@@ -1,55 +1,56 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: Re: gitk translation updates needed?
-Date: Wed, 3 Feb 2010 11:13:10 +0100
-Message-ID: <201002031113.11212.barra_cuda@katamail.com>
-References: <20100201151647.GB8916@spearce.org> <7vy6jbunu8.fsf@alter.siamese.dyndns.org> <7vd40nundv.fsf_-_@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] - "git commit --amend" commits, when exiting the editor
+ with no changes written
+Date: Wed, 3 Feb 2010 05:15:09 -0500
+Message-ID: <20100203101509.GA25336@coredump.intra.peff.net>
+References: <76c5b8581002021247j6df8f609ld9e5d87a060a5423@mail.gmail.com>
+ <394FB581-C9B9-40AB-AFB6-39B68ED5BEAD@wincent.com>
+ <76c5b8581002021356m52bb1817k9a4a29da0d4b681d@mail.gmail.com>
+ <77153A83-158D-4D36-A622-7AA3947C7D52@wincent.com>
+ <76c5b8581002021431o2b5073a0s42b273b6d61893db@mail.gmail.com>
+ <32541b131002021435kadb68ffge77ad5f4e1775418@mail.gmail.com>
+ <76c5b8581002021502i2bb34967y9a88d8b25ce7fa42@mail.gmail.com>
+ <32541b131002021540g7a2834c9hacf2be5962f66515@mail.gmail.com>
+ <20100203061535.GA6566@cthulhu>
+ <20100203093150.GA23956@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 03 11:11:43 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Larry D'Anna <larry@elder-gods.org>, git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 03 11:15:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NccCx-0001n9-Mz
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 11:11:40 +0100
+	id 1NccGS-00049Q-Uz
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 11:15:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932401Ab0BCKLe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 05:11:34 -0500
-Received: from smtp183-pc.aruba.it ([62.149.157.183]:58775 "HELO
-	smtp2-pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S932276Ab0BCKLd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 05:11:33 -0500
-Received: (qmail 21413 invoked by uid 89); 3 Feb 2010 10:11:17 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on smtp2-pc.ad.aruba.it
-X-Spam-Level: *
-X-Spam-Status: No, score=1.5 required=5.0 tests=BAYES_50,RDNS_NONE
-	autolearn=no version=3.2.5
-Received: from unknown (HELO darkstar.localnet) (barra?cuda@katamail.com@78.134.65.18)
-  by smtp2-pc.ad.aruba.it with SMTP; 3 Feb 2010 10:11:17 -0000
-User-Agent: KMail/1.11.4 (Linux/2.6.32.7-mike-1mike; KDE/4.2.4; i686; ; )
-In-Reply-To: <7vd40nundv.fsf_-_@alter.siamese.dyndns.org>
+	id S1757018Ab0BCKPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 05:15:11 -0500
+Received: from peff.net ([208.65.91.99]:48368 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754519Ab0BCKPK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 05:15:10 -0500
+Received: (qmail 25466 invoked by uid 107); 3 Feb 2010 10:15:14 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 03 Feb 2010 05:15:14 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Feb 2010 05:15:09 -0500
 Content-Disposition: inline
+In-Reply-To: <20100203093150.GA23956@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138824>
 
-On Wednesday 03 February 2010, Junio C Hamano wrote:
-> Generating catalog po/it.msg
->  msgfmt --statistics --tcl po/it.po -l it -d po/
->  282 translated messages, 1 fuzzy translation, 6 untranslated messages.
+On Wed, Feb 03, 2010 at 04:31:50AM -0500, Jeff King wrote:
 
-I don't get any fuzzy translation here, but I used to, so I guess it
-regards the copyright message. If that's the case, maybe msgfmt
-mishandles the (C)opyright sign (or maybe gitk uses a weird encoding,
-I don't know).
+> > Or, he can set his $EDITOR to a script that checks the mtime.
+> 
+> Agreed. It could even look like this:
 
-The untranslated messages are either abbreviations (IgnCase) or
-expressions I couldn't translate effectively (Cherry-picking);
-they are quite understandable anyway.
+Also, while we are talking about editor-specific hacks, if you are using
+vim you can use ":cq" to exit with an error code.
+
+-Peff
