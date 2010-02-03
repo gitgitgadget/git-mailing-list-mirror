@@ -1,93 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [BUG] - "git commit --amend" commits, when exiting the editor  with no changes written
-Date: Wed, 03 Feb 2010 19:47:28 +0100
-Message-ID: <vpqzl3q2m2n.fsf@bauges.imag.fr>
-References: <76c5b8581002021207y3eccdc19i9a4abcc3d04315f0@mail.gmail.com>
-	<394FB581-C9B9-40AB-AFB6-39B68ED5BEAD@wincent.com>
-	<76c5b8581002021356m52bb1817k9a4a29da0d4b681d@mail.gmail.com>
-	<77153A83-158D-4D36-A622-7AA3947C7D52@wincent.com>
-	<76c5b8581002021431o2b5073a0s42b273b6d61893db@mail.gmail.com>
-	<alpine.DEB.1.00.1002022356460.4985@pacific.mpi-cbg.de>
-	<76c5b8581002021534i1f0dbd18y1b216233d282cd84@mail.gmail.com>
-	<40aa078e1002021540i13e35776xd733a4e40f34b477@mail.gmail.com>
-	<76c5b8581002021548n129b3997r48ee6f6df5a1a4eb@mail.gmail.com>
-	<vpqeil2kc6b.fsf@bauges.imag.fr>
-	<76c5b8581002030745g634d6ec1hb9e87b687e58e521@mail.gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: git-mv redux: there must be something else going on
+Date: Wed, 3 Feb 2010 13:48:06 -0500
+Message-ID: <32541b131002031048i26d166d9w3567a60515235c34@mail.gmail.com>
+References: <ron1-32BD5F.10255403022010@news.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: kusmabite@gmail.com,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Wincent Colaiuta <win@wincent.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Jacob Helwig <jacob.helwig@gmail.com>, git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 03 19:48:00 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Ron Garret <ron1@flownet.com>
+X-From: git-owner@vger.kernel.org Wed Feb 03 19:48:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NckGe-0007OQ-7u
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 19:48:00 +0100
+	id 1NckHB-0007oC-O3
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 19:48:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756877Ab0BCSri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 13:47:38 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:40407 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756604Ab0BCSrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 13:47:37 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o13Ik5GU014227
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 3 Feb 2010 19:46:05 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NckG8-00072O-ID; Wed, 03 Feb 2010 19:47:28 +0100
-In-Reply-To: <76c5b8581002030745g634d6ec1hb9e87b687e58e521@mail.gmail.com> (Eugene Sajine's message of "Wed\, 3 Feb 2010 10\:45\:54 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 03 Feb 2010 19:46:05 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o13Ik5GU014227
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1265827568.61926@/NHOzdnoOfJ9VRIgQmLtFQ
+	id S1757068Ab0BCSsa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Feb 2010 13:48:30 -0500
+Received: from mail-yw0-f198.google.com ([209.85.211.198]:60059 "EHLO
+	mail-yw0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757035Ab0BCSs1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Feb 2010 13:48:27 -0500
+Received: by ywh36 with SMTP id 36so1565874ywh.15
+        for <git@vger.kernel.org>; Wed, 03 Feb 2010 10:48:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=EzAXM5oRQQLgpHDIfy4pMDvz86yn7zHI878NQ6fdJX0=;
+        b=sRi1U5hkcoclTDS44gvPIwjY6WUF+RAtQlw0xJJP+Ee3+EdRXkt+Hy1gLx8pXIK+8D
+         Q7P1f3ORuaBx5hiKjDU00A6vWGcCJ/pbrGJQk3lYDi8nRJexj7/LpNPwvI1gtLFPhBNo
+         uEBX+qBfRHYmPh6wdbNtZyTaFAOsUTi+ugQI8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=SyoSmnW8Us5BGWnVRD2CtCcMpwCrnFrCcq3l5Fvsqorlipdm0zZoJ1t3JEL5289A3G
+         8duaeUUNs2MG7H/JjLJUt7QTerEaT58iT9ALVgkFJjd20AoNOganQeFTXG3Ylj9QmEv/
+         YTwohdvT4QvGObcOMumBZLBr2hclGzdivCtTE=
+Received: by 10.150.116.5 with SMTP id o5mr331690ybc.336.1265222906284; Wed, 
+	03 Feb 2010 10:48:26 -0800 (PST)
+In-Reply-To: <ron1-32BD5F.10255403022010@news.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138860>
 
-Eugene Sajine <euguess@gmail.com> writes:
+On Wed, Feb 3, 2010 at 1:25 PM, Ron Garret <ron1@flownet.com> wrote:
+> So something in my understanding of how git works must be wrong. =A0G=
+it
+> must be keeping a separate record of file renames somewhere. =A0But w=
+here?
 
-> Tell me you're not serious, please;) I'm working with computers for
-> more than 20 years and I do understand how editors are opening files.
-> If you are serious though...:
+It doesn't.  Your experiment is wrong.
 
-I'm damned serious. If you've been working for 20 years with
-computers, you probably understand what "no change need to be saved"
-mean.
+> [ron@mickey:~/devel/gittest]$ cat>file2
+> 6
+> 7
+> 8
+> 9
+> 10
+> [ron@mickey:~/devel/gittest]$ git mv file2 file3
+> [ron@mickey:~/devel/gittest]$ git commit -m 'letters->numbers'
+> [master ae3f6d4] letters->numbers
+> =A01 files changed, 0 insertions(+), 0 deletions(-)
+> =A0rename file2 =3D> file3 (100%)
 
-> The solution should be as Avery proposed - to monitor file
-> modification timestamp as well as the content.
+Whoops.  You didn't 'git add file2' (before the mv) or 'git add file3'
+(after the mv), or use commit -a, so what you've committed is the
+*old* content of file2 under the name file3.  The *new* content of
+file2 is still uncommitted in your work tree under the name file3.
+This is why git can detect the move.  (The 100% is a good clue: it
+means the old and new files are 100% identical.)
 
-Try it. I do mean "try it". I don't think anyone will be able to
-explain you better than it has already been done, but ... it doesn't
-work.
+Artificial tests like this are useless anyway.  If you renamed file2
+to file3 *and* changed all the contents, did you *really* rename it?
+If so, who cares?  What good does it do you to know this?  If someone
+else tries to patch the old file2 and you merge it into a (totally
+different) file3 vs a (now missing) file2, how is that any better?
 
-So, again, stop arguing, try it, and see by yourself. I promise public
-apologies if you prove me wrong with an actually working piece of
-code.
+On the other hand, if one guy moves file2 to file3 and changes a few
+lines, you want the other guy's patch to go into file3, whether the
+first guy used 'git mv' or add+rm or anything else.
 
-> Timestamp should be remembered by git when editor is fired up and then
-> checked when you're exiting the editor.
+As long as only a few lines changed, git does the right thing.  If
+most/all of the lines have changed, then there is no right thing,
+because you'll get a nasty merge conflict either way.
 
-Which doesn't work reliable, as you would have noticed by reading my
-message.
+Have fun,
 
-(and yes, I'm tired and angry after a long day of work ;-) ).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Avery
