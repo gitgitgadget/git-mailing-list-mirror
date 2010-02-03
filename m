@@ -1,97 +1,148 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git-mv redux: there must be something else going on
-Date: Wed, 3 Feb 2010 14:47:33 -0500
-Message-ID: <32541b131002031147r367ee08fxc64c4c54165953a3@mail.gmail.com>
-References: <ron1-32BD5F.10255403022010@news.gmane.org> <32541b131002031048i26d166d9w3567a60515235c34@mail.gmail.com> 
-	<ron1-5F71CB.11234903022010@news.gmane.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git-gui clone WTFery
+Date: Wed, 3 Feb 2010 11:52:15 -0800
+Message-ID: <20100203195215.GE14799@spearce.org>
+References: <20100201151647.GB8916@spearce.org> <7vy6jbunu8.fsf@alter.siamese.dyndns.org> <201002031111.29557.barra_cuda@katamail.com> <7vwryuhzsn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ron Garret <ron1@flownet.com>
-X-From: git-owner@vger.kernel.org Wed Feb 03 20:48:25 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Michele Ballabio <barra_cuda@katamail.com>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 03 20:52:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NclD7-00042L-5z
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 20:48:25 +0100
+	id 1NclHF-0007A0-2e
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 20:52:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932784Ab0BCTsU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Feb 2010 14:48:20 -0500
-Received: from mail-gx0-f224.google.com ([209.85.217.224]:45361 "EHLO
-	mail-gx0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932770Ab0BCTsT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Feb 2010 14:48:19 -0500
-Received: by gxk24 with SMTP id 24so2174960gxk.1
-        for <git@vger.kernel.org>; Wed, 03 Feb 2010 11:48:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AcUdMIbw9VMJiHPJYEohJaovGClM4RFcdhPue8Gce+I=;
-        b=o0vqfkJeTJYmvB3eAyJyR9Q/F87g8J9LhHXSyk4BXZnpKyC7uNtOMA6JJamQ0mwGno
-         AjxRlxY9sf8pcNhz+e7z/zlivlafcYPFiRo2cyG94q3f+lFbDHFpfpKXfuP/rYWbcTpd
-         cMgx/kPPKYtgYBqVsIkqrV7jtsS1oaVO6Z7Tw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=bggt+uj4MbmYInNGbvYoiVc3tCejLFLhqv3z/xs0mpv4G+2P6moa/eKnws53CqrrI8
-         jdoRNCN6X+6pD4Y2Vl/0tFNuvTzQi6V/HmlMdZXdwLZ1mkAvPF9GW3EaaiwjnT7kBwYH
-         748yBlNEVcBt/4sHv7QXbGgpJiscyw/n8ioy0=
-Received: by 10.150.239.14 with SMTP id m14mr468249ybh.305.1265226473058; Wed, 
-	03 Feb 2010 11:47:53 -0800 (PST)
-In-Reply-To: <ron1-5F71CB.11234903022010@news.gmane.org>
+	id S1757662Ab0BCTwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 14:52:23 -0500
+Received: from mail-iw0-f201.google.com ([209.85.223.201]:59059 "EHLO
+	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757655Ab0BCTwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 14:52:21 -0500
+Received: by iwn39 with SMTP id 39so2004576iwn.1
+        for <git@vger.kernel.org>; Wed, 03 Feb 2010 11:52:20 -0800 (PST)
+Received: by 10.231.151.207 with SMTP id d15mr123089ibw.44.1265226740548;
+        Wed, 03 Feb 2010 11:52:20 -0800 (PST)
+Received: from localhost ([209.20.77.23])
+        by mx.google.com with ESMTPS id 22sm39560iwn.0.2010.02.03.11.52.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 03 Feb 2010 11:52:17 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vwryuhzsn.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138874>
 
-On Wed, Feb 3, 2010 at 2:23 PM, Ron Garret <ron1@flownet.com> wrote:
-> In article
-> Ah. =A0That explains everything. =A0Thanks. =A0(I thought git mv was
-> equivalent to git rm followed by git add. =A0But it's not.)
+Junio C Hamano <gitster@pobox.com> wrote:
+> Michele Ballabio <barra_cuda@katamail.com> writes:
+> > In this case, git-gui is counting objects during a clone; would it be OK
+> > to consider "buckets" as synonim of "objects" or "items" or something
+> > else?  Then I would translate accordingly.
+> 
+> A cursory read of the codepath with that message tells me that Shawn is
+> calling one [0-9a-f][0-9a-f] directory under .git/objects/ a "bucket" and
+> counting the number of them while copying them to implement "git clone"
+> inside git-gui (why?---that is a separate issue).
 
-I suppose in this case it's not.  The only difference is when your
-work tree differs from your index, though, and it's to be expected
-that 'git rm', in removing things from the index, would lose your
-ability to track those differences.
+I just had an argument with someone in a private thread about why
+commit messages should be more than 30 characters long.  Lets see
+if the git-gui history stands up to that and sufficiently explains
+why I rewrote clone in Tcl:
 
-> So... how *does* git decide when two blobs are different blobs and wh=
-en
-> they are the same blob with mods? =A0I asked this question before and=
- was
-> pointed to the diffcore docs, but that didn't really clear things up.
-> That just describes all the different ways git can do diffs, not the
-> actual heuristics that git uses to track content.
+  $ git blame lib/choose_repository.tcl
+  ...
+  81d4d3dd (Shawn O. Pearce     2007-09-24 08:40:44 -0400  633) 
+  81d4d3dd (Shawn O. Pearce     2007-09-24 08:40:44 -0400  634)           $o_cons start \
+  81d4d3dd (Shawn O. Pearce     2007-09-24 08:40:44 -0400  635)                   [mc "Counting objects"] \
+  81d4d3dd (Shawn O. Pearce     2007-09-24 08:40:44 -0400  636)                   [mc "buckets"]
+  ...
+  81d4d3dd (Shawn O. Pearce     2007-09-24 08:40:44 -0400  673)           update
+  81d4d3dd (Shawn O. Pearce     2007-09-24 08:40:44 -0400  674) 
+  ab08b363 (Shawn O. Pearce     2007-09-22 03:47:43 -0400  675)           file mkdir [file join .git objects pack]
+  ab08b363 (Shawn O. Pearce     2007-09-22 03:47:43 -0400  676)           foreach i [glob -tails -nocomplain \
+  ab08b363 (Shawn O. Pearce     2007-09-22 03:47:43 -0400  677)                   -directory [file join $objdir pack] *] {
+  ab08b363 (Shawn O. Pearce     2007-09-22 03:47:43 -0400  678)                   lappend tolink [file join pack $i]
+  ab08b363 (Shawn O. Pearce     2007-09-22 03:47:43 -0400  679)           }
+  81d4d3dd (Shawn O. Pearce     2007-09-24 08:40:44 -0400  680)           $o_cons update [incr bcur] $bcnt
+  81d4d3dd (Shawn O. Pearce     2007-09-24 08:40:44 -0400  681)           update
+  81d4d3dd (Shawn O. Pearce     2007-09-24 08:40:44 -0400  682) 
+  81d4d3dd (Shawn O. Pearce     2007-09-24 08:40:44 -0400  683)           foreach i $buckets {
+  ab08b363 (Shawn O. Pearce     2007-09-22 03:47:43 -0400  684)                   file mkdir [file join .git objects $i]
+  ab08b363 (Shawn O. Pearce     2007-09-22 03:47:43 -0400  685)                   foreach j [glob -tails -nocomplain \
+  ab08b363 (Shawn O. Pearce     2007-09-22 03:47:43 -0400  686)                           -directory [file join $objdir $i] *] {
+  ab08b363 (Shawn O. Pearce     2007-09-22 03:47:43 -0400  687)                           lappend tolink [file join $i $j]
+  ab08b363 (Shawn O. Pearce     2007-09-22 03:47:43 -0400  688)                   }
+  81d4d3dd (Shawn O. Pearce     2007-09-24 08:40:44 -0400  689)                   $o_cons update [incr bcur] $bcnt
+  81d4d3dd (Shawn O. Pearce     2007-09-24 08:40:44 -0400  690)                   update
+  ab08b363 (Shawn O. Pearce     2007-09-22 03:47:43 -0400  691)           }
 
-If you really want to know the details, looking at the code really is
-probably the best solution; it's not even that long.
 
-The short version is that git chooses a set of candidate blobs, then
-diffs them and figures out a percentage similarity between each pair.
-(A simple way to think of the similarity index is "how long is the
-diff compared to the file itself?"  If the diff is of length zero, the
-similarity is 100%, and so on.) If the similarity is greater than a
-certain threshold, then it's considered to be the same file.
+Hmmph. 81d4d3dd and ab08b363 are the relevant commits:
 
-Choosing the set of candidates is actually the more interesting
-problem, since detecting moves using the above algorithm is O(n^2)
-with the number of candidates.  That's why 'git diff' and 'git log'
-don't do it at all by default.
+  commit 81d4d3dddc5e96aea45a2623c9b1840491348b92
+  Author: Shawn O. Pearce <spearce@spearce.org>
+  Date:   Mon Sep 24 08:40:44 2007 -0400
 
-If you provide -M, the set of candidates is the set of files that were
-removed/modified and the set of files that were added.  (Added files
-are compared against removed/modified files, iirc.)  Normally that's a
-very short list.  With -C, you need to compare all
-added/removed/modified files with all others, which is slightly more
-work.  With --find-copies-harder, it becomes potentially a *lot* of
-work.
+    git-gui: Keep the UI responsive while counting objects in clone
+    
+    If we are doing a "standard" clone by way of hardlinking the
+    objects (or copying them if hardlinks are not available) the
+    UI can freeze up for a good few seconds while Tcl scans all
+    of the object directories.  This is espeically noticed on a
+    Windows system when you are working off network shares and
+    need to wait for both the NT overheads and the network.
+    
+    We now show a progress bar as we count the objects and build
+    our list of things to copy.  This keeps the user amused and
+    also makes sure we run the Tk event loop often enough that
+    the window can still be dragged around the desktop.
+    
+    Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 
-Have fun,
+  commit ab08b3630414dfb867825c4a5828438e1c69199d
+  Author: Shawn O. Pearce <spearce@spearce.org>
+  Date:   Sat Sep 22 03:47:43 2007 -0400
 
-Avery
+    git-gui: Allow users to choose/create/clone a repository
+  ...
+    Rather than relying on the git-clone Porcelain that ships with
+    git we build the new repository ourselves and then obtain content
+    by git-fetch.  This technique simplifies the entire clone process
+    to roughly: `git init && git fetch && git pull`.  Today we use
+    three passes with git-fetch; the first pass gets us the bulk of
+    the objects and the branches, the second pass gets us the tags,
+    and the final pass gets us the current value of HEAD to initialize
+    the default branch.
+    
+    If the source repository is on the local disk we try to use a
+    hardlink to connect the objects into the new clone as this can
+    be many times faster than copying the objects or packing them and
+    passing the data through a pipe to index-pack.  Unlike git-clone
+    we stick to pure Tcl [file link -hard] operation thus avoiding the
+    need to fork a cpio process to setup the hardlinks.  If hardlinks
+    do not appear to be supported (e.g. filesystem doesn't allow them or
+    we are crossing filesystem boundaries) we use file copying instead.
+    
+    Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+
+
+My guess is, around this time period (Sept. 2007) git-clone was
+actually git-clone.sh (Yup, it was built-in in 8434c2f1afed "Build
+in clone" Apr 2008).  Clone on Cygwin through git-clone.sh was very
+slow compared to clone in Tcl using a native Win32 wish process...
+
+Today with git-clone in C, this is a WTF.  But at the time, it was
+a nice performance boost on the Windows platform.  And nobody has
+tried to clean this up yet in git-gui.
+
+Yay.  My point about commit messages is still valid.  :-)
+
+-- 
+Shawn.
