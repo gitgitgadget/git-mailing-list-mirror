@@ -1,100 +1,108 @@
-From: Ron Garret <ron1@flownet.com>
-Subject: Re: git-mv redux: there must be something else going on
-Date: Wed, 03 Feb 2010 11:23:49 -0800
-Organization: Amalgamated Widgets
-Message-ID: <ron1-5F71CB.11234903022010@news.gmane.org>
-References: <ron1-32BD5F.10255403022010@news.gmane.org> <32541b131002031048i26d166d9w3567a60515235c34@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: extra headers in commit objects
+Date: Wed, 3 Feb 2010 11:26:12 -0800
+Message-ID: <20100203192612.GD14799@spearce.org>
+References: <20100203174041.GC14799@spearce.org> <alpine.LFD.2.00.1002031311010.1681@xanadu.home> <9b18b3111002031101p3385ecdfo638433bc269791aa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 03 20:24:26 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@fluxnic.net>, git <git@vger.kernel.org>
+To: demerphq <demerphq@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 03 20:26:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nckpp-0001Sa-Mz
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 20:24:22 +0100
+	id 1Nckrq-0003Ep-4u
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 20:26:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757577Ab0BCTYN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Feb 2010 14:24:13 -0500
-Received: from lo.gmane.org ([80.91.229.12]:53311 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756024Ab0BCTYM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 14:24:12 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Nckpe-0001JK-Vt
-	for git@vger.kernel.org; Wed, 03 Feb 2010 20:24:11 +0100
-Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 Feb 2010 20:24:10 +0100
-Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 Feb 2010 20:24:10 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
-User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
+	id S1757584Ab0BCT0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 14:26:21 -0500
+Received: from mail-yx0-f189.google.com ([209.85.210.189]:40403 "EHLO
+	mail-yx0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757560Ab0BCT0V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 14:26:21 -0500
+Received: by yxe27 with SMTP id 27so1455868yxe.4
+        for <git@vger.kernel.org>; Wed, 03 Feb 2010 11:26:20 -0800 (PST)
+Received: by 10.100.245.30 with SMTP id s30mr4679370anh.164.1265225180220;
+        Wed, 03 Feb 2010 11:26:20 -0800 (PST)
+Received: from localhost ([209.20.77.23])
+        by mx.google.com with ESMTPS id 22sm7747789iwn.12.2010.02.03.11.26.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 03 Feb 2010 11:26:17 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <9b18b3111002031101p3385ecdfo638433bc269791aa@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138866>
 
-In article=20
-<32541b131002031048i26d166d9w3567a60515235c34@mail.gmail.com>,
- Avery Pennarun <apenwarr@gmail.com> wrote:
+demerphq <demerphq@gmail.com> wrote:
+> On 3 February 2010 19:15, Nicolas Pitre <nico@fluxnic.net> wrote:
+> > On Wed, 3 Feb 2010, Shawn O. Pearce wrote:
+> >
+> >> Am I correct that core C developers are still under the opinion
+> >> that extra headers in a commit object aren't encouraged?
+> >
+> > I would say so.
+> >
+> > [...]
+> >> At the end of the day, is it a bug that C git doesn't support
+> >> working with extra commit headers? ?IMHO, no, because, we've
+> >> rejected these in the past, and its not part of the Git standard.
+> >> And other implementations shouldn't be trying to sell it that way.
+> >
+> > Agreed. ?And this was discussed in great length on this list on few
+> > occasions already (probably more than a year back).
+> 
+> One problem, is that if you take the approach you say then you
+> basically guarantee that a new git that DOES add new headers will
+> break an old git that doesnt know about the headers, and actually
+> doesnt care about them either.
 
-> On Wed, Feb 3, 2010 at 1:25 PM, Ron Garret <ron1@flownet.com> wrote:
-> > So something in my understanding of how git works must be wrong. =C2=
-=A0Git
-> > must be keeping a separate record of file renames somewhere. =C2=A0=
-But where?
->=20
-> It doesn't.  Your experiment is wrong.
->=20
-> > [ron@mickey:~/devel/gittest]$ cat>file2
-> > 6
-> > 7
-> > 8
-> > 9
-> > 10
-> > [ron@mickey:~/devel/gittest]$ git mv file2 file3
-> > [ron@mickey:~/devel/gittest]$ git commit -m 'letters->numbers'
-> > [master ae3f6d4] letters->numbers
-> > =C2=A01 files changed, 0 insertions(+), 0 deletions(-)
-> > =C2=A0rename file2 =3D> file3 (100%)
->=20
-> Whoops.  You didn't 'git add file2' (before the mv) or 'git add file3=
-'
-> (after the mv), or use commit -a, so what you've committed is the
-> *old* content of file2 under the name file3.  The *new* content of
-> file2 is still uncommitted in your work tree under the name file3.
-> This is why git can detect the move.  (The 100% is a good clue: it
-> means the old and new files are 100% identical.)
+As I understand it, the current stance is:
 
-Ah.  That explains everything.  Thanks.  (I thought git mv was=20
-equivalent to git rm followed by git add.  But it's not.)
+1) A compliant Git implementation ignores any headers it doesn't
+   recognize that appear *after* the optional "encoding" header.
 
-> Artificial tests like this are useless anyway.
+2) A compliant Git implementation does not produce any additional
+   headers in a commit object, because other implementations cannot
+   perform any machine based reasoning on them.
 
-Yes, I know.  This was not intended to be a real-world example.  I was=20
-just trying to understand the heuristics that git uses to track filenam=
-e=20
-changes, and in particular, how much a file could change before git=20
-decided it was a different file.  When I got to zero shared lines=20
-between old and new it was clear that I was missing something=20
-fundamental :-)
+3) All implementations would (eventually) treat all headers equally,
+   that is they all understand what author, committer, encoding are
+   and process them the same way.  Any new headers should equally
+   be fully cross-implementation.
 
-So... how *does* git decide when two blobs are different blobs and when=
-=20
-they are the same blob with mods?  I asked this question before and was=
-=20
-pointed to the diffcore docs, but that didn't really clear things up. =20
-That just describes all the different ways git can do diffs, not the=20
-actual heuristics that git uses to track content.
+> So it would essentially mean that if you ever have to change the
+> commit format you will be in a position where new git commits will be
+> incompatible by design with old git commits.
 
-rg
+So, we can change the format by adding a new header, after the
+optional "encoding" header.
+
+But such a change needs to be something that an older Git will
+safely ignore (due to rule 1), and something that a newer Git can
+make really effective use of (due to rule 2 and 3).  And that newer
+Git must also safely deal with commits missing that new header, due
+to the huge number of commits out in the wild without said header.
+
+And don't even get me started on amending commits with new unknown
+headers.  Existing implementions of Git tools will drop the extra
+headers during the amend, because the headers are viewed as part
+of the commit object data... and during an amend you are making a
+totally new object.
+
+For example, git-gui would drop any extra headers during an amend,
+because its running `git commit-tree` directly without any way to
+tell commit-tree this is for an amend of an existing commit, vs. a
+completely new commit... because either way its a new commit object.
+
+> Shouldn't an old git just ignore headers from a new git?
+
+Yes, see above.
+ 
+-- 
+Shawn.
