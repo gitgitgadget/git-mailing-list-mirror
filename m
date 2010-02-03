@@ -1,87 +1,135 @@
-From: martin f krafft <madduck@debian.org>
-Subject: [gitolite] symlink hooks instead of copying them
-Date: Thu, 4 Feb 2010 09:47:23 +1300
-Organization: The Debian project
-Message-ID: <20100203204723.GA30157@lapse.rw.madduck.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: extra headers in commit objects
+Date: Wed, 3 Feb 2010 13:04:07 -0800
+Message-ID: <20100203210407.GG14799@spearce.org>
+References: <20100203174041.GC14799@spearce.org> <alpine.LFD.2.00.1002031311010.1681@xanadu.home> <9b18b3111002031101p3385ecdfo638433bc269791aa@mail.gmail.com> <20100203192612.GD14799@spearce.org> <7vwryugifz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-ripemd160;
-	protocol="application/pgp-signature"; boundary="LZvS9be/3tNcYl/X"
-To: git discussion list <git@vger.kernel.org>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	Teemu Matilainen <teemu.matilainen@iki.fi>
-X-From: git-owner@vger.kernel.org Wed Feb 03 21:58:24 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: demerphq <demerphq@gmail.com>, Nicolas Pitre <nico@fluxnic.net>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 03 22:04:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcmIp-0006Kp-L6
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 21:58:24 +0100
+	id 1NcmOY-0002yb-1u
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 22:04:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932892Ab0BCU6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 15:58:18 -0500
-Received: from clegg.madduck.net ([193.242.105.96]:51386 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932343Ab0BCU6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 15:58:17 -0500
-Received: from lapse.rw.madduck.net (lapse.nz.madduck.net [IPv6:2001:4428:234::1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id 38C091D409E;
-	Wed,  3 Feb 2010 21:47:26 +0100 (CET)
-Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
-	id 21336FF; Thu,  4 Feb 2010 09:47:23 +1300 (NZDT)
+	id S932894Ab0BCVEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 16:04:13 -0500
+Received: from mail-yx0-f189.google.com ([209.85.210.189]:56080 "EHLO
+	mail-yx0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932343Ab0BCVEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 16:04:12 -0500
+Received: by yxe27 with SMTP id 27so1548510yxe.4
+        for <git@vger.kernel.org>; Wed, 03 Feb 2010 13:04:11 -0800 (PST)
+Received: by 10.91.163.4 with SMTP id q4mr474763ago.13.1265231050443;
+        Wed, 03 Feb 2010 13:04:10 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 23sm7875107iwn.15.2010.02.03.13.04.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 03 Feb 2010 13:04:09 -0800 (PST)
 Content-Disposition: inline
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.32-trunk-686 i686
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: clamav-milter 0.95.3 at clegg
-X-Virus-Status: Clean
+In-Reply-To: <7vwryugifz.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138898>
 
+Junio C Hamano <gitster@pobox.com> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> 
+> > As I understand it, the current stance is:
+> >
+> > 1) A compliant Git implementation ignores any headers it doesn't
+> >    recognize that appear *after* the optional "encoding" header.
+> 
+> I first read the above to mean that you need to add encoding if you want
+> to throw in other garbage.
+> 
+> I would say "*after* the mandatory 'tree', 'parent' (0 or more), 'author',
+> and 'committer' headers that must appear in this order", for clarity.
 
---LZvS9be/3tNcYl/X
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes, sorry, of course that is what I meant.  Thanks for the
+clarification.
 
-Dear Sitaram, dear Teemo, dear gitolite-fans,
+To add to that, "after encoding, if encoding is present".
+ 
+> > 2) A compliant Git implementation does not produce any additional
+> >    headers in a commit object, because other implementations cannot
+> >    perform any machine based reasoning on them.
+> >
+> > 3) All implementations would (eventually) treat all headers equally,
+> >    that is they all understand what author, committer, encoding are
+> >    and process them the same way.  Any new headers should equally
+> >    be fully cross-implementation.
+> 
+> These are very important points.
+> 
+> In your made-up example you added "bug" (presumably to mean "fixes this
+> bug") and "message-id" ("am-ed from this message").  The latter might make
+> sense, but the former does not belong to the header, as it is not a
+> statement of the fact.
 
-Gitolite currently copies hooks to repositories. For upgrades, it
-must thus ensure that all hooks are also upgraded.
+This all came out of what appears to be a tool to bridge another
+VCS system data into Git.  Ala git-svn.
 
-It occurs to me that this might be easier done using symlinks, or
-with a file that includes the master hook(s) in
-~/.gitolite/src/hooks. Then, the hooks just have to be upgraded in
-one place.
+We all know that some other systems, e.g. SVN, permit adding
+additional properties to commits, and that often these are used
+to make statements like "Fixed bug NNNN", and bug tracking systems
+integrate into SVN by reading or updating those properties.
 
-Do you see a reason not to do this via symlinks?
+So you, Nico, myself, might all agree that "bug" does not belong
+in the header, but many others see it like SVN sees additional
+properties on a revision, and thus it goes there.
 
---=20
- .''`.   martin f. krafft <madduck@d.o>      Related projects:
-: :'  :  proud Debian developer               http://debiansystem.info
-`. `'`   http://people.debian.org/~madduck    http://vcs-pkg.org
-  `-  Debian - when you have better things to do than fixing systems
-=20
-"we are trapped in the belly of this horrible machine,
- and the machine is bleeding to death."
-                                        -- godspeed you black emperor!
+Hence the artifical example.  It seems that it is not that artifical
+outside of our mailing list.
+ 
+> Forcing people to say "this fixes" at the commit time means you do not
+> allow mistakes---it may turn out to be an incorrect or non fix later.
 
---LZvS9be/3tNcYl/X
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
+Yup, happens often.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+> When you are amending the commit to say "this does not really fix it", you
+> would want to lose the old "bug" header, but you would want to keep the
+> "message-id" one.  There simply is not enough hint as to which ones must
+> be carried across amending in the "we allow people to randomly throw extra
+> headers into the commit object" model.  It is not a model--it is chaos.
 
-iEYEAREDAAYFAktp4NoACgkQIgvIgzMMSnWPwwCfZHX6wzOi6vt7TJPZMDmn6XWJ
-2IQAoK0G96n0ioxWcbqx1+5DZ+hTRHOW
-=RY7J
------END PGP SIGNATURE-----
+Exactly.  That's what I had thought our position was, for exactly
+this reason, it very quickly devolves into a chaos we can't reason
+about, let alone write code to support for end-users.
 
---LZvS9be/3tNcYl/X--
+> Also it wouldn't be obvious to other people what got changed while
+> comparing two commits (before and after the amend) if the information is
+> hidden in the header.  The right place for that kind of information is in
+> the log message (if the nature of the information is for everybody to see)
+> or in notes.
+
+I'm afraid users might insert their own headers, then come report
+the bug that `git log` and `git show` don't make those headers
+visible when formatting the commit.  After all, they show the author
+committer, and parent information when you use the right flags.
+
+We'll of course say, its not in the message, and suggest using the
+footer style like our Signed-off-by lines, or notes, which appear
+below the message if requested.
+
+> Introducing extra headers needs to be done _very_ carefully after thinking
+> things through, judging the pros and cons.  Even though we kept the format
+> open to allow us to extend the format to add essential statement of fact
+> that we can make at the commit time (e.g. "encoding"), I do not foresee us
+> adding any official extra headers in near future.
+
+Right, me neither, because everything that has been proposed for an
+extra header (e.g. bug id, Message-Id from the email it as git-amed
+from, rename tracking, ...) has all been suggested to be better
+positioned in the message itself, or in a note, or not at all...
+
+-- 
+Shawn.
