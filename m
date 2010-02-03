@@ -1,112 +1,144 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: clarify git-mv behaviour wrt dirty files
-Date: Wed, 03 Feb 2010 13:56:19 -0800
-Message-ID: <7v3a1idlvg.fsf@alter.siamese.dyndns.org>
-References: <ron1-A681F2.12340503022010@news.gmane.org>
- <c43166fa73391a40b43c27153ec142121fdb71d1.1265231310.git.trast@student.ethz.ch>
+From: Zack Brown <zacharyb@gmail.com>
+Subject: Re: Using "git log" to find the files patched at the same time as a 
+	named file
+Date: Wed, 3 Feb 2010 16:52:36 -0500
+Message-ID: <218b69371002031352je066f5cvd87025459fade368@mail.gmail.com>
+References: <218b69371002031238y6a377b06x76b8f8e87ea0ee46@mail.gmail.com>
+	 <7vk4uughzf.fsf@alter.siamese.dyndns.org>
+	 <218b69371002031314rb52da81k92c45f79dc6feca@mail.gmail.com>
+	 <7vfx5idmt2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, Ron Garret <ron1@flownet.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Pete Harlan <pgit@pcharlan.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Feb 03 22:56:41 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 03 22:58:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcnDE-0007rL-QK
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 22:56:41 +0100
+	id 1NcnFH-0000uD-37
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 22:58:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932881Ab0BCV4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 16:56:35 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43354 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932657Ab0BCV4f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 16:56:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C3F949676E;
-	Wed,  3 Feb 2010 16:56:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9iv1n4578gRM0TkuOlmYFSBOHw8=; b=qV43Jx
-	5UQiIqWiu1Yqd7G23aPif232ybKk8D38Aex4apE79QavCDinGgzo/BrW5QJA0jKx
-	ubSS2R7dFamZHacRfMOAlpxbVoP7kMBvyjWN8Y/UmYiCDHEnLR2ET6Q+uV5nCs8D
-	2a8Rs5ULBR42BDhPkhiMHwRQAKB3qIb5LEDUs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=q5x9c0csyiXjxZnr7PET0D9I2YMd7NgI
-	2QheOCYPcgrDGRAJIzDQcH/wo5ruQa05NlYbNIEt2edajD7QM9bkhHjNJOsBpkdc
-	McQ7j57e4ipjn443LOB1ZuaYZb8wH1hmekfkbA8cnw11kkv6/dQU5eVitRczcKhJ
-	1Ps+MClYoKY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 714CC96766;
-	Wed,  3 Feb 2010 16:56:27 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 37D0F96759; Wed,  3 Feb
- 2010 16:56:21 -0500 (EST)
-In-Reply-To: <c43166fa73391a40b43c27153ec142121fdb71d1.1265231310.git.trast@student.ethz.ch> (Thomas Rast's message of "Wed\, 3 Feb 2010 22\:12\:12 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FA804724-110E-11DF-8557-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752219Ab0BCV6m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Feb 2010 16:58:42 -0500
+Received: from mail-gx0-f224.google.com ([209.85.217.224]:61260 "EHLO
+	mail-gx0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750946Ab0BCV6l convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Feb 2010 16:58:41 -0500
+Received: by gxk24 with SMTP id 24so2288714gxk.1
+        for <git@vger.kernel.org>; Wed, 03 Feb 2010 13:58:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=rl/rZPE0jcR6H7kZrU2jTqMrQW7NhbzAAOqMb+4/mLk=;
+        b=IB44tcR+tbzGFUPyOHoC3IlzlnGLtYfCKvDGk2P1N9mGTCgVKdKJbNZkS3tsqyFMB8
+         RG3AdjaAcqIX87ex8gwgQfUWggx9shyl+IlNR/VIB5jFW+2hVBcM1kJdZsjpfUeNaneo
+         fQEwRm9slAn52Ol9+j0CXNLvOqePXHN6y8Vgg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=KJfJ5yHBzyDym1XJmMKywMhOBZezjAZMXvShwpCgdnT8Gsn2jUKhTCCYdoiqS0wNtf
+         /oFULYWSBm2ObOgShfv0yolBOPaIoUILtDcPmFX9WSfg7AoCpGzIc9O+OQakoiRUmztY
+         o7/QGAvNXO7KNXhBTjcipZXUixaBUJ3TG2hIk=
+Received: by 10.150.56.14 with SMTP id e14mr770212yba.109.1265233956037; Wed, 
+	03 Feb 2010 13:52:36 -0800 (PST)
+In-Reply-To: <7vfx5idmt2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138906>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+That looks much clearer. But I would change the final sentence to,
+"This option lifts that limit and tells "git log" to include changes
+from all paths that were affected by the outputted commits, not just
+the changes from the paths specified on the command line."
 
-> Clearly point out that the rename happens separately for worktree and
-> index.  This confused users, as they are apparently told that git-mv
-> == git-rm && mv && git-add, which it is not.
+Be well,
+Zack
 
-I may be confused too as I had to read these three lines three times and I
-do not think these two sentences mesh well together.
+On Wed, Feb 3, 2010 at 4:36 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Zack Brown <zacharyb@gmail.com> writes:
+>
+>> ... What about something like this:
+>>
+>> "Without this flag, "git log -p <path>..." shows commits that touch
+>> the specified paths, but it only includes the diffs from those commi=
+ts
+>
+> I would say "s/but/and/", because it is more natural that you get the
+> "limited" view after you explicitly stated that you are "only interes=
+ted
+> in these things" by giving pathspecs.
+>
+>> that affected those specified paths, regardless of whether other pat=
+hs
+>> were changed in those same commits. With "git log --full-diff -p
+>> <path>...", git still only reports commits that touch the specified
+>> path, but now it also includes the diffs that affected any other pat=
+hs
+>> changed in those same commits."
+>
+> And "but" on the second line from the bottom makes sense---by giving =
+the
+> option, you are telling it to work differently.
+>
+>> Would that be an improvement?
+>
+> Surely. =A0I would suspect that people would go even further. =A0"-p"=
+ is not
+> very special (notice I used --name-status in my example).
+>
+> Also I think the description should start with what it _does_, not wi=
+th
+> what happens without it.
+>
+> So how about this?
+>
+> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+> index 0e39bb6..5dd1c0c 100644
+> --- a/Documentation/git-log.txt
+> +++ b/Documentation/git-log.txt
+> @@ -49,11 +49,14 @@ include::diff-options.txt[]
+> =A0 =A0 =A0 =A0commit was reached.
+>
+> =A0--full-diff::
+> - =A0 =A0 =A0 Without this flag, "git log -p <path>..." shows commits=
+ that
+> - =A0 =A0 =A0 touch the specified paths, and diffs about the same spe=
+cified
+> - =A0 =A0 =A0 paths. =A0With this, the full diff is shown for commits=
+ that touch
+> - =A0 =A0 =A0 the specified paths; this means that "<path>..." limits=
+ only
+> - =A0 =A0 =A0 commits, and doesn't limit diff for those commits.
+> + =A0 =A0 =A0 Show all changes, even outside the given pathspecs.
+> ++
+> +Pathspecs <path>... given to "git log [<options>] <path>..." =A0limi=
+t the
+> +output to the commits that touch the specified paths. =A0When option=
+s to
+> +show changes introduced by these commits (e.g. "-p", "--name-only") =
+are
+> +given, the output of the changes are also limited to the specified p=
+aths.
+> +This option lifts the latter limit and tells "git log" to include al=
+l
+> +changes, even the ones outside of the given pathspecs.
+>
+> =A0--follow::
+> =A0 =A0 =A0 =A0Continue listing the history of a file beyond renames.
+>
+>
+>
 
-What happens with "git mv A B" is that it moves a work tree file A to B
-and moves the index entry for A to B, hence all of:
 
- (1) the fact that you do not have A anymore;
 
- (2) the fact that you now have B instead; and
-
- (3) the fact that your work tree file B (which used to be A) has changes
-     from its corresponding index entry
-
-are _consistently_ kept between the work tree and the index.
-
-I don't think "happens separately for" makes sense.  At best, it is an
-implementation detail that doesn't help users understand what the command
-does and what it is used for better.
-
-Of course, it is different from
-
-    "git rm -f --cached A && mv A B && git add B"
-
-which would add changes that you were not prepared to add (i.e. you had
-output from "git diff A" before you started).  I think that was a buggy
-way old scripted version of "git mv" used to work, by the way.
-
-> While there, move the synposis to the synopsis section, which so far
-> was rather useless, and reword the first sentence to eliminate the
-> mentions of 'script'.
-
-That's a good change regardless.
-
-> +For every renamed file or symlink, the worktree and index contents are
-> +renamed separately, preserving both staged and unstaged changes....
-
-I'd just say:
-
-    While renaming paths, changes in the files in the work tree that you
-    have not added are preserved.
-
-> +....  You
-> +will still have to commit the rename.
-
-I don't understand why you want to say "You will still have to commit the
-rename" here.  It is like saying in "git add" manpage that "You will still
-have to commit the added contents" because "add" only affects the index
-and does not make a commit.  Drop it.
+--=20
+Zack Brown
