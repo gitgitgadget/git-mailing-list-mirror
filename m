@@ -1,101 +1,100 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: extra headers in commit objects
-Date: Wed, 3 Feb 2010 20:01:17 +0100
-Message-ID: <9b18b3111002031101p3385ecdfo638433bc269791aa@mail.gmail.com>
-References: <20100203174041.GC14799@spearce.org>
-	 <alpine.LFD.2.00.1002031311010.1681@xanadu.home>
+From: Ron Garret <ron1@flownet.com>
+Subject: Re: git-mv redux: there must be something else going on
+Date: Wed, 03 Feb 2010 11:23:49 -0800
+Organization: Amalgamated Widgets
+Message-ID: <ron1-5F71CB.11234903022010@news.gmane.org>
+References: <ron1-32BD5F.10255403022010@news.gmane.org> <32541b131002031048i26d166d9w3567a60515235c34@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Wed Feb 03 20:01:52 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 03 20:24:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NckU3-0000mC-JZ
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 20:01:51 +0100
+	id 1Nckpp-0001Sa-Mz
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 20:24:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757557Ab0BCTBV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Feb 2010 14:01:21 -0500
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:52706 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756905Ab0BCTBT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Feb 2010 14:01:19 -0500
-Received: by bwz19 with SMTP id 19so380829bwz.28
-        for <git@vger.kernel.org>; Wed, 03 Feb 2010 11:01:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=1TUnsEbD0jEV6TWRl+7pr2L92nZwFS+tLjiMOqFLGHM=;
-        b=phIZrsnTtjTGJeasd7MAa03hW8veuUEujXQMa4DHn+JUa0t3UTcq1fIihZl37lqykj
-         h4yYWB2WBAQlEd94pCVe8QsO4CMN9biMrGecSabm7SZr+6Lj9CgGhf2PPdnJnXER3x7I
-         HuT2LzECMglZEotqs37RdDAyAshh3UqoSK0YY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=bEAYZBCkDwTwNdZJJ0mKw+zakBhnsaw4wfN4ZSFdDMQUy4nxn4EbO+DX235lnmNWqr
-         MA69eObXteja6KdKy1kFuk6abkdhBYXadfMrR+k5lrL7/YToYOcFv4IeLyHH+t1twY2l
-         6CUQGWEd4WI3be5GZkB75eZdjjjuC2fFlfFKM=
-Received: by 10.239.188.133 with SMTP id p5mr806821hbh.100.1265223677576; Wed, 
-	03 Feb 2010 11:01:17 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.00.1002031311010.1681@xanadu.home>
+	id S1757577Ab0BCTYN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Feb 2010 14:24:13 -0500
+Received: from lo.gmane.org ([80.91.229.12]:53311 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756024Ab0BCTYM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 14:24:12 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Nckpe-0001JK-Vt
+	for git@vger.kernel.org; Wed, 03 Feb 2010 20:24:11 +0100
+Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 03 Feb 2010 20:24:10 +0100
+Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 03 Feb 2010 20:24:10 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
+User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138865>
 
-On 3 February 2010 19:15, Nicolas Pitre <nico@fluxnic.net> wrote:
-> On Wed, 3 Feb 2010, Shawn O. Pearce wrote:
->
->> Am I correct that core C developers are still under the opinion
->> that extra headers in a commit object aren't encouraged?
->
-> I would say so.
->
-> [...]
->> At the end of the day, is it a bug that C git doesn't support
->> working with extra commit headers? =A0IMHO, no, because, we've
->> rejected these in the past, and its not part of the Git standard.
->> And other implementations shouldn't be trying to sell it that way.
->
-> Agreed. =A0And this was discussed in great length on this list on few
-> occasions already (probably more than a year back).
+In article=20
+<32541b131002031048i26d166d9w3567a60515235c34@mail.gmail.com>,
+ Avery Pennarun <apenwarr@gmail.com> wrote:
 
-One problem, is that if you take the approach you say then you
-basically guarantee that a new git that DOES add new headers will
-break an old git that doesnt know about the headers, and actually
-doesnt care about them either.
+> On Wed, Feb 3, 2010 at 1:25 PM, Ron Garret <ron1@flownet.com> wrote:
+> > So something in my understanding of how git works must be wrong. =C2=
+=A0Git
+> > must be keeping a separate record of file renames somewhere. =C2=A0=
+But where?
+>=20
+> It doesn't.  Your experiment is wrong.
+>=20
+> > [ron@mickey:~/devel/gittest]$ cat>file2
+> > 6
+> > 7
+> > 8
+> > 9
+> > 10
+> > [ron@mickey:~/devel/gittest]$ git mv file2 file3
+> > [ron@mickey:~/devel/gittest]$ git commit -m 'letters->numbers'
+> > [master ae3f6d4] letters->numbers
+> > =C2=A01 files changed, 0 insertions(+), 0 deletions(-)
+> > =C2=A0rename file2 =3D> file3 (100%)
+>=20
+> Whoops.  You didn't 'git add file2' (before the mv) or 'git add file3=
+'
+> (after the mv), or use commit -a, so what you've committed is the
+> *old* content of file2 under the name file3.  The *new* content of
+> file2 is still uncommitted in your work tree under the name file3.
+> This is why git can detect the move.  (The 100% is a good clue: it
+> means the old and new files are 100% identical.)
 
-So it would essentially mean that if you ever have to change the
-commit format you will be in a position where new git commits will be
-incompatible by design with old git commits.
+Ah.  That explains everything.  Thanks.  (I thought git mv was=20
+equivalent to git rm followed by git add.  But it's not.)
 
-Maybe I misunderstand, but this doesnt seem to accord with my reading
-of the original design objectives and philosophy of git.
+> Artificial tests like this are useless anyway.
 
-Shouldn't an old git just ignore headers from a new git?
+Yes, I know.  This was not intended to be a real-world example.  I was=20
+just trying to understand the heuristics that git uses to track filenam=
+e=20
+changes, and in particular, how much a file could change before git=20
+decided it was a different file.  When I got to zero shared lines=20
+between old and new it was clear that I was missing something=20
+fundamental :-)
 
-I mean, forget about the fact that somebody is doing something naughty
-with the git protocol, ask youself if you want this rule to basically
-prevent any backwards compatible changes with older gits.
+So... how *does* git decide when two blobs are different blobs and when=
+=20
+they are the same blob with mods?  I asked this question before and was=
+=20
+pointed to the diffcore docs, but that didn't really clear things up. =20
+That just describes all the different ways git can do diffs, not the=20
+actual heuristics that git uses to track content.
 
-As a lurker here I understand completely if you ignore this mail
-entirely. But this seems to me to be a decision that could bite you
-later.
-
-cheers,
-Yves
-
-
-
-
-
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+rg
