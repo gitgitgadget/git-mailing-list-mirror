@@ -1,108 +1,134 @@
-From: Ron Garret <ron1@flownet.com>
-Subject: Re: git-mv redux: there must be something else going on
-Date: Wed, 03 Feb 2010 14:33:28 -0800
-Organization: Amalgamated Widgets
-Message-ID: <ron1-9FA846.14332803022010@news.gmane.org>
-References: <ron1-32BD5F.10255403022010@news.gmane.org> <32541b131002031048i26d166d9w3567a60515235c34@mail.gmail.com> <ron1-5F71CB.11234903022010@news.gmane.org> <alpine.LFD.2.00.1002031436490.1681@xanadu.home> <ron1-34F9C6.12273203022010@news.gmane.org> <32541b131002031240p6b67536ame6b69c6d662a7968@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: extra headers in commit objects
+Date: Wed, 3 Feb 2010 14:39:01 -0800
+Message-ID: <20100203223901.GJ14799@spearce.org>
+References: <20100203174041.GC14799@spearce.org> <1265230702.7429.54.camel@ganieda>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 03 23:34:02 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Jelmer Vernooij <jelmer@samba.org>
+X-From: git-owner@vger.kernel.org Wed Feb 03 23:39:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcnnN-0003hH-Jx
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 23:34:01 +0100
+	id 1NcnsQ-0006Hb-SF
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 23:39:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756606Ab0BCWd5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Feb 2010 17:33:57 -0500
-Received: from lo.gmane.org ([80.91.229.12]:35055 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756539Ab0BCWdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 17:33:55 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NcnnG-0003eS-Fd
-	for git@vger.kernel.org; Wed, 03 Feb 2010 23:33:54 +0100
-Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 Feb 2010 23:33:54 +0100
-Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 Feb 2010 23:33:54 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
-User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
+	id S1756895Ab0BCWjK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 17:39:10 -0500
+Received: from mail-gx0-f224.google.com ([209.85.217.224]:53798 "EHLO
+	mail-gx0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756295Ab0BCWjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 17:39:05 -0500
+Received: by gxk24 with SMTP id 24so2322187gxk.1
+        for <git@vger.kernel.org>; Wed, 03 Feb 2010 14:39:04 -0800 (PST)
+Received: by 10.150.59.14 with SMTP id h14mr751539yba.299.1265236744280;
+        Wed, 03 Feb 2010 14:39:04 -0800 (PST)
+Received: from localhost ([209.20.77.23])
+        by mx.google.com with ESMTPS id 5sm2647081yxd.35.2010.02.03.14.39.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 03 Feb 2010 14:39:03 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1265230702.7429.54.camel@ganieda>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138912>
 
-In article=20
-<32541b131002031240p6b67536ame6b69c6d662a7968@mail.gmail.com>,
- Avery Pennarun <apenwarr@gmail.com> wrote:
+Jelmer Vernooij <jelmer@samba.org> wrote:
+> On Wed, 2010-02-03 at 09:40 -0800, Shawn O. Pearce wrote:
+> > 
+> > I haven't spoken with Jelmer Vernooij directly about it, but after
+> > some indirect email through a 3rd party, it seems he might be under
+> > the impression that this really is a bug in Dulwich, because "other
+> > git implementations do it".
+>
+> If you have concerns like this in the future, please don't hesitate to
+> contact me directly.
 
-> On Wed, Feb 3, 2010 at 3:27 PM, Ron Garret <ron1@flownet.com> wrote:
-> > So I think I'm beginning to understand how this works, but that lea=
-ds me
-> > to another question: it seems to me that there are potential screw =
-cases
-> > for this purely content-based system of tracking files. =C2=A0For e=
-xample,
-> > suppose I have a directory full of sample config files, all of whic=
-h are
-> > similar to each other. =C2=A0Will that cause diffcore to get confus=
-ed?
->=20
-> Cases like that are always confusing, even to humans.  Person A
-> renames X to Y, but at the same time creates Z which is almost
-> identical.  Person B patches X, then merges in person A's changes.
->=20
-> What do you expect to happen?  Should Y be changed, because that's th=
-e
-> file X was moved from?  Or should we change Z, because it's almost th=
-e
-> same content anyway?  Or maybe we should change both, since a change
-> to the old X is probably intended to affect the copied *content* that
-> ended up in both Y and Z?
->=20
-> Simply storing whether person A has renamed vs. copied vs. added a
-> file makes the answer to the "what do you expect to happen" question
-> more obvious, but fails to answer the "what *should* happen" question=
-=2E
->  Thus it's more of a distraction than a feature.  It took a while for
-> me to accept this, but once I did, I realized that git's behaviour ha=
-s
-> still never caused me a problem in real life, despite repeated file
-> renames and complicated merges.
->=20
-> In contrast, svn's explicit rename tracking has shot me in the foot
-> numerous times.  (svn remembers when I delete file X and then
-> subsequently re-add it with the same content.  So if I merge in
-> someone's change to the *old* file X, it barfs because omg omg that's
-> a totally different file X and it can't possibly figure out what to
-> do.  Gee, thanks.  It's also hopelessly incompetent at handling
-> "renames" in which a newbie developer didn't know to use svn mv, but
-> instead used svn rm, mv, and svn add.)
+OK.
 
-Here's a realistic case where keeping explicit track of renames could b=
-e=20
-useful.
+> I don't follow the git list because it's a
+> high-volume list where pretty much all traffic is irrelevant to me. The
+> only reason I became aware of this thread was because Sverre CC'ed me.
 
-A and B start with a file named config.  A and B both make edits.  In=20
-addition, B renames config to be config1 and creates a new, very simila=
-r=20
-file called config2.  B then merges from A with the expectation that B'=
-s=20
-edits to config would end up in config1 and not config2.  It seems to m=
-e=20
-that without tracking renames, it would be luck of the draw which file=20
-the patch got applied to.
+I probably should have CC'd you in from the beginning, sorry.
 
-rg
+Its true, this is a high-volume list.  But we don't see much, if
+anything, about Dulwich here.  Yet I for one like to see discussion
+about other implementations here, to some extent, so its easier
+to make sure everyone is staying close to the C implementation's
+reference standard.
+
+> Originally I was under the impression that custom headers would break
+> (by reading the C Git source code) and so Dulwich made that assumption,
+> but after hearing from several people (among whom Scott, see his reply)
+> at Linux.Conf.Au that custom headers could be added and were ignored by
+> C git I made this change.
+
+Yes, apparently Scott didn't quite represent things accurately.
+Oh well, it seems its been raised now, and beaten to death.
+ 
+> Since Dulwich would blow up when it encountered custom headers that
+> might be set by other Git implements and since (as I understand) C git
+> ignores unknown headers, I called this a bug fix.
+
+That's true, and I'm glad you have made that change to Dulwich.  It is
+a good bug fix to skip over headers you don't recognize.
+
+But, its a new incompatible feature to support writing extra headers.
+
+> If this is indeed a misunderstanding, I'll happily make this
+> datastructure with custom headers read-only.
+
+Yes.  Please see the other messages in this thread, especially from
+Nico and Junio.  Setting other headers is not a good idea, and you
+shouldn't encourage it in Dulwich by making an API available.
+ 
+> > Yes, there are many other Git implementations.  But I thought nearly
+> > all of them were toys, and none of them were even close to serving
+> > the kind of production volume that JGit serves, and JGit isn't even
+> > considered a production library by most.  Yet JGit always tries to
+> > conform to whatever standard is set by the C implementation.
+>
+> So does Dulwich. I've fixed issues in the compatibility with C Git when
+> I've noticed them or have been made aware of them. Any incompatibilities
+> are the result of ignorance on my part rather than malicious intent.
+
+I'm glad to hear that.
+
+See above about keeping discussion related to other Git implementations
+here.  We're happy to help explain something that is perhaps vague or
+poorly specified.  Not everyone has the answer right away, but usually
+the list fills in everything.
+ 
+> > We're starting to see a fork in the basic protocols happen.  Hell,
+> > Dulwich 0.4.1 isn't even capable of speaking over the network to
+> > C Git, but it does talk to itself, so its valid, right?  :-(
+>
+> I've been using Dulwich's client to talk to C Git servers for ages and
+> haven't seen issues. I would appreciate hearing about
+> incompatibilities. 
+
+OK, I haven't actually looked at the Dulwich client code...  so I
+don't know what its current state is.
+ 
+> If you're talking about the server side - we know it's broken, at least
+> dul-daemon. Nobody (except for API changes) has really cared about it
+> since John Carr originally hacked it up. I'd be surprised if it even
+> works with the Dulwich client.
+
+OK, then you may be interested in some of the patches my friend
+Dave worked up (he said he was going to send them to you).
+Dave discovered the server wasn't playing nice with C git, and
+asked me for some protocol help to get it going again.
+
+I'm glad its only an issue of neglect (lack of time) and not
+something else that has caused it to be incompatible.
+
+-- 
+Shawn.
