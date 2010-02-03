@@ -1,93 +1,64 @@
-From: "Christian Eisendle" <git@eisendle.net>
-Subject: Re: Linux Kernel based project in git
-Date: Wed, 3 Feb 2010 09:32:18 +0100
-Message-ID: <be6731d603701c3c5befc79613fd451b.squirrel@webmail.eisendle.net>
-References: <9da7f2802f639777acfeb38eb1e3db90.squirrel@webmail.eisendle.net>
-    <32541b131002021153t53d19e32j56be356c219c5780@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [BUG] - "git commit --amend" commits, when exiting the editor 
+ with no changes written
+Date: Wed, 3 Feb 2010 10:04:30 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1002031003250.3099@intel-tinevez-2-302>
+References: <76c5b8581002021207y3eccdc19i9a4abcc3d04315f0@mail.gmail.com>  <32541b131002021227o1ec9f369w6096e85382857b8a@mail.gmail.com>  <76c5b8581002021247j6df8f609ld9e5d87a060a5423@mail.gmail.com>  <394FB581-C9B9-40AB-AFB6-39B68ED5BEAD@wincent.com> 
+ <76c5b8581002021356m52bb1817k9a4a29da0d4b681d@mail.gmail.com>  <77153A83-158D-4D36-A622-7AA3947C7D52@wincent.com>  <76c5b8581002021431o2b5073a0s42b273b6d61893db@mail.gmail.com>  <alpine.DEB.1.00.1002022356460.4985@pacific.mpi-cbg.de> 
+ <76c5b8581002021534i1f0dbd18y1b216233d282cd84@mail.gmail.com>  <alpine.DEB.1.00.1002030056480.4985@pacific.mpi-cbg.de> <76c5b8581002021609i4c05d039k35979757fbb74676@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: "Avery Pennarun" <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 03 09:32:29 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Wincent Colaiuta <win@wincent.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>, git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 03 10:04:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ncaew-0006Bb-St
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 09:32:27 +0100
+	id 1NcbAD-00021U-3R
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 10:04:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753613Ab0BCIcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 03:32:21 -0500
-Received: from vs.eisendle.net ([62.75.248.112]:51202 "EHLO eisendle.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752283Ab0BCIcU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 03:32:20 -0500
-Received: (qmail 18317 invoked from network); 3 Feb 2010 08:32:18 -0000
-Received: from unknown (HELO webmail.eisendle.net) ([127.0.0.1])
-          (envelope-sender <git@eisendle.net>)
-          by localhost (qmail-ldap-1.03) with SMTP
-          for <apenwarr@gmail.com>; 3 Feb 2010 08:32:18 -0000
-Received: from 212.166.112.250 (proxying for unknown)
-        (SquirrelMail authenticated user git@eisendle.net)
-        by webmail.eisendle.net with HTTP;
-        Wed, 3 Feb 2010 09:32:18 +0100
-In-Reply-To: <32541b131002021153t53d19e32j56be356c219c5780@mail.gmail.com>
-User-Agent: SquirrelMail/1.4.19
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1756302Ab0BCJEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 04:04:35 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41630 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754170Ab0BCJEd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 04:04:33 -0500
+Received: (qmail invoked by alias); 03 Feb 2010 09:04:31 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp052) with SMTP; 03 Feb 2010 10:04:31 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+1O6cxym21G55Phv4I0jGFy4NufGnu17RnTWWYfl
+	xPIOquFHMZDTZa
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <76c5b8581002021609i4c05d039k35979757fbb74676@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68000000000000005
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138815>
 
+Hi,
 
->> For release we always generate 3 patches:
->> - BSP patch
->> - USB patch (since USB part is an external patch comming from a 3rd
->> party)
->> - WiFi patch (same as for USB)
->>
->> So my question is:
->> What's the best way for handling this inside the git repository?
->>
->> IMHO it would make sense to have 3 branches (BSP, USB, WiFi) each based
->> on
->> unmodified 2.6.22 Kernel. USB and WiFi branch is used for generating the
->> patch and for applying possible fixes. BSP branch for actual BSP related
->> feature development and fixes.
->> The changes in these branches are merged into the master branch which is
->> used for compiling/testing the whole BSP.
->
-> Are you planning to submit these patches upstream at any point?  If
-> not, it might be easiest to just jam them all together in one branch
-> and not look back.  Since it seems like they probably affect quite
-> different parts of the code, you could always extract a clean set of
-> patches *later* and submit those patches upstream.
+On Tue, 2 Feb 2010, Eugene Sajine wrote:
 
-For BSP I plan to upstream eventually.
+> > Sorry, your "if message was not saved, abort" is so out of line with 
+> > any program I use that this would be highly confusing (maybe 
+> > "complicated" was the wrong choice of words).
+> 
+> Frankly, i think it is in line with "git commit" and that's the only 
+> thing that matters here as I have no idea what programs you're talking 
+> about.
 
-The basic idea was to divide the project in three different patches since
-USB and WiFi comes from a third party and is not released under GPL (well,
-different story...)
-Keeping them in three different branches would make patch creation easier
-especially if fixes are checked in into the USB/WiFi branch.
+It's not. 'git commit' will abort if you delete all _and save_. So it is 
+not the saving part, it is the deleting all part. And that's exactly how 
+rebase -i works, or add -e: if you delete all and save, it aborts.
 
->
-> But that's just my lazy advice :)  The disadvantage to maintaining
-> them in separate branches is that probably none of the three branches
-> will work on its own anyway, since you don't have a physical device
-> that only has the new USB device, or only the new WiFi device, or only
-> needs the BSP but doesn't have updated USB or WiFi.  Putting them in
-> separate branches is therefore a bit artificial and won't buy you
-> much.
-
-At least the BSP could work on its own but for WiFi and USB you are right -
-it's hard to test them seperately.
-I just thought that there is a convenient way for handling such kind of
-project.
-
-Thanks,
-Christian.
+Ciao,
+Dscho
