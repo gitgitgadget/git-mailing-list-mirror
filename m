@@ -1,56 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] - "git commit --amend" commits, when exiting the editor
- with no changes written
-Date: Wed, 3 Feb 2010 05:15:09 -0500
-Message-ID: <20100203101509.GA25336@coredump.intra.peff.net>
-References: <76c5b8581002021247j6df8f609ld9e5d87a060a5423@mail.gmail.com>
- <394FB581-C9B9-40AB-AFB6-39B68ED5BEAD@wincent.com>
- <76c5b8581002021356m52bb1817k9a4a29da0d4b681d@mail.gmail.com>
- <77153A83-158D-4D36-A622-7AA3947C7D52@wincent.com>
- <76c5b8581002021431o2b5073a0s42b273b6d61893db@mail.gmail.com>
- <32541b131002021435kadb68ffge77ad5f4e1775418@mail.gmail.com>
- <76c5b8581002021502i2bb34967y9a88d8b25ce7fa42@mail.gmail.com>
- <32541b131002021540g7a2834c9hacf2be5962f66515@mail.gmail.com>
- <20100203061535.GA6566@cthulhu>
- <20100203093150.GA23956@coredump.intra.peff.net>
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: Re: Fix signal handler
+Date: Wed, 03 Feb 2010 11:20:30 +0100
+Message-ID: <4B694DEE.5030207@web.de>
+References: <4B684F5F.7020409@web.de> <20100202205849.GA14385@sigill.intra.peff.net> <4B689CC5.3000400@web.de> <20100202223208.GB18781@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Larry D'Anna <larry@elder-gods.org>, git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 03 11:15:17 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 03 11:20:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NccGS-00049Q-Uz
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 11:15:17 +0100
+	id 1NccLi-0007ek-PB
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 11:20:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757018Ab0BCKPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 05:15:11 -0500
-Received: from peff.net ([208.65.91.99]:48368 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754519Ab0BCKPK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 05:15:10 -0500
-Received: (qmail 25466 invoked by uid 107); 3 Feb 2010 10:15:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 03 Feb 2010 05:15:14 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Feb 2010 05:15:09 -0500
-Content-Disposition: inline
-In-Reply-To: <20100203093150.GA23956@coredump.intra.peff.net>
+	id S932422Ab0BCKUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 05:20:37 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:45481 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932276Ab0BCKUh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 05:20:37 -0500
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 9542B14601AAA;
+	Wed,  3 Feb 2010 11:20:35 +0100 (CET)
+Received: from [78.54.162.123] (helo=[192.168.1.202])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1NccLb-0001xb-00; Wed, 03 Feb 2010 11:20:35 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.5) Gecko/20091130 SUSE/3.0.0-1.1.1 Thunderbird/3.0
+In-Reply-To: <20100202223208.GB18781@sigill.intra.peff.net>
+X-Sender: Markus.Elfring@web.de
+X-Provags-ID: V01U2FsdGVkX1+wSOstKuCcL/GFdSvFWF9w7di3rS4wil+u8PeQ
+	mpaoOffb4xl8zU/MR4oZt66h5CFRNQ7YIoRgtrk//DuYApzgzD
+	8USv4U3LzNfE07+XYrtQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138825>
 
-On Wed, Feb 03, 2010 at 04:31:50AM -0500, Jeff King wrote:
 
-> > Or, he can set his $EDITOR to a script that checks the mtime.
-> 
-> Agreed. It could even look like this:
+> I don't think anyone here is much interested in whether there is any
+> sort of guarantee on a particular construct working.
 
-Also, while we are talking about editor-specific hacks, if you are using
-vim you can use ":cq" to exit with an error code.
+That is a pity. - I would expect that professional software development
+will build on working specifications instead of potentially undefined
+behaviour.
 
--Peff
+
+> So to answer your question, I honestly don't know. The code may well
+> be broken on common platforms and it is simply a race condition that
+> has never come up. But I do know that it has not been a common source
+> of bug reports, which makes me not want to spend time investigating
+> it when nobody has demonstrated its incorrectness beyond mentioning
+> a standards document.
+>   
+
+Thanks for your clarification.
+
+I find that programming errors in this area might be hard to identify
+from the outside because resulting race conditions and deadlocks fall
+into the symptom category of heisenbugs, don't they?
+How many software developers do deal with the nasty design details for
+signal handler implementations correctly?
+
+Regards,
+Markus
