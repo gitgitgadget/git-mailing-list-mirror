@@ -1,110 +1,93 @@
-From: "martin f. krafft" <madduck@madduck.net>
-Subject: [PATCH/gitolite] Tell gitweb about repo owner via git-config
-Date: Wed,  3 Feb 2010 21:13:47 +1300
-Message-ID: <1265184827-11364-1-git-send-email-madduck@madduck.net>
-Cc: "martin f. krafft" <madduck@madduck.net>,
-	Sitaram Chamarty <sitaramc@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 03 09:14:49 2010
+From: "Christian Eisendle" <git@eisendle.net>
+Subject: Re: Linux Kernel based project in git
+Date: Wed, 3 Feb 2010 09:32:18 +0100
+Message-ID: <be6731d603701c3c5befc79613fd451b.squirrel@webmail.eisendle.net>
+References: <9da7f2802f639777acfeb38eb1e3db90.squirrel@webmail.eisendle.net>
+    <32541b131002021153t53d19e32j56be356c219c5780@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: "Avery Pennarun" <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 03 09:32:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcaNM-0001el-SX
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 09:14:17 +0100
+	id 1Ncaew-0006Bb-St
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 09:32:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755550Ab0BCIOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 03:14:11 -0500
-Received: from clegg.madduck.net ([193.242.105.96]:37568 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755338Ab0BCIOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 03:14:08 -0500
-Received: from lapse.rw.madduck.net (lapse.nz.madduck.net [IPv6:2001:4428:234::1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id 6A6DE1D4097;
-	Wed,  3 Feb 2010 09:13:56 +0100 (CET)
-Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
-	id 8DF4A177; Wed,  3 Feb 2010 21:13:51 +1300 (NZDT)
-X-Mailer: git-send-email 1.6.6
-X-Virus-Scanned: clamav-milter 0.95.3 at clegg
-X-Virus-Status: Clean
+	id S1753613Ab0BCIcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 03:32:21 -0500
+Received: from vs.eisendle.net ([62.75.248.112]:51202 "EHLO eisendle.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752283Ab0BCIcU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 03:32:20 -0500
+Received: (qmail 18317 invoked from network); 3 Feb 2010 08:32:18 -0000
+Received: from unknown (HELO webmail.eisendle.net) ([127.0.0.1])
+          (envelope-sender <git@eisendle.net>)
+          by localhost (qmail-ldap-1.03) with SMTP
+          for <apenwarr@gmail.com>; 3 Feb 2010 08:32:18 -0000
+Received: from 212.166.112.250 (proxying for unknown)
+        (SquirrelMail authenticated user git@eisendle.net)
+        by webmail.eisendle.net with HTTP;
+        Wed, 3 Feb 2010 09:32:18 +0100
+In-Reply-To: <32541b131002021153t53d19e32j56be356c219c5780@mail.gmail.com>
+User-Agent: SquirrelMail/1.4.19
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138814>
 
-Gitolite uses projects.list to set the owners for gitweb's use.
-Unfortunately, this does not work for gitweb setups that set
-$projectroot to a directory, thus generating the list of
-repositories on the fly.
 
-This patch changes that: gitolite now writes the gitweb.owner
-configuration variable for each repository (and properly cleans up after
-itself if the owner is removed).
+>> For release we always generate 3 patches:
+>> - BSP patch
+>> - USB patch (since USB part is an external patch comming from a 3rd
+>> party)
+>> - WiFi patch (same as for USB)
+>>
+>> So my question is:
+>> What's the best way for handling this inside the git repository?
+>>
+>> IMHO it would make sense to have 3 branches (BSP, USB, WiFi) each based
+>> on
+>> unmodified 2.6.22 Kernel. USB and WiFi branch is used for generating the
+>> patch and for applying possible fixes. BSP branch for actual BSP related
+>> feature development and fixes.
+>> The changes in these branches are merged into the master branch which is
+>> used for compiling/testing the whole BSP.
+>
+> Are you planning to submit these patches upstream at any point?  If
+> not, it might be easiest to just jam them all together in one branch
+> and not look back.  Since it seems like they probably affect quite
+> different parts of the code, you could always extract a clean set of
+> patches *later* and submit those patches upstream.
 
-The patch causes gitolite not to write the owner to projects.list
-anymore, as this would be redundant.
+For BSP I plan to upstream eventually.
 
-The owner also needs no longer be escaped, so this patch removes the
-poor man's 's/ /+/g' escaping previously in place.
+The basic idea was to divide the project in three different patches since
+USB and WiFi comes from a third party and is not released under GPL (well,
+different story...)
+Keeping them in three different branches would make patch creation easier
+especially if fixes are checked in into the USB/WiFi branch.
 
-Note that I am not a Perl coder. Thus there are probably better ways to
-implement this, but at least it works.
+>
+> But that's just my lazy advice :)  The disadvantage to maintaining
+> them in separate branches is that probably none of the three branches
+> will work on its own anyway, since you don't have a physical device
+> that only has the new USB device, or only the new WiFi device, or only
+> needs the BSP but doesn't have updated USB or WiFi.  Putting them in
+> separate branches is therefore a bit artificial and won't buy you
+> much.
 
-Cc: Sitaram Chamarty <sitaramc@gmail.com>
-Signed-off-by: martin f. krafft <madduck@madduck.net>
----
- src/gl-compile-conf |   19 +++++++++++++++++--
- 1 files changed, 17 insertions(+), 2 deletions(-)
+At least the BSP could work on its own but for WiFi and USB you are right -
+it's hard to test them seperately.
+I just thought that there is a convenient way for handling such kind of
+project.
 
-diff --git a/src/gl-compile-conf b/src/gl-compile-conf
-index e88819a..7cd5d2e 100755
---- a/src/gl-compile-conf
-+++ b/src/gl-compile-conf
-@@ -284,7 +284,6 @@ sub parse_conf_file
-             die "$WARN $fragment attempting to set description for $repo\n" if
-                 $fragment ne 'master' and $fragment ne $repo and ($groups{"\@$fragment"}{$repo} || '') ne 'master';
-             $desc{"$repo.git"} = $desc;
--            $owner =~ s/ /+/g if $owner;    # gitweb/INSTALL wants more, but meh...!
-             $owner{"$repo.git"} = $owner || '';
-         }
-         else
-@@ -414,16 +413,32 @@ for my $repo (sort keys %repos) {
-         $projlist{"$repo.git"} = 1;
-         # add the description file; no messages to user or error checking :)
-         $desc{"$repo.git"} and open(DESC, ">", $desc_file) and print DESC $desc{"$repo.git"} . "\n" and close DESC;
-+        if ($owner{"$repo.git"}) {
-+            # set the repository owner
-+            system("git --git-dir=$repo.git config gitweb.owner '" . $owner{"$repo.git"} . "'");
-+        } else {
-+            # remove the repository owner setting
-+            system("git --git-dir=$repo.git config --unset-all gitweb.owner 2>/dev/null");
-+        }
-     } else {
-         # delete the description file; no messages to user or error checking :)
-         unlink $desc_file;
-+        # remove the repository owner setting
-+        system("git --git-dir=$repo.git config --unset-all gitweb.owner 2>/dev/null");
-+    }
-+
-+    # unless there are other gitweb.* keys set, remove the section to keep the
-+    # config file clean
-+    my $keys = `git --git-dir=$repo.git config --get-regexp '^gitweb\\.' 2>/dev/null`;
-+    if (length($keys) == 0) {
-+        system("git --git-dir=$repo.git config --remove-section gitweb 2>/dev/null");
-     }
- }
- 
- # update the project list
- my $projlist_fh = wrap_open( ">", $PROJECTS_LIST);
- for my $proj (sort keys %projlist) {
--    print $projlist_fh "$proj" . ( $owner{$proj} ? " $owner{$proj}" : "" ) . "\n";
-+    print $projlist_fh "$proj\n";
- }
- close $projlist_fh;
- 
--- 
-1.6.6
+Thanks,
+Christian.
