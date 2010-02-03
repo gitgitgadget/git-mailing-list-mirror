@@ -1,82 +1,75 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: faceted search interface
-Date: Wed, 3 Feb 2010 15:47:43 +0000
-Message-ID: <43d8ce651002030747g324a94bfy30d7abf265f93d32@mail.gmail.com>
-References: <E1NceXz-0003VA-QG@mail.chiefmall.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Fix signal handler
+Date: Wed, 3 Feb 2010 07:52:52 -0800
+Message-ID: <20100203155252.GA14799@spearce.org>
+References: <4B684F5F.7020409@web.de> <20100203102915.GA25486@coredump.intra.peff.net> <4B696447.10803@web.de> <201002031412.53195.trast@student.ethz.ch> <4B699A45.7000905@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Alex Ksikes <alex.ksikes@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 03 16:48:03 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Markus Elfring <Markus.Elfring@web.de>
+X-From: git-owner@vger.kernel.org Wed Feb 03 16:53:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NchSM-0004fY-Ka
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 16:47:55 +0100
+	id 1NchXT-0001va-06
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Feb 2010 16:53:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757347Ab0BCPrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 10:47:47 -0500
-Received: from mail-px0-f182.google.com ([209.85.216.182]:53039 "EHLO
-	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756809Ab0BCPrp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 10:47:45 -0500
-Received: by pxi12 with SMTP id 12so1595279pxi.33
-        for <git@vger.kernel.org>; Wed, 03 Feb 2010 07:47:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=4F2bigLa+99q4/PjIDom/1N/9AmTobPSHEbDEBim9NI=;
-        b=h3nK9Y0bpRI3Y2H7rl8w5rPKw2E57pblmNpT/2bamJpUUvwHgbgWtT5/AYEeTQrjx0
-         bcDk/4ZriVv5GQUXpgOAmHEfyTjWQB6EBKrJPWRfNCVdBtVkU4xGfTblG7QUzHYE54Y/
-         4NMvM70ygvEQqfwcdlWD131RwPBdadkk3DFS0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=UkQBo7u/TigD89cwPOgKzhoiNTyUj1y5dngs+Nhd1WMWVM2KXkY9m3Pt417+DpVH42
-         0HDUhS3A5GWxj5T19br2Yi2eTU5RWdLMoZ4Ibt78qe66Jc/w2oRU08AnkHjIrolu5g0+
-         9jA58cniut/w3tbWtU2LHTJB626XQy8jplXL4=
-Received: by 10.115.87.4 with SMTP id p4mr5102746wal.202.1265212063396; Wed, 
-	03 Feb 2010 07:47:43 -0800 (PST)
-In-Reply-To: <E1NceXz-0003VA-QG@mail.chiefmall.com>
+	id S1757367Ab0BCPxE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 10:53:04 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:57894 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757363Ab0BCPw7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 10:52:59 -0500
+Received: by vws20 with SMTP id 20so486772vws.19
+        for <git@vger.kernel.org>; Wed, 03 Feb 2010 07:52:58 -0800 (PST)
+Received: by 10.220.44.197 with SMTP id b5mr5216559vcf.111.1265212375726;
+        Wed, 03 Feb 2010 07:52:55 -0800 (PST)
+Received: from localhost ([209.20.77.23])
+        by mx.google.com with ESMTPS id 39sm81683588vws.14.2010.02.03.07.52.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 03 Feb 2010 07:52:54 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4B699A45.7000905@web.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138841>
 
-On 3 February 2010 12:41, Alex Ksikes <alex@chiefmall.com> wrote:
-> Hi all,
->
-> I have just put together a system to automatically build a faceted search interface and search engine from any data. Would you mind having a look at it and letting me know what you think of it?
+Markus Elfring <Markus.Elfring@web.de> wrote:
+> >
+> > So why don't you post patches (either fixes or testcases exhibiting
+> > the issue) instead of more mails containing the same points?
+> >   
+> 
+> I try to get a feeling about acceptance for update suggestions before
+> they can be expressed in the target programming language.
 
-I get vertical scrollbars for the search box.  This can be reproduced
-by zooming in/out.
+We've been burned too many times by people who drive-by and demand
+we fix X, without showing proof that X is a problem, or offering
+a patch to resolve whatever X they claim is an issue.  Each such
+time burns existing well-known contributor time.
 
-I think the "Powered by Cloud mining" box should be removed.
+We've also been burned too many times by well-known contributors
+posting "Hey, we should do Y" and then never actually writing the
+code themselves.  I know, I've done it.
 
-Remove "Select / remove query terms:"  - it's obvious what to do with
-the big X button.  Make the red "Brad Pitt [X]" thinner - reduce the
-whitespace.
+Pie-in-the-sky discussions serve no purpose, and just waste
+everyone's time.
 
-Remove (Time to generate facets: 0.0 sec.).
 
-Remove "Torrent search".  People who want to get it illegally can
-search by themselves, and you do not want to be prompting illegal
-behaviour.
+If its worthwhile, write the damn code, and share it.  If its not
+worth your time to write the code in order to propose the idea,
+its not worth our time to listen.
 
-Make the search box less thick.  You need to do this because the site
-is so visually heavy, but work on cleaning up the rest of the site
-instead.
+I've never kill-filed _ANYONE_ on this mailing list before.  You are
+>.< this close to making me go figure out how to setup a kill file
+on my domain just so I can stop receving all emails from you.
 
-I like the "Refine by GENRE" etc boxes, but it's extremely visually
-noisy.  Different size fonts, no layout, different colors, etc.  I'm
-not sure what to suggest - maybe making them expandable boxes that
-collapsed by default.
 
-Work on reducing the information shown for each movie.  The key is to
-reduce visual noise as much as possible.  I like how you have a [+]
-box to hide some information.  Can you do this more though?
+-- 
+Shawn.
