@@ -1,72 +1,60 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH 3/3] make --max-pack-size argument to 'git pack-object'
- count in bytes
-Date: Thu, 04 Feb 2010 13:11:17 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1002041309090.1681@xanadu.home>
-References: <1265255308-20514-1-git-send-email-nico@fluxnic.net>
- <1265255308-20514-3-git-send-email-nico@fluxnic.net>
- <20100204040046.GR14799@spearce.org> <7v7hqtty38.fsf@alter.siamese.dyndns.org>
- <7vtytxexjl.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1002041243570.1681@xanadu.home>
- <20100204180015.GC18548@spearce.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH] git-clean: fix the description of the default behavior
+Date: Thu, 4 Feb 2010 16:16:27 -0500
+Message-ID: <76718491002041316x31f02e0bq5c47a2a96aadb6f4@mail.gmail.com>
+References: <dafb1423c81bc2207d06cf2a97205bcbd9a4968e.1265299086.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Feb 04 22:15:10 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Feb 04 22:16:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nd92Z-0007uv-Lu
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 22:15:08 +0100
+	id 1Nd940-0000XT-74
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 22:16:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758042Ab0BDVO4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2010 16:14:56 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:16565 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754882Ab0BDVOz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2010 16:14:55 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0KXB00J0AX6T96X0@VL-MR-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 04 Feb 2010 13:11:17 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20100204180015.GC18548@spearce.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1757838Ab0BDVQa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2010 16:16:30 -0500
+Received: from mail-iw0-f189.google.com ([209.85.223.189]:61206 "EHLO
+	mail-iw0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757431Ab0BDVQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2010 16:16:29 -0500
+Received: by iwn27 with SMTP id 27so181597iwn.5
+        for <git@vger.kernel.org>; Thu, 04 Feb 2010 13:16:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=g8LcvfOBss/kNcUsiKpw/U211ruLrcH5ZgeCfXbN5+A=;
+        b=IuUwPLzACmmsYGwoWPlCXRE2FDilT3nxGGRM8Ify1xr/bBFFkZCemNPAx9EnLF3C4Z
+         BkhMP+UATXJyf9dmfVjiZ3FZ2Wzef2xMSpSqqtQaai9z8/hnFoQugUA3FN2ASOC8uVIk
+         H6buUkhmAYxWXH8HDxJhqV15Iu0T+2D0+2bjQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=vmNRgrUgpVI/QkblcxqBo7+mbS+NwkwB0dZs1hsURHW6nfaQdfC2L6pkvCaV1R79lu
+         X87NQwcBG1lDY3M0xBFo0GQ6Pb20zEYswzMx3iAhFKTRSq5FUu/dykd8f/3X5Kd5X3oL
+         PqPBGBqOji5kbITrpLZqMqxhbNO5Qho69CDI0=
+Received: by 10.231.166.68 with SMTP id l4mr781824iby.40.1265318187899; Thu, 
+	04 Feb 2010 13:16:27 -0800 (PST)
+In-Reply-To: <dafb1423c81bc2207d06cf2a97205bcbd9a4968e.1265299086.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139006>
 
-On Thu, 4 Feb 2010, Shawn O. Pearce wrote:
+On Thu, Feb 4, 2010 at 11:01 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> fatal: clean.requireForce defaults to true and -n or -f not given; refusing to clean
 
-> Nicolas Pitre <nico@fluxnic.net> wrote:
-> > >  --max-pack-size=<n>::
-> > > -	Maximum size of each output packfile, expressed in MiB.
-> > > -	The default is 4096 (4 GiB) as that is the maximum allowed
-> > > +	Maximum size of each output packfile.
-> > > +	The default is 4 GiB as that is the maximum allowed
-> > >  	packfile size (due to file format limitations). Some
-> > >  	importers may wish to lower this, such as to ensure the
-> > >  	resulting packfiles fit on CDs.
-> > 
-> > What file format limitation is alluded to here?  It has been a while 
-> > since the 4GB limit on pack file format has been removed.
-> 
-> The pack index v1 32 bit offset thing.  Which you fixed.
-> 
-> > If this is a 
-> > limitation of fast-import only then maybe this should be explained more 
-> > explicitly.
-> 
-> Damn.  It is.  fast-import can't write a v2 index.  Ugh.
+Bike shed:
 
-Isn't it using write_idx_file()?  That function would do it all for you 
-already.
+fatal: clean.requireForce defaults to true and neither -n nor -f
+given; refusing to clean
 
-
-Nicolas
+j.
