@@ -1,98 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: http getpass function in msysgit
-Date: Wed, 03 Feb 2010 17:28:32 -0800
-Message-ID: <7vaavp3i2n.fsf@alter.siamese.dyndns.org>
-References: <1976ea661002021918m19d9b37fx1872557d3c810e3a@mail.gmail.com>
- <7vpr4mrijt.fsf@alter.siamese.dyndns.org>
- <1976ea661002022148s544be10bie912295e04189864@mail.gmail.com>
+From: Sitaram Chamarty <sitaram@atc.tcs.com>
+Subject: Re: [gitolite] symlink hooks instead of copying them
+Date: Thu, 4 Feb 2010 06:58:40 +0530
+Message-ID: <20100204012840.GC497@atcmail.atc.tcs.com>
+References: <20100203204723.GA30157@lapse.rw.madduck.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	msysGit <msysgit@googlegroups.com>
-To: Frank Li <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 04 02:28:53 2010
+Cc: git discussion list <git@vger.kernel.org>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Teemu Matilainen <teemu.matilainen@iki.fi>
+To: martin f krafft <madduck@debian.org>
+X-From: git-owner@vger.kernel.org Thu Feb 04 02:29:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcqWa-0005fD-S6
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 02:28:53 +0100
+	id 1NcqWy-0005s1-U8
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 02:29:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933047Ab0BDB2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 20:28:44 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36649 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932991Ab0BDB2m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 20:28:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 068B797E2B;
-	Wed,  3 Feb 2010 20:28:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=j+wGhXsoxlChoqzEXL3VkusVeLE=; b=sQxNds
-	+6k+tafZPGuQ7zi6x3RVMuODrkNGN15jdDpNEfkNsc5BV2/u1IlzOe8YpS9gIc4Z
-	vTzdmDXvi4u7IzFDoPCzHi1wyPLfslDUz3a8hhLhDCSq26a50o8qW74Mi78a0Y5B
-	Iyt8F7U9p1SZd9eUYmaBwWWm+k/RPXVqjjIUw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B7YtkhYY1eFT4ejB10gycZpGTjunWKZC
-	uPV/r2hVuXzp92F4Lhz9tM78mmlBO5w9sdFf3fJM6Zb3RQjcVkPh5MgZs8q4FB3G
-	FoBtag8phE661IqAxjNGMDb2a8Zj1EVjPnzIyk2NWHwXj/yUxsyMAp9CS8ij5UHK
-	lY4fywEhwEA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CB3EE97E28;
-	Wed,  3 Feb 2010 20:28:38 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B9B2A97E23; Wed,  3 Feb
- 2010 20:28:33 -0500 (EST)
-In-Reply-To: <1976ea661002022148s544be10bie912295e04189864@mail.gmail.com>
- (Frank Li's message of "Wed\, 3 Feb 2010 13\:48\:26 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9EFD630A-112C-11DF-AA81-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S933040Ab0BDB3O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 20:29:14 -0500
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145]:51487 "EHLO
+	atcmail.atc.tcs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932991Ab0BDB3M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 20:29:12 -0500
+X-Greylist: delayed 606 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Feb 2010 20:29:12 EST
+Received: from atcmail.atc.tcs.com (atcmail.atc.tcs.com [127.0.0.1])
+	by atcmail.atc.tcs.com (8.14.2/8.14.2) with ESMTP id o141SeaI002579;
+	Thu, 4 Feb 2010 06:58:40 +0530
+Received: (from sitaram@localhost)
+	by atcmail.atc.tcs.com (8.14.2/8.14.2/Submit) id o141SesJ002578;
+	Thu, 4 Feb 2010 06:58:40 +0530
+Content-Disposition: inline
+In-Reply-To: <20100203204723.GA30157@lapse.rw.madduck.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/10354/Wed Feb  3 16:33:21 2010 on atcmail.atc.tcs.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-1.2 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+	FH_DATE_PAST_20XX autolearn=no version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on atcmail.atc.tcs.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138925>
 
-Frank Li <lznuaa@gmail.com> writes:
+On Thu, Feb 04, 2010 at 09:47:23AM +1300, martin f krafft wrote:
+> Dear Sitaram, dear Teemo, dear gitolite-fans,
+> 
+> Gitolite currently copies hooks to repositories. For upgrades, it
+> must thus ensure that all hooks are also upgraded.
+> 
+> It occurs to me that this might be easier done using symlinks, or
+> with a file that includes the master hook(s) in
+> ~/.gitolite/src/hooks. Then, the hooks just have to be upgraded in
+> one place.
+> 
+> Do you see a reason not to do this via symlinks?
 
-> You can choose environment name you like. I choose HTTP_ASKPASS just
-> because getpass only used at http.c
-> ssl_cert_password = getpass("Certificate Password: ");
->
-> OpenSSH is separated application and use own SSH_ASKPASS to ask password ...
->
-> May GIT_ASKPASS is optional name.
+If you mean just the gitolite-specific hooks (the update
+hook for all repos, and the post-update hook for the admin
+repo) then no problem.
 
-If that is the case, probably it is easiest for the end users if you
-arrange it this way:
+The other hooks I'd rather not assume anything about.  The
+current scheme forces an overwrite of the gitolite-specific
+hooks, as well as any hooks given in src/hooks, each time an
+"install" is done.  It does not touch any *other* hooks,
+which allows the admin to (via command line) place specific
+hooks in specific repos manually if he wishes to.
 
- - If GIT_ASKPASS is not set:
-
-   - If SSH_ASKPASS is present, then use that from getpass() for any and
-     all places that would want to get "password" like things;
-
-   - Otherwise consult the terminal as before;
-
- - If GIT_ASKPASS is set:
-
-   - If SSH_ASKPASS is not set, then export the value of GIT_ASKPASS as
-     such as well, so that whenever we spawn "ssh", the same GIT_ASKPASS
-     program will be used as a fallback.
-
-That way, if the user already has set up SSH_ASKPASS, we will use the same
-familiar dialog without forcing the user do anything extra.  If the user
-only sets GIT_ASKPASS without doing SSH_ASKPASS, we would also use it to
-drive the ssh session.  In either case, the user doesn't need to worry
-about multiple configuration or dialog interface.
-
-> It is nice to use one dialog for all cases. git-svn also have the same problem.
-
-People often seem to use "/usr/lib{,exec}/openssh/gnome-ssh-askpass" as
-SSH_ASKPASS.  It takes the prompt from its command line argument, reads
-the input, and spits it out to its standard output so that calling program
-can capture it.  It would be a good interface to conform to to minimize
-the work we need to support this.
+I'm ok with symlinking stuff; a couple of "cp" commands
+would change to "ln" :)  Let me try it out (and make sure it
+works for upgrades also...)
