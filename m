@@ -1,80 +1,86 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
+From: Sergio <sergio.callegari@gmail.com>
 Subject: Re: Dealing with many many git repos in a /home directory
-Date: Thu, 4 Feb 2010 10:00:38 -0500
-Message-ID: <46a038f91002040700x623a686ek4bc35d20f5d9cb86@mail.gmail.com>
-References: <9b18b3111002040029x1c7de0afw4a5ef883588f7a18@mail.gmail.com>
+Date: Thu, 4 Feb 2010 15:20:18 +0000 (UTC)
+Message-ID: <loom.20100204T160327-458@post.gmane.org>
+References: <9b18b3111002040029x1c7de0afw4a5ef883588f7a18@mail.gmail.com> <81b0412b1002040157r7af2a587y9cfc7189fc8ad632@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git <git@vger.kernel.org>
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 04 16:00:53 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 04 16:21:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nd3CL-0004jE-RW
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 16:00:50 +0100
+	id 1Nd3Vu-0002zL-7b
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 16:21:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932244Ab0BDPAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2010 10:00:41 -0500
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:53837 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932140Ab0BDPAk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2010 10:00:40 -0500
-Received: by bwz19 with SMTP id 19so364950bwz.28
-        for <git@vger.kernel.org>; Thu, 04 Feb 2010 07:00:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=BuWj7NHYJBYq6e4gY07L83gvyARhspdA5NIw99fJZ+w=;
-        b=RymNgHBwhCPKcxxq4ecaxSOBvTImywoynS5rytgwilBnpEaKloHrHTO4TjEqTDoQma
-         ZAQpNu/sOblxqu3j5RZMo4WjxNkfm+1kXM7PJzw3f+ThHxHNPCV14WFVmErTGH1LrFNj
-         60CNv7Y1ucZl44nha/hXjhm2gkwUyQR2KgHhA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=GERfTkpb4VdiP6UHnk5S+NXyDD+sIgKYyqTebjfkOgFPWCutdKrG4CTx4Z3+Gg7d02
-         3m8FL0C6Yn8meNVh+0XkEEnAWrUw25H9Cf68ISshZAIHTMIWXa3jZPBSFimzwE7I+Hrg
-         EvdbyuqnH888GpeAcQ91G4zt1JIoUnpFMZpKg=
-Received: by 10.204.33.131 with SMTP id h3mr793557bkd.53.1265295639214; Thu, 
-	04 Feb 2010 07:00:39 -0800 (PST)
-In-Reply-To: <9b18b3111002040029x1c7de0afw4a5ef883588f7a18@mail.gmail.com>
+	id S932360Ab0BDPUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2010 10:20:52 -0500
+Received: from lo.gmane.org ([80.91.229.12]:57181 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932346Ab0BDPUv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2010 10:20:51 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Nd3Vd-0002l4-Rf
+	for git@vger.kernel.org; Thu, 04 Feb 2010 16:20:47 +0100
+Received: from i2-ve060.ingce.unibo.it ([137.204.107.60])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 04 Feb 2010 16:20:45 +0100
+Received: from sergio.callegari by i2-ve060.ingce.unibo.it with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 04 Feb 2010 16:20:45 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 137.204.107.60 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100106 Ubuntu/9.10 (karmic) Firefox/3.5.7)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138967>
 
-On Thu, Feb 4, 2010 at 3:29 AM, demerphq <demerphq@gmail.com> wrote:
-> This is starting to take a lot of space.
+Alex Riesen <raa.lkml <at> gmail.com> writes:
 
-What I used to do was to
-
- - have a "canonical" local bare repo for each major project, fetching
-and repacking nightly
-
- - a script that "injects" an "alternates" entry to matching user
-repos -- logic to look at a repo and decide which alternate to hook it
-to is left to the reader.
-
- - optional: automating repacks on users repos
-
-As users repack, their "local" packs will only have the objects that
-are not shared with the canonical repos. With Moodle repos, this was a
-200MB savings per repo.
-
-And the kernel keeps one set of packfiles in buffers, so everyone gets
-much faster gitk / gitlog / blame...
+> 
+> On Thu, Feb 4, 2010 at 09:29, demerphq <demerphq <at> gmail.com> wrote:
+> > Would i be correct in thinking that if i have to repos with an
+> > equivalent  .git/objects/../..... file in them that the files are
+> > necessarily identical and one can be replaced by a hardlink to the
+> > other?
+> 
+> Yes, but you probably wont save as much as you'd like: think about the
+> users
+> who *do* repack their repositories. The .pack files will be all
+> different.
+> 
 
 
+Maybe you can:
 
-m
--- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+for each repo
+  clone it to some place
+  pack it with gc --aggressive
+  take the resulting pack and move it (and the associated index) somewhere
+  make in the same place a file with the same hash as the pack and extension
+    keep and possibly, inside, some note about its content (e.q. what repo
+    was cloned and at what state/time it was so frozen).
+  ask the users to go in the .git/objects/packs dir of their private copy
+    of the corresponding repo and hardlink there the .pack, .idx, .keep
+    file that you have prepared
+  ask the users to invoke git gc
+
+Before actually doing that on something important, maybe wait have the
+confirmation from some developer that there is not something flawed in the
+approach.
+
+Personally, I tend to use keep files a lot because I need to keep two
+machines synchronized using "unison". Without keep files, large packs are
+changed at every gc and the synchronization takes ages. By "freezing" a
+stable subset of my objects I maintain the changing packs much smaller and
+reduce the amount of data that needs to be carried over by unison to keep
+the two machines in sync.
