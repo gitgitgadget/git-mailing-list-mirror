@@ -1,115 +1,102 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: gitk: not all colours are configurable (so grey on black scheme is
- not possible)
-Date: Thu, 4 Feb 2010 17:32:42 -0600
-Message-ID: <20100204233242.GA5441@progeny.tock>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH 1/4] gitweb: notes feature
+Date: Fri, 5 Feb 2010 00:38:51 +0100
+Message-ID: <cb7bb73a1002041538m64c6a6b3p5ee8bbaf0d78457@mail.gmail.com>
+References: <1265300338-25021-1-git-send-email-giuseppe.bilotta@gmail.com> 
+	<7vpr4lhsfu.fsf@alter.siamese.dyndns.org> <7v4olxhrti.fsf@alter.siamese.dyndns.org> 
+	<201002041821.22864.jnareb@gmail.com> <cb7bb73a1002041208q54ff1f57y3202e88ae2f5f44e@mail.gmail.com> 
+	<7vaavo90ic.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthijs Kooijman <matthijs@stdin.nl>,
-	Paul Mackerras <paulus@samba.org>
-To: git@vger.kernel.org, 568470-forwarded@bugs.debian.org
-X-From: git-owner@vger.kernel.org Fri Feb 05 00:33:53 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johan Herland <johan@herland.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 05 00:39:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdBCn-0007zu-6M
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 00:33:49 +0100
+	id 1NdBI7-00038j-VF
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 00:39:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933195Ab0BDXcz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2010 18:32:55 -0500
-Received: from mail-yx0-f204.google.com ([209.85.210.204]:33490 "EHLO
-	mail-yx0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933362Ab0BDXcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2010 18:32:47 -0500
-Received: by yxe42 with SMTP id 42so2607017yxe.22
-        for <git@vger.kernel.org>; Thu, 04 Feb 2010 15:32:45 -0800 (PST)
+	id S933132Ab0BDXjO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Feb 2010 18:39:14 -0500
+Received: from mail-ew0-f228.google.com ([209.85.219.228]:56999 "EHLO
+	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933112Ab0BDXjN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Feb 2010 18:39:13 -0500
+Received: by ewy28 with SMTP id 28so3615435ewy.28
+        for <git@vger.kernel.org>; Thu, 04 Feb 2010 15:39:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=+qNTp+85PVc9RZ0IsnXasN05LSytXddWsKkCNJPMM4I=;
-        b=WEKGmg6CiI+SswDkNPGnDKotpMoJCSBUzqLRFW+4UTxpgvvlZnrBV2TwkUxld2uy0m
-         TCowBvOms7eocibANGjQs6FYHKSQhDxrLcFKe7QrXteo9FEKO8j8pFjW0UOOhdEqsh8b
-         KEl5A/PriLfTpKisppKHx+abjL9a694l2qh2Q=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=9ZlsphjHBp7v6LXw7omHth2Hc6UPuGGp1Ba+4ObG1rs=;
+        b=veTZdvDwaDhg7YSjwXr+qyGdY4LA0ItEOlPpHaPWTSClXdvz78Oxraj5pAhWHQ4kqO
+         Ie8Um2B/AWNjnlWyDF5opdj6qsqDu98pxJilkM3oUfGDoatPaoJfTZb8J748fehPqxL7
+         JM0LIHqQC5j1pkF23wAIg0aNT3g3jl+YklVwg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=H+wDsiJOiKeajBDW0d1PZMcSFlemOn9o8iq2/sk/Sgy+1wyXfkPXPfjNnWzm899KbF
-         fEKcsA4jd4EDHkZHmYqStAVLH7//MxM0Bx5PFP4RdlO4PmsPraBE0LNZa+5JH3ps9vrP
-         PHnP71AdJYj9mCwctcTgpkytK3sc/EqAOsMdg=
-Received: by 10.101.146.30 with SMTP id y30mr2735367ann.20.1265326365614;
-        Thu, 04 Feb 2010 15:32:45 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm201701ywh.17.2010.02.04.15.32.44
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 04 Feb 2010 15:32:45 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Th1IkN6JCdRBZS4cb+UP+OvWwJ17dj/rZxcjH+oJLbVVbsBWhwphRckB4s4TLYA/OP
+         KL3vN2V2yRnYTIaGcacc5Kwro5MEHdFG5brB+cBmZ7Th9HygctX3MLSIpxjVbCV/oHE5
+         EcKO/iO2O+OJ9xV+l+Udxc1zdlsuXx/tY9S5E=
+Received: by 10.213.103.134 with SMTP id k6mr393107ebo.2.1265326751219; Thu, 
+	04 Feb 2010 15:39:11 -0800 (PST)
+In-Reply-To: <7vaavo90ic.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139012>
 
-Hi gitsters,
+On Thu, Feb 4, 2010 at 10:03 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>
+> AFAIU, the note code on the core side already creates a fan-out struc=
+ture
+> when notes tree gets large (see recent "What's cooking"; the series i=
+s
+> parked in 'pu' but that is primarily because we are in feature freeze=
+); it
+> is not just "inherently not robust" but is much closer to "broken fro=
+m day
+> one" ;-). =A0Otherwise I wouldn't have wasted time to point it out.
 
-The following request was submitted against the Debian gitk package.
-Sounds sensible to me; anyone interested?
+Ouch, I hadn't considered that, indeed.
 
-From: Matthijs Kooijman <matthijs@stdin.nl>
-Package: gitk
-Version: 1:1.6.6-1
-Severity: wishlist
+> Your code is a very good proof-of-concept, though.
 
-gitk allows configuration of the colours used in the interface, by using
-the edit -> preferences dialogs. I've used this feature to set the
-background colour to black and the foreground colour to grey. However,
-some colours in the interface are not configurable, which makes this
-scheme very uncomfortable to work with.
+Thanks. I guess at this point a proper implementation can wait for the
+necessary core support functions.
 
-In particular, I'm having the following issues:
- * The foreground text color of the interface. The setting "interface
-   colour" allows me to set the background of most interface parts.
-   (except for the areas in the interface showing the list, diff, etc.
-   which are controllable with the "background colour" setting).
-   However, I can't set the "interface colour" to a dark tone, since I
-   can't control the text.
+> Regarding support of multiple notes hierarchies, listing, etc.
+>
+> See for example:
+>
+> =A0http://thread.gmane.org/gmane.comp.version-control.git/138079/focu=
+s=3D138128
+>
+> I expect more ideas from needs by end-user would come, as we gain
+> experience with using notes in real projects. =A0You will certainly f=
+ind
+> some other needs of your own, like the "not an environment but a comm=
+and
+> line option" which Jakub mentioned, and "multiple hierarchies" like b=
+oth
+> you and I found need for. =A0Share them and let us together make the =
+notes
+> mechanism nicer to use.
 
-   This should be solved by adding an "interface text colour" setting.
- * The background text of some of the interface elements (in particular
-   some textboxes in the new view / edit view dialogs) are controlled by
-   the "background colour" setting instead of the "interface colour".
-   However, the text color is not controlled by the "foregrond colour"
-   (and, as noted in the previous point, is not configurable anywhere),
-   so I get unreadable text if I set "background colour" to black.
+Collecting those ideas together would also help define some sort of
+roadmap, or at least have a clear idea of what's needed, to help drive
+the design of the features themselves. Maybe we could start a TODO
+page on the wiki collecting these ideas?
 
-   This should be solved by making all text boxes listen to the
-   "interface colour" setting, or by making the text in these text boxes
-   listen to the "foreground colour" setting.
- * In the diff view, the two header lines of every file (containing the
-   filename and git hashes) has a fixed grey background. The text
-   colour, however, is controlled by the "foreground colour" setting, so
-   setting that to grey leaves you with unreadable headers.
-   
-   This should be solved by making a "Diff headers background colour"
-   setting, or something similar.
-
-Gr.
-
-Matthijs
--- System Information:
-Debian Release: squeeze/sid
-  APT prefers unstable
-  APT policy: (500, 'unstable'), (500, 'stable'), (1, 'experimental')
-Architecture: amd64 (x86_64)
-
-Kernel: Linux 2.6.32.7 (PREEMPT)
-Locale: LANG=en_US.UTF-8, LC_CTYPE=en_US.UTF-8 (charmap=UTF-8)
-Shell: /bin/sh linked to /bin/bash
-
-Versions of packages gitk depends on:
-ii  git-core                      1:1.6.6-1  fast, scalable, distributed revisi
-ii  tk                            8.4.16-2   The Tk toolkit for Tcl and X11 (de
+--=20
+Giuseppe "Oblomov" Bilotta
