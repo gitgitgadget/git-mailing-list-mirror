@@ -1,86 +1,63 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Making custom git-remove-tree command
-Date: Thu, 04 Feb 2010 10:55:17 +0100
-Message-ID: <4B6A9985.4050909@viscovery.net>
-References: <87iqad2x09.fsf@mithlond.arda>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Dealing with many many git repos in a /home directory
+Date: Thu, 4 Feb 2010 10:57:55 +0100
+Message-ID: <81b0412b1002040157r7af2a587y9cfc7189fc8ad632@mail.gmail.com>
+References: <9b18b3111002040029x1c7de0afw4a5ef883588f7a18@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Thu Feb 04 10:55:42 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git <git@vger.kernel.org>
+To: demerphq <demerphq@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 10:58:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcyQv-0001dr-H7
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 10:55:33 +0100
+	id 1NcyTT-0003bH-HO
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 10:58:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757569Ab0BDJzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2010 04:55:23 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:46763 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757545Ab0BDJzU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2010 04:55:20 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NcyQg-0000yi-8e; Thu, 04 Feb 2010 10:55:18 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 068241660F;
-	Thu,  4 Feb 2010 10:55:17 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <87iqad2x09.fsf@mithlond.arda>
-X-Spam-Score: 1.9 (+)
+	id S1758165Ab0BDJ6J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Feb 2010 04:58:09 -0500
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:63927 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758149Ab0BDJ55 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Feb 2010 04:57:57 -0500
+Received: by bwz19 with SMTP id 19so110341bwz.28
+        for <git@vger.kernel.org>; Thu, 04 Feb 2010 01:57:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ZdwV7CC4hi3C0j6Zx+fRDDsIaBiw2DpiS/AuyN54gE4=;
+        b=ZP284PSIMu6+XHebgNaDD2Kc/OSBJdzGrZCJNtcxo5AmjdgcN9fL2Cf4qWtEnNOjQZ
+         2jaK7xO21n4yKu9cnLk8uqTZIbWXlO6kCtF3FW9VENgq4EnIeRiIwRVgNq0bosLVKQzs
+         ur6TAbS902ETsJ2iwIMu0Y3kqX+9XCoesHf+4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=mIuRkAVUr1+m+733GrX5Ki5Zesb+/Ku8eUGBPWOmuhdgJhOwx2Ai57ZpSePL+0HDQS
+         zSblDAMTbtkok+gIiXEJBcdCqvXMMml3CD7FP0/kruehE23tPknYHWedSpgfciOVRXkF
+         E2jj0ndp0LkhxJsvFIuy5FRGjYKFRsRl6+bUk=
+Received: by 10.204.140.18 with SMTP id g18mr550906bku.47.1265277475797; Thu, 
+	04 Feb 2010 01:57:55 -0800 (PST)
+In-Reply-To: <9b18b3111002040029x1c7de0afw4a5ef883588f7a18@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138961>
 
-Teemu Likonen schrieb:
-> I'm doing a script named git-remove-tree which removes the working tree
-> known to Git. It doesn't touch untracked files; it only deletes
-> directories if they are empty. The script seems to work, but because I'm
-> not very good at Git plumbing and there can be some corner cases which I
-> don't know about, I'd appreciate if more experienced users would have a
-> look. Is the following script safe?
-> 
-> 
-> #!/bin/sh
-> # git-remove-tree
-> 
-> is_wt=$(git rev-parse --is-inside-work-tree)
-> if [ "$is_wt" = false ]; then
-> 	echo "You must run this inside a working tree."
-> 	exit 1
-> elif [ -z "$is_wt" ]; then
-> 	exit 1
-> fi
-> 
-> top=$(git rev-parse --show-toplevel)
-> cd "$top" || {
-> 	echo "Can't go to top-level directory $top"
-> 	exit 1
-> }
-> 
-> git ls-tree --name-only -r -z HEAD | xargs -0r -- sh -c '
-> for f in "$@"; do
-> 	rm -f -- "$f"
-> 	d=$(dirname -- "$f")
-> 	[ "$d" = . ] || rmdir -p -- "$d" 2>/dev/null
-> done' dollar0_argument
+On Thu, Feb 4, 2010 at 09:29, demerphq <demerphq@gmail.com> wrote:
+> Would i be correct in thinking that if i have to repos with an
+> equivalent =C2=A0.git/objects/../..... file in them that the files ar=
+e
+> necessarily identical and one can be replaced by a hardlink to the
+> other?
 
-I think you should be able to reduce all of this to just
-
-git read-tree --index-output=/tmp/empty.index -m -u \
-	4b825dc642cb6eb9a060e54bf8d69288fbee4904 # empty tree
-rm -f /tmp/empty.index
-
-(with the usual caveats about temporary files).
-
-> 
-> echo 'Use "git reset --hard HEAD" to populate the working tree again.'
-
--- Hannes
+Yes, but you probably wont save as much as you'd like: think about the =
+users
+who *do* repack their repositories. The .pack files will be all differe=
+nt.
