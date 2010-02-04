@@ -1,61 +1,89 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 3/3] make --max-pack-size argument to 'git pack-object'
-	count in bytes
-Date: Wed, 3 Feb 2010 20:00:46 -0800
-Message-ID: <20100204040046.GR14799@spearce.org>
-References: <1265255308-20514-1-git-send-email-nico@fluxnic.net> <1265255308-20514-3-git-send-email-nico@fluxnic.net>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: [gitolite] repo config for delegated projects
+Date: Thu, 4 Feb 2010 17:08:12 +1300
+Message-ID: <20100204040812.GC13411@lapse.rw.madduck.net>
+References: <20100203035718.GA30644@lapse.rw.madduck.net>
+ <2e24e5b91002022222h5ca3ebe6k75854a9a056f0ed1@mail.gmail.com>
+ <20100203202249.GA27125@lapse.rw.madduck.net>
+ <20100204011842.GB497@atcmail.atc.tcs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Feb 04 05:01:36 2010
+Content-Type: multipart/signed; micalg=pgp-ripemd160;
+	protocol="application/pgp-signature"; boundary="KDt/GgjP6HVcx58l"
+To: Sitaram Chamarty <sitaram@atc.tcs.com>,
+	git discussion list <git@vger.kernel.org>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Teemu Matilainen <teemu.matilainen@iki.fi>
+X-From: git-owner@vger.kernel.org Thu Feb 04 05:08:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcsuL-0002rd-W2
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 05:01:34 +0100
+	id 1Nct19-0006aC-IG
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 05:08:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756169Ab0BDEAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 23:00:52 -0500
-Received: from mail-iw0-f201.google.com ([209.85.223.201]:33492 "EHLO
-	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755253Ab0BDEAv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 23:00:51 -0500
-Received: by iwn39 with SMTP id 39so2522527iwn.1
-        for <git@vger.kernel.org>; Wed, 03 Feb 2010 20:00:50 -0800 (PST)
-Received: by 10.231.169.144 with SMTP id z16mr1015460iby.25.1265256049944;
-        Wed, 03 Feb 2010 20:00:49 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 21sm345976iwn.6.2010.02.03.20.00.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Feb 2010 20:00:48 -0800 (PST)
+	id S1756108Ab0BDEIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 23:08:30 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:53657 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754009Ab0BDEIa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 23:08:30 -0500
+Received: from lapse.rw.madduck.net (lapse.nz.madduck.net [IPv6:2001:4428:234::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id 0E2121D4099;
+	Thu,  4 Feb 2010 05:08:16 +0100 (CET)
+Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
+	id 08B602A5; Thu,  4 Feb 2010 17:08:12 +1300 (NZDT)
 Content-Disposition: inline
-In-Reply-To: <1265255308-20514-3-git-send-email-nico@fluxnic.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <20100204011842.GB497@atcmail.atc.tcs.com>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.32-trunk-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.95.3 at clegg
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138946>
 
-Nicolas Pitre <nico@fluxnic.net> wrote:
-> The value passed to --max-pack-size used to count in MiB which was
-> inconsistent with the corresponding configuration variable as well as
-> other command arguments which are defined to count in bytes with an
-> optional unit suffix.  This brings --max-pack-size in line with the
-> rest of Git.
-...
->  Documentation/RelNotes-1.7.0.txt   |    8 +++++++-
->  Documentation/config.txt           |   11 +++++++----
->  Documentation/git-pack-objects.txt |    5 +++--
->  Documentation/git-repack.txt       |    8 +++++---
->  builtin-pack-objects.c             |   11 ++++++-----
->  t/t5300-pack-object.sh             |   14 ++++++++------
->  6 files changed, 36 insertions(+), 21 deletions(-)
 
-Shouldn't we also change fast-import.c ?
+--KDt/GgjP6HVcx58l
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Shawn.
+also sprach Sitaram Chamarty <sitaram@atc.tcs.com> [2010.02.04.1418 +1300]:
+> how about
+>=20
+>     $DELEGATED_CONFIGS =3D "hooks.mailinglist,hooks.showrev";
+
+Excellent idea.
+
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+now I lay me back to sleep.
+the speaker's dull; the subject's deep.
+if he should stop before I wake,
+give me a nudge for goodness' sake.
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--KDt/GgjP6HVcx58l
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEAREDAAYFAktqSCwACgkQIgvIgzMMSnVYhgCfSs6HVitDDqdJLbmOBRZ2URy8
+pVUAoMKBy0bfI5xFTNP6lUWNI4ZOjAnS
+=9NXL
+-----END PGP SIGNATURE-----
+
+--KDt/GgjP6HVcx58l--
