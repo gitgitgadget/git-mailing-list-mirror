@@ -1,86 +1,67 @@
-From: Sergio <sergio.callegari@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
 Subject: Re: Dealing with many many git repos in a /home directory
-Date: Thu, 4 Feb 2010 15:20:18 +0000 (UTC)
-Message-ID: <loom.20100204T160327-458@post.gmane.org>
-References: <9b18b3111002040029x1c7de0afw4a5ef883588f7a18@mail.gmail.com> <81b0412b1002040157r7af2a587y9cfc7189fc8ad632@mail.gmail.com>
+Date: Thu, 04 Feb 2010 16:32:41 +0100
+Message-ID: <m24olxuicm.fsf@igel.home>
+References: <9b18b3111002040029x1c7de0afw4a5ef883588f7a18@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 04 16:21:04 2010
+Cc: Git <git@vger.kernel.org>
+To: demerphq <demerphq@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 16:32:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nd3Vu-0002zL-7b
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 16:21:02 +0100
+	id 1Nd3hL-0003Lz-Hr
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 16:32:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932360Ab0BDPUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2010 10:20:52 -0500
-Received: from lo.gmane.org ([80.91.229.12]:57181 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932346Ab0BDPUv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2010 10:20:51 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Nd3Vd-0002l4-Rf
-	for git@vger.kernel.org; Thu, 04 Feb 2010 16:20:47 +0100
-Received: from i2-ve060.ingce.unibo.it ([137.204.107.60])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 04 Feb 2010 16:20:45 +0100
-Received: from sergio.callegari by i2-ve060.ingce.unibo.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 04 Feb 2010 16:20:45 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 137.204.107.60 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100106 Ubuntu/9.10 (karmic) Firefox/3.5.7)
+	id S932691Ab0BDPcp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2010 10:32:45 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:55781 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932278Ab0BDPco (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2010 10:32:44 -0500
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id CEE891C1555B;
+	Thu,  4 Feb 2010 16:32:42 +0100 (CET)
+Received: from localhost (dynscan2.mnet-online.de [192.168.6.166])
+	by mail.m-online.net (Postfix) with ESMTP id C6D1190073;
+	Thu,  4 Feb 2010 16:32:42 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan2.mnet-online.de [192.168.6.166]) (amavisd-new, port 10024)
+	with ESMTP id wh6CKGxDe53f; Thu,  4 Feb 2010 16:32:41 +0100 (CET)
+Received: from igel.home (DSL01.83.171.156.41.ip-pool.NEFkom.net [83.171.156.41])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Thu,  4 Feb 2010 16:32:41 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 71809CA294; Thu,  4 Feb 2010 16:32:41 +0100 (CET)
+X-Yow: Hey, I LIKE that POINT!!
+In-Reply-To: <9b18b3111002040029x1c7de0afw4a5ef883588f7a18@mail.gmail.com>
+	(demerphq@gmail.com's message of "Thu, 4 Feb 2010 09:29:46 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138968>
 
-Alex Riesen <raa.lkml <at> gmail.com> writes:
+demerphq <demerphq@gmail.com> writes:
 
-> 
-> On Thu, Feb 4, 2010 at 09:29, demerphq <demerphq <at> gmail.com> wrote:
-> > Would i be correct in thinking that if i have to repos with an
-> > equivalent  .git/objects/../..... file in them that the files are
-> > necessarily identical and one can be replaced by a hardlink to the
-> > other?
-> 
-> Yes, but you probably wont save as much as you'd like: think about the
-> users
-> who *do* repack their repositories. The .pack files will be all
-> different.
-> 
+> At $work we have a host where we have about 50-100 users each with
+> their own private copies of the same repos. These are cloned froma
+> remote via git/ssh and are not thus automatically hardlinking their
+> object stores.
+>
+> This is starting to take a lot of space.
 
+Create local mirrors of the remote repos (and update them regularily)
+and ask the users to borrow from them.
 
-Maybe you can:
+Andreas.
 
-for each repo
-  clone it to some place
-  pack it with gc --aggressive
-  take the resulting pack and move it (and the associated index) somewhere
-  make in the same place a file with the same hash as the pack and extension
-    keep and possibly, inside, some note about its content (e.q. what repo
-    was cloned and at what state/time it was so frozen).
-  ask the users to go in the .git/objects/packs dir of their private copy
-    of the corresponding repo and hardlink there the .pack, .idx, .keep
-    file that you have prepared
-  ask the users to invoke git gc
-
-Before actually doing that on something important, maybe wait have the
-confirmation from some developer that there is not something flawed in the
-approach.
-
-Personally, I tend to use keep files a lot because I need to keep two
-machines synchronized using "unison". Without keep files, large packs are
-changed at every gc and the synchronization takes ages. By "freezing" a
-stable subset of my objects I maintain the changing packs much smaller and
-reduce the amount of data that needs to be carried over by unison to keep
-the two machines in sync.
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
