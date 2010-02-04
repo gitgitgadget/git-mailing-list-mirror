@@ -1,87 +1,151 @@
-From: Sitaram Chamarty <sitaram@atc.tcs.com>
-Subject: Re: [gitolite] symlink hooks instead of copying them
-Date: Thu, 4 Feb 2010 08:52:39 +0530
-Message-ID: <20100204032239.GA5429@atcmail.atc.tcs.com>
-References: <20100204013556.GA2590@atcmail.atc.tcs.com> <20100204012840.GC497@atcmail.atc.tcs.com> <20100204014657.GA10114@lapse.rw.madduck.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git discussion list <git@vger.kernel.org>,
-	Teemu Matilainen <teemu.matilainen@iki.fi>
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Thu Feb 04 04:23:17 2010
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: [PATCH 2/3] pack-objects: fix pack generation when using
+ pack_size_limit
+Date: Wed, 03 Feb 2010 22:48:27 -0500
+Message-ID: <1265255308-20514-2-git-send-email-nico@fluxnic.net>
+References: <1265255308-20514-1-git-send-email-nico@fluxnic.net>
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 04:48:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcsJJ-0003hg-1S
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 04:23:17 +0100
+	id 1Ncsho-00058V-1Y
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 04:48:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755637Ab0BDDXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 22:23:12 -0500
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145]:36995 "EHLO
-	atcmail.atc.tcs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755098Ab0BDDXJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 22:23:09 -0500
-Received: from atcmail.atc.tcs.com (atcmail.atc.tcs.com [127.0.0.1])
-	by atcmail.atc.tcs.com (8.14.2/8.14.2) with ESMTP id o143MdBM005973;
-	Thu, 4 Feb 2010 08:52:39 +0530
-Received: (from sitaram@localhost)
-	by atcmail.atc.tcs.com (8.14.2/8.14.2/Submit) id o143MdC4005972;
-	Thu, 4 Feb 2010 08:52:39 +0530
-Content-Disposition: inline
-In-Reply-To: <20100204014657.GA10114@lapse.rw.madduck.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.2/10354/Wed Feb  3 16:33:21 2010 on atcmail.atc.tcs.com
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-1.2 required=5.0 tests=ALL_TRUSTED,BAYES_00,
-	FH_DATE_PAST_20XX autolearn=no version=3.2.5
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on atcmail.atc.tcs.com
+	id S1756547Ab0BDDsc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 22:48:32 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:38281 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756497Ab0BDDsa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 22:48:30 -0500
+Received: from localhost.localdomain ([66.130.28.92])
+ by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KXA000WCT8S3332@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 03 Feb 2010 22:48:29 -0500 (EST)
+X-Mailer: git-send-email 1.7.0.rc1.149.g0b0b7
+In-reply-to: <1265255308-20514-1-git-send-email-nico@fluxnic.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138942>
 
-On Thu, Feb 04, 2010 at 02:46:57PM +1300, martin f krafft wrote:
-> also sprach Sitaram Chamarty <sitaram@atc.tcs.com> [2010.02.04.1428 +1300]:
-> > I'm ok with symlinking stuff; a couple of "cp" commands
-> > would change to "ln" :)  Let me try it out (and make sure it
-> > works for upgrades also...)
-> 
-> ln -sf even.
+Current handling of pack_size_limit is quite suboptimal.  Let's consider
+a list of objects to pack which contain alternatively big and small
+objects (which pretty matches reality when big blobs are interlaced
+with tree objects).  Currently, the code simply close the pack and opens
+a new one when the next object in line breaks the size limit.
 
-yup...
+The current code may degenerate into:
 
-> also sprach Sitaram Chamarty <sitaram@atc.tcs.com> [2010.02.04.1435 +1300]:
-> > I forgot... part of the reason this "copy all hooks over each time
-> > you run install" is also to give people an easy way to update the
-> > hooks when the repo was *copied* from elsewhere, and not *created*
-> > by gitolite in the first place.
-> > 
-> > Basically I'm paranoid about that "update" hook, without which the
-> > branch level access control doesn't work at all.
-> 
-> Wouldn't it thus make sense to check during authentication that the
-> symlink exists and points to the right file, and to deny access
-> completely if that isn't the case?
+  - small tree object => store into pack #1
+  - big blob object busting the pack size limit => store into pack #2
+  - small blob but pack #2 is over the limit already => pack #3
+  - big blob busting the size limit => pack #4
+  - small tree but pack #4 is over the limit => pack #5
+  - big blob => pack #6
+  - small tree => pack #7
+  - ... and so on.
 
-Yeah I guess that's easy enough really... just need to
-include a way to tell the code what is the right file to
-point to.  (Currently it's all inside $GL_ADMINDIR but in
-the APT case that may not be true...?)
+The reality is that the content of packs 1, 3, 5 and 7 could well be
+stored more efficiently (and delta compressed) together in pack #1 if
+the big blobs were not forcing an immediate transition to a new pack.
 
-> Having a mass-update command for this might be nice, but I suppose
-> it's also a trivial shell one-liner...
-> 
->   for i (**/*.git/hooks/update) \
->     ln -sf ~git/.gitolite/src/hooks/update $i
-> 
-> (this is zsh, not sure bash can do this yet)
+Incidentally this can be fixed pretty easily by simply skipping over
+those objects that are too big to fit in the current pack while trying
+the whole list of unwritten objects, and then that list considered from
+the beginning again when a new pack is opened.  This creates much fewer
+smallish pack files and help making more predictable test cases for the
+test suite.
 
-This has to work on systems that don't even have bash (like
-plain old sh personality of ksh), leave alone zsh :)
+This change made one of the self sanity checks useless so it is removed
+as well. That check was rather redundant already anyway.
 
-Not saying it's hard; just a "find" in backticks.  I'd still
-rather put it inside the perl code somewhere that already
-gets run anyway, as it is now...
+Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
+---
+ builtin-pack-objects.c |   37 +++++++++++++------------------------
+ 1 files changed, 13 insertions(+), 24 deletions(-)
+
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 4a41547..3186035 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -246,7 +246,7 @@ static unsigned long write_object(struct sha1file *f,
+ 
+ 	type = entry->type;
+ 
+-	/* write limit if limited packsize and not first object */
++	/* apply size limit if limited packsize and not first object */
+ 	if (!pack_size_limit || !nr_written)
+ 		limit = 0;
+ 	else if (pack_size_limit <= write_offset)
+@@ -443,11 +443,15 @@ static int write_one(struct sha1file *f,
+ 
+ 	/* offset is non zero if object is written already. */
+ 	if (e->idx.offset || e->preferred_base)
+-		return 1;
++		return -1;
+ 
+-	/* if we are deltified, write out base object first. */
+-	if (e->delta && !write_one(f, e->delta, offset))
+-		return 0;
++	/*
++	 * If we are deltified, attempt to write out base object first.
++	 * If that fails due to the pack size limit then the current
++	 * object might still possibly fit undeltified within that limit.
++	 */
++	if (e->delta)
++	       write_one(f, e->delta, offset);
+ 
+ 	e->idx.offset = *offset;
+ 	size = write_object(f, e, *offset);
+@@ -501,11 +505,9 @@ static void write_pack_file(void)
+ 		sha1write(f, &hdr, sizeof(hdr));
+ 		offset = sizeof(hdr);
+ 		nr_written = 0;
+-		for (; i < nr_objects; i++) {
+-			if (!write_one(f, objects + i, &offset))
+-				break;
+-			display_progress(progress_state, written);
+-		}
++		for (i = 0; i < nr_objects; i++)
++			if (write_one(f, objects + i, &offset) == 1)
++				display_progress(progress_state, written);
+ 
+ 		/*
+ 		 * Did we write the wrong # entries in the header?
+@@ -580,26 +582,13 @@ static void write_pack_file(void)
+ 			written_list[j]->offset = (off_t)-1;
+ 		}
+ 		nr_remaining -= nr_written;
+-	} while (nr_remaining && i < nr_objects);
++	} while (nr_remaining);
+ 
+ 	free(written_list);
+ 	stop_progress(&progress_state);
+ 	if (written != nr_result)
+ 		die("wrote %"PRIu32" objects while expecting %"PRIu32,
+ 			written, nr_result);
+-	/*
+-	 * We have scanned through [0 ... i).  Since we have written
+-	 * the correct number of objects,  the remaining [i ... nr_objects)
+-	 * items must be either already written (due to out-of-order delta base)
+-	 * or a preferred base.  Count those which are neither and complain if any.
+-	 */
+-	for (j = 0; i < nr_objects; i++) {
+-		struct object_entry *e = objects + i;
+-		j += !e->idx.offset && !e->preferred_base;
+-	}
+-	if (j)
+-		die("wrote %"PRIu32" objects as expected but %"PRIu32
+-			" unwritten", written, j);
+ }
+ 
+ static int locate_object_entry_hash(const unsigned char *sha1)
+-- 
+1.7.0.rc1.149.g0b0b7
