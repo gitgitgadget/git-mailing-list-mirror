@@ -1,65 +1,90 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 3/3] make --max-pack-size argument to 'git pack-object'
-	count in bytes
-Date: Thu, 4 Feb 2010 10:00:15 -0800
-Message-ID: <20100204180015.GC18548@spearce.org>
-References: <1265255308-20514-1-git-send-email-nico@fluxnic.net> <1265255308-20514-3-git-send-email-nico@fluxnic.net> <20100204040046.GR14799@spearce.org> <7v7hqtty38.fsf@alter.siamese.dyndns.org> <7vtytxexjl.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1002041243570.1681@xanadu.home>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: rebase vs rebase -i
+Date: Thu, 4 Feb 2010 13:10:58 -0500
+Message-ID: <76718491002041010k84ad55ct5c3e80529e8f8428@mail.gmail.com>
+References: <76718491002032019i5f8ea947paa527988ddb7a378@mail.gmail.com>
+	 <alpine.DEB.1.00.1002041414530.4505@intel-tinevez-2-302>
+	 <76718491002040914t12956bb2gbe21ae89f31cbc7f@mail.gmail.com>
+	 <alpine.DEB.1.00.1002041859000.4505@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Feb 04 19:01:02 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 04 19:11:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nd60e-0006nM-Bl
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 19:00:56 +0100
+	id 1Nd6AZ-0007Jt-BO
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 19:11:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756653Ab0BDSA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2010 13:00:27 -0500
-Received: from mail-iw0-f201.google.com ([209.85.223.201]:45133 "EHLO
-	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754892Ab0BDSAZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2010 13:00:25 -0500
-Received: by iwn39 with SMTP id 39so3236132iwn.1
-        for <git@vger.kernel.org>; Thu, 04 Feb 2010 10:00:24 -0800 (PST)
-Received: by 10.231.145.5 with SMTP id b5mr534915ibv.70.1265306421730;
-        Thu, 04 Feb 2010 10:00:21 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 21sm272561iwn.6.2010.02.04.10.00.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 04 Feb 2010 10:00:19 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1002041243570.1681@xanadu.home>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1756168Ab0BDSLF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Feb 2010 13:11:05 -0500
+Received: from mail-iw0-f189.google.com ([209.85.223.189]:60925 "EHLO
+	mail-iw0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752523Ab0BDSLD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Feb 2010 13:11:03 -0500
+Received: by iwn27 with SMTP id 27so1908768iwn.5
+        for <git@vger.kernel.org>; Thu, 04 Feb 2010 10:11:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=s5vFR8II5ZeTTGav7HXggZDnIrzErZH/lKDHql0xHW8=;
+        b=sakxWG8N+VIDlKN2tTkTZ7LVXY/tdsMG15H1d8pGXpyaqDI1T/6skOH68XLjbNqwy+
+         iyPGGQL1P5Witst9WMheIJ5E7CnI00aiDf94qeQhbcrHlsYEW1KCEQxFz8m2M0FL9pvV
+         TIl6hkr/+tGdJ4V2PkeBaxlI+HSV2rIceq1RM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VP5iPTQRUk/t7kgfS6q5i8Hnukp9b22gVy7Ai2Qaabp8yO7wiW+dVNmO4Z2MUPp9SB
+         ZGTTGx4K6ZXCf597JHTpzBX3fsmKdZFDUa7ff/OxFX1wZ6VlfJR+Vv1F2VTUzLYp2F2L
+         62y/KDyB+S5m9xMwMBoJzR1fqte5PmZorGX54=
+Received: by 10.231.148.83 with SMTP id o19mr64873ibv.39.1265307058486; Thu, 
+	04 Feb 2010 10:10:58 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.1002041859000.4505@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138995>
 
-Nicolas Pitre <nico@fluxnic.net> wrote:
-> >  --max-pack-size=<n>::
-> > -	Maximum size of each output packfile, expressed in MiB.
-> > -	The default is 4096 (4 GiB) as that is the maximum allowed
-> > +	Maximum size of each output packfile.
-> > +	The default is 4 GiB as that is the maximum allowed
-> >  	packfile size (due to file format limitations). Some
-> >  	importers may wish to lower this, such as to ensure the
-> >  	resulting packfiles fit on CDs.
-> 
-> What file format limitation is alluded to here?  It has been a while 
-> since the 4GB limit on pack file format has been removed.
+On Thu, Feb 4, 2010 at 1:00 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Thu, 4 Feb 2010, Jay Soffian wrote:
+>
+>> On Thu, Feb 4, 2010 at 8:27 AM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>> >> (Here I'm setting GIT_EDITOR=3Dtrue just to demonstrate that I di=
+dn't
+>> >> change the list of commits in the latter case.)
+>> >
+>> > You can get _exactly_ the same behavior if you use -m.
+>>
+>> Or rather, -p. ;-)
+>
+> No. =C2=A0-p tries to preserve merges, and it will use
+> git-rebase--interactive.sh for hysterical raisins.
+>
+> I meant -m.
 
-The pack index v1 32 bit offset thing.  Which you fixed.
+I don't understand what you mean by "_exactly_ the same behavior" then.
 
-> If this is a 
-> limitation of fast-import only then maybe this should be explained more 
-> explicitly.
+"GIT_EDITOR=3Dtrue git rebase -i" and "git rebase -p" both use
+git-rebase--interactive.sh, and so are exactly the same behavior.
 
-Damn.  It is.  fast-import can't write a v2 index.  Ugh.
+-m still uses git-rebase.sh, but calls merge instead of format-patch +
+am. Perhaps the end-result is the same, but the behavior is different.
 
--- 
-Shawn.
+I guess I'm being a bit pedantic here, but I'm really just trying to
+understand what you mean.
+
+Thanks,
+
+j.
