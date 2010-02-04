@@ -1,70 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: pack.packSizeLimit, safety checks
-Date: Wed, 03 Feb 2010 18:34:47 -0800
-Message-ID: <7vzl3pwwxk.fsf@alter.siamese.dyndns.org>
-References: <loom.20100201T101056-232@post.gmane.org>
- <alpine.LFD.2.00.1002011100550.1681@xanadu.home>
- <7vvdeg50x4.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1002011240510.1681@xanadu.home>
- <7v1vh1zr10.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1002032130270.1681@xanadu.home>
+From: Sitaram Chamarty <sitaram@atc.tcs.com>
+Subject: Re: [gitolite] symlink hooks instead of copying them
+Date: Thu, 4 Feb 2010 08:52:39 +0530
+Message-ID: <20100204032239.GA5429@atcmail.atc.tcs.com>
+References: <20100204013556.GA2590@atcmail.atc.tcs.com> <20100204012840.GC497@atcmail.atc.tcs.com> <20100204014657.GA10114@lapse.rw.madduck.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sergio <sergio.callegari@gmail.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Feb 04 03:35:04 2010
+Cc: git discussion list <git@vger.kernel.org>,
+	Teemu Matilainen <teemu.matilainen@iki.fi>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Thu Feb 04 04:23:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcrYd-0006Zi-Jg
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 03:35:03 +0100
+	id 1NcsJJ-0003hg-1S
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 04:23:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752904Ab0BDCe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 21:34:58 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58589 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751840Ab0BDCe5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 21:34:57 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 165859695C;
-	Wed,  3 Feb 2010 21:34:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XqUJAxx/rmUJa6Z6I26J6ieMvGw=; b=tjcAD5
-	zUQq5DiR4/k4gtWbqmiu1JTdQ4cxAWGkukpewBYvvXE3pRCA5a/sNgysWbc9T83Z
-	8SCpaPEcAt6FFHbivnExgivIgaY+9ixqElPn4TKr3Ds6e+ea/Zf06e5TLNwa0blM
-	GZQmSG4dV2h+i4/xUdiyvWCvyd6Bzf8L9jKaw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NoeeI8hHAiB7gKjXIVFINfmtfwEhxd3O
-	SZY5/+I6TgUVhpJ2VzD2Wz/nlazRTiDmmrnH2srj8wiCK8kSYZ6W6+0drlqaJMw7
-	JxSPxFREl+48WEhPy85CIql1CuK390vhl+a7/g83leyhyNVVMaUQgAK1lkXcwPGk
-	bw6OEr0di6g=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D7B0496956;
-	Wed,  3 Feb 2010 21:34:53 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ED95896952; Wed,  3 Feb
- 2010 21:34:48 -0500 (EST)
-In-Reply-To: <alpine.LFD.2.00.1002032130270.1681@xanadu.home> (Nicolas
- Pitre's message of "Wed\, 03 Feb 2010 21\:31\:15 -0500 \(EST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E0485F32-1135-11DF-BF7B-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755637Ab0BDDXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 22:23:12 -0500
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145]:36995 "EHLO
+	atcmail.atc.tcs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755098Ab0BDDXJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 22:23:09 -0500
+Received: from atcmail.atc.tcs.com (atcmail.atc.tcs.com [127.0.0.1])
+	by atcmail.atc.tcs.com (8.14.2/8.14.2) with ESMTP id o143MdBM005973;
+	Thu, 4 Feb 2010 08:52:39 +0530
+Received: (from sitaram@localhost)
+	by atcmail.atc.tcs.com (8.14.2/8.14.2/Submit) id o143MdC4005972;
+	Thu, 4 Feb 2010 08:52:39 +0530
+Content-Disposition: inline
+In-Reply-To: <20100204014657.GA10114@lapse.rw.madduck.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/10354/Wed Feb  3 16:33:21 2010 on atcmail.atc.tcs.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-1.2 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+	FH_DATE_PAST_20XX autolearn=no version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on atcmail.atc.tcs.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138941>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
+On Thu, Feb 04, 2010 at 02:46:57PM +1300, martin f krafft wrote:
+> also sprach Sitaram Chamarty <sitaram@atc.tcs.com> [2010.02.04.1428 +1300]:
+> > I'm ok with symlinking stuff; a couple of "cp" commands
+> > would change to "ln" :)  Let me try it out (and make sure it
+> > works for upgrades also...)
+> 
+> ln -sf even.
 
->> I suspect one of us need to be careful not to forget this thing...
->
-> Please hold on.  I think I have a better patch.
+yup...
 
-Ok, I dropped both fast-import.c mismerge fix and the one you are
-responding to.
+> also sprach Sitaram Chamarty <sitaram@atc.tcs.com> [2010.02.04.1435 +1300]:
+> > I forgot... part of the reason this "copy all hooks over each time
+> > you run install" is also to give people an easy way to update the
+> > hooks when the repo was *copied* from elsewhere, and not *created*
+> > by gitolite in the first place.
+> > 
+> > Basically I'm paranoid about that "update" hook, without which the
+> > branch level access control doesn't work at all.
+> 
+> Wouldn't it thus make sense to check during authentication that the
+> symlink exists and points to the right file, and to deny access
+> completely if that isn't the case?
+
+Yeah I guess that's easy enough really... just need to
+include a way to tell the code what is the right file to
+point to.  (Currently it's all inside $GL_ADMINDIR but in
+the APT case that may not be true...?)
+
+> Having a mass-update command for this might be nice, but I suppose
+> it's also a trivial shell one-liner...
+> 
+>   for i (**/*.git/hooks/update) \
+>     ln -sf ~git/.gitolite/src/hooks/update $i
+> 
+> (this is zsh, not sure bash can do this yet)
+
+This has to work on systems that don't even have bash (like
+plain old sh personality of ksh), leave alone zsh :)
+
+Not saying it's hard; just a "find" in backticks.  I'd still
+rather put it inside the perl code somewhere that already
+gets run anyway, as it is now...
