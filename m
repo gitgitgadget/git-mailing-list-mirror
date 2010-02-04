@@ -1,60 +1,71 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] git-clean: fix the description of the default behavior
-Date: Thu, 4 Feb 2010 16:16:27 -0500
-Message-ID: <76718491002041316x31f02e0bq5c47a2a96aadb6f4@mail.gmail.com>
-References: <dafb1423c81bc2207d06cf2a97205bcbd9a4968e.1265299086.git.git@drmicha.warpmail.net>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: [PATCH] update git-repack documentation wrt repack.UseDeltaBaseOffset
+Date: Thu, 04 Feb 2010 16:19:35 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1002041611530.1681@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Feb 04 22:16:37 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 22:19:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nd940-0000XT-74
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 22:16:36 +0100
+	id 1Nd974-0002q1-3d
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 22:19:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757838Ab0BDVQa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2010 16:16:30 -0500
-Received: from mail-iw0-f189.google.com ([209.85.223.189]:61206 "EHLO
-	mail-iw0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757431Ab0BDVQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2010 16:16:29 -0500
-Received: by iwn27 with SMTP id 27so181597iwn.5
-        for <git@vger.kernel.org>; Thu, 04 Feb 2010 13:16:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=g8LcvfOBss/kNcUsiKpw/U211ruLrcH5ZgeCfXbN5+A=;
-        b=IuUwPLzACmmsYGwoWPlCXRE2FDilT3nxGGRM8Ify1xr/bBFFkZCemNPAx9EnLF3C4Z
-         BkhMP+UATXJyf9dmfVjiZ3FZ2Wzef2xMSpSqqtQaai9z8/hnFoQugUA3FN2ASOC8uVIk
-         H6buUkhmAYxWXH8HDxJhqV15Iu0T+2D0+2bjQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=vmNRgrUgpVI/QkblcxqBo7+mbS+NwkwB0dZs1hsURHW6nfaQdfC2L6pkvCaV1R79lu
-         X87NQwcBG1lDY3M0xBFo0GQ6Pb20zEYswzMx3iAhFKTRSq5FUu/dykd8f/3X5Kd5X3oL
-         PqPBGBqOji5kbITrpLZqMqxhbNO5Qho69CDI0=
-Received: by 10.231.166.68 with SMTP id l4mr781824iby.40.1265318187899; Thu, 
-	04 Feb 2010 13:16:27 -0800 (PST)
-In-Reply-To: <dafb1423c81bc2207d06cf2a97205bcbd9a4968e.1265299086.git.git@drmicha.warpmail.net>
+	id S1758281Ab0BDVTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2010 16:19:38 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:12447 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758086Ab0BDVTh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2010 16:19:37 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KXC00EPN5WNBMI0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 04 Feb 2010 16:19:36 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139007>
 
-On Thu, Feb 4, 2010 at 11:01 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> fatal: clean.requireForce defaults to true and -n or -f not given; refusing to clean
+This default for repack.UseDeltaBaseOffset has been "true" since
+Git v1.6.0.
 
-Bike shed:
+Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
 
-fatal: clean.requireForce defaults to true and neither -n nor -f
-given; refusing to clean
 
-j.
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index e2f2fa2..8c67d17 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -109,15 +109,15 @@ other objects in that pack they already have locally.
+ Configuration
+ -------------
+ 
+-When configuration variable `repack.UseDeltaBaseOffset` is set
+-for the repository, the command passes `--delta-base-offset`
+-option to 'git pack-objects'; this typically results in slightly
+-smaller packs, but the generated packs are incompatible with
+-versions of git older than (and including) v1.4.3; do not set
+-the variable in a repository that older version of git needs to
+-be able to read (this includes repositories from which packs can
+-be copied out over http or rsync, and people who obtained packs
+-that way can try to use older git with it).
++By default, the command passes `--delta-base-offset` option to
++'git pack-objects'; this typically results in slightly smaller packs,
++but the generated packs are incompatible with versions of Git older than
++version 1.4.4. If you need to share your repository with such ancient Git
++versions, either directly or via the dumb http or rsync protocol, then you
++need to set the configuration variable `repack.UseDeltaBaseOffset` to
++"false" and repack. Access from old Git versions over the native protocol
++is unaffected by this option as the conversion is performed on the fly
++as needed in that case.
+ 
+ 
+ Author
