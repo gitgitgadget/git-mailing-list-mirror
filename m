@@ -1,56 +1,47 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-clean: fix the description of the default behavior
-Date: Thu, 04 Feb 2010 09:15:51 -0800
-Message-ID: <7veil0gbw8.fsf@alter.siamese.dyndns.org>
-References: <dafb1423c81bc2207d06cf2a97205bcbd9a4968e.1265299086.git.git@drmicha.warpmail.net>
+From: Larry D'Anna <larry@elder-gods.org>
+Subject: Re: [PATCH v6] add --summary option to git-push and git-fetch
+Date: Thu, 4 Feb 2010 12:16:19 -0500
+Message-ID: <20100204171619.GA9367@cthulhu>
+References: <20100130020548.GA29343@cthulhu>
+ <7vsk9oysds.fsf@alter.siamese.dyndns.org>
+ <20100201005751.GA8322@cthulhu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Feb 04 18:16:33 2010
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 04 18:16:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nd5JQ-0001Y8-HR
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 18:16:16 +0100
+	id 1Nd5Jt-00022N-NN
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 18:16:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758503Ab0BDRQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2010 12:16:00 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52390 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758462Ab0BDRP7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2010 12:15:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B1A0B972E1;
-	Thu,  4 Feb 2010 12:15:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=G1owdN8UGWe0QFLfSgdSIZI88Cg=; b=wrLbaJ
-	Gfp3lxWpBW2b2Y4kTNpuXvEb58YNLEfDBACylNoSWj7MiBEOEHJ50iv0sjcDw7Q7
-	Pyjf9o4mt5RaUYwyqYzVM5cwGLbeAPi1t576D1XxIJ1m60TRN92l+2YK57NiIauk
-	X9cG7jrwUjb9M/d9FK3BuINif/7IhSNzLcQ2Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JgF7KJdU35WEzefo2F2W0DZHEu/oZsH9
-	W/pLGuQhLhF0IfuAJERXoFPumhfu5QfBviy4is4v6qX12E8lPmlbu+fkb1ieSxF7
-	bk9Y8cyXRuqeL7ezm6GEoHU+xfFrBIWzBw5dRj7iyp94okMA3nMKru8vIv+xJhFp
-	hQJGPvPinzQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F10F972DE;
-	Thu,  4 Feb 2010 12:15:56 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C3FBD972DC; Thu,  4 Feb
- 2010 12:15:52 -0500 (EST)
-In-Reply-To: <dafb1423c81bc2207d06cf2a97205bcbd9a4968e.1265299086.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Thu\,  4 Feb 2010 17\:01\:16 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F4EDE7D8-11B0-11DF-8490-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754128Ab0BDRQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2010 12:16:21 -0500
+Received: from cthulhu.elder-gods.org ([140.239.99.253]:44247 "EHLO
+	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753989Ab0BDRQU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2010 12:16:20 -0500
+Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
+	id 5C5E182200D; Thu,  4 Feb 2010 12:16:19 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20100201005751.GA8322@cthulhu>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138984>
 
-looks sane; thanks.
+* Larry D'Anna (larry@elder-gods.org) [100131 19:57]:
+> So i guess you're saying that it would be better for update_local_ref and
+> print_summary_for_push_or_fetch to clear the flags, and just pass a rev_info for
+> print_summary_for_push_or_fetch instead of quickref?
+
+So, should I submit a version of the patch that does it this way?  Should it use
+a subprocess?  Should the option be called something other than --summary?
+Should I just forget about it?
+
+  --larry
