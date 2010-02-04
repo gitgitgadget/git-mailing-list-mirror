@@ -1,110 +1,108 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: [gitolite] symlink hooks instead of copying them
-Date: Thu, 4 Feb 2010 14:46:57 +1300
-Message-ID: <20100204014657.GA10114@lapse.rw.madduck.net>
-References: <20100204013556.GA2590@atcmail.atc.tcs.com>
+From: Sitaram Chamarty <sitaram@atc.tcs.com>
+Subject: Re: [gitolite] repo config for delegated projects
+Date: Thu, 4 Feb 2010 06:48:42 +0530
+Message-ID: <20100204011842.GB497@atcmail.atc.tcs.com>
+References: <20100203035718.GA30644@lapse.rw.madduck.net> <2e24e5b91002022222h5ca3ebe6k75854a9a056f0ed1@mail.gmail.com> <20100203202249.GA27125@lapse.rw.madduck.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-ripemd160;
-	protocol="application/pgp-signature"; boundary="/9DWx/yDrRhgMJTb"
-Cc: Sitaram Chamarty <sitaram@atc.tcs.com>,
+Content-Type: text/plain; charset=us-ascii
+To: git discussion list <git@vger.kernel.org>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
 	Teemu Matilainen <teemu.matilainen@iki.fi>
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 04 02:47:22 2010
+X-From: git-owner@vger.kernel.org Thu Feb 04 02:54:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NcqoT-0006xW-Sa
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 02:47:22 +0100
+	id 1NcqvQ-0002EF-R3
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Feb 2010 02:54:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754864Ab0BDBrQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2010 20:47:16 -0500
-Received: from clegg.madduck.net ([193.242.105.96]:52908 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754389Ab0BDBrN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2010 20:47:13 -0500
-Received: from lapse.rw.madduck.net (lapse.nz.madduck.net [IPv6:2001:4428:234::1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id A7EB81D4099;
-	Thu,  4 Feb 2010 02:47:00 +0100 (CET)
-Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
-	id 4C6942A5; Thu,  4 Feb 2010 14:46:57 +1300 (NZDT)
+	id S1755123Ab0BDBy1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2010 20:54:27 -0500
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145]:59628 "EHLO
+	atcmail.atc.tcs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754532Ab0BDBy1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2010 20:54:27 -0500
+Received: from atcmail.atc.tcs.com (atcmail.atc.tcs.com [127.0.0.1])
+	by atcmail.atc.tcs.com (8.14.2/8.14.2) with ESMTP id o141Ihlj002134;
+	Thu, 4 Feb 2010 06:48:43 +0530
+Received: (from sitaram@localhost)
+	by atcmail.atc.tcs.com (8.14.2/8.14.2/Submit) id o141Ighv002131;
+	Thu, 4 Feb 2010 06:48:42 +0530
 Content-Disposition: inline
-In-Reply-To: <20100204013556.GA2590@atcmail.atc.tcs.com>
- <20100204012840.GC497@atcmail.atc.tcs.com>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.32-trunk-686 i686
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: clamav-milter 0.95.3 at clegg
+In-Reply-To: <20100203202249.GA27125@lapse.rw.madduck.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/10354/Wed Feb  3 16:33:21 2010 on atcmail.atc.tcs.com
 X-Virus-Status: Clean
+X-Spam-Status: No, score=-1.2 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+	FH_DATE_PAST_20XX autolearn=no version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on atcmail.atc.tcs.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/138929>
 
+On Thu, Feb 04, 2010 at 09:22:49AM +1300, martin f krafft wrote:
+> Dear Sitaram, dear Teemo, dear gitolite-fans,
+> 
+> src/gl-compile-conf:261 prohibits delegated repositories to make use
+> of the functionality to configure config variables of the
+> repositories:
+> 
+>   die "$WARN $fragment attempting to set repo configuration\n"
+>     if $fragment ne 'master';
+> 
+> This is a bit unfortunate and makes me reconsider the use of
+> delegations.
+> 
+> What is the reason for this restriction?
 
---/9DWx/yDrRhgMJTb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Like Teemu said, inability to think through all the possible
+repurcussions of allowing a delegated admin to set config
+variables.  There are too many of them for me to go through,
+and they'll keep changing.
 
-also sprach Sitaram Chamarty <sitaram@atc.tcs.com> [2010.02.04.1428 +1300]:
-> I'm ok with symlinking stuff; a couple of "cp" commands
-> would change to "ln" :)  Let me try it out (and make sure it
-> works for upgrades also...)
+To recap, what gitolite wants to do is broadly the
+following:
 
-ln -sf even.
+  - no one who is not admin can do anything to a repo that
+    the config file does not permit him to do (this is not
+    affected by the topic of this email; just adding it for
+    completeness)
 
+  - the main admin (who has RW/RW+ access to all of the
+    gitolite-admin repo) cannot get shell access on the
+    server.  This is a relatively new restriction; initially
+    I did not think to keep these two privileges separate
 
+  - a delegated admin cannot manage any sort of access to
+    repos that the main admin did not delegate to him.
 
-also sprach Sitaram Chamarty <sitaram@atc.tcs.com> [2010.02.04.1435 +1300]:
-> I forgot... part of the reason this "copy all hooks over each time
-> you run install" is also to give people an easy way to update the
-> hooks when the repo was *copied* from elsewhere, and not *created*
-> by gitolite in the first place.
->=20
-> Basically I'm paranoid about that "update" hook, without which the
-> branch level access control doesn't work at all.
+> 
+> Are there settings that are potentially compromising?
+> 
+> Would it be worth to consider making it configurable (e.g.
+> ~/.gitolite.rc) whether to allow delegated repos to set config
+> variables?
 
-Wouldn't it thus make sense to check during authentication that the
-symlink exists and points to the right file, and to deny access
-completely if that isn't the case?
+I wouldn't mind making it configurable, with the default
+being off.  Rather than a blanket
 
-> So this will still need to be done. Or you'll have to provide some
-> other command that will sweep through all repos in the $REPO_BASE
-> and check that the symlink is pointing to the right place etc etc.
+    $ALLOW_DELEGATE_CONFIGS = 1;
 
-Having a mass-update command for this might be nice, but I suppose
-it's also a trivial shell one-liner...
+how about
 
-  for i (**/*.git/hooks/update) \
-    ln -sf ~git/.gitolite/src/hooks/update $i
+    $DELEGATED_CONFIGS = "hooks.mailinglist,hooks.showrev";
 
-(this is zsh, not sure bash can do this yet)
+(to take Teemu's example config file and the config
+variables he uses), so that you (or whoever has shell
+access, which is required for changing RC file) can sort of
+limit the potential damage.
 
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-apt-get source --compile gentoo
-=20
-spamtraps: madduck.bogus@madduck.net
+And the defaults would all be commented out anyway so people
+who don't car about this will never have to worry about it.
 
---/9DWx/yDrRhgMJTb
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
+Regards,
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEAREDAAYFAktqJxEACgkQIgvIgzMMSnVGHwCg1xvCgupNjLqtHJ5ICnCPzMP9
-H88AoMLvNOsQoJ54+jnrqrD21iOZubRJ
-=8raM
------END PGP SIGNATURE-----
-
---/9DWx/yDrRhgMJTb--
+Sitaram
