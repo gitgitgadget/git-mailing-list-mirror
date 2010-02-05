@@ -1,88 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] make git push --dry-run --porcelain exit with
- status 0 even if updates will be rejected
-Date: Fri, 5 Feb 2010 14:56:44 -0500
-Message-ID: <20100205195644.GE24474@coredump.intra.peff.net>
-References: <20100205150638.GB14116@coredump.intra.peff.net>
- <1265398462-17316-3-git-send-email-larry@elder-gods.org>
+From: "Wesley J. Landaker" <wjl@icecavern.net>
+Subject: [PATCH (resend)] Update git fsck --full short description to mention packs
+Date: Fri, 5 Feb 2010 12:58:50 -0700
+Organization: icecavern.net
+Message-ID: <201002051258.50732.wjl@icecavern.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Larry D'Anna <larry@elder-gods.org>
-X-From: git-owner@vger.kernel.org Fri Feb 05 20:56:50 2010
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Feb 05 20:59:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdUIL-0005Je-Rz
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 20:56:50 +0100
+	id 1NdUKn-00077R-M6
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 20:59:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933753Ab0BET4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2010 14:56:44 -0500
-Received: from peff.net ([208.65.91.99]:47741 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932429Ab0BET4n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2010 14:56:43 -0500
-Received: (qmail 27671 invoked by uid 107); 5 Feb 2010 19:56:48 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 05 Feb 2010 14:56:48 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Feb 2010 14:56:44 -0500
-Content-Disposition: inline
-In-Reply-To: <1265398462-17316-3-git-send-email-larry@elder-gods.org>
+	id S933838Ab0BET7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2010 14:59:05 -0500
+Received: from rinoa.icecavern.net ([92.243.7.152]:50933 "EHLO icecavern.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S933842Ab0BET7A (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2010 14:59:00 -0500
+Received: from tonberry.icecavern.net (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
+	by icecavern.net (Postfix) with ESMTPSA id 3575936148;
+	Fri,  5 Feb 2010 12:58:56 -0700 (MST)
+X-Face: #;qMWg=Msk*d]z]X1P2-t9]~6+RoGF$nJo89f%|Y`^whfl3Wj$X2Q_1u)ZAW@Hx|g)J]!)
+ =?utf-8?q?=0A=09Br0=3FK3Imj?=)np=]r*QN,Q8].V99^Og'xl-d9FM~$yaSGB"mfXb>x[QNi[()
+ =?utf-8?q?oob=60/4M42=26We=0A=09cC1jq=3DQ=5CS?=@ck\>H@
+ =?utf-8?q?t=26Y7Y=3Apub=3DHOWqY=7D-d=5CwrCxvsTo7k1Ek=7DqQO=5D5=7EngK=5E=25?=
+ =?utf-8?q?cT5IzmmG=5BQ=0A=09Nha=7D=5DAmI=60R-6m84VcWT4=236c?=)1`>t{$~l6:gZMtv18ge'!d[Yk-/?T3>C5O-|6On4(
+ =?utf-8?q?N=7BAV=23=0A=094Eyw52=5B=3A=25Z?=>#"c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139075>
 
-On Fri, Feb 05, 2010 at 02:34:22PM -0500, Larry D'Anna wrote:
+The '--full' option to git fsck does two things:
 
-> diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-> index 76c7206..dfd7470 100644
-> --- a/builtin-send-pack.c
-> +++ b/builtin-send-pack.c
-> @@ -478,6 +478,11 @@ int send_pack(struct send_pack_args *args,
->  		return ret;
->  	for (ref = remote_refs; ref; ref = ref->next) {
->  		switch (ref->status) {
-> +		case REF_STATUS_REJECT_NONFASTFORWARD:
-> +		case REF_STATUS_REJECT_NODELETE:
-> +			if (args->porcelain && args->dry_run)
-> +				break;
-> +			return -1;
->  		case REF_STATUS_NONE:
->  		case REF_STATUS_UPTODATE:
->  		case REF_STATUS_OK:
+  1) Check objects in packs
+  2) Check alternate objects
 
-Why just these two status flags? Based on your reasoning elsewhere, I
-would assume the logic should be:
+This is documented in the git fsck manual; this patch reflects that in
+the short git fsck option help message as well.
 
-  - if we had some transport-related error, return failure
+Signed-off-by: Wesley J. Landaker <wjl@icecavern.net>
+---
+ builtin-fsck.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-  - if not, then return success, as any ref's failure is already
-    indicated in the porcelain output
+I sent this patch a while back, and after the resulting discussion, the --full
+option was made the default. However, the short option help was still not
+updated to reflect the full documentation (and behavior) of git fsck.
 
-So shouldn't it just be:
+(This is a resend. My apologies if you get this twice.)
 
-  if (args->porcelain && args->dry_run)
-          return 0;
-
-after we check for transport errors but before the loop that you are
-modifying.
-
-> -static int push_had_errors(struct ref *ref)
-> +static int push_had_errors(struct ref *ref, int flags)
->  {
->  	for (; ref; ref = ref->next) {
->  		switch (ref->status) {
-> +		case REF_STATUS_REJECT_NONFASTFORWARD:
-> +		case REF_STATUS_REJECT_NODELETE:
-> +			if (flags & TRANSPORT_PUSH_DRY_RUN && flags & TRANSPORT_PUSH_PORCELAIN)
-> +				break;
-> +			else
-> +				return 1;
-
-Ditto here.
-
--Peff
+diff --git a/builtin-fsck.c b/builtin-fsck.c
+index 0e5faae..0929c7f 100644
+--- a/builtin-fsck.c
++++ b/builtin-fsck.c
+@@ -578,7 +578,7 @@ static struct option fsck_opts[] = {
+ 	OPT_BOOLEAN(0, "root", &show_root, "report root nodes"),
+ 	OPT_BOOLEAN(0, "cache", &keep_cache_objects, "make index objects head nodes"),
+ 	OPT_BOOLEAN(0, "reflogs", &include_reflogs, "make reflogs head nodes (default)"),
+-	OPT_BOOLEAN(0, "full", &check_full, "also consider alternate objects"),
++	OPT_BOOLEAN(0, "full", &check_full, "also consider packs and alternate objects"),
+ 	OPT_BOOLEAN(0, "strict", &check_strict, "enable more strict checking"),
+ 	OPT_BOOLEAN(0, "lost-found", &write_lost_and_found,
+ 				"write dangling objects in .git/lost-found"),
+-- 
+1.6.6.1
