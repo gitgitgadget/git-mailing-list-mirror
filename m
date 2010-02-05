@@ -1,7 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 3/9] reset: refactor reseting in its own function
-Date: Sat, 06 Feb 2010 00:11:05 +0100
-Message-ID: <20100205231112.3689.94900.chriscool@tuxfamily.org>
+Subject: [PATCH 9/9] merge: use new "reset" function instead of running "git
+	read-tree"
+Date: Sat, 06 Feb 2010 00:11:11 +0100
+Message-ID: <20100205231112.3689.34673.chriscool@tuxfamily.org>
 References: <20100205231028.3689.12228.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
@@ -17,211 +18,124 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdXM2-0008WA-B1
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 00:12:50 +0100
+	id 1NdXM3-0008WA-If
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 00:12:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932906Ab0BEXMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2010 18:12:01 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:53956 "EHLO smtp3-g21.free.fr"
+	id S933318Ab0BEXMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2010 18:12:35 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:53997 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757639Ab0BEXMA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2010 18:12:00 -0500
+	id S1757668Ab0BEXMD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2010 18:12:03 -0500
 Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 4A8E18180C5;
-	Sat,  6 Feb 2010 00:11:50 +0100 (CET)
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 8132C81805A;
+	Sat,  6 Feb 2010 00:11:52 +0100 (CET)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 023BF818015;
-	Sat,  6 Feb 2010 00:11:47 +0100 (CET)
-X-git-sha1: a682d99e47d0ef629f464e325d8ca3e6155db489 
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 7181C818050;
+	Sat,  6 Feb 2010 00:11:50 +0100 (CET)
+X-git-sha1: 71bd52b70f6ae4c01491ac37f43ffbb1b8a89437 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20100205231028.3689.12228.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139118>
 
-This splits the reseting logic away from the argument parsing.
+This simplifies "git merge" code and make it more efficient in some
+cases.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin-reset.c |  138 +++++++++++++++++++++++++++++-------------------------
- 1 files changed, 74 insertions(+), 64 deletions(-)
+ builtin-merge.c |   31 +++++++++++--------------------
+ 1 files changed, 11 insertions(+), 20 deletions(-)
 
-diff --git a/builtin-reset.c b/builtin-reset.c
-index 3569695..bf97931 100644
---- a/builtin-reset.c
-+++ b/builtin-reset.c
-@@ -235,68 +235,13 @@ static int update_heads(unsigned char *sha1)
- 	return update_ref(msg, "HEAD", sha1, orig, 0, MSG_ON_ERR);
+diff --git a/builtin-merge.c b/builtin-merge.c
+index 3aaec7b..de2343a 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -25,6 +25,7 @@
+ #include "help.h"
+ #include "merge-recursive.h"
+ #include "resolve-undo.h"
++#include "reset.h"
+ 
+ #define DEFAULT_TWOHEAD (1<<0)
+ #define DEFAULT_OCTOPUS (1<<1)
+@@ -231,24 +232,14 @@ static void save_state(void)
+ 		die("not a valid object: %s", buffer.buf);
  }
  
--int cmd_reset(int argc, const char **argv, const char *prefix)
-+static int reset(const char *rev, const char *prefix,
-+		 int reset_type, int quiet, int patch_mode,
-+		 int argc, const char **argv)
+-static void reset_hard(unsigned const char *sha1, int verbose)
++static void reset_hard(const char *prefix, unsigned const char *sha1, int verbose)
  {
--	int i = 0, reset_type = NONE, update_ref_status = 0, quiet = 0;
--	int patch_mode = 0;
--	const char *rev = "HEAD";
--	unsigned char sha1[20];
- 	struct commit *commit;
--	char *reflog_action;
--	const struct option options[] = {
--		OPT__QUIET(&quiet),
--		OPT_SET_INT(0, "mixed", &reset_type,
--						"reset HEAD and index", MIXED),
--		OPT_SET_INT(0, "soft", &reset_type, "reset only HEAD", SOFT),
--		OPT_SET_INT(0, "hard", &reset_type,
--				"reset HEAD, index and working tree", HARD),
--		OPT_SET_INT(0, "merge", &reset_type,
--				"reset HEAD, index and working tree", MERGE),
--		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively"),
--		OPT_END()
--	};
+-	int i = 0;
+-	const char *args[6];
 -
--	git_config(git_default_config, NULL);
+-	args[i++] = "read-tree";
+-	if (verbose)
+-		args[i++] = "-v";
+-	args[i++] = "--reset";
+-	args[i++] = "-u";
+-	args[i++] = sha1_to_hex(sha1);
+-	args[i] = NULL;
 -
--	argc = parse_options(argc, argv, prefix, options, git_reset_usage,
--						PARSE_OPT_KEEP_DASHDASH);
--	reflog_action = args_to_str(argv);
--	setenv("GIT_REFLOG_ACTION", reflog_action, 0);
--
--	/*
--	 * Possible arguments are:
--	 *
--	 * git reset [-opts] <rev> <paths>...
--	 * git reset [-opts] <rev> -- <paths>...
--	 * git reset [-opts] -- <paths>...
--	 * git reset [-opts] <paths>...
--	 *
--	 * At this point, argv[i] points immediately after [-opts].
--	 */
--
--	if (i < argc) {
--		if (!strcmp(argv[i], "--")) {
--			i++; /* reset to HEAD, possibly with paths */
--		} else if (i + 1 < argc && !strcmp(argv[i+1], "--")) {
--			rev = argv[i];
--			i += 2;
--		}
--		/*
--		 * Otherwise, argv[i] could be either <rev> or <paths> and
--		 * has to be unambiguous.
--		 */
--		else if (!get_sha1(argv[i], sha1)) {
--			/*
--			 * Ok, argv[i] looks like a rev; it should not
--			 * be a filename.
--			 */
--			verify_non_filename(prefix, argv[i]);
--			rev = argv[i++];
--		} else {
--			/* Otherwise we treat this as a filename */
--			verify_filename(prefix, argv[i]);
--		}
--	}
-+	unsigned char sha1[20];
-+	int update_ref_status;
- 
- 	if (get_sha1(rev, sha1))
- 		die("Failed to resolve '%s' as a valid ref.", rev);
-@@ -309,19 +254,19 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	if (patch_mode) {
- 		if (reset_type != NONE)
- 			die("--patch is incompatible with --{hard,mixed,soft}");
--		return interactive_reset(rev, argv + i, prefix);
-+		return interactive_reset(rev, argv, prefix);
- 	}
- 
- 	/* git reset tree [--] paths... can be used to
- 	 * load chosen paths from the tree into the index without
- 	 * affecting the working tree nor HEAD. */
--	if (i < argc) {
-+	if (argc > 0) {
- 		if (reset_type == MIXED)
- 			warning("--mixed option is deprecated with paths.");
- 		else if (reset_type != NONE)
- 			die("Cannot do %s reset with paths.",
- 					reset_type_names[reset_type]);
--		return read_from_tree(prefix, argv + i, sha1,
-+		return read_from_tree(prefix, argv, sha1,
- 				quiet ? REFRESH_QUIET : REFRESH_IN_PORCELAIN);
- 	}
- 	if (reset_type == NONE)
-@@ -361,7 +306,72 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 
- 	remove_branch_state();
- 
-+	return update_ref_status;
-+}
-+
-+int cmd_reset(int argc, const char **argv, const char *prefix)
-+{
-+	int i = 0, reset_type = NONE, quiet = 0;
-+	int patch_mode = 0;
-+	const char *rev = "HEAD";
-+	unsigned char sha1[20];
-+	char *reflog_action;
-+	const struct option options[] = {
-+		OPT__QUIET(&quiet),
-+		OPT_SET_INT(0, "mixed", &reset_type,
-+						"reset HEAD and index", MIXED),
-+		OPT_SET_INT(0, "soft", &reset_type, "reset only HEAD", SOFT),
-+		OPT_SET_INT(0, "hard", &reset_type,
-+				"reset HEAD, index and working tree", HARD),
-+		OPT_SET_INT(0, "merge", &reset_type,
-+				"reset HEAD, index and working tree", MERGE),
-+		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively"),
-+		OPT_END()
-+	};
-+
-+	git_config(git_default_config, NULL);
-+
-+	argc = parse_options(argc, argv, prefix, options, git_reset_usage,
-+						PARSE_OPT_KEEP_DASHDASH);
-+	reflog_action = args_to_str(argv);
-+	setenv("GIT_REFLOG_ACTION", reflog_action, 0);
- 	free(reflog_action);
- 
--	return update_ref_status;
-+	/*
-+	 * Possible arguments are:
-+	 *
-+	 * git reset [-opts] <rev> <paths>...
-+	 * git reset [-opts] <rev> -- <paths>...
-+	 * git reset [-opts] -- <paths>...
-+	 * git reset [-opts] <paths>...
-+	 *
-+	 * At this point, argv[i] points immediately after [-opts].
-+	 */
-+
-+	if (i < argc) {
-+		if (!strcmp(argv[i], "--")) {
-+			i++; /* reset to HEAD, possibly with paths */
-+		} else if (i + 1 < argc && !strcmp(argv[i+1], "--")) {
-+			rev = argv[i];
-+			i += 2;
-+		}
-+		/*
-+		 * Otherwise, argv[i] could be either <rev> or <paths> and
-+		 * has to be unambiguous.
-+		 */
-+		else if (!get_sha1(argv[i], sha1)) {
-+			/*
-+			 * Ok, argv[i] looks like a rev; it should not
-+			 * be a filename.
-+			 */
-+			verify_non_filename(prefix, argv[i]);
-+			rev = argv[i++];
-+		} else {
-+			/* Otherwise we treat this as a filename */
-+			verify_filename(prefix, argv[i]);
-+		}
-+	}
-+
-+	return reset(rev, prefix, reset_type, quiet, patch_mode,
-+		     argc - i, argv + i);
+-	if (run_command_v_opt(args, RUN_GIT_CMD))
+-		die("read-tree failed");
++	int res = reset(sha1_to_hex(sha1), prefix, HARD, !verbose, 0, 0, NULL);
++	if (res)
++		die("hard reset failed");
  }
+ 
+-static void restore_state(void)
++static void restore_state(const char *prefix)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 	const char *args[] = { "stash", "apply", NULL, NULL };
+@@ -256,7 +247,7 @@ static void restore_state(void)
+ 	if (is_null_sha1(stash))
+ 		return;
+ 
+-	reset_hard(head, 1);
++	reset_hard(prefix, head, 1);
+ 
+ 	args[2] = sha1_to_hex(stash);
+ 
+@@ -970,7 +961,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			die("%s - not something we can merge", argv[0]);
+ 		update_ref("initial pull", "HEAD", remote_head->sha1, NULL, 0,
+ 				DIE_ON_ERR);
+-		reset_hard(remote_head->sha1, 0);
++		reset_hard(prefix, remote_head->sha1, 0);
+ 		return 0;
+ 	} else {
+ 		struct strbuf msg = STRBUF_INIT;
+@@ -1167,7 +1158,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		int ret;
+ 		if (i) {
+ 			printf("Rewinding the tree to pristine...\n");
+-			restore_state();
++			restore_state(prefix);
+ 		}
+ 		if (use_strategies_nr != 1)
+ 			printf("Trying merge strategy %s...\n",
+@@ -1228,7 +1219,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	 * it up.
+ 	 */
+ 	if (!best_strategy) {
+-		restore_state();
++		restore_state(prefix);
+ 		if (use_strategies_nr > 1)
+ 			fprintf(stderr,
+ 				"No merge strategy handled the merge.\n");
+@@ -1240,7 +1231,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		; /* We already have its result in the working tree. */
+ 	else {
+ 		printf("Rewinding the tree to pristine...\n");
+-		restore_state();
++		restore_state(prefix);
+ 		printf("Using the %s to prepare resolving by hand.\n",
+ 			best_strategy);
+ 		try_merge_strategy(best_strategy, common, head_arg);
 -- 
 1.6.6.1.557.g77031
