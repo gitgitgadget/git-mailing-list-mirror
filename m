@@ -1,126 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH v2 5/6] receive-pack: Wrap status reports inside side-band-64k
-Date: Fri,  5 Feb 2010 12:57:41 -0800
-Message-ID: <1265403462-20572-6-git-send-email-spearce@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 5/6] receive-pack: Wrap status reports inside
+ side-band-64k
+Date: Fri, 05 Feb 2010 13:14:37 -0800
+Message-ID: <7vd40j1j2a.fsf@alter.siamese.dyndns.org>
 References: <1265403462-20572-1-git-send-email-spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 05 22:09:14 2010
+ <1265403462-20572-6-git-send-email-spearce@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Feb 05 22:14:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdVQQ-0002t7-6d
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 22:09:14 +0100
+	id 1NdVVq-0006bm-Ey
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 22:14:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933801Ab0BEVIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2010 16:08:52 -0500
-Received: from george.spearce.org ([209.20.77.23]:35086 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757511Ab0BEVIv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2010 16:08:51 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 42A613821F
-	for <git@vger.kernel.org>; Fri,  5 Feb 2010 20:57:45 +0000 (UTC)
-X-Mailer: git-send-email 1.7.0.rc1.199.g9253ab
-In-Reply-To: <1265403462-20572-1-git-send-email-spearce@spearce.org>
+	id S1757471Ab0BEVOp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2010 16:14:45 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61742 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752939Ab0BEVOo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2010 16:14:44 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 88DD697165;
+	Fri,  5 Feb 2010 16:14:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IR3RZ9jjwcDechUHHSj5hk/27IM=; b=ERAq07
+	EhFvkjbq6Ffl8udmRVnXmVazZVv6id1EdAKqXcAM0rHZ/CwJqxTJPQCg1//6QhPt
+	pErR/DDYz6TFwyVDexLH+vYDn0sIxx4EI1KTa+6qmXJIFM3FZTo6rBDVkCaY0KkP
+	K35dEcF4HYzzEdzKHzDT520HGGVzs+DToEQiY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ciu3TanFSbAHFwtLT5AoiMX7O/D1xrCW
+	EQ9PLQTjC6pzFhuK5VEi0vXoFMIiIDIwl6ZzDxUlxXlyWFIE+pFZmGswCGfD8i82
+	CYJHsdSeXQT3UNcpkm3KXhkMbWwrtyuSq1YngHs8YdN9HVgwKj5MVFuYJ8xpFO00
+	DzjsI9UW1ck=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 68A7097161;
+	Fri,  5 Feb 2010 16:14:41 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA42D97160; Fri,  5 Feb
+ 2010 16:14:38 -0500 (EST)
+In-Reply-To: <1265403462-20572-6-git-send-email-spearce@spearce.org> (Shawn
+ O. Pearce's message of "Fri\,  5 Feb 2010 12\:57\:41 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 799CFC86-129B-11DF-A7B1-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139095>
 
-If the client requests the side-band-64k protocol capability we
-now wrap the status report data inside of packets sent to band #1.
-This permits us to later send additional progress or informational
-messages down band #2.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-If side-band-64k was enabled, we always send a final flush packet
-to let the client know we are done transmitting.
+> If the client requests the side-band-64k protocol capability we
+> now wrap the status report data inside of packets sent to band #1.
+> This permits us to later send additional progress or informational
+> messages down band #2.
+>
+> If side-band-64k was enabled, we always send a final flush packet
+> to let the client know we are done transmitting.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- builtin-receive-pack.c |   30 ++++++++++++++++++++++--------
- 1 files changed, 22 insertions(+), 8 deletions(-)
+Two questions.
 
-diff --git a/builtin-receive-pack.c b/builtin-receive-pack.c
-index 325ec6e..ff3f117 100644
---- a/builtin-receive-pack.c
-+++ b/builtin-receive-pack.c
-@@ -2,6 +2,7 @@
- #include "pack.h"
- #include "refs.h"
- #include "pkt-line.h"
-+#include "sideband.h"
- #include "run-command.h"
- #include "exec_cmd.h"
- #include "commit.h"
-@@ -27,6 +28,7 @@ static int receive_unpack_limit = -1;
- static int transfer_unpack_limit = -1;
- static int unpack_limit = 100;
- static int report_status;
-+static int use_sideband;
- static int prefer_ofs_delta = 1;
- static int auto_update_server_info;
- static int auto_gc = 1;
-@@ -110,7 +112,7 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
- 	else
- 		packet_write(1, "%s %s%c%s%s\n",
- 			     sha1_to_hex(sha1), path, 0,
--			     " report-status delete-refs",
-+			     " report-status delete-refs side-band-64k",
- 			     prefer_ofs_delta ? " ofs-delta" : "");
- 	sent_capabilities = 1;
- 	return 0;
-@@ -466,6 +468,8 @@ static void read_head_info(void)
- 		if (reflen + 82 < len) {
- 			if (strstr(refname + reflen + 1, "report-status"))
- 				report_status = 1;
-+			if (strstr(refname + reflen + 1, "side-band-64k"))
-+				use_sideband = LARGE_PACKET_MAX;
- 		}
- 		cmd = xmalloc(sizeof(struct command) + len - 80);
- 		hashcpy(cmd->old_sha1, old_sha1);
-@@ -565,17 +569,25 @@ static const char *unpack(void)
- static void report(const char *unpack_status)
- {
- 	struct command *cmd;
--	packet_write(1, "unpack %s\n",
--		     unpack_status ? unpack_status : "ok");
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	packet_buf_write(&buf, "unpack %s\n",
-+			 unpack_status ? unpack_status : "ok");
- 	for (cmd = commands; cmd; cmd = cmd->next) {
- 		if (!cmd->error_string)
--			packet_write(1, "ok %s\n",
--				     cmd->ref_name);
-+			packet_buf_write(&buf, "ok %s\n",
-+					 cmd->ref_name);
- 		else
--			packet_write(1, "ng %s %s\n",
--				     cmd->ref_name, cmd->error_string);
-+			packet_buf_write(&buf, "ng %s %s\n",
-+					 cmd->ref_name, cmd->error_string);
- 	}
--	packet_flush(1);
-+	packet_buf_flush(&buf);
-+
-+	if (use_sideband)
-+		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
-+	else
-+		safe_write(1, buf.buf, buf.len);
-+	strbuf_release(&buf);
- }
- 
- static int delete_only(struct command *cmd)
-@@ -705,5 +717,7 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		if (auto_update_server_info)
- 			update_server_info(0);
- 	}
-+	if (use_sideband)
-+		packet_flush(1);
- 	return 0;
- }
--- 
-1.7.0.rc1.199.g9253ab
+ - Why does use_sideband, the variable with the same name as a boolean
+   variable used by other parts of the system to decide whether we should
+   or should not use the sideband communiocation, get a value other than 0
+   or 1?  What is the benefit of using it to keep an actual value?  Does
+   the benefit outweigh the confusion factor?
+
+ - What happens if client wants only side-band, not 64k?  This is just
+   theoretical and "we don't bother" is a perfectly acceptable answer.  I
+   am just curious ;-).
