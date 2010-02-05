@@ -1,75 +1,95 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: upload-pack timing issue on windows?
-Date: Sat, 6 Feb 2010 00:51:56 +0100
-Message-ID: <40aa078e1002051551o6d116a50uee3f6a32b16adb46@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/9] revert: add --ff option to allow fast forward when
+ cherry-picking
+Date: Fri, 05 Feb 2010 15:57:18 -0800
+Message-ID: <7vpr4jnsm9.fsf@alter.siamese.dyndns.org>
+References: <20100205231028.3689.12228.chriscool@tuxfamily.org>
+ <20100205231112.3689.67634.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 00:52:09 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Stephen Boyd <bebarino@gmail.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sat Feb 06 00:58:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdXy0-0006r2-OU
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 00:52:05 +0100
+	id 1NdY3k-0001hN-Tm
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 00:58:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934061Ab0BEXv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2010 18:51:59 -0500
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:49613 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933393Ab0BEXv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2010 18:51:58 -0500
-Received: by wwi18 with SMTP id 18so719622wwi.19
-        for <git@vger.kernel.org>; Fri, 05 Feb 2010 15:51:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:date:message-id
-         :subject:from:to:content-type;
-        bh=8nbc/hFr17cWkPYxdb+iaF6mSLBLYeLcyF3BNn8KK2Q=;
-        b=Xn0KvMrLKAbOky5WnyzkYEHmVSRKfYQHoJrZAYPxBvAktNIRcsHCeXmoq+LZ40tevQ
-         KMRBtNXuu0fdGurCCj01U84Do+lhcd5B029j2hgOwbhD+ztJqAEXkqyzpPOrY8a3Aqn/
-         obd3HKUxNBi/CMcJf/f4AOrCTJkqU6s8fQqBE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:date:message-id:subject:from:to:content-type;
-        b=paYhShiigChL7LlJcqFSWhHex5u1cHYzcdOgpRwX7HPe76ukbmPw1tz7xd/X/F5+0D
-         z5k5SQc0t6zsbOuMmLWgB7LhuqWHCNTiEME2DBjVPWAPtRSQwFUrNN7MhntGq9q1cfKu
-         N6Hy+VVEu2WFcN5aC9oFSPzPrg9AsfhEF01S8=
-Received: by 10.216.88.7 with SMTP id z7mr1984645wee.19.1265413916271; Fri, 05 
-	Feb 2010 15:51:56 -0800 (PST)
+	id S934102Ab0BEX5m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2010 18:57:42 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55518 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933483Ab0BEX5l (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2010 18:57:41 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 84ECE97D0A;
+	Fri,  5 Feb 2010 18:57:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SE2naoc6E4TeJrd/56e/4IipnB8=; b=fdEsrp
+	tY2EPNRxFq8bEmq5hWRzjMQnjSy+KuSIO8U6IyqS7PesgrYTDlq3cPY0FnUL6MV4
+	5W0PLTFcC5WA0mzB7bBqyRXSl6LRglA7syPvijHEjQAXcPkHXiXmp0bSBQWdlwP+
+	BJUdwntu6J54qzcWQxGGt2TvMnIWflZhRyoFo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=m2hbNu59FGu8iAjs2ctXte+sWV0RQGyz
+	7EilrVQhVOeRpyre8tv0pCkOuJT/9girxylTBkOtKYr8fPZUwP7ePAMvd7vRrwvY
+	+AgkXznlzVlDP6PREod2aL6P7cA38v/HqpTn/Q2MP7VCGSAD7PVnw+rtrVumE/dD
+	hxrQpM+OFMM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F175E97D09;
+	Fri,  5 Feb 2010 18:57:29 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7F95B97D08; Fri,  5 Feb
+ 2010 18:57:19 -0500 (EST)
+In-Reply-To: <20100205231112.3689.67634.chriscool@tuxfamily.org> (Christian
+ Couder's message of "Sat\, 06 Feb 2010 00\:11\:07 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3820E742-12B2-11DF-B125-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139127>
 
-As some of you might know, I've been working on porting git-daemon to
-Windows for quite some time now. As it stands now, there's really only
-one known issue that is blocking on my end here:
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-Something weird happens *sometimes* when upload-pack is exiting,
-leading to a client dying with a "fatal: read error: Invalid
-argument\nfatal: early EOF"-error. If I place a sleep(1) at some place
-after exiting the while(1)-loop in create_pack() in upload-pack.c, the
-symptom goes away. create_pack() contains some async-code, but this
-doesn't seem to be triggered in my minimal case at all. I've tried
-flushing stdout and stderr explicitly, no luck.
+> As "git merge" fast forwards if possible, it seems sensible to
+> have such a feature for "git cherry-pick" too, especially as it
+> could be used in git-rebase--interactive.sh.
 
-How often the issue triggers seems to depend on two things, the size
-of the repo and the connection speed. If I clone from localhost, I
-can't get it to trigger at all. If the repo is of some size, it
-triggers rarely. However if I have a repo with only one commit, it
-seems to trigger every single time for me.
 
-I've noticed that one of the last things that happens is a call to
-poll with nfds=1. This triggers a special case in our poll-emulation
-on Windows; but removing that special case hasn't given me any
-positive results.
+> +	if (!(flags & PICK_REVERSE) && ff_ok && commit->parents) {
+> +		unsigned char head_sha1[20];
+> +		if (get_sha1("HEAD", head_sha1))
+> +			die("You do not have a valid HEAD.");
+> +		if (!hashcmp(commit->parents->item->object.sha1, head_sha1)) {
+> +			char *hex = sha1_to_hex(commit->object.sha1);
 
-Does anyone have a hunch about what might trigger this issue?
+With this check, you are saying:
 
--- 
-Erik "kusma" Faye-Lund
+	If we are cherry-picking commit $C, and if the current HEAD is
+        the first parent of $C, then just reset to $C instead of running a
+        cherry-pick.
+
+I didn't check if you have access to commit->parents->item->object.sha1 at
+this point in the codepath, though (e.g. have you parsed "commit" yet?).
+
+If the goal is to make untouched 'pick' in rebase-i to fast forward
+without actually running cherry-picking, perhaps it is much cleaner to do
+this kind of comparison in the caller of cherry-pick (i.e. rebase-i and
+anything that runs cherry-pick)?
+
+The whole series is titled as if "cherry-pick --ff" is the primary goal,
+but I am puzzled why earlier patches in the series were necessary for this
+change.
