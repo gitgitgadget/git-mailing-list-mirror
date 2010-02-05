@@ -1,103 +1,91 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/4] gitweb: notes feature
-Date: Fri, 5 Feb 2010 01:44:49 +0100
-Message-ID: <201002050144.50538.jnareb@gmail.com>
-References: <1265300338-25021-1-git-send-email-giuseppe.bilotta@gmail.com> <7v4olxhrti.fsf@alter.siamese.dyndns.org> <201002041821.22864.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: rebase vs rebase -i
+Date: Thu, 04 Feb 2010 16:45:21 -0800
+Message-ID: <7vmxzose72.fsf@alter.siamese.dyndns.org>
+References: <76718491002032019i5f8ea947paa527988ddb7a378@mail.gmail.com>
+ <alpine.DEB.1.00.1002041414530.4505@intel-tinevez-2-302>
+ <76718491002040914t12956bb2gbe21ae89f31cbc7f@mail.gmail.com>
+ <alpine.DEB.1.00.1002041859000.4505@intel-tinevez-2-302>
+ <76718491002041010k84ad55ct5c3e80529e8f8428@mail.gmail.com>
+ <alpine.DEB.1.00.1002041946170.4505@intel-tinevez-2-302>
+ <76718491002041157o37de139brb7995076274375aa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johan Herland <johan@herland.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 05 01:41:57 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 05 01:45:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdCGj-00006z-3J
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 01:41:57 +0100
+	id 1NdCKL-0002av-BR
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 01:45:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932319Ab0BEAlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2010 19:41:44 -0500
-Received: from mail-fx0-f220.google.com ([209.85.220.220]:37021 "EHLO
-	mail-fx0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757576Ab0BEAll (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2010 19:41:41 -0500
-Received: by fxm20 with SMTP id 20so3286384fxm.1
-        for <git@vger.kernel.org>; Thu, 04 Feb 2010 16:41:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=VoWh1PzLtMUiZJHMMpycioFrgnDB1n75n6tbS4OSkgc=;
-        b=ZZ6iEPjmI7Ab30puoNZbJoggssyCKDKilEL9dp643v2FjVHD/VsqveRqoyZDpgHorp
-         SUueXYu5qAyvEOO1e10YwCronIR5aWYoHOXc1KeCjvetfPzVQO9xtVMwYpoVRtH82V4H
-         zA4Q/kyJX8KW1mUWpJZ7FyKmHn6L6TyCx09C0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=sIAmvuTACR1Tj3nFmQJQ29Ujz8u+lHW/HfY3EPTIkNa/ir2gH8m/guxT6V08J94gzu
-         ccnotUMUuj0x7Rj/ygMgQN6vzS6TSBkwHwZm+H7ApLSjH4ldMFcpJVYZK/+KOMX5X0UX
-         TwRewI/kVYc6MXAfHks4D/HPgtLYGBBsEDUQQ=
-Received: by 10.87.63.8 with SMTP id q8mr839624fgk.3.1265330499916;
-        Thu, 04 Feb 2010 16:41:39 -0800 (PST)
-Received: from ?192.168.1.13? (abrz208.neoplus.adsl.tpnet.pl [83.8.119.208])
-        by mx.google.com with ESMTPS id 13sm359003fxm.13.2010.02.04.16.41.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 04 Feb 2010 16:41:38 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201002041821.22864.jnareb@gmail.com>
-Content-Disposition: inline
+	id S933305Ab0BEApf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2010 19:45:35 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62355 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757688Ab0BEApe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2010 19:45:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 842FA96477;
+	Thu,  4 Feb 2010 19:45:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eJS4x3hSi3T52BiCiirgV7RcV9Q=; b=w/vXgq
+	uN1ivgrXpAFFK9/CCq2pzu4vCpKBtVSWHk7rnnSm+hGBtRNpfw4pm+f5GbPLZgrB
+	KyVvufW3O2E/BDtQ6J9X3zaK8iMSzINJoWWvtgCMY1qea/nT6hq409R72zFUZYGY
+	8dGEfwZ1KM17GEYT0aAkq8KVNLBbiSQ+ptmic=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OmF40RKzECC28kUnRirQEl9WFsNtakqi
+	CH3aFu9F9reOffsHbBDr0+ETmLU/davc2FveWjk6XggZBl8+iftQauOevRRT2KNI
+	c6bgdkjtwFXoraqtzmwSREe1LV1bRavIfzd5A9/ydamz4yjcsO/BTmqx/nMImL55
+	C8RdDOXOM2A=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 489FA9646F;
+	Thu,  4 Feb 2010 19:45:27 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 66BFD96468; Thu,  4 Feb
+ 2010 19:45:23 -0500 (EST)
+In-Reply-To: <76718491002041157o37de139brb7995076274375aa@mail.gmail.com>
+ (Jay Soffian's message of "Thu\, 4 Feb 2010 14\:57\:13 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C0B9B8D6-11EF-11DF-A6EC-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139016>
 
-Jakub Narebski wrote:
-> On Thu, 4 Feb 2010, Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->> 
->>> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
->>>
->>>> +		my %notes = () ;
->>>> +		foreach my $note_ref (@note_refs) {
->>>> +			my $obj = "$note_ref:$co{'id'}";
-[...]
- 
-> Second, parse_commit / parse_commits use
-> 
->   git rev-list -z --parents --header --max-count-X
-> 
-> If this command automatically shows notes (or it can be modified to
-> automatically show notes) after unindented "Notes:" line (as per
-> git-notes documentation), then the only thing that needs to be
-> changed to fill %commit{'notes'} is parse_commit_text subroutine.
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-This command automatically shows notes, even in absence of GIT_NOTES_REF
-environment variable or core.notesRef (if core.notesRef is not unset),
-so unless we want gitweb to display notes flattened into commit message
-(which I think was intended behavior - design decision for notes 
-display), we would need to modify parse_commit_text to gather notes 
-into %commin{'notes'} (or something).
+> On Thu, Feb 4, 2010 at 1:46 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>> Both "rebase -i" and "rebase -m" are really a cherry-pick in a loop.
+>
+> Well then I'm still confused. I see where pick_one() in
+> git-rebase--interactive.sh is using cherry-pick.
+>
+> But call_merge() in git-rebase.sh is using git-merge-recursive (absent
+> specifying another strategy).
+>
+> ?
 
- 
-> There would be no need for extra subroutine (and extra command, or
-> even up to two extra commands per note) to get notes data.
+I think Dscho's point is that cherry-pick internally runs the same
+merge-recursive.
 
-You are right that we would need it if we want to display notes from
-non-default namespace.
+When you have a change C based on its parent C^ and want to replay that
+effect on a (possibly unrelated) commit A, you would run three-way merge,
+merging C into A as if C^ is the common ancestor.  The rebase script
+cherry-pick, and revert all work with the same principle (for revert
+obviously you would swap C and C^---you are applying the effect of going
+from C to C^ in that case).
 
-Still, 1 or 2 git commands per commit is a bit too much (with shortlog
-displaying 100 commits per page): that is what "git cat-file --batch"
-was invented ;-)
-
--- 
-Jakub Narebski
-Poland
+And no, "format-patch --stdout | am -3" pipe in the normal rebase codepath
+will stay unless you can produce a benchmark that says the performance of
+merge machinery is good enough these days.  Back when "rebase -m" was
+introduced, it wasn't.
