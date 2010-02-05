@@ -1,77 +1,69 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2 5/6] receive-pack: Wrap status reports inside
-	side-band-64k
-Date: Fri, 5 Feb 2010 13:53:44 -0800
-Message-ID: <20100205215344.GC27498@spearce.org>
-References: <1265403462-20572-1-git-send-email-spearce@spearce.org> <1265403462-20572-6-git-send-email-spearce@spearce.org> <7vd40j1j2a.fsf@alter.siamese.dyndns.org>
+ side-band-64k
+Date: Fri, 05 Feb 2010 14:19:46 -0800
+Message-ID: <7vhbpvxr3x.fsf@alter.siamese.dyndns.org>
+References: <1265403462-20572-1-git-send-email-spearce@spearce.org>
+ <1265403462-20572-6-git-send-email-spearce@spearce.org>
+ <7vd40j1j2a.fsf@alter.siamese.dyndns.org>
+ <20100205215344.GC27498@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 05 22:54:03 2010
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Feb 05 23:20:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdW7f-0004ic-EE
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 22:53:55 +0100
+	id 1NdWWv-0006OF-Jj
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 23:20:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933882Ab0BEVxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2010 16:53:49 -0500
-Received: from mail-yw0-f189.google.com ([209.85.211.189]:61108 "EHLO
-	mail-yw0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933861Ab0BEVxs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2010 16:53:48 -0500
-Received: by ywh27 with SMTP id 27so3824667ywh.1
-        for <git@vger.kernel.org>; Fri, 05 Feb 2010 13:53:48 -0800 (PST)
-Received: by 10.101.213.32 with SMTP id p32mr1373852anq.175.1265406827784;
-        Fri, 05 Feb 2010 13:53:47 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 5sm563658ywd.27.2010.02.05.13.53.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 05 Feb 2010 13:53:46 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vd40j1j2a.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S933917Ab0BEWTz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2010 17:19:55 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41014 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933910Ab0BEWTz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2010 17:19:55 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CCD397D0F;
+	Fri,  5 Feb 2010 17:19:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TJPdX7jC+RSSh4pE62Tg1IQbXhE=; b=aqzO6v
+	rLKByHliFmhE2lIl5lY8SL0R8EZpk6JNoP9mOL65eC57HtrDZG4Rd1RjxHUhNkk2
+	7JQX+CtLbAtk/okCxzXrohCgP/pHA9WWa+sSaG0XUIgPn8faL+dK4ww4M1KPHTJz
+	cNl1aOxBnHk5JU1GNjAy87f2e6bf18FqL/Sxk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tpeDkIMwRwirFMpFFgI8NZbEjr98TZmT
+	WHBBe7vxili2MOiNpn2l9nmW/72XDhENOeO0W2J0vkoUjwo1g2lQnXDVljnCT03h
+	BIQlID6QH1detFRutmpdkrb9VIxUDCYnFX55PDOA/T4fKFzWb9W0cqs/ilyfsmjR
+	+gq693TXJS8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 08AC497D0E;
+	Fri,  5 Feb 2010 17:19:51 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 698C597D0D; Fri,  5 Feb
+ 2010 17:19:48 -0500 (EST)
+In-Reply-To: <20100205215344.GC27498@spearce.org> (Shawn O. Pearce's message
+ of "Fri\, 5 Feb 2010 13\:53\:44 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 93EC142E-12A4-11DF-84E6-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139100>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > If the client requests the side-band-64k protocol capability we
-> > now wrap the status report data inside of packets sent to band #1.
-> > This permits us to later send additional progress or informational
-> > messages down band #2.
-> >
-> > If side-band-64k was enabled, we always send a final flush packet
-> > to let the client know we are done transmitting.
-> 
-> Two questions.
-> 
->  - Why does use_sideband, the variable with the same name as a boolean
->    variable used by other parts of the system to decide whether we should
->    or should not use the sideband communiocation, get a value other than 0
->    or 1?  What is the benefit of using it to keep an actual value?  Does
->    the benefit outweigh the confusion factor?
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-I was following the existing convention of use_sideband is
-maximum-packet-size in server code, and boolean in client code.
+> I was following the existing convention of use_sideband is
+> maximum-packet-size in server code, and boolean in client code.
 
-Well, I do diverage a bit in the client, in the client side
-use_sideband = 2 in builtin-fetch-pack.c for side-band-64k and
-use_sideband = 1 in builtin-send-pack.c for the same thing.
- 
->  - What happens if client wants only side-band, not 64k?  This is just
->    theoretical and "we don't bother" is a perfectly acceptable answer.  I
->    am just curious ;-).
+Ahh, I forgot about that -- we did it when we introduced different packet
+size limit.
 
-Why bother?  What client doesn't understand side-band-64k but would
-understand this?
-
--- 
-Shawn.
+Now it all makes sense.  Thanks.
