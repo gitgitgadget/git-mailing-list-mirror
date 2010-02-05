@@ -1,108 +1,100 @@
-From: Larry D'Anna <larry@elder-gods.org>
-Subject: [PATCH v2 3/3] make git push --dry-run --porcelain exit with status 0 even if updates will be rejected
-Date: Fri,  5 Feb 2010 15:49:41 -0500
-Message-ID: <cea7001d626116d76d885e24152d68cf41eca4dd.1265402797.git.larry@elder-gods.org>
-References: <cover.1265402797.git.larry@elder-gods.org>
-Cc: Larry D'Anna <larry@elder-gods.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 05 21:50:32 2010
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: git gc / git repack not removing unused objects?
+Date: Fri, 05 Feb 2010 15:51:07 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1002051539080.1681@xanadu.home>
+References: <cccedfc61002051145q1ff673e7s3db3bd7290be25e1@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Jon Nelson <jnelson@jamponi.net>
+X-From: git-owner@vger.kernel.org Fri Feb 05 21:51:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdV8J-00059V-4c
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 21:50:31 +0100
+	id 1NdV9N-00066i-2v
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 21:51:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755012Ab0BEUto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2010 15:49:44 -0500
-Received: from cthulhu.elder-gods.org ([140.239.99.253]:54173 "EHLO
-	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751031Ab0BEUtn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2010 15:49:43 -0500
-Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
-	id E342B82218B; Fri,  5 Feb 2010 15:49:42 -0500 (EST)
-X-Mailer: git-send-email 1.7.0.rc1.33.g07cf0f.dirty
-In-Reply-To: <cover.1265402797.git.larry@elder-gods.org>
-In-Reply-To: <cover.1265402797.git.larry@elder-gods.org>
-References: <7v1vgz5ta7.fsf@alter.siamese.dyndns.org> <cover.1265402797.git.larry@elder-gods.org>
+	id S1757493Ab0BEUvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2010 15:51:12 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:19925 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753343Ab0BEUvJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2010 15:51:09 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KXD00K32Z97DS01@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 05 Feb 2010 15:51:07 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <cccedfc61002051145q1ff673e7s3db3bd7290be25e1@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139085>
 
-The script calling git push --dry-run --porcelain can see clearly from the
-output that the updates will be rejected.  However, it will probably need to
-distinguish this condition from the push failing for other reasons, such as the
-remote not being reachable.
+On Fri, 5 Feb 2010, Jon Nelson wrote:
 
-Signed-off-by: Larry D'Anna <larry@elder-gods.org>
----
- builtin-send-pack.c |    4 ++++
- send-pack.h         |    1 +
- transport.c         |    7 +++++--
- 3 files changed, 10 insertions(+), 2 deletions(-)
+> [Using git 1.6.4.2]
+> 
+> In one repo I have (136G objects directory, fully packed) I'm having
+> some trouble.
+> I've run git-gc --prune=now, git repack -Adf, and so on a half-dozen
+> times and each time I do so it gets bigger, not smaller.
 
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index 76c7206..358f5e1 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -476,6 +476,10 @@ int send_pack(struct send_pack_args *args,
- 
- 	if (ret < 0)
- 		return ret;
-+
-+	if (args->porcelain && args->dry_run)
-+		return 0;
-+
- 	for (ref = remote_refs; ref; ref = ref->next) {
- 		switch (ref->status) {
- 		case REF_STATUS_NONE:
-diff --git a/send-pack.h b/send-pack.h
-index 28141ac..60b4ba6 100644
---- a/send-pack.h
-+++ b/send-pack.h
-@@ -4,6 +4,7 @@
- struct send_pack_args {
- 	unsigned verbose:1,
- 		quiet:1,
-+		porcelain:1,
- 		send_mirror:1,
- 		force_update:1,
- 		use_thin_pack:1,
-diff --git a/transport.c b/transport.c
-index 00d986c..b41e1dc 100644
---- a/transport.c
-+++ b/transport.c
-@@ -558,8 +558,10 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	return (refs ? 0 : -1);
- }
- 
--static int push_had_errors(struct ref *ref)
-+static int push_had_errors(struct ref *ref, int flags)
- {
-+	if (flags & TRANSPORT_PUSH_DRY_RUN && flags & TRANSPORT_PUSH_PORCELAIN)
-+		return 0;
- 	for (; ref; ref = ref->next) {
- 		switch (ref->status) {
- 		case REF_STATUS_NONE:
-@@ -791,6 +793,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 	args.verbose = !!(flags & TRANSPORT_PUSH_VERBOSE);
- 	args.quiet = !!(flags & TRANSPORT_PUSH_QUIET);
- 	args.dry_run = !!(flags & TRANSPORT_PUSH_DRY_RUN);
-+	args.porcelain = !!(flags & TRANSPORT_PUSH_PORCELAIN);
- 
- 	ret = send_pack(&args, data->fd, data->conn, remote_refs,
- 			&data->extra_have);
-@@ -1052,7 +1055,7 @@ int transport_push(struct transport *transport,
- 			flags & TRANSPORT_PUSH_FORCE);
- 
- 		ret = transport->push_refs(transport, remote_refs, flags);
--		err = push_had_errors(remote_refs);
-+		err = push_had_errors(remote_refs, flags);
- 
- 		ret |= err;
- 
--- 
-1.7.0.rc1.33.g07cf0f.dirty
+Please tell us more.
+
+> Setting that aside for the moment, however, I've run into a stranger problem.
+> 
+> So I use "git verify-pack -v > gvp.out" and "sort -k3nr < gvp.out |
+> head -n 20" to find the top 20 largest blobs.
+> So I have a blob, b32c3d8e8e24d8d3035cf52f606c2873315fe2b8, and now I
+> want to know what tree (or trees) it is in, so I try this:
+> 
+> 
+> for i in $( git branch -a | sed -e 's/\*//g' | grep -v branch ); do if
+> git ls-tree -l -r -t $i | grep
+> b32c3d8e8e24d8d3035cf52f606c2873315fe2b8 > /dev/null; then echo $i;
+> fi; done
+> 
+> The results: no branch or tree appears to contain that blob.
+
+What you did above is simply to list trees that are reachable from the 
+_heads_ of your branches.  If the blob belongs to a commit which isn't 
+the latest revision of any of your branches then you won't see it like 
+that.
+
+> So I tried a different approach:
+> 
+> for i in $( grep tree gvp.out  | awk '{ print $1 }' ); do if git
+> ls-tree $i | grep b32c3d8e8e24d8d3035cf52f606c2873315fe2b8 >
+> /dev/null; then echo $i; fi ; done
+> 
+> This time, I find (at least) one tree
+> (d813af1537358496ca34958bbff08b87590607bf) with the blob.
+> But which branches might that tree appear in? None.
+> 
+> For each branch, I ran "git ls-tree -l -r -t" and saved the output in
+> a file (one per branch).
+> Then I grepped each file for the tree (
+> (d813af1537358496ca34958bbff08b87590607bf) - no luck.
+> I grepped each file for the blob (b32...) - no luck.
+> 
+> The results seem to suggest that I have packed trees which reference
+> blobs, but that the trees themselves are not referenced in any branch
+> and therefore I would expect that they would be pruned.
+
+NO.  If those trees and blobs are stil there then they do get 
+referenced.  But not from the latest commit on any of your branches.  
+You need to dig further down in history to find a commit that actually 
+references that blob/tree.  One easy method is to do:
+
+	git log --raw --all
+
+and within the pager ('less' by default) simply search for "b32c3d8".
+
+
+Nicolas
