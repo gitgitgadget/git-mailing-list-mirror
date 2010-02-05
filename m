@@ -1,69 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Showing whitespace on minus lines of diff ouput
-Date: Thu, 04 Feb 2010 19:03:48 -0800
-Message-ID: <7veil0o02z.fsf@alter.siamese.dyndns.org>
-References: <76718491002041747t327bf2f5l85e095244f6ee1ed@mail.gmail.com>
+From: Michael Wookey <michaelwookey@gmail.com>
+Subject: creating a new branch without an ancestor
+Date: Fri, 5 Feb 2010 14:19:12 +1100
+Message-ID: <d2e97e801002041919r2043d05cjfb114a466605d9a1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 05 11:04:36 2010
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 05 11:04:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdL2U-0003Bj-Je
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 11:03:50 +0100
+	id 1NdL2V-0003Bj-ON
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 11:03:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754572Ab0BEDD4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2010 22:03:56 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41944 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751957Ab0BEDDz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2010 22:03:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E9352979B0;
-	Thu,  4 Feb 2010 22:03:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LiOf4uVL/Iptmwm+QzvZFGl7/7A=; b=eLSCtU
-	bJFYio9ifECVeRIgzFLB8eFFyJ/xCv3Gj6/QAeAjdI9Hexd1IDOfcEBM+sjv4OqP
-	LKOhgN41jBN2PW88Xr6f5jQM7DieL1ZpRFc2uGRHbkL1UAVIS25VEpkGveUi1XmN
-	LZZ8G4NRLvxsdhqcVVgjfhUHoX6tBEFsfJ+lY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=r5FO4SAiGOu4DIYfBkZzM+IhgrU35qT8
-	WxvEgp2Gh9K60+jGt+JmVl3K/i2Oth+i6t4aqhLgKTJWgsqFY7adifZLi/fqE7tm
-	JI9sFfSyy2rnJUCWSHfF0GuD7R2GYYXb7kVrnYpseVyqbwQLRIXRR1qRG0Sjquuy
-	i369HZ4T+K0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BFC6B979AF;
-	Thu,  4 Feb 2010 22:03:52 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 20B52979AE; Thu,  4 Feb
- 2010 22:03:49 -0500 (EST)
-In-Reply-To: <76718491002041747t327bf2f5l85e095244f6ee1ed@mail.gmail.com>
- (Jay Soffian's message of "Thu\, 4 Feb 2010 20\:47\:52 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 172EED90-1203-11DF-8AA0-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755314Ab0BEDTe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2010 22:19:34 -0500
+Received: from mail-pz0-f189.google.com ([209.85.222.189]:36906 "EHLO
+	mail-pz0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754172Ab0BEDTd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2010 22:19:33 -0500
+Received: by pzk27 with SMTP id 27so3626211pzk.33
+        for <git@vger.kernel.org>; Thu, 04 Feb 2010 19:19:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=vKj3zEITvgYbTM/pcfA0sdGbFPekGLtl2cEmpuMU1vM=;
+        b=sXzDoa5UJ9d4HUBfHAtiYBwQ/5hr/9PpxYtKJIp/nn83sHsqROEkSFSbf+Yvu/T6JX
+         AhyP9gfu9ZPw1O6nlpPQsKXH7ECbZZdWzDyBHO0r2ZB+skEkKuv1lm/OaZTy/7bbE2Pt
+         N8+yaMtk4DAa0i2Sfy0eN9ti5MLkxqtvmO+84=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=mbtiH3ovM0igzWxkSp3M6bNjs2YdZ/F/jDTQ/G1DxBQR8n5H2ML8nmTcEss5oW/7/e
+         4dh1IqU/PA8iROOf6gRTH/rShxvq3QRGR68KUAFqh7aE3l1VOf8z9Bn/HBFk1/AGl/GI
+         AzKxjD1VSRzFhJ8EuiA+MNJS92sNSr2NitmJ0=
+Received: by 10.115.64.6 with SMTP id r6mr1347309wak.85.1265339972074; Thu, 04 
+	Feb 2010 19:19:32 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139028>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+Maybe I'm missing something from reading the docs, but I couldn't see
+how to create a new branch in an existing repo that has no ancestor. I
+would like to do something like what git.git does with some of the
+other ancillary branches like "man", "html", and "todo".
 
-> The colored diff output is quite helpful to show introductions of whitespace.
->
-> However, if whitespace has been removed, it's impossible to see in the
-> diff output since whitespace is colorized on '+' lines, but not '-'
-> lines.
->
-> I'm looking at diff.c, but wow. Can someone more familiar with this
-> file point me toward how I'd make a patch to colorize whitespace on
-> '-' lines as well?
+I was hoping to do something like "git branch --no-ancestor
+new-branch-name" but didn't see anything in the documentation that
+describes the necessary branch options.
 
-Totally uninterested.  "diff -R" would be enough, wouldn't it?
+Or, am I looking in the wrong place?
