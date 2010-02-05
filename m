@@ -1,109 +1,75 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH v2 3/3] make git push --dry-run --porcelain exit with
- status 0 even if updates will be rejected
-Date: Sat, 6 Feb 2010 07:50:25 +0800
-Message-ID: <20100206075025.c1fe6b5a.rctay89@gmail.com>
-References: <cover.1265402797.git.larry@elder-gods.org>
-	<cea7001d626116d76d885e24152d68cf41eca4dd.1265402797.git.larry@elder-gods.org>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: upload-pack timing issue on windows?
+Date: Sat, 6 Feb 2010 00:51:56 +0100
+Message-ID: <40aa078e1002051551o6d116a50uee3f6a32b16adb46@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Larry D'Anna <larry@elder-gods.org>
-X-From: git-owner@vger.kernel.org Sat Feb 06 00:50:45 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+X-From: git-owner@vger.kernel.org Sat Feb 06 00:52:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdXwi-00062o-HA
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 00:50:44 +0100
+	id 1NdXy0-0006r2-OU
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 00:52:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934003Ab0BEXuk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2010 18:50:40 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:43960 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933483Ab0BEXuj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2010 18:50:39 -0500
-Received: by ewy28 with SMTP id 28so627458ewy.28
-        for <git@vger.kernel.org>; Fri, 05 Feb 2010 15:50:36 -0800 (PST)
+	id S934061Ab0BEXv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2010 18:51:59 -0500
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:49613 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933393Ab0BEXv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2010 18:51:58 -0500
+Received: by wwi18 with SMTP id 18so719622wwi.19
+        for <git@vger.kernel.org>; Fri, 05 Feb 2010 15:51:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:in-reply-to:references:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=OrZa1KXlNlzD+XiZu+V/E0GmEtM/JIMsCq+P1zeIusI=;
-        b=oUOom+GxCCc6fsySyS4EMZsIPLqvescjYPRZg+WcJH47lECy7CIJaUNrtyVtxvCjH9
-         SIzXxEwYNhhRFpPSaK17WUXFx2tx3e5srAWnlmYErIcNPpKWvFmBBEnfiK4QErmCZ++p
-         m2vzCx07iosthy9T4YKqVJ9tNkzogcIdLGPU4=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:date:message-id
+         :subject:from:to:content-type;
+        bh=8nbc/hFr17cWkPYxdb+iaF6mSLBLYeLcyF3BNn8KK2Q=;
+        b=Xn0KvMrLKAbOky5WnyzkYEHmVSRKfYQHoJrZAYPxBvAktNIRcsHCeXmoq+LZ40tevQ
+         KMRBtNXuu0fdGurCCj01U84Do+lhcd5B029j2hgOwbhD+ztJqAEXkqyzpPOrY8a3Aqn/
+         obd3HKUxNBi/CMcJf/f4AOrCTJkqU6s8fQqBE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        b=saNVU7KTO5W9pGjWnBlsqx04+nqI6euLXMTXz1zIctFFMA3htv2xukaU9WMzNhkOZ5
-         GLrB7BVIsS/kiapGMuJ++YOW0ri70sLrDqjiiT8hDxE+U+a8YoUQDq1FZzlmAYueUXug
-         yxeRFpeY5FTF8yzrr6Saz4tIETpwAvIjx8tV8=
-Received: by 10.213.96.227 with SMTP id i35mr2916616ebn.35.1265413836569;
-        Fri, 05 Feb 2010 15:50:36 -0800 (PST)
-Received: from your-cukc5e3z5n (cm31.zeta153.maxonline.com.sg [116.87.153.31])
-        by mx.google.com with ESMTPS id 14sm1354501ewy.3.2010.02.05.15.50.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 05 Feb 2010 15:50:35 -0800 (PST)
-In-Reply-To: <cea7001d626116d76d885e24152d68cf41eca4dd.1265402797.git.larry@elder-gods.org>
-X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:date:message-id:subject:from:to:content-type;
+        b=paYhShiigChL7LlJcqFSWhHex5u1cHYzcdOgpRwX7HPe76ukbmPw1tz7xd/X/F5+0D
+         z5k5SQc0t6zsbOuMmLWgB7LhuqWHCNTiEME2DBjVPWAPtRSQwFUrNN7MhntGq9q1cfKu
+         N6Hy+VVEu2WFcN5aC9oFSPzPrg9AsfhEF01S8=
+Received: by 10.216.88.7 with SMTP id z7mr1984645wee.19.1265413916271; Fri, 05 
+	Feb 2010 15:51:56 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139126>
 
-Hi,
+As some of you might know, I've been working on porting git-daemon to
+Windows for quite some time now. As it stands now, there's really only
+one known issue that is blocking on my end here:
 
-instead of:
+Something weird happens *sometimes* when upload-pack is exiting,
+leading to a client dying with a "fatal: read error: Invalid
+argument\nfatal: early EOF"-error. If I place a sleep(1) at some place
+after exiting the while(1)-loop in create_pack() in upload-pack.c, the
+symptom goes away. create_pack() contains some async-code, but this
+doesn't seem to be triggered in my minimal case at all. I've tried
+flushing stdout and stderr explicitly, no luck.
 
-> diff --git a/transport.c b/transport.c
-> index 00d986c..b41e1dc 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -558,8 +558,10 @@ static int fetch_refs_via_pack(struct transport *transport,
->  	return (refs ? 0 : -1);
->  }
->  
-> -static int push_had_errors(struct ref *ref)
-> +static int push_had_errors(struct ref *ref, int flags)
->  {
-> +	if (flags & TRANSPORT_PUSH_DRY_RUN && flags & TRANSPORT_PUSH_PORCELAIN)
-> +		return 0;
->  	for (; ref; ref = ref->next) {
->  		switch (ref->status) {
->  		case REF_STATUS_NONE:
+How often the issue triggers seems to depend on two things, the size
+of the repo and the connection speed. If I clone from localhost, I
+can't get it to trigger at all. If the repo is of some size, it
+triggers rarely. However if I have a repo with only one commit, it
+seems to trigger every single time for me.
 
-and:
+I've noticed that one of the last things that happens is a call to
+poll with nfds=1. This triggers a special case in our poll-emulation
+on Windows; but removing that special case hasn't given me any
+positive results.
 
-> @@ -1052,7 +1055,7 @@ int transport_push(struct transport *transport,
->  			flags & TRANSPORT_PUSH_FORCE);
->  
->  		ret = transport->push_refs(transport, remote_refs, flags);
-> -		err = push_had_errors(remote_refs);
-> +		err = push_had_errors(remote_refs, flags);
->  
->  		ret |= err;
->  
-
-why not:
-
--->8--
-@@ -1049,7 +1052,7 @@ int transport_push(struct transport *transport,
-			flags & TRANSPORT_PUSH_FORCE);
-
-		ret = transport->push_refs(transport, remote_refs, flags);
--		err = push_had_errors(remote_refs);
-+		err = (pretend && porcelain) ? 0 : push_had_errors(remote_refs);
-
-		ret |= err;
-
--->8--
+Does anyone have a hunch about what might trigger this issue?
 
 -- 
-Cheers,
-Ray Chuan
+Erik "kusma" Faye-Lund
