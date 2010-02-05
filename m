@@ -1,74 +1,78 @@
-From: Jan Engelhardt <jengelh@medozas.de>
-Subject: git-grep: option parsing conflicts with prefix-dash searches
-Date: Sat, 6 Feb 2010 00:09:11 +0100 (CET)
-Message-ID: <alpine.LSU.2.01.1002052351060.30204@obet.zrqbmnf.qr>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 06 00:09:19 2010
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 0/9] add --ff option to cherry-pick
+Date: Sat, 06 Feb 2010 00:11:02 +0100
+Message-ID: <20100205231028.3689.12228.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Stephen Boyd <bebarino@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 06 00:12:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdXIc-0006CF-Mt
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 00:09:19 +0100
+	id 1NdXLL-00082w-2f
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 00:12:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756427Ab0BEXJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2010 18:09:13 -0500
-Received: from borg.medozas.de ([188.40.89.202]:36258 "EHLO borg.medozas.de"
+	id S1757665Ab0BEXL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2010 18:11:59 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:53931 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752466Ab0BEXJM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2010 18:09:12 -0500
-Received: by borg.medozas.de (Postfix, from userid 25121)
-	id A972FF0C327A6; Sat,  6 Feb 2010 00:09:11 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by borg.medozas.de (Postfix) with ESMTP id A06C2119CE
-	for <git@vger.kernel.org>; Sat,  6 Feb 2010 00:09:11 +0100 (CET)
-User-Agent: Alpine 2.01 (LSU 1266 2009-07-14)
+	id S1752539Ab0BEXL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2010 18:11:58 -0500
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id AA04781809C;
+	Sat,  6 Feb 2010 00:11:49 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 51FFD818057;
+	Sat,  6 Feb 2010 00:11:46 +0100 (CET)
+X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139109>
 
-Greetings.
+Changes since the previous series are the following:
 
+- added some tests in a new patch
+- added some documentation in a new patch
+- added a patch to use the new "reset" function in builtin-merge.c
+- made --ff incompatible with --edit -x and --signoff too, thanks to Paolo
+- improved the first patch with suggestions from Stephen Boyd, thanks
+- made a "struct lock_file" static to initialize it in the first patch
+- improved commit messages
 
-Just about now I wanted to grep for accesses of a particular struct 
-member. Needless to say that it was not a very amusing experience.
-I would expect that (1) probably fails:
+Christian Couder (8):
+  reset: refactor updating heads into a static function
+  reset: refactor reseting in its own function
+  reset: make reset function non static and declare it in "reset.h"
+  revert: add --ff option to allow fast forward when cherry-picking
+  cherry-pick: add tests for new --ff option
+  Documentation: describe new cherry-pick --ff option
+  rebase -i: use new --ff cherry-pick option
+  merge: use new "reset" function instead of running "git read-tree"
 
-(1)	$ git grep '->cnt' net/ipv4/netfilter/
-	error: unknown switch `>'
+Stephan Beyer (1):
+  revert: libify cherry-pick and revert functionnality
 
-So far so good, seems reasonable and matches what I would expect from 
-most other userspace tools. So let's add -- to terminate the option 
-list:
-
-(2)	$ git grep -- '->cnt' net/ipv4/netfilter/
-	fatal: bad flag '->cnt' used after filename
-
-*bzzt*. This does not match typical behavior. Let alone that "--"
-is not a filename.
-
-What works is (3).
-
-(3)	$ git grep -- -- '->cnt' net/ipv4/netfilter/
-
-But it almost looks like Morse code. Or Perl. Imagine I were to
-approxmiately search for all options in iptables's in-code help texts:
-
-	git grep -- -- -- .
-
-I think that overloading "--" was a bad choice. The option parser has
-many more awkward behavior, such as not allowing to bundle most
-options (`git log -z -p` vs. `git log -zp`) yet forcing it on other
-options (`git log -Spattern` vs `git log -S pattern`). The use of
-historic counts (cf. `git log -30` and `tail -30`) compared to a more
-modern `tail -n30`) also prohibits using many standard parsers
-(most notably getopt(3)), as they would recognize that as -3 -0.
-
-As I said, it's a mess. And I know not whether any code can convince
-the "but we need to watch compatibility"-sayers, because this would
-definitely be a flag change.
+ Documentation/git-cherry-pick.txt |    6 +-
+ Makefile                          |    2 +
+ builtin-merge.c                   |   31 ++---
+ builtin-reset.c                   |  175 ++++++++++++----------
+ builtin-revert.c                  |  303 +++++++++----------------------------
+ git-rebase--interactive.sh        |   15 +--
+ pick.c                            |  218 ++++++++++++++++++++++++++
+ pick.h                            |   13 ++
+ reset.h                           |   10 ++
+ t/t3506-cherry-pick-ff.sh         |   38 +++++
+ 10 files changed, 471 insertions(+), 340 deletions(-)
+ create mode 100644 pick.c
+ create mode 100644 pick.h
+ create mode 100644 reset.h
+ create mode 100755 t/t3506-cherry-pick-ff.sh
