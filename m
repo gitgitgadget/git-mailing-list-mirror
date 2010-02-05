@@ -1,125 +1,117 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] push: Use sideband channel for hook messages
-Date: Fri, 5 Feb 2010 07:32:52 -0800
-Message-ID: <20100205153252.GC19255@spearce.org>
-References: <20100205033748.GA19255@spearce.org> <4B6C07E3.5030705@viscovery.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: notes TODOs (was: Re: [PATCH 1/4] gitweb: notes feature)
+Date: Fri, 5 Feb 2010 16:27:02 +0100
+Message-ID: <201002051627.05182.jnareb@gmail.com>
+References: <cb7bb73a1002050444y55f57696gb1b3bd06ab9261ac@mail.gmail.com> <201002051546.19406.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Feb 05 16:33:10 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Feb 05 16:35:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdQBB-00081u-AT
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 16:33:09 +0100
+	id 1NdQDB-0000x9-BS
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 16:35:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751071Ab0BEPdB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2010 10:33:01 -0500
-Received: from mail-iw0-f189.google.com ([209.85.223.189]:62070 "EHLO
-	mail-iw0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750859Ab0BEPdB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2010 10:33:01 -0500
-Received: by iwn27 with SMTP id 27so1030854iwn.5
-        for <git@vger.kernel.org>; Fri, 05 Feb 2010 07:33:00 -0800 (PST)
-Received: by 10.231.148.134 with SMTP id p6mr2753562ibv.96.1265383976777;
-        Fri, 05 Feb 2010 07:32:56 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 23sm1146476iwn.11.2010.02.05.07.32.53
+	id S1751791Ab0BEPfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2010 10:35:07 -0500
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:34341 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751252Ab0BEPfF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2010 10:35:05 -0500
+Received: by bwz19 with SMTP id 19so1543521bwz.28
+        for <git@vger.kernel.org>; Fri, 05 Feb 2010 07:35:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=fUAcvS8Gt86rQrVKDltYa/rmudgaOrUd4JYgX+ZoXCo=;
+        b=oJ30T1vfFrg9VQU5wRKuAI0p+OeRiDHPcNFh9naRR7czsFPaLBkRZIBgkg05BQSqbI
+         Hqn0V9QtICgk+OzfuJaHQZebgG8na1s4H0jB9MRi4iM0P4AjafS07+OxB+SVjK3J7lVk
+         tkY4EZNC+0ixJFDdMjjnMg7+rdCRTlXWHgsoU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=dM2pUwEHWpemiaKkITh/NHHebQjM7l2gqK6xB7ycyWak4G7DqVN/BjpnK8z7g3kPs+
+         oAvocvf66udBtWyfZ+z4PFStA6pdRhRQTHtpKFuaAg75c0EgnsKUsSw6qg+/A+pD8/S/
+         RN674OlhAFFJamluUImuAVzCDNDozIKqc436E=
+Received: by 10.102.236.3 with SMTP id j3mr1945254muh.93.1265383629714;
+        Fri, 05 Feb 2010 07:27:09 -0800 (PST)
+Received: from ?192.168.1.13? (abvb35.neoplus.adsl.tpnet.pl [83.8.199.35])
+        by mx.google.com with ESMTPS id j6sm7816320mue.17.2010.02.05.07.27.07
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 05 Feb 2010 07:32:55 -0800 (PST)
+        Fri, 05 Feb 2010 07:27:08 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201002051546.19406.johan@herland.net>
 Content-Disposition: inline
-In-Reply-To: <4B6C07E3.5030705@viscovery.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139051>
 
-Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Shawn O. Pearce schrieb:
-> > Rather than sending hook messages over stderr, and losing them
-> > entirely on git:// and smart HTTP transports,
+On Fri, 5 Feb 2010, Johan Herland wrote:
+> On Friday 05 February 2010, Giuseppe Bilotta wrote:
+
+> > If I may be allowed to add a suggestion to put in the list, I would
+> > like to see notes attachable to named refs (branch heads in
+> > particular). From a cursory reading of your patches currently in pu
+> > it would seem that you explicitly prohibit this case currently.
+> > However, this has many possible uses, ranging from longer branch
+> > descriptions to tracking information to improve survival in case of
+> > remote rebases.
 > 
-> I don't think "losing them entirely" is true for the git:// protocol:
-> git-daemon writes receive-pack's stderr to the syslog.
+> Nope. There is no explicit prohibition on anything. On a fundamental 
+> level, Git-notes simply maps a given SHA1 (the annotated object) to 
+> another SHA1 (the object holding the annotation itself). In principle 
+> you can annotate _any_ SHA1, it doesn't even have to exist as a git 
+> object!
+
+I guess that it isn't currently possible to map _path_ (here: fully 
+qualified name of ref, i.e. "refs/heads/master" in example) to SHA1
+rather than SHA1 to SHA1, as fan-outs assumes mapping of SHA1 (to 
+object).
+
 > 
-> The question is whether hook errors are intended for the remote side or
-> for the repository owner. Generally, I'd say for the latter. But since
-> your patch is about pushing, a repository owner must already trust the
-> remote side, and then it can be argued that in this case errors can be
-> sent to the remote.
-
-I think everyone expects hook errors on the client.
-
-Most people push over authenticated SSH, where hook messages come
-back on stderr.  For these folks, if they wanted something in syslog,
-they'd send it there directly from the hook.
-
-I doubt there are many anonymous pushes allowed over git://.  But,
-yea, sure, I could see someone setting up their server with an
-update hook to only permit pushes to the refs/heads/mob branch and
-logging access failures to syslog by echoing to stderr.  I think
-these people are in the vast minority, and might not even want this
-behavior by default.  Maybe I'm just a jerk, but if they want their
-hooks to continue to echo to syslog rather than to the client,
-they can build a patch on top of this to git daemon which passes
-a flag down into receive-pack to disable the side band channel.
-
- 
-> > diff --git a/run-command.c b/run-command.c
-> > index cf2d8f7..7d1fd88 100644
-> > @@ -228,6 +231,8 @@ fail_pipe:
-> >  
-> >  	if (need_err)
-> >  		close(fderr[1]);
-> > +	else if (cmd->err)
-> > +		close(cmd->err);
+> In fact, something like the following abomination should solve 
+> your "problem" quite easily:
 > 
-> This requires similar adjustments in the Windows part.
+>   git notes add $(echo "refs/heads/master" | git hash-object --stdin)
 > 
-> Documentation/technical/api-runcommand.txt should be an update, too.
+> (...washing my hands...)
 
-Ouch, good catch.  Will fix.
+This actually annotates (existing or not) _blob_ object with 
+"refs/heads/master" as contents (git-hash-object defaults to -t blob).
 
- 
-> > @@ -326,10 +331,19 @@ static unsigned __stdcall run_thread(void *data)
-> >  int start_async(struct async *async)
-> >  {
-> >  	int pipe_out[2];
-> > +	int proc_fd, call_fd;
-> >  
-> >  	if (pipe(pipe_out) < 0)
-> >  		return error("cannot create pipe: %s", strerror(errno));
-> > -	async->out = pipe_out[0];
-> > +
-> > +	if (async->is_reader) {
-> > +		proc_fd = pipe_out[0];
-> > +		call_fd = pipe_out[1];
-> > +	} else {
-> > +		call_fd = pipe_out[0];
-> > +		proc_fd = pipe_out[1];
-> > +	}
-> > +	async->out = call_fd;
 > 
-> I don't particularly like this approach because it restricts the async
-> procedures to a one-way communication.
+> > And one last comment: how do notes behave wrt to cloning and remote
+> > handling? Am I correct in my understanding that notes are
+> > (presently) local only? Would it make sense to have them cloned to
+> > something like the refs/notes/remotes/* namespace?
+> 
+> They are no more local than any other ref, except that they are
+> outside the refspecs that are "usually" pushed/fetched (refs/heads/
+> and refs/tags/).
+> 
+> 	git push <remote> refs/notes/<foo>
+> 	git fetch <remote> refs/notes/<foo>[:refs/notes/<foo>]
+> 	etc.
+> 
+> should all work as expected.
 
-Well, its always been one way.  With the async function writing to the
-main application consumer.
- 
-> What would you think about passing both channels to the async callback,
-> and the communicating parties must agree on which channel they communicate
-> by closing the unused one? It would require slight changes to all current
-> async users, though. (It also requires in the threaded case that we pass
-> dup()s of the pipe channels.)
-
-Yup, I could do that.  I feel like it might be over-engineering the
-solution a bit.  But I'll respin the patch by splitting it apart,
-and doing a bidirectional async here, since you asked nicely.
+It would be nice, but I guess not possible, to have notes autofollowed 
+on fetch, like tags are autofollowed...
 
 -- 
-Shawn.
+Jakub Narebski
+Poland
