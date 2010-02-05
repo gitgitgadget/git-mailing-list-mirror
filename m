@@ -1,76 +1,54 @@
-From: Jon Nelson <jnelson@jamponi.net>
-Subject: git gc / git repack not removing unused objects?
-Date: Fri, 5 Feb 2010 13:45:41 -0600
-Message-ID: <cccedfc61002051145q1ff673e7s3db3bd7290be25e1@mail.gmail.com>
+From: Larry D'Anna <larry@elder-gods.org>
+Subject: Re: [PATCH] fix an error message in git-push so it goes to stderr
+Date: Fri, 5 Feb 2010 14:50:04 -0500
+Message-ID: <20100205195004.GA21772@cthulhu>
+References: <20100205004140.GA2841@cthulhu>
+ <20100205150638.GB14116@coredump.intra.peff.net>
+ <20100205193950.GA18108@cthulhu>
+ <20100205194824.GD24474@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 05 20:46:15 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <jrk@wrek.org>
+X-From: git-owner@vger.kernel.org Fri Feb 05 20:50:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdU86-0005iW-V7
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 20:46:15 +0100
+	id 1NdUBz-0000Hc-6R
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 20:50:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755699Ab0BETqF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2010 14:46:05 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:65301 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755202Ab0BETqC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2010 14:46:02 -0500
-Received: by ey-out-2122.google.com with SMTP id 25so227834eya.5
-        for <git@vger.kernel.org>; Fri, 05 Feb 2010 11:46:01 -0800 (PST)
-Received: by 10.216.163.81 with SMTP id z59mr1823626wek.95.1265399161249; Fri, 
-	05 Feb 2010 11:46:01 -0800 (PST)
+	id S1755804Ab0BETuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2010 14:50:07 -0500
+Received: from cthulhu.elder-gods.org ([140.239.99.253]:56899 "EHLO
+	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755787Ab0BETuG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2010 14:50:06 -0500
+Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
+	id AACEE82217D; Fri,  5 Feb 2010 14:50:04 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20100205194824.GD24474@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139071>
 
-[Using git 1.6.4.2]
+* Jeff King (jrk@wrek.org) [100205 14:48]:
+> On Fri, Feb 05, 2010 at 02:39:50PM -0500, Larry D'Anna wrote:
+> 
+> > Also it seems to me that git push --dry-run --porcelain should exit successfully
+> > even if it knows some refs will be rejected.  The calling script can see just
+> > fine for itself that they will be rejected, and it probably still wants to know
+> > whether or not the dry-run succeeded, which has nothing to do with whether or
+> > not the same push would succeed as a not-dry-run.
+> 
+> I think that is OK, but only if "git push --dry-run" still exits with an
+> error case, since people may be using it for "will this push work?" and
+> not simply "did an error occur?".
 
-In one repo I have (136G objects directory, fully packed) I'm having
-some trouble.
-I've run git-gc --prune=now, git repack -Adf, and so on a half-dozen
-times and each time I do so it gets bigger, not smaller.
-Setting that aside for the moment, however, I've run into a stranger problem.
+Yup.  That's exactly what the patch I just posted does.
 
-So I use "git verify-pack -v > gvp.out" and "sort -k3nr < gvp.out |
-head -n 20" to find the top 20 largest blobs.
-So I have a blob, b32c3d8e8e24d8d3035cf52f606c2873315fe2b8, and now I
-want to know what tree (or trees) it is in, so I try this:
-
-
-for i in $( git branch -a | sed -e 's/\*//g' | grep -v branch ); do if
-git ls-tree -l -r -t $i | grep
-b32c3d8e8e24d8d3035cf52f606c2873315fe2b8 > /dev/null; then echo $i;
-fi; done
-
-The results: no branch or tree appears to contain that blob.
-
-So I tried a different approach:
-
-for i in $( grep tree gvp.out  | awk '{ print $1 }' ); do if git
-ls-tree $i | grep b32c3d8e8e24d8d3035cf52f606c2873315fe2b8 >
-/dev/null; then echo $i; fi ; done
-
-This time, I find (at least) one tree
-(d813af1537358496ca34958bbff08b87590607bf) with the blob.
-But which branches might that tree appear in? None.
-
-For each branch, I ran "git ls-tree -l -r -t" and saved the output in
-a file (one per branch).
-Then I grepped each file for the tree (
-(d813af1537358496ca34958bbff08b87590607bf) - no luck.
-I grepped each file for the blob (b32...) - no luck.
-
-The results seem to suggest that I have packed trees which reference
-blobs, but that the trees themselves are not referenced in any branch
-and therefore I would expect that they would be pruned.
-
-
--- 
-Jon
+      --larry
