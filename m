@@ -1,81 +1,83 @@
-From: Mihamina Rakotomandimby <mihamina@gulfsat.mg>
-Subject: reverting vs resetting
-Date: Fri, 5 Feb 2010 09:12:23 +0300
-Organization: Gulfsat
-Message-ID: <20100205091223.6b4cffb1@pbmiha.malagasy.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] grep: simple test for operation in a bare repository
+Date: Thu, 04 Feb 2010 22:50:37 -0800
+Message-ID: <7vd40kjhvm.fsf@alter.siamese.dyndns.org>
+References: <4B69BD7C.4010608@lsrfire.ath.cx>
+ <4B6A0BDE.2050908@lsrfire.ath.cx> <4B6B653A.8060909@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 05 11:06:01 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Fri Feb 05 11:06:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdL3W-0003Bj-Du
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 11:04:55 +0100
+	id 1NdL3a-0003Bj-Fq
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Feb 2010 11:04:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933067Ab0BEGn1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2010 01:43:27 -0500
-Received: from static-104-36.blueline.mg ([41.204.104.36]:59726 "EHLO
-	mail.blueline.mg" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933097Ab0BEGn0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2010 01:43:26 -0500
-X-Greylist: delayed 1850 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Feb 2010 01:43:25 EST
-Received: from localhost (spamassassin.malagasy.com [41.204.104.47])
-	by mail.blueline.mg (Postfix) with ESMTP id EA030F83E
-	for <git@vger.kernel.org>; Fri,  5 Feb 2010 09:16:18 +0300 (EAT)
-X-Virus-Scanned: par antivirus.malagasy.com
-X-Spam-Flag: NO
-X-Spam-Score: -2.692
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.692 required=7 tests=[AWL=-0.093, BAYES_00=-2.599]
-Received: from mail.blueline.mg ([41.204.104.38])
-	by localhost (spamassassin.malagasy.com [41.204.104.47]) (amavisd-new, port 10024)
-	with ESMTP id VLjWjGkajtLJ for <git@vger.kernel.org>;
-	Fri,  5 Feb 2010 09:17:15 +0300 (EAT)
-Received: from pbmiha.malagasy.com (sysadmin-cnc.malagasy.com [41.204.104.9])
-	by mail.blueline.mg (Postfix) with ESMTP id 26FC6F83A
-	for <git@vger.kernel.org>; Fri,  5 Feb 2010 09:16:13 +0300 (EAT)
-Received: from localhost ([127.0.0.1] helo=pbmiha.malagasy.com)
-	by pbmiha.malagasy.com with esmtp (Exim 4.69)
-	(envelope-from <mihamina@gulfsat.mg>)
-	id 1NdHQV-0000hv-TR
-	for git@vger.kernel.org; Fri, 05 Feb 2010 09:12:23 +0300
-X-Mailer: Claws Mail 3.7.2 (GTK+ 2.18.3; x86_64-pc-linux-gnu)
+	id S933212Ab0BEGus convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Feb 2010 01:50:48 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63437 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933167Ab0BEGur convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Feb 2010 01:50:47 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CB4D79670E;
+	Fri,  5 Feb 2010 01:50:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=o2LJz6hJq2WW
+	vpOG9tj9qs0dDq4=; b=l+fJxwZCjzVSPQLBwqCCIsObQouJNtvTaFD07hF7d3Mq
+	xhRJQfi2TOOrLmbtnVLNYRmXGMuMdfGxAfHTfydA39SDFlVeFVm4NhRor03HGtqA
+	OEwvGq+85J5sleg1Z+axivBaeAqRfCyufWeyomHxaIEjodSf61VzA7MQYApslQw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=wd/cmG
+	dhEEkUwRfhUXa6UwqkUS/JwSrornjMWoyfTLwK0pOBzGIL6oahhWGqwUc8SJiBPi
+	5DqJBD3kxNOKvn6UZ/QFhmZY48qj41aBj+F/TqwcmfQmsEh/6WYnACEQVAciy7fy
+	gyhoRhEJPwNPNQUdOYIxi8qBeNq5TwH12slKw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A88C79670D;
+	Fri,  5 Feb 2010 01:50:42 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CEC649670B; Fri,  5 Feb
+ 2010 01:50:38 -0500 (EST)
+In-Reply-To: <4B6B653A.8060909@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of "Fri\, 05 Feb 2010 01\:24\:26 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C751AD42-1222-11DF-99EC-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139032>
 
-Manao ahoana, Hello, Bonjour,
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-We put a gateway iptables script (SNAT, DNAT,...) under GIT.
+> There are five more sites in git.c, path.c and setup.c where $GIT_DIR
+> is set directly with setenv().  I wonder if they should better call
+> set_git_dir() instead, too.
+>
+>
+> diff --git a/setup.c b/setup.c
+> index 710e2f3..5fb9b25 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -406,7 +406,7 @@ const char *setup_git_directory_gently(int *nongi=
+t_ok)
+>  				cwd[offset] =3D '\0';
+>  				setenv(GIT_DIR_ENVIRONMENT, cwd, 1);
+>  			} else
+> -				setenv(GIT_DIR_ENVIRONMENT, ".", 1);
+> +				set_git_dir(".");
+>  			check_repository_format_gently(nongit_ok);
+>  			return NULL;
+>  		}
 
-Someone (Bob) made a mistake on it, but he did not know. That broke the
-gateway.
-
-Another one (Andy), did not try to undo Bob's mistake but tried (and
-tried, and tried... always committing) to solve the problem. Andy made
-about 50 commits.
-
-When we decided to giveup, we decided to get back to the configuration
-before Bob broke it. But it would be interesting to see Andy's history.
-
-Reverting or resetting?
-
-As far as I know: 
-- Reverting Bob's commit will only cancel Bob's mistake but not Andy's
-  tries to solve it.
-- Resetting will forget the history.
-
-Any suggestion?
-
-Misaotra, Thanks, Merci.
-
--- 
-       Architecte Informatique chez Blueline/Gulfsat:
-    Administration Systeme, Recherche & Developpement
-                +261 34 29 155 34 / +261 33 11 207 36
+Yeah, shouldn't the other setenv() we see in the context need a similar
+change as well?
