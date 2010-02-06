@@ -1,162 +1,152 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 3/4] gitweb: show notes in log
-Date: Sat, 6 Feb 2010 14:14:23 +0100
-Message-ID: <cb7bb73a1002060514p33a4bcbdqb13d636cd6448998@mail.gmail.com>
-References: <1265300338-25021-1-git-send-email-giuseppe.bilotta@gmail.com> 
-	<1265300338-25021-4-git-send-email-giuseppe.bilotta@gmail.com> 
-	<201002061357.59245.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 4/4] gitweb: show notes in commit(diff) view
+Date: Sat, 6 Feb 2010 14:16:28 +0100
+Message-ID: <201002061416.29481.jnareb@gmail.com>
+References: <1265300338-25021-1-git-send-email-giuseppe.bilotta@gmail.com> <1265300338-25021-5-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Johan Herland <johan@herland.net>,
 	Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 14:14:53 2010
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 06 14:17:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdkUu-0006G9-Kn
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 14:14:53 +0100
+	id 1NdkWi-0008F1-Vb
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 14:16:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755566Ab0BFNOq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Feb 2010 08:14:46 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:45853 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755485Ab0BFNOq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Feb 2010 08:14:46 -0500
-Received: by ey-out-2122.google.com with SMTP id d26so1029837eyd.19
-        for <git@vger.kernel.org>; Sat, 06 Feb 2010 05:14:44 -0800 (PST)
+	id S1755602Ab0BFNQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Feb 2010 08:16:39 -0500
+Received: from mail-fx0-f220.google.com ([209.85.220.220]:33754 "EHLO
+	mail-fx0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755485Ab0BFNQj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2010 08:16:39 -0500
+Received: by fxm20 with SMTP id 20so69897fxm.1
+        for <git@vger.kernel.org>; Sat, 06 Feb 2010 05:16:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=dru8nobnnY9ZDeJfGnaQaFDcK6qIlCUY/MJMjdrpFjA=;
-        b=STtzbVS+HtqpVTmMTpt3oon6WGxUAaAonki3TGnY2W38nr+aufEsUctFeBTpVa/gXt
-         IGPY5y3QdNBOB5C9fs+xNOx1jQKjg0cptrmMYh1H/bZRBITCTbWYe1+mAoDQNa/svRDN
-         CpLJo8Ux4W05mLWy/alcXPQq9rFP30dT3M7fs=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=DkBK6cJktupns/dwV1PjDUziEwys5btg4ZToUjokyvU=;
+        b=UxWU9uJNs8B4MV6xPWnk2AV0MNliK93fv7666ArLhDtr4mbvaXa3lI9sw2mJOF3H1a
+         6wGs9wA7kTw5JAwkRsH7fMbBEufGvN67EnJGlFgxXdFkQp8Hd5l9l8+9tJwCipom9QwJ
+         UjABset6QgIsTWxGCrKduYpv2erD8VsDpYTuo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=VYsDPFCII7u4MTYt30FeKybh8EVo3VL/JX5dLv2QOhsQg865Tnkd3my3vd/LI0133S
-         I5iNXKkAr5pwv56Iv6i5I6fGyu/RPgH9DtoiOQcZu75p+1kQL2nC7E40sb4DQh8+EzFc
-         8ZuUc06qidMzwFHAe8EagxI5nqqc7kVoSTGDs=
-Received: by 10.213.100.129 with SMTP id y1mr1766410ebn.47.1265462083234; Sat, 
-	06 Feb 2010 05:14:43 -0800 (PST)
-In-Reply-To: <201002061357.59245.jnareb@gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=RDXcnX4iMUTqwKL2cpScv3en0dQ5td1MZkMc7JJwxBlL/j3uAJdMKe7tdQrDiJtjNo
+         NPMq8QcbmWxbwkupDjC6ZgcNAJZYOVni+KOW/pArPzZ0GkkEbACGYN8ftYKYfEdyi9/O
+         js9/CohdKn3dnbo8SFDN1j/IOZuITnduhTDNQ=
+Received: by 10.87.67.10 with SMTP id u10mr4156794fgk.28.1265462197361;
+        Sat, 06 Feb 2010 05:16:37 -0800 (PST)
+Received: from ?192.168.1.13? (abws80.neoplus.adsl.tpnet.pl [83.8.242.80])
+        by mx.google.com with ESMTPS id 16sm1081312fxm.0.2010.02.06.05.16.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 06 Feb 2010 05:16:36 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1265300338-25021-5-git-send-email-giuseppe.bilotta@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139163>
 
-2010/2/6 Jakub Narebski <jnareb@gmail.com>:
-> On Thu, 4 Feb 2010, Giuseppe Bilotta wrote:
->
->> The notes are shown in full to the left of the log message.
->
-> Thats all good if you have wide (high resolution) screen, and your
-> project follows common commit message conventions of keeping lines in
-> commit message no longer than at most 80 characters, and you don't ne=
-ed
-> to use large size fonts.
->
-> What happens if screen size is too small to contain both commit messa=
-ge
-> and notes? =A0Does it do the sensible thing of putting notes _below_
-> commit message in such situation? =A0I do not know CSS+HTML enogh to
-> answer this question myself.
+On Thu, 4 Jan 2010, Giuseppe Bilotta wrote:
 
-The CSS forces the width of the notes div at 150px, which is the
-amount left to the left of the commit message. This means that notes
-will line-wrap, but they will not shift the text.
+> The notes are shown side-by-side along the bottom of the commit
+> message. 
 
-> BTW. signoff?
+The same question apply as for previous commit.
 
+What happens if screen size is too small to contain both commit message
+and notes?  Does it do the sensible thing of putting notes _below_
+commit message in such situation?  I do not know CSS+HTML enogh to
+answer this question myself.
 
-As usual, I forgot.
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 0d0877e..0d03026 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -2837,12 +2837,31 @@ sub parse_commit {
+>  	%co = parse_commit_text(<$fd>, 1);
+>  	close $fd;
+>  
+> +	my %notes = ();
+> +	foreach my $note_ref (get_note_refs()) {
+> +		my $obj = "$note_ref:$co{'id'}";
+> +		if (open my $fd, '-|', git_cmd(), 'rev-parse',
+> +			'--verify', '-q', $obj) {
+> +			my $exists = <$fd>;
+> +			close $fd;
+> +			if (defined $exists) {
+> +				if (open $fd, '-|', git_cmd(), 'show', $obj) {
+> +					$notes{$note_ref} = scalar <$fd>;
+> +					close $fd;
+> +				}
+> +			}
+> +		}
+> +	}
+> +	$co{'notes'} = \%notes;
+> +
+>  	return %co;
+>  }
 
-> P.S. We would probably want some support for notes also in feeds (Ato=
-m
-> and RSS feed), but this can be left for the future commit.
+Duplicated code.  Please put this code in a separate subroutine, to be
+called in those two places.
+  
+>  # return all refs matching refs/notes/<globspecs> where the globspecs
+>  # are taken from the notes feature content.
+>  sub get_note_refs {
+> +	local $/ = "";
+> +
 
-I honestly have absolutely no idea how to do that.
+Why it is needed here?  Why you want to use empty lines as terminator
+(which means reading whole paragraphs), while treating two or more
+consecutive empty lines as a single empty line (according to
+perlvar(1))?
 
->> @@ -1631,6 +1631,7 @@ sub format_subject_html {
->> =A0# display notes next to a commit
->> =A0sub format_notes_html {
->> =A0 =A0 =A0 my %notes =3D %{$_[0]};
->> + =A0 =A0 my $tag =3D $_[1] || 'span' ;
->
-> This could be
->
-> =A0 =A0 =A0 =A0my $notes =3D shift;
-> =A0 =A0 =A0 =A0my $tag =3D shift || 'span' ;
->
-> and then use %$notes.
+If you want to slurp whole file, this should be
 
-Would be much bettere, yes.
+   	local $/;
 
->> =A0 =A0 =A0 my $ret =3D "";
->> =A0 =A0 =A0 while (my ($ref, $text) =3D each %notes) {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 # remove 'refs/notes/' and an optional f=
-inal s
->> @@ -1639,15 +1640,15 @@ sub format_notes_html {
->>
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 # double markup is needed to allow pure =
-CSS cross-browser 'popup'
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 # of the note
->> - =A0 =A0 =A0 =A0 =A0 =A0 $ret .=3D "<span title=3D'$ref' class=3D'n=
-ote-container $ref'>";
->> - =A0 =A0 =A0 =A0 =A0 =A0 $ret .=3D "<span title=3D'$ref' class=3D'n=
-ote $ref'>";
->> + =A0 =A0 =A0 =A0 =A0 =A0 $ret .=3D "<$tag title=3D'$ref' class=3D'n=
-ote-container $ref'>";
->> + =A0 =A0 =A0 =A0 =A0 =A0 $ret .=3D "<$tag title=3D'$ref' class=3D'n=
-ote $ref'>";
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 foreach my $line (split /\n/, $text) {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $ret .=3D esc_html($line=
-) . "<br/>";
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
->> - =A0 =A0 =A0 =A0 =A0 =A0 $ret .=3D "</span></span>";
->> + =A0 =A0 =A0 =A0 =A0 =A0 $ret .=3D "</$tag></$tag>";
->> =A0 =A0 =A0 }
->> =A0 =A0 =A0 if ($ret) {
->> - =A0 =A0 =A0 =A0 =A0 =A0 return "<span class=3D'notes'>$ret</span>"=
-;
->> + =A0 =A0 =A0 =A0 =A0 =A0 return "<$tag class=3D'notes'>$ret</$tag>"=
-;
->> =A0 =A0 =A0 } else {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 return $ret;
->> =A0 =A0 =A0 }
->
-> Nice trick, but is this distinction really necessary?
+or more explicit
 
-I think so.  The distinction is useful both from the structural point
-of view (block elements with block elements, inline elements with
-inline elements) and for CSS selection (the block case has totally
-different styling than the inline case).
+   	local $/ = undef;
 
->> + =A0 =A0 =A0 =A0 =A0 =A0 print "$notes\n";
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 print "<div class=3D\"log_body\">\n";
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 git_print_log($co{'comment'}, -final_emp=
-ty_line=3D> 1);
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 print "</div>\n";
->
-> With respect to the question about what happens if the screen is not
-> wide enough, shouldn't notes be put in HTML source below body (commit
-> message)?
+>  	my @globs = gitweb_get_feature('notes');
+>  	my @note_refs = ();
+>  	foreach my $glob (@globs) {
+> @@ -5875,6 +5894,7 @@ sub git_commit {
+>  
+>  	print "<div class=\"page_body\">\n";
+>  	git_print_log($co{'comment'});
+> +	print format_notes_html($co{'notes'}, 'div');
+>  	print "</div>\n";
+>  
+>  	git_difftree_body(\@difftree, $hash, @$parents);
+> @@ -6230,6 +6250,7 @@ sub git_commitdiff {
+>  			git_print_log($co{'comment'}, -final_empty_line=> 1, -remove_title => 1);
+>  			print "</div>\n"; # class="log"
+>  		}
+> +		print format_notes_html($co{'notes'}, 'div');
+>  
+>  	} elsif ($format eq 'plain') {
+>  		my $refs = git_get_references("tags");
 
-As I mentioned, notes width is fixed at the amount of the whitespace
-to the left of the log, so this should not be an issue. Additionally,
-putting notes below makes it much harder to let them float to the left
-of the log body.
+This of course assumes that we want notes treated exactly (or almost
+exactly) the same way for 'log', 'commit' and 'commitdiff' views.
+Perhaps it is a good assumption (at least for first step)...
 
-
---=20
-Giuseppe "Oblomov" Bilotta
+-- 
+Jakub Narebski
+Poland
