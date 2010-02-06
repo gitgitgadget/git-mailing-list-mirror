@@ -1,75 +1,202 @@
-From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
-Subject: [PATCH] bash: support the --autosquash option for rebase
-Date: Sat, 06 Feb 2010 09:37:53 +0100
-Message-ID: <4B6D2A61.3000604@gmail.com>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH 1/4] gitweb: notes feature
+Date: Sat, 6 Feb 2010 10:02:21 +0100
+Message-ID: <cb7bb73a1002060102n5544f825x3d01860b1228cee@mail.gmail.com>
+References: <1265300338-25021-1-git-send-email-giuseppe.bilotta@gmail.com> 
+	<1265300338-25021-2-git-send-email-giuseppe.bilotta@gmail.com> 
+	<201002060044.11225.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Feb 06 09:38:33 2010
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johan Herland <johan@herland.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 06 10:02:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdgBU-00035j-W9
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 09:38:33 +0100
+	id 1NdgZ3-0007YW-OM
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 10:02:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752798Ab0BFIh5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Feb 2010 03:37:57 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:45549 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752278Ab0BFIh4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2010 03:37:56 -0500
-Received: by ewy28 with SMTP id 28so815338ewy.28
-        for <git@vger.kernel.org>; Sat, 06 Feb 2010 00:37:54 -0800 (PST)
+	id S1754059Ab0BFJCo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Feb 2010 04:02:44 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:2551 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753911Ab0BFJCm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Feb 2010 04:02:42 -0500
+Received: by ey-out-2122.google.com with SMTP id d26so1006925eyd.19
+        for <git@vger.kernel.org>; Sat, 06 Feb 2010 01:02:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=m/ShBprteqaegU30oDeIawG1L/pfj24wac/qJccFxOg=;
-        b=HbMMrfBMA8LB/1jjT7cbZJ7+vifTVETX3EpQrWxKPAi6iqJmvjPnnG44gf4fBgDBRs
-         rMITIhcVjAXmuAz7VGxZIJLmYWI2ge8q0ebOp4GwRiV0qHavxCzwM6xT5BaY/8czhdAi
-         8hNjBesVqBUx0Zc2b+UtO3B/OlzcSkx0ER/hE=
+        bh=MdNMP9iU7LtJ6driH+FHiPL7gP97pFNULV+h8o9EFf4=;
+        b=rridiGNXDg567xXkipmp4QPB9kd6sRAygLS5BqQDDR1Xzk3aj9npKXPUpIL4v1SRvs
+         xHBtCB34+qVzoW29Uqe++nlbqEqPwY/dx0YAL6fLiGRAOxY9ujBv+2doXyyB5Ag8FfwB
+         WxvIJ62JOi8CH4sCpDmUuP8PYkntxCMkdXhWs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=Y22BbdcKyL1x6GB/M79oLjyCIoTFX1DVIhKIwvf3qDBYjfCUO+5L5a7GyK8n86x0Jx
-         3Q23kq7WOX8uhw6ICrz4D9Ruygsk3P1ex6uj+6EBJe29x4sHoT+dK6bkCp7eUtxrejlT
-         nHuUFc4vaUWLvr/vExkMjuPBRsQGlfGeaZtso=
-Received: by 10.213.102.73 with SMTP id f9mr3349549ebo.12.1265445474723;
-        Sat, 06 Feb 2010 00:37:54 -0800 (PST)
-Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
-        by mx.google.com with ESMTPS id 14sm1526223ewy.7.2010.02.06.00.37.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 06 Feb 2010 00:37:54 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=wodxjR3JH6dD3s6Lu1YsHIT6e8VrFsd03VzJnwHo0z3Q9dupUSanajVs+5ColtlP6w
+         kPOAp/kQ1e/1Okl1hhIHwBVl8Sk0XC7i8OtGOaMT+5jSkQa2fHn2AoAcRgu60tXUbuSq
+         qgDUB8djQN+IC0cQ1GnWbEt+LWpBOc9Qn6mlw=
+Received: by 10.213.48.2 with SMTP id p2mr1580223ebf.60.1265446961116; Sat, 06 
+	Feb 2010 01:02:41 -0800 (PST)
+In-Reply-To: <201002060044.11225.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139151>
 
-Signed-off-by: Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>
----
- contrib/completion/git-completion.bash |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+2010/2/6 Jakub Narebski <jnareb@gmail.com>:
+> On Thu, 4 Feb 2010, Giuseppe Bilotta wrote:
+>
+> BTW. shouldn't this series be marked as RFC?
+>
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index da46bf8..35acad0 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1386,6 +1386,7 @@ _git_rebase ()
- 			--preserve-merges --stat --no-stat
- 			--committer-date-is-author-date --ignore-date
- 			--ignore-whitespace --whitespace=3D
-+			--autosquash
- 			"
-=20
- 		return
+[snip]
+
+>
+> Signoff?
+
+Y'know, one would figure that, this not being my first contribution
+and what, I'd have learned to do this properly 8-/.
+
+>> + =A0 =A0 # Notes support. When this feature is enabled, the presenc=
+e of notes
+>> + =A0 =A0 # for any commit is signaled, and the note content is made=
+ available
+>> + =A0 =A0 # in a way appropriate for the current view.
+>> + =A0 =A0 # Set this to '*' to enable all notes namespace, or to a s=
+hell-glob
+>> + =A0 =A0 # specification to enable specific namespaces only.
+>
+> It is not obvious from this description that you can provide _list_ o=
+f
+> notes namespaces (or list of shell-globs).
+
+I'm starting to think it might make sense to not have a list here, but
+rather a single value only. First of all, multiple refs can be
+indicated =E0 la shell with {ref1,ref2,ref3}. Or, we can also use the
+intended command-line syntax ref1:ref2:ref3, which would help
+consistency. It also makes things easier for project overrides, as per
+your subsequent comment:
+
+>> +
+>> + =A0 =A0 # To enable system wide have in $GITWEB_CONFIG
+>> + =A0 =A0 # $feature{'notes'}{'default'} =3D ['*'];
+>> + =A0 =A0 # To have project specific config enable override in $GITW=
+EB_CONFIG
+>> + =A0 =A0 # $feature{'notes'}{'override'} =3D 1;
+>> + =A0 =A0 # and in project config gitweb.notes =3D namespace;
+>
+> How you can provide list of notes here? =A0Is overriding limited to s=
+ingle
+> name or shell-glob?
+>
+> See feature_snapshot for example implementation.
+
+As mentioned above, I'd rather use the same syntax deployed on the
+command line, either shell-like or PATH-like multiple paths.
+
+> Second, perhaps it is time to refactor all those similar feature_xxx
+> subroutines (just a possible suggestion)?
+
+feature_notes looks remarkably like feature_avatar, indeed.
+
+>> +# return all refs matching refs/notes/<globspecs> where the globspe=
+cs
+>> +# are taken from the notes feature content.
+>> +sub get_note_refs {
+>> + =A0 =A0 my @globs =3D gitweb_get_feature('notes');
+>> + =A0 =A0 my @note_refs =3D ();
+>> + =A0 =A0 foreach my $glob (@globs) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 if (open my $fd, '-|', git_cmd(), 'for-eac=
+h-ref',
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 '--format=3D%(refname)', "refs/not=
+es/$glob") {
+>
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0open my $fd, '-|', git_cmd(), 'for-eac=
+h-ref',
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0'--format=3D%(refname)=
+', "refs/notes/$glob"
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0or return;
+>
+> would reduce indent level a bit.
+
+Good idea, thanks.
+
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 while (<$fd>) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 chomp;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 push @note=
+_refs, $_ if $_;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
+>
+> Why not simply
+>
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0chomp(@note_refs =3D <$fd>);
+
+Because I didn't know chomp worked on lists. Thanks for the idea.
+
+>> + =A0 =A0 =A0 =A0 =A0 =A0 my %notes =3D () ;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 foreach my $note_ref (@note_refs) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 my $obj =3D "$note_ref:$co=
+{'id'}";
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (open my $fd, '-|', git=
+_cmd(), 'rev-parse',
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 '--verify'=
+, '-q', $obj) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 my $exists=
+ =3D <$fd>;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 close $fd;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (define=
+d $exists) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 if (open $fd, '-|', git_cmd(), 'show', $obj) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 =A0 =A0 =A0 $notes{$note_ref} =3D scalar <$fd>;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 =A0 =A0 =A0 close $fd;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 }
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
+>> + =A0 =A0 =A0 =A0 =A0 =A0 }
+>
+> First, there are '--batch' and '--batch-check' options to git-cat-fil=
+e.
+> With these I think you can get all notes with just single git command=
+,
+> although using it is a bit complicated (requires open2 from IPC::Open=
+2
+> for bidi communication).
+
+Hm. The IPC::Open2 doc makes it sound horribly scary, but still doable.
+
+> Second, if not using 'git cat-file --batch', perhaps it would be easi=
+er
+> to read each $note_ref tree using 'git ls-tree'/'git ls-tree -r', and
+> parse its output to check for which commits/objects there are notes
+> available, and only then call 'git show' (or reuse connection to
+> 'git cat-file --batch').
+>
+> The second solution, with a bit more work, could work even in presenc=
+e
+> of fan-out schemes for notes, I think.
+
+An interesting approach. Without fan-out, git ls-tree -r
+refs/notes/whatever [hash ...] gives us the blobs we're interested in.
+In case of fan-out schemes, the efficiency of this approach probably
+depends on the kind of fan-out we have, and would require some
+heavy-duty grepping. A git ls-notes plumbing with a similar syntax and
+output would be a nice thing to have.
+
 --=20
-1.7.0.rc1.10.gb8bb
+Giuseppe "Oblomov" Bilotta
