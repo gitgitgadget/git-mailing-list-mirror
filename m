@@ -1,129 +1,184 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add new options to git format-patch: --cover-subject and
- --cover-blurb
-Date: Fri, 05 Feb 2010 17:10:34 -0800
-Message-ID: <7vtytvjhit.fsf@alter.siamese.dyndns.org>
-References: <1265405973-5670-1-git-send-email-larry@elder-gods.org>
- <201002051526.18205.wjl@icecavern.net>
- <7vfx5fwbws.fsf@alter.siamese.dyndns.org> <20100205225901.GA29821@cthulhu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Wesley J. Landaker" <wjl@icecavern.net>, git@vger.kernel.org
-To: Larry D'Anna <larry@elder-gods.org>
-X-From: git-owner@vger.kernel.org Sat Feb 06 02:10:52 2010
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [RFC/PATCH] rebase: add -x option to record original commit name
+Date: Fri,  5 Feb 2010 20:19:26 -0500
+Message-ID: <1265419166-21388-1-git-send-email-jaysoffian@gmail.com>
+Cc: Jay Soffian <jaysoffian@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 06 02:25:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdZCF-0000Le-Pd
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 02:10:52 +0100
+	id 1NdZQK-0007Yr-A0
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 02:25:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933087Ab0BFBKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2010 20:10:46 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42109 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757495Ab0BFBKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2010 20:10:45 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B7E49778A;
-	Fri,  5 Feb 2010 20:10:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EujyELrTezEls4ibZXhhTLUJQ+Q=; b=Xzl5Ae
-	fi1MyMh+/hJse+Oo1X5ee0FKqUEiUXOv/Enfd5CQbiM9fXiv2yeXkw5jW+NRBT+j
-	HN6Om4giyk3xohDXExrv2C7CDLSYhZghKROcrMwYkAqZjXCa1csojQfTh4jcfxB8
-	WzFT7TpzYXOmL4HPjTnceGXEqUB84TCnaJCqA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=v6uGcRqNpTNIlfrffO5+x/6I9UIhGO9R
-	La2VuoEwxdTbpeWtKj3pytMDm37e2zBrxJYhsYXs5WH5P8AA37VRZf0EPCeiBROu
-	zUxkQqtQIADc4Oi6U9asWE8fABXNtt8aCLBoy0UmrX/utZ/AN1EiIXfdWurkKDTw
-	4VKhoN6Z7AU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A56E97785;
-	Fri,  5 Feb 2010 20:10:40 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2D1C997784; Fri,  5 Feb
- 2010 20:10:36 -0500 (EST)
-In-Reply-To: <20100205225901.GA29821@cthulhu> (Larry D'Anna's message of
- "Fri\, 5 Feb 2010 17\:59\:01 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 70D7F9CC-12BC-11DF-8800-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S933849Ab0BFBZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2010 20:25:15 -0500
+Received: from mail-yw0-f198.google.com ([209.85.211.198]:48220 "EHLO
+	mail-yw0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933223Ab0BFBZO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2010 20:25:14 -0500
+Received: by ywh36 with SMTP id 36so4580506ywh.15
+        for <git@vger.kernel.org>; Fri, 05 Feb 2010 17:25:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=dD9uk0SAXYNFy43zAlNlSNBOgRcMCCJsMSoiGNudC/s=;
+        b=hzKfawc5nBi6ORiiwdc8QejxP3WhIJdhtMTrF6uhHHvNojU1g7uOqaakEDQV+lZMwE
+         VY+rMhMbbqeRroeYTrU05cp0fbeTUNi0+wZyV3H5OA4AFbNkgUiXOpwrJ3c9yDwlQOe0
+         epAnMqWdcBe5XpoFC/wDuKQJmqp1WAVsboqz0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=xuhvgfenQ48+2ztDz3IE9taO3ZubOEFr6k3lcVPy36YTWL4/c2gKpZo8bIEr8UsFwl
+         qWxf2Hx7qkyYhPmz1yQLVtkh9ugsHgufcTZTBvu/qwEnqgAp5zql5nrF+kjRZMod2bEa
+         cg/4TArFN6uvRLnHrVKzYNgLv5lxsXgyJtoE8=
+Received: by 10.101.170.12 with SMTP id x12mr4841588ano.127.1265419178011;
+        Fri, 05 Feb 2010 17:19:38 -0800 (PST)
+Received: from localhost (cpe-065-190-041-119.nc.res.rr.com [65.190.41.119])
+        by mx.google.com with ESMTPS id 13sm1190507gxk.13.2010.02.05.17.19.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 05 Feb 2010 17:19:37 -0800 (PST)
+X-Mailer: git-send-email 1.7.0.rc1.200.g9c1f9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139135>
 
-Larry D'Anna <larry@elder-gods.org> writes:
+It is often more convenient to use rebase --onto than cherry-pick when
+relocating a range of commits, as cherry-pick only supports a single commit at a
+time.
 
-> 1) make your branch
->
-> 2) git format-patch --cover-letter
->
-> 3) edit the cover letter
->
-> 3) review the series, and realize you need to fix something, fix it.
+This commit teaches rebase the "-x" to record the original commit name, in the
+same way as cherry-pick's "-x" option.
+---
 
-Hmph, this begs a natural question: why didn't you review and realize that
-in step (1)?
+Note that I explictly did not add support for anything but the simple
+format-patch + am codepath. I think it's unlikely to want to record the
+original commit name in cases where "-m/-p" are needed. 
 
-> 4) git format-patch --cover-letter again
->
-> 5) edit the cover letter, *again*.  hopefully you didn't overwrite the
-> old one.
+However, this option might be useful when using "--interactive", but I wanted
+to get feedback first as rebase--interactive is a little scarier to patch. :-)
 
-This step I can understand and am very sympathetic to the cause, even
-though I may not be convinced that the patch under discussion is the best
-solution to the issue.
+Thoughts?
 
-What argument are you giving to the "-o" option?  If your series changed
-(e.g. inserted or deleted a commit in the middle, retitled, etc.), and
-your output is going to the same directory, you would end up with files
-with duplicate serial numbers and you would need to purge the old one
-before your next invocation of send-email.  For this reason, people
-quickly learn to either give a different -o location (so that they can
-compare two versions), or to purge the old contents before running
-format-patch.  If the latter, it would be sufficient to save the old
-0000-cover before removing them, and if the former, the old cover is
-already there.  You can cut and paste from there while editing the new
-one.
+ Documentation/git-rebase.txt |    5 +++++
+ git-am.sh                    |   14 ++++++++++++++
+ git-rebase.sh                |    9 +++++++++
+ 3 files changed, 28 insertions(+), 0 deletions(-)
 
-The thing I found suboptimal in your approach is that most often the cover
-letter is written to explain what the overall goal of the series is and
-how each patch relates to each other to achieve that goal.  In order to
-effectively do so, the overview format-patch leaves in 0000-cover template
-file helps a lot (actually that is half the reason why it shows the
-overview---the other is for the recipients).
-
-Your approach forces the user to write the blurb part in a separate file
-on blank sheet of paper _before_ running format-patch, iow, without the
-help of that series overview, if they want to take advantage of your "I
-don't want to lose what I wrote already" feature.  To put it another way,
-people who use --cover-blurb would write suboptimal (or maybe useless)
-blurb text exactly because they don't look at the series overview while
-they write it---the option encourages a bad cover letter to be sent to
-reviewers.
-
-I am hoping we can do better than that.
-
-It might be sufficient for format-patch to notice a 0000-cover file that
-is already there, read the subject and blurb part and carry that forward,
-instead of unconditionally writing "*** SUBJECT HERE ***" and stuff.  That
-way, the user does not have to prepare a separate file before running
-format-patch.
-
-By scanning from the bottom of the existing 0000-cover file, skipping
-diffstat part (easy to spot with regexp) and then skip backwards a block
-of text whose lines are one of:
-
- (1) two space indented---that's one-line-per-commit;
-
- (2) empty line---separator; or
-
- (3) unindented line that ends with '(' number ')' ':'---the author.
-
-The remainder would be the BLURB.  And you know it is much easier to find
-where the Subject: is ;-)
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 823f2a4..2fb0e96 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -315,6 +315,11 @@ which makes little sense.
+ 	so that the commit marked for squashing comes right after the
+ 	commit to be modified, and change the action of the moved
+ 	commit from `pick` to `squash` (or `fixup`).
++
++-x::
++	Append to the original commit message a note that indicates which commit
++	this change originated from, similar to cherry-pick's -x option. This
++	option is not compatible with -m, -p or --interactive.
+ +
+ This option is only valid when '--interactive' option is used.
+ 
+diff --git a/git-am.sh b/git-am.sh
+index c8b9cbb..83805eb 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -31,6 +31,7 @@ abort           restore the original branch and abort the patching operation.
+ committer-date-is-author-date    lie about committer date
+ ignore-date     use current timestamp for author date
+ rerere-autoupdate update the index with reused conflict resolution if possible
++add-commit-name* (internal use for git-rebase)
+ rebasing*       (internal use for git-rebase)"
+ 
+ . git-sh-setup
+@@ -296,6 +297,7 @@ git_apply_opt=
+ committer_date_is_author_date=
+ ignore_date=
+ allow_rerere_autoupdate=
++add_commit_name=
+ 
+ while test $# != 0
+ do
+@@ -347,6 +349,8 @@ do
+ 		allow_rerere_autoupdate="$1" ;;
+ 	-q|--quiet)
+ 		GIT_QUIET=t ;;
++	--add-commit-name)
++		add_commit_name=t ;;
+ 	--)
+ 		shift; break ;;
+ 	*)
+@@ -454,6 +458,7 @@ else
+ 	echo "$keep" >"$dotest/keep"
+ 	echo "$scissors" >"$dotest/scissors"
+ 	echo "$no_inbody_headers" >"$dotest/no_inbody_headers"
++	echo "$add_commit_name" > "$dotest/add_commit_name"
+ 	echo "$GIT_QUIET" >"$dotest/quiet"
+ 	echo 1 >"$dotest/next"
+ 	if test -n "$rebasing"
+@@ -507,6 +512,10 @@ then
+ else
+ 	no_inbody_headers=
+ fi
++if test "$(cat "$dotest/add_commit_name")" = t
++then
++	add_commit_name=t
++fi
+ if test "$(cat "$dotest/quiet")" = t
+ then
+ 	GIT_QUIET=t
+@@ -630,6 +639,11 @@ do
+ 		then
+ 			echo "$ADD_SIGNOFF"
+ 		fi
++		if test "$add_commit_name" = t
++		then
++			test -z "$commit" && die "Internal error: expecting a commit name."
++			echo "(cherry picked from commit $commit)"
++		fi
+ 	    } >"$dotest/final-commit"
+ 	    ;;
+ 	*)
+diff --git a/git-rebase.sh b/git-rebase.sh
+index fb4fef7..511599e 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -53,6 +53,7 @@ git_am_opt=
+ rebase_root=
+ force_rebase=
+ allow_rerere_autoupdate=
++add_commit_name=
+ 
+ continue_merge () {
+ 	test -n "$prev_head" || die "prev_head must be defined"
+@@ -353,6 +354,10 @@ do
+ 	--rerere-autoupdate|--no-rerere-autoupdate)
+ 		allow_rerere_autoupdate="$1"
+ 		;;
++	-x)
++		git_am_opt="$git_am_opt --add-commit-name"
++		add_commit_name=t
++		;;
+ 	-*)
+ 		usage
+ 		;;
+@@ -386,6 +391,10 @@ else
+ 		die "previous rebase directory $dotest still exists." \
+ 			'Try git rebase (--continue | --abort | --skip)'
+ 	fi
++	if test -n "$add_commit_name"
++	then
++		die "-x not compatible with --merge"
++	fi
+ fi
+ 
+ # The tree must be really really clean.
+-- 
+1.7.0.rc1.200.g9c1f9
