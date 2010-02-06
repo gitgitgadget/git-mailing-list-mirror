@@ -1,86 +1,113 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: Re: [PATCH] t9501: Skip testing load if we can't detect it
-Date: Sat, 6 Feb 2010 08:46:00 -0500
-Message-ID: <0CD6B283-3181-4FAB-A6B2-13AFF9E5071C@gernhardtsoftware.com>
-References: <1265432440-52146-1-git-send-email-brian@gernhardtsoftware.com> <m3eikya9tn.fsf@localhost.localdomain>
-Mime-Version: 1.0 (Apple Message framework v1077)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 14:46:16 2010
+From: Jon Nelson <jnelson@jamponi.net>
+Subject: Re: git gc / git repack not removing unused objects?
+Date: Sat, 6 Feb 2010 07:53:13 -0600
+Message-ID: <cccedfc61002060553w464d5d9drd582b3b3c3f35227@mail.gmail.com>
+References: <cccedfc61002051145q1ff673e7s3db3bd7290be25e1@mail.gmail.com> 
+	<alpine.LFD.2.00.1002051539080.1681@xanadu.home> <cccedfc61002051304t6030d3f7if4bb14709ee6c918@mail.gmail.com> 
+	<alpine.LFD.2.00.1002051634380.1681@xanadu.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sat Feb 06 14:53:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdkzH-0002I8-T3
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 14:46:16 +0100
+	id 1Ndl6T-0006yI-3e
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 14:53:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755752Ab0BFNqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Feb 2010 08:46:10 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:38083 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755625Ab0BFNqI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Feb 2010 08:46:08 -0500
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 835BB1FFC1CE; Sat,  6 Feb 2010 13:46:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.8 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [10.10.10.10] (cpe-67-240-172-169.rochester.res.rr.com [67.240.172.169])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id BD7A71FFC06B;
-	Sat,  6 Feb 2010 13:45:59 +0000 (UTC)
-In-Reply-To: <m3eikya9tn.fsf@localhost.localdomain>
-X-Mailer: Apple Mail (2.1077)
+	id S1755863Ab0BFNxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Feb 2010 08:53:36 -0500
+Received: from mail-ew0-f228.google.com ([209.85.219.228]:33489 "EHLO
+	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755762Ab0BFNxf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2010 08:53:35 -0500
+Received: by ewy28 with SMTP id 28so963477ewy.28
+        for <git@vger.kernel.org>; Sat, 06 Feb 2010 05:53:33 -0800 (PST)
+Received: by 10.216.93.17 with SMTP id k17mr525485wef.31.1265464413151; Sat, 
+	06 Feb 2010 05:53:33 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.1002051634380.1681@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139167>
 
+On Fri, Feb 5, 2010 at 3:45 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
+> On Fri, 5 Feb 2010, Jon Nelson wrote:
+>
+>> On Fri, Feb 5, 2010 at 2:51 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
+>> > On Fri, 5 Feb 2010, Jon Nelson wrote:
+>> >
+>> >> [Using git 1.6.4.2]
+>> >>
+>> >> In one repo I have (136G objects directory, fully packed) I'm having
+>> >> some trouble.
+>> >> I've run git-gc --prune=now, git repack -Adf, and so on a half-dozen
+>> >> times and each time I do so it gets bigger, not smaller.
+>> >
+>> > Please tell us more.
+>>
+>> I'll tell you whatever I can -- as soon as I know what it is you want.
+>
+> I want to know what you did and what results you obtained to lead you to
+> believe that 'git-gc --prune=now' makes your repository bigger.
 
-On Feb 6, 2010, at 6:22 AM, Jakub Narebski wrote:
+Last night, the repo size was 153G after removing some commits and
+objects by way of git filter-branch.
+I'm using "du -sh" in the .git directory to determine the disk usage.
 
-> Brian Gernhardt <brian@gernhardtsoftware.com> writes:
-> 
->> Currently gitweb only knows how to check for load using /proc/loadavg,
->> which isn't available on all systems.  We shouldn't fail the test just
->> because we don't know how to check the system load.
->> 
->> Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
-> 
-> NAK.  It is not necessary, and it would be hindrance (one more place
-> to update) if we are to extend get_loadavg() in gitweb to work without
-> /proc/loadavg, e.g. via BSD::loadavg module.
+Before: 136G
+git repack -dAl
+After: 153G
 
-Without this patch, the test fails on my OS X machine (which doesn't have /proc).  So _something_ is necessary.  Skipping the test because we can't use the feature on the host machine seemed more in line with what the other tests do with things like symlinks and file modes.  And if get_loadavg() is updated to use BSD::loadavg, the test should still be skipped if the module isn't installed.
+Then, just to make sure of some things, I changed nothing and simply
+re-ran "git repack -dAl".
+After: 167G
 
-Furthermore, tests should always be updated when a feature is changed.
+Config:
 
-> Let me explain how it currently works without /proc/loadavg.  
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = true
+        logallrefupdates = true
+        compression = 0
+        loosecompression = 0
+        packedGitLimit = 1500M
+        #packedGitWindowSize = 32m
+[pack]
+        packsizelimit = 256m
+        windowMemory = 128m
+        deltaCacheSize = 1m
+[gc]
+    threads = 1
+    packrefs = true
 
-I did check the code.
+[repack]
+        usedeltabaseoffset = true
 
-> Third, the test (as you can see below in context line in quoted diff
-> below) forces gitweb to go over maximum load by setting $maxload to 0.
-> This means that regardless of true load, and regardless whether gitweb
-> can detect system load (remember that if it cant get system load it
-> returns 0 instead) gitweb would be in "load too high" situation.
+Incorporating the system and global config (git config -l):
 
-I did check the code.  Skipping the test seemed more in line with other tests.
+pack.packsizelimit=2M
+pack.threads=1
+gc.auto=0
+gc.autopacklimit=0
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=true
+core.logallrefupdates=true
+core.compression=0
+core.loosecompression=0
+core.packedgitlimit=1500M
+pack.packsizelimit=256m
+pack.windowmemory=128m
+pack.deltacachesize=1m
+gc.threads=1
+gc.packrefs=true
+repack.usedeltabaseoffset=true
 
-sub get_loadavg {
-    if( -e '/proc/loadavg' ){}
-    return 0;
-}
-
-if (defined $maxload && get_loadavg() > $maxload) {
-}
-
-Setting $maxload to 0 does _not_ trigger failure because zero is not greater than 0.  Setting $maxload to -1 might work though.  I'll try it and test it in a little bit.  While I disagree that it's a good way to handle the situation, I will see if it works.
-
-~~ Brian
+-- 
+Jon
