@@ -1,178 +1,105 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 2/4] gitweb: show notes in shortlog view
-Date: Sat, 6 Feb 2010 10:24:39 +0100
-Message-ID: <cb7bb73a1002060124s7f9bc4f7y9c2cb418e4802f64@mail.gmail.com>
-References: <1265300338-25021-1-git-send-email-giuseppe.bilotta@gmail.com> 
-	<1265300338-25021-3-git-send-email-giuseppe.bilotta@gmail.com> 
-	<201002060118.21137.jnareb@gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] grep: simple test for operation in a bare repository
+Date: Sat, 06 Feb 2010 10:35:19 +0100
+Message-ID: <4B6D37D7.6010505@lsrfire.ath.cx>
+References: <4B69BD7C.4010608@lsrfire.ath.cx> <4B6A0BDE.2050908@lsrfire.ath.cx> 	<4B6B653A.8060909@lsrfire.ath.cx> <fcaeb9bf1002041840l4d8e8ac9k3ad5e9e8761aa1b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johan Herland <johan@herland.net>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 10:25:13 2010
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 06 10:36:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ndgud-0002qg-V1
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 10:25:12 +0100
+	id 1Ndh4c-00016p-LA
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 10:35:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754149Ab0BFJZF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Feb 2010 04:25:05 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:44959 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754138Ab0BFJZA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Feb 2010 04:25:00 -0500
-Received: by ewy28 with SMTP id 28so832960ewy.28
-        for <git@vger.kernel.org>; Sat, 06 Feb 2010 01:24:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=o8ARla79xaOTD4CP1MRDEz5sKQ/xxGvL7VcejnaQIpE=;
-        b=JgXYgup3ExdHd+zoDRfjS6dSCccIvHJpg3dLX3kaKJ4665EmD9mmUV8XuyXiLqAZz3
-         ll94cPG8D23T4ddKOjj/rsaKHyNkObXySc1D5fHF7IsuJJArsrrRqXXjQ82YhFDdxHlv
-         93pZTgVHNM3wMLp1vCoj2MREFGuTsDG0MZFCg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=clmIZfrs/9gHMMzUHM2diRioe2hm8eVHBWuXMn05w1IoSxrJIg6hUuanLyBSe55/8X
-         am7Oy6mHft14P0TruospQu2By9WJU9eCbc135MRTyS+dZmtQkVNtor0uSw/DL1sjQYAm
-         aUJR6slNiV+Gvn2pwlIaIvJKAtx3xnPVNEWBw=
-Received: by 10.213.100.68 with SMTP id x4mr1603272ebn.33.1265448299119; Sat, 
-	06 Feb 2010 01:24:59 -0800 (PST)
-In-Reply-To: <201002060118.21137.jnareb@gmail.com>
+	id S1754858Ab0BFJfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Feb 2010 04:35:25 -0500
+Received: from india601.server4you.de ([85.25.151.105]:37262 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754138Ab0BFJfY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2010 04:35:24 -0500
+Received: from [10.0.1.100] (p57B7C6CB.dip.t-dialin.net [87.183.198.203])
+	by india601.server4you.de (Postfix) with ESMTPSA id 3E2B12F8045;
+	Sat,  6 Feb 2010 10:35:22 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
+In-Reply-To: <fcaeb9bf1002041840l4d8e8ac9k3ad5e9e8761aa1b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139153>
 
-2010/2/6 Jakub Narebski <jnareb@gmail.com>:
-> On Thu, 4 Feb 2010, Giuseppe Bilotta wrote:
->
->> Subject: [PATCH 2/4] gitweb: show notes in shortlog view
->
-> Is it RFC?
+Am 05.02.2010 03:40, schrieb Nguyen Thai Ngoc Duy:
+> setup_pager() calls git_config(), which indirectly calls get_git_dir()
+> and sets git_dir in stone. Changing GIT_DIR environment variable alone
+> won't work, as you have seen.
+> 
+> When RUN_SETUP is set, setup_git_directory() would be called before
+> setup_pager() can kick in, so everything is properly set.
+> 
+>> There are five more sites in git.c, path.c and setup.c where $GIT_DIR
+>> is set directly with setenv().  I wonder if they should better call
+>> set_git_dir() instead, too.
+> 
+> Yes, they should.
 
-See reply to comments on 1/4 8-/
+This patch converts the setenv() calls in path.c and setup.c.  After
+the call, git grep with a pager works again in bare repos.
 
-> Why it is only for 'shortlog' view, and not also for 'history' which =
-is
-> also shortlog-like view? =A0Or is there reason why it is not present =
-for
-> 'history' view?
+It leaves the setenv(GIT_DIR_ENVIRONMENT, ...) calls in git.c alone, as
+they respond to command line switches that emulate the effect of setting
+the environment variable directly.
 
-I always forget about history view, probably because I never use it.
+The remaining site in environment.c is in set_git_dir() and is left
+alone, too, of course.  Finally, builtin-init-db.c is left changed
+because the repo is still being carefully constructed when the
+environment variable is set.
 
->> The presence of the note is shown by a small icon, hovering on which
->> reveals the actual note content.
->
-> Signoff?
+This fixes git shortlog when run inside a git directory, which had been
+broken by abe549e1.
 
-A-hem. (whistles innocently)
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+Since it's doesn't fix a regression (abe549e1 was committed in March
+2008), this patch doesn't have to go in at this point in the release
+cycle.  And perhaps it's even superseded by the more general fix Duy
+is working on?
 
->> +
->> +span.notes span.note-container:before {
->> + =A0 =A0 content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUg=
-AAAAgAAAAIAgMAAAC5YVYYAAAAAXNSR0IArs4c6QAAAAlQTFRFAABnybuD//+t5rXizQAAA=
-AF0Uk5TAEDm2GYAAAABYktHRACIBR1IAAAAGElEQVQI12MIDWXIWglDQHYIQ1YAQ6gDAFWP=
-BrAKFe0fAAAAAElFTkSuQmCC');
->> +}
->
-> Not all web browsers support ':before' pseudo-element, and 'content'
-> (pseudo-)property.
+ path.c  |    2 +-
+ setup.c |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-I know it's neither good form nor good webdesigner attitude, but I
-stopped caring about IE a long time ago. I understand however that
-some ancient versions of Mozilla browsers might have the same issue
-too.
-
-> Not all web browsers support 'data:' URI schema in CSS; also such ima=
-ge
-> cannot be cached (on the other hand it doesn't require extra TCP
-> connection on first access, and CSS file is cached anyway).
->
-> On the other hand adding extra images to gitweb would probably requir=
-e
-> additional (yet another) build time parameter to tell where static
-> images are (besides logo and favicon).
->
-> So perhaps it is good solution, at least for a first attempt.
-
-A possible alternative could maybe do without images and just use
-borders and backgrounds of an 8x8 fixed-size element. Wouldn't look as
-nice, probably, but should render decently in everything that supports
-CSS1.
-
->> +# display notes next to a commit
->> +sub format_notes_html {
->> + =A0 =A0 my %notes =3D %{$_[0]};
->
-> Why not use 'my $notes =3D shift;', and later '%$notes'?
-
-No particular reason. I didn't check for syntax preferences regarding
-this in gitweb, or I would have noticed there was a preference for the
-one you mention.
-
->> + =A0 =A0 my $ret =3D "";
->
-> Perhaps $return or $result would be a better name, to better distingu=
-ish
-> it from visually similar $ref (see $ref vs $res);
-
-Yep, good point.
-
->> + =A0 =A0 while (my ($ref, $text) =3D each %notes) {
->> + =A0 =A0 =A0 =A0 =A0 =A0 # remove 'refs/notes/' and an optional fin=
-al s
->> + =A0 =A0 =A0 =A0 =A0 =A0 $ref =3D~ s/^refs\/notes\///;
->
-> You can use different delimiter than / to avoid 'leaning toothpick'
-> syndrome, e.g.: $ref =3D~ s!^refs/notes/!!;
-
-Indeed I should.
-
->> + =A0 =A0 =A0 =A0 =A0 =A0 $ref =3D~ s/s$//;
->> +
->> + =A0 =A0 =A0 =A0 =A0 =A0 # double markup is needed to allow pure CS=
-S cross-browser 'popup'
->> + =A0 =A0 =A0 =A0 =A0 =A0 # of the note
->> + =A0 =A0 =A0 =A0 =A0 =A0 $ret .=3D "<span title=3D'$ref' class=3D'n=
-ote-container $ref'>";
->> + =A0 =A0 =A0 =A0 =A0 =A0 $ret .=3D "<span title=3D'$ref' class=3D'n=
-ote $ref'>";
->> + =A0 =A0 =A0 =A0 =A0 =A0 foreach my $line (split /\n/, $text) {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $ret .=3D esc_html($line) =
-=2E "<br/>";
->
-> Probably would want
->
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0$ret .=3D esc_html($li=
-ne) . "<br/>\n";
->
-> here. =A0Or do we want single string here?
-
-It's within a span element so I was trying to stick to single line in
-the HTML source.
-
-> Also, do you want/need final <br>? =A0If not, perhaps
->
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0join("<br/>", map { esc_html($_) } spl=
-it(/\n/, $text);
->
-> would be a better solution (you can always add final "<br/>" later)?
-
-I did notice that the final br didn't seem to affect the box height,
-so I didn't bother looking at ways to do without it, but it's probably
-nicer to not have it.
-
---=20
-Giuseppe "Oblomov" Bilotta
+diff --git a/path.c b/path.c
+index 79aa104..0005df3 100644
+--- a/path.c
++++ b/path.c
+@@ -336,7 +336,7 @@ char *enter_repo(char *path, int strict)
+  	if (access("objects", X_OK) == 0 && access("refs", X_OK) == 0 &&
+ 	    validate_headref("HEAD") == 0) {
+-		setenv(GIT_DIR_ENVIRONMENT, ".", 1);
++		set_git_dir(".");
+ 		check_repository_format();
+ 		return path;
+ 	}
+diff --git a/setup.c b/setup.c
+index 710e2f3..b38cbee 100644
+--- a/setup.c
++++ b/setup.c
+@@ -404,9 +404,9 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 				inside_work_tree = 0;
+ 			if (offset != len) {
+ 				cwd[offset] = '\0';
+-				setenv(GIT_DIR_ENVIRONMENT, cwd, 1);
++				set_git_dir(cwd);
+ 			} else
+-				setenv(GIT_DIR_ENVIRONMENT, ".", 1);
++				set_git_dir(".");
+ 			check_repository_format_gently(nongit_ok);
+ 			return NULL;
+ 		}
