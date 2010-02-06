@@ -1,69 +1,168 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [RFC/PATCH] rebase: add -x option to record original commit name
-Date: Sat, 6 Feb 2010 00:19:02 -0500
-Message-ID: <76718491002052119j5d6bae35s146bed8da03e3983@mail.gmail.com>
-References: <1265419166-21388-1-git-send-email-jaysoffian@gmail.com>
-	 <7vzl3ngn7w.fsf@alter.siamese.dyndns.org>
-	 <76718491002051758s577d8b5eq2323cd66d479662@mail.gmail.com>
-	 <7vtytvf4vp.fsf@alter.siamese.dyndns.org>
-	 <76718491002052018s324747ecj31963b493868dbbd@mail.gmail.com>
-	 <7vbpg3dldq.fsf@alter.siamese.dyndns.org>
+From: Sitaram Chamarty <sitaram@atc.tcs.com>
+Subject: Re: [gitolite] repo config for delegated projects
+Date: Sat, 6 Feb 2010 12:15:23 +0530
+Message-ID: <20100206064523.GA14010@atcmail.atc.tcs.com>
+References: <20100203035718.GA30644@lapse.rw.madduck.net> <2e24e5b91002022222h5ca3ebe6k75854a9a056f0ed1@mail.gmail.com> <20100203202249.GA27125@lapse.rw.madduck.net> <20100204011842.GB497@atcmail.atc.tcs.com> <20100204040812.GC13411@lapse.rw.madduck.net> <2e24e5b91002051650k3c7cf14ev8752d36b5616e9a4@mail.gmail.com> <20100206042222.GA7825@lapse.rw.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 06:20:09 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git discussion list <git@vger.kernel.org>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	Teemu Matilainen <teemu.matilainen@iki.fi>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Sat Feb 06 07:46:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ndd5V-0004MR-4D
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 06:20:09 +0100
+	id 1NdeQd-0006pu-V4
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 07:46:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750827Ab0BFFTG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Feb 2010 00:19:06 -0500
-Received: from mail-iw0-f185.google.com ([209.85.223.185]:50615 "EHLO
-	mail-iw0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750730Ab0BFFTE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2010 00:19:04 -0500
-Received: by iwn15 with SMTP id 15so1789846iwn.19
-        for <git@vger.kernel.org>; Fri, 05 Feb 2010 21:19:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=mPOu9hfDMnKyUNEwoJJI+9Y/Xfq5Mo8xlKc12DX4S0o=;
-        b=nRslxZ/7O4TCuaQpof4G7s9uOlI4JhRN5WlQsjsKgma1VGmBtXo7nzlAdKDmnRBzJv
-         9OLpLJ7U1QJACCxl5cJTqk8r72u5Hv1V2/zK3Gx7x33uWPsQMBth+UIk0BvhEWd0hN+q
-         dKWw5IKWJnhGWjOJHAMyVFX1dOFi7CX9lhkII=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=pz+XkD5cAxoIE0r9d3Nqj6AuxdjRFwznOdhr9LuYKJOn/NJjdOOtNChraXrzQSm5TF
-         ARQfFMD3JP9RJWTlQnLhNEIf8N3FVaeE97b12uTROMJF/pQBLHYSJbBBQj9jhNEqdqsV
-         FCu8ifljqtW4ZdvLAEpG0qxAfAkbrZaAJCzKE=
-Received: by 10.231.85.198 with SMTP id p6mr1311658ibl.65.1265433542501; Fri, 
-	05 Feb 2010 21:19:02 -0800 (PST)
-In-Reply-To: <7vbpg3dldq.fsf@alter.siamese.dyndns.org>
+	id S1752231Ab0BFGp5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Feb 2010 01:45:57 -0500
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145]:53272 "EHLO
+	atcmail.atc.tcs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751970Ab0BFGp4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2010 01:45:56 -0500
+Received: from atcmail.atc.tcs.com (atcmail.atc.tcs.com [127.0.0.1])
+	by atcmail.atc.tcs.com (8.14.2/8.14.2) with ESMTP id o166jOL3015066;
+	Sat, 6 Feb 2010 12:15:24 +0530
+Received: (from sitaram@localhost)
+	by atcmail.atc.tcs.com (8.14.2/8.14.2/Submit) id o166jNsw015064;
+	Sat, 6 Feb 2010 12:15:23 +0530
+Content-Disposition: inline
+In-Reply-To: <20100206042222.GA7825@lapse.rw.madduck.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/10361/Fri Feb  5 22:14:47 2010 on atcmail.atc.tcs.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-1.2 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+	FH_DATE_PAST_20XX autolearn=no version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on atcmail.atc.tcs.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139147>
 
-On Fri, Feb 5, 2010 at 11:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> How could that be a counterproposal to a deprecation of -x and adding
-> hooks as a replacement, as a solution to more general issues?
+On Sat, Feb 06, 2010 at 05:22:22PM +1300, martin f krafft wrote:
+> also sprach Sitaram Chamarty <sitaramc@gmail.com> [2010.02.06.1350 +1=
+300]:
+> > OK I've run into a little decision-point here.
+> >=20
+> > The problem above is of making sure that a delegated admin cannot
+> > misuse the gitconfig mechanism to do stuff he's not allowed to do,
+> > but it's actually worse than that :(
+>=20
+> Let me thus challenge the whole delegation mechanism.
+>=20
+> When I first encountered it, I thought it was a great idea, but it
+> seems to promise more than it can do. I understand that the reasons
+> for that are security-related, and I tip my hat to you for being so
+> conscious about this =E2=80=94 better have a secure system with limit=
+ed
+> functionality, than an insecure system that can do everything (why
+> am I thinking of PHP apps right now???).
+>=20
+> The wildrepos branch is a definite improvement to proper delegation.
+> Without it, the main admin has to change the main configuration file
+> every time that a delegated admin wants to add a new repo.
+>=20
+> However, given the somewhat awkward configuration (you need to add
+> delegated admins in multiple places), and the restrictions, I am
+> starting to wonder what use-case delegations solve that couldn't be
+> addressed easier with multiple accounts and gitolite instances.
+> Thoughts?
 
-Sorry, it's been a long week and I wasn't thinking clearly.
+In theory, none at all.  And if you're not in a corporate
+environment, having separate accounts and instances is
+probably easier, as I myself suggest to people sometimes
+when they need *more* from delegation than what it has now.
 
-Yes, adding post-cherry/rebase hook(s) would keep all parties happy. :-)
+What it gives you is *one* central place for all the code,
+one set of users/ids and one entity to approve new ones, and
+the means to delegate only the most volatile changes (like
+at the branch-within-project level), and not the longer term
+ones like actually adding a new user or a new project
+(assuming you're not using wildrepos).
 
-> Maybe, but it calls cmt_metadata() which is "grep ^git-svn-id:" of the
-> commit object, so we know why it doesn't X-<.
+It turns out that this is closer to what corporate
+environments want.  I use it, and a few groups in my $DAYJOB
+also use it, afaik.
 
-Bah, that's too bad. :-(
+But I guess my original question was more for Teemu.  As it
+stands, I need to redo the ability for even the "main" admin
+to add gitconfigs... it allows him to get a shell too
+easily.
 
-j.
+> > Regardless of how I look at it, I can't think of a cure for this sh=
+ort
+> > of either:
+> >   - putting all the allowed gitconfigs in the RC file, and not in t=
+he
+> > config (writing the RC file requires shell access, and we presume t=
+he
+> > "root of trust" person has enough smarts to know what to allow and
+> > what not to allow), and allowing repo admins to *refer* to them to =
+use
+> > whichever they want
+> >   - someone coming up with a list of gitconfig's that are "safe", a=
+nd
+> > specific values for those that are unsafe (like saying "if you use
+> > showrev, you can only use this command  as the value", and forcing
+> > only those.
+>=20
+> I think the second path is a red herring. However, I don't
+> understand why we would need to go via the RC file instead of the
+> main config. Only the main admin can modify that, or appoint others
+> to modify it. Plus, it's managed in Git and thus has a history
+> attached to it.
+
+That's what I used to think, that it doesn't matter.
+
+But there's a notion (and once I realised it I agreed with
+it) that the ability to do "shell" things on the server is a
+step higher than the ability to update gitolite's access
+list.
+
+Some people needed this, and I agreed.  Nothing prevents any
+installation from giving anyone any rights, but I'd like to
+prevent them acquiring it via gitolite, even if they can
+write to the admin repo.
+
+So right now (coming back to the ability to set gitconfig
+from within gitolite) I'm thinking:
+
+    $GL_GITCONFIG_KEYS =3D "core.foo core.baz";
+        # actually list of regexes for valid keys
+
+and advising people that these are the choices in terms of
+allowing gitconfig from the admin repo (or delegation; no
+difference):
+
+  - (ultra paranoid mode): set the variable above to empty;
+    no gitconfig allowed from gitolite.conf or delegated
+    conf files
+  - (just your normal everyday paranoia mode): set the
+    variable to stuff that you know will not give shell
+    access (example: the aforementioned hooks.mailinglist)
+  - ("what, me worry?" mode): set that variable to ".*" and
+    allow any damn gitconfig so they won't keep pestering
+    you to add a config for them!
+
+In the first 2 cases, someone with shell access must do all
+required gitconfigs manually on the server when needed.
+
+> Speaking of shell access, I notice gl-auth-command has the -s
+> option. Is there a configuration variable that I overlooked which
+> allows me to give shell login rights to specific users?
+
+yes; it's in the RC file.  If you want to give anyone shell
+access, add their name to a space-sep list in $SHELL_USERS
+and push the config once.
+
+The documentation for this is in a weird place (doc/6);
+sorry about that!  Will move it to doc/3 soon.
+
+--=20
+Sitaram
