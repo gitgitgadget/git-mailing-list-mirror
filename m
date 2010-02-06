@@ -1,77 +1,77 @@
-From: tytso@mit.edu
-Subject: Re: [RFC/PATCH] rebase: add -x option to record original commit
- name
-Date: Sat, 6 Feb 2010 08:32:27 -0500
-Message-ID: <20100206133227.GE321@thunk.org>
-References: <1265419166-21388-1-git-send-email-jaysoffian@gmail.com>
- <7vzl3ngn7w.fsf@alter.siamese.dyndns.org>
- <76718491002051758s577d8b5eq2323cd66d479662@mail.gmail.com>
- <7vtytvf4vp.fsf@alter.siamese.dyndns.org>
- <76718491002052018s324747ecj31963b493868dbbd@mail.gmail.com>
- <7vbpg3dldq.fsf@alter.siamese.dyndns.org>
- <76718491002052119j5d6bae35s146bed8da03e3983@mail.gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: A generalization of git notes from blobs to trees - git metadata?
+Date: Sun, 7 Feb 2010 00:32:52 +1100
+Message-ID: <2cfc40321002060532g4d22dd4dx403bf312708e1424@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 14:32:51 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 06 14:38:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdkmI-0002kx-Kf
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 14:32:50 +0100
+	id 1Ndkrz-0006YW-8C
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 14:38:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755852Ab0BFNcl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Feb 2010 08:32:41 -0500
-Received: from THUNK.ORG ([69.25.196.29]:37961 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755783Ab0BFNce (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2010 08:32:34 -0500
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1Ndklw-0004aW-Am; Sat, 06 Feb 2010 08:32:28 -0500
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@thunk.org>)
-	id 1Ndklv-0004Ua-ML; Sat, 06 Feb 2010 08:32:27 -0500
-Content-Disposition: inline
-In-Reply-To: <76718491002052119j5d6bae35s146bed8da03e3983@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1755842Ab0BFNii (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Feb 2010 08:38:38 -0500
+Received: from mail-pz0-f178.google.com ([209.85.222.178]:38601 "EHLO
+	mail-pz0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755668Ab0BFNih (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2010 08:38:37 -0500
+X-Greylist: delayed 345 seconds by postgrey-1.27 at vger.kernel.org; Sat, 06 Feb 2010 08:38:37 EST
+Received: by pzk8 with SMTP id 8so2724039pzk.22
+        for <git@vger.kernel.org>; Sat, 06 Feb 2010 05:38:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=+jrCzpeA+nW3wtxjnx8tffdOIGenuikoDk6cfMXyUAY=;
+        b=KdF5SZ4kyJUGR9kQhM8C/4h05MttwZzBl/7su4Hi5KgiSsWRmL+hlFez2jDPVoj0ZT
+         ALXYWksW9GMBjo4VJ6ZrT0GUHtl3zst650NEqXzeXrnIkBYCttJxuX/okhylfHWrVqhX
+         2N5KreMPimIz4/UznMuDuBT1tfWePahKeug6c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=VSSwt+v3TqHwmR3imt8H0HRzZ9CSJEbcaBuhJXV5GglxY2LG5C31LIjLJqzpN1ggmd
+         wnQMF1X+Fz6U5qsaoEWzHIbWoxT8wDL3dM5eqK7aJFe9VxjxohsqHK5I60KELPTBDlio
+         5igG3wKhyKLl+WGtTAzdrBCfwmvjqMaVzuUTc=
+Received: by 10.114.70.4 with SMTP id s4mr2754154waa.31.1265463172576; Sat, 06 
+	Feb 2010 05:32:52 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139165>
 
-On Sat, Feb 06, 2010 at 12:19:02AM -0500, Jay Soffian wrote:
-> On Fri, Feb 5, 2010 at 11:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > How could that be a counterproposal to a deprecation of -x and adding
-> > hooks as a replacement, as a solution to more general issues?
-> 
-> Sorry, it's been a long week and I wasn't thinking clearly.
-> 
-> Yes, adding post-cherry/rebase hook(s) would keep all parties happy. :-)
+git notes is a nice innovation - well done to all those involved.
 
-I really don't think it's a contamination of the log when it's used to
-record a cherry pick of patch from the dev stream to an older
-maintainance branch, but I'll grudgingly accept doing via a hook; but
-can there be an easy way to control whether or not the hook is
-actually executed?  
+Has consideration ever been given to generalizing the concept to allow
+note (or more correctly -  metadata) trees with arbitrary sha1s?
 
-*Normally* I don't want cherry-pick -x, but some of the time I do want
-it, and manually enabling and disabling the hook by having to do some
-kind of "chmod -x .git/hooks/cherry-pick" command.  I suppose I could
-create an alias for cherry-pick-record which does a "chmod a+x `git
-rev-parse --git-dir`/hooks/cherry-pick; git cherry-pick $*; chmod a-x
-`git rev-parse --git-dir`/hooks/cherry-pick", but that seems really
-hacky.  :-(
+For example, suppose you had reason to cache the distribution that
+resulted from the build of a particular commit, then it'd be nice to
+be able to do this using a notes like mechanism.
 
-So it would be nice if there was some kind of command-line option to
-cherry-pick which could be passed to the hook script.
+    git metadata import foo-1.1.0 dist ~/foo/dist
 
-					- Ted
+would create a git tree from the contents of ~/foo/dist and then bind
+it to meta item called dist associated with the sha1 corresponding to
+foo-1.1.0
+
+To retrieve the contents of the previous build, you'd do something like
+
+   get metadata export foo-1.1.0 dist /tmp/foo-1.1.0
+
+This would find the metadata tree associated with foo-1.1.0, extract
+the dist subtree from that tree and write it to disk at /tmp/foo-1.1.0
+
+I've used build outputs as an example here, but really it needn't be
+limited to that. I can see this facility would be useful for any kind
+of annotation or derived result that is more complex than a single
+text blob. Metadata trees in combination with a name spacing
+technique, could be used to store arbitrary metadata created by an
+arbitrary set of tools to arbitrary SHA1 objects.
+
+jon.
