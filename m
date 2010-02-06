@@ -1,90 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-grep: option parsing conflicts with prefix-dash searches
-Date: Fri, 05 Feb 2010 20:53:36 -0800
-Message-ID: <7v7hqrdkxb.fsf@alter.siamese.dyndns.org>
-References: <alpine.LSU.2.01.1002052351060.30204@obet.zrqbmnf.qr>
- <7vsk9fs1j9.fsf@alter.siamese.dyndns.org>
- <20100206035143.GA31784@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jan Engelhardt <jengelh@medozas.de>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 06 05:54:12 2010
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: [PATCH] t9501: Skip testing load if we can't detect it
+Date: Sat,  6 Feb 2010 00:00:40 -0500
+Message-ID: <1265432440-52146-1-git-send-email-brian@gernhardtsoftware.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 06 06:11:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdcgM-0001mn-QE
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 05:54:11 +0100
+	id 1Ndcwp-0000dP-7o
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 06:11:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755000Ab0BFExq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2010 23:53:46 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56885 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754554Ab0BFExp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2010 23:53:45 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CBF997003;
-	Fri,  5 Feb 2010 23:53:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=t7IXBuSiVag7SWnR+FF8+T3qZVk=; b=XL4TPG
-	8H5xXV6siZsWNpmK90cqPYqkCrNXn8oWFn2BmfQfc9jOlYQpJB+Qc9nRL7S3Fw8H
-	FcY9oSkVygrvYSXZL55dzpu+ZrfXiwBgA9jN6t8uxHrjn/ZWcTRdld4yUz6hg7ED
-	Dd2YCj2elmZtarVWSZGN49vW3WVDXWU06uWA4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oxESGw5vBocXgB+dU0GxUWJbOWCcxe+U
-	uSWDKy+xA18IvXOCRkUjOupHketvL/rtnFahqxzzqOQZJ9q/6L/H2L5R3LIGjUp0
-	d94lperaHc85ItWpY+IZN5+50mwPrArHIdSOBQ9aBqxR9v6Uror8Q2VdS2PoRnxV
-	PlJvIOkblLA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DEE6F97FFE;
-	Fri,  5 Feb 2010 23:53:41 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1858297FFC; Fri,  5 Feb
- 2010 23:53:37 -0500 (EST)
-In-Reply-To: <20100206035143.GA31784@sigill.intra.peff.net> (Jeff King's
- message of "Fri\, 5 Feb 2010 22\:51\:43 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9905F42A-12DB-11DF-9BED-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1750751Ab0BFFHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Feb 2010 00:07:42 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:39786 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750706Ab0BFFHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2010 00:07:41 -0500
+X-Greylist: delayed 418 seconds by postgrey-1.27 at vger.kernel.org; Sat, 06 Feb 2010 00:07:41 EST
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id D90651FFC1CE; Sat,  6 Feb 2010 05:00:31 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from localhost.localdomain (cpe-67-240-172-169.rochester.res.rr.com [67.240.172.169])
+	by silverinsanity.com (Postfix) with ESMTPA id C8A811FFC06B;
+	Sat,  6 Feb 2010 05:00:30 +0000 (UTC)
+X-Mailer: git-send-email 1.7.0.rc1.141.gd3fd2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139145>
 
-Jeff King <peff@peff.net> writes:
+Currently gitweb only knows how to check for load using /proc/loadavg,
+which isn't available on all systems.  We shouldn't fail the test just
+because we don't know how to check the system load.
 
-> The worst I could come up with is the
-> double-double-dash case:
->
->   git grep -- pattern revision -- pathname
->
-> It is perhaps not as pretty as
->
->   git grep -e pattern revision -- pathname
->
-> but I don't think it is ambiguous.
+Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+---
+ t/t9501-gitweb-standalone-http-status.sh |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
 
-I don't think if "ambiguous or not" is what we are after to begin with.
-
-I have known GNU extended grep implementations long enough but never saw
-that "--" used to quote a pattern.  Is it worth supporting to begin with?
-
-> So actually my patch above is breaking somebody who truly wanted to grep
-> for "--" by doing
->
->   git grep --
->
-> but that is sufficiently insane that I'm not too worried about it.
-
-I would say "git grep -- pattern" is sufficiently insane enough that
-I'm not worried about it at all.  Interpreting "git grep --" as a request
-to look for double-dash feels million times saner than that, actually.
-
-Unless somebody comes up with example of that pattern's wide use.  Point
-me to some well known open source software's source trees that use "--"
-for such a purpose in one of its shell script or Makefile.
+diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-standalone-http-status.sh
+index 7590f10..992d729 100755
+--- a/t/t9501-gitweb-standalone-http-status.sh
++++ b/t/t9501-gitweb-standalone-http-status.sh
+@@ -115,12 +115,19 @@ test_debug 'cat gitweb.output'
+ # ----------------------------------------------------------------------
+ # load checking
+ 
++if test -e /proc/loadavg
++then
++	test_set_prereq PROC_LOADAVG
++else
++	say 'skipping load tests (no /proc/loadavg found)'
++fi
++
+ # always hit the load limit
+ cat >>gitweb_config.perl <<\EOF
+ our $maxload = 0;
+ EOF
+ 
+-test_expect_success 'load checking: load too high (default action)' '
++test_expect_success PROC_LOADAVG 'load checking: load too high (default action)' '
+ 	gitweb_run "p=.git" &&
+ 	grep "Status: 503 Service Unavailable" gitweb.headers &&
+ 	grep "503 - The load average on the server is too high" gitweb.body
+-- 
+1.7.0.rc1.141.gd3fd2
