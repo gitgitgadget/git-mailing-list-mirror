@@ -1,75 +1,201 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 9/9] merge: use new "reset" function instead of running
- "git read-tree"
-Date: Fri, 05 Feb 2010 16:03:50 -0800
-Message-ID: <7vbpg3nsbd.fsf@alter.siamese.dyndns.org>
-References: <20100205231028.3689.12228.chriscool@tuxfamily.org>
- <20100205231112.3689.34673.chriscool@tuxfamily.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/4] gitweb: show notes in shortlog view
+Date: Sat, 6 Feb 2010 01:18:19 +0100
+Message-ID: <201002060118.21137.jnareb@gmail.com>
+References: <1265300338-25021-1-git-send-email-giuseppe.bilotta@gmail.com> <1265300338-25021-3-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Paolo Bonzini <bonzini@gnu.org>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Feb 06 01:05:33 2010
+	Johan Herland <johan@herland.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 06 01:18:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdYB3-0005yL-48
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 01:05:33 +0100
+	id 1NdYNe-0004e2-TY
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 01:18:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933792Ab0BFAEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2010 19:04:12 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60197 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933495Ab0BFAEL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2010 19:04:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B0FE997E2E;
-	Fri,  5 Feb 2010 19:04:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=c2QplXBMlWTIWrJVj7cimE79TBI=; b=AqDKKk
-	N3N44wnRYOL8cVpeKWYOb+8vGd6bK051BrQwNumxOhoa1VoIEtbumxHm+jRjWKEn
-	haGsoX5J3WQF0f44sn2R1FDGM9a7vZr0wfIJ20JzESoBDgCYX6+RoTgdtD8PCp1u
-	Y1gTs0eF/wNl6q6RNtdDbgFiKXooglNS/VOXY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qsWXR0Xzvt36l9qgaqsiTH/BPwY4+UTm
-	3bWXL+8K1aO3cgP+pOxYlERn1cKH+eA64mFSz/JXAJXEz1lZ317pH0b1r5FGWgym
-	dx5V/hAbEh/5K/O0rXVj3y35o5dYKXwXJGzJeXtK6CMlLAPNEoFartZyxDIMedGe
-	hEdBu7VoBak=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CEEC97E2A;
-	Fri,  5 Feb 2010 19:04:02 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DD30797DEB; Fri,  5 Feb
- 2010 19:03:52 -0500 (EST)
-In-Reply-To: <20100205231112.3689.34673.chriscool@tuxfamily.org> (Christian
- Couder's message of "Sat\, 06 Feb 2010 00\:11\:11 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 21E5747E-12B3-11DF-BEB9-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753652Ab0BFAS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2010 19:18:26 -0500
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:40663 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751887Ab0BFASZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2010 19:18:25 -0500
+Received: by bwz19 with SMTP id 19so303310bwz.28
+        for <git@vger.kernel.org>; Fri, 05 Feb 2010 16:18:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=IlW3RvBCUAhIjHqiHwCXoPbz6fFXKqpg2zAlX2f2+iE=;
+        b=tnVEnXb9oSOfkHvs+BosHSYEUywHShH+LZZJJV3uMJ3/2AxlcPe3MxJWQPajLTvldG
+         UyDw5JswCs7Je7UizI+6zSULy7mWiziqxb3MJCZWqkehqrpfhN3W3yuIa5CqeYIPpnHb
+         4QiWecKvy87X9D8fAxuN7XUlqctxUKLtXwrcs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=daXfP6muPSSy5hMeIwDkSjC8kWERoJSX5SEIyRLGn9k6RjWbr+xhCoDchzrjY4Ugpc
+         LI9g7rTUcgK9eAkv8t2V0wdypvD+17RxfPTmrvtbiBEBfWcea7fL4T2st5C0n62qSlaG
+         XWcIkIJhbEqoqRgemWr+Xv+hvKd7RXKxt9pws=
+Received: by 10.204.151.91 with SMTP id b27mr2202811bkw.110.1265415503541;
+        Fri, 05 Feb 2010 16:18:23 -0800 (PST)
+Received: from ?192.168.1.13? (abvb35.neoplus.adsl.tpnet.pl [83.8.199.35])
+        by mx.google.com with ESMTPS id 14sm905879bwz.5.2010.02.05.16.18.20
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 05 Feb 2010 16:18:20 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1265300338-25021-3-git-send-email-giuseppe.bilotta@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139129>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On Thu, 4 Feb 2010, Giuseppe Bilotta wrote:
 
-> This simplifies "git merge" code and make it more efficient in some
-> cases.
+> Subject: [PATCH 2/4] gitweb: show notes in shortlog view
 
-I vaguely recall somebody (perhaps it was you) tried to do something like
-this before to drive unpack_trees() inside the main process, broke the
-program rather badly, and then we ended up keeping read-tree invocation
-external to the process.  Am I misremembering things?
+Is it RFC?
 
-If not, could you describe how is this round different from the old one?
+Why it is only for 'shortlog' view, and not also for 'history' which is
+also shortlog-like view?  Or is there reason why it is not present for
+'history' view?
+
+> The presence of the note is shown by a small icon, hovering on which
+> reveals the actual note content.
+
+Signoff?
+
+> ---
+>  gitweb/gitweb.css  |   29 +++++++++++++++++++++++++++++
+>  gitweb/gitweb.perl |   30 +++++++++++++++++++++++++++++-
+>  2 files changed, 58 insertions(+), 1 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+> index 50067f2..7d1836b 100644
+> --- a/gitweb/gitweb.css
+> +++ b/gitweb/gitweb.css
+> @@ -572,3 +572,32 @@ span.match {
+>  div.binary {
+>  	font-style: italic;
+>  }
+> +
+> +span.notes {
+> +	float:right;
+> +	position:relative;
+> +}
+> +
+> +span.notes span.note-container:before {
+> +	content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAgMAAAC5YVYYAAAAAXNSR0IArs4c6QAAAAlQTFRFAABnybuD//+t5rXizQAAAAF0Uk5TAEDm2GYAAAABYktHRACIBR1IAAAAGElEQVQI12MIDWXIWglDQHYIQ1YAQ6gDAFWPBrAKFe0fAAAAAElFTkSuQmCC');
+> +}
+
+Not all web browsers support ':before' pseudo-element, and 'content'
+(pseudo-)property.
+
+Not all web browsers support 'data:' URI schema in CSS; also such image
+cannot be cached (on the other hand it doesn't require extra TCP 
+connection on first access, and CSS file is cached anyway).
+
+On the other hand adding extra images to gitweb would probably require
+additional (yet another) build time parameter to tell where static
+images are (besides logo and favicon).
+
+So perhaps it is good solution, at least for a first attempt.
+
+[...]
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 9ba5815..1701ed1 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -1628,6 +1628,33 @@ sub format_subject_html {
+>  	}
+>  }
+>  
+> +# display notes next to a commit
+> +sub format_notes_html {
+> +	my %notes = %{$_[0]};
+
+Why not use 'my $notes = shift;', and later '%$notes'?
+
+> +	my $ret = "";
+
+Perhaps $return or $result would be a better name, to better distinguish
+it from visually similar $ref (see $ref vs $res);
+
+> +	while (my ($ref, $text) = each %notes) {
+> +		# remove 'refs/notes/' and an optional final s
+> +		$ref =~ s/^refs\/notes\///;
+
+You can use different delimiter than / to avoid 'leaning toothpick'
+syndrome, e.g.: $ref =~ s!^refs/notes/!!;
+
+> +		$ref =~ s/s$//;
+> +
+> +		# double markup is needed to allow pure CSS cross-browser 'popup'
+> +		# of the note
+> +		$ret .= "<span title='$ref' class='note-container $ref'>";
+> +		$ret .= "<span title='$ref' class='note $ref'>";
+> +		foreach my $line (split /\n/, $text) {
+> +			$ret .= esc_html($line) . "<br/>";
+
+Probably would want
+
+   			$ret .= esc_html($line) . "<br/>\n";
+
+here.  Or do we want single string here?
+
+
+Also, do you want/need final <br>?  If not, perhaps
+
+   		join("<br/>", map { esc_html($_) } split(/\n/, $text);
+
+would be a better solution (you can always add final "<br/>" later)?
+
+> +		}
+> +		$ret .= "</span></span>";
+> +	}
+> +	if ($ret) {
+> +		return "<span class='notes'>$ret</span>";
+> +	} else {
+> +		return $ret;
+> +	}
+> +
+> +
+> +}
+> +
+>  # Rather than recomputing the url for an email multiple times, we cache it
+>  # after the first hit. This gives a visible benefit in views where the avatar
+>  # for the same email is used repeatedly (e.g. shortlog).
+> @@ -4595,6 +4622,7 @@ sub git_shortlog_body {
+>  		my %co = %{$commitlist->[$i]};
+>  		my $commit = $co{'id'};
+>  		my $ref = format_ref_marker($refs, $commit);
+> +		my $notes = format_notes_html($co{'notes'});
+>  		if ($alternate) {
+>  			print "<tr class=\"dark\">\n";
+>  		} else {
+> @@ -4605,7 +4633,7 @@ sub git_shortlog_body {
+>  		print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
+>  		      format_author_html('td', \%co, 10) . "<td>";
+>  		print format_subject_html($co{'title'}, $co{'title_short'},
+> -		                          href(action=>"commit", hash=>$commit), $ref);
+> +		                          href(action=>"commit", hash=>$commit), $ref . $notes);
+>  		print "</td>\n" .
+>  		      "<td class=\"link\">" .
+>  		      $cgi->a({-href => href(action=>"commit", hash=>$commit)}, "commit") . " | " .
+
+Nice.
+
+-- 
+Jakub Narebski
+Poland
