@@ -1,110 +1,101 @@
-From: "J.H." <warthog9@eaglescrag.net>
-Subject: Re: [RFC PATCH 00/10] gitweb: Simple file based output caching
-Date: Fri, 05 Feb 2010 16:51:17 -0800
-Message-ID: <4B6CBD05.6040604@eaglescrag.net>
-References: <1263432185-21334-10-git-send-email-warthog9@eaglescrag.net> <cover.1264198194.git.jnareb@gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: [gitolite] repo config for delegated projects
+Date: Sat, 6 Feb 2010 06:20:50 +0530
+Message-ID: <2e24e5b91002051650k3c7cf14ev8752d36b5616e9a4@mail.gmail.com>
+References: <20100203035718.GA30644@lapse.rw.madduck.net>
+	 <2e24e5b91002022222h5ca3ebe6k75854a9a056f0ed1@mail.gmail.com>
+	 <20100203202249.GA27125@lapse.rw.madduck.net>
+	 <20100204011842.GB497@atcmail.atc.tcs.com>
+	 <20100204040812.GC13411@lapse.rw.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "John 'Warthog9' Hawley" <warthog9@kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 01:52:09 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sitaram Chamarty <sitaram@atc.tcs.com>,
+	git discussion list <git@vger.kernel.org>,
+	Teemu Matilainen <teemu.matilainen@iki.fi>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Sat Feb 06 01:56:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdYu8-0006xC-M4
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 01:52:09 +0100
+	id 1NdYy9-0000qR-Ag
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 01:56:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933118Ab0BFAwB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2010 19:52:01 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:52567 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755417Ab0BFAwA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2010 19:52:00 -0500
-Received: from voot-cruiser.eaglescrag.net (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.3/8.14.3) with ESMTP id o160pHNl001645
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Fri, 5 Feb 2010 16:51:17 -0800
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100120 Fedora/3.0.1-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.1
-In-Reply-To: <cover.1264198194.git.jnareb@gmail.com>
-X-Enigmail-Version: 1.0
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Fri, 05 Feb 2010 16:51:17 -0800 (PST)
+	id S933285Ab0BFA4M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Feb 2010 19:56:12 -0500
+Received: from mail-px0-f182.google.com ([209.85.216.182]:53216 "EHLO
+	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933128Ab0BFA4K convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Feb 2010 19:56:10 -0500
+Received: by pxi12 with SMTP id 12so4889070pxi.33
+        for <git@vger.kernel.org>; Fri, 05 Feb 2010 16:56:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=WofhmQ1diwuSfgDYHCnffrInD+U+bHAxaE/zTwhw7kU=;
+        b=xHl3FcZKIBYmAicNrxLc3d+xNY2zTEcfcx9LtK2o+wTZs6exbykoAaHCrU4C8pItHa
+         98hb88YcNZPQl8qf/HvPJQiQng0nngC7Cglez9a5DmTNkM+lXmQ0HcU1w2zyf6CYXGLE
+         QhcsKfChE6OlvJKobVQjRFjP+BQuLiYnGIgpI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SX6irM9N+utrzB/Yx3/cu5SRE1hguIu3Rt3fLyP0zuyGMrmtsZYLkbhVscdsa1eLQz
+         mTUtCZpPacL4Ch5rexq8IplKkl00KCeFMfSdtMFHEo92KZ3DdmrWvQdxPdWJJ9qDTr55
+         uBfOADABnnbvZUGuYltVkTnMTLnFbuEelpl30=
+Received: by 10.114.188.8 with SMTP id l8mr2276119waf.12.1265417451018; Fri, 
+	05 Feb 2010 16:50:51 -0800 (PST)
+In-Reply-To: <20100204040812.GC13411@lapse.rw.madduck.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139132>
 
-> Table of contents:
-> ~~~~~~~~~~~~~~~~~~
->  [RFC PATCH 01/10] gitweb: Print to explicit filehandle (preparing
->                    for caching)
+On Thu, Feb 4, 2010 at 9:38 AM, martin f krafft <madduck@madduck.net> w=
+rote:
+> also sprach Sitaram Chamarty <sitaram@atc.tcs.com> [2010.02.04.1418 +=
+1300]:
+>> how about
+>>
+>> =C2=A0 =C2=A0 $DELEGATED_CONFIGS =3D "hooks.mailinglist,hooks.showre=
+v";
+>
+> Excellent idea.
 
-This looks fine, I did some quick testing to verify that this would work
-- and it does.
+OK I've run into a little decision-point here.
 
-The only caveat that needs to be aware is that if the layer is going to
-output binary data it needs to flip the whole stream to :raw before
-outputting (this is going to be more specific to the caching layer).
+The problem above is of making sure that a delegated admin cannot
+misuse the gitconfig mechanism to do stuff he's not allowed to do, but
+it's actually worse than that :(
 
-One advantage to having the file handles separate is that it's easier to
-distinguish if the data is going to need to be binary data that will
-need to be flipped properly.
+=46irst some background.  For a long time I treated the "main" admin
+(anyone who has RW/RW+ rights to gitolite.conf) to be eqvt to having
+shell access.  Then we started moving away from that, and that is good
+because having shell access allows him to bypass the logging that
+gitolite does, thus polluting the audit trail.  Preventing that makes
+a lot of sense in a corporate environment, and lets you allow a lot
+more people to manage the gitolite access list.
 
-Also means you could cache the binary data differently than textual data.
+Now I just looked up hooks.showrev, and it's supposed to be any shell
+command.  Clearly this means anyone who can set that gitconfig option
+now has shell capability, and it's game over.
 
-I.E. binary data gets saved to disk, but page data gets saved to memcached.
+Regardless of how I look at it, I can't think of a cure for this short
+of either:
+  - putting all the allowed gitconfigs in the RC file, and not in the
+config (writing the RC file requires shell access, and we presume the
+"root of trust" person has enough smarts to know what to allow and
+what not to allow), and allowing repo admins to *refer* to them to use
+whichever they want
+  - someone coming up with a list of gitconfig's that are "safe", and
+specific values for those that are unsafe (like saying "if you use
+showrev, you can only use this command  as the value", and forcing
+only those.
 
-Just food for thought, I'm not sure which way makes more sense
-personally, though I would have a tendency to err on the side of
-flexibility and have both.
-
->  [RFC PATCH 02/10] gitweb: href(..., -path_info => 0|1)
-
-note: delaying additional comment till I've finished reading through the
-basics of the following patches.
-
->  [RFC PATCH 03/10] gitweb/cache.pm - Very simple file based caching
-
-Ok this is quite the departure from what I had, I'm unsure that it's the
-right way to go, but it obviously has merits (I.E. much simpler addition
-of any Cache::Cache or CHI compatible caching layer)
-
-This patch itself looks fine, and as it states it borrows heavily from
-my basic implementation - just wraps it differently.  I might have some
-thoughts on extending this a bit to be a bit more flushed out from a
-basic standpoint.
-
-Need to dig through it some more, but I'm generally ok with it.
-
->  [RFC PATCH 04/10] gitweb/cache.pm - Stat-based cache expiration
-
-Looks fine to me, though the note about getting the errors should get
-moved to previous patch, as it says.
-
-Note: I'm going to stop here as the following are WIP and I want to play
-around with this particular direction on my own a little more before
-further comment.  There's some ideas running around I want to try and
-get down in code first.  Me moving on and trying these other ideas is
-not a reflection on the following patches, just some alternative
-thinking before I discuss some other ideas on the following patches.
-
-Also I've been sitting on this e-mail in this state for almost a week
-while I've been playing with this and having to fight other fires and I
-know that Jakub has been looking for commentary on this.
-
->  [RFC PATCH 05/10] gitweb: Use Cache::Cache compatibile (get, set)
->                    output caching (WIP)
->  [RFC PATCH 06/10] gitweb/cache.pm - Adaptive cache expiration time (WIP)
->  [RFC PATCH 07/10] gitweb: Use CHI compatibile (compute method) caching (WIP)
->  [RFC PATCH 08/10] gitweb/cache.pm - Use locking to avoid 'stampeding herd'
->                    problem (WIP)
->  [RFC PATCH 09/10] gitweb/cache.pm - Serve stale data when waiting for
->                    filling cache (WIP)
->  [RFC PATCH 10/10] gitweb: Show appropriate "Generating..." page when
->                    regenerating cache (WIP)
+I'm leaning toward the former; easier for me ;-)  Meanwhile, I'm
+punting this to Teemu until the morning fog in my brain clears :)
