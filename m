@@ -1,70 +1,74 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 9/9] merge: use new "reset" function instead of running "git read-tree"
-Date: Sat, 6 Feb 2010 16:34:01 +0100
-Message-ID: <201002061634.02126.chriscool@tuxfamily.org>
-References: <20100205231028.3689.12228.chriscool@tuxfamily.org> <20100205231112.3689.34673.chriscool@tuxfamily.org> <7vbpg3nsbd.fsf@alter.siamese.dyndns.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 5/9] revert: add --ff option to allow fast forward when
+ cherry-picking
+Date: Sat, 06 Feb 2010 16:41:43 +0100
+Message-ID: <hkk2jl$ghl$1@ger.gmane.org>
+References: <20100205231028.3689.12228.chriscool@tuxfamily.org> <20100205231112.3689.67634.chriscool@tuxfamily.org> <4B6D38FB.9000307@gnu.org> <201002061629.05640.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Paolo Bonzini <bonzini@gnu.org>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 16:31:00 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 06 16:42:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ndmce-00074m-3p
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 16:31:00 +0100
+	id 1Ndmnc-0000Ur-B8
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 16:42:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753542Ab0BFPaz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Feb 2010 10:30:55 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:51098 "EHLO smtp3-g21.free.fr"
+	id S1754115Ab0BFPmL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Feb 2010 10:42:11 -0500
+Received: from lo.gmane.org ([80.91.229.12]:59034 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753071Ab0BFPax convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Feb 2010 10:30:53 -0500
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 3C2CA8180A4;
-	Sat,  6 Feb 2010 16:30:44 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 4925081810F;
-	Sat,  6 Feb 2010 16:30:42 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vbpg3nsbd.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753666Ab0BFPmK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2010 10:42:10 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NdmnM-0000I2-Ju
+	for git@vger.kernel.org; Sat, 06 Feb 2010 16:42:04 +0100
+Received: from 93-34-208-53.ip51.fastwebnet.it ([93.34.208.53])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 06 Feb 2010 16:42:04 +0100
+Received: from bonzini by 93-34-208-53.ip51.fastwebnet.it with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 06 Feb 2010 16:42:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 93-34-208-53.ip51.fastwebnet.it
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100120 Fedora/3.0.1-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.1
+In-Reply-To: <201002061629.05640.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139175>
 
-On samedi 06 f=E9vrier 2010, Junio C Hamano wrote:
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > This simplifies "git merge" code and make it more efficient in some
-> > cases.
+On 02/06/2010 04:29 PM, Christian Couder wrote:
+> On samedi 06 f=E9vrier 2010, Paolo Bonzini wrote:
+>> On 02/06/2010 12:11 AM, Christian Couder wrote:
+>>> As "git merge" fast forwards if possible, it seems sensible to
+>>> have such a feature for "git cherry-pick" too, especially as it
+>>> could be used in git-rebase--interactive.sh.
+>>>
+>>> Maybe this option could be made the default in the long run, with
+>>> another --no-ff option to disable this default behavior, but that
+>>> could make some scripts backward incompatible and/or that would
+>>> require testing if some GIT_AUTHOR_* environment variables are
+>>> set. So we don't do that for now.
+>>
+>> I would still like to have a no-op --no-ff so that scripts that do r=
+ely
+>> on that can be future proofed (or also, scripts that do "git cherry-=
+pick
+>> $blah -e COMMIT" could use --no-ff to avoid errors in case $blah
+>> contains --ff).
 >
-> I vaguely recall somebody (perhaps it was you) tried to do something =
-like
-> this before to drive unpack_trees() inside the main process, broke th=
-e
-> program rather badly, and then we ended up keeping read-tree invocati=
-on
-> external to the process.  Am I misremembering things?
+> Ok, I will add a --no-ff option but I think it should be incompatible
+> with --ff rather than overide it.
 
-I don't think it was me and I don't recall that, but I don't follow all=
- the=20
-threads on the mailing list.
+Whatever it does it should be the same as git merge.
 
-I will search the archive, but any pointer would be very appreciated.
-
-Thanks anyway,
-Christian.
-
-> If not, could you describe how is this round different from the old o=
-ne?
+Paolo
