@@ -1,105 +1,80 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] grep: simple test for operation in a bare repository
-Date: Sat, 06 Feb 2010 10:35:19 +0100
-Message-ID: <4B6D37D7.6010505@lsrfire.ath.cx>
-References: <4B69BD7C.4010608@lsrfire.ath.cx> <4B6A0BDE.2050908@lsrfire.ath.cx> 	<4B6B653A.8060909@lsrfire.ath.cx> <fcaeb9bf1002041840l4d8e8ac9k3ad5e9e8761aa1b@mail.gmail.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 5/9] revert: add --ff option to allow fast forward when
+ cherry-picking
+Date: Sat, 06 Feb 2010 10:40:11 +0100
+Message-ID: <4B6D38FB.9000307@gnu.org>
+References: <20100205231028.3689.12228.chriscool@tuxfamily.org> <20100205231112.3689.67634.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 06 10:36:01 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Stephen Boyd <bebarino@gmail.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sat Feb 06 10:40:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ndh4c-00016p-LA
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 10:35:31 +0100
+	id 1Ndh9N-0004Xv-6B
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 10:40:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754858Ab0BFJfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Feb 2010 04:35:25 -0500
-Received: from india601.server4you.de ([85.25.151.105]:37262 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754138Ab0BFJfY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2010 04:35:24 -0500
-Received: from [10.0.1.100] (p57B7C6CB.dip.t-dialin.net [87.183.198.203])
-	by india601.server4you.de (Postfix) with ESMTPSA id 3E2B12F8045;
-	Sat,  6 Feb 2010 10:35:22 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
-In-Reply-To: <fcaeb9bf1002041840l4d8e8ac9k3ad5e9e8761aa1b@mail.gmail.com>
+	id S1755098Ab0BFJkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Feb 2010 04:40:18 -0500
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:64874 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754614Ab0BFJkQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2010 04:40:16 -0500
+Received: by bwz19 with SMTP id 19so499256bwz.28
+        for <git@vger.kernel.org>; Sat, 06 Feb 2010 01:40:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=xsroTFYre44L7XiIRQUaKfihYyOaijwwUwuNdHmGa1U=;
+        b=inzLOejaclLR2k3ZiOoahJbpuJTQVLRlhQA25aIe82bsv1f+kTQKb7Ou3qAsF0gBMm
+         CNGK0864A2nMk9hOJZohHReTCOvSZ5LTsZbAZyPXDVGFsVcRhECB2trRxvqSJzh3p1lx
+         MWwweWnDRgPobWXRiWrlvPAwOIuaBwLEEn6X0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=KffjuIrbyv9KYKvKVWzrz3A+XFpDgNQyWscLHudErqCzQl5JVKYAxJDVfQda70NF7M
+         IPrfPiaIJnzYAAVXNCA1WZs7wQfhMGKMLmVWK4ym9ApQTvp9Rff1oz9GdLaAcm6VM19y
+         OhOYeU8VC46GuyZ2BOOVGZ3W8v2JRgejhwwBA=
+Received: by 10.204.5.217 with SMTP id 25mr2551897bkw.114.1265449214683;
+        Sat, 06 Feb 2010 01:40:14 -0800 (PST)
+Received: from yakj.usersys.redhat.com (93-34-208-53.ip51.fastwebnet.it [93.34.208.53])
+        by mx.google.com with ESMTPS id 16sm1051099bwz.3.2010.02.06.01.40.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 06 Feb 2010 01:40:12 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100120 Fedora/3.0.1-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.1
+In-Reply-To: <20100205231112.3689.67634.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139154>
 
-Am 05.02.2010 03:40, schrieb Nguyen Thai Ngoc Duy:
-> setup_pager() calls git_config(), which indirectly calls get_git_dir()
-> and sets git_dir in stone. Changing GIT_DIR environment variable alone
-> won't work, as you have seen.
-> 
-> When RUN_SETUP is set, setup_git_directory() would be called before
-> setup_pager() can kick in, so everything is properly set.
-> 
->> There are five more sites in git.c, path.c and setup.c where $GIT_DIR
->> is set directly with setenv().  I wonder if they should better call
->> set_git_dir() instead, too.
-> 
-> Yes, they should.
+On 02/06/2010 12:11 AM, Christian Couder wrote:
+> As "git merge" fast forwards if possible, it seems sensible to
+> have such a feature for "git cherry-pick" too, especially as it
+> could be used in git-rebase--interactive.sh.
+>
+> Maybe this option could be made the default in the long run, with
+> another --no-ff option to disable this default behavior, but that
+> could make some scripts backward incompatible and/or that would
+> require testing if some GIT_AUTHOR_* environment variables are
+> set. So we don't do that for now.
 
-This patch converts the setenv() calls in path.c and setup.c.  After
-the call, git grep with a pager works again in bare repos.
+I would still like to have a no-op --no-ff so that scripts that do rely 
+on that can be future proofed (or also, scripts that do "git cherry-pick 
+$blah -e COMMIT" could use --no-ff to avoid errors in case $blah 
+contains --ff).
 
-It leaves the setenv(GIT_DIR_ENVIRONMENT, ...) calls in git.c alone, as
-they respond to command line switches that emulate the effect of setting
-the environment variable directly.
-
-The remaining site in environment.c is in set_git_dir() and is left
-alone, too, of course.  Finally, builtin-init-db.c is left changed
-because the repo is still being carefully constructed when the
-environment variable is set.
-
-This fixes git shortlog when run inside a git directory, which had been
-broken by abe549e1.
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
-Since it's doesn't fix a regression (abe549e1 was committed in March
-2008), this patch doesn't have to go in at this point in the release
-cycle.  And perhaps it's even superseded by the more general fix Duy
-is working on?
-
- path.c  |    2 +-
- setup.c |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/path.c b/path.c
-index 79aa104..0005df3 100644
---- a/path.c
-+++ b/path.c
-@@ -336,7 +336,7 @@ char *enter_repo(char *path, int strict)
-  	if (access("objects", X_OK) == 0 && access("refs", X_OK) == 0 &&
- 	    validate_headref("HEAD") == 0) {
--		setenv(GIT_DIR_ENVIRONMENT, ".", 1);
-+		set_git_dir(".");
- 		check_repository_format();
- 		return path;
- 	}
-diff --git a/setup.c b/setup.c
-index 710e2f3..b38cbee 100644
---- a/setup.c
-+++ b/setup.c
-@@ -404,9 +404,9 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 				inside_work_tree = 0;
- 			if (offset != len) {
- 				cwd[offset] = '\0';
--				setenv(GIT_DIR_ENVIRONMENT, cwd, 1);
-+				set_git_dir(cwd);
- 			} else
--				setenv(GIT_DIR_ENVIRONMENT, ".", 1);
-+				set_git_dir(".");
- 			check_repository_format_gently(nongit_ok);
- 			return NULL;
- 		}
+Paolo
