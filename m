@@ -1,102 +1,140 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] add new options to git format-patch: --cover-subject
- and --cover-blurb
-Date: Sat, 6 Feb 2010 13:13:15 -0600
-Message-ID: <20100206191315.GA3732@progeny.tock>
-References: <1265405973-5670-1-git-send-email-larry@elder-gods.org>
- <201002051526.18205.wjl@icecavern.net>
- <7vfx5fwbws.fsf@alter.siamese.dyndns.org>
- <20100205225901.GA29821@cthulhu>
- <7vtytvjhit.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: imap.preformattedHTML and imap.sslverify
+Date: Sat, 06 Feb 2010 11:26:35 -0800
+Message-ID: <7v7hqqxj10.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Larry D'Anna <larry@elder-gods.org>,
-	"Wesley J. Landaker" <wjl@icecavern.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 20:22:40 2010
+Cc: Jeremy White <jwhite@codeweavers.com>,
+	Robert Shearman <robertshearman@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 06 20:26:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdqEo-0000Cf-Qq
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 20:22:39 +0100
+	id 1NdqIy-0002eo-LI
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 20:26:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932848Ab0BFTNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Feb 2010 14:13:21 -0500
-Received: from mail-iw0-f185.google.com ([209.85.223.185]:62807 "EHLO
-	mail-iw0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932817Ab0BFTNU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2010 14:13:20 -0500
-Received: by iwn15 with SMTP id 15so2166105iwn.19
-        for <git@vger.kernel.org>; Sat, 06 Feb 2010 11:13:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=sCDwuWUzoHUuwxqAVYtVilDJy7yMVZDkFTRHmhCGz+8=;
-        b=vjfbc6EmpRt8EhHQQ/AF+2XQ0I9m5LYy9Ah99VjkTuEI61dlm3D9I9PH0qCWU7N3QN
-         ZDP3ZbWfv7vlp0xni4DChX+gY6d3is7VFsNXValEV7MeCeCUSdg8FB88BaPIYEzkLpPB
-         CEetsqR6vtP70nWrLGWf6bh3qE4hglBbyubws=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=O2oH4wSzaj7VBUFl1KTnmItIop4txmd3W1mCvtaMVG7tzwxySpQBSuBVDWuUOmlpyg
-         NHl9Udn5WvonUoqzkkGbYtBLdQolUoZxkZoGRL035pqM9GVAJcTkXjED18nRJua0XkGe
-         KS2OmSRUpenGh8VjW49E7sy8sSxJaqDZx7Fqo=
-Received: by 10.231.149.9 with SMTP id r9mr2573547ibv.82.1265483599203;
-        Sat, 06 Feb 2010 11:13:19 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 21sm2384511iwn.6.2010.02.06.11.13.18
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 06 Feb 2010 11:13:18 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vtytvjhit.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753868Ab0BFT0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Feb 2010 14:26:46 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62383 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751356Ab0BFT0p (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2010 14:26:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E1BD697832;
+	Sat,  6 Feb 2010 14:26:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=9LTL
+	PIAiriHI2L8KVqhc+WHCMz0=; b=Lw7tYqwu67xwB7/xraAjqe4tZ/G+aS9eaOup
+	MYTCI7lvjPSJODTYl1CNE1faLXAloaajoCkXoGcJU5oBxn0ocBWJ/NRGlrXIewv5
+	z9uZTjap7mfRBxe2rhif8ePCLNYjeHRel13Sb4NE/sE3k2R/cy67/JEtz8nRZYfb
+	dpqRll4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:from:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
+	dE4P1jNIYMugMKtcL2T+0rQlatMhMG+0v3j0y7vekQe/Su7MAYCuyaqUFr05YrQQ
+	H9Mo1f+AdWEYWMznPlROq4Sv5sB2sN8R0CEcN5lfIkGI0tl5G/3RLRorf2S8tf2q
+	Gq4IcfZ1yXbydLxyedF2E3oSeGjFP3kzjm9HHqrJ9MI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A74589782B;
+	Sat,  6 Feb 2010 14:26:40 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ACC619782A; Sat,  6 Feb
+ 2010 14:26:36 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8D330D20-1355-11DF-9BAF-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139186>
 
-Junio C Hamano wrote:
-> Larry D'Anna <larry@elder-gods.org> writes:
+I hate to bring up a topic that is almost a year old, but has either of
+these configuration variables ever worked?
+
+The code does this while reading its configuration file:
+
+        static int git_imap_config(const char *key, const char *val, void *cb)
+        {
+                char imap_key[] = "imap.";
+
+                if (strncmp(key, imap_key, sizeof imap_key - 1))
+                        return 0;
+
+                if (!val)
+                        return config_error_nonbool(key);
+                ...
+                else if (!strcmp("sslverify", key))
+                        server.ssl_verify = git_config_bool(key, val);
+                else if (!strcmp("preformattedHTML", key))
+                        server.use_html = git_config_bool(key, val);
+
+Two issues:
+
+ - The body of the function is protected by "nonbool" written back in the
+   days when there was no boolean variables in imap.* namespace.  Hence,
+   a user cannot write
+
+           [imap]
+                sslverify
+
+   and turn it on.  The user needs to write
+
+
+           [imap]
+                sslverify = True
+
+   which is against the parsing rules for boolean variables.
+
+ - The config parser downcases the key before calling the parse callback
+   function, so !strcmp("preformattedHTML", key) will never trigger.
+
+The fix is obvious (see below), but I am far more disturbed by the
+apparent lack of testing.  Especially, preformattedHTML one would have
+never worked as setting the configuration is the only way to trigger this.
+
+Could peole _test_ this patch and report, as I don't use this program at
+all.
+
+Thanks.
+
+ imap-send.c |   15 ++++++++-------
+ 1 files changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/imap-send.c b/imap-send.c
+index de8114b..ea769a9 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1335,11 +1335,16 @@ static int git_imap_config(const char *key, const char *val, void *cb)
+ 	if (strncmp(key, imap_key, sizeof imap_key - 1))
+ 		return 0;
  
->> 1) make your branch
->>
->> 2) git format-patch --cover-letter
->>
->> 3) edit the cover letter
->>
->> 3) review the series, and realize you need to fix something, fix it.
->
-> Hmph, this begs a natural question: why didn't you review and realize that
-> in step (1)?
-
-One answer: writing a cover letter forces one to reflect a little.
-Perhaps that is why the cover letter and review share step 3. ;-)
-
-> It might be sufficient for format-patch to notice a 0000-cover file that
-> is already there, read the subject and blurb part and carry that forward,
-> instead of unconditionally writing "*** SUBJECT HERE ***" and stuff.  That
-> way, the user does not have to prepare a separate file before running
-> format-patch.
-
-FWIW I think this sounds sane and would be happy to see this feature.
-
-Jonathan
-
-> By scanning from the bottom of the existing 0000-cover file, skipping
-> diffstat part (easy to spot with regexp) and then skip backwards a block
-> of text whose lines are one of:
-> 
->  (1) two space indented---that's one-line-per-commit;
-> 
->  (2) empty line---separator; or
-> 
->  (3) unindented line that ends with '(' number ')' ':'---the author.
-> 
-> The remainder would be the BLURB.  And you know it is much easier to find
-> where the Subject: is ;-)
+-	if (!val)
+-		return config_error_nonbool(key);
+-
+ 	key += sizeof imap_key - 1;
+ 
++	/* check booleans first, and barf on others */
++	if (!strcmp("sslverify", key))
++		server.ssl_verify = git_config_bool(key, val);
++	else if (!strcmp("preformattedhtml", key))
++		server.use_html = git_config_bool(key, val);
++	else if (!val)
++		return config_error_nonbool(key);
++
+ 	if (!strcmp("folder", key)) {
+ 		imap_folder = xstrdup(val);
+ 	} else if (!strcmp("host", key)) {
+@@ -1360,10 +1365,6 @@ static int git_imap_config(const char *key, const char *val, void *cb)
+ 		server.port = git_config_int(key, val);
+ 	else if (!strcmp("tunnel", key))
+ 		server.tunnel = xstrdup(val);
+-	else if (!strcmp("sslverify", key))
+-		server.ssl_verify = git_config_bool(key, val);
+-	else if (!strcmp("preformattedHTML", key))
+-		server.use_html = git_config_bool(key, val);
+ 	return 0;
+ }
+ 
