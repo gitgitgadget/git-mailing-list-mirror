@@ -1,265 +1,81 @@
-From: Aaron Crane <git@aaroncrane.co.uk>
-Subject: Re: [PATCH v2] cvsimport: new -R option: generate .git/cvs-revisions mapping
-Date: Sat, 6 Feb 2010 17:15:17 +0000
-Message-ID: <E1Ndqtw-00066G-3b@bunsen.laxan.com>
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 06 21:05:37 2010
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: Re: [PATCH] t9501: Skip testing load if we can't detect it
+Date: Sat, 6 Feb 2010 15:09:39 -0500
+Message-ID: <378C5218-C859-4E82-B39E-40BE5D7A572C@gernhardtsoftware.com>
+References: <1265432440-52146-1-git-send-email-brian@gernhardtsoftware.com> <m3eikya9tn.fsf@localhost.localdomain> <0CD6B283-3181-4FAB-A6B2-13AFF9E5071C@gernhardtsoftware.com> <201002061505.13886.jnareb@gmail.com> <7vwryq1aid.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (iPhone Mail 7E18)
+Content-Type: text/plain;
+	charset=us-ascii;
+	format=flowed;
+	delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 06 21:09:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdquP-0003VZ-2F
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 21:05:37 +0100
+	id 1NdqyZ-0006Ma-Kz
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 21:09:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754895Ab0BFUB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Feb 2010 15:01:29 -0500
-Received: from bunsen.laxan.com ([95.172.25.26]:53047 "EHLO bunsen.laxan.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752736Ab0BFUB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2010 15:01:28 -0500
-X-Greylist: delayed 625 seconds by postgrey-1.27 at vger.kernel.org; Sat, 06 Feb 2010 15:01:28 EST
-Received: from aaron by bunsen.laxan.com with local (Exim 4.69)
-	(envelope-from <git@aaroncrane.co.uk>)
-	id 1Ndqtw-00066G-3b; Sat, 06 Feb 2010 20:05:08 +0000
+	id S1755849Ab0BFUJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Feb 2010 15:09:50 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:55396 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755400Ab0BFUJu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2010 15:09:50 -0500
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 3E01A1FFC1CE; Sat,  6 Feb 2010 20:09:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [10.124.230.248] (mobile-166-137-138-213.mycingular.net [166.137.138.213])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id BF9BB1FFC06B;
+	Sat,  6 Feb 2010 20:09:40 +0000 (UTC)
+In-Reply-To: <7vwryq1aid.fsf@alter.siamese.dyndns.org>
+X-Mailer: iPhone Mail (7E18)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139189>
 
-This option causes the creation or updating of a file mapping CVS
-(filename, revision number) pairs to Git commit IDs.  This is expected
-to be useful if you have CVS revision numbers stored in commit messages,
-bug-tracking systems, email archives, and the like.
+On Feb 6, 2010, at 1:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-Signed-off-by: Aaron Crane <git@aaroncrane.co.uk>
----
-Re-sent because of line wrapping; sorry for the noise.
+> Here is my attempt to reword the commit log message from Brian (the  
+> "-1"
+> one, squashed into a revert of the one from yesterday, the latter of  
+> which
+> I already pushed out).  I just added the first paragraph to better  
+> justify
+> the reason why we are testing the codepath that would never be  
+> exercised
+> in real life on platforms that lack /proc/loadavg.
 
-See also the thread beginning at
-http://thread.gmane.org/gmane.comp.version-control.git/138079
+Looks good to me.
 
-Thanks to Peff for his review at
-http://article.gmane.org/gmane.comp.version-control.git/138544
-
-I believe this revised patch takes account of all his comments.  In
-particular, compared to the previous version:
-
-- Tests are included
-- Now works with incremental import
-- The file is always generated as .git/cvs-revisions, rather than
-  letting the user pick the name
-
- Documentation/git-cvsimport.txt |   18 +++++++++++++++++-
- git-cvsimport.perl              |   21 +++++++++++++++++----
- t/t9600-cvsimport.sh            |   36 +++++++++++++++++++++++++++++++++---
- 3 files changed, 67 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
-index ddfcb3d..8bcd875 100644
---- a/Documentation/git-cvsimport.txt
-+++ b/Documentation/git-cvsimport.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	      [-A <author-conv-file>] [-p <options-for-cvsps>] [-P <file>]
- 	      [-C <git_repository>] [-z <fuzz>] [-i] [-k] [-u] [-s <subst>]
- 	      [-a] [-m] [-M <regex>] [-S <regex>] [-L <commitlimit>]
--	      [-r <remote>] [<CVS_module>]
-+	      [-r <remote>] [-R] [<CVS_module>]
- 
- 
- DESCRIPTION
-@@ -157,6 +157,22 @@ It is not recommended to use this feature if you intend to
- export changes back to CVS again later with
- 'git cvsexportcommit'.
- 
-+-R::
-+	Generate a `$GIT_DIR/cvs-revisions` file containing a mapping from CVS
-+	revision numbers to newly-created Git commit IDs.  The generated file
-+	will contain one line for each (filename, revision) pair imported;
-+	each line will look like
-++
-+---------
-+src/widget.c 1.1 1d862f173cdc7325b6fa6d2ae1cfd61fd1b512b7
-+---------
-++
-+The revision data is appended to the file if it already exists, for use when
-+doing incremental imports.
-++
-+This option may be useful if you have CVS revision numbers stored in commit
-+messages, bug-tracking systems, email archives, and the like.
-+
- -h::
- 	Print a short usage message and exit.
- 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 4853bf7..9e03eee 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -29,7 +29,7 @@ use IPC::Open2;
- $SIG{'PIPE'}="IGNORE";
- $ENV{'TZ'}="UTC";
- 
--our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,@opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r);
-+our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,@opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r, $opt_R);
- my (%conv_author_name, %conv_author_email);
- 
- sub usage(;$) {
-@@ -40,7 +40,7 @@ Usage: git cvsimport     # fetch/update GIT from CVS
-        [-o branch-for-HEAD] [-h] [-v] [-d CVSROOT] [-A author-conv-file]
-        [-p opts-for-cvsps] [-P file] [-C GIT_repository] [-z fuzz] [-i] [-k]
-        [-u] [-s subst] [-a] [-m] [-M regex] [-S regex] [-L commitlimit]
--       [-r remote] [CVS_module]
-+       [-r remote] [-R] [CVS_module]
- END
- 	exit(1);
- }
-@@ -110,7 +110,7 @@ sub read_repo_config {
- 	}
- }
- 
--my $opts = "haivmkuo:d:p:r:C:z:s:M:P:A:S:L:";
-+my $opts = "haivmkuo:d:p:r:C:z:s:M:P:A:S:L:R";
- read_repo_config($opts);
- Getopt::Long::Configure( 'no_ignore_case', 'bundling' );
- 
-@@ -659,6 +659,11 @@ if ($opt_A) {
- 	write_author_info("$git_dir/cvs-authors");
- }
- 
-+# open .git/cvs-revisions, if requested
-+open my $revision_map, '>>', "$git_dir/cvs-revisions"
-+    or die "Can't open $git_dir/cvs-revisions for appending: $!\n"
-+	if defined $opt_R;
-+
- 
- #
- # run cvsps into a file unless we are getting
-@@ -742,7 +747,7 @@ sub write_tree () {
- }
- 
- my ($patchset,$date,$author_name,$author_email,$branch,$ancestor,$tag,$logmsg);
--my (@old,@new,@skipped,%ignorebranch);
-+my (@old,@new,@skipped,%ignorebranch,@commit_revisions);
- 
- # commits that cvsps cannot place anywhere...
- $ignorebranch{'#CVSPS_NO_BRANCH'} = 1;
-@@ -825,6 +830,11 @@ sub commit {
- 	system('git' , 'update-ref', "$remote/$branch", $cid) == 0
- 		or die "Cannot write branch $branch for update: $!\n";
- 
-+	if ($revision_map) {
-+		print $revision_map "@$_ $cid\n" for @commit_revisions;
-+	}
-+	@commit_revisions = ();
-+
- 	if ($tag) {
- 	        my ($xtag) = $tag;
- 		$xtag =~ s/\s+\*\*.*$//; # Remove stuff like ** INVALID ** and ** FUNKY **
-@@ -959,6 +969,7 @@ while (<CVS>) {
- 		    push(@skipped, $fn);
- 		    next;
- 		}
-+		push @commit_revisions, [$fn, $rev];
- 		print "Fetching $fn   v $rev\n" if $opt_v;
- 		my ($tmpname, $size) = $cvs->file($fn,$rev);
- 		if ($size == -1) {
-@@ -981,7 +992,9 @@ while (<CVS>) {
- 		unlink($tmpname);
- 	} elsif ($state == 9 and /^\s+(.+?):\d+(?:\.\d+)+->(\d+(?:\.\d+)+)\(DEAD\)\s*$/) {
- 		my $fn = $1;
-+		my $rev = $2;
- 		$fn =~ s#^/+##;
-+		push @commit_revisions, [$fn, $rev];
- 		push(@old,$fn);
- 		print "Delete $fn\n" if $opt_v;
- 	} elsif ($state == 9 and /^\s*$/) {
-diff --git a/t/t9600-cvsimport.sh b/t/t9600-cvsimport.sh
-index 363345f..b572ce3 100755
---- a/t/t9600-cvsimport.sh
-+++ b/t/t9600-cvsimport.sh
-@@ -47,13 +47,20 @@ EOF
- 
- test_expect_success 'import a trivial module' '
- 
--	git cvsimport -a -z 0 -C module-git module &&
-+	git cvsimport -a -R -z 0 -C module-git module &&
- 	test_cmp module-cvs/o_fortuna module-git/o_fortuna
- 
- '
- 
- test_expect_success 'pack refs' 'cd module-git && git gc && cd ..'
- 
-+test_expect_success 'initial import has correct .git/cvs-revisions' '
-+
-+	(cd module-git &&
-+	 git log --format="o_fortuna 1.1 %H" -1) > expected &&
-+	test_cmp expected module-git/.git/cvs-revisions
-+'
-+
- test_expect_success 'update cvs module' '
- 
- 	cd module-cvs &&
-@@ -86,13 +93,21 @@ EOF
- test_expect_success 'update git module' '
- 
- 	cd module-git &&
--	git cvsimport -a -z 0 module &&
-+	git cvsimport -a -R -z 0 module &&
- 	git merge origin &&
- 	cd .. &&
- 	test_cmp module-cvs/o_fortuna module-git/o_fortuna
- 
- '
- 
-+test_expect_success 'update has correct .git/cvs-revisions' '
-+
-+	(cd module-git &&
-+	 git log --format="o_fortuna 1.1 %H" -1 HEAD^ &&
-+	 git log --format="o_fortuna 1.2 %H" -1 HEAD) > expected &&
-+	test_cmp expected module-git/.git/cvs-revisions
-+'
-+
- test_expect_success 'update cvs module' '
- 
- 	cd module-cvs &&
-@@ -107,13 +122,22 @@ test_expect_success 'cvsimport.module config works' '
- 
- 	cd module-git &&
- 		git config cvsimport.module module &&
--		git cvsimport -a -z0 &&
-+		git cvsimport -a -R -z0 &&
- 		git merge origin &&
- 	cd .. &&
- 	test_cmp module-cvs/tick module-git/tick
- 
- '
- 
-+test_expect_success 'second update has correct .git/cvs-revisions' '
-+
-+	(cd module-git &&
-+	 git log --format="o_fortuna 1.1 %H" -1 HEAD^^ &&
-+	 git log --format="o_fortuna 1.2 %H" -1 HEAD^
-+	 git log --format="tick 1.1 %H" -1 HEAD) > expected &&
-+	test_cmp expected module-git/.git/cvs-revisions
-+'
-+
- test_expect_success 'import from a CVS working tree' '
- 
- 	$CVS co -d import-from-wt module &&
-@@ -126,6 +150,12 @@ test_expect_success 'import from a CVS working tree' '
- 
- '
- 
-+test_expect_success 'no .git/cvs-revisions created by default' '
-+
-+	! test -e import-from-wt/.git/cvs-revisions
-+
-+'
-+
- test_expect_success 'test entire HEAD' 'test_cmp_branch_tree master'
- 
- test_done
--- 
-1.6.6.1
+>    Subject: t9501: Re-fix max load test
+>
+>    Revert the previous attempt to skip this test on platforms where we
+>    currently cannot determine the system load.  We want to make sure  
+> that
+>    the max-load-limit codepath produces results cleanly, when gitweb  
+> is
+>    updated and becomes capable of reading the load average by some  
+> other
+>    method.
+>
+>    The code to check for load returns 0 if it doesn't know how to find
+>    load.  It also checks to see if the current load is higher than the
+>    max load.  So to force the script to quit early by setting the  
+> maxload
+>    variable negative which should work for systems where we can detect
+>    load (which should be a positive number) and systems where we can't
+>    (where detected load is 0)
+>
+>    Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
