@@ -1,216 +1,293 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 1/4] gitweb: notes feature
-Date: Sat, 6 Feb 2010 23:58:54 +0100
-Message-ID: <cb7bb73a1002061458s5b2c1e7ere83111429473d11c@mail.gmail.com>
-References: <1265300338-25021-1-git-send-email-giuseppe.bilotta@gmail.com> 
-	<201002060044.11225.jnareb@gmail.com> <cb7bb73a1002060102n5544f825x3d01860b1228cee@mail.gmail.com> 
-	<201002062314.00631.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC PATCH 00/10] gitweb: Simple file based output caching
+Date: Sun, 7 Feb 2010 00:56:30 +0100
+Message-ID: <201002070056.31665.jnareb@gmail.com>
+References: <1263432185-21334-10-git-send-email-warthog9@eaglescrag.net> <cover.1264198194.git.jnareb@gmail.com> <4B6CBD05.6040604@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johan Herland <johan@herland.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 23:59:31 2010
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
+	Petr Baudis <pasky@suse.cz>
+To: "J.H." <warthog9@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Sun Feb 07 00:56:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdtcZ-0008Gt-Tc
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 23:59:24 +0100
+	id 1NduWA-0000Co-59
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Feb 2010 00:56:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933066Ab0BFW7T convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Feb 2010 17:59:19 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:40593 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933061Ab0BFW7R convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Feb 2010 17:59:17 -0500
-Received: by ewy28 with SMTP id 28so1295468ewy.28
-        for <git@vger.kernel.org>; Sat, 06 Feb 2010 14:59:16 -0800 (PST)
+	id S1756671Ab0BFX4m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Feb 2010 18:56:42 -0500
+Received: from mail-fx0-f211.google.com ([209.85.220.211]:41119 "EHLO
+	mail-fx0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755690Ab0BFX4l (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2010 18:56:41 -0500
+Received: by fxm3 with SMTP id 3so5801444fxm.39
+        for <git@vger.kernel.org>; Sat, 06 Feb 2010 15:56:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=jZw707E6C+fE40PPFdN8z6aZgAElEHq0dR+1dhPUUxU=;
-        b=J4rHoc+iDz9lCIU53I/WuWh3LBCE9YFKBYfX1lUt2Zmvw65w5SK9H5XW/ShH3VwFwZ
-         z8Qtu94BQCVUxeTlyn5GyenMJr1Z9TZYfdoLDQrZPmRd2TnRSvdiHPAWr/oI6qdx+ItF
-         rg3OX7WvlzUWPIr5AExR07+gmJOOlIJH61+6I=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=ZV48EUpvemx3sHB+np+nzHtBc6vsIp3naM4aEo1MBwU=;
+        b=nSsmHd1w8gU17XqgtbQBsTweXf7F0baWVN2t1DJO6lHVKDEOSQRNE2kBNzSDW4X7rW
+         xCM3Ttfbx57NUHB06K8nGVhK4vW4UM/vWCWhLmnfifVC6Mo8z3Pg4buKQ3rz8k8/Rofs
+         OgTEVkh5MwJImUUVIlpa+e4dlwOpQysnbJqqw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=FV61QOkcqd5Ke6SS1gnhF5NqTQI87myML3S4Y6EHmNCFN6h1c76jfGdNXw8hbZEvQi
-         Yu6OfCUsPVpPv8vPE5R3SKOWK31S7IjOPgl3X4bjOImdwEUKsnqOJma5RgFOYFof8/+e
-         y4QIF1o+kfWDA4asOk1W5M/WLHOczggBNiih8=
-Received: by 10.213.71.143 with SMTP id h15mr2322195ebj.31.1265497154070; Sat, 
-	06 Feb 2010 14:59:14 -0800 (PST)
-In-Reply-To: <201002062314.00631.jnareb@gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=H5XaKq+katFqDSn52+TO/Egwxxa6COHnWCb27czzBoC9FcC0x8bkf2EKOrJy8zpVwO
+         S3qxnWu8esH2cU+Pk7TRrLDgIgA7sBEFRGd7LF4rHyF2n79BkLiXMHB23EhxmgL+Dgf/
+         BEP4UIEe3fqHEIRaiqVsvVid4HrhwBlmRct14=
+Received: by 10.103.87.28 with SMTP id p28mr3085571mul.83.1265500598764;
+        Sat, 06 Feb 2010 15:56:38 -0800 (PST)
+Received: from ?192.168.1.13? (abws80.neoplus.adsl.tpnet.pl [83.8.242.80])
+        by mx.google.com with ESMTPS id n10sm4854232mue.44.2010.02.06.15.56.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 06 Feb 2010 15:56:37 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4B6CBD05.6040604@eaglescrag.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139200>
 
-On Sat, Feb 6, 2010 at 11:14 PM, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
-> On Sat, 6 Feb 2010, Giuseppe Bilotta wrote:
->> 2010/2/6 Jakub Narebski <jnareb@gmail.com>:
->>> On Thu, 4 Feb 2010, Giuseppe Bilotta wrote:
->
->>>> + =A0 =A0 # Notes support. When this feature is enabled, the prese=
-nce of notes
->>>> + =A0 =A0 # for any commit is signaled, and the note content is ma=
-de available
->>>> + =A0 =A0 # in a way appropriate for the current view.
->>>> + =A0 =A0 # Set this to '*' to enable all notes namespace, or to a=
- shell-glob
->>>> + =A0 =A0 # specification to enable specific namespaces only.
->>>
->>> It is not obvious from this description that you can provide _list_=
- of
->>> notes namespaces (or list of shell-globs).
->>
->> I'm starting to think it might make sense to not have a list here, b=
-ut
->> rather a single value only. First of all, multiple refs can be
->> indicated =E0 la shell with {ref1,ref2,ref3}. Or, we can also use th=
-e
->> intended command-line syntax ref1:ref2:ref3, which would help
->> consistency. It also makes things easier for project overrides, as p=
-er
->> your subsequent comment:
->
-> So it is to be single shell-glob / fnmatch (I think) compatible patte=
-rn,
-> isn't it?
+On Sat, 6 Feb 2010, J.H. wrote:
+> > Table of contents:
+> > ~~~~~~~~~~~~~~~~~~
+> >  [RFC PATCH 01/10] gitweb: Print to explicit filehandle (preparing
+> >                    for caching)
 
-Sort of. fnmatch doesn't do brace expansion, which is a pity IMO, but
-that's just my personal preference. Colon-separated, fnmatched
-components is probably the easiest thing to implement to have multiple
-refs. I'll go with whatever is chosen for core.
+I am working on v2 of this series, where this patch is not necessary.
 
->>> First, there are '--batch' and '--batch-check' options to git-cat-f=
-ile.
->>> With these I think you can get all notes with just single git comma=
-nd,
->>> although using it is a bit complicated (requires open2 from IPC::Op=
-en2
->>> for bidi communication).
->>
->> Hm. The IPC::Open2 doc makes it sound horribly scary, but still doab=
-le.
->
-> It would look something like the following (fragment of my WIP code):
->
-> =A0 =A0 =A0 =A0use IPC::Open2 qw(open2);
-> =A0 =A0 =A0 =A0use IO::Handle;
->
-> =A0 =A0 =A0 =A0# ...
->
-> =A0 =A0 =A0 =A0unless ($object_stdout) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0# Open bidi pipe the first time get_ob=
-ject is called.
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0# open2 raises an exception on error, =
-no need to 'or die'.
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0$object_pid =3D
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0open2($object_stdout, =
-$object_stdin,
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0git_cmd(),=
- 'cat-file', '--batch');
-> =A0 =A0 =A0 =A0}
-> =A0 =A0 =A0 =A0$object_stdin->printflush("$object_id\n") # NB: \n req=
-uired to avoid deadlocking
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0or die "get_object: cannot write to pi=
-pe: $!";
-> =A0 =A0 =A0 =A0my ($sha1, $type, $size) =3D
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0split ' ', $object_stdout->getline()
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0or die "get_object: cannot read from p=
-ipe: $!";
-> =A0 =A0 =A0 =A0die "'$object_id' not found in repository"
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if $type eq 'missing';
-> =A0 =A0 =A0 =A0$object_stdout->read(my $content, $size);
-> =A0 =A0 =A0 =A0$object_stdout->getline(); =A0# eat trailing newline
->
-> The above fragment of code is tested that it works. =A0You would prob=
-ably
-> need to replace dies with something less fatal...
+It uses *STDOUT->push_layer(scalar => \$data) and *STDOUT->pop_layer()
+from PerlIO::Util if it is available, and manipulation of *STDOUT (which
+means *STDOUT = $data_fh and not $out = $data_fh).  But I must say that
+doing capture of STDOUT (only; STDERR is not captured) without requiring
+extra Perl modules (like recommended Capture::Tiny or e.g. IO::Capture),
+and especially testing that it works correctly with capturing output
+of cache_fetch is serious PITA.
 
-On the other hand, as mentioned by Junio, this approach is not
-future-proof enough for any kind of fan-out schemes.
+This patch has the advantage that all operations are simpler.  In
+particular it is easy to have section which should be not captured,
+or where capture should be turned off (slightly different).
 
->>> Second, if not using 'git cat-file --batch', perhaps it would be ea=
-sier
->>> to read each $note_ref tree using 'git ls-tree'/'git ls-tree -r', a=
-nd
->>> parse its output to check for which commits/objects there are notes
->>> available, and only then call 'git show' (or reuse connection to
->>> 'git cat-file --batch').
->>>
->>> The second solution, with a bit more work, could work even in prese=
-nce
->>> of fan-out schemes for notes, I think.
->>
->> An interesting approach. Without fan-out, git ls-tree -r
->> refs/notes/whatever [hash ...] gives us the blobs we're interested i=
-n.
->> In case of fan-out schemes, the efficiency of this approach probably
->> depends on the kind of fan-out we have, and would require some
->> heavy-duty grepping. A git ls-notes plumbing with a similar syntax a=
-nd
->> output would be a nice thing to have.
->
-> No grepping, just pass '-r' option to 'git-ls-tree', and use
-> parse_ls_tree_line() to parse lines. =A0Then if we have fanout scheme
-> we would get, I guess, something like the following:
->
-> =A0100644 blob 23da787d... =A0 =A0 =A0 de/adbeef...
-> =A0100644 blob bc10f25f... =A0 =A0 =A0 c5/31d986...
-> =A0100644 blob c9656ece... =A0 =A0 =A0 24/d93129...
->
-> Now you only need to s!/!!g on filename to get SHA1 of annotated obje=
-ct
-> (for which is the note).
+It has the disadvantage that all future contributions must use
+"print $out <something>" / "print {$out} <something>", and that
+contributions from before this change would have to be carefully
+updated.  (Well, we could probably add the test that would check
+that everything that needs to go to $out does, and everything that
+shouldn't got to $out but to STDOUT doesn't.)
 
-What worries me is that you're going to get fan-outs when there are
-LOTS of notes, and that's precisely the kind of situation where you
-_don't_ want to go through all the notes to pick the ones you're only
-interested in.
 
-If we have a guarantee that the fan-outs follow a 2/[2/...] scheme,
-the open2 approach might still be the best way to go, by just trying
-not only namespace:xxxxx...xxx but also namespace:xx/xxxxx etc.
-Horrible, but could still be coalesced in a single call. It mgiht also
-be optimized to stop at the first successfull hit in a namespace.
+If I were to have such patch in new version of "gitweb output
+caching" series, I would make the following changes:
+* (optionally) use simpler 'print $out <sth>' instead of visually 
+  distinct 'print {$out} <sth>', where from first glance one can
+  see that $out is filehandle and not something to be printed
+* use short filehandle name: $out, or $oh, or $o/$O.
+* split above patch in 2 to 4 patches:
+  - pure mechanical (scripted) change:
+     + print <sth>     ->  print $out <sth>
+     + printf(<sth>)   ->  printf($out <sth>)
+     + binmode STDOUT  ->  binmode $out
+    The last with possible exception of very first binmode call.
+  - realign (purely whitespace change)
+  - wrap too long lines (newlines and whitespace), optional
+  - change $out to $bout/$bin ($binary_output_fh) where needed;
+    but see comment below (optional)
 
-> P.S. We still would want parse_commit_text to parse notes from defaul=
-t
-> namespace. =A0parse_commit / parse_commits output contains notes from
-> default namespace, e.g.:
->
-> =A0d6bbe7fd52058cdf0e48bec00701ae0f4861dcd3 94ac0c7b30a7dc43d926b0ffb=
-e90892c1e19e5f6
-> =A0tree b9ee8876df81b80b13c6b017be993fff8427cfaf
-> =A0parent 94ac0c7b30a7dc43d926b0ffbe90892c1e19e5f6
-> =A0author Jakub Narebski <jnareb@gmail.com> 1265309578 +0100
-> =A0committer Jakub Narebski <jnareb@gmail.com> 1265309578 +0100
->
-> =A0 =A0 =A0This is a commit message
->
-> =A0 =A0 =A0Signed-off-by: Jakub Narebski <jnareb@gmail.com>
->
-> =A0Notes:
-> =A0 =A0 =A0This is just a note for commit d6bbe7fd52058cdf0e48bec0070=
-1ae0f4861dcd3
->
-> to get commit message lines in $co{'comment'} (as array reference),
-> and notes in $co{'note'} (or $co{'notes'}).
+> 
+> This looks fine, I did some quick testing to verify that this would work
+> - and it does.
 
-I'm not getting these in the repo I'm testing this. And I think this
-is indeed the behavior of current git next
+I have only ran test, and didn't actually check that it works correctly.
+This commit shouldn't change gitweb behaviour at all.
 
---=20
-Giuseppe "Oblomov" Bilotta
+> 
+> The only caveat that needs to be aware is that if the layer is going to
+> output binary data it needs to flip the whole stream to :raw before
+> outputting (this is going to be more specific to the caching layer).
+> 
+> One advantage to having the file handles separate is that it's easier to
+> distinguish if the data is going to need to be binary data that will
+> need to be flipped properly.
+
+I don't think that it would be needed.  
+
+First, all mode changing operations, i.e. calls to binmode are changed
+to act on $out rather than on STDOUT it means.  It means that if we are
+using 'in memory file' to capture output to scalar variable, then captured
+data would be properly converted in variable.  So it would be enough to
+save this variable in :raw mode to file.  If we are saving directly to
+cache file, then of course saved data would go through layer and would
+be converted properly.  In any case in cache file we would have _already_
+_converted_ data.
+
+This means that regardless whether $out used ':utf8' (pseudo)layer,
+or ':raw' (pseudo)layer, if we read from cache file in ':raw' (binary mode)
+and print data from cache to original (true) STDOUT also in ':raw' mode,
+we would print correctly formatted data.
+
+> 
+> Also means you could cache the binary data differently than textual data.
+> 
+> I.E. binary data gets saved to disk, but page data gets saved to memcached.
+
+That's true, but on the other hand it would be easy to add some extra
+command marking data as binary below binmode.  Or we can examine IO
+layers (using PerlIO::get_layers($out); the PerlIO module is in Perl
+core) if there is 'utf8' layer or 'raw' (pseudo)layer.
+
+> 
+> Just food for thought, I'm not sure which way makes more sense
+> personally, though I would have a tendency to err on the side of
+> flexibility and have both.
+
+It might be good idea... but nevertheless I'd like to have short name
+for binary filehandle, if we decode to keep it.  What should it be?
+$bout, $bin, $B, $bin_out, $out_bin, $bin_fh?
+
+> 
+> >  [RFC PATCH 02/10] gitweb: href(..., -path_info => 0|1)
+> 
+> note: delaying additional comment till I've finished reading through the
+> basics of the following patches.
+
+This is to use later _full_ _normalized_ URI as cache key for given page.
+IIRC in your original patch you ignored path_info; but on the other hand
+git.kernel.org has path_info feature turned off...
+
+> 
+> >  [RFC PATCH 03/10] gitweb/cache.pm - Very simple file based caching
+> 
+> Ok this is quite the departure from what I had, I'm unsure that it's the
+> right way to go, but it obviously has merits (I.E. much simpler addition
+> of any Cache::Cache or CHI compatible caching layer)
+> 
+> This patch itself looks fine, and as it states it borrows heavily from
+> my basic implementation - just wraps it differently.  I might have some
+> thoughts on extending this a bit to be a bit more flushed out from a
+> basic standpoint.
+> 
+> Need to dig through it some more, but I'm generally ok with it.
+
+Note that the new implementation in (not send yet) new version of 
+"gitweb output caching" series is based more on newer and more modern
+CHI unified interface rather than older Cache::Cache interface.  It
+is I think much cleaner and easier to read.
+
+The major difference from your implementation is that in my version
+the gitweb caching engine uses "save to temporary file + rename file
+to final name" method to have atomic write to cache (atomic cache
+filling).  It should be more robust, but OTOH it introduces a bit of
+performance penalty.  With locking and single writer we could use
+predictable temporary file name rather than using tempfile/mkstemp
+or equivalent from File::Temp, or UUID based filename like CHI does
+it.
+
+Also, tests.
+
+
+Current code (even the v2 version) lacks proper error detection, error
+signalling and logging.
+
+> 
+> >  [RFC PATCH 04/10] gitweb/cache.pm - Stat-based cache expiration
+> 
+> Looks fine to me, though the note about getting the errors should get
+> moved to previous patch, as it says.
+
+I wanted to get this series out faster, that is why it is not polished.
+
+> 
+> Note: I'm going to stop here as the following are WIP and I want to play
+> around with this particular direction on my own a little more before
+> further comment.  There's some ideas running around I want to try and
+> get down in code first.  Me moving on and trying these other ideas is
+> not a reflection on the following patches, just some alternative
+> thinking before I discuss some other ideas on the following patches.
+
+Take a look at gitweb/cache-kernel-v2 branch (the new caching series).
+Note however that it would be subject to rebasing / changes.
+
+> 
+> Also I've been sitting on this e-mail in this state for almost a week
+> while I've been playing with this and having to fight other fires and I
+> know that Jakub has been looking for commentary on this.
+
+Thank you very much for your commentary, in spite of your heavy load.
+
+> 
+> >  [RFC PATCH 05/10] gitweb: Use Cache::Cache compatibile (get, set)
+> >                    output caching (WIP)
+> >  [RFC PATCH 06/10] gitweb/cache.pm - Adaptive cache expiration time (WIP)
+> >  [RFC PATCH 07/10] gitweb: Use CHI compatibile (compute method) caching (WIP)
+> >  [RFC PATCH 08/10] gitweb/cache.pm - Use locking to avoid 'stampeding herd'
+> >                    problem (WIP)
+> >  [RFC PATCH 09/10] gitweb/cache.pm - Serve stale data when waiting for
+> >                    filling cache (WIP)
+> >  [RFC PATCH 10/10] gitweb: Show appropriate "Generating..." page when
+> >                    regenerating cache (WIP)
+
+There is new version of this series in gitweb/cache-kernel-v2 in my
+git/jnareb-git.git fork (clone) of git.git repository at repo.or.cz.
+Now all commits have proper description (for first series one had to
+read comment section in emails for commit description), and all features
+are tested (at least on API level, and to some extent) -- full tests
+do require having PerlIO::Util installed (I have done it following
+local::lib and installing it from 'cpan' client), though.
+
+Also all features are fully configurable, to even greater extent than
+in original series by J.H. (this what what v1 was lacking).  And there
+is (see diffstat) section about caching in gitweb/README.
+
+The following changes since commit d5f8a3d6f4d946c33459e00edf02819f89711777:
+  Junio C Hamano (1):
+        Merge branch 'master' into next
+
+are available in the git repository at:
+
+  git://repo.or.cz/git/jnareb-git.git gitweb/cache-kernel-v2
+
+You can view it via gitweb at:
+
+  http://repo.or.cz/w/git/jnareb-git.git/shortlog/refs/heads/gitweb/cache-kernel-v2
+  http://repo.or.cz/w/git/jnareb-git.git/log/refs/heads/gitweb/cache-kernel-v2
+
+SHORTLOG (10):
+      gitweb: href(..., -path_info => 0|1)
+      gitweb/cache.pm - Very simple file based caching
+      gitweb/cache.pm - Stat-based cache expiration
+      gitweb: Use Cache::Cache compatibile (get, set) output caching
+      gitweb/cache.pm - Adaptive cache expiration time
+      gitweb: Use CHI compatibile (compute method) caching
+      gitweb/cache.pm - Use locking to avoid 'cache miss stampede' problem
+      gitweb/cache.pm - Serve stale data when waiting for filling cache
+      gitweb/cache.pm - Regenerate (refresh) cache in background
+      gitweb: Show appropriate "Generating..." page when regenerating cache
+
+ gitweb/README                          |   70 +++++
+ gitweb/cache.pm                        |  527 ++++++++++++++++++++++++++++++++
+ gitweb/gitweb.perl                     |  301 +++++++++++++++++-
+ t/gitweb-lib.sh                        |    2 +
+ t/t9500-gitweb-standalone-no-errors.sh |   19 ++
+ t/t9503-gitweb-caching.sh              |   32 ++
+ t/t9503/test_cache_interface.pl        |  380 +++++++++++++++++++++++
+ t/test-lib.sh                          |    3 +
+ 8 files changed, 1319 insertions(+), 15 deletions(-)
+ create mode 100644 gitweb/cache.pm
+ create mode 100755 t/t9503-gitweb-caching.sh
+ create mode 100755 t/t9503/test_cache_interface.pl
+
+-- 
+Jakub Narebski
+Poland
