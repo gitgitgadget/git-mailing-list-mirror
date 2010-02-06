@@ -1,79 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-grep: option parsing conflicts with prefix-dash searches
-Date: Sat, 06 Feb 2010 09:39:32 -0800
-Message-ID: <7v8wb64623.fsf@alter.siamese.dyndns.org>
-References: <alpine.LSU.2.01.1002052351060.30204@obet.zrqbmnf.qr>
- <7vsk9fs1j9.fsf@alter.siamese.dyndns.org>
- <20100206035143.GA31784@sigill.intra.peff.net>
- <7v7hqrdkxb.fsf@alter.siamese.dyndns.org>
- <20100206115817.GA11605@sigill.intra.peff.net>
+Subject: Re: [RFC/PATCH] rebase: add -x option to record original commit name
+Date: Sat, 06 Feb 2010 09:47:00 -0800
+Message-ID: <7v4olu45pn.fsf@alter.siamese.dyndns.org>
+References: <1265419166-21388-1-git-send-email-jaysoffian@gmail.com>
+ <7vzl3ngn7w.fsf@alter.siamese.dyndns.org>
+ <76718491002051758s577d8b5eq2323cd66d479662@mail.gmail.com>
+ <7vtytvf4vp.fsf@alter.siamese.dyndns.org>
+ <76718491002052018s324747ecj31963b493868dbbd@mail.gmail.com>
+ <7vbpg3dldq.fsf@alter.siamese.dyndns.org>
+ <76718491002052119j5d6bae35s146bed8da03e3983@mail.gmail.com>
+ <20100206133227.GE321@thunk.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jan Engelhardt <jengelh@medozas.de>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 06 18:42:21 2010
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: tytso@mit.edu
+X-From: git-owner@vger.kernel.org Sat Feb 06 18:47:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ndofk-00072R-K6
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 18:42:20 +0100
+	id 1Ndokw-0001my-J2
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 18:47:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932299Ab0BFRjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Feb 2010 12:39:45 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49556 "EHLO
+	id S932339Ab0BFRrN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Feb 2010 12:47:13 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55037 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932254Ab0BFRjo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2010 12:39:44 -0500
+	with ESMTP id S932254Ab0BFRrM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2010 12:47:12 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2BFE5979DD;
-	Sat,  6 Feb 2010 12:39:42 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A717797AFF;
+	Sat,  6 Feb 2010 12:47:11 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5vRANMU4In8LKFgpgn8Csgufv78=; b=CrQvg1
-	VxmHKS8aM5e6nKhGscRA8Z6wC/TxsHDowLen/XWaK+ENJpdO95FrKnpZV0boVUPm
-	wcQC68AuWOdtAfF/j4vNhilasMfrJBDM4vL4k6k7qvfhpwX8/GgFDPQ82nF7WO1s
-	NtcwEefAKzOJGZxmEA+bfdfhJZXZN/Q35dZbQ=
+	:content-type; s=sasl; bh=i+LAVOpa+70zydh8plLHe4ZNWV4=; b=oVOafR
+	b1dCpuu+WgE4fqHI1PRXnKPNfjipZVR1QKF3NkazZwLNvpfFkuDODiSO75pLi4T1
+	BmsDY8ge/7+BL9jOXbjuZPBNHXbpuBBgxE8naUS9jwzRxpMNK6xSWY/OIcC331G+
+	SrIGcZEt7ox6DHWKyb4KJAl0xRuKCEzTZqEDA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aJPQs94BjZFi81uO0cplb0gGzKtqnGOj
-	h9gJteLBij+DTLmegpKCaK4hkZSLTVO6suss0iXPKVeTaWQdY1pBxjq4HqPB8MpA
-	fCoPxl7eNpEuBCKCo9wvcu8gyrDeDmWnanoNtr15bNVk+lCGaH6uP2at2z024gWq
-	dHOO2yVqz/o=
+	:content-type; q=dns; s=sasl; b=nah5aASfpDFmkccDm0MuxwXr4HkKqBRm
+	JRxImPTw1sQfupuvxd2HdtrVEh5rlGcP9dBak482zwFCV5ez/A2OpRVJsNyv3VnX
+	sBGE0qgcqZPk2oa42y4drVoxlKttSXx2p21fy6hXVGnnaWQof8NoyuAiPuUuVGaB
+	yMtmO9tv7/k=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C18EE979DC;
-	Sat,  6 Feb 2010 12:39:38 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2ECE797AFC;
+	Sat,  6 Feb 2010 12:47:07 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DA4C4979D9; Sat,  6 Feb
- 2010 12:39:33 -0500 (EST)
-In-Reply-To: <20100206115817.GA11605@sigill.intra.peff.net> (Jeff King's
- message of "Sat\, 6 Feb 2010 06\:58\:17 -0500")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4FE5C97AFA; Sat,  6 Feb
+ 2010 12:47:02 -0500 (EST)
+In-Reply-To: <20100206133227.GE321@thunk.org> (tytso@mit.edu's message of
+ "Sat\, 6 Feb 2010 08\:32\:27 -0500")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 99753DE2-1346-11DF-87AA-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A4B6391C-1347-11DF-BEC1-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139179>
 
-Jeff King <peff@peff.net> writes:
+tytso@mit.edu writes:
 
-> On Fri, Feb 05, 2010 at 08:53:36PM -0800, Junio C Hamano wrote:
->
->> >   git grep -- pattern revision -- pathname
->> [...]
->> I don't think if "ambiguous or not" is what we are after to begin with.
->> 
->> I have known GNU extended grep implementations long enough but never saw
->> that "--" used to quote a pattern.  Is it worth supporting to begin with?
->
-> I think so. It was the first thing the original poster in this thread
-> tried. It is also something I have tried (and still do, then grumblingly
-> retype "-e pattern"). And it certainly makes sense from a user
-> perspective; it is the same end-of-options signal that most other
-> programs take.
+> I really don't think it's a contamination of the log when it's used to
+> record a cherry pick of patch from the dev stream to an older
+> maintainance branch,...
 
-Ok, then let's take that (perhaps before 1.7.0 perhaps after).
+Ok, then I'll happily scrap my earlier comment and accept -x to rebase,
+too.
+
+Thanks for a feedback and injection of some sanity.
