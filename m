@@ -1,114 +1,147 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [msysGit] upload-pack timing issue on windows?
-Date: Sat, 6 Feb 2010 13:01:50 +0100
-Message-ID: <40aa078e1002060401r1dec3c2ate3ddd4f5f5db1e0c@mail.gmail.com>
-References: <40aa078e1002051551o6d116a50uee3f6a32b16adb46@mail.gmail.com>
-	 <201002061106.04305.j6t@kdbg.org>
-Reply-To: kusmabite@gmail.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 3/4] gitweb: show notes in log
+Date: Sat, 6 Feb 2010 13:57:57 +0100
+Message-ID: <201002061357.59245.jnareb@gmail.com>
+References: <1265300338-25021-1-git-send-email-giuseppe.bilotta@gmail.com> <1265300338-25021-4-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysgit@googlegroups.com, Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Feb 06 13:02:04 2010
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johan Herland <johan@herland.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 06 13:58:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdjMR-0001If-Oc
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 13:02:04 +0100
+	id 1NdkEp-0004DX-P2
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 13:58:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752661Ab0BFMBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Feb 2010 07:01:53 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:39622 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751306Ab0BFMBv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2010 07:01:51 -0500
-Received: by ewy28 with SMTP id 28so903483ewy.28
-        for <git@vger.kernel.org>; Sat, 06 Feb 2010 04:01:50 -0800 (PST)
+	id S1755568Ab0BFM6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Feb 2010 07:58:06 -0500
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:34161 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755550Ab0BFM6F (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2010 07:58:05 -0500
+Received: by bwz19 with SMTP id 19so576198bwz.28
+        for <git@vger.kernel.org>; Sat, 06 Feb 2010 04:58:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=AfKa+Pe7t8XoFqXV0pPVk39qZ40G+dCe6pcTr2+IcDY=;
-        b=jdp77onShpgO0Z3so88enZk8whcL28SNUfuHQS8j6LZF8YtmBXH5HbPfSnR/1nEEj1
-         zTPszGnfhXCxS9UGXHURvgud6XM2kOXsrEfsbgAQjQv0Zw/N60bREV2eX4vOoeWd+Wvb
-         sPIHKukhWxoM0IcV89S51wDPGODowQS0iAbJk=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=B0oX0FPxSD6RnfgXkCt65RQE4TwXbGcD44yePPKA+6A=;
+        b=YmsGNApgn8xBbwJ4Gq51fCi0BuCghdG2dsEDbIYczgoK18L4P6IbZ3ATjnVoKP2JZv
+         UR4ye988EnMx65e54E13kc2OxJnTt1UW3di+1FF/jgrUFVoBTa1HsjX0qYvo5QeVMsP2
+         IA4ZIve9K6ioSYCTE3SqLzQR4nQoFW3BOv3jw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        b=wblFi4cMul7A57xYClG6O8mxJIzY0Nkx/1ApS2lDTGtd0wmbCC7mT0c6Ej+RhQzcjL
-         Z5nfcQBsBQy7WfoiJ9IUJpLUGaw8xVK8sRr4tZ+OPnzy+3XtKkJ19pJzPKTei4m/7fE6
-         uwa+/KxCZM/LXyKEPaVIPrVB5HeGp4QDyG+kE=
-Received: by 10.216.90.196 with SMTP id e46mr2160530wef.194.1265457710234; 
-	Sat, 06 Feb 2010 04:01:50 -0800 (PST)
-In-Reply-To: <201002061106.04305.j6t@kdbg.org>
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=H6NEi3XybOYXwLvdRYNXTdW/Hn43QzGbd8eW4ofAIyKrWg+w47TPI+AwntiD4M6nOz
+         GYX/zzcRYY84aQEAnKuyuLamhLeC/in485fHSWaHdOfRmNulKpkuBO72W8HNIV68UfBg
+         VWUBhp9EHh36ncOIgiXkj/ONe8jdokqHgex/8=
+Received: by 10.204.9.134 with SMTP id l6mr2734476bkl.83.1265461083499;
+        Sat, 06 Feb 2010 04:58:03 -0800 (PST)
+Received: from ?192.168.1.13? (abws80.neoplus.adsl.tpnet.pl [83.8.242.80])
+        by mx.google.com with ESMTPS id 13sm1117033bwz.6.2010.02.06.04.58.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 06 Feb 2010 04:58:02 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1265300338-25021-4-git-send-email-giuseppe.bilotta@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139161>
 
-On Sat, Feb 6, 2010 at 11:06 AM, Johannes Sixt <j6t@kdbg.org> wrote:
-> On Samstag, 6. Februar 2010, Erik Faye-Lund wrote:
->> As some of you might know, I've been working on porting git-daemon to
->> Windows for quite some time now. As it stands now, there's really only
->> one known issue that is blocking on my end here:
->>
->> Something weird happens *sometimes* when upload-pack is exiting,
->> leading to a client dying with a "fatal: read error: Invalid
->> argument\nfatal: early EOF"-error. If I place a sleep(1) at some place
->> after exiting the while(1)-loop in create_pack() in upload-pack.c, the
->> symptom goes away. create_pack() contains some async-code, but this
->> doesn't seem to be triggered in my minimal case at all. I've tried
->> flushing stdout and stderr explicitly, no luck.
->
-> I've observed timing related issues in upload-pack as well, but only in the
-> case where the die() is called from the async thread. This is the reason why
-> t5530 does not pass.
->
-> But your case seems to be different - i.e. there is no die() involved. Sorry,
-> can't help more...
->
+On Thu, 4 Feb 2010, Giuseppe Bilotta wrote:
 
-Yeah, it's probably not the same case, but I certainly do find it
-interesting that we seemingly have two separate timing-related around
-here somewhere...
+> The notes are shown in full to the left of the log message.
 
-> Perhaps use Procmon to analyse differences among the different successful and
-> failing cases.
->
+Thats all good if you have wide (high resolution) screen, and your 
+project follows common commit message conventions of keeping lines in 
+commit message no longer than at most 80 characters, and you don't need 
+to use large size fonts.
 
-I'm not entirely sure what to look for, but I do see that there's
-difference. There's about 3.5k lines of logging from git.exe,
-git-daemon.exe and git-upload-pack.exe for the failure case versus
-2.5k for the successful case. And the last sequence of TCP Send in the
-success case is a send of 8 bytes, followed by a send of 212 bytes,
-followed again by a send of 1 byte. In the failure case, there's only
-a send of 8 bytes in the end. This sequence is reported as sent by
-git-daemon.exe. In fact, all TCP actions are reported from
-git-daemon.exe, and apart from the last sequence the lengths are
-reported as identical.
+What happens if screen size is too small to contain both commit message 
+and notes?  Does it do the sensible thing of putting notes _below_ 
+commit message in such situation?  I do not know CSS+HTML enogh to 
+answer this question myself.
 
-> Try hacking fetch-pack so that it does not announce side-band(-64k). Perhaps
-> it makes a difference.
->
+BTW. signoff?
 
-This didn't make any difference. I removed "side-band" and
-"side-band-64k" from capabilities in send_ref() in upload-pack.c, as
-well as the "if (server_supports("side-band<...>"-lines in
-builtin-fetch-pack.c.
 
-While I was at it, I also tried to disable all other capabilities; no luck.
+P.S. We would probably want some support for notes also in feeds (Atom 
+and RSS feed), but this can be left for the future commit.
 
-However, I have tracked down a bit of what goes on in the client.
-There's a call to read_in_full, called from pack-write.c, line 246
-that fails in the failure-case, but not in the success-case. This is
-where the client expects "pack\tSHA-1" or "keep\tSHA-1". There "fatal:
-early EOF"-messages seems to originate from index-pack.c, line 197.
-This is the first line of code in parse_pack_header(), it's also
-AFAICT the first call-site for any read(0, <...>) (though fill()).
+
+> @@ -1631,6 +1631,7 @@ sub format_subject_html {
+>  # display notes next to a commit
+>  sub format_notes_html {
+>  	my %notes = %{$_[0]};
+> +	my $tag = $_[1] || 'span' ;
+
+This could be
+
+   	my $notes = shift;
+   	my $tag = shift || 'span' ;
+
+and then use %$notes.
+
+>  	my $ret = "";
+>  	while (my ($ref, $text) = each %notes) {
+>  		# remove 'refs/notes/' and an optional final s
+> @@ -1639,15 +1640,15 @@ sub format_notes_html {
+>  
+>  		# double markup is needed to allow pure CSS cross-browser 'popup'
+>  		# of the note
+> -		$ret .= "<span title='$ref' class='note-container $ref'>";
+> -		$ret .= "<span title='$ref' class='note $ref'>";
+> +		$ret .= "<$tag title='$ref' class='note-container $ref'>";
+> +		$ret .= "<$tag title='$ref' class='note $ref'>";
+>  		foreach my $line (split /\n/, $text) {
+>  			$ret .= esc_html($line) . "<br/>";
+>  		}
+> -		$ret .= "</span></span>";
+> +		$ret .= "</$tag></$tag>";
+>  	}
+>  	if ($ret) {
+> -		return "<span class='notes'>$ret</span>";
+> +		return "<$tag class='notes'>$ret</$tag>";
+>  	} else {
+>  		return $ret;
+>  	}
+
+Nice trick, but is this distinction really necessary?
+
+> @@ -4581,6 +4582,7 @@ sub git_log_body {
+>  		next if !%co;
+>  		my $commit = $co{'id'};
+>  		my $ref = format_ref_marker($refs, $commit);
+> +		my $notes = format_notes_html($co{'notes'}, 'div');
+>  		my %ad = parse_date($co{'author_epoch'});
+>  		git_print_header_div('commit',
+>  		               "<span class=\"age\">$co{'age_string'}</span>" .
+> @@ -4598,6 +4600,7 @@ sub git_log_body {
+>  		      git_print_authorship(\%co, -tag => 'span');
+>  		      print "<br/>\n</div>\n";
+>  
+> +		print "$notes\n";
+>  		print "<div class=\"log_body\">\n";
+>  		git_print_log($co{'comment'}, -final_empty_line=> 1);
+>  		print "</div>\n";
+
+With respect to the question about what happens if the screen is not 
+wide enough, shouldn't notes be put in HTML source below body (commit 
+message)?
 
 -- 
-Erik "kusma" Faye-Lund
+Jakub Narebski
+Poland
