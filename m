@@ -1,76 +1,265 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] t9501: Correctly force over max load everywhere
-Date: Sat, 6 Feb 2010 20:45:50 +0100
-Message-ID: <201002062045.50943.jnareb@gmail.com>
-References: <201002061505.13886.jnareb@gmail.com> <1265467803-31210-1-git-send-email-brian@gernhardtsoftware.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 20:46:11 2010
+From: Aaron Crane <git@aaroncrane.co.uk>
+Subject: Re: [PATCH v2] cvsimport: new -R option: generate .git/cvs-revisions mapping
+Date: Sat, 6 Feb 2010 17:15:17 +0000
+Message-ID: <E1Ndqtw-00066G-3b@bunsen.laxan.com>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 06 21:05:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdqbX-0007kG-HQ
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 20:46:07 +0100
+	id 1NdquP-0003VZ-2F
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 21:05:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754799Ab0BFTqA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Feb 2010 14:46:00 -0500
-Received: from mail-fx0-f211.google.com ([209.85.220.211]:60403 "EHLO
-	mail-fx0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752235Ab0BFTp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2010 14:45:59 -0500
-Received: by fxm3 with SMTP id 3so5602430fxm.39
-        for <git@vger.kernel.org>; Sat, 06 Feb 2010 11:45:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=0cs141oTpkcJ36faLlKPc8qNhO43N6uD9n2gmR1oGCQ=;
-        b=Uu+QHhLQakXO6Epvr3ethP5tSHKBsyKyYhri/A1LVWuBGVdazI+9z6dbwTC15oPKZO
-         6da4zSyWqscFSMUPDkV4EzVBM06ubg7INrYL9ppTuk8Z93QGSqCsvL6Oa6wjOS4ufGVc
-         GIZXxh9nAErE7G2cBIKyoLbpkyFxBC5xRQaqg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=OKt2177/ftqg9RZ88is2yTji96AGGho7QG5gv/OA9F19J0Eoh7iCDp8kuNuoY2MiFZ
-         w2IEHmuFIaxj8fA8J1FGxHFeyxQwk54eLLIyi5frVdyPuqdhRvc/qlUsF3cdLqE4SpCp
-         efIuK/kQ9yex0/AjkgYHtNkjqmyZ682nLKzSE=
-Received: by 10.103.84.19 with SMTP id m19mr2899178mul.66.1265485557872;
-        Sat, 06 Feb 2010 11:45:57 -0800 (PST)
-Received: from ?192.168.1.13? (abws80.neoplus.adsl.tpnet.pl [83.8.242.80])
-        by mx.google.com with ESMTPS id s10sm13096603muh.59.2010.02.06.11.45.56
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 06 Feb 2010 11:45:56 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1265467803-31210-1-git-send-email-brian@gernhardtsoftware.com>
-Content-Disposition: inline
+	id S1754895Ab0BFUB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Feb 2010 15:01:29 -0500
+Received: from bunsen.laxan.com ([95.172.25.26]:53047 "EHLO bunsen.laxan.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752736Ab0BFUB2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2010 15:01:28 -0500
+X-Greylist: delayed 625 seconds by postgrey-1.27 at vger.kernel.org; Sat, 06 Feb 2010 15:01:28 EST
+Received: from aaron by bunsen.laxan.com with local (Exim 4.69)
+	(envelope-from <git@aaroncrane.co.uk>)
+	id 1Ndqtw-00066G-3b; Sat, 06 Feb 2010 20:05:08 +0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139188>
 
-Dnia sobota 6. lutego 2010 15:50, Brian Gernhardt napisa=B3:
+This option causes the creation or updating of a file mapping CVS
+(filename, revision number) pairs to Git commit IDs.  This is expected
+to be useful if you have CVS revision numbers stored in commit messages,
+bug-tracking systems, email archives, and the like.
 
-> The code to check for load returns 0 if it doesn't know how to find
-> load.  It also checks to see if the current load is higher than the
-> max load.  So to force the script to quit early by setting the maxloa=
-d
-> variable negative which should work for systems where we can detect
-> load (which should be a positive number) and systems where we can't
-> (where detected load is 0)
->=20
-> Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+Signed-off-by: Aaron Crane <git@aaroncrane.co.uk>
+---
+Re-sent because of line wrapping; sorry for the noise.
 
-Acked-by: Jakub Narebski <jnareb@gmail.com>
+See also the thread beginning at
+http://thread.gmane.org/gmane.comp.version-control.git/138079
 
---=20
-Jakub Narebski
-Poland
+Thanks to Peff for his review at
+http://article.gmane.org/gmane.comp.version-control.git/138544
+
+I believe this revised patch takes account of all his comments.  In
+particular, compared to the previous version:
+
+- Tests are included
+- Now works with incremental import
+- The file is always generated as .git/cvs-revisions, rather than
+  letting the user pick the name
+
+ Documentation/git-cvsimport.txt |   18 +++++++++++++++++-
+ git-cvsimport.perl              |   21 +++++++++++++++++----
+ t/t9600-cvsimport.sh            |   36 +++++++++++++++++++++++++++++++++---
+ 3 files changed, 67 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
+index ddfcb3d..8bcd875 100644
+--- a/Documentation/git-cvsimport.txt
++++ b/Documentation/git-cvsimport.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	      [-A <author-conv-file>] [-p <options-for-cvsps>] [-P <file>]
+ 	      [-C <git_repository>] [-z <fuzz>] [-i] [-k] [-u] [-s <subst>]
+ 	      [-a] [-m] [-M <regex>] [-S <regex>] [-L <commitlimit>]
+-	      [-r <remote>] [<CVS_module>]
++	      [-r <remote>] [-R] [<CVS_module>]
+ 
+ 
+ DESCRIPTION
+@@ -157,6 +157,22 @@ It is not recommended to use this feature if you intend to
+ export changes back to CVS again later with
+ 'git cvsexportcommit'.
+ 
++-R::
++	Generate a `$GIT_DIR/cvs-revisions` file containing a mapping from CVS
++	revision numbers to newly-created Git commit IDs.  The generated file
++	will contain one line for each (filename, revision) pair imported;
++	each line will look like
+++
++---------
++src/widget.c 1.1 1d862f173cdc7325b6fa6d2ae1cfd61fd1b512b7
++---------
+++
++The revision data is appended to the file if it already exists, for use when
++doing incremental imports.
+++
++This option may be useful if you have CVS revision numbers stored in commit
++messages, bug-tracking systems, email archives, and the like.
++
+ -h::
+ 	Print a short usage message and exit.
+ 
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 4853bf7..9e03eee 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -29,7 +29,7 @@ use IPC::Open2;
+ $SIG{'PIPE'}="IGNORE";
+ $ENV{'TZ'}="UTC";
+ 
+-our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,@opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r);
++our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,@opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r, $opt_R);
+ my (%conv_author_name, %conv_author_email);
+ 
+ sub usage(;$) {
+@@ -40,7 +40,7 @@ Usage: git cvsimport     # fetch/update GIT from CVS
+        [-o branch-for-HEAD] [-h] [-v] [-d CVSROOT] [-A author-conv-file]
+        [-p opts-for-cvsps] [-P file] [-C GIT_repository] [-z fuzz] [-i] [-k]
+        [-u] [-s subst] [-a] [-m] [-M regex] [-S regex] [-L commitlimit]
+-       [-r remote] [CVS_module]
++       [-r remote] [-R] [CVS_module]
+ END
+ 	exit(1);
+ }
+@@ -110,7 +110,7 @@ sub read_repo_config {
+ 	}
+ }
+ 
+-my $opts = "haivmkuo:d:p:r:C:z:s:M:P:A:S:L:";
++my $opts = "haivmkuo:d:p:r:C:z:s:M:P:A:S:L:R";
+ read_repo_config($opts);
+ Getopt::Long::Configure( 'no_ignore_case', 'bundling' );
+ 
+@@ -659,6 +659,11 @@ if ($opt_A) {
+ 	write_author_info("$git_dir/cvs-authors");
+ }
+ 
++# open .git/cvs-revisions, if requested
++open my $revision_map, '>>', "$git_dir/cvs-revisions"
++    or die "Can't open $git_dir/cvs-revisions for appending: $!\n"
++	if defined $opt_R;
++
+ 
+ #
+ # run cvsps into a file unless we are getting
+@@ -742,7 +747,7 @@ sub write_tree () {
+ }
+ 
+ my ($patchset,$date,$author_name,$author_email,$branch,$ancestor,$tag,$logmsg);
+-my (@old,@new,@skipped,%ignorebranch);
++my (@old,@new,@skipped,%ignorebranch,@commit_revisions);
+ 
+ # commits that cvsps cannot place anywhere...
+ $ignorebranch{'#CVSPS_NO_BRANCH'} = 1;
+@@ -825,6 +830,11 @@ sub commit {
+ 	system('git' , 'update-ref', "$remote/$branch", $cid) == 0
+ 		or die "Cannot write branch $branch for update: $!\n";
+ 
++	if ($revision_map) {
++		print $revision_map "@$_ $cid\n" for @commit_revisions;
++	}
++	@commit_revisions = ();
++
+ 	if ($tag) {
+ 	        my ($xtag) = $tag;
+ 		$xtag =~ s/\s+\*\*.*$//; # Remove stuff like ** INVALID ** and ** FUNKY **
+@@ -959,6 +969,7 @@ while (<CVS>) {
+ 		    push(@skipped, $fn);
+ 		    next;
+ 		}
++		push @commit_revisions, [$fn, $rev];
+ 		print "Fetching $fn   v $rev\n" if $opt_v;
+ 		my ($tmpname, $size) = $cvs->file($fn,$rev);
+ 		if ($size == -1) {
+@@ -981,7 +992,9 @@ while (<CVS>) {
+ 		unlink($tmpname);
+ 	} elsif ($state == 9 and /^\s+(.+?):\d+(?:\.\d+)+->(\d+(?:\.\d+)+)\(DEAD\)\s*$/) {
+ 		my $fn = $1;
++		my $rev = $2;
+ 		$fn =~ s#^/+##;
++		push @commit_revisions, [$fn, $rev];
+ 		push(@old,$fn);
+ 		print "Delete $fn\n" if $opt_v;
+ 	} elsif ($state == 9 and /^\s*$/) {
+diff --git a/t/t9600-cvsimport.sh b/t/t9600-cvsimport.sh
+index 363345f..b572ce3 100755
+--- a/t/t9600-cvsimport.sh
++++ b/t/t9600-cvsimport.sh
+@@ -47,13 +47,20 @@ EOF
+ 
+ test_expect_success 'import a trivial module' '
+ 
+-	git cvsimport -a -z 0 -C module-git module &&
++	git cvsimport -a -R -z 0 -C module-git module &&
+ 	test_cmp module-cvs/o_fortuna module-git/o_fortuna
+ 
+ '
+ 
+ test_expect_success 'pack refs' 'cd module-git && git gc && cd ..'
+ 
++test_expect_success 'initial import has correct .git/cvs-revisions' '
++
++	(cd module-git &&
++	 git log --format="o_fortuna 1.1 %H" -1) > expected &&
++	test_cmp expected module-git/.git/cvs-revisions
++'
++
+ test_expect_success 'update cvs module' '
+ 
+ 	cd module-cvs &&
+@@ -86,13 +93,21 @@ EOF
+ test_expect_success 'update git module' '
+ 
+ 	cd module-git &&
+-	git cvsimport -a -z 0 module &&
++	git cvsimport -a -R -z 0 module &&
+ 	git merge origin &&
+ 	cd .. &&
+ 	test_cmp module-cvs/o_fortuna module-git/o_fortuna
+ 
+ '
+ 
++test_expect_success 'update has correct .git/cvs-revisions' '
++
++	(cd module-git &&
++	 git log --format="o_fortuna 1.1 %H" -1 HEAD^ &&
++	 git log --format="o_fortuna 1.2 %H" -1 HEAD) > expected &&
++	test_cmp expected module-git/.git/cvs-revisions
++'
++
+ test_expect_success 'update cvs module' '
+ 
+ 	cd module-cvs &&
+@@ -107,13 +122,22 @@ test_expect_success 'cvsimport.module config works' '
+ 
+ 	cd module-git &&
+ 		git config cvsimport.module module &&
+-		git cvsimport -a -z0 &&
++		git cvsimport -a -R -z0 &&
+ 		git merge origin &&
+ 	cd .. &&
+ 	test_cmp module-cvs/tick module-git/tick
+ 
+ '
+ 
++test_expect_success 'second update has correct .git/cvs-revisions' '
++
++	(cd module-git &&
++	 git log --format="o_fortuna 1.1 %H" -1 HEAD^^ &&
++	 git log --format="o_fortuna 1.2 %H" -1 HEAD^
++	 git log --format="tick 1.1 %H" -1 HEAD) > expected &&
++	test_cmp expected module-git/.git/cvs-revisions
++'
++
+ test_expect_success 'import from a CVS working tree' '
+ 
+ 	$CVS co -d import-from-wt module &&
+@@ -126,6 +150,12 @@ test_expect_success 'import from a CVS working tree' '
+ 
+ '
+ 
++test_expect_success 'no .git/cvs-revisions created by default' '
++
++	! test -e import-from-wt/.git/cvs-revisions
++
++'
++
+ test_expect_success 'test entire HEAD' 'test_cmp_branch_tree master'
+ 
+ test_done
+-- 
+1.6.6.1
