@@ -1,94 +1,131 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [RFC/PATCH] rebase: add -x option to record original commit name
-Date: Fri, 5 Feb 2010 23:18:45 -0500
-Message-ID: <76718491002052018s324747ecj31963b493868dbbd@mail.gmail.com>
-References: <1265419166-21388-1-git-send-email-jaysoffian@gmail.com>
-	 <7vzl3ngn7w.fsf@alter.siamese.dyndns.org>
-	 <76718491002051758s577d8b5eq2323cd66d479662@mail.gmail.com>
-	 <7vtytvf4vp.fsf@alter.siamese.dyndns.org>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: [gitolite] repo config for delegated projects
+Date: Sat, 6 Feb 2010 17:22:22 +1300
+Message-ID: <20100206042222.GA7825@lapse.rw.madduck.net>
+References: <20100203035718.GA30644@lapse.rw.madduck.net>
+ <2e24e5b91002022222h5ca3ebe6k75854a9a056f0ed1@mail.gmail.com>
+ <20100203202249.GA27125@lapse.rw.madduck.net>
+ <20100204011842.GB497@atcmail.atc.tcs.com>
+ <20100204040812.GC13411@lapse.rw.madduck.net>
+ <2e24e5b91002051650k3c7cf14ev8752d36b5616e9a4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 05:24:25 2010
+Content-Type: multipart/signed; micalg=pgp-ripemd160;
+	protocol="application/pgp-signature"; boundary="EeQfGwPcQSOJBaQU"
+Cc: Sitaram Chamarty <sitaramc@gmail.com>,
+	Sitaram Chamarty <sitaram@atc.tcs.com>,
+	Teemu Matilainen <teemu.matilainen@iki.fi>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 06 05:24:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NdcDY-0004wT-Tj
+	id 1NdcDZ-0004wT-Fq
 	for gcvg-git-2@lo.gmane.org; Sat, 06 Feb 2010 05:24:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753589Ab0BFESr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Feb 2010 23:18:47 -0500
-Received: from mail-iw0-f185.google.com ([209.85.223.185]:45777 "EHLO
-	mail-iw0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753412Ab0BFESq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Feb 2010 23:18:46 -0500
-Received: by iwn15 with SMTP id 15so1763142iwn.19
-        for <git@vger.kernel.org>; Fri, 05 Feb 2010 20:18:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=070jjvZdIhFg/LunQXtD97O4K0xy5glyGENSlLnNRaU=;
-        b=IOeAy0UDuO8Tz7vktIkQRfERdTztReZFPNNJrgGAbCDXNtSYuRdtV2FchKmQBq9C9s
-         8X8404cboNI7xdLkq+CvxXqjC+r6glDPT3nl5OfRczEPO4W7JCL94p2cAl69OsiryNvL
-         /KSIs2UwjCEVXdoZZc1HVfLT6icHivXqSnjMM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=CSEHHJwjOxE2HU0XH0VkP5UGa28ngM89r8M0OGEy+6xMAn4ErMpbMIEyYeoVbvS/X5
-         dJSj9+5pPiszCSPxaPmWwOG14nqAocApaiFRobfscgK6F8gT3ZHnB14sF+Z/mHJZjCb0
-         +R3m7a1kgC3Faxln6X5yNH9f8g9lPF1K39pmI=
-Received: by 10.231.168.133 with SMTP id u5mr3952562iby.29.1265429925546; Fri, 
-	05 Feb 2010 20:18:45 -0800 (PST)
-In-Reply-To: <7vtytvf4vp.fsf@alter.siamese.dyndns.org>
+	id S1753758Ab0BFEWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2010 23:22:45 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:57987 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752795Ab0BFEWn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2010 23:22:43 -0500
+Received: from lapse.rw.madduck.net (lapse.nz.madduck.net [IPv6:2001:4428:234::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id D39551D4099;
+	Sat,  6 Feb 2010 05:22:26 +0100 (CET)
+Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
+	id 5B2F8CC; Sat,  6 Feb 2010 17:22:22 +1300 (NZDT)
+Content-Disposition: inline
+In-Reply-To: <2e24e5b91002051650k3c7cf14ev8752d36b5616e9a4@mail.gmail.com>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.32-trunk-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.95.3 at clegg
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139142>
 
-On Fri, Feb 5, 2010 at 9:57 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
->> Hmfph. So I know some folks don't like polluting log messages (e.g.,
->> the git-svn-id footer, or apparently, the cherry-pick -x message),..=
-=2E
->
-> That reminds me of a slightly related topic. =C2=A0I've been running =
-git-svn to
-> follow (but never build) a project without metadata, exactly because =
-I do
-> not want the log message contamination. I am having a hard time mappi=
-ng
-> the commit object name back to the upstream subversion serial number.
 
-Since there is a difference of opinion here, how about this proposal:
+--EeQfGwPcQSOJBaQU
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-1) We keep -x in cherry-pick
+also sprach Sitaram Chamarty <sitaramc@gmail.com> [2010.02.06.1350 +1300]:
+> OK I've run into a little decision-point here.
+>=20
+> The problem above is of making sure that a delegated admin cannot
+> misuse the gitconfig mechanism to do stuff he's not allowed to do,
+> but it's actually worse than that :(
 
-2) I convince you to add my -x patch to rebase.sh (hmm, how to do that?=
-) :-)
+Let me thus challenge the whole delegation mechanism.
 
-3) We add a -X option to both cherry-pick and rebase.sh that records
-in the notes instead of in the log message.
+When I first encountered it, I thought it was a great idea, but it
+seems to promise more than it can do. I understand that the reasons
+for that are security-related, and I tip my hat to you for being so
+conscious about this =E2=80=94 better have a secure system with limited
+functionality, than an insecure system that can do everything (why
+am I thinking of PHP apps right now???).
 
-> I ended up using this hacky script for that. =C2=A0It finds the svn u=
-uid from
-> the metadata file, and then finds ".rev_map.$uuid" files from all ove=
-r the
-> place to see if any of them contains a record that points at the git
-> commit I am interested in.
->
-> I really wish "git svn" has a built-in way to do something like that;
-> perhaps I didn't look hard enough.
+The wildrepos branch is a definite improvement to proper delegation.
+Without it, the main admin has to change the main configuration file
+every time that a delegated admin wants to add a new repo.
 
-Is git svn find-rev not what you want? (Caveat, it doesn't seem to
-work for me, but it's claimed description seems to be what you're
-asking for.)
+However, given the somewhat awkward configuration (you need to add
+delegated admins in multiple places), and the restrictions, I am
+starting to wonder what use-case delegations solve that couldn't be
+addressed easier with multiple accounts and gitolite instances.
+Thoughts?
 
-j.
+> Regardless of how I look at it, I can't think of a cure for this short
+> of either:
+>   - putting all the allowed gitconfigs in the RC file, and not in the
+> config (writing the RC file requires shell access, and we presume the
+> "root of trust" person has enough smarts to know what to allow and
+> what not to allow), and allowing repo admins to *refer* to them to use
+> whichever they want
+>   - someone coming up with a list of gitconfig's that are "safe", and
+> specific values for those that are unsafe (like saying "if you use
+> showrev, you can only use this command  as the value", and forcing
+> only those.
+
+I think the second path is a red herring. However, I don't
+understand why we would need to go via the RC file instead of the
+main config. Only the main admin can modify that, or appoint others
+to modify it. Plus, it's managed in Git and thus has a history
+attached to it.
+
+Speaking of shell access, I notice gl-auth-command has the -s
+option. Is there a configuration variable that I overlooked which
+allows me to give shell login rights to specific users?
+
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+review of a chemistry paper:
+  "paper should be greatly reduced or completely oxidized."
+                                                    -- frank vastola
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--EeQfGwPcQSOJBaQU
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEAREDAAYFAkts7noACgkQIgvIgzMMSnXdoQCdEIIkPZtSZZuBOGvZwU+2R5AV
+/zMAn0BQg+vYw43DvUUZzKPWRs0nyv97
+=KYRP
+-----END PGP SIGNATURE-----
+
+--EeQfGwPcQSOJBaQU--
