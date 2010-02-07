@@ -1,98 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: A generalization of git notes from blobs to trees - git
- metadata?
-Date: Sun, 7 Feb 2010 14:33:20 -0500
-Message-ID: <20100207193320.GB3185@coredump.intra.peff.net>
-References: <2cfc40321002060532g4d22dd4dx403bf312708e1424@mail.gmail.com>
- <201002070236.12711.johan@herland.net>
- <7v1vgxlr9q.fsf@alter.siamese.dyndns.org>
- <20100207050255.GA17049@coredump.intra.peff.net>
- <2cfc40321002062136q64f832aesd979c9cb22f3612@mail.gmail.com>
+From: Aaron Crane <git@aaroncrane.co.uk>
+Subject: Re: [PATCH] Documentation/SubmittingPatches: fix Gmail workaround 
+	advice
+Date: Sun, 7 Feb 2010 20:03:31 +0000
+Message-ID: <bc341e101002071203x52bceaach8d42c6188630f1d1@mail.gmail.com>
+References: <1265555642-40204-1-git-send-email-git@aaroncrane.co.uk> 
+	<7v8wb4gaef.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 07 20:33:30 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>,
+	David Aguilar <davvid@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 07 21:03:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NeCsr-0006FX-O8
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Feb 2010 20:33:30 +0100
+	id 1NeDMJ-0007CM-MV
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Feb 2010 21:03:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756716Ab0BGTdU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Feb 2010 14:33:20 -0500
-Received: from peff.net ([208.65.91.99]:48100 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754467Ab0BGTdT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Feb 2010 14:33:19 -0500
-Received: (qmail 22906 invoked by uid 107); 7 Feb 2010 19:33:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 07 Feb 2010 14:33:25 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Feb 2010 14:33:20 -0500
-Content-Disposition: inline
-In-Reply-To: <2cfc40321002062136q64f832aesd979c9cb22f3612@mail.gmail.com>
+	id S1754155Ab0BGUDu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Feb 2010 15:03:50 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:11873 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751054Ab0BGUDt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Feb 2010 15:03:49 -0500
+Received: by ey-out-2122.google.com with SMTP id d26so1189145eyd.19
+        for <git@vger.kernel.org>; Sun, 07 Feb 2010 12:03:48 -0800 (PST)
+Received: by 10.216.93.78 with SMTP id k56mr1080099wef.102.1265573028238; Sun, 
+	07 Feb 2010 12:03:48 -0800 (PST)
+X-Originating-IP: [87.194.157.167]
+In-Reply-To: <7v8wb4gaef.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: ad592cf2297804fd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139250>
 
-On Sun, Feb 07, 2010 at 04:36:59PM +1100, Jon Seymour wrote:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Aaron Crane <git@aaroncrane.co.uk> writes:
+>> The suggested approach to dealing with Gmail's propensity for breaki=
+ng
+>> patches doesn't seem to work. =C2=A0Recommend an alternative techniq=
+ue which
+>> does.
+>
+> Do you know _why_ it does not work? =C2=A0For example, does it not wo=
+rk _at
+> all_ for you? =C2=A0Or only certain things does not reliably work (io=
+w, perhaps
+> you are seeing a bug in imap-send)?
 
-> As I see it, the existing use of notes is a special instance of a more
-> general metadata capability in which the metadata is constrained to be
-> a single blob. If notes continued to be constrained in this way, there
-> is no reason to change anything with respect to its current userspace
-> behaviour. That said, most of the plumbing which enabled notes could
-> be generalized to enable the arbitrary tree case [ which admittedly, I
-> have yet to sell successfully !]
+What happens for me is that `git imap-send` successfully puts the
+message into the gmail Drafts folder, but when it's sent it's been
+line-wrapped (and any line-end spaces are deleted, which breaks diffs
+containing empty context lines).
 
-I do agree that storing trees is a natural generalization of the current
-notes implementation. Callers have to be made aware that they may see
-trees, of course, but you could probably "demote" trees into their
-representative sha1s for callers who were interested only in a blob
-form.
+I've verified that it's not `git imap-send` at fault, by tweaking it
+to tee all socket-written data to a local file; all whitespace in the
+mail prepared locally is sent to Gmail unchanged.  So Gmail is
+mangling the message when it gets uploaded (or possibly when it's
+opened in the web interface, or when it's sent).
 
-But what I am concerned with is that generalizing may violate some
-assumptions made about how notes work. Notes trees can re-balance
-themselves to some degree, I thought (though I am pretty out of the loop
-on current notes developments). So during merges we need to normalize
-tree representations (though we probably already need to do that for the
-blob case). We would also need to do some magic with rename detection
-during merges.  You would probably want rename detection _within_ a tree
-stored as a note for a particular commit, but not between notes stored
-for different commits.
+I've tried this both with a vanilla Gmail account, and with Google
+Apps For Your Domain Standard Edition, and I get the same behaviour.
 
-Or perhaps you would not even want to do a tree-merge between notes at
-all, and would rather see a conflict if two people noted two different
-trees. This would make sense to me if you were doing something like
-noting a build setup. If I note that commit X builds with a tree
-pointing to version Y of the build tools, and you note that it builds
-with version Z of the build tools, what should happen when we merge our
-notes? I can imagine wanting a conflict, and resolving it to Y or Z
-(perhaps whichever is more desirable). I can also see resolving it to Y
-_and_ Z (iow, treating it like a list). But doing a merge on the two
-trees of build tools (which are presumably somewhat immutable) is
-probably not helpful.
+> What I am trying to get at is to see if the current imap-send suggest=
+ion
+> is fundamentally unworkable with gmail. =C2=A0Perhaps they stopped su=
+pporting
+> imap. =C2=A0Perhaps the procedure never worked.
 
-Which to me argues in favor of adding the extra level of indirection.
-The note should store the tree sha1, and those who want to treat it as a
-tree can do so. Rename and merge issues just go away, as they operate on
-the tree sha1 and not on the tree itself. And of course the
-representation is just an implementation detail; you could still make a
-"git metadata" wrapper to transparently store trees from the user's
-perspective.
+As far as I can determine, the current imap-send suggestion is
+fundamentally unworkable with gmail at the moment.  I don't know
+whether it ever used to work, though I've been assuming that it did.
 
-The only complication is that git doesn't know to follow those sha1s for
-reachability analysis. In some cases that won't matter (like Junio's
-html/man example), but I suspect in some it will. Perhaps there is some
-way to flag the note entry as "this stores a sha1 that should be
-followed by fsck, but not otherwise dereferenced".
-
-I dunno. That is all just thinking out loud. It would help if we had
-some really detailed concrete examples of notes being used in practice.
-
--Peff
+--=20
+Aaron Crane ** http://aaroncrane.co.uk/
