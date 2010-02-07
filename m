@@ -1,84 +1,96 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Documentation/SubmittingPatches: fix Gmail workaround
- advice
-Date: Sun, 7 Feb 2010 16:16:45 -0600
-Message-ID: <20100207221645.GA2862@progeny.tock>
-References: <1265555642-40204-1-git-send-email-git@aaroncrane.co.uk>
- <7v8wb4gaef.fsf@alter.siamese.dyndns.org>
- <bc341e101002071203x52bceaach8d42c6188630f1d1@mail.gmail.com>
- <20100207215311.GA2177@progeny.tock>
+From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
+Subject: Re: [PATCH] Add a test for a problem in "rebase --whitespace=fix"
+Date: Sun, 7 Feb 2010 23:44:20 +0100
+Message-ID: <6672d0161002071444lba0f751w3e7e33043e1ec2e8@mail.gmail.com>
+References: <4B6E7564.7040109@gmail.com>
+	 <7vtytsevsd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tom Preston-Werner <tom@github.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jacob Helwig <jacob.helwig@gmail.com>,
-	David Aguilar <davvid@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	John Tapsell <johnflux@gmail.com>
-To: Aaron Crane <git@aaroncrane.co.uk>
-X-From: git-owner@vger.kernel.org Sun Feb 07 23:16:59 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 07 23:45:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NeFR2-000455-Mm
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Feb 2010 23:16:57 +0100
+	id 1NeFsN-0003Wp-Rw
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Feb 2010 23:45:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755397Ab0BGWQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Feb 2010 17:16:51 -0500
-Received: from mail-iw0-f183.google.com ([209.85.223.183]:57907 "EHLO
-	mail-iw0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754592Ab0BGWQu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Feb 2010 17:16:50 -0500
-Received: by iwn13 with SMTP id 13so4219358iwn.25
-        for <git@vger.kernel.org>; Sun, 07 Feb 2010 14:16:50 -0800 (PST)
+	id S1755044Ab0BGWoW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Feb 2010 17:44:22 -0500
+Received: from ey-out-2122.google.com ([74.125.78.25]:41987 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754414Ab0BGWoV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Feb 2010 17:44:21 -0500
+Received: by ey-out-2122.google.com with SMTP id d26so1208894eyd.19
+        for <git@vger.kernel.org>; Sun, 07 Feb 2010 14:44:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=sE0k7bLMbs4muQwU0ioob1vKemrNQKkc58eGYMykS9E=;
-        b=bAmjJoUs5vi+ud27lEvdp6dYcax/LEZsJL65sSSWWkKfteRh5Vqa2WdPcYNeD/82a1
-         hT2gchh/h1LhumsXM8KaYgzsCPuSp/tLKnmkJWU+05WETyFTYGoOO+9fz9zLJATYyE39
-         +lH+drF/Pj1lf8HBdW/JmFCVsA8JaZmg+ugCE=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ij9Rxtst5fQegbbz8OBx56n3AmxGHZ55OuuDxgScbs4=;
+        b=ECi4ihOAJx9uidbxG009qYtr8VjnwzZee4O3xipVVxfxbxQU7Rwaaen1ksI9PcxCb6
+         UWWwJaf2zmy5G/Okamy+9rESmwQS9XGn9RrmxwrIhxl73JfGHzMYnh9Qjhi6+ZyFaPby
+         zWH2YzekLSkwg8vQ0ichn2+cpWHJOyyw7Wz4s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ie4Za9fo+kskG00GvAn1lOZuAhv5VnKcC1mS+OHl4zwyiQYjwZHY4KB3IbGZrfw7JT
-         kHH6CdouLjLGHTRdrLXuG1RZQgqQCnW/g1u6WpcDWTFvFqcjrHJsw1D74tKqTMqN7+bT
-         jozR15aCzMeytGa6hj4Jo5y0ZsVgEi1EFWuSw=
-Received: by 10.231.154.207 with SMTP id p15mr816905ibw.91.1265581010358;
-        Sun, 07 Feb 2010 14:16:50 -0800 (PST)
-Received: from progeny.tock (wireless-205-208-124-228.uchicago.edu [205.208.124.228])
-        by mx.google.com with ESMTPS id 20sm3797614iwn.1.2010.02.07.14.16.49
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 07 Feb 2010 14:16:49 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20100207215311.GA2177@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=F9zk6fOZjL30BWxwmXKnYbr3lAm4AWYBIaKUr2gz0LRUiVWtUyxjTzGKz+iyadj9Tb
+         jwwcKt+iwcmBYmrBYyy7+enEBp+y71/SngCOUq0U2rp3FmPCxwvgNPsHm0yXedlnFKxz
+         4+KHIc3jclD7gQh3jxyzH/d9tlgKNEHtgwhTk=
+Received: by 10.216.87.13 with SMTP id x13mr115483wee.12.1265582660113; Sun, 
+	07 Feb 2010 14:44:20 -0800 (PST)
+In-Reply-To: <7vtytsevsd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139261>
 
-Jonathan Nieder wrote:
-> Aaron Crane wrote:
+2010/2/7 Junio C Hamano <gitster@pobox.com>:
 
->> As far as I can determine, the current imap-send suggestion is
->> fundamentally unworkable with gmail at the moment.  I don't know
->> whether it ever used to work, though I've been assuming that it did.
->
-> I think it still works, or depending on your perspective, it never did.
+> First, is this a condition that we want to change the behaviour to
+> "succeed" later?
 
-Scratch that: it looks like it once did.
+Yes, assuming it is possible to fix.
 
-http://thread.gmane.org/gmane.comp.version-control.git/99721/focus=99775
+> Imagine that the gap between abc and def block in your example is muc=
+h
+> larger to exceed the number of pre-context lines of your second patch
+> (usually 3), and imagine you are the "git apply --whitespace=3Dfix" p=
+rogram
+> you have updated to "fix" the preceived problem. =C2=A0You know you e=
+arlier
+> might have stripped some blank lines at the EOF, but there is nothing=
+ that
+> tells you if you had only 3 blank lines, or you had even more. =C2=A0=
+How many
+> blank lines will you be adding back?
 
-Tom, any clues?  Are you still able to avoid spurious line wrapping in
-gmail?
+My original idea was to add back exactly the number of lines needed
+so that the context lines would match. That can be calculated from
+the line numbers of the last line of the pre-image and the line number
+in the chunk and by scanning the chunk for blank context lines
+(both at the beginning and end of chunk). Since the blanks lines
+at the end will be stripped away anyway, I doesn't matter if I add
+back fewer lines than were there originally.
 
-Jonathan
+Thinking a little more about it, if there is a chunk that starts
+beyond the end of file, I could add the number of blanks lines
+that is missing up to the beginning of the chunk plus the
+number of lines in the chunk itself. That will also take
+care of the case that the chunk deletes blanks lines.
+(That will probably add too many blanks at the end,
+but they will be stripped out again.)
+
+That is my plan. Of course, since I have not attempted
+to implement it yet, there could be fatal flaws in it.
+
+Do you see any fatal flaws that I don't see?
+
+--=20
+Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
