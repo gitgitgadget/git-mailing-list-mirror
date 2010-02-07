@@ -1,90 +1,125 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 1/4] gitweb: notes feature
-Date: Sun, 7 Feb 2010 21:11:32 +0100
-Message-ID: <cb7bb73a1002071211n23a410f9icc3d4d29179c44ca@mail.gmail.com>
-References: <1265300338-25021-1-git-send-email-giuseppe.bilotta@gmail.com> 
-	<201002070248.03855.johan@herland.net> <cb7bb73a1002070314t4f382d31k91423eac00a68715@mail.gmail.com> 
-	<201002071341.36440.jnareb@gmail.com> <7vock0evs8.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: A generalization of git notes from blobs to trees - git
+ metadata?
+Date: Sun, 07 Feb 2010 12:25:13 -0800
+Message-ID: <7v8wb4aj4m.fsf@alter.siamese.dyndns.org>
+References: <2cfc40321002060532g4d22dd4dx403bf312708e1424@mail.gmail.com>
+ <201002070236.12711.johan@herland.net>
+ <7v1vgxlr9q.fsf@alter.siamese.dyndns.org>
+ <20100207050255.GA17049@coredump.intra.peff.net>
+ <2cfc40321002062136q64f832aesd979c9cb22f3612@mail.gmail.com>
+ <20100207193320.GB3185@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 07 21:12:13 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jon Seymour <jon.seymour@gmail.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Feb 07 21:26:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NeDU7-0003hX-R4
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Feb 2010 21:12:00 +0100
+	id 1NeDiS-0005Dt-4v
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Feb 2010 21:26:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754272Ab0BGULy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Feb 2010 15:11:54 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:62566 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751382Ab0BGULy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Feb 2010 15:11:54 -0500
-Received: by ewy28 with SMTP id 28so1823525ewy.28
-        for <git@vger.kernel.org>; Sun, 07 Feb 2010 12:11:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=EyxR6n8DfWWl0Wul++oJrQM8/GgsY17Ziizb7Y4UK9s=;
-        b=v10TRJ4yV2qTWi5yhdU1xW21yxgTJu6/ji0QW8hcFa3HOhJUj+DHLotwcuTSxoty50
-         rh4qYjUlLy68Fy3Or3GcJfe1f9eboDw+xdLESbRDIJDIjFVXFmjuRE9u8gOrH/T5BTw8
-         crotYnbWpZknMTiSU+3ZtAbdFBWHwEuDWE6iM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=FxMT0KRipIpmW/+lQJO+U90vybmnHs2Yop4qeFYGi+V2NgJ5supfK655DVF4Hax5UM
-         rG0g/5oeiAlDQRaI+5NyYUHt1kIVN2/W4SUrDp/4Ea02MjqAajlnlWlUMmTjkL5ldqIX
-         K1+R2PhWYgqt46Jz+8x9Un2MiKCeY+Q1a+3Sc=
-Received: by 10.213.1.23 with SMTP id 23mr3700674ebd.98.1265573512341; Sun, 07 
-	Feb 2010 12:11:52 -0800 (PST)
-In-Reply-To: <7vock0evs8.fsf@alter.siamese.dyndns.org>
+	id S1755016Ab0BGUZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Feb 2010 15:25:26 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40977 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754595Ab0BGUZZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Feb 2010 15:25:25 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 30AB8972CC;
+	Sun,  7 Feb 2010 15:25:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qAiYX5wJBJ8Q93JNGAYWjoj5Kn4=; b=rn33uy
+	6+gCDo4SFh3gqGqciyAdYXfeF70u6wwLgAAOm8dVZQmaSpVbtylbdYT4CK0xus1t
+	IQ9NwnyRXjh1RVI2GylIVBzbd7GnDiOnmY/HDAq6ESFm8xbJxlo1x/zDMzPKfgUJ
+	Jm0nk+c4uaUlPhKnqmH/+KTGwYVlK1lZ8ZSqI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=W2pzeAf7B1urAmIN9keNBfJnNz1ceNP4
+	3Iho/6Q6AQd5sCNRnAD+92WJw2dhjdYq5tudInXkLPTOfsIh39R4pJP+w7fiac7Y
+	/8x4GaoLI5AoSO4rHlhKpQI9q9sB5Fjvllxnw3eP6QG+xFVYHs7Jv8Ny2OGc5wOx
+	bKs9+dx6CJ0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D7C7F972CB;
+	Sun,  7 Feb 2010 15:25:19 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CFC38972CA; Sun,  7 Feb
+ 2010 15:25:14 -0500 (EST)
+In-Reply-To: <20100207193320.GB3185@coredump.intra.peff.net> (Jeff King's
+ message of "Sun\, 7 Feb 2010 14\:33\:20 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E93859A0-1426-11DF-B0EC-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139252>
 
-On Sun, Feb 7, 2010 at 7:38 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
->
-> Notes are fundamenally metainformation about an _object_ [*1*] and ar=
-e not
-> metainformation about refs. =A0Since whatever magic notation to denot=
-e notes
-> we choose wants to be applied to an arbitrary commit, it shouldn't be=
- the
-> at-brace syntax.
+Jeff King <peff@peff.net> writes:
 
-Makes sense. ^{note[:namespace]} is ok for me too btw, although maybe
-it looks a little off-base when compared with the tag indicator ^{}
-which works, in a sense, in the opposite direction.
+> Or perhaps you would not even want to do a tree-merge between notes at
+> all, and would rather see a conflict if two people noted two different
+> trees.
 
-> [Footnote]
->
-> *1* Yes, I am aware of movements to misuse notes to annotate anything
-> after mapping it to a random SHA-1 value, but I think that is outside=
- the
-> scope of notes. =A0Our design decision should be based on supporting =
-the
-> primary use of annotating an object, and that might still keep such a=
- use
-> working, in which case that would be an added bonus. =A0But our desig=
-n
-> shouldn't be constrained by such a secondary use.
+I've been thinking about the merge issues, and am starting to suspect that
+we might want a merge strategy quite drastically different even for blob
+cases.  That is one of the reasons why I don't want to see us muddy the
+issues by introducing even more complex "tree" case.
 
+Anybody working in the same project can start 'notes' tree with his or her
+own root.  That is the normal use case for annotating commits for your own
+use.  For merges inside the history of primary contents that people try to
+collaborate to advance, three-way merge pivoting on a common ancestor is a
+natural way to reach a satisfactory result.  In notes namespace, on the
+other hand, the norm is to simply overlay the notes trees, adjusting for
+the fan-out.  You annotated that commit I was not interested in, while I
+annotated this commit you weren't interested in.  We have our notes in the
+end result, and both of us are happy.  If we happen to have annotated the
+same commit without knowing what the other was doing, then there is no
+sane consolidation---in the most typical case, we would want to keep both,
+perhaps concatenating them together.  Textual merge becomes the exception
+that triggers two "notes" histories happened to have forked from the same
+root somehow.
 
-BTW, I still think that notes should be attachable to named refs (not
-SHA-1, thus) too.
+And for that most typical use case, I suspect even the current "notes on
+any and all commits for a single purpose are thrown into a one _bag_ that
+is a notes tree, and the growth of that bag is made into a history" model
+captures sets of notes that is too wide.
 
---=20
-Giuseppe "Oblomov" Bilotta
+Suppose Alice, Bob and I are involved in a project, and we annotate
+commits for some shared purpose (say, tracking regressions).  Alice and
+Bob may independently annotate overlapping set of commits (and hopefully
+they have shared root for their notes history as they are collaborating),
+and they may even be working together on the same issue, but I may not be
+involved in the area.  What happens when I pull from Alice and Bob and get
+conflicts in notes they produced, especially the only reason I was
+interested was because they have new things to say about commits that I am
+interested in?
+
+You can end up with conflicts in areas you are not familiar with but Alice
+and Bob are in charge of even in the primary content space, but there is a
+fundamental difference of this type of conflict in the notes space, I
+think.  The set of contents in the primary content space are supposed to
+make a consistent whole, and there is a topic branch workflow to partition
+the work to allow me to easily kick the merge back to them (i.e. I can
+tell Alice and Bob to resolve the conflicts between themselves and trust
+that what they do between them do not touch outside of their area) without
+getting blocked.  I don't see a clear workflow to resolve this in the
+notes space, especially with the set of operations the current "git notes"
+(and obvious and straightforward enhancements of what it does).  At least
+not yet.
+
+It's like "keeping track of /etc" (or "your home directory").  It is a
+misguided thing to do because you are throwing in records of the states of
+totally unrelated things into a single history (e.g. "Why does it matter I
+added new user frotz to /etc/passwd before I futzed with my sendmail
+configuration?  ---It shouldn't matter; there shouldn't be ancestry
+relationships between these two changes").  I somehow feel that keeping
+track of the "growth of the bag of annotations to any and all commits" in
+a single history may be making the same mistake.
