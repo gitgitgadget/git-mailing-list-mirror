@@ -1,146 +1,106 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git-grep: option parsing conflicts with prefix-dash searches
-Date: Sat, 6 Feb 2010 23:44:15 -0500
-Message-ID: <20100207044415.GA6622@coredump.intra.peff.net>
-References: <alpine.LSU.2.01.1002052351060.30204@obet.zrqbmnf.qr>
- <7vsk9fs1j9.fsf@alter.siamese.dyndns.org>
- <20100206035143.GA31784@sigill.intra.peff.net>
- <7v7hqrdkxb.fsf@alter.siamese.dyndns.org>
- <20100206115817.GA11605@sigill.intra.peff.net>
- <7v8wb64623.fsf@alter.siamese.dyndns.org>
+Subject: Re: A generalization of git notes from blobs to trees - git
+ metadata?
+Date: Sun, 7 Feb 2010 00:02:55 -0500
+Message-ID: <20100207050255.GA17049@coredump.intra.peff.net>
+References: <2cfc40321002060532g4d22dd4dx403bf312708e1424@mail.gmail.com>
+ <201002070236.12711.johan@herland.net>
+ <7v1vgxlr9q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jan Engelhardt <jengelh@medozas.de>, git@vger.kernel.org
+Cc: Johan Herland <johan@herland.net>,
+	Jon Seymour <jon.seymour@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 07 05:44:23 2010
+X-From: git-owner@vger.kernel.org Sun Feb 07 06:03:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ndz0O-0003DE-H7
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Feb 2010 05:44:20 +0100
+	id 1NdzIU-0002Ey-5F
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Feb 2010 06:03:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754270Ab0BGEoP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Feb 2010 23:44:15 -0500
-Received: from peff.net ([208.65.91.99]:56366 "EHLO peff.net"
+	id S1750842Ab0BGFC4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Feb 2010 00:02:56 -0500
+Received: from peff.net ([208.65.91.99]:56664 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753834Ab0BGEoP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2010 23:44:15 -0500
-Received: (qmail 14294 invoked by uid 107); 7 Feb 2010 04:44:20 -0000
+	id S1750739Ab0BGFC4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Feb 2010 00:02:56 -0500
+Received: (qmail 14340 invoked by uid 107); 7 Feb 2010 05:03:00 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 06 Feb 2010 23:44:20 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 06 Feb 2010 23:44:15 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 07 Feb 2010 00:03:00 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Feb 2010 00:02:55 -0500
 Content-Disposition: inline
-In-Reply-To: <7v8wb64623.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7v1vgxlr9q.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139218>
 
-On Sat, Feb 06, 2010 at 09:39:32AM -0800, Junio C Hamano wrote:
+On Sat, Feb 06, 2010 at 06:21:37PM -0800, Junio C Hamano wrote:
 
-> > I think so. It was the first thing the original poster in this thread
-> > tried. It is also something I have tried (and still do, then grumblingly
-> > retype "-e pattern"). And it certainly makes sense from a user
-> > perspective; it is the same end-of-options signal that most other
-> > programs take.
+> Johan Herland <johan@herland.net> writes:
 > 
-> Ok, then let's take that (perhaps before 1.7.0 perhaps after).
+> > Furthermore, although we currently assume that all note objects are blobs, 
+> > someone (who?) has already suggested (as mentioned in the notes TODO list) 
+> > that a note object could also be a _tree_ object that can be unpacked/read 
+> > to reveal further "sub-notes".
+> 
+> I would advice you not to go there.  How would you even _merge_ such a
+> thing with other notes attached to the same object?  What determines the
+> path in that tree object?
+> 
+> Clueless ones can freely make misguided suggestions without thinking
+> things through and make things unnecessarily complex without real gain.
+> You do not have to listen to every one of them.
 
-Here it is with a commit message and some tests. While it is a minor
-change, we are pretty late in the release cycle, so perhaps it is best
-to leave it post-1.7.0 just to be on the safe side.
+I think I may have been the one to suggest trees or notes at one point.
+But let me clarify that this is not exactly what the OP is proposing in
+this thread.
 
--- >8 --
-Subject: [PATCH] accept "git grep -- pattern"
+My suggestion was that some use cases may have many key/value pairs of
+notes for a single sha1. We basically have two options:
 
-Currently the only way to "quote" a grep pattern that might
-begin with a dash is to use "git grep -e pattern". This
-works just fine, and is also the way right way to do it on
-many traditional grep implemenations.
+  1. store each in a separate notes ref, with each sha1 mapping to
+     a blob. The note "name" is the name of the ref.
 
-Some people prefer to use "git grep -- pattern", however, as
-"--" is the usual "end of options" marker, and at least GNU
-grep and Solaris 10 grep support this. This patch makes that
-syntax work.
+  2. store notes in a single notes ref, with each sha1 mapping to a
+     tree with named sub-notes. The note "name" is the combination of
+     ref-name and tree entry name.
 
-There is a slight behavior change, in that "git grep -- $X"
-used to be interpreted as "grep for -- in $X". However, that
-usage is questionable. "--" is usually the end-of-options
-marker, so "git grep" was unlike many other greps in
-treating it as a literal pattern (e.g., both GNU grep and
-Solaris 10 grep will treat "grep --" as missing a pattern).
+The advantage of (1) is that notes are not bound tightly to each other.
+I can distribute the notes tree for one "name" independent of the
+others.  The advantage of (2) is that it is faster and smaller. In (1),
+each note has a separate index, and we must traverse each note index
+separately.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin-grep.c  |   10 ++++++++++
- t/t7002-grep.sh |   33 +++++++++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 0 deletions(-)
+In practice, I would expect to use (1) for logically separate datasets.
+For example, automatic bug-tracking notes would go in a different ref
+from human annotations. But I would expect to use (2) if I had, say, 5
+different pieces of bug tracking information and I wanted an easy way to
+refer to them individually.
 
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 26d4deb..63d4b95 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -861,6 +861,16 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			     PARSE_OPT_STOP_AT_NON_OPTION |
- 			     PARSE_OPT_NO_INTERNAL_HELP);
- 
-+	/*
-+	 * skip a -- separator; we know it cannot be
-+	 * separating revisions from pathnames if
-+	 * we haven't even had any patterns yet
-+	 */
-+	if (argc > 0 && !opt.pattern_list && !strcmp(argv[0], "--")) {
-+		argv++;
-+		argc--;
-+	}
-+
- 	/* First unrecognized non-option token */
- 	if (argc > 0 && !opt.pattern_list) {
- 		append_grep_pattern(&opt, argv[0], "command line", 0,
-diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
-index 7144f81..0b583cb 100755
---- a/t/t7002-grep.sh
-+++ b/t/t7002-grep.sh
-@@ -434,4 +434,37 @@ test_expect_success 'grep -Fi' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'setup double-dash tests' '
-+cat >double-dash <<EOF &&
-+--
-+->
-+other
-+EOF
-+git add double-dash
-+'
-+
-+cat >expected <<EOF
-+double-dash:->
-+EOF
-+test_expect_success 'grep -- pattern' '
-+	git grep -- "->" >actual &&
-+	test_cmp expected actual
-+'
-+test_expect_success 'grep -- pattern -- pathspec' '
-+	git grep -- "->" -- double-dash >actual &&
-+	test_cmp expected actual
-+'
-+test_expect_success 'grep -e pattern -- path' '
-+	git grep -e "->" -- double-dash >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+double-dash:--
-+EOF
-+test_expect_success 'grep -e -- -- path' '
-+	git grep -e -- -- double-dash >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
--- 
-1.7.0.rc1.58.g769126
+And a specialized merge for that is straightforward. In the simplest
+case, you simply say "notes of this ref are tree-type, or they are
+blob-type" and then you have no merge problems. But if you want to get
+fancy, you can say that a conflict between "sha1/blob" and
+"sha1/tree/key" should automatically "promote" the first one into
+"sha1/tree/default" or some other canonical name.
+
+Note that all of this is my pie-in-the-sky "here is what I was thinking
+of when I looked at notes a long time ago". I don't care strongly if it
+gets implemented or not at this point; I just wanted to add some context
+to what Johan had in his notes todo list (or maybe I am wrong, and what
+is in his todo list was based on something totally different said by
+somebody else, and I have just confused the issue more. :) ).
+
+With respect to the idea of storing an arbitrary tree, I agree it is
+probably too complex with respect to merging. In addition, it makes
+things like "git log --format=%N" confusing. I think you would do better
+to simply store a tree sha1 inside the note blob, and callers who were
+interested in the tree contents could then dereference it and examine as
+they saw fit.  The only caveat is that you need some way of telling git
+that the referenced trees are reachable and not to be pruned.
+
+-Peff
