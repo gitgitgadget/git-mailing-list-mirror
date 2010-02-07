@@ -1,95 +1,114 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: Using =?utf-8?q?=E2=80=98git_replace=E2=80=99_to_replace?= blobs
-Date: Sun, 7 Feb 2010 07:45:59 +0100
-Message-ID: <201002070746.00200.chriscool@tuxfamily.org>
-References: <20100207011056.GA15307@progeny.tock>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] archive: fix segfault from too long --format parameter
+Date: Sun, 7 Feb 2010 01:10:46 -0600
+Message-ID: <20100207070811.GA26338@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Nick Edelen <sirnot@gmail.com>,
-	Sam Vilain <sam@vilain.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 07 07:44:50 2010
+Cc: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 07 08:18:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ne0sy-0004ZL-GS
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Feb 2010 07:44:48 +0100
+	id 1Ne1P6-0007t0-F0
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Feb 2010 08:18:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751426Ab0BGGmu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Feb 2010 01:42:50 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:43312 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751337Ab0BGGmu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Feb 2010 01:42:50 -0500
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 4251281805F;
-	Sun,  7 Feb 2010 07:42:42 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 1CF69818045;
-	Sun,  7 Feb 2010 07:42:40 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20100207011056.GA15307@progeny.tock>
+	id S1751881Ab0BGHKt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Feb 2010 02:10:49 -0500
+Received: from mail-iw0-f201.google.com ([209.85.223.201]:53966 "EHLO
+	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751663Ab0BGHKs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Feb 2010 02:10:48 -0500
+Received: by iwn39 with SMTP id 39so5691465iwn.1
+        for <git@vger.kernel.org>; Sat, 06 Feb 2010 23:10:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=axpD/hJaKE+m021lruc3SON1og2kH4pxVp+PKS1PPFI=;
+        b=lJnmPdI4JwKg2XO2RexGR8ABPkLCq2ZMPqdXdP7wwdLRNsVDhr1nMXOk+Wl3kEyPVZ
+         ZQH6ZDWedl7Dn094sRHNKWgLYXLDyxtO4zKHWBhjd1LMDJ/VM3ULmV5zy+7BIVA3+HQT
+         k8/1DBtMuRHZ1O5/rmNjopDbESbyjz5bVla8o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        b=GQVrVKQpP58UvdrSxRycItlEruwTqbuAYzqmEy9WEldcy+poOkgWP9dq/B8claJhQ4
+         HBSqPtr2lOFgFfc1Uma2Hu3jPOWfh/E3HvAnrfA3uYSrvU/gJoZ0ImMi2ZMk/ntyAwD3
+         HCb9PdXsPcivlH9FV3NAvek+FyRgGxRLCv/1U=
+Received: by 10.231.161.138 with SMTP id r10mr2428766ibx.34.1265526647165;
+        Sat, 06 Feb 2010 23:10:47 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 21sm3019128iwn.2.2010.02.06.23.10.46
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 06 Feb 2010 23:10:46 -0800 (PST)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139223>
 
-On dimanche 07 f=C3=A9vrier 2010, Jonathan Nieder wrote:
-> I think it is a known problem that =E2=80=98git replace=E2=80=99 cann=
-ot be used safely
-> to replace blobs used in the currently checked out commit.  The man
-> page says:
->
-> 	Comparing blobs or trees that have been replaced with
-> 	those that replace them will not work properly.
->
-> Indeed, in practice it produces problems. [1]
->
-> I would like to start to fix this. =20
+=E2=80=98git archive --format=3D<string of 25 characters or more>=E2=80=
+=99 overflows a
+local buffer, producing a segfault here.
 
-One way to fix it may be to use a bit in "struct object" that could tel=
-l if=20
-any object was replaced or not. I think that in the "Add caching suppor=
-t to=20
-git-daemon" GSoc patches, Nick Edelen did something like that for graft=
-s.=20
-(See http://thread.gmane.org/gmane.comp.version-control.git/127932/)
+The context: in commit 0f4b377 (git-archive: infer output format from
+filename when unspecified, 2009-09-14), the cmd_archive wrapper
+learned to produce a format argument for the local or remote archive
+machinery in a local buffer, but that code was missing a bounds check.
 
-> But the correct semantics are not=20
-> obvious to me:
->
->  - When writing a tree from an index that includes replaced blobs,
->    should the result use the original blobs or the replaced ones?
+So add the missing check.  As a belt-and-suspenders measure, also use
+snprintf to make sure the copy afterwards does not overflow.
 
-It may depend on why the original blob was replaced in the first place.
-I did not think much about this though.
+Cc: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Cc: Dmitry Potapov <dpotapov@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+I noticed this while reading over the archive code.  Thoughts?
 
->  - When reading a tree that includes replaced blobs, should the
->    resulting cache entries use the original blobs or the replaced
->    ones?
+ builtin-archive.c   |    4 +++-
+ t/t5000-tar-tree.sh |    6 ++++++
+ 2 files changed, 9 insertions(+), 1 deletions(-)
 
-I think it should depend on whether the global variable read_replace_re=
-fs is=20
-set or not.
-
-> My hunch is to say both should use the replaced blobs.  This way,
-> replacing a blob in a checked-out index would behave in a more
-> intuitive way, and git filter-branch would make permanent any
-> substitutions requested through replaced blob entries.
-
-It might not always be a good idea to make any substitution permanent.
-=46or example if you use git replace to improve the bisectability of yo=
-ur=20
-commit history you may want to keep the original commits.
-
-I know you are talking about blobs, not commits, but perhaps there are =
-some=20
-similar use cases of replaced blobs.
-
-Thanks for looking at that,
-Christian.
+diff --git a/builtin-archive.c b/builtin-archive.c
+index 3fb4136..94db00d 100644
+--- a/builtin-archive.c
++++ b/builtin-archive.c
+@@ -107,7 +107,9 @@ int cmd_archive(int argc, const char **argv, const =
+char *prefix)
+ 	}
+=20
+ 	if (format) {
+-		sprintf(fmt_opt, "--format=3D%s", format);
++		if (strlen(format) > sizeof(fmt_opt) - sizeof("--format=3D"))
++			die("git archive: format is too long: %.50s", format);
++		snprintf(fmt_opt, sizeof(fmt_opt), "--format=3D%s", format);
+ 		/*
+ 		 * We have enough room in argv[] to muck it in place,
+ 		 * because either --format and/or --output must have
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 0037f63..cf114b2 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -174,6 +174,12 @@ test_expect_success \
+ '
+=20
+ test_expect_success \
++    'git archive --format=3D<long nonsense string>' \
++    'format=3Dabacadabra &&
++    format=3D"${format}${format}${format}zip" &&
++    test_must_fail git archive "--format=3D$format" HEAD'
++
++test_expect_success \
+     'git archive --format=3Dzip' \
+     'git archive --format=3Dzip HEAD >d.zip'
+=20
+--=20
+1.7.0.rc1
