@@ -1,79 +1,60 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: A Visual Git Reference
-Date: Mon, 8 Feb 2010 16:57:12 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.1002081513430.14365@iabervon.org>
-References: <ca433831002081134m698f531bwa22f0474db0cdcb@mail.gmail.com>
+From: Larry D'Anna <larry@elder-gods.org>
+Subject: Re: [PATCH v3 2/3] git-push: clean up some of the output from git
+ push --porcelain
+Date: Mon, 8 Feb 2010 17:15:58 -0500
+Message-ID: <20100208221558.GA21718@cthulhu>
+References: <214a0317f2e4707a866b2f5d10509296bc1479c1.1265661033.git.larry@elder-gods.org>
+ <a1b71c9f6566549e6117f5c98c2f1e60754a7334.1265661033.git.larry@elder-gods.org>
+ <7vtytrih7b.fsf@alter.siamese.dyndns.org>
+ <7vvde7h1mn.fsf@alter.siamese.dyndns.org>
+ <20100208213256.GA470@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git list <git@vger.kernel.org>
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 08 22:57:21 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 08 23:16:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nebba-0000ZZ-Kj
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 22:57:19 +0100
+	id 1Nebtn-00067C-D7
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 23:16:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752267Ab0BHV5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2010 16:57:14 -0500
-Received: from iabervon.org ([66.92.72.58]:60153 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752124Ab0BHV5N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2010 16:57:13 -0500
-Received: (qmail 6741 invoked by uid 1000); 8 Feb 2010 21:57:12 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 8 Feb 2010 21:57:12 -0000
-In-Reply-To: <ca433831002081134m698f531bwa22f0474db0cdcb@mail.gmail.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1752422Ab0BHWQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2010 17:16:00 -0500
+Received: from cthulhu.elder-gods.org ([140.239.99.253]:35438 "EHLO
+	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750859Ab0BHWP7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2010 17:15:59 -0500
+Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
+	id B9D6082205A; Mon,  8 Feb 2010 17:15:58 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20100208213256.GA470@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139325>
 
-On Mon, 8 Feb 2010, Mark Lodato wrote:
-
-> All,
+* Jeff King (peff@peff.net) [100208 16:32]:
+> > @@ -1071,7 +1071,8 @@ int transport_push(struct transport *transport,
+> >  		}
+> >  
+> >  		if (!quiet && !ret && !refs_pushed(remote_refs))
+> > -			fprintf(stderr, "Everything up-to-date\n");
+> > +			fprintf(porcelain ? stdout : stderr,
+> > +				"Everything up-to-date\n");
+> >  		return ret;
+> >  	}
 > 
-> I put together a "Visual Git Reference" containing visualizations of
-> the most common git commands, for people who prefer to see images over
-> text.  It is designed as a reference, not a tutorial, so readers need
-> to have some amount of experience before the page will become useful.
-> 
-> URL: http://marklodato.github.com/visual-git-guide/
-> Git repo: http://github.com/marklodato/visual-git-guide/
-> 
-> If you have any feedback or suggestions, please let me know!
+> This one, on the other hand, seems to me to be just noise. What does a
+> --porcelain caller learn by seeing "Everything up-to-date" that it did
+> not already know from seeing the list of refs?
 
-The "3-way merge" node should graphically distinguish the base from the 
-two sides, rather than having all three just go in. The "3-way merge" 
-operation is tricky to understand visually without some sort of "split and 
-rejoin, with specific points" thing.
+I agree.  I don't see how sending this message to stdout could possibly help the
+--porcelain caller.
 
-Also, it would probably be worth showing the use of the index in the 
-process of a 3-way merge: all three versions go into the blue box, and a 
-combination (with conflict markers) goes into the pink box; the user 
-cleans up the pink box, and replaces the 3-part blue box content with the 
-cleaned-up single result content; then the commit gives the diagram you 
-have for "git merge other".
 
-I think you should introduce the detached HEAD situation early; right 
-after "git checkout HEAD~ files", it would be worth showing "git checkout 
-HEAD~". It's pretty common for people in the "technical user" part of the 
-kernel community to use git to browse history and test different commits, 
-and never do a commit at all. This is a pretty common mode across many 
-version control systems (e.g., "cvs checkout -D yesterday"), and nothing 
-unexpected happens if you don't try to commit while doing it. In fact, you 
-could show tracking down a bug introduced between maint and master by 
-checking out c10b9 and then da985.
-
-Then, later, you can bring up the fact that you can actually do commits in 
-that situation, and show how that works. That part is the part that's 
-novel and could potentially lead to people doing work and having it become 
-unreachable. Also, after commiting with a detached HEAD, the normal next 
-step is to create a new branch ("git checkout -b new-topic").
-
-	-Daniel
-*This .sig left intentionally blank*
+            --larry
