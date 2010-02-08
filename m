@@ -1,90 +1,101 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: git add -u nonexistent-file
-Date: Mon, 8 Feb 2010 14:12:41 -0500
-Message-ID: <a038bef51002081112s2d552835m4b34973f797ab4f8@mail.gmail.com>
-References: <20100208182929.GB14355@neumann>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: git-add: correct first example
+Date: Mon, 08 Feb 2010 11:22:34 -0800
+Message-ID: <7vsk9bmt1h.fsf@alter.siamese.dyndns.org>
+References: <1265650551-32664-1-git-send-email-gbacon@dbresearch.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Feb 08 20:20:43 2010
+To: Greg Bacon <gbacon@dbresearch.net>
+X-From: git-owner@vger.kernel.org Mon Feb 08 20:22:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NeZA0-0002m6-AC
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 20:20:40 +0100
+	id 1NeZC3-0004WG-Or
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 20:22:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754244Ab0BHTUf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Feb 2010 14:20:35 -0500
-Received: from mail-pz0-f172.google.com ([209.85.222.172]:62340 "EHLO
-	mail-pz0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751228Ab0BHTUe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Feb 2010 14:20:34 -0500
-Received: by pzk2 with SMTP id 2so181146pzk.21
-        for <git@vger.kernel.org>; Mon, 08 Feb 2010 11:20:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=98RY0FR8564HwooHYhBSUebkYs8FuS9uQDjVhUG934U=;
-        b=vW4Fa9pbn5MZbvpyvPEzbaCoyAyKID5QytRPMEi8e3bwca03N6OAQ7Pr0D2scw3WQJ
-         LRTr1NTu0l+ZEnuHUSaaXuwkS05WR5QNL0tTmKFJtDUQzjIi9tZTyricUN/1q035g8ST
-         9u0krIKLCmMmp4VXWHoQVv32ThD/J4EQWgRHY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lvaY0R+dm0VfYNWyzqhL1n6i7IvGtJ2wv9FQvkOMZ0baAtORC/4Dyn6duheXkaWOHS
-         u633CbEE3tkwmD3CRM/Bv0SlDhbeAz4h4e8a2+kr/5u9hEkxxP1TyLzuB9rEsV5+rK+5
-         P+OesSiEghV+su/Vspl5+QasoF7bfvHoDaAcc=
-Received: by 10.115.65.6 with SMTP id s6mr3669167wak.53.1265656361657; Mon, 08 
-	Feb 2010 11:12:41 -0800 (PST)
-In-Reply-To: <20100208182929.GB14355@neumann>
+	id S1754337Ab0BHTWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2010 14:22:42 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36988 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754287Ab0BHTWl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2010 14:22:41 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B0C3C98B53;
+	Mon,  8 Feb 2010 14:22:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OpwA0nGV3/9dFwa97+o4rV331gw=; b=BXqfyG
+	wMu5REouJ9r8kkm/gLVgy2RRY9v4yCtaxK1EbIrLL+Brb79q8BfQ1b2/gvyAPFHi
+	jQOo/eaYVzuYjxou9v53X1cN1M5dwXFr80BG2oK6j93QwLU3dewdyRQmK3H38Fqu
+	HKikU6bjOAnUNObCuPxd/Zv66y/YtFfCCSDNs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KKeCry06DrdfFqid7lZyW0IrhNuOHTjG
+	3OwwbkcsQ5cIWrS2vssKK9nA3OagUn5/YBb0cfCXMJMvJvyAi/tMm1bGp3XbLPIL
+	RJ45u/SHeb4qPmfvLevROga3qh3rKeJDG4dDwb3N7QU/uaVv0iAXy93BHDpPMduy
+	vNuoTe5dw8c=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 852C698B52;
+	Mon,  8 Feb 2010 14:22:38 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C914998B4F; Mon,  8 Feb
+ 2010 14:22:35 -0500 (EST)
+In-Reply-To: <1265650551-32664-1-git-send-email-gbacon@dbresearch.net> (Greg
+ Bacon's message of "Mon\,  8 Feb 2010 11\:35\:51 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 51B3E678-14E7-11DF-90E9-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139306>
 
-2010/2/8 SZEDER G=C3=A1bor <szeder@ira.uka.de>:
-> Hi,
+Greg Bacon <gbacon@dbresearch.net> writes:
+
+> The first example for git-add covers recursive adding of patterns but
+> contains an extra backslash.
+
+Correct.  
+
+> Signed-off-by: Greg Bacon <gbacon@dbresearch.net>
+> ---
+>  Documentation/git-add.txt |    5 +++--
+>  1 files changed, 3 insertions(+), 2 deletions(-)
 >
->
-> $ git --version
-> git version 1.7.0.rc1.84.g9879
-> $ git add -u nonexistent-file
-> $ echo $?
-> 0
->
-> No error message, no error in exit status.
->
-> Is it OK this way? =C2=A0Why?
->
->
-> Best,
-> G=C3=A1bor
->
+> diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+> index f74fcf3..93e8f57 100644
+> --- a/Documentation/git-add.txt
+> +++ b/Documentation/git-add.txt
+> @@ -149,11 +149,12 @@ those in info/exclude.  See linkgit:gitrepository-layout[5].
+>  EXAMPLES
+>  --------
+>  
+> -* Adds content from all `\*.txt` files under `Documentation` directory
+> +* Adds content from all `*.txt` files under `Documentation` directory
 
-Hi,
+For this, both
 
-I see the same behaviour with git version 1.6.4.2.
+    http://www.kernel.org/pub/software/scm/git/docs/git-add.html
 
-=46rom the man page of git-add
+and output from
 
--u, --update
-           Update only files that git already knows about, staging
-modified content for
-           commit and marking deleted files for removal.
+    git help add
 
-So git will only look at files that are already in the repository.
+in my local build seem to be rendered correctly by AsciiDoc.
 
-It looks like in the case you've highlighted git is ignoring the extra
-non-option parameters on the command line. I'll let other people argue
-whether this is by design or omission.
+>  and its subdirectories:
+>  +
+>  ------------
+> -$ git add Documentation/\\*.txt
 
-'git add nonexistent-file' works as expected, exiting with an error
-message and non-zero exit status.
+This indeed results in double-backslash in the output.
+
+> +$ git add Documentation/\*.txt
+
+and this seems to fix it.
+
+Thanks.
