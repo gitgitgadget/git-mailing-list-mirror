@@ -1,69 +1,110 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: Gmail and unwanted line-wrapping
-Date: Mon, 8 Feb 2010 16:20:53 +0100
-Message-ID: <40aa078e1002080720y4fe67d1eue2860dff9e12e0bf@mail.gmail.com>
-References: <bc341e101002061229t7a1525c2w2d5a8e221124b3c2@mail.gmail.com>
-	 <fabb9a1e1002061247k7a8fba5at4c687faac0dcabb8@mail.gmail.com>
-	 <20100207002413.GA14744@gmail.com>
-	 <76718491002061650ge299426s22de5e00b26af108@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: [PATCH] Revert
+ "pack-objects: fix pack generation when using pack_size_limit"
+Date: Mon, 08 Feb 2010 10:39:01 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1002081032530.1681@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: David Aguilar <davvid@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Aaron Crane <git@aaroncrane.co.uk>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 08 16:21:03 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 08 16:43:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NeVQ7-0007BT-6Z
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 16:21:03 +0100
+	id 1NeVlp-0007wE-Nv
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 16:43:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753195Ab0BHPU6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2010 10:20:58 -0500
-Received: from mail-fx0-f211.google.com ([209.85.220.211]:34518 "EHLO
-	mail-fx0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752775Ab0BHPU6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2010 10:20:58 -0500
-Received: by fxm3 with SMTP id 3so7776217fxm.39
-        for <git@vger.kernel.org>; Mon, 08 Feb 2010 07:20:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=XyRyAGhveZvz1NNh6QMkt0AYjTNmZJZF0dNcJRVIdbI=;
-        b=u9J0K/xgqIyVt5NEwczxiciGF6oWP6APEnQDlCoeudGL1pkK/NMh2OX7pzTATZ/jwV
-         KT037qnTxv1KrsbtZxwAV6u56ETzAOw7KDwGwISpCo+stTgj5ChNYWQAU6v6OP2aOIN/
-         d+Ly5WYNE8kNPATEexolJt+lU3XzhoOH+72nE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        b=sR/jbygIKB68FrHn0rZv3owa/zU3y97w22SgEH8gXnGsirqTEz7VPjrleroUDGsvwm
-         smzNGjW7cF6CH+X9u+sgp5s2wFb0IUY+64Fj5jAHZhiDp96/dS6+J7yaApka8jWm6Ovx
-         L1kh52FG1vBvflmIfDcP8rqOwSAXaG/j3KMOA=
-Received: by 10.216.171.138 with SMTP id r10mr2724308wel.153.1265642454597; 
-	Mon, 08 Feb 2010 07:20:54 -0800 (PST)
-In-Reply-To: <76718491002061650ge299426s22de5e00b26af108@mail.gmail.com>
+	id S1752775Ab0BHPnY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2010 10:43:24 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:39059 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752157Ab0BHPnX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2010 10:43:23 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0KXJ00D2D4T11H00@VL-MR-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 08 Feb 2010 10:39:01 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139293>
 
-On Sun, Feb 7, 2010 at 1:50 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
->> I've added it to the Git Wiki:
->> http://git.wiki.kernel.org/index.php/GitTips#Using_gmail_to_send_your_patches
->
-> If you're on MacOS X and have MacPorts installed, then install both
-> the curl and msmtp packages, then use an .msmtprc as follows:
->
 
-There's also an article on the msysGit-wiki about using msmtp to send patches:
-http://code.google.com/p/msysgit/wiki/UsingSendEmail
+This reverts most of commit a2430dde8ceaaaabf05937438249397b883ca77a.
 
--- 
-Erik "kusma" Faye-Lund
+That commit made the situation better for repositories with relatively
+small number of objects.  However with many objects and a small pack size
+limit, the time required to complete the repack tends towards O(n^2),
+or even much worse with long delta chains.
+
+Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
+---
+
+Fixing this doesn't appear to be as trivial as I initially thought.
+Although I do have some ideas, they're not appropriate so late in 
+the -rc period.
+
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index dcfe62a..e1d3adf 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -445,13 +445,9 @@ static int write_one(struct sha1file *f,
+ 	if (e->idx.offset || e->preferred_base)
+ 		return -1;
+ 
+-	/*
+-	 * If we are deltified, attempt to write out base object first.
+-	 * If that fails due to the pack size limit then the current
+-	 * object might still possibly fit undeltified within that limit.
+-	 */
+-	if (e->delta)
+-	       write_one(f, e->delta, offset);
++	/* if we are deltified, write out base object first. */
++	if (e->delta && !write_one(f, e->delta, offset))
++		return 0;
+ 
+ 	e->idx.offset = *offset;
+ 	size = write_object(f, e, *offset);
+@@ -505,9 +501,11 @@ static void write_pack_file(void)
+ 		sha1write(f, &hdr, sizeof(hdr));
+ 		offset = sizeof(hdr);
+ 		nr_written = 0;
+-		for (i = 0; i < nr_objects; i++)
+-			if (write_one(f, objects + i, &offset) == 1)
+-				display_progress(progress_state, written);
++		for (; i < nr_objects; i++) {
++			if (!write_one(f, objects + i, &offset))
++				break;
++			display_progress(progress_state, written);
++		}
+ 
+ 		/*
+ 		 * Did we write the wrong # entries in the header?
+@@ -582,7 +580,7 @@ static void write_pack_file(void)
+ 			written_list[j]->offset = (off_t)-1;
+ 		}
+ 		nr_remaining -= nr_written;
+-	} while (nr_remaining);
++	} while (nr_remaining && i < nr_objects);
+ 
+ 	free(written_list);
+ 	stop_progress(&progress_state);
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 1058d98..7649b81 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -389,7 +389,7 @@ test_expect_success 'verify resulting packs' '
+ test_expect_success 'tolerate packsizelimit smaller than biggest object' '
+ 	git config pack.packSizeLimit 1 &&
+ 	packname_11=$(git pack-objects test-11 <obj-list) &&
+-	test 3 = $(ls test-11-*.pack | wc -l)
++	test 5 = $(ls test-11-*.pack | wc -l)
+ '
+ 
+ test_expect_success 'verify resulting packs' '
