@@ -1,79 +1,79 @@
-From: Larry D'Anna <larry@elder-gods.org>
-Subject: Re: [PATCH v3 3/3] git-push: make git push --dry-run --porcelain
- exit with status 0 even if updates will be rejected
-Date: Mon, 8 Feb 2010 16:49:39 -0500
-Message-ID: <20100208214939.GA11355@cthulhu>
-References: <214a0317f2e4707a866b2f5d10509296bc1479c1.1265661033.git.larry@elder-gods.org>
- <032264a40d15cb9f4a86885947ffa23a603bfb0e.1265661033.git.larry@elder-gods.org>
- <7vpr4figv3.fsf@alter.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: A Visual Git Reference
+Date: Mon, 8 Feb 2010 16:57:12 -0500 (EST)
+Message-ID: <alpine.LNX.2.00.1002081513430.14365@iabervon.org>
+References: <ca433831002081134m698f531bwa22f0474db0cdcb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 08 22:49:48 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git list <git@vger.kernel.org>
+To: Mark Lodato <lodatom@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 08 22:57:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NebUI-0003CN-7j
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 22:49:46 +0100
+	id 1Nebba-0000ZZ-Kj
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 22:57:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751135Ab0BHVtl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2010 16:49:41 -0500
-Received: from cthulhu.elder-gods.org ([140.239.99.253]:58391 "EHLO
-	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750780Ab0BHVtk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2010 16:49:40 -0500
-Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
-	id B9AB982205A; Mon,  8 Feb 2010 16:49:39 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7vpr4figv3.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752267Ab0BHV5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2010 16:57:14 -0500
+Received: from iabervon.org ([66.92.72.58]:60153 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752124Ab0BHV5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2010 16:57:13 -0500
+Received: (qmail 6741 invoked by uid 1000); 8 Feb 2010 21:57:12 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 8 Feb 2010 21:57:12 -0000
+In-Reply-To: <ca433831002081134m698f531bwa22f0474db0cdcb@mail.gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139324>
 
-* Junio C Hamano (gitster@pobox.com) [100208 15:59]:
-> Larry D'Anna <larry@elder-gods.org> writes:
+On Mon, 8 Feb 2010, Mark Lodato wrote:
+
+> All,
 > 
-> > The script calling git push --dry-run --porcelain can see clearly from the
-> > output that the updates will be rejected.  However, it will probably need to
-> > distinguish this condition from the push failing for other reasons, such as the
-> > remote not being reachable.
+> I put together a "Visual Git Reference" containing visualizations of
+> the most common git commands, for people who prefer to see images over
+> text.  It is designed as a reference, not a tutorial, so readers need
+> to have some amount of experience before the page will become useful.
 > 
-> I am not sure about this reasoning.  If you are telling the script writers
-> to decide what happened by reading from the output, shouldn't the program
-> say "I fail because I cannot reach the other side" to its standard output
-> so that the script can read it as well?
+> URL: http://marklodato.github.com/visual-git-guide/
+> Git repo: http://github.com/marklodato/visual-git-guide/
+> 
+> If you have any feedback or suggestions, please let me know!
 
-Wouldn't that just complicate life for the script writer?  If you send such
-messages to the standard output, the script would have to include logic to
-distinguish error messages from the rest of the output.  If you send them to the
-standard error then the script knows exactly where to find them.
+The "3-way merge" node should graphically distinguish the base from the 
+two sides, rather than having all three just go in. The "3-way merge" 
+operation is tricky to understand visually without some sort of "split and 
+rejoin, with specific points" thing.
 
-> Having said that, I don't think it matters either way.  If a script wants
-> to know if push would fully succeed or not, it will run without
-> --porcelain (perhaps while discarding the standard error) and check the
-> status.  Even without this patch, if a script runs with --porcelain and
-> gets non-zero status, it can inspect the output and if it got rejection,
-> that is a sure sign that it at least reached the other end to get enough
-> information to decide that it will be rejected, no?
+Also, it would probably be worth showing the use of the index in the 
+process of a 3-way merge: all three versions go into the blue box, and a 
+combination (with conflict markers) goes into the pink box; the user 
+cleans up the pink box, and replaces the 3-part blue box content with the 
+cleaned-up single result content; then the commit gives the diagram you 
+have for "git merge other".
 
-Yes, it's a sure sign that it reached the other side, but how does the script
-know nothing else went wrong?  What if a malloc failed?  OK that's a bit far
-fetched, but it's really, really nice to be able to get an unambiguous status
-bit out of a command so you know if the requested operation succeeded or not.
-Without this patch, a script calling git push --porcelain --dry-run has no way
-of distinguishing these two situations
+I think you should introduce the detached HEAD situation early; right 
+after "git checkout HEAD~ files", it would be worth showing "git checkout 
+HEAD~". It's pretty common for people in the "technical user" part of the 
+kernel community to use git to browse history and test different commits, 
+and never do a commit at all. This is a pretty common mode across many 
+version control systems (e.g., "cvs checkout -D yesterday"), and nothing 
+unexpected happens if you don't try to commit while doing it. In fact, you 
+could show tracking down a bug introduced between maint and master by 
+checking out c10b9 and then da985.
 
-1) "git push" would try to push a ref that would get rejected, but everything
-else is fine.
+Then, later, you can bring up the fact that you can actually do commits in 
+that situation, and show how that works. That part is the part that's 
+novel and could potentially lead to people doing work and having it become 
+unreachable. Also, after commiting with a detached HEAD, the normal next 
+step is to create a new branch ("git checkout -b new-topic").
 
-2) "git push" would try to push a ref that would get rejected, and also some
-unknown type of error occurred that this script has no idea how to handle.
-
-        --larry
-            
+	-Daniel
+*This .sig left intentionally blank*
