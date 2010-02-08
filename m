@@ -1,98 +1,80 @@
-From: =?UTF-8?B?Sm/Do28gQ2FybG9zIE1lbmRlcyBMdcOtcw==?= 
-	<jonny@jonny.eng.br>
-Subject: Re: Unix root dir as a work tree
-Date: Mon, 08 Feb 2010 10:17:11 -0200
-Message-ID: <4B7000C7.30507@jonny.eng.br>
-References: <4B6F6971.6000106@jonny.eng.br> <fcaeb9bf1002071803o343bed87u2e1df2ef77db607f@mail.gmail.com>
+From: =?ISO-8859-1?Q?Gustav_H=E5llberg?= <gustav@gmail.com>
+Subject: [stgit] Documentation build error in proposed branch
+Date: Mon, 8 Feb 2010 14:00:03 +0100
+Message-ID: <a1e915351002080500u74e4878fy500713ddb25aa750@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 08 13:17:22 2010
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 08 14:00:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NeSYM-0002B9-5k
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 13:17:22 +0100
+	id 1NeTDq-0003Qx-0J
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 14:00:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751405Ab0BHMRQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Feb 2010 07:17:16 -0500
-Received: from roma.coe.ufrj.br ([146.164.53.65]:59683 "EHLO coe.ufrj.br"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750854Ab0BHMRP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2010 07:17:15 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coe.ufrj.br (Postfix) with ESMTP id 6E3531FA034;
-	Mon,  8 Feb 2010 10:17:14 -0200 (BRST)
-X-Virus-Scanned: amavisd-new at coe.ufrj.br
-Received: from coe.ufrj.br ([146.164.53.65])
-	by localhost (roma.coe.ufrj.br [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cXTmZ3NWLM-4; Mon,  8 Feb 2010 10:17:11 -0200 (BRST)
-Received: from home.jonny.eng.br (unknown [187.14.9.79])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coe.ufrj.br (Postfix) with ESMTPSA id CE5A41FA029;
-	Mon,  8 Feb 2010 10:17:11 -0200 (BRST)
-User-Agent: Thunderbird 2.0.0.22 (X11/20090625)
-In-Reply-To: <fcaeb9bf1002071803o343bed87u2e1df2ef77db607f@mail.gmail.com>
+	id S1751555Ab0BHNAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2010 08:00:06 -0500
+Received: from mail-bw0-f223.google.com ([209.85.218.223]:33698 "EHLO
+	mail-bw0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751473Ab0BHNAF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2010 08:00:05 -0500
+Received: by bwz23 with SMTP id 23so1064390bwz.1
+        for <git@vger.kernel.org>; Mon, 08 Feb 2010 05:00:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Uq0BwZwXdUARR1/3H1tX0dAi7okixynABAu3eLMKkD4=;
+        b=ZmdlxEVg0jU8jQ0DRatkvIcoP+YIYKMkz0zH+DakB6gzFFIdziVsxaYNMULBTUpU9N
+         EBUiBLdEGT37o9PLY1K5FOh2dcb6edSlUYaUPHSVLQ6XhZt4peqAAC8MWF8/en3a3jFL
+         D/+zAwPAdNkfB3GHU+2qBcLZ7VtCxjC7Dxlpw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=hums74a66rvDDbpfO1vbeGopRbhEeRYVw4RFF472lXpLjTsVSw0YcAZfECY0GsbV9u
+         66iuHQ1IxNCOhWBr0db0E5f1iOf/IDwSOaLK6gY/aGIUfL1hdajj8kNomnpfLlXYGSXv
+         UtT+jlEfmReOA1yzOilM16rZR0q/TIu/uKFHg=
+Received: by 10.204.128.82 with SMTP id j18mr1265141bks.133.1265634003772; 
+	Mon, 08 Feb 2010 05:00:03 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139288>
 
+As of recently, I cannot compile documentation in
+git://repo.or.cz/stgit.git proposed:
 
+lux:~/devel/stgit$ git ls-files -o | xargs rm
+lux:~/devel/stgit$ git rev-parse HEAD
+c7506039d0299c093140857b7a617ec6bcdbfc13
+lux:~/devel/stgit$ make all doc
+   :
+cd Documentation && make all
+make[1]: Entering directory `/home/gustav/devel/stgit/Documentation'
+rm -f doc.dep+ doc.dep
+perl ./build-docdep.perl >doc.dep+
+mv doc.dep+ doc.dep
+make[1]: Leaving directory `/home/gustav/devel/stgit/Documentation'
+make[1]: Entering directory `/home/gustav/devel/stgit/Documentation'
+../stg-build --cmd-list > command-list.txt
+Traceback (most recent call last):
+  File "../stg-build", line 41, in <module>
+    main()
+  File "../stg-build", line 31, in main
+    commands.get_commands(allow_cached = False), sys.stdout)
+  File "/home/gustav/devel/stgit/stgit/commands/__init__.py", line 89,
+in asciidoc_command_list
+    for kind, cmds in _command_list(commands):
+  File "/home/gustav/devel/stgit/stgit/commands/__init__.py", line 72,
+in _command_list
+    yield kind, sorted(kinds[kind].iteritems())
+KeyError: 'Alias commands'
+make[1]: *** [command-list.txt] Error 1
+make[1]: Leaving directory `/home/gustav/devel/stgit/Documentation'
+make: *** [doc] Error 2
 
-Nguyen Thai Ngoc Duy wrote:
-> 2010/2/8 Jo=C3=A3o Carlos Mendes Lu=C3=ADs <jonny@jonny.eng.br>:
->  =20
->> Hi,
->>
->>   Sorry if this is a FAQ, but I could not find any reference.
->>
->>   I have been using CVS as a version control system for unix configu=
-ration
->> files for a long time.  I know it has some limitations, and I know g=
-it also
->> has its.  But I expect to work around all of them using etckeeper.
->>
->>   The problem is that etckeeper was created with /etc only in mind, =
-and I
->> want to keep track of important files everywhere, not only below /et=
-c (think
->> /opt, /usr/local).  The obvious solution appear to create the reposi=
-tory at
->> the system root, and not at /etc, but it did not work.  I think, bec=
-ause of
->> a bug.
->>
->>  Now, I have a patch that appears to work, but since I am a beginner=
- to git,
->> I don't know if this is the best way to implement it, if it has any =
-side
->> effects, or even if it works for other operating systems (probably t=
-hey
->> don't even have the bug).  Would any git wizard care to look at it, =
-check if
->> it is ok, and maybe commit in HEAD or give me any advice against my =
-patch?
->>    =20
->
-> How did you set GIT_DIR and GIT_WORK_TREE? What command failed?
->  =20
-Did not set any env special variable.  I expect git to find those=20
-automatically.
-
-Any command which needs a work tree fails.  git-add, git-status, etc.
-
-It thinks that its root is "/.git", instead of "/".  Easy to repeat.
-
-cd /
-git init
-git add etc/motd        # this works
-cd etc
-git add resolv.conf    # this does not work without my patch
+- Gustav
