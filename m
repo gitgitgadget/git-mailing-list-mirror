@@ -1,88 +1,285 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Unix root dir as a work tree
-Date: Mon, 8 Feb 2010 09:18:25 +0700
-Message-ID: <fcaeb9bf1002071818j29fe919bve0ef2d1c4cac8a79@mail.gmail.com>
-References: <4B6F6971.6000106@jonny.eng.br>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git 1.7.0.rc2
+Date: Sun, 07 Feb 2010 18:18:39 -0800
+Message-ID: <7vljf4wjuo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Jo=C3=A3o_Carlos_Mendes_Lu=C3=ADs?= <jonny@jonny.eng.br>
-X-From: git-owner@vger.kernel.org Mon Feb 08 03:19:10 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 08 03:19:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NeJDR-0004VM-Aw
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 03:19:09 +0100
+	id 1NeJDS-0004VM-JF
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 03:19:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755807Ab0BHCSq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Feb 2010 21:18:46 -0500
-Received: from mail-px0-f189.google.com ([209.85.216.189]:58507 "EHLO
-	mail-px0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755613Ab0BHCSp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Feb 2010 21:18:45 -0500
-Received: by pxi27 with SMTP id 27so3308781pxi.4
-        for <git@vger.kernel.org>; Sun, 07 Feb 2010 18:18:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Xz+vVwyueGobqfE+MNQsERfACdSrZUtdTGTyVcH8y9o=;
-        b=ws4azfNdqNnddrva8B7SP/QBh5B8KAC0rES1zWpO07BycdwTzjGihGt7lnUJ1Dmal+
-         Nos8utl1RCElVhbyU4J8tFsMBoaS+6syka/MbaQmgaZr/3m6oEvznGgi1OcA0foCzFM+
-         144ZB7gLu2iLhpm4Plnobw4WRaiEvNJmdlK1o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=O9eNpihkNOMnPUCdBhpnu81O6hJ8+T1XnvvOM725KIqE7kGkGi/FjeBA8NQaXUPhzD
-         OsGuadiG+xQhCo/sm40QHSSHa0WrxaupJDLSweA2dvWkhcvyhswkF7vJKuzQJuHAD5rR
-         MiIifswuqAYHsiAdU8tyZM6hNpVsYnK24nQBI=
-Received: by 10.114.215.17 with SMTP id n17mr3932677wag.197.1265595525121; 
-	Sun, 07 Feb 2010 18:18:45 -0800 (PST)
-In-Reply-To: <4B6F6971.6000106@jonny.eng.br>
+	id S1756246Ab0BHCSz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Feb 2010 21:18:55 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40612 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756026Ab0BHCSy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Feb 2010 21:18:54 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C37097EE4;
+	Sun,  7 Feb 2010 21:18:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=UEvd
+	7uDFOYDFu6F8eUE/ABc6NIE=; b=hKiVXTCeRJ7yyjBtGhsK/iI0gjEk2umwXt0N
+	SS9BMmnn9ijrbHaMpRvhv0hwls9jXS2m/6ovQFbYq3NaCvFpgm0Zr3t4bNbazQpO
+	D1pcfUoCE/NyCTy7sg31HuevpYPVth7pq9IeLbXXRdAcrWMwCfHavOUIe92drWK9
+	A2f6YKk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=biU
+	iVqDwbcOEY52DlVqWmkVP8WX4yOHFNTTnfHmUVbNp2HF5q6yjioU4Kf9VhRMI52N
+	/QDxhtf/7oJxUiCO9rY6Kcr4Y+m9h9TWqH+LOKCbumN97F+nHNbBo6nTWEH99FT9
+	IKyOdoQL/MQMeEbk9B1muSE48MeUud3bzOtuO7Vk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B77B97EE3;
+	Sun,  7 Feb 2010 21:18:46 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EE96497EE0; Sun,  7 Feb
+ 2010 21:18:40 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4946E556-1458-11DF-BE33-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139274>
 
-2010/2/8 Jo=C3=A3o Carlos Mendes Lu=C3=ADs <jonny@jonny.eng.br>:
-> =C2=A0Now, I have a patch that appears to work, but since I am a begi=
-nner to git,
-> I don't know if this is the best way to implement it, if it has any s=
-ide
-> effects, or even if it works for other operating systems (probably th=
-ey
-> don't even have the bug). =C2=A0Would any git wizard care to look at =
-it, check if
-> it is ok, and maybe commit in HEAD or give me any advice against my p=
-atch?
+A release candidate Git 1.7.0.rc2 is available at the usual places
+for testing:
 
-Hmm.. I guess you put .git at root directory so you needed your patch.
-I haven't tried it yet because I don't have root access here.
+  http://www.kernel.org/pub/software/scm/git/
 
-Anyway you may also need the below patch. Please report back if any
-Git operation that does not work under your setup.
+  git-1.7.0.rc2.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.7.0.rc2.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.7.0.rc2.tar.{gz,bz2}		(preformatted docs)
 
-diff --git a/setup.c b/setup.c
-index 710e2f3..d31dcb8 100644
---- a/setup.c
-+++ b/setup.c
-@@ -25,7 +25,7 @@ const char *prefix_path(const char *prefix, int len,
-const char *path)
- 		len =3D strlen(work_tree);
- 		total =3D strlen(sanitized) + 1;
- 		if (strncmp(sanitized, work_tree, len) ||
--		    (sanitized[len] !=3D '\0' && sanitized[len] !=3D '/')) {
-+		    (len > 1 && sanitized[len] !=3D '\0' && sanitized[len] !=3D '/')=
-) {
- 		error_out:
- 			die("'%s' is outside repository", orig);
- 		}
+The RPM binary packages for a few architectures are found in:
 
---=20
-Duy
+  testing/git-*-1.7.0.rc2-1.fc11.$arch.rpm	(RPM)
+
+Hopefully this is the final -rc before the real thing in a few days.
+
+----------------------------------------------------------------
+
+Git v1.7.0 Release Notes (draft)
+========================
+
+Notes on behaviour change
+-------------------------
+
+ * "git push" into a branch that is currently checked out (i.e. pointed by
+   HEAD in a repository that is not bare) is refused by default.
+
+   Similarly, "git push $there :$killed" to delete the branch $killed
+   in a remote repository $there, when $killed branch is the current
+   branch pointed at by its HEAD, will be refused by default.
+
+   Setting the configuration variables receive.denyCurrentBranch and
+   receive.denyDeleteCurrent to 'ignore' in the receiving repository
+   can be used to override these safety features.
+
+ * "git send-email" does not make deep threads by default when sending a
+   patch series with more than two messages.  All messages will be sent
+   as a reply to the first message, i.e. cover letter.
+
+   It has been possible to configure send-email to send "shallow thread"
+   by setting sendemail.chainreplyto configuration variable to false.  The
+   only thing this release does is to change the default when you haven't
+   configured that variable.
+
+ * "git status" is not "git commit --dry-run" anymore.  This change does
+   not affect you if you run the command without argument.
+
+ * "git diff" traditionally treated various "ignore whitespace" options
+   only as a way to filter the patch output.  "git diff --exit-code -b"
+   exited with non-zero status even if all changes were about changing the
+   ammount of whitespace and nothing else.  and "git diff -b" showed the
+   "diff --git" header line for such a change without patch text.
+
+   In this release, the "ignore whitespaces" options affect the semantics
+   of the diff operation.  A change that does not affect anything but
+   whitespaces is reported with zero exit status when run with
+   --exit-code, and there is no "diff --git" header for such a change.
+
+ * External diff and textconv helpers are now executed using the shell.
+   This makes them consistent with other programs executed by git, and
+   allows you to pass command-line parameters to the helpers. Any helper
+   paths containing spaces or other metacharacters now need to be
+   shell-quoted.  The affected helpers are GIT_EXTERNAL_DIFF in the
+   environment, and diff.*.command and diff.*.textconv in the config
+   file.
+
+ * The --max-pack-size argument to 'git repack', 'git pack-objects', and
+   'git fast-import' was assuming the provided size to be expressed in MiB,
+   unlike the corresponding config variable and other similar options accepting
+   a size value.  It is now expecting a size expressed in bytes, with a possible
+   unit suffix of 'k', 'm', or 'g'.
+
+Updates since v1.6.6
+--------------------
+
+(subsystems)
+
+ * "git fast-import" updates; adds "option" and "feature" to detect the
+   mismatch between fast-import and the frontends that produce the input
+   stream.
+
+ * "git svn" support of subversion "merge tickets" and miscellaneous fixes.
+
+ * "gitk" updates.
+
+ * "gitweb" updates (code clean-up, load checking etc.)
+
+(portability)
+
+ * Some more MSVC portability patches for msysgit port.
+
+ * Minimum Pthreads emulation for msysgit port.
+
+(performance)
+
+ * More performance improvement patches for msysgit port.
+
+(usability, bells and whistles)
+
+ * More commands learned "--quiet" and "--[no-]progress" options.
+
+ * Various commands given by the end user (e.g. diff.type.textconv,
+   and GIT_EDITOR) can be specified with command line arguments.  E.g. it
+   is now possible to say "[diff "utf8doc"] textconv = nkf -w".
+
+ * "sparse checkout" feature allows only part of the work tree to be
+   checked out.
+
+ * HTTP transfer can use authentication scheme other than basic
+   (i.e./e.g. digest).
+
+ * Switching from a version of superproject that used to have a submodule
+   to another version of superproject that no longer has it did not remove
+   the submodule directory when it should (namely, when you are not
+   interested in the submodule at all and didn't clone/checkout).
+
+ * A new attribute conflict-marker-size can be used to change the size of
+   the conflict markers from the default 7; this is useful when tracked
+   contents (e.g. git-merge documentation) have strings that resemble the
+   conflict markers.
+
+ * A new syntax "<branch>@{upstream}" can be used on the command line to
+   substitute the name of the "upstream" of the branch.  Missing branch
+   defaults to the current branch, so "git fetch && git merge @{upstream}"
+   will be equivalent to "git pull".
+
+ * "git branch --set-upstream" can be used to update the (surprise!) upstream
+   i.e. where the branch is supposed to pull and merge from (or rebase onto).
+
+ * "git checkout A...B" is a way to detach HEAD at the merge base between
+   A and B.
+
+ * "git checkout -m path" to reset the work tree file back into the
+   conflicted state works even when you already ran "git add path" and
+   resolved the conflicts.
+
+ * "git commit --date='<date>'" can be used to override the author date
+   just like "git commit --author='<name> <email>'" can be used to
+   override the author identity.
+
+ * "git commit --no-status" can be used to omit the listing of the index
+   and the work tree status in the editor used to prepare the log message.
+
+ * "git commit" warns a bit more aggressively until you configure user.email,
+   whose default value almost always is not (and fundamentally cannot be)
+   what you want.
+
+ * "git difftool" has been extended to make it easier to integrate it
+   with gitk.
+
+ * "git fetch --all" can now be used in place of "git remote update".
+
+ * "git grep" does not rely on external grep anymore.  It can use more than
+   one threads to accelerate the operation.
+
+ * "git grep" learned "--quiet" option.
+
+ * "git log" and friends learned "--glob=heads/*" syntax that is a more
+   flexible way to complement "--branches/--tags/--remotes".
+
+ * "git merge" learned to pass options specific to strategy-backends.  E.g.
+
+    - "git merge -Xsubtree=path/to/directory" can be used to tell the subtree
+      strategy how much to shift the trees explicitly.
+
+    - "git merge -Xtheirs" can be used to auto-merge as much as possible,
+      while discarding your own changes and taking merged version in
+      conflicted regions.
+
+ * "git push" learned "git push origin --delete branch", a syntactic sugar
+   for "git push origin :branch".
+
+ * "git push" learned "git push --set-upstream origin forker:forkee" that
+   lets you configure your "forker" branch to later pull from "forkee"
+   branch at "origin".
+
+ * "git rebase --onto A...B" means the history is replayed on top of the
+   merge base between A and B.
+
+ * "git rebase -i" learned new action "fixup", that squashes the change
+   but does not affect existing log message.
+
+ * "git rebase -i" also learned --autosquash option, that is useful
+   together with the new "fixup" action.
+
+ * "git remote" learned set-url subcommand, to update (surprise!) url
+   for an existing remote nickname.
+
+ * "git rerere" learned "forget path" subcommand.  Together with "git
+   checkout -m path" it will be useful when you recorded a wrong
+   resolution.
+
+ * Use of "git reset --merge" has become easier when resetting away a
+   conflicted mess left in the work tree.
+
+ * "git rerere" had rerere.autoupdate configuration but there was no way
+   to countermand it from the command line; --no-rerere-autoupdate option
+   given to "merge", "revert", etc. fixes this.
+
+ * "git status" learned "-s(hort)" output format.
+
+(developers)
+
+ * The infrastructure to build foreign SCM interface has been updated.
+
+ * Many more commands are now built-in.
+
+ * THREADED_DELTA_SEARCH is no more.  If you build with threads, delta
+   compression will always take advantage of it.
+
+Fixes since v1.6.6
+------------------
+
+All of the fixes in v1.6.6.X maintenance series are included in this
+release, unless otherwise noted.
+
+ * "git branch -d branch" used to refuse deleting the branch even when
+   the branch is fully merged to its upstream branch if it is not merged
+   to the current branch.  It now deletes it in such a case.
+
+ * "git config -f <relative path>" run from a subdirectory misbehaved.
+   65807ee (builtin-config: Fix crash when using "-f <relative path>"
+   from non-root dir, 2010-01-26) may be merged to older maintenance
+   branches.
+
+ * "git fast-import" did not correctly handle large blobs that may
+   bust the pack size limit.
+
+ * When using "git status" or asking "git diff" to compare the work tree
+   with something, they used to consider that a checked-out submodule with
+   uncommitted changes is not modified; this could cause people to forget
+   committing these changes in the submodule before committing in the
+   superproject. They now consider such a change as a modification and
+   "git diff" will append a "-dirty" to the work tree side when generating
+   patch output or when used with the --submodule option.
