@@ -1,80 +1,79 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: error: packfile size changed
-Date: Mon, 8 Feb 2010 18:17:17 +0100
-Message-ID: <40aa078e1002080917s1c23580bo815de0c1afa4922@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/SubmittingPatches: fix Gmail workaround
+ advice
+Date: Mon, 08 Feb 2010 09:42:55 -0800
+Message-ID: <7veikvpqsg.fsf@alter.siamese.dyndns.org>
+References: <1265555642-40204-1-git-send-email-git@aaroncrane.co.uk>
+ <7v8wb4gaef.fsf@alter.siamese.dyndns.org>
+ <bc341e101002071203x52bceaach8d42c6188630f1d1@mail.gmail.com>
+ <20100207215311.GA2177@progeny.tock> <20100207221645.GA2862@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
-X-From: git-owner@vger.kernel.org Mon Feb 08 18:17:25 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Aaron Crane <git@aaroncrane.co.uk>,
+	Tom Preston-Werner <tom@github.com>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>,
+	David Aguilar <davvid@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	John Tapsell <johnflux@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 08 18:43:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NeXEi-0004Dr-Jj
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 18:17:24 +0100
+	id 1NeXdu-0006Va-ED
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 18:43:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754086Ab0BHRRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2010 12:17:19 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:39244 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753791Ab0BHRRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2010 12:17:18 -0500
-Received: by ewy28 with SMTP id 28so2756006ewy.28
-        for <git@vger.kernel.org>; Mon, 08 Feb 2010 09:17:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:date:message-id
-         :subject:from:to:content-type;
-        bh=yxurw+9k+L4fGpk4pVFSQCSAywUOmW4feVehk78exOI=;
-        b=gIdsOwTxK0kAza+TWAHnIzZVf3fJnLQu1Bt5/NFMxJZf/Km3xLLu/Fc8WFPbPBGM0c
-         SwCleXz9BfP6wmqTDDawMc+5/lHeaDnuLrEqbNVQIpllHHngrk1uxK0N8/BCTs0Z09nX
-         +uqlxVwdHhca5QGPK6WYHcmo3RJT3agHqryoQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:date:message-id:subject:from:to:content-type;
-        b=GJhv5SPdF7Q8CyT8YclvmLCkp+qcxU9EFDxMdsL7Ra2qbPKiGODGDBIMg413695Jkp
-         QYkRC6Oq8mlOdApC804SXvdi58JbVtjGnuRPSs0ZIrKXvk1/ld0asQWZM2DNejVNtGpJ
-         mJboevuwkx5pYHXracmJiPBWLFNbCsjPNI0ow=
-Received: by 10.216.88.208 with SMTP id a58mr1485890wef.35.1265649437175; Mon, 
-	08 Feb 2010 09:17:17 -0800 (PST)
+	id S1752981Ab0BHRnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2010 12:43:20 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36604 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751131Ab0BHRnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2010 12:43:19 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 67CEF9895A;
+	Mon,  8 Feb 2010 12:43:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=CVNuBw0GNapE/t3YaQOm5NxrPfs=; b=IuEObELE5sfFImuQA8BJx54
+	Kk2tMTDfXBQ8Gagovez3wOatNOmM6D9C8oNFcpdb679f9gGoQ/YgUhFOiCZ/fx+d
+	SdiMG1nVfjs9RXEalFE1a7RqxsE/GO7yYKYX94VXtNycts7zUeisVfRTTwBmgEnK
+	ReiuPg1qUlNIVhlTgVn4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=W/ofJt1/qFfwd5qi+0+NyJaAcISXvmyofNK6+sNzO0vuQJOU1
+	oVJKFuIGcKjxSRlXgVRQotASIDwQ3sde8JWDkN1BjtuRHmY35OdAVa36udCm8PZV
+	69G3bB3uyW2/EuKvdVxoI1IJOGKLA1eqdmgPCDFlPx8nWknpPVVYNNamq4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C078898956;
+	Mon,  8 Feb 2010 12:43:07 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 508F69894C; Mon,  8 Feb
+ 2010 12:42:57 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 6ADAE5A6-14D9-11DF-9753-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139299>
 
-I was just about to push out a branch to a remote repo, and got a
-quite worrying error message:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-$ git push kusma work/git-svn-autocrlf
-Counting objects: 3475, done.
-Delta compression using up to 8 threads.
-Compressing objects: 100% (1132/1132), done.
-Writing objects: 100% (2503/2503), 933.82 KiB, done.
-Total 2503 (delta 1909), reused 1927 (delta 1362)
-error: packfile
-./objects/pack/pack-165dacbd05ac0aa1634eb220f2b6d3be05b2bd3c.pack size
-changed
-error: packfile
-./objects/pack/pack-165dacbd05ac0aa1634eb220f2b6d3be05b2bd3c.pack
-cannot be accessed
-error: unpack should have generated
-83d114b6781e06b422a2062854dd3dede3795079, but I can't find it!
-To ssh://kusma@repo.or.cz/srv/git/git/kusma.git
- ! [remote rejected] work/git-svn-autocrlf -> work/git-svn-autocrlf (bad pack)
-error: failed to push some refs to
-'ssh://kusma@repo.or.cz/srv/git/git/kusma.git'
+> Scratch that: it looks like it once did.
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/99721/focus=99775
+>
+> Tom, any clues?  Are you still able to avoid spurious line wrapping in
+> gmail?
 
-The push was attempted with git v1.7.0.rc2. It fails with v1.6.6.1
-(and msysgit's devel-branch, 1.6.5.1.1375.gc836) as well.
+The example Tom cites $gmane/99759 does not have long enough lines to be
+linewrapped, so perhaps the problem was there from day one but was not
+noticed.
 
-I tried running "git fsck --full", but it didn't report anything apart
-from dangling objects.
-
-Any ideas, anyone?
-
--- 
-Erik "kusma" Faye-Lund
+I just tried it myself (I don't even regularly use Gmail), following the
+procedure outlined in SubmittingPatches.  It does look like Gmail web
+interface mangles longer lines in the message.
