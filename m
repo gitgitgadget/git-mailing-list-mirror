@@ -1,120 +1,98 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [msysGit] upload-pack timing issue on windows?
-Date: Mon, 8 Feb 2010 12:18:06 +0100
-Message-ID: <40aa078e1002080318n16918f91r5a5f4cd9b76a8436@mail.gmail.com>
-References: <40aa078e1002051551o6d116a50uee3f6a32b16adb46@mail.gmail.com>
-	 <201002061106.04305.j6t@kdbg.org>
-	 <40aa078e1002060401r1dec3c2ate3ddd4f5f5db1e0c@mail.gmail.com>
-	 <201002062318.59180.j6t@kdbg.org>
-Reply-To: kusmabite@gmail.com
+From: =?UTF-8?B?Sm/Do28gQ2FybG9zIE1lbmRlcyBMdcOtcw==?= 
+	<jonny@jonny.eng.br>
+Subject: Re: Unix root dir as a work tree
+Date: Mon, 08 Feb 2010 10:17:11 -0200
+Message-ID: <4B7000C7.30507@jonny.eng.br>
+References: <4B6F6971.6000106@jonny.eng.br> <fcaeb9bf1002071803o343bed87u2e1df2ef77db607f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: msysgit@googlegroups.com, Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Feb 08 12:18:15 2010
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 08 13:17:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NeRd9-0000P9-3a
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 12:18:15 +0100
+	id 1NeSYM-0002B9-5k
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 13:17:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750779Ab0BHLSJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Feb 2010 06:18:09 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:51483 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750722Ab0BHLSH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Feb 2010 06:18:07 -0500
-Received: by ewy28 with SMTP id 28so2327513ewy.28
-        for <git@vger.kernel.org>; Mon, 08 Feb 2010 03:18:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=UDro1GhLO3oAbkP5B2JiMkVZlCbRD++dQG6etgT96mU=;
-        b=I+8/3bELvG2gGzJy2ZYhW0oWj7H4wmxXFJfqPfcfMjWqGudh6fk0BszRcYdNHZ7qhx
-         cVSQ5QVgck/kOmKQKHUheIU546ESMoOaFmqnkj+v7Z6p5Tl7UUsKfSwTdIQtw/ErvVQw
-         gH80CIgwjHjXUd51mwQ45/y1BL0k/LtqCWM78=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=A67/PhvN6iqW0JN7w6/0HsvwNVTN6gRb4xUs6PsR40f2FKznuyqoyLydX11HH6CVqh
-         YD7Dz4v+JZr3OXPyetT3NzT9fE4kxgs1wDFXN0yWWkA/pWqopoV40uXOezorrRnvT9s6
-         JPmwaJ+4+cSUke682vPysyqpMdAD3POhwKmDk=
-Received: by 10.216.90.1 with SMTP id d1mr927845wef.136.1265627886235; Mon, 08 
-	Feb 2010 03:18:06 -0800 (PST)
-In-Reply-To: <201002062318.59180.j6t@kdbg.org>
+	id S1751405Ab0BHMRQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Feb 2010 07:17:16 -0500
+Received: from roma.coe.ufrj.br ([146.164.53.65]:59683 "EHLO coe.ufrj.br"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750854Ab0BHMRP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2010 07:17:15 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coe.ufrj.br (Postfix) with ESMTP id 6E3531FA034;
+	Mon,  8 Feb 2010 10:17:14 -0200 (BRST)
+X-Virus-Scanned: amavisd-new at coe.ufrj.br
+Received: from coe.ufrj.br ([146.164.53.65])
+	by localhost (roma.coe.ufrj.br [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cXTmZ3NWLM-4; Mon,  8 Feb 2010 10:17:11 -0200 (BRST)
+Received: from home.jonny.eng.br (unknown [187.14.9.79])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coe.ufrj.br (Postfix) with ESMTPSA id CE5A41FA029;
+	Mon,  8 Feb 2010 10:17:11 -0200 (BRST)
+User-Agent: Thunderbird 2.0.0.22 (X11/20090625)
+In-Reply-To: <fcaeb9bf1002071803o343bed87u2e1df2ef77db607f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139287>
 
-On Sat, Feb 6, 2010 at 11:18 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> On Samstag, 6. Februar 2010, Erik Faye-Lund wrote:
->> However, I have tracked down a bit of what goes on in the client.
->> There's a call to read_in_full, called from pack-write.c, line 246
->> that fails in the failure-case, but not in the success-case. This is
->> where the client expects "pack\tSHA-1" or "keep\tSHA-1". There "fata=
-l:
->> early EOF"-messages seems to originate from index-pack.c, line 197.
->> This is the first line of code in parse_pack_header(), it's also
->> AFAICT the first call-site for any read(0, <...>) (though fill()).
->
-> This looks like upload-pack died without sending enough to fill a pac=
-k header.
->
-> Try merging this branch:
->
-> =A0git://repo.or.cz/git/mingw/j6t.git async-in-thread
->
-> It contains your changes to start_async plus a refinement of die() wh=
-en it is
-> called from the async procedure (it passes t5530, for example). It is=
- also
-> converted to pthreads, and therefore also works on Unix. The new
-> implementation of start_async is more careful about the file handles,=
- though
-> not so much on Windows.
->
-> If there's no change for you, then you could look into implementing
-> fcntl(F_GETFD/SETFD, FD_CLOEXEC), which are currently ignored, on top=
- of this
-> branch, using Get/SetHandleInformation().
->
 
-Thanks a lot. I tried merging it, but the issue still pops up. I also
-tried to implement fcntl(F_GETFD/SETFD, FD_CLOEXEC), still no dice.
-I'm not entirely sure if I did it correctly, though.
 
-> Background: On Unix, we need FD_CLOEXEC so that the fds that are mean=
-t for the
-> async thread do not remain open in an unrelated child process; on Win=
-dows, we
-> are just lucky and can get away without FD_CLOEXEC because our pipe()=
-s are
-> non-inheritable and async only work with pipes. But once we pass othe=
-r fds to
-> the async procedure, we need a working FD_CLOEXEC. Perhaps something =
-in this
-> direction is related to your problem.
+Nguyen Thai Ngoc Duy wrote:
+> 2010/2/8 Jo=C3=A3o Carlos Mendes Lu=C3=ADs <jonny@jonny.eng.br>:
+>  =20
+>> Hi,
+>>
+>>   Sorry if this is a FAQ, but I could not find any reference.
+>>
+>>   I have been using CVS as a version control system for unix configu=
+ration
+>> files for a long time.  I know it has some limitations, and I know g=
+it also
+>> has its.  But I expect to work around all of them using etckeeper.
+>>
+>>   The problem is that etckeeper was created with /etc only in mind, =
+and I
+>> want to keep track of important files everywhere, not only below /et=
+c (think
+>> /opt, /usr/local).  The obvious solution appear to create the reposi=
+tory at
+>> the system root, and not at /etc, but it did not work.  I think, bec=
+ause of
+>> a bug.
+>>
+>>  Now, I have a patch that appears to work, but since I am a beginner=
+ to git,
+>> I don't know if this is the best way to implement it, if it has any =
+side
+>> effects, or even if it works for other operating systems (probably t=
+hey
+>> don't even have the bug).  Would any git wizard care to look at it, =
+check if
+>> it is ok, and maybe commit in HEAD or give me any advice against my =
+patch?
+>>    =20
 >
-> You could push out your current state of the git-daemon and a recipe =
-to
-> reproduce the problem. Perhaps I find some time to look into it.
->
+> How did you set GIT_DIR and GIT_WORK_TREE? What command failed?
+>  =20
+Did not set any env special variable.  I expect git to find those=20
+automatically.
 
-Sure. You can find my current version at
-git://repo.or.cz/git/kusma.git work/daemon-fcntl
+Any command which needs a work tree fails.  git-add, git-status, etc.
 
-This branch includes your branch and my fcntl-attempt, as well as an
-almost-fixed-up version of the last daemon-win32 series I sent out
-(still lacking critical sections when saving process ids, as you
-suggested).
+It thinks that its root is "/.git", instead of "/".  Easy to repeat.
 
---=20
-Erik "kusma" Faye-Lund
+cd /
+git init
+git add etc/motd        # this works
+cd etc
+git add resolv.conf    # this does not work without my patch
