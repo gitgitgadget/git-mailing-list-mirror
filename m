@@ -1,77 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/3] git-push: clean up some of the output from git
- push --porcelain
-Date: Mon, 08 Feb 2010 12:51:52 -0800
-Message-ID: <7vtytrih7b.fsf@alter.siamese.dyndns.org>
-References: <214a0317f2e4707a866b2f5d10509296bc1479c1.1265661033.git.larry@elder-gods.org> <a1b71c9f6566549e6117f5c98c2f1e60754a7334.1265661033.git.larry@elder-gods.org>
+From: Mark Lodato <lodatom@gmail.com>
+Subject: Re: A Visual Git Reference
+Date: Mon, 8 Feb 2010 15:57:25 -0500
+Message-ID: <ca433831002081257u4fec4010sa382f1e1bfeb4c0b@mail.gmail.com>
+References: <ca433831002081134m698f531bwa22f0474db0cdcb@mail.gmail.com> 
+	<20100208195141.GF30877@m62s10.vlinux.de> <ca433831002081221o660ff882o703381c5f066512e@mail.gmail.com> 
+	<2cfc40321002081234t2e8585bxfbcae41b18804e70@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Larry D'Anna <larry@elder-gods.org>
-X-From: git-owner@vger.kernel.org Mon Feb 08 21:52:08 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git list <git@vger.kernel.org>
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 08 21:57:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NeaaV-0007cC-Qt
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 21:52:08 +0100
+	id 1Neag6-0003Xy-Qr
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Feb 2010 21:57:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752331Ab0BHUv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2010 15:51:59 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54222 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751899Ab0BHUv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2010 15:51:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 508E898A1B;
-	Mon,  8 Feb 2010 15:51:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Nf54DI0XcL7XTd1lJjKp2GQazd4=; b=Y+mBG6
-	ybdwwfqFzQxXNxfi0TG8XuJzmZEE00wp33fAK0YMpfNssnUPop+PkuqloWTrZgqh
-	sUFpD6XJVCE8uYuahJJ81bTp/4DV902yTtCOodjvruRZ1Ry5zuVsw7cF8Ea4zTI8
-	/wJbhqMtmi4gopNkOfg0znKiLUyVqhYwrSWCg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H7fESJUqYuDj5vfFU3V2Nrc8jvTm/iLi
-	k7ZC4JIVLxmH2NlXfsD1//22n4UMb6i+1aupPgdsmK82E2Hl9uKR/oWmGXan79Sw
-	72dtkKYQySzM4PQnaeJZXmErxlylJLOulOLIufQbYlpQSXjvwhGeUhnQtCtSN1oI
-	PKlpgI+Tx8A=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F6B298A1A;
-	Mon,  8 Feb 2010 15:51:56 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A35098A19; Mon,  8 Feb
- 2010 15:51:53 -0500 (EST)
-In-Reply-To: <a1b71c9f6566549e6117f5c98c2f1e60754a7334.1265661033.git.larry@elder-gods.org> (Larry D'Anna's message of "Mon\,  8 Feb 2010 15\:31\:23 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CB1C7334-14F3-11DF-BB51-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752622Ab0BHU5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2010 15:57:46 -0500
+Received: from mail-px0-f202.google.com ([209.85.216.202]:39253 "EHLO
+	mail-px0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751543Ab0BHU5p (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2010 15:57:45 -0500
+X-Greylist: delayed 2146 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 Feb 2010 15:57:45 EST
+Received: by pxi40 with SMTP id 40so6801541pxi.21
+        for <git@vger.kernel.org>; Mon, 08 Feb 2010 12:57:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=Wg+J0HFQ18PlmecrybvfTCXI85uCpZwRvUTUZFytcFY=;
+        b=AeeCO9zKFCd2u2qHaEgq4khktj32QxWEWGrIN7ewgjN34MOKIbAcBR5KBYGsjsNJ9g
+         i5BYcP2YUqmZtxS0RlzBOmh1WtXWP6Eo3wl5baeXbNfgTwtNlR+zPb+iRa1NnDnIMsn2
+         LWKB5BfFAXvsHUJzBU7q7nCWBRZU/pGwEWC48=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=f717S7MOkI8Ea2XD7ZSv1Tydmjy78fbLA7WR19iH96osTT/0NOl4HnmaqDUbbS2FOF
+         XBuDFyzI1dPS77NJfrJJB2nwqieT+kZ7AKAQzFHApF4MFYeyPg7jRVQiWRJW3S6rnr2m
+         9hsM5zHJ00TVw+Yc0vNfcvY0w23PCM7+rN1ZA=
+Received: by 10.114.236.35 with SMTP id j35mr2191536wah.117.1265662665129; 
+	Mon, 08 Feb 2010 12:57:45 -0800 (PST)
+In-Reply-To: <2cfc40321002081234t2e8585bxfbcae41b18804e70@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139318>
 
-Larry D'Anna <larry@elder-gods.org> writes:
+On Mon, Feb 8, 2010 at 3:34 PM, Jon Seymour <jon.seymour@gmail.com> wrote:
+> Nice diagrams. You might want to change the arrows on the diffs to be
+> consistently in direction of the forward diff.
 
-> * don't emit long explanatory message about non-fast-forward updates.
+Thanks.  You're right, the da985->b325c was the only one that made
+sense - the rest were reversed.  Is this what you meant?  I just
+pushed this change, so it should be fixed.
 
-This makes sense as a goal, but at the same time as an implementation it
-would be cleaner to flip "advice" off under --porcelain, instead of doing
-"s/if (advice_blah)/if (advice_blah && !porcelain)/;".
-
-This is doubly important if you consider longer term maintainability.  I
-do not want to see the next person who tries to add new advice messages to
-copy and paste the long if() statement you added in this patch.
-
-> * send "To dest" lines to standard out so whoever is reading standard
-> out knows which ref updates went to which remotes.
-
-Makes sense. s/standard out/the standard output/, and
-s/reading .*knows/reading from the process knows/, perhaps.
-
-> * only send the "Everything up-to-date" line if verbose.
-
-Don't you want to send this also to stdout?
+Mark
