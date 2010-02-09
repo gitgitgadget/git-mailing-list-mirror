@@ -1,58 +1,70 @@
-From: Larry D'Anna <larry@elder-gods.org>
-Subject: [PATCH 1/4] git-push: fix an error message so it goes to stderr
-Date: Tue,  9 Feb 2010 00:53:59 -0500
-Message-ID: <1d1ce7e0ad28fd0cad8d9d7bfeda04ba58be36d4.1265694627.git.larry@elder-gods.org>
-References: <20100209054820.GA30907@cthulhu>
-Cc: Larry D'Anna <larry@elder-gods.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 09 06:54:28 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] blame: prevent a segv when -L given start > EOF
+Date: Mon, 08 Feb 2010 21:55:51 -0800
+Message-ID: <7vwrynq7fc.fsf@alter.siamese.dyndns.org>
+References: <1265687293-11168-1-git-send-email-jaysoffian@gmail.com>
+ <7vtytrrrju.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 09 06:56:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nej3M-0006T5-9i
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 06:54:28 +0100
+	id 1Nej4z-0007BV-Nz
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 06:56:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752439Ab0BIFyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 00:54:07 -0500
-Received: from cthulhu.elder-gods.org ([140.239.99.253]:36724 "EHLO
-	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751413Ab0BIFyF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2010 00:54:05 -0500
-Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
-	id D962F82200E; Tue,  9 Feb 2010 00:54:02 -0500 (EST)
-X-Mailer: git-send-email 1.7.0.rc1.33.g07cf0f.dirty
-In-Reply-To: <20100209054820.GA30907@cthulhu>
+	id S1752402Ab0BIF4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2010 00:56:01 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52320 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751941Ab0BIF4A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2010 00:56:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ACFC697167;
+	Tue,  9 Feb 2010 00:55:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=astpbG3X0JCfVyIc8oJsc6E9ItY=; b=KM/s5m
+	s9oLbvbUjTxHXpJbaX1etBHeh3/9nvHe4kGk/nQqGpSY2z7zih3H4mXWy2npgP5W
+	UDbg06jqrxgcl6iksFK9RE3FYE4xskG6PivCS5jrLItinC1cBb0kC0BiKJPYiYLR
+	hqBjYwEHD60ne5MorOitgYN9q/9ovV2c4rVdM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wyEkd5KwpqNDxAhjq2MHNZ87BSy2/uIs
+	F7wdde9mojGHDshJyUYo8x7DIaOUwYnZwxdVHerHaq67WsURn2vjJOZ0BOj6oZ4F
+	Rl+yx9VlMxqq6+dlk4l0bccJUqVZRVPCGJcElIKvUnFpZe65Vog6XSo/ecYfVy98
+	mDzqQZ/h9YI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A1E197162;
+	Tue,  9 Feb 2010 00:55:56 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BD12497161; Tue,  9 Feb
+ 2010 00:55:52 -0500 (EST)
+In-Reply-To: <7vtytrrrju.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon\, 08 Feb 2010 19\:55\:49 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CA49F87C-153F-11DF-A97E-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139369>
 
-These sort of messages typically go to the standard error.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Larry D'Anna <larry@elder-gods.org>
----
- builtin-push.c |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+> Jay Soffian <jaysoffian@gmail.com> writes:
+>
+>> -	if (lno < top)
+>> +	if (lno < top || lno < bottom)
+>>  		die("file %s has only %lu lines", path, lno);
+>
+> Thanks; I think we make sure that "bottom < top" always hold true before
+> we reach this point, so checking with bottom alone should suffice, no?
 
-diff --git a/builtin-push.c b/builtin-push.c
-index 5633f0a..0a27072 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -124,9 +124,9 @@ static int push_with_options(struct transport *transport, int flags)
- 		return 0;
- 
- 	if (nonfastforward && advice_push_nonfastforward) {
--		printf("To prevent you from losing history, non-fast-forward updates were rejected\n"
--		       "Merge the remote changes before pushing again.  See the 'Note about\n"
--		       "fast-forwards' section of 'git push --help' for details.\n");
-+		fprintf(stderr, "To prevent you from losing history, non-fast-forward updates were rejected\n"
-+				"Merge the remote changes before pushing again.  See the 'Note about\n"
-+				"fast-forwards' section of 'git push --help' for details.\n");
- 	}
- 
- 	return 1;
--- 
-1.7.0.rc1.33.g07cf0f.dirty
+I am ... stupid.  If lno < bottom, then lno < top, but we need to check
+both anyway.
