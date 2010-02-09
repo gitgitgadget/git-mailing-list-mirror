@@ -1,97 +1,91 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: t5401-update-hooks test failure
-Date: Tue, 9 Feb 2010 09:51:39 -0800
-Message-ID: <20100209175139.GA28936@spearce.org>
-References: <214a0317f2e4707a866b2f5d10509296bc1479c1.1265661033.git.larry@elder-gods.org> <a1b71c9f6566549e6117f5c98c2f1e60754a7334.1265661033.git.larry@elder-gods.org> <7vtytrih7b.fsf@alter.siamese.dyndns.org> <7vvde7h1mn.fsf@alter.siamese.dyndns.org> <20100208213256.GA470@coredump.intra.peff.net> <7viqa7cqs9.fsf@alter.siamese.dyndns.org> <20100208223107.GB21718@cthulhu> <7vpr4f9wey.fsf@alter.siamese.dyndns.org> <20100209045417.GA15210@cthulhu> <7v4olqlva7.fsf@alter.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH] blame: prevent a segv when -L given start > EOF
+Date: Tue, 9 Feb 2010 12:55:37 -0500
+Message-ID: <76718491002090955g66eca03ar7438e57811616267@mail.gmail.com>
+References: <1265687293-11168-1-git-send-email-jaysoffian@gmail.com>
+	 <4B71122F.3040809@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Larry D'Anna <larry@elder-gods.org>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 09 18:51:50 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <junio@kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Feb 09 18:55:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NeuFZ-0000Ee-4U
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 18:51:49 +0100
+	id 1NeuJL-0002gH-Iq
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 18:55:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755374Ab0BIRvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 12:51:44 -0500
-Received: from mail-qy0-f190.google.com ([209.85.221.190]:51922 "EHLO
-	mail-qy0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754994Ab0BIRvn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2010 12:51:43 -0500
-Received: by qyk28 with SMTP id 28so739495qyk.25
-        for <git@vger.kernel.org>; Tue, 09 Feb 2010 09:51:42 -0800 (PST)
-Received: by 10.229.214.69 with SMTP id gz5mr1299192qcb.106.1265737902112;
-        Tue, 09 Feb 2010 09:51:42 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 23sm210336iwn.3.2010.02.09.09.51.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 09 Feb 2010 09:51:40 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7v4olqlva7.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755379Ab0BIRzj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Feb 2010 12:55:39 -0500
+Received: from mail-iw0-f171.google.com ([209.85.223.171]:62540 "EHLO
+	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754862Ab0BIRzi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Feb 2010 12:55:38 -0500
+Received: by iwn1 with SMTP id 1so3743827iwn.24
+        for <git@vger.kernel.org>; Tue, 09 Feb 2010 09:55:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wmAPGULDrnv3T8Iawv0EGywMvK9sD2xu4XiWxIfQbKo=;
+        b=K4prlRvk5OwNtwk/zFnmz0iHlHCtt/qlTLuNczdHYvj2phXRmdbI1aIpvmUY7v2YWZ
+         4oOgJltKgwlpCOxaFr4oiJciZkTJ/9PVbVss3rxqoWN8JqBpzDsAVtYamUh7x5Xuo9+/
+         5rjxHwrVuQhEEpbHsb4j5f4tVSnZtgmAcXOs8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Qi8IELWJNd5UY4LuyNLBartLQsCGaf1zoPk+h6VPOIGca5HJVtMJ1oA/B7N8k2l9DE
+         SFBXU05QpUDcDVA7MnllNtUh1agArBmgeM15gQck18TxFIUgK4JXi8dURZCKg2bORqvH
+         tM2iBSmEZb+HTC2bJbwF8J+Cfm12tB2ox7AiM=
+Received: by 10.231.148.16 with SMTP id n16mr1473228ibv.37.1265738137408; Tue, 
+	09 Feb 2010 09:55:37 -0800 (PST)
+In-Reply-To: <4B71122F.3040809@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139424>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> $ while sh t5401-*.sh -i; do :; done
-> ... wait for a while ...
-> * FAIL 12: send-pack stderr contains hook messages
-> 
->                 grep ^remote: send.err | sed "s/ *\$//" >actual &&
->                 test_cmp - actual <expect
-> 
-> $ t/(364643e...); cat trash\ directory.t5401-update-hooks/actual 
-> remote: STDOUT pre-receive
-> remote: STDERR pre-receive
-> remote: STDOUT update refs/heads/master
-> remote: STDERR update refs/heads/master
-> remote: STDOUT update refs/heads/tofail
-> remote: STDOUT post-receive
-> remote: STDERR post-receive
-> remote: STDOUT post-update
-> remote: STDERR post-update
-> $ t/(364643e...); cat trash\ directory.t5401-update-hooks/expect 
-> remote: STDOUT pre-receive
-> remote: STDERR pre-receive
-> remote: STDOUT update refs/heads/master
-> remote: STDERR update refs/heads/master
-> remote: STDOUT update refs/heads/tofail
-> remote: STDERR update refs/heads/tofail
-> remote: STDOUT post-receive
-> remote: STDERR post-receive
-> remote: STDOUT post-update
-> remote: STDERR post-update
+On Tue, Feb 9, 2010 at 2:43 AM, Johannes Sixt <j.sixt@viscovery.net> wr=
+ote:
+> Jay Soffian schrieb:
+>> +test_expect_success 'blame -L with invalid start' '
+>> + =C2=A0 =C2=A0 test_must_fail git blame -L5 tres 2>&1 | grep "has o=
+nly 2 lines"
+>
+> Please write this as
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_must_fail git blame -L5 tres >output =
+2>&1 &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0grep "has only 2 lines" output
+>
+>> +'
+>> +
+>> +test_expect_success 'blame -L with invalid end' '
+>> + =C2=A0 =C2=A0 git blame -L1,5 tres 2>&1 | grep "has only 2 lines"
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_must_fail git blame -L1,5 tres >outpu=
+t 2>&1 &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0grep "has only 2 lines" output
+>
+> because shells look only at the exit code of the last command in a pi=
+peline.
 
-A quick visual inspection shows that only the STDERR tofail message
-is missing here.  That sounds to me like a race condition in the
-recv_sideband decoder.  Or, a race condition in the hook code in
-builtin-receive-pack.c.
+Thanks, I knew that. I'd left in test_must_fail accidentally because
+initially I wasn't bothering to grep the output. I then added the grep
+and forgot to remove test_must_fail. Isn't this an adequate test:
 
-I doubt its in receive-pack. run_update_hook() directly calls the
-copy_to_sideband() function, and that reads until EOF on the hook's
-stderr stream before it returns and waits for the hook's exit status.
-So we should be pulling everything and dumping it into the sideband.
+  test_expect_success 'blame -L with invalid start' '
+ =C2=A0 =C2=A0 git blame -L5 tres 2>&1 | grep "has only 2 lines"
 
-builtin-send-pack.c clearly isn't stopping early while processing
-the stream, since we see later messages from the post-receive and
-post-update hooks just fine.
+As it seems unlikely git would crash and still output the message
+correctly in this case.
 
-So I think the only code that is in question is the case 2 arm of
-recv_sideband().  But to be honest, I can't find any fault with it.
+?
 
-
-I've been running this test in a while loop for a while now, and
-I can't make it trigger this failure.  Maybe its possible that
-its the update hook itself, not flushing its stderr buffer before
-it terminates?
-
--- 
-Shawn.
+j.
