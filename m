@@ -1,54 +1,158 @@
-From: Jeroen Michiel <jmichiel@yahoo.com>
-Subject: Repository corrupt after push
-Date: Tue, 9 Feb 2010 02:21:00 -0800 (PST)
-Message-ID: <306369.29911.qm@web65510.mail.ac4.yahoo.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC PATCHv2 00/10] gitweb: Simple file based output caching
+Date: Tue,  9 Feb 2010 11:30:17 +0100
+Message-ID: <1265711427-15193-1-git-send-email-jnareb@gmail.com>
+Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	John 'Warthog9' Hawley <warthog9@kernel.org>,
+	Petr Baudis <pasky@suse.cz>, Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 09 11:21:45 2010
+X-From: git-owner@vger.kernel.org Tue Feb 09 11:30:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NenDy-0007ma-0u
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 11:21:42 +0100
+	id 1NenMk-0003al-8i
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 11:30:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753410Ab0BIKVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 05:21:31 -0500
-Received: from n3b.bullet.mail.ac4.yahoo.com ([76.13.13.73]:29382 "HELO
-	n3b.bullet.mail.ac4.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751604Ab0BIKVa convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 9 Feb 2010 05:21:30 -0500
-Received: from [76.13.13.26] by n3.bullet.mail.ac4.yahoo.com with NNFMP; 09 Feb 2010 10:21:00 -0000
-Received: from [76.13.10.181] by t3.bullet.mail.ac4.yahoo.com with NNFMP; 09 Feb 2010 10:21:00 -0000
-Received: from [127.0.0.1] by omp122.mail.ac4.yahoo.com with NNFMP; 09 Feb 2010 10:21:00 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 551785.70234.bm@omp122.mail.ac4.yahoo.com
-Received: (qmail 30482 invoked by uid 60001); 9 Feb 2010 10:21:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1265710860; bh=p8WPWif1LwagAzmHrxKI+QIycXPuXRZGBLxriZyi21M=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=hbpMTDW34SnI5CB5eQd9otu4jX2AzBdNwkUs17cydE6l3u5ygw7WWuGqdqOD3FCBz1cyKZ8S6yDyeC4yDCRGWaavVkMgdFuDBTRk8aG3DPS47mrJ9IA4Ucj0j47OUBVnr7Elmyf8MKUBG9/ausx6k2GXgknRDVhLZ74y+XbuYcs=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=lPg45rMUaT2efnXwPMwfNzAEs0YZ6Z8zzUgjGMkUA8i4qyx+3YboZwI2ymnzTICzzkyTGlciXSLqj5u75fzKQZi+qfZMjoCgnwF3+6MDpcAWZ2dQ7723CvjIGHePkEc5/CN+5+qG0JPs05ydHpHW23rpjhdSFtcsvvigFlVQ/5c=;
-X-YMail-OSG: qnmXbOEVM1k.1Ul.ZlRpa2UQg7nb0PaxKyWw5rD9SXcLNyG3WYq7Wog5qz5L0x70byeovG4L9wYwji47Fvd3k5Pi0vQclmyfPgjLUizTtlqWpF4GvQU.Urp6SKnsVpj1I9zLx1W53CAW4uEmWqqdksgp2YR0ZNHxthV3FDsrXjqbYoMv9piEcuTmo.ER9_7SkfI_ZNx.xE2o822l8kTkTt2pM1DmpGVNzZF0PhIgQLtzX0OsPelBJDxthKvvjt442nvlwIKSZCu.fRYyGxOJKMjWDsmD.HKQW8Jgn5ynZHJqgPImu9Y_Cb8Wkg--
-Received: from [194.78.31.114] by web65510.mail.ac4.yahoo.com via HTTP; Tue, 09 Feb 2010 02:21:00 PST
-X-Mailer: YahooMailRC/272.8 YahooMailWebService/0.8.100.260964
+	id S1752588Ab0BIKal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2010 05:30:41 -0500
+Received: from mail-fx0-f220.google.com ([209.85.220.220]:57151 "EHLO
+	mail-fx0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751911Ab0BIKak (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2010 05:30:40 -0500
+Received: by fxm20 with SMTP id 20so3026581fxm.21
+        for <git@vger.kernel.org>; Tue, 09 Feb 2010 02:30:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=/7JAYgsB+0w4RdWNbRQBFsXllnrCDerS9PA28Cyp9S8=;
+        b=rPbfqz8sKPxm5g6Rf1mtRfYTkrGR50kw5Q/JET4xXfyIKskMoGAWQNyASwqlhsW1r3
+         J0OkVsJ5bxWlseE3gjKhQF9w7nJvJ530KG9EuXGFV/Fp2/1LDUBQPS+3rjPUUhuQvCdu
+         /1HpHrhrRMCM+0TLl4nAODPbF/PnVS7Nsg+eQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=sfd8wGuezHaSpWNeh705F8W481QZ70bjbQCqLCRpYZfL6G6qL0GE97sjB1KyCikcsB
+         Bg3TE6ifc7gGv9fOpNDcJPvE8VM5upwqewF7A00LoSBwM1W5z1HvJYlS9fI/bpfEgLUL
+         cwrh4nWsE83gyjCumBFl/n18QsGRwwIHuBZyo=
+Received: by 10.223.10.220 with SMTP id q28mr104086faq.46.1265711438692;
+        Tue, 09 Feb 2010 02:30:38 -0800 (PST)
+Received: from localhost.localdomain (abvg140.neoplus.adsl.tpnet.pl [83.8.204.140])
+        by mx.google.com with ESMTPS id 16sm2344332fxm.8.2010.02.09.02.30.36
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 09 Feb 2010 02:30:37 -0800 (PST)
+X-Mailer: git-send-email 1.6.6.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139382>
 
-Hi,
+This 10 patches long patch series is intended as preliminary version
+for splitting large 'gitweb: File based caching layer (from git.kernel.org)'
+mega-patch by John 'Warthog9' Hawley aka J.H., by starting small and
+adding features piece by piece.
 
-I'm trying to run a git server on my synology Diskstation DS108j with gitosis.
-I can clone the gitosis-admin.git reposotory, but if I edit the gitosis.conf file, commit and then try to push to the server, the repository on the server ends up being corrupt. My client PC is running Windows (tried on XP and 7) git Git Extensions. I tried with Git Extensions, Git GUI and Git Bash, but it all ends up being corrupt.
-What can be causing this?
+This is second version (second release) of this series; previous is
+available at http://repo.or.cz/w/git/jnareb-git.git as 'gitweb/cache-kernel'
+branch.  It was sent as:
+* [RFC PATCH 00/10] gitweb: Simple file based output caching
+  Message-Id: <cover.1264198194.git.jnareb@gmail.com>
+  http://thread.gmane.org/gmane.comp.version-control.git/136913/focus=136917
+(note however that v1 series of emails is lacking one of patches because
+it was over VGER anti-spam size limit for messages).
 
-Any hints and help appreciated!
-Jeroen
+This version tries to do without 
+  gitweb: Print to explicit filehandle (preparing for caching)
+patch, by capturing output using either PerlIO layers manipulated
+using PerlIO::Util if this module is available, or direct manipulation
+of *STDOUT if PerlIO::Util isn't available.  One of the goals of this
+series is then decide whether it is worth to have explicit filehandle
+in print statements in gitweb, or not; if the complexity is worth not
+having to deal with straightforward but quite intrusive (and large)
+patch.
+
+As the earlier version was inspired by file-based caching in
+Cache::Cache, this one is inspired by file-based caching in more
+modern CHI (unified cache interface).
+
+It still lacks POD for gitweb/cache.pm (would it be needed, or would
+comments be enough), and gitweb/cache.pm still ties rather heavily
+into gitweb (following still what was in original J.H. (mega)patch).
+
+It *does* have quite detailed commit messages, as opposed to v1 of
+this series, where some commits were described only in comment section
+of emails containing them.  It is also very configurable (Pasky, this
+would probably be of interest to you, as you didn't want to have 
+"Generating..." pages enabled), even more than in original patch
+by J.H.
 
 
-      
+NOTE: there are quite a bit of _API_ tests, but I have not tested gitweb
+output with caching enabled extensively (thats how bug in "Generating..."
+slipped through - for details see comments in last patch).  I have tested
+that caching works around 4th patch in series, in that it doesn't cause
+errors and displays page (here the lack of error handling is decidely
+unhelpful), and that it displays the time when page was generated.  As I
+have installed PerlIO::Util using local::lib, i.e. locally in ~/perl5,
+I think that what I have been testing was the "*STDOUT munging" method
+of capturing gitweb output.  (See "Capturing gitweb output" section
+in PATCHv2 04/10).
+
+
+This series is based on commit 8424981934c415bd20643de9cc932bd348dfb115:
+(in the 'master' branch of git.git repository)
+  Jeff King (1):
+        Fix invalid read in quote_c_style_counted
+
+and is available in the git repository at:
+
+  git://repo.or.cz/git/jnareb-git.git gitweb/cache-kernel-v2
+
+Jakub Narebski (10):
+  gitweb: href(..., -path_info => 0|1)
+  gitweb/cache.pm - Very simple file based caching
+  gitweb/cache.pm - Stat-based cache expiration
+  gitweb: Use Cache::Cache compatible (get, set) output caching
+  gitweb/cache.pm - Adaptive cache expiration time
+  gitweb: Use CHI compatible (compute method) caching
+  gitweb/cache.pm - Use locking to avoid 'cache miss stampede' problem
+  gitweb/cache.pm - Serve stale data when waiting for filling cache
+  gitweb/cache.pm - Regenerate (refresh) cache in background
+  gitweb: Show appropriate "Generating..." page when regenerating cache
+
+Note that compared to previous version of this series, this version
+lacks initial commit.
+  gitweb: Print to explicit filehandle (preparing for caching)
+This is a bit of an experiment if we can do caching without large patch
+to gitweb upfront, and to decide whether tradeoff (more complicated
+capturing) is worth it.
+
+Also, one of the commits:
+  gitweb/cache.pm - Serve stale data when waiting for filling cache (WIP)
+was split into two separate commits:
+  gitweb/cache.pm - Serve stale data when waiting for filling cache
+  gitweb/cache.pm - Regenerate (refresh) cache in background
+one serving stale data (in processes waiting for cache to be filled, 
+aka readers), and one adding background cache regeneration. 
+
+After previous series I have sent additional (PATCH 11/10) patch:
+  gitweb: Ajax-y "Generating..." page when regenerating cache (WIP)
+This patch would require rework to apply to this new series.
+
+Diffstat:
+~~~~~~~~~
+ gitweb/README                          |   70 +++++
+ gitweb/cache.pm                        |  530 ++++++++++++++++++++++++++++++++
+ gitweb/gitweb.perl                     |  305 +++++++++++++++++-
+ t/gitweb-lib.sh                        |    2 +
+ t/t9500-gitweb-standalone-no-errors.sh |   19 ++
+ t/t9503-gitweb-caching.sh              |   32 ++
+ t/t9503/test_cache_interface.pl        |  380 +++++++++++++++++++++++
+ t/test-lib.sh                          |    3 +
+ 8 files changed, 1325 insertions(+), 16 deletions(-)
+ create mode 100644 gitweb/cache.pm
+ create mode 100755 t/t9503-gitweb-caching.sh
+ create mode 100755 t/t9503/test_cache_interface.pl
