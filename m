@@ -1,95 +1,69 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Generate a warning message if we find an unrecognized
- option.
-Date: Tue, 9 Feb 2010 00:59:38 -0500
-Message-ID: <20100209055938.GA14736@coredump.intra.peff.net>
-References: <4B70913F.7060809@winehq.org>
- <20100209004514.GB4065@coredump.intra.peff.net>
- <7vvde7z0kf.fsf@alter.siamese.dyndns.org>
- <20100209030151.GA5370@coredump.intra.peff.net>
- <20100209051730.GA28599@gmail.com>
+Subject: Re: [PATCH] t9302: Protect against OS X normalization
+Date: Tue, 9 Feb 2010 01:08:45 -0500
+Message-ID: <20100209060845.GD14736@coredump.intra.peff.net>
+References: <7vfx5bt6nn.fsf@alter.siamese.dyndns.org>
+ <1265688445-46137-1-git-send-email-brian@gernhardtsoftware.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jeremy White <jwhite@winehq.org>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 09 06:59:44 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Brian Gernhardt <brian@gernhardtsoftware.com>
+X-From: git-owner@vger.kernel.org Tue Feb 09 07:09:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nej8R-0000Cv-R6
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 06:59:44 +0100
+	id 1NejHg-0004KQ-Po
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 07:09:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752274Ab0BIF7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 00:59:38 -0500
-Received: from peff.net ([208.65.91.99]:38614 "EHLO peff.net"
+	id S1753528Ab0BIGIr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Feb 2010 01:08:47 -0500
+Received: from peff.net ([208.65.91.99]:46094 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751297Ab0BIF7h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2010 00:59:37 -0500
-Received: (qmail 15633 invoked by uid 107); 9 Feb 2010 05:59:45 -0000
+	id S1753525Ab0BIGIp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2010 01:08:45 -0500
+Received: (qmail 15677 invoked by uid 107); 9 Feb 2010 06:08:52 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 09 Feb 2010 00:59:45 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Feb 2010 00:59:38 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 09 Feb 2010 01:08:52 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Feb 2010 01:08:45 -0500
 Content-Disposition: inline
-In-Reply-To: <20100209051730.GA28599@gmail.com>
+In-Reply-To: <1265688445-46137-1-git-send-email-brian@gernhardtsoftware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139372>
 
-On Mon, Feb 08, 2010 at 09:17:31PM -0800, David Aguilar wrote:
+On Mon, Feb 08, 2010 at 11:07:25PM -0500, Brian Gernhardt wrote:
 
-> > > > And obviously that is weighed against the ability to notice things like
-> > > > typos. But if we are going to start complaining about unknown config, we
-> > > > would probably do better to complain about _all_ unknown config, and not
-> > > > just this one subsection.
-> 
-> No, please, please no.
+> 8424981: "Fix invalid read in quote_c_style_counted" introduced a tes=
+t
+> that used "caract=C3=A8re sp=C3=A9cial" as a directory name.
+>=20
+> Git creates it as "caract\303\250re sp\303\251cial"
+> OS X stores it as "caracte\314\200re spe\314\201cial"
+>=20
+> To work around this problem, use the already introduced $FN as the
+> directory name.
+>=20
+> Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+> ---
+>=20
+>  Junio C Hamano wrote:
+>  > How about using $FN as the directory name instead?
+>=20
+>  I knew there was a clever answer I was missing.
 
-I would only be OK with it if it were optional.
+I am not 100% sure this will still trigger the failure that 8424981 was
+meant to fix. From my recollection of the bug, it not only needed an
+unterminated string (which we get by having a directory) but the string
+length and presence of multiple spread-out characters may have been
+relevant.
 
-> > I would rather have a "git config --lint" command, but that is even
-> > harder, since we are not even loading most of the subsystems which know
-> > about the valid config options. And it presupposes that people will
-> > bother to actually run such a lint command.
-> 
-> This runs up against the same issue you pointed out
-> earlier--that older versions of git cannot adequately lint
-> configs from newer versions.
-
-Yeah, but that isn't a big deal. You just don't run "config --lint" with
-the older version. But if, for example, "git diff" breaks because your
-config is too new, then that is a real pain (and that was what happened
-with color.diff.func recently).
-
-> There are also config variables from unknown git scripts outside
-> of git.git that happen to use the git-config mechanism because
-> it is convenient.  It would be unfortunate to punish those who
-> chose to make up their own config variables by warning them
-> that git doesn't know about them.
-
-Yes, I don't think anyone is proposing to lint _all_ variables. But it
-does not seem unreasonable for certain subsystems to claim portions of
-the namespace. I would expect git-core to own "core.*". And I would
-expect git-gui to own "git-gui", etc.
-
-> I have to wonder if this is a non-existent problem.
-> 
-> Config variables are one-shot things.  You set them and forget
-> about them.  When you set it you are usually pretty well aware
-> of whether it's typoed because it simply does't work.
-> color.ui is a perfect example.  If it's typoed, you don't need
-> 'git config --lint' to tell you, you already know by virtue of
-> using the thing.
-
-I think I agree with you on this. It is _much_ more annoying to me not
-to have version portability than it is not to have strict config
-checking. I was mainly trying to put myself in the shoes of "regular"
-users, who are less likely to be running the same config file on many
-different versions, and are more likely to be clueless about config. But
-I may have overcompensated.
+Of course, that specific bug is fixed, so maybe it is not worth worryin=
+g
+about too much.
 
 -Peff
