@@ -1,112 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Generate a warning message if we find an unrecognized
- option.
-Date: Mon, 8 Feb 2010 22:01:51 -0500
-Message-ID: <20100209030151.GA5370@coredump.intra.peff.net>
-References: <4B70913F.7060809@winehq.org>
- <20100209004514.GB4065@coredump.intra.peff.net>
- <7vvde7z0kf.fsf@alter.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: blame -L questions
+Date: Mon, 8 Feb 2010 22:03:37 -0500
+Message-ID: <76718491002081903s2e37875bs85eeb55779167ce7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeremy White <jwhite@winehq.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 09 04:01:57 2010
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 09 04:03:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NegMP-0001sf-HB
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 04:01:57 +0100
+	id 1NegO7-0002hA-L8
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 04:03:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753436Ab0BIDBw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Feb 2010 22:01:52 -0500
-Received: from peff.net ([208.65.91.99]:33408 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752018Ab0BIDBu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2010 22:01:50 -0500
-Received: (qmail 13568 invoked by uid 107); 9 Feb 2010 03:01:57 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 08 Feb 2010 22:01:57 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Feb 2010 22:01:51 -0500
-Content-Disposition: inline
-In-Reply-To: <7vvde7z0kf.fsf@alter.siamese.dyndns.org>
+	id S1753460Ab0BIDDi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2010 22:03:38 -0500
+Received: from mail-iw0-f182.google.com ([209.85.223.182]:60396 "EHLO
+	mail-iw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753347Ab0BIDDh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2010 22:03:37 -0500
+Received: by iwn12 with SMTP id 12so8107560iwn.26
+        for <git@vger.kernel.org>; Mon, 08 Feb 2010 19:03:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=1h+PUT76mViVMfx9QiABsr+WCdr30inLm9G/R07nRQw=;
+        b=HCTrq4eg9z8rUmDatcqhrzpQ/MYGdUoqvtTGtAnn9d3bkkRpe6+qXlZuDp8v7dKFZz
+         ZplIBnILTGPMBNht725VZF4XaKeNLIVCww2K34zUk7TpiGXqEe9LgAU0bFz6Jgyk5C2k
+         L4UdTQBwjwfvxKmMVZ+sENujCMkiPWz2Phi9M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=am6HIVA0pWUec8IFEa/oMopiyJzGDddHQ5OnC41mH1xBUQvz4gPlAVgZjYArrUta+L
+         psEruZfDr9bnqWvS3BdGoSOun7/9fRCAofS35WzH/kx1CmV00SGLw/V7NVfXKaiFIAYN
+         cxJIVA5hpLiQisI+CLi3ZkgMoUhaAptEmbU1U=
+Received: by 10.231.150.2 with SMTP id w2mr2346155ibv.90.1265684617071; Mon, 
+	08 Feb 2010 19:03:37 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139351>
 
-On Mon, Feb 08, 2010 at 04:59:12PM -0800, Junio C Hamano wrote:
+Junio,
 
-> > And obviously that is weighed against the ability to notice things =
-like
-> > typos. But if we are going to start complaining about unknown confi=
-g, we
-> > would probably do better to complain about _all_ unknown config, an=
-d not
-> > just this one subsection.
->=20
-> We would probably want something like:
->=20
-> 	static int do_warn_unknown_config;
->=20
-> 	void warn_unknown_config(const char *key)
->         {
-> 		if (do_warn_unknown_config)
->                 	warn("Unknown configuration variable %s", key);
->         }
->=20
-> and sprinkle that everywhere.
+I'd like git blame to be able to emit multiple blocks when using it
+with -L /start/,/end/.
 
-Your "sprinkle that everywhere" is a little harder than one might hope.
-There is no code path that reads and claims to recognize _all_ of the
-git config. In many cases, the git_*_config for individual subsystems
-can reasonably lay claim to the whole of a "[heading]" section. But
-there are exceptions even to that.
+My use case is emitting blocks that are wrapped in
 
-Diff config is split across git_diff_basic_config and
-git_diff_ui_config. You would certainly not want to warn about
-diff.color.* just because you are running a plumbing command which
-happens not to recognize those entries.
+#if defined(WHATEVER)
+....
+#endif
 
-And some headings have entries for several subsystems. remote.*.fetch i=
-s
-used many places for calculating upstream branches. But only git-remote
-looks at remote.*.skipDefaultUpdate.
+I was going to use the syntax -L /start/../end/ for this.
 
-So in practice I think you will get quite spotty coverage. Which isn't
-to say it isn't necessarily worth doing, but I am personally not very
-excited about working on it. I do like the suggestion of making it
-optional, so that people who don't care about having a portable config
-can have the benefit of sanity-checking their config.
+I naively thought I might just be able to setup multiple blame_entry's
+linked through the next/prev pointers at the start, but that clearly
+does not work.
 
-> An interesting issue is where to flip do_warn_unknown_config.  A na=C3=
-=AFve
-> and obvious implementation would do:
->=20
->         static int git_default_core_config(const char *var, const cha=
-r *value)
->         {
-> 		...
-> 		if (!strcmp(var, "core.warnunknownconfig")) {
-> 			do_warn_unknown_config =3D git_config_bool(var, value);
-> 			return 0;
-> 		}
-> 		...
-> 	}
->=20
-> but that means the definition of this variable has to come very early=
- in
-> the configuration file to be effective.
+So I was wondering if you could give me any tips about how the
+scoreboard, blame_entry, and origin all fit together before I injure
+myself. :-)
 
-I would rather have a "git config --lint" command, but that is even
-harder, since we are not even loading most of the subsystems which know
-about the valid config options. And it presupposes that people will
-bother to actually run such a lint command.
+Thanks,
 
-You could always just hoist into an environment variable which neatly
-gets rid of the ordering problem.
-
--Peff
+j.
