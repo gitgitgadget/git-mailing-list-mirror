@@ -1,65 +1,112 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] Support working directory located at root
-Date: Tue, 9 Feb 2010 09:49:54 +0700
-Message-ID: <fcaeb9bf1002081849m5aacc55fo52e5119548d8d704@mail.gmail.com>
-References: <1265640810-6361-1-git-send-email-pclouds@gmail.com> 
-	<7v8wb3pqqw.fsf@alter.siamese.dyndns.org> <fcaeb9bf1002081818s53f8646ev80afbaa37f039e50@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Generate a warning message if we find an unrecognized
+ option.
+Date: Mon, 8 Feb 2010 22:01:51 -0500
+Message-ID: <20100209030151.GA5370@coredump.intra.peff.net>
+References: <4B70913F.7060809@winehq.org>
+ <20100209004514.GB4065@coredump.intra.peff.net>
+ <7vvde7z0kf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?Jo=C3=A3o_Carlos_Mendes_Lu=C3=ADs?= <jonny@jonny.eng.br>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Feb 09 03:50:24 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeremy White <jwhite@winehq.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 09 04:01:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NegBD-0004fH-9D
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 03:50:23 +0100
+	id 1NegMP-0001sf-HB
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 04:01:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753377Ab0BICuQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2010 21:50:16 -0500
-Received: from mail-px0-f202.google.com ([209.85.216.202]:43340 "EHLO
-	mail-px0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752914Ab0BICuO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2010 21:50:14 -0500
-Received: by pxi40 with SMTP id 40so6996548pxi.21
-        for <git@vger.kernel.org>; Mon, 08 Feb 2010 18:50:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=b7wxoiHG9jlo9R3RK1CUoDCDH4h8WSlTS2z/cjPZksk=;
-        b=eowJl0dJvQshAV0DMhCd3LqfVpmiP3BcwelKwlZuVuuxFWZmV4vsHGWVz7N2NpiaNn
-         rnrg4ylSRNgPxKV2i70m7IRV4CHXBOToUgnBRzRwNkAC/A0ulVXGuVmlgjSzp0szd5Cz
-         xfYSATW/zCekwBFN0WpTCkimNmy/FeMcQrMPU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=EJQuqEAmK7N4Vtbjfa4ueAptIiJ051H/03aGon6cnUa89BAIy6A6Xp7XMSqEAiOs85
-         ibUElxRDxP78LN/068zVeAVd3LsguV3m85Xh7WvBL0Qyf3HALzmYdjbKlQc9rs1R8Zfd
-         quub8sPXU8ArUzsN743Jps4HqRX3Pk2DXJO/Q=
-Received: by 10.115.38.27 with SMTP id q27mr5016900waj.58.1265683814109; Mon, 
-	08 Feb 2010 18:50:14 -0800 (PST)
-In-Reply-To: <fcaeb9bf1002081818s53f8646ev80afbaa37f039e50@mail.gmail.com>
+	id S1753436Ab0BIDBw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Feb 2010 22:01:52 -0500
+Received: from peff.net ([208.65.91.99]:33408 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752018Ab0BIDBu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2010 22:01:50 -0500
+Received: (qmail 13568 invoked by uid 107); 9 Feb 2010 03:01:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 08 Feb 2010 22:01:57 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Feb 2010 22:01:51 -0500
+Content-Disposition: inline
+In-Reply-To: <7vvde7z0kf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139350>
 
-2010/2/9 Nguyen Thai Ngoc Duy <pclouds@gmail.com>:
-> But I suspect my change in this code is not enough and caused
-> the problem (on msys?) for Hannes. If the worktree somehow is '//' and
-> sanitized is '/etc/resolv.conf', then we could end up eating two
-> chars, leading to "'tc/resolv.conf' not match" error.
->
-> Hannes, can you put a "printf("%s\n", work_tree);" in prefix_path() to
-> see if it's the case?
+On Mon, Feb 08, 2010 at 04:59:12PM -0800, Junio C Hamano wrote:
 
-Silly me. You used relative path, so that code path was untouched.
--- 
-Duy
+> > And obviously that is weighed against the ability to notice things =
+like
+> > typos. But if we are going to start complaining about unknown confi=
+g, we
+> > would probably do better to complain about _all_ unknown config, an=
+d not
+> > just this one subsection.
+>=20
+> We would probably want something like:
+>=20
+> 	static int do_warn_unknown_config;
+>=20
+> 	void warn_unknown_config(const char *key)
+>         {
+> 		if (do_warn_unknown_config)
+>                 	warn("Unknown configuration variable %s", key);
+>         }
+>=20
+> and sprinkle that everywhere.
+
+Your "sprinkle that everywhere" is a little harder than one might hope.
+There is no code path that reads and claims to recognize _all_ of the
+git config. In many cases, the git_*_config for individual subsystems
+can reasonably lay claim to the whole of a "[heading]" section. But
+there are exceptions even to that.
+
+Diff config is split across git_diff_basic_config and
+git_diff_ui_config. You would certainly not want to warn about
+diff.color.* just because you are running a plumbing command which
+happens not to recognize those entries.
+
+And some headings have entries for several subsystems. remote.*.fetch i=
+s
+used many places for calculating upstream branches. But only git-remote
+looks at remote.*.skipDefaultUpdate.
+
+So in practice I think you will get quite spotty coverage. Which isn't
+to say it isn't necessarily worth doing, but I am personally not very
+excited about working on it. I do like the suggestion of making it
+optional, so that people who don't care about having a portable config
+can have the benefit of sanity-checking their config.
+
+> An interesting issue is where to flip do_warn_unknown_config.  A na=C3=
+=AFve
+> and obvious implementation would do:
+>=20
+>         static int git_default_core_config(const char *var, const cha=
+r *value)
+>         {
+> 		...
+> 		if (!strcmp(var, "core.warnunknownconfig")) {
+> 			do_warn_unknown_config =3D git_config_bool(var, value);
+> 			return 0;
+> 		}
+> 		...
+> 	}
+>=20
+> but that means the definition of this variable has to come very early=
+ in
+> the configuration file to be effective.
+
+I would rather have a "git config --lint" command, but that is even
+harder, since we are not even loading most of the subsystems which know
+about the valid config options. And it presupposes that people will
+bother to actually run such a lint command.
+
+You could always just hoist into an environment variable which neatly
+gets rid of the ordering problem.
+
+-Peff
