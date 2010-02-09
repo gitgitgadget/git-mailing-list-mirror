@@ -1,80 +1,69 @@
-From: Christian MICHON <christian.michon@gmail.com>
-Subject: Re: What should I do to display the diff of even a simple merge 
-	commit?
-Date: Wed, 10 Feb 2010 00:46:57 +0100
-Message-ID: <46d6db661002091546r1372836cs5dc47d54ae8eb19e@mail.gmail.com>
-References: <46d6db661002091545j74f625ffr74ca70a0474948fc@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Fix signal handler
+Date: Tue, 9 Feb 2010 18:49:05 -0500 (EST)
+Message-ID: <alpine.LNX.2.00.1002091812290.14365@iabervon.org>
+References: <4B684F5F.7020409@web.de> <20100202205849.GA14385@sigill.intra.peff.net> <4B71A2EE.8070708@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 10 00:47:06 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Markus Elfring <Markus.Elfring@web.de>
+X-From: git-owner@vger.kernel.org Wed Feb 10 00:49:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NeznM-000207-N9
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 00:47:05 +0100
+	id 1NezpT-0003GL-08
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 00:49:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754186Ab0BIXq7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 18:46:59 -0500
-Received: from mail-bw0-f223.google.com ([209.85.218.223]:59789 "EHLO
-	mail-bw0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752130Ab0BIXq6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2010 18:46:58 -0500
-Received: by bwz23 with SMTP id 23so780978bwz.1
-        for <git@vger.kernel.org>; Tue, 09 Feb 2010 15:46:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type;
-        bh=6SpOsj8/4zP3oPIvawFYEv3aHH6emeSeC9tjwB4kxw4=;
-        b=DIUBIio7ad/R/LWbS7TIjYTz57YrJuJH+N7MgrgYMU/kK4hdO59q4qhSS0mvBXiypg
-         ydXYeBTl9P0aN4wQapXxmn0PjALxiLk//auN/U7bFcRlmqZLrk0UedfNLkZVu0nkwjCv
-         WilngR+yGDgBOFaDNEw1fA3mlpbHfJb9VbDr8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=oPJB4VRGSwCl3yR9g3bI9/U7BRDch20qwdTLbBq6uKahbSyW1YJDT+SLg1nW6cj2R+
-         HIVY4SFbclWoXjSeImXoUUV8C/bVCr+mFB8JjpMw9ULNSG/6lAugvb1h6lU1lbR9ar4N
-         VV9mALiGRHeBNeyCQ54Z+d6yei8iNiqeFTCB4=
-Received: by 10.204.150.81 with SMTP id x17mr1802228bkv.200.1265759217131; 
-	Tue, 09 Feb 2010 15:46:57 -0800 (PST)
-In-Reply-To: <46d6db661002091545j74f625ffr74ca70a0474948fc@mail.gmail.com>
+	id S1754653Ab0BIXtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2010 18:49:10 -0500
+Received: from iabervon.org ([66.92.72.58]:57465 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754586Ab0BIXtI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2010 18:49:08 -0500
+Received: (qmail 18310 invoked by uid 1000); 9 Feb 2010 23:49:05 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 9 Feb 2010 23:49:05 -0000
+In-Reply-To: <4B71A2EE.8070708@web.de>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139462>
 
-On Wed, Feb 10, 2010 at 12:45 AM, Christian MICHON
-<christian.michon@gmail.com> wrote:
-> Hi list,
->
-> I'm performing many merges between developpers branches these days,
-> most of them not yielding into conflicts. (understand: simple merges)
->
-> All is good, but sometimes, I would like to really like what has been changed.
+On Tue, 9 Feb 2010, Markus Elfring wrote:
 
-I meant << I would really like to see what has been changed. >>
+> 
+> >
+> > If you can demonstrate a practical problem and provide a patch, then I
+> > am sure people would be happy to read it.
+> >   
+> 
+> I need a few further clarifications on this issue to choose a potential fix.
+> 
+> I have noticed that the variable "show_early_output" gets a value
+> assigned only at a few places in the source code. I wonder that the set
+> pointer is only used by the function "limit_list" to call the function
+> "log_show_early" on demand.
+> http://git.kernel.org/?p=git/git.git;a=blob;f=revision.c;h=3ba6d991f6e9789949c314c2981dfc6b208a6f66;hb=HEAD#l683
+> 
+> I find that a simple flag would be sufficient. I see no need to handle
+> different function pointers here. Do any objections exist to achieve the
+> same effect with the data type "sig_atomic_t"?
 
->
-> As I do not systematically do this "git merge --no-commit --stat
-> <list_to_merge>" and then fire "git gui" to inspect the diffs before
-> the real commit, I'm wondering: how could I do this using some
-> plumbing ?
->
-> Right now, I've tried the obvious git log -c -p, git show -u --cc, but
-> since the merge are simple merges, I cannot get any diff output. I
-> believe this is by construction.
->
-> Any hints ?
->
-> Thanks in advance.
->
+In that particular instance, there's actually a comment that says it uses 
+an int (which is almost certainly what sig_atomic_t is, but sig_atomic_t 
+might not be defined on some actual platforms). Making the code match the 
+comment, at least, would be good.
 
--- 
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
+In particular, function pointers are more likely than other pointers to be 
+not a machine word. I'm pretty sure that an IA64 machine could potentially 
+have a race with a small window here.
+
+As to whether to use int (as the comment says) or sig_atomic_t, I don't 
+really have any idea which would have fewer problems.
+
+	-Daniel
+*This .sig left intentionally blank*
