@@ -1,101 +1,96 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: A Visual Git Reference
-Date: Mon, 8 Feb 2010 19:18:14 -0500
-Message-ID: <ca433831002081618s1e3193c3ge7b637ede540533a@mail.gmail.com>
-References: <ca433831002081134m698f531bwa22f0474db0cdcb@mail.gmail.com> 
-	<alpine.LNX.2.00.1002081513430.14365@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-push: fix the documentation to explain all the
+ status flags
+Date: Mon, 08 Feb 2010 16:23:55 -0800
+Message-ID: <7veikv2r50.fsf@alter.siamese.dyndns.org>
+References: <7vmxzj726j.fsf@alter.siamese.dyndns.org>
+ <1265672654-26511-1-git-send-email-larry@elder-gods.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git list <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Feb 09 01:18:46 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Larry D'Anna <larry@elder-gods.org>
+X-From: git-owner@vger.kernel.org Tue Feb 09 01:24:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NedoP-0007tH-Iu
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 01:18:41 +0100
+	id 1Nedtl-0003rv-Ko
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 01:24:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751464Ab0BIASg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2010 19:18:36 -0500
-Received: from mail-pz0-f172.google.com ([209.85.222.172]:57450 "EHLO
-	mail-pz0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750842Ab0BIASf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2010 19:18:35 -0500
-Received: by mail-pz0-f172.google.com with SMTP id 2so57522pzk.21
-        for <git@vger.kernel.org>; Mon, 08 Feb 2010 16:18:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=+dj7lNeYmLHVWeIlxTlU+bKL+yV1CfbczQQlyt76ZnM=;
-        b=buZ5EEXzV7yslRHLfm2d0wCcRsi+6oOw+A7cOalWZtmCLbtEfmFBBBI6fonEIB5Smd
-         RFUPpv4AiabyTpXFZb5krR1wcfXtyn7klacjjb6l4k/9Zx+DGJ1PnVqN52yOVQCJDuJC
-         orQT1Q+x8jKnvgNgYH6vwk+8n/m2hp3N/S1C0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=EB5pe13gkLXRqCouUc7OeHg3u17RI3qxIQuQR3I1pZT5wwCZ3xZ9r7oGf6E4LN8yQY
-         V06ZOrBAzAqrZXEGp8jIigBFblkriezi1VVuwk7PBfLgbNfGUCr91rKQPr0oDv2gSM0R
-         7PObRLQ5zmRhhl0XTOsTMV7VaRIDhFts8vXM4=
-Received: by 10.114.165.17 with SMTP id n17mr4852309wae.218.1265674715667; 
-	Mon, 08 Feb 2010 16:18:35 -0800 (PST)
-In-Reply-To: <alpine.LNX.2.00.1002081513430.14365@iabervon.org>
+	id S1751803Ab0BIAYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2010 19:24:07 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54479 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751472Ab0BIAYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2010 19:24:06 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9EDB698E67;
+	Mon,  8 Feb 2010 19:24:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FA67IaWb4WTBkjR+4uMzc6b76JI=; b=wEUUTh
+	2BdK02LD0UMcSI0uztApOj5UgUIaGhXpz3+CySqnK6+Qh9x5jFntwXAYFin1JdfK
+	o5aiA6dbI+Q6FX3/9Tn/KMfq6EzShDot9Jrsz14IeIP2x5CIu/6deU76f+8peD3r
+	NqOmH+07QS0p1FiD1YhSCA1w4oTWwXC5Yqvcc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=o3K90xSZhaT4TWciwS8gxE/ZaEKLOmvz
+	LRZi+a4UtTwiiNwl2ZnQCGf6iupRajqsiVpnnp09qC+2gYeUjRKKSI0/X6OLVILs
+	QHtj1eQ/pjotTHMXHtj1rn9kUaWUnnhNyj2c+fSNVt/aiZtYULgUf1J5Qkk39Ywa
+	NJozIxNjMhU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7318C98E63;
+	Mon,  8 Feb 2010 19:24:00 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7C1E698E62; Mon,  8 Feb
+ 2010 19:23:57 -0500 (EST)
+In-Reply-To: <1265672654-26511-1-git-send-email-larry@elder-gods.org> (Larry
+ D'Anna's message of "Mon\,  8 Feb 2010 18\:44\:14 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 6B4F0A7A-1511-11DF-9CFC-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139339>
 
-On Mon, Feb 8, 2010 at 4:57 PM, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> The "3-way merge" node should graphically distinguish the base from the
-> two sides, rather than having all three just go in. The "3-way merge"
-> operation is tricky to understand visually without some sort of "split and
-> rejoin, with specific points" thing.
+Larry D'Anna <larry@elder-gods.org> writes:
 
-Yes, I'm not happy with the merge picture at all.  As you said, it's
-difficult to draw a nice picture for it that doesn't become too
-complex.  I'll have to think of a better way...
+> git-push prints a flag indicating the status of each ref that was pushed, or
+> attempted to be pushed.  The documentation did not correctly list all of the
+> possible flags.
+> ---
 
-> Also, it would probably be worth showing the use of the index in the
-> process of a 3-way merge: all three versions go into the blue box, and a
-> combination (with conflict markers) goes into the pink box; the user
-> cleans up the pink box, and replaces the 3-part blue box content with the
-> cleaned-up single result content; then the commit gives the diagram you
-> have for "git merge other".
+Thanks.
 
-My fear is making the graphic too complicated.  That said, it may be
-worth making separate graphics: a simple no-conflict case, and a more
-complicated conflict case.
+I assume it is Ok to copy your sign-off from your other messages ;-)
 
-> I think you should introduce the detached HEAD situation early; right
-> after "git checkout HEAD~ files", it would be worth showing "git checkout
-> HEAD~". It's pretty common for people in the "technical user" part of the
-> kernel community to use git to browse history and test different commits,
-> and never do a commit at all. This is a pretty common mode across many
-> version control systems (e.g., "cvs checkout -D yesterday"), and nothing
-> unexpected happens if you don't try to commit while doing it.
+> @@ -176,12 +176,17 @@ If --porcelain is used, then each line of the output is of the form:
+>   <flag> \t <from>:<to> \t <summary> (<reason>)
+>  -------------------------------
+>  
+> +The status of up to date refs is shown only if --porcelain or --verbose is used.
+> +
+>  flag::
+>  	A single character indicating the status of the ref. This is
+> -	blank for a successfully pushed ref, `!` for a ref that was
+> -	rejected or failed to push, and '=' for a ref that was up to
+> -	date and did not need pushing (note that the status of up to
+> -	date refs is shown only when `git push` is running verbosely).
+> +[horizontal]
+> +	" " (space)::: for a successfully pushed fast-forward
 
-Good point.  At your suggestion, I moved up the detached HEAD section
-and integrated part of it into the checkout section.  You're right,
-this does come up a lot, so I should cover it.
+Both [horizontal] and three colons are something we never have used in the
+existing documentation set.  How confident are you that various versions
+of deployed AsciiDoc people would use all support this?
 
-> In fact, you
-> could show tracking down a bug introduced between maint and master by
-> checking out c10b9 and then da985.
+I am not _complaining_; I am just being cautious to see if I have to look
+into the issue myself (if your answer is "not at all") or not (otherwise).
 
-I may add a section on git bisect in the future.
-
-> Then, later, you can bring up the fact that you can actually do commits in
-> that situation, and show how that works. That part is the part that's
-> novel and could potentially lead to people doing work and having it become
-> unreachable. Also, after commiting with a detached HEAD, the normal next
-> step is to create a new branch ("git checkout -b new-topic").
-
-Done.  Good idea.
-
-Thanks for the feedback.  If you have any other thoughts, I'd be glad
-to hear them!
-Mark
+> +	"+"::: for a successful forced update
+> +	"-"::: for a successfully deleted ref
+> +	"*"::: for a successfully pushed new ref
+> +	"!"::: for a ref that was rejected or failed to push
+> +	"="::: for a ref that was up to date and did not need pushing
