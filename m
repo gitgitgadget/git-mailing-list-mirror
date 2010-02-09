@@ -1,87 +1,67 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC PATCHv2 08/10] gitweb/cache.pm - Serve stale data when waiting for filling cache
-Date: Tue,  9 Feb 2010 11:30:25 +0100
-Message-ID: <1265711427-15193-9-git-send-email-jnareb@gmail.com>
+Subject: [RFC PATCHv2 09/10] gitweb/cache.pm - Regenerate (refresh) cache in background
+Date: Tue,  9 Feb 2010 11:30:26 +0100
+Message-ID: <1265711427-15193-10-git-send-email-jnareb@gmail.com>
 References: <1265711427-15193-1-git-send-email-jnareb@gmail.com>
 Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	John 'Warthog9' Hawley <warthog9@kernel.org>,
 	Petr Baudis <pasky@suse.cz>, Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 09 11:31:42 2010
+X-From: git-owner@vger.kernel.org Tue Feb 09 11:31:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NenNd-00041a-EF
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 11:31:41 +0100
+	id 1NenNe-00041a-5p
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 11:31:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751731Ab0BIKbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 05:31:06 -0500
-Received: from mail-fx0-f220.google.com ([209.85.220.220]:37995 "EHLO
+	id S1754061Ab0BIKbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2010 05:31:10 -0500
+Received: from mail-fx0-f220.google.com ([209.85.220.220]:57151 "EHLO
 	mail-fx0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753991Ab0BIKa4 (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751406Ab0BIKa4 (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 9 Feb 2010 05:30:56 -0500
-Received: by mail-fx0-f220.google.com with SMTP id 20so3026604fxm.21
-        for <git@vger.kernel.org>; Tue, 09 Feb 2010 02:30:53 -0800 (PST)
+Received: by mail-fx0-f220.google.com with SMTP id 20so3026581fxm.21
+        for <git@vger.kernel.org>; Tue, 09 Feb 2010 02:30:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=kIzscT1S2Jum7Q4GzlT//i8ewKNLWxLNDemTpemUSRo=;
-        b=QAjNYHATxgawQOcU5S+PIcp8AozzpkZx5Ts9/K9QGLI839603nxkEsdeWuEFKIyGXt
-         JFgCXK4nPfWQ27P+VIjbalxfy97CMxVQeiPl+IQnzylpFKaTc4y82dHBYJu0Yg0cIwip
-         wbs7tj0oFYWnF68JwQ6U8tsHT+OOMWVqZjyWc=
+        bh=Yr7V+QhOdPIhY6pwlGpXFg5YD8rERFTHgHLJ/c1hdcs=;
+        b=S/9PZmFJzl6FtNkoo9fkGuMVRtYWw14pIXklPYAaSYQdn2VLTOsm/LQS94o8fPSrcD
+         16QVw6mqVAhLmLeFg9wSR69Bet4OAiRAVHHWahlEVTPqFnju0pXFPUXONeurvvscZMsx
+         v8IlADHHqhoTpsIgz2In1OFxha1dMb5gIhSuk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=n+9J3e9Q+WLcs5JP0AbmJw+jvwHyj2ZRsTYCwcgX40l7+g2CcP4YLLhFgMch4ZqS9U
-         NfS5gqDM9rhUd+JRKpBOEHFYaszY8ek2c2GWmaOAE/eK0uTIPWPfJuoUEmtAx7oHLvtZ
-         66JQZFYWOmPauDB09VYqdaT6aNHnWBhAqsY1s=
-Received: by 10.87.5.15 with SMTP id h15mr10637135fgi.43.1265711453337;
-        Tue, 09 Feb 2010 02:30:53 -0800 (PST)
+        b=cgbax3fmYysuDHcTfYJWsB4S354I4bfVoDAZeWWERrEubXzcl7SzHYPdJCb09Chdp+
+         a6rsapl1TDqrmCdcvdRD0Vt4oOZWd3V6U+o4pNhsm4PdNcq/SBkYzKXJe2C5lsKMl7mE
+         ZgYgO+TUxMZj5mbHnTxwqgquZq4hW+1WWAhFo=
+Received: by 10.223.5.212 with SMTP id 20mr5965104faw.19.1265711454964;
+        Tue, 09 Feb 2010 02:30:54 -0800 (PST)
 Received: from localhost.localdomain (abvg140.neoplus.adsl.tpnet.pl [83.8.204.140])
-        by mx.google.com with ESMTPS id 16sm2344332fxm.8.2010.02.09.02.30.51
+        by mx.google.com with ESMTPS id 16sm2344332fxm.8.2010.02.09.02.30.53
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 09 Feb 2010 02:30:52 -0800 (PST)
+        Tue, 09 Feb 2010 02:30:54 -0800 (PST)
 X-Mailer: git-send-email 1.6.6.1
 In-Reply-To: <1265711427-15193-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139390>
 
-When process fails to acquire exclusive (writers) lock, then instead
-of waiting for the other process to (re)generate and fill cache, serve
-stale (expired) data from cache.  This is of course possible only if
-there is some stale data in cache for given key.
+This commit removes assymetry in serving stale data (if it exists)
+when regenerating cache in GitwebCache::SimpleFileCache.  The process
+that acquired exclusive (writers) lock, and is therefore selected to
+be the one that (re)generates data to fill the cache, can now generate
+data in background, while serving stale data.
 
-This feature of GitwebCache::SimpleFileCache is used only for an
-->update($key, $code) method.  It is controlled by 'max_lifetime'
-cache parameter; you can set it to -1 to always serve stale data
-if it exists, and you can set it to 0 (or any value smaller than
-'expires_min') to turn this feature off.
-
-This feature, as it is implemented currently, makes ->update() method a
-bit assymetric with respect to process that acquired writers lock and
-those processes that didn't, which can be seen in the new test in t9503.
-The process that is to regenerate (refresh) data in cache must wait for
-the data to be generated in full before showing anything to client, while
-the other processes show stale (expired) data immediately.  In order to
-remove or reduce this assymetry gitweb would need to employ one of the two
-alternate solutions.  Either data should be (re)generated in background,
-so that process that acquired writers lock would generate data in
-background while serving stale data, or alternatively the process that
-generates data should pass output to original STDOUT while capturing it
-("tee" otput).
-
-When developing this feature, ->is_valid() method acquired additional
-extra optional parameter, where one cap pass expire time instead of using
-cache-wode global expire time.
+This feature can be enabled or disabled on demand via 'background_cache'
+cache parameter.  It is turned on by default.
 
 To be implemented (from original patch by J.H.):
-* background building,
 * server-side progress indicator when waiting for filling cache,
   which in turn requires separating situations (like snapshots and
   other non-HTML responses) where we should not show 'please wait'
@@ -90,223 +70,184 @@ To be implemented (from original patch by J.H.):
 Inspired-by-code-by: John 'Warthog9' Hawley <warthog9@kernel.org>
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
+This is second part of what was single commit in previous version of
+this series.
+
 Differences from v1:
-* Proper commit messages
-* Both serving stale data (this patch) and background generation (next
-  patch) were together in a single patch in previous version of this
-  series.
-* There is limit (like in J.H. patch) how stale can cache entry be to be
-  eligible to be served while waiting for cache to be refreshed.  You can
-  set 'max_lifetime' to -1 to always serve stale data if it exists, no
-  matter how long ago it was generated (this is the default, like in v1).
-* The above led to modifying ->is_valid() to accept optional parameter
-  specifying max age.  Note that this max age is not influenced by
-  'check_load' (is not adaptive).
-* Because background cache generation was split in separate patch, for now
-  serving stale data is used only for readers (processes which would have to
-  wait for refreshing cache).
-* This feature is turned off in tests, and turned on only for testng this
-  feature.  Extra test that this feature can be turned off, which caused
-  refactoring common code.
+* Proper commit message
+* You can now configure whether to use background cache (re)generation with
+  'background_cache' parameter (field), which is turned on by default.
+* Simplified code for forking writer.
+* Close lockfile, releasing lock, before waitpid for child.
+* Child (serving stale data) doesn't close lockfile explicitly, although
+  that doesn't mean much as lockfile is closed automatically on leaving
+  dynamic scope for indirect filehandle $lock_fh (on its desctruction).
+  This change perhaps should be reverted.
 
 Differences from relevant parts of J.H. patch:
-* Instead of using $maxCacheLife, use 'max_lifetime' option (with
-  'max_cache_lifetime' as optional spelling in GitwebCache::SimpleFileCache
-  constructor).
-* Use 5*60*60 seconds for 5 hours, rather than 18000 (or 18_000) seconds.
-* Serving stale data was enabled only when background cache regeneration was
-  enabled; here it is enabled for readers regardless whether background
-  generation (introduced in next commit) is turned on or not. 
+* Fork (run generating process in background) only if there is stale data to
+  serve (and if background cache is turned on).
+* In J.H. patch forking was done uncoditionally, only generation or exit
+  depended on $backgroundCache.
+* Lock before forking (which I am not sure if is a good idea, but on the
+  other hand tests passes, so...)
+* Tests (currently only of API)
+* In my opinion cleaner control flow.
 
-Possible improvements:
-* Run long tests only with --long (well, they are not _that_ long).
-
- gitweb/cache.pm                 |   23 ++++++++++----
- gitweb/gitweb.perl              |    8 +++++
- t/t9503/test_cache_interface.pl |   63 +++++++++++++++++++++++++++++++++++++-
- 3 files changed, 86 insertions(+), 8 deletions(-)
+ gitweb/cache.pm                 |   36 +++++++++++++++++++++++++++++-------
+ gitweb/gitweb.perl              |    9 +++++++++
+ t/t9503/test_cache_interface.pl |   14 ++++++++------
+ 3 files changed, 46 insertions(+), 13 deletions(-)
 
 diff --git a/gitweb/cache.pm b/gitweb/cache.pm
-index 5c2de7e..e3bbe57 100644
+index e3bbe57..c3a6c26 100644
 --- a/gitweb/cache.pm
 +++ b/gitweb/cache.pm
-@@ -66,6 +66,7 @@ sub new {
+@@ -66,7 +66,7 @@ sub new {
  
  	my ($root, $depth, $ns);
  	my ($expires_min, $expires_max, $increase_factor, $check_load);
-+	my ($max_lifetime);
+-	my ($max_lifetime);
++	my ($max_lifetime, $background_cache);
  	if (defined $p_options_hash_ref) {
  		$root  =
  			$p_options_hash_ref->{'cache_root'} ||
-@@ -82,6 +83,9 @@ sub new {
- 			$p_options_hash_ref->{'expires_max'};
- 		$increase_factor = $p_options_hash_ref->{'expires_factor'};
- 		$check_load      = $p_options_hash_ref->{'check_load'};
-+		$max_lifetime =
-+			$p_options_hash_ref->{'max_lifetime'} ||
-+			$p_options_hash_ref->{'max_cache_lifetime'};
+@@ -86,6 +86,7 @@ sub new {
+ 		$max_lifetime =
+ 			$p_options_hash_ref->{'max_lifetime'} ||
+ 			$p_options_hash_ref->{'max_cache_lifetime'};
++		$background_cache = $p_options_hash_ref->{'background_cache'};
  	}
  	$root  = $DEFAULT_CACHE_ROOT  unless defined($root);
  	$depth = $DEFAULT_CACHE_DEPTH unless defined($depth);
-@@ -91,12 +95,14 @@ sub new {
- 		if (!defined($expires_max) && exists $p_options_hash_ref->{'expires_in'});
+@@ -96,6 +97,7 @@ sub new {
  	$expires_max = 1200 unless (defined($expires_max));
  	$increase_factor = 60 unless defined($increase_factor);
-+	$max_lifetime = -1 unless defined($max_lifetime);
+ 	$max_lifetime = -1 unless defined($max_lifetime);
++	$background_cache = 1 unless defined($background_cache);
  
  	$self->set_root($root);
  	$self->set_depth($depth);
- 	$self->set_namespace($ns);
- 	$self->set_expires_min($expires_min);
- 	$self->set_expires_max($expires_max);
-+	$self->set_max_lifetime($max_lifetime);
+@@ -105,6 +107,7 @@ sub new {
+ 	$self->set_max_lifetime($max_lifetime);
  	$self->set_increase_factor($increase_factor);
  	$self->set_check_load($check_load);
++	$self->set_background_cache($background_cache);
  
-@@ -108,7 +114,7 @@ sub new {
+ 	return $self;
+ }
+@@ -114,7 +117,9 @@ sub new {
  
  # http://perldesignpatterns.com/perldesignpatterns.html#AccessorPattern
  
--foreach my $i (qw(depth root namespace expires_min expires_max increase_factor check_load)) {
-+foreach my $i (qw(depth root namespace expires_min expires_max increase_factor check_load max_lifetime)) {
+-foreach my $i (qw(depth root namespace expires_min expires_max increase_factor check_load max_lifetime)) {
++foreach my $i (qw(depth root namespace
++                  expires_min expires_max increase_factor check_load
++                  max_lifetime background_cache)) {
  	my $field = $i;
  	no strict 'refs';
  	*{"get_$field"} = sub {
-@@ -295,7 +301,7 @@ sub remove {
+@@ -353,14 +358,31 @@ sub compute {
  
- # exists in cache and is not expired
- sub is_valid {
--	my ($self, $key) = @_;
-+	my ($self, $key, $expires_in) = @_;
- 
- 	my $path = $self->path_to_key($key);
- 
-@@ -303,7 +309,7 @@ sub is_valid {
- 	return 0 unless -f $path;
- 
- 	# expire time can be set to never
--	my $expires_in = $self->get_expires_in();
-+	$expires_in = defined $expires_in ? $expires_in : $self->get_expires_in();
- 	return 1 unless (defined $expires_in && $expires_in >= 0);
- 
- 	# is file expired?
-@@ -352,9 +358,14 @@ sub compute {
- 		$data = $p_coderef->($self, $p_key);
- 		$self->set($p_key, $data);
- 	} else {
--		# get readers lock
--		flock($lock_fh, LOCK_SH);
--		$data = $self->fetch($p_key);
-+		# try to retrieve stale data
-+		$data = $self->fetch($p_key)
-+			if $self->is_valid($p_key, $self->get_max_lifetime());
-+		if (!defined $data) {
-+			# get readers lock if there is no stale data to serve
-+			flock($lock_fh, LOCK_SH);
-+			$data = $self->fetch($p_key);
+ 	open my $lock_fh, '+>', $lockfile;
+ 	#	or die "Can't open lockfile '$lockfile': $!";
++
++	# try to retrieve stale data
++	$data = $self->fetch($p_key)
++		if $self->is_valid($p_key, $self->get_max_lifetime());
++
+ 	if (my $lock_state = flock($lock_fh, LOCK_EX | LOCK_NB)) {
+ 		# acquired writers lock
+-		$data = $p_coderef->($self, $p_key);
+-		$self->set($p_key, $data);
++		my $pid = fork() if ($data && $self->get_background_cache());
++		if (!defined $pid || $pid) {
++			# parent, or didn't fork
++			$data = $p_coderef->($self, $p_key);
++			$self->set($p_key, $data);
++
++			if ($pid) {
++				# releases lock before waiting and exiting
++				close $lock_fh;
++				# wait for child (which would print) and exit
++				waitpid $pid, 0;
++				exit 0;
++			}
++		} else {
++			# child is to serve stale data
++			return $data;
 +		}
- 	}
- 	# closing lockfile releases lock
- 	close $lock_fh;
+ 	} else {
+-		# try to retrieve stale data
+-		$data = $self->fetch($p_key)
+-			if $self->is_valid($p_key, $self->get_max_lifetime());
+ 		if (!defined $data) {
+ 			# get readers lock if there is no stale data to serve
+ 			flock($lock_fh, LOCK_SH);
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index aabed72..ea0ad25 100755
+index ea0ad25..8a97e50 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -285,6 +285,14 @@ our %cache_options = (
- 	# lifetime control.
- 	# (Compatibile with Cache::Adaptive.)
- 	'check_load' => \&get_loadavg,
+@@ -293,6 +293,15 @@ our %cache_options = (
+ 	# Set it to -1 to always serve existing data if it exists,
+ 	# set it to 0 to turn off serving stale data - always wait.
+ 	'max_lifetime' => 5*60*60, # 5 hours
 +
-+	# Maximum cache file life, in seconds.  If cache entry lifetime exceeds
-+	# this value, it wouldn't be served as being too stale when waiting for
-+	# cache to be regenerated/refreshed, instead of trying to display
-+	# existing cache date.
-+	# Set it to -1 to always serve existing data if it exists,
-+	# set it to 0 to turn off serving stale data - always wait.
-+	'max_lifetime' => 5*60*60, # 5 hours
++	# This enables/disables background caching.  If it is set to true value,
++	# caching engine would return stale data (if it is not older than
++	# 'max_lifetime' seconds) if it exists, and launch process if regenerating
++	# (refreshing) cache into the background.  If it is set to false value,
++	# the process that fills cache must always wait for data to be generated.
++	# In theory this will make gitweb seem more responsive at the price of
++	# serving possibly stale data.
++	'background_cache' => 1,
  );
  
  
 diff --git a/t/t9503/test_cache_interface.pl b/t/t9503/test_cache_interface.pl
-index 42fe359..922c7cd 100755
+index 922c7cd..41c7bc3 100755
 --- a/t/t9503/test_cache_interface.pl
 +++ b/t/t9503/test_cache_interface.pl
-@@ -53,8 +53,11 @@ ok($return,          "run   gitweb/cache.pm");
- 
- # Test creating a cache
- #
--my $cache = new_ok('GitwebCache::SimpleFileCache',
--	[ { 'cache_root' => 'cache', 'cache_depth' => 2 } ]);
-+my $cache = new_ok('GitwebCache::SimpleFileCache', [ {
-+	'cache_root' => 'cache',
-+	'cache_depth' => 2,
-+	'max_lifetime' => 0, # turn it off
-+} ]);
- 
- # Test that default values are defined
- #
-@@ -269,6 +272,62 @@ if ((my $use_perlio_util = $test_perlio_util)) {
- 	is($test_data, $cached_output,             'action output is printed (from cache)');
+@@ -299,32 +299,34 @@ sub run_compute_forked {
  }
+ $cache->set_expires_in(0);    # expire now
+ $cache->set_max_lifetime(-1); # forever
++ok($cache->get_background_cache(), 'generate cache in background by default');
+ $pid = open $kid_fh, '-|';
+ SKIP: {
+-	skip "cannot fork: $!", 2
++	skip "cannot fork: $!", 3
+ 		unless defined $pid;
  
-+# Test that cache returns stale data in existing but expired cache situation
-+# (probably should be run only if GIT_TEST_LONG)
-+#
-+my $stale_value = 'Stale Value';
-+my $child_data = '';
-+$cache->set($key, $stale_value);
-+$call_count = 0;
-+sub run_compute_forked {
-+	my $pid = shift;
-+
-+	my $data = $cache->compute($key, \&get_value_slow);
-+
-+	if ($pid) {
-+		$child_data = <$kid_fh>;
-+		chomp $child_data;
-+
-+		waitpid $pid, 0;
-+		close $kid_fh;
-+	} else {
-+		print "$data\n";
-+		exit 0;
-+	}
-+
-+	return $data;
-+}
-+$cache->set_expires_in(0);    # expire now
-+$cache->set_max_lifetime(-1); # forever
-+$pid = open $kid_fh, '-|';
-+SKIP: {
+ 	my $data = run_compute_forked($pid);
+ 
+ 	# returning stale data works
+-	ok($data eq $stale_value || $child_data eq $stale_value,
+-	   'stale data in at least one process when expired');
++	is($data,       $stale_value, 'stale data in parent when expired');
++	is($child_data, $stale_value, 'stale data in child  when expired');
+ 
+ 	$cache->set_expires_in(-1); # never expire for next ->get
++	sleep 1; # wait for background process to have chance to set data
+ 	is($cache->get($key), $value, 'value got set correctly, even if stale data returned');
+ }
+ $cache->set_expires_in(0);   # expire now
+ $cache->set_max_lifetime(0); # don't serve stale data
+ $pid = open $kid_fh, '-|';
+ SKIP: {
+-	skip "cannot fork: $!", 1
 +	skip "cannot fork: $!", 2
-+		unless defined $pid;
-+
-+	my $data = run_compute_forked($pid);
-+
-+	# returning stale data works
-+	ok($data eq $stale_value || $child_data eq $stale_value,
-+	   'stale data in at least one process when expired');
-+
-+	$cache->set_expires_in(-1); # never expire for next ->get
-+	is($cache->get($key), $value, 'value got set correctly, even if stale data returned');
-+}
-+$cache->set_expires_in(0);   # expire now
-+$cache->set_max_lifetime(0); # don't serve stale data
-+$pid = open $kid_fh, '-|';
-+SKIP: {
-+	skip "cannot fork: $!", 1
-+		unless defined $pid;
-+
-+	my $data = run_compute_forked($pid);
-+
-+	# no returning stale data
-+	ok($data ne $stale_value && $child_data ne $stale_value,
-+	   'configured to never return stale data');
-+}
-+$cache->set_expires_in(-1);
-+
- done_testing();
+ 		unless defined $pid;
  
- print Dumper($cache);
+ 	my $data = run_compute_forked($pid);
+ 
+ 	# no returning stale data
+-	ok($data ne $stale_value && $child_data ne $stale_value,
+-	   'configured to never return stale data');
++	isnt($data,       $stale_value, 'no stale data in parent if configured');
++	isnt($child_data, $stale_value, 'no stale data in child  if configured');
+ }
+ $cache->set_expires_in(-1);
+ 
 -- 
 1.6.6.1
