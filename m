@@ -1,83 +1,51 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] blame: prevent a segv when -L given start > EOF
-Date: Mon, 8 Feb 2010 23:09:30 -0500
-Message-ID: <76718491002082009u6a94d628ncf060820d427df7c@mail.gmail.com>
-References: <1265687293-11168-1-git-send-email-jaysoffian@gmail.com>
-	 <7vtytrrrju.fsf@alter.siamese.dyndns.org>
+From: Larry D'Anna <larry@elder-gods.org>
+Subject: Re: [PATCH v3 2/3] git-push: clean up some of the output from git
+ push --porcelain
+Date: Mon, 8 Feb 2010 23:54:17 -0500
+Message-ID: <20100209045417.GA15210@cthulhu>
+References: <214a0317f2e4707a866b2f5d10509296bc1479c1.1265661033.git.larry@elder-gods.org>
+ <a1b71c9f6566549e6117f5c98c2f1e60754a7334.1265661033.git.larry@elder-gods.org>
+ <7vtytrih7b.fsf@alter.siamese.dyndns.org>
+ <7vvde7h1mn.fsf@alter.siamese.dyndns.org>
+ <20100208213256.GA470@coredump.intra.peff.net>
+ <7viqa7cqs9.fsf@alter.siamese.dyndns.org>
+ <20100208223107.GB21718@cthulhu>
+ <7vpr4f9wey.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 09 05:09:38 2010
+X-From: git-owner@vger.kernel.org Tue Feb 09 05:55:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NehPu-0006fE-13
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 05:09:38 +0100
+	id 1Nei7z-00049y-9s
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 05:55:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752013Ab0BIEJd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Feb 2010 23:09:33 -0500
-Received: from mail-iw0-f182.google.com ([209.85.223.182]:59216 "EHLO
-	mail-iw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751495Ab0BIEJc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Feb 2010 23:09:32 -0500
-Received: by iwn12 with SMTP id 12so8171291iwn.26
-        for <git@vger.kernel.org>; Mon, 08 Feb 2010 20:09:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=dd72yMJx7dpfH8qlhZ5b4NSxQavw7fnkQ1ebS0Lx5vM=;
-        b=ofNnr3s5APLvtLT5VpMuzNx56iJ9byIiFFkfn0cixBkIQMr2ErFuZYWCZCbp0jJyaL
-         VfU/spwEKq0dNCHObzjojHFHl5ktrDvUmC2efjFNbcJf9w5WAcr+e9Lp0c2cm+46zFzY
-         zWd6vGsLE565nC6BhIQGuwXE42CPgL8oKpgu8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=iQX8uUHNU1vStpXe31fQmftejv+VVON+3B0ri4IiycOEg9MUDqumEVGHSj2Qcu1fUt
-         KKBJUsnUXsih/B5T1SJqa4E3IdsZzSc/2rG7URQKK7ttmyZ/RTSte/mRfGNc5hYKL+vo
-         vS4za71dHnUrhqd9+jyZeHfoyU1Nq7LCxws5k=
-Received: by 10.231.145.69 with SMTP id c5mr1109945ibv.85.1265688570911; Mon, 
-	08 Feb 2010 20:09:30 -0800 (PST)
-In-Reply-To: <7vtytrrrju.fsf@alter.siamese.dyndns.org>
+	id S1753099Ab0BIEyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2010 23:54:19 -0500
+Received: from cthulhu.elder-gods.org ([140.239.99.253]:46671 "EHLO
+	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752938Ab0BIEyS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2010 23:54:18 -0500
+Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
+	id 61ED082200E; Mon,  8 Feb 2010 23:54:17 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7vpr4f9wey.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139362>
 
-On Mon, Feb 8, 2010 at 10:55 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Jay Soffian <jaysoffian@gmail.com> writes:
->
->> - =C2=A0 =C2=A0 if (lno < top)
->> + =C2=A0 =C2=A0 if (lno < top || lno < bottom)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die("file %s has on=
-ly %lu lines", path, lno);
->
-> Thanks; I think we make sure that "bottom < top" always hold true bef=
-ore
-> we reach this point, so checking with bottom alone should suffice, no=
-?
+* Junio C Hamano (gitster@pobox.com) [100208 17:48]:
+> *1* As I hinted repeatedly, I think many of them are mere churn, except
+> for "don't advice porcelain scripts" (good) and perhaps "exit with failure
+> status upon only this kind of failure" (I am undecided).  
 
-Right, so given "-L 10" at the point of that check:
-
-bottom =3D 0
-top =3D 10
-
-Whereas given "-L 10,100" at the point of that check:
-
-bottom =3D 9
-top =3D 100
-
-So the code needs to check both.  Previously it made sure neither was
-< 1, and swapped bottom/top if they were reversed.
-
-Sorry for the confusion.
-
-j.
+What about the "To" lines?  It seems that they really should go to stdout (if
+--porcelain is selected).  Otherwise, how does the reader of stdout know which
+refs got pushed to which remote?
