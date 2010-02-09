@@ -1,73 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/4] Some improvements for git-imap-send
-Date: Tue, 9 Feb 2010 13:54:10 -0500
-Message-ID: <20100209185410.GA22092@coredump.intra.peff.net>
-References: <7vaavj8h1k.fsf@alter.siamese.dyndns.org>
- <1265717345-2118-1-git-send-email-mitake@dcl.info.waseda.ac.jp>
- <20100209150650.GA15982@sigill.intra.peff.net>
- <40aa078e1002090713h7e7d2f93r4cca9649e98db735@mail.gmail.com>
- <20100209165745.GA21135@coredump.intra.peff.net>
- <40aa078e1002091037j226eb911v215a5564cba42142@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 1/4] make_absolute_path(): Do not append redundant slash
+Date: Tue, 9 Feb 2010 20:10:43 +0100
+Message-ID: <201002092010.43910.j6t@kdbg.org>
+References: <1265734950-15145-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Hitoshi Mitake <mitake@dcl.info.waseda.ac.jp>, gitster@pobox.com,
-	git@vger.kernel.org, jwhite@codeweavers.com,
-	robertshearman@gmail.com
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Tue Feb 09 19:54:18 2010
+Cc: git@vger.kernel.org,
+	=?utf-8?q?Jo=C3=A3o_Carlos_Mendes_Lu=C3=ADs?= <jonny@jonny.eng.br>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 09 20:12:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NevE0-0007Kp-Kf
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 19:54:17 +0100
+	id 1NevVT-0003KO-E6
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 20:12:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751151Ab0BISyL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Feb 2010 13:54:11 -0500
-Received: from peff.net ([208.65.91.99]:45539 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750965Ab0BISyK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2010 13:54:10 -0500
-Received: (qmail 24013 invoked by uid 107); 9 Feb 2010 18:54:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 09 Feb 2010 13:54:16 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Feb 2010 13:54:10 -0500
+	id S1751497Ab0BITMO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Feb 2010 14:12:14 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:43908 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751065Ab0BITMO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2010 14:12:14 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id C922B2C400C;
+	Tue,  9 Feb 2010 20:12:06 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 2FD5619F6B8;
+	Tue,  9 Feb 2010 20:10:44 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <1265734950-15145-1-git-send-email-pclouds@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <40aa078e1002091037j226eb911v215a5564cba42142@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139432>
 
-On Tue, Feb 09, 2010 at 07:37:44PM +0100, Erik Faye-Lund wrote:
+On Dienstag, 9. Februar 2010, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy=
+ wrote:
+> @@ -54,8 +54,9 @@ const char *make_absolute_path(const char *path)
+>  			if (len + strlen(last_elem) + 2 > PATH_MAX)
+>  				die ("Too long path name: '%s/%s'",
+>  						buf, last_elem);
+> -			buf[len] =3D '/';
+> -			strcpy(buf + len + 1, last_elem);
+> +			if (*buf !=3D '/' || buf[1] !=3D '\0')
+> +				buf[len++] =3D '/';
 
-> > Did you mean "SASL-support that is needed for CRAM-MD5"? The SASL n=
-eeded
-> > for that is pretty simple. Hitoshi's patch 3/4 does all of that alr=
-eady
-> > in less than 100 lines. =C2=A0Using a "real" sasl library might get=
- us more
-> > authentication methods than CRAM-MD5, but I don't know that anyone
-> > necessarily cares about them.
->=20
-> No, that's not what I meant. I agree that CRAM-MD5 should be
-> sufficient, but to be honest I'd already thought that once you have a=
-n
-> SSL connection, plaintext would also be sufficient. So I'm thinking o=
-f
-> this addition as a "hmpf, some server requires stuff that is really
-> over the top - perhaps we'll have this problem later with other
-> servers, and we'd be better off just using some well-tested
-> implementation". But that's kinda philosophical.
+Huh? You are adding a slash unless buf is exactly "/". That is, when bu=
+f=20
+is "/foo/" you still add a slash? That's not exactly avoiding redundanc=
+y.=20
+(Disclaimer: I didn't analyze the rest of the function whether my claim=
+ is=20
+true.)
 
-Ah, I see. Yes, it's possible that we may want to support other
-authentication methods later. In my experience, CRAM-MD5 is the only
-common non-plain IMAP mechanism used by IMAP, but I admit it has been
-quite a number of years since I actively paid attention to such things.
+> +			strcpy(buf + len, last_elem);
+>  			free(last_elem);
+>  			last_elem =3D NULL;
+>  		}
 
-I'd leave that choice to whoever feels like implementing it. :)
-
--Peff
+-- Hannes
