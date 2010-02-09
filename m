@@ -1,72 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Better cooperation between checkouts and stashing
-Date: Tue, 09 Feb 2010 12:06:15 -0800
-Message-ID: <7vbpfy9nt4.fsf@alter.siamese.dyndns.org>
-References: <4B67227A.7030908@web.de>
- <7vhbq0wuy6.fsf@alter.siamese.dyndns.org> <4B71B574.3010609@web.de>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: [RFD] Notes are independent: proposal for new notes 
+	implementation
+Date: Tue, 9 Feb 2010 15:26:27 -0500
+Message-ID: <32541b131002091226p58b40237j40d3cd6cfaa91df5@mail.gmail.com>
+References: <201002092105.25636.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Markus Elfring <Markus.Elfring@web.de>
-X-From: git-owner@vger.kernel.org Tue Feb 09 21:06:37 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jon Seymour <jon.seymour@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 09 21:26:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NewM1-0003jz-1c
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 21:06:37 +0100
+	id 1Newfe-000899-Fq
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 21:26:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753722Ab0BIUGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 15:06:31 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52394 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753521Ab0BIUGY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2010 15:06:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C80D98ABE;
-	Tue,  9 Feb 2010 15:06:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fQfd9Dzazpc5rW6lOq348FiaGEg=; b=Kpj4kb
-	Qj7gHRrmGk5WtCSHJC0gyxy4t7WZQZnZrv3OIxAZ+x/HgR+LgD5jTDyWM2z/WNGz
-	o1JZLwkLfCxXCXLHvOLc1coIi6bKj64shhVIHBhFvLj1penE8BmCyT0BRAixQZMu
-	K8GwcRW95yKT1+JmIj2UjA04GRh32tuHf4PBM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gYd6ryr8abPef58+FIjrAnowJgYuGgKK
-	Xc4EBdAPzSz2GffxjmX1V2aPW+fsWZfNzT/FNMzQwmEbOnAjOvzkIkR5aukFbnBx
-	n2tSZ2zj3F919tBZIIWO5/leIwtWsl8q6I4UNulBR5LgRzHmyhpSBZnSG7yWxtfQ
-	XLpwZYiTHdo=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4677798ABB;
-	Tue,  9 Feb 2010 15:06:21 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 876A798AB9; Tue,  9 Feb
- 2010 15:06:17 -0500 (EST)
-In-Reply-To: <4B71B574.3010609@web.de> (Markus Elfring's message of "Tue\, 09
- Feb 2010 20\:20\:20 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 97645B24-15B6-11DF-BB6F-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752025Ab0BIU0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2010 15:26:49 -0500
+Received: from mail-gx0-f224.google.com ([209.85.217.224]:36183 "EHLO
+	mail-gx0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751288Ab0BIU0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2010 15:26:48 -0500
+Received: by gxk24 with SMTP id 24so2149748gxk.1
+        for <git@vger.kernel.org>; Tue, 09 Feb 2010 12:26:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=qKTP08eCOZfvD2aEktHIVyGDgK2FSlPWYs1ZNTv77Kg=;
+        b=CB1W4/whyqzGWqdq4OaJ8rOUXzTHtJJFhl9srSjMxRREIoM9dNWtT/F5SkIICZGiO0
+         3S/UBHu0FEONrSd50fCfCWYmKE7CwOseEtsxydTcJJzLVBxo32dC1geJhbIJOkkTYcY+
+         1u24DI2f6RTdhps3bi+foiaMAHkH9SD0JkzEw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=FbxoFJeYd/4L3jHDDUxdq/BlC8I8UrikP9Orv7/eBlapBdiLv1gz2uGWn892LWuH+H
+         79vVkOqsaCf1hINujWos2Iw3qlp7lJbstR7/t/VW3XCOFkw63R6igxKB92W3POBDupUT
+         tTXXfindY+Rt1n990K5BQd6N7wb6vI0z9O0ec=
+Received: by 10.150.31.5 with SMTP id e5mr907922ybe.45.1265747207475; Tue, 09 
+	Feb 2010 12:26:47 -0800 (PST)
+In-Reply-To: <201002092105.25636.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139440>
 
-Markus Elfring <Markus.Elfring@web.de> writes:
+2010/2/9 Jakub Narebski <jnareb@gmail.com>:
+> But
+> what if the answer was to change implementation, decoupling history of
+> notes from each other, and keeping history of each note separate.
 
->>
->> We _can_ start experimenting with an option (similar to "checkout -m"),
->> which does:
->>   
->
-> Does the documentation need any improvements on the dependencies between
-> the mentioned subfunctions?
+Congratulations, you've re-invented CVS! :)
 
-Sorry, you lost me.  I did say and still think that it would be good to
-have in the documentation a separate section that teaches the users what
-happens to their uncommitted changes when checking out a different branch
-(or an unnamed branch).  But I am at loss guessing what dependencies among
-what "subfunctions" you are talking about.
+Seriously though, I'm not sure what problems this solved.  Notes that
+are related to each other can (and perhaps should) be in the same
+notes commit history; notes that are not related to each other can
+exist in separate histories with their own ref.
+
+> This means for example that if in repository A somebody annotated
+> commits foo and bar creating notes in this order, and in repository B
+> somebody annotated bar and foo (creating notes in reverse order), then
+> merging those changes would require generating merge commit even if
+> those notes are identical.
+
+That's a feature; now you have the true history of your notes, which
+is good for all the same reasons it's good in git.
+
+Of course this whole line of reasoning could lead to questions like
+"can I rebase my notes history?" and "what about rebase -i" and "can I
+maintain a notes patch queue" and so on.
+
+Have fun,
+
+Avery
