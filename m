@@ -1,70 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] blame: prevent a segv when -L given start > EOF
-Date: Mon, 08 Feb 2010 21:55:51 -0800
-Message-ID: <7vwrynq7fc.fsf@alter.siamese.dyndns.org>
-References: <1265687293-11168-1-git-send-email-jaysoffian@gmail.com>
- <7vtytrrrju.fsf@alter.siamese.dyndns.org>
+From: Frank Li <lznuaa@gmail.com>
+Subject: [ANNOUNCE] TortoiseGit 1.3.6.0 Release
+Date: Tue, 9 Feb 2010 13:58:36 +0800
+Message-ID: <1976ea661002082158ic46e7c8nce16f958754bad8f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 09 06:56:10 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: tortoisegit-dev <tortoisegit-dev@googlegroups.com>,
+	tortoisegit-announce@googlegroups.com,
+	tortoisegit-users@googlegroups.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 09 06:58:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nej4z-0007BV-Nz
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 06:56:10 +0100
+	id 1Nej7T-0008CV-IV
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 06:58:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752402Ab0BIF4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 00:56:01 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52320 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751941Ab0BIF4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2010 00:56:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ACFC697167;
-	Tue,  9 Feb 2010 00:55:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=astpbG3X0JCfVyIc8oJsc6E9ItY=; b=KM/s5m
-	s9oLbvbUjTxHXpJbaX1etBHeh3/9nvHe4kGk/nQqGpSY2z7zih3H4mXWy2npgP5W
-	UDbg06jqrxgcl6iksFK9RE3FYE4xskG6PivCS5jrLItinC1cBb0kC0BiKJPYiYLR
-	hqBjYwEHD60ne5MorOitgYN9q/9ovV2c4rVdM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wyEkd5KwpqNDxAhjq2MHNZ87BSy2/uIs
-	F7wdde9mojGHDshJyUYo8x7DIaOUwYnZwxdVHerHaq67WsURn2vjJOZ0BOj6oZ4F
-	Rl+yx9VlMxqq6+dlk4l0bccJUqVZRVPCGJcElIKvUnFpZe65Vog6XSo/ecYfVy98
-	mDzqQZ/h9YI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A1E197162;
-	Tue,  9 Feb 2010 00:55:56 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BD12497161; Tue,  9 Feb
- 2010 00:55:52 -0500 (EST)
-In-Reply-To: <7vtytrrrju.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon\, 08 Feb 2010 19\:55\:49 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CA49F87C-153F-11DF-A97E-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752938Ab0BIF6i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2010 00:58:38 -0500
+Received: from mail-yx0-f193.google.com ([209.85.210.193]:49919 "EHLO
+	mail-yx0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751998Ab0BIF6h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2010 00:58:37 -0500
+Received: by yxe31 with SMTP id 31so6478799yxe.21
+        for <git@vger.kernel.org>; Mon, 08 Feb 2010 21:58:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=CSl9qrZXPuHjqlbqSAONcgZbMUsLUFksBgZXnCc8AZY=;
+        b=dECHtv3UL0+wv4Can24AOzqiAQX7vAv6XJC/FKAi54xwx6B+o/EQL0o7Mi+UgMf1ub
+         Se83Jpg4c2dX+Qo+u7UIA9WrIzUizui5y4qvpYiLTKW+rqGmxs+TCll2F5VqxVoK0d/I
+         qV4gZbquBwPwdZuGRVQJTqTVszrN3GggAPo6w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=hkm18Snbb78sc6H6ibyjO8mmFnpJYS1PS1VrmEwguQNYA23nsYA5hy9SXnvN/SpN61
+         2yPw3j27SSwT3OMbgzqA0nuEDUZ+V/7Gd5Et9NNnNg64U48OtH9c4/RaLZnC52bW+I4m
+         3uckxDaIQKHhvuXZ41q75QNply+beZdik6yTc=
+Received: by 10.150.55.31 with SMTP id d31mr2815819yba.327.1265695116851; Mon, 
+	08 Feb 2010 21:58:36 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139370>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Download:
 
-> Jay Soffian <jaysoffian@gmail.com> writes:
->
->> -	if (lno < top)
->> +	if (lno < top || lno < bottom)
->>  		die("file %s has only %lu lines", path, lno);
->
-> Thanks; I think we make sure that "bottom < top" always hold true before
-> we reach this point, so checking with bottom alone should suffice, no?
+http://tortoisegit.googlecode.com/files/TortoiseGit-1.3.6.0-32bit.msi
 
-I am ... stupid.  If lno < bottom, then lno < top, but we need to check
-both anyway.
+http://tortoisegit.googlecode.com/files/TortoiseGit-1.3.6.0-64bit.msi
+
+= Release 1.3.6.0 =
+== Bug Fix ==
+ * Fixed log crash when no body message at commit
+ * Fixed issue #298: State of "View Patch/Hide Patch" link (commit
+window) is wrong in some ways
+ * Fixed issue #301: Show Log crashes with empty repo
+
+= Release 1.3.5.0 =
+== Features ==
+ * Support Annotated tags
+   Implemented issue #274: Enhancement: Annotated tags
+
+ * shallow clones support --depth at clone dialog
+   Fixed issue #290: Shallow clones support --depth at clone dialog
+
+ * Improve Diff Dialog
+   Change commit at diff dialog
+   Diff commit context menu show in git repository
+
+ * Log Dialog
+   Direct Launch external diff when open dialog at file
+   Log can refresh when Click Rev button.
+
+ * Context menu
+   Use setting dialog to control which menuitem is external menu.
+
+ * Sync Dialog
+   Add remote update at sync dialog
+
+== Bug Fix ==
+ * Fixed issue #294: commit template not supported and support msysgit unix path
+ * Fixed issue #282: Fom/To/Messages/Authors/Paths filters are
+eventually disabled
+ * Fixed issue #292: Very large dialog when merging
+ * Fixed issue #291: Blame makes empty "UserImages.bmp" file
+ * Fix crash when copy several log message to clipboards
+ * Fixed issue #284: Show Log crashes when switching branches wait for
+log thread exit
+ * Fixed issue #285: Cherry picking no longer works
+ * Fix fetch command can't sync remote branch at sync dialog
