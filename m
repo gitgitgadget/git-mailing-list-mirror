@@ -1,94 +1,92 @@
 From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: error: packfile size changed
-Date: Tue, 9 Feb 2010 15:15:20 +0100
-Message-ID: <40aa078e1002090615m3fb94fc5k89d968eebe2c137a@mail.gmail.com>
-References: <40aa078e1002080917s1c23580bo815de0c1afa4922@mail.gmail.com>
+Subject: Re: [PATCH 3/4] git-imap-send: Implement CRAM-MD5 auth method
+Date: Tue, 9 Feb 2010 15:22:47 +0100
+Message-ID: <40aa078e1002090622vb65027xa53acff95557a183@mail.gmail.com>
+References: <7vaavj8h1k.fsf@alter.siamese.dyndns.org>
+	 <1265717345-2118-4-git-send-email-mitake@dcl.info.waseda.ac.jp>
 Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
-X-From: git-owner@vger.kernel.org Tue Feb 09 15:15:28 2010
+Cc: gitster@pobox.com, git@vger.kernel.org,
+	Jeremy White <jwhite@codeweavers.com>,
+	Robert Shearman <robertshearman@gmail.com>
+To: Hitoshi Mitake <mitake@dcl.info.waseda.ac.jp>
+X-From: git-owner@vger.kernel.org Tue Feb 09 15:22:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NeqsC-0000dL-7o
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 15:15:28 +0100
+	id 1NeqzP-0005oY-Fy
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 15:22:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754682Ab0BIOPX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Feb 2010 09:15:23 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:42987 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754451Ab0BIOPW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Feb 2010 09:15:22 -0500
-Received: by ewy28 with SMTP id 28so3833513ewy.28
-        for <git@vger.kernel.org>; Tue, 09 Feb 2010 06:15:20 -0800 (PST)
+	id S1754762Ab0BIOWu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Feb 2010 09:22:50 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:42437 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754413Ab0BIOWt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Feb 2010 09:22:49 -0500
+Received: by ey-out-2122.google.com with SMTP id d26so1588054eyd.19
+        for <git@vger.kernel.org>; Tue, 09 Feb 2010 06:22:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:content-type
+         :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=Y0JXAV4sKIeehF+mhZbyGRI2J+MWAd9rjfyJxATTQ1I=;
-        b=PbDTjeMo8fbCkdHnK6x2vNe9PgvMc03wsB/fkong9zTjYF4yfnX2j1/njr0BHQMAdG
-         MbLMPVPHrRxtpr/2c/s6GC6BKQdwQ4/97ZGE25gIGGKRq56QxglgFSQRjbqwSuW+OT/2
-         J7rBETOODuiTa9LppzHZohuECJ8MDLppq2YPc=
+        bh=V6QEBUgFgqI7nAJfZc1CvaL+bYHH1x1V2qldRRRLkBE=;
+        b=VScSWR8HvjF1x5EhCItHTJAf8Zgbt+oH5yRJNgjHisZMq9nOqVX8ItP1ao5pEGDmSQ
+         zXCBygEth5wmlvrPhtnhfeZ1HPKFosbgfjmwG94tajgtXhWB6xuUvay2I7XxUnWLnClY
+         tJlc2yduM5RyUxKk1dABEVcB2X4wkNkBu1tMg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
         h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        b=uI+5U2SMANgSjTwa7WtAAEtcIJFTJweCKBTgSLr1INw7hDk6YwCTCty7vNgQGGULVx
-         Iq9YY27bmmm5D3PuzVE7NNYrAq/+jzg6eQZ3za3sAfDoBoIFQUkn2a9JU/m/cyt+hzz2
-         g+gQU3EDjV+RIxAqaba5VUc1wTu5KCNvc6I0Y=
-Received: by 10.216.87.67 with SMTP id x45mr1501360wee.18.1265724920242; Tue, 
-	09 Feb 2010 06:15:20 -0800 (PST)
-In-Reply-To: <40aa078e1002080917s1c23580bo815de0c1afa4922@mail.gmail.com>
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=OL1Qfcw1HkkjtDKTgLmCkHwqyuigN4CaY271l2FAaDDJ8UFr6bJm8BegBvvpJEPcVs
+         KAzBiMwF7zqqFb5zjmh1r+2SlE0nwV4gGe0LnDykWW35TDrCx0ejD3Tvmw/LrkMTlcee
+         cUnl+XPAUbNhWegMM1UPn6w2hiXsuLW9VFph0=
+Received: by 10.216.93.18 with SMTP id k18mr130795wef.218.1265725367566; Tue, 
+	09 Feb 2010 06:22:47 -0800 (PST)
+In-Reply-To: <1265717345-2118-4-git-send-email-mitake@dcl.info.waseda.ac.jp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139405>
 
-On Mon, Feb 8, 2010 at 6:17 PM, Erik Faye-Lund <kusmabite@googlemail.co=
-m> wrote:
-> I was just about to push out a branch to a remote repo, and got a
-> quite worrying error message:
->
-> $ git push kusma work/git-svn-autocrlf
-> Counting objects: 3475, done.
-> Delta compression using up to 8 threads.
-> Compressing objects: 100% (1132/1132), done.
-> Writing objects: 100% (2503/2503), 933.82 KiB, done.
-> Total 2503 (delta 1909), reused 1927 (delta 1362)
-> error: packfile
-> ./objects/pack/pack-165dacbd05ac0aa1634eb220f2b6d3be05b2bd3c.pack siz=
-e
-> changed
-> error: packfile
-> ./objects/pack/pack-165dacbd05ac0aa1634eb220f2b6d3be05b2bd3c.pack
-> cannot be accessed
-> error: unpack should have generated
-> 83d114b6781e06b422a2062854dd3dede3795079, but I can't find it!
-> To ssh://kusma@repo.or.cz/srv/git/git/kusma.git
-> =A0! [remote rejected] work/git-svn-autocrlf -> work/git-svn-autocrlf=
- (bad pack)
-> error: failed to push some refs to
-> 'ssh://kusma@repo.or.cz/srv/git/git/kusma.git'
->
-> The push was attempted with git v1.7.0.rc2. It fails with v1.6.6.1
-> (and msysgit's devel-branch, 1.6.5.1.1375.gc836) as well.
->
-> I tried running "git fsck --full", but it didn't report anything apar=
-t
-> from dangling objects.
->
-> Any ideas, anyone?
->
+On Tue, Feb 9, 2010 at 1:09 PM, Hitoshi Mitake
+<mitake@dcl.info.waseda.ac.jp> wrote:
+> +static int auth_cram_md5(struct imap_store *ctx, struct imap_cmd *cm=
+d, const char *prompt)
+> +{
+> + =A0 =A0 =A0 int ret;
+> + =A0 =A0 =A0 char digest[DIGEST_HEX_LEN];
+> + =A0 =A0 =A0 char buf[256], base64_out[256];
+> +
+> + =A0 =A0 =A0 memset(buf, 0, 256);
+> + =A0 =A0 =A0 base64_decode(buf, prompt, strlen(prompt));
+> +
+> + =A0 =A0 =A0 memset(digest, 0, DIGEST_HEX_LEN);
+> + =A0 =A0 =A0 md5_hex_hmac(digest, (const unsigned char *)buf, strlen=
+(buf),
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0(const unsigned char *)serve=
+r.pass, strlen(server.pass));
+> +
+> + =A0 =A0 =A0 memset(buf, 0, 256);
+> + =A0 =A0 =A0 strcpy(buf, server.user);
+> + =A0 =A0 =A0 strcpy(buf + strlen(buf), " ");
+> + =A0 =A0 =A0 strcpy(buf + strlen(buf), digest);
+> + =A0 =A0 =A0 memset(base64_out, 0, 256);
+> + =A0 =A0 =A0 base64_encode(base64_out, buf, strlen(buf));
+> +
+> + =A0 =A0 =A0 ret =3D socket_write(&ctx->imap->buf.sock, base64_out, =
+strlen(base64_out));
 
-I tried doing the same again today, and it worked just fine. Perhaps
-it was just some glitch at the other end?
+Since this is the only location in this function that accesses
+anything inside ctx, how about just passing the imap_socket itself to
+the function? That'd make it a bit simpler if, say, I was rewriting
+send-email in C and wanted to add CRAM-MD5 AUTH support (given that
+I'd done the work to use imap_socket first)...
 
 --=20
 Erik "kusma" Faye-Lund
