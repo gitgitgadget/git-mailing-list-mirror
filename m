@@ -1,158 +1,217 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC PATCHv2 00/10] gitweb: Simple file based output caching
-Date: Tue,  9 Feb 2010 11:30:17 +0100
-Message-ID: <1265711427-15193-1-git-send-email-jnareb@gmail.com>
+Subject: [RFC PATCHv2 03/10] gitweb/cache.pm - Stat-based cache expiration
+Date: Tue,  9 Feb 2010 11:30:20 +0100
+Message-ID: <1265711427-15193-4-git-send-email-jnareb@gmail.com>
+References: <1265711427-15193-1-git-send-email-jnareb@gmail.com>
 Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	John 'Warthog9' Hawley <warthog9@kernel.org>,
 	Petr Baudis <pasky@suse.cz>, Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 09 11:30:52 2010
+X-From: git-owner@vger.kernel.org Tue Feb 09 11:31:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NenMk-0003al-8i
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 11:30:46 +0100
+	id 1NenN8-0003mJ-DP
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 11:31:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752588Ab0BIKal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 05:30:41 -0500
-Received: from mail-fx0-f220.google.com ([209.85.220.220]:57151 "EHLO
-	mail-fx0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751911Ab0BIKak (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2010 05:30:40 -0500
-Received: by fxm20 with SMTP id 20so3026581fxm.21
-        for <git@vger.kernel.org>; Tue, 09 Feb 2010 02:30:38 -0800 (PST)
+	id S1753957Ab0BIKaw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2010 05:30:52 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:14295 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753516Ab0BIKap (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2010 05:30:45 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so19774fgg.1
+        for <git@vger.kernel.org>; Tue, 09 Feb 2010 02:30:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=/7JAYgsB+0w4RdWNbRQBFsXllnrCDerS9PA28Cyp9S8=;
-        b=rPbfqz8sKPxm5g6Rf1mtRfYTkrGR50kw5Q/JET4xXfyIKskMoGAWQNyASwqlhsW1r3
-         J0OkVsJ5bxWlseE3gjKhQF9w7nJvJ530KG9EuXGFV/Fp2/1LDUBQPS+3rjPUUhuQvCdu
-         /1HpHrhrRMCM+0TLl4nAODPbF/PnVS7Nsg+eQ=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=Z3KqUurmd38vs2gsq3JUgeUiSnXxo84Miqv6TCpELS4=;
+        b=ZBUTuwGRi/5nuy4/kNyeICNmiOordPDLqkE8oB1p7qlr2FJH/KFPVWC/rgoD7cJ24Y
+         UinSNFOFnO16RF2vMdgMWV9mMQNysPz/eFmXjd3e3igaUmQAIqQstFa7x84qboYcFg9C
+         Q8uQjvvChQ6igLZaO9frEAamQiaddbilSUQOU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=sfd8wGuezHaSpWNeh705F8W481QZ70bjbQCqLCRpYZfL6G6qL0GE97sjB1KyCikcsB
-         Bg3TE6ifc7gGv9fOpNDcJPvE8VM5upwqewF7A00LoSBwM1W5z1HvJYlS9fI/bpfEgLUL
-         cwrh4nWsE83gyjCumBFl/n18QsGRwwIHuBZyo=
-Received: by 10.223.10.220 with SMTP id q28mr104086faq.46.1265711438692;
-        Tue, 09 Feb 2010 02:30:38 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=A36L4wArAdpyxjPItU20Fq1WV/eDfJaTXr0lfaSEjoTAA7C3DGXKXVHIcC1DBCJ5M8
+         blr5hybQQXd/h/MbH0/MMxyqJjInXO5bLdMHSQpkKb55IqI5t46JISd3t6xwBDTm5/o2
+         9Yv9+Icfy/OQDPpU17ZUcfm5mWGPJb/f5/PUM=
+Received: by 10.87.61.5 with SMTP id o5mr1832140fgk.79.1265711443639;
+        Tue, 09 Feb 2010 02:30:43 -0800 (PST)
 Received: from localhost.localdomain (abvg140.neoplus.adsl.tpnet.pl [83.8.204.140])
-        by mx.google.com with ESMTPS id 16sm2344332fxm.8.2010.02.09.02.30.36
+        by mx.google.com with ESMTPS id 16sm2344332fxm.8.2010.02.09.02.30.42
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 09 Feb 2010 02:30:37 -0800 (PST)
+        Tue, 09 Feb 2010 02:30:43 -0800 (PST)
 X-Mailer: git-send-email 1.6.6.1
+In-Reply-To: <1265711427-15193-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139383>
 
-This 10 patches long patch series is intended as preliminary version
-for splitting large 'gitweb: File based caching layer (from git.kernel.org)'
-mega-patch by John 'Warthog9' Hawley aka J.H., by starting small and
-adding features piece by piece.
+Add stat-based cache expiration to file-based GitwebCache::SimpleFileCache.
+Contrary to the way other caching interfaces such as Cache::Cache and CHI
+do it, the time cache element expires in is _global_ value associated with
+cache instance, and is not local property of cache entry.  (Currently cache
+entry does not store any metadata associated with entry... which means that
+there is no need for serialization / marshaling / freezing and thawing.)
+Default expire time is -1, which means never expire.
 
-This is second version (second release) of this series; previous is
-available at http://repo.or.cz/w/git/jnareb-git.git as 'gitweb/cache-kernel'
-branch.  It was sent as:
-* [RFC PATCH 00/10] gitweb: Simple file based output caching
-  Message-Id: <cover.1264198194.git.jnareb@gmail.com>
-  http://thread.gmane.org/gmane.comp.version-control.git/136913/focus=136917
-(note however that v1 series of emails is lacking one of patches because
-it was over VGER anti-spam size limit for messages).
+To check if cache entry is expired, GitwebCache::SimpleFileCache compares
+difference between mtime (last modify time) of a cache file and current time
+with (global) time to expire.  It is done using CHI-compatible is_valid()
+method.
 
-This version tries to do without 
-  gitweb: Print to explicit filehandle (preparing for caching)
-patch, by capturing output using either PerlIO layers manipulated
-using PerlIO::Util if this module is available, or direct manipulation
-of *STDOUT if PerlIO::Util isn't available.  One of the goals of this
-series is then decide whether it is worth to have explicit filehandle
-in print statements in gitweb, or not; if the complexity is worth not
-having to deal with straightforward but quite intrusive (and large)
-patch.
+Add some tests checking that expiring works correctly (on the level of API).
 
-As the earlier version was inspired by file-based caching in
-Cache::Cache, this one is inspired by file-based caching in more
-modern CHI (unified cache interface).
+To be implemented (from original patch by J.H.):
+* actually using this cache in gitweb, except error pages
+* adaptive cache expiration, based on average system load
+* optional locking interface, where only one process can update cache
+  (using flock)
+* server-side progress indicator when waiting for filling cache,
+  which in turn requires separating situations (like snapshots and
+  other non-HTML responses) where we should not show 'please wait'
+  message
 
-It still lacks POD for gitweb/cache.pm (would it be needed, or would
-comments be enough), and gitweb/cache.pm still ties rather heavily
-into gitweb (following still what was in original J.H. (mega)patch).
+Inspired-by-code-by: John 'Warthog9' Hawley <warthog9@kernel.org>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Now that caching engine supports cache expiration, we can add caching
+support to gitweb.
 
-It *does* have quite detailed commit messages, as opposed to v1 of
-this series, where some commits were described only in comment section
-of emails containing them.  It is also very configurable (Pasky, this
-would probably be of interest to you, as you didn't want to have 
-"Generating..." pages enabled), even more than in original patch
-by J.H.
+Differences from v1:
+* Showing diagnostic if there were parse errors in gitweb/cache.pm
+  was moved to previous commit
+* ->get_expires_in() and ->set_expires_in($duration) accessors are generated
+  rather than written by hand (reducing repetition of very similar code).
+* Test that value is not expired with expiration time of 1 day, and not 
+  forever ('expires_in' == -1).
 
+Differences from relevant parts of J.H. patch:
+* It simply uses stat on last accessed file (checked for existence),
+  instead of opening file for reading (without error detection!), running
+  stat on it, and then closing it.
+* One can use expire time of -1 (or to be more exact less than 0) to set
+  expire time to never (cache is considered fresh forever).
+* There are some tests in t9503 of cache expiration (one of those assume
+  that expire time of one day would be not expired in get after set).
 
-NOTE: there are quite a bit of _API_ tests, but I have not tested gitweb
-output with caching enabled extensively (thats how bug in "Generating..."
-slipped through - for details see comments in last patch).  I have tested
-that caching works around 4th patch in series, in that it doesn't cause
-errors and displays page (here the lack of error handling is decidely
-unhelpful), and that it displays the time when page was generated.  As I
-have installed PerlIO::Util using local::lib, i.e. locally in ~/perl5,
-I think that what I have been testing was the "*STDOUT munging" method
-of capturing gitweb output.  (See "Capturing gitweb output" section
-in PATCHv2 04/10).
+ gitweb/cache.pm                 |   34 ++++++++++++++++++++++++++++++++--
+ t/t9503/test_cache_interface.pl |   10 ++++++++++
+ 2 files changed, 42 insertions(+), 2 deletions(-)
 
-
-This series is based on commit 8424981934c415bd20643de9cc932bd348dfb115:
-(in the 'master' branch of git.git repository)
-  Jeff King (1):
-        Fix invalid read in quote_c_style_counted
-
-and is available in the git repository at:
-
-  git://repo.or.cz/git/jnareb-git.git gitweb/cache-kernel-v2
-
-Jakub Narebski (10):
-  gitweb: href(..., -path_info => 0|1)
-  gitweb/cache.pm - Very simple file based caching
-  gitweb/cache.pm - Stat-based cache expiration
-  gitweb: Use Cache::Cache compatible (get, set) output caching
-  gitweb/cache.pm - Adaptive cache expiration time
-  gitweb: Use CHI compatible (compute method) caching
-  gitweb/cache.pm - Use locking to avoid 'cache miss stampede' problem
-  gitweb/cache.pm - Serve stale data when waiting for filling cache
-  gitweb/cache.pm - Regenerate (refresh) cache in background
-  gitweb: Show appropriate "Generating..." page when regenerating cache
-
-Note that compared to previous version of this series, this version
-lacks initial commit.
-  gitweb: Print to explicit filehandle (preparing for caching)
-This is a bit of an experiment if we can do caching without large patch
-to gitweb upfront, and to decide whether tradeoff (more complicated
-capturing) is worth it.
-
-Also, one of the commits:
-  gitweb/cache.pm - Serve stale data when waiting for filling cache (WIP)
-was split into two separate commits:
-  gitweb/cache.pm - Serve stale data when waiting for filling cache
-  gitweb/cache.pm - Regenerate (refresh) cache in background
-one serving stale data (in processes waiting for cache to be filled, 
-aka readers), and one adding background cache regeneration. 
-
-After previous series I have sent additional (PATCH 11/10) patch:
-  gitweb: Ajax-y "Generating..." page when regenerating cache (WIP)
-This patch would require rework to apply to this new series.
-
-Diffstat:
-~~~~~~~~~
- gitweb/README                          |   70 +++++
- gitweb/cache.pm                        |  530 ++++++++++++++++++++++++++++++++
- gitweb/gitweb.perl                     |  305 +++++++++++++++++-
- t/gitweb-lib.sh                        |    2 +
- t/t9500-gitweb-standalone-no-errors.sh |   19 ++
- t/t9503-gitweb-caching.sh              |   32 ++
- t/t9503/test_cache_interface.pl        |  380 +++++++++++++++++++++++
- t/test-lib.sh                          |    3 +
- 8 files changed, 1325 insertions(+), 16 deletions(-)
- create mode 100644 gitweb/cache.pm
- create mode 100755 t/t9503-gitweb-caching.sh
- create mode 100755 t/t9503/test_cache_interface.pl
+diff --git a/gitweb/cache.pm b/gitweb/cache.pm
+index aebab01..b59509f 100644
+--- a/gitweb/cache.pm
++++ b/gitweb/cache.pm
+@@ -52,6 +52,10 @@ our $DEFAULT_CACHE_ROOT = "cache";
+ #    The number of subdirectories deep to cache object item.  This should be
+ #    large enough that no cache directory has more than a few hundred objects.
+ #    Defaults to 1 unless explicitly set.
++#  * 'default_expires_in' (Cache::Cache compatibile),
++#    'expires_in' (CHI compatibile) [seconds]
++#    The expiration time for objects place in the cache.
++#    Defaults to -1 (never expire) if not explicitly set.
+ sub new {
+ 	my ($proto, $p_options_hash_ref) = @_;
+ 
+@@ -59,7 +63,7 @@ sub new {
+ 	my $self  = {};
+ 	$self = bless($self, $class);
+ 
+-	my ($root, $depth, $ns);
++	my ($root, $depth, $ns, $expires_in);
+ 	if (defined $p_options_hash_ref) {
+ 		$root  =
+ 			$p_options_hash_ref->{'cache_root'} ||
+@@ -68,14 +72,19 @@ sub new {
+ 			$p_options_hash_ref->{'cache_depth'} ||
+ 			$p_options_hash_ref->{'depth'};
+ 		$ns    = $p_options_hash_ref->{'namespace'};
++		$expires_in =
++			$p_options_hash_ref->{'default_expires_in'} ||
++			$p_options_hash_ref->{'expires_in'};
+ 	}
+ 	$root  = $DEFAULT_CACHE_ROOT  unless defined($root);
+ 	$depth = $DEFAULT_CACHE_DEPTH unless defined($depth);
+ 	$ns    = '' unless defined($ns);
++	$expires_in = -1 unless defined($expires_in); # <0 means never
+ 
+ 	$self->set_root($root);
+ 	$self->set_depth($depth);
+ 	$self->set_namespace($ns);
++	$self->set_expires_in($expires_in);
+ 
+ 	return $self;
+ }
+@@ -85,7 +94,7 @@ sub new {
+ 
+ # http://perldesignpatterns.com/perldesignpatterns.html#AccessorPattern
+ 
+-foreach my $i (qw(depth root namespace)) {
++foreach my $i (qw(depth root namespace expires_in)) {
+ 	my $field = $i;
+ 	no strict 'refs';
+ 	*{"get_$field"} = sub {
+@@ -232,6 +241,26 @@ sub remove {
+ 	unlink($file);
+ }
+ 
++# exists in cache and is not expired
++sub is_valid {
++	my ($self, $key) = @_;
++
++	my $path = $self->path_to_key($key);
++
++	# does file exists in cache?
++	return 0 unless -f $path;
++
++	# expire time can be set to never
++	my $expires_in = $self->get_expires_in();
++	return 1 unless (defined $expires_in && $expires_in >= 0);
++
++	# is file expired?
++	my $mtime = (stat(_))[9];
++	my $now = time();
++
++	return (($now - $mtime) < $expires_in);
++}
++
+ # Getting and setting
+ 
+ sub set {
+@@ -245,6 +274,7 @@ sub set {
+ sub get {
+ 	my ($self, $key) = @_;
+ 
++	return undef unless $self->is_valid($key);
+ 	my $data = $self->fetch($key)
+ 		or return undef;
+ 
+diff --git a/t/t9503/test_cache_interface.pl b/t/t9503/test_cache_interface.pl
+index 9714f72..8700b71 100755
+--- a/t/t9503/test_cache_interface.pl
++++ b/t/t9503/test_cache_interface.pl
+@@ -79,6 +79,16 @@ is($cache->compute($key, \&get_value), $value, 'compute 2nd time (get)');
+ is($cache->compute($key, \&get_value), $value, 'compute 3rd time (get)');
+ cmp_ok($call_count, '==', 1, 'get_value() is called once from compute');
+ 
++# Test cache expiration for 'expire now'
++#
++$cache->set_expires_in(60*60*24); # set expire time to 1 day
++cmp_ok($cache->get_expires_in(), '>', 0, '"expires in" is greater than 0');
++is($cache->get($key), $value,            'get returns cached value (not expired)');
++$cache->set_expires_in(0);
++is($cache->get_expires_in(), 0,          '"expires in" is set to now (0)');
++$cache->set($key, $value);
++ok(!defined($cache->get($key)),          'cache is expired');
++
+ done_testing();
+ 
+ print Dumper($cache);
+-- 
+1.6.6.1
