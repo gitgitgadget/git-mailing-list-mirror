@@ -1,94 +1,95 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: [ANNOUNCE] TortoiseGit 1.3.6.0 Release
-Date: Tue, 9 Feb 2010 13:58:36 +0800
-Message-ID: <1976ea661002082158ic46e7c8nce16f958754bad8f@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Generate a warning message if we find an unrecognized
+ option.
+Date: Tue, 9 Feb 2010 00:59:38 -0500
+Message-ID: <20100209055938.GA14736@coredump.intra.peff.net>
+References: <4B70913F.7060809@winehq.org>
+ <20100209004514.GB4065@coredump.intra.peff.net>
+ <7vvde7z0kf.fsf@alter.siamese.dyndns.org>
+ <20100209030151.GA5370@coredump.intra.peff.net>
+ <20100209051730.GA28599@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: tortoisegit-dev <tortoisegit-dev@googlegroups.com>,
-	tortoisegit-announce@googlegroups.com,
-	tortoisegit-users@googlegroups.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 09 06:58:44 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jeremy White <jwhite@winehq.org>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 09 06:59:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nej7T-0008CV-IV
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 06:58:43 +0100
+	id 1Nej8R-0000Cv-R6
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 06:59:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752938Ab0BIF6i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 00:58:38 -0500
-Received: from mail-yx0-f193.google.com ([209.85.210.193]:49919 "EHLO
-	mail-yx0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751998Ab0BIF6h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2010 00:58:37 -0500
-Received: by yxe31 with SMTP id 31so6478799yxe.21
-        for <git@vger.kernel.org>; Mon, 08 Feb 2010 21:58:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=CSl9qrZXPuHjqlbqSAONcgZbMUsLUFksBgZXnCc8AZY=;
-        b=dECHtv3UL0+wv4Can24AOzqiAQX7vAv6XJC/FKAi54xwx6B+o/EQL0o7Mi+UgMf1ub
-         Se83Jpg4c2dX+Qo+u7UIA9WrIzUizui5y4qvpYiLTKW+rqGmxs+TCll2F5VqxVoK0d/I
-         qV4gZbquBwPwdZuGRVQJTqTVszrN3GggAPo6w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=hkm18Snbb78sc6H6ibyjO8mmFnpJYS1PS1VrmEwguQNYA23nsYA5hy9SXnvN/SpN61
-         2yPw3j27SSwT3OMbgzqA0nuEDUZ+V/7Gd5Et9NNnNg64U48OtH9c4/RaLZnC52bW+I4m
-         3uckxDaIQKHhvuXZ41q75QNply+beZdik6yTc=
-Received: by 10.150.55.31 with SMTP id d31mr2815819yba.327.1265695116851; Mon, 
-	08 Feb 2010 21:58:36 -0800 (PST)
+	id S1752274Ab0BIF7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2010 00:59:38 -0500
+Received: from peff.net ([208.65.91.99]:38614 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751297Ab0BIF7h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2010 00:59:37 -0500
+Received: (qmail 15633 invoked by uid 107); 9 Feb 2010 05:59:45 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 09 Feb 2010 00:59:45 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Feb 2010 00:59:38 -0500
+Content-Disposition: inline
+In-Reply-To: <20100209051730.GA28599@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139371>
 
-Download:
+On Mon, Feb 08, 2010 at 09:17:31PM -0800, David Aguilar wrote:
 
-http://tortoisegit.googlecode.com/files/TortoiseGit-1.3.6.0-32bit.msi
+> > > > And obviously that is weighed against the ability to notice things like
+> > > > typos. But if we are going to start complaining about unknown config, we
+> > > > would probably do better to complain about _all_ unknown config, and not
+> > > > just this one subsection.
+> 
+> No, please, please no.
 
-http://tortoisegit.googlecode.com/files/TortoiseGit-1.3.6.0-64bit.msi
+I would only be OK with it if it were optional.
 
-= Release 1.3.6.0 =
-== Bug Fix ==
- * Fixed log crash when no body message at commit
- * Fixed issue #298: State of "View Patch/Hide Patch" link (commit
-window) is wrong in some ways
- * Fixed issue #301: Show Log crashes with empty repo
+> > I would rather have a "git config --lint" command, but that is even
+> > harder, since we are not even loading most of the subsystems which know
+> > about the valid config options. And it presupposes that people will
+> > bother to actually run such a lint command.
+> 
+> This runs up against the same issue you pointed out
+> earlier--that older versions of git cannot adequately lint
+> configs from newer versions.
 
-= Release 1.3.5.0 =
-== Features ==
- * Support Annotated tags
-   Implemented issue #274: Enhancement: Annotated tags
+Yeah, but that isn't a big deal. You just don't run "config --lint" with
+the older version. But if, for example, "git diff" breaks because your
+config is too new, then that is a real pain (and that was what happened
+with color.diff.func recently).
 
- * shallow clones support --depth at clone dialog
-   Fixed issue #290: Shallow clones support --depth at clone dialog
+> There are also config variables from unknown git scripts outside
+> of git.git that happen to use the git-config mechanism because
+> it is convenient.  It would be unfortunate to punish those who
+> chose to make up their own config variables by warning them
+> that git doesn't know about them.
 
- * Improve Diff Dialog
-   Change commit at diff dialog
-   Diff commit context menu show in git repository
+Yes, I don't think anyone is proposing to lint _all_ variables. But it
+does not seem unreasonable for certain subsystems to claim portions of
+the namespace. I would expect git-core to own "core.*". And I would
+expect git-gui to own "git-gui", etc.
 
- * Log Dialog
-   Direct Launch external diff when open dialog at file
-   Log can refresh when Click Rev button.
+> I have to wonder if this is a non-existent problem.
+> 
+> Config variables are one-shot things.  You set them and forget
+> about them.  When you set it you are usually pretty well aware
+> of whether it's typoed because it simply does't work.
+> color.ui is a perfect example.  If it's typoed, you don't need
+> 'git config --lint' to tell you, you already know by virtue of
+> using the thing.
 
- * Context menu
-   Use setting dialog to control which menuitem is external menu.
+I think I agree with you on this. It is _much_ more annoying to me not
+to have version portability than it is not to have strict config
+checking. I was mainly trying to put myself in the shoes of "regular"
+users, who are less likely to be running the same config file on many
+different versions, and are more likely to be clueless about config. But
+I may have overcompensated.
 
- * Sync Dialog
-   Add remote update at sync dialog
-
-== Bug Fix ==
- * Fixed issue #294: commit template not supported and support msysgit unix path
- * Fixed issue #282: Fom/To/Messages/Authors/Paths filters are
-eventually disabled
- * Fixed issue #292: Very large dialog when merging
- * Fixed issue #291: Blame makes empty "UserImages.bmp" file
- * Fix crash when copy several log message to clipboards
- * Fixed issue #284: Show Log crashes when switching branches wait for
-log thread exit
- * Fixed issue #285: Cherry picking no longer works
- * Fix fetch command can't sync remote branch at sync dialog
+-Peff
