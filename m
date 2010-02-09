@@ -1,119 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t5401-update-hooks test failure
-Date: Tue, 09 Feb 2010 14:44:59 -0800
-Message-ID: <7vpr4eyqok.fsf@alter.siamese.dyndns.org>
-References: <7vtytrih7b.fsf@alter.siamese.dyndns.org>
- <7vvde7h1mn.fsf@alter.siamese.dyndns.org>
- <20100208213256.GA470@coredump.intra.peff.net>
- <7viqa7cqs9.fsf@alter.siamese.dyndns.org> <20100208223107.GB21718@cthulhu>
- <7vpr4f9wey.fsf@alter.siamese.dyndns.org> <20100209045417.GA15210@cthulhu>
- <7v4olqlva7.fsf@alter.siamese.dyndns.org>
- <20100209175139.GA28936@spearce.org>
- <alpine.LFD.2.00.1002091337421.1681@xanadu.home>
- <20100209192628.GC28936@spearce.org>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: [Announce] bup 0.09: git-based backup system for really huge datasets
+Date: Tue, 9 Feb 2010 17:48:03 -0500
+Message-ID: <32541b131002091448o6f809322x1d86d2d7f74a80ed@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Larry D'Anna <larry@elder-gods.org>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Feb 09 23:45:56 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 09 23:48:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Neypx-0002OK-D3
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 23:45:41 +0100
+	id 1Neysf-0005NX-KE
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 23:48:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753254Ab0BIWpX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 17:45:23 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38165 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753080Ab0BIWpQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2010 17:45:16 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BB3A981CD;
-	Tue,  9 Feb 2010 17:45:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UvODmkZfNwNTgcFATeUnfGde4gs=; b=T4iM/Q
-	izff5+RHLKVVwLzUWsRNbPajwMN3jA8UoP77pHmlfxEkep0gW8my/R+F6gmLIJ+1
-	9nMGhjs7zSlAaQXb8ONFs2ccXqkUNfAPyY+gs793HPgzWSArldycWUIQbP1M/E0f
-	Yqb0qKDw9qYENg9Zv6O6TPIozidvNDYAFOS5A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nZBo3ybYnF6uEGEtgceAXTvAVM1YAVoD
-	tNfD9dyyAMMns5hgDAEzuLBfVXd+hYdJUv6PJqWiFDZ5LZ3zJ+wUg3762bPUvrmh
-	2hpdP0mKtfszOy2ztXVkmKpIKZVVsBbFVnG4K5v0qN6H+YLYVzYQDsyijGVIUHJv
-	4lWKo5EbxNo=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E4680981B8;
-	Tue,  9 Feb 2010 17:45:07 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 20E4B981A1; Tue,  9 Feb
- 2010 17:45:00 -0500 (EST)
-In-Reply-To: <20100209192628.GC28936@spearce.org> (Shawn O. Pearce's message
- of "Tue\, 9 Feb 2010 11\:26\:28 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C5AE032A-15CC-11DF-83F1-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753080Ab0BIWsY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2010 17:48:24 -0500
+Received: from mail-iw0-f183.google.com ([209.85.223.183]:60553 "EHLO
+	mail-iw0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752835Ab0BIWsY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2010 17:48:24 -0500
+Received: by iwn13 with SMTP id 13so8983181iwn.25
+        for <git@vger.kernel.org>; Tue, 09 Feb 2010 14:48:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=yb8AaIavVmUkAyjD9Npwi/V1X7neOuAasIR1hz1oT0w=;
+        b=fGAyExdaUf3ombm64pHNulvmeW+k8UbpgAxSD3t0vzuGNyUAsaKBLiHKXVoVy9DpHT
+         PBX04ZhMw3xg+cbVBEHMLQ7lF1uoX1nKJaIeqVwiKD9C63XXKBgkwqtFl6wdP7+EVXho
+         EcrrjhrqyDfsuIqdHQQsFYWBI2rb+WLl6+kJA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=lfyeKx+jTEJHmJq0TiZag1bpDEukB0eAAJOOT24Z+1a+a+hCCy6KC14lsFFZHkxKEQ
+         rgFiLqA9gu7h63Oqf4IzQWECfCC1J59NuTh4Huv6p0Ilt+fgvIxP8Opdsa3KhWiokLbX
+         eF3eD0kAKvw/OLdoQ+ST6/VTma4qLnRAJ7g1w=
+Received: by 10.231.162.9 with SMTP id t9mr237915ibx.5.1265755703087; Tue, 09 
+	Feb 2010 14:48:23 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139456>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Hi all,
 
-> The only way I can see this missing message happening is if the C
-> library isn't flushing the stdio buffer before the hook process
-> exits.  Given that the hook process is a /bin/sh shell script,
-> and its using echo to print its messages... I'm at a loss for how
-> to fix that in Git.
->
-> Unless its the recv_sideband() somehow skipping a line.  But I
-> can't see it doing that.
+bup is a file backup tool based on the git packfile format.  If you're
+interested in git, you might find bup interesting because:
 
-The detection method of test is fooled by intermixed message.
+- It can handle really massive datasets (hundreds of gigabytes)
+without melting down.
 
-This is what send.err has, and you grep for '^remote:' in it.
+- It can handle huge individual files (hundreds of gigabytes), such as
+virtual machine images or giant textual database dumps, while neither
+wasting disk space nor bogging down in xdelta.
 
--- >8 --
-warning: updating the current branch
-warning: Updating the currently cheremote: STDERR pre-receive        
-,
-warning: as the index and work tree do not reflect changes that are in HEAD.
-warning: As a result, you may see the changes you just pushed into it
-warning: reverted when you run 'git diff' over there, and you may want
-warning: to run 'git reset --hard' before starting to work to recover.
-warning: 
-warning: You can set 'receive.denyCurrentBranch' configuration variable to
-warning: 'refuse' in the remote repository to forbid pushing into its
-warning: current branch.
-warning: To allow pushing into the current branch, you can set it to 'ignore';
-warning: but this is not recommended unless you arranged to update its work
-warning: tree to match what you pushed in some other way.
-warning: 
-warning: To squelch this message, you can set it to 'warn'.
-warning: 
-warning: Note that the default will change in a future version of git
-warning: to refuse updating the current branch unless you have the
-warning: configuration variable set to either 'ignore' or 'warn'.
-remote: STDOUT update refs/heads/master        
-remote: STDERR update refs/heads/master        
-remote: STDOUT update refs/heads/tofail        
-remote: STDERR update refs/heads/tofail        
-error: hook declined to update refs/heads/tofail
-remote: STDOUT post-receive        
-remote: STDERR post-receive        
-remote: STDOUT post-update        
-remote: STDERR post-update        
-To ./victim/.git
-   d4f8e4a..b07e5b8  master -> master
- ! [remote rejected] tofail -> tofail (hook declined)
--- 8< --
+- It can backup files directly to a remote server, without creating
+git objects on the local system first.
 
-But there indeed _is_ some skipping.  "Updating the currently che"
-is interrupted by the output from the pre-receive hook, and I do not see
-the remainder "cked out branch may cause confusion,\n" anywhere.
+- It uses a different format for its index file (.bup/bupindex) that
+allows you to search and iterate non-linearly.  Thus if you have a
+filesystem with a million files and only one of them is marked dirty,
+bup can back it up near-instantly.
+
+- Like git, it separates the concept of indexing the filesystem from
+the concept of actually making new commits.  Thus it would be easy to
+plugin an inotify-like system eventually, avoiding the slow filesystem
+iteration every time you want to make a backup.
+
+- It introduces a "multi-index" file (midx) that has a sorted list of
+the objects from multiple .pack files, so that checking for a
+nonexistent object only needs to swap in two pages at most.  (This is
+unimportant in git, but critical when most of your work is ingesting
+huge files whose sha1sums haven't been seen before.)
+
+- It provides a FUSE-based filesystem so that you can easily browse
+your backup history, including exporting it via samba if you want.
+
+bup doesn't yet back up extra file metadata (beyond what git already
+tracks).  Obviously this will be needed relatively soon.
+
+bup is still pretty experimental, but it's already a useful tool for
+backing up your files, even if those files include millions of files
+and hundreds of gigs of VM images.
+
+You can find the source code (and README) at github:
+
+    http://github.com/apenwarr/bup
+
+To subscribe to the bup mailing list, send an email to:
+
+    bup-list+subscribe@googlegroups.com
+
+Looking forward to everyone's feedback.
+
+Have fun,
+
+Avery
