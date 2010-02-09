@@ -1,82 +1,156 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: t5401-update-hooks test failure
-Date: Tue, 9 Feb 2010 11:26:28 -0800
-Message-ID: <20100209192628.GC28936@spearce.org>
-References: <7vtytrih7b.fsf@alter.siamese.dyndns.org> <7vvde7h1mn.fsf@alter.siamese.dyndns.org> <20100208213256.GA470@coredump.intra.peff.net> <7viqa7cqs9.fsf@alter.siamese.dyndns.org> <20100208223107.GB21718@cthulhu> <7vpr4f9wey.fsf@alter.siamese.dyndns.org> <20100209045417.GA15210@cthulhu> <7v4olqlva7.fsf@alter.siamese.dyndns.org> <20100209175139.GA28936@spearce.org> <alpine.LFD.2.00.1002091337421.1681@xanadu.home>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFD] Notes are independent: proposal for new notes implementation
+Date: Tue, 9 Feb 2010 21:05:23 +0100
+Message-ID: <201002092105.25636.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Larry D'Anna <larry@elder-gods.org>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Tue Feb 09 20:26:44 2010
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Johan Herland <johan@herland.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 09 21:05:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NevjO-0005wF-GS
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 20:26:42 +0100
+	id 1NewL4-00037W-1E
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Feb 2010 21:05:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751076Ab0BIT0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 14:26:35 -0500
-Received: from mail-iw0-f171.google.com ([209.85.223.171]:41544 "EHLO
-	mail-iw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750942Ab0BIT0e (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2010 14:26:34 -0500
-Received: by iwn1 with SMTP id 1so3900622iwn.24
-        for <git@vger.kernel.org>; Tue, 09 Feb 2010 11:26:33 -0800 (PST)
-Received: by 10.231.59.5 with SMTP id j5mr3094854ibh.6.1265743592834;
-        Tue, 09 Feb 2010 11:26:32 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 21sm263171iwn.10.2010.02.09.11.26.29
+	id S1753425Ab0BIUFb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2010 15:05:31 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:3648 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751359Ab0BIUF3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2010 15:05:29 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so59367fgg.1
+        for <git@vger.kernel.org>; Tue, 09 Feb 2010 12:05:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=JMKABpqoJBvtjpXaXEBhFdI2GFEnPawehUy2iHihk6s=;
+        b=kRYGCjbh4p3Qq65ckgIViRtcxNW/jhcYxjjOWITrZBPrbnU0ollXNOVINcVmF7pnhc
+         hrE2h3PPRyVEx+KK71JjEubBSYGZN9gFGB2mQk6scqJOwuxpyL2s8VvHBlQIcnZhfftV
+         WAimM90CGFZWwrWi4eiWNXYqCaFv7Aiih4oBU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        b=gzmrE+RCM6KjRTUMZEFBcbJ1KeM5ltSdmHsykkI0RjHridphYaXR6YktC4zBZ+v9Xh
+         p0vcPcMS1YHxjUVxwvuzYBlVmS7SHwwcTQkPrkCdKyla31RDsjx2/0dHqBHhfZn+g3bB
+         +Eqlma7MUYlDtoR2/eos0G+uU4LqnGZNJDX40=
+Received: by 10.87.73.15 with SMTP id a15mr1104199fgl.50.1265745927579;
+        Tue, 09 Feb 2010 12:05:27 -0800 (PST)
+Received: from ?192.168.1.13? (abvg140.neoplus.adsl.tpnet.pl [83.8.204.140])
+        by mx.google.com with ESMTPS id l19sm7644105fgb.10.2010.02.09.12.05.25
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 09 Feb 2010 11:26:30 -0800 (PST)
+        Tue, 09 Feb 2010 12:05:26 -0800 (PST)
+User-Agent: KMail/1.9.3
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1002091337421.1681@xanadu.home>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139438>
 
-Nicolas Pitre <nico@fluxnic.net> wrote:
-> On Tue, 9 Feb 2010, Shawn O. Pearce wrote:
-> > 
-> > builtin-send-pack.c clearly isn't stopping early while processing
-> > the stream, since we see later messages from the post-receive and
-> > post-update hooks just fine.
-> > 
-> > So I think the only code that is in question is the case 2 arm of
-> > recv_sideband().  But to be honest, I can't find any fault with it.
-> 
-> Note that strict order of messages passed through the sideband can't be 
-> relied upon.  Often you have sideband 1 connected to stdin and sideband 
-> 2 connected to stderr,
+Junio have noticed in one of threads about notes implementation in
+git[*1*] that current notes implementation has (conceptual) problems:
 
-Oh.  Sure.  But that isn't really the case here.
+[1] "Re: A generalization of git notes from blobs to trees - git metadata?"
+    Message-ID: <7v8wb4aj4m.fsf@alter.siamese.dyndns.org>
+    http://permalink.gmane.org/gmane.comp.version-control.git/139252
 
-The messages are all coming down side band #2, before we write
-anything down side band #1.  The missing message in question
-should have appeared somewhere in the middle of that side band
-#2 stream that we are seeing in the test output.  Given that its
-all serialized down into a single stream by the parent process
-receive-pack, we really shouldn't see the messages out of order.
+    (its one of threads that IIRC started with implementing hand-rolled
+    support for notes in gitweb by Giuseppe Bilotta)
+
+Junio C Hamano <gitster@pobox.com> writes:
+JH>
+JH> It's [current notes implementation] like "keeping track of /etc" (or
+JH> "your home directory").  It is a misguided thing to do because you
+JH> are throwing in records of the states of totally unrelated things
+JH> into a single history (e.g. "Why does it matter I added new user 
+JH> frotz to /etc/passwd before I futzed with my sendmail configuration?
+JH> ---It shouldn't matter; there shouldn't be ancestry relationships
+JH> between these two changes").  I somehow feel that keeping track of
+JH> the "growth of the bag of annotations to any and all commits" in a
+JH> single history may be making the same mistake.
+
+The proposed solution was to use custom merge strategy for notes.  But
+what if the answer was to change implementation, decoupling history of
+notes from each other, and keeping history of each note separate.
+
+Let's simplify situation, and talk for now about single notes namespace
+(refs/notes/commits), no fanout scheme, and plain blob notes.
 
 
-> and they are linked with pipes, and various 
-> factors such as stdio buffering or even printf implementation in the C 
-> lib
+In CURRENT notes implementation the notes ref (e.g. refs/notes/commits)
+point to a commit object: the tip of history of all notes.  This commit
+stores information about last change to any note; it's commit message is
+"Annotate <SHA-1>".  It's tree contains mapping between notes and
+annotated object: notes are stored as leafs in the tree, and their
+pathnames are (representing) objects they are annotating.
 
-The only way I can see this missing message happening is if the C
-library isn't flushing the stdio buffer before the hook process
-exits.  Given that the hook process is a /bin/sh shell script,
-and its using echo to print its messages... I'm at a loss for how
-to fix that in Git.
+This means for example that if in repository A somebody annotated
+commits foo and bar creating notes in this order, and in repository B
+somebody annotated bar and foo (creating notes in reverse order), then
+merging those changes would require generating merge commit even if
+those notes are identical.
 
-Unless its the recv_sideband() somehow skipping a line.  But I
-can't see it doing that.
+ 
+ tree:                         <-- Annotate bar <-- refs/notes/commits
+ <foo note SHA-1> <foo SHA-1>           |
+ <bar note SHA-1> <bar SHA-1>           | (parent)
+                                        |
+                                        v
+ tree:                         <-- Annotate foo
+ <foo note SHA-1> <foo SHA-1>      (no parent)
+
+
+The PROPOSED solution (with admittedly larger overhead) is to have notes
+history stored in submodule-like fashion.  The notes ref would point to
+the tree object.  In this tree each leaf would point to a *commit*
+representing tip of history for a given note (like for submodules).
+Each commit would contain tree, which would map note to annotated object
+(it is extra level of indirection, needed because commit cannot point to
+blob directly... unless multiple notes for the same commit in tree
+structure got implemented, or tree annotations got implemented.)
+
+This way history of each note is in kind of a separate branch, and notes
+refs point to tree object representing branch hierarchy.
+
+Merge conflict would appear only if notes for the same object would have
+different contents or/and different history.
+
+                  tree:                         <-- refs/notes/commits
+    /------------ <foo hist SHA-1> <foo SHA-1> 
+    |         /-- <bar hist SHA-1> <bar SHA-1> 
+    |         |
+    |         v
+    |     Annotate bar --> tree:
+    |     (no parent)      <bar note SHA-1> <bar SHA-1>
+    v
+  Annotate foo ----------> tree
+  (no parent)              <foo note SHA-1> <foo SHA-1>
+
+One thing that would need to be addressed is converting from older notes
+implementation, but this should be doable.  The problem would be in
+supporting both implementations in one repository; it might be not
+possible.  Also this would break compatibility: older git versions
+supporting notes wouldn't be able, I guess, to access new (proposed)
+format.
+
+There are probably numerous issues with proposed implementation, beside
+breaking backward compatibility...
+
+
+P.S. This shows why git tools (such as gitweb) should not access notes
+directly, but use git-notes, %N / %N(<ref>) format specifier, and proposed
+<object>^@{} / object^@{<ref>} or <object>^{notes} / <object>^{notes:<ref>}
 
 -- 
-Shawn.
+Jakub Narebski
+Poland
