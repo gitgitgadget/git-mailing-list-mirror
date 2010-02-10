@@ -1,70 +1,84 @@
 From: Larry D'Anna <larry@elder-gods.org>
-Subject: RFC: git sync
-Date: Tue, 9 Feb 2010 22:27:20 -0500
-Message-ID: <20100210032720.GA5205@cthulhu>
+Subject: Re: Suggestion on git-push --porcelain
+Date: Tue, 9 Feb 2010 22:35:57 -0500
+Message-ID: <20100210033557.GB5205@cthulhu>
+References: <be6fef0d1002091834i1c4b202cp5afacc326bd1a4d6@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 10 04:27:27 2010
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 10 04:36:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nf3Ec-0003CD-Gc
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 04:27:26 +0100
+	id 1Nf3Mx-0007bM-ON
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 04:36:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754913Ab0BJD1W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 22:27:22 -0500
-Received: from cthulhu.elder-gods.org ([140.239.99.253]:44768 "EHLO
+	id S1755192Ab0BJDf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2010 22:35:58 -0500
+Received: from cthulhu.elder-gods.org ([140.239.99.253]:56332 "EHLO
 	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752499Ab0BJD1V (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2010 22:27:21 -0500
+	with ESMTP id S1752970Ab0BJDf6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2010 22:35:58 -0500
 Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
-	id D40C282200F; Tue,  9 Feb 2010 22:27:20 -0500 (EST)
+	id 60C6F82200F; Tue,  9 Feb 2010 22:35:57 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <be6fef0d1002091834i1c4b202cp5afacc326bd1a4d6@mail.gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139479>
 
-So say you have a project with a bunch of branches.  You have two main computers
-you work on: a laptop and a workstation, and you keep an authoritative copy on a
-server somewhere.  When you sit down at your laptop to work on your project, the
-first thing you want to do is make sure that whatever you've got locally is
-up-to-date with the repo on the server.  So you run: 
+* Tay Ray Chuan (rctay89@gmail.com) [100209 21:34]:
+> Hi,
+> 
+> this is regarding the recent patch series from Larry. (I thought
+> replying to any of the patch messages was appropriate, I couldn't find
+> a cover-letter, so I'm starting a new thread.)
+> 
+> Around June last year, a patch from Larry was made to add the
+> --porcelain option, so as to produce machine-readable output regarding
+> ref status.
+> 
+> The latest patch series goes a step further, and tries to change
+> output - for example, suppressing user-friendly advice and giving "To:
+> <destination>".
+> 
+> I think this is an untenable path - adding/suppressing output of
+> certain messages for porcelain writers, while trying to keep things
+> fixed enough for porcelain writers to depend on. We will also have to
+> keep and eye out for future patches from adding fprintfs to stdout and
+> stderr that may break porcelain scripts.
 
-git push origin :
+While I agree with you in principle, I'm still advocating that we make these two
+changes.  *Especially* suppressing the advice.  That advice did not exist last
+June, so the output format has already been changed.  Also, the advice never
+should have gone to the standard output in the first place.  All the other
+instances of output like that go to standard error.
 
-Then if it says anything isn't a fast-forward, you use some combination of git
-pull, git checkout, or git fetch to get all you branches up to date, then
-possibly you run the push again to push merges back to the server.
+As for the "To: " lines, unfortunately the lack of them was a pretty serious
+design flaw in the original patch :(
 
-How about instead we add a new command called "git sync" that does all that for
-you?  So if you say 
+> I believe a better approach would be to prefix messages intended for
+> porcelain writers. For example, a push session might look like this:
+> 
+>   $ git push --porcelain
+>   PORCELAIN To git://foo.com/git/myrepo.git
+>   PORCELAIN uptodate refs/heads/baz:refs/heads/baz 1234ab ba4321
+>   PORCELAIN nonff refs/heads/bar:refs/heads/bar 2345cd 3456de
+> 
+> This is an "positive" approach, in the sense that we don't remove
+> anything from the current output; we just add more printf("PORCELAIN")
+> lines to wherever is appropriate.
 
-git sync origin : 
-
-It matches refs just like git-push would, but it will also automatically
-fast-forward your local refs if possible.  (and update the worktree+index if
-HEAD is one of the local refs that gets fast forwarded).  If any merges would
-be required, it will print a warning and leave that ref alone.
-
-And if you say
-
-git sync --merge origin :
-
-it will try to merge any refs that need it.  If the merge succeeds, it will be
-exactly as if you had said
-
-git checkout foobranch
-git pull origin foobranch
-git push origin foobranch
-
-What do you all think?  If you like the idea, I'll do it as a builtin.
-Otherwise I'll just hack up a perl script for myself.
+Actually, What I'm proposing is something very similar to this: I think that the
+output for the porcelain writer and *only* the output for the porcelain writer
+should go to standard output, and everything else should go to standard error.
 
 
-          --larry
+       --larry
