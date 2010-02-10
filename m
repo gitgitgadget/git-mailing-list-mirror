@@ -1,61 +1,115 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] blame: allow -L n,m to have an m bigger than the file's 
-	line count
-Date: Wed, 10 Feb 2010 08:37:36 -0500
-Message-ID: <76718491002100537h521fcc26gb267ed7cd2b8db6f@mail.gmail.com>
-References: <1265786864-5460-1-git-send-email-bebarino@gmail.com>
+From: Daniele Segato <daniele.bilug@gmail.com>
+Subject: cherry-pick from a branch to another with git-svn automatically 
+	stripping git-svn-id from commit message
+Date: Wed, 10 Feb 2010 16:44:54 +0100
+Message-ID: <9accb4401002100744o73a347e0pe86e706bcd2b04be@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 14:37:45 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 10 16:45:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfClE-0007hC-EF
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 14:37:44 +0100
+	id 1NfEkt-0001xn-Ah
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 16:45:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753963Ab0BJNhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2010 08:37:38 -0500
-Received: from mail-iw0-f185.google.com ([209.85.223.185]:57476 "EHLO
-	mail-iw0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753699Ab0BJNhh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2010 08:37:37 -0500
-Received: by iwn15 with SMTP id 15so6640459iwn.19
-        for <git@vger.kernel.org>; Wed, 10 Feb 2010 05:37:36 -0800 (PST)
+	id S1754291Ab0BJPo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2010 10:44:58 -0500
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:34946 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753699Ab0BJPo5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2010 10:44:57 -0500
+Received: by bwz19 with SMTP id 19so156189bwz.28
+        for <git@vger.kernel.org>; Wed, 10 Feb 2010 07:44:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=d9hv18zBgpNvFhPK/Kb0i02Fd8YtjlxFd2Q31j3oCGU=;
-        b=Inu/4iszkBudu58GozsGl6M01/M5WNlWdcH9FoKrKRtEikmv5nl0S/yCmpdAh2Ii8Z
-         kqR8wF9SC1G4aB6jqpUjxql4o1wjtDUh1OmfRucattxQHEufixCR3A3CcxCrKcufM0Kt
-         0GqPOLGcbw1wO5L2EzNiqLYc5tJpohk0NshJ0=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=LL85vYN0CNU9Rk+d3tQ4MEO5enzOMX4atrF4IO12GTc=;
+        b=c7tU0SCagFYIPgvncF18gBqf5fWoEey8hA7NAayXNH0QQUScj25phNFll9NCk2Dsxy
+         Vuvubz01L1ru0Jw9c7mDWFIHvC2ZRV/yvYOAOWdeRd3g+hDRlcCEGr66A7QavczITsuD
+         DP86D30n8rlmy5QPbnatw9e6BV9HKMg/GNnzo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=bLvwKFXI2O8Z/hABhJL3pRF0H5P7NikdtoNG19EVYjsrBqbBhZgTKoCbxKYI6BrCFu
-         vNHPnZvSqu7LuQsch3JaiEbeHcAaCzqts0yQ7nC+RTnjphtmfqCM4urBD1Y11XmACha5
-         cWcRy/2s1DrNFut3aaw+twXAOjo2td48KKIsk=
-Received: by 10.231.161.138 with SMTP id r10mr472182ibx.34.1265809056582; Wed, 
-	10 Feb 2010 05:37:36 -0800 (PST)
-In-Reply-To: <1265786864-5460-1-git-send-email-bebarino@gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=DYWxr1gOkecaXJDpWRLeSLjEPyK4bkVDPj20RSMRdcB7I9yz+dwGBcCHz6utQt/RWA
+         nop+HyfOc4+K1RsbcqUghfQFlp+XXTKSrnqaqz6XbiRUL9YXQkz/9Yxw96FDPHv50SYi
+         C4AVk5k6CrxjcRM0c8/lWqxuXznx/hSX6Powc=
+Received: by 10.204.143.3 with SMTP id s3mr260936bku.144.1265816694963; Wed, 
+	10 Feb 2010 07:44:54 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139512>
 
-On Wed, Feb 10, 2010 at 2:27 AM, Stephen Boyd <bebarino@gmail.com> wrote:
-> and get what I want but that isn't very discoverable. If the range is
-> greater than the number of lines just truncate the range to go up to
-> the end of the file.
+Hi,
 
-I agree this is the right thing to do. I'm working on a patch to
-support matching multiple times when given a regex range and made just
-that change as well. :-)
+since git-svn modify the commit message when you dcommit something
+(git svn dcommit)
+and then use the commit message to decide which is the branch to
+dcommit next cherry-pick-ing
+(and other commands) has some problem when you work through different
+svn branch.
 
-j.
+Example, you have 2 remote branch: remote/trunk, remote/v1.x
+and you are following them with two branches: trunk and v1.x
+
+now say you want to cherry-pick a commit from trunk into v1.x locally
+to dcommit it onto the remote/v1.x branch.
+
+the step you had to do are:
+git cherry-pick <your-commit-hash-on-trunk>
+git commit --amend # removing the line starting with git-svn-id
+# or add the -e option to cherry-pick instead of amending
+git svn dcommit
+
+
+now, if you have to do it frequently it is a bit annoying and you man
+do some mistake.
+
+I want to make it automatic and easy to use like:
+
+git cherry-pick-svn <your-commit-hash-on-trunk>
+git svn dcommit
+
+with an alias.
+
+on #irc charon suggested me to use !GIT_EDITOR="script that strip the
+git-svn-id here" git cherry-pick ...
+
+so I tried this from command line (hash is just a random one):
+
+GIT_EDITOR="sed -i '/^git-svn-id:/d'" git cherry-pick -e 9eb6b7de
+
+it works.
+
+so I opened my ~/.gitconfig and added this alias:
+
+[alias]
+	cherry-pick-svn =  !GIT_EDITOR="sed -i '/^git-svn-id:/d'" git cherry-pick -e
+
+
+but with
+$ git cherry-pick-svn 9eb6b7de
+I get:
+sh: -i: command not found
+fatal: Failed to run 'GIT_EDITOR=sed -i -e '/^git-svn-id:/d' git
+cherry-pick -e '9eb6b7de...'' when expanding alias 'cherry-pick-svn'
+
+
+but modifying it with this:
+[alias]
+	cherry-pick-svn =  !GIT_EDITOR='sed -i /^git-svn-id:/d' git cherry-pick -e
+
+made it working.
+
+I just want to share this with you if someone need it.
+
+And may be ask if you find any problem with this or if you have a
+better way to do it
+
+Regards,
+Daniele
