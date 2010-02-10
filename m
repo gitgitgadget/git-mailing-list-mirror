@@ -1,72 +1,79 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: git rebase -i and the reflog
-Date: Wed, 10 Feb 2010 23:26:39 +0100
-Message-ID: <fabb9a1e1002101426p41cba90dw5b3d4afdfb157b5c@mail.gmail.com>
-References: <fabb9a1e1002101419x40844a42s21108aaa849430c1@mail.gmail.com> 
-	<7v3a183f3q.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git cherry-pick --continue?
+Date: Wed, 10 Feb 2010 14:34:21 -0800
+Message-ID: <7vpr4c200i.fsf@alter.siamese.dyndns.org>
+References: <fabb9a1e1002101237i60a0b2c5j6d1e52b33dacbaa2@mail.gmail.com>
+ <20100210210419.GA7728@coredump.intra.peff.net>
+ <20100210212408.GB7728@coredump.intra.peff.net>
+ <7v63644uoq.fsf@alter.siamese.dyndns.org>
+ <7vbpfw3f6t.fsf@alter.siamese.dyndns.org>
+ <fabb9a1e1002101423y79460afdn2bc31b117195ef42@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 23:27:29 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 10 23:34:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfL1p-0004hH-OE
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 23:27:26 +0100
+	id 1NfL8p-0001Pd-2N
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 23:34:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756676Ab0BJW1E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Feb 2010 17:27:04 -0500
-Received: from mail-px0-f184.google.com ([209.85.216.184]:58261 "EHLO
-	mail-px0-f184.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756656Ab0BJW07 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Feb 2010 17:26:59 -0500
-Received: by pxi14 with SMTP id 14so297455pxi.20
-        for <git@vger.kernel.org>; Wed, 10 Feb 2010 14:26:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=68VEO+IiEe2fy1PmQE88D/z4f8NNfxuqrrPORCxh44Q=;
-        b=D6iiP081c58NLcESUwnM7u53IWc75unSrZOBvlIYvTfp5u8gWrU4mgLF/mNxFqJEEP
-         y4e3Vs0invhpQf5iPoPissOKO7aBpkNP372ixZa+0s31ckwdrwCDlrEiKBDf7gKoCnIO
-         SQK2Yv7ED009Lv9FhlLWXUxYrvf3Hd+avdi6o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=H4J8pZu5tYfslt8wy5BNJiKsx6hPrXgwWsehFTD4ltpDaAAG96/Q7ul2ugOyqWQmhM
-         UGOQPYASi5hE88i0vrjPzfc2QECue0OenBd+u4w3iN4ZtNBTb9+H6CW1JstI5r9745hW
-         /Q7JDYffqgkm2LE8ujIGbQsnLE+1c5sT4pig8=
-Received: by 10.142.59.19 with SMTP id h19mr564796wfa.243.1265840819080; Wed, 
-	10 Feb 2010 14:26:59 -0800 (PST)
-In-Reply-To: <7v3a183f3q.fsf@alter.siamese.dyndns.org>
+	id S1756628Ab0BJWee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2010 17:34:34 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58453 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755877Ab0BJWed (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2010 17:34:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B5E6098FAF;
+	Wed, 10 Feb 2010 17:34:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=37CXdTTfQBCU4DrJ8V+MKJmmpg0=; b=sBhdTw
+	e52+p0K2rf9DFrAMeGmZ3Cd3fJ6/3x94qqzY2Oj+d4A8K1aD4YFjS62Z5uE976sD
+	CYeG8BXS0Y3z/BtsV5NGGdXXdIXnhWnxl3jwdgidqR8kQsphpaPujqFcL+Oyz8Vs
+	S8o1zwu9o5p/P8aTLcVa3GtdD3k/X//2cak/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uABtYGvF8cNzKblHElXb6z1kRFRMrqwM
+	J9Ujwr8YF4wOA7iX6km+SYIU+tNr59JmlCWuM861U54g7qpPA+nyJBY2MBeTina8
+	4iHOvdoUpFVbPlCdProi2mFceT8T6jvif7OQ0pvn9GZaK7m5MJLQBJj1NYGJZiKD
+	BD9o82oMpmU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 82AB598FAC;
+	Wed, 10 Feb 2010 17:34:26 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC0D398F93; Wed, 10 Feb
+ 2010 17:34:22 -0500 (EST)
+In-Reply-To: <fabb9a1e1002101423y79460afdn2bc31b117195ef42@mail.gmail.com>
+ (Sverre Rabbelier's message of "Wed\, 10 Feb 2010 23\:23\:29 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 71CE6D8A-1694-11DF-94F6-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139564>
 
-Heya,
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-On Wed, Feb 10, 2010 at 23:23, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Yes and no. =A0I too suffer from it but only when I rebase a detached=
- HEAD
-> state. =A0If you rebased a topic, "git diff topic@{1}" (or "git diff =
-@{1}")
-> would give you what you want.
+> On Wed, Feb 10, 2010 at 23:21, Junio C Hamano <gitster@pobox.com> wrote:
+>> Having said all I did in the previous message, I think "am --continue"
+>> would be a good addition.
+>
+> How about 'cherry-pick --resolved' though ;).
 
-Ah, mhh, so the reason I'm seeing this cruft is that I'm using 'HEAD@'
-instead of 'topic@'. It only makes sense that HEAD's reflog includes
-every commit, and a topic's reflog includes just that topics. Thanks
-for the quick reply, this'll make my life a bunch easier :).
+Changing the insn to suggest using "-C topic" when the original command
+line was "git cherry-pick topic" would be a good addition, too.  Currently
+we suggest "-c" and abbreviated object name, neither of which is sensible.
 
---=20
-Cheers,
-
-Sverre Rabbelier
+While I think "--resolved" makes sense, I do not see much benefit, and it
+largely depends on what you do.  If you are suggesting to commit with what
+is kept in $GIT_DIR/MERGE_MSG, I would actually recommend against it.  The
+message will have "Conflicts:" information but that is meaningless unless
+you are recording from what context the commit was cherry-picked from at
+the same time.
