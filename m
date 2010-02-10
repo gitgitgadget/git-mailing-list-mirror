@@ -1,109 +1,66 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH] Documentation: reword --thin description
-Date: Tue,  9 Feb 2010 21:14:11 -0800
-Message-ID: <1265778851-5397-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 10 06:14:23 2010
+From: Jeff King <peff@peff.net>
+Subject: Re: A Visual Git Reference
+Date: Wed, 10 Feb 2010 00:20:57 -0500
+Message-ID: <20100210052057.GE28526@coredump.intra.peff.net>
+References: <ca433831002081134m698f531bwa22f0474db0cdcb@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git list <git@vger.kernel.org>
+To: Mark Lodato <lodatom@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 10 06:22:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nf4u5-0006X9-BI
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 06:14:21 +0100
+	id 1Nf527-0001Fn-2a
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 06:22:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751255Ab0BJFOQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2010 00:14:16 -0500
-Received: from mail-yw0-f173.google.com ([209.85.211.173]:49014 "EHLO
-	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750696Ab0BJFOP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2010 00:14:15 -0500
-Received: by ywh3 with SMTP id 3so7396528ywh.22
-        for <git@vger.kernel.org>; Tue, 09 Feb 2010 21:14:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=sc1yi50emNMpp3N6qpyMoQSB2+wRb5/dBmeCxe6EYmc=;
-        b=dscGvAE9Xe6Byq/MpsKYi5oKut1U5eC7VYujNnoJ9UUYpR5XwxJW5RGgAnFJ2S9JiJ
-         yk66qZE9uA6MePkcq2Hro2owNRernL4p9MuyfhIihcn9B/xWGvE2jP3z5ffb99d7kTai
-         wwD04pJvlfXoBDArWtWEpFdMV8qKncuAYEEWE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=Oas4qQO48QR8CXjEtmKE4ZZg0ZG1oSbL3pf3B2EGyH3R+xrShWggMiigKUkQX7dVaq
-         qWlpNH08LkxZCVJBMdQJn29X7RbEw6ThYKC8WpYNyywx7SeNJSP4tUOtVwGNFDv/0PGj
-         kdhCum02/j1B10bJCF2JOS4Xewy6N70WSMDRk=
-Received: by 10.151.60.3 with SMTP id n3mr1598379ybk.32.1265778854654;
-        Tue, 09 Feb 2010 21:14:14 -0800 (PST)
-Received: from localhost (user-0c9haca.cable.mindspring.com [24.152.169.138])
-        by mx.google.com with ESMTPS id 23sm322346yxe.36.2010.02.09.21.14.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 09 Feb 2010 21:14:13 -0800 (PST)
-X-Mailer: git-send-email 1.7.0.rc2
+	id S1750985Ab0BJFU5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2010 00:20:57 -0500
+Received: from peff.net ([208.65.91.99]:47678 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750763Ab0BJFU4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2010 00:20:56 -0500
+Received: (qmail 30116 invoked by uid 107); 10 Feb 2010 05:21:04 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 10 Feb 2010 00:21:04 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Feb 2010 00:20:57 -0500
+Content-Disposition: inline
+In-Reply-To: <ca433831002081134m698f531bwa22f0474db0cdcb@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139487>
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
+On Mon, Feb 08, 2010 at 02:34:21PM -0500, Mark Lodato wrote:
 
-Don't know if git-push needs to say that --thin is passed to send-pack.
+> I put together a "Visual Git Reference" containing visualizations of
+> the most common git commands, for people who prefer to see images over
+> text.  It is designed as a reference, not a tutorial, so readers need
+> to have some amount of experience before the page will become useful.
+> 
+> URL: http://marklodato.github.com/visual-git-guide/
+> Git repo: http://github.com/marklodato/visual-git-guide/
+> 
+> If you have any feedback or suggestions, please let me know!
 
- Documentation/git-fetch-pack.txt |    4 ++--
- Documentation/git-push.txt       |    6 +++---
- Documentation/git-send-pack.txt  |    4 ++--
- 3 files changed, 7 insertions(+), 7 deletions(-)
+This looks really awesome, thanks for doing it (though I'll admit I
+threw up in my mouth a little when I saw you did all of the diagrams as
+TeX. ;) ).
 
-diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch-pack.txt
-index e9952e8..2b4e4dd 100644
---- a/Documentation/git-fetch-pack.txt
-+++ b/Documentation/git-fetch-pack.txt
-@@ -44,8 +44,8 @@ OPTIONS
- 	locked against repacking.
- 
- --thin::
--	Spend extra cycles to minimize the number of objects to be sent.
--	Use it on slower connection.
-+	Spend extra cycles minimizing the number of sent objects.
-+	Use it with a slow connection.
- 
- --include-tag::
- 	If the remote side supports it, annotated tags objects will
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index bd79119..a14bc9c 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -141,9 +141,9 @@ useful if you write an alias or script around 'git push'.
- 
- --thin::
- --no-thin::
--	These options are passed to 'git send-pack'.  Thin
--	transfer spends extra cycles to minimize the number of
--	objects to be sent and meant to be used on slower connection.
-+	These options are passed to 'git send-pack'.  A thin
-+	transfer spends extra cycles minimizing the number of
-+	sent objects and is meant to be used with a slow connection.
- 
- -v::
- --verbose::
-diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
-index 8178d92..0a78dac 100644
---- a/Documentation/git-send-pack.txt
-+++ b/Documentation/git-send-pack.txt
-@@ -48,8 +48,8 @@ OPTIONS
- 	Run verbosely.
- 
- --thin::
--	Spend extra cycles to minimize the number of objects to be sent.
--	Use it on slower connection.
-+	Spend extra cycles minimizing the number of sent objects.
-+	Use it with a slow connection.
- 
- <host>::
- 	A remote host to house the repository.  When this
--- 
-1.7.0.rc2
+One of the projects I have wanted to do but never found time for is a
+"Git Picture Glossary". I was intending to start with much simpler
+concepts, like how the various object types relate, what a ref is, how a
+symref differs, what a detached HEAD is, etc. And then move on to "here
+is what happens when you branch", "here is what happens when you merge",
+etc. Sort of like "Git for Computer Scientists", but organized as a
+glossary, with each entry starting off with "to understand this, you
+first need to understand entries X and Y", with links.
+
+And it seems like what you have done is more or less the same thing,
+except you skipped all of the really basic entries and went straight to
+the action-oriented ones.
+
+-Peff
