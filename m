@@ -1,105 +1,62 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@fzi.de>
-Subject: Re: [PATCH] blame: allow -L n,m to have an m bigger than the
-	file's line count
-Date: Wed, 10 Feb 2010 13:42:38 +0100
-Message-ID: <20100210124238.GA31978@neumann>
-References: <1265786864-5460-1-git-send-email-bebarino@gmail.com>
+From: =?UTF-8?B?Sm/Do28gQ2FybG9zIE1lbmRlcyBMdcOtcw==?= 
+	<jonny@jonny.eng.br>
+Subject: Re: [PATCH 4/4] Add test for using Git at root of file system
+Date: Wed, 10 Feb 2010 11:10:13 -0200
+Message-ID: <4B72B035.9080603@jonny.eng.br>
+References: <1265734950-15145-1-git-send-email-pclouds@gmail.com> <1265734950-15145-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 13:42:47 2010
+	Johannes Sixt <j6t@kdbg.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 10 14:11:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
+	by lo.gmane.org with smtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfBu3-000143-Hj
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 13:42:47 +0100
+	id 1NfCLz-00056H-If
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 14:11:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752005Ab0BJMmm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Feb 2010 07:42:42 -0500
-Received: from francis.fzi.de ([141.21.7.5]:19934 "EHLO exchange.fzi.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751709Ab0BJMmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2010 07:42:42 -0500
-Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 10 Feb 2010 13:42:38 +0100
-Content-Disposition: inline
-In-Reply-To: <1265786864-5460-1-git-send-email-bebarino@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 10 Feb 2010 12:42:38.0607 (UTC) FILETIME=[873551F0:01CAAA4E]
+	id S1753409Ab0BJNKU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Feb 2010 08:10:20 -0500
+Received: from roma.coe.ufrj.br ([146.164.53.65]:60228 "EHLO coe.ufrj.br"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753232Ab0BJNKS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2010 08:10:18 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coe.ufrj.br (Postfix) with ESMTP id B21161FA1D4;
+	Wed, 10 Feb 2010 11:10:16 -0200 (BRST)
+X-Virus-Scanned: amavisd-new at coe.ufrj.br
+Received: from coe.ufrj.br ([146.164.53.65])
+	by localhost (roma.coe.ufrj.br [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id T5uCzLsA4MsB; Wed, 10 Feb 2010 11:10:14 -0200 (BRST)
+Received: from home.jonny.eng.br (unknown [187.14.9.79])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coe.ufrj.br (Postfix) with ESMTPSA id 1E9531FA080;
+	Wed, 10 Feb 2010 11:10:14 -0200 (BRST)
+User-Agent: Thunderbird 2.0.0.22 (X11/20090625)
+In-Reply-To: <1265734950-15145-4-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139509>
-
-Hi Stephen,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139510>
 
 
-On Tue, Feb 09, 2010 at 11:27:44PM -0800, Stephen Boyd wrote:
-> Sometimes I want to blame a file starting at some point and ending at
-> the end of the file. In my haste I'll write something like this:
->=20
-> $ git blame -L5,2342343 -- builtin-blame.c
->=20
-> and be greeted by a die message telling me that my end range is great=
-er
-> than the number of lines in the file. Obviously I can do:
->=20
-> $ git blame -L5, -- builtin-blame.c
->=20
-> and get what I want but that isn't very discoverable. If the range is
-> greater than the number of lines just truncate the range to go up to
-> the end of the file.
->=20
-> Update the docs to more accurately reflect the defaults for n and m t=
-oo.
->=20
-> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
-> ---
->=20
-> I realize this is late in the game for 1.7.0 so I'll resend if this
-> isn't picked up.
->=20
->  Documentation/blame-options.txt |    4 +++-
->  builtin-blame.c                 |    4 +++-
->  t/t8003-blame.sh                |    4 ++--
->  3 files changed, 8 insertions(+), 4 deletions(-)
->=20
-> diff --git a/Documentation/blame-options.txt b/Documentation/blame-op=
-tions.txt
-> index 4833cac..620660d 100644
-> --- a/Documentation/blame-options.txt
-> +++ b/Documentation/blame-options.txt
-> @@ -9,7 +9,7 @@
->  --show-stats::
->  	Include additional statistics at the end of blame output.
-> =20
-> --L <start>,<end>::
-> +-L [<start>],[<end>]::
->  	Annotate only the given line range.  <start> and <end> can take
->  	one of these forms:
-> =20
-> @@ -31,6 +31,8 @@ starting at the line given by <start>.
->  This is only valid for <end> and will specify a number
->  of lines before or after the line given by <start>.
->  +
-> +Note: if <start> is not given it defaults to 1 and if <end> is not g=
-iven it
-> +defaults to the number of lines in the file.
-> =20
->  -l::
->  	Show long rev (Default: off).
 
-I agree that its too late for the behavioral change, but IMHO the
-documentation update part can be considered as a bugfix, and as such
-it could perhaps be included in 1.7.0.  (I never knew that <start> or
-<end> can be omitted...  so thanks for the hint anyway)
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> This kind of test requires a throw-away root filesystem so that it ca=
+n
+> play on. If you have such a system, go ahead, "chmod 777 /" and run
+> this test manually ("make test" with root permission won't work).
+>  =20
 
-
-Best,
-G=E1bor
+I've seen you have a prepare-chroot.sh file in there.  Is it working or=
+=20
+not?  I mean, did you create a chrooted environment to test, or there=20
+was any problem with that?
