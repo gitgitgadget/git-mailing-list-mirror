@@ -1,79 +1,83 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Fix signal handler
-Date: Wed, 10 Feb 2010 09:14:06 -0800
-Message-ID: <20100210171406.GE2747@spearce.org>
-References: <4B684F5F.7020409@web.de> <20100202205849.GA14385@sigill.intra.peff.net> <4B71A2EE.8070708@web.de> <4B72E81B.3020900@web.de>
+Subject: Re: [PATCH 8/6] receive-pack: Send internal errors over side-band
+	#2
+Date: Wed, 10 Feb 2010 09:17:08 -0800
+Message-ID: <20100210171708.GF2747@spearce.org>
+References: <1265767290-25863-1-git-send-email-spearce@spearce.org> <1265767290-25863-2-git-send-email-spearce@spearce.org> <4B725CB1.1080908@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Markus Elfring <Markus.Elfring@web.de>
-X-From: git-owner@vger.kernel.org Wed Feb 10 18:22:16 2010
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Feb 10 18:24:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfGGR-0006ji-LP
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 18:22:12 +0100
+	id 1NfGJ0-0008Re-HP
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 18:24:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753450Ab0BJRWB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2010 12:22:01 -0500
-Received: from mail-yx0-f200.google.com ([209.85.210.200]:34152 "EHLO
-	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751709Ab0BJRWA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2010 12:22:00 -0500
-X-Greylist: delayed 471 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Feb 2010 12:22:00 EST
-Received: by yxe38 with SMTP id 38so225950yxe.4
-        for <git@vger.kernel.org>; Wed, 10 Feb 2010 09:22:00 -0800 (PST)
-Received: by 10.101.139.34 with SMTP id r34mr673389ann.29.1265822049164;
-        Wed, 10 Feb 2010 09:14:09 -0800 (PST)
+	id S1755908Ab0BJRXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2010 12:23:55 -0500
+Received: from mail-yw0-f173.google.com ([209.85.211.173]:42441 "EHLO
+	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755848Ab0BJRXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2010 12:23:54 -0500
+Received: by ywh3 with SMTP id 3so262705ywh.22
+        for <git@vger.kernel.org>; Wed, 10 Feb 2010 09:23:53 -0800 (PST)
+Received: by 10.150.208.17 with SMTP id f17mr2807183ybg.185.1265822231958;
+        Wed, 10 Feb 2010 09:17:11 -0800 (PST)
 Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 23sm517583yxe.54.2010.02.10.09.14.07
+        by mx.google.com with ESMTPS id 21sm526423yxe.1.2010.02.10.09.17.09
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 10 Feb 2010 09:14:08 -0800 (PST)
+        Wed, 10 Feb 2010 09:17:10 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <4B72E81B.3020900@web.de>
+In-Reply-To: <4B725CB1.1080908@viscovery.net>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139523>
 
-Markus Elfring <Markus.Elfring@web.de> wrote:
-> How do Git software developers think about the appended update suggestion?
-> Would you like to integrate such adjustments into your source code
-> repository?
-
-Finally, a concrete patch we can comment on!
- 
-> Subject: [PATCH] Fix a signal handler
+Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Shawn O. Pearce schrieb:
+> > +static void rp_error(const char *err, ...) __attribute__((format (printf, 1, 2)));
+> > +static void rp_warning(const char *err, ...) __attribute__((format (printf, 1, 2)));
+> > +
+> > +static void report_message(const char *prefix, const char *err, va_list params)
+> > +{
+> > +	int sz = strlen(prefix);
+> > +	char msg[4096];
+> > +
+> > +	strncpy(msg, prefix, sz);
+> > +	sz += vsnprintf(msg + sz, sizeof(msg) - (sz + 1), err, params);
+> > +	msg[sz++] = '\n';
 > 
-> A global flag can only be set by a signal handler in a portable way if it has got the data type "sig_atomic_t". The previously used assignment of a function pointer in the function "early_output" was moved to another variable in the function "setup_early_output".
-> The involved software design details were also mentioned on the mailing list.
+> This writes beyond the buffer if it is too small because the return value
+> tells how many characters *would* have been written if it were
+> sufficiently large, no?
 
-Please line wrap your commit messages at ~70 characters per line.
-This improves readability when reading the messages with tools like
-`git log` and `gitk` where the lines aren't reflowed.
+Ugh.  I don't code C often enough anymore.
 
-Please read Documentation/SubmittingPatches and add a Signed-off-by
-line if you agree to the Developer's Certificate of Origin.
+Thank you for catching that.
 
+ 
+> > +static void rp_warning(const char *err, ...)
+> > ...
+> > +static void rp_error(const char *err, ...)
+> > ...
+> 
+> Looks like we need set_report_routine().
+> 
+> Or did you replace only selected error() and warning() calls by rp_error()
+> and rp_warning()?
 
-> +	early_output_function = &log_show_early;
-...
-> -volatile show_early_output_fn_t show_early_output;
-> +sig_atomic_t show_early_output = 0;
-> +show_early_output_fn_t early_output_function = NULL;
-...
-> +		if (show_early_output) {
-> +			(*early_output_function)(revs, newlist);
-> +			show_early_output = 0;
-> +		}
-
-The function pointer isn't necessary.  AFAIK its only called in
-this one call site.  So you can make a direct reference to the
-log_show_early function.
+As described by others in the thread... I only replaced selected
+calls.  Well, most of them, maybe too many.  But I didn't want to
+expose everything to the client.  So I added new functions.  Yes, it
+was painful.  I wasn't happy about it.  But I also wasn't happy about
+exposing every message to the client over the side-band channel.
 
 -- 
 Shawn.
