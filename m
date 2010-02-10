@@ -1,88 +1,79 @@
-From: Tzafrir Cohen <tzafrir.cohen@xorcom.com>
-Subject: Re: git-svn: Cannot lock the ref 'refs/remotes/tags/autotag_for_.'.
-Date: Wed, 10 Feb 2010 19:07:57 +0200
-Organization: Xorcom*
-Message-ID: <20100210170757.GZ3599@xorcom.com>
-References: <20100209213929.GL3599@xorcom.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Fix signal handler
+Date: Wed, 10 Feb 2010 09:14:06 -0800
+Message-ID: <20100210171406.GE2747@spearce.org>
+References: <4B684F5F.7020409@web.de> <20100202205849.GA14385@sigill.intra.peff.net> <4B71A2EE.8070708@web.de> <4B72E81B.3020900@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 10 18:09:12 2010
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Markus Elfring <Markus.Elfring@web.de>
+X-From: git-owner@vger.kernel.org Wed Feb 10 18:22:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfG3r-0007wC-Dc
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 18:09:11 +0100
+	id 1NfGGR-0006ji-LP
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 18:22:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754723Ab0BJRJF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2010 12:09:05 -0500
-Received: from local.xorcom.com ([62.90.10.53]:41759 "EHLO local.xorcom.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754358Ab0BJRJE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2010 12:09:04 -0500
-Received: by local.xorcom.com (Postfix, from userid 1000)
-	id E1515C55AA9; Wed, 10 Feb 2010 19:07:57 +0200 (IST)
-Mail-Followup-To: git@vger.kernel.org
+	id S1753450Ab0BJRWB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2010 12:22:01 -0500
+Received: from mail-yx0-f200.google.com ([209.85.210.200]:34152 "EHLO
+	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751709Ab0BJRWA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2010 12:22:00 -0500
+X-Greylist: delayed 471 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Feb 2010 12:22:00 EST
+Received: by yxe38 with SMTP id 38so225950yxe.4
+        for <git@vger.kernel.org>; Wed, 10 Feb 2010 09:22:00 -0800 (PST)
+Received: by 10.101.139.34 with SMTP id r34mr673389ann.29.1265822049164;
+        Wed, 10 Feb 2010 09:14:09 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 23sm517583yxe.54.2010.02.10.09.14.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 10 Feb 2010 09:14:08 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20100209213929.GL3599@xorcom.com>
-X-Forced-Service: Sadly Using Gmail [tm]
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <4B72E81B.3020900@web.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139522>
 
-Small update,
+Markus Elfring <Markus.Elfring@web.de> wrote:
+> How do Git software developers think about the appended update suggestion?
+> Would you like to integrate such adjustments into your source code
+> repository?
 
-On Tue, Feb 09, 2010 at 11:39:29PM +0200, Tzafrir Cohen wrote:
-> Hi
+Finally, a concrete patch we can comment on!
+ 
+> Subject: [PATCH] Fix a signal handler
 > 
-> I'm using git-svn for watching over SVN repositories in
-> svn.asterisk.org . The largest one there is
-> http://svn.asterisk.org/svn/asterisk .
-> 
-> This worked fine up until recently. I was using Debian Stable with Git
-> 1.5.6 .
-> 
-> Recently I upgraded my system to Debian Testing with Git 1.6 (I
-> currently have 1.6.6.1-1). Today I tried to update the repository (git
-> svn rebase --fetch-all) and got the following error:
-> 
->   fatal: Cannot lock the ref 'refs/remotes/tags/autotag_for_.'.
-> 
-> IIRC it followed an automatic garbage-collection in the repository.
-> 
-> I decided to re-clone the SVN repository (I was planning on doing that
-> for quite some time, with a proper AUTHORS file this time. But it's a
-> repo of some 200,000 revisions and takes a few days to clone)
-> 
-> I eventually got the same error.
-> 
-> The specific revision that triggered it:
-> 
->   http://svnview.digium.com/svn/asterisk?view=revision&revision=47394
-> 
-> Should git-svn mangle SVN tag names to be legal git ref names? Or just
-> panic before it makes the git repo invalid?
-> 
-> Is there a way for me to skip some tags? I can avoid that specific tag.
+> A global flag can only be set by a signal handler in a portable way if it has got the data type "sig_atomic_t". The previously used assignment of a function pointer in the function "early_output" was moved to another variable in the function "setup_early_output".
+> The involved software design details were also mentioned on the mailing list.
 
-Here's one that did not work:
+Please line wrap your commit messages at ~70 characters per line.
+This improves readability when reading the messages with tools like
+`git log` and `gitk` where the lines aren't reflowed.
 
-$ git svn clone -s --ignore-paths='^/tags/autotag_for_.$' http://svn.asterisk.org/svn/asterisk
+Please read Documentation/SubmittingPatches and add a Signed-off-by
+line if you agree to the Developer's Certificate of Origin.
 
-I again stress that git-svn manages to fetch a faulty repository.
-Another sub-question is: how do I remove that faulty reference git-svn
-added?
 
-> 
-> Please CC your replies to me as I don't actively follow this list.
+> +	early_output_function = &log_show_early;
+...
+> -volatile show_early_output_fn_t show_early_output;
+> +sig_atomic_t show_early_output = 0;
+> +show_early_output_fn_t early_output_function = NULL;
+...
+> +		if (show_early_output) {
+> +			(*early_output_function)(revs, newlist);
+> +			show_early_output = 0;
+> +		}
+
+The function pointer isn't necessary.  AFAIK its only called in
+this one call site.  So you can make a direct reference to the
+log_show_early function.
 
 -- 
-               Tzafrir Cohen
-icq#16849755              jabber:tzafrir.cohen@xorcom.com
-+972-50-7952406           mailto:tzafrir.cohen@xorcom.com
-http://www.xorcom.com  iax:guest@local.xorcom.com/tzafrir
+Shawn.
