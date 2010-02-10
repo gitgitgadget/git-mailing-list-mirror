@@ -1,157 +1,83 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] git log -p -m: Document, honor --first-parent
-Date: Wed, 10 Feb 2010 03:12:10 +0100
-Message-ID: <20100210021148.GT9553@machine.or.cz>
-References: <46d6db661002091545j74f625ffr74ca70a0474948fc@mail.gmail.com>
- <20100209235707.GQ9553@machine.or.cz>
- <7v1vguuf8h.fsf@alter.siamese.dyndns.org>
- <20100210011149.GR9553@machine.or.cz>
- <7vpr4dop1m.fsf@alter.siamese.dyndns.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Suggestion on git-push --porcelain
+Date: Wed, 10 Feb 2010 10:34:00 +0800
+Message-ID: <be6fef0d1002091834i1c4b202cp5afacc326bd1a4d6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian MICHON <christian.michon@gmail.com>,
-	git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 03:13:24 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "Larry D'Anna" <larry@elder-gods.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 10 03:34:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nf24b-0005nB-0h
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 03:13:01 +0100
+	id 1Nf2P5-0001ot-8R
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 03:34:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755339Ab0BJCMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 21:12:53 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:47984 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755122Ab0BJCMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2010 21:12:52 -0500
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 9418E86209D; Wed, 10 Feb 2010 03:12:10 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7vpr4dop1m.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755346Ab0BJCeE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2010 21:34:04 -0500
+Received: from mail-iw0-f201.google.com ([209.85.223.201]:34935 "EHLO
+	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754982Ab0BJCeB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2010 21:34:01 -0500
+Received: by iwn39 with SMTP id 39so9294352iwn.1
+        for <git@vger.kernel.org>; Tue, 09 Feb 2010 18:34:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=idUuXjEXImUo9s8g7gxb1ghQf07yCG4AezjxIQ0/Vh8=;
+        b=gzd0OLrALPMBzTTKQT/CPIELelGn1fLyWKupnMNKcu5Gt8fBdCidwX1DD4wGkEkso3
+         jjToSnMBGK5nW4/0PmtlgDMzi5mKybrGJkN7XLr9DHbE6KajH2ZqJA/Iw+D4hYqBiC0F
+         oYUoNOBccF2S0nj0nT9OpEmbsofwIhrJyJDco=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=G806eTQNd7scziF63m+E/dwtSqP88yRhHq9cQQ/3ptABu4linsys8CCj3tdi9ZhTbk
+         g8G6TTqGMLBQ3tzlFDD7mzUrA1q84r7ibAajPvoexQNdLeyFKbZF57bN7dGfNkfiGnFL
+         JNQfJOsZcGAry7+/UvOatK8fZbJH6Y29HATcM=
+Received: by 10.231.148.83 with SMTP id o19mr505494ibv.39.1265769240044; Tue, 
+	09 Feb 2010 18:34:00 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139474>
 
-On Tue, Feb 09, 2010 at 05:30:29PM -0800, Junio C Hamano wrote:
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> > diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-> > index 0e39bb6..a2a2d04 100644
-> > --- a/Documentation/git-log.txt
-> > +++ b/Documentation/git-log.txt
-> > @@ -118,6 +118,15 @@ git log master --not --remotes=*/master::
-> >  	Shows all commits that are in local master but not in any remote
-> >  	repository master branches.
-> >  
-> > +git log -p -m --first-parent::
-> > +
-> > +	Shows the history including change diffs, but only from the
-> > +	"main branch" perspective, skipping commits that come only from
-> > +	merges, and showing full diffs of changes introduced by the merges.
-> > +	This makes sense only when following a strict policy of merging all
-> > +	topic branches when staying on a single integration branch and
-> > +	making sure the merges are not fast-forwards.
-> 
-> I think the tone of the last three lines is too strong.
-> 
-> Why is it necessary to make a merge with a single commit side branch when
-> fast-forward would do?  And if the side branch is actually two or more
-> commits, it will show the broken-down changes in more detail, but the fact
-> that it was made on the "primary" history would also have some
-> significance (e.g. trivial and obvious fixes made directly on 'master',
-> other branches merged from topic after cooking).
+Hi,
 
-Ok, so what about "...the merges are not fast-forwards if the branch
-histories are non-trivial"? Since there are two cases:
+this is regarding the recent patch series from Larry. (I thought
+replying to any of the patch messages was appropriate, I couldn't find
+a cover-letter, so I'm starting a new thread.)
 
-* The branch was created on top of HEAD, the commits were made and now
-the branch is merged back, that's an "ok fastforward".
+Around June last year, a patch from Larry was made to add the
+--porcelain option, so as to produce machine-readable output regarding
+ref status.
 
-* The branch was created long ago, but has merged latest changes of the
-top of HEAD in, and now the branch is merged back, that's a "bad
-fastforward" since that flips the perspective of main-vs-topic branch.
+The latest patch series goes a step further, and tries to change
+output - for example, suppressing user-friendly advice and giving "To:
+<destination>".
 
-I feel that it's important to point out this caveat.
+I think this is an untenable path - adding/suppressing output of
+certain messages for porcelain writers, while trying to keep things
+fixed enough for porcelain writers to depend on. We will also have to
+keep and eye out for future patches from adding fprintfs to stdout and
+stderr that may break porcelain scripts.
 
-> It is Ok to elaborate on the "policy" issues in the Discussion section,
-> but otherwise, I would rather see you spend the same number of lines to
-> clarify "showing full diffs of changes introduced by the merges" a bit
-> better (e.g. it is unclear if you are showing diff from each parents or
-> just from the first parent).  Perhaps "s/introduced /& to the first-parent
-> ancestry /" may suffice.
+I believe a better approach would be to prefix messages intended for
+porcelain writers. For example, a push session might look like this:
 
-I really dislike the "first-parent ancestry" wording, I think it muds
-down the whole issue.  It would seem to me that the basic idea is clear
-from the description (which might even now be excessively verbose) and
-if anyone is still confused, they can quickly peek at -m description or
-actually try the command out.
+  $ git push --porcelain
+  PORCELAIN To git://foo.com/git/myrepo.git
+  PORCELAIN uptodate refs/heads/baz:refs/heads/baz 1234ab ba4321
+  PORCELAIN nonff refs/heads/bar:refs/heads/bar 2345cd 3456de
 
-> > diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-> > index 6e9baf8..d7d0dee 100644
-> > --- a/Documentation/rev-list-options.txt
-> > +++ b/Documentation/rev-list-options.txt
-> > @@ -108,8 +108,8 @@ options may be given. See linkgit:git-diff-files[1] for more options.
-> >  
-> >  -c::
-> >  
-> > -	This flag changes the way a merge commit is displayed.  It shows
-> > -	the differences from each of the parents to the merge result
-> > +	This flag forces the default way a merge commit is displayed.  It
-> > +	shows the differences from each of the parents to the merge result
-> >  	simultaneously instead of showing pairwise diff between a parent
-> 
-> Sorry, I don't understand this change; "forces the default?"  Any option
-> "forces" the command to behave differently.  At least the original is
-> understandable "Ah, without it it shows one way but with this it shows in
-> a different way", even though that does not carry much useful information
-> (i.e. what are the two ways?  ah, I need to read further down).
-
-At some point when making this change, I was in the state of believing
-that combined diffs are always the default. :-) That is not true, so
-I will drop this change again.
-
-> > diff --git a/log-tree.c b/log-tree.c
-> > index 27afcf6..fb990a1 100644
-> > --- a/log-tree.c
-> > +++ b/log-tree.c
-> > @@ -514,6 +514,14 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
-> >  			return 0;
-> >  		else if (opt->combine_merges)
-> >  			return do_diff_combined(opt, commit);
-> > +		else if (opt->first_parent_only) {
-> > +			/* Generate merge log entry only for the first
-> > +			 * parent, showing summary diff of the others
-> > +			 * we merged _in_. */
-> 
-> Style?
-
-What's wrong? There should be an empty line at the comment beginning?
-I have a faint memory of getting some-such undocumented comment ugliness
-requirement wrong before. ;-)
-
-> Don't we use --cc as default for "show" (and possibly "log"---I don't
-> remember the details)?
-
-Ah, that must be it! Turning that off in -m code makes it work for show
-as well.
-
-> > +			diff_tree_sha1(parents->item->object.sha1, sha1, "", &opt->diffopt);
-> > +			log_tree_diff_flush(opt);
-> > +			return !opt->loginfo;
-> > +		}
-> 
-> This needs some tests but I think it is a good first step in the right
-> direction.
-
-Thanks. Hrmh, testsuites... ;-)
+This is an "positive" approach, in the sense that we don't remove
+anything from the current output; we just add more printf("PORCELAIN")
+lines to wherever is appropriate.
 
 -- 
-				Petr "Pasky" Baudis
-If you can't see the value in jet powered ants you should turn in
-your nerd card. -- Dunbal (464142)
+Cheers,
+Ray Chuan
