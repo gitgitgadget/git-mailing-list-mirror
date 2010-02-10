@@ -1,84 +1,88 @@
-From: Larry D'Anna <larry@elder-gods.org>
-Subject: Re: Suggestion on git-push --porcelain
-Date: Tue, 9 Feb 2010 22:35:57 -0500
-Message-ID: <20100210033557.GB5205@cthulhu>
-References: <be6fef0d1002091834i1c4b202cp5afacc326bd1a4d6@mail.gmail.com>
+From: "John J. Franey" <jjfraney@gmail.com>
+Subject: Re: A Visual Git Reference
+Date: Wed, 10 Feb 2010 03:40:18 +0000 (UTC)
+Message-ID: <hkt9r2$gi8$1@ger.gmane.org>
+References: <ca433831002081134m698f531bwa22f0474db0cdcb@mail.gmail.com>
+	<alpine.LNX.2.00.1002081513430.14365@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 04:36:05 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 10 05:00:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nf3Mx-0007bM-ON
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 04:36:04 +0100
+	id 1Nf3kW-00046V-CA
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 05:00:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755192Ab0BJDf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 22:35:58 -0500
-Received: from cthulhu.elder-gods.org ([140.239.99.253]:56332 "EHLO
-	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752970Ab0BJDf6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2010 22:35:58 -0500
-Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
-	id 60C6F82200F; Tue,  9 Feb 2010 22:35:57 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <be6fef0d1002091834i1c4b202cp5afacc326bd1a4d6@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755281Ab0BJEAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2010 23:00:09 -0500
+Received: from lo.gmane.org ([80.91.229.12]:48510 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755039Ab0BJEAH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2010 23:00:07 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Nf3kD-0003xJ-HD
+	for git@vger.kernel.org; Wed, 10 Feb 2010 05:00:05 +0100
+Received: from pool-70-21-128-48.nwrk.east.verizon.net ([70.21.128.48])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 10 Feb 2010 05:00:05 +0100
+Received: from jjfraney by pool-70-21-128-48.nwrk.east.verizon.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 10 Feb 2010 05:00:05 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pool-70-21-128-48.nwrk.east.verizon.net
+User-Agent: Pan/0.133 (House of Butterflies)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139480>
 
-* Tay Ray Chuan (rctay89@gmail.com) [100209 21:34]:
-> Hi,
+On Mon, 08 Feb 2010 16:57:12 -0500, Daniel Barkalow wrote:
+
+> On Mon, 8 Feb 2010, Mark Lodato wrote:
 > 
-> this is regarding the recent patch series from Larry. (I thought
-> replying to any of the patch messages was appropriate, I couldn't find
-> a cover-letter, so I'm starting a new thread.)
+>> All,
+>> 
+>> I put together a "Visual Git Reference" containing visualizations of
+>> the most common git commands, for people who prefer to see images over
+>> text.  It is designed as a reference, not a tutorial, so readers need
+>> to have some amount of experience before the page will become useful.
+>> 
+>> URL: http://marklodato.github.com/visual-git-guide/ Git repo:
+>> http://github.com/marklodato/visual-git-guide/
+>> 
+>> If you have any feedback or suggestions, please let me know!
 > 
-> Around June last year, a patch from Larry was made to add the
-> --porcelain option, so as to produce machine-readable output regarding
-> ref status.
+> The "3-way merge" node should graphically distinguish the base from the
+> two sides, rather than having all three just go in. The "3-way merge"
+> operation is tricky to understand visually without some sort of "split
+> and rejoin, with specific points" thing.
 > 
-> The latest patch series goes a step further, and tries to change
-> output - for example, suppressing user-friendly advice and giving "To:
-> <destination>".
+> Also, it would probably be worth showing the use of the index in the
+> process of a 3-way merge: all three versions go into the blue box, and a
+> combination (with conflict markers) goes into the pink box; the user
+> cleans up the pink box, and replaces the 3-part blue box content with
+> the cleaned-up single result content; then the commit gives the diagram
+> you have for "git merge other".
 > 
-> I think this is an untenable path - adding/suppressing output of
-> certain messages for porcelain writers, while trying to keep things
-> fixed enough for porcelain writers to depend on. We will also have to
-> keep and eye out for future patches from adding fprintfs to stdout and
-> stderr that may break porcelain scripts.
 
-While I agree with you in principle, I'm still advocating that we make these two
-changes.  *Especially* suppressing the advice.  That advice did not exist last
-June, so the output format has already been changed.  Also, the advice never
-should have gone to the standard output in the first place.  All the other
-instances of output like that go to standard error.
+I often have difficulty trying to internally visualize a mapping from the 
+commits of a merge to the panes of a kdiff3 session.  I have special 
+difficulty keeping straight which commit is the LOCAL and which is the 
+REMOTE.  Looking at your visual guide, I can almost see a kdiff session 
+in this section on three way merge where each commit sits in one of the 
+panes. b325c in upper left, ed489 in upper middle, and 33104 in upper 
+right, "Working Directory" on the bottom pane.  Not sure if that graphic 
+would be useful to anyone else.  Thought I'd throw it in for grins.
 
-As for the "To: " lines, unfortunately the lack of them was a pretty serious
-design flaw in the original patch :(
+I learned a few things from your guide.  I've been using git for about a 
+year and a half.  Thanks.
 
-> I believe a better approach would be to prefix messages intended for
-> porcelain writers. For example, a push session might look like this:
-> 
->   $ git push --porcelain
->   PORCELAIN To git://foo.com/git/myrepo.git
->   PORCELAIN uptodate refs/heads/baz:refs/heads/baz 1234ab ba4321
->   PORCELAIN nonff refs/heads/bar:refs/heads/bar 2345cd 3456de
-> 
-> This is an "positive" approach, in the sense that we don't remove
-> anything from the current output; we just add more printf("PORCELAIN")
-> lines to wherever is appropriate.
-
-Actually, What I'm proposing is something very similar to this: I think that the
-output for the porcelain writer and *only* the output for the porcelain writer
-should go to standard output, and everything else should go to standard error.
-
-
-       --larry
+John
