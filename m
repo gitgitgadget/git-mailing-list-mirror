@@ -1,192 +1,126 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] git log -p -m: Document, honor --first-parent
-Date: Wed, 10 Feb 2010 02:11:49 +0100
-Message-ID: <20100210011149.GR9553@machine.or.cz>
-References: <46d6db661002091545j74f625ffr74ca70a0474948fc@mail.gmail.com>
- <20100209235707.GQ9553@machine.or.cz>
- <7v1vguuf8h.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC PATCHv2 04/10] gitweb: Use Cache::Cache compatibile (get, set) output caching
+Date: Wed, 10 Feb 2010 02:12:24 +0100
+Message-ID: <201002100212.26157.jnareb@gmail.com>
+References: <1265711427-15193-1-git-send-email-jnareb@gmail.com> <1265711427-15193-5-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian MICHON <christian.michon@gmail.com>,
-	git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 02:12:16 2010
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	John 'Warthog9' Hawley <warthog9@kernel.org>,
+	Petr Baudis <pasky@suse.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 10 02:12:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nf17n-0005Kx-OJ
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 02:12:16 +0100
+	id 1Nf18B-0005a0-5v
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 02:12:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754919Ab0BJBLz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2010 20:11:55 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:57602 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754913Ab0BJBLy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2010 20:11:54 -0500
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id D560786209A; Wed, 10 Feb 2010 02:11:49 +0100 (CET)
+	id S1754891Ab0BJBMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2010 20:12:34 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:49346 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754469Ab0BJBMd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2010 20:12:33 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so169243fgg.1
+        for <git@vger.kernel.org>; Tue, 09 Feb 2010 17:12:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=JyYbwhocGt6XZ9vFFZKYmAMtR2N/SEnfq3/291527v4=;
+        b=M/chifhNLx3g3rPKkhkzo1yRlFdhO+/1bNrPrvqOgssFPVbo+Vdw/8GURy6rm3U1yd
+         S5/bdCJOeKqt6ehZ3N0WsMnfJORfeq0Avi2Y2MtlYkd+XCFUQZ/XJwaeQQ0UWilAPQSc
+         bV3VDylSH2ODLHOnFVSleH+ZVTFdUbXR16SXE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=LaDPTnLpKkcFmHR47aEU8oLXbl/fmtntkoOUcZv8rW/OZNNp1eu8IN4aGpAgZ/3Jd8
+         RcdFW7OTxTlr6x4xl8xLCkYrfrwPvnLmfK/9Ase1o9mnD3t8ZyHVta6/++ijKlMtFcme
+         8nNrtTdOPUsqrtIhyE4l0NZrJ12bg5k/yoKs4=
+Received: by 10.87.11.25 with SMTP id o25mr1737025fgi.23.1265764351817;
+        Tue, 09 Feb 2010 17:12:31 -0800 (PST)
+Received: from ?192.168.1.13? (abvg140.neoplus.adsl.tpnet.pl [83.8.204.140])
+        by mx.google.com with ESMTPS id 12sm8163103fgg.27.2010.02.09.17.12.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 09 Feb 2010 17:12:29 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1265711427-15193-5-git-send-email-jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7v1vguuf8h.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139467>
 
-On Tue, Feb 09, 2010 at 04:05:50PM -0800, Junio C Hamano wrote:
-> Petr Baudis <pasky@suse.cz> writes:
+On Tue, 9 Feb 2010 at 11:30 +0100, Jakub Narebski wrote:
+
+> The cache_fetch subroutine captures output (from STDOUT only, as
+> STDERR is usually logged) using either ->push_layer()/->pop_layer()
+> from PerlIO::Util submodule (if it is available), or by setting and
+> restoring *STDOUT.  Note that only the former could be tested reliably
+> to be reliable in t9503 test!
+
+Scratch that, I have just checked that (at least for Apache + mod_cgi,
+but I don't think that it matters) the latter solution, with setting
+and restoring *STDOUT doesn't work: I would get data in cache (so it
+can be restored later), but instead of output I would get Internal Server
+Error ("The server encountered an internal error or misconfiguration and
+was unable to complete your request.") without even a hint what the
+problem was.  Sprinkling "die ...: $!" didn't help to catch this error:
+I suspect that the problem is with capturing.
+
+So we either would have to live with non-core PerlIO::Util or (pure Perl)
+Capture::Tiny, or do the 'print -> print $out' patch...
+
+[....]
+> Capturing gitweb output
+> =======================
+> When output (response) caching is enabled, the caching mechanism has to
+> capture gitweb output (perhaps while printing it to standard output) to
+> save it to cache, unless the data is available in cache and not expired.
 > 
-> >   I'm not sure if there is any clever switch for this, but I usually
-> > just use one of
-> >
-> > 	git diff mergecommit^1 mergecommit
-> > 	git diff mergecommit^2 mergecommit
-> >
-> > depending on which parent I want the diff against. If you always do your
-> > merges as "on mainline, merging in a topic" without fast-forwarding,
-> > diff against the first parent will be probably the right one and you can
-> > simply use:
-> >
-> > 	git diff mergecommit^ mergecommit
+> Because die_error uses 'exit', and because it uses git_header_html and
+> other printing subroutines (which output has to be captured in other
+> situations), it needs to disable caching, unless we are "tee"-ing.
+> Otherwise we would get no output from die_error (because it is captured),
+> but also we would not get data to be saved in cache and printed, because
+> 'exit' in die_error would exit capture, too.  This restricts methods and
+> modules that can be used to capture output.
 > 
-> Frankly, we should make "git log --first-parent -p" DTRT, I think.
+> Below there are presented various considered and used ways of capturing the
+> output, or "tee"-ing it (capturing while printing), with their advantages
+> and disadvantages.
 > 
-> The attitude towards merges we maintain officially is "all parents are
-> equal", but in practice, there often are cases where --first-parent
-> traversal makes a lot more sense when browsing the history (especially
-> "the official" one).  The use of that option should be a clear enough sign
-> that diff between the first parent and the merge result is asked for.
+> 
+> Capturing output (capture)
+> ~~~~~~~~~~~~~~~~~~~~~~~~~~
+[...]
 
-I have also discovered -m while digging into this, which seems to have
-the effect of showing the merge TWICE, each time against a different
-parent; this is sort-of-almost what Christian also wanted.
+> 5. Without 'print <sth>' to 'print $out <sth>' change to gitweb, one can try
+>    manipulating *STDOUT directly, first saving *STDOUT or \*STDOUT to some
+>    variable, then setting *STDOUT = $data_fh, where $data_fh is filehandle
+>    opened to in-memory file.
+> 
+>    This seems to work, does not require large patch to gitweb, and does not
+>    require extra (non-core) Perl module.  Nevertheless it seems fragile with
+>    respect to restoring STDOUT, and even though basic tests (not included)
+>    of this mechanism producted expected result, I wasn't able to write
+>    working tests when using this method.
+> 
+>    We could probably examine how Capture::Tiny does it, and reuse (copy)
+>    relevant parts of code, perhaps duplicating STDOUT, closing it and then
+>    reopening as in-memory filehandle.
+> 
+>    YMMV (Your Mileage May Vary).
 
-This seems to be undocumented and does have this effect only in log,
-not in show - I have absolutely no idea why from cursory code
-examination.
-
-I think making just --first-parent alone imply this behavior is wrong,
-IMHO first-parent alone does not warrant avoiding combined-diff behavior.
-I'm not really sure though, so feel free to add another
-
-	if (revs->diff && revs->follow_first_parent)
-		revs->ignore_merges = 0;
-
-test at the right place (whatever that is).  At any rate, -m explicitly
-states the intent and the current behavior of not honoring
---first-parent is IMHO a bug.
-
-I think --first-parent documentation is still accurate with the new
-behavior, so I adjusted just -m documentation - also making the flag
-actually visible for non-diff-tree-stdin cases. Sorry that it's both
-conflated in a single patch, I'd rather avoid creating a patch queue
-out of this supposedly-5-minute hack.
-
---8<--
-
-git log -p -m has a special magic behavior of showin one merge entry per
-parent, with an appropriate diff; this can be frequently useful when
-examining histories where full set of changes introduced by a merged
-branch is interesting, not only the conflicts.
-
-This patch properly documents the -m switch, which has so far been
-mentioned only as a fairly special diff-tree flag. It also makes the
-code show full patch entry only for the first parent in case
---first-parent is used. Thus,
-
-	git log -p -m --first-parent
-
-will show the history from the "main branch perspective", while also
-including full diff of changes introduced by other merged in branches.
-
-Signed-off-by: Petr Baudis <pasky@suse.cz>
-
----
-
-diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
-index 0f25ba7..8f9a241 100644
---- a/Documentation/diff-generate-patch.txt
-+++ b/Documentation/diff-generate-patch.txt
-@@ -56,7 +56,8 @@ combined diff format
- 
- "git-diff-tree", "git-diff-files" and "git-diff" can take '-c' or
- '--cc' option to produce 'combined diff'.  For showing a merge commit
--with "git log -p", this is the default format.
-+with "git log -p", this is the default format; you can force showing
-+full diff with the '-m' option.
- A 'combined diff' format looks like this:
- 
- ------------
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 0e39bb6..a2a2d04 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -118,6 +118,15 @@ git log master --not --remotes=*/master::
- 	Shows all commits that are in local master but not in any remote
- 	repository master branches.
- 
-+git log -p -m --first-parent::
-+
-+	Shows the history including change diffs, but only from the
-+	"main branch" perspective, skipping commits that come only from
-+	merges, and showing full diffs of changes introduced by the merges.
-+	This makes sense only when following a strict policy of merging all
-+	topic branches when staying on a single integration branch and
-+	making sure the merges are not fast-forwards.
-+
- Discussion
- ----------
- 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 6e9baf8..d7d0dee 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -108,8 +108,8 @@ options may be given. See linkgit:git-diff-files[1] for more options.
- 
- -c::
- 
--	This flag changes the way a merge commit is displayed.  It shows
--	the differences from each of the parents to the merge result
-+	This flag forces the default way a merge commit is displayed.  It
-+	shows the differences from each of the parents to the merge result
- 	simultaneously instead of showing pairwise diff between a parent
- 	and the result one at a time. Furthermore, it lists only files
- 	which were modified from all parents.
-@@ -121,6 +121,15 @@ options may be given. See linkgit:git-diff-files[1] for more options.
- 	the parents have only two variants and the merge result picks
- 	one of them without modification.
- 
-+-m::
-+
-+	This flag makes the merge commits show the full diff like
-+	regular commits; for each merge parent, a separate log entry
-+	and diff is generated. (An exception is made if '--first-parent'
-+	option has been also passed; in that case, only diff against
-+	the first parent is shown, representing the changes the merge
-+	brought _into_ the then-current branch.)
-+
- -r::
- 
- 	Show recursive diffs.
-diff --git a/log-tree.c b/log-tree.c
-index 27afcf6..fb990a1 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -514,6 +514,14 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
- 			return 0;
- 		else if (opt->combine_merges)
- 			return do_diff_combined(opt, commit);
-+		else if (opt->first_parent_only) {
-+			/* Generate merge log entry only for the first
-+			 * parent, showing summary diff of the others
-+			 * we merged _in_. */
-+			diff_tree_sha1(parents->item->object.sha1, sha1, "", &opt->diffopt);
-+			log_tree_diff_flush(opt);
-+			return !opt->loginfo;
-+		}
- 
- 		/* If we show individual diffs, show the parent info */
- 		log->parent = parents->item;
+-- 
+Jakub Narebski
+Poland
