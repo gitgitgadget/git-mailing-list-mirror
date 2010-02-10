@@ -1,73 +1,112 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: A generalization of git notes from blobs to trees - git
- metadata?
-Date: Wed, 10 Feb 2010 00:29:02 -0500
-Message-ID: <20100210052902.GA28832@coredump.intra.peff.net>
-References: <2cfc40321002060532g4d22dd4dx403bf312708e1424@mail.gmail.com>
- <201002070236.12711.johan@herland.net>
- <7v1vgxlr9q.fsf@alter.siamese.dyndns.org>
- <20100207050255.GA17049@coredump.intra.peff.net>
- <2cfc40321002062136q64f832aesd979c9cb22f3612@mail.gmail.com>
- <20100207193320.GB3185@coredump.intra.peff.net>
- <7v8wb4aj4m.fsf@alter.siamese.dyndns.org>
- <20100210050902.GD28526@coredump.intra.peff.net>
- <7vvde5irzz.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v3 2/3] git-push: clean up some of the output from git
+ push --porcelain
+Date: Wed, 10 Feb 2010 00:39:37 -0500
+Message-ID: <20100210053937.GF28526@coredump.intra.peff.net>
+References: <214a0317f2e4707a866b2f5d10509296bc1479c1.1265661033.git.larry@elder-gods.org>
+ <a1b71c9f6566549e6117f5c98c2f1e60754a7334.1265661033.git.larry@elder-gods.org>
+ <7vtytrih7b.fsf@alter.siamese.dyndns.org>
+ <7vvde7h1mn.fsf@alter.siamese.dyndns.org>
+ <20100208213256.GA470@coredump.intra.peff.net>
+ <7viqa7cqs9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jon Seymour <jon.seymour@gmail.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
+Cc: Larry D'Anna <larry@elder-gods.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 06:30:38 2010
+X-From: git-owner@vger.kernel.org Wed Feb 10 06:43:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nf59l-0004M5-Q8
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 06:30:34 +0100
+	id 1Nf5Md-00019S-CQ
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 06:43:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751268Ab0BJF3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2010 00:29:01 -0500
-Received: from peff.net ([208.65.91.99]:40081 "EHLO peff.net"
+	id S1751162Ab0BJFji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2010 00:39:38 -0500
+Received: from peff.net ([208.65.91.99]:51740 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751081Ab0BJF3A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2010 00:29:00 -0500
-Received: (qmail 31244 invoked by uid 107); 10 Feb 2010 05:29:08 -0000
+	id S1750749Ab0BJFjh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2010 00:39:37 -0500
+Received: (qmail 31280 invoked by uid 107); 10 Feb 2010 05:39:43 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 10 Feb 2010 00:29:08 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Feb 2010 00:29:02 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 10 Feb 2010 00:39:43 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Feb 2010 00:39:37 -0500
 Content-Disposition: inline
-In-Reply-To: <7vvde5irzz.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7viqa7cqs9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139490>
 
-On Tue, Feb 09, 2010 at 09:23:12PM -0800, Junio C Hamano wrote:
+On Mon, Feb 08, 2010 at 02:21:26PM -0800, Junio C Hamano wrote:
 
-> > Hmm. OK, I see the point of Jakub's message a bit more now. You want to
-> > create a new view, inconsistent with that of either Alice or Bob (that
-> > is, you have taken snippets of each's state, but you cannot in good
-> > faith represent this as a history merge, because your state should not
-> > supersede either of theirs).
+> I think the purpose of the patches that started this thread was to admit
+> that 1965ff7 (add --porcelain option to git-push, 2009-06-22) was not well
+> thought out, and to break compatibility to fix it.
+
+I thought it was simply to remove stdout cruft that had crept in, and at
+the same time to remove some stderr cruft that was simply noise on the
+terminal. That being said, I am in favor of fixing it even if it means a
+slight compatibility breakage.
+
+> Having said that, I would say that what 1965ff7 specified was only these
+> two:
 > 
-> In the message you are quoting, I am not interested in creating a narrowed
-> view.  If I cannot resolve conflicts between Alice and Bob in a merge in
-> the contents space, I would ask either of them (because they are more
-> familiar with the area) to do the merge.  I however was unsure if asking
-> the same for merges in the notes space is a reasonable thing to do.
+>     = TAB refs/heads/master:refs/heads/master TAB [up to date]
+>     - TAB :refs/heads/foobar TAB [deleted]
+> 
+> so everything else that do not match this pattern is a fair game, most
+> importantly, the line that begins with "To" would not be mistaken with
+> this pattern, I think.
 
-No, I don't see a problem with asking them to do it. If you are all
-collaborating as a group, it is something they will need to do
-eventually anyway. If they are not, and you are an intermediary, you are
-eventually going to share Alice's history with Bob and vice versa. So
-you pull from Alice, then say to Bob: "I have some history but I'm not
-sure of the correct merge. Pull from me and merge please". The only real
-problem is if you _never_ want to share the history between the two of
-them. In that case, I think you should keep two parallel branches of
-history (refs/notes/alice and refs/notes/bob), and then squash the trees
-at run-time (either concatenating them, or favoring one over the other
-in the case of conflicts).
+It depends on the parser. If the parser was something like:
+
+  switch (line[0]) {
+    case '=': ...; break;
+    case '-': ...; break;
+    default: die("wtf: %s", line);
+  }
+
+then we are not introducing any ambiguity, but we are causing a
+breakage. The problem is that we did not specify the format anywhere, so
+it is hard to say whether we are breaking any promises we made.
+
+> > This one, on the other hand, seems to me to be just noise. What does a
+> > --porcelain caller learn by seeing "Everything up-to-date" that it did
+> > not already know from seeing the list of refs?
+> 
+> I do not care too much about this hunk either way.  We could leave it as
+> is, as we will be giving some other stuff to the standard error stream
+> without squelching anyway, even with the three-patch series.  We could
+> squelch only this message, but it is dubious what it is buying us.  If you
+> forced me to decide, I would probably say "let's just drop this hunk and
+> keep the code as-is".
+
+I have not actually been running these patches, just reading them, but
+my impression was the goal _was_ to squelch all of the stderr cruft. But
+if we are not even close, then probably we should just give up and
+callers should "2>/dev/null".
+
+> As to the exit status, do you have any thoughts, by the way?
+> 
+> I am not convinced that it would be necessary nor even a good idea to make
+> it behave inconsistently between the normal case and Porcelain case, only
+> to make it easier to special case the "remote side would reject due to
+> non-fast-forward" failure mode (iow, even if the calling script knows that
+> it would fail due to non-fast-forward but otherwise everything else would
+> be fine, what good would it do?)
+
+I had initially endorsed it, but now I am having second thoughts.
+Especially if the "usual" calling convention is to redirect stderr as
+above, then we are probably missing out on any useful error messages
+that accompany a failure return, anyway.  So maybe the sane thing to do
+is to leave the exit code alone, and include a --porcelain output line
+that either says "Everything was OK, see individual ref status" or "We
+couldn't even talk to the other side". Then the status code is
+irrelevant, and stdout contains all of the useful information (and if
+you don't get an error or OK message, you know there was some
+serious error like a broken git installation).
 
 -Peff
