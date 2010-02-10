@@ -1,76 +1,67 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH] Documentation: reword --thin description
-Date: Wed, 10 Feb 2010 11:07:09 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1002101037300.1681@xanadu.home>
-References: <1265778851-5397-1-git-send-email-bebarino@gmail.com>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] blame: allow -L n,m to have an m bigger than the file's
+ line count
+Date: Wed, 10 Feb 2010 08:25:34 -0800
+Message-ID: <4B72DDFE.7090400@gmail.com>
+References: <1265786864-5460-1-git-send-email-bebarino@gmail.com> <76718491002100537h521fcc26gb267ed7cd2b8db6f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 17:07:28 2010
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 10 17:25:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfF63-0002dR-Mm
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 17:07:24 +0100
+	id 1NfFNs-0001cY-UL
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 17:25:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753675Ab0BJQHQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2010 11:07:16 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:20217 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753016Ab0BJQHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2010 11:07:14 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KXM004U1VFXQ1Y0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 10 Feb 2010 11:07:10 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <1265778851-5397-1-git-send-email-bebarino@gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1755509Ab0BJQZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2010 11:25:41 -0500
+Received: from mail-yw0-f173.google.com ([209.85.211.173]:61041 "EHLO
+	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754589Ab0BJQZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2010 11:25:41 -0500
+Received: by ywh3 with SMTP id 3so194695ywh.22
+        for <git@vger.kernel.org>; Wed, 10 Feb 2010 08:25:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=8ML+i8XBWEGH8gWQEtuvyI8mbpg0W5MNBitY+qDnOfg=;
+        b=FNgLaGS+H3LLkQSCoVLl2j5MsCrZsc5913I3I3b6Wgld9y3ni8R52F4jAgflJKhTFV
+         /0/ei2rAyHu8mWW/7bhIFTFjFUhywi4CUmb4OUCXPO43ZUI0t49/I+PRyf8DhnebHyQH
+         te4HJjdNOm803rAdhv3QKxI2Am+f/+XjVy5eE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=TEu1eTPLAXObLz54EmzXkPHKOyllWaORfS71CMcJsCqCMTemxMvNm2bfmsr9NU4Vln
+         hpXJtmxQvph1f1fDlw3D9rTWdDeolaypPvm8Ed6g9B4fdVOGxgaIGVH+G36F2v7ejfj1
+         oL6j8AgQYJ/5TFQbiqlqHkPf5v6e3uRtdq82I=
+Received: by 10.151.88.11 with SMTP id q11mr1369254ybl.20.1265819140114;
+        Wed, 10 Feb 2010 08:25:40 -0800 (PST)
+Received: from ?192.168.1.5? (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id 21sm509337ywh.1.2010.02.10.08.25.36
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 10 Feb 2010 08:25:38 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7pre) Gecko/20091214 Shredder/3.0.1pre
+In-Reply-To: <76718491002100537h521fcc26gb267ed7cd2b8db6f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139514>
 
-On Tue, 9 Feb 2010, Stephen Boyd wrote:
+On 02/10/2010 05:37 AM, Jay Soffian wrote:
+> I agree this is the right thing to do. I'm working on a patch to
+> support matching multiple times when given a regex range and made just
+> that change as well. :-)
+>    
 
->  --thin::
-> -	Spend extra cycles to minimize the number of objects to be sent.
-> -	Use it on slower connection.
-> +	Spend extra cycles minimizing the number of sent objects.
-> +	Use it with a slow connection.
-
-Both the old and the new text are bollocks.
-
-There is no extra cycles involved here.  And linking this to a slow 
-connection is misleading.
-
-The point of --thin is to create a pack containing delta objects while 
-excluding the base objects they depend on when those objects are known 
-to exist in the receiver's repository already.  Because base objects 
-are usually significantly bigger than delta objects, this results in a 
-large reduction in the amount of data to transfer.
-
-However we don't allow a pack with delta objects referencing base 
-objects to be stored in a Git repository if those base objects are not 
-part of the same pack for robustness reasons.  Therefore, when a thin 
-pack is transferred via the git protocol, the receiving end must 
-"fatten" the pack by appending those missing base objects for that pack 
-to be complete and valid.  This results in somewhat suboptimal object 
-storage on the receiving end due to some object duplications.  Of course 
-a simple gc will fix that.
-
-These days --thin is always the default for a fetch.  We used to think 
-that --thin might not be the best thing to do on a push given that the 
-receiving end is typically a central server in that case and keeping 
-storage low on a central server should be preferred.  But --thin turned 
-out to be re-enabled by default for pushes by mistake on a few occasions 
-when the affected code has been reworked.  No idea what state it is now, 
-and I don't think that makes such a difference on the server in the end.
-
-
-Nicolas
+Great! I'll split the patch into a documentation patch (for 1.7.0) and a 
+behavioral patch (for post 1.7.0)? Or perhaps you can take care of the 
+behavioral change in your upcoming series?
