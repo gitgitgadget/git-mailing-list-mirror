@@ -1,62 +1,61 @@
-From: =?UTF-8?B?Sm/Do28gQ2FybG9zIE1lbmRlcyBMdcOtcw==?= 
-	<jonny@jonny.eng.br>
-Subject: Re: [PATCH 4/4] Add test for using Git at root of file system
-Date: Wed, 10 Feb 2010 11:10:13 -0200
-Message-ID: <4B72B035.9080603@jonny.eng.br>
-References: <1265734950-15145-1-git-send-email-pclouds@gmail.com> <1265734950-15145-4-git-send-email-pclouds@gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH] blame: allow -L n,m to have an m bigger than the file's 
+	line count
+Date: Wed, 10 Feb 2010 08:37:36 -0500
+Message-ID: <76718491002100537h521fcc26gb267ed7cd2b8db6f@mail.gmail.com>
+References: <1265786864-5460-1-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 14:11:40 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 10 14:37:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with smtp (Exim 4.69)
+	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfCLz-00056H-If
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 14:11:39 +0100
+	id 1NfClE-0007hC-EF
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 14:37:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753409Ab0BJNKU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Feb 2010 08:10:20 -0500
-Received: from roma.coe.ufrj.br ([146.164.53.65]:60228 "EHLO coe.ufrj.br"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753232Ab0BJNKS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2010 08:10:18 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coe.ufrj.br (Postfix) with ESMTP id B21161FA1D4;
-	Wed, 10 Feb 2010 11:10:16 -0200 (BRST)
-X-Virus-Scanned: amavisd-new at coe.ufrj.br
-Received: from coe.ufrj.br ([146.164.53.65])
-	by localhost (roma.coe.ufrj.br [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id T5uCzLsA4MsB; Wed, 10 Feb 2010 11:10:14 -0200 (BRST)
-Received: from home.jonny.eng.br (unknown [187.14.9.79])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coe.ufrj.br (Postfix) with ESMTPSA id 1E9531FA080;
-	Wed, 10 Feb 2010 11:10:14 -0200 (BRST)
-User-Agent: Thunderbird 2.0.0.22 (X11/20090625)
-In-Reply-To: <1265734950-15145-4-git-send-email-pclouds@gmail.com>
+	id S1753963Ab0BJNhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2010 08:37:38 -0500
+Received: from mail-iw0-f185.google.com ([209.85.223.185]:57476 "EHLO
+	mail-iw0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753699Ab0BJNhh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2010 08:37:37 -0500
+Received: by iwn15 with SMTP id 15so6640459iwn.19
+        for <git@vger.kernel.org>; Wed, 10 Feb 2010 05:37:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=d9hv18zBgpNvFhPK/Kb0i02Fd8YtjlxFd2Q31j3oCGU=;
+        b=Inu/4iszkBudu58GozsGl6M01/M5WNlWdcH9FoKrKRtEikmv5nl0S/yCmpdAh2Ii8Z
+         kqR8wF9SC1G4aB6jqpUjxql4o1wjtDUh1OmfRucattxQHEufixCR3A3CcxCrKcufM0Kt
+         0GqPOLGcbw1wO5L2EzNiqLYc5tJpohk0NshJ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=bLvwKFXI2O8Z/hABhJL3pRF0H5P7NikdtoNG19EVYjsrBqbBhZgTKoCbxKYI6BrCFu
+         vNHPnZvSqu7LuQsch3JaiEbeHcAaCzqts0yQ7nC+RTnjphtmfqCM4urBD1Y11XmACha5
+         cWcRy/2s1DrNFut3aaw+twXAOjo2td48KKIsk=
+Received: by 10.231.161.138 with SMTP id r10mr472182ibx.34.1265809056582; Wed, 
+	10 Feb 2010 05:37:36 -0800 (PST)
+In-Reply-To: <1265786864-5460-1-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139511>
 
+On Wed, Feb 10, 2010 at 2:27 AM, Stephen Boyd <bebarino@gmail.com> wrote:
+> and get what I want but that isn't very discoverable. If the range is
+> greater than the number of lines just truncate the range to go up to
+> the end of the file.
 
+I agree this is the right thing to do. I'm working on a patch to
+support matching multiple times when given a regex range and made just
+that change as well. :-)
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> This kind of test requires a throw-away root filesystem so that it ca=
-n
-> play on. If you have such a system, go ahead, "chmod 777 /" and run
-> this test manually ("make test" with root permission won't work).
->  =20
-
-I've seen you have a prepare-chroot.sh file in there.  Is it working or=
-=20
-not?  I mean, did you create a chrooted environment to test, or there=20
-was any problem with that?
+j.
