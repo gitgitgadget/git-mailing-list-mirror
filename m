@@ -1,100 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-mailsplit: add `mailsplit.keep-cr` configuration variable.
-Date: Thu, 11 Feb 2010 10:35:54 -0800 (PST)
-Message-ID: <m3k4uj8vts.fsf@localhost.localdomain>
-References: <1265911741-14840-1-git-send-email-stefan.hahn@s-hahn.de>
-	<20100211181354.GC15028@scotty.home>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: git cherry-pick --continue?
+Date: Wed, 10 Feb 2010 23:38:28 +0100
+Message-ID: <fabb9a1e1002101438v74aea1b9v482ff49fa4ddd15d@mail.gmail.com>
+References: <fabb9a1e1002101237i60a0b2c5j6d1e52b33dacbaa2@mail.gmail.com> 
+	<20100210210419.GA7728@coredump.intra.peff.net> <20100210212408.GB7728@coredump.intra.peff.net> 
+	<7v63644uoq.fsf@alter.siamese.dyndns.org> <7vbpfw3f6t.fsf@alter.siamese.dyndns.org> 
+	<fabb9a1e1002101423y79460afdn2bc31b117195ef42@mail.gmail.com> 
+	<7vpr4c200i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
-X-From: git-owner@vger.kernel.org Thu Feb 11 19:36:19 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 10 23:46:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nfdth-0006KC-Ok
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Feb 2010 19:36:18 +0100
+	id 1NfLKP-00027j-5K
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 23:46:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756693Ab0BKSgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2010 13:36:12 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:45629 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756251Ab0BKSgI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2010 13:36:08 -0500
-Received: by ewy28 with SMTP id 28so232585ewy.28
-        for <git@vger.kernel.org>; Thu, 11 Feb 2010 10:36:06 -0800 (PST)
+	id S1756596Ab0BJWqR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Feb 2010 17:46:17 -0500
+Received: from mail-iw0-f185.google.com ([209.85.223.185]:49541 "EHLO
+	mail-iw0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756477Ab0BJWqO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Feb 2010 17:46:14 -0500
+Received: by iwn15 with SMTP id 15so637733iwn.19
+        for <git@vger.kernel.org>; Wed, 10 Feb 2010 14:46:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=2S7wGj0TZChM/YmXGF6blQjo3r0JjEGH9pf1wrKtbGY=;
-        b=DMqeRSywxQKkVgfjhcpdpnB+6oaL1KLvLyyqwea8efXZZRNILzI5+bII9/aBJoepWX
-         YUlxGWuuwb8mGCh9QLwUCZnIDgPeRLvWVvwR7qViOW+VDw9WHE/m0bFYXWLsu6pn/SLs
-         WwgdezSnjY+GHfURhiadP9r5d7an9+e1tQhtE=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GuF36bP6Q+f21fyt0BoPr+RHOWXGw+X6eSR8h2BokH8=;
+        b=uVelp51qh7RlhvPnTPQ3njr/eaAlupgkCAXN98Pet54UZHdUIDAxhb7SxIRf+irdhi
+         56l3t8sGJEmhvbqE54RBETnXKU6I0jQcGF+CV4XI17WpZO29WWC4m77WRQbn/PJN+8BY
+         Zs4iv09bc1KhCZaQ/kbAXzM6xi6rofaNS4RtU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=GEnbWPpFcH0ZRwMaLjxstgy9DFISh2UvzQoTGTIBM5W9QVs/nlAG6u8n/jZHGn4D5v
-         fiku132J2rvWmBAWAHwdC1AJiIPur+F1P1KGC0H6TK8pOymDlpvjBItGe6QZbYq4qJTx
-         fFCQk13bTregJuSLeWz49bwQqr7+joxchqj2Y=
-Received: by 10.213.44.18 with SMTP id y18mr946621ebe.69.1265913357232;
-        Thu, 11 Feb 2010 10:35:57 -0800 (PST)
-Received: from localhost.localdomain (abwf229.neoplus.adsl.tpnet.pl [83.8.229.229])
-        by mx.google.com with ESMTPS id 14sm1722212ewy.7.2010.02.11.10.35.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Feb 2010 10:35:54 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o1BIZSC2004799;
-	Thu, 11 Feb 2010 19:35:39 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o1BIZCar004795;
-	Thu, 11 Feb 2010 19:35:12 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20100211181354.GC15028@scotty.home>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=r80i88dOaOhozePSvhdteqt6laSQspD2bIdlkesxJFfGXY0G45Kfn8nV5CuYgXngss
+         8aKk3kgwClvPbasSXPfQvDbur8ct0iQbiDpNzBfPpA1G7io73pooJEx1f++40BYbbNZ0
+         KWfNFKqeYUkIafLy5Wg3JUTitQvEmXqorYC7Q=
+Received: by 10.142.75.9 with SMTP id x9mr557226wfa.318.1265841528179; Wed, 10 
+	Feb 2010 14:38:48 -0800 (PST)
+In-Reply-To: <7vpr4c200i.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139615>
 
-Subject should read start with '[PATCH 2/4] '.
+Heya,
 
-"Stefan-W. Hahn" <stefan.hahn@s-hahn.de> writes:
+On Wed, Feb 10, 2010 at 23:34, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> Changing the insn to suggest using "-C topic" when the original comma=
+nd
+> line was "git cherry-pick topic" would be a good addition, too. =A0Cu=
+rrently
+> we suggest "-c" and abbreviated object name, neither of which is sens=
+ible.
 
-> If using git-mailsplit in environments where files with dos and unix
-> line ending stay in one repository mbox patches must be split with
-> additional parameter '--keep-cr', because the behaviour of
-> git-mailsplit have been changed in commit c2ca1d79.
-> 
-> With this patch the behaviour of git-mailsplit can be set via
-> configuration file.
-> 
-> Signed-off-by: Stefan-W. Hahn <stefan.hahn@s-hahn.de>
-> ---
-[...]
+I think it's sensible to use '-c' instead of '-C', just like 'git
+rebase -i' lets you change the commit message after you resolve a
+conflict.
 
-> +mailsplit.keep-cr::
-> +	If true git-mailsplit will not remove `\r` from lines ending
-> +	with `\r\n`. See linkgit:git-mailsplit[1].
-> +
+> While I think "--resolved" makes sense, I do not see much benefit, an=
+d it
+> largely depends on what you do. =A0If you are suggesting to commit wi=
+th what
+> is kept in $GIT_DIR/MERGE_MSG, I would actually recommend against it.=
+ =A0The
+> message will have "Conflicts:" information but that is meaningless un=
+less
+> you are recording from what context the commit was cherry-picked from=
+ at
+> the same time.
 
-The convention use by config variables is to have camelCase or
-allsmallcase name (variable name and section name are case
-insensitive), e.g.:
+I'm not sure how to implement it, but I was thinking to just automate
+the 'git commit -c ...' part. I don't like having to copy/paste some
+instruction, so maybe we can record the original commit somewhere and
+have 'git cherry-pick --resolve' be equivalent to 'git commit -c `cat
+=2Egit/CHERRY_PICK_CMT`', or somesuch?
 
-  transfer.unpackLimit::
-  status.showUntrackedFiles::
-  sendemail.aliasfiletype::
-  repack.usedeltabaseoffset::
+--=20
+Cheers,
 
-etc., with the only outlier being add.ignore-errors.
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Sverre Rabbelier
