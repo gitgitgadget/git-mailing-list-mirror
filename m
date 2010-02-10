@@ -1,73 +1,67 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 8/6] receive-pack: Send internal errors over side-band
- #2
-Date: Wed, 10 Feb 2010 09:13:00 +0100
-Message-ID: <4B726A8C.6010600@viscovery.net>
-References: <1265767290-25863-1-git-send-email-spearce@spearce.org> <1265767290-25863-2-git-send-email-spearce@spearce.org> <4B725CB1.1080908@viscovery.net>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: A question about the tree associated with a git notes commit
+Date: Wed, 10 Feb 2010 19:21:18 +1100
+Message-ID: <2cfc40321002100021r55370b5fj36d9c292c67bcca4@mail.gmail.com>
+References: <2cfc40321002092216p5cbf432bs3766d40858f9bf3a@mail.gmail.com>
+	 <7vmxzhfuat.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Feb 10 09:13:14 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 10 09:21:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nf7hB-0006vO-6V
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 09:13:13 +0100
+	id 1Nf7p7-0003D4-7S
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 09:21:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752681Ab0BJING (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2010 03:13:06 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:27708 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752514Ab0BJINF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2010 03:13:05 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Nf7gz-0008JH-9L; Wed, 10 Feb 2010 09:13:01 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 0655C1660F;
-	Wed, 10 Feb 2010 09:13:00 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <4B725CB1.1080908@viscovery.net>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1752866Ab0BJIVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2010 03:21:20 -0500
+Received: from mail-yw0-f173.google.com ([209.85.211.173]:49011 "EHLO
+	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751461Ab0BJIVT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2010 03:21:19 -0500
+Received: by ywh3 with SMTP id 3so7488810ywh.22
+        for <git@vger.kernel.org>; Wed, 10 Feb 2010 00:21:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=UGybplFP3iMyJaYdEkMkO28jhdKfL7daYZEcU0+uPtM=;
+        b=A7H7xgiY0HUoGBes1SpWiq2ggDc8JtMEgmM1WqW/2kFXt3EnqLKN47pGMG3T5qPDAF
+         VO4KRC3xrdvOpe7j75rmdG7GJW8bA4EcWJTvZCKZ0mpOgMgLdNnlRUcpaPFfY7swF8oT
+         kF+iHtyBQZT7EYirPXoxhmJrlhy8CBWAC3Fhw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=Hsjfb+I4zgPK43UBN7f21aGhHu9c3MaOWXlaFrho8ZutQ0CP1x8trwpbMEWBfq4SU5
+         f86gCpCp1YgccRNUH8UlS6/vwhYLcapur0hVHi1NHeZUgsQJn5UnCGSEaMjwi6lJYzo6
+         2dVt0y7LyknR5fVzhJOFcd/EFZ/bxf0AATxrc=
+Received: by 10.150.253.10 with SMTP id a10mr1747794ybi.283.1265790078431; 
+	Wed, 10 Feb 2010 00:21:18 -0800 (PST)
+In-Reply-To: <7vmxzhfuat.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139500>
 
-Johannes Sixt schrieb:
-> Or did you replace only selected error() and warning() calls by rp_error()
-> and rp_warning()?
+Thanks..apologies for not seeking the answer myself.
 
-Actually, you want to send only selected messages to the pusher. For
-example, these look like errors on the server side (right?) and should go
-to the site administrator:
+jon.
 
->  	if (!is_null_sha1(new_sha1) && !has_sha1_file(new_sha1)) {
-> -		error("unpack should have generated %s, "
-> -		      "but I can't find it!", sha1_to_hex(new_sha1));
-> +		rp_error("unpack should have generated %s, "
-> +			 "but I can't find it!", sha1_to_hex(new_sha1));
->  		return "bad pack";
->  	}
-
->  		if (!old_object || !new_object ||
->  		    old_object->type != OBJ_COMMIT ||
->  		    new_object->type != OBJ_COMMIT) {
-> -			error("bad sha1 objects for %s", name);
-> +			rp_error("bad sha1 objects for %s", name);
->  			return "bad ref";
->  		}
->  		old_commit = (struct commit *)old_object;
-
-In particular, your patch does not send errors produced by unpack-objects
-or index-pack to the pusher over the sideband, and this is the right thing
-to do.
-
--- Hannes
+On Wed, Feb 10, 2010 at 6:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jon Seymour <jon.seymour@gmail.com> writes:
+>
+>> Apologies if this question is answered with trivial analysis of the
+>> code, I admittedly haven't done that.
+>
+> Output from "git log master..0ce25c4b" and especially and c07d5eb (t3305:
+> Verify that adding many notes with git-notes triggers increased fanout,
+> 2010-01-27) and 71942f4 (t3305: Verify that removing notes triggers
+> automatic fanout consolidation, 2010-01-27) would be of interest.
+>
