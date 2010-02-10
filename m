@@ -1,80 +1,84 @@
-From: Schuyler Duveen <sky@columbia.edu>
-Subject: [RFC] submodule+shallow clone feature request
-Date: Wed, 10 Feb 2010 16:39:08 -0500
-Message-ID: <4B73277C.9010801@columbia.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git cherry-pick --continue?
+Date: Wed, 10 Feb 2010 14:01:09 -0800
+Message-ID: <7v63644uoq.fsf@alter.siamese.dyndns.org>
+References: <fabb9a1e1002101237i60a0b2c5j6d1e52b33dacbaa2@mail.gmail.com>
+ <20100210210419.GA7728@coredump.intra.peff.net>
+ <20100210212408.GB7728@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 10 22:58:50 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 10 23:01:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfKaA-0000mb-16
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 22:58:50 +0100
+	id 1NfKcj-00030k-MK
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 23:01:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755833Ab0BJV6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2010 16:58:44 -0500
-Received: from serrano.cc.columbia.edu ([128.59.29.6]:64921 "EHLO
-	serrano.cc.columbia.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751452Ab0BJV6n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2010 16:58:43 -0500
-X-Greylist: delayed 1172 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Feb 2010 16:58:43 EST
-Received: from [192.168.1.102] (cpe-69-203-12-132.nyc.res.rr.com [69.203.12.132])
-	(user=sky mech=PLAIN bits=0)
-	by serrano.cc.columbia.edu (8.14.3/8.14.3) with ESMTP id o1ALd8rr027045
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 10 Feb 2010 16:39:09 -0500 (EST)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-X-No-Spam-Score: Local
-X-Scanned-By: MIMEDefang 2.68 on 128.59.29.6
+	id S1756150Ab0BJWBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2010 17:01:25 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37121 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756124Ab0BJWBY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2010 17:01:24 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 222F898919;
+	Wed, 10 Feb 2010 17:01:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IAUxDKYNVYH/6ln8kzLZgEtTAiY=; b=QJ3dIg
+	KsmcGqHarz+gc2luDWQ8qjZdY8TxOEIfA894DJteo92kQtd+JLg7tLtnfA5ua5DI
+	h8S9lWZU93lCFguwALzF9m5lT208myp1uISI+rrh6u1b/ErPNG4VVL3h6HAUls7o
+	fR4BYaEOdYxbLvvwoHEGw2c3JXjUocWpzRmc8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=s/AfTglHfsaG8OhqA0OeXf4HL9cBQ9lQ
+	4/iM3wQhtVtQI+oiLQ4fsQHiAiH9nf8otlVLUqYymdgFK0GdOFOXocgSe9CzhogP
+	S3eyOapi1DoS30S1shM0GbCnZwrbnZIVT74boq3DDX7B7d2uwdRpreg1kGZbIHmY
+	VL4l/jwQhEc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E4AEA9890D;
+	Wed, 10 Feb 2010 17:01:15 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 07AAD98904; Wed, 10 Feb
+ 2010 17:01:10 -0500 (EST)
+In-Reply-To: <20100210212408.GB7728@coredump.intra.peff.net> (Jeff King's
+ message of "Wed\, 10 Feb 2010 16\:24\:08 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CF564054-168F-11DF-A59D-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139555>
 
-My use case is deploying from a git repository, which would be even more
-graceful with the following features:
+Jeff King <peff@peff.net> writes:
 
-1. When 'git clone' has both --recursive and --depth, then submodules
-are also checked out shallow (for speed/bandwidth).
+> Hmm. I was thinking "am" was the odd man out, but really there are only
+> two sequencer commands that I noted: rebase and am. So you could perhaps
+> argue that rebase should also learn "--resolved". Or am I forgetting
+> one?
 
-2. Some way to specify an override on .gitmodules sources.  This is
-because our .gitmodules includes public, read-only sources (github),
-rather than our local repos we would prefer to deploy from (for the
-purpose of reliability).
+I don't think you are forgetting anything, except that "am" came first with
+"resolved".
 
-The other use-case for feature #2 is the read-only vs. writable
-repository sources.  Developers that are also working on the submodules
-should be able to clone from separate repository sources.  Though this
-could be (and perhaps is) satisfied with a pushurl= in .gitmodules, I'd
-like to keep the push url non-public, and that still would leave us
-unable to deploy from different urls.
+The focus of the verb is "I declare I am finished marking the resolution".
+Taking that declaration and continuing is ultimately "am"'s decision.  IOW
+the user is not telling "am" to continue---the difference is subtle, but
+it was a conscious design decision.
 
-For #2 maybe something like this:
+"rebase --continue" came later, and I think its focus is placed more
+heavily on the instruction side ("Please continue"), and not on the
+declaration side ("I now have marked the resolution for all paths").
 
-$ git clone --recursive --depth 1 --modules foo.modules\
-> git@example.com/foo.git
-where foo.modules contains:
-<begin>
-[submodule "bar"]
-	path = bar
-	url = git@example.com/bar.git
-[submodule "bar/baz"]
-	path = bar/baz
-	url = git@example.com/baz.git
-<end>
+This causes people sometimes to want to see it "continue", even when then
+haven't marked the resolved paths as resolved.  I personally think the
+focus is misplaced.
 
-Notice how the .gitmodules needs to be able to specify recursive sources
-as well.  Presumably `git submodule init` would take --modules argument
-as well (and maybe git submodule update, too).
-
-I'm not well-versed in the git source code yet, but poking around
-suggests that this is doable.  Would a patch be well received (or does
-someone want to do it for me :-)
-
-cheers,
-sky
+But that is just a philosophical difference ;-).
