@@ -1,80 +1,81 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: Re: [PATCH] Add a test for a problem in "rebase --whitespace=fix"
-Date: Wed, 10 Feb 2010 21:20:18 +0100
-Message-ID: <6672d0161002101220h34ebbda8o3fde503d41c8313e@mail.gmail.com>
-References: <4B6E7564.7040109@gmail.com>
-	 <7vtytsevsd.fsf@alter.siamese.dyndns.org>
-	 <6672d0161002071444lba0f751w3e7e33043e1ec2e8@mail.gmail.com>
-	 <7vbpg060qx.fsf@alter.siamese.dyndns.org>
-	 <6672d0161002072337r2ad002adq69f4c686da8cdf09@mail.gmail.com>
-	 <7vzl3i137f.fsf@alter.siamese.dyndns.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: GSoC 2010
+Date: Wed, 10 Feb 2010 21:23:55 +0100
+Message-ID: <fabb9a1e1002101223o6a00f7eavb84567c1119c8ebc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 21:20:30 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Eric Wong <normalperson@yhbt.net>, Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spe
+X-From: git-owner@vger.kernel.org Wed Feb 10 21:24:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfJ2v-0005xx-PI
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 21:20:26 +0100
+	id 1NfJ6j-0000hw-7F
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 21:24:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755351Ab0BJUUV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Feb 2010 15:20:21 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:39328 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755323Ab0BJUUU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Feb 2010 15:20:20 -0500
-Received: by ewy28 with SMTP id 28so468850ewy.28
-        for <git@vger.kernel.org>; Wed, 10 Feb 2010 12:20:18 -0800 (PST)
+	id S1755873Ab0BJUYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2010 15:24:17 -0500
+Received: from mail-pz0-f187.google.com ([209.85.222.187]:57398 "EHLO
+	mail-pz0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755789Ab0BJUYP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2010 15:24:15 -0500
+Received: by pzk17 with SMTP id 17so407726pzk.4
+        for <git@vger.kernel.org>; Wed, 10 Feb 2010 12:24:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lHDCQ1U1FVAbHFyt5QERQ87naUq44YVKCXFvsKL+3Ak=;
-        b=SgnVyeJm3B6yYkgrulntvd/IejWm1wGBsnfZHwtUUKu4Tf1385hZeviA5ph+b8GfUc
-         Xwd+wrcDIILfxYt+quoIj5v9GwDNnok8vF15yrILGbjeqmj5yNw1I1Cb+dveaYKaqr84
-         vb05CB9YqLKOdBSqMKxKH8by37hdOcB6xLpNs=
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=uTwYtBPYbYR5F5iV7BAYcNepnNNM6Mv2gYuwMlNuiyk=;
+        b=iNY9/TNNZ40euEy1lh6/oIPJlfeOAQNkoirG3NZdzLlNfx0Mj4NFwpGOun0YykZQOK
+         oaQp+ETNZe2gGmTv4wsjD1P850+/l9+3/o0lfdj05PfzzE71+kfuEcpBCmWZGVkmHQa5
+         D07IL6RZkGV1yr2mCkiigLjp6/qDE4t5epgMQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=wcWzy96VG/CazJeKpqPd32LEBBx3L0724v/I/Is25c823oTNAGgy1Cdw8zbPxQCHSw
-         0XtoV8cCw47+nPzKNDlfl1qD/SEy4teLBiLTjJpRhq8F3NPdLYH1B1TUhY/J5TEjRaSp
-         WBrbR366XA19EryThyPoDDHgIWptT9CXwoRB0=
-Received: by 10.216.88.143 with SMTP id a15mr429258wef.206.1265833218365; Wed, 
-	10 Feb 2010 12:20:18 -0800 (PST)
-In-Reply-To: <7vzl3i137f.fsf@alter.siamese.dyndns.org>
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=ZYSPXZxsNMBho85SSwDoyfpdQaG0We4yBqzd/q3NKNfsBgo96SNodrKbEJAyYeXuFz
+         /KqtBgNKrV2vZtiyGMCiQRW9rdzm8iCvcRlDJtWsyeoiU8NSfqEQqkXBFBrSMV2o18q+
+         CZKZVZdOxYl9nhK3eD2PMEHYOY5Sr7T2I7NOI=
+Received: by 10.142.67.11 with SMTP id p11mr444345wfa.342.1265833455080; Wed, 
+	10 Feb 2010 12:24:15 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139545>
 
-2010/2/9 Junio C Hamano <gitster@pobox.com>:
-> I actually changed my mind after thinking about it a bit more.
+Heya,
 
-Thanks for thinking more about it and for your explanation
-about the algorithm
+Dscho created a GSoC 2010 idea's page [0] a few weeks ago, but it's a
+bit sad at the moment (only two idea's). Part of the reason Git was
+listed as 'example application' before was our awesome idea list, we
+should live up to that again this year :). If you feel like mentoring
+a summer of code student, or if you have a great idea, please add it
+to the list so that our would-be students have some variety in
+choosing their projects. I just added "A remote helper for svn" [1]
+myself, since I would love to see native svn support in git. Would
+either Daniel or Eric (or someone else of course) be interested in
+being a co- or backup-mentor for this project?
 
-I am quite busy at the moment, but I hope to get started
-on a patch series after the end of February.
+Also, unless Shawn volunteers again, we need a Summer of Code admin
+for this year. Dscho, Peff, as you two have both jumped in for Junio
+before, do either of you have the time and inclination to do so if
+Shawn cannot? And of course, Shawn, do you have time to admin again
+this year? If not, (and no-one else steps up) I'm willing to admin
+myself, but I'll also be backup-admin and mentor for Melange, so if at
+all possible it would be awesome if someone else jumps in.
 
-> I'd like to see this logic (and only this logic, without relying on t=
-he
-> diff hunk offset numbers at all) done first, because it is very much =
-in
-> line with what we already do, and more importantly, because it is a m=
-ore
-> general solution that is applicable outside the context of rebase.
+Anyway, Summer of Code 2010 is a go [2], now is the time to get ready
+and prepare for an awesome summer :).
 
-I'll try to implement that logic. It seems that it should cover
-99% of all real-world use cases. I will not worry about the general
-case (tons of blanks) until I have got the first patch working.
+[0] http://git.wiki.kernel.org/index.php/SoC2010Ideas
+[1] http://git.wiki.kernel.org/index.php/SoC2010Ideas#A_remote_helper_for_svn
+[2] http://socghop.appspot.com/
 
---=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+-- 
+Cheers,
+
+Sverre Rabbelier
