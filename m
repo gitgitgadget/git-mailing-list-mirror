@@ -1,56 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: No 1.7.0 tonight
-Date: Wed, 10 Feb 2010 15:43:00 -0800
-Message-ID: <7vr5osverf.fsf@alter.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC] submodule+shallow clone feature request
+Date: Thu, 11 Feb 2010 00:59:54 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1002110057180.20986@pacific.mpi-cbg.de>
+References: <4B73277C.9010801@columbia.edu> <7vsk983fi4.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.1002102354010.20986@pacific.mpi-cbg.de> <7v1vgszo16.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 11 00:43:12 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Schuyler Duveen <sky@columbia.edu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 11 00:53:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfMDA-0003BU-2D
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Feb 2010 00:43:12 +0100
+	id 1NfMNB-0001Uc-8e
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Feb 2010 00:53:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756562Ab0BJXnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2010 18:43:07 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33678 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755831Ab0BJXnF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2010 18:43:05 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E1B8A98C00;
-	Wed, 10 Feb 2010 18:43:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=dc1Y
-	qgfwFZADDmeQzN1OdPdUMZo=; b=kVnkM6EkNz+WHDDaoWPDwmXttRIMcMYDGepB
-	p8mIYITZtDB3qxLPV5YrFtsPcF53VLt0lxT5/flVilFdIl1X6erFtlHQAkhSJLEG
-	nDj4cRC4Q4M3+98lKlGHfIb8Jb4UYVsKXBwvDR/MkxafTnIm3zlhZKylrqSd0AYp
-	lo/1p4k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=Hzh
-	21M3uqcGikrJMUBA82NGfgHgkUGzCNozFJo6DI1/WjW9BKGXo1NhgC8SezF0iK42
-	CWCFVBDEXnwzC7xaOYKo8gUtOzb5fVjJOdLrLhNZbEpx80PDwYWBjj83gbOjVhMu
-	yONPdcWuuUGO961v6YtjNDXMEh+E8axxBMXGTqpc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CE5CA98BFE;
-	Wed, 10 Feb 2010 18:43:03 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5082298BFD; Wed, 10 Feb
- 2010 18:43:02 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 07EEF75E-169E-11DF-836B-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756212Ab0BJXx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2010 18:53:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40018 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756053Ab0BJXx1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2010 18:53:27 -0500
+Received: (qmail invoked by alias); 10 Feb 2010 23:53:25 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp057) with SMTP; 11 Feb 2010 00:53:25 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19CdS9jGD9CzbuMtPOSi1IsQldeBClyVEFjQkcpIj
+	T5wsWPfzohmNWv
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7v1vgszo16.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67000000000000004
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139569>
 
-I'll be sucked into a meeting tonight; I won't have enough time to do the
-usual release engineering work for 1.7.0 carefully so it will be sometime
-later this week.
+Hi,
 
-Thanks.
+On Wed, 10 Feb 2010, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Yes. Note, though, that the problems of enhancing git-submodule are 
+> > not technical, as we can learn from the recent history, including the 
+> > lack of support for rebasing submodules (there _were_ patches!).
+> 
+> Sorry I don't recall.  Were they of 'next' quality?  How well were they 
+> reviewed?
+
+Obviously not, otherwise you would have applied them, no?
+
+OTOH I found the technical details rather trivial, so maybe they were 
+'next' quality, but there was another reason you did not apply them.
+
+I just know that from my daily workflow, I deeply miss rebasing 
+submodules. But then, I listed the issues I have with submodules, and this 
+list was welcomed with unbelievable enthusiasm.
+
+Ciao,
+Dscho
