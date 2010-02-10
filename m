@@ -1,103 +1,109 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: A generalization of git notes from blobs to trees - git
- metadata?
-Date: Wed, 10 Feb 2010 00:09:02 -0500
-Message-ID: <20100210050902.GD28526@coredump.intra.peff.net>
-References: <2cfc40321002060532g4d22dd4dx403bf312708e1424@mail.gmail.com>
- <201002070236.12711.johan@herland.net>
- <7v1vgxlr9q.fsf@alter.siamese.dyndns.org>
- <20100207050255.GA17049@coredump.intra.peff.net>
- <2cfc40321002062136q64f832aesd979c9cb22f3612@mail.gmail.com>
- <20100207193320.GB3185@coredump.intra.peff.net>
- <7v8wb4aj4m.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jon Seymour <jon.seymour@gmail.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 06:10:43 2010
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: [PATCH] Documentation: reword --thin description
+Date: Tue,  9 Feb 2010 21:14:11 -0800
+Message-ID: <1265778851-5397-1-git-send-email-bebarino@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 10 06:14:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nf4qZ-000513-0u
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 06:10:43 +0100
+	id 1Nf4u5-0006X9-BI
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 06:14:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750742Ab0BJFJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2010 00:09:01 -0500
-Received: from peff.net ([208.65.91.99]:43342 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750732Ab0BJFJB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2010 00:09:01 -0500
-Received: (qmail 29936 invoked by uid 107); 10 Feb 2010 05:09:08 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 10 Feb 2010 00:09:08 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Feb 2010 00:09:02 -0500
-Content-Disposition: inline
-In-Reply-To: <7v8wb4aj4m.fsf@alter.siamese.dyndns.org>
+	id S1751255Ab0BJFOQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2010 00:14:16 -0500
+Received: from mail-yw0-f173.google.com ([209.85.211.173]:49014 "EHLO
+	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750696Ab0BJFOP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2010 00:14:15 -0500
+Received: by ywh3 with SMTP id 3so7396528ywh.22
+        for <git@vger.kernel.org>; Tue, 09 Feb 2010 21:14:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=sc1yi50emNMpp3N6qpyMoQSB2+wRb5/dBmeCxe6EYmc=;
+        b=dscGvAE9Xe6Byq/MpsKYi5oKut1U5eC7VYujNnoJ9UUYpR5XwxJW5RGgAnFJ2S9JiJ
+         yk66qZE9uA6MePkcq2Hro2owNRernL4p9MuyfhIihcn9B/xWGvE2jP3z5ffb99d7kTai
+         wwD04pJvlfXoBDArWtWEpFdMV8qKncuAYEEWE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Oas4qQO48QR8CXjEtmKE4ZZg0ZG1oSbL3pf3B2EGyH3R+xrShWggMiigKUkQX7dVaq
+         qWlpNH08LkxZCVJBMdQJn29X7RbEw6ThYKC8WpYNyywx7SeNJSP4tUOtVwGNFDv/0PGj
+         kdhCum02/j1B10bJCF2JOS4Xewy6N70WSMDRk=
+Received: by 10.151.60.3 with SMTP id n3mr1598379ybk.32.1265778854654;
+        Tue, 09 Feb 2010 21:14:14 -0800 (PST)
+Received: from localhost (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id 23sm322346yxe.36.2010.02.09.21.14.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 09 Feb 2010 21:14:13 -0800 (PST)
+X-Mailer: git-send-email 1.7.0.rc2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139486>
 
-On Sun, Feb 07, 2010 at 12:25:13PM -0800, Junio C Hamano wrote:
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+---
 
-> Suppose Alice, Bob and I are involved in a project, and we annotate
-> commits for some shared purpose (say, tracking regressions).  Alice and
-> Bob may independently annotate overlapping set of commits (and hopefully
-> they have shared root for their notes history as they are collaborating),
-> and they may even be working together on the same issue, but I may not be
-> involved in the area.  What happens when I pull from Alice and Bob and get
-> conflicts in notes they produced, especially the only reason I was
-> interested was because they have new things to say about commits that I am
-> interested in?
+Don't know if git-push needs to say that --thin is passed to send-pack.
 
-Hmm. OK, I see the point of Jakub's message a bit more now. You want to
-create a new view, inconsistent with that of either Alice or Bob (that
-is, you have taken snippets of each's state, but you cannot in good
-faith represent this as a history merge, because your state should not
-supersede either of theirs).
+ Documentation/git-fetch-pack.txt |    4 ++--
+ Documentation/git-push.txt       |    6 +++---
+ Documentation/git-send-pack.txt  |    4 ++--
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-The standard way to do such a thing in git is to create a new, alternate
-history through cherry-picking or rebasing. So I suspect we could do
-something like:
-
-  1. git notes pull alice
-
-     We fast-forward (or do the trivial merge) with Alice's work.
-
-  2. git notes pull --ignore-conflicts bob
-
-     We try to merge Bob's work and see that there are conflicts. So we
-     iterate through refs/notes..bob/notes, cherry-picking each one that
-     applies cleanly and ignoring the rest.
-
-And then you're at a state inconsistent with Bob, and a superset of what
-Alice has. And that's what your history represents, too: you've branched
-but done some of the same things as Bob. At that point you can examine
-your inconsistent state, and then when you're done, you can either:
-
-  3a. Reset back to your pre-ignore-conflicts state.
-
-  3b. Leave it. When you pull from Bob later, your shared changes will
-      be ignored[1], and you will get the conflicts that you ignored
-      earlier.
-
-It is perhaps a hacky band-aid to handle notes this way, but it is the
-"most git" way of doing it. That is, it uses our standard tools and
-practices.  And when all you have is a hammer... :)  And I really expect
-the "I am collaborating with these people, but I want an inconsistent
-view of their history" to be the exception. Most people would _want_ to
-resolve the conflicts (especially if there is a --cat-conflicts
-option to do it automatically) in a collaboration scenario.
-
--Peff
-
-[1] Actually because history has diverged, you have the usual cherry
-pick problems with merging later. If some note is at state A, then I
-cherry-pick Bob's change to B, then Bob changes it to C and I try to
-merge with him, from the 3-way merge's perspective we have a conflict,
-because nothing in the history says that Bob's change to C meant to
-supersede my cherry-picked version of his history.
+diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch-pack.txt
+index e9952e8..2b4e4dd 100644
+--- a/Documentation/git-fetch-pack.txt
++++ b/Documentation/git-fetch-pack.txt
+@@ -44,8 +44,8 @@ OPTIONS
+ 	locked against repacking.
+ 
+ --thin::
+-	Spend extra cycles to minimize the number of objects to be sent.
+-	Use it on slower connection.
++	Spend extra cycles minimizing the number of sent objects.
++	Use it with a slow connection.
+ 
+ --include-tag::
+ 	If the remote side supports it, annotated tags objects will
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index bd79119..a14bc9c 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -141,9 +141,9 @@ useful if you write an alias or script around 'git push'.
+ 
+ --thin::
+ --no-thin::
+-	These options are passed to 'git send-pack'.  Thin
+-	transfer spends extra cycles to minimize the number of
+-	objects to be sent and meant to be used on slower connection.
++	These options are passed to 'git send-pack'.  A thin
++	transfer spends extra cycles minimizing the number of
++	sent objects and is meant to be used with a slow connection.
+ 
+ -v::
+ --verbose::
+diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
+index 8178d92..0a78dac 100644
+--- a/Documentation/git-send-pack.txt
++++ b/Documentation/git-send-pack.txt
+@@ -48,8 +48,8 @@ OPTIONS
+ 	Run verbosely.
+ 
+ --thin::
+-	Spend extra cycles to minimize the number of objects to be sent.
+-	Use it on slower connection.
++	Spend extra cycles minimizing the number of sent objects.
++	Use it with a slow connection.
+ 
+ <host>::
+ 	A remote host to house the repository.  When this
+-- 
+1.7.0.rc2
