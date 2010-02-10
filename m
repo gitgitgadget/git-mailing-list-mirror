@@ -1,78 +1,81 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: git-svn taking a long time
-Date: Wed, 10 Feb 2010 18:29:59 +0100
-Message-ID: <87bpfxov6w.fsf@krank.kagedal.org>
-References: <87hbppp8k7.fsf@krank.kagedal.org>
-	<6D721095-7A04-4097-8D86-1A2B915182DF@apple.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Fix signal handler
+Date: Wed, 10 Feb 2010 12:33:48 -0500
+Message-ID: <20100210173348.GA5091@coredump.intra.peff.net>
+References: <4B684F5F.7020409@web.de>
+ <20100202205849.GA14385@sigill.intra.peff.net>
+ <4B71A2EE.8070708@web.de>
+ <4B72E81B.3020900@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Andrew Myrick <amyrick@apple.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 18:30:29 2010
+Cc: git@vger.kernel.org
+To: Markus Elfring <Markus.Elfring@web.de>
+X-From: git-owner@vger.kernel.org Wed Feb 10 18:34:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfGOS-0003Tv-Ly
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 18:30:29 +0100
+	id 1NfGS4-00060p-4i
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 18:34:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756078Ab0BJRaO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Feb 2010 12:30:14 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:55754 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755844Ab0BJRaJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2010 12:30:09 -0500
-Received: from mail.lysator.liu.se (localhost [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 855374000A;
-	Wed, 10 Feb 2010 18:28:22 +0100 (CET)
-Received: by mail.lysator.liu.se (Postfix, from userid 1674)
-	id 7606D40016; Wed, 10 Feb 2010 18:28:22 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
-	bernadotte.lysator.liu.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 required=5.0 tests=AWL autolearn=disabled 
-	version=3.1.7-deb3
-Received: from krank (unknown [87.96.142.66])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 436AF4000A;
-	Wed, 10 Feb 2010 18:28:20 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id 23A6D61154; Wed, 10 Feb 2010 18:30:00 +0100 (CET)
-In-Reply-To: <6D721095-7A04-4097-8D86-1A2B915182DF@apple.com> (Andrew Myrick's
-	message of "Wed, 10 Feb 2010 08:59:37 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1756210Ab0BJRdt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2010 12:33:49 -0500
+Received: from peff.net ([208.65.91.99]:46987 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755849Ab0BJRdr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2010 12:33:47 -0500
+Received: (qmail 6265 invoked by uid 107); 10 Feb 2010 17:33:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 10 Feb 2010 12:33:54 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Feb 2010 12:33:48 -0500
+Content-Disposition: inline
+In-Reply-To: <4B72E81B.3020900@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139525>
 
-Andrew Myrick <amyrick@apple.com> writes:
+On Wed, Feb 10, 2010 at 06:08:43PM +0100, Markus Elfring wrote:
 
-> Give 1.7.0-rc2 a try.  It includes commit 8bff7c5383ed833bd1df9c8d85c=
-00a27af3e5b02, which attempts to persistently cache a lot of the proces=
-sing that git-svn has to do on subversion's merge tickets, which has im=
-proved my fetch times significantly. =20
+> A global flag can only be set by a signal handler in a portable way if
+> it has got the data type "sig_atomic_t". The previously used
+> assignment of a function pointer in the function "early_output" was
+> moved to another variable in the function "setup_early_output".
+>
+> The involved software design details were also mentioned on the
+> mailing list.
 
-By "merge tickets", are you talking about the merge functionality that
-appeared in subversion 1.5? We don't use that.
+Keep in mind commit messages will be read much later through "git log"
+and the like.  Mentioning the mailing list is usually not very helpful
+there. It is usually a good idea instead to summarize what was said on
+the list for later readers of the commit (though in this case, I think
+your first paragraph really says everything that needs to be said).
 
-But I had another idea. I pecularity of our subversion repo is that we
-no longer use the foo/trunk branch, but only foo/branches/*. But we did
-once upon a time have a foo/trunk. And since I didn't include a "fetch =
-=3D
-foo/trunk:refs/remotes/svn/trunk" in my config, it might need to refetc=
-h
-that information every time. For instance, the first revision is on
-trunk.
+> --- a/builtin-log.c
+> +++ b/builtin-log.c
+> @@ -123,7 +123,7 @@ static void show_early_header(struct rev_info *rev, const char *stage, int nr)
+>  
+>  static struct itimerval early_output_timer;
+>  
+> -static void log_show_early(struct rev_info *revs, struct commit_list *list)
+> +extern void log_show_early(struct rev_info *revs, struct commit_list *list)
 
-I'm rerunning the fetch now with the trunk added, so see if it helps.
+Why does this need to become extern? It looks like we are still just
+assigning the function pointer from within this file.
 
-And another note is that "git svn fetch --parent" was always quick.
+> -volatile show_early_output_fn_t show_early_output;
+> +sig_atomic_t show_early_output = 0;
+> +show_early_output_fn_t early_output_function = NULL;
 
---=20
-David K=C3=A5gedal
+Good. I was worried from the above s/static/extern/ that you were going
+to make log_show_early the only possible early output function, but the
+way you did it is definitely the right way.
+
+Overall, this change looks sane to me. You still haven't provided any
+evidence that this is a problem in practice, but these changes are not
+particularly cumbersome, so it is probably better to be on the safe
+side.
+
+-Peff
