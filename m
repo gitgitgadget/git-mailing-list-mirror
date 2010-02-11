@@ -1,82 +1,71 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git cherry-pick --continue?
-Date: Thu, 11 Feb 2010 15:13:35 -0800
-Message-ID: <7vk4ujs6w0.fsf@alter.siamese.dyndns.org>
-References: <fabb9a1e1002101237i60a0b2c5j6d1e52b33dacbaa2@mail.gmail.com>
- <20100210210419.GA7728@coredump.intra.peff.net>
- <20100210212408.GB7728@coredump.intra.peff.net>
- <7v63644uoq.fsf@alter.siamese.dyndns.org>
- <7vbpfw3f6t.fsf@alter.siamese.dyndns.org>
- <fabb9a1e1002101423y79460afdn2bc31b117195ef42@mail.gmail.com>
- <7vpr4c200i.fsf@alter.siamese.dyndns.org>
- <20100211210445.GA8819@coredump.intra.peff.net>
- <20100211211937.GA12752@coredump.intra.peff.net>
- <76718491002111505u2935381erc376cea862e15801@mail.gmail.com>
+Subject: Re: [PATCH 3/4] git-push: send "To <remoteurl>" messages to the 
+ standard output in --porcelain mode
+Date: Thu, 11 Feb 2010 15:19:34 -0800
+Message-ID: <7veikrs6m1.fsf@alter.siamese.dyndns.org>
+References: <20100209054820.GA30907@cthulhu>
+ <1d1ce7e0ad28fd0cad8d9d7bfeda04ba58be36d4.1265694627.git.larry@elder-gods.org> <45357037fd8f928759c9e9064736c62e793b84be.1265694627.git.larry@elder-gods.org> <be6fef0d1002111454w10ad965ej72699d1e185d2a9f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 12 00:14:02 2010
+Cc: "Larry D'Anna" <larry@elder-gods.org>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 12 00:20:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfiET-00084N-G5
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 00:14:01 +0100
+	id 1NfiKG-0003tz-NM
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 00:20:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757432Ab0BKXNu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2010 18:13:50 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61065 "EHLO
+	id S1757381Ab0BKXTu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2010 18:19:50 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33519 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757370Ab0BKXNs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2010 18:13:48 -0500
+	with ESMTP id S1757301Ab0BKXTt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2010 18:19:49 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 902549932D;
-	Thu, 11 Feb 2010 18:13:47 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 10DDC99438;
+	Thu, 11 Feb 2010 18:19:45 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tiHAbxT9we3yPv+fOJHsfhBFTyk=; b=lhsx9W
-	jqhIqeA5KBPSB4NmINiU6KEP43efPYL/pJQMlCroU0cbRBxhObq08j+ikp7u9+zW
-	PNpH/76q1QLW8TF7QlX5Q9dJYb6aC7XJ9YbUrjjk+sTOwkKaK0pO7u0JPfiSVCCM
-	7dR/aGMluN3QPAfinhYo929+T2aBBVGDjaHnQ=
+	:content-type; s=sasl; bh=qyud55cnDaocUIwLqlDU5LS3yi0=; b=e+UBnK
+	poG3Sl+L4u7pY77BWHPvogmT4HLomintRSdD9yR71jAt9EF8zYIP0jbIsZOvUXiR
+	54YitbKVrZS+AQwdN+0kyq/MFI0Q9nbktCWGgiH065peT8z+aSwITzkO+xLFzeH2
+	dLFfUYbAqxh67RDT9Q9BXLvaYW/CmqtyeqfbE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fkaK5zzAFybnwy2hvBHg3QAPDvpq7xZq
-	BxhTvPKBlaxoMCalqlM+T/zZEORPlVRWVqrbULAuiWq0XZ+2kWVE9fzjWW84skYj
-	zXFhKeMqS6FsZnQcCU6WS6ym4akgQWsoE23AjCkq9ZPGI48NhLoBBvaHLClaR3cy
-	zlbWeoduNeQ=
+	:content-type; q=dns; s=sasl; b=KRuhFrwHtIM6lw0IMMNNO1fiSO0iKa7Q
+	IGyZY5qwLbCKTJTWDaG560pbo3qTxFF/4qzLjNBTxBSr4FQNSDSzh0nmuxzPyx2C
+	Dkt5Werkk4w9j8uGK+FNAR9uoF2ujpJCguXomp0k9dzVBkLf9vjm4RCaFMYmKKhE
+	8Hs+nIEPZxg=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 50F669932B;
-	Thu, 11 Feb 2010 18:13:43 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BFF2D99434;
+	Thu, 11 Feb 2010 18:19:40 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4818999325; Thu, 11 Feb
- 2010 18:13:37 -0500 (EST)
-In-Reply-To: <76718491002111505u2935381erc376cea862e15801@mail.gmail.com>
- (Jay Soffian's message of "Thu\, 11 Feb 2010 18\:05\:18 -0500")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E1F029942D; Thu, 11 Feb
+ 2010 18:19:35 -0500 (EST)
+In-Reply-To: <be6fef0d1002111454w10ad965ej72699d1e185d2a9f@mail.gmail.com>
+ (Tay Ray Chuan's message of "Fri\, 12 Feb 2010 06\:54\:47 +0800")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 18FF3E6C-1763-11DF-B039-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: EE0DD2D0-1763-11DF-A55D-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139640>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+Tay Ray Chuan <rctay89@gmail.com> writes:
 
-> Blech, how is this an improvement? Why can't I just say "git
-> cherry-pick --continue"?
->
-> If I've still got the message in my terminal, it's no harder to use
-> the SHA1. And if I've lost the message in my terminal, HEAD~23 is lost
-> and I've got to dig the SHA1 out of my shell history anyway.
+> If that's the case, then perhaps the "To: <destination>" lines should
+> be sent to both stdout and stderr - stdout, for porcelain scripts as a
+> "header", and stderr, to help the user make sense of any errors that
+> occur ("oh, these errors were triggered when pushing to so-and-so
+> remote").
 
-Maybe it doesn't look like an improvement to you, but I usually do my
-editing in other terminal and come back to the shell, so this is a huge
-improvement.  It depends on the user.
-
-I don't think Peff meant this change as the sole replacement for --cont
-anyway, so I don't understand why you are so upset about it.
+Under --porcelain, to show or not to show is under control of the calling
+script.  Not sending it to standard error stream doesn't cause any harm,
+as the calling script can choose to echo it out to its standard error (or
+standard output).
