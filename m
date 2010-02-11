@@ -1,102 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git cherry-pick --continue?
-Date: Thu, 11 Feb 2010 16:19:37 -0500
-Message-ID: <20100211211937.GA12752@coredump.intra.peff.net>
-References: <fabb9a1e1002101237i60a0b2c5j6d1e52b33dacbaa2@mail.gmail.com>
- <20100210210419.GA7728@coredump.intra.peff.net>
- <20100210212408.GB7728@coredump.intra.peff.net>
- <7v63644uoq.fsf@alter.siamese.dyndns.org>
- <7vbpfw3f6t.fsf@alter.siamese.dyndns.org>
- <fabb9a1e1002101423y79460afdn2bc31b117195ef42@mail.gmail.com>
- <7vpr4c200i.fsf@alter.siamese.dyndns.org>
- <20100211210445.GA8819@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 11 22:19:45 2010
+From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+Subject: [PATCH 1/4] git-mailsplit: Show parameter '--keep-cr' in usage and documentation
+Date: Thu, 11 Feb 2010 22:26:16 +0100
+Message-ID: <1265923579-24900-2-git-send-email-stefan.hahn@s-hahn.de>
+References: <1265923579-24900-1-git-send-email-stefan.hahn@s-hahn.de>
+Cc: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 11 22:27:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfgRp-0006mV-ML
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Feb 2010 22:19:42 +0100
+	id 1NfgZG-0004pW-OO
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Feb 2010 22:27:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757225Ab0BKVTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2010 16:19:37 -0500
-Received: from peff.net ([208.65.91.99]:48496 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757111Ab0BKVTg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2010 16:19:36 -0500
-Received: (qmail 22129 invoked by uid 107); 11 Feb 2010 21:19:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 11 Feb 2010 16:19:44 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Feb 2010 16:19:37 -0500
-Content-Disposition: inline
-In-Reply-To: <20100211210445.GA8819@coredump.intra.peff.net>
+	id S1756871Ab0BKV1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2010 16:27:12 -0500
+Received: from moutng.kundenserver.de ([212.227.126.186]:64503 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756788Ab0BKV1K (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2010 16:27:10 -0500
+Received: from scotty.home (port-92-203-5-233.dynamic.qsc.de [92.203.5.233])
+	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
+	id 0McxnO-1NOZ9X2a7G-00Hf9w; Thu, 11 Feb 2010 22:27:06 +0100
+Received: from scotty.home (hs@localhost [127.0.0.1])
+	by scotty.home (8.14.3/8.14.3/Debian-5) with ESMTP id o1BLR40l025019;
+	Thu, 11 Feb 2010 22:27:04 +0100
+Received: (from hs@localhost)
+	by scotty.home (8.14.3/8.14.3/Submit) id o1BLR4GB025016;
+	Thu, 11 Feb 2010 22:27:04 +0100
+X-Mailer: git-send-email 1.7.0.rc2.17.g39385
+In-Reply-To: <1265923579-24900-1-git-send-email-stefan.hahn@s-hahn.de>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=ALL_TRUSTED autolearn=failed
+	version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on scotty.home
+X-Virus-Scanned: clamav-milter 0.95.3 at scotty
+X-Virus-Status: Clean
+X-Provags-ID: V01U2FsdGVkX1/35bVCarZAEli+4rjo8sTd8PligFWUMBLmR2N
+ JuiN+XetWPVWkM1PIeM41aj8+xXbbbmNaDbVwVkcZFGM+Qugo8
+ CpWS3Td7JCmQ9x8HbYh9Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139630>
 
-On Thu, Feb 11, 2010 at 04:04:45PM -0500, Jeff King wrote:
-
-> Series to follow:
-> 
->   [1/4]: cherry-pick: rewrap advice message
->   [2/4]: cherry-pick: refactor commit parsing code
->   [3/4]: cherry-pick: format help message as strbuf
->   [4/4]: cherry-pick: show commit name instead of sha1
-
-Actually, I think the message is still a bit ugly after this, so perhaps
-this 5/4 would help:
-
--- >8 --
-Subject: [PATCH] cherry-pick: prettify the advice message
-
-It's hard to see the "how to commit" part of this message,
-which users may want to cut and paste. On top of that,
-having it in paragraph form means that a really long commit
-name may cause ugly wrapping. Let's make it prettier, like:
-
-  Automatic cherry-pick failed.  After resolving the conflicts,
-  mark the corrected paths with 'git add <paths>' or 'git rm <paths>'
-  and commit the result with:
-
-          git commit -c HEAD~23
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Stefan-W. Hahn <stefan.hahn@s-hahn.de>
 ---
- builtin-revert.c |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
+ Documentation/git-mailsplit.txt |    5 ++++-
+ builtin-mailsplit.c             |    2 +-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/builtin-revert.c b/builtin-revert.c
-index ad61249..eff5268 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -208,14 +208,16 @@ static char *help_msg(const char *name)
+diff --git a/Documentation/git-mailsplit.txt b/Documentation/git-mailsplit.txt
+index 5cc94ec..a634485 100644
+--- a/Documentation/git-mailsplit.txt
++++ b/Documentation/git-mailsplit.txt
+@@ -7,7 +7,7 @@ git-mailsplit - Simple UNIX mbox splitter program
  
- 	strbuf_addstr(&helpbuf, "  After resolving the conflicts,\n"
- 		"mark the corrected paths with 'git add <paths>' or 'git rm <paths>'\n"
--		"and commit the result.");
-+		"and commit the result");
+ SYNOPSIS
+ --------
+-'git mailsplit' [-b] [-f<nn>] [-d<prec>] -o<directory> [--] [<mbox>|<Maildir>...]
++'git mailsplit' [-b] [-f<nn>] [-d<prec>] [--keep-cr] -o<directory> [--] [<mbox>|<Maildir>...]
  
- 	if (action == CHERRY_PICK) {
--		strbuf_addf(&helpbuf,
--			"  When committing, use the option '-c %s'\n"
--			"to retain authorship and message.",
-+		strbuf_addf(&helpbuf, " with: \n"
-+			"\n"
-+			"        git commit -c %s\n",
- 			name);
- 	}
-+	else
-+		strbuf_addch(&helpbuf, '.');
- 	return strbuf_detach(&helpbuf, NULL);
- }
+ DESCRIPTION
+ -----------
+@@ -43,6 +43,9 @@ OPTIONS
+ 	Skip the first <nn> numbers, for example if -f3 is specified,
+ 	start the numbering with 0004.
  
++--keep-cr::
++	Do not remove `\r` from lines ending with `\r\n`.
++
+ Author
+ ------
+ Written by Linus Torvalds <torvalds@osdl.org>
+diff --git a/builtin-mailsplit.c b/builtin-mailsplit.c
+index 207e358..cdfc1b7 100644
+--- a/builtin-mailsplit.c
++++ b/builtin-mailsplit.c
+@@ -10,7 +10,7 @@
+ #include "strbuf.h"
+ 
+ static const char git_mailsplit_usage[] =
+-"git mailsplit [-d<prec>] [-f<n>] [-b] -o<directory> [<mbox>|<Maildir>...]";
++"git mailsplit [-d<prec>] [-f<n>] [-b] [--keep-cr] -o<directory> [<mbox>|<Maildir>...]";
+ 
+ static int is_from_line(const char *line, int len)
+ {
 -- 
-1.7.0.rc2.32.g190cd.dirty
+1.7.0.rc2.17.g39385
