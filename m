@@ -1,67 +1,59 @@
-From: Patrick Sudowe <git@sudowe.net>
-Subject: Re: git rebase -i and the reflog
-Date: Thu, 11 Feb 2010 08:29:01 +0100
-Message-ID: <4B73B1BD.7030606@sudowe.net>
-References: <fabb9a1e1002101419x40844a42s21108aaa849430c1@mail.gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: git-svn: Cannot lock the ref 'refs/remotes/tags/autotag_for_.'.
+Date: Thu, 11 Feb 2010 16:36:51 +0800
+Message-ID: <be6fef0d1002110036g2b13616bud0aa7c1a0cbcdb1e@mail.gmail.com>
+References: <20100209213929.GL3599@xorcom.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 11 08:35:12 2010
+X-From: git-owner@vger.kernel.org Thu Feb 11 09:44:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfTZw-0008KF-01
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Feb 2010 08:35:12 +0100
+	id 1NfUew-0002y2-Cm
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Feb 2010 09:44:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751768Ab0BKHfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2010 02:35:05 -0500
-Received: from vacuity.ath.cx ([85.10.202.48]:40911 "EHLO vacuity.ath.cx"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751300Ab0BKHfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2010 02:35:03 -0500
-X-Greylist: delayed 359 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Feb 2010 02:35:03 EST
-Received: from blackparity_k.local (f050093213.adsl.alicedsl.de [78.50.93.213])
-	by vacuity.ath.cx (Postfix) with ESMTPSA id 19824AD408E
-	for <git@vger.kernel.org>; Thu, 11 Feb 2010 08:29:01 +0100 (CET)
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
-In-Reply-To: <fabb9a1e1002101419x40844a42s21108aaa849430c1@mail.gmail.com>
+	id S1752360Ab0BKIgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2010 03:36:53 -0500
+Received: from mail-iw0-f185.google.com ([209.85.223.185]:52830 "EHLO
+	mail-iw0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751777Ab0BKIgw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2010 03:36:52 -0500
+Received: by iwn15 with SMTP id 15so1037175iwn.19
+        for <git@vger.kernel.org>; Thu, 11 Feb 2010 00:36:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type;
+        bh=eFIYSW8DYpHUzHY0B86vGQlx/0bcT8XfeBY4E7DlvZU=;
+        b=YZq3yRyb09OSa0e7hsR8QGrR4P37BxrxERjFiUUJoKGrroTTqETqQFniKTYyt1hcA8
+         7SCCXXuaUtqroBP+3YSbEffRzgLTSCjHSY25GE9m20j7uGKAW7vmrBIZrqsmU0Chp0CI
+         nBG92rSmRJWOEzkuFYpdRRnZOz251pXvyId64=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        b=PG/pJvx5/nFZ75xqeYANTmi1fDR1ftUAHTZ+EtcOMwlS+8OmS2E0jI2Lx3e9o371KC
+         g4cuIrBfE2ngsz9IoyNOftx22wBrUeMg2pg2Mw8R1CDEDEUxYg7Eo3euPBc7YaAi54PR
+         0Kk8caljAilDBStVlcGNnTe0qSZd4rdSZXMMg=
+Received: by 10.231.167.65 with SMTP id p1mr2525808iby.20.1265877411659; Thu, 
+	11 Feb 2010 00:36:51 -0800 (PST)
+In-Reply-To: <20100209213929.GL3599@xorcom.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139577>
 
+Hi,
 
+On Wed, Feb 10, 2010 at 5:39 AM, Tzafrir Cohen <tzafrir.cohen@xorcom.com> wrote:
+> Is there a way for me to skip some tags? I can avoid that specific tag.
 
-On Wednesday 2/10 2/10  11:19 PM, Sverre Rabbelier wrote:
-> Heya,
->
-> I use "git rebase -i" a lot, and as a result the output from 'git log
-> -g' and 'git reflog' is a tad messy. That is, it's (afaik) not
-> possible to check that after my rebasing did not mess things up using
-> something like 'git diff HEAD@{1}'. I could of course tag the old head
-> or something, but that's not the only problem, due to the clutter it's
-> hard to find genuine commits. What I want is a way to see HEAD's
-> movement _excluding_ any rebase activity. So if I change history from
-> A-o-B-C to A-o-B'-C', I want to see C and C' in the reflog, but not
-> B', since B' is often actually identical to B, the only reason that it
-> changed is that I did 'git rebase -i' on some far-back commit.
->
-> Is there an existing solution to this?
->
+have you tried --ignore-paths?
 
-Since nobody else mentioned it on the list.
-
-You could also use ORIG_HEAD.
-merge, rebase and am (maybe others?) record the position of HEAD to 
-ORIG_HEAD before their operation.
-So to check for the differences directly after one of these commands
-a diff between HEAD and ORIG_HEAD should do.
-
-I really liked the shortcut of ORIG_HEAD when I found out about it
-just a couple days ago.
-
--Patrick
+-- 
+Cheers,
+Ray Chuan
