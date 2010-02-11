@@ -1,92 +1,113 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: git cherry-pick --continue?
-Date: Wed, 10 Feb 2010 23:38:28 +0100
-Message-ID: <fabb9a1e1002101438v74aea1b9v482ff49fa4ddd15d@mail.gmail.com>
-References: <fabb9a1e1002101237i60a0b2c5j6d1e52b33dacbaa2@mail.gmail.com> 
-	<20100210210419.GA7728@coredump.intra.peff.net> <20100210212408.GB7728@coredump.intra.peff.net> 
-	<7v63644uoq.fsf@alter.siamese.dyndns.org> <7vbpfw3f6t.fsf@alter.siamese.dyndns.org> 
-	<fabb9a1e1002101423y79460afdn2bc31b117195ef42@mail.gmail.com> 
-	<7vpr4c200i.fsf@alter.siamese.dyndns.org>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: Separate default push/pull?
+Date: Thu, 11 Feb 2010 13:57:34 -0500
+Message-ID: <a038bef51002111057l382ed55fy6b4042d1115a830c@mail.gmail.com>
+References: <m2zl3fg26j.fsf@boostpro.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 23:46:39 2010
+Cc: git@vger.kernel.org
+To: David Abrahams <dave@boostpro.com>
+X-From: git-owner@vger.kernel.org Thu Feb 11 19:58:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfLKP-00027j-5K
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Feb 2010 23:46:37 +0100
+	id 1NfeEf-0007cP-1N
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Feb 2010 19:57:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756596Ab0BJWqR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Feb 2010 17:46:17 -0500
-Received: from mail-iw0-f185.google.com ([209.85.223.185]:49541 "EHLO
-	mail-iw0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756477Ab0BJWqO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Feb 2010 17:46:14 -0500
-Received: by iwn15 with SMTP id 15so637733iwn.19
-        for <git@vger.kernel.org>; Wed, 10 Feb 2010 14:46:13 -0800 (PST)
+	id S1756826Ab0BKS5i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Feb 2010 13:57:38 -0500
+Received: from mail-pz0-f172.google.com ([209.85.222.172]:40888 "EHLO
+	mail-pz0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756146Ab0BKS5f convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Feb 2010 13:57:35 -0500
+Received: by pzk2 with SMTP id 2so988671pzk.21
+        for <git@vger.kernel.org>; Thu, 11 Feb 2010 10:57:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=GuF36bP6Q+f21fyt0BoPr+RHOWXGw+X6eSR8h2BokH8=;
-        b=uVelp51qh7RlhvPnTPQ3njr/eaAlupgkCAXN98Pet54UZHdUIDAxhb7SxIRf+irdhi
-         56l3t8sGJEmhvbqE54RBETnXKU6I0jQcGF+CV4XI17WpZO29WWC4m77WRQbn/PJN+8BY
-         Zs4iv09bc1KhCZaQ/kbAXzM6xi6rofaNS4RtU=
+        bh=A3CwMdCVQCSWnHnh5fsdrHa0C+QonmxtAjg/bCX13Nw=;
+        b=F38QabGDuxYzJIIy3U+G5+1Vcmh/temx4ZOFO8wy8wMUfwWgZ7kvDx2LJONHc7a5iB
+         3YPf9ENLaTMn5pStNmKvVu6YfZ8U4lT24w5FKj+Dz9IBK1YGYbG304WtImIEy455AXvb
+         MCTbI7bmva3rwsDDcBbwDpQVspzHCQMOFryJ8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=r80i88dOaOhozePSvhdteqt6laSQspD2bIdlkesxJFfGXY0G45Kfn8nV5CuYgXngss
-         8aKk3kgwClvPbasSXPfQvDbur8ct0iQbiDpNzBfPpA1G7io73pooJEx1f++40BYbbNZ0
-         KWfNFKqeYUkIafLy5Wg3JUTitQvEmXqorYC7Q=
-Received: by 10.142.75.9 with SMTP id x9mr557226wfa.318.1265841528179; Wed, 10 
-	Feb 2010 14:38:48 -0800 (PST)
-In-Reply-To: <7vpr4c200i.fsf@alter.siamese.dyndns.org>
+        b=Wp2U20g+T34fI5+cm5zZr1ZqV2DMAtpB79WeDKUitRw8f4v7Ki79/l13YdPUaRGTE3
+         w+ccyxAq8kpYK5v/Z41U8JTuzTbTyl8f5p/vEA9QFTiSqTZ6m1iLlMMv0A9FRXvw2CGK
+         vUB/ShjyWJoyD6emlHMO97Dexiqghg16reDu4=
+Received: by 10.115.87.4 with SMTP id p4mr153601wal.202.1265914654191; Thu, 11 
+	Feb 2010 10:57:34 -0800 (PST)
+In-Reply-To: <m2zl3fg26j.fsf@boostpro.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139617>
 
-Heya,
+On Thu, Feb 11, 2010 at 11:36 AM, David Abrahams <dave@boostpro.com> wr=
+ote:
+>
+> If I am collaborating mostly with one other person, I typically want =
+to
+> pull from his publicly-readable repo and push to mine (on which I hav=
+e
+> write permission). =C2=A0Is there any way to set things up so =E2=80=9C=
+git pull=E2=80=9D and
+> =E2=80=9Cgit push=E2=80=9D without additional arguments will do this =
+by default?
+>
+> Thanks,
+>
+> --
+> Dave Abrahams =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Meet me at BoostCon:=
+ http://www.boostcon.com
+> BoostPro Computing
+> http://www.boostpro.com
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
+>
 
-On Wed, Feb 10, 2010 at 23:34, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Changing the insn to suggest using "-C topic" when the original comma=
-nd
-> line was "git cherry-pick topic" would be a good addition, too. =A0Cu=
-rrently
-> we suggest "-c" and abbreviated object name, neither of which is sens=
-ible.
+Yes there is a way. I haven't used it myself but search this list and
+you'll find plenty of references.
 
-I think it's sensible to use '-c' instead of '-C', just like 'git
-rebase -i' lets you change the commit message after you resolve a
-conflict.
+(disclaimer: the following is what I think you can do based on some
+vague recollection and some man pages)
 
-> While I think "--resolved" makes sense, I do not see much benefit, an=
-d it
-> largely depends on what you do. =A0If you are suggesting to commit wi=
-th what
-> is kept in $GIT_DIR/MERGE_MSG, I would actually recommend against it.=
- =A0The
-> message will have "Conflicts:" information but that is meaningless un=
-less
-> you are recording from what context the commit was cherry-picked from=
- at
-> the same time.
+Taking a quick look at the git push --help you'll see the following
+snippet of configuration.
 
-I'm not sure how to implement it, but I was thinking to just automate
-the 'git commit -c ...' part. I don't like having to copy/paste some
-instruction, so maybe we can record the original commit somewhere and
-have 'git cherry-pick --resolve' be equivalent to 'git commit -c `cat
-=2Egit/CHERRY_PICK_CMT`', or somesuch?
+                   [remote "<name>"]
+                           url =3D <url>
+                           pushurl =3D <pushurl>
+                           push =3D <refspec>
+                           fetch =3D <refspec>
 
---=20
-Cheers,
+so I think if you just add the pushurl to your .git/config should do
+what you've asked
 
-Sverre Rabbelier
+[remote "origin"]
+        fetch =3D +refs/heads/*:refs/remotes/origin/*
+        url =3D git://git.kernel.org/pub/scm/git/git.git
+        pushurl =3D git://git.example.com/yourrepo.git
+
+=46or your own sanity I suggest doing this by adding your repository as
+a separate remote.
+
+e.g.
+
+  git remote add yourrepo git://git.example.com/yourrepo.git
+  git push yourrepo master:refs/heads/master  # the first time
+  git push yourrepo # subsequent times
+
+There probably is a way to tell push to use something other than
+"origin" by default but I don't know/can't find it.
