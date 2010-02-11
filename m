@@ -1,47 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 8/6 v2] receive-pack: Send internal errors over	side-band
- #2
-Date: Thu, 11 Feb 2010 20:04:22 +0100
-Message-ID: <4B7454B6.50703@viscovery.net>
-References: <1265767290-25863-1-git-send-email-spearce@spearce.org> <1265767290-25863-2-git-send-email-spearce@spearce.org> <4B725CB1.1080908@viscovery.net> <4B726A8C.6010600@viscovery.net> <20100210173412.GG2747@spearce.org> <4B73C0FF.5020503@viscovery.net> <20100211150547.GL2747@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git cherry-pick --continue?
+Date: Thu, 11 Feb 2010 14:32:48 -0500
+Message-ID: <20100211193248.GA27072@coredump.intra.peff.net>
+References: <fabb9a1e1002101237i60a0b2c5j6d1e52b33dacbaa2@mail.gmail.com>
+ <20100210210419.GA7728@coredump.intra.peff.net>
+ <20100210212408.GB7728@coredump.intra.peff.net>
+ <7v63644uoq.fsf@alter.siamese.dyndns.org>
+ <7vbpfw3f6t.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Feb 11 20:04:45 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 11 20:32:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfeL1-0004cD-TW
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Feb 2010 20:04:32 +0100
+	id 1NfemV-0005BY-2t
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Feb 2010 20:32:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756487Ab0BKTE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2010 14:04:26 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:13632 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756351Ab0BKTE0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2010 14:04:26 -0500
-Received: from [192.168.0.200] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 2EFDD1002A;
-	Thu, 11 Feb 2010 20:04:22 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <20100211150547.GL2747@spearce.org>
+	id S1756874Ab0BKTcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2010 14:32:48 -0500
+Received: from peff.net ([208.65.91.99]:54606 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756843Ab0BKTcr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2010 14:32:47 -0500
+Received: (qmail 20462 invoked by uid 107); 11 Feb 2010 19:32:55 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 11 Feb 2010 14:32:55 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Feb 2010 14:32:48 -0500
+Content-Disposition: inline
+In-Reply-To: <7vbpfw3f6t.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139619>
 
-Shawn O. Pearce schrieb:
-> Johannes Sixt <j.sixt@viscovery.net> wrote:
->> Sorry, still no joy - the terminating NUL is missing (I should have  
->> noticed this in your v1 already).
+On Wed, Feb 10, 2010 at 02:21:14PM -0800, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> Why is it necessary?
+> > Jeff King <peff@peff.net> writes:
+> >
+> >> Hmm. I was thinking "am" was the odd man out, but really there are only
+> >> two sequencer commands that I noted: rebase and am. So you could perhaps
+> >> argue that rebase should also learn "--resolved". Or am I forgetting
+> >> one?
+> 
+> Having said all I did in the previous message, I think "am --continue"
+> would be a good addition.
 
-It isn't, sorry - I'm sick, and it shows :-/ Your version is fine.
+OK. I agree with your philosophical ramblings in the previous message,
+but I also think there is some value in making it simple for the user to
+remember.
 
--- Hannes
+Do you just want to pick up my patch from earlier in the thread, or do
+you have further comments? The only thing I could think to change would
+be that we may not want to even bother advertising --continue in the
+usage message (conversely, we could go a step further and actually
+advertise it in the manpage).
+
+> And "rebase --resolved" would not make any sense if the reason the control
+> is given back to you was because you ran "rebase -i" and marked a commit
+> to be "edit"ed.  Of course, we could add "--resolved" and "--edited" (or
+> perhaps "--amended") to "rebase", and have it make sure that the correct
+> one is given.  For example, when it stopped for "edit", it would reject
+> "rebase --resolved".  But I do not think it is worth the hassle.
+
+Agreed.
+
+-Peff
