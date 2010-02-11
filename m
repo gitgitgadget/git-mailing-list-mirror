@@ -1,145 +1,95 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 4/5] Support working directory located at root
-Date: Thu, 11 Feb 2010 21:43:22 +0700
-Message-ID: <1265899403-15904-5-git-send-email-pclouds@gmail.com>
-References: <1265899403-15904-1-git-send-email-pclouds@gmail.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH v2 1/2] git-imap-send: Add CRAM-MD5 authenticate method 
+	support
+Date: Thu, 11 Feb 2010 15:55:07 +0100
+Message-ID: <40aa078e1002110655n120b14b9y242a57d0e1bd3e96@mail.gmail.com>
+References: <1265717345-2118-1-git-send-email-mitake@dcl.info.waseda.ac.jp>
+	 <1265899135-11488-1-git-send-email-mitake@dcl.info.waseda.ac.jp>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org,
-	=?UTF-8?q?Jo=C3=A3o=20Carlos=20Mendes=20Lu=C3=ADs?= 
-	<jonny@jonny.eng.br>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Feb 11 15:54:39 2010
+Cc: gitster@pobox.com, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jeff King <peff@peff.org>
+To: Hitoshi Mitake <mitake@dcl.info.waseda.ac.jp>
+X-From: git-owner@vger.kernel.org Thu Feb 11 15:55:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfaRD-00049O-Aa
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Feb 2010 15:54:39 +0100
+	id 1NfaRp-0004eQ-0d
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Feb 2010 15:55:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756128Ab0BKOye convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Feb 2010 09:54:34 -0500
-Received: from mail-gx0-f224.google.com ([209.85.217.224]:34396 "EHLO
-	mail-gx0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755924Ab0BKOyd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2010 09:54:33 -0500
-Received: by gxk24 with SMTP id 24so1165572gxk.1
-        for <git@vger.kernel.org>; Thu, 11 Feb 2010 06:54:31 -0800 (PST)
+	id S1756138Ab0BKOzL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Feb 2010 09:55:11 -0500
+Received: from mail-fx0-f215.google.com ([209.85.220.215]:42307 "EHLO
+	mail-fx0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755621Ab0BKOzJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Feb 2010 09:55:09 -0500
+Received: by fxm7 with SMTP id 7so1281761fxm.28
+        for <git@vger.kernel.org>; Thu, 11 Feb 2010 06:55:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=ZnqS0RRIJzxgOOFMW17P/v7r0zd2pNNNf48YQ/o8u+k=;
-        b=J0QlyJEd0kdUebrGFcMUYvAMmY9PWOHJqAnRSsZIF3Ey4kKhS8onaQe6V/r1Js7OK+
-         JlAeXb9o54iXLpO3Ls3mBurBixbTTPUW9PDAZELMa6OB4jE3OVB+xTtIX5/G6t06GaPd
-         d2ZCQ68CZ7zDGravKOWDGakjJFSvCaCfLDJnI=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=kTnIIbySHxUi+lkme2ZUSQWqyO+pcTxiGW/fowiYjNc=;
+        b=ewdadvMp2f9MLCEwz+xUKC3miWzKNEuWdSi1DiPysgtvp3Up4L44KFKsjOjvKE9cK6
+         3RWr0OEoLSiKF6Ijj+N5GwBHeYEszp7pcK/Un/tUx/fkJ9sbEG/JdJtRjobVzGTDEAKc
+         01X47KwFbMN+c0tABHafc931WMDAJFLkNGe8w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=F84HgJylQrE2itH28ucLhhqXGc/JDrw3uBismSxqFFauqD2EzVtLj0gBO03OjkNrb9
-         DWEoWKdgzgO/aBSuyjiA4hFVupvLt/Y4pYJQrBS30xfEhtjEVRaWItwit/X1EMF0JLmM
-         oqpvb4OZDzWUrGq6YlzWjacg5mmK/3TyYUno0=
-Received: by 10.150.131.15 with SMTP id e15mr267250ybd.324.1265899593760;
-        Thu, 11 Feb 2010 06:46:33 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.243.56])
-        by mx.google.com with ESMTPS id 6sm944549ywd.52.2010.02.11.06.46.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Feb 2010 06:46:32 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 11 Feb 2010 21:43:52 +0700
-X-Mailer: git-send-email 1.7.0.rc2.182.g3adef
-In-Reply-To: <1265899403-15904-1-git-send-email-pclouds@gmail.com>
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=eAwcDtqL7Pt4fFcgw0yrls/IarpAguO9DzjJWzT+xZ39RVexx1Q0rlv586L2Gv/iwb
+         IyzAj7cJueC4DKaNPI43hzXPeh0s7n9u44ibZZaonn2jqGbrJCSL0nBzhOIS4ATf751W
+         xuOvr9RWYybTrkMI71InNp2LxXu5gDjfyxvis=
+Received: by 10.216.86.193 with SMTP id w43mr1088039wee.16.1265900107321; Thu, 
+	11 Feb 2010 06:55:07 -0800 (PST)
+In-Reply-To: <1265899135-11488-1-git-send-email-mitake@dcl.info.waseda.ac.jp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139600>
 
-Git should work regardless where the working directory is located,
-even at root. This patch fixes two places where it assumes working
-directory always have parent directory.
+On Thu, Feb 11, 2010 at 3:38 PM, Hitoshi Mitake
+<mitake@dcl.info.waseda.ac.jp> wrote:
+> @@ -1101,6 +1190,7 @@ static struct store *imap_open_store(struct ima=
+p_server_conf *srvc)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0}
+> =A0#endif
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0imap_info("Logging in...\n");
+> +
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (!srvc->user) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0fprintf(stderr, "Skipp=
+ing server %s, no user\n", srvc->host);
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0goto bail;
+> @@ -1258,6 +1375,7 @@ static int read_message(FILE *f, struct msg_dat=
+a *msg)
+>
+> =A0 =A0 =A0 =A0msg->len =A0=3D buf.len;
+> =A0 =A0 =A0 =A0msg->data =3D strbuf_detach(&buf, NULL);
+> +
+> =A0 =A0 =A0 =A0return msg->len;
+> =A0}
+>
+> @@ -1307,21 +1425,10 @@ static int split_msg(struct msg_data *all_msg=
+s, struct msg_data *msg, int *ofs)
+>
+> =A0 =A0 =A0 =A0msg->data =3D xmemdupz(data, msg->len);
+> =A0 =A0 =A0 =A0*ofs +=3D msg->len;
+> +
+> =A0 =A0 =A0 =A0return 1;
+> =A0}
+>
 
-In setup_git_directory_gently(), when Git goes up to root and finds
-=2Egit there, it happily sets worktree to "" instead of "/".
+There's not much point in having three hunks with a single added
+newline in each...
 
-In prefix_path(), loosen the outside repo check a little bit. Usually
-when a path XXX is inside worktree /foo, it must be either "/foo", or
-"/foo/...". When worktree is simply "/", we can safely ignore the
-check: we have a slash at the beginning already.
 
-Not related to worktree, but also set gitdir correctly if a bare repo
-is placed (insanely?) at root.
-
-Thanks Jo=C3=A3o Carlos Mendes Lu=C3=ADs for pointing out this problem.
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- setup.c |   13 ++++++++-----
- 1 files changed, 8 insertions(+), 5 deletions(-)
-
-diff --git a/setup.c b/setup.c
-index b38cbee..cdad176 100644
---- a/setup.c
-+++ b/setup.c
-@@ -18,14 +18,15 @@ const char *prefix_path(const char *prefix, int len=
-, const char *path)
- 	if (normalize_path_copy(sanitized, sanitized))
- 		goto error_out;
- 	if (is_absolute_path(orig)) {
--		size_t len, total;
-+		size_t root_len, len, total;
- 		const char *work_tree =3D get_git_work_tree();
- 		if (!work_tree)
- 			goto error_out;
- 		len =3D strlen(work_tree);
-+		root_len =3D is_root_path(work_tree);
- 		total =3D strlen(sanitized) + 1;
- 		if (strncmp(sanitized, work_tree, len) ||
--		    (sanitized[len] !=3D '\0' && sanitized[len] !=3D '/')) {
-+		    (len > root_len && sanitized[len] !=3D '\0' && sanitized[len] !=3D=
- '/')) {
- 		error_out:
- 			die("'%s' is outside repository", orig);
- 		}
-@@ -321,7 +322,7 @@ const char *setup_git_directory_gently(int *nongit_=
-ok)
- 	static char cwd[PATH_MAX+1];
- 	const char *gitdirenv;
- 	const char *gitfile_dir;
--	int len, offset, ceil_offset;
-+	int len, offset, ceil_offset, root_len;
-=20
- 	/*
- 	 * Let's assume that we are in a git repository.
-@@ -403,7 +404,8 @@ const char *setup_git_directory_gently(int *nongit_=
-ok)
- 			if (!work_tree_env)
- 				inside_work_tree =3D 0;
- 			if (offset !=3D len) {
--				cwd[offset] =3D '\0';
-+				root_len =3D is_root_path(cwd);
-+				cwd[offset > root_len ? offset : root_len] =3D '\0';
- 				set_git_dir(cwd);
- 			} else
- 				set_git_dir(".");
-@@ -427,7 +429,8 @@ const char *setup_git_directory_gently(int *nongit_=
-ok)
- 	inside_git_dir =3D 0;
- 	if (!work_tree_env)
- 		inside_work_tree =3D 1;
--	git_work_tree_cfg =3D xstrndup(cwd, offset);
-+	root_len =3D is_root_path(cwd);
-+	git_work_tree_cfg =3D xstrndup(cwd, offset > root_len ? offset : root=
-_len);
- 	if (check_repository_format_gently(nongit_ok))
- 		return NULL;
- 	if (offset =3D=3D len)
 --=20
-1.7.0.rc2.182.g3adef
+Erik "kusma" Faye-Lund
