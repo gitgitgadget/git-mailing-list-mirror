@@ -1,105 +1,91 @@
 From: Hitoshi Mitake <mitake@dcl.info.waseda.ac.jp>
-Subject: Re: [PATCH 1/4] Add base64 encoder and decoder
-Date: Thu, 11 Feb 2010 23:37:37 +0900
-Message-ID: <4B741631.40203@dcl.info.waseda.ac.jp>
-References: <7vaavj8h1k.fsf@alter.siamese.dyndns.org>	 <1265717345-2118-2-git-send-email-mitake@dcl.info.waseda.ac.jp> <40aa078e1002090645s63449057hf88c89a232933680@mail.gmail.com>
+Subject: Re: [PATCH 4/4] git-imap-send: Add method to convert from LF to CRLF
+Date: Thu, 11 Feb 2010 23:37:55 +0900
+Message-ID: <4B741643.1000607@dcl.info.waseda.ac.jp>
+References: <7vaavj8h1k.fsf@alter.siamese.dyndns.org>	<1265717345-2118-5-git-send-email-mitake@dcl.info.waseda.ac.jp> <m31vgu9yjk.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8;
 	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Erik Faye-Lund <kusmabite@googlemail.com>, gitster@pobox.com,
-	git@vger.kernel.org, Jeremy White <jwhite@codeweavers.com>,
-	Robert Shearman <robertshearman@gmail.com>, peff@peff.net
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Thu Feb 11 15:37:47 2010
+Cc: gitster@pobox.com, git@vger.kernel.org,
+	Jeremy White <jwhite@codeweavers.com>,
+	Robert Shearman <robertshearman@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 11 15:38:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfaAs-0007PQ-IR
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Feb 2010 15:37:46 +0100
+	id 1NfaBA-0007f7-7y
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Feb 2010 15:38:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755424Ab0BKOhl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Feb 2010 09:37:41 -0500
-Received: from ns.dcl.info.waseda.ac.jp ([133.9.216.194]:64020 "EHLO
+	id S1755465Ab0BKOh6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Feb 2010 09:37:58 -0500
+Received: from ns.dcl.info.waseda.ac.jp ([133.9.216.194]:64030 "EHLO
 	ns.dcl.info.waseda.ac.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755279Ab0BKOhk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2010 09:37:40 -0500
+	with ESMTP id S1754557Ab0BKOh5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2010 09:37:57 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by ns.dcl.info.waseda.ac.jp (Postfix) with ESMTP id 40FECEAF5A8;
-	Thu, 11 Feb 2010 23:37:39 +0900 (JST)
+	by ns.dcl.info.waseda.ac.jp (Postfix) with ESMTP id 5FB5CEAF5BC;
+	Thu, 11 Feb 2010 23:37:56 +0900 (JST)
 X-Virus-Scanned: amavisd-new at dcl.info.waseda.ac.jp
 Received: from ns.dcl.info.waseda.ac.jp ([127.0.0.1])
 	by localhost (ns.dcl.info.waseda.ac.jp [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id RpjCPG1Wh4A2; Thu, 11 Feb 2010 23:37:38 +0900 (JST)
+	with ESMTP id mKoYGfR2UW-h; Thu, 11 Feb 2010 23:37:56 +0900 (JST)
 Received: from [192.168.11.2] (FL1-122-130-141-251.tky.mesh.ad.jp [122.130.141.251])
-	by ns.dcl.info.waseda.ac.jp (Postfix) with ESMTP id 1AD69EAF5A4;
-	Thu, 11 Feb 2010 23:37:38 +0900 (JST)
+	by ns.dcl.info.waseda.ac.jp (Postfix) with ESMTP id EFD0EEAF5B9;
+	Thu, 11 Feb 2010 23:37:55 +0900 (JST)
 User-Agent: Mozilla/5.0 (X11; U; Linux i686; ja; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
-In-Reply-To: <40aa078e1002090645s63449057hf88c89a232933680@mail.gmail.com>
+In-Reply-To: <m31vgu9yjk.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139592>
 
-(2010=E5=B9=B402=E6=9C=8809=E6=97=A5 23:45), Erik Faye-Lund wrote:
-> On Tue, Feb 9, 2010 at 1:09 PM, Hitoshi Mitake
-> <mitake@dcl.info.waseda.ac.jp>  wrote:
->> +void base64_encode(char *out, const char *in, int inlen)
->> +{
->> +       const char *inp =3D in;
->> +       char *outp =3D out;
+(2010=E5=B9=B402=E6=9C=8810=E6=97=A5 01:15), Jakub Narebski wrote:
+> Hitoshi Mitake<mitake@dcl.info.waseda.ac.jp>  writes:
 >
-> ...Why? It's copying the pointers to pointers of identical type with
-> different names, and never using the originals again... Looks like a
-> sloppy extraction from another code-base to me.
+>> Some strict IMAP servers (e.g. Cyrus) don't
+>> allow "bare newlines ('\n')" in messages.
+>> So I added new boolean option "lf-to-crlf" to imap section.
+>> If this option enabled, git-imap-send converts LF to CRLF("\r\n").
+>>
+>> If you want to use it, add line:
+>> 	lf-to-crlf
+>> to [imap] section of your .gitconfig .
+>>
+>> This patch also adds description to Documentation/git-imap-send.txt =
+=2E
 >
+>> +imap.lf-to-crlf::
+>> +	If you use strict IMAP server (e.g. Cyrus),
+>> +	"bare newlines ('\n')" in messages are not allowed.
+>> +	If this option enabled, git-imap-send converts LF to CRLF("\r\n").
 >> +
->> +       while (inlen>=3D 3) {
->> +               *outp++ =3D base64char[(inp[0]>>  2)&  0x3f];
->> +               *outp++ =3D base64char[((inp[0]&  0x03)<<  4) |
->> +                                    ((inp[1]>>  4)&  0x0f)];
->> +               *outp++ =3D base64char[((inp[1]&  0x0f)<<  2) |
->> +                                    ((inp[2]>>  6)&  0x03)];
->> +               *outp++ =3D base64char[inp[2]&  0x3f];
->> +
->> +               inp +=3D 3;
->> +               inlen -=3D 3;
->> +       }
->> +
->> +       if (inlen>  0) {
->> +               *outp++ =3D base64char[(inp[0]>>  2)&  0x3f];
->> +               if (inlen =3D=3D 1) {
->> +                       *outp++ =3D base64char[(inp[0]&  0x03)<<  4]=
-;
->> +                       *outp++ =3D '=3D';
->> +               } else {
->> +                       *outp++ =3D base64char[((inp[0]&  0x03)<<  4=
-) |
->> +                                            ((inp[1]>>  4)&  0x0f)]=
-;
->> +                       *outp++ =3D base64char[((inp[1]&  0x0f)<<  2=
-)];
->> +               }
->> +               *outp++ =3D '=3D';
->> +       }
->> +
->> +       *outp =3D '\0';
->> +}
 >
-> If inlen is 0, a single '=3D' should be emitted (plus the obvious zer=
-o
-> termination). It could be that the code deals with that by making sur=
-e
-> that inlen never is zero, though.
+> If you take a look at Documentation/config.txt at the names of other
+> config variables, you would see that they have
 >
+>    core.fileMode::
+>    core.ignoreCygwinFSTricks::
+>    core.quotepath::
+>    core.safecrlf::
+>
+> names, i.e. either camelCase or allsmallcase, and not
+>
+>    imap.lf-to-crlf::
+>
+> with '-' to separate parts.  Values can and do use this syntax, like
+> e.g. `blank-at-eol` for core.whitespace.
+>
+> The only outlier is add.ignore-errors (not add.ignoreerrors or
+> add.ignoreErrors).
+>
+>
+> The same is true for the other config variable you propsed in 3/4
+> patch.
 
-
-Thanks for your review, I was careless...
-
-I decided to use base64 and md5 stuffs OpenSSL provides.
-I'll remove 1 and 2 of my patch series.
-
-Thanks,
+Thanks for your review, I'll rename these values
+based on custom of Git.
