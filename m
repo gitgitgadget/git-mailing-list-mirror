@@ -1,92 +1,69 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: Mike Hommey <mh@glandium.org>
 Subject: Re: GSoC 2010
-Date: Fri, 12 Feb 2010 10:06:39 +0100
-Message-ID: <fabb9a1e1002120106n3c7e8bcje04bfeb996940222@mail.gmail.com>
-References: <fabb9a1e1002101223o6a00f7eavb84567c1119c8ebc@mail.gmail.com> 
-	<20100212080620.GA31719@dcvr.yhbt.net>
+Date: Fri, 12 Feb 2010 10:16:35 +0100
+Message-ID: <20100212091635.GA22942@glandium.org>
+References: <fabb9a1e1002101223o6a00f7eavb84567c1119c8ebc@mail.gmail.com>
+ <20100212080620.GA31719@dcvr.yhbt.net>
+ <alpine.DEB.1.00.1002121000290.20986@pacific.mpi-cbg.de>
+ <fabb9a1e1002120103j3f37d417ka5b7b7ca3ae8edd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eric Wong <normalperson@yhbt.net>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Jeff King <peff@peff.net>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Git List <git@vger.kernel.org>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Feb 12 10:13:26 2010
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 12 10:16:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfraY-0007qc-1G
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 10:13:26 +0100
+	id 1Nfrdv-0001YK-Bh
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 10:16:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750945Ab0BLJNU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Feb 2010 04:13:20 -0500
-Received: from qw-out-2122.google.com ([74.125.92.26]:37325 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750776Ab0BLJNS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Feb 2010 04:13:18 -0500
-Received: by qw-out-2122.google.com with SMTP id 5so46291qwi.37
-        for <git@vger.kernel.org>; Fri, 12 Feb 2010 01:13:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=j88Je/pSQ8YgBWuBSGeoqivFtnZP5AG/TDIslFpuXX8=;
-        b=ZmGJmie3XHua+rgBpDQZx4pFPa6igbuK1SqepG7SGR5oCFyrsDcXUU78ITR9EzA2Ax
-         h+hs02kOm3PDuhIOia+3WT7Ol64ViM0aGdHIYhk0j4SZHGQrvZcMxm/mPcIRZMcTK5Ba
-         AouB/oluQSGp3UQBnOb0Rw0N2ak+dE6ybDNcw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=gkGkyahAw4vQpPPfk/CPBk1qb/7olJXugilVUsM5Qowg9pLOMlR81i/17Ir9jwwjzF
-         eAtSH+sJUpKLIXbRxBtmYs1H6hQGpgxJIAovneKqCcqyOqkMv4vO2NMPs+cnlgL8ZBIJ
-         VdnUQcRD21x6BCzbfuypJk8ViISkI/QP7+zTw=
-Received: by 10.224.80.66 with SMTP id s2mr536212qak.293.1265965619108; Fri, 
-	12 Feb 2010 01:06:59 -0800 (PST)
-In-Reply-To: <20100212080620.GA31719@dcvr.yhbt.net>
+	id S1751082Ab0BLJQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2010 04:16:49 -0500
+Received: from vuizook.err.no ([85.19.221.46]:36923 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750997Ab0BLJQs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 04:16:48 -0500
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1Nfrdc-00056N-J6; Fri, 12 Feb 2010 10:16:39 +0100
+Received: from mh by jigen with local (Exim 4.71)
+	(envelope-from <mh@jigen>)
+	id 1Nfrdb-0005yV-Hr; Fri, 12 Feb 2010 10:16:35 +0100
+Content-Disposition: inline
+In-Reply-To: <fabb9a1e1002120103j3f37d417ka5b7b7ca3ae8edd@mail.gmail.com>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139667>
 
-Heya,
+On Fri, Feb 12, 2010 at 10:03:43AM +0100, Sverre Rabbelier wrote:
+> Heya,
+> 
+> On Fri, Feb 12, 2010 at 10:02, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > Would it not make sense to implement git-remote-svn as a C program? That
+> > should help matters especially on Windows, where git-svn is very slow due
+> > to its using MSys (which is a stripped-down Cygwin, as you know, jumping
+> > through hoops to bring some POSIX-iness to Windows).
+> 
+> It would very much be sense to do so, perhaps we should update the
+> wiki to say that implementing it in C is strongly preferred?
 
-On Fri, Feb 12, 2010 at 09:06, Eric Wong <normalperson@yhbt.net> wrote:
-> I can't commit to anything, but they're welcome to email me/the list =
-for
-> guidance.
+It is already mentioned on the wiki that this would probably be a
+problem, license-wise. (the svn library is Apache license, which is
+incompatible with GPLv2)
 
-Can't ask for more :).
-
-> =A0The git-vcs-* stuff is interesting and a good reason to refactor/r=
-edo
-> =A0parts of git-svn to work with it. =A0It's been overdue for a
-> =A0refactoring/cleanup for _years_ now.
-
-Do you think that the code can be sane again if we use git-svn as a
-base? Wouldn't it be better to start from scratch and use git-svn only
-as a reference as to how to interact with svn?
-
-> I can't say SVN (nor the Perl support libraries) are pleasant to work
-> with. =A0Things to keep in mind:
-
-Perhaps then it would indeed be better to just work with the C
-bindings, if they are equally painful.
-
-> I'm sure I'm missing some things here that my mind just blocked
-> out entirely...
-
-Do you have any idea how we are wrt licensing issues? II[U|R]C the svn
-bindings are APLv2 licensed which would be problematic if we try to
-use it in git?
-
---=20
-Cheers,
-
-Sverre Rabbelier
+Mike
