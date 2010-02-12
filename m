@@ -1,74 +1,76 @@
-From: David Hagood <david.hagood@gmail.com>
-Subject: Git under Windows should warn or fail on entities differning only
- in case
-Date: Fri, 12 Feb 2010 06:40:33 -0600
-Message-ID: <1265978433.7519.6.camel@chumley>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH v4 1/2] git-imap-send: Add CRAM-MD5 authenticate method 
+	support
+Date: Fri, 12 Feb 2010 13:41:07 +0100
+Message-ID: <40aa078e1002120441p2240797du7481c8da21e6176b@mail.gmail.com>
+References: <1265717345-2118-1-git-send-email-mitake@dcl.info.waseda.ac.jp>
+	 <1265974572-6282-1-git-send-email-mitake@dcl.info.waseda.ac.jp>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 12 13:40:52 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jeff King <peff@peff.net>
+To: Hitoshi Mitake <mitake@dcl.info.waseda.ac.jp>
+X-From: git-owner@vger.kernel.org Fri Feb 12 13:41:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfupC-00071p-9F
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 13:40:46 +0100
+	id 1Nfupf-0007OU-V2
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 13:41:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754491Ab0BLMki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 07:40:38 -0500
-Received: from mail-iw0-f201.google.com ([209.85.223.201]:33235 "EHLO
-	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751323Ab0BLMkh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 07:40:37 -0500
-Received: by iwn39 with SMTP id 39so560787iwn.1
-        for <git@vger.kernel.org>; Fri, 12 Feb 2010 04:40:37 -0800 (PST)
+	id S1754640Ab0BLMlL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Feb 2010 07:41:11 -0500
+Received: from mail-ew0-f228.google.com ([209.85.219.228]:65055 "EHLO
+	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752670Ab0BLMlJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Feb 2010 07:41:09 -0500
+Received: by ewy28 with SMTP id 28so1247689ewy.28
+        for <git@vger.kernel.org>; Fri, 12 Feb 2010 04:41:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:subject:from:to
-         :content-type:date:message-id:mime-version:x-mailer
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=lOeAQDDgwzXnILA0O216klzDCKbv537th6DC2BUkn50=;
-        b=ZdfVLtoSNCzce1A3iwipbOgxZRxAEW8KWAcqe9yMiBuRlVzWtam7fTQr9Q6jUtOWZS
-         nqE+4GxI4pAjNxK02y4oQplpXGybWiI0/CdhCDVKbvVktxM+3QFAJH5XyKrPSPsgJ9Hw
-         Fq1AU4SM9g3H9i2CzMlEMDNzeqBc3xk9KQX4I=
+        bh=p3qh02dWcBR5jjTb7LiAblJ4p+SFcSDPQBIyqV6VwKo=;
+        b=W3rYqZMOZQqH9pGJe/0B5ZRh4sHvkJ9JxZP5LXEbuPgrsEqHRZ25iE3CbuyvQeHVZ8
+         LKo45Jeb6Br4KvBoKVMICBiEJdNoZkdIXZg64Pfqr/UI1sGJiily4C7eQaQVTpwXzxtN
+         GN0pKHXCBUYysestnhVl2EPROoHah/VirHBEc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding;
-        b=D/g5BuJgfwN1cYMr+E+/vY0XFi5RG+/uVzIJPWouKfIT5h+hSHspbhvWbWSqTHu9FN
-         seFVXLu95C1EpsRZ+QptRSnQp1dUwRVAmB5Tpg/h/jfXtlf0ycalmnXL0x9K7eAf0Gq4
-         tLYie1qhkDpsl3/e80/LywmQtxY7tg7pdw1eM=
-Received: by 10.231.169.145 with SMTP id z17mr853604iby.83.1265978436737;
-        Fri, 12 Feb 2010 04:40:36 -0800 (PST)
-Received: from Deathwish.hagood.sktc.net (7206-2.clr.64.71.120.40.clradsl.sktc.net [64.71.120.40])
-        by mx.google.com with ESMTPS id 21sm2952241iwn.14.2010.02.12.04.40.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 12 Feb 2010 04:40:36 -0800 (PST)
-Received: from [10.16.0.66] (chumley.hagood.sktc.net [10.16.0.66])
-	by Deathwish.hagood.sktc.net (Postfix) with ESMTP id 39F38C7B8042
-	for <git@vger.kernel.org>; Fri, 12 Feb 2010 06:40:34 -0600 (CST)
-X-Mailer: Evolution 2.28.1 
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=aa7SE06g0LrS+ffla5u2pXgKMnjHxG13/ZghDxbgwC69BsCKUMxg7ylmKn4oFuMEde
+         EZtLoAPDQF7SQEzD6Vo5yRpXc97IiScwWph+kappomQ/ugCbixfns5KC/27uP+h74Y6s
+         ZoBFaEWrDpV594jiPdSLdvTVz3z1k2K1bZdqo=
+Received: by 10.216.90.74 with SMTP id d52mr828938wef.51.1265978467593; Fri, 
+	12 Feb 2010 04:41:07 -0800 (PST)
+In-Reply-To: <1265974572-6282-1-git-send-email-mitake@dcl.info.waseda.ac.jp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139698>
 
-I work in a mixed Windows and Linux development team where we have an
-embedded project that we are storing in GIT. However, we got bit by what
-is arguably a bug in Windows, but...
+On Fri, Feb 12, 2010 at 12:36 PM, Hitoshi Mitake
+<mitake@dcl.info.waseda.ac.jp> wrote:
+> +
+> +static char *cram(const char *challenge_64, const char *user, const =
+char *pass)
+> +{
+> + =A0 =A0 =A0 fprintf(stderr, "If you want to use CRAM-MD5 authentica=
+te method,"
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 "you have to build git-imap-send with O=
+penSSL library\n");
+> + =A0 =A0 =A0 exit(1);
+> +}
+> +
 
-If you have 2 entities in a directory which have names differing only in
-case, e.g. "foo" and "FOO", under a REAL operating system with case
-sensitive file system semantics, this is no problem. However, under
-Windows and their wonderful "Case preserving but case insensitive"
-semantics, "FOO" and "foo" would be the same file, so when you
-pull/checkout/clone a repo with this condition, Windows will overwrite
-one file, then Git will always see a "change" because one file or the
-other won't be "right".
+Why not use die() here?
 
-I would suggest that git should check for this case, and generate a big
-warning about it when it happens. (Yes, it sucks burdening Git with
-Windows' problems....)
+--=20
+Erik "kusma" Faye-Lund
