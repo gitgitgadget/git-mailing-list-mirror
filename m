@@ -1,66 +1,79 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 0/5 v2] Worktree/Gitdir at root directory
-Date: Fri, 12 Feb 2010 11:21:21 +0100
-Message-ID: <4B752BA1.9080105@kdbg.org>
-References: <1265899403-15904-1-git-send-email-pclouds@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: strbuf & other stuff dual-licensing, was Re: GSoC 2010
+Date: Fri, 12 Feb 2010 11:49:41 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1002121147440.20986@pacific.mpi-cbg.de>
+References: <fabb9a1e1002101223o6a00f7eavb84567c1119c8ebc@mail.gmail.com> <20100212080620.GA31719@dcvr.yhbt.net> <alpine.DEB.1.00.1002121000290.20986@pacific.mpi-cbg.de> <fabb9a1e1002120103j3f37d417ka5b7b7ca3ae8edd@mail.gmail.com> <20100212091635.GA22942@glandium.org>
+ <alpine.DEB.1.00.1002121034320.20986@pacific.mpi-cbg.de> <fabb9a1e1002120132q157d2d4dqd7c81d766bd933f6@mail.gmail.com> <20100212100758.GA23461@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?Sm/Do28gQ2FybG9zIE1lbmRlcyBMdcOtcw==?= 
-	<jonny@jonny.eng.br>, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 12 11:21:30 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Mike Hommey <mh@glandium.org>, Andreas Ericsson <ae@op5.se>,
+	Pierre Habouzit <madcoder@madism.org>
+X-From: git-owner@vger.kernel.org Fri Feb 12 11:43:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfseP-0004kZ-Be
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 11:21:29 +0100
+	id 1NfszX-0004LI-4u
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 11:43:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751566Ab0BLKVX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Feb 2010 05:21:23 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:37226 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751134Ab0BLKVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 05:21:22 -0500
-Received: from [192.168.0.200] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id D8A41CDF9A;
-	Fri, 12 Feb 2010 11:21:20 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <1265899403-15904-1-git-send-email-pclouds@gmail.com>
+	id S1752136Ab0BLKnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2010 05:43:13 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47463 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751161Ab0BLKnM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 05:43:12 -0500
+Received: (qmail invoked by alias); 12 Feb 2010 10:43:10 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp005) with SMTP; 12 Feb 2010 11:43:10 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19x7TlrNSZx3RjnCDbktOuuixhy2Ia6igHySQxxJK
+	/RFU1Ki2BmDexq
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20100212100758.GA23461@glandium.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.60999999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139679>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy schrieb:
-> So here we go again. Changes are:
->=20
->  - Support DOS drives as root path (Thanks Hannes)
->  - Fix one "broken" test that I was too lazy to do last time
->  - t1509-root-worktree.sh will refuse to run under root permission
->=20
-> I did not test it on Windows, so an Ack from someone who actually tes=
-ts it on Windows
-> is really appreciated.
+Hi,
 
-I don't see any regressions in may tests on Windows, but I actually don=
-'t=20
-know what to test (the chroot test doesn't work on Windows). I did test=
- on=20
-the root of a partition
+[culling the Cc: list to the most-likely interested parties, Cc:ing 
+Andreas and Pierre]
 
-    T:\> git init
-    T:\> cd foo
-    T:\foo> git add bar
+On Fri, 12 Feb 2010, Mike Hommey wrote:
 
-and it works as expected.
+> On Fri, Feb 12, 2010 at 10:32:44AM +0100, Sverre Rabbelier wrote:
+> 
+> > On Fri, Feb 12, 2010 at 10:35, Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > > On Fri, 12 Feb 2010, Mike Hommey wrote:
+> > >> It is already mentioned on the wiki that this would probably be a
+> > >> problem, license-wise. (the svn library is Apache license, which is
+> > >> incompatible with GPLv2)
+> > 
+> > Yeah, guess who put that there ;).
+> > 
+> > > So git-remote-svn would have to be under an Apache-compatible license, so
+> > > what? It is not as if git-remote-svn was a derivative work of Git, just
+> > > because it abides by a very simple command-line interface that happens to
+> > > be defined in Git, but would work anywhere else, too.
+> > 
+> > Excellent point, I think we could safely argue that if we only expose
+> > 'import' and 'export' (so adhere to the fast-import/fast-export format
+> > that is already widely used), that it is indeed not a derative work.
+> 
+> It is not so clear when you begin to use facilities such as strbuf, etc.
+> Maybe dual-licensing these parts would be enough, though, but that still
+> means doing some homework (getting approval from all contributors)
 
-You should address my comments to 3/5, please.
+AFAIR Andreas already did most of the chasing down for libgit2.
 
--- Hannes
+Ciao,
+Dscho
