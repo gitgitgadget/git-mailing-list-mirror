@@ -1,55 +1,64 @@
-From: Ron Garret <ron1@flownet.com>
-Subject: Individual file snapshots
-Date: Fri, 12 Feb 2010 04:03:05 -0800
-Organization: Amalgamated Widgets
-Message-ID: <ron1-CD3223.04030512022010@news.gmane.org>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: Individual file snapshots
+Date: Fri, 12 Feb 2010 13:18:09 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1002121316260.10583@ds9.cixit.se>
+References: <ron1-CD3223.04030512022010@news.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 12 13:04:20 2010
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ron Garret <ron1@flownet.com>
+X-From: git-owner@vger.kernel.org Fri Feb 12 13:19:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfuFl-0004Uq-3D
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 13:04:09 +0100
+	id 1NfuUQ-0001OO-FC
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 13:19:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756855Ab0BLMDd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 07:03:33 -0500
-Received: from lo.gmane.org ([80.91.229.12]:36823 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756192Ab0BLMD2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 07:03:28 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NfuF4-0003oA-Jl
-	for git@vger.kernel.org; Fri, 12 Feb 2010 13:03:26 +0100
-Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 12 Feb 2010 13:03:26 +0100
-Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 12 Feb 2010 13:03:26 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
-User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
+	id S1756436Ab0BLMSR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2010 07:18:17 -0500
+Received: from upper-gw.cixit.se ([92.43.32.133]:39360 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752670Ab0BLMSQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 07:18:16 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id o1CCI9p7026217
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 12 Feb 2010 13:18:10 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o1CCI9Qf026214;
+	Fri, 12 Feb 2010 13:18:09 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <ron1-CD3223.04030512022010@news.gmane.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Fri, 12 Feb 2010 13:18:10 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139692>
 
-Before I reinvent the wheel...
+Ron Garret:
 
-I would like to be able to store snapshots of individual files without 
-making a commit on the main branch.  The scenario is that I've written 
-some experimental code that I have decided not to keep as part of the 
-main project, but which I might want to refer back to some day.  Is 
-there any easy way of doing that in git?
+> I would like to be able to store snapshots of individual files without 
+> making a commit on the main branch.
 
-Thanks,
-rg
+   git hash-object -w filename
+
+will add the file to the object database, outputting it's hash value.
+
+   git tag mytag hashvalue
+
+creates a tag "mytag" pointing to that file.
+
+   git show mytag
+
+will output the file you put in.
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
