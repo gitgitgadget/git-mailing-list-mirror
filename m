@@ -1,100 +1,86 @@
-From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
-Subject: Re: [PATCH 3/4] git-am: Add command line parameter `--keep-cr`
-	passing it to git-mailsplit.
-Date: Fri, 12 Feb 2010 22:05:46 +0100
-Organization: -no organization-
-Message-ID: <20100212210546.GC32018@pille.home>
-References: <1265923579-24900-1-git-send-email-stefan.hahn@s-hahn.de> <1265923579-24900-4-git-send-email-stefan.hahn@s-hahn.de> <7vocjvqryb.fsf@alter.siamese.dyndns.org>
+From: Ron Garret <ron1@flownet.com>
+Subject: Re: Individual file snapshots
+Date: Fri, 12 Feb 2010 13:25:32 -0800
+Organization: Amalgamated Widgets
+Message-ID: <ron1-519083.13253112022010@news.gmane.org>
+References: <ron1-CD3223.04030512022010@news.gmane.org> <4B75BD06.1010802@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 12 22:06:03 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 12 22:26:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ng2i9-0000gD-Kz
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 22:06:01 +0100
+	id 1Ng31T-0006g7-Op
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 22:26:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757739Ab0BLVF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 16:05:56 -0500
-Received: from moutng.kundenserver.de ([212.227.126.186]:50464 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755645Ab0BLVFz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 16:05:55 -0500
-Received: from pille.home (port-92-203-117-198.dynamic.qsc.de [92.203.117.198])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0MgYEB-1NJAfP3zMd-00O5tA; Fri, 12 Feb 2010 22:05:53 +0100
-Received: from pille.home (localhost [127.0.0.1])
-	by pille.home (8.14.3/8.14.3/Debian-5) with ESMTP id o1CL5p4B013821;
-	Fri, 12 Feb 2010 22:05:51 +0100
-Received: (from hs@localhost)
-	by pille.home (8.14.3/8.14.3/Submit) id o1CL5k5E013819;
-	Fri, 12 Feb 2010 22:05:46 +0100
-X-Authentication-Warning: pille.home: hs set sender to stefan.hahn@s-hahn.de using -f
-Content-Disposition: inline
-In-Reply-To: <7vocjvqryb.fsf@alter.siamese.dyndns.org>
-X-Mailer: Mutt 1.5.18 http://www.mutt.org/
-X-Editor: GNU Emacs 22.2.1 http://www.gnu.org/
-X-Accept-Language: de en
-X-Location: Europe, Germany, Wolfenbuettel
-X-GPG-Public-Key: gpg --keyserver keys.gnupg.net --recv-keys E4FCD563
-X-GPG-key-ID/Fingerprint: 0xE4FCD563 / EF09 97BB 3731 7DC7 25BA 5C39 185C
-	F986 E4FC D563
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Provags-ID: V01U2FsdGVkX18Xh+vcr9bgtZki2fcsfjA4r+b6M7ZQSpeLjDd
- atSk8cjPD73+q3c5NBtrOjpY15bLNfETlvDCp6Z/7xph4Xba4Z
- 1cKTh9ngP956YY3aTgGzA==
+	id S1754176Ab0BLVZy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Feb 2010 16:25:54 -0500
+Received: from lo.gmane.org ([80.91.229.12]:38099 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752057Ab0BLVZx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 16:25:53 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Ng31M-0006bo-HS
+	for git@vger.kernel.org; Fri, 12 Feb 2010 22:25:52 +0100
+Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Feb 2010 22:25:52 +0100
+Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Feb 2010 22:25:52 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
+User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139748>
 
-Also sprach Junio C Hamano am Thu, 11 Feb 2010 at 15:21:32 -0800:
-> "Stefan-W. Hahn" <stefan.hahn@s-hahn.de> writes:
-> 
-> > If applying patches with the following command sequence
-> >
-> >    git format-patch --stdout ... | git am ...
-> >
-> > in repositories having files with dos and unix line endings
-> > git-mailsplit, which is called from git-am must be called with
-> > `--keep-cr` parameter since commit c2ca1d79.
-> 
-> Sorry, I cannot parse this.
+In article <4B75BD06.1010802@lsrfire.ath.cx>,
+ Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
 
-What?
+> Am 12.02.2010 13:03, schrieb Ron Garret:
+> > Before I reinvent the wheel...
+> >=20
+> > I would like to be able to store snapshots of individual files with=
+out=20
+> > making a commit on the main branch.  The scenario is that I've writ=
+ten=20
+> > some experimental code that I have decided not to keep as part of t=
+he=20
+> > main project, but which I might want to refer back to some day.  Is=
+=20
+> > there any easy way of doing that in git?
+>=20
+> You could keep the experimental files (or changes) in a separate,
+> private branch on your local repository.
+>=20
+> Ren=C3=A9
 
-> Perhaps you meant to have a comma between "git-am" and "must be"?
-> 
-> > +e,keep-cr       pass --keep-cr flag to git-mailsplit for mbox format
-> 
-> This short form -e does not make much sense to me.  Why is it -e, and do
-> we even need a short form in the first place?
+Yeah, I considered that.  The problem with that is that the actual=20
+process turns out to be pretty obtrusive.  The scenario is that I've=20
+done a bunch of hacking on the main branch and I realize that it's goin=
+g=20
+nowhere.  Nothing is working, everything is a horrible mess that's=20
+spinning wildly out of control.  I want to get rid of everything I've=20
+done and start over from an earlier snapshot that I knew was working. =20
+But I also want to keep a copy of this current messy state around for=20
+reference just in case there's a snippet here and there that might be=20
+salvageable later on.  I don't know of any easy way to save the messed=20
+up file onto another branch.  I'd have to save the file somewhere (in=20
+the stash maybe?), check out the snapshot branch, retrieve the saved=20
+file, do the commit, and then switch back to the main branch.
 
-Just for shortening the commandline.
+But maybe the right answer is to just write a script that does all that=
+=20
+automatically?
 
-> or even:
-> 
-> 	if test -n "$r$k"
->         then
->         	keep_cr=--keep-cr
-> 	else
->         	keep_cr=
-> 	fi
-
-This one. I will make a patch soon.
-
-Stefan
--- 
-Stefan-W. Hahn                          It is easy to make things.
-/ mailto:stefan.hahn@s-hahn.de /        It is hard to make things simple.			
-
-Please note that according to the German law on data retention,
-information on every electronic information exchange with me is
-retained for a period of six months.
-Bundesgesetzblatt:
-http://www.bgblportal.de/BGBL/bgbl1f/bgbl107s3198.pdf
+rg
