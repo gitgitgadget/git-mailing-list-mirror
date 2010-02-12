@@ -1,64 +1,74 @@
-From: Michael Poole <mdpoole@troilus.org>
-Subject: Re: Maintaining a fork workflows
-Date: Fri, 12 Feb 2010 07:37:31 -0500
-Message-ID: <87k4uid3zo.fsf@troilus.org>
-References: <f7b87f7c1002120123t376f3f14ma3f3bcb21ae2836@mail.gmail.com>
+From: David Hagood <david.hagood@gmail.com>
+Subject: Git under Windows should warn or fail on entities differning only
+ in case
+Date: Fri, 12 Feb 2010 06:40:33 -0600
+Message-ID: <1265978433.7519.6.camel@chumley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Christos Trochalakis <yatiohi@ideopolis.gr>
-X-From: git-owner@vger.kernel.org Fri Feb 12 13:37:41 2010
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 12 13:40:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfumC-00058D-IU
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 13:37:40 +0100
+	id 1NfupC-00071p-9F
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 13:40:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754200Ab0BLMhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 07:37:36 -0500
-Received: from na3sys009aog114.obsmtp.com ([74.125.149.211]:57781 "HELO
-	na3sys009aog114.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751837Ab0BLMhf (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Feb 2010 07:37:35 -0500
-Received: from source ([74.125.92.24]) by na3sys009aob114.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKS3VLjiw4YIbOAwWU6JYenWzRuURJb2ET@postini.com; Fri, 12 Feb 2010 04:37:34 PST
-Received: by qw-out-2122.google.com with SMTP id 3so410790qwe.3
-        for <git@vger.kernel.org>; Fri, 12 Feb 2010 04:37:33 -0800 (PST)
-Received: by 10.224.118.206 with SMTP id w14mr646255qaq.366.1265978253725;
-        Fri, 12 Feb 2010 04:37:33 -0800 (PST)
-Received: from graviton.troilus.org (pool-72-83-66-147.washdc.east.verizon.net [72.83.66.147])
-        by mx.google.com with ESMTPS id 20sm2186889qyk.13.2010.02.12.04.37.32
+	id S1754491Ab0BLMki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2010 07:40:38 -0500
+Received: from mail-iw0-f201.google.com ([209.85.223.201]:33235 "EHLO
+	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751323Ab0BLMkh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 07:40:37 -0500
+Received: by iwn39 with SMTP id 39so560787iwn.1
+        for <git@vger.kernel.org>; Fri, 12 Feb 2010 04:40:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:subject:from:to
+         :content-type:date:message-id:mime-version:x-mailer
+         :content-transfer-encoding;
+        bh=lOeAQDDgwzXnILA0O216klzDCKbv537th6DC2BUkn50=;
+        b=ZdfVLtoSNCzce1A3iwipbOgxZRxAEW8KWAcqe9yMiBuRlVzWtam7fTQr9Q6jUtOWZS
+         nqE+4GxI4pAjNxK02y4oQplpXGybWiI0/CdhCDVKbvVktxM+3QFAJH5XyKrPSPsgJ9Hw
+         Fq1AU4SM9g3H9i2CzMlEMDNzeqBc3xk9KQX4I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer
+         :content-transfer-encoding;
+        b=D/g5BuJgfwN1cYMr+E+/vY0XFi5RG+/uVzIJPWouKfIT5h+hSHspbhvWbWSqTHu9FN
+         seFVXLu95C1EpsRZ+QptRSnQp1dUwRVAmB5Tpg/h/jfXtlf0ycalmnXL0x9K7eAf0Gq4
+         tLYie1qhkDpsl3/e80/LywmQtxY7tg7pdw1eM=
+Received: by 10.231.169.145 with SMTP id z17mr853604iby.83.1265978436737;
+        Fri, 12 Feb 2010 04:40:36 -0800 (PST)
+Received: from Deathwish.hagood.sktc.net (7206-2.clr.64.71.120.40.clradsl.sktc.net [64.71.120.40])
+        by mx.google.com with ESMTPS id 21sm2952241iwn.14.2010.02.12.04.40.35
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 12 Feb 2010 04:37:32 -0800 (PST)
-In-Reply-To: <f7b87f7c1002120123t376f3f14ma3f3bcb21ae2836@mail.gmail.com>
-	(Christos Trochalakis's message of "Fri, 12 Feb 2010 11:23:44 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+        Fri, 12 Feb 2010 04:40:36 -0800 (PST)
+Received: from [10.16.0.66] (chumley.hagood.sktc.net [10.16.0.66])
+	by Deathwish.hagood.sktc.net (Postfix) with ESMTP id 39F38C7B8042
+	for <git@vger.kernel.org>; Fri, 12 Feb 2010 06:40:34 -0600 (CST)
+X-Mailer: Evolution 2.28.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139697>
 
-Christos Trochalakis writes:
+I work in a mixed Windows and Linux development team where we have an
+embedded project that we are storing in GIT. However, we got bit by what
+is arguably a bug in Windows, but...
 
-> Hello, I have created a light fork of an upstream project and I am not
-> quite sure which "syncing with upstream" workflow fits better.
->
-> I can think of 3 solutions
-> 1. the obvious one, merge the upstream changes on the forked branch
-> and make the necessary modifications on the merge commit
-> 2. Rebase upstream commits on top of the fork & make a commit with the
-> necessary modifications
-> 3. Cherrypick & modify upstream commits
->
-> Which practice is considered better?
+If you have 2 entities in a directory which have names differing only in
+case, e.g. "foo" and "FOO", under a REAL operating system with case
+sensitive file system semantics, this is no problem. However, under
+Windows and their wonderful "Case preserving but case insensitive"
+semantics, "FOO" and "foo" would be the same file, so when you
+pull/checkout/clone a repo with this condition, Windows will overwrite
+one file, then Git will always see a "change" because one file or the
+other won't be "right".
 
-I would recommend #1 if you expect other people to base work on your
-tree, and #2 if you don't.  #1 preserves both tree's histories, rather
-than occasionally rewriting your tree's history like #2 does.  #3 at
-best hides the relationship between the upstream history and the
-cherry-picked commits, which is why it isn't a serious contender to me.
-
-Michael Poole
+I would suggest that git should check for this case, and generate a big
+warning about it when it happens. (Yes, it sucks burdening Git with
+Windows' problems....)
