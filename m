@@ -1,183 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] Documentation: describe --thin more accurately
-Date: Fri, 12 Feb 2010 09:36:16 -0800
-Message-ID: <7vhbpm2w6n.fsf@alter.siamese.dyndns.org>
-References: <1265778851-5397-1-git-send-email-bebarino@gmail.com>
- <1265961646-28585-1-git-send-email-bebarino@gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Solve continuous integration (pending head / commit queue) 
+	problem using git
+Date: Fri, 12 Feb 2010 12:42:44 -0500
+Message-ID: <32541b131002120942w50a29e7cjf2c10820b3286017@mail.gmail.com>
+References: <c41cd75d1002120837t20f2a47fi41e8c67245c4284c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 12 18:36:35 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Jan Koprowski <jan.koprowski@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 12 18:43:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfzRR-0004Qj-NL
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 18:36:34 +0100
+	id 1NfzXz-0000fw-K4
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 18:43:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757275Ab0BLRg3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 12:36:29 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49675 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752711Ab0BLRg2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 12:36:28 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DBF5D99877;
-	Fri, 12 Feb 2010 12:36:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WSq86NFxl2kUOWn5RsN8s6Jie9g=; b=XWiIuF
-	PBTOFQ2uNbQkAKyd1xmvn/TWK9gF9BwRUoNYl1gQT7dtvOshMU+hGQxwSU5D7dRA
-	k2c9jhjCmMxErFoa8b+a6Xqwo/uQtRlPtFkgXft2NHwjqpxBSylqDsdrYp9I+DhI
-	ll5zTvQjZUo1BQ+MOV6yMvssF//sLnh3pUXeU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MZ/Uw0/QFSzOKqDYUyOR8GQZFWMROI1A
-	RAQvsdrUPt1AIPTC/ZUR3PaYWIVeSC1YFtDvC5opfR4v/1EHRV7X/NIjhJmdMrox
-	tyvlL6aSlc+QPHLmhMMhofIIFZVojwoWidS4TtkP2Wu2+ZiNoyMPBneuJxoHOR+f
-	pR4D+mhCqrQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A23C699874;
-	Fri, 12 Feb 2010 12:36:22 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B18899870; Fri, 12 Feb
- 2010 12:36:18 -0500 (EST)
-In-Reply-To: <1265961646-28585-1-git-send-email-bebarino@gmail.com> (Stephen
- Boyd's message of "Fri\, 12 Feb 2010 00\:00\:46 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2308569C-17FD-11DF-875E-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757365Ab0BLRnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2010 12:43:14 -0500
+Received: from mail-gx0-f224.google.com ([209.85.217.224]:32911 "EHLO
+	mail-gx0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755059Ab0BLRnN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 12:43:13 -0500
+Received: by gxk24 with SMTP id 24so2629776gxk.1
+        for <git@vger.kernel.org>; Fri, 12 Feb 2010 09:43:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=YYg3+eXnvImf2DFWnl4BDhv5IoakHncS1laH/eS58J4=;
+        b=NMCKGADeedheLAqcZmcki61tFaKnTt2tduVJgxPkr/TPaD5Z+ziV5PlLz9iT1EJrfX
+         ZGnH+dRIy8CtsyPYhit3Lp/SNs7kdZcJCx+Go1rhRzygx92NT7HsCx60tRddINZ7VdeA
+         247J+pbvWMAbhDDCfN0EusivdRgvr5SkHv+i8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=LcLkyhdi/VqCBPLyOoF7+I0AgXB2IhS7hTG/iIa+F30qIRccl12urZwciLw3MEjk+r
+         7zcFRKwXvR4dvSkpAfqhDnro90UaASLRPVkEAKP6HreioWcPQ5TVTzl47SpwcfvXRhMz
+         cnrBsuo1JPj/WyAwjAlLpfbOi/Jgluyy5iRfg=
+Received: by 10.150.120.42 with SMTP id s42mr2784129ybc.91.1265996592332; Fri, 
+	12 Feb 2010 09:43:12 -0800 (PST)
+In-Reply-To: <c41cd75d1002120837t20f2a47fi41e8c67245c4284c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139731>
 
-Stephen Boyd <bebarino@gmail.com> writes:
-
-> The description for --thin was misleading and downright wrong. Correct
-> it with some inspiration from the description of index-pack's --fix-thin
-> and some background information from Nicolas Pitre <nico@fluxnic.net>.
+On Fri, Feb 12, 2010 at 11:37 AM, Jan Koprowski <jan.koprowski@gmail.com> wrote:
+> Now. My idea. There is some revision tagged as "stable". *Clone* and
+> *pull* operations is somehow "overloaded" from server side and always!
+> return last revision tagged as stable. After compiling external tool
+> just move tag to another revision which pass all tests. Of course
+> there is some additional parameter (for example --last or --unstable)
+> which can clone fine way of repository.
 >
-> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+> Two questions.
+> 1) Maybe I try to invent the wheel again. Is there any way to take the
+> effect without overloading standard git behaviours.
+> 2) If not how overload git behaviors on git "server side" repo?
 
-Looks better, but...
+In general, code that lies to you about what's the most revision is
+evil.  Sometimes you *do* want to fetch that revision it's lying to
+you and saying doesn't exist, precisely because you'd like to help fix
+it before integration.
 
-> diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch-pack.txt
-> index e9952e8..c428f6d 100644
-> --- a/Documentation/git-fetch-pack.txt
-> +++ b/Documentation/git-fetch-pack.txt
-> @@ -44,8 +44,10 @@ OPTIONS
->  	locked against repacking.
->  
->  --thin::
-> -	Spend extra cycles to minimize the number of objects to be sent.
-> -	Use it on slower connection.
-> +	Fetch a "thin" pack, which records objects in deltified form based
-> +	on objects not included in the pack to reduce network traffic.
-> +	The excluded objects are expected to be present on the receiving
-> +	end.
+What you really want is:
 
-It is useless and misleading to say "expected to be" for fetch-pack and
-send-pack.  Imagine you are a first time reader of this documentation and
-read the above.  Wouldn't it be very natural to ask yourself: "I want to
-take advantage of reduced network traffic by using --thin.  How do I make
-sure that my local repository (i.e. receiving end) satisfies that
-expectation?"
+- nobody can push to the "integration branch" except the "integration manager"
 
-The answer is, "nothing"---the protocol exchange ensures that condition.
+- the "integration manager" should be a computer program, so that you
+can have "continuous integration"
 
-> diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
-> index 65a301b..73fe51a 100644
-> --- a/Documentation/git-index-pack.txt
-> +++ b/Documentation/git-index-pack.txt
-> @@ -46,10 +46,10 @@ OPTIONS
->  	'git repack'.
->  
->  --fix-thin::
-> -	It is possible for 'git pack-objects' to build
-> +	It is possible for 'git pack-objects' to build a
->  	"thin" pack, which records objects in deltified form based on
->  	objects not included in the pack to reduce network traffic.
-> -	Those objects are expected to be present on the receiving end
-> +	The excluded objects are expected to be present on the receiving end
->  	and they must be included in the pack for that pack to be self
->  	contained and indexable. Without this option any attempt to
->  	index a thin pack will fail. This option only makes sense in
+This isn't actually that hard.  Give each user their own repository;
+no user can write to any other user's repository.  (This is the
+default setup on github.com, for example.)  Alternatively, just tell
+people to never, ever push to the master branch by themselves.  People
+are easily capable of following rules like that unless they're
+actively trying to screw you.
 
-This "expected to be present and they must be included" is correct, but
-"running index-pack with this option is how you 'fix' the thin pack by
-including them" is missing (not your patch's fault---but because you are
-touching in the vicinity on this exact topic anyway...).
+Then set up something like gitbuilder
+(http://github.com/apenwarr/gitbuilder) (Full disclosure: I wrote it)
+to build *all* the branches from *all* the users.  This sounds like it
+would create exponential work for the build machine, but it doesn't,
+since most users will have mostly the same commits anyway.
 
-> diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-> index ffd5025..f32c322 100644
-> --- a/Documentation/git-pack-objects.txt
-> +++ b/Documentation/git-pack-objects.txt
-> @@ -179,6 +179,14 @@ base-name::
->  	Add --no-reuse-object if you want to force a uniform compression
->  	level on all data no matter the source.
->  
-> +--thin::
-> +	Create a "thin" pack, which records objects in deltified form based
-> +	on objects not included in the pack to reduce network traffic.
-> +	The excluded objects are expected to be present on the receiving end
-> +	and eventually must be included in the pack for that pack to be self
-> +	contained and indexable. This option only makes sense in
-> +	conjunction with --stdout.
+When gitbuilder tags a particular commit as having built and passed
+all tests, then it becomes a candidate for merging into the
+integration branch.  Write a little script that goes through candidate
+branches, checks their gitbuilder status, and if they've passed,
+pushes them into the integration branch.  The push will only succeed
+if the integration branch can be fast-forwarded to match the branch
+you're trying to push; if you can't, it'll be rejected, which is what
+you want, since merging (even conflict-free merging) might break
+tests.
 
-Before using such a "thin" pack, the receiving end must add excluded
-objects back to make it self-contained and indexable by running index-pack
-with its --fix-thin option.
+That mechanism works pretty well at my company, with one exception: we
+didn't bother with an automatic tool that merges into master.  We
+prefer to have a release manager do that.
 
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index bd79119..c67b06c 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> @@ -141,9 +141,10 @@ useful if you write an alias or script around 'git push'.
->  
->  --thin::
->  --no-thin::
-> -	These options are passed to 'git send-pack'.  Thin
-> -	transfer spends extra cycles to minimize the number of
-> -	objects to be sent and meant to be used on slower connection.
-> +	These options are passed to linkgit:git-send-pack[1]. A thin transfer
-> +	significantly reduces the number of sent objects when the sender and
-> +	receiver share many of the same objects in common. The default is
-> +	\--thin.
+Have fun,
 
-It is sometimes true that "number of" send objects is reduced, but the
-significant reduction comes from sending smaller amount of data.
-
-If both sides start out with a file with 10000 lines, and you have two
-commits since then, one adding a line A and then adding another line B on
-top of it.  Without --thin, you would send the last version (10000
-original lines plus A and B) in full and a delta that says "starting from
-that version, delete line B", in order to represent the two versions (one
-with addition of line A, the other with addition of both line A and B).
-With --thin, you would instead send two deltas that say "starting from the
-10000-line file you have, add line A" and "starting from that result, add
-line B", without sending any full version.  The sent number of objects in
-these two cases are the same (the version with A added, and the version
-with both A and B added). 
-
-> diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
-> index 8178d92..1d7c4d4 100644
-> --- a/Documentation/git-send-pack.txt
-> +++ b/Documentation/git-send-pack.txt
-> @@ -48,8 +48,10 @@ OPTIONS
->  	Run verbosely.
->  
->  --thin::
-> -	Spend extra cycles to minimize the number of objects to be sent.
-> -	Use it on slower connection.
-> +	Send a "thin" pack, which records objects in deltified form based
-> +	on objects not included in the pack to reduce network traffic.
-> +	The excluded objects are expected to be present on the receiving
-> +	end.
-
-The same comment as fetch-pack one applies here.
-
-Thanks.
+Avery
