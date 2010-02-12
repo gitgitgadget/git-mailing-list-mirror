@@ -1,110 +1,75 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: git cherry-pick --continue?
-Date: Fri, 12 Feb 2010 15:11:47 +0100
-Message-ID: <20100212141147.GA18676@neumann>
-References: <fabb9a1e1002101237i60a0b2c5j6d1e52b33dacbaa2@mail.gmail.com>
-	<20100210210419.GA7728@coredump.intra.peff.net>
-	<20100210212408.GB7728@coredump.intra.peff.net>
-	<7v63644uoq.fsf@alter.siamese.dyndns.org>
-	<7vbpfw3f6t.fsf@alter.siamese.dyndns.org>
-	<20100211193248.GA27072@coredump.intra.peff.net>
-	<7vfx5733x7.fsf@alter.siamese.dyndns.org>
-	<20100211222714.GA12805@coredump.intra.peff.net>
+From: Raja R Harinath <harinath@hurrynot.org>
+Subject: Re: [PATCH 4/7] Documentation: merge: add an overview
+Date: Fri, 12 Feb 2010 19:45:11 +0530
+Message-ID: <87zl3ey1zk.fsf@hariville.hurrynot.org>
+References: <20100123092551.GA7571@progeny.tock>
+	<20100123094246.GE7571@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Sverre Rabbelier <srabbelier@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Feb 12 15:11:58 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 12 15:39:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfwFR-0005eJ-Sq
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 15:11:58 +0100
+	id 1Nfwfm-0007VX-IB
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 15:39:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756650Ab0BLOLv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Feb 2010 09:11:51 -0500
-Received: from francis.fzi.de ([141.21.7.5]:14789 "EHLO exchange.fzi.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756513Ab0BLOLu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 09:11:50 -0500
-Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 12 Feb 2010 15:11:47 +0100
-Content-Disposition: inline
-In-Reply-To: <20100211222714.GA12805@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 12 Feb 2010 14:11:47.0056 (UTC) FILETIME=[4FF55F00:01CAABED]
+	id S1755997Ab0BLOjF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2010 09:39:05 -0500
+Received: from lo.gmane.org ([80.91.229.12]:59607 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754358Ab0BLOjB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 09:39:01 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Nfwfa-0007NU-19
+	for git@vger.kernel.org; Fri, 12 Feb 2010 15:38:58 +0100
+Received: from 117.192.134.243 ([117.192.134.243])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Feb 2010 15:38:57 +0100
+Received: from harinath by 117.192.134.243 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Feb 2010 15:38:57 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 117.192.134.243
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.92 (gnu/linux)
+Cancel-Lock: sha1:gU7Kw1Xg9fPUe8MXm5OTt2u2cO8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139712>
 
 Hi,
 
-On Thu, Feb 11, 2010 at 05:27:14PM -0500, Jeff King wrote:
-> On Thu, Feb 11, 2010 at 12:36:52PM -0800, Junio C Hamano wrote:
->=20
-> > > Do you just want to pick up my patch from earlier in the thread, =
-or do
-> > > you have further comments? The only thing I could think to change=
- would
-> > > be that we may not want to even bother advertising --continue in =
-the
-> > > usage message (conversely, we could go a step further and actuall=
-y
-> > > advertise it in the manpage).
-> >=20
-> > I would say our eventual goal should be to make "--continue" the pr=
-imary
-> > word the end users would see.  It would bring us closer to that goa=
-l to
-> > start advertising --continue early.
->=20
-> OK. Then I think my patch is fine. But we could also do this if we
-> wanted to push it further now:
->=20
-> -- >8 --
-> Subject: [PATCH] am: switch --resolved to --continue
->=20
-> Rebase calls this same function "--continue", which means
-> users may be trained to type it. There is no reason to
-> deprecate --resolved (or -r), so we will keep it as a
-> synonym.
->=20
-> Signed-off-by: Jeff King <peff@peff.net>
+Jonathan Nieder <jrnieder@gmail.com> writes:
+[snip]
+> +Assume the following history exists and the current branch is
+> +"`master`":
+> +
+> +------------
+> +          A---B---C topic
+> +         /
+> +    D---E---F---G master
+> +------------
+> +
+> +Then "`git merge topic`" will replay the changes made on the
+> +`topic` branch since it diverged from `master` (i.e., `E`) until
+> +its current commit (`C`) on top of `master`, and record the result
+> +in a new commit along with the names of the two parent commits and
+> +a log message from the user describing the changes.
 
-Then maybe we should have this, too.
+The word 'replay' seems inappropriate for a description of 'merge'.  To
+me 'replay' seems a synonym of 'rebase' (and IIRC tla has a 'replay'
+command that was similar to 'rebase' [1]).
 
-Best,
-G=E1bor
+(Yeah, I know, I'm responding 3 weeks too late, and the patch is already
+in the tree.)
 
+- Hari
 
- -- >8 --
-Subject: [PATCH] bash: support 'git am's new '--continue' option
-
-Signed-off-by: SZEDER G=E1bor <szeder@ira.uka.de>
----
- contrib/completion/git-completion.bash |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 35acad0..fe93747 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -667,7 +667,7 @@ _git_am ()
- {
- 	local cur=3D"${COMP_WORDS[COMP_CWORD]}" dir=3D"$(__gitdir)"
- 	if [ -d "$dir"/rebase-apply ]; then
--		__gitcomp "--skip --resolved --abort"
-+		__gitcomp "--skip --continue --resolved --abort"
- 		return
- 	fi
- 	case "$cur" in
---=20
-1.7.0.rc1.84.g9879
+[1] http://www.gnu.org/software/gnu-arch/tutorial/Introducing-replay-_002d_002d-An-Alternative-to-update.html
