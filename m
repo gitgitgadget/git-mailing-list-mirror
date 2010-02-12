@@ -1,71 +1,73 @@
-From: Ron Garret <ron1@flownet.com>
-Subject: Re: Individual file snapshots
-Date: Fri, 12 Feb 2010 09:24:27 -0800
-Organization: Amalgamated Widgets
-Message-ID: <ron1-278C58.09242712022010@news.gmane.org>
-References: <ron1-CD3223.04030512022010@news.gmane.org> <alpine.DEB.2.00.1002121316260.10583@ds9.cixit.se>
+From: Pete Harlan <pgit@pcharlan.com>
+Subject: Re: Git under Windows should warn or fail on entities differning
+ only in case
+Date: Fri, 12 Feb 2010 09:31:58 -0800
+Message-ID: <4B75908E.3060407@pcharlan.com>
+References: <1265978433.7519.6.camel@chumley> <alpine.DEB.1.00.1002121412300.20986@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 12 18:24:58 2010
+Cc: David Hagood <david.hagood@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 12 18:32:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfzGE-0004uq-0M
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 18:24:58 +0100
+	id 1NfzNE-0001in-8E
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 18:32:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757327Ab0BLRYx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 12:24:53 -0500
-Received: from lo.gmane.org ([80.91.229.12]:55612 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757253Ab0BLRYw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 12:24:52 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NfzG6-0004ov-6J
-	for git@vger.kernel.org; Fri, 12 Feb 2010 18:24:50 +0100
-Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 12 Feb 2010 18:24:50 +0100
-Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 12 Feb 2010 18:24:50 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
-User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
+	id S1757436Ab0BLRcG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2010 12:32:06 -0500
+Received: from caibbdcaaaaf.dreamhost.com ([208.113.200.5]:58615 "EHLO
+	swarthymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1757319Ab0BLRcF (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Feb 2010 12:32:05 -0500
+Received: from [192.168.1.174] (adsl-71-148-55-8.dsl.chi2ca.sbcglobal.net [71.148.55.8])
+	by swarthymail-a1.g.dreamhost.com (Postfix) with ESMTP id BAD6B8F17E;
+	Fri, 12 Feb 2010 09:31:58 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+In-Reply-To: <alpine.DEB.1.00.1002121412300.20986@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139729>
 
-In article <alpine.DEB.2.00.1002121316260.10583@ds9.cixit.se>,
- Peter Krefting <peter@softwolves.pp.se> wrote:
+On 02/12/2010 05:14 AM, Johannes Schindelin wrote:
+> Hi,
+> 
+> Disclaimer: I am not uninterested in the subject you talk about, but my 
+> reply could come over as harsh, due to lack of time. If you are likely to 
+> be annoyed by direct criticism, delete this mail and do not reply. Thank 
+> you very much.
+> 
+> On Fri, 12 Feb 2010, David Hagood wrote:
+> 
+>> I would suggest that git should check for this case, and generate a big 
+>> warning about it when it happens. (Yes, it sucks burdening Git with 
+>> Windows' problems....)
+> 
+> Git is burdened with Windows' problems already. That does not suck. What 
+> sucks is that you only suggest that Git should check the case, in effect 
+> asking the few Git for Windows contributors to do it, instead of 
+> just going ahead and scratching your own itch.
 
-> Ron Garret:
-> 
-> > I would like to be able to store snapshots of individual files without 
-> > making a commit on the main branch.
-> 
->    git hash-object -w filename
-> 
-> will add the file to the object database, outputting it's hash value.
-> 
->    git tag mytag hashvalue
-> 
-> creates a tag "mytag" pointing to that file.
-> 
->    git show mytag
-> 
-> will output the file you put in.
+I didn't read David's patch as anything other than floating an idea.
 
-Ah, cool!  Thanks.  I knew about git hash-object, but I did not know 
-that you could tag the resulting hash.  I thought you could only tag 
-commit objects.
+Posting a wish item to the list without a patch seems useful to me:
 
-rg
+1. Someone might be able to explain why the wished-for item is a bad
+idea, or why it's unfeasible to implement.
+
+2. Someone might have a flash of insight for how to implement the idea
+in a few lines of code and post the patch, improving Git.
+
+3. Someone might say, "Good idea, go ahead and make the change," and the
+person with the itch now knows that the idea will be accepted.
+
+It sounds like this is a (3), which is doing pretty well for an idea
+about how to change Git :)
+
+--Pete
