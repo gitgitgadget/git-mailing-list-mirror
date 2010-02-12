@@ -1,91 +1,98 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: GSoC 2010
-Date: Fri, 12 Feb 2010 11:10:47 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.1002120923060.14365@iabervon.org>
-References: <fabb9a1e1002101223o6a00f7eavb84567c1119c8ebc@mail.gmail.com>  <20100212080620.GA31719@dcvr.yhbt.net> <alpine.DEB.1.00.1002121000290.20986@pacific.mpi-cbg.de>  <fabb9a1e1002120103j3f37d417ka5b7b7ca3ae8edd@mail.gmail.com>  <20100212091635.GA22942@glandium.org>
- <alpine.DEB.1.00.1002121034320.20986@pacific.mpi-cbg.de> <fabb9a1e1002120132q157d2d4dqd7c81d766bd933f6@mail.gmail.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
+Subject: [StGit PATCH] mail: Ask for the SMTP credentials before sending the
+ messages
+Date: Fri, 12 Feb 2010 16:11:51 +0000
+Message-ID: <20100212161150.12036.62592.stgit@pc1117.cambridge.arm.com>
+Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Mike Hommey <mh@glandium.org>,
-	Eric Wong <normalperson@yhbt.net>, Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git List <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 12 17:10:56 2010
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Pavel Roskin <proski@gnu.org>, Alex Chiang <achiang@hp.com>
+To: git@vger.kernel.org, Karl Wiberg <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Fri Feb 12 17:12:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nfy6Y-0008Mc-Lb
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 17:10:55 +0100
+	id 1Nfy7q-0000pm-LK
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 17:12:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755742Ab0BLQKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 11:10:49 -0500
-Received: from iabervon.org ([66.92.72.58]:40196 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753151Ab0BLQKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 11:10:48 -0500
-Received: (qmail 12595 invoked by uid 1000); 12 Feb 2010 16:10:47 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 12 Feb 2010 16:10:47 -0000
-In-Reply-To: <fabb9a1e1002120132q157d2d4dqd7c81d766bd933f6@mail.gmail.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1756977Ab0BLQMH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2010 11:12:07 -0500
+Received: from cam-admin0.cambridge.arm.com ([217.140.96.50]:38291 "EHLO
+	cam-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756936Ab0BLQMD (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Feb 2010 11:12:03 -0500
+Received: from cam-owa1.Emea.Arm.com (cam-owa1.emea.arm.com [10.1.255.62])
+	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id o1CGBpeI000879;
+	Fri, 12 Feb 2010 16:11:51 GMT
+Received: from pc1117.cambridge.arm.com ([10.1.255.212]) by cam-owa1.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
+	 Fri, 12 Feb 2010 16:11:51 +0000
+User-Agent: StGit/0.15-53-gecb05-dirty
+X-OriginalArrivalTime: 12 Feb 2010 16:11:51.0452 (UTC) FILETIME=[161CF5C0:01CAABFE]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139719>
 
-On Fri, 12 Feb 2010, Sverre Rabbelier wrote:
+The original implementation was asking for the SMTP password on every
+patch sent. This patch only asks the password once before sending or
+even editing the cover message and patches.
 
-> Heya,
-> 
-> On Fri, Feb 12, 2010 at 10:35, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > On Fri, 12 Feb 2010, Mike Hommey wrote:
-> >> It is already mentioned on the wiki that this would probably be a
-> >> problem, license-wise. (the svn library is Apache license, which is
-> >> incompatible with GPLv2)
-> 
-> Yeah, guess who put that there ;).
-> 
-> > So git-remote-svn would have to be under an Apache-compatible license, so
-> > what? It is not as if git-remote-svn was a derivative work of Git, just
-> > because it abides by a very simple command-line interface that happens to
-> > be defined in Git, but would work anywhere else, too.
-> 
-> Excellent point, I think we could safely argue that if we only expose
-> 'import' and 'export' (so adhere to the fast-import/fast-export format
-> that is already widely used), that it is indeed not a derative work.
-> Also, becaus of how we set up the remote helpers (as drop in
-> binaries), we shouldn't have to worry too much about distributing?
+Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
+Cc: Pavel Roskin <proski@gnu.org>
+Cc: Alex Chiang <achiang@hp.com>
+---
+ stgit/commands/mail.py |   22 ++++++++++++++++++++--
+ 1 files changed, 20 insertions(+), 2 deletions(-)
 
-It was intentional on my part that the mode where the helper only talks to 
-the remote system and to its parent be not a derived work of the parent, 
-under the usual analysis that something is not covered by copyright if it 
-has to be a particular way for functional or interoperability reasons.
-
-This does not strictly mean that helpers won't be derived works of git, 
-simply because they may use git code internally (strbuf, for example), and 
-because it's currently much easier to do incremental imports by looking up 
-the current state from the git object database than to be completely 
-agnostic.
-
-Also note that the current helper protocol is definitely insufficient to 
-replace git-svn ('export' isn't actually specified, although I think 
-everyone who guesses how it works guesses the same thing), and the 
-transport code needs to be extended to handle the "dcommit" situation 
-(when you push a commit, the state that you see on the remote changes 
-based on the semantics of what you sent, but it does not change to have 
-the same hash as what you pushed).
-
-Distribution of binaries shouldn't be a problem (the GPL specifically 
-states that just coming in the same package doesn't matter for licensing, 
-and this is generally what copyright laws say anyway); the main issue is 
-that packages would have to specify which things have which license, since 
-it won't just be obvious.
-
-	-Daniel
-*This .sig left intentionally blank*
+diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
+index 34262d3..b0a8f13 100644
+--- a/stgit/commands/mail.py
++++ b/stgit/commands/mail.py
+@@ -192,9 +192,18 @@ def __send_message_sendmail(sendmail, msg):
+     cmd = sendmail.split()
+     Run(*cmd).raw_input(msg).discard_output()
+ 
+-def __send_message_smtp(smtpserver, from_addr, to_addr_list, msg, options):
+-    """Send the message using the given SMTP server
++__smtp_credentials = None
++
++def __set_smtp_credentials(options):
++    """Set the (smtpuser, smtppassword, smtpusetls) credentials if the method
++    of sending is SMTP.
+     """
++    global __smtp_credentials
++
++    smtpserver = options.smtp_server or config.get('stgit.smtpserver')
++    if options.git or smtpserver.startswith('/'):
++        return
++
+     smtppassword = options.smtp_password or config.get('stgit.smtppassword')
+     smtpuser = options.smtp_user or config.get('stgit.smtpuser')
+     smtpusetls = options.smtp_tls or config.get('stgit.smtptls') == 'yes'
+@@ -206,6 +215,13 @@ def __send_message_smtp(smtpserver, from_addr, to_addr_list, msg, options):
+     if (smtpuser and not smtppassword):
+         smtppassword = getpass.getpass("Please enter SMTP password: ")
+ 
++    __smtp_credentials = (smtpuser, smtppassword, smtpusetls)
++
++def __send_message_smtp(smtpserver, from_addr, to_addr_list, msg, options):
++    """Send the message using the given SMTP server
++    """
++    smtpuser, smtppassword, smtpusetls = __smtp_credentials
++
+     try:
+         s = smtplib.SMTP(smtpserver)
+     except Exception, err:
+@@ -652,6 +668,8 @@ def func(parser, options, args):
+     else:
+         ref_id = None
+ 
++    # get username/password if sending by SMTP
++    __set_smtp_credentials(options)
+ 
+     # send the cover message (if any)
+     if options.cover or options.edit_cover:
