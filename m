@@ -1,102 +1,114 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: GSoC 2010
-Date: Fri, 12 Feb 2010 17:34:52 +0800
-Message-ID: <be6fef0d1002120134p7dda53e4h7c970bd852e6ce99@mail.gmail.com>
-References: <fabb9a1e1002101223o6a00f7eavb84567c1119c8ebc@mail.gmail.com>
-	 <20100212080620.GA31719@dcvr.yhbt.net>
-	 <alpine.DEB.1.00.1002121000290.20986@pacific.mpi-cbg.de>
-	 <fabb9a1e1002120103j3f37d417ka5b7b7ca3ae8edd@mail.gmail.com>
-	 <20100212091635.GA22942@glandium.org>
-	 <alpine.DEB.1.00.1002121034320.20986@pacific.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Mike Hommey <mh@glandium.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 12 10:35:00 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] Documentation: minor fixes to RelNotes-1.7.0
+Date: Fri, 12 Feb 2010 10:47:53 +0100
+Message-ID: <8912da79892fba3404885c301b7c333a19dc6b49.1265968004.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 12 10:47:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfrvP-0005kZ-Ec
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 10:34:59 +0100
+	id 1Nfs7l-0005iK-KV
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 10:47:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751676Ab0BLJez (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 04:34:55 -0500
-Received: from mail-iw0-f201.google.com ([209.85.223.201]:61629 "EHLO
-	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751431Ab0BLJex (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 04:34:53 -0500
-Received: by iwn39 with SMTP id 39so449083iwn.1
-        for <git@vger.kernel.org>; Fri, 12 Feb 2010 01:34:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=Wdh/J7EfGXOs8KF1Uey9BcZZfLtt0KRf5SitBknpmOk=;
-        b=noAMKZc9AFfxU7sq84uEOPohct3Cv8n2nDt0GBQJCMreCE7+Onn+Kxo9kePy0ZOX88
-         miPdm1VZ6aK7XDD204Pfo+ppIBVxxxHVcQp/T75Y+bxDKZaaQhAcW6ZziqkVDA6drsra
-         vdCsM/M+AVAhZt39ZDNl+NaPas0SCOnLZCiWM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=D3fArEVdOYoZDnZyxgxr/DyXjy4YCWL/T5k4yU7n/+zi5B4IqIXWRlhNrFySLQxPg9
-         ECETF2Jj7AUUgKeE+5AMRrbe/VgkISyouu8PM+vi3Nyju6OtPiw/CSOEdpRcZQOWQvJr
-         Qm3/ONlWEV/aXnGAU2dpGwmn2YQnJPRgdguxc=
-Received: by 10.231.157.83 with SMTP id a19mr1808656ibx.41.1265967292139; Fri, 
-	12 Feb 2010 01:34:52 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.1002121034320.20986@pacific.mpi-cbg.de>
+	id S1752230Ab0BLJrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2010 04:47:40 -0500
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:45022 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752122Ab0BLJrj (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Feb 2010 04:47:39 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 95EA0E10CF;
+	Fri, 12 Feb 2010 04:47:38 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 12 Feb 2010 04:47:38 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=HVwX43PchWJ3bfieG2zvanGZ00U=; b=k6u93W9Kt9DrPKo59XEYXrP/bZ66WG7a1MbUlT8k0EMAlX0MMrFNeFOjQloMjksMUNPOoyle6+BnUQ3j2pdXXULXU5BDHA1KnxGubj+/mLXAPGUPdmBgmO0spEfZbcBHNeGsA6uYafiNs67LF/KWt8p9bSUqfjlFw3w9e8OswL8=
+X-Sasl-enc: EbXMu2UqxdBZ0rqhww5GeiqAgUYJNuK9hY1f8DRbvwlD 1265968057
+Received: from localhost (p3EE2A707.dip0.t-ipconnect.de [62.226.167.7])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 6CC7E4ADF5B;
+	Fri, 12 Feb 2010 04:47:37 -0500 (EST)
+X-Mailer: git-send-email 1.7.0.rc2.186.gbb211
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139673>
 
-Hi,
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+Terribly sorry for chimping in so late. Ruined my desktop the other day
+but recovered now...
 
-On Fri, Feb 12, 2010 at 5:35 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Fri, 12 Feb 2010, Mike Hommey wrote:
->
->> On Fri, Feb 12, 2010 at 10:03:43AM +0100, Sverre Rabbelier wrote:
->>
->> > On Fri, Feb 12, 2010 at 10:02, Johannes Schindelin
->> > <Johannes.Schindelin@gmx.de> wrote:
->> > > Would it not make sense to implement git-remote-svn as a C program?
->> > > That should help matters especially on Windows, where git-svn is
->> > > very slow due to its using MSys (which is a stripped-down Cygwin, as
->> > > you know, jumping through hoops to bring some POSIX-iness to
->> > > Windows).
->> >
->> > It would very much be sense to do so, perhaps we should update the
->> > wiki to say that implementing it in C is strongly preferred?
->>
->> It is already mentioned on the wiki that this would probably be a
->> problem, license-wise. (the svn library is Apache license, which is
->> incompatible with GPLv2)
->
-> So git-remote-svn would have to be under an Apache-compatible license, so
-> what? It is not as if git-remote-svn was a derivative work of Git, just
-> because it abides by a very simple command-line interface that happens to
-> be defined in Git, but would work anywhere else, too.
+ Documentation/RelNotes-1.7.0.txt |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
 
-hmm, what about distribution? Will we be able to distribute this
-remote helper with the rest of Git's GPL-ed code?
-
-As a side note, if I'm remember correctly, there used to be a
-implementation of SHA-1 hashing algorithm from Mozilla  - was that
-under MPL? If so, how did we deal with that? (Wikipedia says MPL is
-incompatible with GPL, too.)
-
+diff --git a/Documentation/RelNotes-1.7.0.txt b/Documentation/RelNotes-1.7.0.txt
+index 2fedb66..0815ca1 100644
+--- a/Documentation/RelNotes-1.7.0.txt
++++ b/Documentation/RelNotes-1.7.0.txt
+@@ -4,7 +4,7 @@ Git v1.7.0 Release Notes
+ Notes on behaviour change
+ -------------------------
+ 
+- * "git push" into a branch that is currently checked out (i.e. pointed by
++ * "git push" into a branch that is currently checked out (i.e. pointed at by
+    HEAD in a repository that is not bare) is refused by default.
+ 
+    Similarly, "git push $there :$killed" to delete the branch $killed
+@@ -19,7 +19,7 @@ Notes on behaviour change
+    patch series with more than two messages.  All messages will be sent
+    as a reply to the first message, i.e. cover letter.
+ 
+-   It has been possible to configure send-email to send "shallow thread"
++   It has been possible already to configure send-email to send "shallow thread"
+    by setting sendemail.chainreplyto configuration variable to false.  The
+    only thing this release does is to change the default when you haven't
+    configured that variable.
+@@ -30,7 +30,7 @@ Notes on behaviour change
+  * "git diff" traditionally treated various "ignore whitespace" options
+    only as a way to filter the patch output.  "git diff --exit-code -b"
+    exited with non-zero status even if all changes were about changing the
+-   ammount of whitespace and nothing else.  and "git diff -b" showed the
++   amount of whitespace and nothing else;  and "git diff -b" showed the
+    "diff --git" header line for such a change without patch text.
+ 
+    In this release, the "ignore whitespaces" options affect the semantics
+@@ -106,7 +106,7 @@ Updates since v1.6.6
+    defaults to the current branch, so "git fetch && git merge @{upstream}"
+    will be equivalent to "git pull".
+ 
+- * "git branch --set-upstream" can be used to update the (surprise!) upstream
++ * "git branch --set-upstream" can be used to update the (surprise!) upstream,
+    i.e. where the branch is supposed to pull and merge from (or rebase onto).
+ 
+  * "git checkout A...B" is a way to detach HEAD at the merge base between
+@@ -133,7 +133,7 @@ Updates since v1.6.6
+  * "git fetch --all" can now be used in place of "git remote update".
+ 
+  * "git grep" does not rely on external grep anymore.  It can use more than
+-   one threads to accelerate the operation.
++   one thread to accelerate the operation.
+ 
+  * "git grep" learned "--quiet" option.
+ 
+@@ -159,13 +159,13 @@ Updates since v1.6.6
+  * "git rebase --onto A...B" means the history is replayed on top of the
+    merge base between A and B.
+ 
+- * "git rebase -i" learned new action "fixup", that squashes the change
++ * "git rebase -i" learned new action "fixup" that squashes the change
+    but does not affect existing log message.
+ 
+- * "git rebase -i" also learned --autosquash option, that is useful
++ * "git rebase -i" also learned --autosquash option that is useful
+    together with the new "fixup" action.
+ 
+- * "git remote" learned set-url subcommand, to update (surprise!) url
++ * "git remote" learned set-url subcommand that updates (surprise!) url
+    for an existing remote nickname.
+ 
+  * "git rerere" learned "forget path" subcommand.  Together with "git
 -- 
-Cheers,
-Ray Chuan
+1.7.0.rc2.186.gbb211
