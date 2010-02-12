@@ -1,69 +1,68 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: GSoC 2010
-Date: Fri, 12 Feb 2010 10:16:35 +0100
-Message-ID: <20100212091635.GA22942@glandium.org>
-References: <fabb9a1e1002101223o6a00f7eavb84567c1119c8ebc@mail.gmail.com>
- <20100212080620.GA31719@dcvr.yhbt.net>
- <alpine.DEB.1.00.1002121000290.20986@pacific.mpi-cbg.de>
- <fabb9a1e1002120103j3f37d417ka5b7b7ca3ae8edd@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC] git rebase --edit
+Date: Fri, 12 Feb 2010 10:29:18 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1002121026380.20986@pacific.mpi-cbg.de>
+References: <be6fef0d1002120044w5f14d061t52863fbc8b0bd304@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Wong <normalperson@yhbt.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git List <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 12 10:16:55 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 12 10:24:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nfrdv-0001YK-Bh
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 10:16:55 +0100
+	id 1Nfrkj-0005xS-3E
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 10:23:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751082Ab0BLJQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 04:16:49 -0500
-Received: from vuizook.err.no ([85.19.221.46]:36923 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750997Ab0BLJQs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 04:16:48 -0500
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1Nfrdc-00056N-J6; Fri, 12 Feb 2010 10:16:39 +0100
-Received: from mh by jigen with local (Exim 4.71)
-	(envelope-from <mh@jigen>)
-	id 1Nfrdb-0005yV-Hr; Fri, 12 Feb 2010 10:16:35 +0100
-Content-Disposition: inline
-In-Reply-To: <fabb9a1e1002120103j3f37d417ka5b7b7ca3ae8edd@mail.gmail.com>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
+	id S1750840Ab0BLJWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2010 04:22:50 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59979 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750718Ab0BLJWt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 04:22:49 -0500
+Received: (qmail invoked by alias); 12 Feb 2010 09:22:46 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp008) with SMTP; 12 Feb 2010 10:22:46 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18VtNldfTMVnCWqNhy+swV36Dl6Y2uWn78LsXSIYd
+	UOk/98slDQ88rR
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <be6fef0d1002120044w5f14d061t52863fbc8b0bd304@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66000000000000003
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139668>
 
-On Fri, Feb 12, 2010 at 10:03:43AM +0100, Sverre Rabbelier wrote:
-> Heya,
+Hi,
+
+On Fri, 12 Feb 2010, Tay Ray Chuan wrote:
+
+> [description how to amend a single commit that is not HEAD]
+>
+> Perhaps git-rebase --interactive could learn an option, say, --edit
+> <commit>, that
 > 
-> On Fri, Feb 12, 2010 at 10:02, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > Would it not make sense to implement git-remote-svn as a C program? That
-> > should help matters especially on Windows, where git-svn is very slow due
-> > to its using MSys (which is a stripped-down Cygwin, as you know, jumping
-> > through hoops to bring some POSIX-iness to Windows).
+>   1. determines where to start the rebase (instead of saying <commit>^ above),
+>   2. marks <commit> as 'e' in git-rebase-todo,
+>   3. start the edit process ("You can amend the commit now...").
 > 
-> It would very much be sense to do so, perhaps we should update the
-> wiki to say that implementing it in C is strongly preferred?
+> The user would then proceed with the usual git-rebase --continue.
+> 
+> Is this a workable suggestion?
 
-It is already mentioned on the wiki that this would probably be a
-problem, license-wise. (the svn library is Apache license, which is
-incompatible with GPLv2)
+Sure!
 
-Mike
+Note that the current workflow for such things is to make a temporary 
+commit which is then handled by the new "fixup" command. But of course, 
+this only works if your history is not messy, i.e. has too many changes in 
+the same place (because then the fixup commit does not apply cleanly to 
+the commit in question).
+
+Ciao,
+Dscho
