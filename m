@@ -1,64 +1,105 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Commit annotations (editable commit messages)
-Date: Fri, 12 Feb 2010 17:55:46 -0500
-Message-ID: <32541b131002121455s46bfe15aie484e9be484259c6@mail.gmail.com>
-References: <op.u71cw50km02fvl@cybershadow.mshome.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [StGit PATCH] mail: Ask for the SMTP credentials before
+ sending the messages
+Date: Fri, 12 Feb 2010 17:56:51 -0500
+Message-ID: <1266015411.25535.21.camel@mj>
+References: <20100212161150.12036.62592.stgit@pc1117.cambridge.arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Vladimir Panteleev <thecybershadow@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 12 23:56:19 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Karl Wiberg <kha@treskal.com>,
+	Alex Chiang <achiang@hp.com>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 12 23:57:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ng4Qs-0007RS-D0
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 23:56:18 +0100
+	id 1Ng4Rk-00084n-SZ
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 23:57:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753816Ab0BLW4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 17:56:12 -0500
-Received: from mail-yw0-f179.google.com ([209.85.211.179]:48687 "EHLO
-	mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751403Ab0BLW4I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 17:56:08 -0500
-Received: by ywh9 with SMTP id 9so2979096ywh.19
-        for <git@vger.kernel.org>; Fri, 12 Feb 2010 14:56:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=/T4UP0srCz1yC8TqekJ96NaA1vJxnuqa9Qc8sF3nBts=;
-        b=YgDjZGIC3Xsi66lSr/oR0E6AUCWpnTsWtCLRBnyXGWy+dmjo3JSvDgil+DpAUbaUXX
-         lkc95+GKMPjnQAQTMRPk3AQFKHIIRy5X6JZ/Yh+jSfjYoR//jm4xovVHkNqRh82FOT0i
-         E4UeIkuXFTtRzA3alt6vxofYDfKOIemzOoe1A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=lwF1EGUPD/K5ZCw42EkFJLZDafHJx7fGfTKpaid/mN3TJewU8J3Bmm74iZ4jvPRhst
-         MUCF6nPn9pDn0boMdtAICEe7OBMUxXtddrzqVBnemu4jRGcoDVE8mtRS9KB9F1sapxCS
-         k/QYz2VfJ2ZAb0XJW4ljb8rWmHvUa51im4k8w=
-Received: by 10.150.120.42 with SMTP id s42mr3324839ybc.91.1266015366127; Fri, 
-	12 Feb 2010 14:56:06 -0800 (PST)
-In-Reply-To: <op.u71cw50km02fvl@cybershadow.mshome.net>
+	id S1754143Ab0BLW5I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Feb 2010 17:57:08 -0500
+Received: from c60.cesmail.net ([216.154.195.49]:38892 "EHLO c60.cesmail.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751963Ab0BLW5D (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 17:57:03 -0500
+Received: from unknown (HELO smtprelay1.cesmail.net) ([192.168.1.111])
+  by c60.cesmail.net with ESMTP; 12 Feb 2010 17:57:03 -0500
+Received: from [192.168.0.22] (unknown [72.92.88.10])
+	by smtprelay1.cesmail.net (Postfix) with ESMTPSA id 79DE334C69;
+	Fri, 12 Feb 2010 17:56:56 -0500 (EST)
+In-Reply-To: <20100212161150.12036.62592.stgit@pc1117.cambridge.arm.com>
+X-Mailer: Evolution 2.26.3 (2.26.3-1.fc11) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139763>
 
-2010/2/12 Vladimir Panteleev <thecybershadow@gmail.com>:
-> You have to agree, being able to edit commit messages in a controlled
-> (logged/versioned) fashion is pretty useful. Aside mundane corrections such
-> as typos or undocumented changes, it makes it possible to document bugs and
-> other unintended changes in the commit that they were introduced. This is
-> possible in centralized VCSes and is implemented in Subversion (controlled
-> by a server-side hook).
+On Fri, 2010-02-12 at 16:11 +0000, Catalin Marinas wrote:
+> The original implementation was asking for the SMTP password on every
+> patch sent. This patch only asks the password once before sending or
+> even editing the cover message and patches.
 
-It sounds like you want to read about a new feature called git-notes:
-http://www.kernel.org/pub/software/scm/git/docs/git-notes.html
+I don't have time to investigate at the moment, but "make test" fails i=
+n
+t1900-mail.sh on the "proposed" branch, which includes this patch:
 
-Have fun,
+*** t1900-mail.sh ***
+*   ok 1: Initialize the StGIT repository
+*   ok 2: Put all the patches in an mbox
+*   ok 3: Import the mbox and compare
+* FAIL 4: Put all the patches in an mbox with patch attachments
+        stg mail --to=3D"Inge Str=C3=83=C2=B6m <inge@example.com>" -a -=
+m \
+               -t ../../templates/mailattch.tmpl > mbox1
+* FAIL 5: Import the mbox containing patch attachments and compare
 
-Avery
+            t1=3D$(git cat-file -p $(stg id) | grep ^tree)
+            stg pop -a &&
+            stg import -M mbox1 &&
+            t2=3D$(git cat-file -p $(stg id) | grep ^tree) &&
+            [ "$t1" =3D "$t2" ]
+           =20
+* FAIL 6: Check the To:, Cc: and Bcc: headers
+
+            stg mail --to=3Da@a --cc=3D"b@b, c@c" --bcc=3Dd@d $(stg top=
+) -m \
+                -t ../../templates/patchmail.tmpl > mbox &&
+            test "$(cat mbox | grep -e "^To:")" =3D "To: a@a" &&
+            test "$(cat mbox | grep -e "^Cc:")" =3D "Cc: b@b, c@c" &&
+            test "$(cat mbox | grep -e "^Bcc:")" =3D "Bcc: d@d"
+           =20
+* FAIL 7: Check the --auto option
+
+            stg edit --sign &&
+            stg mail --to=3Da@a --cc=3D"b@b, c@c" --bcc=3Dd@d --auto $(=
+stg top) -m \
+                -t ../../templates/patchmail.tmpl > mbox &&
+            test "$(cat mbox | grep -e "^To:")" =3D "To: a@a" &&
+            test "$(cat mbox | grep -e "^Cc:")" =3D \
+                "Cc: C O Mitter <committer@example.com>, b@b, c@c" &&
+            test "$(cat mbox | grep -e "^Bcc:")" =3D "Bcc: d@d"
+           =20
+* FAIL 8: Check the e-mail address duplicates
+
+            stg mail --to=3D"a@a, b b <b@b>" --cc=3D"b@b, c@c" \
+                --bcc=3D"c@c, d@d, committer@example.com" --auto $(stg =
+top) -m \
+                -t ../../templates/patchmail.tmpl > mbox &&
+            test "$(cat mbox | grep -e "^To:")" =3D "To: b b <b@b>, a@a=
+" &&
+            test "$(cat mbox | grep -e "^Cc:")" =3D "Cc: c@c" &&
+            test "$(cat mbox | grep -e "^Bcc:")" =3D "Bcc: committer@ex=
+ample.com, d@d"
+           =20
+* failed 5 among 8 test(s)
+make[1]: *** [t1900-mail.sh] Error 1
+make[1]: Leaving directory `/home/proski/src/stgit/t'
+make: *** [test] Error 2
+
+--=20
+Regards,
+Pavel Roskin
