@@ -1,73 +1,40 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Separate default push/pull?
-Date: Thu, 11 Feb 2010 21:57:54 -0800
-Message-ID: <7vvde3dmhp.fsf@alter.siamese.dyndns.org>
-References: <m2zl3fg26j.fsf@boostpro.com>
- <a038bef51002111057l382ed55fy6b4042d1115a830c@mail.gmail.com>
- <20100212001417.GC21930@coredump.intra.peff.net>
- <7veikrl1m1.fsf@alter.siamese.dyndns.org>
- <20100212010549.GA23303@coredump.intra.peff.net>
+From: NEMI <kuzeygyllensten77@gmail.com>
+Subject: Fake Gmail
+Date: Thu, 11 Feb 2010 23:10:33 -0800 (PST)
+Message-ID: <31063f58-a930-466e-8a62-cb1356fb0eae@o3g2000yqb.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chris Packham <judge.packham@gmail.com>,
-	David Abrahams <dave@boostpro.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 12 07:00:20 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 12 08:52:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfoZe-00014s-Hl
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 07:00:18 +0100
+	id 1NfqK3-00022L-1W
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 08:52:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751394Ab0BLF6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 00:58:10 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54149 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750805Ab0BLF6J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 00:58:09 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CD58B99C33;
-	Fri, 12 Feb 2010 00:58:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4r7OxNsbToHKmk60E6Sv/ozYqeU=; b=qu0wgW
-	y5Ss5bEF4Y7CzNRhOAJoaQC8EAFyKrQ4Zp7RgiBixmPsDCGbAJWkBjvJPq5ZcK9K
-	auTBicpCGc8zG+Z2orWImHGLijEBLtDxlH0a6tlw1BrpTUivI5ifdnG7qpohbaEh
-	8r/azh7MvwEjntoFBjz4WEH2z3si9duTb4q9k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MOpL7lJjYIUOqx07QDApn0a3DDrYHVKf
-	mEHirdMmytIu8Kvt0hSarm9ody6Y610rhkZXqBwaFAh5SYRGyVDh2smkxpzVcvPu
-	iZQqIj5VcG1+EQA0sctj0cvI8CTlCPt0kv7jDSLna8OL7YmLgyylKOIH28oishoc
-	CJW/Wtf7p/U=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8BFC599C2F;
-	Fri, 12 Feb 2010 00:58:01 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A866399C2E; Fri, 12 Feb
- 2010 00:57:56 -0500 (EST)
-In-Reply-To: <20100212010549.GA23303@coredump.intra.peff.net> (Jeff King's
- message of "Thu\, 11 Feb 2010 20\:05\:49 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9409E692-179B-11DF-A3C3-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752157Ab0BLHwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2010 02:52:10 -0500
+Received: from mail-yx0-f161.google.com ([209.85.210.161]:61723 "EHLO
+	mail-yx0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752067Ab0BLHwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 02:52:08 -0500
+X-Greylist: delayed 2494 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Feb 2010 02:52:08 EST
+Received: by yxe33 with SMTP id 33so4654131yxe.16
+        for <git@vger.kernel.org>; Thu, 11 Feb 2010 23:52:07 -0800 (PST)
+Received: by 10.150.172.3 with SMTP id u3mr53941ybe.30.1265958633311; Thu, 11 
+	Feb 2010 23:10:33 -0800 (PST)
+X-IP: 88.176.216.7
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET 
+	CLR 2.0.50727),gzip(gfe),gzip(gfe)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139659>
 
-Jeff King <peff@peff.net> writes:
-
-> In a distributed setup, I don't think it is that uncommon to not want to
-> push to the place you pull from. You are generally pulling and building
-> on somebody else's work, so if there is no central repo, you will be
-> pushing to somewhere that is not where you pulled it.
-
-You are probably right.
-
-It still feels funny to see "git pull" and "git push" goes to different
-places, but as long as that is what the user explicitly configures, that's
-fine.
+Have You seen? I just find step-by-step tutorial how to login gmail
+account using ANY username!
+http://tmsurl.com/ab
