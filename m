@@ -1,105 +1,81 @@
 From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Solve continuous integration (pending head / commit queue) 
-	problem using git
-Date: Fri, 12 Feb 2010 12:42:44 -0500
-Message-ID: <32541b131002120942w50a29e7cjf2c10820b3286017@mail.gmail.com>
-References: <c41cd75d1002120837t20f2a47fi41e8c67245c4284c@mail.gmail.com>
+Subject: Re: [Announce] bup 0.09: git-based backup system for really huge 
+	datasets
+Date: Fri, 12 Feb 2010 12:51:35 -0500
+Message-ID: <32541b131002120951h25368812w547e8dcbaf054fa1@mail.gmail.com>
+References: <32541b131002091448o6f809322x1d86d2d7f74a80ed@mail.gmail.com> 
+	<20100211135129.GA2988@cuci.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Jan Koprowski <jan.koprowski@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 12 18:43:20 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Fri Feb 12 18:52:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfzXz-0000fw-K4
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 18:43:19 +0100
+	id 1NfzgQ-0006Qb-Ul
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 18:52:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757365Ab0BLRnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 12:43:14 -0500
-Received: from mail-gx0-f224.google.com ([209.85.217.224]:32911 "EHLO
+	id S1756885Ab0BLRv5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Feb 2010 12:51:57 -0500
+Received: from mail-gx0-f224.google.com ([209.85.217.224]:47671 "EHLO
 	mail-gx0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755059Ab0BLRnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 12:43:13 -0500
-Received: by gxk24 with SMTP id 24so2629776gxk.1
-        for <git@vger.kernel.org>; Fri, 12 Feb 2010 09:43:12 -0800 (PST)
+	with ESMTP id S1755059Ab0BLRv4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Feb 2010 12:51:56 -0500
+Received: by gxk24 with SMTP id 24so2641848gxk.1
+        for <git@vger.kernel.org>; Fri, 12 Feb 2010 09:51:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=YYg3+eXnvImf2DFWnl4BDhv5IoakHncS1laH/eS58J4=;
-        b=NMCKGADeedheLAqcZmcki61tFaKnTt2tduVJgxPkr/TPaD5Z+ziV5PlLz9iT1EJrfX
-         ZGnH+dRIy8CtsyPYhit3Lp/SNs7kdZcJCx+Go1rhRzygx92NT7HsCx60tRddINZ7VdeA
-         247J+pbvWMAbhDDCfN0EusivdRgvr5SkHv+i8=
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Bq3fwu7jgV2rNWOvHx+9TDYGQS4+celwZdDSawJycXQ=;
+        b=q+IGnveMlE0S/XQH/NY2ybusTE3+7FOpQpCAyIT5D6VaqDZ4+Jsvw2Me65f92HleXC
+         jwVhr8j6HlXW6WZSkkLaaFJ62QFmka12fI4azYTtOURsK2RoSjAOXIH58YOi+ztNBXt7
+         nSCZX7JnK26SwbyDkGCQ/SAkb0Fm7o4sNQoE0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=LcLkyhdi/VqCBPLyOoF7+I0AgXB2IhS7hTG/iIa+F30qIRccl12urZwciLw3MEjk+r
-         7zcFRKwXvR4dvSkpAfqhDnro90UaASLRPVkEAKP6HreioWcPQ5TVTzl47SpwcfvXRhMz
-         cnrBsuo1JPj/WyAwjAlLpfbOi/Jgluyy5iRfg=
-Received: by 10.150.120.42 with SMTP id s42mr2784129ybc.91.1265996592332; Fri, 
-	12 Feb 2010 09:43:12 -0800 (PST)
-In-Reply-To: <c41cd75d1002120837t20f2a47fi41e8c67245c4284c@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        b=KWKpYQMY+DYoaawaMsiOCfvrkvv6KcfxfAR4sPV9jnJTDLg6/pQv4mm1h+CArYGRZd
+         5yPQT+HaEXVQcDjw0J5mC2AlMzpSK2Fq5zP5ts2UWJKm1EQZHw6SdSPV76ND3VbyJwAD
+         kED8yHcEXag8ldr/Bq7yAa7FXLDi/1aX1r6/o=
+Received: by 10.150.56.11 with SMTP id e11mr2788833yba.212.1265997115388; Fri, 
+	12 Feb 2010 09:51:55 -0800 (PST)
+In-Reply-To: <20100211135129.GA2988@cuci.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139732>
 
-On Fri, Feb 12, 2010 at 11:37 AM, Jan Koprowski <jan.koprowski@gmail.com> wrote:
-> Now. My idea. There is some revision tagged as "stable". *Clone* and
-> *pull* operations is somehow "overloaded" from server side and always!
-> return last revision tagged as stable. After compiling external tool
-> just move tag to another revision which pass all tests. Of course
-> there is some additional parameter (for example --last or --unstable)
-> which can clone fine way of repository.
+On Thu, Feb 11, 2010 at 8:51 AM, Stephen R. van den Berg <srb@cuci.nl> =
+wrote:
+> Avery Pennarun wrote:
+>>bup is a file backup tool based on the git packfile format. =A0If you=
+'re
+>>interested in git, you might find bup interesting because:
 >
-> Two questions.
-> 1) Maybe I try to invent the wheel again. Is there any way to take the
-> effect without overloading standard git behaviours.
-> 2) If not how overload git behaviors on git "server side" repo?
+> Interesting concept. =A0It has some killer features which make it a g=
+ood
+> competitor to any of the existing solutions.
+> The only obvious thing missing for unattended backup-operation is a w=
+ay
+> to purge specific or old backups.
 
-In general, code that lies to you about what's the most revision is
-evil.  Sometimes you *do* want to fetch that revision it's lying to
-you and saying doesn't exist, precisely because you'd like to help fix
-it before integration.
+Thanks.  Oddly enough, pruning of old backups hasn't been a really
+high priority for me (or apparently any of the other users) because
+chunking-based deduplication is so efficient that my backup disk
+hasn't filled up yet :)  But it's clear that this will need to be
+added eventually.
 
-What you really want is:
-
-- nobody can push to the "integration branch" except the "integration manager"
-
-- the "integration manager" should be a computer program, so that you
-can have "continuous integration"
-
-This isn't actually that hard.  Give each user their own repository;
-no user can write to any other user's repository.  (This is the
-default setup on github.com, for example.)  Alternatively, just tell
-people to never, ever push to the master branch by themselves.  People
-are easily capable of following rules like that unless they're
-actively trying to screw you.
-
-Then set up something like gitbuilder
-(http://github.com/apenwarr/gitbuilder) (Full disclosure: I wrote it)
-to build *all* the branches from *all* the users.  This sounds like it
-would create exponential work for the build machine, but it doesn't,
-since most users will have mostly the same commits anyway.
-
-When gitbuilder tags a particular commit as having built and passed
-all tests, then it becomes a candidate for merging into the
-integration branch.  Write a little script that goes through candidate
-branches, checks their gitbuilder status, and if they've passed,
-pushes them into the integration branch.  The push will only succeed
-if the integration branch can be fast-forwarded to match the branch
-you're trying to push; if you can't, it'll be rejected, which is what
-you want, since merging (even conflict-free merging) might break
-tests.
-
-That mechanism works pretty well at my company, with one exception: we
-didn't bother with an automatic tool that merges into master.  We
-prefer to have a release manager do that.
+Unfortunately git's normal pruning and gc stuff is inapplicable since
+it dies horribly when faced with hundreds of gigabytes of data.
+That's to be expected, but it means I can't just cheat by running 'git
+gc' and hoping for magic.
 
 Have fun,
 
