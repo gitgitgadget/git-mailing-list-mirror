@@ -1,72 +1,81 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Individual file snapshots
-Date: Fri, 12 Feb 2010 17:32:15 -0500
-Message-ID: <C022F034-F60E-4E89-A174-DC0F53ADEC19@silverinsanity.com>
-References: <ron1-CD3223.04030512022010@news.gmane.org> <4B75BD06.1010802@lsrfire.ath.cx> <ron1-519083.13253112022010@news.gmane.org> <12B5BDAB-DD9C-4CED-9489-0773BF577DF3@silverinsanity.com> <ron1-62D136.13570812022010@news.gmane.org>
-Mime-Version: 1.0 (Apple Message framework v1077)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Ron Garret <ron1@flownet.com>
-X-From: git-owner@vger.kernel.org Fri Feb 12 23:32:26 2010
+From: "Vladimir Panteleev" <thecybershadow@gmail.com>
+Subject: Commit annotations (editable commit messages)
+Date: Sat, 13 Feb 2010 00:32:55 +0200
+Message-ID: <op.u71cw50km02fvl@cybershadow.mshome.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=koi8-r; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 12 23:35:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ng43l-0006ZO-Nh
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 23:32:26 +0100
+	id 1Ng46W-0000Dk-EN
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 23:35:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755951Ab0BLWcU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 17:32:20 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:34012 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755336Ab0BLWcU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Feb 2010 17:32:20 -0500
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 55E8F1FFC43B; Fri, 12 Feb 2010 22:32:12 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.9 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.5.227] (unknown [64.134.71.141])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id 25BC61FFC1CE;
-	Fri, 12 Feb 2010 22:32:10 +0000 (UTC)
-In-Reply-To: <ron1-62D136.13570812022010@news.gmane.org>
-X-Mailer: Apple Mail (2.1077)
+	id S1755964Ab0BLWfJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2010 17:35:09 -0500
+Received: from lo.gmane.org ([80.91.229.12]:50683 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755863Ab0BLWfH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 17:35:07 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Ng46M-00006Z-6f
+	for git@vger.kernel.org; Fri, 12 Feb 2010 23:35:06 +0100
+Received: from 89.28.117.31 ([89.28.117.31])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Feb 2010 23:35:06 +0100
+Received: from thecybershadow by 89.28.117.31 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Feb 2010 23:35:06 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 89.28.117.31
+User-Agent: Opera Mail/10.50 (Win32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139758>
 
+You have to agree, being able to edit commit messages in a controlled  
+(logged/versioned) fashion is pretty useful. Aside mundane corrections  
+such as typos or undocumented changes, it makes it possible to document  
+bugs and other unintended changes in the commit that they were introduced.  
+This is possible in centralized VCSes and is implemented in Subversion  
+(controlled by a server-side hook).
 
-On Feb 12, 2010, at 4:57 PM, Ron Garret wrote:
+When I presented somewhere the idea of migrating from SVN to Git, I got an  
+opinion that the inability to edit commit messages (without rewriting  
+history) would be a show-stopper, so I began to wonder how would it be  
+possible to implement versioned editable commit messages (or commit  
+"annotations") in Git:
+1) the repository has a separate, special branch that only contains text  
+files named by the SHA-1 of the commit they are describing
+2) commit annotations are created/edited by creating/editing the  
+respective text files, either manually or using some utilities (e.g. "git  
+edit-annotation <SHA-1>" could check out the file from the branch, open up  
+an editor and commit it back)
+3) setting up "git push/pull" to also push/pull the annotations branch
+4) "git log" and related commands would also show the contents of the  
+respective text files, if they exist
 
-> That would require a separate branch for every snapshot, no?  I want 
-> this to be lightweight.  It's not so much the creation of a zillion 
-> branches that bothers me, but having to come up with a new name every 
-> time would be a real hassle.
+The first three seem trivial... I'm not sure how to approach 4) though.  
+Would it be possible to hack git to add a commit message output  
+preprocessor hook OSLT?
 
-Ahhhh...  You could just use the stash and use some kind of recognizable message: git stash Failed: fooed the bar badly
+There's also the problem with rebasing. Aside hacks with copies or  
+symlinks in the annotations branch, what would be the best way to have an  
+annotation follow commits after they're rebased (and have a different  
+SHA-1)? Perhaps tie them to some property unique to the commit  
+(timestamp?)? Depending on how this idea (and git rebase) is implemented,  
+it could also just copy over the then-current version of the annotation  
+into the new commit message when rebasing the commit.
 
-Or you could make a stash-like snapshot branch?  The following sequence does something like that:
-
-  git add .
-  git commit -m "Ooops"
-  git branch -f
-  git reset --hard HEAD^
-
-After a few failures like that, you can look over all the snapshots with
-
-  git log -g snapshots
-
-By default they will be kept around for 30 days, or the current setting of gc.reflogexpireunreachable.  If you want to keep a snapshot around for more than 30 days, you probably want to give it a real branch anyway.
-
-You could either create a script that uses the above commands or a patch that makes git-stash take a --ref= argument and then set:
-
-  alias.snapshot = stash --ref=refs/snapshots
-
-~~ Brian
+-- 
+Best regards,
+  Vladimir                            mailto:thecybershadow@gmail.com
