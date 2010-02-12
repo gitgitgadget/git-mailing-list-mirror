@@ -1,69 +1,86 @@
-From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
-Subject: Re: [PATCH 2/4] git-mailsplit: add `mailsplit.keepcr`
-	configuration variable.
-Date: Fri, 12 Feb 2010 23:04:25 +0100
-Message-ID: <20100212220425.GE32018@pille.home>
-References: <1265923579-24900-1-git-send-email-stefan.hahn@s-hahn.de> <1265923579-24900-3-git-send-email-stefan.hahn@s-hahn.de> <7vhbpnqrxr.fsf@alter.siamese.dyndns.org> <20100212210336.GB32018@pille.home> <7vr5oqnmzr.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Individual file snapshots
+Date: Fri, 12 Feb 2010 14:14:20 -0800
+Message-ID: <7v1vgqksoz.fsf@alter.siamese.dyndns.org>
+References: <ron1-CD3223.04030512022010@news.gmane.org>
+ <4B75BD06.1010802@lsrfire.ath.cx> <ron1-519083.13253112022010@news.gmane.org>
+ <12B5BDAB-DD9C-4CED-9489-0773BF577DF3@silverinsanity.com>
+ <ron1-62D136.13570812022010@news.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 12 23:06:02 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ron Garret <ron1@flownet.com>
+X-From: git-owner@vger.kernel.org Fri Feb 12 23:14:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ng3cq-0002Gt-9d
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 23:04:36 +0100
+	id 1Ng3mW-0002FZ-Us
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 23:14:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755498Ab0BLWEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 17:04:30 -0500
-Received: from moutng.kundenserver.de ([212.227.126.186]:61379 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754176Ab0BLWE3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 17:04:29 -0500
-Received: from pille.home (port-92-203-117-198.dynamic.qsc.de [92.203.117.198])
-	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
-	id 0LpzzH-1O9srt2w35-00f2hJ; Fri, 12 Feb 2010 23:04:27 +0100
-Received: from pille.home (localhost [127.0.0.1])
-	by pille.home (8.14.3/8.14.3/Debian-5) with ESMTP id o1CM4Pdf014840;
-	Fri, 12 Feb 2010 23:04:25 +0100
-Received: (from hs@localhost)
-	by pille.home (8.14.3/8.14.3/Submit) id o1CM4Pc0014839;
-	Fri, 12 Feb 2010 23:04:25 +0100
-X-Authentication-Warning: pille.home: hs set sender to stefan.hahn@s-hahn.de using -f
-Content-Disposition: inline
-In-Reply-To: <7vr5oqnmzr.fsf@alter.siamese.dyndns.org>
-X-Mailer: Mutt 1.5.18 http://www.mutt.org/
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Provags-ID: V01U2FsdGVkX1/0SqBHJvsrRtfbe+NSr9KkDcss6FX6dpv3iYp
- KTovJ6oV7dTUeR2UZ1LxXpNSvbr4hHbjDzzIU90Zy5Kgjc0xcm
- 0m8J+9FD36QL8PG3bENNg==
+	id S1755707Ab0BLWOb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2010 17:14:31 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45841 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755016Ab0BLWOb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 17:14:31 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C8EE6978F6;
+	Fri, 12 Feb 2010 17:14:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gOA8XLL71vqQmWUg2GT83u/rW2w=; b=SLkkDn
+	VEZl3FIpmJjj6QHfbkPBebqFoutNU9HjJ6kudk5k8WHn2WQF2pA0yD6JkBit2E9M
+	hoUqUBMlhS0ZmC8QuyrAaCJQUqu9D2mPGRHyZjZgDaNtRqUgtEjZydU+aT0dW+yR
+	j5AbjYYi1hq1GYkO3XJgGGmuhnf/AmeWu5rN0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OVrzyRGsisuzOl4TnPqHrygHbzk2n0Y/
+	ctODTY1d6kwjazINMHAYm8/TqYTLZyuJvlRGxCyS8cJwkWXxe9i06w6S3KEyYAOo
+	/awViW7HVn4A/lAJkcaEwIHRzT+ZtVUMGmVSzWxRSYCMZrwIMZ+xkugbJS8cGWdO
+	ZbShJpA4O5I=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A071B978F0;
+	Fri, 12 Feb 2010 17:14:25 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA346978E8; Fri, 12 Feb
+ 2010 17:14:22 -0500 (EST)
+In-Reply-To: <ron1-62D136.13570812022010@news.gmane.org> (Ron Garret's
+ message of "Fri\, 12 Feb 2010 13\:57\:08 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: FADF36BE-1823-11DF-AE7F-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139756>
 
-Also sprach Junio C Hamano am Fri, 12 Feb 2010 at 13:49:12 -0800:
-> Regardless of where the configuration goes between am and mailsplit, you
-> need to think about the interaction between rebase and am.  You might set
-> the configuration for am---should that automatically and always kick in
-> when you run rebase?  Do we need some way to override it per invocation
-> when running rebase?
+Ron Garret <ron1@flownet.com> writes:
 
-I did not have had any problem with git-rebase in mixed line ending
-environment. If used via git-rebase, git-mailsplit should called
-with --keep-cr set, independent from configuration for this.
+>> Or if a series of commits seem to have gone bad:
+>> 
+>> git commit -a -m "Well, that didn't work."
+>> git branch failed-experiment
+>> git reset --hard origin/master # or other good state
+>> 
+>> You can of course replace the -a to commit with the needed "git add <file>" 
+>> commands and leave off the -m to leave real messages about why it went bad 
+>> using $EDITOR.
+>
+> That would require a separate branch for every snapshot, no?  I want 
+> this to be lightweight.  It's not so much the creation of a zillion 
+> branches that bothers me, but having to come up with a new name every 
+> time would be a real hassle.
 
-Stefan
+Perhaps "stash"?
 
--- 
-Stefan-W. Hahn                          It is easy to make things.
-/ mailto:stefan.hahn@s-hahn.de /        It is hard to make things simple.			
+Usually stash is used to store "diff between stash@{N}^1 and stash@{N}",
+and "stash pop" or "stash apply" are geared toward that usage.  But you
+can use it as a way to keep snapshots.  You would be interacting with
+the stash differently, though.  E.g.
 
-Please note that according to the German law on data retention,
-information on every electronic information exchange with me is
-retained for a period of six months.
-Bundesgesetzblatt:
-http://www.bgblportal.de/BGBL/bgbl1f/bgbl107s3198.pdf
+	git diff stash@{4}
+	git diff origin/master stash@{2}
+	git checkout stash -- Makefile
