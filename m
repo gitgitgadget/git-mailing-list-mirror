@@ -1,72 +1,68 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: GSoC 2010
-Date: Fri, 12 Feb 2010 17:43:10 +0100
-Message-ID: <fabb9a1e1002120843j493af52aq603ea4eb80d7294d@mail.gmail.com>
-References: <fabb9a1e1002101223o6a00f7eavb84567c1119c8ebc@mail.gmail.com> 
-	<alpine.LNX.2.00.1002121111120.14365@iabervon.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: web-based client for Git, was Re: GSoC 2010
+Date: Fri, 12 Feb 2010 17:45:07 +0100
+Message-ID: <20100212164507.GM4159@machine.or.cz>
+References: <fabb9a1e1002101223o6a00f7eavb84567c1119c8ebc@mail.gmail.com>
+ <20100211214833.GU9553@machine.or.cz>
+ <201002120502.43565.chriscool@tuxfamily.org>
+ <e72faaa81002120222p19db9c75u737e2615c14930b1@mail.gmail.com>
+ <e72faaa81002120226y5e4b1c28tbaf6a7dccb9634dc@mail.gmail.com>
+ <alpine.DEB.1.00.1002121149470.20986@pacific.mpi-cbg.de>
+ <20100212113538.GV9553@machine.or.cz>
+ <e72faaa81002120355t4c8596d0q66da4aeb4cce3a94@mail.gmail.com>
+ <20100212121844.GK4159@machine.or.cz>
+ <d411cc4a1002120714p49d26594ubf279d03295d24bc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Wong <normalperson@yhbt.net>, Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Git List <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Feb 12 17:43:43 2010
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 12 17:45:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NfycF-0000V3-T1
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 17:43:40 +0100
+	id 1Nfydr-0001kS-IT
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Feb 2010 17:45:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757248Ab0BLQne (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 11:43:34 -0500
-Received: from mail-yx0-f196.google.com ([209.85.210.196]:51224 "EHLO
-	mail-yx0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757063Ab0BLQnd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 11:43:33 -0500
-Received: by yxe34 with SMTP id 34so727840yxe.15
-        for <git@vger.kernel.org>; Fri, 12 Feb 2010 08:43:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=KOpW/zG7UaeidXwXOx3BauvjXBiEGHe9XbuG1EX69W8=;
-        b=E0gxqBxdSVK3c2FYuSRrY/odsFme5D8boHIFV56P4Zi763QiRq6vghE+Rd6pLOQfwb
-         T01yGhK3QCpu0SfQLG/7XLcAnXe3ac2qAwcCen/mhUvSXYismRNTuRVFx9u6cLPyWKY0
-         izK+Tcx2xbR05F/05q1HFHTZkKS+LU1B7KefY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=DeTDhIIavF+tZN4H3LBnhILgUejJhxHXco3z/QpoEuCGW1kpLblzYxYTQb7WDwsSfu
-         o9NXQtQ/FAEkOY9IGL5gqxI9WWHuPAG8bX+0IRWAmofv/LRKb0Ea3EyzJP5vlrbXgb31
-         S0oyVtamKNqsfjy/aXG3lvclHgkDb1X2jzwxw=
-Received: by 10.142.6.24 with SMTP id 24mr1065415wff.294.1265993010143; Fri, 
-	12 Feb 2010 08:43:30 -0800 (PST)
-In-Reply-To: <alpine.LNX.2.00.1002121111120.14365@iabervon.org>
+	id S1757254Ab0BLQpL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Feb 2010 11:45:11 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:59724 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756930Ab0BLQpK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 11:45:10 -0500
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 4AF6F125A0F7; Fri, 12 Feb 2010 17:45:07 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <d411cc4a1002120714p49d26594ubf279d03295d24bc@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139725>
 
-Heya,
+On Fri, Feb 12, 2010 at 07:14:58AM -0800, Scott Chacon wrote:
+> Hey,
+>=20
+> On Fri, Feb 12, 2010 at 4:18 AM, Petr Baudis <pasky@suse.cz> wrote:
+> > =A0P.S.: I could volunteer to mentor such a project, if no more act=
+ive
+> > Git hacker shows interest. Perhaps Jakub Narebski might be interest=
+ed?
+> >
+>=20
+> I would also be happy to help with this project - it sounds very
+> interesting and Python/web-dev stuff is something I can actually help
+> with.
 
-On Fri, Feb 12, 2010 at 17:19, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> I've noticed that
-> GSoC students are often shy about asking non-mentor developers to review
-> their designs, and I'd like to review this before it's all written and
-> under the end-of-summer crunch.
+Ok, I don't actually know too much about web-dev in Python (actually
+fairly little ;-), so you would certainly be better choice!
 
-Since I'm (planning on) mentoring this student, I don't think you'll
-have to worry about that too much. My experience with my own gsoc was
-that the more exposure your work gets on the list the better, so the
-student should send weekly 'state of the code' (including the code as
-a patch) mails.
-
--- 
-Cheers,
-
-Sverre Rabbelier
+--=20
+				Petr "Pasky" Baudis
+A great many people think they are thinking when they are merely
+rearranging their prejudices. -- William James
