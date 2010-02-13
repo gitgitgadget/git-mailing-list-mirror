@@ -1,13 +1,14 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv13 23/30] builtin-notes: Add --message/--file aliases for -m/-F
- options
-Date: Sat, 13 Feb 2010 22:28:31 +0100
-Message-ID: <1266096518-2104-24-git-send-email-johan@herland.net>
+Subject: [PATCHv13 21/30] Documentation: Generalize git-notes docs to 'objects'
+ instead of 'commits'
+Date: Sat, 13 Feb 2010 22:28:29 +0100
+Message-ID: <1266096518-2104-22-git-send-email-johan@herland.net>
 References: <1266096518-2104-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, johan@herland.net
+Cc: git@vger.kernel.org, johan@herland.net,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
 To: gitster@pobox.com
 X-From: git-owner@vger.kernel.org Sat Feb 13 22:32:00 2010
 Return-path: <git-owner@vger.kernel.org>
@@ -15,24 +16,24 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgPap-0002mJ-Bl
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 22:31:59 +0100
+	id 1NgPaq-0002mJ-F2
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 22:32:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758158Ab0BMVat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Feb 2010 16:30:49 -0500
+	id S1758169Ab0BMVbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2010 16:31:08 -0500
 Received: from smtp.getmail.no ([84.208.15.66]:51460 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758117Ab0BMV3y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2010 16:29:54 -0500
+	id S1758109Ab0BMV3q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2010 16:29:46 -0500
 Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KXS00EGJUDOVE80@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Sat, 13 Feb 2010 22:29:48 +0100 (MET)
+ with ESMTP id <0KXS00EGDUDKVE80@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 13 Feb 2010 22:29:44 +0100 (MET)
 Received: from localhost.localdomain ([84.215.68.234])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KXS00ADYUC2BL00@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Sat, 13 Feb 2010 22:29:48 +0100 (MET)
+ git@vger.kernel.org; Sat, 13 Feb 2010 22:29:44 +0100 (MET)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2010.2.13.211545
 X-Mailer: git-send-email 1.7.0.rc1.141.gd3fd
@@ -41,47 +42,97 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139857>
 
+Notes can annotate arbitrary objects (not only commits), but this is not
+reflected in the current documentation.
+
+This patch rewrites the git-notes documentation to talk about 'objects'
+instead of 'commits'. However, the discussion on commit notes and how
+they are displayed by 'git log' is largely preserved.
+
+Finally, I add myself to the Author/Documentation credits, since most of
+the lines in the git-notes code and docs are blamed on me.
+
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- Documentation/git-notes.txt |    2 ++
- builtin-notes.c             |    4 ++--
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ Documentation/git-notes.txt |   35 ++++++++++++++++++++---------------
+ 1 files changed, 20 insertions(+), 15 deletions(-)
 
 diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index 4d29d5f..8969f6f 100644
+index 3973f90..84db2a4 100644
 --- a/Documentation/git-notes.txt
 +++ b/Documentation/git-notes.txt
-@@ -58,11 +58,13 @@ prune::
- OPTIONS
- -------
- -m <msg>::
-+--message=<msg>::
- 	Use the given note message (instead of prompting).
- 	If multiple `-m` options are given, their values
- 	are concatenated as separate paragraphs.
+@@ -3,37 +3,41 @@ git-notes(1)
  
- -F <file>::
-+--file=<file>::
- 	Take the note message from the given file.  Use '-' to
- 	read the note message from the standard input.
+ NAME
+ ----
+-git-notes - Add/inspect commit notes
++git-notes - Add/inspect object notes
  
-diff --git a/builtin-notes.c b/builtin-notes.c
-index b808534..ec959bc 100644
---- a/builtin-notes.c
-+++ b/builtin-notes.c
-@@ -217,9 +217,9 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 	struct msg_arg msg = { 0, STRBUF_INIT };
- 	struct option options[] = {
- 		OPT_GROUP("Notes edit options"),
--		OPT_CALLBACK('m', NULL, &msg, "msg",
-+		OPT_CALLBACK('m', "message", &msg, "msg",
- 			     "note contents as a string", parse_msg_arg),
--		OPT_FILENAME('F', NULL, &msgfile, "note contents in a file"),
-+		OPT_FILENAME('F', "file", &msgfile, "note contents in a file"),
- 		OPT_END()
- 	};
+ SYNOPSIS
+ --------
+ [verse]
+-'git notes' (edit [-F <file> | -m <msg>] | show | remove | prune) [commit]
++'git notes' (edit [-F <file> | -m <msg>] | show | remove | prune) [object]
  
+ DESCRIPTION
+ -----------
+-This command allows you to add/remove notes to/from commit messages,
+-without changing the commit.  To discern these notes from the message
+-stored in the commit object, the notes are indented like the message,
+-after an unindented line saying "Notes:".
++This command allows you to add/remove notes to/from objects, without
++changing the objects themselves.
+ 
+-To disable commit notes, you have to set the config variable
+-core.notesRef to the empty string.  Alternatively, you can set it
+-to a different ref, something like "refs/notes/bugzilla".  This setting
+-can be overridden by the environment variable "GIT_NOTES_REF".
++A typical use of notes is to extend a commit message without having
++to change the commit itself. Such commit notes can be shown by `git log`
++along with the original commit message. To discern these notes from the
++message stored in the commit object, the notes are indented like the
++message, after an unindented line saying "Notes:".
++
++To disable notes, you have to set the config variable core.notesRef to
++the empty string.  Alternatively, you can set it to a different ref,
++something like "refs/notes/bugzilla".  This setting can be overridden
++by the environment variable "GIT_NOTES_REF".
+ 
+ 
+ SUBCOMMANDS
+ -----------
+ 
+ edit::
+-	Edit the notes for a given commit (defaults to HEAD).
++	Edit the notes for a given object (defaults to HEAD).
+ 
+ show::
+-	Show the notes for a given commit (defaults to HEAD).
++	Show the notes for a given object (defaults to HEAD).
+ 
+ remove::
+-	Remove the notes for a given commit (defaults to HEAD).
++	Remove the notes for a given object (defaults to HEAD).
+ 	This is equivalent to specifying an empty note message to
+ 	the `edit` subcommand.
+ 
+@@ -54,11 +58,12 @@ OPTIONS
+ 
+ Author
+ ------
+-Written by Johannes Schindelin <johannes.schindelin@gmx.de>
++Written by Johannes Schindelin <johannes.schindelin@gmx.de> and
++Johan Herland <johan@herland.net>
+ 
+ Documentation
+ -------------
+-Documentation by Johannes Schindelin
++Documentation by Johannes Schindelin and Johan Herland
+ 
+ GIT
+ ---
 -- 
 1.7.0.rc1.141.gd3fd
