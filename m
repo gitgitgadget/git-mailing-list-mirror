@@ -1,38 +1,38 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv13 22/30] builtin-notes: Add "list" subcommand for listing note
- objects
-Date: Sat, 13 Feb 2010 22:28:30 +0100
-Message-ID: <1266096518-2104-23-git-send-email-johan@herland.net>
+Subject: [PATCHv13 19/30] Notes API: prune_notes(): Prune notes that belong to
+ non-existing objects
+Date: Sat, 13 Feb 2010 22:28:27 +0100
+Message-ID: <1266096518-2104-20-git-send-email-johan@herland.net>
 References: <1266096518-2104-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org, johan@herland.net
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Feb 13 22:30:25 2010
+X-From: git-owner@vger.kernel.org Sat Feb 13 22:30:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgPZI-0001iD-6R
+	id 1NgPZH-0001iD-LT
 	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 22:30:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758127Ab0BMV34 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Feb 2010 16:29:56 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:62509 "EHLO smtp.getmail.no"
+	id S1758116Ab0BMV3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2010 16:29:51 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:62475 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758103Ab0BMV3x (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2010 16:29:53 -0500
+	id S1758103Ab0BMV3k (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2010 16:29:40 -0500
 Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KXS00FKNUDN5490@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Sat, 13 Feb 2010 22:29:47 +0100 (MET)
+ with ESMTP id <0KXS00FKAUDF5490@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 13 Feb 2010 22:29:39 +0100 (MET)
 Received: from localhost.localdomain ([84.215.68.234])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KXS00ADYUC2BL00@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Sat, 13 Feb 2010 22:29:47 +0100 (MET)
+ git@vger.kernel.org; Sat, 13 Feb 2010 22:29:39 +0100 (MET)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2010.2.13.211545
 X-Mailer: git-send-email 1.7.0.rc1.141.gd3fd
@@ -41,192 +41,107 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139846>
 
-"git notes list" will list all note objects in the current notes ref (in the
-format "<note object> <annotated object>"). "git notes list <object>" will
-list the note object associated with the given <object>, or fail loudly if
-the given <object> has no associated notes.
+When an object is made unreachable by Git, any notes that annotate that object
+are not automagically made unreachable, since all notes are always trivially
+reachable from a notes ref. In order to remove notes for non-existing objects,
+we therefore need to add functionality for traversing the notes tree and
+explicitly removing references to notes that annotate non-reachable objects.
+Thus the notes objects themselves also become unreachable, and are removed
+by a later garbage collect.
 
-If no arguments are given to "git notes", it defaults to the "list"
-subcommand. This is for pseudo-compatibility with "git tag" and "git branch".
+prune_notes() performs this traversal (by using for_each_note() internally),
+and removes the notes in question from the notes tree.
 
-The patch includes tests verifying correct behaviour of the new subcommand.
+Note that the effect of prune_notes() is not persistent unless a subsequent
+call to write_notes_tree() is made.
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- Documentation/git-notes.txt |   13 ++++++++++++-
- builtin-notes.c             |   37 ++++++++++++++++++++++++++++++++-----
- t/t3301-notes.sh            |   32 ++++++++++++++++++++++++++++++++
- 3 files changed, 76 insertions(+), 6 deletions(-)
+ notes.c |   39 +++++++++++++++++++++++++++++++++++++++
+ notes.h |   12 ++++++++++++
+ 2 files changed, 51 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index 84db2a4..4d29d5f 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -8,7 +8,12 @@ git-notes - Add/inspect object notes
- SYNOPSIS
- --------
- [verse]
--'git notes' (edit [-F <file> | -m <msg>] | show | remove | prune) [object]
-+'git notes' [list [<object>]]
-+'git notes' edit [-F <file> | -m <msg>] [<object>]
-+'git notes' show [<object>]
-+'git notes' remove [<object>]
-+'git notes' prune
+diff --git a/notes.c b/notes.c
+index d432517..3ba3e6d 100644
+--- a/notes.c
++++ b/notes.c
+@@ -749,6 +749,29 @@ static int write_each_note(const unsigned char *object_sha1,
+ 		write_each_note_helper(d->root, note_path, mode, note_sha1);
+ }
+ 
++struct note_delete_list {
++	struct note_delete_list *next;
++	const unsigned char *sha1;
++};
 +
- 
- DESCRIPTION
- -----------
-@@ -30,6 +35,12 @@ by the environment variable "GIT_NOTES_REF".
- SUBCOMMANDS
- -----------
- 
-+list::
-+	List the notes object for a given object. If no object is
-+	given, show a list of all note objects and the objects they
-+	annotate (in the format "<note object> <annotated object>").
-+	This is the default subcommand if no subcommand is given.
-+
- edit::
- 	Edit the notes for a given object (defaults to HEAD).
- 
-diff --git a/builtin-notes.c b/builtin-notes.c
-index 48bc455..b808534 100644
---- a/builtin-notes.c
-+++ b/builtin-notes.c
-@@ -18,6 +18,7 @@
- #include "parse-options.h"
- 
- static const char * const git_notes_usage[] = {
-+	"git notes [list [<object>]]",
- 	"git notes edit [-m <msg> | -F <file>] [<object>]",
- 	"git notes show [<object>]",
- 	"git notes remove [<object>]",
-@@ -31,6 +32,14 @@ static const char note_template[] =
- 	"# Write/edit the notes for the following object:\n"
- 	"#\n";
- 
-+static int list_each_note(const unsigned char *object_sha1,
++static int prune_notes_helper(const unsigned char *object_sha1,
 +		const unsigned char *note_sha1, char *note_path,
 +		void *cb_data)
 +{
-+	printf("%s %s\n", sha1_to_hex(note_sha1), sha1_to_hex(object_sha1));
++	struct note_delete_list **l = (struct note_delete_list **) cb_data;
++	struct note_delete_list *n;
++
++	if (has_sha1_file(object_sha1))
++		return 0; /* nothing to do for this note */
++
++	/* failed to find object => prune this note */
++	n = (struct note_delete_list *) xmalloc(sizeof(*n));
++	n->next = *l;
++	n->sha1 = object_sha1;
++	*l = n;
 +	return 0;
 +}
 +
- static void write_note_data(int fd, const unsigned char *sha1)
+ int combine_notes_concatenate(unsigned char *cur_sha1,
+ 		const unsigned char *new_sha1)
  {
- 	unsigned long size;
-@@ -202,7 +211,8 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 	const char *object_ref;
- 	char logmsg[100];
+@@ -922,6 +945,22 @@ int write_notes_tree(struct notes_tree *t, unsigned char *result)
+ 	return ret;
+ }
  
--	int edit = 0, show = 0, remove = 0, prune = 0;
-+	int list = 0, edit = 0, show = 0, remove = 0, prune = 0;
-+	int given_object;
- 	const char *msgfile = NULL;
- 	struct msg_arg msg = { 0, STRBUF_INIT };
- 	struct option options[] = {
-@@ -217,7 +227,9 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, prefix, options, git_notes_usage, 0);
- 
--	if (argc && !strcmp(argv[0], "edit"))
-+	if (argc && !strcmp(argv[0], "list"))
-+		list = 1;
-+	else if (argc && !strcmp(argv[0], "edit"))
- 		edit = 1;
- 	else if (argc && !strcmp(argv[0], "show"))
- 		show = 1;
-@@ -225,8 +237,10 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 		remove = 1;
- 	else if (argc && !strcmp(argv[0], "prune"))
- 		prune = 1;
-+	else if (!argc)
-+		list = 1; /* Default to 'list' if no other subcommand given */
- 
--	if (edit + show + remove + prune != 1)
-+	if (list + edit + show + remove + prune != 1)
- 		usage_with_options(git_notes_usage, options);
- 
- 	if ((msg.given || msgfile) && !edit) {
-@@ -239,7 +253,8 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_notes_usage, options);
- 	}
- 
--	object_ref = argc == 2 ? argv[1] : "HEAD";
-+	given_object = argc == 2;
-+	object_ref = given_object ? argv[1] : "HEAD";
- 	if (argc > 2 || (prune && argc > 1)) {
- 		error("too many parameters");
- 		usage_with_options(git_notes_usage, options);
-@@ -257,9 +272,21 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 
- 	note = get_note(t, object);
- 
-+	/* list command */
++void prune_notes(struct notes_tree *t)
++{
++	struct note_delete_list *l = NULL;
 +
-+	if (list) {
-+		if (given_object) {
-+			if (note) {
-+				puts(sha1_to_hex(note));
-+				return 0;
-+			}
-+		} else
-+			return for_each_note(t, 0, list_each_note, NULL);
++	if (!t)
++		t = &default_notes_tree;
++	assert(t->initialized);
++
++	for_each_note(t, 0, prune_notes_helper, &l);
++
++	while (l) {
++		remove_note(t, l->sha1);
++		l = l->next;
 +	}
++}
 +
- 	/* show command */
+ void free_notes(struct notes_tree *t)
+ {
+ 	if (!t)
+diff --git a/notes.h b/notes.h
+index f98578f..bad03cc 100644
+--- a/notes.h
++++ b/notes.h
+@@ -162,6 +162,18 @@ int for_each_note(struct notes_tree *t, int flags, each_note_fn fn,
+ int write_notes_tree(struct notes_tree *t, unsigned char *result);
  
--	if (show && !note) {
-+	if ((list || show) && !note) {
- 		error("No note found for object %s.", sha1_to_hex(object));
- 		return 1;
- 	} else if (show) {
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index d29daac..768a1cb 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -292,6 +292,38 @@ test_expect_success 'verify note removal with "git notes remove"' '
- 	! git notes show HEAD^
- '
- 
-+cat > expect << EOF
-+c18dc024e14f08d18d14eea0d747ff692d66d6a3 1584215f1d29c65e99c6c6848626553fdd07fd75
-+c9c6af7f78bc47490dbf3e822cf2f3c24d4b9061 268048bfb8a1fb38e703baceb8ab235421bf80c5
-+EOF
+ /*
++ * Remove all notes annotating non-existing objects from the given notes tree
++ *
++ * All notes in the given notes_tree that are associated with objects that no
++ * longer exist in the database, are removed from the notes tree.
++ *
++ * IMPORTANT: The changes made by prune_notes() to the given notes_tree
++ * structure are not persistent until a subsequent call to write_notes_tree()
++ * returns zero.
++ */
++void prune_notes(struct notes_tree *t);
 +
-+test_expect_success 'list notes with "git notes list"' '
-+	git notes list > output &&
-+	test_cmp expect output
-+'
-+
-+test_expect_success 'list notes with "git notes"' '
-+	git notes > output &&
-+	test_cmp expect output
-+'
-+
-+cat > expect << EOF
-+c18dc024e14f08d18d14eea0d747ff692d66d6a3
-+EOF
-+
-+test_expect_success 'list specific note with "git notes list <object>"' '
-+	git notes list HEAD^^ > output &&
-+	test_cmp expect output
-+'
-+
-+cat > expect << EOF
-+EOF
-+
-+test_expect_success 'listing non-existing notes fails' '
-+	test_must_fail git notes list HEAD > output &&
-+	test_cmp expect output
-+'
-+
- test_expect_success 'create other note on a different notes ref (setup)' '
- 	: > a6 &&
- 	git add a6 &&
++/*
+  * Free (and de-initialize) the given notes_tree structure
+  *
+  * IMPORTANT: Changes made to the given notes_tree since the last, successful
 -- 
 1.7.0.rc1.141.gd3fd
