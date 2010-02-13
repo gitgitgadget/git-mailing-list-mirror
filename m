@@ -1,77 +1,83 @@
-From: Zygo Blaxell <zblaxell@esightcorp.com>
-Subject: Re: 'git add' corrupts repository if the working directory is
-	modified as it runs
-Date: Sat, 13 Feb 2010 17:37:33 -0500
-Message-ID: <20100213223733.GP24809@gibbs.hungrycats.org>
-References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org> <20100213121238.GA2559@progeny.tock> <20100213133951.GA14352@Knoppix> <201002131539.54142.trast@student.ethz.ch> <20100213162924.GA14623@Knoppix> <37fcd2781002131409r4166e496h9d12d961a2330914@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] git-svn: support fetch with autocrlf on
+Date: Sun, 14 Feb 2010 00:55:28 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1002140054300.20986@pacific.mpi-cbg.de>
+References: <1265997155-3592-1-git-send-email-kusmabite@gmail.com> <1265997155-3592-2-git-send-email-kusmabite@gmail.com> <20100213122532.GA31653@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 13 23:45:27 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Erik Faye-Lund <kusmabite@googlemail.com>, git@vger.kernel.org,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Feb 14 00:51:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgQjv-0003tk-DG
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 23:45:27 +0100
+	id 1NgRlL-0007Qt-N8
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Feb 2010 00:51:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757464Ab0BMWpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Feb 2010 17:45:22 -0500
-Received: from ip-70-38-54-39.static.privatedns.com ([70.38.54.39]:45562 "EHLO
-	ginevra.hungrycats.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751543Ab0BMWpV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2010 17:45:21 -0500
-X-Greylist: delayed 465 seconds by postgrey-1.27 at vger.kernel.org; Sat, 13 Feb 2010 17:45:21 EST
-X-Envelope-Mail-From: zblaxell@esightcorp.com
-X-Envelope-Mail-From: zblaxell@esightcorp.com
-X-Envelope-Mail-From: zblaxell@esightcorp.com
-X-Envelope-Mail-From: zblaxell@esightcorp.com
-X-Envelope-Mail-From: zblaxell@esightcorp.com
-Received: from gibbs.hungrycats.org (gibbs.vpn7.hungrycats.org [10.132.226.42])
-	by ginevra.hungrycats.org (Postfix) with ESMTP id 1DBCE770130;
-	Sat, 13 Feb 2010 17:37:34 -0500 (EST)
-Received: from zblaxell by gibbs.hungrycats.org with local (Exim 4.69)
-	(envelope-from <zblaxell@esightcorp.com>)
-	id 1NgQcH-0008PH-Vk; Sat, 13 Feb 2010 17:37:33 -0500
-Content-Disposition: inline
-In-Reply-To: <37fcd2781002131409r4166e496h9d12d961a2330914@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1758059Ab0BMXs4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2010 18:48:56 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51706 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753220Ab0BMXs4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2010 18:48:56 -0500
+Received: (qmail invoked by alias); 13 Feb 2010 23:48:54 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp008) with SMTP; 14 Feb 2010 00:48:54 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18BwTVn/VkBFeDGDkpeQXLhU2ColNoHCbxo34eTSb
+	aAD9Ox/C57kFEo
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20100213122532.GA31653@dcvr.yhbt.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57999999999999996
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139868>
 
-On Sun, Feb 14, 2010 at 01:09:23AM +0300, Dmitry Potapov wrote:
-> On Sat, Feb 13, 2010 at 7:29 PM, Ilari Liusvaara
-> <ilari.liusvaara@elisanet.fi> wrote:
-> > Hmm... One needs to copy the data block at time into temporary buffer
-> > and use that for feeding zlib and SHA-1. That ensures that whatever
-> > SHA-1 hashes and zlib compresses are consistent.
+Hi,
+
+On Sat, 13 Feb 2010, Eric Wong wrote:
+
+> Erik Faye-Lund <kusmabite@googlemail.com> wrote:
+> > If I enable core.autocrlf and perform a "git svn rebase" that fetches
+> > a change containing CRLFs, the git-svn meta-data gets corrupted.
+> > 
+> > Commit d3c9634e worked around this by setting core.autocrlf to "false" 
+> > in the per-repo config when initing the clone. However if the config 
+> > variable was changed, the breakage would still occur. This made it 
+> > painful to work with git-svn on repos with mostly checked in LFs on 
+> > Windows.
+> > 
+> > This patch tries to fix the same problem while allowing core.autocrlf 
+> > to be enabled, by disabling filters when when hashing.
+> > 
+> > git-svn is currently the only call-site for hash_and_insert_object 
+> > (apart from the test-suite), so changing it should be safe.
+> > 
+> > Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+> > ---
+> > 
+> > With this patch applied, I guess we can also revert d3c9634e. I didn't
+> > do this in this series, because I'm lazy and selfish and thus only
+> > changed the code I needed to get what I wanted to work ;)
+> > 
+> > I've been running git-svn with these patches with core.autocrlf enabled
+> > since December, and never seen the breakage that I saw before d3c9634e.
 > 
-> If you want this then just compile Git with NO_MMAP = YesPlease
-> It should solve the described problem.
+> Hi Erik,
+> 
+> How does reverting d3c9634e affect dcommit?  I've never dealt with (or
+> even looked at) autocrlf, so I'll put my trust in you and Dscho with
+> anything related to it.
 
-Doesn't that also turn off mmap in other places where it's harmless or
-even beneficial?  Otherwise, why use mmap in Git at all?  It also doesn't
-solve the problem in cases when mmap support is compiled in.
+I have no idea how reverting said commit affects dcommit, and I do not 
+have the time to check, sorry!
 
-There is a performance-robustness trade-off here.  If we do an extra
-copy of the file data, we get always consistent repo contents but lose
-speed (not very much speed, since sha1 and zlib are much slower than
-a memory copy).  If we don't, we still get consistent repo contents
-if--and only if--the files never happen to be modified during a git add.
-I can live with that, as long as the limitation is documented and there's
-a config switch somewhere that I can turn on for cases when I can't make
-such assurances.
-
-I imagine similar reasoning led to the existence of the
-receive.fsckObjects option.  Personally, checking all objects fetched
-from remote repos is not a feature I'd ever want to be able to turn off;
-however, it's easy to think of cases where integrity matters less than
-speed (e.g. build systems doing clone-build-destroy cycles from a trusted,
-reliable server over a similarly trusted network).
+Ciao,
+Dscho
