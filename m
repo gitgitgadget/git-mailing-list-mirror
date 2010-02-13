@@ -1,91 +1,64 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH 5/5] Use kwset in grep
-Date: Sat, 13 Feb 2010 18:38:12 +0100
-Message-ID: <4B76E384.2070602@gnu.org>
-References: <20100213141558.22851.13660.stgit@fredrik-laptop> <20100213142110.GF9543@fredrik-laptop>
+From: Ron Garret <ron1@flownet.com>
+Subject: Re: Individual file snapshots
+Date: Sat, 13 Feb 2010 10:41:34 -0800
+Organization: Amalgamated Widgets
+Message-ID: <ron1-E2C140.10413413022010@news.gmane.org>
+References: <ron1-CD3223.04030512022010@news.gmane.org> <4B75BD06.1010802@lsrfire.ath.cx> <ron1-519083.13253112022010@news.gmane.org> <12B5BDAB-DD9C-4CED-9489-0773BF577DF3@silverinsanity.com> <ron1-62D136.13570812022010@news.gmane.org> <C022F034-F60E-4E89-A174-DC0F53ADEC19@silverinsanity.com> <ron1-5EFFD7.14390512022010@news.gmane.org> <ca433831002121633j5b96049bs71e539c96397aff4@mail.gmail.com> <7v6362c672.fsf@alter.siamese.dyndns.org> <ca433831002130713i5b015686k9f53911954858845@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Fredrik Kuivinen <frekui@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 13 18:38:24 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 13 19:42:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgLwl-0007EO-Dl
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 18:38:23 +0100
+	id 1NgMwM-00018e-6c
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 19:42:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757658Ab0BMRiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Feb 2010 12:38:18 -0500
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:36691 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757524Ab0BMRiR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2010 12:38:17 -0500
-Received: by fxm27 with SMTP id 27so125843fxm.25
-        for <git@vger.kernel.org>; Sat, 13 Feb 2010 09:38:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=7j3n7xkY9x3u8NZs2EEkVVI57d6GwYXp8eJKYPs7wLo=;
-        b=C6YX6AvXct7t0VyZaWPc8xm+tJwGh5sn/CC9n8IH5C6ITp3IT41tdOKO6xHH0ARjuv
-         9rtefJgHU9GjGjynmBWc+jIn5D/UXjjW0PwvuQpylQLU79ETrtrQkl4Pqmt4L37L51ps
-         MT7/V4UyE3a53udrhEPXkzlZv+t54WYPg/5v0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=S03vpYL4UOoIPyzBbB/pyjaO3VJ2n5IMfGvbaMEl5QdK8+PF8mptwp/m9hc0rqktAs
-         nVgkorpDZ7mOFjUfjf5uXwkaGt75G6n9cGOLMo8vHuFcBGbS80/9anKxAILZ7qOtxRZZ
-         oaiphdoJt2WTZLW8uVsCJTVfQiMOUxFYpexj8=
-Received: by 10.223.5.82 with SMTP id 18mr3332178fau.79.1266082695429;
-        Sat, 13 Feb 2010 09:38:15 -0800 (PST)
-Received: from yakj.usersys.redhat.com ([85.93.118.17])
-        by mx.google.com with ESMTPS id 18sm7459120fks.4.2010.02.13.09.38.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 13 Feb 2010 09:38:14 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100120 Fedora/3.0.1-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.1
-In-Reply-To: <20100213142110.GF9543@fredrik-laptop>
+	id S1757583Ab0BMSl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2010 13:41:56 -0500
+Received: from lo.gmane.org ([80.91.229.12]:46786 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752727Ab0BMSl4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2010 13:41:56 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NgMwE-00013u-OW
+	for git@vger.kernel.org; Sat, 13 Feb 2010 19:41:54 +0100
+Received: from 68-190-211-184.dhcp.gldl.ca.charter.com ([68.190.211.184])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 13 Feb 2010 19:41:54 +0100
+Received: from ron1 by 68-190-211-184.dhcp.gldl.ca.charter.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 13 Feb 2010 19:41:54 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 68-190-211-184.dhcp.gldl.ca.charter.com
+User-Agent: MT-NewsWatcher/3.5.1 (Intel Mac OS X)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139820>
 
-On 02/13/2010 03:21 PM, Fredrik Kuivinen wrote:
-> Best of five runs in the linux repository:
->
-> before:
->
-> $ time git grep qwerty
-> drivers/char/keyboard.c:        "qwertyuiop[]\r\000as"                          /* 0x10 - 0x1f */
->
-> real	0m1.065s
-> user	0m1.400s
-> sys	0m0.536s
->
->
-> after:
->
-> $ time git grep qwerty
-> drivers/char/keyboard.c:        "qwertyuiop[]\r\000as"                          /* 0x10 - 0x1f */
->
-> real	0m0.621s
-> user	0m0.560s
-> sys	0m0.564s
->
-> So we gain about 40% by using the kwset code.
+In article 
+<ca433831002130713i5b015686k9f53911954858845@mail.gmail.com>,
+ Mark Lodato <lodatom@gmail.com> wrote:
 
-Hmm, on a more accurate review for
+> On Sat, Feb 13, 2010 at 2:01 AM, Ron Garret <ron1@flownet.com> wrote:
+> > Moving the index around seems kinda hacky.  You probably want git-mktree.
+> 
+> git-mktree is way too complicated.  I would have to parse the index
+> and call git-mktree for each directory.
 
-     git grep -e foo -e bar
+Yeah, but think of how studly you'll feel when you do that! ;-)
 
-you're creating two kwsets, so a Boyer-Moore search be much 
-simpler---the performance would be the same since that's what kwset 
-degrades to for a single string, but you'd probably save around 600 
-lines of code...
+> Besides, using GIT_INDEX_FILE as suggested
+> by Junio allows me to leave the original index file intact.
 
-Paolo
+Yeah, that might actually be a better plan.
+
+rg
