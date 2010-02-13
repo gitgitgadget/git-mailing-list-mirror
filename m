@@ -1,114 +1,175 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv13 18/30] t3305: Verify that removing notes triggers automatic
- fanout consolidation
-Date: Sat, 13 Feb 2010 22:28:26 +0100
-Message-ID: <1266096518-2104-19-git-send-email-johan@herland.net>
+Subject: [PATCHv13 29/30] builtin-notes: Misc. refactoring of argc and exit
+ value handling
+Date: Sat, 13 Feb 2010 22:28:37 +0100
+Message-ID: <1266096518-2104-30-git-send-email-johan@herland.net>
 References: <1266096518-2104-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org, johan@herland.net
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Feb 13 22:30:29 2010
+X-From: git-owner@vger.kernel.org Sat Feb 13 22:30:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgPZH-0001iD-3i
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 22:30:23 +0100
+	id 1NgPZJ-0001iD-Qx
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 22:30:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758113Ab0BMV3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Feb 2010 16:29:47 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:51414 "EHLO smtp.getmail.no"
+	id S1758148Ab0BMVaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2010 16:30:17 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:51565 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758085Ab0BMV3k (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2010 16:29:40 -0500
+	id S1758138Ab0BMVaJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2010 16:30:09 -0500
 Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KXS00EG0UDDVE80@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Sat, 13 Feb 2010 22:29:37 +0100 (MET)
+ with ESMTP id <0KXS00EH3UE5VE80@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 13 Feb 2010 22:30:05 +0100 (MET)
 Received: from localhost.localdomain ([84.215.68.234])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KXS00ADYUC2BL00@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Sat, 13 Feb 2010 22:29:37 +0100 (MET)
+ git@vger.kernel.org; Sat, 13 Feb 2010 22:30:05 +0100 (MET)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2010.2.13.211545
+ Antispam-Data: 2010.2.13.211825
 X-Mailer: git-send-email 1.7.0.rc1.141.gd3fd
 In-reply-to: <1266096518-2104-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139850>
+
+This is in preparation of future patches that add additional subcommands.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- t/t3305-notes-fanout.sh |   47 ++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 46 insertions(+), 1 deletions(-)
+ builtin-notes.c |   61 ++++++++++++++++++++++++++++++++----------------------
+ 1 files changed, 36 insertions(+), 25 deletions(-)
 
-diff --git a/t/t3305-notes-fanout.sh b/t/t3305-notes-fanout.sh
-index 823b0ff..c6d263b 100755
---- a/t/t3305-notes-fanout.sh
-+++ b/t/t3305-notes-fanout.sh
-@@ -1,6 +1,6 @@
- #!/bin/sh
+diff --git a/builtin-notes.c b/builtin-notes.c
+index 98de115..bbf98a9 100644
+--- a/builtin-notes.c
++++ b/builtin-notes.c
+@@ -287,7 +287,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
  
--test_description='Test that adding many notes triggers automatic fanout restructuring'
-+test_description='Test that adding/removing many notes triggers automatic fanout restructuring'
+ 	int list = 0, add = 0, append = 0, edit = 0, show = 0, remove = 0,
+ 	    prune = 0, force = 0;
+-	int given_object;
++	int given_object = 0, i = 1, retval = 0;
+ 	struct msg_arg msg = { 0, 0, STRBUF_INIT };
+ 	struct option options[] = {
+ 		OPT_GROUP("Notes options"),
+@@ -321,8 +321,10 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 		remove = 1;
+ 	else if (argc && !strcmp(argv[0], "prune"))
+ 		prune = 1;
+-	else if (!argc)
++	else if (!argc) {
+ 		list = 1; /* Default to 'list' if no other subcommand given */
++		i = 0;
++	}
  
- . ./test-lib.sh
+ 	if (list + add + append + edit + show + remove + prune != 1)
+ 		usage_with_options(git_notes_usage, options);
+@@ -344,9 +346,10 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(git_notes_usage, options);
+ 	}
  
-@@ -47,4 +47,49 @@ test_expect_success 'many notes created with git-notes triggers fanout' '
- 	done
- '
- 
-+test_expect_success 'deleting most notes with git-notes' '
-+	num_notes=250 &&
-+	i=0 &&
-+	git rev-list HEAD |
-+	while read sha1
-+	do
-+		i=$(($i + 1)) &&
-+		if test $i -gt $num_notes
-+		then
-+			break
-+		fi &&
-+		test_tick &&
-+		git notes remove "$sha1"
-+	done
-+'
+-	given_object = argc == 2;
+-	object_ref = given_object ? argv[1] : "HEAD";
+-	if (argc > 2 || (prune && argc > 1)) {
++	given_object = argc > i;
++	object_ref = given_object ? argv[i++] : "HEAD";
 +
-+test_expect_success 'most notes deleted correctly with git-notes' '
-+	git log HEAD~250 | grep "^    " > output &&
-+	i=50 &&
-+	while test $i -gt 0
-+	do
-+		echo "    commit #$i" &&
-+		echo "    note #$i" &&
-+		i=$(($i - 1));
-+	done > expect &&
-+	test_cmp expect output
-+'
++	if (argc > i || (prune && given_object)) {
+ 		error("too many parameters");
+ 		usage_with_options(git_notes_usage, options);
+ 	}
+@@ -369,34 +372,38 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 		if (given_object) {
+ 			if (note) {
+ 				puts(sha1_to_hex(note));
+-				return 0;
++				goto end;
+ 			}
+-		} else
+-			return for_each_note(t, 0, list_each_note, NULL);
++		} else {
++			retval = for_each_note(t, 0, list_each_note, NULL);
++			goto end;
++		}
+ 	}
+ 
+ 	/* show command */
+ 
+ 	if ((list || show) && !note) {
+ 		error("No note found for object %s.", sha1_to_hex(object));
+-		return 1;
++		retval = 1;
++		goto end;
+ 	} else if (show) {
+ 		const char *show_args[3] = {"show", sha1_to_hex(note), NULL};
+-		return execv_git_cmd(show_args);
++		retval = execv_git_cmd(show_args);
++		goto end;
+ 	}
+ 
+ 	/* add/append/edit/remove/prune command */
+ 
+ 	if (add && note) {
+-		if (force)
+-			fprintf(stderr, "Overwriting existing notes for object %s\n",
+-				sha1_to_hex(object));
+-		else {
+-			error("Cannot add notes. Found existing notes for object %s. "
+-			      "Use '-f' to overwrite existing notes",
++		if (!force) {
++			error("Cannot add notes. Found existing notes for object"
++			      " %s. Use '-f' to overwrite existing notes",
+ 			      sha1_to_hex(object));
+-			return 1;
++			retval = 1;
++			goto end;
+ 		}
++		fprintf(stderr, "Overwriting existing notes for object %s\n",
++			sha1_to_hex(object));
+ 	}
+ 
+ 	if (remove) {
+@@ -408,18 +415,22 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 	if (prune) {
+ 		hashclr(new_note);
+ 		prune_notes(t);
+-	} else {
++		goto commit;
++	} else
+ 		create_note(object, &msg, append, note, new_note);
+-		if (is_null_sha1(new_note))
+-			remove_note(t, object);
+-		else
+-			add_note(t, object, new_note, combine_notes_overwrite);
+-	}
+-	snprintf(logmsg, sizeof(logmsg), "Note %s by 'git notes %s'",
 +
-+test_expect_success 'deleting most notes triggers fanout consolidation' '
-+	# Expect entire notes tree to have a fanout == 0
-+	git ls-tree -r --name-only refs/notes/commits |
-+	while read path
-+	do
-+		case "$path" in
-+		????????????????????????????????????????)
-+			: true
-+			;;
-+		*)
-+			echo "Invalid path \"$path\"" &&
-+			return 1
-+			;;
-+		esac
-+	done
-+'
++	if (is_null_sha1(new_note))
++		remove_note(t, object);
++	else
++		add_note(t, object, new_note, combine_notes_overwrite);
 +
- test_done
++commit:
++	snprintf(logmsg, sizeof(logmsg), "Notes %s by 'git notes %s'",
+ 		 is_null_sha1(new_note) ? "removed" : "added", argv[0]);
+ 	commit_notes(t, logmsg);
+ 
++end:
+ 	free_notes(t);
+ 	strbuf_release(&(msg.buf));
+-	return 0;
++	return retval;
+ }
 -- 
 1.7.0.rc1.141.gd3fd
