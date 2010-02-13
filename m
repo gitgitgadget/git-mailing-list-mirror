@@ -1,62 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Separate default push/pull?
-Date: Sat, 13 Feb 2010 06:58:34 -0500
-Message-ID: <20100213115834.GA7385@coredump.intra.peff.net>
-References: <m2zl3fg26j.fsf@boostpro.com>
- <a038bef51002111057l382ed55fy6b4042d1115a830c@mail.gmail.com>
- <20100212001417.GC21930@coredump.intra.peff.net>
- <7veikrl1m1.fsf@alter.siamese.dyndns.org>
- <20100212010549.GA23303@coredump.intra.peff.net>
- <7vvde3dmhp.fsf@alter.siamese.dyndns.org>
+From: Daniel Black <daniel.subs@internode.on.net>
+Subject: cvsimport error when modulename is '.'
+Date: Sat, 13 Feb 2010 22:51:42 +1100
+Message-ID: <201002132251.42070.daniel.subs@internode.on.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Chris Packham <judge.packham@gmail.com>,
-	David Abrahams <dave@boostpro.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 13 12:58:38 2010
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 13 13:08:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgGdy-0006Xr-3t
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 12:58:38 +0100
+	id 1NgGnR-0003pn-Ee
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 13:08:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752641Ab0BML6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Feb 2010 06:58:33 -0500
-Received: from peff.net ([208.65.91.99]:60376 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752416Ab0BML6c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2010 06:58:32 -0500
-Received: (qmail 13858 invoked by uid 107); 13 Feb 2010 11:58:41 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 13 Feb 2010 06:58:41 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 13 Feb 2010 06:58:34 -0500
-Content-Disposition: inline
-In-Reply-To: <7vvde3dmhp.fsf@alter.siamese.dyndns.org>
+	id S1753162Ab0BMMIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2010 07:08:19 -0500
+Received: from bld-mail19.adl2.internode.on.net ([150.101.137.104]:44375 "EHLO
+	mail.internode.on.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752504Ab0BMMIT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2010 07:08:19 -0500
+X-Greylist: delayed 916 seconds by postgrey-1.27 at vger.kernel.org; Sat, 13 Feb 2010 07:08:18 EST
+Received: from passivegrunt.localnet (unverified [121.45.205.47]) 
+	by mail.internode.on.net (SurgeMail 3.8f2) with ESMTP id 13499141-1927428 
+	for <git@vger.kernel.org>; Sat, 13 Feb 2010 22:23:01 +1030 (CDT)
+User-Agent: KMail/1.13.0 (Linux/2.6.31-gentoo-r4; KDE/4.4.0; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139791>
 
-On Thu, Feb 11, 2010 at 09:57:54PM -0800, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > In a distributed setup, I don't think it is that uncommon to not want to
-> > push to the place you pull from. You are generally pulling and building
-> > on somebody else's work, so if there is no central repo, you will be
-> > pushing to somewhere that is not where you pulled it.
-> 
-> You are probably right.
-> 
-> It still feels funny to see "git pull" and "git push" goes to different
-> places, but as long as that is what the user explicitly configures, that's
-> fine.
+in an empty directory I'm attempting the command:
 
-By the way, I am a little iffy on the configuration I suggested. Even
-though it matches David's workflow, it seems unintuitive to me that a
-"push.defaultremote" variable would override what's in "branch.*.remote".
+git  cvsimport -A ../authcvs-conv -k -m -v -d:pserver:anonymous@opendkim.cvs.sourceforge.net:/cvsroot/opendkim .
 
--Peff
+this results in ...
+
+Initialized empty Git repository in /home/dan/software_projects/opendkim-import4/.git/                                                
+Running cvsps...                                                                                                                      
+connect error: Network is unreachable                                                                                                 
+cvs rlog: Logging .                                                                                                                   
+NOTICE: used alternate strip path /cvsroot/opendkim/.c                                                                                
+WARNING: file /cvsroot/opendkim/BRANCHES doesn't match strip_path /cvsroot/opendkim/.c. ignoring                                      
+WARNING: file /cvsroot/opendkim/FEATURES doesn't match strip_path /cvsroot/opendkim/.c. ignoring                                      
+....
+for every file up until the end:
+....
+Fetching vsignore   v 1.1
+Unknown: error
+
+The resulting directory is empty apart from a empty initialised git repository.
+
+git version 1.7.0.rc2.13.g8b233.dirty
+cvsps version 2.1
+
+numerous permutations of attempting this import have failed. Also fails with
+ the CVS module aliases 'world -> .' and attempting to use "world" as an alias name.
+
+I'm happy to assist in debugging this if required.
+
+Daniel
+OpenDKIM developer
