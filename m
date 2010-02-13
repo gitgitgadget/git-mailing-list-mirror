@@ -1,161 +1,258 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv13 26/30] builtin-notes: Deprecate the -m/-F options for
- "git notes edit"
-Date: Sat, 13 Feb 2010 22:28:34 +0100
-Message-ID: <1266096518-2104-27-git-send-email-johan@herland.net>
+Subject: [PATCHv13 20/30] builtin-notes: Add "prune" subcommand for removing
+ notes for missing objects
+Date: Sat, 13 Feb 2010 22:28:28 +0100
+Message-ID: <1266096518-2104-21-git-send-email-johan@herland.net>
 References: <1266096518-2104-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org, johan@herland.net
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Feb 13 22:32:00 2010
+X-From: git-owner@vger.kernel.org Sat Feb 13 22:32:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgPan-0002mJ-7c
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 22:31:57 +0100
+	id 1NgPaq-0002mJ-W6
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 22:32:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758137Ab0BMVaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Feb 2010 16:30:10 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:62641 "EHLO smtp.getmail.no"
+	id S932072Ab0BMVbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2010 16:31:10 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:62509 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758130Ab0BMV36 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2010 16:29:58 -0500
+	id S1758107Ab0BMV3o (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2010 16:29:44 -0500
 Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KXS00FKZUDX5490@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Sat, 13 Feb 2010 22:29:57 +0100 (MET)
+ with ESMTP id <0KXS00FKFUDI5490@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 13 Feb 2010 22:29:42 +0100 (MET)
 Received: from localhost.localdomain ([84.215.68.234])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KXS00ADYUC2BL00@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Sat, 13 Feb 2010 22:29:57 +0100 (MET)
+ git@vger.kernel.org; Sat, 13 Feb 2010 22:29:42 +0100 (MET)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2010.2.13.211825
+ Antispam-Data: 2010.2.13.211545
 X-Mailer: git-send-email 1.7.0.rc1.141.gd3fd
 In-reply-to: <1266096518-2104-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139859>
 
-The semantics for "git notes edit -m/-F" overlap with those for
-"git notes add -f", and the behaviour (i.e. overwriting existing
-notes with the given message/file) is more intuitively captured
-by (and better documented with) "git notes add -f".
+"git notes prune" will remove all notes that annotate unreachable/non-
+existing objects.
+
+The patch includes tests verifying correct behaviour of the new subcommand.
 
 Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- Documentation/git-notes.txt |    2 +-
- builtin-notes.c             |   10 ++++++++--
- t/t3304-notes-mixed.sh      |    2 +-
- t/t3305-notes-fanout.sh     |    2 +-
- t/t3306-notes-prune.sh      |    6 +++---
- 5 files changed, 14 insertions(+), 8 deletions(-)
+ Documentation/git-notes.txt |    4 +-
+ builtin-notes.c             |   28 ++++++++-----
+ t/t3306-notes-prune.sh      |   94 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 115 insertions(+), 11 deletions(-)
+ create mode 100755 t/t3306-notes-prune.sh
 
 diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index 35dd8fa..53c5d90 100644
+index a52d23a..3973f90 100644
 --- a/Documentation/git-notes.txt
 +++ b/Documentation/git-notes.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- 'git notes' [list [<object>]]
- 'git notes' add [-f] [-F <file> | -m <msg>] [<object>]
- 'git notes' append [-F <file> | -m <msg>] [<object>]
--'git notes' edit [-F <file> | -m <msg>] [<object>]
-+'git notes' edit [<object>]
- 'git notes' show [<object>]
- 'git notes' remove [<object>]
- 'git notes' prune
+@@ -8,7 +8,7 @@ git-notes - Add/inspect commit notes
+ SYNOPSIS
+ --------
+ [verse]
+-'git notes' (edit [-F <file> | -m <msg>] | show | remove) [commit]
++'git notes' (edit [-F <file> | -m <msg>] | show | remove | prune) [commit]
+ 
+ DESCRIPTION
+ -----------
+@@ -37,6 +37,8 @@ remove::
+ 	This is equivalent to specifying an empty note message to
+ 	the `edit` subcommand.
+ 
++prune::
++	Remove all notes for non-existing/unreachable objects.
+ 
+ OPTIONS
+ -------
 diff --git a/builtin-notes.c b/builtin-notes.c
-index c88df00..572b477 100644
+index 7c40075..48bc455 100644
 --- a/builtin-notes.c
 +++ b/builtin-notes.c
-@@ -21,7 +21,7 @@ static const char * const git_notes_usage[] = {
- 	"git notes [list [<object>]]",
- 	"git notes add [-f] [-m <msg> | -F <file>] [<object>]",
- 	"git notes append [-m <msg> | -F <file>] [<object>]",
--	"git notes edit [-m <msg> | -F <file>] [<object>]",
-+	"git notes edit [<object>]",
+@@ -21,6 +21,7 @@ static const char * const git_notes_usage[] = {
+ 	"git notes edit [-m <msg> | -F <file>] [<object>]",
  	"git notes show [<object>]",
  	"git notes remove [<object>]",
- 	"git notes prune",
-@@ -233,7 +233,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
++	"git notes prune",
+ 	NULL
+ };
+ 
+@@ -201,7 +202,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 	const char *object_ref;
+ 	char logmsg[100];
+ 
+-	int edit = 0, show = 0, remove = 0;
++	int edit = 0, show = 0, remove = 0, prune = 0;
  	const char *msgfile = NULL;
  	struct msg_arg msg = { 0, STRBUF_INIT };
  	struct option options[] = {
--		OPT_GROUP("Notes edit options"),
-+		OPT_GROUP("Notes options"),
- 		OPT_CALLBACK('m', "message", &msg, "msg",
- 			     "note contents as a string", parse_msg_arg),
- 		OPT_FILENAME('F', "file", &msgfile, "note contents in a file"),
-@@ -270,6 +270,12 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+@@ -222,8 +223,10 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 		show = 1;
+ 	else if (argc && !strcmp(argv[0], "remove"))
+ 		remove = 1;
++	else if (argc && !strcmp(argv[0], "prune"))
++		prune = 1;
+ 
+-	if (edit + show + remove != 1)
++	if (edit + show + remove + prune != 1)
+ 		usage_with_options(git_notes_usage, options);
+ 
+ 	if ((msg.given || msgfile) && !edit) {
+@@ -237,7 +240,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	object_ref = argc == 2 ? argv[1] : "HEAD";
+-	if (argc > 2) {
++	if (argc > 2 || (prune && argc > 1)) {
+ 		error("too many parameters");
  		usage_with_options(git_notes_usage, options);
  	}
-
-+	if ((msg.given || msgfile) && edit) {
-+		fprintf(stderr, "The -m and -F options has been deprecated for"
-+			" the 'edit' subcommand.\n"
-+			"Please use 'git notes add -f -m/-F' instead.\n");
+@@ -264,7 +267,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 		return execv_git_cmd(show_args);
+ 	}
+ 
+-	/* edit/remove command */
++	/* edit/remove/prune command */
+ 
+ 	if (remove)
+ 		strbuf_reset(&buf);
+@@ -278,12 +281,17 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 			die_errno("could not open or read '%s'", msgfile);
+ 	}
+ 
+-	create_note(object, &buf, msg.given || msgfile || remove, note,
+-		    new_note);
+-	if (is_null_sha1(new_note))
+-		remove_note(t, object);
+-	else
+-		add_note(t, object, new_note, combine_notes_overwrite);
++	if (prune) {
++		hashclr(new_note);
++		prune_notes(t);
++	} else {
++		create_note(object, &buf, msg.given || msgfile || remove, note,
++			    new_note);
++		if (is_null_sha1(new_note))
++			remove_note(t, object);
++		else
++			add_note(t, object, new_note, combine_notes_overwrite);
 +	}
-+
- 	if (msg.given && msgfile) {
- 		error("mixing -m and -F options is not allowed.");
- 		usage_with_options(git_notes_usage, options);
-diff --git a/t/t3304-notes-mixed.sh b/t/t3304-notes-mixed.sh
-index c975a6d..1709e8c 100755
---- a/t/t3304-notes-mixed.sh
-+++ b/t/t3304-notes-mixed.sh
-@@ -188,7 +188,7 @@ test_expect_success "verify contents of non-notes" '
- test_expect_success "git-notes preserves non-notes" '
-
- 	test_tick &&
--	git notes edit -m "foo bar"
-+	git notes add -f -m "foo bar"
- '
-
- test_expect_success "verify contents of non-notes after git-notes" '
-diff --git a/t/t3305-notes-fanout.sh b/t/t3305-notes-fanout.sh
-index c6d263b..b1ea64b 100755
---- a/t/t3305-notes-fanout.sh
-+++ b/t/t3305-notes-fanout.sh
-@@ -14,7 +14,7 @@ test_expect_success 'creating many notes with git-notes' '
- 		echo "file for commit #$i" > file &&
- 		git add file &&
- 		git commit -q -m "commit #$i" &&
--		git notes edit -m "note #$i" || return 1
-+		git notes add -m "note #$i" || return 1
- 	done
- '
-
+ 	snprintf(logmsg, sizeof(logmsg), "Note %s by 'git notes %s'",
+ 		 is_null_sha1(new_note) ? "removed" : "added", argv[0]);
+ 	commit_notes(t, logmsg);
 diff --git a/t/t3306-notes-prune.sh b/t/t3306-notes-prune.sh
-index b0adc7e..a0ed035 100755
---- a/t/t3306-notes-prune.sh
+new file mode 100755
+index 0000000..b0adc7e
+--- /dev/null
 +++ b/t/t3306-notes-prune.sh
-@@ -10,17 +10,17 @@ test_expect_success 'setup: create a few commits with notes' '
- 	git add file1 &&
- 	test_tick &&
- 	git commit -m 1st &&
--	git notes edit -m "Note #1" &&
-+	git notes add -m "Note #1" &&
- 	: > file2 &&
- 	git add file2 &&
- 	test_tick &&
- 	git commit -m 2nd &&
--	git notes edit -m "Note #2" &&
-+	git notes add -m "Note #2" &&
- 	: > file3 &&
- 	git add file3 &&
- 	test_tick &&
- 	git commit -m 3rd &&
--	git notes edit -m "Note #3"
-+	git notes add -m "Note #3"
- '
-
- cat > expect <<END_OF_LOG
---
+@@ -0,0 +1,94 @@
++#!/bin/sh
++
++test_description='Test git notes prune'
++
++. ./test-lib.sh
++
++test_expect_success 'setup: create a few commits with notes' '
++
++	: > file1 &&
++	git add file1 &&
++	test_tick &&
++	git commit -m 1st &&
++	git notes edit -m "Note #1" &&
++	: > file2 &&
++	git add file2 &&
++	test_tick &&
++	git commit -m 2nd &&
++	git notes edit -m "Note #2" &&
++	: > file3 &&
++	git add file3 &&
++	test_tick &&
++	git commit -m 3rd &&
++	git notes edit -m "Note #3"
++'
++
++cat > expect <<END_OF_LOG
++commit 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:15:13 2005 -0700
++
++    3rd
++
++Notes:
++    Note #3
++
++commit 08341ad9e94faa089d60fd3f523affb25c6da189
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:14:13 2005 -0700
++
++    2nd
++
++Notes:
++    Note #2
++
++commit ab5f302035f2e7aaf04265f08b42034c23256e1f
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:13:13 2005 -0700
++
++    1st
++
++Notes:
++    Note #1
++END_OF_LOG
++
++test_expect_success 'verify commits and notes' '
++
++	git log > actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'remove some commits' '
++
++	git reset --hard HEAD~2 &&
++	git reflog expire --expire=now HEAD &&
++	git gc --prune=now
++'
++
++test_expect_success 'verify that commits are gone' '
++
++	! git cat-file -p 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29 &&
++	! git cat-file -p 08341ad9e94faa089d60fd3f523affb25c6da189 &&
++	git cat-file -p ab5f302035f2e7aaf04265f08b42034c23256e1f
++'
++
++test_expect_success 'verify that notes are still present' '
++
++	git notes show 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29 &&
++	git notes show 08341ad9e94faa089d60fd3f523affb25c6da189 &&
++	git notes show ab5f302035f2e7aaf04265f08b42034c23256e1f
++'
++
++test_expect_success 'prune notes' '
++
++	git notes prune
++'
++
++test_expect_success 'verify that notes are gone' '
++
++	! git notes show 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29 &&
++	! git notes show 08341ad9e94faa089d60fd3f523affb25c6da189 &&
++	git notes show ab5f302035f2e7aaf04265f08b42034c23256e1f
++'
++
++test_done
+-- 
 1.7.0.rc1.141.gd3fd
