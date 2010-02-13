@@ -1,159 +1,93 @@
-From: Jan Koprowski <jan.koprowski@gmail.com>
-Subject: Re: Solve continuous integration (pending head / commit queue) 
-	problem using git
-Date: Sat, 13 Feb 2010 08:04:50 +0100
-Message-ID: <c41cd75d1002122304i5aab52abt598e6a553defe1cf@mail.gmail.com>
-References: <c41cd75d1002120837t20f2a47fi41e8c67245c4284c@mail.gmail.com>
-	 <32541b131002120942w50a29e7cjf2c10820b3286017@mail.gmail.com>
-	 <c41cd75d1002121007k4da9a617t161b699a3bca0fa7@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 1/2] git-imap-send: Add CRAM-MD5 authenticate method
+ support
+Date: Fri, 12 Feb 2010 23:42:13 -0800
+Message-ID: <7vsk95sht6.fsf@alter.siamese.dyndns.org>
+References: <1265717345-2118-1-git-send-email-mitake@dcl.info.waseda.ac.jp>
+ <1265974572-6282-1-git-send-email-mitake@dcl.info.waseda.ac.jp>
+ <7vljeyp1rj.fsf@alter.siamese.dyndns.org>
+ <4B764B67.1020402@dcl.info.waseda.ac.jp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 13 08:05:02 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@googlemail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jeff King <peff@peff.net>
+To: Hitoshi Mitake <mitake@dcl.info.waseda.ac.jp>
+X-From: git-owner@vger.kernel.org Sat Feb 13 08:42:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgC3p-0003dQ-Pt
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 08:05:02 +0100
+	id 1NgCeD-0002Mm-Cz
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 08:42:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751704Ab0BMHE5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Feb 2010 02:04:57 -0500
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:42515 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751512Ab0BMHE4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Feb 2010 02:04:56 -0500
-Received: by bwz22 with SMTP id 22so50243bwz.1
-        for <git@vger.kernel.org>; Fri, 12 Feb 2010 23:04:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=Uw5LQM8qg5hiyUpaP3BzNswfutNgNuDt0IZ4wdf7IyY=;
-        b=rqE2UKw/G3zSMMMp1nmBX0QUbcAGm3pA4mGfq/Gn6TR99VXnpq+1immmpPpfWUC+4m
-         aJsMFhqTP8GJIACc1+H5ljZuSZOKGEKNKUwXiztqB2PPbOJbqINtmuCaN1qM1ahzUosg
-         G669S8N6UJW0lV0XvtlaQ9z9cpzzLoqY4DuPk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=ESoG2V91w7WNWJLHwI8httHR+Yah5DGdDhPYeRp0PROEQDOV8G9jt75D7+yR+i2FB5
-         XhHcBWXLVyPa8UY6Vb8+e37k0E0DTR/+Bif/jEXbBaAcKNp/lMnkWZdZuFbAv3acBc/U
-         DEqqGmnhguO2TdQkycilEf8S0jiGbxl9orMkk=
-Received: by 10.204.10.3 with SMTP id n3mr1538554bkn.81.1266044690761; Fri, 12 
-	Feb 2010 23:04:50 -0800 (PST)
-In-Reply-To: <c41cd75d1002121007k4da9a617t161b699a3bca0fa7@mail.gmail.com>
+	id S1752002Ab0BMHmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2010 02:42:32 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42311 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751868Ab0BMHmb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2010 02:42:31 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D340A991B1;
+	Sat, 13 Feb 2010 02:42:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=m6EtmWHznAv8GEGbUbNA1kvTjdM=; b=m0t/YA
+	WqoTwlzgPid67rlkknPTO5ocqHDUPNmC0OiNTD4e5b32Mx+X3TRd1b3A/o+FlEun
+	9mFYqU63WlzfoB72sjd70oaf4rdZLhsy+2xUH4GiIpkinpISWFq0+86YBamP1g8b
+	Xrf2DlXjyeomSoqi6m3a9vF4nhwm0o4SiVvx0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GN0vDg2LLzRIp+wg8EvV6rTssagqc1QY
+	T363k7ZwJbwJpyQ8qQsgwm4VRgZira5I32hv96Bb6AQILwcs/UTazUyN989V/3Ol
+	K67Q5UXg0UsmJ3QJ0LDYfuhGMCSoCyu2k/sEEc1LK5RtDxQ6z0+mSa0muOCVEe7x
+	qgm415IRA8U=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 70575991AD;
+	Sat, 13 Feb 2010 02:42:22 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 32ED0991AC; Sat, 13 Feb
+ 2010 02:42:15 -0500 (EST)
+In-Reply-To: <4B764B67.1020402@dcl.info.waseda.ac.jp> (Hitoshi Mitake's
+ message of "Sat\, 13 Feb 2010 15\:49\:11 +0900")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 523A5FD4-1873-11DF-B0D1-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139779>
 
-On Fri, Feb 12, 2010 at 7:07 PM, Jan Koprowski <jan.koprowski@gmail.com=
-> wrote:
-> On Fri, Feb 12, 2010 at 6:42 PM, Avery Pennarun <apenwarr@gmail.com> =
-wrote:
->> On Fri, Feb 12, 2010 at 11:37 AM, Jan Koprowski <jan.koprowski@gmail=
-=2Ecom> wrote:
->>> Now. My idea. There is some revision tagged as "stable". *Clone* an=
-d
->>> *pull* operations is somehow "overloaded" from server side and alwa=
-ys!
->>> return last revision tagged as stable. After compiling external too=
-l
->>> just move tag to another revision which pass all tests. Of course
->>> there is some additional parameter (for example --last or --unstabl=
-e)
->>> which can clone fine way of repository.
->>>
->>> Two questions.
->>> 1) Maybe I try to invent the wheel again. Is there any way to take =
-the
->>> effect without overloading standard git behaviours.
->>> 2) If not how overload git behaviors on git "server side" repo?
->>
->> In general, code that lies to you about what's the most revision is
->> evil. =C2=A0Sometimes you *do* want to fetch that revision it's lyin=
-g to
->> you and saying doesn't exist, precisely because you'd like to help f=
-ix
->> it before integration.
->>
->> What you really want is:
->>
->> - nobody can push to the "integration branch" except the "integratio=
-n manager"
->>
->> - the "integration manager" should be a computer program, so that yo=
-u
->> can have "continuous integration"
->>
->> This isn't actually that hard. =C2=A0Give each user their own reposi=
-tory;
->> no user can write to any other user's repository. =C2=A0(This is the
->> default setup on github.com, for example.) =C2=A0Alternatively, just=
- tell
->> people to never, ever push to the master branch by themselves. =C2=A0=
-People
->> are easily capable of following rules like that unless they're
->> actively trying to screw you.
->>
->> Then set up something like gitbuilder
->> (http://github.com/apenwarr/gitbuilder) (Full disclosure: I wrote it=
-)
->> to build *all* the branches from *all* the users. =C2=A0This sounds =
-like it
->> would create exponential work for the build machine, but it doesn't,
->> since most users will have mostly the same commits anyway.
->>
->> When gitbuilder tags a particular commit as having built and passed
->> all tests, then it becomes a candidate for merging into the
->> integration branch. =C2=A0Write a little script that goes through ca=
-ndidate
->> branches, checks their gitbuilder status, and if they've passed,
->> pushes them into the integration branch. =C2=A0The push will only su=
-cceed
->> if the integration branch can be fast-forwarded to match the branch
->> you're trying to push; if you can't, it'll be rejected, which is wha=
-t
->> you want, since merging (even conflict-free merging) might break
->> tests.
->>
->> That mechanism works pretty well at my company, with one exception: =
-we
->> didn't bother with an automatic tool that merges into master. =C2=A0=
-We
->> prefer to have a release manager do that.
->>
->> Have fun,
->>
->> Avery
->>
->
-> Probably I don't have a problem (or it is a lateness). Because only
-> tagging as stable and making two compile loops: one per management
-> always compiling stable tag and second compiling latest repo... And
-> that is all :D
->
-> --
->><> Jan Koprowski [696775174] GSM
->
+Hitoshi Mitake <mitake@dcl.info.waseda.ac.jp> writes:
 
-Here is a thing :)
-After I install Hudson CI and equip them of Git plugin I saw two ways
-supported by Hudson:
-1) Compile specific branch of code which suggest merging stable
-changes to this branch
-2) Merging witch "something" before building and rollback changes
-after which suggest some unstable "branch" or "repository" where all
-programmers commit and changes from are "merged" before build to the
-stable branch. I don't check details because I choose first option.
+> Because strlen(challenge_64) is the upper limit of length of challenge.
+> So tail part of challenge may not be filled by EVP_DecodeBlock(),
+> non-zero filled buffer produces not NULL terminated string.
+> I've confused once by this problem before.
 
-Sad thing there is no support for tagging in Git plugin.
+If you know the length of the decoded thing, then you would just know
+how much to hash.  Doesn't the EVP_DecodeBlock() give you that number?
+Why do you need a NUL termination to begin with?
 
+Because you pretend as if you do not have the actual length, you run
+strlen() instead.  I am not that familiar with the API to EVP_* functions,
+but I'd be surprised if it were designed in such a stupid way to force you
+to write into a pre-zeroed buffer.
 
---=20
-><> Jan Koprowski [696775174] GSM
+By the way, if you use strlen() on a pre-cleared and overallocated buffer,
+doesn't your ENCODED_SIZE(n) have to be one byte longer than what you are
+computing?
+
+Looking for EVP_DecodeBlock in http://www.google.com/codesearch seems to
+find usage examples of varying quality.  Your favorite isync-0.5 stores
+the result in "len", but it entirely ignores it and does the same silly
+calloc() and strlen().  Usage example in OpenSSL's own x509spki stores the
+return value in spki_len and uses that as the length of the stuff to call
+another function, which looks much more reasonable.  From this observation
+and a bit of reading of the manual, my understanding is that the function
+gives you the number of bytes written in the buffer.
+
+So does EncodeBlock(), I would think.
