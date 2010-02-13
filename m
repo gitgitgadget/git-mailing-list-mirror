@@ -1,83 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] git-svn: support fetch with autocrlf on
-Date: Sun, 14 Feb 2010 00:55:28 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1002140054300.20986@pacific.mpi-cbg.de>
-References: <1265997155-3592-1-git-send-email-kusmabite@gmail.com> <1265997155-3592-2-git-send-email-kusmabite@gmail.com> <20100213122532.GA31653@dcvr.yhbt.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: 'git svn log' no longer uses the pager
+Date: Sat, 13 Feb 2010 18:51:56 -0500
+Message-ID: <20100213235156.GA9054@coredump.intra.peff.net>
+References: <462027ff1002131314k62069160h63760fc8316aa43b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Erik Faye-Lund <kusmabite@googlemail.com>, git@vger.kernel.org,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sun Feb 14 00:51:00 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Sebastian Celis <sebastian@sebastiancelis.com>
+X-From: git-owner@vger.kernel.org Sun Feb 14 00:52:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgRlL-0007Qt-N8
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Feb 2010 00:51:00 +0100
+	id 1NgRmT-00085a-W6
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Feb 2010 00:52:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758059Ab0BMXs4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Feb 2010 18:48:56 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51706 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753220Ab0BMXs4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2010 18:48:56 -0500
-Received: (qmail invoked by alias); 13 Feb 2010 23:48:54 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp008) with SMTP; 14 Feb 2010 00:48:54 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18BwTVn/VkBFeDGDkpeQXLhU2ColNoHCbxo34eTSb
-	aAD9Ox/C57kFEo
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20100213122532.GA31653@dcvr.yhbt.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57999999999999996
+	id S1758232Ab0BMXvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2010 18:51:55 -0500
+Received: from peff.net ([208.65.91.99]:53281 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758065Ab0BMXvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2010 18:51:54 -0500
+Received: (qmail 24149 invoked by uid 107); 13 Feb 2010 23:52:04 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 13 Feb 2010 18:52:04 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 13 Feb 2010 18:51:56 -0500
+Content-Disposition: inline
+In-Reply-To: <462027ff1002131314k62069160h63760fc8316aa43b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139869>
 
-Hi,
+On Sat, Feb 13, 2010 at 03:14:54PM -0600, Sebastian Celis wrote:
 
-On Sat, 13 Feb 2010, Eric Wong wrote:
-
-> Erik Faye-Lund <kusmabite@googlemail.com> wrote:
-> > If I enable core.autocrlf and perform a "git svn rebase" that fetches
-> > a change containing CRLFs, the git-svn meta-data gets corrupted.
-> > 
-> > Commit d3c9634e worked around this by setting core.autocrlf to "false" 
-> > in the per-repo config when initing the clone. However if the config 
-> > variable was changed, the breakage would still occur. This made it 
-> > painful to work with git-svn on repos with mostly checked in LFs on 
-> > Windows.
-> > 
-> > This patch tries to fix the same problem while allowing core.autocrlf 
-> > to be enabled, by disabling filters when when hashing.
-> > 
-> > git-svn is currently the only call-site for hash_and_insert_object 
-> > (apart from the test-suite), so changing it should be safe.
-> > 
-> > Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-> > ---
-> > 
-> > With this patch applied, I guess we can also revert d3c9634e. I didn't
-> > do this in this series, because I'm lazy and selfish and thus only
-> > changed the code I needed to get what I wanted to work ;)
-> > 
-> > I've been running git-svn with these patches with core.autocrlf enabled
-> > since December, and never seen the breakage that I saw before d3c9634e.
+> Ever since upgrading to git 1.6.6.1 I have noticed that 'git svn log'
+> no longer uses the pager. It definitely used to in git 1.6.5.X, but it
+> no longer does.
 > 
-> Hi Erik,
-> 
-> How does reverting d3c9634e affect dcommit?  I've never dealt with (or
-> even looked at) autocrlf, so I'll put my trust in you and Dscho with
-> anything related to it.
+> Is this a recent bug that was introduced? Or was this changed on
+> purpose? I definitely preferred the old behavior.
 
-I have no idea how reverting said commit affects dcommit, and I do not 
-have the time to check, sorry!
+I think it's a bug. It bisects to Jonathan's dec543e (am -i, git-svn:
+use "git var GIT_PAGER", 2009-10-30). But it seems to me that "git var
+GIT_PAGER" is fundamentally broken. It calls git_pager, which in turns
+checks isatty(1). But of course stdout _isn't_ a tty, because we are
+piping it back to the perl process to read the result of "git var".
+In other words, I don't see how this ever could have worked.
 
-Ciao,
-Dscho
+For git-config's colorbool support we have the caller pass in a
+stdout-is-tty flag. I suspect we would need to do the same thing here.
+
+-Peff
