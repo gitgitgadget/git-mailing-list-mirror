@@ -1,279 +1,234 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.0
-Date: Fri, 12 Feb 2010 17:24:02 -0800
-Message-ID: <7vljey6i8d.fsf@alter.siamese.dyndns.org>
+Subject: What's cooking in git.git (Feb 2010, #03; Fri, 12)
+Date: Fri, 12 Feb 2010 17:24:58 -0800
+Message-ID: <7vfx566i6t.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Sat Feb 13 02:24:30 2010
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+X-From: git-owner@vger.kernel.org Sat Feb 13 02:25:15 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Ng6kH-0007iq-Gl
-	for glk-linux-kernel-3@lo.gmane.org; Sat, 13 Feb 2010 02:24:30 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Ng6l0-00086R-Lm
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 02:25:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752213Ab0BMBYS (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Fri, 12 Feb 2010 20:24:18 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51538 "EHLO
+	id S1752532Ab0BMBZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2010 20:25:06 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52368 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750907Ab0BMBYQ (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Fri, 12 Feb 2010 20:24:16 -0500
+	with ESMTP id S1752227Ab0BMBZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 20:25:04 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A87FA99D84;
-	Fri, 12 Feb 2010 20:24:14 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C2AD199DDA;
+	Fri, 12 Feb 2010 20:25:03 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=oPJg
-	4WsPyvidvnZPndJ/+OqiFgk=; b=XjgygOjSWBM3oEEC5ZNYVYAshfV/ORGbJiOL
-	MlyuDv8Sy0rqMRgOteqNzS6NZaGt2TorXsj+AxpCLvS/wuoIl2pPhyn0q0CEBwXI
-	O4PyD5P7KsGvkxMokh6kOMYX0J2F/OjwNLlAqdBxfESg5t7fHzC/buMARc+67Zdi
-	rqQNzEg=
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=wR2e
+	KyC6djYimY8aDOna3CwZ/q4=; b=aqmwXCVvV2gi16qSlvYcwPNhUx5Lb2fFmPL8
+	wrf1Kv0lP4WO8jpnIIxhMxqE7fL5foDkevFOMY72nGZYz+IuhdcvlwUA3TFbgKAS
+	v9Lzo7sQYnHRWEt50HpzdYfR0q0nLNHeXJlA60ALIjCBZOReNLiCipMG/JmlyNIA
+	y0eCFtc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=k8O
-	jtitKZrdN0xqCaU8VPeHXu+SPuVNmSp0d/pMFhTSXshh1o4RbFjEu3ukBeT1LUjm
-	dYvwEys0KWIJN7c5lsf3n1p7rG53iz9/6UnLi9lw/HOdERaQTbCpMWIJNkqXSE0W
-	rKJLT+HfVeakcnD+KWkuZQ2o6xY0Mleievx6PapI=
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=Uk/
+	2w+FsWxt9YQC4wqwunyFZU7SFcEGoQmozD+Y6ZtMBzGtDxtsjdRWUakW4UXkzD5f
+	N49yTH1bKyfUmQzAOyA4S+fiok29puLAe1Cd+o3jUCEMD1Gi5fH+XkCoFU8B/i80
+	cRSpWt3yrwC5ULIHgJGtIuzDrOwxsXMQlFzxP5ok=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F38499D7E;
-	Fri, 12 Feb 2010 20:24:10 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A4CFC99DD9;
+	Fri, 12 Feb 2010 20:25:02 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A180999D7A; Fri, 12 Feb
- 2010 20:24:04 -0500 (EST)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 932E799DD6; Fri, 12 Feb
+ 2010 20:25:00 -0500 (EST)
+X-master-at: e923eaeb901ff056421b9007adcbbce271caa7b6
+X-next-at: 57c9972634e181f6aad83258a8e7d61f0b99b6ce
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7CB35F2A-183E-11DF-BE04-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+X-Pobox-Relay-ID: 9BD6D576-183E-11DF-BE04-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139769>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139770>
 
-The latest feature release Git 1.7.0 is available at the usual
-places:
+Here are the topics that have been cooking.  Commits prefixed with '-' are
+only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
+marked with '.' do not appear in any of the integration branches, but I am
+still holding onto them.
+
+Now 1.7.0 is out, we will take a short pause and watch breakage reports
+(or Olympics ;-) for a few days, and then start merging down new topics.
+
+--------------------------------------------------
+[New Topics]
+
+* ld/push-porcelain (2010-02-09) 4 commits
+ - git-push: fix an error message so it goes to stderr
+ - git-push: make git push --dry-run --porcelain exit with status 0 even if updates will be rejected
+ - git-push: send "To <remoteurl>" messages to the standard output in --porcelain mode
+ - git-push: squelch advice message if in --porcelain mode
 
-  http://www.kernel.org/pub/software/scm/git/
-
-  git-1.7.0.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.7.0.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.7.0.tar.{gz,bz2}		(preformatted docs)
-
-The RPM binary packages for a few architectures are found in:
-
-  RPMS/$arch/git-*-1.7.0-1.fc11.$arch.rpm	(RPM)
-
-Git v1.7.0 Release Notes
-========================
-
-Notes on behaviour change
--------------------------
-
- * "git push" into a branch that is currently checked out (i.e. pointed at by
-   HEAD in a repository that is not bare) is refused by default.
-
-   Similarly, "git push $there :$killed" to delete the branch $killed
-   in a remote repository $there, when $killed branch is the current
-   branch pointed at by its HEAD, will be refused by default.
-
-   Setting the configuration variables receive.denyCurrentBranch and
-   receive.denyDeleteCurrent to 'ignore' in the receiving repository
-   can be used to override these safety features.
-
- * "git send-email" does not make deep threads by default when sending a
-   patch series with more than two messages.  All messages will be sent
-   as a reply to the first message, i.e. cover letter.
-
-   It has been possible already to configure send-email to send "shallow thread"
-   by setting sendemail.chainreplyto configuration variable to false.  The
-   only thing this release does is to change the default when you haven't
-   configured that variable.
-
- * "git status" is not "git commit --dry-run" anymore.  This change does
-   not affect you if you run the command without argument.
-
- * "git diff" traditionally treated various "ignore whitespace" options
-   only as a way to filter the patch output.  "git diff --exit-code -b"
-   exited with non-zero status even if all changes were about changing the
-   amount of whitespace and nothing else;  and "git diff -b" showed the
-   "diff --git" header line for such a change without patch text.
-
-   In this release, the "ignore whitespaces" options affect the semantics
-   of the diff operation.  A change that does not affect anything but
-   whitespaces is reported with zero exit status when run with
-   --exit-code, and there is no "diff --git" header for such a change.
-
- * External diff and textconv helpers are now executed using the shell.
-   This makes them consistent with other programs executed by git, and
-   allows you to pass command-line parameters to the helpers. Any helper
-   paths containing spaces or other metacharacters now need to be
-   shell-quoted.  The affected helpers are GIT_EXTERNAL_DIFF in the
-   environment, and diff.*.command and diff.*.textconv in the config
-   file.
-
- * The --max-pack-size argument to 'git repack', 'git pack-objects', and
-   'git fast-import' was assuming the provided size to be expressed in MiB,
-   unlike the corresponding config variable and other similar options accepting
-   a size value.  It is now expecting a size expressed in bytes, with a possible
-   unit suffix of 'k', 'm', or 'g'.
-
-Updates since v1.6.6
---------------------
-
-(subsystems)
-
- * "git fast-import" updates; adds "option" and "feature" to detect the
-   mismatch between fast-import and the frontends that produce the input
-   stream.
-
- * "git svn" support of subversion "merge tickets" and miscellaneous fixes.
-
- * "gitk" and "git gui" translation updates.
-
- * "gitweb" updates (code clean-up, load checking etc.)
-
-(portability)
-
- * Some more MSVC portability patches for msysgit port.
-
- * Minimum Pthreads emulation for msysgit port.
-
-(performance)
-
- * More performance improvement patches for msysgit port.
-
-(usability, bells and whistles)
-
- * More commands learned "--quiet" and "--[no-]progress" options.
-
- * Various commands given by the end user (e.g. diff.type.textconv,
-   and GIT_EDITOR) can be specified with command line arguments.  E.g. it
-   is now possible to say "[diff "utf8doc"] textconv = nkf -w".
-
- * "sparse checkout" feature allows only part of the work tree to be
-   checked out.
-
- * HTTP transfer can use authentication scheme other than basic
-   (i.e./e.g. digest).
-
- * Switching from a version of superproject that used to have a submodule
-   to another version of superproject that no longer has it did not remove
-   the submodule directory when it should (namely, when you are not
-   interested in the submodule at all and didn't clone/checkout).
-
- * A new attribute conflict-marker-size can be used to change the size of
-   the conflict markers from the default 7; this is useful when tracked
-   contents (e.g. git-merge documentation) have strings that resemble the
-   conflict markers.
-
- * A new syntax "<branch>@{upstream}" can be used on the command line to
-   substitute the name of the "upstream" of the branch.  Missing branch
-   defaults to the current branch, so "git fetch && git merge @{upstream}"
-   will be equivalent to "git pull".
-
- * "git am --resolved" has a synonym "git am --continue".
-
- * "git branch --set-upstream" can be used to update the (surprise!) upstream,
-   i.e. where the branch is supposed to pull and merge from (or rebase onto).
-
- * "git checkout A...B" is a way to detach HEAD at the merge base between
-   A and B.
-
- * "git checkout -m path" to reset the work tree file back into the
-   conflicted state works even when you already ran "git add path" and
-   resolved the conflicts.
-
- * "git commit --date='<date>'" can be used to override the author date
-   just like "git commit --author='<name> <email>'" can be used to
-   override the author identity.
-
- * "git commit --no-status" can be used to omit the listing of the index
-   and the work tree status in the editor used to prepare the log message.
-
- * "git commit" warns a bit more aggressively until you configure user.email,
-   whose default value almost always is not (and fundamentally cannot be)
-   what you want.
-
- * "git difftool" has been extended to make it easier to integrate it
-   with gitk.
-
- * "git fetch --all" can now be used in place of "git remote update".
-
- * "git grep" does not rely on external grep anymore.  It can use more than
-   one thread to accelerate the operation.
-
- * "git grep" learned "--quiet" option.
-
- * "git log" and friends learned "--glob=heads/*" syntax that is a more
-   flexible way to complement "--branches/--tags/--remotes".
-
- * "git merge" learned to pass options specific to strategy-backends.  E.g.
-
-    - "git merge -Xsubtree=path/to/directory" can be used to tell the subtree
-      strategy how much to shift the trees explicitly.
-
-    - "git merge -Xtheirs" can be used to auto-merge as much as possible,
-      while discarding your own changes and taking merged version in
-      conflicted regions.
-
- * "git push" learned "git push origin --delete branch", a syntactic sugar
-   for "git push origin :branch".
-
- * "git push" learned "git push --set-upstream origin forker:forkee" that
-   lets you configure your "forker" branch to later pull from "forkee"
-   branch at "origin".
-
- * "git rebase --onto A...B" means the history is replayed on top of the
-   merge base between A and B.
-
- * "git rebase -i" learned new action "fixup" that squashes the change
-   but does not affect existing log message.
-
- * "git rebase -i" also learned --autosquash option that is useful
-   together with the new "fixup" action.
-
- * "git remote" learned set-url subcommand that updates (surprise!) url
-   for an existing remote nickname.
-
- * "git rerere" learned "forget path" subcommand.  Together with "git
-   checkout -m path" it will be useful when you recorded a wrong
-   resolution.
-
- * Use of "git reset --merge" has become easier when resetting away a
-   conflicted mess left in the work tree.
-
- * "git rerere" had rerere.autoupdate configuration but there was no way
-   to countermand it from the command line; --no-rerere-autoupdate option
-   given to "merge", "revert", etc. fixes this.
-
- * "git status" learned "-s(hort)" output format.
-
-(developers)
-
- * The infrastructure to build foreign SCM interface has been updated.
-
- * Many more commands are now built-in.
-
- * THREADED_DELTA_SEARCH is no more.  If you build with threads, delta
-   compression will always take advantage of it.
-
-Fixes since v1.6.6
-------------------
-
-All of the fixes in v1.6.6.X maintenance series are included in this
-release, unless otherwise noted.
-
- * "git branch -d branch" used to refuse deleting the branch even when
-   the branch is fully merged to its upstream branch if it is not merged
-   to the current branch.  It now deletes it in such a case.
-
- * "fiter-branch" command incorrectly said --prune-empty and --filter-commit
-   were incompatible; the latter should be read as --commit-filter.
-
- * When using "git status" or asking "git diff" to compare the work tree
-   with something, they used to consider that a checked-out submodule with
-   uncommitted changes is not modified; this could cause people to forget
-   committing these changes in the submodule before committing in the
-   superproject. They now consider such a change as a modification and
-   "git diff" will append a "-dirty" to the work tree side when generating
-   patch output or when used with the --submodule option.
+After some discussion this needs further simplification?
+
+* cp/add-u-pathspec (2010-02-09) 2 commits
+ - test for add with non-existent pathspec
+ - git add -u: die on unmatched pathspec
+
+* hm/maint-imap-send-crlf (2010-02-12) 1 commit
+ - git-imap-send: Convert LF to CRLF before storing patch to draft box
+
+Cram-MD5 from the same author seemed to need another round before landing
+here, but this one seemed to be ready for 'pu'.
+
+* jk/cherry-pick-reword (2010-02-11) 5 commits
+  (merged to 'next' on 2010-02-11 at d0eace1)
+ + cherry-pick: prettify the advice message
+ + cherry-pick: show commit name instead of sha1
+ + cherry-pick: format help message as strbuf
+ + cherry-pick: refactor commit parsing code
+ + cherry-pick: rewrap advice message
+
+* nd/root-git (2010-02-11) 5 commits
+ - Add test for using Git at root directory
+ - Support working directory located at root
+ - Add is_root_path()
+ - init-db, rev-parse --git-dir: do not append redundant slash
+ - make_absolute_path(): Do not append redundant slash
+
+The middle one needs replacement, as pointed by Hannes.
+
+* pb/log-first-parent-p-m (2010-02-10) 1 commit
+ - git log -p -m: document -m and honor --first-parent
+
+Needs tests but otherwise looked fine.  We might want to teach "-m trumps
+implicit --cc" to "git show", but that is a totally separate topic.
+
+--------------------------------------------------
+[Cooking]
+
+Many of these have been parked in 'pu' during the pre-release freeze.
+They will start migrating to 'next' shortly.
+
+* sp/maint-push-sideband (2010-02-10) 8 commits
+ - receive-pack: Send internal errors over side-band #2
+ - t5401: Use a bare repository for the remote peer
+ - receive-pack: Send hook output over side band #2
+ - receive-pack: Wrap status reports inside side-band-64k
+ - receive-pack: Refactor how capabilities are shown to the client
+ - send-pack: demultiplex a sideband stream with status data
+ - run-command: support custom fd-set in async
+ - run-command: Allow stderr to be a caller supplied pipe
+ (this branch is used by sp/push-sideband.)
+
+Based on 1.6.5 maintenance track.
+
+* sp/push-sideband (2010-02-10) 0 commits
+ (this branch uses sp/maint-push-sideband.)
+
+And my conflict resolution in #ifdef WINDOWS codepath.
+
+* ac/cvsimport-revision-mapping (2010-02-06) 1 commit
+ - cvsimport: new -R option: generate .git/cvs-revisions mapping
+
+* jc/maint-1.6.3-imap-send-bool-config-fix (2010-02-06) 1 commit
+ - imap-send: fix longstanding configuration parser bug
+
+* js/rebase-origin-x (2010-02-05) 1 commit
+ - [RFC w/o test and incomplete] rebase: add -x option to record original commit name
+
+* rs/git-dir-cleanup (2010-02-11) 3 commits
+  (merged to 'next' on 2010-02-11 at fa4f83c)
+ + Untouch RelNotes 1.7.0: grep --no-index will not be in the release
+  (merged to 'next' on 2010-02-06 at ef8ab9b)
+ + Resurrect "git grep --no-index"
+ + setenv(GIT_DIR) clean-up
+
+* jc/typo (2010-02-03) 1 commit
+ - Typofixes outside documentation area
+
+* jk/grep-double-dash (2010-02-06) 1 commit
+  (merged to 'next' on 2010-02-07 at 2ac040d)
+ + accept "git grep -- pattern"
+
+* jn/maint-makedepend (2010-01-26) 5 commits
+ - Makefile: drop dependency on $(wildcard */*.h)
+ - Makefile: clean up http-walker.o dependency rules
+ - Makefile: remove wt-status.h from LIB_H
+ - Makefile: make sure test helpers are rebuilt when headers change
+ - Makefile: add missing header file dependencies
+ (this branch is used by jn/makedepend and jn/master-makedepend.)
+
+These look sensible clean-up that could go to maint later.
+
+* jn/master-makedepend (2010-01-26) 0 commits
+ (this branch uses jn/maint-makedepend; is used by jn/makedepend.)
+
+This is to help merging the clean-up to "master".
+
+* jn/makedepend (2010-01-31) 9 commits
+ - Makefile: always remove .depend directories on 'make clean'
+ - Makefile: tuck away generated makefile fragments in .depend
+ - Teach Makefile to check header dependencies
+ - Makefile: list standalone program object files in PROGRAM_OBJS
+ - Makefile: lazily compute header dependencies
+ - Makefile: list generated object files in OBJECTS
+ - Makefile: disable default implicit rules
+ - Makefile: rearrange dependency rules
+ - Makefile: transport.o depends on branch.h now
+ (this branch uses jn/maint-makedepend and jn/master-makedepend.)
+
+And this is to build on top.  I don't want to touch build infrastructure
+during the pre-release freeze too much to avoid the last minute hassles
+that is only discovered when I try to cut RPMs; hence this will stay out
+of 'master' until 1.7.0 ships.
+
+* jc/checkout-detached (2010-01-29) 1 commit
+ - Reword "detached HEAD" notification
+
+* jc/maint-fix-test-perm (2010-01-30) 2 commits
+ - lib-patch-mode.sh: Fix permission
+ - t6000lib: Fix permission
+
+* jh/gitweb-caching (2010-01-30) 1 commit
+ - gitweb: Add an option to force version match
+
+* jn/makefile-script-lib (2010-01-31) 1 commit
+ - Do not install shell libraries executable
+
+* mv/request-pull-modernize (2010-01-29) 1 commit
+ - request-pull: avoid mentioning that the start point is a single commit
+
+* cc/reset-keep (2010-01-19) 5 commits
+ - reset: disallow using --keep when there are unmerged entries
+ - reset: disallow "reset --keep" outside a work tree
+ - Documentation: reset: describe new "--keep" option
+ - reset: add test cases for "--keep" option
+ - reset: add option "--keep" to "git reset"
+
+* jh/notes (2010-01-27) 23 commits
+ - builtin-notes: Add "add" subcommand for appending to note objects
+ - builtin-notes: Add "list" subcommand for listing note objects
+ - Documentation: Generalize git-notes docs to 'objects' instead of 'commits'
+ - builtin-notes: Add "prune" subcommand for removing notes for missing objects
+ - Notes API: prune_notes(): Prune notes that belong to non-existing objects
+ - t3305: Verify that removing notes triggers automatic fanout consolidation
+ - builtin-notes: Add "remove" subcommand for removing existing notes
+ - Teach builtin-notes to remove empty notes
+ - Teach notes code to properly preserve non-notes in the notes tree
+ - t3305: Verify that adding many notes with git-notes triggers increased fanout
+ - t3301: Verify successful annotation of non-commits
+ - Builtin-ify git-notes
+ - Refactor notes concatenation into a flexible interface for combining notes
+ - Notes API: Allow multiple concurrent notes trees with new struct notes_tree
+ - Notes API: write_notes_tree(): Store the notes tree in the database
+ - Notes API: for_each_note(): Traverse the entire notes tree with a callback
+ - Notes API: get_note(): Return the note annotating the given object
+ - Notes API: remove_note(): Remove note objects from the notes tree structure
+ - Notes API: add_note(): Add note objects to the internal notes tree structure
+ - Notes API: init_notes(): Initialize the notes tree from the given notes ref
+ - Add tests for checking correct handling of $GIT_NOTES_REF and core.notesRef
+ - Notes API: get_commit_notes() -> format_note() + remove the commit restriction
+ - Cosmetic fixes to notes.c
+
+* jc/grep-author-all-match-implicit (2010-01-17) 1 commit
+ - "log --author=me --grep=it" should find intersection, not union
