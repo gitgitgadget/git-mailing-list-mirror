@@ -1,102 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: 'git add' corrupts repository if the working directory is
- modified as it runs
-Date: Sat, 13 Feb 2010 06:12:38 -0600
-Message-ID: <20100213121238.GA2559@progeny.tock>
-References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org>
- <20100212002741.GB9883@progeny.tock>
- <20100212012314.GC24809@gibbs.hungrycats.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 2/2] git-svn: support fetch with autocrlf on
+Date: Sat, 13 Feb 2010 04:25:32 -0800
+Message-ID: <20100213122532.GA31653@dcvr.yhbt.net>
+References: <1265997155-3592-1-git-send-email-kusmabite@gmail.com> <1265997155-3592-2-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Zygo Blaxell <zblaxell@gibbs.hungrycats.org>
-X-From: git-owner@vger.kernel.org Sat Feb 13 13:12:43 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Erik Faye-Lund <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 13 13:26:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgGrb-0006Vy-0I
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 13:12:43 +0100
+	id 1NgH4t-0001Wh-5o
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 13:26:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753808Ab0BMMMi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Feb 2010 07:12:38 -0500
-Received: from mail-iw0-f201.google.com ([209.85.223.201]:60973 "EHLO
-	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753181Ab0BMMMh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2010 07:12:37 -0500
-Received: by iwn39 with SMTP id 39so761529iwn.1
-        for <git@vger.kernel.org>; Sat, 13 Feb 2010 04:12:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=NiyZJAoDwsNmF5dEZjgt76/z+fSdDRUAZx1732axvTY=;
-        b=n/PLVCLsCnTDQddRONoOWZCwZygkYIqYpeNMKcbNrHIh7H3ip4KooYlQ2y88LSYp31
-         g4swpK+AOQ9UTDp9GrY2l6ZYU0zRCvNNtc15QZYa5tR4swNhnmFH4wwZpESS4AQ13UZ4
-         Mmt99+fcl4z+XM/TgCCAsPZg85zrFGsgUFUtY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=aDKmCNu0rltCeNGvzViHTWpdbbHjLOVITCuPxVE8qFE7A47xeO6KM2I1MSfFphw2Lo
-         vQfxcm8I/6xK5d6aZcwJY0EfAVgOZNWWdfdr/yFp4cYY7YK/nKT3rOLLoEnx8pFFpXoC
-         Fl370jvCZq5efvwJTsKERtw42RjCThmNTLrwg=
-Received: by 10.231.59.7 with SMTP id j7mr1927492ibh.12.1266063156468;
-        Sat, 13 Feb 2010 04:12:36 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm3937994iwn.4.2010.02.13.04.12.34
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 13 Feb 2010 04:12:36 -0800 (PST)
+	id S1754321Ab0BMMZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2010 07:25:34 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:36411 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753884Ab0BMMZd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2010 07:25:33 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id D73991F68C;
+	Sat, 13 Feb 2010 12:25:32 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <20100212012314.GC24809@gibbs.hungrycats.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <1265997155-3592-2-git-send-email-kusmabite@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139793>
 
-Zygo Blaxell wrote:
-> On Thu, Feb 11, 2010 at 06:27:41PM -0600, Jonathan Nieder wrote:
+Erik Faye-Lund <kusmabite@googlemail.com> wrote:
+> If I enable core.autocrlf and perform a "git svn rebase" that fetches
+> a change containing CRLFs, the git-svn meta-data gets corrupted.
+> 
+> Commit d3c9634e worked around this by setting core.autocrlf to "false"
+> in the per-repo config when initing the clone. However if the config
+> variable was changed, the breakage would still occur. This made it
+> painful to work with git-svn on repos with mostly checked in LFs on
+> Windows.
+> 
+> This patch tries to fix the same problem while allowing core.autocrlf
+> to be enabled, by disabling filters when when hashing.
+> 
+> git-svn is currently the only call-site for hash_and_insert_object
+> (apart from the test-suite), so changing it should be safe.
+> 
+> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+> ---
+> 
+> With this patch applied, I guess we can also revert d3c9634e. I didn't
+> do this in this series, because I'm lazy and selfish and thus only
+> changed the code I needed to get what I wanted to work ;)
+> 
+> I've been running git-svn with these patches with core.autocrlf enabled
+> since December, and never seen the breakage that I saw before d3c9634e.
 
->>  - Low-hanging fruit: it should be possible for update-index to chec=
-k
->>    the stat information to see if the file has changed between when =
-it
->>    first opens it and when it finishes.
->
-> I don't think this is a good idea.  stat() is very coarse-grained
+Hi Erik,
 
-You=E2=80=99re probably right.  For many file types, st_size is likely =
-to
-change (in this way your script is testing something unusual), but
-that is no excuse to behave poorly when it doesn=E2=80=99t.
+How does reverting d3c9634e affect dcommit?  I've never dealt with (or
+even looked at) autocrlf, so I'll put my trust in you and Dscho with
+anything related to it.
 
-> What would be a good idea is to make sure that the code that copies a
-> file into the index and calculates its hash does both in a single pas=
-s
-> over the same input data.  That might require replacing a simple mmap=
-()
-> of the input file with a read-hash-copy loop.
-
-This leaves me nervous about speed.  Consider the following simple
-case: someone the file to be added is already in the object
-repository somewhere (maybe the user has tried this code before, or
-a file was renamed with 'mv', or a patch applied with 'patch', or an
-unmount and remount dirtied the stat information).
-
-With the current code, write_sha1_file() will hash the file, notice
-that object is already in .git/objects, and return.  With a
-read-hash-copy loop, git would have to store a (compressed or
-uncompressed) copy of the file somewhere in the meantime.
-
-But I=E2=80=99d be happy to see code appear that proves me wrong. ;-)  =
-One
-simple benchmark to try is running the git test suite.
-
-Cheers,
-Jonathan
+-- 
+Eric Wong
