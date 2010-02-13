@@ -1,68 +1,87 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: 'git add' corrupts repository if the working directory is 
-	modified as it runs
-Date: Sun, 14 Feb 2010 01:09:23 +0300
-Message-ID: <37fcd2781002131409r4166e496h9d12d961a2330914@mail.gmail.com>
-References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org>
-	 <20100213121238.GA2559@progeny.tock> <20100213133951.GA14352@Knoppix>
-	 <201002131539.54142.trast@student.ethz.ch>
-	 <20100213162924.GA14623@Knoppix>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Solve continuous integration (pending head / commit queue) 
+ problem using git
+Date: Sat, 13 Feb 2010 17:11:16 -0500 (EST)
+Message-ID: <alpine.LNX.2.00.1002131640200.14365@iabervon.org>
+References: <c41cd75d1002120837t20f2a47fi41e8c67245c4284c@mail.gmail.com> <32541b131002120942w50a29e7cjf2c10820b3286017@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Zygo Blaxell <zblaxell@gibbs.hungrycats.org>,
-	git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Sat Feb 13 23:10:30 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jan Koprowski <jan.koprowski@gmail.com>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 13 23:11:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgQC4-0000KP-Qw
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 23:10:29 +0100
+	id 1NgQDH-000179-Rf
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 23:11:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932089Ab0BMWJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Feb 2010 17:09:25 -0500
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:54402 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751005Ab0BMWJZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2010 17:09:25 -0500
-Received: by fxm27 with SMTP id 27so41230fxm.25
-        for <git@vger.kernel.org>; Sat, 13 Feb 2010 14:09:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=INrWtY+qIEuyimItzrL1BXC5UlnzUkkgcuC5i8D+o/E=;
-        b=LfD0BRCyQLMEmLUg8iWbzRu+hicEoQSjh4SLExIIcCy1hUMLBsr8BRw1C9GEqiWxjY
-         KbLJmzk6VGBJzZbIgcWFY5fle2Qq143WonvL/k7mx0W0qvxmvTzxksN7BZwb2lHUDWAc
-         45ghWosUA7qP1V1QeAmEIdaCb7IItk1sRAM1g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Qnj3nM8WGVmnuBQUyKyF/H44ZDzuEdA+igrcmAx7+BVo2p5mch3VVLh9tVy5BeQipa
-         5tnJUR0chFEqGPxasjyklyf6yGzH5ORGP7HhGqKBN/OJ9O0PzHcEZZ4l9QHQrQ7hrsDz
-         MuEXScRjzBUFqi3UvxOFesRwnhxIeZ99Mh/eI=
-Received: by 10.239.135.16 with SMTP id b16mr339887hbb.108.1266098963326; Sat, 
-	13 Feb 2010 14:09:23 -0800 (PST)
-In-Reply-To: <20100213162924.GA14623@Knoppix>
+	id S1757847Ab0BMWLT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2010 17:11:19 -0500
+Received: from iabervon.org ([66.92.72.58]:56109 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751005Ab0BMWLS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2010 17:11:18 -0500
+Received: (qmail 15955 invoked by uid 1000); 13 Feb 2010 22:11:16 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 13 Feb 2010 22:11:16 -0000
+In-Reply-To: <32541b131002120942w50a29e7cjf2c10820b3286017@mail.gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139866>
 
-On Sat, Feb 13, 2010 at 7:29 PM, Ilari Liusvaara
-<ilari.liusvaara@elisanet.fi> wrote:
->
-> Hmm... One needs to copy the data block at time into temporary buffer
-> and use that for feeding zlib and SHA-1. That ensures that whatever
-> SHA-1 hashes and zlib compresses are consistent.
+On Fri, 12 Feb 2010, Avery Pennarun wrote:
 
-If you want this then just compile Git with NO_MMAP = YesPlease
-It should solve the described problem.
+> On Fri, Feb 12, 2010 at 11:37 AM, Jan Koprowski <jan.koprowski@gmail.com> wrote:
+> > Now. My idea. There is some revision tagged as "stable". *Clone* and
+> > *pull* operations is somehow "overloaded" from server side and always!
+> > return last revision tagged as stable. After compiling external tool
+> > just move tag to another revision which pass all tests. Of course
+> > there is some additional parameter (for example --last or --unstable)
+> > which can clone fine way of repository.
+> >
+> > Two questions.
+> > 1) Maybe I try to invent the wheel again. Is there any way to take the
+> > effect without overloading standard git behaviours.
+> > 2) If not how overload git behaviors on git "server side" repo?
+> 
+> In general, code that lies to you about what's the most revision is
+> evil.  Sometimes you *do* want to fetch that revision it's lying to
+> you and saying doesn't exist, precisely because you'd like to help fix
+> it before integration.
 
-Dmitry
+I think a more suitable detail here would be to have the remote system 
+respond to pushes by stating that it's taking your push request under 
+advisement, but cannot give an immediate verdict for that request (and it 
+may want to let you know that it's updated a different ref of its choice 
+that you didn't intentionally request).
+
+$ git push
+   f99642a..e70de97  HEAD -> master (proposed, not updated)
+
+$ git log --oneline origin/master
+f99642a Original commit
+
+(wait for external signal, like getting a confirmation email)
+
+$ git fetch
+   f99642a..e70de97  maaster    -> origin/master
+
+$ git log --oneline origin/master
+f99642a Your commit
+
+I think the only thing that would be needed would be a way for the remote 
+server to report that it's not updating the ref, but it is planning to act 
+on your request, so that your local git can give a non-error without 
+updating the remote branch inappropriately. (Presumably, the server would 
+have used a pre-update hook to give this response, which would have 
+enqueued the request in the CI system; when the CI system likes a change, 
+it can push and the hook would detect that it's actually the CI system and 
+let the update happen).
+
+	-Daniel
+*This .sig left intentionally blank*
