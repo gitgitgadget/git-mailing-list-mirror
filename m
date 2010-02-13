@@ -1,217 +1,79 @@
-From: Fredrik Kuivinen <frekui@gmail.com>
-Subject: [PATCH 5/5] Use kwset in grep
-Date: Sat, 13 Feb 2010 15:21:10 +0100
-Message-ID: <20100213142110.GF9543@fredrik-laptop>
-References: <20100213141558.22851.13660.stgit@fredrik-laptop>
+From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
+Subject: Re: [PATCH] add -p: make the beginning of the hunk easier to see
+Date: Sat, 13 Feb 2010 15:34:00 +0100
+Message-ID: <6672d0161002130634j6d9b4994w5cd44405fe9b98a1@mail.gmail.com>
+References: <4B768807.3030003@gmail.com>
+	 <20100213112342.GA1299@coredump.intra.peff.net>
+	 <6672d0161002130333m55372972x909234cae7bd0d82@mail.gmail.com>
+	 <6672d0161002130342h348765a0j76f63972c4bbe060@mail.gmail.com>
+	 <20100213115512.GA5472@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 13 15:21:24 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Feb 13 15:35:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgIs5-0006L2-Mc
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 15:21:22 +0100
+	id 1NgJ5z-00083Q-FY
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 15:35:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757240Ab0BMOVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Feb 2010 09:21:15 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:53809 "EHLO
+	id S1754772Ab0BMOeF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Feb 2010 09:34:05 -0500
+Received: from mail-ew0-f228.google.com ([209.85.219.228]:62428 "EHLO
 	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757227Ab0BMOVO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2010 09:21:14 -0500
-Received: by mail-ew0-f228.google.com with SMTP id 28so2560766ewy.28
-        for <git@vger.kernel.org>; Sat, 13 Feb 2010 06:21:13 -0800 (PST)
+	with ESMTP id S1752420Ab0BMOeC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Feb 2010 09:34:02 -0500
+Received: by ewy28 with SMTP id 28so2570476ewy.28
+        for <git@vger.kernel.org>; Sat, 13 Feb 2010 06:34:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=fjqeBkGuNPdgyKCpzFAmWytnAXNx0bTP3msUrBSs7xo=;
-        b=GIIwJBttRQMXNNoa3lgG19R0dE+QmSBK0ggVE1YEL1ijPHJlVRxu4owAVuHR5YIUTC
-         D6ofMm8YO5iL5cLVmaYcwzdPksy2+0nECWJ5n+VeHO2UEeQve9IhuxImanYDeRO2fr78
-         UpjqMMx9UZOEFD3FPo1sCuMPlgypn24Xe6/g4=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wM5Y2A0t0f+irY9fWFnYzMzqkP0YQcnxO+HVPc00GvU=;
+        b=QgmzSp79SbeuPI+aZVYCJLzqBGkCO2dAnJGSn3CT+YRyZ4en/5LaqFIhX1HxdYmnbt
+         pjHmiRPYWQ0a9nODFfJ01x9HsRpUXGgt4pvVYDKz+u6/sjaqTKKnsSKKEeBSrgE44J/o
+         GaURtMc45lhexQ3P2RZvhYo4DeiTRboDIgQSM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=bJCGPQtaj3qpq2689YYi3lLouzZ1mVWrffo3bWC5mAzzm9D2GR2poztWz417G5IeOR
-         eXSZnB8HXDQVwEPnXjtofPzpkMPGtojrGTUrjqz3AXaK3a92f1NPZobz9HSdttOUDRna
-         y11QrAFqwLm9pwhyTrpe0+dZhOIZtJ1YQJ7LI=
-Received: by 10.213.111.18 with SMTP id q18mr1047669ebp.39.1266070873540;
-        Sat, 13 Feb 2010 06:21:13 -0800 (PST)
-Received: from fredrik-laptop (c83-250-157-96.bredband.comhem.se [83.250.157.96])
-        by mx.google.com with ESMTPS id 28sm10678563eyg.20.2010.02.13.06.21.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 13 Feb 2010 06:21:12 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20100213141558.22851.13660.stgit@fredrik-laptop>
-User-Agent: StGIT/0.14.2
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=qDWAVUnen4oFdxBMlyDvbgqsB8SZ8E/hv0q79WNz86D9quTyZMIdn2cY/w+4d0+d8C
+         MhpgJxLIdWvGQcnIi5PuYLyV3+YwEpPMWbkuP1IY+PHS133TjkMnftfRzdRwuqFuk4cR
+         26LrjSja/5/z3sAiptC68q4K31yuSJU2w+or8=
+Received: by 10.216.88.205 with SMTP id a55mr1719661wef.122.1266071641015; 
+	Sat, 13 Feb 2010 06:34:01 -0800 (PST)
+In-Reply-To: <20100213115512.GA5472@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139803>
 
-Best of five runs in the linux repository:
+2010/2/13 Jeff King <peff@peff.net>:
+> On Sat, Feb 13, 2010 at 12:42:56PM +0100, Bj=C3=B6rn Gustavsson wrote=
+:
+> If you are using color.interactive (or color.ui), that should already=
+ be
+> "bold blue". You can change it to red with color.interactive.prompt.
 
-before:
+Oops! Turned out I only had colors for "diff", "status", and "branch",
+so the prompt had had no color. I configured my color settings the
+day I started using git last spring (according to some tutorial or
+getting started document) and haven't looked at the color
+settings since.
 
-$ time git grep qwerty
-drivers/char/keyboard.c:        "qwertyuiop[]\r\000as"                          /* 0x10 - 0x1f */
+Now it looks much better.
 
-real	0m1.065s
-user	0m1.400s
-sys	0m0.536s
+Personally, I would prefer if more colors were turned on by
+default, or if there were a master setting to turn on all colors
+at once.
 
+Thanks for the help!
 
-after:
-
-$ time git grep qwerty
-drivers/char/keyboard.c:        "qwertyuiop[]\r\000as"                          /* 0x10 - 0x1f */
-
-real	0m0.621s
-user	0m0.560s
-sys	0m0.564s
-
-So we gain about 40% by using the kwset code.
-
-Signed-off-by: Fredrik Kuivinen <frekui@gmail.com>
----
-
- grep.c |   61 +++++++++++++++++++++++++++++++++++++++++--------------------
- grep.h |    2 ++
- 2 files changed, 43 insertions(+), 20 deletions(-)
-
-diff --git a/grep.c b/grep.c
-index a0864f1..deb5f71 100644
---- a/grep.c
-+++ b/grep.c
-@@ -51,16 +51,38 @@ struct grep_opt *grep_opt_dup(const struct grep_opt *opt)
- 	return ret;
- }
- 
-+static int is_fixed(const char *s)
-+{
-+	while (*s && !is_regex_special(*s))
-+		s++;
-+	return !*s;
-+}
-+
- static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
- {
- 	int err;
- 
- 	p->word_regexp = opt->word_regexp;
- 	p->ignore_case = opt->ignore_case;
--	p->fixed = opt->fixed;
--
--	if (p->fixed)
-+	p->fixed = 0;
-+
-+	if (opt->fixed || is_fixed(p->pattern))
-+		p->fixed = 1;
-+
-+	if (p->fixed) {
-+		if (opt->regflags & REG_ICASE || p->ignore_case) {
-+			static char trans[256];
-+			int i;
-+			for (i = 0; i < 256; i++)
-+				trans[i] = tolower(i);
-+			p->kws = kwsalloc(trans);
-+		} else {
-+			p->kws = kwsalloc(NULL);
-+		}
-+		kwsincr(p->kws, p->pattern, strlen(p->pattern));
-+		kwsprep(p->kws);
- 		return;
-+	}
- 
- 	err = regcomp(&p->regexp, p->pattern, opt->regflags);
- 	if (err) {
-@@ -241,7 +263,10 @@ void free_grep_patterns(struct grep_opt *opt)
- 		case GREP_PATTERN: /* atom */
- 		case GREP_PATTERN_HEAD:
- 		case GREP_PATTERN_BODY:
--			regfree(&p->regexp);
-+			if (p->fixed)
-+				kwsfree(p->kws);
-+			else
-+				regfree(&p->regexp);
- 			break;
- 		default:
- 			break;
-@@ -277,21 +302,17 @@ static void show_name(struct grep_opt *opt, const char *name)
- }
- 
- 
--static int fixmatch(const char *pattern, char *line, int ignore_case, regmatch_t *match)
-+static int fixmatch(const kwset_t kws, char *line, size_t sz,
-+		    regmatch_t *match)
- {
--	char *hit;
--	if (ignore_case)
--		hit = strcasestr(line, pattern);
--	else
--		hit = strstr(line, pattern);
--
--	if (!hit) {
-+	struct kwsmatch kwsm;
-+	size_t offset = kwsexec(kws, line, sz, &kwsm);
-+	if (offset == -1) {
- 		match->rm_so = match->rm_eo = -1;
- 		return REG_NOMATCH;
--	}
--	else {
--		match->rm_so = hit - line;
--		match->rm_eo = match->rm_so + strlen(pattern);
-+	} else {
-+		match->rm_so = offset;
-+		match->rm_eo = match->rm_so + kwsm.size[0];
- 		return 0;
- 	}
- }
-@@ -346,7 +367,7 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
- 
-  again:
- 	if (p->fixed)
--		hit = !fixmatch(p->pattern, bol, p->ignore_case, pmatch);
-+		hit = !fixmatch(p->kws, bol, eol-bol, pmatch);
- 	else
- 		hit = !regexec(&p->regexp, bol, 1, pmatch, eflags);
- 
-@@ -670,9 +691,9 @@ static int look_ahead(struct grep_opt *opt,
- 		int hit;
- 		regmatch_t m;
- 
--		if (p->fixed)
--			hit = !fixmatch(p->pattern, bol, p->ignore_case, &m);
--		else {
-+		if (p->fixed) {
-+			hit = !fixmatch(p->kws, bol, *left_p, &m);
-+		} else {
- #ifdef REG_STARTEND
- 			m.rm_so = 0;
- 			m.rm_eo = *left_p;
-diff --git a/grep.h b/grep.h
-index 9703087..3c79154 100644
---- a/grep.h
-+++ b/grep.h
-@@ -1,6 +1,7 @@
- #ifndef GREP_H
- #define GREP_H
- #include "color.h"
-+#include "kwset.h"
- 
- enum grep_pat_token {
- 	GREP_PATTERN,
-@@ -31,6 +32,7 @@ struct grep_pat {
- 	const char *pattern;
- 	enum grep_header_field field;
- 	regex_t regexp;
-+	kwset_t kws;
- 	unsigned fixed:1;
- 	unsigned ignore_case:1;
- 	unsigned word_regexp:1;
+--=20
+Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
