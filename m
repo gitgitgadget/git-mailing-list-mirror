@@ -1,80 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Individual file snapshots
-Date: Fri, 12 Feb 2010 16:47:29 -0800
-Message-ID: <7v6362c672.fsf@alter.siamese.dyndns.org>
-References: <ron1-CD3223.04030512022010@news.gmane.org>
- <4B75BD06.1010802@lsrfire.ath.cx> <ron1-519083.13253112022010@news.gmane.org>
- <12B5BDAB-DD9C-4CED-9489-0773BF577DF3@silverinsanity.com>
- <ron1-62D136.13570812022010@news.gmane.org>
- <C022F034-F60E-4E89-A174-DC0F53ADEC19@silverinsanity.com>
- <ron1-5EFFD7.14390512022010@news.gmane.org>
- <ca433831002121633j5b96049bs71e539c96397aff4@mail.gmail.com>
+From: Mark Lodato <lodatom@gmail.com>
+Subject: Re: Commit annotations (editable commit messages)
+Date: Fri, 12 Feb 2010 20:01:00 -0500
+Message-ID: <ca433831002121701u7c4e47ddn2f8bc19c45b2bd03@mail.gmail.com>
+References: <op.u71cw50km02fvl@cybershadow.mshome.net> <32541b131002121455s46bfe15aie484e9be484259c6@mail.gmail.com> 
+	<op.u71e00v4m02fvl@cybershadow.mshome.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ron Garret <ron1@flownet.com>, git@vger.kernel.org
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 13 01:48:12 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Vladimir Panteleev <thecybershadow@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 13 02:01:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ng6B6-0000xg-Gg
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 01:48:08 +0100
+	id 1Ng6O0-0003Au-W5
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 02:01:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757423Ab0BMArz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 19:47:55 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58276 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757271Ab0BMArm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 19:47:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5560A99889;
-	Fri, 12 Feb 2010 19:47:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+UgAnUzq8gn4lK2Qa+U86EDvoUQ=; b=M0Nz3Y
-	z7AialItjRxvjp4d2MdIS15tNU7Nx/LqkuypfdT8nIaTW+/XKZOD2DU9LL/FaYe4
-	RX9+4mGZSkga3Ztu7oY/BNyFu1UWknYDCEpgW+xIInKpGqSPflgpEHrL6RI4NGUD
-	c1vy08T+b1YczAyUBeqR3tsd7LGx3gRm/33/o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=e/njMc1LR3h+R1mO5Jm+d5cRCx7Km26G
-	Qg5GPNZ/F4ddQPh8xVegVduEN8UrKaeJg5An8pE2MnmGrrRTxanG62sCCSLcDkUk
-	LtcOUtq6wsRbC8mNILBsziYJOdoxUThFTUARuus7m7bwdFDkOOBHvLzt5Ti8XHe7
-	56LOCI+Av/4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1EA0B99883;
-	Fri, 12 Feb 2010 19:47:35 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3EF7899881; Fri, 12 Feb
- 2010 19:47:31 -0500 (EST)
-In-Reply-To: <ca433831002121633j5b96049bs71e539c96397aff4@mail.gmail.com>
- (Mark Lodato's message of "Fri\, 12 Feb 2010 19\:33\:56 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6038760A-1839-11DF-9786-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754589Ab0BMBBX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2010 20:01:23 -0500
+Received: from mail-yw0-f179.google.com ([209.85.211.179]:49144 "EHLO
+	mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753532Ab0BMBBW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 20:01:22 -0500
+Received: by ywh9 with SMTP id 9so3059424ywh.19
+        for <git@vger.kernel.org>; Fri, 12 Feb 2010 17:01:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=D/BK22OQx3dnz4ZcGJsNji/DhLrVRMu210MvIk/RsuM=;
+        b=LAt6HKkMQtflYlDlB+u0nYAfqSIVVMlJ1ANNSapmQEPSsA+n+ku0QWq3T6d2tMibQ3
+         /p4E0eF0yy2buqbrTfn0HKvhuMmZWc9IRe3gO8iess6SIcrLcnElNUIq8B+ByeIWlwJT
+         uolIKc5zY2tGxN1SapYLAQlVvGEr/6SyzlmPc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=Tgbhu+xNPJCnFO/jbDrTuGjmvdo1CknEcgsQnxuq6MGYx8wIVaT2iT4xFMEqn1yfc/
+         iH/N1IxFHtmccbEnA9Efvi78JR5i+yexY06/PtJF4OMNghgoP2iJnYsvxQD2Py56dad/
+         SkG/bZncwoKUto62XvuOOJBbHl6EoQkgxHcHg=
+Received: by 10.90.11.12 with SMTP id 12mr2190280agk.18.1266022881345; Fri, 12 
+	Feb 2010 17:01:21 -0800 (PST)
+In-Reply-To: <op.u71e00v4m02fvl@cybershadow.mshome.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139767>
 
-Mark Lodato <lodatom@gmail.com> writes:
-
-> The basic steps are:
+2010/2/12 Vladimir Panteleev <thecybershadow@gmail.com>:
+>> It sounds like you want to read about a new feature called git-notes:
+>> http://www.kernel.org/pub/software/scm/git/docs/git-notes.html
 >
-> backup .git/index
-> git add -a
-> git write-tree
-> git commit-tree
-> restore .git/index
+> Wow, thanks! Looks like I'm behind the times. (Currently stuck with
+> msysGit/1.6.5)
 
-Instead of doing that, you might want to consider
+Yes, what you described sounds *exactly* like git-notes :)
 
-	GIT_INDEX_FILE=...some-temporary-file...
-        export GIT_INDEX_FILE
+> The documentation looks pretty scant. Does anyone know how close were my
+> suggestions to the actual implemented behavior (esp. regarding rebasing)?
 
-and run everything as if that is the index throughout your script.  That
-way, if your script ever failed in the middle, you won't have to worry
-about a broken index file.
+1, 2, 3, and 4 are all implemented, as far as I know.  However, I
+don't think notes copy during a rebase.  My gut feeling is that you
+probably shouldn't be rebasing so much that this is an issue.  I'm
+guessing that you should copy the note to the new commit ID after the
+rebase.
+
+I have also found the documentation lacking.  It helped a bit to see
+the history.  It's pretty compact in the logs.  Here are two commands
+to isolate the commits:
+
+git log --reverse fed8a7de3592~..df27f6280545
+gitk fed8a7de3592..df27f6280545
+
+--
+Mark
