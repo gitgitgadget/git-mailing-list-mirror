@@ -1,51 +1,67 @@
-From: Larry D'Anna <larry@elder-gods.org>
-Subject: Re: Individual file snapshots
-Date: Fri, 12 Feb 2010 22:00:04 -0500
-Message-ID: <20100213030004.GA20863@cthulhu>
-References: <ron1-CD3223.04030512022010@news.gmane.org>
- <4B75BD06.1010802@lsrfire.ath.cx>
- <ron1-519083.13253112022010@news.gmane.org>
- <12B5BDAB-DD9C-4CED-9489-0773BF577DF3@silverinsanity.com>
- <ron1-62D136.13570812022010@news.gmane.org>
+From: Hitoshi Mitake <mitake@dcl.info.waseda.ac.jp>
+Subject: Re: [PATCH v4 1/2] git-imap-send: Add CRAM-MD5 authenticate method
+ 	support
+Date: Sat, 13 Feb 2010 13:21:05 +0900
+Message-ID: <4B7628B1.1070506@dcl.info.waseda.ac.jp>
+References: <1265717345-2118-1-git-send-email-mitake@dcl.info.waseda.ac.jp>	 <1265974572-6282-1-git-send-email-mitake@dcl.info.waseda.ac.jp> <40aa078e1002120441p2240797du7481c8da21e6176b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ron Garret <ron1@flownet.com>
-X-From: git-owner@vger.kernel.org Sat Feb 13 04:00:14 2010
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Erik Faye-Lund <kusmabite@googlemail.com>, gitster@pobox.com,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jeff King <peff@peff.net>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Sat Feb 13 05:21:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ng8Ev-0006Q1-RE
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 04:00:14 +0100
+	id 1Ng9VL-0002Rc-Mx
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Feb 2010 05:21:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753649Ab0BMDAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2010 22:00:07 -0500
-Received: from cthulhu.elder-gods.org ([140.239.99.253]:51935 "EHLO
-	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751568Ab0BMDAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2010 22:00:05 -0500
-Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
-	id 688AC822215; Fri, 12 Feb 2010 22:00:04 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <ron1-62D136.13570812022010@news.gmane.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755795Ab0BMEVK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Feb 2010 23:21:10 -0500
+Received: from ns.dcl.info.waseda.ac.jp ([133.9.216.194]:65373 "EHLO
+	ns.dcl.info.waseda.ac.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754774Ab0BMEVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2010 23:21:09 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by ns.dcl.info.waseda.ac.jp (Postfix) with ESMTP id E83CDEBFBF2;
+	Sat, 13 Feb 2010 13:21:05 +0900 (JST)
+X-Virus-Scanned: amavisd-new at dcl.info.waseda.ac.jp
+Received: from ns.dcl.info.waseda.ac.jp ([127.0.0.1])
+	by localhost (ns.dcl.info.waseda.ac.jp [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id JzRmebx0demA; Sat, 13 Feb 2010 13:21:05 +0900 (JST)
+Received: from [192.168.10.21] (fw-cisco.dcl.info.waseda.ac.jp [133.9.216.204])
+	by ns.dcl.info.waseda.ac.jp (Postfix) with ESMTP id 83A43EBFBEE;
+	Sat, 13 Feb 2010 13:21:05 +0900 (JST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5) Gecko/20091211 Shredder/3.0
+In-Reply-To: <40aa078e1002120441p2240797du7481c8da21e6176b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139773>
 
-* Ron Garret (ron1@flownet.com) [100212 16:58]:
-> That would require a separate branch for every snapshot, no?  I want 
-> this to be lightweight.  It's not so much the creation of a zillion 
-> branches that bothers me, but having to come up with a new name every 
-> time would be a real hassle.
+On 2010=E5=B9=B402=E6=9C=8812=E6=97=A5 21:41, Erik Faye-Lund wrote:
+> On Fri, Feb 12, 2010 at 12:36 PM, Hitoshi Mitake
+> <mitake@dcl.info.waseda.ac.jp>  wrote:
+>> +
+>> +static char *cram(const char *challenge_64, const char *user, const=
+ char *pass)
+>> +{
+>> +       fprintf(stderr, "If you want to use CRAM-MD5 authenticate me=
+thod,"
+>> +               "you have to build git-imap-send with OpenSSL librar=
+y\n");
+>> +       exit(1);
+>> +}
+>> +
+>
+> Why not use die() here?
+>
 
-I like to keep a branch called 'archive' for crap that's not being actively used
-anymore, but that I don't to throw away.  Like failed experiments, or top-git
-branches that have been merged.  I just merge -s ours all of it into archive and
-forget about it.
-
-       --larry
+Ah, die() is the most adequate function for this case, thanks!
