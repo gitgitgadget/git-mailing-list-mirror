@@ -1,74 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] don't use mmap() to hash files
-Date: Sun, 14 Feb 2010 03:46:51 -0800
-Message-ID: <7vsk94niok.fsf@alter.siamese.dyndns.org>
-References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org>
- <20100214021847.GA9704@dpotapov.dyndns.org>
- <7v8wawy0ee.fsf@alter.siamese.dyndns.org>
- <201002141214.15025.trast@student.ethz.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: 'git svn log' no longer uses the pager
+Date: Sun, 14 Feb 2010 05:54:30 -0600
+Message-ID: <20100214115430.GA1849@progeny.tock>
+References: <462027ff1002131314k62069160h63760fc8316aa43b@mail.gmail.com>
+ <20100213235156.GA9054@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	Zygo Blaxell <zblaxell@esightcorp.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Jonathan Nieder <jrnieder@gmail.com>, <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Feb 14 12:47:20 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sebastian Celis <sebastian@sebastiancelis.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Feb 14 12:54:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgcwX-0001w2-Gk
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Feb 2010 12:47:17 +0100
+	id 1Ngd3w-0006J6-5H
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Feb 2010 12:54:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754258Ab0BNLrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Feb 2010 06:47:11 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39592 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752793Ab0BNLrI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Feb 2010 06:47:08 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A0FF99123;
-	Sun, 14 Feb 2010 06:47:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4Mo82/Gs6EI00n5LnJxixjoFElU=; b=TnogJy
-	tuTd8nm1J/BS5Kjx7SDSgh/u87djn/fH7EP6BnTUICxdj9hybwdCfN04iJ0Ecd5U
-	ztF5hZoec3GIU9R7Ae6rvND6zjJF/iJE2X//382thwfq5mzKfeZUbP9rT3dtA/pi
-	tdCdiVWLIR3ysDHypzNNBNBAKxuhmG2YA7Y/s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QQqE31AjSLcsI6U/ov3zjqxJ5CXuT0hs
-	HO6zPlQGeOtskJEBbRe/X+derRrQYh4EBVKbVPYkWYW4eU0bTCNBwkeHvwDFl2zE
-	tLahV6n2Dh9pvJPfHdTzvsVb8qms2TDYN059ZLgGtdI9fNe1xCbVUIuenWS/Y3CP
-	2ML9SaDisv0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0DA8499122;
-	Sun, 14 Feb 2010 06:47:00 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C7BEA99120; Sun, 14 Feb
- 2010 06:46:52 -0500 (EST)
-In-Reply-To: <201002141214.15025.trast@student.ethz.ch> (Thomas Rast's
- message of "Sun\, 14 Feb 2010 12\:14\:14 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A92A7F40-195E-11DF-B71F-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758409Ab0BNLyi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Feb 2010 06:54:38 -0500
+Received: from mail-iw0-f201.google.com ([209.85.223.201]:48576 "EHLO
+	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758358Ab0BNLyf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Feb 2010 06:54:35 -0500
+Received: by iwn39 with SMTP id 39so1360396iwn.1
+        for <git@vger.kernel.org>; Sun, 14 Feb 2010 03:54:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=igQDpq0ttbzmgNnbberkJjQHQv3T7u/K8PibAjSPaKs=;
+        b=JHcZO0ele5xgVI6+B5plKdr2G1jySMgYNr6cCIsQ4W63QiOSUWrN0Mqc1nYuKTFl48
+         KyLiQ1DxzmaZbXnjmjdwMOCXPrygdagY3Yp53N0KzXPDkXCyc75mCW0cZ61KEY4DM0FT
+         1At5LY2YBvyQwYMP5vdxd1m35EfnnWko8Ssec=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=RivmVi1Pyj+c8+fM89DGDhewetz+nJzWAfB7U4zmsWOfsdqt58lTi3Km7jeoWcbTrI
+         q+b6BWqApWPxwTLLWUHU/Y6m7X+toGMY+SJqtF6bdN/9JQGVenqUqkdVoH100fRT9Ukh
+         oxA1KhRDNDfioEQSQRDB+BQ/ooGPf1D3mBYC0=
+Received: by 10.231.150.74 with SMTP id x10mr5881025ibv.97.1266148475044;
+        Sun, 14 Feb 2010 03:54:35 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 22sm5129981iwn.0.2010.02.14.03.54.34
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 14 Feb 2010 03:54:34 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20100213235156.GA9054@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139899>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Jeff King wrote:
+> On Sat, Feb 13, 2010 at 03:14:54PM -0600, Sebastian Celis wrote:
 
-> * Give up and stick with Dmitry's patch :-)
+>> Ever since upgrading to git 1.6.6.1 I have noticed that 'git svn log=
+'
+>> no longer uses the pager. It definitely used to in git 1.6.5.X, but =
+it
+>> no longer does.
+[...]
+> I think it's a bug. It bisects to Jonathan's dec543e (am -i, git-svn:
+> use "git var GIT_PAGER", 2009-10-30). But it seems to me that "git va=
+r
+> GIT_PAGER" is fundamentally broken.
 
-You obviously didn't read the last line of my message before responding.
+Yikes, you=E2=80=99re right.  Sorry about that.
 
-In any case, I have a suspicion that streaming to a single loose object
-file would not buy us much (that is the only case the "cross directory
-rename" could matter), exactly because we wouldn't want to leave an object
-in loose form if it is so big that we do not want to slurp it in full into
-memory anyway.  If we stream such a huge object directly to a new pack, on
-the other hand, there won't be any cross directory rename issues.
+> For git-config's colorbool support we have the caller pass in a
+> stdout-is-tty flag. I suspect we would need to do the same thing here=
+=2E
+
+Thanks for the helpful reference.  I think it is simpler for the caller
+to disable the pager himself, i.e., something like patches 2, 4, and 5
+below:
+
+Jonathan Nieder (6):
+  Fix 'git var' usage synopsis
+  Make 'git var GIT_PAGER' always print the configured pager
+  git.1: Clarify the behavior of the --paginate option
+  git svn: Fix launching of pager
+  am: Fix launching of pager
+  tests: Add tests for automatic use of pager
+
+ Documentation/git-var.txt |    2 +-
+ Documentation/git.txt     |    8 ++-
+ builtin-var.c             |    4 +-
+ cache.h                   |    2 +-
+ git-am.sh                 |    5 +-
+ git-sh-setup.sh           |   16 +++++
+ git-svn.perl              |    9 ++-
+ pager.c                   |    6 +-
+ t/t7006-pager.sh          |  163 +++++++++++++++++++++++++++++++++++++=
+++++++++
+ 9 files changed, 200 insertions(+), 15 deletions(-)
+ create mode 100644 t/t7006-pager.sh
