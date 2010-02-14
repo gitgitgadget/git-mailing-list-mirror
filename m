@@ -1,73 +1,76 @@
-From: Fredrik Kuivinen <frekui@gmail.com>
-Subject: Re: [PATCH 2/5] Add string search routines from GNU grep
-Date: Sun, 14 Feb 2010 17:52:48 +0100
-Message-ID: <4c8ef71002140852g4966f35aq9a5aa0fda0247a9c@mail.gmail.com>
-References: <20100213141558.22851.13660.stgit@fredrik-laptop>
-	 <20100213142038.GC9543@fredrik-laptop> <4B76CBA8.5060504@gnu.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] don't use mmap() to hash files
+Date: Sun, 14 Feb 2010 19:10:01 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1002141908150.20986@pacific.mpi-cbg.de>
+References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org> <20100213121238.GA2559@progeny.tock> <20100213133951.GA14352@Knoppix> <201002131539.54142.trast@student.ethz.ch> <20100213162924.GA14623@Knoppix> <37fcd2781002131409r4166e496h9d12d961a2330914@mail.gmail.com>
+ <20100213223733.GP24809@gibbs.hungrycats.org> <20100214011812.GA2175@dpotapov.dyndns.org> <alpine.DEB.1.00.1002140249410.20986@pacific.mpi-cbg.de> <20100214024259.GB9704@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Dmitry Potapov <dpotapov@gmail.com>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Feb 14 17:52:56 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Zygo Blaxell <zblaxell@esightcorp.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 14 19:03:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NghiJ-0007R7-Lx
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Feb 2010 17:52:56 +0100
+	id 1Ngip4-0003TY-CV
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Feb 2010 19:03:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751946Ab0BNQwv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Feb 2010 11:52:51 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:36297 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751908Ab0BNQwu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Feb 2010 11:52:50 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so165085fgg.1
-        for <git@vger.kernel.org>; Sun, 14 Feb 2010 08:52:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=t4ryKjlu5VWefOpLum3q22M8gY4OCynamcHSOaPLHaE=;
-        b=qQ2CxW43JZNw7c6mFJKkAw5Vhd2zwvbQDNlISdTxE6QBx6EYbKgsKSjYQc9sdYen8H
-         yXnuu7PAcC0j7Oj0F+EiGkIwH5ilJY11av6CZlGh8sHN92hVtnlK6mC1Ef9AW3c/0W+E
-         sO0Wz6bS2VtdfPIrJ4DQK8TGzzvRmLKWY9MDU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=PvPObrsyOynrZfIv+RX1yjMhK7Y+ZvzHKVB3DEkiesT6VGDT8lmm+1py5xA0zTTknJ
-         NBEnrlNQrQuT9+Suctp/r+heOtaz4MyU/GO8le8J3YdsCIFuQScrtXoTEpXgmaJ6VCLB
-         pwmNiPH+u578sp3DVIEYRKyIRrW6Nanl8yfC0=
-Received: by 10.239.188.202 with SMTP id q10mr410328hbh.80.1266166368582; Sun, 
-	14 Feb 2010 08:52:48 -0800 (PST)
-In-Reply-To: <4B76CBA8.5060504@gnu.org>
+	id S1752252Ab0BNSDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Feb 2010 13:03:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53075 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751494Ab0BNSD3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Feb 2010 13:03:29 -0500
+Received: (qmail invoked by alias); 14 Feb 2010 18:03:26 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp048) with SMTP; 14 Feb 2010 19:03:26 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+C7JhjJZqCFDzdBTcS//eYgKB0r52+zqyqzQhT+g
+	3VcfeAIIVXCIS3
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20100214024259.GB9704@dpotapov.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.56999999999999995
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139928>
 
-On Sat, Feb 13, 2010 at 16:56, Paolo Bonzini <bonzini@gnu.org> wrote:
->
->> + =A0 This program is free software; you can redistribute it and/or =
-modify
->> + =A0 it under the terms of the GNU General Public License as publis=
-hed by
->> + =A0 the Free Software Foundation; either version 3, or (at your op=
-tion)
->> + =A0 any later version.
->
-> You need to use the last GPLv2 version (commit e7ac713d^ in the GNU g=
-rep git
-> repository). =A0It doesn't change anything except the copyright heade=
-r, but
-> let's do things the right way.
+Hi,
 
-Thanks. I will use the GPLv2 version in the next iteration.
+On Sun, 14 Feb 2010, Dmitry Potapov wrote:
 
-- Fredrik
+> On Sun, Feb 14, 2010 at 02:53:58AM +0100, Johannes Schindelin wrote:
+> > On Sun, 14 Feb 2010, Dmitry Potapov wrote:
+> > 
+> > > +	if (strbuf_read(&sbuf, fd, 4096) >= 0)
+> > 
+> > How certain are you at this point that all of fd's contents fit into 
+> > your memory?
+> 
+> You can't be sure... In fact, we know mmap() also may fail for huge
+> files, so can strbuf_read().
+
+That's comparing oranges to apples. In one case, the address space runs 
+out, in the other the available memory. The latter is much more likely.
+
+> > And even if you could be certain, a hint is missing that 
+> > strbuf_read(), its name notwithstanding, does not read NUL-terminated 
+> > strings. Oh, and the size is just a hint for the initial size, and it 
+> > reads until EOF. That has to be said in the commit message.
+> 
+> I did not add _any_ new code, including the above line. It was there
+> before my patch.
+
+But that explanation does not answer my question, does it? And my question 
+was not unreasonable to ask, was it?
+
+Ciao,
+Dscho
