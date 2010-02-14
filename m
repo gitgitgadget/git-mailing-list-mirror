@@ -1,80 +1,90 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: mmap with MAP_PRIVATE is useless
-Date: Sun, 14 Feb 2010 03:11:30 +0100
-Message-ID: <4B775BD2.3040007@gnu.org>
-References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org> <20100212002741.GB9883@progeny.tock> <4B775384.50009@gnu.org> <7vy6iw4m6r.fsf@alter.siamese.dyndns.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH] don't use mmap() to hash files
+Date: Sun, 14 Feb 2010 05:18:47 +0300
+Message-ID: <20100214021847.GA9704@dpotapov.dyndns.org>
+References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org>
+ <20100213121238.GA2559@progeny.tock>
+ <20100213133951.GA14352@Knoppix>
+ <201002131539.54142.trast@student.ethz.ch>
+ <20100213162924.GA14623@Knoppix>
+ <37fcd2781002131409r4166e496h9d12d961a2330914@mail.gmail.com>
+ <20100213223733.GP24809@gibbs.hungrycats.org>
+ <20100214011812.GA2175@dpotapov.dyndns.org>
+ <7vtytk61im.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Zygo Blaxell <zblaxell@gibbs.hungrycats.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Zygo Blaxell <zblaxell@esightcorp.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 14 03:11:59 2010
+X-From: git-owner@vger.kernel.org Sun Feb 14 03:20:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgTxn-0000KG-Gx
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Feb 2010 03:11:59 +0100
+	id 1NgU6U-0004Rv-Kr
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Feb 2010 03:20:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758272Ab0BNCLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Feb 2010 21:11:35 -0500
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:63814 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758118Ab0BNCLe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2010 21:11:34 -0500
-Received: by fxm27 with SMTP id 27so145719fxm.25
-        for <git@vger.kernel.org>; Sat, 13 Feb 2010 18:11:32 -0800 (PST)
+	id S932133Ab0BNCSy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2010 21:18:54 -0500
+Received: from fg-out-1718.google.com ([72.14.220.158]:18278 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758276Ab0BNCSx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2010 21:18:53 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so48349fgg.1
+        for <git@vger.kernel.org>; Sat, 13 Feb 2010 18:18:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=sdEJpqO0DtFVeohRgJoHz7XYWaKO4RmDCW1YLW2fcYY=;
-        b=JYWzbi4/h6np/G+OY0DY7qdqcqAT5FGAbPvvI/sX0n0IwWr9qwuCIMcmGXU0kRVhiA
-         E3MEt5a5lcs5Dv6SVENgb0FqdxMbddlFVdMZCPkyQ0Jy1AxIDJGxsEpuAPsffbYj2ekR
-         hcaQESXviY60AHIQb59oV0jKCCxFUSuQjbV2w=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=PQD0LOIkS84IO8kfv6vt/L525rsr0BhHjVHQefemJlY=;
+        b=mswmErvpeIt0Jz+QURjofuE5+rWw3otzGH+0hKu/KhZlGg81YBUbX3TfO2XSP80VaS
+         h62E5w1VJKtRZYxowBHUumS/Hq8//E3y7HtN3a5WXJYsvk274g1MLqpWZbRjzpa8bzQq
+         DHcASkw1KwtQ0FB71FjmPLjThvMPu+nQ9ZwZ4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=aReoN7My0P/b0WMYNni7DC/M1Q2IjrNe/W5SXz6gS2ocgM1jLtHCFAY3Al7ONJD5BC
-         nvi8H+V6ruMqYRltDWeQchHjTwU7GnYfaKJC2g/phrW9dusyfbbpopYFrVWUOCL89gpx
-         W7IMS0UB5gsKekO7p6ke9oIPfNA1+GHefMBQw=
-Received: by 10.223.97.220 with SMTP id m28mr3852849fan.36.1266113492271;
-        Sat, 13 Feb 2010 18:11:32 -0800 (PST)
-Received: from yakj.usersys.redhat.com ([85.93.118.17])
-        by mx.google.com with ESMTPS id 18sm7979494fks.4.2010.02.13.18.11.30
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Dc/EYIZBTfxCy4QHLua09f254C6El+UBT7dyZCTQhdiauuKcejXX7zl2qmePwxsPxN
+         mWScQpvlEff2NQVhygaIxEqE3uAExKU5s9adgIDbz77lVu96A2I71pSigA8ULd8zmUf1
+         pQzzTjIBkFb8WH/k+lUuUOWe5ktGFfmuS6bCk=
+Received: by 10.87.51.13 with SMTP id d13mr5954509fgk.11.1266113930171;
+        Sat, 13 Feb 2010 18:18:50 -0800 (PST)
+Received: from localhost (ppp91-76-16-167.pppoe.mtu-net.ru [91.76.16.167])
+        by mx.google.com with ESMTPS id d8sm10376759fga.8.2010.02.13.18.18.49
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 13 Feb 2010 18:11:31 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100120 Fedora/3.0.1-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.1
-In-Reply-To: <7vy6iw4m6r.fsf@alter.siamese.dyndns.org>
+        Sat, 13 Feb 2010 18:18:49 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vtytk61im.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139883>
 
-On 02/14/2010 02:53 AM, Junio C Hamano wrote:
-> Back when most of these mmap calls were written by Linus and myself,
-> we weren't interested in using MAP_PRIVATE, or any other trick for
-> that matter, to deal with the case where the user tells git to go
-> index a file, and then mucks with the file before git finishes and
-> gives back control.
+On Sat, Feb 13, 2010 at 05:37:21PM -0800, Junio C Hamano wrote:
+> Dmitry Potapov <dpotapov@gmail.com> writes:
+> 
+> > If a mmapped file is changed by another program during git-add, it
+> > causes the repository corruption. Disabling mmap() in index_fd() does
+> > not have any negative impact on the overall speed of Git. In fact, it
+> > makes git hash-object to work slightly faster....
+> > ...
+> > I think more people should test this change to see its impact on
+> > performance. For me, it was positive. Here is my results:
+> 
+> I wasn't particularly impressed by the original problem description, but
+> this is a very interesting result.
 
-Eh, this one in particular (in index_fd) is quite ancient...
+My initial reaction was to write that the whole problem is due to abuse
+Git for the purposes that it was not intended. But then I decided to do
+some testing to see what impact it has. And, because I do not see any
+negative impact (in fact, slightly improve speed), and I decided to ask
+other people (who are interested in this patch) to do more testing.
 
-commit e83c5163316f89bfbde7d9ab23ca2e25604af290
-Author: Linus Torvalds <torvalds@ppc970.osdl.org>
-Date:   Thu Apr 7 15:13:13 2005 -0700
 
-     Initial revision of "git", the information manager from hell
-
-:-)
-
-There were three mmap calls -- in read_sha1_file, read_cache and 
-index_fd -- and all three were of the same mmap (NULL, st.st_size, 
-PROT_READ, MAP_PRIVATE, fd, 0) shape.
-
-Paolo
+Dmitry
