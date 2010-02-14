@@ -1,95 +1,73 @@
 From: Fredrik Kuivinen <frekui@gmail.com>
-Subject: Re: [PATCH 5/5] Use kwset in grep
-Date: Sun, 14 Feb 2010 17:51:19 +0100
-Message-ID: <4c8ef71002140851hff65a2bj7cc31c634ce5bab3@mail.gmail.com>
+Subject: Re: [PATCH 2/5] Add string search routines from GNU grep
+Date: Sun, 14 Feb 2010 17:52:48 +0100
+Message-ID: <4c8ef71002140852g4966f35aq9a5aa0fda0247a9c@mail.gmail.com>
 References: <20100213141558.22851.13660.stgit@fredrik-laptop>
-	 <20100213142110.GF9543@fredrik-laptop> <4B76E384.2070602@gnu.org>
+	 <20100213142038.GC9543@fredrik-laptop> <4B76CBA8.5060504@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Dmitry Potapov <dpotapov@gmail.com>
 To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Feb 14 17:51:30 2010
+X-From: git-owner@vger.kernel.org Sun Feb 14 17:52:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nghgt-00068j-PM
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Feb 2010 17:51:28 +0100
+	id 1NghiJ-0007R7-Lx
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Feb 2010 17:52:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751904Ab0BNQvX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Feb 2010 11:51:23 -0500
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:56298 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751678Ab0BNQvW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Feb 2010 11:51:22 -0500
-Received: by fxm27 with SMTP id 27so391627fxm.25
-        for <git@vger.kernel.org>; Sun, 14 Feb 2010 08:51:20 -0800 (PST)
+	id S1751946Ab0BNQwv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Feb 2010 11:52:51 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:36297 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751908Ab0BNQwu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Feb 2010 11:52:50 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so165085fgg.1
+        for <git@vger.kernel.org>; Sun, 14 Feb 2010 08:52:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=GCBirZUCobLA9XU49paD+zPhlLsYtiDeknaBB75qWik=;
-        b=tFyO5bzBksMqN5VcQyslaeh/bQRIBlOoCeRNEE2kob+UKCUCz0a0bGItHFgFbOkkt9
-         f+dcVP7ZsYOlQffyjIkjXP8P5sVxwFnZ/sPd//JXk2yGkvOkalLEq7yvFjx7bw6yi3rh
-         LVjUmAgYHIgt1hNeGSNG05I78kty4M/Rq4h1w=
+        bh=t4ryKjlu5VWefOpLum3q22M8gY4OCynamcHSOaPLHaE=;
+        b=qQ2CxW43JZNw7c6mFJKkAw5Vhd2zwvbQDNlISdTxE6QBx6EYbKgsKSjYQc9sdYen8H
+         yXnuu7PAcC0j7Oj0F+EiGkIwH5ilJY11av6CZlGh8sHN92hVtnlK6mC1Ef9AW3c/0W+E
+         sO0Wz6bS2VtdfPIrJ4DQK8TGzzvRmLKWY9MDU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=UKYMtpkDNs/OwcmlR8Zoeo2B+5/Q0mylTxWurWJ9wpiApTxDXY7KtvPQ/075RC8opj
-         cJlkFHi760gOli8+wPqu+vCsA5Yn065zdfMxB9/GWkqVIZ7vgbiRDdAg+YJvR61cgSWc
-         aXYfDMVtEtnbooNgSkYzT8wSv/1rWP4GofMRk=
-Received: by 10.239.189.140 with SMTP id t12mr441373hbh.146.1266166279753; 
-	Sun, 14 Feb 2010 08:51:19 -0800 (PST)
-In-Reply-To: <4B76E384.2070602@gnu.org>
+        b=PvPObrsyOynrZfIv+RX1yjMhK7Y+ZvzHKVB3DEkiesT6VGDT8lmm+1py5xA0zTTknJ
+         NBEnrlNQrQuT9+Suctp/r+heOtaz4MyU/GO8le8J3YdsCIFuQScrtXoTEpXgmaJ6VCLB
+         pwmNiPH+u578sp3DVIEYRKyIRrW6Nanl8yfC0=
+Received: by 10.239.188.202 with SMTP id q10mr410328hbh.80.1266166368582; Sun, 
+	14 Feb 2010 08:52:48 -0800 (PST)
+In-Reply-To: <4B76CBA8.5060504@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139927>
 
-On Sat, Feb 13, 2010 at 18:38, Paolo Bonzini <bonzini@gnu.org> wrote:
-> On 02/13/2010 03:21 PM, Fredrik Kuivinen wrote:
->>
->> Best of five runs in the linux repository:
->>
->> before:
->>
->> $ time git grep qwerty
->> drivers/char/keyboard.c: =A0 =A0 =A0 =A0"qwertyuiop[]\r\000as"
->> =A0 =A0 =A0/* 0x10 - 0x1f */
->>
->> real =A0 =A00m1.065s
->> user =A0 =A00m1.400s
->> sys =A0 =A0 0m0.536s
->>
->>
->> after:
->>
->> $ time git grep qwerty
->> drivers/char/keyboard.c: =A0 =A0 =A0 =A0"qwertyuiop[]\r\000as"
->> =A0 =A0 =A0/* 0x10 - 0x1f */
->>
->> real =A0 =A00m0.621s
->> user =A0 =A00m0.560s
->> sys =A0 =A0 0m0.564s
->>
->> So we gain about 40% by using the kwset code.
+On Sat, Feb 13, 2010 at 16:56, Paolo Bonzini <bonzini@gnu.org> wrote:
 >
-> Hmm, on a more accurate review for
+>> + =A0 This program is free software; you can redistribute it and/or =
+modify
+>> + =A0 it under the terms of the GNU General Public License as publis=
+hed by
+>> + =A0 the Free Software Foundation; either version 3, or (at your op=
+tion)
+>> + =A0 any later version.
 >
-> =A0 =A0git grep -e foo -e bar
->
-> you're creating two kwsets, so a Boyer-Moore search be much simpler--=
--the
-> performance would be the same since that's what kwset degrades to for=
- a
-> single string, but you'd probably save around 600 lines of code...
+> You need to use the last GPLv2 version (commit e7ac713d^ in the GNU g=
+rep git
+> repository). =A0It doesn't change anything except the copyright heade=
+r, but
+> let's do things the right way.
 
-Another approach is to just create a single kwset for this case as
-well. I will try that in the next iteration.
+Thanks. I will use the GPLv2 version in the next iteration.
 
 - Fredrik
