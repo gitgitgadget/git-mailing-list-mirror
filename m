@@ -1,70 +1,70 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: git stash pop not reapplying deletions
-Date: Sun, 14 Feb 2010 23:08:01 +0100
-Message-ID: <201002142308.01704.trast@student.ethz.ch>
-References: <loom.20100214T200110-615@post.gmane.org>
+From: skillzero@gmail.com
+Subject: Re: Global reflog?
+Date: Sun, 14 Feb 2010 14:14:13 -0800
+Message-ID: <2729632a1002141414l4c4ccd82j32693e6e3bd02bc5@mail.gmail.com>
+References: <2729632a1002141349s6c9a31b7u6784d89d132547ac@mail.gmail.com>
+	 <alpine.LFD.2.00.1002141655450.1946@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Steve Folly <steve@spfweb.co.uk>
-X-From: git-owner@vger.kernel.org Sun Feb 14 23:08:14 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sun Feb 14 23:14:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgmdS-0006rL-4e
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Feb 2010 23:08:14 +0100
+	id 1NgmjM-00023b-Tw
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Feb 2010 23:14:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751856Ab0BNWIH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Feb 2010 17:08:07 -0500
-Received: from gwse.ethz.ch ([129.132.178.238]:18900 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751389Ab0BNWIG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Feb 2010 17:08:06 -0500
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sun, 14 Feb
- 2010 23:08:02 +0100
-Received: from thomas.localnet (217.162.250.31) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sun, 14 Feb
- 2010 23:08:01 +0100
-User-Agent: KMail/1.13.0 (Linux/2.6.31.12-0.1-desktop; KDE/4.4.0; x86_64; ; )
-In-Reply-To: <loom.20100214T200110-615@post.gmane.org>
+	id S1751865Ab0BNWOP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Feb 2010 17:14:15 -0500
+Received: from mail-iw0-f201.google.com ([209.85.223.201]:39753 "EHLO
+	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751410Ab0BNWOP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Feb 2010 17:14:15 -0500
+Received: by iwn39 with SMTP id 39so1641092iwn.1
+        for <git@vger.kernel.org>; Sun, 14 Feb 2010 14:14:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ifeh1Nk2QRM76FfqCVbevI5sY2WTds5WUaz7JkoZvFg=;
+        b=I6OvZB4cwL1t390fjHa3EbqA8vs3ar+gJHKaF2COz5tPz3E1lN9PeifgbGqnghzgTP
+         fJTqlXfp7aCzpOzdaxcWgR/waORmFSnrjsgV/GwrY54nMU1LvXDR4I4MNVGjppebQYhT
+         1Tmqoz41uEVKF76loVUxR53Fhw1R4PwheO1qo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Rot1AHJor4GqXjH9ZBR8Qt3n99f/+EskFT8zhxhUxWECXRON2Lw4YUuA3x6ajoQKRa
+         5BNa+nxiZl3A7x8thmX/8F+U5SSMm5XhGd/RocwKASy/VvA+BPmtDSAfqw2ExqFGSEtp
+         IJJQ2Ib5jts7V6p1aQfAGOsjOnQ7OM6Mv7yEw=
+Received: by 10.231.145.74 with SMTP id c10mr255178ibv.51.1266185653471; Sun, 
+	14 Feb 2010 14:14:13 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.1002141655450.1946@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139948>
 
-On Sunday 14 February 2010 20:45:03 Steve Folly wrote:
-> 
-> I'm not sure if I've found a bug in 'git stash' or if I'm using 
-> it the wrong way? (This is with git 1.6.6):
-> 
-[eliding a lot everywhere to make it clearer]
-> $ git status   # correctly shows renames
-> #	renamed:    dira/a -> dirb/a
-> #	renamed:    dira/b -> dirb/b
-> #	renamed:    dira/c -> dirb/c
-> $ git stash
-> $ git stash pop
-> # Changes to be committed:
-> #	new file:   dirb/a
-> #	new file:   dirb/b
-> #	new file:   dirb/c
-> # Changed but not updated:
-> #	deleted:    dira/a
-> #	deleted:    dira/b
-> #	deleted:    dira/c
+On Sun, Feb 14, 2010 at 1:56 PM, Nicolas Pitre <nico@fluxnic.net> wrote=
+:
+> On Sun, 14 Feb 2010, skillzero@gmail.com wrote:
+>
+>> Is there a way to have git maintain a single reflog across all
+>> branches (and stashes)? I switch between branches, create and delete
+>> branches, stash save and pop, etc. frequently and it would be great
+>> for me if there was a way to have a global reflog that showed every
+>> operation, independent of a particular branch. Is there some way to
+>> enable this?
+>
+> You have it already. =C2=A0It is the "HEAD" reflog.
 
-The problem is that you aren't using --index, but still expecting it
-to restore your index.  If you change it to 'git stash pop --index',
-everything will work as expected.
-
-Yes, it does stage new files, but that is only to help you: otherwise
-you could forget them before committing.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+I don't seem to see any stash activity. For example, I made a test
+change, did git stash, and then git stash pop. When I do git reflog, I
+don't see the stash commit or the delete of the stash. Is there a way
+to enable that?
