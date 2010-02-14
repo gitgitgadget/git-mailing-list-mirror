@@ -1,133 +1,139 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Die if there are parsing errors in config file
-Date: Sun, 14 Feb 2010 22:46:28 +0100
-Message-ID: <201002142246.29478.jnareb@gmail.com>
-References: <20100207093744.29846.6468.stgit@localhost.localdomain> <7v8wava55y.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] WIP: git notes copy --stdin
+Date: Sun, 14 Feb 2010 22:46:57 +0100
+Message-ID: <0b241a335d71bdf56a07a712cb5506e1b1e1db6f.1266183704.git.trast@student.ethz.ch>
+References: <cover.1266164150.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "J.H." <warthog19@eaglescrag.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 14 22:47:07 2010
+Content-Type: text/plain
+Cc: Johan Herland <johan@herland.net>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Feb 14 22:47:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgmIy-0003BY-31
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Feb 2010 22:47:04 +0100
+	id 1NgmJ0-0003BY-Hi
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Feb 2010 22:47:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750925Ab0BNVqj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Feb 2010 16:46:39 -0500
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:63979 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750832Ab0BNVqi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Feb 2010 16:46:38 -0500
-Received: by fxm27 with SMTP id 27so15263fxm.25
-        for <git@vger.kernel.org>; Sun, 14 Feb 2010 13:46:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=4WW3RESD9TcaSiUU+srrB52N5igQwbsLRihcdAJUDVI=;
-        b=tXBizDXCQ/8paX7D6Rq2I4vCZ/USXtu5ToLZQJ3Oq7iAEuE/WHqYJR6EeyEF1XuZp4
-         Pi1hCwu+zIZip9kpZXKZnG57iImwFU4GYL4ulivmoMRfdN5oFQkVxI37+7IHpP10J8x6
-         JWJO7Sxx1dSdkH5gWfRlZUJgC5wb69Y+MIhcY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=bCvrY16+wjmnrEUlbX20ibjtc4fEMYAgWuXqpXUW8hfqB5McyhvIIUI1wIC9PPjsfo
-         f36OfusQ2D6H1VsziSS4XmNzcdx8NIlXZsgK01hhyQl3jne8A9Cmd20zA3V0oxKhkMDZ
-         10ISyvacjekTSTxl0rjD64/unuEP9PlAMjqGA=
-Received: by 10.223.145.140 with SMTP id d12mr3501593fav.7.1266183996563;
-        Sun, 14 Feb 2010 13:46:36 -0800 (PST)
-Received: from ?192.168.1.13? (abwr159.neoplus.adsl.tpnet.pl [83.8.241.159])
-        by mx.google.com with ESMTPS id 22sm8951662fkr.27.2010.02.14.13.46.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 14 Feb 2010 13:46:35 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v8wava55y.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751096Ab0BNVrB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Feb 2010 16:47:01 -0500
+Received: from gwse.ethz.ch ([129.132.178.238]:21473 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750978Ab0BNVrA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Feb 2010 16:47:00 -0500
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sun, 14 Feb
+ 2010 22:46:58 +0100
+Received: from localhost.localdomain (217.162.250.31) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sun, 14 Feb
+ 2010 22:46:57 +0100
+X-Mailer: git-send-email 1.7.0.224.g30f23.dirty
+In-Reply-To: <cover.1266164150.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139944>
 
-Dnia niedziela 14. lutego 2010 22:17, Junio C Hamano napisa=B3:
-> Jakub Narebski <jnareb@gmail.com> writes:
->=20
-> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> > index 1f6978a..a5bc359 100755
-> > --- a/gitweb/gitweb.perl
-> > +++ b/gitweb/gitweb.perl
-> > @@ -556,6 +556,8 @@ if (-e $GITWEB_CONFIG) {
-> >  	our $GITWEB_CONFIG_SYSTEM =3D $ENV{'GITWEB_CONFIG_SYSTEM'} || "++=
-GITWEB_CONFIG_SYSTEM++";
-> >  	do $GITWEB_CONFIG_SYSTEM if -e $GITWEB_CONFIG_SYSTEM;
-> >  }
-> > +# die if there are errors parsing config file
-> > +die $@ if $@;
->=20
-> I cannot figure out $@ from which command this if statement modifier =
-is
-> checking when none of GITWEB_CONFIG or GITWEB_CONFIG_SYSTEM candidate=
-s is
-> present.  Neither of the "do" executes in such a case.  Do you end up
-> checking the result from the very first eval that checks if Time::HiR=
-es
-> can be "require"d successfully?
-
-Good catch.  There is corrected patch.
-
--- >8 --
-Subject: [PATCH] gitweb: Die if there are parsing errors in config file
-
-Otherwise the errors can propagate, and show in damnest places, and
-you would spend your time chasing ghosts instead of debugging real
-problem (yes, it is from personal experience).
-
-This follows (parts of) advice in `perldoc -f do` documentation.
-
-This required restructoring code a bit, so we die only if we are readin=
-g
-(executing) config file.  As a side effect $GITWEB_CONFIG_SYSTEM is alw=
-ays
-available, even when we use $GITWEB_CONFIG.
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+This implements a 'git notes copy --stdin' mode suitable to read the
+data fed to the post-rewrite hook.
 ---
-Probably-Acked-by: John 'Warthog9' Hawley <warthog9@kernel.org>
 
- gitweb/gitweb.perl |    9 ++++++---
- 1 files changed, 6 insertions(+), 3 deletions(-)
+Ok, so I changed my mind and decided to implement the "make it
+built-in and configurable" way.  This helper should work.  I spent
+some time trying to refactor cmd_notes() into something that can
+nicely handle commands that do not fit the normal scheme, but
+eventually was too tired to continue and just crafted it in the
+existing code in the right place.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 1f6978a..20106a4 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -550,11 +550,14 @@ sub filter_snapshot_fmts {
+If nobody beats me to it I'll pick this up later this week, but
+tomorrow will be too busy to even think about it.
+
+
+ builtin-notes.c |   56 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 56 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-notes.c b/builtin-notes.c
+index 123ecad..3cd9e45 100644
+--- a/builtin-notes.c
++++ b/builtin-notes.c
+@@ -278,6 +278,52 @@ int commit_notes(struct notes_tree *t, const char *msg)
+ 	return 0;
  }
-=20
- our $GITWEB_CONFIG =3D $ENV{'GITWEB_CONFIG'} || "++GITWEB_CONFIG++";
-+our $GITWEB_CONFIG_SYSTEM =3D $ENV{'GITWEB_CONFIG_SYSTEM'} || "++GITWE=
-B_CONFIG_SYSTEM++";
-+# die if there are errors parsing config file
- if (-e $GITWEB_CONFIG) {
- 	do $GITWEB_CONFIG;
--} else {
--	our $GITWEB_CONFIG_SYSTEM =3D $ENV{'GITWEB_CONFIG_SYSTEM'} || "++GITW=
-EB_CONFIG_SYSTEM++";
--	do $GITWEB_CONFIG_SYSTEM if -e $GITWEB_CONFIG_SYSTEM;
-+	die $@ if $@;
-+} elsif (-e $GITWEB_CONFIG_SYSTEM) {
-+	do $GITWEB_CONFIG_SYSTEM;
-+	die $@ if $@;
- }
-=20
- # Get loadavg of system, to compare against $maxload.
---=20
-1.6.6.1
+ 
++int notes_copy_from_stdin(int force)
++{
++	struct strbuf buf = STRBUF_INIT;
++	struct notes_tree *t;
++
++	init_notes(NULL, NULL, NULL, 0);
++	t = &default_notes_tree;
++
++	while (strbuf_getline(&buf, stdin, '\n') != EOF) {
++		unsigned char from_obj[20], to_obj[20];
++		struct strbuf **split;
++		const unsigned char *note;
++
++		split = strbuf_split(&buf, ' ');
++		if (!split[0] || !split[1])
++			die("Malformed input line: '%s'.", buf.buf);
++		strbuf_rtrim(split[0]);
++		strbuf_rtrim(split[1]);
++		if (get_sha1(split[0]->buf, from_obj))
++			die("Failed to resolve '%s' as a valid ref.", split[0]->buf);
++		if (get_sha1(split[1]->buf, to_obj))
++			die("Failed to resolve '%s' as a valid ref.", split[1]->buf);
++
++		note = get_note(t, from_obj);
++		if (!force) {
++			const unsigned char *existing_note = get_note(t, to_obj);
++			if (existing_note) {
++				error("Cannot copy notes. Found existing notes for object"
++				      " %s. Use '-f' to overwrite existing notes",
++				      sha1_to_hex(to_obj));
++				return 1;
++			}
++		}
++
++		if (note)
++			add_note(t, to_obj, note, combine_notes_overwrite);
++		else
++			remove_note(t, to_obj);
++
++		strbuf_list_free(split);
++	}
++
++	commit_notes(t, "Notes added by 'git notes copy'");
++	return 0;
++}
++
+ int cmd_notes(int argc, const char **argv, const char *prefix)
+ {
+ 	struct notes_tree *t;
+@@ -301,6 +347,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 		OPT_CALLBACK('C', "reuse-message", &msg, "OBJECT",
+ 			   "reuse specified note object", parse_reuse_arg),
+ 		OPT_BOOLEAN('f', "force", &force, "replace existing notes"),
++		OPT_BOOLEAN(0, "stdin", &force, "read objects from stdin"),
+ 		OPT_END()
+ 	};
+ 
+@@ -351,6 +398,15 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 
+ 	if (copy) {
+ 		const char *from_ref;
++		if (stdin) {
++			if (argc > 2) {
++				error("too few parameters");
++				usage_with_options(git_notes_usage, options);
++			} else {
++				retval = notes_copy_from_stdin(force);
++				goto end;
++			}
++		}
+ 		if (argc < 3) {
+ 			error("too few parameters");
+ 			usage_with_options(git_notes_usage, options);
+-- 
+1.7.0.224.g30f23.dirty
