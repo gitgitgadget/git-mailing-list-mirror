@@ -1,85 +1,107 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/6] Make 'git var GIT_PAGER' always print the
- configured pager
-Date: Sun, 14 Feb 2010 23:44:47 -0600
-Message-ID: <20100215054447.GB22121@progeny.tock>
-References: <462027ff1002131314k62069160h63760fc8316aa43b@mail.gmail.com>
- <20100213235156.GA9054@coredump.intra.peff.net>
- <20100214115430.GA1849@progeny.tock>
- <20100214115959.GB3499@progeny.tock>
- <20100215050007.GE3336@coredump.intra.peff.net>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] don't use mmap() to hash files
+Date: Mon, 15 Feb 2010 00:48:41 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1002150016110.1946@xanadu.home>
+References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org>
+ <37fcd2781002131409r4166e496h9d12d961a2330914@mail.gmail.com>
+ <20100213223733.GP24809@gibbs.hungrycats.org>
+ <20100214011812.GA2175@dpotapov.dyndns.org>
+ <alpine.DEB.1.00.1002140249410.20986@pacific.mpi-cbg.de>
+ <20100214024259.GB9704@dpotapov.dyndns.org>
+ <alpine.DEB.1.00.1002141908150.20986@pacific.mpi-cbg.de>
+ <37fcd2781002141106v761ce6e0kc5c5bdd5001f72a9@mail.gmail.com>
+ <32541b131002141513m29f9a796ma8fb5855a45f91e9@mail.gmail.com>
+ <alpine.LFD.2.00.1002142252020.1946@xanadu.home>
+ <32541b131002142101i226663cfk90d1ba14f1031788@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sebastian Celis <sebastian@sebastiancelis.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 15 06:44:55 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Zygo Blaxell <zblaxell@esightcorp.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 15 06:48:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgtlO-000640-MT
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 06:44:55 +0100
+	id 1Ngtp9-00074f-R8
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 06:48:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753135Ab0BOFop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2010 00:44:45 -0500
-Received: from mail-iw0-f201.google.com ([209.85.223.201]:39949 "EHLO
-	mail-iw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752268Ab0BOFoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2010 00:44:44 -0500
-Received: by iwn39 with SMTP id 39so1867818iwn.1
-        for <git@vger.kernel.org>; Sun, 14 Feb 2010 21:44:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=tA5/9C2WhFT2T3XKb4Hqg/g/AZXikBX1s/2n2949kFs=;
-        b=IEXJCURB9BKsN1yoIv5nJsu48fDKOigoAnonXxeDg6RijRjTTBtYGW6zQeo5sezosf
-         o4x8NUSJsxTgITLNNosdeSpojfmWkQ3hS+aijk7BPpFUHmmM5f00ivbNKuz6/0Bj9sRy
-         3yrcbww4Pa/6sqn8Eb7LPOPLpyhLmgffUr2co=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Ol2ibR0pCXIyK3Afl/62/xkkPMwB7lVPsAhrIVulN/xeHxQpnZjXep3y9X+03hvsIL
-         6RUpWeMi5yVaCQNgsHwC+SXXFFD9rr2H8gqeXA2t8aWszmR/2sV+nraHQuuxAHi4nqqk
-         bJfU+LzjIsmQV3NeJQ+R93jPPQa3ldhvIcTH8=
-Received: by 10.231.149.10 with SMTP id r10mr4268859ibv.63.1266212684074;
-        Sun, 14 Feb 2010 21:44:44 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm6051013iwn.15.2010.02.14.21.44.42
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 14 Feb 2010 21:44:43 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20100215050007.GE3336@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753262Ab0BOFsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 00:48:43 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:58009 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752378Ab0BOFsm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2010 00:48:42 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KXV00130C55STG0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 15 Feb 2010 00:48:41 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <32541b131002142101i226663cfk90d1ba14f1031788@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139985>
 
-On Mon, Feb 15, 2010 at 12:00:07AM -0500, Jeff King wrote:
-> On Sun, Feb 14, 2010 at 05:59:59AM -0600, Jonathan Nieder wrote:
+On Mon, 15 Feb 2010, Avery Pennarun wrote:
 
->> So avoid tricks with isatty() and just always print the configured
->> pager.
->
-> I think this is the right thing to do. But isn't "git am" broken in the
-> meantime, as it now always paginates (whereas before, it would never
-> paginate)? You fix it later in the series, but is there any test
-> breakage in the meantime (not rhetorical, I didn't actually check) that
-> would hurt bisectability?
+> - git-prune only prunes unpacked objects
+> 
+> - git-repack claims to be willing to explode unreachable objects back
+> into loose objects with -A, but I'm not quite sure if its definition
+> of "unreachable" is the same as mine.  
 
-The behavior before dec543 (am -i, git-svn: use "git var GIT_PAGER",
-2009-10-30) was to always paginate.  This made some sense, since this
-is the (v)iew command in git am --interactive; whether we check or
-not, presumably stdout is a terminal.  So for git am, this restores
-the older behavior.
+Unreachable means not referenced by the specified rev-list 
+specification.  So if you give it --all --reflog then it means any 
+objects that is not reachable through either your branches, tags or 
+reflog entries.
 
-There are unfortunately no tests for am --interactive in the test
-suite, so test suite runs would detect none of this.
+> And I'm not sure rewriting a
+> pack with -A makes the old pack reliably unreachable according to -d.
 
-Thank you for your attention to detail.
-Jonathan
+Reachability doesn't apply to packs.  That applies to objects.  And 
+unreachable objects may be copied to loose objects with -A, or simply 
+forgotten about with -a.  Then -d will literally delete the old pack 
+file.
+
+> - there seems to be no documented situation in which you can ever
+> delete unused objects from a pack without using repack -a or -A, which
+> can be amazingly slow if your packs are huge.  (Ideally you'd only
+> repack the particular packs that you want to shrink.)  For example, my
+> bup repo is currently 200 GB.
+
+Ideally you don't keep volatile objects into huge packs.  That's why we 
+have .keep to flag those packs that are huge and pure so not to touch 
+them anymore.
+
+Incremental repacking is there to gather only those _reachable_ loose 
+objects into a new pack.  The objects that you're likely to make 
+unreachable are probably going to come from a temporary branch that you 
+deleted which is likely to affect objects only from that latest and 
+small pack.
+
+And repacking can be done unattended and in parallel to normal Git 
+operations with no issues.  So even if it is slow to repack huge packs, 
+it is something that you might do during the night and only once in a 
+while.
+
+But if you really want to shrink only one pack without touching the 
+other packs, and you do know which objects have to be removed from that 
+pack, then it is trivial to write a small script using git-show-index, 
+sorting the output by offset, filter out the unwanted objects, keeping 
+only the SHA1 column, and feeding the result into git-pack-objects.  Oh 
+and delete the original pack when done of course.  It is also trivial to 
+generate the list of all packed objects, compare it to the list of all 
+reachable objects, and prune objects from the packs that contains those 
+objects which are not to be found in the reachable object list.
+
+
+Nicolas
