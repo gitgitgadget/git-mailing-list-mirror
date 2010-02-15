@@ -1,68 +1,93 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH v3] Detailed diagnosis when parsing an object name fails.
-Date: Mon, 15 Feb 2010 15:16:05 +0100
-Message-ID: <fabb9a1e1002150616h6a747f58q41eecf84dac736fb@mail.gmail.com>
-References: <vpqws0zcd1c.fsf@bauges.imag.fr> <1260180650-613-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: Walking commits from the first
+Date: Tue, 16 Feb 2010 01:20:12 +1100
+Message-ID: <2cfc40321002150620i7e290c10pfc978ec9754a914a@mail.gmail.com>
+References: <e72faaa81002142037g7f5f518erb9fefbb239124bc5@mail.gmail.com>
+	 <e72faaa81002142039h5531a19y354d24e595295bb1@mail.gmail.com>
+	 <20100215080646.GD5347@coredump.intra.peff.net>
+	 <e72faaa81002150333r4eb27a15t7de6b3c820eb4bc2@mail.gmail.com>
+	 <2cfc40321002150605l4de9d970t919ee56d7a3d697e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Feb 15 15:16:33 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 15 15:20:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nh1kW-0001Pp-Id
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 15:16:32 +0100
+	id 1Nh1oD-0003ot-Se
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 15:20:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754779Ab0BOOQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2010 09:16:27 -0500
-Received: from mail-pz0-f197.google.com ([209.85.222.197]:49100 "EHLO
+	id S1755323Ab0BOOUO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Feb 2010 09:20:14 -0500
+Received: from mail-pz0-f197.google.com ([209.85.222.197]:33387 "EHLO
 	mail-pz0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751805Ab0BOOQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2010 09:16:26 -0500
-Received: by pzk35 with SMTP id 35so249236pzk.33
-        for <git@vger.kernel.org>; Mon, 15 Feb 2010 06:16:25 -0800 (PST)
+	with ESMTP id S1755244Ab0BOOUN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Feb 2010 09:20:13 -0500
+Received: by pzk35 with SMTP id 35so252537pzk.33
+        for <git@vger.kernel.org>; Mon, 15 Feb 2010 06:20:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=jXEV5zXrr0SxqmFA3QF1gVx5Mg+s2F1fiKbOB1PENbM=;
-        b=T7t3qGVZDfUW8do8u1a+A2K90vbOzD+48HuUsoKIE3ju/ML+MEXKYZE+wBkqDBzCHN
-         ASRt/0EG4vuGFPt9gDwmiU0/VThOODFXjdOVVXzasYowxLAtNcPWcivWeWE1K89XjxLu
-         ODIAI2OHD0u5S7r331QwKQXK1S+LLv4hMQNhI=
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=yWRWK8EiQdHgLsnnYpYH8dHMk6WnTqRHLTQ6U/4ahV4=;
+        b=P9530q5JIIAo12AR3nw3mtJzYW7R1i9yroGS2DwCOl3oIE/dpugFTkodyiZxZBTsEe
+         ShPOJrYYVhwOmngwN6UMODbwXpq/WOPTSW1X6JjZv+ysl+ziTTsg2fZLR35kCZ7HPuVl
+         FjKqDdYjzWxD9CjlZPfXtzcS+FRNl/KkA1WrM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=d3zsxskQITRvxOVP8dcc1Dy2P74yGNG/CG6H9GYLzpQXvwKRYWc5vm6m/YT+N1GK5x
-         zGnX2WstYM7ZH+cpTdxusbfps1pW3/73b8/l2eEce2DOoZgDxvnFciYvyqG4l4BVjM/j
-         ag4d4KtGU3Y6sMjdMEqdwOAqTJhg0ZxYuxC1E=
-Received: by 10.142.67.13 with SMTP id p13mr3475906wfa.54.1266243385094; Mon, 
-	15 Feb 2010 06:16:25 -0800 (PST)
-In-Reply-To: <1260180650-613-1-git-send-email-Matthieu.Moy@imag.fr>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Ac2Tk+jebPGlXipqCdrTbSqsaXccfkWn7ZW1qaJCQIe5KEpyQRskszELIlRP6zEhZV
+         K9aLfZE/OSrJu+D7XVsK67vEuY5Zc88qGB0E6qkhpeUMVbBjg/RqMNlMngIyAGSg/eYi
+         33LykcIZ82Nuvcz1Kw94tlmnxPGJdZpAasyIQ=
+Received: by 10.115.101.40 with SMTP id d40mr3506696wam.95.1266243612549; Mon, 
+	15 Feb 2010 06:20:12 -0800 (PST)
+In-Reply-To: <2cfc40321002150605l4de9d970t919ee56d7a3d697e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140011>
 
-Heya,
+On Tue, Feb 16, 2010 at 1:05 AM, Jon Seymour <jon.seymour@gmail.com> wr=
+ote:
+> On Mon, Feb 15, 2010 at 10:33 PM, Pavan Kumar Sunkara
+>
+> The history is useful for understanding how something came to be -
+> commits followed backwards down one merge branch will tend to have
+> some semantic relationship to each other unless your committers are o=
+n
+> acid. Trying to comprehend the evolution of history by replaying it
+> forwards and keeping track of n parallel threads of development as
+> they diverge seems like an unnecessarily complicated way of trying to
+> comprehend the world.
+>
 
-On Mon, Dec 7, 2009 at 11:10, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> The previous error message was the same in many situations (unknown
-> revision or path not in the working tree). We try to help the user as
-> much as possible to understand the error, especially with the
-> sha1:filename notation. In this case, we say whether the sha1 or the
-> filename is problematic, and diagnose the confusion between
-> relative-to-root and relative-to-$PWD confusion precisely.
+That said, of course, git once had an option to rev-list that I
+contributed (--merge-order) that attempted to create the best possible
+linear history by performing a topological sort that minimised the
+number of "jumps" between semantically unrelated commits in the linear
+order. The algorithm was kind of cool (based as it was on a
+conservation of mass analogy), but it eventually got stripped out for
+various eminently understandable reasons (like no-one was using it, I
+wasn't maintaining it and it was the only remaining use of a
+dependency on the open-ssl infinite precision integer arithmetic
+libraries that complicated the build).
 
-Thank you, I just got helped by your patch, and was very pleasantly
-surprised to see git being so unusually helpful! We'll make a
-user-friendly scm out of git yet :).
+git rev-list --topo-order will do a topological sort that guarantees
+that you never visit a commit before visiting all its ancestors.
 
--- 
-Cheers,
 
-Sverre Rabbelier
+> jon.
+>
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>>
+>
