@@ -1,56 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] fix threaded grep for machines with only one cpu
-Date: Tue, 16 Feb 2010 00:09:38 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1002160008210.20986@pacific.mpi-cbg.de>
-References: <20100215225001.GA944@book.hvoigt.net>
+From: Pete Harlan <pgit@pcharlan.com>
+Subject: [PATCH] Remove hyphen from "git-command" in two error messages
+Date: Mon, 15 Feb 2010 15:25:38 -0800
+Message-ID: <4B79D7F2.80207@pcharlan.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Feb 16 00:03:11 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 16 00:25:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nh9yA-0008Ls-RD
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 00:03:11 +0100
+	id 1NhAK0-0004t6-CY
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 00:25:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756671Ab0BOXDF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2010 18:03:05 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48965 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756404Ab0BOXDB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2010 18:03:01 -0500
-Received: (qmail invoked by alias); 15 Feb 2010 23:02:59 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp072) with SMTP; 16 Feb 2010 00:02:59 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19svOphHsls1DnW4lOYFJdTj1p+1P/qyPEKqgsUik
-	Gekk0Q8vCaRqrW
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20100215225001.GA944@book.hvoigt.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.69999999999999996
+	id S1756687Ab0BOXZj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 18:25:39 -0500
+Received: from caibbdcaaaaf.dreamhost.com ([208.113.200.5]:39073 "EHLO
+	swarthymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756565Ab0BOXZj (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Feb 2010 18:25:39 -0500
+Received: from [192.168.0.119] (031.132-78-65.ftth.swbr.surewest.net [65.78.132.31])
+	by swarthymail-a1.g.dreamhost.com (Postfix) with ESMTP id 5B3168F229
+	for <git@vger.kernel.org>; Mon, 15 Feb 2010 15:25:38 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140043>
 
-Hi,
+Signed-off-by: Pete Harlan <pgit@pcharlan.com>
+---
+The hyphen in
 
-On Mon, 15 Feb 2010, Heiko Voigt wrote:
+  git: 'foo' is not a git-command. See 'git --help'.
 
-> In case the machine has only one cpu the initialization was
-> skipped.
-> 
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-> ---
+looks like an anachronism.  Patch generated against "next".
 
-Thank you, Heiko, for fixing that nasty bug! It is already in 4msysgit's 
-'devel' branch.
+ git.c  |    2 +-
+ help.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Ciao,
-Dscho
+diff --git a/git.c b/git.c
+index b3e23f1..90c6daf 100644
+--- a/git.c
++++ b/git.c
+@@ -527,7 +527,7 @@ int main(int argc, const char **argv)
+ 			break;
+ 		if (was_alias) {
+ 			fprintf(stderr, "Expansion of alias '%s' failed; "
+-				"'%s' is not a git-command\n",
++				"'%s' is not a git command\n",
+ 				cmd, argv[0]);
+ 			exit(1);
+ 		}
+diff --git a/help.c b/help.c
+index 9da97d7..7f4928e 100644
+--- a/help.c
++++ b/help.c
+@@ -350,7 +350,7 @@ const char *help_unknown_cmd(const char *cmd)
+ 		return assumed;
+ 	}
+
+-	fprintf(stderr, "git: '%s' is not a git-command. See 'git --help'.\n",
+cmd);
++	fprintf(stderr, "git: '%s' is not a git command. See 'git --help'.\n",
+cmd);
+
+ 	if (SIMILAR_ENOUGH(best_similarity)) {
+ 		fprintf(stderr, "\nDid you mean %s?\n",
+-- 
+1.7.0
