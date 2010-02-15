@@ -1,77 +1,68 @@
-From: Gabriel Filion <lelutin@gmail.com>
-Subject: Re: [PATCH] require_work_tree broken with NONGIT_OK
-Date: Mon, 15 Feb 2010 02:24:59 -0500
-Message-ID: <4B78F6CB.2070304@gmail.com>
-References: <4B78C4D3.90407@gmail.com> <7vzl3bj95l.fsf@alter.siamese.dyndns.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH] don't use mmap() to hash files
+Date: Mon, 15 Feb 2010 08:48:06 +0100
+Message-ID: <4B78FC36.1090108@gnu.org>
+References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org>	 <37fcd2781002131409r4166e496h9d12d961a2330914@mail.gmail.com>	 <20100213223733.GP24809@gibbs.hungrycats.org>	 <20100214011812.GA2175@dpotapov.dyndns.org>	 <alpine.DEB.1.00.1002140249410.20986@pacific.mpi-cbg.de>	 <20100214024259.GB9704@dpotapov.dyndns.org>	 <alpine.DEB.1.00.1002141908150.20986@pacific.mpi-cbg.de>	 <37fcd2781002141106v761ce6e0kc5c5bdd5001f72a9@mail.gmail.com>	 <alpine.DEB.1.00.1002142021100.20986@pacific.mpi-cbg.de>	 <alpine.DEB.1.00.1002142025160.20986@pacific.mpi-cbg.de> <37fcd2781002141156n7e2b9673s1eb6c12869facdb2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 08:25:13 2010
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Zygo Blaxell <zblaxell@esightcorp.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 15 08:48:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgvKS-0008JH-Jx
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 08:25:12 +0100
+	id 1Ngvgq-0006Nd-Sy
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 08:48:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755043Ab0BOHZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2010 02:25:04 -0500
-Received: from mail001.aei.ca ([206.123.6.130]:36623 "EHLO mail001.aei.ca"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754544Ab0BOHZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2010 02:25:03 -0500
-Received: (qmail 4241 invoked by uid 89); 15 Feb 2010 07:25:00 -0000
-Received: by simscan 1.2.0 ppid: 4235, pid: 4236, t: 0.0413s
-         scanners: regex: 1.2.0 attach: 1.2.0
-Received: from mail002.aei.ca (HELO mail002.contact.net) (206.123.6.132)
-  by mail001.aei.ca with (DHE-RSA-AES256-SHA encrypted) SMTP; 15 Feb 2010 07:25:00 -0000
-Received: (qmail 14622 invoked by uid 89); 15 Feb 2010 07:25:00 -0000
-Received: by simscan 1.2.0 ppid: 14616, pid: 14617, t: 0.4871s
-         scanners: regex: 1.2.0 attach: 1.2.0 clamav: 0.95.3/m:51 spam: 3.3.0
-X-Spam-Checker-Version: SpamAssassin 3.3.0 (2010-01-18)
-X-Spam-Level: 
-X-Spam-Status: No, hits=-3.0 required=5.0 tests=ALL_TRUSTED,BAYES_00,
-	FREEMAIL_FROM autolearn=ham version=3.3.0
-Received: from dsl-152-38.aei.ca (HELO ?192.168.2.202?) (66.36.152.38)
-  by mail.aei.ca with SMTP; 15 Feb 2010 07:24:59 -0000
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20100108 Lightning/1.0b1 Icedove/3.0
-In-Reply-To: <7vzl3bj95l.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.0
+	id S1755163Ab0BOHsP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 02:48:15 -0500
+Received: from mail-fx0-f227.google.com ([209.85.220.227]:43360 "EHLO
+	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754696Ab0BOHsO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2010 02:48:14 -0500
+Received: by fxm27 with SMTP id 27so307728fxm.25
+        for <git@vger.kernel.org>; Sun, 14 Feb 2010 23:48:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=totagHjktK7B3JTAbVt18d4nuLY78QmrD/i+1kGyYEY=;
+        b=R+IUOAgXYF1n77OMNxF9Qrn+HV1epscAGOKBtLFNQIvbmJTSYA5DnhjeDmMqSFQjjC
+         lbGAN5zgrQ1+flRtCVHsf15dX1/9djuS3mQUpzRaGTfZcEf8on7zX1gViYCv12Aa04rr
+         OiIIdvRIwpNEoF65uIMcVThh1UNkyXcCpcZmU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=QhQIAyiNakaz+MI3fbA5Lo5+jP2OUL0VfSUZyHsIk+UA1BSxp2tNJNbVM1/0wfQcpj
+         b40mnHyeZj64FjoKXLo8w4WpHzHiU3GdOz1lmISrju8IENxfVNktmo9Y0b2FTdiMZqq2
+         SGi/dOE1MsfGDy2bweF+6FZNdzgYcxr5A3iv8=
+Received: by 10.223.5.82 with SMTP id 18mr5481080fau.79.1266220093097;
+        Sun, 14 Feb 2010 23:48:13 -0800 (PST)
+Received: from yakj.usersys.redhat.com ([85.93.118.17])
+        by mx.google.com with ESMTPS id z15sm9595640fkz.6.2010.02.14.23.48.11
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 14 Feb 2010 23:48:11 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100120 Fedora/3.0.1-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.1
+In-Reply-To: <37fcd2781002141156n7e2b9673s1eb6c12869facdb2@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139992>
 
-On 2010-02-15 01:38, Junio C Hamano wrote:
-> Gabriel Filion <lelutin@gmail.com> writes:
-> 
->> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
->> index d56426d..8de2f03 100755
->> --- a/git-sh-setup.sh
->> +++ b/git-sh-setup.sh
->> @@ -128,7 +128,7 @@ cd_to_toplevel () {
->>  }
->>   require_work_tree () {
->> -	test $(git rev-parse --is-inside-work-tree) = true ||
-> 
-> This needs to have dq around it, as "Not a git repository" case we fatal
-> out without any output, like this:
-> 
-> 	test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = true ||
-> 
->> +	test git rev-parse --is-inside-work-tree >/dev/null 2>&1 ||
-> 
-> I don't think this would ever work with "test" at the beginning.
-> 
-Well, it would seem you are right! my bad for thinking that "test" was
-actually evaluating any command given in the expression :\
+On 02/14/2010 08:56 PM, Dmitry Potapov wrote:
+> It may not work without enough swap space
 
-Your implementation seems to be working better and fixes the problem.
-Thanks for reviewing the patch.
+No, the kernel will use the file itself as "swap" if it has to page out 
+the memory (since the mmap is PROT_READ).
 
--- 
-Gabriel Filion
+Paolo
