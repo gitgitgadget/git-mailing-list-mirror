@@ -1,149 +1,68 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: Walking commits from the first
-Date: Tue, 16 Feb 2010 01:05:35 +1100
-Message-ID: <2cfc40321002150605l4de9d970t919ee56d7a3d697e@mail.gmail.com>
-References: <e72faaa81002142037g7f5f518erb9fefbb239124bc5@mail.gmail.com>
-	 <e72faaa81002142039h5531a19y354d24e595295bb1@mail.gmail.com>
-	 <20100215080646.GD5347@coredump.intra.peff.net>
-	 <e72faaa81002150333r4eb27a15t7de6b3c820eb4bc2@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH v3] Detailed diagnosis when parsing an object name fails.
+Date: Mon, 15 Feb 2010 15:16:05 +0100
+Message-ID: <fabb9a1e1002150616h6a747f58q41eecf84dac736fb@mail.gmail.com>
+References: <vpqws0zcd1c.fsf@bauges.imag.fr> <1260180650-613-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 15:05:44 2010
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Feb 15 15:16:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nh1a2-0002nK-QP
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 15:05:43 +0100
+	id 1Nh1kW-0001Pp-Id
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 15:16:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754696Ab0BOOFh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Feb 2010 09:05:37 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:41609 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752282Ab0BOOFg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Feb 2010 09:05:36 -0500
-Received: by pwj8 with SMTP id 8so539328pwj.19
-        for <git@vger.kernel.org>; Mon, 15 Feb 2010 06:05:35 -0800 (PST)
+	id S1754779Ab0BOOQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 09:16:27 -0500
+Received: from mail-pz0-f197.google.com ([209.85.222.197]:49100 "EHLO
+	mail-pz0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751805Ab0BOOQ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2010 09:16:26 -0500
+Received: by pzk35 with SMTP id 35so249236pzk.33
+        for <git@vger.kernel.org>; Mon, 15 Feb 2010 06:16:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hTbBzlppKA4Qk272QipEqC3iYplbULMmFtYsVU7xANY=;
-        b=S1QArgoRsLJatrWwC+j+Ph6iF2jltN3gD1bLCj2G2PbjHYw58GUrKz3NiopL/P9zEq
-         f87rc4EyayG8JySBlAPHa0Zn5IDGXVGqLPa9S8JEBjJQu4vHJYBlcsd4gpDmTB5QMQLt
-         94senU9494WiWPBOR7z/UkavMoaaUWE0HvGNs=
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=jXEV5zXrr0SxqmFA3QF1gVx5Mg+s2F1fiKbOB1PENbM=;
+        b=T7t3qGVZDfUW8do8u1a+A2K90vbOzD+48HuUsoKIE3ju/ML+MEXKYZE+wBkqDBzCHN
+         ASRt/0EG4vuGFPt9gDwmiU0/VThOODFXjdOVVXzasYowxLAtNcPWcivWeWE1K89XjxLu
+         ODIAI2OHD0u5S7r331QwKQXK1S+LLv4hMQNhI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZuBmKciv1TK5C/ztWYQixuOSEcjT40tSJadAmQXZirOoLqoEzuDhBn7wyi1Y57BcCZ
-         dJ0uNoBfHSPjwbflvr3oWGY3DQ9WpQGWy8Qji1FtUJyC0xPyJosMJvk0js9arMAjF4DD
-         KkORPvA9Kg8bwObELsWi6YJXfbgChSDu6iKeQ=
-Received: by 10.115.101.40 with SMTP id d40mr3497633wam.95.1266242735487; Mon, 
-	15 Feb 2010 06:05:35 -0800 (PST)
-In-Reply-To: <e72faaa81002150333r4eb27a15t7de6b3c820eb4bc2@mail.gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=d3zsxskQITRvxOVP8dcc1Dy2P74yGNG/CG6H9GYLzpQXvwKRYWc5vm6m/YT+N1GK5x
+         zGnX2WstYM7ZH+cpTdxusbfps1pW3/73b8/l2eEce2DOoZgDxvnFciYvyqG4l4BVjM/j
+         ag4d4KtGU3Y6sMjdMEqdwOAqTJhg0ZxYuxC1E=
+Received: by 10.142.67.13 with SMTP id p13mr3475906wfa.54.1266243385094; Mon, 
+	15 Feb 2010 06:16:25 -0800 (PST)
+In-Reply-To: <1260180650-613-1-git-send-email-Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140010>
 
-On Mon, Feb 15, 2010 at 10:33 PM, Pavan Kumar Sunkara
-<pavan.sss1991@gmail.com> wrote:
->> In most repositories, you can do this:
->>
->> =A0git checkout `git rev-list --reverse HEAD | head -n 1`
->>
->
-> Thanks for the command
->
->> It is not as simple as that, for two reasons.
->>
->> For walking backwards, you can take multiple paths from merge commit=
-s
->> (which have multiple parents). So there may actually be several "fir=
-st
->> commits" if unrelated lines of development were merged together. For
->> example, in git.git:
->>
->> =A0$ git log --format=3D'%h %p' |
->> =A0 =A0grep ' $'
->> =A016d6b8a
->> =A0cb07fc2
->> =A0161332a
->> =A01db95b0
->> =A02744b23
->> =A0e83c516
->>
->> There are six root commits. You can see what they are by piping the
->> above into "tr -d ' ' | git log --no-walk --stdin".
->>
->> For your "--next" suggestion, it is even worse. There may be an infi=
-nite
->> number of commits that point to a given commit as the parent. So the=
-re
->> is no such thing as "what came next from X". You can only ask
->> "leading up to some commit Y which is a descendant of X, what was th=
-e
->> commit that came after X". But while there are a finite number of
->> answers, there is not necessarily just one. If two branches diverged=
- at
->> X and then remerged before Y, they are both equally "next".
->>
->> -Peff
->>
->
-> My bad. I never thought of branch merging while writing this
-> So, if i want to get the second commit, Is this enough or will i get
-> the problem of branch diverging, if there is a branch diverging from
-> there.
->
+Heya,
 
-It's not merging that's the problem - it's forking. Merges are easy to
-comprehend - a merge has a finite number of input branches all of
-which are immediately discoverable with an O(1) operation. A merge,
-once performed, is immutable for all time.  The number of forks from a
-given commit is fundamentally unbounded and requires comprehensive
-knowledge of the entire history of the repository.
+On Mon, Dec 7, 2009 at 11:10, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> The previous error message was the same in many situations (unknown
+> revision or path not in the working tree). We try to help the user as
+> much as possible to understand the error, especially with the
+> sha1:filename notation. In this case, we say whether the sha1 or the
+> filename is problematic, and diagnose the confusion between
+> relative-to-root and relative-to-$PWD confusion precisely.
 
-> git checkout `git rev-list --reverse HEAD | head -n 2`
->
-> Even though we have the problem branches to travel reversely, we can
-> do it in another way. As, we have the timestamp for every commit, the=
-n
-> it will be easy to implement --next. Take the next commit in timeline
-> and checkout. Even though it's completely different branch, no proble=
-m
-> as long as we are going in order.
->
-> Also we can have git checkout --next --same-branch to checkout the
-> next commit in timeline of the same branch.
+Thank you, I just got helped by your patch, and was very pleasantly
+surprised to see git being so unusually helpful! We'll make a
+user-friendly scm out of git yet :).
 
-If your goal is to understand the source code, then reviewing commits
-in time order from start to finish is unlikely to be
-very helpful.
+-- 
+Cheers,
 
-The reason is that two adjacent commits in this order will unlikely to
-have any semantic relationship of any value unless they happen to be
-on the same stream of development.
-
-The history is useful for understanding how something came to be -
-commits followed backwards down one merge branch will tend to have
-some semantic relationship to each other unless your committers are on
-acid. Trying to comprehend the evolution of history by replaying it
-forwards and keeping track of n parallel threads of development as
-they diverge seems like an unnecessarily complicated way of trying to
-comprehend the world.
-
-jon.
-
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+Sverre Rabbelier
