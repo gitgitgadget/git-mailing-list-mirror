@@ -1,55 +1,75 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: GSoC 2010
-Date: Mon, 15 Feb 2010 14:36:43 -0800
-Message-ID: <20100215223643.GC7512@spearce.org>
-References: <fabb9a1e1002101223o6a00f7eavb84567c1119c8ebc@mail.gmail.com> <20100214065243.GA21956@coredump.intra.peff.net> <alpine.DEB.1.00.1002141912080.20986@pacific.mpi-cbg.de> <20100215083003.GA13168@coredump.intra.peff.net> <20100215165311.GB7512@spearce.org> <fabb9a1e1002151353x5c0083cfp583b06bac4f29925@mail.gmail.com> <alpine.DEB.1.00.1002152332380.20986@pacific.mpi-cbg.de> <fabb9a1e1002151431v611d666ale3c1a9213f43c78c@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH] fix threaded grep for machines with only one cpu
+Date: Mon, 15 Feb 2010 23:50:02 +0100
+Message-ID: <20100215225001.GA944@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 23:36:55 2010
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 15 23:50:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nh9Yj-0001NB-Jr
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 23:36:53 +0100
+	id 1Nh9le-0000xH-Gt
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 23:50:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756649Ab0BOWgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2010 17:36:48 -0500
-Received: from mail-gx0-f224.google.com ([209.85.217.224]:57807 "EHLO
-	mail-gx0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756637Ab0BOWgr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2010 17:36:47 -0500
-Received: by gxk24 with SMTP id 24so5261023gxk.1
-        for <git@vger.kernel.org>; Mon, 15 Feb 2010 14:36:47 -0800 (PST)
-Received: by 10.101.181.32 with SMTP id i32mr3336084anp.7.1266273406784;
-        Mon, 15 Feb 2010 14:36:46 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 9sm2478999yxf.59.2010.02.15.14.36.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 15 Feb 2010 14:36:45 -0800 (PST)
+	id S1756620Ab0BOWuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 17:50:07 -0500
+Received: from darksea.de ([83.133.111.250]:35547 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756574Ab0BOWuG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2010 17:50:06 -0500
+Received: (qmail 13693 invoked from network); 15 Feb 2010 23:50:02 +0100
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 15 Feb 2010 23:50:02 +0100
 Content-Disposition: inline
-In-Reply-To: <fabb9a1e1002151431v611d666ale3c1a9213f43c78c@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140040>
 
-Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> On Mon, Feb 15, 2010 at 23:33, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > My preference is backup, but if Shawn does not want to/is not able to be
-> > principal admin, I will take over.
-> 
-> All right, Shawn, are you ok with being admin then, with Dscho as
-> backup? I'll update the wiki with whatever you decide.
+In case the machine has only one cpu the initialization was
+skipped.
 
-Yea, lets do that.
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+ builtin-grep.c |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 26d4deb..644051c 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -220,12 +220,6 @@ static void start_threads(struct grep_opt *opt)
+ {
+ 	int i;
+ 
+-	pthread_mutex_init(&grep_mutex, NULL);
+-	pthread_mutex_init(&read_sha1_mutex, NULL);
+-	pthread_cond_init(&cond_add, NULL);
+-	pthread_cond_init(&cond_write, NULL);
+-	pthread_cond_init(&cond_result, NULL);
+-
+ 	for (i = 0; i < ARRAY_SIZE(todo); i++) {
+ 		strbuf_init(&todo[i].out, 0);
+ 	}
+@@ -880,6 +874,12 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	if (online_cpus() == 1 || !grep_threads_ok(&opt))
+ 		use_threads = 0;
+ 
++	pthread_mutex_init(&grep_mutex, NULL);
++	pthread_mutex_init(&read_sha1_mutex, NULL);
++	pthread_cond_init(&cond_add, NULL);
++	pthread_cond_init(&cond_write, NULL);
++	pthread_cond_init(&cond_result, NULL);
++
+ 	if (use_threads)
+ 		start_threads(&opt);
+ #else
 -- 
-Shawn.
+1.7.0.rc1.7.gc0da5
