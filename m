@@ -1,61 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/4] for-each-ref --format='%(symref) %(symref:short)'
-Date: Mon, 15 Feb 2010 03:39:24 -0500
-Message-ID: <20100215083924.GA13636@coredump.intra.peff.net>
-References: <1266093033-9526-1-git-send-email-gitster@pobox.com>
- <1266093033-9526-4-git-send-email-gitster@pobox.com>
- <20100214063243.GA20630@coredump.intra.peff.net>
- <7vy6iwp0oy.fsf@alter.siamese.dyndns.org>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [PATCH 1/4] Refactoring: remove duplicated code from
+ transport.c and builtin-send-pack.c
+Date: Mon, 15 Feb 2010 10:46:43 +0200
+Message-ID: <20100215084643.GA26012@Knoppix>
+References: <1266182863-5048-1-git-send-email-michael.lukashov@gmail.com>
+ <20100215052853.GJ3336@coredump.intra.peff.net>
+ <7v7hqfknwz.fsf@alter.siamese.dyndns.org>
+ <20100215075514.GB5347@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 09:39:26 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Lukashov <michael.lukashov@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 15 09:50:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgwUI-0006P4-4H
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 09:39:26 +0100
+	id 1NgweA-0004M8-Di
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 09:49:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751938Ab0BOIjV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2010 03:39:21 -0500
-Received: from peff.net ([208.65.91.99]:41708 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751091Ab0BOIjU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2010 03:39:20 -0500
-Received: (qmail 16810 invoked by uid 107); 15 Feb 2010 08:39:31 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 15 Feb 2010 03:39:31 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Feb 2010 03:39:24 -0500
+	id S1752850Ab0BOIqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 03:46:52 -0500
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110]:59616 "EHLO
+	emh04.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750750Ab0BOIqv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2010 03:46:51 -0500
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh04-2.mail.saunalahti.fi (Postfix) with SMTP id A878D13BEE3;
+	Mon, 15 Feb 2010 10:46:50 +0200 (EET)
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A074B99B994; Mon, 15 Feb 2010 10:46:50 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id EB0C11C6395;
+	Mon, 15 Feb 2010 10:46:43 +0200 (EET)
 Content-Disposition: inline
-In-Reply-To: <7vy6iwp0oy.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20100215075514.GB5347@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140001>
 
-On Sun, Feb 14, 2010 at 02:32:29AM -0800, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+On Mon, Feb 15, 2010 at 02:55:15AM -0500, Jeff King wrote:
+> On Sun, Feb 14, 2010 at 10:34:20PM -0800, Junio C Hamano wrote:
 > 
-> > It feels ugly that we need to re-resolve the ref when we simply threw
-> > that information away earlier from when we called resolve_ref in
-> > get_ref_dir...
-> 
-> It is true and I indeed thought about it while doing the patch, but "how
-> often would we see symref in the entire refs list, and what percentage of
-> callers would benefit from seeing this information?" stopped me from going
-> further in that direction.
+> Actually, I wonder if we can simply get rid of some of the calls in
+> send-pack. I think that the code in send-pack isn't even called anymore
+> via "git push"; it only gets called when you call send-pack directly.
 
-It is really only two code-paths (the one I mentioned, and the new one
-you are adding). I was thinking that we had to pay the resolve_ref cost
-for _every_ ref, symref or not, but that is not the case. Because we
-pass along the flag, we can re-resolve only the few that need it.
+Actually, its also seemingly called by git-remote-http(s) (at least it
+contains references to "stateless RPC", which is related to smart HTTP).
 
-So there is even less efficiency to be gained than I at first thought.
-Let's just drop it, as it is such an invasive change for no good reason.
+> And arguably send-pack as plumbing shouldn't be generating all sorts of
+> user-facing output. But it is a behavior change. I wonder if anybody
+> actually calls send-pack directly anymore. It seems like even scripts
+> use "git push" because of the transport agnosticism.
 
--Peff
+For non-stateless case, it seems that the only protocols builtin-send-pack
+can deal with are ssh://, git:// and file://, it can't deal with any
+sort of remote helper, not even one provoding smart transport.
+
+-Ilari
