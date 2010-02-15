@@ -1,75 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: GSoC 2010
-Date: Mon, 15 Feb 2010 08:53:11 -0800
-Message-ID: <20100215165311.GB7512@spearce.org>
-References: <fabb9a1e1002101223o6a00f7eavb84567c1119c8ebc@mail.gmail.com> <20100214065243.GA21956@coredump.intra.peff.net> <alpine.DEB.1.00.1002141912080.20986@pacific.mpi-cbg.de> <20100215083003.GA13168@coredump.intra.peff.net>
+From: Larry D'Anna <larry@elder-gods.org>
+Subject: Re: [PATCH 1/4] Refactoring: remove duplicated code from
+ transport.c and builtin-send-pack.c
+Date: Mon, 15 Feb 2010 12:30:41 -0500
+Message-ID: <20100215173041.GA8215@cthulhu>
+References: <1266182863-5048-1-git-send-email-michael.lukashov@gmail.com>
+ <20100215052853.GJ3336@coredump.intra.peff.net>
+ <7v7hqfknwz.fsf@alter.siamese.dyndns.org>
+ <7v635zj8jr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 15 17:53:31 2010
+Cc: Michael Lukashov <michael.lukashov@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 15 18:30:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nh4CQ-0001dU-68
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 17:53:30 +0100
+	id 1Nh4mX-0005AN-Ge
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 18:30:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755577Ab0BOQxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2010 11:53:24 -0500
-Received: from mail-pz0-f197.google.com ([209.85.222.197]:51079 "EHLO
-	mail-pz0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755523Ab0BOQxX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2010 11:53:23 -0500
-Received: by pzk35 with SMTP id 35so412041pzk.33
-        for <git@vger.kernel.org>; Mon, 15 Feb 2010 08:53:15 -0800 (PST)
-Received: by 10.141.188.41 with SMTP id q41mr2996181rvp.203.1266252794916;
-        Mon, 15 Feb 2010 08:53:14 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 6sm2353710yxg.66.2010.02.15.08.53.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 15 Feb 2010 08:53:13 -0800 (PST)
+	id S1755521Ab0BORan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 12:30:43 -0500
+Received: from cthulhu.elder-gods.org ([140.239.99.253]:33639 "EHLO
+	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754972Ab0BORam (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2010 12:30:42 -0500
+Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
+	id 13194822226; Mon, 15 Feb 2010 12:30:42 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <20100215083003.GA13168@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <7v635zj8jr.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140018>
 
-Jeff King <peff@peff.net> wrote:
-> On Sun, Feb 14, 2010 at 07:15:56PM +0100, Johannes Schindelin wrote:
+
+Weird: I only got the Cc for this, git@vger.kernel.org didnt' sent it to me.  It
+doesn't seem to be on gmane either.
+
+* Junio C Hamano (gitster@pobox.com) [100215 01:51]:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> > > Shawn, Dscho, and I talked about it off-list. I de-nominated myself 
-> > > because my wife is having a baby the week that student proposals will be 
-> > > reviewed, so I will probably disappear then. I think the plan was for 
-> > > Shawn to be the admin again.
-> > 
-> > No, my plan was to off-load work from Shawn, who is obviously overworked.
+> > Jeff King <peff@peff.net> writes:
+> >
+> >>>  builtin-send-pack.c |   89 ++++++++++++++----------
+> >>>  send-pack.h         |   20 +++++
+> >>>  transport.c         |  196 ---------------------------------------------------
+> >>
+> >> I think this is backwards. The versions in send-pack were there first,
+> >> and then were ported to transport.c so that other transports could
+> >> benefit from them. And that is where they should ultimately be.
+> >
+> > Also the names of these functions probably need to be made more specific
+> > so that people not so familiar with the transport code can tell that they
+> > are from "transport" family.  The names didn't matter much while they were
+> > file scope static, but this series changes that.
 > 
-> Let me clarify what I said. I hope everyone who is interested will sign
-> up to be a potential mentor, and will help by reading and ranking
-> student proposals. And I include both you and me in that everyone.
+> Ah, one more thing.  I think this patch touches somewhat overlapping areas
+> the ld/push-porcelain topic in 'pu' touches.
 > 
-> But somebody needs to be the officially designated admin and the last
-> word on decisions, and I thought that was going to be Shawn. If you (or
-> anyone else) wants to do it, I would be fine with that. But I do not
-> feel comfortable taking on the responsibility myself.
+> I think Peff's "backwards" observation is correct (and Daniel can
+> elaborate if he wants).  Once the direction is set on that point, you and
+> Larry probably would need to coordinate to decide how to proceed.  My gut
+> feeling without actually looking at the conflicts is that applying your
+> code consolidation first and then doing the "porcelain" rework on top
+> might be a cleaner approach, but you two are in better position to decide
+> on the order, as these are your codes that will be conflicting with each
+> other.
 
-Yup.  In the private discussion off-list about this, I basically
-agreed to be admin because Peff won't have the time, and it sounded
-like Dscho wouldn't either.  So I volunteered out of default.
+That sounds good to me.  I'll rebase the porcelain stuff off the next version of
+Michael's series.
 
-I think GSoC is a great program, and would love to see Git
-participate again this year, and would hate for us to miss out
-simply because we couldn't find someone to be the project admin.
-
-Fortunately $DAY_JOB feels GSoC is important, and thus might cut
-me a bit of slack during the peak program periods...
-
--- 
-Shawn.
+          --larry
