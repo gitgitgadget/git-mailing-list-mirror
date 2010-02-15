@@ -1,72 +1,85 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 1/4] Refactoring: remove duplicated code from transport.c
- and builtin-send-pack.c
-Date: Mon, 15 Feb 2010 13:25:35 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.1002151250030.14365@iabervon.org>
-References: <1266182863-5048-1-git-send-email-michael.lukashov@gmail.com> <20100215052853.GJ3336@coredump.intra.peff.net> <7v7hqfknwz.fsf@alter.siamese.dyndns.org> <20100215075514.GB5347@coredump.intra.peff.net>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH v2] stash pop: remove 'apply' options during 'drop' invocation
+Date: Mon, 15 Feb 2010 10:46:35 -0800
+Message-ID: <4B79968B.7060606@gmail.com>
+References: <201002151641.19694.trast@student.ethz.ch> <2927b3dc67ab0b9067d4fe849e85654125706b91.1266249586.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Lukashov <michael.lukashov@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 15 19:25:42 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Nanako Shiraishi <nanako3@lavabit.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Steve Folly <steve@spfweb.co.uk>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Feb 15 19:46:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nh5dd-0001vy-V1
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 19:25:42 +0100
+	id 1Nh5y3-0007wn-V2
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 19:46:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756009Ab0BOSZg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2010 13:25:36 -0500
-Received: from iabervon.org ([66.92.72.58]:36499 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755956Ab0BOSZg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2010 13:25:36 -0500
-Received: (qmail 11761 invoked by uid 1000); 15 Feb 2010 18:25:35 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 15 Feb 2010 18:25:35 -0000
-In-Reply-To: <20100215075514.GB5347@coredump.intra.peff.net>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1756058Ab0BOSqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 13:46:42 -0500
+Received: from qw-out-2122.google.com ([74.125.92.27]:48222 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755836Ab0BOSql (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2010 13:46:41 -0500
+Received: by qw-out-2122.google.com with SMTP id 5so541649qwi.37
+        for <git@vger.kernel.org>; Mon, 15 Feb 2010 10:46:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=/xcaNSEZpnibJtKr/hcHm2CgwmCEh+ipLfhTsfEGNyo=;
+        b=QiNqHb97g09b+EkvNcWsE5HERFV6nrhOnBiJ0ed6uVQNf+EalunlxC7PrXZBSLeJQD
+         Ny7nSiYB59lEg+ruAGoa742th3IzjdZ/OoE3TiZ34PyixBTMRDy32zvPDbcZ4RQSfdTQ
+         rtJvOAHsh12GVeqfwf92DINjQdzY1dbnJzdYY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=b8los3NgiCxL/gXKWLzrKy6nb5uS2hmiXyIiD3zq8SbtMkND6OSwenltqnE2aVswXD
+         EVqjnCZ1gELsrpw9N/EOdovDXq2Ht3rxZj7ERyAtEgnGD0+6MrfJIWiTf439UeQb3wDc
+         CogIIwFp1O6ajIN/rtLoUfuB8zjoSn39yg8PU=
+Received: by 10.220.122.24 with SMTP id j24mr85558vcr.28.1266259599495;
+        Mon, 15 Feb 2010 10:46:39 -0800 (PST)
+Received: from ?192.168.1.5? (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id 6sm2447884ywd.37.2010.02.15.10.46.37
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 15 Feb 2010 10:46:38 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7pre) Gecko/20091214 Shredder/3.0.1pre
+In-Reply-To: <2927b3dc67ab0b9067d4fe849e85654125706b91.1266249586.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140021>
 
-On Mon, 15 Feb 2010, Jeff King wrote:
+On 02/15/2010 08:05 AM, Thomas Rast wrote:
+> The 'git stash pop' option parsing used to remove the first argument
+> in --index mode.  At the time this was implemented, this first
+> argument was always --index.  However, since the invention of the -q
+> option in fcdd0e9 (stash: teach quiet option, 2009-06-17) you can
+> cause an internal invocation of
+>
+>   git stash drop --index
+>
+> by running
+>
+>   git stash pop -q --index
+>
+> which then of course fails because drop doesn't know --index.
+>
+> To handle this, instead let 'git stash apply' decide what the future
+> argument to 'drop' should be.
+>
+> Warning: this means that 'git stash apply' must parse all options that
+> 'drop' can take, and deal with them in the same way.  This is
+> currently true for its only option -q.
+>
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+>
 
-> On Sun, Feb 14, 2010 at 10:34:20PM -0800, Junio C Hamano wrote:
-> 
-> > > I can't remember the exact details of why the originals were not
-> > > removed, though (I think I complained about it once before, and there
-> > > was some technical reason, but I don't recall now). Daniel (cc'd) might
-> > > remember more.
-> > 
-> > Also the names of these functions probably need to be made more specific
-> > so that people not so familiar with the transport code can tell that they
-> > are from "transport" family.  The names didn't matter much while they were
-> > file scope static, but this series changes that.
-> 
-> Actually, I wonder if we can simply get rid of some of the calls in
-> send-pack. I think that the code in send-pack isn't even called anymore
-> via "git push"; it only gets called when you call send-pack directly.
-> And arguably send-pack as plumbing shouldn't be generating all sorts of
-> user-facing output. But it is a behavior change. I wonder if anybody
-> actually calls send-pack directly anymore. It seems like even scripts
-> use "git push" because of the transport agnosticism.
-
-I think it would probably be better to get rid of send-pack as a separate 
-command entirely, rather than changing any of its behavior, and make 
-remote-curl use a private command that only has the desired behavior, 
-which is stdio to a local proxy for the remote.
-
-For that matter, it would likely be worthwhile abstracting the packet_line 
-code such that send-pack (and fetch-pack) could be done in-process without 
-the messages going over a classic packet_line connection to remote-curl 
-before being sent over HTTP to the actual server.
-
-	-Daniel
-*This .sig left intentionally blank*
+Acked-by: Stephen Boyd <bebarino@gmail.com>
