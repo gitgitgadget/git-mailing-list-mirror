@@ -1,58 +1,46 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v3 3/5] Move offset_1st_component() to path.c
-Date: Mon, 15 Feb 2010 20:43:41 +0100
-Message-ID: <4B79A3ED.4090308@kdbg.org>
-References: <1266162285-10955-1-git-send-email-pclouds@gmail.com> <1266162285-10955-3-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH v4 5/6] am: Fix launching of pager
+Date: Mon, 15 Feb 2010 21:26:43 +0100
+Message-ID: <4B79AE03.6050108@kdbg.org>
+References: <462027ff1002131314k62069160h63760fc8316aa43b@mail.gmail.com> <20100213235156.GA9054@coredump.intra.peff.net> <20100214115430.GA1849@progeny.tock> <20100214120731.GE3499@progeny.tock> <20100215025958.GB17444@progeny.tock> <20100215032533.GA19230@progeny.tock> <20100215044223.GA3336@coredump.intra.peff.net> <20100215050413.GA19586@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?Sm/Do28gQ2FybG9zIE1lbmRlcyBMdcOtcw==?= 
-	<jonny@jonny.eng.br>, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 20:44:02 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>,
+	Sebastian Celis <sebastian@sebastiancelis.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 15 21:27:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nh6rO-0004Rx-QK
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 20:43:59 +0100
+	id 1Nh7X2-0006wY-Ds
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 21:27:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756271Ab0BOTnx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Feb 2010 14:43:53 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:30529 "EHLO bsmtp.bon.at"
+	id S1756456Ab0BOU0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 15:26:55 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:18781 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756246Ab0BOTnw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2010 14:43:52 -0500
+	id S1756202Ab0BOU0y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2010 15:26:54 -0500
 Received: from [77.119.192.246] (77.119.192.246.wireless.dyn.drei.com [77.119.192.246])
-	by bsmtp.bon.at (Postfix) with ESMTP id D67861000B;
-	Mon, 15 Feb 2010 20:43:45 +0100 (CET)
+	by bsmtp.bon.at (Postfix) with ESMTP id 2E04F2C400C;
+	Mon, 15 Feb 2010 21:26:47 +0100 (CET)
 User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <1266162285-10955-3-git-send-email-pclouds@gmail.com>
+In-Reply-To: <20100215050413.GA19586@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140027>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy schrieb:
-> +int offset_1st_component(const char *path)
-> +{
-> +	if (has_dos_drive_prefix(path))
-> +		return 2 + (path[2] =3D=3D '/');
-> +	return *path =3D=3D '/';
-> +}
+Jonathan Nieder schrieb:
+> tty is portable, but "test -t 1" is cleaner.
 
-I'd have expected that you future-proofed this function by using=20
-is_dir_sep() or even use your previous implementation of is_root_path=20
-(because this implementation is a bit cryptic).
+tty is not portable enough: we don't have it on Windows. test -t 1 is fine.
 
-But if the new callers of this function will only pass the results of=20
-normalize_path_copy() and getcwd() (both return only forward-slashes on=
-=20
-Windows), then I'm fine with this version. Do they?
+Thanks.
 
 -- Hannes
