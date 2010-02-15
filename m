@@ -1,59 +1,67 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 2/4] Refactoring: connect.c: move duplicated code to get_host_and_port
-Date: Mon, 15 Feb 2010 22:11:56 +0100
-Message-ID: <4B79B89C.1050603@kdbg.org>
-References: <1266182863-5048-1-git-send-email-michael.lukashov@gmail.com> <1266182863-5048-2-git-send-email-michael.lukashov@gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: GSoC 2010
+Date: Mon, 15 Feb 2010 22:53:53 +0100
+Message-ID: <fabb9a1e1002151353x5c0083cfp583b06bac4f29925@mail.gmail.com>
+References: <fabb9a1e1002101223o6a00f7eavb84567c1119c8ebc@mail.gmail.com> 
+	<20100214065243.GA21956@coredump.intra.peff.net> <alpine.DEB.1.00.1002141912080.20986@pacific.mpi-cbg.de> 
+	<20100215083003.GA13168@coredump.intra.peff.net> <20100215165311.GB7512@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael Lukashov <michael.lukashov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 22:12:18 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 15 22:54:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nh8En-0004cy-H5
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 22:12:13 +0100
+	id 1Nh8tY-0007Dc-0u
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 22:54:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932141Ab0BOVMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2010 16:12:08 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:12303 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S932133Ab0BOVMG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2010 16:12:06 -0500
-Received: from [77.119.192.246] (77.119.192.246.wireless.dyn.drei.com [77.119.192.246])
-	by bsmtp.bon.at (Postfix) with ESMTP id D9879CDF8C;
-	Mon, 15 Feb 2010 22:12:00 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <1266182863-5048-2-git-send-email-michael.lukashov@gmail.com>
+	id S932218Ab0BOVyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 16:54:14 -0500
+Received: from mail-pz0-f197.google.com ([209.85.222.197]:55586 "EHLO
+	mail-pz0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932158Ab0BOVyN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2010 16:54:13 -0500
+Received: by pzk35 with SMTP id 35so687176pzk.33
+        for <git@vger.kernel.org>; Mon, 15 Feb 2010 13:54:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=SUVdtvr9EqEcupjwNXowFb+OuueRVqvPrT48JV4s63U=;
+        b=ZDvecjrafKD47xrf9GFbTSvNDRGZgL3PC0Li1D8xfIl+Il2ISE+M0LlqqQZt5DJZOV
+         BNHVZ9wTnq1kuZMa4GXkt2HSxcTOAdRMndk8ej2zbxg1BiRtdXM/emCEBNt1h4f2VVR9
+         0o3kFmqDltgeKbGzRk8DGWD8HlQCHUT3GF6/8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=q2EI7qZaO3wuYkAVW9xZFF5cRKsiuI4jUtha07OKdIx/F2IkTj5EgvE00QH9S1uRqM
+         OyuPz82lYGHVG9nqtz64pTp4M+stNtoYuBY4giOUJrWjIIgcsw2CYGVetYQWTsjNX3/z
+         Q4sppKCha9UWneXJCbFe/2A4cF/ADRr2LFAU4=
+Received: by 10.142.9.26 with SMTP id 26mr3769654wfi.24.1266270853095; Mon, 15 
+	Feb 2010 13:54:13 -0800 (PST)
+In-Reply-To: <20100215165311.GB7512@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140035>
 
-Michael Lukashov schrieb:
-> +static void get_host_and_port(char **host, const char **port, int set_port_none)
+Heya,
 
-Minor nit: The last parameter, set_port_none, is a rather prominent sign 
-that this function mixes policy and functionality. And indeed, this 
-implementation:
+On Mon, Feb 15, 2010 at 17:53, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Fortunately $DAY_JOB feels GSoC is important, and thus might cut
+> me a bit of slack during the peak program periods...
 
-> +	if (colon) {
-> +		*colon = 0;
-> +		*port = colon + 1;
-> +		if (set_port_none && !**port)
-> +			*port = "<none>";
-> +	}
+Ok, Dscho, do you want to be admin and have Shawn be backup, or the
+other way around? It'd be nice if we could make a concrete decision
+;).
 
-proves it. The _functionality_ is to find host and port from a string. The 
-_policy_ is to set the port to "<none>" if it would otherwise be empty. 
-The callers take care of the _policy_, this function should only care 
-about _functionality_. There's only one call site that wants "<none>"; 
-don't move this detail into this function.
+-- 
+Cheers,
 
-Other than that: nice catch.
-
--- Hannes
+Sverre Rabbelier
