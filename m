@@ -1,79 +1,76 @@
 From: Larry D'Anna <larry@elder-gods.org>
-Subject: Re: [PATCH 1/4] Refactoring: remove duplicated code from
- transport.c and builtin-send-pack.c
-Date: Mon, 15 Feb 2010 12:30:41 -0500
-Message-ID: <20100215173041.GA8215@cthulhu>
-References: <1266182863-5048-1-git-send-email-michael.lukashov@gmail.com>
- <20100215052853.GJ3336@coredump.intra.peff.net>
- <7v7hqfknwz.fsf@alter.siamese.dyndns.org>
- <7v635zj8jr.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v3 3/3] git-push: make git push --dry-run --porcelain
+ exit with status 0 even if updates will be rejected
+Date: Mon, 15 Feb 2010 12:40:13 -0500
+Message-ID: <20100215174013.GA12761@cthulhu>
+References: <214a0317f2e4707a866b2f5d10509296bc1479c1.1265661033.git.larry@elder-gods.org>
+ <032264a40d15cb9f4a86885947ffa23a603bfb0e.1265661033.git.larry@elder-gods.org>
+ <7vtytqyrlk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Lukashov <michael.lukashov@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 18:30:51 2010
+X-From: git-owner@vger.kernel.org Mon Feb 15 18:40:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nh4mX-0005AN-Ge
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 18:30:49 +0100
+	id 1Nh4vm-0003jH-B0
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 18:40:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755521Ab0BORan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2010 12:30:43 -0500
-Received: from cthulhu.elder-gods.org ([140.239.99.253]:33639 "EHLO
+	id S1755930Ab0BORkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 12:40:15 -0500
+Received: from cthulhu.elder-gods.org ([140.239.99.253]:33717 "EHLO
 	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754972Ab0BORam (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2010 12:30:42 -0500
+	with ESMTP id S1755922Ab0BORkO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2010 12:40:14 -0500
 Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
-	id 13194822226; Mon, 15 Feb 2010 12:30:42 -0500 (EST)
+	id 83FC3822226; Mon, 15 Feb 2010 12:40:13 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <7v635zj8jr.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vtytqyrlk.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140019>
 
-
-Weird: I only got the Cc for this, git@vger.kernel.org didnt' sent it to me.  It
-doesn't seem to be on gmane either.
-
-* Junio C Hamano (gitster@pobox.com) [100215 01:51]:
-> Junio C Hamano <gitster@pobox.com> writes:
+* Junio C Hamano (gitster@pobox.com) [100209 17:25]:
+> Larry D'Anna <larry@elder-gods.org> writes:
 > 
-> > Jeff King <peff@peff.net> writes:
-> >
-> >>>  builtin-send-pack.c |   89 ++++++++++++++----------
-> >>>  send-pack.h         |   20 +++++
-> >>>  transport.c         |  196 ---------------------------------------------------
-> >>
-> >> I think this is backwards. The versions in send-pack were there first,
-> >> and then were ported to transport.c so that other transports could
-> >> benefit from them. And that is where they should ultimately be.
-> >
-> > Also the names of these functions probably need to be made more specific
-> > so that people not so familiar with the transport code can tell that they
-> > are from "transport" family.  The names didn't matter much while they were
-> > file scope static, but this series changes that.
+> > @@ -1052,7 +1053,7 @@ int transport_push(struct transport *transport,
+> >  			flags & TRANSPORT_PUSH_FORCE);
+> >  
+> >  		ret = transport->push_refs(transport, remote_refs, flags);
+> > -		err = push_had_errors(remote_refs);
+> > +		err = (pretend && porcelain) ? 0 : push_had_errors(remote_refs);
 > 
-> Ah, one more thing.  I think this patch touches somewhat overlapping areas
-> the ld/push-porcelain topic in 'pu' touches.
+> Hmph, you are doing (rewritten in an easier to follow format)
 > 
-> I think Peff's "backwards" observation is correct (and Daniel can
-> elaborate if he wants).  Once the direction is set on that point, you and
-> Larry probably would need to coordinate to decide how to proceed.  My gut
-> feeling without actually looking at the conflicts is that applying your
-> code consolidation first and then doing the "porcelain" rework on top
-> might be a cleaner approach, but you two are in better position to decide
-> on the order, as these are your codes that will be conflicting with each
-> other.
+> 	if (--dry-run && --porcelain)
+> 		err = 0;
+> 	else
+> 		err = push_add_errors(remote_refs);
+> 
+> here, which I think changes the semantics of what follows immediately
+> after this hunk, namely:
+> 
+> 	if (!quiet || err)
+> 		print_push_status(transport->url, remote_refs,
+> 				verbose | porcelain, porcelain,
+> 				nonfastforward);
+> 
+> Earlier, the logic said "even if you asked for --quiet, we would report if
+> there is an error" but now you are changing the rule to "under --dry-run
+> and --porcelain, --quiet means don't ever report the status, even when
+> there are errors".
+> 
+> I don't necessarily think it is a bad change, but in any case the semantic
+> change is worth documenting.
 
-That sounds good to me.  I'll rebase the porcelain stuff off the next version of
-Michael's series.
+Which version of the --quiet behavior do you want for the next version of this
+series?  My feeling is that "even if you asked for --quiet, we would report if
+there is an error" is the best policy, even under --dry-run --porcelain.
 
-          --larry
+         --larry
