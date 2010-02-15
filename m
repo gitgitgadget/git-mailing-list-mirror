@@ -1,98 +1,74 @@
-From: Jacob Helwig <jacob.helwig@gmail.com>
-Subject: [PATCH v2] Documentation: Fix indentation problem in git-commit(1)
-Date: Mon, 15 Feb 2010 04:33:06 -0800
-Message-ID: <1266237186-8065-1-git-send-email-jacob.helwig@gmail.com>
-References: <201002151008.31980.trast@student.ethz.ch>
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Jacob Helwig <jacob.helwig@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 15 13:33:56 2010
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: git locate
+Date: Mon, 15 Feb 2010 14:20:35 +0100
+Message-ID: <fabb9a1e1002150520v29cf8d59ke27cde3e9697b011@mail.gmail.com>
+References: <43d8ce651001191717l58d10919j691f4e5b056fe9b5@mail.gmail.com> 
+	<alpine.DEB.1.00.1001200224270.4985@pacific.mpi-cbg.de> <m3zl49bk0o.fsf@localhost.localdomain> 
+	<alpine.DEB.1.00.1001201021060.31129@intel-tinevez-2-302> 
+	<4B579BA8.8050000@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: SungHyun Nam <goweol@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 15 14:21:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nh09C-0004M0-H4
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 13:33:54 +0100
+	id 1Nh0st-0005yz-4s
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 14:21:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755486Ab0BOMds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2010 07:33:48 -0500
-Received: from mail-pz0-f197.google.com ([209.85.222.197]:37214 "EHLO
-	mail-pz0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751550Ab0BOMdr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2010 07:33:47 -0500
-Received: by pzk35 with SMTP id 35so164112pzk.33
-        for <git@vger.kernel.org>; Mon, 15 Feb 2010 04:33:47 -0800 (PST)
+	id S1752189Ab0BONU6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 08:20:58 -0500
+Received: from mail-px0-f204.google.com ([209.85.216.204]:59263 "EHLO
+	mail-px0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751034Ab0BONUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2010 08:20:55 -0500
+Received: by pxi42 with SMTP id 42so3279478pxi.5
+        for <git@vger.kernel.org>; Mon, 15 Feb 2010 05:20:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=/JVWC67jyNsZzviqIG/2lws4oLa12LUzcplBXIgkFls=;
-        b=RiqsYi0jpjQRxGdON7pSy5b2YWh5N12KfiImwDVAzWFxeO14F4k2J+cWQA2V7zs9pL
-         Z8bT12iyRn6IE5Wk6WBrPXitudUq9GlBNTA1+GbKGOTJQcTBK0YOORg7tUWIObgDQDkR
-         g4ThH5kWTkOKJgalGbJhNilhM55WsAWVuBiDs=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=PyjK6YMzU/xzIFeO16ipwMiyQvt1c+VR8jnIB+n1z4g=;
+        b=n33ETFkvfRaQRx7iIMekJzUAqrRVnZXbBVOcoOV9NTuTQ2QeCvFErMxqjb6XmYD31W
+         0zf81RvQx5Y4FYTCFxQpWatAq0eJIiPEPcehtfM9aW/EWiP/B+JU3CF+Lpbs/z5jiUmH
+         H69IfTjb8Y1ezUJ+V7Q6R3YT7oM8cqxp8qGXI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=JTsebF8wPvBxhV8yqkUgJgbLUiuDT+l9KsRzwPGrU0MzG+plLSnJXtB9YB91P1Hi2C
-         mbpmTAuUe2n6lgkqWCwyjLEPezRXBgDlD/XrcNFHLq3Pxkipq/2Cz5ela9tjjX5ye3az
-         NiqMP1bBRZWQcMDEQj/WuajzKquKE/W9xnnJw=
-Received: by 10.114.189.27 with SMTP id m27mr3389740waf.221.1266237227067;
-        Mon, 15 Feb 2010 04:33:47 -0800 (PST)
-Received: from localhost.localdomain ([96.225.220.117])
-        by mx.google.com with ESMTPS id 22sm5512675pzk.13.2010.02.15.04.33.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 15 Feb 2010 04:33:45 -0800 (PST)
-X-Mailer: git-send-email 1.7.0
-In-Reply-To: <201002151008.31980.trast@student.ethz.ch>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=q5FDOggLtgjw0SxjBNUOLXNyAGe7dgp7TJWNZZdQO82S39SBSt+Tx7gST3hDlNtvHq
+         PuxTR8gerqqgF+cEK7mcozYnnvnVz+wVBuaTrhtQGD1f4uSl1ba2Q+h2uOfeQltFOWTw
+         XIrQUJ0tbmjEnFrMo9HOxrfZGnkMEIbke40NY=
+Received: by 10.142.9.26 with SMTP id 26mr3406681wfi.24.1266240055056; Mon, 15 
+	Feb 2010 05:20:55 -0800 (PST)
+In-Reply-To: <4B579BA8.8050000@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140008>
 
-Ever since the "See linkgit:git-config[1]..." paragraph was added to the
-description for --untracked-files (d6293d1), the paragraphs for the
-following options were indented at the same level as the "See
-linkgit:git-config[1]" paragraph.  This problem showed up in the
-manpages, but not in the HTML documentation.
+Heya,
 
-While this does fix the alignment of the options following
---untracked-files in the manpage, the "See linkgit..." portion of the
-description does not retain its previous indentation level in the
-manpages, or HTML documentation.
+On Thu, Jan 21, 2010 at 01:11, SungHyun Nam <goweol@gmail.com> wrote:
+> The alias 'git locate' and the command 'git ls-files' runs
+> differently if I run them in a subdirectory.
+> Is it expected?
 
-Signed-off-by: Jacob Helwig <jacob.helwig@gmail.com>
-Acked-by: Thomas Rast <trast@student.ethz.ch>
----
+I just ran into this (I wanted to alias 'git find' but to me the 'run
+ls-files from cwd' is desirable. Also, I prefer to have a trailing
+glob as well, so I added one :). An easy solution is to drop
+'git-find' in your path somewhere:
 
-When adding the caveat to the commit message, the introductory comment
-paragraph I had before seemed to fit better; I decided to go with a
-version of it, instead.
+sverre@laptop-sverre:~/bin$ cat git-find
+#!/bin/bash
 
- Documentation/git-commit.txt |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+git ls-files "*$1*"
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index e99bb14..64fb458 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -197,13 +197,13 @@ FROM UPSTREAM REBASE" section in linkgit:git-rebase[1].)
- 	Show untracked files (Default: 'all').
- +
- The mode parameter is optional, and is used to specify
--the handling of untracked files. The possible options are:
-+the handling of untracked files.
-++
-+The possible options are:
- +
----
- 	- 'no'     - Show no untracked files
- 	- 'normal' - Shows untracked files and directories
- 	- 'all'    - Also shows individual files in untracked directories.
----
- +
- See linkgit:git-config[1] for configuration variable
- used to change the default for when the option is not
 -- 
-1.7.0
+Cheers,
+
+Sverre Rabbelier
