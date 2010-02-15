@@ -1,57 +1,59 @@
-From: Steve Folly <steve@spfweb.co.uk>
-Subject: Re: git stash pop not reapplying deletions
-Date: Mon, 15 Feb 2010 21:09:53 +0000 (UTC)
-Message-ID: <loom.20100215T220806-238@post.gmane.org>
-References: <loom.20100214T200110-615@post.gmane.org> <201002142308.01704.trast@student.ethz.ch> <loom.20100215T152932-38@post.gmane.org> <201002151641.19694.trast@student.ethz.ch>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 2/4] Refactoring: connect.c: move duplicated code to get_host_and_port
+Date: Mon, 15 Feb 2010 22:11:56 +0100
+Message-ID: <4B79B89C.1050603@kdbg.org>
+References: <1266182863-5048-1-git-send-email-michael.lukashov@gmail.com> <1266182863-5048-2-git-send-email-michael.lukashov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 15 22:10:23 2010
+Cc: git@vger.kernel.org
+To: Michael Lukashov <michael.lukashov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 15 22:12:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nh8D0-0003Sr-KI
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 22:10:22 +0100
+	id 1Nh8En-0004cy-H5
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 22:12:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932121Ab0BOVKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2010 16:10:17 -0500
-Received: from lo.gmane.org ([80.91.229.12]:46923 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932089Ab0BOVKQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2010 16:10:16 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Nh8Ct-0003Og-1q
-	for git@vger.kernel.org; Mon, 15 Feb 2010 22:10:15 +0100
-Received: from cpc1-haye16-0-0-cust629.haye.cable.virginmedia.com ([92.234.82.118])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Feb 2010 22:10:15 +0100
-Received: from steve by cpc1-haye16-0-0-cust629.haye.cable.virginmedia.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Feb 2010 22:10:15 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 92.234.82.118 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_2; en-gb) AppleWebKit/531.21.8 (KHTML, like Gecko) Version/4.0.4 Safari/531.21.10)
+	id S932141Ab0BOVMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 16:12:08 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:12303 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S932133Ab0BOVMG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2010 16:12:06 -0500
+Received: from [77.119.192.246] (77.119.192.246.wireless.dyn.drei.com [77.119.192.246])
+	by bsmtp.bon.at (Postfix) with ESMTP id D9879CDF8C;
+	Mon, 15 Feb 2010 22:12:00 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <1266182863-5048-2-git-send-email-michael.lukashov@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140034>
 
-Thomas Rast <trast <at> student.ethz.ch> writes:
+Michael Lukashov schrieb:
+> +static void get_host_and_port(char **host, const char **port, int set_port_none)
 
-> 
-> Please don't remove the Cc list, it helps us (among other things) flag
-> the mail that is important.
+Minor nit: The last parameter, set_port_none, is a rather prominent sign 
+that this function mixes policy and functionality. And indeed, this 
+implementation:
 
-It's probably happened again, but not my fault - I'm reply via gmane.org, 
-not email.
+> +	if (colon) {
+> +		*colon = 0;
+> +		*port = colon + 1;
+> +		if (set_port_none && !**port)
+> +			*port = "<none>";
+> +	}
 
+proves it. The _functionality_ is to find host and port from a string. The 
+_policy_ is to set the port to "<none>" if it would otherwise be empty. 
+The callers take care of the _policy_, this function should only care 
+about _functionality_. There's only one call site that wants "<none>"; 
+don't move this detail into this function.
 
-Steve
+Other than that: nice catch.
+
+-- Hannes
