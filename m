@@ -1,77 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: ce_stage(..) == 2?
-Date: Sun, 14 Feb 2010 22:53:34 -0800
-Message-ID: <7vbpfrhtw1.fsf@alter.siamese.dyndns.org>
-References: <4B78EE4B.2040707@gmail.com>
+From: Gabriel Filion <lelutin@gmail.com>
+Subject: Re: [PATCH] require_work_tree broken with NONGIT_OK
+Date: Mon, 15 Feb 2010 02:24:59 -0500
+Message-ID: <4B78F6CB.2070304@gmail.com>
+References: <4B78C4D3.90407@gmail.com> <7vzl3bj95l.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: chengang31@gmail.com
-X-From: git-owner@vger.kernel.org Mon Feb 15 07:53:47 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 15 08:25:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nguq3-0001Io-4v
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 07:53:47 +0100
+	id 1NgvKS-0008JH-Jx
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 08:25:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752750Ab0BOGxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2010 01:53:42 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61873 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753556Ab0BOGxl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2010 01:53:41 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CE049ADEC;
-	Mon, 15 Feb 2010 01:53:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hnx3V6GvSZLH2naoZOT27xvSWKU=; b=d79YXc
-	ZVC3kko91nj155J/LSRcUyeumJincjsM8XMQ9QH9NRHi13NLl8UpqLfy5KSvJK/q
-	u3XVLHDYVAHLJnwlfmX6ghradya2Ggc5pw03+2FuBA5TsQ5BA0TkDKh4Wjsjk1rh
-	KnRvyN8VC+ZhA5nTIgUAMnPFjczkVQIFuf7SY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SpikZ9Egadlw+/9lu/zXfZ5ID3XGMJRB
-	TlsRdCEKsmd4cjHrZu8ubSFIh6L94CkVaCwGqkovvDXcdNSbVkjy/b8xYN/He8Nn
-	2DqRV9VdAAPdyXBKcW6lOHaQEIvXdu4YYNntRNNTKAMNAUntuSWLHuGlVGiNKU2V
-	sVB1/GetS9M=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EF7B99ADEA;
-	Mon, 15 Feb 2010 01:53:38 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5F1E99ADE9; Mon, 15 Feb
- 2010 01:53:36 -0500 (EST)
-In-Reply-To: <4B78EE4B.2040707@gmail.com> (cg's message of "Mon\, 15 Feb 2010
- 14\:48\:43 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D887126C-19FE-11DF-9F31-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755043Ab0BOHZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 02:25:04 -0500
+Received: from mail001.aei.ca ([206.123.6.130]:36623 "EHLO mail001.aei.ca"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754544Ab0BOHZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2010 02:25:03 -0500
+Received: (qmail 4241 invoked by uid 89); 15 Feb 2010 07:25:00 -0000
+Received: by simscan 1.2.0 ppid: 4235, pid: 4236, t: 0.0413s
+         scanners: regex: 1.2.0 attach: 1.2.0
+Received: from mail002.aei.ca (HELO mail002.contact.net) (206.123.6.132)
+  by mail001.aei.ca with (DHE-RSA-AES256-SHA encrypted) SMTP; 15 Feb 2010 07:25:00 -0000
+Received: (qmail 14622 invoked by uid 89); 15 Feb 2010 07:25:00 -0000
+Received: by simscan 1.2.0 ppid: 14616, pid: 14617, t: 0.4871s
+         scanners: regex: 1.2.0 attach: 1.2.0 clamav: 0.95.3/m:51 spam: 3.3.0
+X-Spam-Checker-Version: SpamAssassin 3.3.0 (2010-01-18)
+X-Spam-Level: 
+X-Spam-Status: No, hits=-3.0 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+	FREEMAIL_FROM autolearn=ham version=3.3.0
+Received: from dsl-152-38.aei.ca (HELO ?192.168.2.202?) (66.36.152.38)
+  by mail.aei.ca with SMTP; 15 Feb 2010 07:24:59 -0000
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20100108 Lightning/1.0b1 Icedove/3.0
+In-Reply-To: <7vzl3bj95l.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139991>
 
-cg <chengang31@gmail.com> writes:
+On 2010-02-15 01:38, Junio C Hamano wrote:
+> Gabriel Filion <lelutin@gmail.com> writes:
+> 
+>> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+>> index d56426d..8de2f03 100755
+>> --- a/git-sh-setup.sh
+>> +++ b/git-sh-setup.sh
+>> @@ -128,7 +128,7 @@ cd_to_toplevel () {
+>>  }
+>>   require_work_tree () {
+>> -	test $(git rev-parse --is-inside-work-tree) = true ||
+> 
+> This needs to have dq around it, as "Not a git repository" case we fatal
+> out without any output, like this:
+> 
+> 	test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = true ||
+> 
+>> +	test git rev-parse --is-inside-work-tree >/dev/null 2>&1 ||
+> 
+> I don't think this would ever work with "test" at the beginning.
+> 
+Well, it would seem you are right! my bad for thinking that "test" was
+actually evaluating any command given in the expression :\
 
-> I  saw some code like:
-> attr.c(365): if (ce_stage(istate->cache[i]) == 2)
-> ...
-> rerere.c(352):  if (ce_stage(e2) == 2
-> ...
->
-> but there is no 0x200 in cache.h(158):
-> #define CE_NAMEMASK  (0x0fff)
-> #define CE_STAGEMASK (0x3000)
-> #define CE_EXTENDED  (0x4000)
-> #define CE_VALID     (0x8000)
-> #define CE_STAGESHIFT 12
->
-> so what does "2" mean?
+Your implementation seems to be working better and fixes the problem.
+Thanks for reviewing the patch.
 
-#define ce_stage(ce) ((CE_STAGEMASK & (ce)->ce_flags) >> CE_STAGESHIFT)
-
-0x3000 shifted 12 places is a mask for two bits, as you can have cache
-entries at stage 0 (normal), or stage 1/2/3.
+-- 
+Gabriel Filion
