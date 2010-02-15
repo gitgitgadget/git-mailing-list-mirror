@@ -1,67 +1,157 @@
-From: Zygo Blaxell <zblaxell@esightcorp.com>
-Subject: Re: [PATCH] don't use mmap() to hash files
-Date: Sun, 14 Feb 2010 18:52:19 -0500
-Message-ID: <20100214235219.GE24809@gibbs.hungrycats.org>
-References: <37fcd2781002131409r4166e496h9d12d961a2330914@mail.gmail.com> <20100213223733.GP24809@gibbs.hungrycats.org> <20100214011812.GA2175@dpotapov.dyndns.org> <alpine.DEB.1.00.1002140249410.20986@pacific.mpi-cbg.de> <20100214024259.GB9704@dpotapov.dyndns.org> <alpine.DEB.1.00.1002141908150.20986@pacific.mpi-cbg.de> <37fcd2781002141106v761ce6e0kc5c5bdd5001f72a9@mail.gmail.com> <alpine.DEB.1.00.1002142021100.20986@pacific.mpi-cbg.de> <alpine.DEB.1.00.1002142025160.20986@pacific.mpi-cbg.de> <37fcd2781002141156n7e2b9673s1eb6c12869facdb2@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 00:52:31 2010
+From: Mark Lodato <lodatom@gmail.com>
+Subject: git-grep ignores untracked files
+Date: Sun, 14 Feb 2010 19:35:37 -0500
+Message-ID: <1266194137-25653-1-git-send-email-lodatom@gmail.com>
+Cc: Mark Lodato <lodatom@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 15 01:33:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgoGK-0007CW-QX
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 00:52:29 +0100
+	id 1NgouJ-0003J8-61
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 01:33:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753626Ab0BNXwV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Feb 2010 18:52:21 -0500
-Received: from ip-70-38-54-39.static.privatedns.com ([70.38.54.39]:47179 "EHLO
-	ginevra.hungrycats.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752765Ab0BNXwU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Feb 2010 18:52:20 -0500
-X-Envelope-Mail-From: zblaxell@esightcorp.com
-X-Envelope-Mail-From: zblaxell@esightcorp.com
-X-Envelope-Mail-From: zblaxell@esightcorp.com
-X-Envelope-Mail-From: zblaxell@esightcorp.com
-X-Envelope-Mail-From: zblaxell@esightcorp.com
-X-Envelope-Mail-From: zblaxell@esightcorp.com
-Received: from gibbs.hungrycats.org (gibbs.vpn7.hungrycats.org [10.132.226.42])
-	by ginevra.hungrycats.org (Postfix) with ESMTP id 9130A8018;
-	Sun, 14 Feb 2010 18:52:19 -0500 (EST)
-Received: from zblaxell by gibbs.hungrycats.org with local (Exim 4.69)
-	(envelope-from <zblaxell@esightcorp.com>)
-	id 1NgoGB-0007XK-EV; Sun, 14 Feb 2010 18:52:19 -0500
-Content-Disposition: inline
-In-Reply-To: <37fcd2781002141156n7e2b9673s1eb6c12869facdb2@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753768Ab0BOAdl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Feb 2010 19:33:41 -0500
+Received: from qw-out-2122.google.com ([74.125.92.27]:24628 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753365Ab0BOAdj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Feb 2010 19:33:39 -0500
+Received: by qw-out-2122.google.com with SMTP id 5so359731qwi.37
+        for <git@vger.kernel.org>; Sun, 14 Feb 2010 16:33:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=MhZmZsPIWuT0eYNs/O/i4nyxNtcKJ+kjQBmL4D3jH+U=;
+        b=ChQ2yJ5IAoANlBo/kVCkKJ7sQ7cq9J1EIyn1lLF6g0Q++oIBy52s8YhwARQYBqcvzC
+         kuEr/EEeclURHIW+5hFtU0C/2o+CxxsiahbU14hKBIz9GqR++3hxThK9rPV7iInEba2d
+         8uIa0rzHvTb1c+so8lwjwuvkvtRSVNXGzSx2M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=aOoK8fZAb49XS3t93MIw0o8wIvlQ2Sr20zucDRw9LH/jjiBD9UB6V4LIur6naWnRV1
+         YOMLObt4IfBnjOJMAIVtjJwXqsLvFVZipvyizfnk1Uq8c3Dt/SootUxGG4T2t1iVLs8k
+         6Q7/GfM2izX0Obe4Hj1BMgVzuEPpIO/+LgVdw=
+Received: by 10.224.115.74 with SMTP id h10mr2044406qaq.372.1266194019137;
+        Sun, 14 Feb 2010 16:33:39 -0800 (PST)
+Received: from localhost.localdomain (c-68-50-174-152.hsd1.dc.comcast.net [68.50.174.152])
+        by mx.google.com with ESMTPS id 20sm3897042qyk.13.2010.02.14.16.33.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 14 Feb 2010 16:33:38 -0800 (PST)
+X-Mailer: git-send-email 1.7.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139951>
 
-On Sun, Feb 14, 2010 at 10:56:46PM +0300, Dmitry Potapov wrote:
-> It may not work without enough swap space, and it will not pretty anyway
-> due to swapping. So, I see the following options:
-> 
-> 1. to introduce a configuration parameter that will define whether to use
-> mmap() to hash files or not. It is a trivial change, but the real question
-> is what default value for this option (should we do some heuristic based
-> on filesize vs available memory?)
+Currently, git-grep ignores untracked files in the working directory.
+For example:
 
-I'm a fan of having the option.  It lets users who know what they're
-doing (and who might be doing something unusual, like files that are
-large relative to memory size, or files that are being modified during
-git add) decide how to make the performance-robustness trade-off.
+    $ pattern=qazxswedc
+    $ echo $pattern > foo
+    $ git grep $pattern || echo not found
+    not found
 
-"Large" is relative.  How common is it to add files to git that are
-large relative to the RAM size of the machine?  I have a machine with 6GB
-of RAM and a repo on that machine with half a dozen 0.5-1.5GB files in it.
-Git add is painfully slow on that repo even with mmap().  I wouldn't dare
-trying to manipulate that repo on a machine with less than 1GB of RAM.
+This is annoying and counter-intuitive, since it *does* search modified
+files with unstaged changes.  More importantly, this is undocumented.
+
+The situation is much worse when untracked files are given on the
+command line.  For example, the following command warns me that a file
+does not exist, as expected.
+
+    $ git grep $pattern does_not_exist
+    fatal: ambiguous argument 'does_not_exist': unknown revision or path not in the working tree.
+    Use '--' to separate paths from revisions
+
+However, if I give it an untracked file, it just tells me there's no match.
+
+    $ git grep $pattern foo || echo not found
+    not found
+
+In this case, I would expect the program to either search that file
+(would be nice!) or die with an error message (I'll take this for now).
+Furthermore, when '--' is given, even the non-existent case fails
+silently.
+
+    $ git grep $pattern -- does_not_exist || echo not found
+    not found
+
+So, what I would I like to see?  Ideally, something like the following
+series of patches:
+
+1. Document the current behavior in the man page.
+
+2. Issue a warning if any paths (pattern or non-pattern) fail to match
+any files.  Ideally, this would work in all cases (work tree, --cached,
+and trees).  If an untracked file matches a pattern that also matches
+a tracked file, there would be no warning - not sure what's best in this
+case.  This warning should probably be disable-able with a flag, say
+--no-warn-if-unmatched.
+
+3. If neither --cached nor trees are given, and a non-pattern filename
+is given that does not not exist in the cache, search this file as well.
+(That is, instead of issuing a warning, just search it.)  If the
+filename is a directory, issue a warning.
+
+4. Add an --untracked flag that causes grep to search *all* files in the
+working directory, not just tracked ones.  (This includes searches with
+and without a pathspec.)  The option would be incompatible with --cached
+or given trees.
+
+
+I post this wish list for several reasons.  First, to see if anyone
+agrees with me.  Second, to see if this patch series has a chance of
+ever being accepted.  Third, to implant this idea into someones head so
+they write it for me :).  I may try to do it myself, but it will take me
+a while.
+
+To get started, here's a shot at #1.
+
+Mark
+
+---- 8< ----
+From 697d97ca45b5c7abe8c84c3caae28cf839c668ac Mon Sep 17 00:00:00 2001
+From: Mark Lodato <lodatom@gmail.com>
+Date: Sun, 14 Feb 2010 19:28:55 -0500
+Subject: [PATCH] Documentation: clarify untracked files and <path>
+
+Note that only tracked files are searched, that non-matching paths are
+silently ignored, and that <path> is a glob(7) pattern.
+
+Signed-off-by: Mark Lodato <lodatom@gmail.com>
+---
+ Documentation/git-grep.txt |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index e019e76..fdc05ec 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -27,7 +27,9 @@ SYNOPSIS
+ DESCRIPTION
+ -----------
+ Look for specified patterns in the working tree files, blobs
+-registered in the index file, or given tree objects.
++registered in the index file, or given tree objects.  Only tracked files in
++the working tree are searched.  Paths that do not match are silently ignored,
++including paths to untracked files.
+ 
+ 
+ OPTIONS
+@@ -170,6 +172,10 @@ OPTIONS
+ 	Signals the end of options; the rest of the parameters
+ 	are <path> limiters.
+ 
++<path>...::
++	Only search files matching these wildcard patterns; see glob(7) for
++	the format.  If not given, all tracked files in the tree are searched.
++
+ 
+ Example
+ -------
+-- 
+1.7.0
