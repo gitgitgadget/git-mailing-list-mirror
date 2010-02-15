@@ -1,77 +1,80 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: Global reflog?
-Date: Sun, 14 Feb 2010 23:24:49 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1002142320440.1946@xanadu.home>
-References: <2729632a1002141349s6c9a31b7u6784d89d132547ac@mail.gmail.com>
- <alpine.LFD.2.00.1002141655450.1946@xanadu.home>
- <2729632a1002141414l4c4ccd82j32693e6e3bd02bc5@mail.gmail.com>
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: Walking commits from the first
+Date: Mon, 15 Feb 2010 10:09:02 +0530
+Message-ID: <e72faaa81002142039h5531a19y354d24e595295bb1@mail.gmail.com>
+References: <e72faaa81002142037g7f5f518erb9fefbb239124bc5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_9r96QYz6w1CSD0kFKEju1A)"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: skillzero@gmail.com
-X-From: git-owner@vger.kernel.org Mon Feb 15 05:24:55 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 15 05:39:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NgsVz-0003v8-2Z
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 05:24:55 +0100
+	id 1Ngsjo-00005Z-G2
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Feb 2010 05:39:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754920Ab0BOEYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Feb 2010 23:24:50 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:23618 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754531Ab0BOEYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Feb 2010 23:24:49 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KXV00HUR89DRUY0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 14 Feb 2010 23:24:49 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <2729632a1002141414l4c4ccd82j32693e6e3bd02bc5@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1755215Ab0BOEjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Feb 2010 23:39:07 -0500
+Received: from mail-yx0-f196.google.com ([209.85.210.196]:45390 "EHLO
+	mail-yx0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755128Ab0BOEjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Feb 2010 23:39:05 -0500
+Received: by yxe34 with SMTP id 34so2220887yxe.15
+        for <git@vger.kernel.org>; Sun, 14 Feb 2010 20:39:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type;
+        bh=rZBmTV06JqEwZg/dHFJk1s2wbw0e1Hxuz+xcUKfVlYA=;
+        b=g9CShXmDndN8ZP4Rd5D5daLRM5V6qfHc+wN2yjrpy2yx/uM14TjHrGkCWVjLjx/P7U
+         RygZQZiNB0VS58zq+H55YEXJCKtyacIntgP2EzCQE936UZlTvuh0nApVjZzGFFcqfhkX
+         QozAqWSgEk4kcvwiyuAi813dhqYAkeAvrRiV8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        b=d6ySYnRApsg23/7X3TL18JC77sgNhSRNS0NUl20q4dQSsZmaVXLLcA/KcEPn8nN/BJ
+         7cwz5ZTg1BOZoP1aYH0KBkZXwEK4sISN/XDVfDlaH6AK2Me7QwaDgYqn27t50abyzzO2
+         kxc0o/kjV/Aept4T4PRBgc+LKnqFzMLy/fq6s=
+Received: by 10.150.56.35 with SMTP id e35mr6479395yba.118.1266208742814; Sun, 
+	14 Feb 2010 20:39:02 -0800 (PST)
+In-Reply-To: <e72faaa81002142037g7f5f518erb9fefbb239124bc5@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/139967>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---Boundary_(ID_9r96QYz6w1CSD0kFKEju1A)
-Content-type: TEXT/PLAIN; charset=UTF-8
-Content-transfer-encoding: 8BIT
+ When you clone a big git repository and would like to read and
+understand the source code, you need to checkout and read every commit
+right from the first commit. As per my knowledge, there is no command
+(even with flags) to checkout the first commit of the repository.
 
-On Sun, 14 Feb 2010, skillzero@gmail.com wrote:
+If there is some command, please put it in user's manual
 
-> On Sun, Feb 14, 2010 at 1:56 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
-> > On Sun, 14 Feb 2010, skillzero@gmail.com wrote:
-> >
-> >> Is there a way to have git maintain a single reflog across all
-> >> branches (and stashes)? I switch between branches, create and delete
-> >> branches, stash save and pop, etc. frequently and it would be great
-> >> for me if there was a way to have a global reflog that showed every
-> >> operation, independent of a particular branch. Is there some way to
-> >> enable this?
-> >
-> > You have it already.  It is the "HEAD" reflog.
-> 
-> I don't seem to see any stash activity. For example, I made a test
-> change, did git stash, and then git stash pop. When I do git reflog, I
-> don't see the stash commit or the delete of the stash. Is there a way
-> to enable that?
+Also if we somehow managed to do it by a series of commands, after we
+finish reading it then we need to redo it all over again to checkout
+the next commit.
 
-It is true that stash doesn't touch HEAD.  So logically the stash 
-operations should not end up in the HEAD reflog.  But maybe creating a 
-reflog only for stashed states could be a good thing.
+So, what i would like to have is something like this:
+1) git checkout --first
+   Checksout the commit #1 of the git repository
+2) git checkout --next
+   Checksout the next commit
 
-I personally don't use stash that much since I've grown the habit of 
-saving temporary states to a temporary branch before git-stash even 
-existed, which in that case is always captured by the HEAD reflog.
+What I think:
 
+I know that every git commit is a vertice in a DAG which has it's edge
+pointed to it's parent. So, walking from the latest commits to old
+commits is easy but the reverse is not.
+I would like to know if there is any problem if we make the walking
+bidirectional. What i mean is, when a new commit is created, create an
+edge not only from it to it's parent but also from it's parent to it.
+Also, have something for the first commit of the repo which can be
+referred as INIT (similiar to HEAD)
 
-Nicolas
-
---Boundary_(ID_9r96QYz6w1CSD0kFKEju1A)--
+-pavan
