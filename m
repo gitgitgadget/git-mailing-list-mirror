@@ -1,59 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [msysGit] [PATCH] Skip t1300.70 and 71 on msysGit.
-Date: Tue, 16 Feb 2010 10:27:41 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1002161027040.20986@pacific.mpi-cbg.de>
-References: <87r5omghop.fsf@users.sourceforge.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Running git-archive recursively over submodules
+Date: Tue, 16 Feb 2010 11:01:42 +0100
+Message-ID: <201002161101.42493.trast@student.ethz.ch>
+References: <201002152156.17132.trast@student.ethz.ch> <4B7A4B60.3090401@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Tue Feb 16 10:21:21 2010
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Feb 16 11:02:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhJcJ-0002iA-SO
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 10:21:16 +0100
+	id 1NhKFd-000893-3L
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 11:01:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756805Ab0BPJVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 04:21:08 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52718 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755620Ab0BPJVG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 04:21:06 -0500
-Received: (qmail invoked by alias); 16 Feb 2010 09:21:01 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp037) with SMTP; 16 Feb 2010 10:21:01 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+lCaBRQEul+ddD/xzuJKGoPBSRiylWKl+aNWThKF
-	/u8l7YKY1ogK6C
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <87r5omghop.fsf@users.sourceforge.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68000000000000005
+	id S1756870Ab0BPKBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 05:01:45 -0500
+Received: from gwse.ethz.ch ([129.132.178.237]:17763 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756851Ab0BPKBp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 05:01:45 -0500
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.234.1; Tue, 16 Feb
+ 2010 11:01:42 +0100
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Tue, 16 Feb
+ 2010 11:01:42 +0100
+User-Agent: KMail/1.13.0 (Linux/2.6.31.12-0.1-desktop; KDE/4.4.0; x86_64; ; )
+In-Reply-To: <4B7A4B60.3090401@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140088>
 
-Hi Pat,
-
-On Mon, 15 Feb 2010, Pat Thoyts wrote:
-
-> These two tests fail on msysGit because /dev/null is an alias for nul on 
-> Windows and when reading the value back from git config the alias does 
-> not match the real filename. Also the HOME environment variable has a 
-> unix-style path but git returns a native equivalent path for '~'.  As 
-> these are platform-dependent equivalent results it seems simplest to 
-> skip the test entirely.
+On Tuesday 16 February 2010 08:38:08 Michael J Gruber wrote:
+> Thomas Rast venit, vidit, dixit 15.02.2010 21:56:
+> > while git ls-files -s | grep -q ^160000; do
+> >     read_one_level
+> > done
 > 
-> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
-> ---
+> Am I blind, not seeing a recursion, or is there simply none? I reckon
+> you're reading the super project and one level of submodules into the
+> temporary index - which is fine for most purposes, of course. I would
+> say this is iterating over the submodules of the super project.
 
-Can you push this to 4msysgit's 'devel' branch?
+Well, the while condition reads "while there are submodule entries in
+my index".  The read_one_level function then replaces those submodules
+with their corresponding trees, which of course may again contain
+submodule entries.
 
-Thank you,
-Dscho
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
