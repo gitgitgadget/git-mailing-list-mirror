@@ -1,83 +1,51 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Using test-lib.sh under GPLv3?
-Date: Tue, 16 Feb 2010 12:54:19 -0800
-Message-ID: <7vaav8hpfo.fsf@alter.siamese.dyndns.org>
-References: <87ljf8pvxx.fsf@yoom.home.cworth.org>
- <87hbpwpoko.fsf@yoom.home.cworth.org>
- <5641883d1002060727ia4e6c16lf800a92fc8735430@mail.gmail.com>
- <201002081614.24284.sojkam1@fel.cvut.cz>
- <871vgr78lr.fsf@yoom.home.cworth.org> <87iqa2y0gz.fsf@steelpick.localdomain>
- <87r5oqe7mi.fsf@yoom.home.cworth.org> <871vgmki4f.fsf@steelpick.localdomain>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [PATCH] fix threaded grep for machines with only one cpu
+Date: Tue, 16 Feb 2010 21:57:33 +0100
+Message-ID: <20100216205732.GB1860@book.hvoigt.net>
+References: <20100215225001.GA944@book.hvoigt.net> <7vwryet2cw.fsf@alter.siamese.dyndns.org> <7vocjpnc5v.fsf@alter.siamese.dyndns.org> <7vljetlx8r.fsf@alter.siamese.dyndns.org> <20100216180209.GA1532@book.hvoigt.net> <7vocjpng1w.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1002161458410.1946@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Carl Worth <cworth@cworth.org>, notmuch@notmuchmail.org,
-	git@vger.kernel.org
-To: Michal Sojka <sojkam1@fel.cvut.cz>
-X-From: git-owner@vger.kernel.org Tue Feb 16 21:54:41 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Tue Feb 16 21:57:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhURN-0002kH-5d
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 21:54:41 +0100
+	id 1NhUUI-0004zG-5v
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 21:57:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933277Ab0BPUyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 15:54:32 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46186 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933242Ab0BPUyb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 15:54:31 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3246B9AC6E;
-	Tue, 16 Feb 2010 15:54:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dvqQ7+2oxytvVMsfvFj9Orrvims=; b=RpoD5N
-	Rwxwr3zpaeXxsYy+M1lPntTLvkeGzpgOWq5OVkIDM+S47PbCiCvYkmIfXV3HzsJJ
-	HkVTkoosNHDBnwY4/GBre+iXIUbh/RO9T1CCINkAlxgYlLFK8l57eLtXkjAPmNbS
-	0KVfjYxZLXoUAG2fvWu8B2qMWtk6VR/87bAyM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ylu2MarljZdYp2B/RPnWm6JfT2Ro3E8t
-	uMpb5xdoymCEfLAIGJBatNHYmReK2FMkIbzdDNDuZ10NvQzwt7IMQ7eySuLwiuLc
-	nD51Z7uPhQn1l/HeCPUNZqgLxCg8+yT6YyrZ3Fy3uyOsakswY4AtwUBxxL/50yxb
-	8bTxf0dMVGU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E41069AC62;
-	Tue, 16 Feb 2010 15:54:25 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA2B99AC5E; Tue, 16 Feb
- 2010 15:54:20 -0500 (EST)
-In-Reply-To: <871vgmki4f.fsf@steelpick.localdomain> (Michal Sojka's message
- of "Mon\, 15 Feb 2010 09\:39\:28 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 77AAC9EE-1B3D-11DF-B803-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S933283Ab0BPU5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 15:57:37 -0500
+Received: from darksea.de ([83.133.111.250]:40350 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933078Ab0BPU5g (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 15:57:36 -0500
+Received: (qmail 18027 invoked from network); 16 Feb 2010 21:57:32 +0100
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 16 Feb 2010 21:57:32 +0100
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.1002161458410.1946@xanadu.home>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140157>
 
-Michal Sojka <sojkam1@fel.cvut.cz> writes:
+On Tue, Feb 16, 2010 at 03:00:47PM -0500, Nicolas Pitre wrote:
+> On Tue, 16 Feb 2010, Junio C Hamano wrote:
+> 
+> [...]
+> > Notice how your version (xyzzy) broke the cascade of if..elseif..else.
+> > 
+> > Don't they teach this in schools anymore?
+> 
+> What do you expect from academia?  School and real life are still too 
+> often disconnected.
 
-> ... You are mentioned
-> as a copyright holder in test-lib.sh and t0000-basic.sh so I'd like to
-> ask you: Would you mind using parts of these files under GPLv3?
-
-I don't mind for the parts I wrote, which is the basic infrastructure
-(output redirection, skipping certain tests, expecting failure, etc).
-My blessing would be enough to relicense it if you are are going to take
-the file from some old version like 04ece59 (GIT_SKIP_TESTS: allow users
-to omit tests that are known to break, 2006-12-28) and base your work on
-it, but otherwise it would not be nearly sufficient.
-
-Other people worked on polishing it over time and they all hold copyright
-on their parts.  Notable parts that are not mine and that are not git
-specific are:
-
- - color output support is mostly by Pierre Habouzit <madcoder@debian.org>
- - valgrind support: Johannes Schindelin <johannes.schindelin@gmx.de>
- - conditional test: Johannes Sixt <j6t@kdbg.org>
- - summarizing the results: Sverre Rabbelier <srabbelier@gmail.com>
+If you want to offend people that try to help out in real life. This is
+exactly the kind of comment that does it.
