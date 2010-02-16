@@ -1,108 +1,110 @@
 From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: git-grep ignores untracked files
-Date: Mon, 15 Feb 2010 19:20:30 -0500
-Message-ID: <ca433831002151620q2b875c51md883f4b424231f15@mail.gmail.com>
-References: <1266194137-25653-1-git-send-email-lodatom@gmail.com> 
-	<7vvddz5l1z.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 01:20:57 2010
+Subject: [PATCHv2] grep documentation: clarify what files match
+Date: Mon, 15 Feb 2010 19:25:40 -0500
+Message-ID: <1266279940-13251-1-git-send-email-lodatom@gmail.com>
+References: <7vvddz5l1z.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Mark Lodato <lodatom@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 16 01:23:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhBBQ-00010j-Qc
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 01:20:57 +0100
+	id 1NhBE4-0002Wn-J5
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 01:23:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932355Ab0BPAUw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Feb 2010 19:20:52 -0500
-Received: from mail-gx0-f224.google.com ([209.85.217.224]:42290 "EHLO
-	mail-gx0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932312Ab0BPAUv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Feb 2010 19:20:51 -0500
-Received: by gxk24 with SMTP id 24so5334992gxk.1
-        for <git@vger.kernel.org>; Mon, 15 Feb 2010 16:20:50 -0800 (PST)
+	id S932378Ab0BPAXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 19:23:36 -0500
+Received: from mail-qy0-f200.google.com ([209.85.221.200]:42923 "EHLO
+	mail-qy0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932359Ab0BPAXf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2010 19:23:35 -0500
+Received: by qyk38 with SMTP id 38so809071qyk.1
+        for <git@vger.kernel.org>; Mon, 15 Feb 2010 16:23:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=iPNVTobHcCCuls+YcihwXypmxf5ZFJf0ImlTWhCcA08=;
-        b=g7pGWQL08fHdWnGE+UiQpIFh0L9cf/sGRxTz0L/+IqNQBMGNFZg1CXGT/mr3qIUNqK
-         ErGS0F+nV4o619p6dtk75j24FTLwT/9vUWstji0qd2Rhk0UczpSLdNpOafTaAvbhtjYS
-         X79OHt7yC65uJyYyI5TiEiUXdNlU/LyapL1AM=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=Wc/2Ilkm1WSj+mUodUahmm97X5WJEMGGpRm8hyvqIdo=;
+        b=T1ocuZvMthrq10KRPW653WMBibjxlcnJT7WjZFJ2StGwbLhzhw7e8zsz4xFis1shbW
+         EnERq3weBrnyVoGq6drCNSsfeMnax//5GJ+L7jDjojmBNqW0/8+Z9tGb2Mi5RYz+0Cb0
+         4ZDrbNyQW0MQaWaLA+n4mEccqCRCHaf8O3RCE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=v67MU3c6ZnZbp6LZCOdAzoBN0sZ2BeHBGRSXC79ViK0LA3/SUmrdCQrCoKycVIYQEQ
-         Ii1XCBZ3dcX4sR2X/Y4qqi3b3HyBSD7Qtx9AG2TCm8yua1b3yhFQ3b32utgyU1gj7SFQ
-         X7ff54ug1Hm4eJ30QEyf+SA/J7yOHDuMqkFlU=
-Received: by 10.91.153.3 with SMTP id f3mr35124ago.80.1266279650226; Mon, 15 
-	Feb 2010 16:20:50 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=NS/ooOvq+XXeV/YozUyaEKWAtI/pPc3FstiDv3XXuQ3m1D5IQnqxpjMYj8x/xK5Q/K
+         UOkmCypBCSW+x4i/9wgmrmyKgnRSM6Z0iSUlOCrAxsug1EvMBao/10uW+sSLMwg6wpLp
+         4txYc9vIIJMC3Bo6kxcNyNRHAQSMgj7QBxXXU=
+Received: by 10.224.18.139 with SMTP id w11mr513270qaa.160.1266279813381;
+        Mon, 15 Feb 2010 16:23:33 -0800 (PST)
+Received: from localhost.localdomain (c-68-50-174-152.hsd1.dc.comcast.net [68.50.174.152])
+        by mx.google.com with ESMTPS id 20sm4685512qyk.13.2010.02.15.16.23.32
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 15 Feb 2010 16:23:32 -0800 (PST)
+X-Mailer: git-send-email 1.7.0
 In-Reply-To: <7vvddz5l1z.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140053>
 
-On Sun, Feb 14, 2010 at 8:45 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> I doubt we want to have "Only tracked files blah blah". =C2=A0Like al=
-l the
-> normal git commands, "grep" is about tracked contents, and I don't th=
-ink
-> it would help to repeat the obvious like pathspec filter will act as =
-a
-> filter. =C2=A0"add <pathspec>" is an exception in that it _is_ about =
-untracked
-> paths and that is why you get warnings for unmatched ones.
+Clarify that git-grep(1) searches only tracked files, and that each
+<path> is a glob, as in git-add(1).  Add an example to show a simple use
+case for searching all .c and .h files.
 
-I think adding this information to the description of <path> would be
-sufficient.  I'll send a new patch in a minute.
+The meta-variable <path> should be changed to an official term for
+a path glob, and the description for this should be in git(1), not
+git-add(1).  However, we don't yet have such an official term, so just
+use <path> and reference git-add(1) for now.
 
-> =C2=A0 =C2=A0Side note: there will be --no-index option to let you ru=
-n "git grep"
-> =C2=A0 =C2=A0over files in a random directory.
+Signed-off-by: Mark Lodato <lodatom@gmail.com>
+---
+ Documentation/git-grep.txt |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
 
-Ah, didn't see this.  So, it looks like most of my requests were
-already done.  However, it may still be a good idea to DWIM when none
-of --cached, --no-index, or trees are given but a pathspec is given
-that matches an untracked file in the working directory.  For example:
-
-$ git grep $pattern -- untracked_file
-
-It is obvious that the user meant to specify --no-index.   However,
-I'm not sure where to draw the line.  What if they give tracked and
-untracked files, or if they given a glob pattern that matches both?
-
-Still, the simple, "one path is given, it's not a pattern, and it
-matches exactly to an untracked file" case should probably run with
---no-index.
-
->> +<path>...::
->> + =C2=A0 =C2=A0 Only search files matching these wildcard patterns; =
-see glob(7) for
->> + =C2=A0 =C2=A0 the format. =C2=A0If not given, all tracked files in=
- the tree are searched.
->
-> Please do *not* "see glob(7) for the format". =C2=A0Pathspec used for=
- "grep"
-> (and "ls-files") are "leading path match or glob(7)". =C2=A0E.g. "git=
- grep
-> frotz t/" looks for frotz in all files under "t/" recursively, and th=
-at
-> does not have much to do with glob(7). =C2=A0If we do not have a desc=
-ription
-> already, we may want to add these basics to git(1) or the user manual=
-=2E
-
-Ah.  This is a major inconsistency in the documentation.  I have a lot
-to say about this, so I'll make this a separate thread.  For the
-patch, I'll just reference git-add(1), which is the does have a
-description, and then we can fix this properly in a future patch.
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index e019e76..7f24032 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -26,8 +26,8 @@ SYNOPSIS
+ 
+ DESCRIPTION
+ -----------
+-Look for specified patterns in the working tree files, blobs
+-registered in the index file, or given tree objects.
++Look for specified patterns in the tracked files in the working tree, blobs
++registered in the index file, or blobs in given tree objects.
+ 
+ 
+ OPTIONS
+@@ -49,7 +49,7 @@ OPTIONS
+ 	Don't match the pattern in binary files.
+ 
+ --max-depth <depth>::
+-	For each pathspec given on command line, descend at most <depth>
++	For each <path> given on command line, descend at most <depth>
+ 	levels of directories. A negative value means no limit.
+ 
+ -w::
+@@ -170,10 +170,17 @@ OPTIONS
+ 	Signals the end of options; the rest of the parameters
+ 	are <path> limiters.
+ 
++<path>...::
++	If given, limit the search to paths matching at least one pattern.
++	Each pattern is the same as <filepattern> of linkgit:git-add[1].
+ 
+ Example
+ -------
+ 
++git grep 'time_t' -- '*.[ch]'::
++	Looks for `time_t` in all tracked .c and .h files in the working
++	directory.
++
+ git grep -e \'#define\' --and \( -e MAX_PATH -e PATH_MAX \)::
+ 	Looks for a line that has `#define` and either `MAX_PATH` or
+ 	`PATH_MAX`.
+-- 
+1.7.0
