@@ -1,8 +1,7 @@
 From: Michael Lukashov <michael.lukashov@gmail.com>
-Subject: [PATCH v3 2/4] Refactoring: connect.c: move duplicated code to a new function 'get_host_and_port'
-Date: Tue, 16 Feb 2010 23:42:53 +0000
-Message-ID: <0d6d0066fecc892bd5b6afda64e1aa5591347504.1266360267.git.michael.lukashov@gmail.com>
-References: <cover.1266360267.git.michael.lukashov@gmail.com>
+Subject: [PATCH v3 0/4] Refactoring: remove duplicated code
+Date: Tue, 16 Feb 2010 23:42:51 +0000
+Message-ID: <cover.1266360267.git.michael.lukashov@gmail.com>
 Cc: Michael Lukashov <michael.lukashov@gmail.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Wed Feb 17 00:43:29 2010
@@ -11,188 +10,70 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhX4i-0007JW-GP
+	id 1NhX4h-0007JW-Vj
 	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 00:43:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933545Ab0BPXn1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 18:43:27 -0500
+	id S933373Ab0BPXnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 18:43:21 -0500
 Received: from mail-bw0-f219.google.com ([209.85.218.219]:50925 "EHLO
 	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757082Ab0BPXnY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 18:43:24 -0500
-Received: by mail-bw0-f219.google.com with SMTP id 19so5008437bwz.28
-        for <git@vger.kernel.org>; Tue, 16 Feb 2010 15:43:23 -0800 (PST)
+	with ESMTP id S1757060Ab0BPXnV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 18:43:21 -0500
+Received: by bwz19 with SMTP id 19so5008437bwz.28
+        for <git@vger.kernel.org>; Tue, 16 Feb 2010 15:43:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:in-reply-to:references;
-        bh=F2J9oYdGk1rDqPfOLbxCZiaqoXN5eBd7Z0BGQb1Su28=;
-        b=jlW9F1GMgvimevA7sso3iBcZScLFyPyHyeuBrxRgfeJJSdsTIN5ABvqtkOjsG2jlMb
-         ucvAm0/1Ree1M/EALHW4YY5Rren3aOjHGKJHUbuKA5aldwwFSBwo+rQ/lmYkHihv7WFp
-         W4+TEC1MWVgLH/Imv34IiBu/jNmCMxFdokvw8=
+         :message-id:x-mailer;
+        bh=SGx2Wr0gtXUw9fwBOuAx3kVOTJzQofTXnKf/55+EbkI=;
+        b=ZSBoCuPc/dCCq58GfbsjdAEPMJpcGtDvJxXYtGdmA19kRDZiUUzerliC78RxzTkevZ
+         yqNVB7lL12xsErIHtoGzdeMSLQhEeXiY5t7f08joZgRX+n1TmIgQHwuzz5XMaBv0VrXZ
+         6aLesGihFh/GznN546smmLli/xPCihR0U3sY8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=WR5tXZ412lSgNFiB32Y3Tl3EmpA7GGHWQuJAPGZ1hyYoTDMykkv0oS+sUfO8gUGr6a
-         R1unRzo7NmZqc7ELli9Dgto/e/3WHki7gPWBxudKrPZLmJPF/h8NL/gY1VuUMOYYWlBY
-         pQuX8DkUZ0ZsXjEsjHP7Ig355xai4ltxCgzOw=
-Received: by 10.204.15.4 with SMTP id i4mr1912254bka.21.1266363803520;
-        Tue, 16 Feb 2010 15:43:23 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=jbt6eCdEyJG7N3LRS8jm/D8ZbPnJWXKC5ef9i6mtsa7CzBvW9Tf1XmUm1t7NfJx7oZ
+         XPoGm1m40+iqDSGlAm9pQcJcWJawSWtZIbkg3nY+4mVAu8TMD5VXvaoR+FtcxJn9ZTGX
+         5m9e10ldRH9ec+XbimWbJ6DYjHHaceiXxez0Y=
+Received: by 10.204.48.136 with SMTP id r8mr2315427bkf.149.1266363798063;
+        Tue, 16 Feb 2010 15:43:18 -0800 (PST)
 Received: from localhost (nat-nz.wwwcom.ru [195.62.62.242])
-        by mx.google.com with ESMTPS id 16sm3377369bwz.3.2010.02.16.15.43.22
+        by mx.google.com with ESMTPS id 13sm3315621bwz.10.2010.02.16.15.43.16
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 16 Feb 2010 15:43:22 -0800 (PST)
+        Tue, 16 Feb 2010 15:43:16 -0800 (PST)
 X-Mailer: git-send-email 1.7.0.14.g7e948
-In-Reply-To: <cover.1266360267.git.michael.lukashov@gmail.com>
-In-Reply-To: <cover.1266360267.git.michael.lukashov@gmail.com>
-References: <cover.1266360267.git.michael.lukashov@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140174>
 
-The following functions:
+Hi,
 
-  git_tcp_connect_sock (IPV6 version)
-  git_tcp_connect_sock (no IPV6 version),
-  git_proxy_connect
+Here is 3rd iteration of my refactoring patches. These patches take into
+account suggestions made by Tay Ray Chuan, Johannes Sixt, Jeff King and Junio C Hamano
 
-have common block of code. Move it to a new function 'get_host_and_port'
+Michael Lukashov (4):
+  Refactoring: remove duplicated code from builtin-send-pack.c and
+    transport.c
+  Refactoring: connect.c: move duplicated code to a new function
+    'get_host_and_port'
+  Refactoring: move duplicated code from builtin-pack-objects.c and
+    fast-import.c to sha1_file.c
+  Refactoring: move duplicated code from builtin-checkout.c and
+    merge-recursive.c to xdiff-interface.c
 
-Signed-off-by: Michael Lukashov <michael.lukashov@gmail.com>
----
- connect.c |   83 +++++++++++++++++++++---------------------------------------
- 1 files changed, 29 insertions(+), 54 deletions(-)
-
-diff --git a/connect.c b/connect.c
-index 20054e4..cd399f4 100644
---- a/connect.c
-+++ b/connect.c
-@@ -152,6 +152,28 @@ static enum protocol get_protocol(const char *name)
- #define STR_(s)	# s
- #define STR(s)	STR_(s)
- 
-+static void get_host_and_port(char **host, const char **port)
-+{
-+	char *colon, *end;
-+
-+	if (*host[0] == '[') {
-+		end = strchr(*host + 1, ']');
-+		if (end) {
-+			*end = 0;
-+			end++;
-+			(*host)++;
-+		} else
-+			end = *host;
-+	} else
-+		end = *host;
-+	colon = strchr(end, ':');
-+
-+	if (colon) {
-+		*colon = 0;
-+		*port = colon + 1;
-+	}
-+}
-+
- #ifndef NO_IPV6
- 
- static const char *ai_name(const struct addrinfo *ai)
-@@ -170,30 +192,14 @@ static const char *ai_name(const struct addrinfo *ai)
- static int git_tcp_connect_sock(char *host, int flags)
- {
- 	int sockfd = -1, saved_errno = 0;
--	char *colon, *end;
- 	const char *port = STR(DEFAULT_GIT_PORT);
- 	struct addrinfo hints, *ai0, *ai;
- 	int gai;
- 	int cnt = 0;
- 
--	if (host[0] == '[') {
--		end = strchr(host + 1, ']');
--		if (end) {
--			*end = 0;
--			end++;
--			host++;
--		} else
--			end = host;
--	} else
--		end = host;
--	colon = strchr(end, ':');
--
--	if (colon) {
--		*colon = 0;
--		port = colon + 1;
--		if (!*port)
--			port = "<none>";
--	}
-+	get_host_and_port(&host, &port);
-+	if (!*port)
-+		*port = "<none>";
- 
- 	memset(&hints, 0, sizeof(hints));
- 	hints.ai_socktype = SOCK_STREAM;
-@@ -251,30 +257,15 @@ static int git_tcp_connect_sock(char *host, int flags)
- static int git_tcp_connect_sock(char *host, int flags)
- {
- 	int sockfd = -1, saved_errno = 0;
--	char *colon, *end;
--	char *port = STR(DEFAULT_GIT_PORT), *ep;
-+	const char *port = STR(DEFAULT_GIT_PORT);
-+	char *ep;
- 	struct hostent *he;
- 	struct sockaddr_in sa;
- 	char **ap;
- 	unsigned int nport;
- 	int cnt;
- 
--	if (host[0] == '[') {
--		end = strchr(host + 1, ']');
--		if (end) {
--			*end = 0;
--			end++;
--			host++;
--		} else
--			end = host;
--	} else
--		end = host;
--	colon = strchr(end, ':');
--
--	if (colon) {
--		*colon = 0;
--		port = colon + 1;
--	}
-+	get_host_and_port(&host, &port);
- 
- 	if (flags & CONNECT_VERBOSE)
- 		fprintf(stderr, "Looking up %s ... ", host);
-@@ -406,26 +397,10 @@ static int git_use_proxy(const char *host)
- static void git_proxy_connect(int fd[2], char *host)
- {
- 	const char *port = STR(DEFAULT_GIT_PORT);
--	char *colon, *end;
- 	const char *argv[4];
- 	struct child_process proxy;
- 
--	if (host[0] == '[') {
--		end = strchr(host + 1, ']');
--		if (end) {
--			*end = 0;
--			end++;
--			host++;
--		} else
--			end = host;
--	} else
--		end = host;
--	colon = strchr(end, ':');
--
--	if (colon) {
--		*colon = 0;
--		port = colon + 1;
--	}
-+	get_host_and_port(&host, &port);
- 
- 	argv[0] = git_proxy_command;
- 	argv[1] = host;
--- 
-1.7.0.1571.g856c2
+ builtin-checkout.c     |   24 +-----
+ builtin-fetch.c        |   20 +++---
+ builtin-pack-objects.c |   31 +-------
+ builtin-send-pack.c    |  191 ++----------------------------------------------
+ cache.h                |    8 ++
+ connect.c              |   83 +++++++--------------
+ fast-import.c          |   29 +-------
+ merge-recursive.c      |   23 +-----
+ sha1_file.c            |   20 +++++
+ transport.c            |   22 +++---
+ transport.h            |   11 +++
+ xdiff-interface.c      |   17 ++++
+ xdiff-interface.h      |    1 +
+ 13 files changed, 123 insertions(+), 357 deletions(-)
