@@ -1,69 +1,83 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [RFC] git clone --checkout <branch>
-Date: Tue, 16 Feb 2010 19:12:41 +0800
-Message-ID: <be6fef0d1002160312w82c7f33t42e383b0756e4fae@mail.gmail.com>
-References: <be6fef0d1002160248h7410d4edu6e3ed1fd27c40059@mail.gmail.com>
-	 <20100216110724.GA25173@coredump.intra.peff.net>
+From: Daniel Black <daniel.subs@internode.on.net>
+Subject: Re: cvsimport error when modulename is '.'
+Date: Tue, 16 Feb 2010 22:21:58 +1100
+Message-ID: <201002162221.58483.daniel.subs@internode.on.net>
+References: <201002132251.42070.daniel.subs@internode.on.net> <20100214070757.GA22000@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 16 12:12:52 2010
+X-From: git-owner@vger.kernel.org Tue Feb 16 12:23:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhLMG-0000L6-4N
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 12:12:48 +0100
+	id 1NhLWk-0007IQ-I7
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 12:23:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754125Ab0BPLMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 06:12:43 -0500
-Received: from mail-iw0-f185.google.com ([209.85.223.185]:36051 "EHLO
-	mail-iw0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753740Ab0BPLMm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 06:12:42 -0500
-Received: by iwn15 with SMTP id 15so5673644iwn.19
-        for <git@vger.kernel.org>; Tue, 16 Feb 2010 03:12:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=5rQHHoN/XZCXFwcmHv1kYyQtya64RmvD2/5SKbd6uB4=;
-        b=ibmaqwk36Cc5b4GFEHxgEiLvTHmYxWeEKArtOr/5g4Ztp5Y9tUSGRxlDVy+HeKqpky
-         aPqfNWwVlh10s01z+r3jXpJ6oF4OydYo0I548KkbRsoizdCD1c23Qqv1cBRzWz2xNr0a
-         RLYczMbXsgDH11u6nO02+fDXh82NHHhhnAwkQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=L9FGW1b8q35zyP9cDrQcPuA+qE1GkRJh/GEPNbWVEf45v+TJB+8/mVC3qSUF0Jkyq2
-         EkjTQxSt8gmytxgyUQr7dXM3z/T7woVlPlyZ+UVs8hO0sDCktGys6EOsEdR9BuO8nYJ4
-         SCA9kUwKyNvD82prJt53z1vY801axT/tw8bmA=
-Received: by 10.231.146.2 with SMTP id f2mr857034ibv.23.1266318761302; Tue, 16 
-	Feb 2010 03:12:41 -0800 (PST)
-In-Reply-To: <20100216110724.GA25173@coredump.intra.peff.net>
+	id S1754660Ab0BPLXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 06:23:33 -0500
+Received: from bld-mail19.adl2.internode.on.net ([150.101.137.104]:55590 "EHLO
+	mail.internode.on.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754363Ab0BPLXc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 06:23:32 -0500
+Received: from passivegrunt.localnet (unverified [121.45.210.27]) 
+	by mail.internode.on.net (SurgeMail 3.8f2) with ESMTP id 13816798-1927428 
+	for multiple; Tue, 16 Feb 2010 21:53:30 +1030 (CDT)
+User-Agent: KMail/1.13.0 (Linux/2.6.31-gentoo-r4; KDE/4.4.0; x86_64; ; )
+In-Reply-To: <20100214070757.GA22000@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140098>
 
-Hi,
+On Sunday 14 February 2010 18:07:58 Jeff King wrote:
+> On Sat, Feb 13, 2010 at 10:51:42PM +1100, Daniel Black wrote:
 
-On Tue, Feb 16, 2010 at 7:07 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Feb 16, 2010 at 06:48:42PM +0800, Tay Ray Chuan wrote:
->
->> what do you guys think about allowing users to specify the branch to
->> checkout when cloning, instead of the default HEAD of the to-be-cloned
->> repository?
->
-> I think it's a great idea, but that we should call it "--branch" and
-> that I should travel back in time to implement it last September as
-> 7a4ee28.
+> These messages are not coming from git-cvsimport, but rather from cvsps,
 
-ah, yet another RTFM, my bad. :)
+thanks for narrowing it down. I'll see if I can track down the maintainer 
+there.
 
--- 
-Cheers,
-Ray Chuan
+> which cvsimport uses to generate whole patchsets from the CVS data. Just
+> running "cvsps ." results in similar errors, and I don't see an obvious
+> way to do what you want. So probably it would require a patch to cvsps
+> to fix.
+
+thanks for confirming this.
+ 
+> If this is a one-shot import, you can try a few different things.
+
+was hoping not too but i might be able to get the project team on board with a 
+one-shot.
+ 
+> As a hack, if you can move files in the CVS repository
+
+on sf its easy as you've got read rsync access on the source
+
+> (and if you
+> can't, try using cvssuck or similar to pull them locally, and then do
+> the import from there), then move everything to a submodule "foo", and
+> import that module.
+
+might to this .
+
+> Alternatively, you might check out some of the alternative importers
+> like parsecvs or cvs2git. I don't know if they would handle this
+> situation better.
+
+ok
+
+> And as a super-hacky alternative, you could import each module
+> separately and then stich them all together using git-filter-branch.
+
+Yep was thinking of this. Thanks for the expert advice on the stiching 
+together because i had no idea how.
+
+Much appreciate your time for putting together these options.
+
+Thanks Jeff.
