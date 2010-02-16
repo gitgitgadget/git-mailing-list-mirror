@@ -1,143 +1,325 @@
-From: Sylvain Rabot <sylvain@abstraction.fr>
-Subject: make test fails with git 1.7.0 on my debian
-Date: Tue, 16 Feb 2010 17:18:07 +0100
-Message-ID: <7fce93be1002160818p1095b251s281dcd0b644ca519@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [WIP PATCH 26/26] Turn on GIT_HARDENED_SETUP for the whole test suite
+Date: Tue, 16 Feb 2010 23:05:17 +0700
+Message-ID: <1266336317-607-27-git-send-email-pclouds@gmail.com>
+References: <1266336317-607-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 16 17:18:35 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 16 17:18:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhQ82-0007mx-1z
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 17:18:26 +0100
+	id 1NhQ82-0007mx-KV
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 17:18:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757227Ab0BPQSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 11:18:10 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:23145 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757201Ab0BPQSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 11:18:09 -0500
-Received: by ey-out-2122.google.com with SMTP id d26so1518679eyd.19
-        for <git@vger.kernel.org>; Tue, 16 Feb 2010 08:18:08 -0800 (PST)
-Received: by 10.213.109.131 with SMTP id j3mr1650790ebp.36.1266337088436; Tue, 
-	16 Feb 2010 08:18:08 -0800 (PST)
-X-Originating-IP: [80.13.22.90]
+	id S1757218Ab0BPQSY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Feb 2010 11:18:24 -0500
+Received: from mail-gx0-f227.google.com ([209.85.217.227]:60990 "EHLO
+	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757217Ab0BPQSX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 11:18:23 -0500
+Received: by gxk27 with SMTP id 27so93474gxk.1
+        for <git@vger.kernel.org>; Tue, 16 Feb 2010 08:18:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=opsBjJfSTqm7rFTjGX/DP6yBtR3OJLKYq6u10s28EuA=;
+        b=OaygWDQdnduZ5lPIEs/csd+PkAScZp5uZppuZiIR9dLIWob1aiEuZoWRyyiENqupvu
+         Wmj+w0qs8e7D0curNzujS6PXzSEpDjs6PHBOY5PDyFWnGyQaNg6U8ejlsEd+CIuy0DdS
+         20lm15HRRVXmvPRFp8GTOMuqSuQZciGx1axbE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=J2cJYEbk1psAWwyupUefSr1CjCjx8IfI3lsL9zI2UD5ikrpIhmsCsjwF7sjEPmC2d4
+         hkaODcM2PxlVcJo/92Tq2eCEwlcK+PQLougK/USglgBds4C4q42VkuqyMe9KllGlNsYv
+         grX3mWP9qtanC56j8tY381AHltvp+iOADiBiw=
+Received: by 10.101.105.1 with SMTP id h1mr2817080anm.131.1266336645881;
+        Tue, 16 Feb 2010 08:10:45 -0800 (PST)
+Received: from pclouds@gmail.com ([115.73.207.162])
+        by mx.google.com with ESMTPS id 22sm2875287ywh.0.2010.02.16.08.10.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 16 Feb 2010 08:10:44 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 16 Feb 2010 23:08:02 +0700
+X-Mailer: git-send-email 1.7.0.195.g637a2
+In-Reply-To: <1266336317-607-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140128>
-
-Hi,
-
-this is what I get running make test on my debian :
-
-root@numerobis:~/src/git-1.7.0# uname -a
-Linux numerobis 2.6.26-2-686 #1 SMP Wed Nov 4 20:45:37 UTC 2009 i686 GNU/Linux
-root@numerobis:~/src/git-1.7.0# make test
-    SUBDIR git-gui
-    SUBDIR gitk-git
-make[1]: Nothing to be done for `all'.
-    SUBDIR perl
-    SUBDIR git_remote_helpers
-    SUBDIR templates
-make -C t/ all
-make[1]: Entering directory `/root/src/git-1.7.0/t'
-rm -f -r test-results
-make aggregate-results-and-cleanup
-make[2]: Entering directory `/root/src/git-1.7.0/t'
-*** t0000-basic.sh ***
-*   ok 1: .git/objects should be empty after git init in an empty repo.
-*   ok 2: .git/objects should have 3 subdirectories.
-*   ok 3: success is reported like this
-*   still broken 4: pretend we have a known breakage
-*   FIXED 5: pretend we have fixed a known breakage
-*   ok 6: test runs if prerequisite is satisfied
-* skip 7: unmet prerequisite causes test to be skipped
-*   ok 8: git update-index without --add should fail adding.
-*   ok 9: git update-index with --add should succeed.
-*   ok 10: writing tree out with git write-tree
-*   ok 11: validate object ID of a known tree.
-*   ok 12: git update-index without --remove should fail removing.
-*   ok 13: git update-index with --remove should be able to remove.
-*   ok 14: git write-tree should be able to write an empty tree.
-*   ok 15: validate object ID of a known tree.
-*   ok 16: adding various types of objects with git update-index --add.
-*   ok 17: showing stage with git ls-files --stage
-*   ok 18: validate git ls-files output for a known tree.
-*   ok 19: writing tree out with git write-tree.
-*   ok 20: validate object ID for a known tree.
-*   ok 21: showing tree with git ls-tree
-*   ok 22: git ls-tree output for a known tree.
-*   ok 23: showing tree with git ls-tree -r
-*   ok 24: git ls-tree -r output for a known tree.
-*   ok 25: showing tree with git ls-tree -r -t
-*   ok 26: git ls-tree -r output for a known tree.
-*   ok 27: writing partial tree out with git write-tree --prefix.
-*   ok 28: validate object ID for a known tree.
-*   ok 29: writing partial tree out with git write-tree --prefix.
-*   ok 30: validate object ID for a known tree.
-*   ok 31: put invalid objects into the index.
-*   ok 32: writing this tree without --missing-ok.
-*   ok 33: writing this tree with --missing-ok.
-*   ok 34: git read-tree followed by write-tree should be idempotent.
-*   ok 35: validate git diff-files output for a know cache/work tree state.
-*   ok 36: git update-index --refresh should succeed.
-*   ok 37: no diff after checkout and git update-index --refresh.
-*   ok 38: git commit-tree records the correct tree in a commit.
-*   ok 39: git commit-tree records the correct parent in a commit.
-*   ok 40: git commit-tree omits duplicated parent in a commit.
-*   ok 41: update-index D/F conflict
-*   ok 42: absolute path works as expected
-*   ok 43: very long name in the index handled sanely
-* fixed 1 known breakage(s)
-* still have 1 known breakage(s)
-* passed all remaining 42 test(s)
-*** t0001-init.sh ***
-*   ok 1: plain
-*   ok 2: plain with GIT_WORK_TREE
-*   ok 3: plain bare
-*   ok 4: plain bare with GIT_WORK_TREE
-*   ok 5: GIT_DIR bare
-*   ok 6: init --bare
-*   ok 7: GIT_DIR non-bare
-*   ok 8: GIT_DIR & GIT_WORK_TREE (1)
-*   ok 9: GIT_DIR & GIT_WORK_TREE (2)
-*   ok 10: reinit
-*   ok 11: init with --template
-*   ok 12: init with --template (blank)
-*   ok 13: init --bare/--shared overrides system/global config
-*   ok 14: init honors global core.sharedRepository
-*   ok 15: init rejects insanely long --template
-*   ok 16: init creates a new directory
-*   ok 17: init creates a new bare directory
-*   ok 18: init recreates a directory
-*   ok 19: init recreates a new bare directory
-*   ok 20: init creates a new deep directory
-*   ok 21: init creates a new deep directory (umask vs. shared)
-*   ok 22: init notices EEXIST (1)
-*   ok 23: init notices EEXIST (2)
-* FAIL 24: init notices EPERM
-
-        rm -fr newdir &&
-        (
-            mkdir newdir &&
-            chmod -w newdir &&
-            test_must_fail git init newdir/a/b
-        )
-
-* failed 1 among 24 test(s)
-make[2]: *** [t0001-init.sh] Error 1
-make[2]: Leaving directory `/root/src/git-1.7.0/t'
-make[1]: *** [all] Error 2
-make[1]: Leaving directory `/root/src/git-1.7.0/t'
-make: *** [test] Error 2
-
-Regards.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140129>
 
 
---
-Sylvain
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ t/t0000-basic.sh              |    2 --
+ t/t0001-init.sh               |    2 --
+ t/t0003-attributes.sh         |    2 --
+ t/t0024-crlf-archive.sh       |    2 --
+ t/t4201-shortlog.sh           |    2 --
+ t/t5000-tar-tree.sh           |    2 --
+ t/t5001-archive-attr.sh       |    2 --
+ t/t5600-clone-fail-cleanup.sh |    2 --
+ t/t5601-clone.sh              |    2 --
+ t/t5602-clone-remote-exec.sh  |    2 --
+ t/t5700-clone-reference.sh    |    2 --
+ t/t5701-clone-local.sh        |    2 --
+ t/t5702-clone-options.sh      |    2 --
+ t/t5704-bundle.sh             |    2 --
+ t/t5705-clone-2gb.sh          |    2 --
+ t/t5706-clone-branch.sh       |    2 --
+ t/t7002-grep.sh               |    2 --
+ t/test-lib.sh                 |    3 +++
+ 18 files changed, 3 insertions(+), 34 deletions(-)
+
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 0a4be17..f4ca4fc 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -28,8 +28,6 @@ then
+ 	exit 1
+ fi
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ . ./test-lib.sh
+=20
+ ################################################################
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 0dd6ffa..5386504 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -4,8 +4,6 @@ test_description=3D'git init'
+=20
+ . ./test-lib.sh
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ check_config () {
+ 	if test -d "$1" && test -f "$1/config" && test -d "$1/refs"
+ 	then
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index 2ebb345..1c77192 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -4,8 +4,6 @@ test_description=3Dgitattributes
+=20
+ . ./test-lib.sh
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ attr_check () {
+=20
+ 	path=3D"$1"
+diff --git a/t/t0024-crlf-archive.sh b/t/t0024-crlf-archive.sh
+index f96db4d..ff345ea 100755
+--- a/t/t0024-crlf-archive.sh
++++ b/t/t0024-crlf-archive.sh
+@@ -4,8 +4,6 @@ test_description=3D'respect crlf in git archive'
+=20
+ . ./test-lib.sh
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ UNZIP=3D${UNZIP:-unzip}
+=20
+ test_expect_success setup '
+diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+index 7ae327a..a01e55b 100755
+--- a/t/t4201-shortlog.sh
++++ b/t/t4201-shortlog.sh
+@@ -8,8 +8,6 @@ test_description=3D'git shortlog
+=20
+ . ./test-lib.sh
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ echo 1 > a1
+ git add a1
+ tree=3D$(git write-tree)
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 4c69dd2..27bfba5 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -29,8 +29,6 @@ UNZIP=3D${UNZIP:-unzip}
+=20
+ SUBSTFORMAT=3D%H%n
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ test_expect_success \
+     'populate workdir' \
+     'mkdir a b c &&
+diff --git a/t/t5001-archive-attr.sh b/t/t5001-archive-attr.sh
+index 80e1e72..426b319 100755
+--- a/t/t5001-archive-attr.sh
++++ b/t/t5001-archive-attr.sh
+@@ -4,8 +4,6 @@ test_description=3D'git archive attribute tests'
+=20
+ . ./test-lib.sh
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ SUBSTFORMAT=3D%H%n
+=20
+ test_expect_exists() {
+diff --git a/t/t5600-clone-fail-cleanup.sh b/t/t5600-clone-fail-cleanup=
+=2Esh
+index 424e6ad..ee06d28 100755
+--- a/t/t5600-clone-fail-cleanup.sh
++++ b/t/t5600-clone-fail-cleanup.sh
+@@ -11,8 +11,6 @@ remove the directory before attempting a clone again.=
+'
+=20
+ . ./test-lib.sh
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ test_expect_success \
+     'clone of non-existent source should fail' \
+     'test_must_fail git clone foo bar'
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index a598f75..2147567 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -4,8 +4,6 @@ test_description=3Dclone
+=20
+ . ./test-lib.sh
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ test_expect_success setup '
+=20
+ 	rm -fr .git &&
+diff --git a/t/t5602-clone-remote-exec.sh b/t/t5602-clone-remote-exec.s=
+h
+index a94c528..deffdae 100755
+--- a/t/t5602-clone-remote-exec.sh
++++ b/t/t5602-clone-remote-exec.sh
+@@ -4,8 +4,6 @@ test_description=3Dclone
+=20
+ . ./test-lib.sh
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ test_expect_success setup '
+ 	echo "#!/bin/sh" > not_ssh
+ 	echo "echo \"\$*\" > not_ssh_output" >> not_ssh
+diff --git a/t/t5700-clone-reference.sh b/t/t5700-clone-reference.sh
+index 2464f57..1c10916 100755
+--- a/t/t5700-clone-reference.sh
++++ b/t/t5700-clone-reference.sh
+@@ -6,8 +6,6 @@
+ test_description=3D'test clone --reference'
+ . ./test-lib.sh
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ base_dir=3D`pwd`
+=20
+ U=3D$base_dir/UPLOAD_LOG
+diff --git a/t/t5701-clone-local.sh b/t/t5701-clone-local.sh
+index 3c3d6ed..8b4c356 100755
+--- a/t/t5701-clone-local.sh
++++ b/t/t5701-clone-local.sh
+@@ -3,8 +3,6 @@
+ test_description=3D'test local clone'
+ . ./test-lib.sh
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ D=3D`pwd`
+=20
+ test_expect_success 'preparing origin repository' '
+diff --git a/t/t5702-clone-options.sh b/t/t5702-clone-options.sh
+index 63f59ba..02cb024 100755
+--- a/t/t5702-clone-options.sh
++++ b/t/t5702-clone-options.sh
+@@ -3,8 +3,6 @@
+ test_description=3D'basic clone options'
+ . ./test-lib.sh
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ test_expect_success 'setup' '
+=20
+ 	mkdir parent &&
+diff --git a/t/t5704-bundle.sh b/t/t5704-bundle.sh
+index 507c838..a8f4419 100755
+--- a/t/t5704-bundle.sh
++++ b/t/t5704-bundle.sh
+@@ -3,8 +3,6 @@
+ test_description=3D'some bundle related tests'
+ . ./test-lib.sh
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ test_expect_success 'setup' '
+=20
+ 	: > file &&
+diff --git a/t/t5705-clone-2gb.sh b/t/t5705-clone-2gb.sh
+index f63a557..adfaae8 100755
+--- a/t/t5705-clone-2gb.sh
++++ b/t/t5705-clone-2gb.sh
+@@ -3,8 +3,6 @@
+ test_description=3D'Test cloning a repository larger than 2 gigabyte'
+ . ./test-lib.sh
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ test -z "$GIT_TEST_CLONE_2GB" &&
+ say "Skipping expensive 2GB clone test; enable it with GIT_TEST_CLONE_=
+2GB=3Dt" &&
+ test_done &&
+diff --git a/t/t5706-clone-branch.sh b/t/t5706-clone-branch.sh
+index fbee0d0..f3f9a76 100755
+--- a/t/t5706-clone-branch.sh
++++ b/t/t5706-clone-branch.sh
+@@ -3,8 +3,6 @@
+ test_description=3D'clone --branch option'
+ . ./test-lib.sh
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ check_HEAD() {
+ 	echo refs/heads/"$1" >expect &&
+ 	git symbolic-ref HEAD >actual &&
+diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
+index 67afb42..ebae152 100755
+--- a/t/t7002-grep.sh
++++ b/t/t7002-grep.sh
+@@ -8,8 +8,6 @@ test_description=3D'git grep various.
+=20
+ . ./test-lib.sh
+=20
+-export GIT_HARDENED_SETUP=3D1
+-
+ cat >hello.c <<EOF
+ #include <stdio.h>
+ int main(int argc, const char **argv)
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index afd3053..e3e3084 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -61,6 +61,9 @@ export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
+ export EDITOR
+ GIT_TEST_CMP=3D${GIT_TEST_CMP:-diff -u}
+=20
++GIT_HARDENED_SETUP=3D1
++export GIT_HARDENED_SETUP
++
+ # Protect ourselves from common misconfiguration to export
+ # CDPATH into the environment
+ unset CDPATH
+--=20
+1.7.0.195.g637a2
