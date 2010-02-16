@@ -1,329 +1,327 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC PATCHv3 07/10] gitweb/cache.pm - Use locking to avoid 'cache miss stampede' problem
-Date: Tue, 16 Feb 2010 20:36:42 +0100
-Message-ID: <1266349005-15393-8-git-send-email-jnareb@gmail.com>
+Subject: [RFC PATCHv3 09/10] gitweb/cache.pm - Regenerate (refresh) cache in background
+Date: Tue, 16 Feb 2010 20:36:44 +0100
+Message-ID: <1266349005-15393-10-git-send-email-jnareb@gmail.com>
 References: <1266349005-15393-1-git-send-email-jnareb@gmail.com>
 Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	John 'Warthog9' Hawley <warthog9@kernel.org>,
 	Petr Baudis <pasky@suse.cz>, Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 16 20:38:00 2010
+X-From: git-owner@vger.kernel.org Tue Feb 16 20:38:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhTF9-0002i3-PV
+	id 1NhTFA-0002i3-AL
 	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 20:38:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933238Ab0BPTh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 14:37:26 -0500
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:54748 "EHLO
+	id S933241Ab0BPTh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 14:37:27 -0500
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:38796 "EHLO
 	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933165Ab0BPThN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 14:37:13 -0500
-Received: by bwz5 with SMTP id 5so2281353bwz.1
-        for <git@vger.kernel.org>; Tue, 16 Feb 2010 11:37:11 -0800 (PST)
+	with ESMTP id S933230Ab0BPThV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 14:37:21 -0500
+Received: by mail-bw0-f213.google.com with SMTP id 5so2281058bwz.1
+        for <git@vger.kernel.org>; Tue, 16 Feb 2010 11:37:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=cqrxH5LvVVKNAP7Rwnxbev8hh0ksEI5U+Hp5bkMSKYo=;
-        b=FwXqyLdbkhCC1dQMX4BJ27I2wyDMYrvQfi7cuhbZATXBFvm4zZZlcFbxOFiOfUjX3X
-         Q2NFavt0MqxVkhXjl+YVnYVQOrlRcTDGskwsG+pLZ1eyH1U+BoZ/1f9sWYoDxNrMuVij
-         wTLxnsQ8v8bWiBf6nEXVc14l1tphmY7ik5n6I=
+        bh=qkfUDmvyFtXt5X/LLi6FWPHP1ni1eq0e5GqCRjjS1XU=;
+        b=D1K+y2zLOTmL/4YU/MFOhAaCyS5FSp2O2o/YGAmxvlA1dW9OP4YPk5ta/kN9io6ZBN
+         vbO4XO8y1/4gbJe+utkRCOmw0BlupJZ18LXrkublHv/pbtCIfPoayW29KHxdWFmUVbAK
+         8gFbwKMyLzROumL2+QHtykubTpEBzGHIWwFwA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=M1zgdMe2U4IBTEKh9omugINnU3HBpUM1SlF2Ssguy/3zG+t0wLn6aT8wxJ90qHUQUc
-         Z23Sl0oOJyBkShesXBFq6mFIxdnNoigqL0+g9T/s6MiaEbQcj4AkPwhxffqLC84yIJ+c
-         rVutI+As/w2ChwVpc+wQbs2bbEOAPLdLRuzcc=
-Received: by 10.204.20.80 with SMTP id e16mr1287174bkb.72.1266349031215;
-        Tue, 16 Feb 2010 11:37:11 -0800 (PST)
+        b=r1OvMTkLfF9bGif77qq8XZnxZ7CHGcxk4jvBOn5BruAKM0fWl+b7YuSeAbuYD+Wi+Z
+         Eo4P6EBJEzTvE/U/S0UVtWitpa3AMocciMj7dFVjr4cOktWN2iz8HzuK1F34eaEjthkc
+         d7FBUo5fdi9chzTDNYfQLgmFQoiRSXEWvYpDc=
+Received: by 10.204.132.207 with SMTP id c15mr880784bkt.102.1266349040825;
+        Tue, 16 Feb 2010 11:37:20 -0800 (PST)
 Received: from localhost.localdomain (abvy197.neoplus.adsl.tpnet.pl [83.8.222.197])
-        by mx.google.com with ESMTPS id 15sm3243751bwz.12.2010.02.16.11.37.08
+        by mx.google.com with ESMTPS id 15sm3243751bwz.12.2010.02.16.11.37.18
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 16 Feb 2010 11:37:10 -0800 (PST)
+        Tue, 16 Feb 2010 11:37:19 -0800 (PST)
 X-Mailer: git-send-email 1.6.6.1
 In-Reply-To: <1266349005-15393-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140146>
 
-In the ->compute($key, $code) method from GitwebCache::SimpleFileCache,
-use locking (via flock) to ensure that only one process would generate
-data to update/fill-in cache; the rest would wait for the cache to
-be (re)generated and would read data from cache.  If process that was
-to (re)generate data dies or exits, one of the readers would take its
-role.
+This commit removes asymmetry in serving stale data (if it exists)
+when regenerating cache in GitwebCache::SimpleFileCache.  The process
+that acquired exclusive (writers) lock, and is therefore selected to
+be the one that (re)generates data to fill the cache, can now generate
+data in background, while serving stale data.
 
-Currently this feature can not be disabled (via %cache_options).
-Other future features (like: serving stale data while cache is being
-regenerated, (re)generating cache in background, activity indicator)
-all depend on locking.
+Those background processes are daemonized, i.e. detached from the main
+process (the one returning data or stale data).  Otherwise there might be a
+problem when gitweb is running as (part of) long-lived process, for example
+from mod_perl (or in the future from FastCGI): it would leave unreaped
+children as zombies (entries in process table).  We don't want to wait for
+background process, and we can't set $SIG{CHLD} to 'IGNORE' in gitweb to
+automatically reap child processes, because this interferes with using
+  open my $fd, '-|', git_cmd(), 'param', ...
+    or die_error(...)
+  # read from <$fd>
+  close $fd
+    or die_error(...)
+In the above code "close" for magic "-|" open calls waitpid...  and we
+would would die with "No child processes".  Removing 'or die' would
+possibly remove ability to react to other errors.
 
+This feature can be enabled or disabled on demand via 'background_cache'
+cache parameter.  It is turned on by default.
 
-A test in t9503 shows that in the case where there are two clients
-trying to simultaneously access non-existent or stale cache entry,
-(and generating data takes (artifically) a bit of time), if they are
-using ->compute method the data is (re)generated once, as opposed to
-if those clients are just using ->get/->set methods.
 
 To be implemented (from original patch by J.H.):
-* background building, and showing stale cache
 * server-side progress indicator when waiting for filling cache,
   which in turn requires separating situations (like snapshots and
   other non-HTML responses) where we should not show 'please wait'
   message
-
-Note that there is slight inefficiency, in that filename for lockfile
-depends on the filename for cache entry (it just adds '.lock' suffix),
-but is recalculated from $key for both paths.
 
 Inspired-by-code-by: John 'Warthog9' Hawley <warthog9@kernel.org>
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
 Differences from v2:
 * More comments.
-* Add loop in ->compute(), so if process that was to (re)generate data dies
-  or exits, one of the readers would take its role.  Such situation should
-  be rare: it can happen if two client access the same invalid URL.
-* Add test for such situation in t9503
+* Daemonize background process, detaching it from parent.  This way
+  whether main process is short-lived (gitweb as CGI) or long-lived
+  (mod_perl), there would be no need to wait and no zombies.
 
 Differences from relevant parts of J.H. patch:
-* Locking on separate *.lock file, for simpler work and robustness;
-  acquiring exclusive lock might require having file opened for possible
-  write, following
-    "File Locking Tricks and Traps" (http://perl.plover.com/yak/flock/)
-  J.H. patch used separate *.bg file for lock only for background caching 
-  (to be implemented in one of next commits).
-* Ensure that ->compute() delivers $data, unless $code fails.  See above
-  about adding loop in ->compute() method.
-* Single variable $lock_state, in place of $lockingStatus, $lockStatBG,
-  $lockStat, $lockStatus in J.H. patch.
-* Use indirect (lexical) filehandles for lockfiles, instead of barewords,
-  i.e. global filehandles:
-    open my $lock_fh, '+>', $lockfile;
-  rather than equivalent of
-    open LOCK, '>:utf8', $lockfile
-* Do not use LOCK_UN: closing lockfile would unlock
-* In my opinion much cleaner flow control
+* Fork (run generating process in background) only if there is stale data to
+  serve (and if background cache is turned on).
+* In J.H. patch forking was done unconditionally, only generation or exit
+  depended on $backgroundCache.
+* Lock before forking.
+* Tests (currently only of API).
+* In my opinion cleaner control flow.
 
-Possible improvements:
-* When using locking, only one process would be able to write to temporary
-  file.  Therefore temporary file can now have non-random name; no need for
-  File::Temp nor unique_id (performance).  It would probably be best done
-  via ->get_tempfile() method, or something like that.
-* Run tests in t9503 which contain 'sleep 1' in them (which is required to
-  test how they handle concurrent access, e.g. testing cache miss stampede
-  situation) only when test is run with --long.  This would require update
-  to t/test-lib.sh to export GIT_TEST_LONG to external program in
-  test_external etc.
-* ->get_lockname should perhaps be ->get_lockfile which would return opened
-  filehandle, or filehandle + filename like File::Temp::tempfile, or objects
-  that functions like filehandle but stringifies to filename like
-  File::Temp->new().
-* Equivalent of old _Make_Path?
-* Would ability to turn this feature off make sense?
-
- gitweb/cache.pm                 |   44 +++++++++++++++-
- t/t9503/test_cache_interface.pl |  107 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 148 insertions(+), 3 deletions(-)
+ gitweb/cache.pm                 |   61 ++++++++++++++++++++++++++++++++------
+ gitweb/gitweb.perl              |    9 ++++++
+ t/t9503/test_cache_interface.pl |   16 ++++++----
+ 3 files changed, 70 insertions(+), 16 deletions(-)
 
 diff --git a/gitweb/cache.pm b/gitweb/cache.pm
-index b828102..25f0278 100644
+index 1773a7e..a3fa6fd 100644
 --- a/gitweb/cache.pm
 +++ b/gitweb/cache.pm
-@@ -25,6 +25,7 @@ use File::Path qw(mkpath);
- use File::Spec;
+@@ -26,6 +26,7 @@ use File::Spec;
  use File::Temp;
  use Digest::MD5 qw(md5_hex);
-+use Fcntl qw(:flock);
+ use Fcntl qw(:flock);
++use POSIX qw(setsid);
  
  # by default, the cache nests all entries on the filesystem two
  # directories deep
-@@ -226,6 +227,13 @@ sub path_to_key {
- 	return $filepath;
+@@ -79,6 +80,9 @@ our $DEFAULT_CACHE_ROOT = "cache";
+ #    than it, serve stale data when waiting for cache entry to be 
+ #    regenerated (refreshed).  Non-adaptive.
+ #    Defaults to -1 (never expire / always serve stale).
++#  * 'background_cache' (boolean)
++#    This enables/disables regenerating cache in background process.
++#    Defaults to true.
+ sub new {
+ 	my ($proto, $p_options_hash_ref) = @_;
+ 
+@@ -88,7 +92,7 @@ sub new {
+ 
+ 	my ($root, $depth, $ns);
+ 	my ($expires_min, $expires_max, $increase_factor, $check_load);
+-	my ($max_lifetime);
++	my ($max_lifetime, $background_cache);
+ 	if (defined $p_options_hash_ref) {
+ 		$root  =
+ 			$p_options_hash_ref->{'cache_root'} ||
+@@ -108,6 +112,7 @@ sub new {
+ 		$max_lifetime =
+ 			$p_options_hash_ref->{'max_lifetime'} ||
+ 			$p_options_hash_ref->{'max_cache_lifetime'};
++		$background_cache = $p_options_hash_ref->{'background_cache'};
+ 	}
+ 	$root  = $DEFAULT_CACHE_ROOT  unless defined($root);
+ 	$depth = $DEFAULT_CACHE_DEPTH unless defined($depth);
+@@ -118,6 +123,7 @@ sub new {
+ 	$expires_max = 1200 unless (defined($expires_max));
+ 	$increase_factor = 60 unless defined($increase_factor);
+ 	$max_lifetime = -1 unless defined($max_lifetime);
++	$background_cache = 1 unless defined($background_cache);
+ 
+ 	$self->set_root($root);
+ 	$self->set_depth($depth);
+@@ -127,6 +133,7 @@ sub new {
+ 	$self->set_max_lifetime($max_lifetime);
+ 	$self->set_increase_factor($increase_factor);
+ 	$self->set_check_load($check_load);
++	$self->set_background_cache($background_cache);
+ 
+ 	return $self;
  }
+@@ -137,7 +144,9 @@ sub new {
+ # http://perldesignpatterns.com/perldesignpatterns.html#AccessorPattern
  
-+# Take an human readable key, and return path to be used for lockfile
-+sub get_lockname {
-+	my $self = shift;
-+
-+	return $self->path_to_key(@_) . '.lock';
-+}
-+
- # ----------------------------------------------------------------------
- # worker methods
- 
-@@ -393,15 +401,45 @@ sub get {
- # get $key; if successful, returns the value.  Otherwise, calls $code
- # and uses the return value as the new value for $key, which is then
- # returned.
-+# Uses file locking to have only one process updating value for $key
-+# to avoid 'cache miss stampede' (aka 'stampeding herd') problem.
+ # creates get_depth() and set_depth($depth) etc. methods
+-foreach my $i (qw(depth root namespace expires_min expires_max increase_factor check_load max_lifetime)) {
++foreach my $i (qw(depth root namespace
++                  expires_min expires_max increase_factor check_load
++                  max_lifetime background_cache)) {
+ 	my $field = $i;
+ 	no strict 'refs';
+ 	*{"get_$field"} = sub {
+@@ -417,8 +426,9 @@ sub get {
+ # to avoid 'cache miss stampede' (aka 'stampeding herd') problem.
  sub compute {
  	my ($self, $p_key, $p_coderef) = @_;
++	my ($data, $stale_data);
  
- 	my $data = $self->get($p_key);
--	if (!defined $data) {
--		$data = $p_coderef->($self, $p_key);
--		$self->set($p_key, $data);
-+	return $data if defined $data;
-+
-+	my $dir;
-+	my $lockfile = $self->get_lockname($p_key, \$dir);
-+
-+	# ensure that directory leading to lockfile exists
-+	if (!-d $dir) {
-+		mkpath($dir, 0, 0777)
-+			or die "Couldn't mkpath '$dir' for lockfile: $!";
- 	}
+-	my $data = $self->get($p_key);
++	$data = $self->get($p_key);
+ 	return $data if defined $data;
  
-+	# this loop is to protect against situation where process that
-+	# acquired exclusive lock (writer) dies or exits (die_error)
-+	# before writing data to cache
-+	my $lock_state; # needed for loop condition
-+	do {
-+		open my $lock_fh, '+>', $lockfile
-+			or die "Could't open lockfile '$lockfile': $!";
-+		$lock_state = flock($lock_fh, LOCK_EX | LOCK_NB);
-+		if ($lock_state) {
-+			# acquired writers lock
-+			$data = $p_coderef->($self, $p_key);
-+			$self->set($p_key, $data);
-+		} else {
-+			# get readers lock
-+			flock($lock_fh, LOCK_SH);
-+			$data = $self->fetch($p_key);
-+		}
-+		# closing lockfile releases lock
-+		close $lock_fh
-+			or die "Could't close lockfile '$lockfile': $!";
-+	} until (defined $data || $lock_state);
-+	# repeat until we have data, or we tried generating data oneself and failed
- 	return $data;
+ 	my $dir;
+@@ -437,16 +447,47 @@ sub compute {
+ 	do {
+ 		open my $lock_fh, '+>', $lockfile
+ 			or die "Could't open lockfile '$lockfile': $!";
++
+ 		$lock_state = flock($lock_fh, LOCK_EX | LOCK_NB);
+ 		if ($lock_state) {
+-			# acquired writers lock
+-			$data = $p_coderef->($self, $p_key);
+-			$self->set($p_key, $data);
++			## acquired writers lock, have to generate data
++			my $pid;
++			if ($self->{'background_cache'}) {
++				# try to retrieve stale data
++				$stale_data = $self->fetch($p_key)
++					if $self->is_valid($p_key, $self->get_max_lifetime());
++
++				# fork if there is stale data, for background process
++				# to regenerate/refresh the cache (generate data)
++				$pid = fork() if (defined $stale_data);
++			}
++			if (!defined $pid || !$pid) {
++				## didn't fork, or are in background process
++
++				# daemonize background process, detaching it from parent
++				# see also Proc::Daemonize, Apache2::SubProcess
++				if (defined $pid) {
++					POSIX::setsid();  # or setpgrp(0, 0);
++					fork() && exit 0;
++				}
++
++				$data = $p_coderef->($self, $p_key);
++				$self->set($p_key, $data);
++
++				if (defined $pid) {
++					## in background process; parent will serve stale data
++					close $lock_fh
++						or die "Couldn't close lockfile '$lockfile' (background): $!";
++					exit 0;
++				}
++			}
++			
+ 		} else {
+ 			# try to retrieve stale data
+-			$data = $self->fetch($p_key)
++			$stale_data = $self->fetch($p_key)
+ 				if $self->is_valid($p_key, $self->get_max_lifetime());
+-			if (!defined $data) {
++
++			if (!defined $stale_data) {
+ 				# get readers lock if there is no stale data to serve
+ 				flock($lock_fh, LOCK_SH);
+ 				$data = $self->fetch($p_key);
+@@ -455,9 +496,9 @@ sub compute {
+ 		# closing lockfile releases lock
+ 		close $lock_fh
+ 			or die "Could't close lockfile '$lockfile': $!";
+-	} until (defined $data || $lock_state);
++	} until (defined $data || defined $stale_data || $lock_state);
+ 	# repeat until we have data, or we tried generating data oneself and failed
+-	return $data;
++	return defined $data ? $data : $stale_data;
  }
  
+ 1;
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index ff249b9..c391226 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -293,6 +293,15 @@ our %cache_options = (
+ 	# Set it to -1 to always serve existing data if it exists,
+ 	# set it to 0 to turn off serving stale data - always wait.
+ 	'max_lifetime' => 5*60*60, # 5 hours
++
++	# This enables/disables background caching.  If it is set to true value,
++	# caching engine would return stale data (if it is not older than
++	# 'max_lifetime' seconds) if it exists, and launch process if regenerating
++	# (refreshing) cache into the background.  If it is set to false value,
++	# the process that fills cache must always wait for data to be generated.
++	# In theory this will make gitweb seem more responsive at the price of
++	# serving possibly stale data.
++	'background_cache' => 1,
+ );
+ 
+ 
 diff --git a/t/t9503/test_cache_interface.pl b/t/t9503/test_cache_interface.pl
-index d28f4df..255fad2 100755
+index 2eae9e0..9643631 100755
 --- a/t/t9503/test_cache_interface.pl
 +++ b/t/t9503/test_cache_interface.pl
-@@ -89,6 +89,113 @@ is($cache->compute($key, \&get_value), $value, 'compute 2nd time (get)');
- is($cache->compute($key, \&get_value), $value, 'compute 3rd time (get)');
- cmp_ok($call_count, '==', 1, 'get_value() is called once from compute');
+@@ -86,6 +86,7 @@ sub get_value {
+ 	$call_count++;
+ 	return $value;
+ }
++local $SIG{CHLD} = 'IGNORE'; # compute can fork, don't generate zombies
+ can_ok($cache, qw(compute));
+ is($cache->compute($key, \&get_value), $value, 'compute 1st time (set)');
+ is($cache->compute($key, \&get_value), $value, 'compute 2nd time (get)');
+@@ -305,32 +306,35 @@ sub run_compute_forked {
+ }
+ $cache->set_expires_in(0);    # expire now
+ $cache->set_max_lifetime(-1); # forever
++ok($cache->get_background_cache(), 'generate cache in background by default');
+ $pid = open $kid_fh, '-|';
+ SKIP: {
+-	skip "cannot fork: $!", 2
++	skip "cannot fork: $!", 3
+ 		unless defined $pid;
  
-+# Test 'stampeding herd' / 'cache miss stampede' problem
-+# (probably should be run only if GIT_TEST_LONG)
-+#
-+sub get_value_slow {
-+	$call_count++;
-+	sleep 1;
-+	return $value;
-+}
-+my ($pid, $kid_fh);
-+
-+$call_count = 0;
-+$cache->remove($key);
-+$pid = open $kid_fh, '-|';
-+SKIP: {
-+	skip "cannot fork: $!", 1
-+		unless defined $pid;
-+
-+	my $data = $cache->get($key);
-+	if (!defined $data) {
-+		$data = get_value_slow();
-+		$cache->set($key, $data);
-+	}
-+
-+	if ($pid) {
-+		my $child_count = <$kid_fh>;
-+		chomp $child_count;
-+
-+		waitpid $pid, 0;
-+		close $kid_fh;
-+
-+		$call_count += $child_count;
-+	} else {
-+		print "$call_count\n";
-+		exit 0;
-+	}
-+
-+	cmp_ok($call_count, '==', 2, 'parallel get/set: get_value_slow() called twice');
-+}
-+
-+$call_count = 0;
-+$cache->remove($key);
-+$pid = open $kid_fh, '-|';
-+SKIP: {
-+	skip "cannot fork: $!", 1
-+		unless defined $pid;
-+
-+	my $data = $cache->compute($key, \&get_value_slow);
-+
-+	if ($pid) {
-+		my $child_count = <$kid_fh>;
-+		chomp $child_count;
-+
-+		waitpid $pid, 0;
-+		close $kid_fh;
-+
-+		$call_count += $child_count;
-+	} else {
-+		print "$call_count\n";
-+		exit 0;
-+	}
-+
-+	cmp_ok($call_count, '==', 1, 'parallel compute: get_value_slow() called once');
-+}
-+
-+# Test that it doesn't hang if get_action exits/dies
-+#
-+sub get_value_die {
-+	die "get_value_die\n";
-+}
-+print STDERR "$$: start\n";
-+my $result = eval {
-+	$pid = open $kid_fh, '-|';
-+ SKIP: {
-+		skip "cannot fork: $!", 2
-+			unless defined $pid;
-+
-+		local $SIG{ALRM} = sub { die "alarm\n"; };
-+		alarm 4;
-+
-+		my ($eval_error, $child_eval_error);
-+		eval { $cache->compute('No Key', \&get_value_die); };
-+		$eval_error = $@;
-+
-+		if ($pid) {
-+			local $/ = "\0";
-+
-+			$child_eval_error = <$kid_fh>;
-+			chomp $child_eval_error;
-+
-+			waitpid $pid, 0;
-+			close $kid_fh;
-+		} else {
-+
-+			print "$eval_error\0";
-+			exit 0;
-+		}
-+
-+		is($eval_error,       "get_value_die\n", 'get_value_die() died in parent');
-+		is($child_eval_error, "get_value_die\n", 'get_value_die() died in child');
-+
-+		alarm 0;
-+	}
-+};
-+ok(!$@, 'no alarm call (neither process hung)');
-+diag($@) if $@;
-+
-+
- # Test cache expiration for 'expire now'
- #
- $cache->set_expires_in(60*60*24); # set expire time to 1 day
+ 	my $data = run_compute_forked($pid);
+ 
+ 	# returning stale data works
+-	ok($data eq $stale_value || $child_data eq $stale_value,
+-	   'stale data in at least one process when expired');
++	is($data,       $stale_value, 'stale data in parent when expired');
++	is($child_data, $stale_value, 'stale data in child  when expired');
+ 
+ 	$cache->set_expires_in(-1); # never expire for next ->get
++	diag('waiting for background process to have time to set data');
++	sleep 1; # wait for background process to have chance to set data
+ 	is($cache->get($key), $value, 'value got set correctly, even if stale data returned');
+ }
+ $cache->set_expires_in(0);   # expire now
+ $cache->set_max_lifetime(0); # don't serve stale data
+ $pid = open $kid_fh, '-|';
+ SKIP: {
+-	skip "cannot fork: $!", 1
++	skip "cannot fork: $!", 2
+ 		unless defined $pid;
+ 
+ 	my $data = run_compute_forked($pid);
+ 
+ 	# no returning stale data
+-	ok($data ne $stale_value && $child_data ne $stale_value,
+-	   'configured to never return stale data');
++	isnt($data,       $stale_value, 'no stale data in parent if configured');
++	isnt($child_data, $stale_value, 'no stale data in child  if configured');
+ }
+ $cache->set_expires_in(-1);
+ 
 -- 
 1.6.6.1
