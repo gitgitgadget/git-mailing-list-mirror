@@ -1,69 +1,89 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] fix threaded grep for machines with only one cpu
-Date: Tue, 16 Feb 2010 20:26:59 +0100
-Message-ID: <fabb9a1e1002161126m2db5fe4i1572a9959665977f@mail.gmail.com>
-References: <20100215225001.GA944@book.hvoigt.net> <7vwryet2cw.fsf@alter.siamese.dyndns.org> 
-	<7vocjpnc5v.fsf@alter.siamese.dyndns.org> <7vljetlx8r.fsf@alter.siamese.dyndns.org> 
-	<20100216180209.GA1532@book.hvoigt.net> <7vocjpng1w.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/4] Refactoring: move duplicated code from
+ builtin-pack-objects.c and fast-import.c to object.c
+Date: Tue, 16 Feb 2010 11:35:56 -0800
+Message-ID: <7vhbphm0rn.fsf@alter.siamese.dyndns.org>
+References: <1266276411-5796-1-git-send-email-michael.lukashov@gmail.com>
+ <1266276411-5796-4-git-send-email-michael.lukashov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 20:27:28 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Lukashov <michael.lukashov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 16 20:36:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhT4x-0002Tn-IV
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 20:27:27 +0100
+	id 1NhTDT-0001So-5j
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 20:36:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933026Ab0BPT1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 14:27:21 -0500
-Received: from mail-pz0-f187.google.com ([209.85.222.187]:33572 "EHLO
-	mail-pz0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932871Ab0BPT1U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 14:27:20 -0500
-Received: by pzk17 with SMTP id 17so5382655pzk.4
-        for <git@vger.kernel.org>; Tue, 16 Feb 2010 11:27:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=0g+aRypuiro9erLBdu0P+tcb/wJFzjwQvgtgw5H4KSs=;
-        b=c2tOlIYwkfj925Pj3WprCN+rdJJ7u1yggeoFglooSdMPOJYGe/VgvdJAICBpXNus/D
-         ekyMBvtp3Yu4JGMID7d4aFnk2FHvlx9LVxKa+T3RazIoTdXHXSA6TewcY4ebTF+RVY4d
-         oiFM+iX7AQBLaH+6QKGUyLf2k+VK3gpAr/vEQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=GoFuspwZthkvBUL02esELgrn6b8ywmLO96gNeMEvTv8ErRFodt01rcNfUbiaJfWcW+
-         qUVVyKd1uKUj++M2QFCcATf/vyD6cS1cXWhZ4P7FVF9dH5RWDnXv71UFhWFCNRm1ZkQ5
-         VZKI7qdEV0ND60AGJRr+nDvnmFXLoZVHW6A4o=
-Received: by 10.142.66.40 with SMTP id o40mr4592235wfa.262.1266348439218; Tue, 
-	16 Feb 2010 11:27:19 -0800 (PST)
-In-Reply-To: <7vocjpng1w.fsf@alter.siamese.dyndns.org>
+	id S1756138Ab0BPTgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 14:36:09 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35474 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754863Ab0BPTgF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 14:36:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 098659AD1C;
+	Tue, 16 Feb 2010 14:36:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UnNJIeVGr0wQm7bd2RoL9LyeqqY=; b=hjcGVW
+	ZC0xs80mk6fsw13VixaWLF2iT+0iIG+jxot0yiFKHtK3NLcJY23khI00yCq9oJBg
+	o9DwFk2Fk7MYZUKDqQ1UL2MiE4E30TJV9ml7E7PLIh4PHBdiXEAhz85pFD4v6Lic
+	MQJKWwYUIs4F20z8ujT1iYS8GJ/h80me8b4Zw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ix9kdLJ4qo8RZy8yG26/jrL8s8B2Ip1F
+	J076Z8+PR+oiT8cswN2aJRgIW/41SzgASvM26kXvX25IEAX3DKgnahYp4ysERqsc
+	ExN2M6GrWyB5jdq6o4fvl+BZvBVW2TUKtTdOAGdYVTEq3A5xKuBLgqUakbyTlRer
+	KkcUSzbEj9k=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D3DC59AD1A;
+	Tue, 16 Feb 2010 14:36:00 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 272F09AD0D; Tue, 16 Feb
+ 2010 14:35:57 -0500 (EST)
+In-Reply-To: <1266276411-5796-4-git-send-email-michael.lukashov@gmail.com>
+ (Michael Lukashov's message of "Mon\, 15 Feb 2010 23\:26\:49 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 833A547E-1B32-11DF-998C-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140137>
 
-Heya,
+Michael Lukashov <michael.lukashov@gmail.com> writes:
 
-On Tue, Feb 16, 2010 at 20:20, Junio C Hamano <gitster@pobox.com> wrote:
-> Don't they teach this in schools anymore?
+> The following functions are duplicated:
+>
+>   encode_header
 
-Have they ever? And no, they don't. At least in the Netherlands (and I
-suspect it to be the same in other European countries, and perhaps
-even in the US) don't spend a whole lot of time teaching C. At my uni
-they start out with Java, and stick with that most of the time. There
-are only brief (and often optional) ventures into other languages.
+what are the other duplicated ones ;-)?
 
--- 
-Cheers,
+> Signed-off-by: Michael Lukashov <michael.lukashov@gmail.com>
+> ---
 
-Sverre Rabbelier
+Two comments:
+
+ - encode_header() was a perfectly good name for a static function in
+   these two contexts, but when lifted into public namespace, it is not
+   clear enough anymore.  It is not clear "header" in what context you are
+   talking about.  At least it should be encode_in_pack_object_header();
+
+ - Look at what are in object.[ch]; they are all about "object" layer,
+   that sits one level higher in the abstraction on top of the raw object
+   data layer (e.g. read_sha1_file() and friends).  This function belongs
+   to a layer that is even lower level than the raw object data (i.e. one
+   particular implementation of the raw object data representations among
+   others).
+
+   It looks very out of place.  I would say that cache.h and sha1_file.c
+   would probably be a better place, if nobody else finds a better
+   alternative.
+
+Other than that, I agree with the patch, including its choice of types
+involved.
