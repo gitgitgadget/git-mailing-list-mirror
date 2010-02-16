@@ -1,79 +1,59 @@
-From: Evan Powers <evan.powers@gmail.com>
-Subject: [PATCH] git-p4: fix bug in symlink handling
-Date: Tue, 16 Feb 2010 00:44:08 -0800
-Message-ID: <6682cfcf1002160044i7aacd1b0t7bb351380b1bd27c@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [msysGit] [PATCH] Skip t1300.70 and 71 on msysGit.
+Date: Tue, 16 Feb 2010 10:27:41 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1002161027040.20986@pacific.mpi-cbg.de>
+References: <87r5omghop.fsf@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: gitster@pobox.com, Simon Hausmann <simon@lst.de>,
-	Luke Diamand <luke@diamand.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 16 09:44:18 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: msysgit@googlegroups.com, git@vger.kernel.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Feb 16 10:21:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhJ2W-0005PB-AM
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 09:44:16 +0100
+	id 1NhJcJ-0002iA-SO
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 10:21:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752022Ab0BPIoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 03:44:10 -0500
-Received: from mail-pz0-f187.google.com ([209.85.222.187]:33984 "EHLO
-	mail-pz0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750759Ab0BPIoI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 03:44:08 -0500
-Received: by pzk17 with SMTP id 17so4828585pzk.4
-        for <git@vger.kernel.org>; Tue, 16 Feb 2010 00:44:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=uwtkvQwOwenalHQjOUlbF81uWwO77FWOgZMTKGOs4s8=;
-        b=aqNjqpsiNLP0xg2prKjW95ZRyRogoP5Q6eJR6LFoNpzpXo0ZlhjeRfVZ6lur/vBXXz
-         fHd6HAKlB2s/HoUAT1W9w7F6wb4RCVo/LDqjqlv0ni0Dc9QopwWRhY2uJ7O/y/03EHn+
-         OBZ+bmTbB64F9l9dNSLfc7S3lYbMrseTFVfow=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        b=gWwz00lGWmXFrXcu3Rrsty2tqKvpK6LwNRXa3YDk6R1avHb8SwHGiQeGDsYbXiqzC0
-         wOP9TAVYsmDmVQ3arEAB96RAZoagd5MRJjmQ7Q988ywmp6XtSbdXq9ZyCld2SoVt4LP6
-         fTU5xZTJBBK9yGZ8KKTnb6Se80Mk9r2rsOy84=
-Received: by 10.143.21.9 with SMTP id y9mr4143790wfi.229.1266309848069; Tue, 
-	16 Feb 2010 00:44:08 -0800 (PST)
+	id S1756805Ab0BPJVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 04:21:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52718 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755620Ab0BPJVG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 04:21:06 -0500
+Received: (qmail invoked by alias); 16 Feb 2010 09:21:01 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp037) with SMTP; 16 Feb 2010 10:21:01 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+lCaBRQEul+ddD/xzuJKGoPBSRiylWKl+aNWThKF
+	/u8l7YKY1ogK6C
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <87r5omghop.fsf@users.sourceforge.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68000000000000005
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140087>
 
-Fix inadvertent breakage from b932705 in the code that strips the
-trailing '\n' from p4 print on a symlink. (In practice, contents is of
-the form ['target\n', ''].)
+Hi Pat,
 
-Signed-off-by: Evan Powers <evan.powers@gmail.com>
----
-This patch Works For Me, but I didn't take the time to understand the
-entire code path so it might be equally valid to replace contents.pop()
-with contents.pop(0) and call it a day.
+On Mon, 15 Feb 2010, Pat Thoyts wrote:
 
- contrib/fast-import/git-p4 |    5 ++---
- 1 files changed, 2 insertions(+), 3 deletions(-)
+> These two tests fail on msysGit because /dev/null is an alias for nul on 
+> Windows and when reading the value back from git config the alias does 
+> not match the real filename. Also the HOME environment variable has a 
+> unix-style path but git returns a native equivalent path for '~'.  As 
+> these are platform-dependent equivalent results it seems simplest to 
+> skip the test entirely.
+> 
+> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+> ---
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index e7c4814..cd96c6f 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -967,9 +967,8 @@ class P4Sync(Command):
-         elif file["type"] == "symlink":
-             mode = "120000"
-             # p4 print on a symlink contains "target\n", so strip it off
--            last = contents.pop()
--            last = last[:-1]
--            contents.append(last)
-+            data = ''.join(contents)
-+            contents = [data[:-1]]
+Can you push this to 4msysgit's 'devel' branch?
 
-         if self.isWindows and file["type"].endswith("text"):
-             mangled = []
--- 
-1.6.6
+Thank you,
+Dscho
