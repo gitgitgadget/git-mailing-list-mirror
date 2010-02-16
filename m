@@ -1,99 +1,62 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Fatal error running status in new repo
-Date: Tue, 16 Feb 2010 02:21:54 -0500
-Message-ID: <20100216072154.GF2169@coredump.intra.peff.net>
-References: <20100216041945.GB10296@vfb-9.home>
- <20100216060528.GB2169@coredump.intra.peff.net>
- <20100216062422.GC10296@vfb-9.home>
+Subject: Re: git fetch origin hanging in 1.7.0
+Date: Tue, 16 Feb 2010 02:24:56 -0500
+Message-ID: <20100216072456.GG2169@coredump.intra.peff.net>
+References: <7e3605161002151608t44bd320cgcd589796a9ec902b@mail.gmail.com>
+ <20100216063959.GC2169@coredump.intra.peff.net>
+ <20100216151821.994ace31.rctay89@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Ping Yin <pkufranky@gmail.com>, Johan Herland <johan@herland.net>,
+Cc: Kevin Menard <nirvdrum@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
 	git@vger.kernel.org
-To: Jacob Helwig <jacob.helwig@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 08:22:02 2010
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 16 08:25:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhHkv-0000f6-3x
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 08:22:01 +0100
+	id 1NhHns-00024j-Bu
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 08:25:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932635Ab0BPHVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 02:21:55 -0500
-Received: from peff.net ([208.65.91.99]:41068 "EHLO peff.net"
+	id S932650Ab0BPHY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 02:24:58 -0500
+Received: from peff.net ([208.65.91.99]:41076 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932624Ab0BPHVz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 02:21:55 -0500
-Received: (qmail 30232 invoked by uid 107); 16 Feb 2010 07:22:06 -0000
+	id S932624Ab0BPHY5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 02:24:57 -0500
+Received: (qmail 30256 invoked by uid 107); 16 Feb 2010 07:25:08 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 16 Feb 2010 02:22:06 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Feb 2010 02:21:54 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 16 Feb 2010 02:25:08 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Feb 2010 02:24:56 -0500
 Content-Disposition: inline
-In-Reply-To: <20100216062422.GC10296@vfb-9.home>
+In-Reply-To: <20100216151821.994ace31.rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140080>
 
-On Mon, Feb 15, 2010 at 10:24:22PM -0800, Jacob Helwig wrote:
+On Tue, Feb 16, 2010 at 03:18:21PM +0800, Tay Ray Chuan wrote:
 
-[in an empty repo]
-> $ GIT_TRACE=1 git status
-> trace: built-in: git 'status'
-> # On branch master
-> #
-> # Initial commit
-> #
-[...]
-> trace: run_command: 'git-submodule' 'summary' '--cached' '--for-status' '--summary-limit' '-1' 'HEAD'
-[...]
-> trace: built-in: git 'rev-parse' '-q' '--verify' 'HEAD^0'
-> warning: ignoring dangling symref HEAD.
-[...]
-> trace: built-in: git 'diff-index' '--cached' '--raw' 'HEAD' '--' 'HEAD'
-> fatal: bad revision 'HEAD'
+> > That fixes the problem for me, but I am totally clueless about this
+> > code. Do all transports have a git_transport_data (if so, then why is it
+> > a void pointer?).
+> 
+> It is void so that it can be any struct - for example,
+> git_transport_data, bundle_transport_data. That way, transport->data
+> can point to any transport-specific data, while keeping the compiler
+> satisfied at compile-time.
 
-The patch I just posted elsewhere in the thread fixes the "ignoring
-dangling symref" message. The "bad revision 'HEAD'" comes from
-diff-index. But as you can see, that diff-index invocation is somewhat
-bogus.
+OK, I figured it was something like that. In that case, your fix looks
+like the right thing to do (and it fixes my test case).
 
-It looks like this code (git-submodule.sh:556-562):
+Thanks.
 
-        if rev=$(git rev-parse -q --verify "$1^0")
-        then
-                head=$rev
-                shift
-        else
-                head=HEAD
-        fi
+> -- >8 --
+> Subject: [PATCH] transport: add got_remote_refs flag
 
-is meant to guess whether the argument is a revision or a file limiter,
-and if the latter, assume HEAD was meant. Which obviously breaks down
-when the argument is HEAD and it is invalid. The patch below seems to
-fix it for me, but I have no idea if I am breaking something else.
-
-Can somebody more clueful about the submodule script take a look?
+Acked-by: Jeff King <peff@peff.net>
 
 -Peff
-
----
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 664f217..4332992 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -555,10 +555,12 @@ cmd_summary() {
- 
- 	if rev=$(git rev-parse -q --verify "$1^0")
- 	then
- 		head=$rev
- 		shift
-+	elif test "$1" = "HEAD"; then
-+		return
- 	else
- 		head=HEAD
- 	fi
- 
- 	if [ -n "$files" ]
