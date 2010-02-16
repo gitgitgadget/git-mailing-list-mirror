@@ -1,136 +1,115 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC PATCHv3 00/10] gitweb: Simple file based output caching
-Date: Tue, 16 Feb 2010 20:36:35 +0100
-Message-ID: <1266349005-15393-1-git-send-email-jnareb@gmail.com>
+Subject: [RFC PATCHv3 01/10] gitweb: href(..., -path_info => 0|1)
+Date: Tue, 16 Feb 2010 20:36:36 +0100
+Message-ID: <1266349005-15393-2-git-send-email-jnareb@gmail.com>
+References: <1266349005-15393-1-git-send-email-jnareb@gmail.com>
 Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	John 'Warthog9' Hawley <warthog9@kernel.org>,
 	Petr Baudis <pasky@suse.cz>, Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 16 20:37:06 2010
+X-From: git-owner@vger.kernel.org Tue Feb 16 20:37:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhTED-00027Q-J0
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 20:37:01 +0100
+	id 1NhTES-0002Gw-3H
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 20:37:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932807Ab0BPTg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 14:36:57 -0500
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:34515 "EHLO
+	id S933125Ab0BPThA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 14:37:00 -0500
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:38796 "EHLO
 	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757031Ab0BPTgz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 14:36:55 -0500
-Received: by bwz5 with SMTP id 5so2280988bwz.1
-        for <git@vger.kernel.org>; Tue, 16 Feb 2010 11:36:52 -0800 (PST)
+	with ESMTP id S1757054Ab0BPTg6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 14:36:58 -0500
+Received: by bwz5 with SMTP id 5so2281058bwz.1
+        for <git@vger.kernel.org>; Tue, 16 Feb 2010 11:36:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=v1uLqvJxSXWFZlrWc9/+lVjjwm+hy85LUWbE8EaVpjI=;
-        b=iyn9BtYCwOpP/b3Ks+6EcolLDsl/tgfAaBURGYHgmctmG7ud3ZZxY+YFqA415CHiAE
-         ZYH+NN4a+r+CgOHRxH8LCxTFCd2B0Le+vEHnS8yqzePM0JTCCWJDeObSSLv93WqQeik+
-         PcxPYpNwe84YnNDt6J3XSCGL2P95nDiSOxv9s=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=vV4dctcOu0gMW+ufoY793EY4KIVHbYWlD52XKmK1mzA=;
+        b=F/8YlsxUjPRAGOf++U2ii6odxlOPrZg9i+o5xdmQVbaaKIY3SgWxwjRygUH1FXCKAN
+         RFoR+YUHJZkHqh9o1nsL/2MzPIiAwsOE7mNBe+ZDgF745jKugl4BcOK0W56vdAuWl1O4
+         RPS2h3NsIF7VBqsM2BQ1nqcLPh+O/QNR1PwN0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=bCKgdbx+p/KAVNGdNHElqsaZF6iBuZQvAsPsg/GcOfi1b4tuGGq73GDb2kgVNgDv8Z
-         5lg+pBYPRgP+kxo1l/X4W3WuHgrJj8OxvUSrOkjoIBXo9hONoceWlsHeMzNsXdbTUn5z
-         n1iRn8udp3sW/pH9PBM8c4psutVJkwQypKN+Q=
-Received: by 10.204.48.197 with SMTP id s5mr4547217bkf.177.1266349012600;
-        Tue, 16 Feb 2010 11:36:52 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=ePvcPqe0kscQNO0+EBoYV4yAJBACIbaVkXUk2o4m7Uid3I0rGSAneZRNaUZt172t0d
+         zXAB1C+p6CvB0juYNkAT1D/NrXjaRyKuXcKEfmNHpCosJOQ8Vs5njl2IJ1I8pm0L2Clh
+         GPEojHRhqgF49eDTHOAJg4vtvynIjAjGBxPr4=
+Received: by 10.204.5.216 with SMTP id 24mr4614910bkw.141.1266349014502;
+        Tue, 16 Feb 2010 11:36:54 -0800 (PST)
 Received: from localhost.localdomain (abvy197.neoplus.adsl.tpnet.pl [83.8.222.197])
-        by mx.google.com with ESMTPS id 15sm3243751bwz.12.2010.02.16.11.36.49
+        by mx.google.com with ESMTPS id 15sm3243751bwz.12.2010.02.16.11.36.52
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 16 Feb 2010 11:36:50 -0800 (PST)
+        Tue, 16 Feb 2010 11:36:53 -0800 (PST)
 X-Mailer: git-send-email 1.6.6.1
+In-Reply-To: <1266349005-15393-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140139>
 
-This 10 patches long patch series is intended (yet) as preliminary version
-for splitting large 'gitweb: File based caching layer (from git.kernel.org)'
-mega-patch by John 'Warthog9' Hawley aka J.H., by starting small and
-adding features piece by piece.
+If named boolean option -path_info is passed to href() subroutine, it
+would use its value to decide whether to generate path_info URL form.
+If this option is not passed, href() queries 'pathinfo' feature to
+check whether to generate path_info URL (if generating path_info link
+is possible at all).
 
-This is third version (third release) of this series, and is available on
-http://repo.or.cz/w/git/jnareb-git.git as 'gitweb/cache-kernel-v3' branch.
-Earlier versions are available there as branches 'gitweb/cache-kernel'
-and 'gitweb/cache-kernel-v2'.  Previous version of this series was sent
-to git mailing list as:
-* [RFC PATCHv2 00/10] gitweb: Simple file based output caching
-  Message-Id: <1265711427-15193-1-git-send-email-jnareb@gmail.com>
-  http://thread.gmane.org/gmane.comp.version-control.git/139382
+href(-replay=>1, -path_info=>0) is meant to be used to generate a key
+for caching gitweb output; alternate solution would be to use freeze()
+from Storable (core module) on %input_params hash (or its reference),
+e.g.:
+  $key = freeze \%input_params;
+or other serialization of %input_params.
 
-This version tries to do without 
-  gitweb: Print to explicit filehandle (preparing for caching)
-patch (or its equivalent).  It does it by "capturing" output by changing
-default filehandle (used for "print", "printf" and "write" without explicit
-filehandle) via 'select($data_fh);' to point to in-memory file.  This is
-simplest possible solution, and does not require extra Perl modules.
+While at it document extra options/flags to href().
 
-Among other solutions are tie-ing *STDOUT to a class that captures output
-(similar to what CGI::Cache does), or using PerlIO layers via push_layer() /
-pop_layer() methods from (non-core) PerlIO::Util module (from CPAN).
-
-This version also includes thorough (perhaps too thorough) error checking,
-it has much more comments, should work correctly when two clients access the
-same URL with an error condition (die_error is called), and it detaches
-background process so even with mod_perl it would not generate zombies.
-
-This version was tested a bit running under mod_cgi: that it generates page
-correctly, that it gets page from cache, that cache expires correctly, that
-stale page is being served, that "Generating..." page is generated correctly
-and that it works.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+There is no change in the patch with v3, as compared to v2.
 
 
-There are a few KNOWN ISSUES: 'blame_incremental' action is not incremental
-and does not work (perhaps JavaScript-based actions should be turned off
-with current implementation of output cache?), and "Generating..." page
-somehow does not get additional "." when waiting (but it works).
+Note that in the caching patch by J.H. from "Gitweb caching v5" thread
+(and top commit in git://git.kernel.org/pub/scm/git/warthog9/gitweb.git,
+gitweb-ml-v5 branch) the key was generated as "$my_url?".$ENV{'QUERY_STRING'}
+which wouldn't work with path_info URLs, but on the other hand gitweb
+at git.kernel.org doesn't use path_info URLs (perhaps even doesn't
+support them).
 
+Using href(replay=>1,full=>1,path_info=>0) has additional advantage
+over using $cgi->self_url() in that it also does not depend on
+ordering of parameters in handcrafted URLs.
 
-The following changes since commit 7e5eb8f1834722507e2d2171a253b78b1d924458
-(in the 'master' branch of git.git repository):
-  Junio C Hamano (1):
-        Merge branch 'maint'
+ gitweb/gitweb.perl |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
-are available in the git repository at:
-
-  git://repo.or.cz/git/jnareb-git.git gitweb/cache-kernel-v3
-
-Shortlog:
-~~~~~~~~~
-Jakub Narebski (10):
-  gitweb: href(..., -path_info => 0|1)
-  gitweb/cache.pm - Very simple file based cache
-  gitweb/cache.pm - Stat-based cache expiration
-  gitweb: Use Cache::Cache compatibile (get, set) output caching
-  gitweb/cache.pm - Adaptive cache expiration time
-  gitweb: Use CHI compatibile (compute method) caching
-  gitweb/cache.pm - Use locking to avoid 'cache miss stampede' problem
-  gitweb/cache.pm - Serve stale data when waiting for filling cache
-  gitweb/cache.pm - Regenerate (refresh) cache in background
-  gitweb: Show appropriate "Generating..." page when regenerating cache
-
-Diffstat:
-~~~~~~~~~
- gitweb/README                          |   70 ++++
- gitweb/cache.pm                        |  655 ++++++++++++++++++++++++++++++++
- gitweb/gitweb.perl                     |  321 +++++++++++++++-
- t/gitweb-lib.sh                        |    2 +
- t/t9500-gitweb-standalone-no-errors.sh |   19 +
- t/t9503-gitweb-caching.sh              |   32 ++
- t/t9503/test_cache_interface.pl        |  404 ++++++++++++++++++++
- t/test-lib.sh                          |    3 +
- 8 files changed, 1486 insertions(+), 20 deletions(-)
- create mode 100644 gitweb/cache.pm
- create mode 100755 t/t9503-gitweb-caching.sh
- create mode 100755 t/t9503/test_cache_interface.pl
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 1f6978a..97ea3ec 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -970,6 +970,10 @@ exit;
+ ## ======================================================================
+ ## action links
+ 
++# possible values of extra options
++# -full => 0|1      - use absolute/full URL ($my_uri/$my_url as base)
++# -replay => 1      - start from a current view (replay with modifications)
++# -path_info => 0|1 - don't use/use path_info URL (if possible)
+ sub href {
+ 	my %params = @_;
+ 	# default is to use -absolute url() i.e. $my_uri
+@@ -986,7 +990,8 @@ sub href {
+ 	}
+ 
+ 	my $use_pathinfo = gitweb_check_feature('pathinfo');
+-	if ($use_pathinfo and defined $params{'project'}) {
++	if (defined $params{'project'} &&
++	    (exists $params{-path_info} ? $params{-path_info} : $use_pathinfo)) {
+ 		# try to put as many parameters as possible in PATH_INFO:
+ 		#   - project name
+ 		#   - action
 -- 
-Jakub Narebski
-
-git version 1.6.6.1
+1.6.6.1
