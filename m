@@ -1,149 +1,141 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [RFC PATCH v2 10/11] filter-branch: invoke post-rewrite hook
-Date: Wed, 17 Feb 2010 00:26:06 +0100
-Message-ID: <c1498be72baf88ffd78c3a0daa06aa7d8000e244.1266361759.git.trast@student.ethz.ch>
+Subject: [RFC PATCH v2 03/11] rebase: invoke post-rewrite hook
+Date: Wed, 17 Feb 2010 00:25:59 +0100
+Message-ID: <844b90d4fdb9156431c740dc9b870dd0f8c9e21b.1266361759.git.trast@student.ethz.ch>
 References: <cover.1266361759.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Johannes Sixt <j6t@kdbg.org>, Johan Herland <johan@herland.net>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 17 00:27:18 2010
+X-From: git-owner@vger.kernel.org Wed Feb 17 00:27:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhWp3-0006BI-AQ
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 00:27:17 +0100
+	id 1NhWp1-0006BI-4H
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 00:27:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933602Ab0BPX0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 18:26:49 -0500
+	id S933583Ab0BPX0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 18:26:35 -0500
 Received: from gwse.ethz.ch ([129.132.178.238]:45469 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933596Ab0BPX0n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 18:26:43 -0500
+	id S933358Ab0BPX0c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 18:26:32 -0500
 Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
  (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Wed, 17 Feb
- 2010 00:26:27 +0100
+ 2010 00:26:26 +0100
 Received: from localhost.localdomain (84.74.100.59) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Wed, 17 Feb
- 2010 00:26:11 +0100
+ 2010 00:26:08 +0100
 X-Mailer: git-send-email 1.7.0.67.g67ac3
 In-Reply-To: <cover.1266361759.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140166>
 
-With a twist: since this is supposed to be the be-all end-all of
-rewriting, we give the user the chance to override the hook.
+We have to deal with two separate code paths: a normal rebase, which
+actually goes through git-am; and rebase {-m|-s}.
+
+The only small issue with both is that they need to remember the
+original sha1 across a possible conflict resolution.  rebase -m
+already puts this information in $dotest/current, and we just
+introduce a similar file for git-am.
+
+Note that in git-am, the hook really only runs when coming from
+git-rebase: the code path that sets the $dotest/original-commit file
+is guarded by a test for $dotest/rebasing.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- Documentation/git-filter-branch.txt |    7 ++++++-
- git-filter-branch.sh                |   21 +++++++++++++++++++++
- t/t5407-post-rewrite-hook.sh        |   28 ++++++++++++++++++++++++++++
- 3 files changed, 55 insertions(+), 1 deletions(-)
+ git-am.sh                    |   10 ++++++++++
+ git-rebase.sh                |    5 +++++
+ t/t5407-post-rewrite-hook.sh |   30 ++++++++++++++++++++++++++++++
+ 3 files changed, 45 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index 020028c..28a705f 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- 	[--index-filter <command>] [--parent-filter <command>]
- 	[--msg-filter <command>] [--commit-filter <command>]
- 	[--tag-name-filter <command>] [--subdirectory-filter <directory>]
--	[--prune-empty]
-+	[--prune-empty] [--post-rewrite <command>]
- 	[--original <namespace>] [-d <directory>] [-f | --force]
- 	[--] [<rev-list options>...]
+diff --git a/git-am.sh b/git-am.sh
+index 3c08d53..56428b4 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -575,6 +575,7 @@ do
+ 			echo "Patch is empty.  Was it split wrong?"
+ 			stop_here $this
+ 		}
++		rm -f "$dotest/original-commit"
+ 		if test -f "$dotest/rebasing" &&
+ 			commit=$(sed -e 's/^From \([0-9a-f]*\) .*/\1/' \
+ 				-e q "$dotest/$msgnum") &&
+@@ -582,6 +583,7 @@ do
+ 		then
+ 			git cat-file commit "$commit" |
+ 			sed -e '1,/^$/d' >"$dotest/msg-clean"
++			echo "$commit" > "$dotest/original-commit"
+ 		else
+ 			{
+ 				sed -n '/^Subject/ s/Subject: //p' "$dotest/info"
+@@ -768,6 +770,10 @@ do
+ 	git update-ref -m "$GIT_REFLOG_ACTION: $FIRSTLINE" HEAD $commit $parent ||
+ 	stop_here $this
  
-@@ -182,6 +182,11 @@ the nearest ancestor that was not excluded.
- 	of the `git commit-tree "$@"` idiom in your commit filter to make that
- 	happen.
- 
-+--post-rewrite <command>::
-+	Overrides the post-rewrite hook (if you have one).  To bypass
-+	the hook for this invocation, pass `:`.  See
-+	linkgit:githooks[1].
-+
- --original <namespace>::
- 	Use this option to set the namespace where the original commits
- 	will be stored. The default value is 'refs/original'.
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 88fb0f0..301c497 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -101,6 +101,7 @@ USAGE="[--env-filter <command>] [--tree-filter <command>]
-             [--index-filter <command>] [--parent-filter <command>]
-             [--msg-filter <command>] [--commit-filter <command>]
-             [--tag-name-filter <command>] [--subdirectory-filter <directory>]
-+	    [--post-rewrite <command>]
-             [--original <namespace>] [-d <directory>] [-f | --force]
-             [<rev-list options>...]"
- 
-@@ -126,6 +127,13 @@ orig_namespace=refs/original/
- force=
- prune_empty=
- remap_to_ancestor=
-+
-+if test -x "$GIT_DIR"/hooks/post-rewrite; then
-+	post_rewrite=$(git rev-parse --sq-quote "$GIT_DIR"/hooks/post-rewrite)
-+else
-+	post_rewrite=:
-+fi
-+
- while :
- do
- 	case "$1" in
-@@ -190,6 +198,10 @@ do
- 		filter_subdir="$OPTARG"
- 		remap_to_ancestor=t
- 		;;
-+	--post-rewrite)
-+		post_rewrite="$OPTARG"
-+		post_rewrite_given=t
-+		;;
- 	--original)
- 		orig_namespace=$(expr "$OPTARG/" : '\(.*[^/]\)/*$')/
- 		;;
-@@ -358,6 +370,10 @@ while read commit parents; do
- 	@SHELL_PATH@ -c "$filter_commit" "git commit-tree" \
- 		$(git write-tree) $parentstr < ../message > ../map/$commit ||
- 			die "could not write rewritten commit"
-+	new_commit=$(map $commit)
-+	if test $commit != $new_commit; then
-+		echo $commit $new_commit >> "$workdir"/../rewritten
++	if test -f "$dotest/original-commit"; then
++		echo "$(cat "$dotest/original-commit") $commit" >> "$dotest/rewritten"
 +	fi
- done <../revs
- 
- # If we are filtering for paths, as in the case of a subdirectory
-@@ -484,6 +500,11 @@ if [ "$filter_tag_name" ]; then
- fi
- 
- cd ../..
 +
-+if test -s "$workdir"/../rewritten; then
-+	eval "$post_rewrite" 'filter-branch < "$workdir"/../rewritten'
+ 	if test -x "$GIT_DIR"/hooks/post-applypatch
+ 	then
+ 		"$GIT_DIR"/hooks/post-applypatch
+@@ -776,6 +782,10 @@ do
+ 	go_next
+ done
+ 
++if test -s "$dotest"/rewritten && test -x "$GIT_DIR"/hooks/post-rewrite; then
++	"$GIT_DIR"/hooks/post-rewrite rebase < "$dotest"/rewritten
 +fi
 +
- rm -rf "$tempdir"
+ git gc --auto
  
- trap - 0
+ rm -fr "$dotest"
+diff --git a/git-rebase.sh b/git-rebase.sh
+index fb4fef7..52f8b9b 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -79,6 +79,7 @@ continue_merge () {
+ 		then
+ 			printf "Committed: %0${prec}d " $msgnum
+ 		fi
++		echo "$cmt $(git rev-parse HEAD^0)" >> "$dotest/rewritten"
+ 	else
+ 		if test -z "$GIT_QUIET"
+ 		then
+@@ -151,6 +152,10 @@ move_to_original_branch () {
+ 
+ finish_rb_merge () {
+ 	move_to_original_branch
++	if test -x "$GIT_DIR"/hooks/post-rewrite &&
++		test -s "$dotest"/rewritten; then
++		"$GIT_DIR"/hooks/post-rewrite rebase < "$dotest"/rewritten
++	fi
+ 	rm -r "$dotest"
+ 	say All done.
+ }
 diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index 488d4a0..fa81fd4 100755
+index 1020af9..1ecaa4b 100755
 --- a/t/t5407-post-rewrite-hook.sh
 +++ b/t/t5407-post-rewrite-hook.sh
-@@ -157,4 +157,32 @@ EOF
- 	verify_hook_input
+@@ -49,4 +49,34 @@ test_expect_success 'git commit --amend --no-post-rewrite' '
+ 	test ! -f post-rewrite.data
  '
  
-+test_expect_success 'git filter-branch' '
++test_expect_success 'git rebase' '
 +	git reset --hard D &&
 +	clear_hook_input &&
-+	git filter-branch -f --tree-filter "touch newfile" B..HEAD &&
-+	echo filter-branch >expected.args &&
++	test_must_fail git rebase --onto A B &&
++	echo C > foo &&
++	git add foo &&
++	git rebase --continue &&
++	echo rebase >expected.args &&
 +	cat >expected.data <<EOF &&
 +$(git rev-parse C) $(git rev-parse HEAD^)
 +$(git rev-parse D) $(git rev-parse HEAD)
@@ -151,20 +143,19 @@ index 488d4a0..fa81fd4 100755
 +	verify_hook_input
 +'
 +
-+test_expect_success 'git filter-branch (no-op)' '
++test_expect_success 'git rebase --skip' '
 +	git reset --hard D &&
 +	clear_hook_input &&
-+	git filter-branch -f B..HEAD &&
-+	test ! -f post-rewrite.args &&
-+	test ! -f post-rewrite.data
-+'
-+
-+test_expect_success 'git filter-branch --post-rewrite :' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	git filter-branch -f --post-rewrite : --tree-filter "touch newfile" B..HEAD &&
-+	test ! -f post-rewrite.args &&
-+	test ! -f post-rewrite.data
++	test_must_fail git rebase --onto A B &&
++	test_must_fail git rebase --skip &&
++	echo D > foo &&
++	git add foo &&
++	git rebase --continue &&
++	echo rebase >expected.args &&
++	cat >expected.data <<EOF &&
++$(git rev-parse D) $(git rev-parse HEAD)
++EOF
++	verify_hook_input
 +'
 +
  test_done
