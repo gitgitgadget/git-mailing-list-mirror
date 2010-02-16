@@ -1,175 +1,88 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH] submodule summary: Don't barf when invoked in an empty repo
-Date: Tue, 16 Feb 2010 11:21:14 +0100
-Message-ID: <201002161121.14613.johan@herland.net>
-References: <20100216041945.GB10296@vfb-9.home>
- <20100216062422.GC10296@vfb-9.home>
- <20100216072154.GF2169@coredump.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Using test-lib.sh under GPLv3?
+Date: Tue, 16 Feb 2010 02:27:37 -0800 (PST)
+Message-ID: <m3aav98oj7.fsf@localhost.localdomain>
+References: <87ljf8pvxx.fsf@yoom.home.cworth.org>
+	<87hbpwpoko.fsf@yoom.home.cworth.org>
+	<5641883d1002060727ia4e6c16lf800a92fc8735430@mail.gmail.com>
+	<201002081614.24284.sojkam1@fel.cvut.cz>
+	<871vgr78lr.fsf@yoom.home.cworth.org>
+	<87iqa2y0gz.fsf@steelpick.localdomain>
+	<87r5oqe7mi.fsf@yoom.home.cworth.org>
+	<871vgmki4f.fsf@steelpick.localdomain>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>, Jacob Helwig <jacob.helwig@gmail.com>,
-	Ping Yin <pkufranky@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 16 11:21:29 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Carl Worth <cworth@cworth.org>,
+	notmuch@notmuchmail.org, git@vger.kernel.org
+To: Michal Sojka <sojkam1@fel.cvut.cz>
+X-From: git-owner@vger.kernel.org Tue Feb 16 11:27:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhKYX-0002Eo-UE
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 11:21:26 +0100
+	id 1NhKeg-0005py-Hp
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 11:27:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932750Ab0BPKVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 05:21:20 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:46040 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932372Ab0BPKVT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 05:21:19 -0500
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KXX00824JFHDZB0@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Tue, 16 Feb 2010 11:21:17 +0100 (MET)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KXX007GQJFFUM40@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 16 Feb 2010 11:21:17 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2010.2.16.100626
-User-Agent: KMail/1.13.0 (Linux/2.6.32-ARCH; KDE/4.4.0; x86_64; ; )
-In-reply-to: <20100216072154.GF2169@coredump.intra.peff.net>
+	id S932767Ab0BPK1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 05:27:41 -0500
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:41627 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932603Ab0BPK1k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 05:27:40 -0500
+Received: by bwz5 with SMTP id 5so1760891bwz.1
+        for <git@vger.kernel.org>; Tue, 16 Feb 2010 02:27:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=4nqny5w1n+t8Cobm2IkkVO9m67PtwfXxx8RMXMsqYJg=;
+        b=OLY07QD1/k5KyY6/Cp+0N3ix1zYDVc1DnDTHbutvWoVaWGTu19nfNz9YFo2f72Jgqu
+         LZRixzv8qQQ/3rvESYdn7eGxBmp8s669+u2Cve1fEZ0PuQMVaaiOLthTHCkGH3TUVyiD
+         /Guruf79XRuST62nZCLOfFfNoBUi1xOV5lw0k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=bcqaoApo1dv4Da5f0QHHA7BZIh3BA/1y6SmL45yKJjHdgy6ANuCpsgJKvDJzvaqqeT
+         2p6A3HxnnrZjIWKyf/ktYZGXXB0/rw36S5i5an3szKnTife1hh4FAgo5iVWOvVjqtpJZ
+         YhLCV3jDRSAYKbfQXmHwI8TcMARGYZQfP08G0=
+Received: by 10.204.151.216 with SMTP id d24mr4120084bkw.1.1266316058661;
+        Tue, 16 Feb 2010 02:27:38 -0800 (PST)
+Received: from localhost.localdomain (abvc76.neoplus.adsl.tpnet.pl [83.8.200.76])
+        by mx.google.com with ESMTPS id 16sm3022251bwz.15.2010.02.16.02.27.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 16 Feb 2010 02:27:37 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o1GAQrNu006466;
+	Tue, 16 Feb 2010 11:27:03 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o1GAQKA2006454;
+	Tue, 16 Feb 2010 11:26:20 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <871vgmki4f.fsf@steelpick.localdomain>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140091>
 
-When invoking "git submodule summary" in an empty repo (which can be
-indirectly done by setting status.submodulesummary = true), it currently
-emits an error message (via "git diff-index") since HEAD points to an
-unborn branch.
+Michal Sojka <sojkam1@fel.cvut.cz> writes:
 
-This patch adds handling of the HEAD-points-to-unborn-branch special case,
-so that "git submodule summary" no longer emits this error message.
+> I like the simple and powerful test suite used by Git and I would like
+> to use something like that in Notmuch project (http://notmuchmail.org/).
+> Notmuch is licenced under GPLv3 and we think that things will be simpler
+> if everything in the repository is licenced the same. You are mentioned
+> as a copyright holder in test-lib.sh and t0000-basic.sh so I'd like to
+> ask you: Would you mind using parts of these files under GPLv3?
 
-The patch also adds a test case that verifies the fix.
-
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Johan Herland <johan@herland.net>
----
-
-On Tuesday 16 February 2010, Jeff King wrote:
-> It looks like this code (git-submodule.sh:556-562):
-> 
->         if rev=$(git rev-parse -q --verify "$1^0")
->         then
->                 head=$rev
->                 shift
->         else
->                 head=HEAD
->         fi
-> 
-> is meant to guess whether the argument is a revision or a file limiter,
-> and if the latter, assume HEAD was meant. Which obviously breaks down
-> when the argument is HEAD and it is invalid. The patch below seems to
-> fix it for me, but I have no idea if I am breaking something else.
-> 
-> Can somebody more clueful about the submodule script take a look?
-
-I don't know this code very well, but from looking at the commit introducing
-this code (28f9af5: git-submodule summary: code framework), your analysis
-makes sense. However, your fix doesn't work well for me.
-
-> ---
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 664f217..4332992 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -555,10 +555,12 @@ cmd_summary() {
-> 
->  	if rev=$(git rev-parse -q --verify "$1^0")
->  	then
->  		head=$rev
->  		shift
-> +	elif test "$1" = "HEAD"; then
-> +		return
->  	else
->  		head=HEAD
->  	fi
-> 
->  	if [ -n "$files" ]
-
-I'm working from the simple test case in the below patch, I get the
-following output with your proposed fix:
-
-  [...]
-  trace: built-in: git 'rev-parse' '-q' '--verify' '^0'
-  [...]
-  trace: built-in: git 'diff-index' '--raw' 'HEAD' '--'
-  fatal: bad revision 'HEAD'
-  [...]
-
-I.e. your fix doesn't work because $1 is empty (not "HEAD") at this point.
-
-My alternative patch (below) does pass my test case (and all the other
-tests as well)
-
-I'd still like an ACK from the original author (Ping Yin) as well, as I'm
-not sure if I overlooked something by removing the "$1^0".
-
-
-Have fun! :)
-
-...Johan
-
-
- git-submodule.sh             |    7 +++++--
- t/t7401-submodule-summary.sh |    7 +++++++
- 2 files changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 664f217..906b7b2 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -553,12 +553,15 @@ cmd_summary() {
- 
- 	test $summary_limit = 0 && return
- 
--	if rev=$(git rev-parse -q --verify "$1^0")
-+	if rev=$(git rev-parse -q --verify --default HEAD $1)
- 	then
- 		head=$rev
- 		shift
-+	elif test -z "$1" -o "$1" = "HEAD"
-+	then
-+		return
- 	else
--		head=HEAD
-+		head="HEAD"
- 	fi
- 
- 	if [ -n "$files" ]
-diff --git a/t/t7401-submodule-summary.sh b/t/t7401-submodule-summary.sh
-index d3c039f..cee319d 100755
---- a/t/t7401-submodule-summary.sh
-+++ b/t/t7401-submodule-summary.sh
-@@ -227,4 +227,11 @@ test_expect_success 'fail when using --files together with --cached' "
-     test_must_fail git submodule summary --files --cached
- "
- 
-+test_expect_success 'should not fail in an empty repo' "
-+    git init xyzzy &&
-+    cd xyzzy &&
-+    git submodule summary >output 2>&1 &&
-+    test_cmp output /dev/null
-+"
-+
- test_done
--- 
-1.7.0.rc1.141.gd3fd
-
+Have you thought about using TAP (Test Anything Protocol) format for
+your testsuite?  Its page (http://testanything.org) has a TAP-producing
+bash library: http://testanything.org/wiki/index.php/Tap-functions
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Jakub Narebski
+Poland
+ShadeHawk on #git
