@@ -1,7 +1,7 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [RFC PATCH v2 03/11] rebase: invoke post-rewrite hook
-Date: Wed, 17 Feb 2010 00:25:59 +0100
-Message-ID: <844b90d4fdb9156431c740dc9b870dd0f8c9e21b.1266361759.git.trast@student.ethz.ch>
+Subject: [RFC PATCH v2 04/11] rebase -i: invoke post-rewrite hook
+Date: Wed, 17 Feb 2010 00:26:00 +0100
+Message-ID: <17b3a5c3d40c54bc9a045c0a09c421fc4bc988e0.1266361759.git.trast@student.ethz.ch>
 References: <cover.1266361759.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
@@ -13,15 +13,15 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhWp1-0006BI-4H
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 00:27:15 +0100
+	id 1NhWp0-0006BI-Jb
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 00:27:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933583Ab0BPX0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S933589Ab0BPX0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Tue, 16 Feb 2010 18:26:35 -0500
 Received: from gwse.ethz.ch ([129.132.178.238]:45469 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933358Ab0BPX0c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 18:26:32 -0500
+	id S933572Ab0BPX0d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 18:26:33 -0500
 Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
  (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Wed, 17 Feb
  2010 00:26:26 +0100
@@ -34,104 +34,145 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140167>
 
-We have to deal with two separate code paths: a normal rebase, which
-actually goes through git-am; and rebase {-m|-s}.
-
-The only small issue with both is that they need to remember the
-original sha1 across a possible conflict resolution.  rebase -m
-already puts this information in $dotest/current, and we just
-introduce a similar file for git-am.
-
-Note that in git-am, the hook really only runs when coming from
-git-rebase: the code path that sets the $dotest/original-commit file
-is guarded by a test for $dotest/rebasing.
+Aside from the same issue that rebase also has (remembering the
+original commit across a conflict resolution), rebase -i brings an
+extra twist: We need to defer writing the rewritten list in the case
+of {squash,fixup} because their rewritten result should be the last
+commit in the squashed group.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- git-am.sh                    |   10 ++++++++++
- git-rebase.sh                |    5 +++++
- t/t5407-post-rewrite-hook.sh |   30 ++++++++++++++++++++++++++++++
- 3 files changed, 45 insertions(+), 0 deletions(-)
+ git-rebase--interactive.sh   |   39 +++++++++++++++++++++
+ t/t5407-post-rewrite-hook.sh |   78 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 117 insertions(+), 0 deletions(-)
 
-diff --git a/git-am.sh b/git-am.sh
-index 3c08d53..56428b4 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -575,6 +575,7 @@ do
- 			echo "Patch is empty.  Was it split wrong?"
- 			stop_here $this
- 		}
-+		rm -f "$dotest/original-commit"
- 		if test -f "$dotest/rebasing" &&
- 			commit=$(sed -e 's/^From \([0-9a-f]*\) .*/\1/' \
- 				-e q "$dotest/$msgnum") &&
-@@ -582,6 +583,7 @@ do
- 		then
- 			git cat-file commit "$commit" |
- 			sed -e '1,/^$/d' >"$dotest/msg-clean"
-+			echo "$commit" > "$dotest/original-commit"
- 		else
- 			{
- 				sed -n '/^Subject/ s/Subject: //p' "$dotest/info"
-@@ -768,6 +770,10 @@ do
- 	git update-ref -m "$GIT_REFLOG_ACTION: $FIRSTLINE" HEAD $commit $parent ||
- 	stop_here $this
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 5735859..fc4f7e9 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -96,6 +96,13 @@ AUTHOR_SCRIPT="$DOTEST"/author-script
+ # command is processed, this file is deleted.
+ AMEND="$DOTEST"/amend
  
-+	if test -f "$dotest/original-commit"; then
-+		echo "$(cat "$dotest/original-commit") $commit" >> "$dotest/rewritten"
-+	fi
++# For the post-rewrite hook, we make a list of rewritten commits and
++# their new sha1s.  The rewritten-pending list keeps the sha1s of
++# commits that have been processed, but not committed yet,
++# e.g. because they are waiting for a 'squash' command.
++REWRITTEN_LIST="$DOTEST"/rewritten-list
++REWRITTEN_PENDING="$DOTEST"/rewritten-pending
 +
- 	if test -x "$GIT_DIR"/hooks/post-applypatch
- 	then
- 		"$GIT_DIR"/hooks/post-applypatch
-@@ -776,6 +782,10 @@ do
- 	go_next
- done
- 
-+if test -s "$dotest"/rewritten && test -x "$GIT_DIR"/hooks/post-rewrite; then
-+	"$GIT_DIR"/hooks/post-rewrite rebase < "$dotest"/rewritten
-+fi
-+
- git gc --auto
- 
- rm -fr "$dotest"
-diff --git a/git-rebase.sh b/git-rebase.sh
-index fb4fef7..52f8b9b 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -79,6 +79,7 @@ continue_merge () {
- 		then
- 			printf "Committed: %0${prec}d " $msgnum
- 		fi
-+		echo "$cmt $(git rev-parse HEAD^0)" >> "$dotest/rewritten"
- 	else
- 		if test -z "$GIT_QUIET"
- 		then
-@@ -151,6 +152,10 @@ move_to_original_branch () {
- 
- finish_rb_merge () {
- 	move_to_original_branch
-+	if test -x "$GIT_DIR"/hooks/post-rewrite &&
-+		test -s "$dotest"/rewritten; then
-+		"$GIT_DIR"/hooks/post-rewrite rebase < "$dotest"/rewritten
-+	fi
- 	rm -r "$dotest"
- 	say All done.
+ PRESERVE_MERGES=
+ STRATEGY=
+ ONTO=
+@@ -198,6 +205,7 @@ make_patch () {
  }
+ 
+ die_with_patch () {
++	echo "$1" > "$DOTEST"/conflicted-sha
+ 	make_patch "$1"
+ 	git rerere
+ 	die "$2"
+@@ -348,6 +356,7 @@ pick_one_preserving_merges () {
+ 				printf "%s\n" "$msg" > "$GIT_DIR"/MERGE_MSG
+ 				die_with_patch $sha1 "Error redoing merge $sha1"
+ 			fi
++			echo "$sha1 $(git rev-parse HEAD^0)" >> "$REWRITTEN_LIST"
+ 			;;
+ 		*)
+ 			output git cherry-pick "$@" ||
+@@ -425,6 +434,26 @@ die_failed_squash() {
+ 	die_with_patch $1 ""
+ }
+ 
++flush_rewritten_pending() {
++	test -s "$REWRITTEN_PENDING" || return
++	newsha1="$(git rev-parse HEAD^0)"
++	sed "s/$/ $newsha1/" < "$REWRITTEN_PENDING" >> "$REWRITTEN_LIST"
++	rm -f "$REWRITTEN_PENDING"
++}
++
++record_in_rewritten() {
++	oldsha1="$(git rev-parse $1)"
++	echo "$oldsha1" >> "$REWRITTEN_PENDING"
++
++	case "$(peek_next_command)" in
++	    squash|s|fixup|f)
++		;;
++	    *)
++		flush_rewritten_pending
++		;;
++	esac
++}
++
+ do_next () {
+ 	rm -f "$MSG" "$AUTHOR_SCRIPT" "$AMEND" || exit
+ 	read command sha1 rest < "$TODO"
+@@ -438,6 +467,7 @@ do_next () {
+ 		mark_action_done
+ 		pick_one $sha1 ||
+ 			die_with_patch $sha1 "Could not apply $sha1... $rest"
++		record_in_rewritten $sha1
+ 		;;
+ 	reword|r)
+ 		comment_for_reflog reword
+@@ -446,6 +476,7 @@ do_next () {
+ 		pick_one $sha1 ||
+ 			die_with_patch $sha1 "Could not apply $sha1... $rest"
+ 		git commit --amend --no-post-rewrite
++		record_in_rewritten $sha1
+ 		;;
+ 	edit|e)
+ 		comment_for_reflog edit
+@@ -454,6 +485,7 @@ do_next () {
+ 		pick_one $sha1 ||
+ 			die_with_patch $sha1 "Could not apply $sha1... $rest"
+ 		make_patch $sha1
++		record_in_rewritten "$sha1"
+ 		git rev-parse --verify HEAD > "$AMEND"
+ 		warn "Stopped at $sha1... $rest"
+ 		warn "You can amend the commit now, with"
+@@ -509,6 +541,7 @@ do_next () {
+ 			rm -f "$SQUASH_MSG" "$FIXUP_MSG"
+ 			;;
+ 		esac
++		record_in_rewritten $sha1
+ 		;;
+ 	*)
+ 		warn "Unknown command: $command $sha1 $rest"
+@@ -537,6 +570,11 @@ do_next () {
+ 		test ! -f "$DOTEST"/verbose ||
+ 			git diff-tree --stat $(cat "$DOTEST"/head)..HEAD
+ 	} &&
++	if test -x "$GIT_DIR"/hooks/post-rewrite &&
++		test -s "$REWRITTEN_LIST"; then
++		"$GIT_DIR"/hooks/post-rewrite rebase < "$REWRITTEN_LIST"
++		true # we don't care if this hook failed
++	fi &&
+ 	rm -rf "$DOTEST" &&
+ 	git gc --auto &&
+ 	warn "Successfully rebased and updated $HEADNAME."
+@@ -685,6 +723,7 @@ first and then run 'git rebase --continue' again."
+ 				test -n "$amend" && git reset --soft $amend
+ 				die "Could not commit staged changes."
+ 			}
++			record_in_rewritten "$(cat "$DOTEST"/conflicted-sha)"
+ 		fi
+ 
+ 		require_clean_work_tree
 diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index 1020af9..1ecaa4b 100755
+index 1ecaa4b..488d4a0 100755
 --- a/t/t5407-post-rewrite-hook.sh
 +++ b/t/t5407-post-rewrite-hook.sh
-@@ -49,4 +49,34 @@ test_expect_success 'git commit --amend --no-post-rewrite' '
- 	test ! -f post-rewrite.data
+@@ -79,4 +79,82 @@ EOF
+ 	verify_hook_input
  '
  
-+test_expect_success 'git rebase' '
++test_expect_success 'git rebase -m' '
 +	git reset --hard D &&
 +	clear_hook_input &&
-+	test_must_fail git rebase --onto A B &&
++	test_must_fail git rebase -m --onto A B &&
 +	echo C > foo &&
 +	git add foo &&
 +	git rebase --continue &&
@@ -143,7 +184,7 @@ index 1020af9..1ecaa4b 100755
 +	verify_hook_input
 +'
 +
-+test_expect_success 'git rebase --skip' '
++test_expect_success 'git rebase -m --skip' '
 +	git reset --hard D &&
 +	clear_hook_input &&
 +	test_must_fail git rebase --onto A B &&
@@ -153,6 +194,54 @@ index 1020af9..1ecaa4b 100755
 +	git rebase --continue &&
 +	echo rebase >expected.args &&
 +	cat >expected.data <<EOF &&
++$(git rev-parse D) $(git rev-parse HEAD)
++EOF
++	verify_hook_input
++'
++
++. "$TEST_DIRECTORY"/lib-rebase.sh
++
++set_fake_editor
++
++test_expect_success 'git rebase -i (unchanged)' '
++	git reset --hard D &&
++	clear_hook_input &&
++	FAKE_LINES="1 2" test_must_fail git rebase -i --onto A B &&
++	echo C > foo &&
++	git add foo &&
++	git rebase --continue &&
++	echo rebase >expected.args &&
++	cat >expected.data <<EOF &&
++$(git rev-parse C) $(git rev-parse HEAD^)
++$(git rev-parse D) $(git rev-parse HEAD)
++EOF
++	verify_hook_input
++'
++
++test_expect_success 'git rebase -i (skip)' '
++	git reset --hard D &&
++	clear_hook_input &&
++	FAKE_LINES="2" test_must_fail git rebase -i --onto A B &&
++	echo D > foo &&
++	git add foo &&
++	git rebase --continue &&
++	echo rebase >expected.args &&
++	cat >expected.data <<EOF &&
++$(git rev-parse D) $(git rev-parse HEAD)
++EOF
++	verify_hook_input
++'
++
++test_expect_success 'git rebase -i (squash)' '
++	git reset --hard D &&
++	clear_hook_input &&
++	FAKE_LINES="1 squash 2" test_must_fail git rebase -i --onto A B &&
++	echo C > foo &&
++	git add foo &&
++	git rebase --continue &&
++	echo rebase >expected.args &&
++	cat >expected.data <<EOF &&
++$(git rev-parse C) $(git rev-parse HEAD)
 +$(git rev-parse D) $(git rev-parse HEAD)
 +EOF
 +	verify_hook_input
