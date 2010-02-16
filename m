@@ -1,83 +1,72 @@
-From: Daniel Black <daniel.subs@internode.on.net>
-Subject: Re: cvsimport error when modulename is '.'
-Date: Tue, 16 Feb 2010 22:21:58 +1100
-Message-ID: <201002162221.58483.daniel.subs@internode.on.net>
-References: <201002132251.42070.daniel.subs@internode.on.net> <20100214070757.GA22000@coredump.intra.peff.net>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: git fetch origin hanging in 1.7.0
+Date: Tue, 16 Feb 2010 14:27:59 +0200
+Message-ID: <20100216122759.GA30898@Knoppix>
+References: <7e3605161002151608t44bd320cgcd589796a9ec902b@mail.gmail.com>
+ <20100216063959.GC2169@coredump.intra.peff.net>
+ <20100216151821.994ace31.rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 16 12:23:47 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Jeff King <peff@peff.net>, Kevin Menard <nirvdrum@gmail.com>,
+	git@vger.kernel.org
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 16 13:28:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhLWk-0007IQ-I7
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 12:23:38 +0100
+	id 1NhMXG-0000zC-6U
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 13:28:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754660Ab0BPLXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 06:23:33 -0500
-Received: from bld-mail19.adl2.internode.on.net ([150.101.137.104]:55590 "EHLO
-	mail.internode.on.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754363Ab0BPLXc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 06:23:32 -0500
-Received: from passivegrunt.localnet (unverified [121.45.210.27]) 
-	by mail.internode.on.net (SurgeMail 3.8f2) with ESMTP id 13816798-1927428 
-	for multiple; Tue, 16 Feb 2010 21:53:30 +1030 (CDT)
-User-Agent: KMail/1.13.0 (Linux/2.6.31-gentoo-r4; KDE/4.4.0; x86_64; ; )
-In-Reply-To: <20100214070757.GA22000@coredump.intra.peff.net>
+	id S1754085Ab0BPM2J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 07:28:09 -0500
+Received: from emh03.mail.saunalahti.fi ([62.142.5.109]:59142 "EHLO
+	emh03.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751308Ab0BPM2H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 07:28:07 -0500
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh03-2.mail.saunalahti.fi (Postfix) with SMTP id 24CE1EBBC1;
+	Tue, 16 Feb 2010 14:28:04 +0200 (EET)
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A0303721C85; Tue, 16 Feb 2010 14:28:04 +0200
+Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
+	by emh04.mail.saunalahti.fi (Postfix) with ESMTP id DAC3741BFA;
+	Tue, 16 Feb 2010 14:27:59 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <20100216151821.994ace31.rctay89@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140099>
 
-On Sunday 14 February 2010 18:07:58 Jeff King wrote:
-> On Sat, Feb 13, 2010 at 10:51:42PM +1100, Daniel Black wrote:
+On Tue, Feb 16, 2010 at 03:18:21PM +0800, Tay Ray Chuan wrote:
+> NAK. This will only work if the given transport is git://. (My take
+> below.)
+> 
+> 
+> -- >8 --
+> Subject: [PATCH] transport: add got_remote_refs flag
+> 
+> tranport.c::transport_get_remote_refs() used to check
+> transport->remote_refs to determine whether transport->get_refs_list()
+> should be invoked.
+> 
+> However, transport->remote_refs could evaluate to false (eg. if it is
+> NULL), causingo transport->get_refs_list() to be invoked unnecessarily.
+> 
+> Introduce a flag, transport->got_remote_refs, and make
+> tranport.c::transport_get_remote_refs() check this flag rather than
+> evaluating transport->remote_refs.
 
-> These messages are not coming from git-cvsimport, but rather from cvsps,
+<snip patch>
 
-thanks for narrowing it down. I'll see if I can track down the maintainer 
-there.
+Seems to work even in external transport case (not suprising, as at this
+level, there's no difference between git://, ssh://, file:// and external
+transports).
 
-> which cvsimport uses to generate whole patchsets from the CVS data. Just
-> running "cvsps ." results in similar errors, and I don't see an obvious
-> way to do what you want. So probably it would require a patch to cvsps
-> to fix.
-
-thanks for confirming this.
- 
-> If this is a one-shot import, you can try a few different things.
-
-was hoping not too but i might be able to get the project team on board with a 
-one-shot.
- 
-> As a hack, if you can move files in the CVS repository
-
-on sf its easy as you've got read rsync access on the source
-
-> (and if you
-> can't, try using cvssuck or similar to pull them locally, and then do
-> the import from there), then move everything to a submodule "foo", and
-> import that module.
-
-might to this .
-
-> Alternatively, you might check out some of the alternative importers
-> like parsecvs or cvs2git. I don't know if they would handle this
-> situation better.
-
-ok
-
-> And as a super-hacky alternative, you could import each module
-> separately and then stich them all together using git-filter-branch.
-
-Yep was thinking of this. Thanks for the expert advice on the stiching 
-together because i had no idea how.
-
-Much appreciate your time for putting together these options.
-
-Thanks Jeff.
+-Ilari
