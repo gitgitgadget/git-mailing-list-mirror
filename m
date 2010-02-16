@@ -1,84 +1,109 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git fetch origin hanging in 1.7.0
-Date: Tue, 16 Feb 2010 01:39:59 -0500
-Message-ID: <20100216063959.GC2169@coredump.intra.peff.net>
-References: <7e3605161002151608t44bd320cgcd589796a9ec902b@mail.gmail.com>
+From: Larry D'Anna <larry@elder-gods.org>
+Subject: Re: [PATCH 2/2] bugfix: git diff --quiet -w never returns with
+ exit status 1
+Date: Tue, 16 Feb 2010 01:45:39 -0500
+Message-ID: <20100216064539.GA18741@cthulhu>
+References: <1266293446-8092-1-git-send-email-larry@elder-gods.org>
+ <1266293446-8092-2-git-send-email-larry@elder-gods.org>
+ <7v3a11ivmz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org
-To: Kevin Menard <nirvdrum@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 07:40:17 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 16 07:45:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhH6W-0008I3-Q2
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 07:40:17 +0100
+	id 1NhHBr-0002BT-9S
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 07:45:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753916Ab0BPGkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 01:40:09 -0500
-Received: from peff.net ([208.65.91.99]:42779 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753738Ab0BPGkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 01:40:08 -0500
-Received: (qmail 29989 invoked by uid 107); 16 Feb 2010 06:40:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 16 Feb 2010 01:40:14 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Feb 2010 01:39:59 -0500
+	id S1753879Ab0BPGpl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 01:45:41 -0500
+Received: from cthulhu.elder-gods.org ([140.239.99.253]:59613 "EHLO
+	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753590Ab0BPGpk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 01:45:40 -0500
+Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
+	id CFBC6822010; Tue, 16 Feb 2010 01:45:39 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <7e3605161002151608t44bd320cgcd589796a9ec902b@mail.gmail.com>
+In-Reply-To: <7v3a11ivmz.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140073>
 
-On Mon, Feb 15, 2010 at 07:08:25PM -0500, Kevin Menard wrote:
-
-> I've run into an issue that doing a "git fetch origin" is hanging for
-> me in git 1.7.0.  The setup here may be wrong, so I don't want to call
-> it a bug.  But basically I have an empty repo created on the server
-> that a client then clones.  There's a job that fetches new updates to
-> the server periodically.  If nothing has been pushed to the server
-> yet, the client fetch hangs.
+* Junio C Hamano (gitster@pobox.com) [100216 00:42]:
+> Larry D'Anna <larry@elder-gods.org> writes:
 > 
-> This worked fine in 1.6.6, so I'll just roll back my version for now.
-> But any help on how to do this different would be much appreciated.
+> > Rationale: diff_flush_patch expects to write its output to options->file.
+> > Adding a "silence" flag to diff_flush_patch and everything it calls would be
+> > more invasive.
+> 
+> I would agree that the logic to redirect the output to nowhere may be the
+> easiest way out, but because the reason anybody sane would want to give -q
+> is to say "I don't care what the actual changes are, but I want to know if
+> there is any real quick" (otherwise the call would be "diff -w >/dev/null"),
+> shouldn't we at least be exiting the loop early when we see any difference?
+> 
+> > Signed-off-by: Larry D'Anna <larry@elder-gods.org>
+> > ---
+> >  diff.c |   20 ++++++++++++++++++++
+> >  1 files changed, 20 insertions(+), 0 deletions(-)
+> >
+> > diff --git a/diff.c b/diff.c
+> > index 68def6c..ff00816 100644
+> > --- a/diff.c
+> > +++ b/diff.c
+> > @@ -3522,6 +3522,26 @@ void diff_flush(struct diff_options *options)
+> >  		separator++;
+> >  	}
+> >  
+> > +	if (output_format & DIFF_FORMAT_NO_OUTPUT &&
+> > +	    DIFF_OPT_TST(options, EXIT_WITH_STATUS) &&
+> > +	    DIFF_OPT_TST(options, DIFF_FROM_CONTENTS)) {
+> > +		/* run diff_flush_patch for the exit status */
+> > +		/* setting options->file to /dev/null should be safe, becaue we
+> > +		   aren't supposed to produce any output anyways */
+> 
+> Style?
+> 
+> > +		static FILE *devnull = NULL;
+> 
+> Would this cause one file descriptor to leak?  Do we care?
 
-No, what you're doing should work OK (though it does actually produce
-ugly "the remote end hung up unexpectedly" messages in v1.6.6).
+Originally I thought it would be best to just let one leak, because I didn't
+know how much longer it would need to stick around.  I didn't notice it's being
+closed anyway a few lines down.
 
-I can reproduce the bug with:
 
-  $ mkdir foo && (cd foo && git init)
-  $ git clone foo bar
-  Initialized empty Git repository in /home/peff/bar/.git/
-  warning: You appear to have cloned an empty repository.
-  $ cd bar && git fetch
+> > +		if(!devnull) {
+> 
+> Style?	if (!devnull)
+> 
+> > +			devnull = fopen("/dev/null", "w");
+> > +			if (!devnull)
+> > +				die_errno("Could not open /dev/null");
+> > +		}
+> > +		options->file = devnull;
+> 
+> Would this cause the original "options->file" leak?  Do we care?
 
-which hangs on a pipe read(). It bisects to 61b075b (Support taking over
-transports, 2009-12-09) from Ilari (cc'd). It looks like we get the
-empty ref list once in get_remote_heads, and then try to get it again
-and hang. Maybe we need this?
+oops.
 
-diff --git a/transport.c b/transport.c
-index ad25b98..e6f9464 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1010,7 +1010,8 @@ int transport_push(struct transport *transport,
- 
- const struct ref *transport_get_remote_refs(struct transport *transport)
- {
--	if (!transport->remote_refs)
-+	struct git_transport_data *data = transport->data;
-+	if (!data->got_remote_heads)
- 		transport->remote_refs = transport->get_refs_list(transport, 0);
- 
- 	return transport->remote_refs;
-
-That fixes the problem for me, but I am totally clueless about this
-code. Do all transports have a git_transport_data (if so, then why is it
-a void pointer?).
-
--Peff
+> > +		for (i = 0; i < q->nr; i++) {
+> > +			struct diff_filepair *p = q->queue[i];
+> > +			if (check_pair_status(p))
+> > +				diff_flush_patch(p, options);
+> > +		}
+> > +	}
+> > +
+> >  	if (output_format & DIFF_FORMAT_PATCH) {
+> >  		if (separator) {
+> >  			putc(options->line_termination, options->file);
+> > -- 
+> > 1.7.0.rc2.40.g7d8aa
+> 
