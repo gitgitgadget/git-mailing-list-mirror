@@ -1,82 +1,85 @@
-From: Larry D'Anna <larry@elder-gods.org>
-Subject: [PATCH 2/2] bugfix: git diff --quiet -w never returns with exit status 1
-Date: Mon, 15 Feb 2010 23:10:46 -0500
-Message-ID: <1266293446-8092-2-git-send-email-larry@elder-gods.org>
-References: <1266293446-8092-1-git-send-email-larry@elder-gods.org>
-Cc: Larry D'Anna <larry@elder-gods.org>
+From: Jacob Helwig <jacob.helwig@gmail.com>
+Subject: Fatal error running status in new repo
+Date: Mon, 15 Feb 2010 20:19:45 -0800
+Message-ID: <20100216041945.GB10296@vfb-9.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 16 05:11:11 2010
+X-From: git-owner@vger.kernel.org Tue Feb 16 05:25:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhEmD-0004OH-2P
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 05:11:09 +0100
+	id 1NhF05-0002hY-0b
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 05:25:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932593Ab0BPEK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2010 23:10:56 -0500
-Received: from cthulhu.elder-gods.org ([140.239.99.253]:58100 "EHLO
-	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932547Ab0BPEKy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2010 23:10:54 -0500
-Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
-	id E75EE822010; Mon, 15 Feb 2010 23:10:53 -0500 (EST)
-X-Mailer: git-send-email 1.7.0.rc2.40.g7d8aa
-In-Reply-To: <1266293446-8092-1-git-send-email-larry@elder-gods.org>
+	id S932604Ab0BPEZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2010 23:25:18 -0500
+Received: from mail-px0-f173.google.com ([209.85.216.173]:58726 "EHLO
+	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932589Ab0BPEZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2010 23:25:17 -0500
+X-Greylist: delayed 328 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Feb 2010 23:25:17 EST
+Received: by pxi3 with SMTP id 3so2305389pxi.28
+        for <git@vger.kernel.org>; Mon, 15 Feb 2010 20:25:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=+BrzE8rlyGoJL9FcfdITZsK+vaW1reXsf+frDcRmeh8=;
+        b=K+ji14Wyp3nqK1i9XukADlLNzL0cyRXz7MsbNcldNjDXczg4387QOubu2bAoNafnQ/
+         XbWFu+yj+UR7Otc6XxkR/anltoHDZGbQnQRlIgxtSY+IF0CO3NGEjweWWUflRbaCT8mu
+         F9Xo/Bg8evFrfZmUknjERlOb+KTZ4DHPP82og=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=XhGWQUF2KZ7Kj8QmDUSaXK4G8NXxyS8hx08gtZuuuWqwexhUTIqhzXGvMhMf3x+iuW
+         XEmwTtUANJ1jUvujSMc6zSSAi5py5qKSTs9zucJR/egsrG13wOAZSyHWRzOTvqh2mO2T
+         r8krfpg/LaoJiGeMGIfGWPm+9mKxj2/a/LD6c=
+Received: by 10.141.89.6 with SMTP id r6mr4036924rvl.52.1266293988363;
+        Mon, 15 Feb 2010 20:19:48 -0800 (PST)
+Received: from vfb-9.home ([96.225.220.117])
+        by mx.google.com with ESMTPS id 22sm6416934pzk.13.2010.02.15.20.19.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 15 Feb 2010 20:19:47 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140066>
 
-The problem: -w causes the flag DIFF_FROM_CONTENTS to be set, which causes
-diff_flush to set the flag HAS_CHANGES based on options->found_changes, which is
-set by diff_flush_patch (if there were any changes).  However, --quiet causes
-diff_flush to never call diff_flush_patch, so options->found_changes is always 0.
+I just noticed this when creating a new repo for a project.
 
-The solution: In this situation, call diff_flush_patch with options->file set to
-/dev/null.
 
-Rationale: diff_flush_patch expects to write its output to options->file.
-Adding a "silence" flag to diff_flush_patch and everything it calls would be
-more invasive.
+$ mkdir tmp
+$ cd tmp
+$ git init
+Initialized empty shared Git repository in /home/jhe/projects/tmp/.git/
+$ git status
+# On branch master
+#
+# Initial commit
+#
+warning: ignoring dangling symref HEAD.
+fatal: bad revision 'HEAD'
+nothing to commit (create/copy files and use "git add" to track)
+$ echo $?
+0
+$ git --version
+git version 1.7.0
 
-Signed-off-by: Larry D'Anna <larry@elder-gods.org>
----
- diff.c |   20 ++++++++++++++++++++
- 1 files changed, 20 insertions(+), 0 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 68def6c..ff00816 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3522,6 +3522,26 @@ void diff_flush(struct diff_options *options)
- 		separator++;
- 	}
- 
-+	if (output_format & DIFF_FORMAT_NO_OUTPUT &&
-+	    DIFF_OPT_TST(options, EXIT_WITH_STATUS) &&
-+	    DIFF_OPT_TST(options, DIFF_FROM_CONTENTS)) {
-+		/* run diff_flush_patch for the exit status */
-+		/* setting options->file to /dev/null should be safe, becaue we
-+		   aren't supposed to produce any output anyways */
-+		static FILE *devnull = NULL;
-+		if(!devnull) {
-+			devnull = fopen("/dev/null", "w");
-+			if (!devnull)
-+				die_errno("Could not open /dev/null");
-+		}
-+		options->file = devnull;
-+		for (i = 0; i < q->nr; i++) {
-+			struct diff_filepair *p = q->queue[i];
-+			if (check_pair_status(p))
-+				diff_flush_patch(p, options);
-+		}
-+	}
-+
- 	if (output_format & DIFF_FORMAT_PATCH) {
- 		if (separator) {
- 			putc(options->line_termination, options->file);
+Seems a bit silly that "git status" should be issuing warnings, and
+fatal errors (especially when the exit code is still 0), when run before
+the first commit has been created in a brand new repository.
+
+The warnings make sense if you know what's going on behind the scenes,
+but seem like the kind of thing that could scare someone new to git when
+they haven't actually done anything wrong at this point.
+
 -- 
-1.7.0.rc2.40.g7d8aa
+Jacob Helwig
