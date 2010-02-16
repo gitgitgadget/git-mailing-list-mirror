@@ -1,150 +1,120 @@
-From: =?us-ascii?B?PT9VVEYtOD9xP05ndXk9RTE9QkI9ODVuPTIwVGg9QzM9QTFpPTIw?=
-	 =?us-ascii?B?Tmc9RTE9QkI9OERjPTIwRHV5Pz0=?= <pclouds@gmail.com>
-Subject: [PATCH v3 3/5] Move offset_1st_component() to path.c
-Date: Tue, 16 Feb 2010 12:22:08 +0700
-Message-ID: <20100216052208.GA18438@do>
-References: <1266162285-10955-1-git-send-email-pclouds@gmail.com> <1266162285-10955-3-git-send-email-pclouds@gmail.com> <4B79A3ED.4090308@kdbg.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] bugfix: git diff --quiet -w never returns with exit
+ status 1
+Date: Mon, 15 Feb 2010 21:42:44 -0800
+Message-ID: <7v3a11ivmz.fsf@alter.siamese.dyndns.org>
+References: <1266293446-8092-1-git-send-email-larry@elder-gods.org>
+ <1266293446-8092-2-git-send-email-larry@elder-gods.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?iso-8859-1?Q?Jo=E3o_Carlos_Mendes_Lu=EDs?= <jonny@jonny.eng.br>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Feb 16 06:25:02 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Larry D'Anna <larry@elder-gods.org>
+X-From: git-owner@vger.kernel.org Tue Feb 16 06:43:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhFve-0002b6-6e
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 06:24:58 +0100
+	id 1NhGDD-0001iO-F9
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 06:43:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751090Ab0BPFYw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Feb 2010 00:24:52 -0500
-Received: from mail-px0-f191.google.com ([209.85.216.191]:54503 "EHLO
-	mail-px0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750964Ab0BPFYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 00:24:51 -0500
-Received: by pxi29 with SMTP id 29so1546764pxi.1
-        for <git@vger.kernel.org>; Mon, 15 Feb 2010 21:24:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=5Qd/DYxT4DZBQg0h0Mw3jP6M/FY91CxAnrPSDcfCyX0=;
-        b=g4z1JAJkEd38H0UlpY9EVGLqbau+a0s4sVEVsq59LdTmTjvAb/mU1y32AZUaxyfVhR
-         lmR0muNS3Sf0YcChBinASHERG234fmugUJExnjq+u12fSe/f3Fcex/hQX3IKg7HocCJG
-         515ykzAd/XP+wa0Yk6xBnRL6aWXzitEUjY4Lc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=e5OHD8U7SCBvLAfwElNxxyohpeZPOQQRE7YBAe/yO0K2tkebI4VVWjX1k6I5VOUfkq
-         l7SjxjPymumkPF9sVnOTacpiz8KhKYmmOss5lwrHrf5rH6+bn/a+TwrPf0K5RTYfCmB7
-         h/DGhhP3YhHypqd27q6BN3PWMLY1QjQkGV1Zc=
-Received: by 10.142.8.38 with SMTP id 38mr4041938wfh.125.1266297890594;
-        Mon, 15 Feb 2010 21:24:50 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.207.162])
-        by mx.google.com with ESMTPS id 22sm6480272pzk.13.2010.02.15.21.24.48
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 15 Feb 2010 21:24:49 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 16 Feb 2010 12:22:08 +0700
-Content-Disposition: inline
-In-Reply-To: <4B79A3ED.4090308@kdbg.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751547Ab0BPFnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 00:43:00 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45203 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751113Ab0BPFm7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 00:42:59 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B60029AB0C;
+	Tue, 16 Feb 2010 00:42:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6ffISTj4opKHge1iaGcSNIYOBMU=; b=QLcJau
+	jvISJ2neVSz1ponw98Mo8F0oCU5cmHnv/JjRDCJLDh/F9oLx5ZnPShBXJWNwMwfi
+	TPZIc+xuZkGF3EjXA+73vn+FD6l2oBfkqVTYoLkohzJCDpBoi8CJ2jNFEPqwiCZ0
+	5SoDj7rj6TiMTgPc1DmZZTDfb6IvgF4PSVNKc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mZd44rm174Mtjuy+bPXmtBrpwxSN5g4S
+	HN8ogutLn6LPYZ8NDKFUiZGta8bJYgAcUrzoDLGtzzk3zMwEHNPldii7iXHn+vaW
+	4DHdvcboGaDMWLG6rvRBTXupYy8S6PhDgLV8jjkxF/iPRb+zpGm8jKzu2Bc8EzmG
+	VgbSJfu+akI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E2099AB0B;
+	Tue, 16 Feb 2010 00:42:54 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F8449AB0A; Tue, 16 Feb
+ 2010 00:42:51 -0500 (EST)
+In-Reply-To: <1266293446-8092-2-git-send-email-larry@elder-gods.org> (Larry
+ D'Anna's message of "Mon\, 15 Feb 2010 23\:10\:46 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 2113FED6-1ABE-11DF-A6B1-6AF7ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140068>
 
-The implementation is also lightly modified to use is_dir_sep()
-instead of hardcoding '/'.
+Larry D'Anna <larry@elder-gods.org> writes:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
-  On Mon, Feb 15, 2010 at 08:43:41PM +0100, Johannes Sixt wrote:
-  > Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy schrieb:
-  >> +int offset_1st_component(const char *path)
-  >> +{
-  >> +	if (has_dos_drive_prefix(path))
-  >> +		return 2 + (path[2] =3D=3D '/');
-  >> +	return *path =3D=3D '/';
-  >> +}
-  >
-  > I'd have expected that you future-proofed this function by using=20
-  > is_dir_sep() or even use your previous implementation of is_root_pa=
-th=20
-  > (because this implementation is a bit cryptic).
-  >
-  > But if the new callers of this function will only pass the results =
-of=20
-  > normalize_path_copy() and getcwd() (both return only forward-slashe=
-s on=20
-  > Windows), then I'm fine with this version. Do they?
+> Rationale: diff_flush_patch expects to write its output to options->file.
+> Adding a "silence" flag to diff_flush_patch and everything it calls would be
+> more invasive.
 
-  They do. But future-proofing can never be a bad thing.
+I would agree that the logic to redirect the output to nowhere may be the
+easiest way out, but because the reason anybody sane would want to give -q
+is to say "I don't care what the actual changes are, but I want to know if
+there is any real quick" (otherwise the call would be "diff -w >/dev/null"),
+shouldn't we at least be exiting the loop early when we see any difference?
 
- cache.h     |    1 +
- path.c      |   10 ++++++++++
- sha1_file.c |    7 -------
- 3 files changed, 11 insertions(+), 7 deletions(-)
+> Signed-off-by: Larry D'Anna <larry@elder-gods.org>
+> ---
+>  diff.c |   20 ++++++++++++++++++++
+>  1 files changed, 20 insertions(+), 0 deletions(-)
+>
+> diff --git a/diff.c b/diff.c
+> index 68def6c..ff00816 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -3522,6 +3522,26 @@ void diff_flush(struct diff_options *options)
+>  		separator++;
+>  	}
+>  
+> +	if (output_format & DIFF_FORMAT_NO_OUTPUT &&
+> +	    DIFF_OPT_TST(options, EXIT_WITH_STATUS) &&
+> +	    DIFF_OPT_TST(options, DIFF_FROM_CONTENTS)) {
+> +		/* run diff_flush_patch for the exit status */
+> +		/* setting options->file to /dev/null should be safe, becaue we
+> +		   aren't supposed to produce any output anyways */
 
-diff --git a/cache.h b/cache.h
-index d478eff..ff23cd1 100644
---- a/cache.h
-+++ b/cache.h
-@@ -675,6 +675,7 @@ int normalize_path_copy(char *dst, const char *src)=
-;
- int longest_ancestor_length(const char *path, const char *prefix_list)=
-;
- char *strip_path_suffix(const char *path, const char *suffix);
- int daemon_avoid_alias(const char *path);
-+int offset_1st_component(const char *path);
-=20
- /* Read and unpack a sha1 file into memory, write memory to a sha1 fil=
-e */
- extern int sha1_object_info(const unsigned char *, unsigned long *);
-diff --git a/path.c b/path.c
-index 0005df3..6304805 100644
---- a/path.c
-+++ b/path.c
-@@ -649,3 +649,13 @@ int daemon_avoid_alias(const char *p)
- 		}
- 	}
- }
-+
-+int offset_1st_component(const char *path)
-+{
-+	int len =3D 0;
-+	if (has_dos_drive_prefix(path))
-+		len +=3D 2;
-+	if (is_dir_sep(path[len]))
-+		return len++;
-+	return len;
-+}
-diff --git a/sha1_file.c b/sha1_file.c
-index 657825e..52052b9 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -35,13 +35,6 @@ static size_t sz_fmt(size_t s) { return s; }
-=20
- const unsigned char null_sha1[20];
-=20
--static inline int offset_1st_component(const char *path)
--{
--	if (has_dos_drive_prefix(path))
--		return 2 + (path[2] =3D=3D '/');
--	return *path =3D=3D '/';
--}
--
- int safe_create_leading_directories(char *path)
- {
- 	char *pos =3D path + offset_1st_component(path);
---=20
-1.7.0.195.g637a2
+Style?
+
+> +		static FILE *devnull = NULL;
+
+Would this cause one file descriptor to leak?  Do we care?
+
+> +		if(!devnull) {
+
+Style?	if (!devnull)
+
+> +			devnull = fopen("/dev/null", "w");
+> +			if (!devnull)
+> +				die_errno("Could not open /dev/null");
+> +		}
+> +		options->file = devnull;
+
+Would this cause the original "options->file" leak?  Do we care?
+
+> +		for (i = 0; i < q->nr; i++) {
+> +			struct diff_filepair *p = q->queue[i];
+> +			if (check_pair_status(p))
+> +				diff_flush_patch(p, options);
+> +		}
+> +	}
+> +
+>  	if (output_format & DIFF_FORMAT_PATCH) {
+>  		if (separator) {
+>  			putc(options->line_termination, options->file);
+> -- 
+> 1.7.0.rc2.40.g7d8aa
