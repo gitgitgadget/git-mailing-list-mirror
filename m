@@ -1,56 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Fatal error running status in new repo
-Date: Tue, 16 Feb 2010 01:47:53 -0500
-Message-ID: <20100216064753.GD2169@coredump.intra.peff.net>
-References: <20100216041945.GB10296@vfb-9.home>
- <20100216060528.GB2169@coredump.intra.peff.net>
- <20100216062422.GC10296@vfb-9.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jacob Helwig <jacob.helwig@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 07:48:00 2010
+From: Larry D'Anna <larry@elder-gods.org>
+Subject: [PATCH 2/2] bugfix: git diff --quiet -w never returns with exit status 1
+Date: Tue, 16 Feb 2010 01:55:21 -0500
+Message-ID: <1266303321-28337-1-git-send-email-larry@elder-gods.org>
+References: <20100216064539.GA18741@cthulhu>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Larry D'Anna <larry@elder-gods.org>
+To: Larry D'Anna <larry@elder-gods.org>
+X-From: git-owner@vger.kernel.org Tue Feb 16 07:55:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhHDz-0003D5-PZ
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 07:48:00 +0100
+	id 1NhHLP-0006La-TE
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Feb 2010 07:55:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754210Ab0BPGrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 01:47:55 -0500
-Received: from peff.net ([208.65.91.99]:49449 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754122Ab0BPGry (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 01:47:54 -0500
-Received: (qmail 30055 invoked by uid 107); 16 Feb 2010 06:48:05 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 16 Feb 2010 01:48:05 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Feb 2010 01:47:53 -0500
-Content-Disposition: inline
-In-Reply-To: <20100216062422.GC10296@vfb-9.home>
+	id S1754266Ab0BPGzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 01:55:35 -0500
+Received: from cthulhu.elder-gods.org ([140.239.99.253]:47914 "EHLO
+	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753917Ab0BPGze (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 01:55:34 -0500
+Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
+	id D6C76822010; Tue, 16 Feb 2010 01:55:33 -0500 (EST)
+X-Mailer: git-send-email 1.7.0.rc2.40.g7d8aa
+In-Reply-To: <20100216064539.GA18741@cthulhu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140076>
 
-On Mon, Feb 15, 2010 at 10:24:22PM -0800, Jacob Helwig wrote:
+The problem: -w causes the flag DIFF_FROM_CONTENTS to be set, which causes
+diff_flush to set the flag HAS_CHANGES based on options->found_changes, which is
+set by diff_flush_patch (if there were any changes).  However, --quiet causes
+diff_flush to never call diff_flush_patch, so options->found_changes is always 0.
 
-> $ GIT_TRACE=1 git status
-> trace: built-in: git 'status'
-> # On branch master
-> #
-> # Initial commit
-> #
-> trace: run_command: 'submodule' 'summary' '--cached' '--for-status' '--summary-limit' '-1' 'HEAD'
+The solution: In this situation, call diff_flush_patch with options->file set to
+/dev/null.
 
-Ah, OK. That is why I did not see it; I don't have submodulesummary
-turned on.
+Rationale: diff_flush_patch expects to write its output to options->file.
+Adding a "silence" flag to diff_flush_patch and everything it calls would be
+more invasive.
 
-I can reproduce your problem. The messages are actually from two
-different spots. The first is actually a bug in the code I mentioned
-earlier, and I'm still tracking down the second. Patches in a moment.
+Signed-off-by: Larry D'Anna <larry@elder-gods.org>
+---
+ diff.c |   23 +++++++++++++++++++++++
+ 1 files changed, 23 insertions(+), 0 deletions(-)
 
--Peff
+diff --git a/diff.c b/diff.c
+index 68def6c..2984c41 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3522,6 +3522,29 @@ void diff_flush(struct diff_options *options)
+ 		separator++;
+ 	}
+ 
++	if (output_format & DIFF_FORMAT_NO_OUTPUT &&
++	    DIFF_OPT_TST(options, EXIT_WITH_STATUS) &&
++	    DIFF_OPT_TST(options, DIFF_FROM_CONTENTS)) {
++		/*
++		 * run diff_flush_patch for the exit status.
++		 * setting options->file to /dev/null should be safe, becaue we
++		 * aren't supposed to produce any output anyways
++		 */
++		if (options->close_file)
++			fclose(options->file);
++		options->file = fopen("/dev/null", "w");
++		if (!options->file)
++			die_errno("Could not open /dev/null");
++		options->close_file = 1;
++		for (i = 0; i < q->nr; i++) {
++			struct diff_filepair *p = q->queue[i];
++			if (check_pair_status(p))
++				diff_flush_patch(p, options);
++			if (options->found_changes)
++				break;
++		}
++	}
++
+ 	if (output_format & DIFF_FORMAT_PATCH) {
+ 		if (separator) {
+ 			putc(options->line_termination, options->file);
+-- 
+1.7.0.rc2.40.g7d8aa
