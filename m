@@ -1,250 +1,270 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [RFC PATCH v2 04/11] rebase -i: invoke post-rewrite hook
-Date: Wed, 17 Feb 2010 00:26:00 +0100
-Message-ID: <17b3a5c3d40c54bc9a045c0a09c421fc4bc988e0.1266361759.git.trast@student.ethz.ch>
+Subject: [RFC PATCH v2 06/11] notes: implement 'git notes copy --stdin'
+Date: Wed, 17 Feb 2010 00:26:02 +0100
+Message-ID: <d8649cbda00586a9dfbd5085bb7338a5824134b1.1266361759.git.trast@student.ethz.ch>
 References: <cover.1266361759.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Johannes Sixt <j6t@kdbg.org>, Johan Herland <johan@herland.net>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 17 00:27:15 2010
+X-From: git-owner@vger.kernel.org Wed Feb 17 00:27:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhWp0-0006BI-Jb
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 00:27:14 +0100
+	id 1NhWp1-0006BI-LF
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 00:27:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933589Ab0BPX0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 18:26:35 -0500
+	id S933592Ab0BPX0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 18:26:37 -0500
 Received: from gwse.ethz.ch ([129.132.178.238]:45469 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933572Ab0BPX0d (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 18:26:33 -0500
+	id S933358Ab0BPX0f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 18:26:35 -0500
 Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
  (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Wed, 17 Feb
  2010 00:26:26 +0100
 Received: from localhost.localdomain (84.74.100.59) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Wed, 17 Feb
- 2010 00:26:08 +0100
+ 2010 00:26:09 +0100
 X-Mailer: git-send-email 1.7.0.67.g67ac3
 In-Reply-To: <cover.1266361759.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140168>
 
-Aside from the same issue that rebase also has (remembering the
-original commit across a conflict resolution), rebase -i brings an
-extra twist: We need to defer writing the rewritten list in the case
-of {squash,fixup} because their rewritten result should be the last
-commit in the squashed group.
+This implements a mass-copy command that takes a sequence of lines in
+the format
+
+  <from-sha1> SP <to-sha1> [ SP <rest> ] LF
+
+on stdin, and copies each <from-sha1>'s notes to the <to-sha1>.  The
+<rest> is ignored.  The intent, of course, is that this can read the
+same input that the 'post-rewrite' hook gets.
+
+The copy_note() function is exposed for everyone's and in particular
+the next commit's use.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- git-rebase--interactive.sh   |   39 +++++++++++++++++++++
- t/t5407-post-rewrite-hook.sh |   78 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 117 insertions(+), 0 deletions(-)
+ Documentation/git-notes.txt |   12 ++++++++-
+ builtin-notes.c             |   57 ++++++++++++++++++++++++++++++++++++++++++-
+ notes.c                     |   21 ++++++++++++++++
+ notes.h                     |    9 +++++++
+ t/t3301-notes.sh            |   32 ++++++++++++++++++++++++
+ 5 files changed, 129 insertions(+), 2 deletions(-)
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 5735859..fc4f7e9 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -96,6 +96,13 @@ AUTHOR_SCRIPT="$DOTEST"/author-script
- # command is processed, this file is deleted.
- AMEND="$DOTEST"/amend
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index 14f73b9..f67cb6a 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ [verse]
+ 'git notes' [list [<object>]]
+ 'git notes' add [-f] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+-'git notes' copy [-f] <from-object> <to-object>
++'git notes' copy [-f] ( --stdin | <from-object> <to-object> )
+ 'git notes' append [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+ 'git notes' edit [<object>]
+ 'git notes' show [<object>]
+@@ -55,6 +55,16 @@ copy::
+ 	objects has none. (use -f to overwrite existing notes to the
+ 	second object). This subcommand is equivalent to:
+ 	`git notes add [-f] -C $(git notes list <from-object>) <to-object>`
+++
++In `\--stdin` mode, take lines in the format
+++
++----------
++<from-object> SP <to-object> [ SP <rest> ] LF
++----------
+++
++on standard input, and copy the notes from each <from-object> to its
++corresponding <to-object>.  (The optional `<rest>` is ignored so that
++the command can read the input given to the `post-rewrite` hook.)
  
-+# For the post-rewrite hook, we make a list of rewritten commits and
-+# their new sha1s.  The rewritten-pending list keeps the sha1s of
-+# commits that have been processed, but not committed yet,
-+# e.g. because they are waiting for a 'squash' command.
-+REWRITTEN_LIST="$DOTEST"/rewritten-list
-+REWRITTEN_PENDING="$DOTEST"/rewritten-pending
-+
- PRESERVE_MERGES=
- STRATEGY=
- ONTO=
-@@ -198,6 +205,7 @@ make_patch () {
+ append::
+ 	Append to the notes of an existing object (defaults to HEAD).
+diff --git a/builtin-notes.c b/builtin-notes.c
+index 123ecad..30420d1 100644
+--- a/builtin-notes.c
++++ b/builtin-notes.c
+@@ -278,6 +278,46 @@ int commit_notes(struct notes_tree *t, const char *msg)
+ 	return 0;
  }
  
- die_with_patch () {
-+	echo "$1" > "$DOTEST"/conflicted-sha
- 	make_patch "$1"
- 	git rerere
- 	die "$2"
-@@ -348,6 +356,7 @@ pick_one_preserving_merges () {
- 				printf "%s\n" "$msg" > "$GIT_DIR"/MERGE_MSG
- 				die_with_patch $sha1 "Error redoing merge $sha1"
- 			fi
-+			echo "$sha1 $(git rev-parse HEAD^0)" >> "$REWRITTEN_LIST"
- 			;;
- 		*)
- 			output git cherry-pick "$@" ||
-@@ -425,6 +434,26 @@ die_failed_squash() {
- 	die_with_patch $1 ""
++int notes_copy_from_stdin(int force)
++{
++	struct strbuf buf = STRBUF_INIT;
++	struct notes_tree *t;
++	struct notes_rewrite_cfg *c = NULL;
++	int ret = 0;
++
++	init_notes(NULL, NULL, NULL, 0);
++	t = &default_notes_tree;
++
++	while (strbuf_getline(&buf, stdin, '\n') != EOF) {
++		unsigned char from_obj[20], to_obj[20];
++		struct strbuf **split;
++		int err;
++
++		split = strbuf_split(&buf, ' ');
++		if (!split[0] || !split[1])
++			die("Malformed input line: '%s'.", buf.buf);
++		strbuf_rtrim(split[0]);
++		strbuf_rtrim(split[1]);
++		if (get_sha1(split[0]->buf, from_obj))
++			die("Failed to resolve '%s' as a valid ref.", split[0]->buf);
++		if (get_sha1(split[1]->buf, to_obj))
++			die("Failed to resolve '%s' as a valid ref.", split[1]->buf);
++
++		err = copy_note(t, from_obj, to_obj, force, combine_notes_overwrite);
++
++		if (err) {
++			error("Failed to copy notes from '%s' to '%s'",
++			      split[0]->buf, split[1]->buf);
++			ret = 1;
++		}
++
++		strbuf_list_free(split);
++	}
++
++	commit_notes(t, "Notes added by 'git notes copy'");
++	return ret;
++}
++
+ int cmd_notes(int argc, const char **argv, const char *prefix)
+ {
+ 	struct notes_tree *t;
+@@ -287,7 +327,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 	char logmsg[100];
+ 
+ 	int list = 0, add = 0, copy = 0, append = 0, edit = 0, show = 0,
+-	    remove = 0, prune = 0, force = 0;
++	    remove = 0, prune = 0, force = 0, from_stdin = 0;
+ 	int given_object = 0, i = 1, retval = 0;
+ 	struct msg_arg msg = { 0, 0, STRBUF_INIT };
+ 	struct option options[] = {
+@@ -301,6 +341,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 		OPT_CALLBACK('C', "reuse-message", &msg, "OBJECT",
+ 			   "reuse specified note object", parse_reuse_arg),
+ 		OPT_BOOLEAN('f', "force", &force, "replace existing notes"),
++		OPT_BOOLEAN(0, "stdin", &from_stdin, "read objects from stdin"),
+ 		OPT_END()
+ 	};
+ 
+@@ -349,8 +390,22 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(git_notes_usage, options);
+ 	}
+ 
++	if (!copy && from_stdin) {
++		error("cannot use --stdin with %s subcommand.", argv[0]);
++		usage_with_options(git_notes_usage, options);
++	}
++
+ 	if (copy) {
+ 		const char *from_ref;
++		if (from_stdin) {
++			if (argc > 1) {
++				error("too many parameters");
++				usage_with_options(git_notes_usage, options);
++			} else {
++				retval = notes_copy_from_stdin(force);
++				goto end;
++			}
++		}
+ 		if (argc < 3) {
+ 			error("too few parameters");
+ 			usage_with_options(git_notes_usage, options);
+diff --git a/notes.c b/notes.c
+index 3ba3e6d..a5ff723 100644
+--- a/notes.c
++++ b/notes.c
+@@ -1030,3 +1030,24 @@ void format_note(struct notes_tree *t, const unsigned char *object_sha1,
+ 
+ 	free(msg);
  }
- 
-+flush_rewritten_pending() {
-+	test -s "$REWRITTEN_PENDING" || return
-+	newsha1="$(git rev-parse HEAD^0)"
-+	sed "s/$/ $newsha1/" < "$REWRITTEN_PENDING" >> "$REWRITTEN_LIST"
-+	rm -f "$REWRITTEN_PENDING"
++
++int copy_note(struct notes_tree *t,
++	      const unsigned char *from_obj, const unsigned char *to_obj,
++	      int force, combine_notes_fn combine_fn)
++{
++	const unsigned char *note;
++
++	note = get_note(t, from_obj);
++	if (!force) {
++		const unsigned char *existing_note = get_note(t, to_obj);
++		if (existing_note)
++			return 1;
++	}
++
++	if (note)
++		add_note(t, to_obj, note, combine_fn);
++	else
++		remove_note(t, to_obj);
++
++	return 0;
 +}
-+
-+record_in_rewritten() {
-+	oldsha1="$(git rev-parse $1)"
-+	echo "$oldsha1" >> "$REWRITTEN_PENDING"
-+
-+	case "$(peek_next_command)" in
-+	    squash|s|fixup|f)
-+		;;
-+	    *)
-+		flush_rewritten_pending
-+		;;
-+	esac
-+}
-+
- do_next () {
- 	rm -f "$MSG" "$AUTHOR_SCRIPT" "$AMEND" || exit
- 	read command sha1 rest < "$TODO"
-@@ -438,6 +467,7 @@ do_next () {
- 		mark_action_done
- 		pick_one $sha1 ||
- 			die_with_patch $sha1 "Could not apply $sha1... $rest"
-+		record_in_rewritten $sha1
- 		;;
- 	reword|r)
- 		comment_for_reflog reword
-@@ -446,6 +476,7 @@ do_next () {
- 		pick_one $sha1 ||
- 			die_with_patch $sha1 "Could not apply $sha1... $rest"
- 		git commit --amend --no-post-rewrite
-+		record_in_rewritten $sha1
- 		;;
- 	edit|e)
- 		comment_for_reflog edit
-@@ -454,6 +485,7 @@ do_next () {
- 		pick_one $sha1 ||
- 			die_with_patch $sha1 "Could not apply $sha1... $rest"
- 		make_patch $sha1
-+		record_in_rewritten "$sha1"
- 		git rev-parse --verify HEAD > "$AMEND"
- 		warn "Stopped at $sha1... $rest"
- 		warn "You can amend the commit now, with"
-@@ -509,6 +541,7 @@ do_next () {
- 			rm -f "$SQUASH_MSG" "$FIXUP_MSG"
- 			;;
- 		esac
-+		record_in_rewritten $sha1
- 		;;
- 	*)
- 		warn "Unknown command: $command $sha1 $rest"
-@@ -537,6 +570,11 @@ do_next () {
- 		test ! -f "$DOTEST"/verbose ||
- 			git diff-tree --stat $(cat "$DOTEST"/head)..HEAD
- 	} &&
-+	if test -x "$GIT_DIR"/hooks/post-rewrite &&
-+		test -s "$REWRITTEN_LIST"; then
-+		"$GIT_DIR"/hooks/post-rewrite rebase < "$REWRITTEN_LIST"
-+		true # we don't care if this hook failed
-+	fi &&
- 	rm -rf "$DOTEST" &&
- 	git gc --auto &&
- 	warn "Successfully rebased and updated $HEADNAME."
-@@ -685,6 +723,7 @@ first and then run 'git rebase --continue' again."
- 				test -n "$amend" && git reset --soft $amend
- 				die "Could not commit staged changes."
- 			}
-+			record_in_rewritten "$(cat "$DOTEST"/conflicted-sha)"
- 		fi
+diff --git a/notes.h b/notes.h
+index bad03cc..b7547bf 100644
+--- a/notes.h
++++ b/notes.h
+@@ -100,6 +100,15 @@ void add_note(struct notes_tree *t, const unsigned char *object_sha1,
+ 		const unsigned char *object_sha1);
  
- 		require_clean_work_tree
-diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index 1ecaa4b..488d4a0 100755
---- a/t/t5407-post-rewrite-hook.sh
-+++ b/t/t5407-post-rewrite-hook.sh
-@@ -79,4 +79,82 @@ EOF
- 	verify_hook_input
+ /*
++ * Copy a note from one object to another in the given notes_tree.
++ *
++ * Fails if the to_obj already has a note unless 'force' is true.
++ */
++int copy_note(struct notes_tree *t,
++	      const unsigned char *from_obj, const unsigned char *to_obj,
++	      int force, combine_notes_fn combine_fn);
++
++/*
+  * Flags controlling behaviour of for_each_note()
+  *
+  * Default behaviour of for_each_note() is to traverse every single note object
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 3fec7ae..9396080 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -595,4 +595,36 @@ test_expect_success 'cannot copy note from object without notes' '
+ 	test_must_fail git notes copy HEAD^ HEAD
  '
  
-+test_expect_success 'git rebase -m' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	test_must_fail git rebase -m --onto A B &&
-+	echo C > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse C) $(git rev-parse HEAD^)
-+$(git rev-parse D) $(git rev-parse HEAD)
++cat > expect << EOF
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:25:13 2005 -0700
++
++    13th
++
++Notes:
++    yet another note
++$whitespace
++    yet another note
++
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:24:13 2005 -0700
++
++    12th
++
++Notes:
++    other note
++$whitespace
++    yet another note
 +EOF
-+	verify_hook_input
-+'
 +
-+test_expect_success 'git rebase -m --skip' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	test_must_fail git rebase --onto A B &&
-+	test_must_fail git rebase --skip &&
-+	echo D > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
-+'
-+
-+. "$TEST_DIRECTORY"/lib-rebase.sh
-+
-+set_fake_editor
-+
-+test_expect_success 'git rebase -i (unchanged)' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	FAKE_LINES="1 2" test_must_fail git rebase -i --onto A B &&
-+	echo C > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse C) $(git rev-parse HEAD^)
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
-+'
-+
-+test_expect_success 'git rebase -i (skip)' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	FAKE_LINES="2" test_must_fail git rebase -i --onto A B &&
-+	echo D > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
-+'
-+
-+test_expect_success 'git rebase -i (squash)' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	FAKE_LINES="1 squash 2" test_must_fail git rebase -i --onto A B &&
-+	echo C > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse C) $(git rev-parse HEAD)
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
++test_expect_success 'git notes copy --stdin' '
++	(echo $(git rev-parse HEAD~3) $(git rev-parse HEAD^); \
++	echo $(git rev-parse HEAD~2) $(git rev-parse HEAD)) |
++	git notes copy --stdin &&
++	git log -2 > output &&
++	strip_then_cmp expect output &&
++	test "$(git notes list HEAD)" = "$(git notes list HEAD~2)" &&
++	test "$(git notes list HEAD^)" = "$(git notes list HEAD~3)"
 +'
 +
  test_done
