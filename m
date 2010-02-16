@@ -1,272 +1,211 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [RFC PATCH v2 06/11] notes: implement 'git notes copy --stdin'
-Date: Wed, 17 Feb 2010 00:26:02 +0100
-Message-ID: <d8649cbda00586a9dfbd5085bb7338a5824134b1.1266361759.git.trast@student.ethz.ch>
+Subject: [RFC PATCH v2 11/11] filter-branch: learn how to filter notes
+Date: Wed, 17 Feb 2010 00:26:07 +0100
+Message-ID: <a1bdef42de198dec4ec59c0d2b8b67e8656192d1.1266361759.git.trast@student.ethz.ch>
 References: <cover.1266361759.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Johannes Sixt <j6t@kdbg.org>, Johan Herland <johan@herland.net>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 17 00:27:16 2010
+X-From: git-owner@vger.kernel.org Wed Feb 17 00:27:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhWp1-0006BI-LF
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 00:27:16 +0100
+	id 1NhWp4-0006BI-CE
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 00:27:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933592Ab0BPX0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 18:26:37 -0500
+	id S933529Ab0BPX05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 18:26:57 -0500
 Received: from gwse.ethz.ch ([129.132.178.238]:45469 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933358Ab0BPX0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 18:26:35 -0500
+	id S933572Ab0BPX0q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 18:26:46 -0500
 Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
  (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Wed, 17 Feb
- 2010 00:26:26 +0100
+ 2010 00:26:27 +0100
 Received: from localhost.localdomain (84.74.100.59) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Wed, 17 Feb
- 2010 00:26:09 +0100
+ 2010 00:26:11 +0100
 X-Mailer: git-send-email 1.7.0.67.g67ac3
 In-Reply-To: <cover.1266361759.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140169>
 
-This implements a mass-copy command that takes a sequence of lines in
-the format
-
-  <from-sha1> SP <to-sha1> [ SP <rest> ] LF
-
-on stdin, and copies each <from-sha1>'s notes to the <to-sha1>.  The
-<rest> is ignored.  The intent, of course, is that this can read the
-same input that the 'post-rewrite' hook gets.
-
-The copy_note() function is exposed for everyone's and in particular
-the next commit's use.
+Teach filter-branch a new option --notes-filter that acts as a pipe
+filter (much like --msg-filter) for the commit notes.  For consistency
+with the note copying support in amend/rebase, it defaults to 'cat' if
+notes.rewrite.filter-branch is set.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- Documentation/git-notes.txt |   12 ++++++++-
- builtin-notes.c             |   57 ++++++++++++++++++++++++++++++++++++++++++-
- notes.c                     |   21 ++++++++++++++++
- notes.h                     |    9 +++++++
- t/t3301-notes.sh            |   32 ++++++++++++++++++++++++
- 5 files changed, 129 insertions(+), 2 deletions(-)
+ Documentation/config.txt            |   12 ++++++++----
+ Documentation/git-filter-branch.txt |   13 +++++++++++++
+ Documentation/githooks.txt          |    8 ++++----
+ git-filter-branch.sh                |   18 +++++++++++++++++-
+ t/t7003-filter-branch.sh            |   22 ++++++++++++++++++++++
+ 5 files changed, 64 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index 14f73b9..f67cb6a 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- [verse]
- 'git notes' [list [<object>]]
- 'git notes' add [-f] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
--'git notes' copy [-f] <from-object> <to-object>
-+'git notes' copy [-f] ( --stdin | <from-object> <to-object> )
- 'git notes' append [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
- 'git notes' edit [<object>]
- 'git notes' show [<object>]
-@@ -55,6 +55,16 @@ copy::
- 	objects has none. (use -f to overwrite existing notes to the
- 	second object). This subcommand is equivalent to:
- 	`git notes add [-f] -C $(git notes list <from-object>) <to-object>`
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 403f5cf..2dfab6d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1301,10 +1301,10 @@ mergetool.prompt::
+ 	Prompt before each invocation of the merge resolution program.
+ 
+ notes.rewrite.<command>::
+-	When rewriting commits with <command> (currently `amend` or
+-	`rebase`) and this variable is set to `true`, git
+-	automatically copies your notes from the original to the
+-	rewritten commit.  Defaults to `false`.
++	When rewriting commits with <command> (currently `amend`,
++	`rebase` or `filter-branch`) and this variable is set to
++	`true`, git automatically copies your notes from the original
++	to the rewritten commit.  Defaults to `false`.
+ 
+ notes.rewriteMode::
+ 	When copying notes during a rewrite (see the
+@@ -1312,6 +1312,10 @@ notes.rewriteMode::
+ 	the target commit already has a note.  Must be one of
+ 	`overwrite`, `concatenate`, or `ignore`.  Defaults to
+ 	`concatenate`.
 ++
-+In `\--stdin` mode, take lines in the format
++Note that 'git-filter-branch' ignores this setting and always
++overwrites; see the description of `--notes-filter` in
++linkgit:git-filter-branch[1].
+ 
+ pack.window::
+ 	The size of the window used by linkgit:git-pack-objects[1] when no
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index 28a705f..6fd97d7 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -161,6 +161,19 @@ to other tags will be rewritten to point to the underlying commit.
+ 	The result will contain that directory (and only that) as its
+ 	project root.  Implies --remap-to-ancestor.
+ 
++--notes-filter <command>::
++	This filter rewrites the notes (see linkgit:git-notes[1]).  It
++	gets the old notes on standard input, and its standard output
++	is written as the new note (overwriting any existing notes).
 ++
-+----------
-+<from-object> SP <to-object> [ SP <rest> ] LF
-+----------
++Defaults to doing nothing, unless the `notes.rewrite.filter-branch`
++option is set, in which case it copies the notes (i.e., defaults to
++`cat`).
 ++
-+on standard input, and copy the notes from each <from-object> to its
-+corresponding <to-object>.  (The optional `<rest>` is ignored so that
-+the command can read the input given to the `post-rewrite` hook.)
++In addition to the usual variables, GIT_NEW_COMMIT is set to the
++result of the rewriting so that the filter can get at the existing
++notes, if any.
++
+ --remap-to-ancestor::
+ 	Rewrite refs to the nearest rewritten ancestor instead of
+ 	ignoring them.
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index c33a38e..f9252dd 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -350,11 +350,11 @@ rebase::
+ filter-branch::
+ 	Commits that were processed by 'git-filter-branch', but not
+ 	changed, are not included in the list.  If the list is empty
+-	after this filtering, the hook is not invoked at all.
++	after this filtering, the hook is not invoked at all.  Also
++	see the `--post-rewrite` option in
++	linkgit:git-filter-branch[1].
  
- append::
- 	Append to the notes of an existing object (defaults to HEAD).
-diff --git a/builtin-notes.c b/builtin-notes.c
-index 123ecad..30420d1 100644
---- a/builtin-notes.c
-+++ b/builtin-notes.c
-@@ -278,6 +278,46 @@ int commit_notes(struct notes_tree *t, const char *msg)
- 	return 0;
- }
+-There is no default 'post-rewrite' hook, but see the
+-`post-receive-copy-notes` script in `contrib/hooks` for an example
+-that copies your git-notes to the rewritten commits.
++There is no default 'post-rewrite' hook.
  
-+int notes_copy_from_stdin(int force)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct notes_tree *t;
-+	struct notes_rewrite_cfg *c = NULL;
-+	int ret = 0;
-+
-+	init_notes(NULL, NULL, NULL, 0);
-+	t = &default_notes_tree;
-+
-+	while (strbuf_getline(&buf, stdin, '\n') != EOF) {
-+		unsigned char from_obj[20], to_obj[20];
-+		struct strbuf **split;
-+		int err;
-+
-+		split = strbuf_split(&buf, ' ');
-+		if (!split[0] || !split[1])
-+			die("Malformed input line: '%s'.", buf.buf);
-+		strbuf_rtrim(split[0]);
-+		strbuf_rtrim(split[1]);
-+		if (get_sha1(split[0]->buf, from_obj))
-+			die("Failed to resolve '%s' as a valid ref.", split[0]->buf);
-+		if (get_sha1(split[1]->buf, to_obj))
-+			die("Failed to resolve '%s' as a valid ref.", split[1]->buf);
-+
-+		err = copy_note(t, from_obj, to_obj, force, combine_notes_overwrite);
-+
-+		if (err) {
-+			error("Failed to copy notes from '%s' to '%s'",
-+			      split[0]->buf, split[1]->buf);
-+			ret = 1;
-+		}
-+
-+		strbuf_list_free(split);
-+	}
-+
-+	commit_notes(t, "Notes added by 'git notes copy'");
-+	return ret;
-+}
-+
- int cmd_notes(int argc, const char **argv, const char *prefix)
- {
- 	struct notes_tree *t;
-@@ -287,7 +327,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 	char logmsg[100];
  
- 	int list = 0, add = 0, copy = 0, append = 0, edit = 0, show = 0,
--	    remove = 0, prune = 0, force = 0;
-+	    remove = 0, prune = 0, force = 0, from_stdin = 0;
- 	int given_object = 0, i = 1, retval = 0;
- 	struct msg_arg msg = { 0, 0, STRBUF_INIT };
- 	struct option options[] = {
-@@ -301,6 +341,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 		OPT_CALLBACK('C', "reuse-message", &msg, "OBJECT",
- 			   "reuse specified note object", parse_reuse_arg),
- 		OPT_BOOLEAN('f', "force", &force, "replace existing notes"),
-+		OPT_BOOLEAN(0, "stdin", &from_stdin, "read objects from stdin"),
- 		OPT_END()
- 	};
+ GIT
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 301c497..ad2da4e 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -101,7 +101,7 @@ USAGE="[--env-filter <command>] [--tree-filter <command>]
+             [--index-filter <command>] [--parent-filter <command>]
+             [--msg-filter <command>] [--commit-filter <command>]
+             [--tag-name-filter <command>] [--subdirectory-filter <directory>]
+-	    [--post-rewrite <command>]
++	    [--post-rewrite <command>] [--notes-filter <command>]
+             [--original <namespace>] [-d <directory>] [-f | --force]
+             [<rev-list options>...]"
  
-@@ -349,8 +390,22 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_notes_usage, options);
- 	}
+@@ -134,6 +134,12 @@ else
+ 	post_rewrite=:
+ fi
  
-+	if (!copy && from_stdin) {
-+		error("cannot use --stdin with %s subcommand.", argv[0]);
-+		usage_with_options(git_notes_usage, options);
-+	}
++if test "$(git config --bool notes.rewrite.filter-branch)"; then
++	filter_notes=cat
++else
++	filter_notes=
++fi
 +
- 	if (copy) {
- 		const char *from_ref;
-+		if (from_stdin) {
-+			if (argc > 1) {
-+				error("too many parameters");
-+				usage_with_options(git_notes_usage, options);
-+			} else {
-+				retval = notes_copy_from_stdin(force);
-+				goto end;
-+			}
-+		}
- 		if (argc < 3) {
- 			error("too few parameters");
- 			usage_with_options(git_notes_usage, options);
-diff --git a/notes.c b/notes.c
-index 3ba3e6d..a5ff723 100644
---- a/notes.c
-+++ b/notes.c
-@@ -1030,3 +1030,24 @@ void format_note(struct notes_tree *t, const unsigned char *object_sha1,
+ while :
+ do
+ 	case "$1" in
+@@ -198,6 +204,9 @@ do
+ 		filter_subdir="$OPTARG"
+ 		remap_to_ancestor=t
+ 		;;
++	--notes-filter)
++		filter_notes="$OPTARG"
++		;;
+ 	--post-rewrite)
+ 		post_rewrite="$OPTARG"
+ 		post_rewrite_given=t
+@@ -374,6 +383,13 @@ while read commit parents; do
+ 	if test $commit != $new_commit; then
+ 		echo $commit $new_commit >> "$workdir"/../rewritten
+ 	fi
++	if test -n "$filter_notes"; then
++		if git notes show $commit >../note 2>/dev/null; then
++			export GIT_NEW_COMMIT="$new_commit"
++			eval "$filter_notes" <../note |
++			git notes add -F- -f $new_commit
++		fi
++	fi
+ done <../revs
  
- 	free(msg);
- }
-+
-+int copy_note(struct notes_tree *t,
-+	      const unsigned char *from_obj, const unsigned char *to_obj,
-+	      int force, combine_notes_fn combine_fn)
-+{
-+	const unsigned char *note;
-+
-+	note = get_note(t, from_obj);
-+	if (!force) {
-+		const unsigned char *existing_note = get_note(t, to_obj);
-+		if (existing_note)
-+			return 1;
-+	}
-+
-+	if (note)
-+		add_note(t, to_obj, note, combine_fn);
-+	else
-+		remove_note(t, to_obj);
-+
-+	return 0;
-+}
-diff --git a/notes.h b/notes.h
-index bad03cc..b7547bf 100644
---- a/notes.h
-+++ b/notes.h
-@@ -100,6 +100,15 @@ void add_note(struct notes_tree *t, const unsigned char *object_sha1,
- 		const unsigned char *object_sha1);
- 
- /*
-+ * Copy a note from one object to another in the given notes_tree.
-+ *
-+ * Fails if the to_obj already has a note unless 'force' is true.
-+ */
-+int copy_note(struct notes_tree *t,
-+	      const unsigned char *from_obj, const unsigned char *to_obj,
-+	      int force, combine_notes_fn combine_fn);
-+
-+/*
-  * Flags controlling behaviour of for_each_note()
-  *
-  * Default behaviour of for_each_note() is to traverse every single note object
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index 3fec7ae..9396080 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -595,4 +595,36 @@ test_expect_success 'cannot copy note from object without notes' '
- 	test_must_fail git notes copy HEAD^ HEAD
+ # If we are filtering for paths, as in the case of a subdirectory
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 0da13a8..6dc21e8 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -306,6 +306,28 @@ test_expect_success '--remap-to-ancestor with filename filters' '
+ 	test $orig_invariant = $(git rev-parse invariant)
  '
  
-+cat > expect << EOF
-+Author: A U Thor <author@example.com>
-+Date:   Thu Apr 7 15:25:13 2005 -0700
-+
-+    13th
-+
-+Notes:
-+    yet another note
-+$whitespace
-+    yet another note
-+
-+Author: A U Thor <author@example.com>
-+Date:   Thu Apr 7 15:24:13 2005 -0700
-+
-+    12th
-+
-+Notes:
-+    other note
-+$whitespace
-+    yet another note
-+EOF
-+
-+test_expect_success 'git notes copy --stdin' '
-+	(echo $(git rev-parse HEAD~3) $(git rev-parse HEAD^); \
-+	echo $(git rev-parse HEAD~2) $(git rev-parse HEAD)) |
-+	git notes copy --stdin &&
-+	git log -2 > output &&
-+	strip_then_cmp expect output &&
-+	test "$(git notes list HEAD)" = "$(git notes list HEAD~2)" &&
-+	test "$(git notes list HEAD^)" = "$(git notes list HEAD~3)"
++test_expect_success '--notes-filter off' '
++	git checkout master &&
++	test_commit notes-foo &&
++	git notes add -mtestnote &&
++	git filter-branch -f --tree-filter "touch notes-1" HEAD^.. &&
++	test_must_fail git notes show
 +'
 +
- test_done
++test_expect_success '--notes-filter manually' '
++	git reset --hard notes-foo &&
++	git filter-branch -f --notes-filter "sed s/test/foo/" \
++		--tree-filter "touch notes-2" HEAD^.. &&
++	test foonote = "$(git notes show)"
++'
++
++test_expect_success '--notes-filter implicit' '
++	git reset --hard notes-foo &&
++	git config notes.rewrite.filter-branch true &&
++	git filter-branch -f --tree-filter "touch notes-3" HEAD^.. &&
++	test testnote = "$(git notes show)"
++'
++
+ test_expect_success 'setup submodule' '
+ 	rm -fr ?* .git &&
+ 	git init &&
 -- 
 1.7.0.53.g5c2e6.dirty
