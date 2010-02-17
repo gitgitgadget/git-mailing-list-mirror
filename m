@@ -1,90 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add `log.decorate' configuration variable.
-Date: Tue, 16 Feb 2010 19:16:59 -0800
-Message-ID: <7v635wimac.fsf@alter.siamese.dyndns.org>
-References: <alpine.LNX.2.00.1002171239430.2477@vqena.qenxr.bet.am>
- <7vljespt2l.fsf@alter.siamese.dyndns.org>
- <alpine.LNX.2.00.1002171427080.3414@vqena.qenxr.bet.am>
+From: Steven Drake <sdrake@xnet.co.nz>
+Subject: Re: [PATCH] Add 'git format-patch --to=' option and 'format.to'
+ configuration variable.
+Date: Wed, 17 Feb 2010 16:11:30 +1300 (NZDT)
+Message-ID: <alpine.LNX.2.00.1002171516520.3414@vqena.qenxr.bet.am>
+References: <alpine.LNX.2.00.1002171238310.2477@vqena.qenxr.bet.am> <7vhbpgpsto.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Steven Drake <sdrake@xnet.co.nz>
-X-From: git-owner@vger.kernel.org Wed Feb 17 04:17:38 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 04:19:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhaPv-0003vc-9K
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 04:17:35 +0100
+	id 1NhaRo-0004ky-J7
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 04:19:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933944Ab0BQDRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 22:17:13 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47569 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933920Ab0BQDRL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 22:17:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A5A49AD71;
-	Tue, 16 Feb 2010 22:17:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=V1QaJolmUF/IMxj/h8q+futELco=; b=FuwVkl
-	wHcCYnisHJCVkeLIPMYC11rRXzdUXj8/AX9QQRVlGoD3HkqRHAZ6N0QIMJZVcARB
-	fGckqAmVnCZBSwrUq1A/nkPoOOsGZdD6jLPSlSE8Y/0BHb6dwdVlVJ8v00sFYRDx
-	PiS9AZvr9Ykz1/q33xAKskcxNEp/xmKFbTfE0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=r9YZeN3/+aphqKQEiDlOxa/Cnou4LhDG
-	K/xQ55MJQFt4HDOS5Ef9BB1aQLWjvnmVHVrYc8fccKy2H7Otgc9ET5EFzUE7lsny
-	2Sp5rMOODn49HX2UxTNP6zaNAShm5MU6OjyHIVfSip9nuZGSyNqhatNsEeAf4Fx7
-	3JrGyCjQ8NQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0729D9AD6C;
-	Tue, 16 Feb 2010 22:17:05 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF24D9AD6A; Tue, 16 Feb
- 2010 22:17:01 -0500 (EST)
-In-Reply-To: <alpine.LNX.2.00.1002171427080.3414@vqena.qenxr.bet.am> (Steven
- Drake's message of "Wed\, 17 Feb 2010 15\:04\:21 +1300 \(NZDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EC59A49C-1B72-11DF-8691-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S933952Ab0BQDT1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 22:19:27 -0500
+Received: from ananke.wxnz.net ([58.28.4.122]:32867 "EHLO ananke.wxnz.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933940Ab0BQDT1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 22:19:27 -0500
+Received: from idran.drake.org.nz (ip-118-90-92-203.xdsl.xnet.co.nz [118.90.92.203])
+	by ananke.wxnz.net (Postfix) with ESMTP id 1E098171125;
+	Wed, 17 Feb 2010 16:19:17 +1300 (NZDT)
+In-Reply-To: <7vhbpgpsto.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140202>
 
-Steven Drake <sdrake@xnet.co.nz> writes:
+On Tue, 16 Feb 2010, Junio C Hamano wrote:
 
-> Good point, and looking at the code "log.decorate" only has an affect after
-> cmd_log_init() is called, which is call by cmd_whatchanged(), cmd_show(), 
-> cmd_log_reflog() and cmd_log() so only those command are affected
-> (notably not format-patch).
+> I don't _mind_ adding such a config (I didn't check the patch text,
+> though), but one thing I don't understand is what kind of workflow do
+> people who use format.cc, format.to, --cc and --to are using.
 
-I was not worried about what your change does.  I am worried about
-protecting what the code after your change currently does from future
-changes done by other people while you are not actively watching the
-patches in flight on this list.
+In the commit that add '--cc', Daniel Barkalow wrote:
+> When you have particular reviewers you want to sent particular series
+> to, it's nice to be able to generate the whole series with them as
+> additional recipients, without configuring them into your general
+> headers or adding them by hand afterwards.
 
-> While on the subject of git_config I think die_bad_config() should be an
-> extern (i.e. decleared in cache.h and a static function) so that it could
-> be used in git_XXX_config functions for handling error.  Something like:
->
-> diff --git a/builtin-log.c b/builtin-log.c
-> index f096eea..a41a7bb 100644
-> --- a/builtin-log.c
-> +++ b/builtin-log.c
-> @@ -264,6 +264,8 @@ static int git_log_config(const char *var, const char *value, void *cb)
->  			decoration_style = DECORATE_FULL_REFS;
->  		else if (!strcmp(value, "short"))
->  			decoration_style = DECORATE_SHORT_REFS;
-> +		else
-> +			die_bad_config(var);
+In the commit that added 'format.cc' Miklos Vajna wrote:
+> Some projects prefer to always CC patches to a given mailing list. In
+> these cases, it's handy to configure that address once.
 
-We generally avoid doing this, as we may later want to add different
-values to "log.decorate", and keep the older git working as if nothing is
-specified, rather than barfing, so that people can access the same
-repository, perhaps over NFS, from different machines with varying vintage
-of git.
+I think it's weired to have an option & config variable for Cc and not To.
+
+> My impression has always been that you drive your _MUA_ to set these
+> values, and MUAs are either (1) not so cooperating to read these headers
+> from format-patch output and use them to decide where to send mails from,
+Any MUA that does not cooperate with reading the To header is going to
+give trouble with any header (e.g. Subject, Date).
+
+> or (2) is a git-send-email which is customizable already per repository so
+> you do not have to do anything funky when running format-patch.
+Haven't got around to using git-send-email yet!
+
+> [...] how does having To:
+> and Cc: header pregenerated by format-patch help you?
+Mostly having to remember/lookup the email address.
+
+-- 
+Steven
