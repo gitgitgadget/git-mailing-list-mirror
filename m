@@ -1,69 +1,92 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH v3 1/4] Refactoring: remove duplicated code from 
-	builtin-send-pack.c and transport.c
-Date: Wed, 17 Feb 2010 10:23:07 +0800
-Message-ID: <be6fef0d1002161823u48dc42f9g8b532e03763af17@mail.gmail.com>
-References: <cover.1266360267.git.michael.lukashov@gmail.com>
-	 <57f2a1b845f82f86709c71d1fbc530bb5fdb1a7f.1266360267.git.michael.lukashov@gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] fix threaded grep for machines with only one cpu
+Date: Tue, 16 Feb 2010 21:41:20 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1002162140110.1946@xanadu.home>
+References: <20100215225001.GA944@book.hvoigt.net>
+ <7vwryet2cw.fsf@alter.siamese.dyndns.org>
+ <7vocjpnc5v.fsf@alter.siamese.dyndns.org>
+ <7vljetlx8r.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.1002160914140.20986@pacific.mpi-cbg.de>
+ <7viq9wzq8g.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.1002170200370.20986@pacific.mpi-cbg.de>
+ <7vvddwodox.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Michael Lukashov <michael.lukashov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 17 03:23:17 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 03:41:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhZZN-00077A-7E
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 03:23:17 +0100
+	id 1NhZqz-0000x2-2E
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 03:41:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933466Ab0BQCXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 21:23:12 -0500
-Received: from mail-iw0-f185.google.com ([209.85.223.185]:42650 "EHLO
-	mail-iw0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933335Ab0BQCXL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 21:23:11 -0500
-Received: by iwn15 with SMTP id 15so5952483iwn.19
-        for <git@vger.kernel.org>; Tue, 16 Feb 2010 18:23:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=/CKMlQqR2bMDZKUfqcMxYogUKBvTFNU4fncVjIqvUxo=;
-        b=qIfp9rPSTvPGOXzdMUhkZzVen2beO1OAiCFx/eHgQHzDJsHeC3bniBQnYvMSqru8GV
-         ZkIsbmFHab/pHQ89tZxKqrwrijI5dPoTTufyr0Vz7z7Iazz+wEX5SucLYnXVjBXyRUiA
-         H/CzGC+4X7WEGIAx4vAMbcXlG0m/VgxseiPII=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=evptvl+EfnjLLY2q/OxmYOIOJ5gBzfuo3inbULE9h7gYm9RvWPQ6lzaSFfqFsgOehl
-         kDrzAAXCIjy9qG3SmSL4qxUxvCtI6FIHxWkz6dM23Yn6dVgqgvSWseFDWVlVaLGjxTow
-         RlUeZGFlorvLx3dTHrD0jPWG+qnEm7Xb/BZzY=
-Received: by 10.231.190.146 with SMTP id di18mr4282581ibb.19.1266373387329; 
-	Tue, 16 Feb 2010 18:23:07 -0800 (PST)
-In-Reply-To: <57f2a1b845f82f86709c71d1fbc530bb5fdb1a7f.1266360267.git.michael.lukashov@gmail.com>
+	id S933716Ab0BQClY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 21:41:24 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:53394 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933523Ab0BQClX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 21:41:23 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0KXY003OGSSWM900@VL-MR-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 16 Feb 2010 21:41:20 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7vvddwodox.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140200>
 
-Hi,
+On Tue, 16 Feb 2010, Junio C Hamano wrote:
 
-On Wed, Feb 17, 2010 at 7:42 AM, Michael Lukashov
-<michael.lukashov@gmail.com> wrote:
-> [snip]
-> Also, move #define SUMMARY_WIDTH to transport.h and rename it TRANSPORT_SUMMARY_WIDTH
-> as it is used in builtin-fetch.c and transport.c
->
-> Signed-off-by: Michael Lukashov <michael.lukashov@gmail.com>
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> The program can decide at runtime not to use threading even if the support
+> >> is compiled in.  In such a case, mutexes are not necessary and left
+> >> uninitialized.  But the code incorrectly tried to take and release the
+> >> read_sha1_mutex unconditionally.
+> >> 
+> >> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> >> Acked-by: Fredrik Kuivinen <frekui@gmail.com>
+> >> ---
+> >
+> > Yes, this one looks much, much nicer.
+> 
+> The structure may be much nicer, but one remaining thing is that I do not
+> think foo_locked() is a good name; IIRC, kernel folks use _locked() suffix
+> when the caller is expected to already hold the lock.  So a typical naming
+> convention goes like this:
+> 
+> 	foo()
+>         {
+>         	lock();
+>                 foo_locked();
+>                 unlock();
+>         }
+> 
+> but what the patch did was the other way around:
+> 
+> 	read_sha1_file_locked()
+>         {
+>         	lock();
+>                 read_sha1_file();
+>                 unlock();
+> 	}
+> 
+> which is probably against the convention many readers of our codebase are
+> already familiar with.
+> 
+> We need a better name to unconfuse people, I think.
 
-Apart from the long line in the patch message, looks ok to me.
+lock_and_read_sha1_file()
 
-Acked-by: Tay Ray Chuan <rctay89@gmail.com>
 
--- 
-Cheers,
-Ray Chuan
+Nicolas
