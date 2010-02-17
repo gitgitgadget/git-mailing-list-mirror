@@ -1,86 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/4] Refactoring: connect.c: move duplicated code to a
- new function 'get_host_and_port'
-Date: Tue, 16 Feb 2010 16:07:51 -0800
-Message-ID: <7vaav8ybag.fsf@alter.siamese.dyndns.org>
-References: <cover.1266360267.git.michael.lukashov@gmail.com>
- <0d6d0066fecc892bd5b6afda64e1aa5591347504.1266360267.git.michael.lukashov@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [RFC PATCH v2 07/11] notes: implement helpers needed for note copying during rewrite
+Date: Wed, 17 Feb 2010 01:09:24 +0100
+Message-ID: <201002170109.25211.trast@student.ethz.ch>
+References: <cover.1266361759.git.trast@student.ethz.ch> <b8d8e699a7067f0bb095f4df73966fc61ffeb6c6.1266361759.git.trast@student.ethz.ch> <7v635w20o5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Lukashov <michael.lukashov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 17 01:08:07 2010
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+	Johan Herland <johan@herland.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 01:09:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhXSX-0005fM-UT
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 01:08:06 +0100
+	id 1NhXTy-0006TO-RH
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 01:09:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933683Ab0BQAH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 19:07:59 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48749 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933630Ab0BQAH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 19:07:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 917C09A1AE;
-	Tue, 16 Feb 2010 19:07:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SUgnmXm5nCmIvUOC+/58bXjrn5w=; b=Fi+DCE
-	7g0JfgqN3BVQRyjI1igu6Ngm5wYApTZ6rg+ZPlfjx7lLGa4O6bSm4XaYrlhyutap
-	EppurZvDD3YYdJokOx4cWcO92x4gpcCNSEsMmEKipeDVW1qUyJS4iMjclqpmnRhn
-	+IE4viHCEtgDUSu2RrYE5UCMqOSmhQLdNmYB0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KhmHdk/lSmkA2Tr2k9C0k5P1rXLZzYQe
-	K47juynRgkzhFlvrPos1ZlJed6C0US9y2lQ4ZCp0nvZgKKf1WmuBSNje2aCQpEHD
-	yNmjuQfz75SX63WXClj5VcUZw0uicE8zUyWG8djijGopejJykLbjB90bPfo5a6ZC
-	xTJSBBDYv6s=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E4279A1A9;
-	Tue, 16 Feb 2010 19:07:55 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BD2D79A1A7; Tue, 16 Feb
- 2010 19:07:52 -0500 (EST)
-In-Reply-To: <0d6d0066fecc892bd5b6afda64e1aa5591347504.1266360267.git.michael.lukashov@gmail.com> (Michael Lukashov's message of "Tue\, 16 Feb 2010 23\:42\:53 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7F7A76D6-1B58-11DF-845E-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S933709Ab0BQAJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 19:09:29 -0500
+Received: from gwse.ethz.ch ([129.132.178.237]:54014 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933701Ab0BQAJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 19:09:28 -0500
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.234.1; Wed, 17 Feb
+ 2010 01:09:26 +0100
+Received: from thomas.localnet (84.74.100.59) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Wed, 17 Feb
+ 2010 01:09:25 +0100
+User-Agent: KMail/1.13.0 (Linux/2.6.31.12-0.1-desktop; KDE/4.4.0; x86_64; ; )
+In-Reply-To: <7v635w20o5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140188>
 
-Michael Lukashov <michael.lukashov@gmail.com> writes:
+On Wednesday 17 February 2010 00:58:18 Junio C Hamano wrote:
+> Thomas Rast <trast@student.ethz.ch> writes:
+> 
+> > Implement helper functions to load the rewriting config, and to
+> > actually copy the notes.  Also document the config.
+> 
+> I find it somewhat unnerving that this series is a bit overengineered to
+> have fancier and facier handling of notes, while at the same time still
+> sticking to the "only one default notes tree" mode of operation.  Are you
+> digging a deep hole that you will find hard to get out of when you finally
+> need to support copying/rewriting notes from multiple trees at the same
+> time?
 
-> The following functions:
->
->   git_tcp_connect_sock (IPV6 version)
->   git_tcp_connect_sock (no IPV6 version),
->   git_proxy_connect
->
-> have common block of code. Move it to a new function 'get_host_and_port'
->
-> Signed-off-by: Michael Lukashov <michael.lukashov@gmail.com>
+Hmm, very good point.
 
-> @@ -170,30 +192,14 @@ static const char *ai_name(const struct addrinfo *ai)
->  static int git_tcp_connect_sock(char *host, int flags)
-> ...
-> -	if (colon) {
-> -		*colon = 0;
-> -		port = colon + 1;
-> -		if (!*port)
-> -			port = "<none>";
-> -	}
-> +	get_host_and_port(&host, &port);
-> +	if (!*port)
-> +		*port = "<none>";
+I believe the code in this patch is fairly well-prepared to deal with
+it.  It would merely need to learn to store a list of trees in the
+notes_rewrite_cfg, provided that it's ok to load them all
+simultaneously.
 
-Is this version any different from v2?
+However, I haven't really thought about having several notes trees.
+Is this automatic copying the only operation that needs this feature,
+or were you thinking of others too?  Is it enough to, say, introduce a
+way of configuring it at the branch level, or declaring that we
+rewrite everything in refs/notes, or some such?
 
-I expected that at least this one would have been fixed from the older
-version.
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
