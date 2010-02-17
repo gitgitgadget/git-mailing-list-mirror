@@ -1,196 +1,377 @@
-From: Michael Lukashov <michael.lukashov@gmail.com>
-Subject: [PATCH v4 2/4] Refactoring: connect.c: move duplicated code to a new function 'get_host_and_port'
-Date: Wed, 17 Feb 2010 20:56:02 +0000
-Message-ID: <1266440162-3500-1-git-send-email-michael.lukashov@gmail.com>
-References: <20100217000456.GA28433@cthulhu>
-Cc: Michael Lukashov <michael.lukashov@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (Feb 2010, #04; Wed, 17)
+Date: Wed, 17 Feb 2010 13:09:16 -0800
+Message-ID: <7veikjefib.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 17 21:56:26 2010
+X-From: git-owner@vger.kernel.org Wed Feb 17 22:09:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhqwY-0001S3-2F
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 21:56:22 +0100
+	id 1Nhr9I-0001t4-8H
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 22:09:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756124Ab0BQU4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2010 15:56:16 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:58642 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754873Ab0BQU4Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2010 15:56:16 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so393710fgg.1
-        for <git@vger.kernel.org>; Wed, 17 Feb 2010 12:56:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=JmNPn6wKROo69iK6LVNDQNpBAC6d/ODW5q6Llk4UuaU=;
-        b=ZdlJteDcAW3CYYf2uT6UbjPPPGxnfcokFfqqTsITKrgWRhy6ogrRS4LKn0mOELTxtn
-         pC9wJi5on4Cd6F7o368lngfgMZb1TnMjvsvhGFvZAxAx/+UIUuFMt7V7F/+IizYuC5/d
-         4fUy2yyhNb+G2vxyJ2xkb6+NDPVpKDSERc8o0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=XDlmzq5VmAK4qn23LeiZsjimKJIYwaHeSrQIMg73wcZXrmFYcUxM0pcKNo5m/Oni/4
-         H9VBOo116q8zNDhr1KeaNO4PRVSA0OfnUoUONckNkW+VrkFBEpT4zVMt+2HYxq4HC2cg
-         pWwPZbwn7ECoSL77SlZfE+Rwn6ZLiGcqDV/xU=
-Received: by 10.87.67.10 with SMTP id u10mr15389601fgk.28.1266440174504;
-        Wed, 17 Feb 2010 12:56:14 -0800 (PST)
-Received: from localhost (nat-nz.wwwcom.ru [195.62.62.242])
-        by mx.google.com with ESMTPS id e11sm14418516fga.24.2010.02.17.12.56.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 17 Feb 2010 12:56:12 -0800 (PST)
-X-Mailer: git-send-email 1.7.0.14.g7e948
-In-Reply-To: <20100217000456.GA28433@cthulhu>
+	id S1756495Ab0BQVJ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2010 16:09:26 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36716 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756468Ab0BQVJY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2010 16:09:24 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F4609A415;
+	Wed, 17 Feb 2010 16:09:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=YwGF
+	gmdPWThhzwGFob7vQOk+Xy0=; b=AfqWQCKnED+8ezGKWUwFf2fkrJghywC/HneA
+	vAZ/ugCxHEvsX/qq8sMKU5G0X3IwLSjMGsuUqejkOYNaMUZ/r9UsJhuWs7StXM4v
+	grW5/OR0JoZKsuF8oGsZO0Uex5lj2VLuj7Z3oImbcPomrGaMeBNfyXZc7i+qOBTM
+	lIGxftw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=w6X
+	yUMx7aNs8VaCtBSZW3gZ9cYrlMofmFWfniBQKWBEz9hIiS4VHuUg2/TDBNeXfpb6
+	Xaa4tndykgUMocCVyAYPBUNBP2sUOvVTBUWDZnQYZQfHgSX8io8vK6KaQSHwkD21
+	Fqt4sDT86yuTrxzkqqlRLta44T8wqxxEeGhZjW4A=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 05D7B9A414;
+	Wed, 17 Feb 2010 16:09:20 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E05DD9A412; Wed, 17 Feb
+ 2010 16:09:17 -0500 (EST)
+X-master-at: 1df48766137f2040e2e992d7d278d5aca26406cf
+X-next-at: 3b7be804f698c39d8f538d9996786b41c08b7181
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B6FF7704-1C08-11DF-BB28-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140263>
 
-The following functions:
+Here are the topics that have been cooking.  Commits prefixed with '-' are
+only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
+marked with '.' do not appear in any of the integration branches, but I am
+still holding onto them.
 
-  git_tcp_connect_sock (IPV6 version)
-  git_tcp_connect_sock (no IPV6 version),
-  git_proxy_connect
+--------------------------------------------------
+[Graduated to "master"]
 
-have common block of code. Move it to a new function 'get_host_and_port'
+* jk/cherry-pick-reword (2010-02-11) 5 commits
+  (merged to 'next' on 2010-02-11 at d0eace1)
+ + cherry-pick: prettify the advice message
+ + cherry-pick: show commit name instead of sha1
+ + cherry-pick: format help message as strbuf
+ + cherry-pick: refactor commit parsing code
+ + cherry-pick: rewrap advice message
 
-Signed-off-by: Michael Lukashov <michael.lukashov@gmail.com>
----
- connect.c |   83 +++++++++++++++++++++---------------------------------------
- 1 files changed, 29 insertions(+), 54 deletions(-)
+* rs/git-dir-cleanup (2010-02-11) 3 commits
+  (merged to 'next' on 2010-02-11 at fa4f83c)
+ + Untouch RelNotes 1.7.0: grep --no-index will not be in the release
+  (merged to 'next' on 2010-02-06 at ef8ab9b)
+ + Resurrect "git grep --no-index"
+ + setenv(GIT_DIR) clean-up
 
-diff --git a/connect.c b/connect.c
-index 20054e4..f4563f9 100644
---- a/connect.c
-+++ b/connect.c
-@@ -152,6 +152,28 @@ static enum protocol get_protocol(const char *name)
- #define STR_(s)	# s
- #define STR(s)	STR_(s)
- 
-+static void get_host_and_port(char **host, const char **port)
-+{
-+	char *colon, *end;
-+
-+	if (*host[0] == '[') {
-+		end = strchr(*host + 1, ']');
-+		if (end) {
-+			*end = 0;
-+			end++;
-+			(*host)++;
-+		} else
-+			end = *host;
-+	} else
-+		end = *host;
-+	colon = strchr(end, ':');
-+
-+	if (colon) {
-+		*colon = 0;
-+		*port = colon + 1;
-+	}
-+}
-+
- #ifndef NO_IPV6
- 
- static const char *ai_name(const struct addrinfo *ai)
-@@ -170,30 +192,14 @@ static const char *ai_name(const struct addrinfo *ai)
- static int git_tcp_connect_sock(char *host, int flags)
- {
- 	int sockfd = -1, saved_errno = 0;
--	char *colon, *end;
- 	const char *port = STR(DEFAULT_GIT_PORT);
- 	struct addrinfo hints, *ai0, *ai;
- 	int gai;
- 	int cnt = 0;
- 
--	if (host[0] == '[') {
--		end = strchr(host + 1, ']');
--		if (end) {
--			*end = 0;
--			end++;
--			host++;
--		} else
--			end = host;
--	} else
--		end = host;
--	colon = strchr(end, ':');
--
--	if (colon) {
--		*colon = 0;
--		port = colon + 1;
--		if (!*port)
--			port = "<none>";
--	}
-+	get_host_and_port(&host, &port);
-+	if (!*port)
-+		port = "<none>";
- 
- 	memset(&hints, 0, sizeof(hints));
- 	hints.ai_socktype = SOCK_STREAM;
-@@ -251,30 +257,15 @@ static int git_tcp_connect_sock(char *host, int flags)
- static int git_tcp_connect_sock(char *host, int flags)
- {
- 	int sockfd = -1, saved_errno = 0;
--	char *colon, *end;
--	char *port = STR(DEFAULT_GIT_PORT), *ep;
-+	const char *port = STR(DEFAULT_GIT_PORT);
-+	char *ep;
- 	struct hostent *he;
- 	struct sockaddr_in sa;
- 	char **ap;
- 	unsigned int nport;
- 	int cnt;
- 
--	if (host[0] == '[') {
--		end = strchr(host + 1, ']');
--		if (end) {
--			*end = 0;
--			end++;
--			host++;
--		} else
--			end = host;
--	} else
--		end = host;
--	colon = strchr(end, ':');
--
--	if (colon) {
--		*colon = 0;
--		port = colon + 1;
--	}
-+	get_host_and_port(&host, &port);
- 
- 	if (flags & CONNECT_VERBOSE)
- 		fprintf(stderr, "Looking up %s ... ", host);
-@@ -406,26 +397,10 @@ static int git_use_proxy(const char *host)
- static void git_proxy_connect(int fd[2], char *host)
- {
- 	const char *port = STR(DEFAULT_GIT_PORT);
--	char *colon, *end;
- 	const char *argv[4];
- 	struct child_process proxy;
- 
--	if (host[0] == '[') {
--		end = strchr(host + 1, ']');
--		if (end) {
--			*end = 0;
--			end++;
--			host++;
--		} else
--			end = host;
--	} else
--		end = host;
--	colon = strchr(end, ':');
--
--	if (colon) {
--		*colon = 0;
--		port = colon + 1;
--	}
-+	get_host_and_port(&host, &port);
- 
- 	argv[0] = git_proxy_command;
- 	argv[1] = host;
--- 
-1.7.0.1571.g856c2
+* jk/grep-double-dash (2010-02-06) 1 commit
+  (merged to 'next' on 2010-02-07 at 2ac040d)
+ + accept "git grep -- pattern"
+
+* jc/typo (2010-02-03) 1 commit
+ + Typofixes outside documentation area
+
+--------------------------------------------------
+[New Topics]
+
+* dp/maint-1.6.3-hash-sans-mmap (2010-02-14) 1 commit
+ - don't use mmap() to hash files
+
+This was more of an RFC in that slurping a potentially huge file into
+memory without using mmap() was conceptually wrong. I suspect somebody
+is cooking a patch to hash and compress a large blob in chunks straight
+into a packfile as a replacement ;-).
+
+* jc/for-each-ref (2010-02-13) 4 commits
+ - for-each-ref --format='%(flag)'
+ - for-each-ref --format='%(symref) %(symref:short)'
+ - builtin-for-each-ref.c: check if we need to peel onion while parsing the format
+ - builtin-for-each-ref.c: comment fixes
+
+Should be Ok for 'next'.
+
+* jn/gitweb-config-error-die (2010-02-14) 1 commit
+ - gitweb: Die if there are parsing errors in config file
+
+Should be Ok for 'next'.
+
+* jn/maint-fix-pager (2010-02-14) 6 commits
+ - tests: Add tests for automatic use of pager
+ - am: Fix launching of pager
+ - git svn: Fix launching of pager
+ - git.1: Clarify the behavior of the --paginate option
+ - Make 'git var GIT_PAGER' always print the configured pager
+ - Fix 'git var' usage synopsis
+
+Should be Ok for 'next'.
+
+* ml/color-when (2010-02-16) 1 commit
+ - Add an optional argument for --color options
+
+* hm/imap-send-cram-md5 (2010-02-15) 1 commit
+ - imap-send: support CRAM-MD5 authentication
+
+A potential clean-up sent as a counter-proposal; waiting for response.
+
+* jh/maint-submodule-status-in-void (2010-02-16) 1 commit
+ - submodule summary: Don't barf when invoked in an empty repo
+
+Looked Ok for 'next' but I lost track somewhat...
+
+* ld/maint-diff-quiet-w (2010-02-16) 1 commit
+ - git diff --quiet -w: check and report the status
+
+Needs tests but otherwise looked Ok.
+
+* ml/maint-grep-doc (2010-02-15) 1 commit
+  (merged to 'next' on 2010-02-16 at 4059a38)
+ + grep documentation: clarify what files match
+
+Soon to graduate to 'master'.
+
+* tc/maint-transport-ls-remote-with-void (2010-02-16) 1 commit
+  (merged to 'next' on 2010-02-16 at e6ef1a8)
+ + transport: add got_remote_refs flag
+
+Soon to graduate to 'master'.
+
+* bg/apply-blank-at-eof (2010-02-17) 3 commits
+ - t3417: Add test cases for "rebase --whitespace=fix"
+ - t4124: Add additional tests of --whitespace=fix
+ - apply: Allow blank context lines to match beyond EOF
+
+RFC.
+
+* gf/maint-sh-setup-nongit-ok (2010-02-16) 1 commit
+ - require_work_tree broken with NONGIT_OK
+
+Looked sensible and ready for 'next'.
+
+* ml/send-pack-transport-refactor (2010-02-16) 1 commit
+ - Refactoring: remove duplicated code from builtin-send-pack.c and transport.c
+
+Probably ready for 'next'.
+
+* np/fast-import-idx-v2 (2010-02-17) 6 commits
+ - fast-import: use the diff_delta() max_delta_size argument
+ - fast-import: honor pack.indexversion and pack.packsizelimit config vars
+ - fast-import: make default pack size unlimited
+ - fast-import: use write_idx_file() instead of custom code
+ - fast-import: use sha1write() for pack data
+ - fast-import: start using struct pack_idx_entry
+
+* sd/format-patch-to (2010-02-17) 1 commit
+ - Add 'git format-patch --to=' option and 'format.to' configuration variable.
+
+Shouldn't be too hard to add tests to t4014; other than that looked ready
+for 'next'.
+
+* sd/init-template (2010-02-17) 2 commits
+ - Add a "TEMPLATE DIRECTORY" section to git-init[1].
+ - Add `init.templatedir` configuration variable.
+
+Shouldn't be too hard to add tests to t0001; other than that looked ready
+for 'next'.
+
+* sd/log-decorate (2010-02-17) 3 commits
+ - log.decorate: usability fixes
+ - Add `log.decorate' configuration variable.
+ - git_config_maybe_bool()
+
+Probably ready for 'next', except that people need to be warned about
+having to update their scripts to explicitly pass --no-decorate to keep
+them working.
+
+* jc/maint-status-preload (2010-02-17) 1 commit
+ - status: preload index to optimize lstat(2) calls
+
+--------------------------------------------------
+[Cooking]
+
+* ld/push-porcelain (2010-02-09) 4 commits
+ - git-push: fix an error message so it goes to stderr
+ - git-push: make git push --dry-run --porcelain exit with status 0 even if updates will be rejected
+ - git-push: send "To <remoteurl>" messages to the standard output in --porcelain mode
+ - git-push: squelch advice message if in --porcelain mode
+
+After some discussion this needs further simplification?  May need to move
+to Stalled.
+
+* cp/add-u-pathspec (2010-02-09) 2 commits
+ - test for add with non-existent pathspec
+ - git add -u: die on unmatched pathspec
+
+I am a bit torn on this one.  Traditionally we never complained on
+unmatched pathspec when talking about tracked files.  If we were to go
+this route, I think we should probably enhance the "run_diff_files" and
+friends in such a way that they mark matched pathspecs, in a way similar
+to match_pathspec() in dir.c does, and report unmatched ones based on
+that result, instead of adding an extra pass to scan the index.  The same
+goes for pathspec_matches() in builtin-grep.c
+
+Incidentally, I've proposed "pathspec unification" as possible GSoC'10
+project---with luck, we might finally see a progress on this front ;-)
+
+* hm/maint-imap-send-crlf (2010-02-12) 1 commit
+  (merged to 'next' on 2010-02-17 at c6162cb)
+ + git-imap-send: Convert LF to CRLF before storing patch to draft box
+
+Soon to graduate to 'master'.
+
+* nd/root-git (2010-02-14) 5 commits
+ - Add test for using Git at root of file system
+ - Support working directory located at root
+ - Move offset_1st_component() to path.c
+ - init-db, rev-parse --git-dir: do not append redundant slash
+ - make_absolute_path(): Do not append redundant slash
+
+How does this interact with the much larger series to rework the set-up
+codepath?
+
+* pb/log-first-parent-p-m (2010-02-10) 1 commit
+  (merged to 'next' on 2010-02-17 at 2f8e5ae)
+ + git log -p -m: document -m and honor --first-parent
+
+Needs tests but otherwise looked fine.  We might want to teach "-m trumps
+implicit --cc" to "git show", but that is a totally separate topic.
+
+* sp/maint-push-sideband (2010-02-10) 8 commits
+  (merged to 'next' on 2010-02-16 at 6f19e5b)
+ + receive-pack: Send internal errors over side-band #2
+ + t5401: Use a bare repository for the remote peer
+ + receive-pack: Send hook output over side band #2
+ + receive-pack: Wrap status reports inside side-band-64k
+ + receive-pack: Refactor how capabilities are shown to the client
+ + send-pack: demultiplex a sideband stream with status data
+ + run-command: support custom fd-set in async
+ + run-command: Allow stderr to be a caller supplied pipe
+ (this branch is used by sp/push-sideband.)
+
+Based on 1.6.5 maintenance track.
+
+* sp/push-sideband (2010-02-10) 0 commits
+ (this branch uses sp/maint-push-sideband.)
+
+This also is in 'next' now.
+
+* ac/cvsimport-revision-mapping (2010-02-06) 1 commit
+  (merged to 'next' on 2010-02-17 at 6756446)
+ + cvsimport: new -R option: generate .git/cvs-revisions mapping
+
+Any comments from CVSimport users?
+
+* js/rebase-origin-x (2010-02-05) 1 commit
+ - [RFC w/o test and incomplete] rebase: add -x option to record original commit name
+
+I retract my objection against the idea of -x; needs polishing before
+moving forward.
+
+* jn/maint-makedepend (2010-01-26) 5 commits
+ - Makefile: drop dependency on $(wildcard */*.h)
+ - Makefile: clean up http-walker.o dependency rules
+ - Makefile: remove wt-status.h from LIB_H
+ - Makefile: make sure test helpers are rebuilt when headers change
+ - Makefile: add missing header file dependencies
+ (this branch is used by jn/makedepend and jn/master-makedepend.)
+
+* jn/master-makedepend (2010-01-26) 0 commits
+ (this branch uses jn/maint-makedepend; is used by jn/makedepend.)
+
+This is to help merging the clean-up to "master".
+
+* jn/makedepend (2010-01-31) 9 commits
+ - Makefile: always remove .depend directories on 'make clean'
+ - Makefile: tuck away generated makefile fragments in .depend
+ - Teach Makefile to check header dependencies
+ - Makefile: list standalone program object files in PROGRAM_OBJS
+ - Makefile: lazily compute header dependencies
+ - Makefile: list generated object files in OBJECTS
+ - Makefile: disable default implicit rules
+ - Makefile: rearrange dependency rules
+ - Makefile: transport.o depends on branch.h now
+ (this branch uses jn/maint-makedepend and jn/master-makedepend.)
+
+And this is to build on top.
+Looked ok for 'next'.
+
+* jc/checkout-detached (2010-01-29) 1 commit
+  (merged to 'next' on 2010-02-17 at 7e03edc)
+ + Reword "detached HEAD" notification
+
+* jc/maint-fix-test-perm (2010-01-30) 2 commits
+  (merged to 'next' on 2010-02-16 at 9d2e037)
+ + lib-patch-mode.sh: Fix permission
+ + t6000lib: Fix permission
+
+* jh/gitweb-caching (2010-01-30) 1 commit
+ - gitweb: Add an option to force version match
+
+The controversial one.  Will probably drop this.  RFC v3 of gitweb caching
+series needs to be queued but hasn't happened yet.
+
+* jn/makefile-script-lib (2010-01-31) 1 commit
+  (merged to 'next' on 2010-02-16 at f5334f5)
+ + Do not install shell libraries executable
+
+Soon to graduate to 'master'.
+
+* mv/request-pull-modernize (2010-01-29) 1 commit
+  (merged to 'next' on 2010-02-16 at be03aad)
+ + request-pull: avoid mentioning that the start point is a single commit
+
+Soon to graduate to 'master'.
+
+* jh/notes (2010-02-13) 30 commits
+ - builtin-notes: Add "copy" subcommand for copying notes between objects
+ - builtin-notes: Misc. refactoring of argc and exit value handling
+ - builtin-notes: Add -c/-C options for reusing notes
+ - builtin-notes: Refactor handling of -F option to allow combining -m and -F
+ - builtin-notes: Deprecate the -m/-F options for "git notes edit"
+ - builtin-notes: Add "append" subcommand for appending to note objects
+ - builtin-notes: Add "add" subcommand for adding notes to objects
+ - builtin-notes: Add --message/--file aliases for -m/-F options
+ - builtin-notes: Add "list" subcommand for listing note objects
+ - Documentation: Generalize git-notes docs to 'objects' instead of 'commits'
+ - builtin-notes: Add "prune" subcommand for removing notes for missing objects
+ - Notes API: prune_notes(): Prune notes that belong to non-existing objects
+ - t3305: Verify that removing notes triggers automatic fanout consolidation
+ - builtin-notes: Add "remove" subcommand for removing existing notes
+ - Teach builtin-notes to remove empty notes
+ - Teach notes code to properly preserve non-notes in the notes tree
+ - t3305: Verify that adding many notes with git-notes triggers increased fanout
+ - t3301: Verify successful annotation of non-commits
+ - Builtin-ify git-notes
+ - Refactor notes concatenation into a flexible interface for combining notes
+ - Notes API: Allow multiple concurrent notes trees with new struct notes_tree
+ - Notes API: write_notes_tree(): Store the notes tree in the database
+ - Notes API: for_each_note(): Traverse the entire notes tree with a callback
+ - Notes API: get_note(): Return the note annotating the given object
+ - Notes API: remove_note(): Remove note objects from the notes tree structure
+ - Notes API: add_note(): Add note objects to the internal notes tree structure
+ - Notes API: init_notes(): Initialize the notes tree from the given notes ref
+ - Add tests for checking correct handling of $GIT_NOTES_REF and core.notesRef
+ - Notes API: get_commit_notes() -> format_note() + remove the commit restriction
+ - Minor cosmetic fixes to notes.c
+
+Looked Ok for 'next'; comments?
+
+* cc/reset-keep (2010-01-19) 5 commits
+ - reset: disallow using --keep when there are unmerged entries
+ - reset: disallow "reset --keep" outside a work tree
+ - Documentation: reset: describe new "--keep" option
+ - reset: add test cases for "--keep" option
+ - reset: add option "--keep" to "git reset"
+
+* jc/grep-author-all-match-implicit (2010-01-17) 1 commit
+  (merged to 'next' on 2010-02-17 at 3b7be80)
+ + "log --author=me --grep=it" should find intersection, not union
