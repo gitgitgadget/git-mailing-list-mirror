@@ -1,71 +1,175 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add `log.decorate' configuration variable.
-Date: Wed, 17 Feb 2010 00:14:52 -0800
-Message-ID: <7v635w5ldv.fsf@alter.siamese.dyndns.org>
-References: <alpine.LNX.2.00.1002171239430.2477@vqena.qenxr.bet.am>
- <7vljespt2l.fsf@alter.siamese.dyndns.org>
- <alpine.LNX.2.00.1002171427080.3414@vqena.qenxr.bet.am>
- <7v635wimac.fsf@alter.siamese.dyndns.org>
- <alpine.LNX.2.00.1002171950040.8560@vqena.qenxr.bet.am>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steven Drake <sdrake@xnet.co.nz>
-X-From: git-owner@vger.kernel.org Wed Feb 17 09:15:20 2010
+From: Steven Drake <sdrake@xnet.co.nz>
+Subject: [PATCH] Add `[decorate]' configuration section.
+Date: Wed, 17 Feb 2010 21:22:46 +1300
+Message-ID: <16c38171fc04cee7bdc607bb4c6586925b15278c.1266394059.git.sdrake@xnet.co.nz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 17 09:49:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nhf3y-0002Ra-J3
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 09:15:14 +0100
+	id 1NhfbM-0007Ju-BM
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 09:49:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934165Ab0BQIPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2010 03:15:00 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54080 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934126Ab0BQIO7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2010 03:14:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 737369A3D3;
-	Wed, 17 Feb 2010 03:14:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=/vjohR3Eeli3Tk/Fg7EAIFxeIYE=; b=ciH+5sEbTktf9sji+1hwbIH
-	7mU1n1kBk5/l2FggAu3zj7E0vzm3aTtg5+YDa1wr1UpF30pTmvYw0lIWCu8A6rcv
-	YtQHZuVshT4T2FrH7Qyxu7/M9kGupkTzsZeRAnm5uK8frDYP1xSPmk6aqntMyKXK
-	T1b3h184qhMod0zRCtdU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=TnicURBf+S3hNAzpKshWc6t3CFz94HNgEOMrnYSEXdJivnlqG
-	ixmu3Zz1xu6MFZfiK8phXo7IoLEDBu1RWKhZiIAdw42HKleDbjIq7NsJ7m1dQ7yl
-	m+ZgqvJHpfJmhR66uYSsoPgAdC+9H6PxrxModQ/JEkqFLClE1r71otuAEs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 036E79A3CD;
-	Wed, 17 Feb 2010 03:14:55 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5F6429A3CA; Wed, 17 Feb
- 2010 03:14:53 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8849AC8E-1B9C-11DF-A336-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S934091Ab0BQIti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2010 03:49:38 -0500
+Received: from ananke.wxnz.net ([58.28.4.122]:38871 "EHLO ananke.wxnz.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934032Ab0BQIti (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2010 03:49:38 -0500
+Received: from localhost.localdomain (ip-118-90-92-203.xdsl.xnet.co.nz [118.90.92.203])
+	by ananke.wxnz.net (Postfix) with ESMTP id C72B641519
+	for <git@vger.kernel.org>; Wed, 17 Feb 2010 21:30:34 +1300 (NZDT)
+X-Mailer: git-send-email 1.6.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140218>
 
-Steven Drake <sdrake@xnet.co.nz> writes:
+This can be used to enable the display of ref names of commits that are
+shown by log commands.  Each of the log commands (whatchanged, show,
+reflog, and log) can be enable separately.
 
-> Have you commited the git_config_maybe_bool() code?
+e.g:
+	[decorate]
+		log
+		reflog
 
-Not yet, but now you mention it, it probably is a good idea to make the
-"maybe" part a separate patch, independent from log.decorate.  It should
-be useful elsewhere, I guess.
+Signed-off-by: Steven Drake <sdrake@xnet.co.nz>
+---
+ Documentation/config.txt |   12 ++++++++++++
+ builtin-log.c            |   43 +++++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 51 insertions(+), 4 deletions(-)
 
-> By the way is it alright to send patches that use inbody-headers and/or 
-> scissors?
-
-If used judiciously, i.e. when it makes it easier to follow the
-discussion.  It would sometimes make an important patch more likely to get
-buried in a deep thread, though.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 4c36aa9..dc9d6fd 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -740,6 +740,18 @@ commit.template::
+ 	"{tilde}/" is expanded to the value of `$HOME` and "{tilde}user/" to the
+ 	specified user's home directory.
+ 
++decorate.whatchanged::
++decorate.log::
++decorate.reflog::
++decorate.show::
++	Print out the ref names of any commits that are shown by the different
++	log command.  If 'short' is specified, the ref name prefixes
++	'refs/heads/', 'refs/tags/' and 'refs/remotes/' will not be printed.
++	If 'full' is specified, the full ref name (including prefix) will be
++	printed.  May be set as a bool which will be treated as 'short'.
++	This is the same as the log commands '--decorate' option.
++
++
+ diff.autorefreshindex::
+ 	When using 'git diff' to compare with work tree
+ 	files, do not consider stat-only change as changed.
+diff --git a/builtin-log.c b/builtin-log.c
+index 8d16832..51b5e10 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -24,6 +24,8 @@
+ static const char *default_date_mode = NULL;
+ 
+ static int default_show_root = 1;
++static struct { int whatchanged, show, reflog, log;} decorate = {0,0,0,0};
++static int decoration_style = 0;
+ static const char *fmt_patch_subject_prefix = "PATCH";
+ static const char *fmt_pretty;
+ 
+@@ -35,7 +37,6 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 		      struct rev_info *rev)
+ {
+ 	int i;
+-	int decoration_style = 0;
+ 
+ 	rev->abbrev = DEFAULT_ABBREV;
+ 	rev->commit_format = CMIT_FMT_DEFAULT;
+@@ -58,9 +59,6 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 		usage(builtin_log_usage);
+ 	argc = setup_revisions(argc, argv, rev, "HEAD");
+ 
+-	if (!rev->show_notes_given && !rev->pretty_given)
+-		rev->show_notes = 1;
+-
+ 	if (rev->diffopt.pickaxe || rev->diffopt.filter)
+ 		rev->always_show_header = 0;
+ 	if (DIFF_OPT_TST(&rev->diffopt, FOLLOW_RENAMES)) {
+@@ -244,8 +242,41 @@ static int cmd_log_walk(struct rev_info *rev)
+ 	return diff_result_code(&rev->diffopt, 0);
+ }
+ 
++static int set_decoration_style(const char *var, const char *value)
++{
++	switch (git_config_maybe_bool(var, value)) {
++	case 0:
++		return 0;
++	case 1:
++		return DECORATE_SHORT_REFS;
++	default:
++		break;
++	}
++	if (!strcmp(value, "full"))
++		return DECORATE_FULL_REFS;
++	else if (!strcmp(value, "short"))
++		return DECORATE_SHORT_REFS;
++	return 0;
++}
++
+ static int git_log_config(const char *var, const char *value, void *cb)
+ {
++	if (!strcmp(var, "decorate.log")) {
++		decorate.log = set_decoration_style(var, value);
++		return 0;
++	}
++	if (!strcmp(var, "decorate.reflog")) {
++		decorate.reflog = set_decoration_style(var, value);
++		return 0;
++	}
++	if (!strcmp(var, "decorate.show")) {
++		decorate.show = set_decoration_style(var, value);
++		return 0;
++	}
++	if (!strcmp(var, "decorate.whatchanged")) {
++		decorate.whatchanged = set_decoration_style(var, value);
++		return 0;
++	}
+ 	if (!strcmp(var, "format.pretty"))
+ 		return git_config_string(&fmt_pretty, var, value);
+ 	if (!strcmp(var, "format.subjectprefix"))
+@@ -264,6 +295,7 @@ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
+ 	struct rev_info rev;
+ 
+ 	git_config(git_log_config, NULL);
++	decoration_style = decorate.whatchanged;
+ 
+ 	if (diff_use_color_default == -1)
+ 		diff_use_color_default = git_use_color_default;
+@@ -331,6 +363,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+ 	int i, count, ret = 0;
+ 
+ 	git_config(git_log_config, NULL);
++	decoration_style = decorate.show;
+ 
+ 	if (diff_use_color_default == -1)
+ 		diff_use_color_default = git_use_color_default;
+@@ -407,6 +440,7 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
+ 	struct rev_info rev;
+ 
+ 	git_config(git_log_config, NULL);
++	decoration_style = decorate.reflog;
+ 
+ 	if (diff_use_color_default == -1)
+ 		diff_use_color_default = git_use_color_default;
+@@ -440,6 +474,7 @@ int cmd_log(int argc, const char **argv, const char *prefix)
+ 	struct rev_info rev;
+ 
+ 	git_config(git_log_config, NULL);
++	decoration_style = decorate.log;
+ 
+ 	if (diff_use_color_default == -1)
+ 		diff_use_color_default = git_use_color_default;
+-- 
+1.6.6
