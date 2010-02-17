@@ -1,70 +1,78 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: Question about git rebase --onto
-Date: Wed, 17 Feb 2010 18:19:42 +0800
-Message-ID: <be6fef0d1002170219j27c79877k830f8d853719ea2e@mail.gmail.com>
-References: <4B6865A9.60603@obry.net> <7v636f7biw.fsf@alter.siamese.dyndns.org>
-	 <4B686CAC.7020103@obry.net> <7vhbpx3it2.fsf@alter.siamese.dyndns.org>
-	 <4B6AF9EE.3000205@obry.net> <7vr5p1gd2t.fsf@alter.siamese.dyndns.org>
-	 <4B7BB604.20205@obry.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: t7400.24 git submodule 'update --init' test fails on some
+ machines
+Date: Wed, 17 Feb 2010 04:23:16 -0600
+Message-ID: <20100217102315.GA6364@progeny.tock>
+References: <20100213090544.GA29850@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
-To: pascal@obry.net
-X-From: git-owner@vger.kernel.org Wed Feb 17 11:19:50 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Johan Herland <johan@herland.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 17 11:23:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nhh0X-0001hC-EZ
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 11:19:49 +0100
+	id 1Nhh3s-0004FU-Kd
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 11:23:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751326Ab0BQKTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2010 05:19:44 -0500
-Received: from mail-pz0-f187.google.com ([209.85.222.187]:62190 "EHLO
-	mail-pz0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750983Ab0BQKTn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2010 05:19:43 -0500
-Received: by pzk17 with SMTP id 17so6128746pzk.4
-        for <git@vger.kernel.org>; Wed, 17 Feb 2010 02:19:42 -0800 (PST)
+	id S1751185Ab0BQKXL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Feb 2010 05:23:11 -0500
+Received: from mail-iw0-f185.google.com ([209.85.223.185]:62941 "EHLO
+	mail-iw0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750866Ab0BQKXJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2010 05:23:09 -0500
+Received: by iwn15 with SMTP id 15so6178886iwn.19
+        for <git@vger.kernel.org>; Wed, 17 Feb 2010 02:23:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=AE1DkizAy0T5/i3MwMaYewJ7qiSuEvr40Eqhz3sIJN8=;
-        b=R4ZRm3TcO2BydIFOuq4HyjUzqS+UO0AbCP9ZgpiOzrKRoPE2Z2Im7ZMys/78Eac3Io
-         c3tmu5sMlVHq3gaZVylMB19xFi8koq5aIFAGcTYP9fe6c+4Tkt8U8Zmwbf5p0Ms4zqh2
-         +xUhiBiJHIV2IptTod5TV/9xQ+nkGmPv8U2DA=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=BpPCCG2R5wCwxh94RqNAjzwBz1mIoSRNlepKf8vLfv8=;
+        b=gMz4tTQxwARbKfv12PvDxDJPov1iNL6qL1EbzR1RH6mDmRlO9+USWcjFkMXWepOel2
+         IrByrJjNWTCCa+ZnOlMZP0RFzYd6uHM8JMsVHYX+zuSzcu6tdj8zvoVCeXZCaRnegavT
+         5u8wH/D7eFGcMwlwrW/Dt0hkIPaCWCw+0YszI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=qO15nilucWRiDgSIo/26a9MslaulWb2p1r74RLD2pZWrfNazl6F2qxS/jwTofOO1Lj
-         tKhQKrrsQes1G09EuaOWppQKVFZKAq7k6JKxkZBcJU/2i6UYCyOrMQj2XSfaDDrc78ZO
-         6BrZuuQc6pqXMR6wsy491XchccczlqOM0k6ds=
-Received: by 10.142.152.8 with SMTP id z8mr5153023wfd.230.1266401982442; Wed, 
-	17 Feb 2010 02:19:42 -0800 (PST)
-In-Reply-To: <4B7BB604.20205@obry.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=X2ymlwT3ljE+rWjPB9u1jJ661GKQxqZ2woDP1UVDwHKK2K8MSxdvs/D7KtCwupnWGZ
+         knqlkFwDp2rjq48wM+MpcmFz+GplD52TwxEqLLylVOCKCiitcbXcYSRrHk2C4miXGWyJ
+         /OaGi+B3sKFu/USJRhGxMs2cM6aiYroFyj78A=
+Received: by 10.231.169.71 with SMTP id x7mr3839005iby.18.1266402185819;
+        Wed, 17 Feb 2010 02:23:05 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 23sm2285280iwn.3.2010.02.17.02.23.04
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 17 Feb 2010 02:23:04 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20100213090544.GA29850@progeny.tock>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140227>
 
-Hi,
+Jonathan Nieder wrote:
+> Some machines I don=E2=80=99t have access to have been hitting a test=
+ failure
+> when building git 1.6.6.2 and 1.7.0-rc2.  I am looking for ideas.
+>=20
+> The failed test is #24 from t7400-submodule-basic.sh:
+>=20
+>  test_expect_success 'update --init' '
 
-On Wed, Feb 17, 2010 at 5:25 PM, Pascal Obry <pascal@obry.net> wrote:
-> $ git clone http://git.sv.gnu.org/r/v2p.git
+Looks like it was an infrastructure problem of some kind.  I still
+haven=E2=80=99t figured it out what changed, but all the affected platf=
+orms
+dealt fine with 1.7.0.  There was no need to bother you.
 
-in case anyone is wondering, the equivalent git:// url is
-
-  git://git.sv.gnu.org/v2p.git
-
-> $ git rebase --onto v3.1 HEAD~3 HEAD
-
-Why do you add the last parameter ("HEAD")? If I run the rebase
-without it, it works fine (ie. not on a detached HEAD).
-
--- 
-Cheers,
-Ray Chuan
+So sorry for the noise,
+Jonathan
+https://buildd.debian.org/status/package.php?p=3Dgit-core - build logs
