@@ -1,83 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'git status' on NFS performance regression in 1.7.0
-Date: Wed, 17 Feb 2010 12:23:31 -0800
-Message-ID: <7vy6irligs.fsf@alter.siamese.dyndns.org>
-References: <885649361002171208j41405b9exdfc34034c905e96c@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Possible bug with git status in 1.7.0
+Date: Wed, 17 Feb 2010 21:52:33 +0100
+Message-ID: <4B7C5711.8060708@web.de>
+References: <loom.20100217T184109-183@post.gmane.org> <7vvddvoegv.fsf@alter.siamese.dyndns.org> <4B7C490B.8030902@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git ML <git@vger.kernel.org>
-To: James Pickens <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 17 21:23:58 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Sergio Callegari <sergio.callegari@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 21:52:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhqRA-0006SK-HY
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 21:23:56 +0100
+	id 1Nhqt1-0007Ag-KV
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 21:52:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755331Ab0BQUXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2010 15:23:38 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60052 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755064Ab0BQUXh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2010 15:23:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B6199AA39;
-	Wed, 17 Feb 2010 15:23:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; s=sasl; bh=BuNV0PuhsdPOsu9rqzjCEpSPZec=; b=ekPV73
-	dSJ4+GxFLwjdpoLz8kAROaBjj93XQ5hLB/iM8B04sO4HEXCTt70LfYe7Ca6Hw9+Y
-	+xBIbR/qBLhhn2fHCQ1KAsqPBNbj1trr9fFnN9uSc01w4sD5jWGCIDzshfV+lrYF
-	9FWEvTaKbZfaYpKLfhSlTkpEoMjq5CnPM3koA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qXC71kGfnS1kMKRIgj3m/fYsamq6b6EP
-	CvkAqUdYoENpwS+eiHnNQ29kA4PkPYimMfvAhEkTy1XzzIq3DwrpxfZ+F+s7OOj/
-	sJrj3CtXIfFPLllIkxeHc7lgt4lWyW4IMWz7C+EhhWzn1VDx6I0zqPBFCWGZLHXp
-	y7arkzMamBQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 356C19AA35;
-	Wed, 17 Feb 2010 15:23:35 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 80D4D9AA33; Wed, 17 Feb
- 2010 15:23:32 -0500 (EST)
-In-Reply-To: <885649361002171208j41405b9exdfc34034c905e96c@mail.gmail.com>
- (James Pickens's message of "Wed\, 17 Feb 2010 13\:08\:12 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 52F73E32-1C02-11DF-8055-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756116Ab0BQUwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2010 15:52:37 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:53328 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755779Ab0BQUwg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2010 15:52:36 -0500
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 219DD147B2856;
+	Wed, 17 Feb 2010 21:52:35 +0100 (CET)
+Received: from [80.128.113.116] (helo=[192.168.178.26])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1Nhqss-0006Ph-00; Wed, 17 Feb 2010 21:52:34 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
+In-Reply-To: <4B7C490B.8030902@gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/49EFRSE5/GVKNkst/MRsB8EsLe+JQHbvTAqqn
+	3g48iXZETbRa34heo8snYG0hvH4zNIWcEbXN3PArAyuy12mppZ
+	np3vpqMAMOfpvWfTC/Gg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140261>
 
-James Pickens <jepicken@gmail.com> writes:
+Am 17.02.2010 20:52, schrieb Sergio Callegari:
+> Junio C Hamano wrote:
+>> You are getting reminded that you either forgot to "git add" that file in
+>> the submodule, or you forgot to add that file to .gitignore in the
+>> submodule.
+>>   
+> 
+> Thanks for the explanation!
+> 
+> The wording of the reminder is a bit unclear, though.  Suppose that the
+> problem is with submodule "mod".
+> 
+> What you get from git status is a notice that something is modified but
+> not updated, with the following suggestion
+> 
+> # Changed but not
+> updated:                                                                                     
+> 
+> #   (use "git add <file>..." to update what will be committed)
+> 
+> and then the notice about what is in fact modified
+> 
+> #       modified:   mod
+> 
+> 
+> So the first problem is that now git status provides a hint that may be
+> confusing.  One gets the idea that he needs to add mod (to store a new
+> commit id in the index) and not to add a file in mod.
 
-> I noticed that 'git status' in version 1.7.0 is much slower than in 1.6.2.5
-> on large work trees on NFS - averaging ~13 seconds runtime vs. ~2 seconds.
-> I did a bit of debugging and found that 'git status' apparently doesn't use
-> the multi-threaded preload_index any more, although some other commands
-> like diff still use it.  Was it intentionally dropped from 'git status'?
+That is a very valid point. I am currently working on git status being
+more explicit about the type of modification. I just asked for comments
+on this issue on February 14th in the thread titled "[PATCH/RFC] git
+diff --submodule: Show detailed dirty status of submodules" (Gmane is
+down for me right now, so i am sorry: no link today).
 
-There might be subtle breakage for doing this, but it would be worth a try
-;-)
+The changes i have in mind for git status would also include giving a
+better hint, as you rightfully pointed out.
 
- builtin-commit.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 55676fd..71f81c9 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -1046,7 +1046,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	if (*argv)
- 		s.pathspec = get_pathspec(prefix, argv);
- 
--	read_cache();
-+	read_cache_preload(NULL);
- 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, s.pathspec, NULL, NULL);
- 	s.is_initial = get_sha1(s.reference, sha1) ? 1 : 0;
- 	s.in_merge = in_merge;
+> As a second issue, note that mod is in fact not really modified being that
+> 
+> 1) no tracked file in it has been modified.
+> 2) no new commit has been made
+> 
+> and the fact is that from git status I cannot recognize anymore if the
+> module is really changed (the module commit id has changed) or has
+> uncommited changes (some tracked file is changed) or is merely polluted
+> by untracked files, so now I always need to explore the submodule.
+> 
+> It is true that this can be solved putting more stuff in .gitignore.
+> However, it might be a matter of taste, but I do not like putting all
+> byproducts in .gitignore  because not doing so allows me to
+> differentiate between
+> 
+> - files that are just garbage
+> - files that are not tracked but may be still precious
+> 
+> and selectively clean either category using the -x or -X options of git
+> clean.
+> 
+> 
+> So, it would be nice to improve the feedback of git status for this
+> particular case and possibly have an option to avoid status being so
+> wordy about untracked files.
+
+So i assume that my proposal to explicitly state that a submodule has
+new commits, modified files and/or untracked files would solve your
+woes?
