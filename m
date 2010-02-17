@@ -1,82 +1,63 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Git svn fetches entire trunk on tags (change from 1.6.5.2 to
-	1.7.0)
-Date: Wed, 17 Feb 2010 15:23:42 -0800
-Message-ID: <20100217232342.GA29610@dcvr.yhbt.net>
-References: <94a51d821002161717q4dd116f9tebff3a2475446a8e@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 0/6] fast-import updates
+Date: Wed, 17 Feb 2010 15:23:41 -0800
+Message-ID: <20100217232341.GA27377@spearce.org>
+References: <1266433556-1987-1-git-send-email-nico@fluxnic.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Robert Zeh <robert.allan.zeh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 18 00:23:50 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Thu Feb 18 00:23:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhtFE-00041P-AA
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 00:23:48 +0100
+	id 1NhtFO-00046D-6E
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 00:23:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757843Ab0BQXXn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Feb 2010 18:23:43 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:60569 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755375Ab0BQXXm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2010 18:23:42 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60AC01F4EF;
-	Wed, 17 Feb 2010 23:23:42 +0000 (UTC)
+	id S1757871Ab0BQXXq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2010 18:23:46 -0500
+Received: from mail-yw0-f197.google.com ([209.85.211.197]:65244 "EHLO
+	mail-yw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757868Ab0BQXXp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2010 18:23:45 -0500
+Received: by ywh35 with SMTP id 35so446917ywh.4
+        for <git@vger.kernel.org>; Wed, 17 Feb 2010 15:23:45 -0800 (PST)
+Received: by 10.151.88.12 with SMTP id q12mr6140373ybl.315.1266449024921;
+        Wed, 17 Feb 2010 15:23:44 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 35sm3404979yxh.15.2010.02.17.15.23.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 17 Feb 2010 15:23:43 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <94a51d821002161717q4dd116f9tebff3a2475446a8e@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <1266433556-1987-1-git-send-email-nico@fluxnic.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140271>
 
-Robert Zeh <robert.allan.zeh@gmail.com> wrote:
-> Since upgrading from 1.6.5.2 to 1.7.0 I've noticed a change in how
-> git=A0svn=A0fetches from the Subversion repository on tags.=A0=A0Of c=
-ourse,
-> for the repo I'm working with there are many more tags then branches.
-> 1.6.5.2 gives me=A0the following on a tag:
->=20
->=20
-> r333 =3D b15f3f20710a1e282fb6ff62c13fad64376ad2b4 (refs/remotes/trunk=
-)
-> Found possible branch point:http://bt011us013s/prod_repos/trunk
-> =3D>http://bt011us013s/prod_repos/tags/3.09.1255, 333
-> Found branch parent: (refs/remotes/tags/3.09.1255)
-> b15f3f20710a1e282fb6ff62c13fad64376ad2b4
-> Following parent with=A0do_switch
-> Successfully followed parent
->=20
-> r334 =3D 77d132d69bc333e7c988a4f3af9d48a98dadf0d4 (refs/remotes/tags/=
-3.09.1255)
->=20
-> With 1.7.0:
-> r333 =3D b15f3f20710a1e282fb6ff62c13fad64376ad2b4 (refs/remotes/trunk=
-)
->=20
-> =A0=A0=A0=A0=A0=A0=A0=A0A=A0=A0=A0=A0=A0=A0=A0Enterprise/Header.txt
-> =A0=A0=A0=A0=A0=A0=A0=A0....
->=20
-> r334 =3D 2c0e6dd89e81e7d18288e135f40f193b2ff22018 (refs/remotes/tags/=
-3.09.1255)
->=20
-> The SHA1s are also different.
->=20
-> It would be nice if the entire branch wasn't fetched.
+Nicolas Pitre <nico@fluxnic.net> wrote:
+> Will follow a couple fast-import updates, with the most significant
+> change being the ability for fast-import to produce pack index v2 by
+> default.  Overall this should make fast-import produced data more imune
+> to silent corruptions, and also lift the limit on the maximum pack size
+> it could produce.
+> 
+> [PATCH 1/6] fast-import: start using struct pack_idx_entry
+> [PATCH 2/6] fast-import: use sha1write() for pack data
+> [PATCH 3/6] fast-import: use write_idx_file() instead of custom code
+> [PATCH 4/6] fast-import: make default pack size unlimited
+> [PATCH 5/6] fast-import: honor pack.indexversion and pack.packsizelimit config vars
+> [PATCH 6/6] fast-import: use the diff_delta() max_delta_size argument
 
-Hi Robert,
+Acked-by: Shawn O. Pearce <spearce@spearce.org>
 
-There was a rather large amount of changes between 1.6.5.2 so some
-regressions could've slipped in.  A bisection would definitely help
-us track down the cause.
+Thanks Nico.  I wanted to do this myself, but couldn't find the time
+since it was recently brought up that we still didn't use index v2
+in fast-import.
 
-Does the repository you're using svn:mergeinfo use by any chance?
-
---=20
-Eric Wong
+-- 
+Shawn.
