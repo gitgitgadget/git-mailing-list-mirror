@@ -1,92 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] submodule summary: Don't barf when invoked in an empty
- repo
-Date: Wed, 17 Feb 2010 01:10:05 -0500
-Message-ID: <20100217061005.GA520@coredump.intra.peff.net>
-References: <20100216041945.GB10296@vfb-9.home>
- <20100216062422.GC10296@vfb-9.home>
- <20100216072154.GF2169@coredump.intra.peff.net>
- <201002161121.14613.johan@herland.net>
+From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
+Subject: [RFC/PATCH 0/3] More fool-proof "git rebase --whitespace=fix"
+Date: Wed, 17 Feb 2010 08:02:51 +0100
+Message-ID: <4B7B949B.6020302@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Jacob Helwig <jacob.helwig@gmail.com>,
-	Ping Yin <pkufranky@gmail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Feb 17 07:10:18 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 17 08:03:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nhd74-0002ft-0t
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 07:10:18 +0100
+	id 1Nhdw4-0006as-Ur
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 08:03:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752014Ab0BQGKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2010 01:10:10 -0500
-Received: from peff.net ([208.65.91.99]:49814 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751680Ab0BQGKJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2010 01:10:09 -0500
-Received: (qmail 11452 invoked by uid 107); 17 Feb 2010 06:10:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 17 Feb 2010 01:10:18 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Feb 2010 01:10:05 -0500
-Content-Disposition: inline
-In-Reply-To: <201002161121.14613.johan@herland.net>
+	id S1752382Ab0BQHCz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Feb 2010 02:02:55 -0500
+Received: from ey-out-2122.google.com ([74.125.78.26]:60501 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752289Ab0BQHCy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2010 02:02:54 -0500
+Received: by ey-out-2122.google.com with SMTP id d26so1679282eyd.19
+        for <git@vger.kernel.org>; Tue, 16 Feb 2010 23:02:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:content-type
+         :content-transfer-encoding;
+        bh=2HT8TS9piq/jHaQYS4jbDI0HShuBSY1bAjhU3Q/X07s=;
+        b=GZtwhu4ZGEykbS+E/ngM1XsofKvRLYzpjCHQ26QZ57zCzVnpyVqesD4QRNiIYAcalW
+         JCP6k+BOvHIa/mn49TCHWzZpd8cxxzHkoIZqyxWmFg8GCypFys+lPq6XTKfI1XJp1qOb
+         xv5GUaud1NaCWgdK43sB5A/qgVrruSl00lY/E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=ZN4NdubN0iL8GCGmz9335d7bHUGJIyofyXORNqViL6+fs5268jlknoOEm4/tldrbPY
+         BwDC3SLPtBQ0AegK6etfrIg4IqWBEF5SR/VEXub/HJ3Xc3Cg6ZHzYeBZYWQEK8yMrUna
+         8G158+F4qveJlASRX9yf3XDTktCU3AlD2o3sY=
+Received: by 10.213.59.145 with SMTP id l17mr4813437ebh.56.1266390172962;
+        Tue, 16 Feb 2010 23:02:52 -0800 (PST)
+Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
+        by mx.google.com with ESMTPS id 28sm20132375eyg.36.2010.02.16.23.02.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 16 Feb 2010 23:02:52 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140207>
 
-On Tue, Feb 16, 2010 at 11:21:14AM +0100, Johan Herland wrote:
+This is the first step in making sure that "git rebase --whitespace=3Df=
+ix HEAD~<number>"
+will never fail.
 
-> I'm working from the simple test case in the below patch, I get the
-> following output with your proposed fix:
-> 
->   [...]
->   trace: built-in: git 'rev-parse' '-q' '--verify' '^0'
->   [...]
->   trace: built-in: git 'diff-index' '--raw' 'HEAD' '--'
->   fatal: bad revision 'HEAD'
->   [...]
-> 
-> I.e. your fix doesn't work because $1 is empty (not "HEAD") at this point.
+As suggested by Junio, the first step consists in changing "git apply w=
+hitespace=3Dfix"
+to be smarter about previously deleted blank lines at the end of the fi=
+le.
 
-Ah, right. I was testing "git status" which calls "git submodule summary
-HEAD", but your test uses the assumed HEAD. And both need fixing.
+I would be grateful for any feedback on the design decisions and the im=
+plementation.
 
-> My alternative patch (below) does pass my test case (and all the other
-> tests as well)
-> 
-> I'd still like an ACK from the original author (Ping Yin) as well, as I'm
-> not sure if I overlooked something by removing the "$1^0".
+Bj=C3=B6rn Gustavsson (3):
+  apply: Allow blank context lines to match beyond EOF
+  t4124: Add additional tests of --whitespace=3Dfix
+  t3417: Add test cases for "rebase --whitespace=3Dfix"
 
-Your patch looks correct to me. I don't really see how dropping the "^0"
-will have any effect. rev-parse --verify already prefers revisions to
-files, and diff-index should peel if needed.
-
-Which, btw, seems like a mini-bug here. The point of this code is to say
-"if we have an argument, is it a revision? If so, shift it off.
-Otherwise, put it (and any other arguments) after the -- as a file
-limiter".
-
-Usually if I have a branch "master" and a file "master", git will
-complain about the ambiguity unless I use an explicit "--" separator.
-But here it always takes it as a revision, no questions asked. Or if I
-am in "--files" mode, that argument is simply removed and ignored (see
-just below where we unset $head).
-
-Probably it should be re-ordered as
-
-  if test -n "$files"; then
-     ...
-  else
-     if rev=$(git rev-parse -q --verify --default HEAD "$1")
-       ...
-  fi
-
-It just doesn't come up much because usually having branch names and
-filenames the same is sufficiently annoying that nobody does it.
-
--Peff
+ builtin-apply.c                  |  127 ++++++++++++++++++++++++++++++=
+++------
+ t/t3417-rebase-whitespace-fix.sh |  126 ++++++++++++++++++++++++++++++=
++++++++
+ t/t4124-apply-ws-rule.sh         |   12 ++++
+ 3 files changed, 246 insertions(+), 19 deletions(-)
+ create mode 100755 t/t3417-rebase-whitespace-fix.sh
