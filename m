@@ -1,92 +1,90 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH] fix threaded grep for machines with only one cpu
-Date: Tue, 16 Feb 2010 21:41:20 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1002162140110.1946@xanadu.home>
-References: <20100215225001.GA944@book.hvoigt.net>
- <7vwryet2cw.fsf@alter.siamese.dyndns.org>
- <7vocjpnc5v.fsf@alter.siamese.dyndns.org>
- <7vljetlx8r.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.1002160914140.20986@pacific.mpi-cbg.de>
- <7viq9wzq8g.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.1002170200370.20986@pacific.mpi-cbg.de>
- <7vvddwodox.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add `log.decorate' configuration variable.
+Date: Tue, 16 Feb 2010 19:16:59 -0800
+Message-ID: <7v635wimac.fsf@alter.siamese.dyndns.org>
+References: <alpine.LNX.2.00.1002171239430.2477@vqena.qenxr.bet.am>
+ <7vljespt2l.fsf@alter.siamese.dyndns.org>
+ <alpine.LNX.2.00.1002171427080.3414@vqena.qenxr.bet.am>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 17 03:41:29 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Steven Drake <sdrake@xnet.co.nz>
+X-From: git-owner@vger.kernel.org Wed Feb 17 04:17:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhZqz-0000x2-2E
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 03:41:29 +0100
+	id 1NhaPv-0003vc-9K
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 04:17:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933716Ab0BQClY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 21:41:24 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:53394 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933523Ab0BQClX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 21:41:23 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0KXY003OGSSWM900@VL-MR-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 16 Feb 2010 21:41:20 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7vvddwodox.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S933944Ab0BQDRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 22:17:13 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47569 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933920Ab0BQDRL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 22:17:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A5A49AD71;
+	Tue, 16 Feb 2010 22:17:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=V1QaJolmUF/IMxj/h8q+futELco=; b=FuwVkl
+	wHcCYnisHJCVkeLIPMYC11rRXzdUXj8/AX9QQRVlGoD3HkqRHAZ6N0QIMJZVcARB
+	fGckqAmVnCZBSwrUq1A/nkPoOOsGZdD6jLPSlSE8Y/0BHb6dwdVlVJ8v00sFYRDx
+	PiS9AZvr9Ykz1/q33xAKskcxNEp/xmKFbTfE0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r9YZeN3/+aphqKQEiDlOxa/Cnou4LhDG
+	K/xQ55MJQFt4HDOS5Ef9BB1aQLWjvnmVHVrYc8fccKy2H7Otgc9ET5EFzUE7lsny
+	2Sp5rMOODn49HX2UxTNP6zaNAShm5MU6OjyHIVfSip9nuZGSyNqhatNsEeAf4Fx7
+	3JrGyCjQ8NQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0729D9AD6C;
+	Tue, 16 Feb 2010 22:17:05 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF24D9AD6A; Tue, 16 Feb
+ 2010 22:17:01 -0500 (EST)
+In-Reply-To: <alpine.LNX.2.00.1002171427080.3414@vqena.qenxr.bet.am> (Steven
+ Drake's message of "Wed\, 17 Feb 2010 15\:04\:21 +1300 \(NZDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: EC59A49C-1B72-11DF-8691-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140201>
 
-On Tue, 16 Feb 2010, Junio C Hamano wrote:
+Steven Drake <sdrake@xnet.co.nz> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> The program can decide at runtime not to use threading even if the support
-> >> is compiled in.  In such a case, mutexes are not necessary and left
-> >> uninitialized.  But the code incorrectly tried to take and release the
-> >> read_sha1_mutex unconditionally.
-> >> 
-> >> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> >> Acked-by: Fredrik Kuivinen <frekui@gmail.com>
-> >> ---
-> >
-> > Yes, this one looks much, much nicer.
-> 
-> The structure may be much nicer, but one remaining thing is that I do not
-> think foo_locked() is a good name; IIRC, kernel folks use _locked() suffix
-> when the caller is expected to already hold the lock.  So a typical naming
-> convention goes like this:
-> 
-> 	foo()
->         {
->         	lock();
->                 foo_locked();
->                 unlock();
->         }
-> 
-> but what the patch did was the other way around:
-> 
-> 	read_sha1_file_locked()
->         {
->         	lock();
->                 read_sha1_file();
->                 unlock();
-> 	}
-> 
-> which is probably against the convention many readers of our codebase are
-> already familiar with.
-> 
-> We need a better name to unconfuse people, I think.
+> Good point, and looking at the code "log.decorate" only has an affect after
+> cmd_log_init() is called, which is call by cmd_whatchanged(), cmd_show(), 
+> cmd_log_reflog() and cmd_log() so only those command are affected
+> (notably not format-patch).
 
-lock_and_read_sha1_file()
+I was not worried about what your change does.  I am worried about
+protecting what the code after your change currently does from future
+changes done by other people while you are not actively watching the
+patches in flight on this list.
 
+> While on the subject of git_config I think die_bad_config() should be an
+> extern (i.e. decleared in cache.h and a static function) so that it could
+> be used in git_XXX_config functions for handling error.  Something like:
+>
+> diff --git a/builtin-log.c b/builtin-log.c
+> index f096eea..a41a7bb 100644
+> --- a/builtin-log.c
+> +++ b/builtin-log.c
+> @@ -264,6 +264,8 @@ static int git_log_config(const char *var, const char *value, void *cb)
+>  			decoration_style = DECORATE_FULL_REFS;
+>  		else if (!strcmp(value, "short"))
+>  			decoration_style = DECORATE_SHORT_REFS;
+> +		else
+> +			die_bad_config(var);
 
-Nicolas
+We generally avoid doing this, as we may later want to add different
+values to "log.decorate", and keep the older git working as if nothing is
+specified, rather than barfing, so that people can access the same
+repository, perhaps over NFS, from different machines with varying vintage
+of git.
