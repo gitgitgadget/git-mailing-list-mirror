@@ -1,80 +1,103 @@
-From: Robert Zeh <robert.allan.zeh@gmail.com>
-Subject: Git svn fetches entire trunk on tags (change from 1.6.5.2 to 1.7.0)
-Date: Tue, 16 Feb 2010 19:17:47 -0600
-Message-ID: <94a51d821002161717q4dd116f9tebff3a2475446a8e@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fix threaded grep for machines with only one cpu
+Date: Tue, 16 Feb 2010 17:26:06 -0800
+Message-ID: <7vvddwodox.fsf@alter.siamese.dyndns.org>
+References: <20100215225001.GA944@book.hvoigt.net>
+ <7vwryet2cw.fsf@alter.siamese.dyndns.org>
+ <7vocjpnc5v.fsf@alter.siamese.dyndns.org>
+ <7vljetlx8r.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.1002160914140.20986@pacific.mpi-cbg.de>
+ <7viq9wzq8g.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.1002170200370.20986@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 17 02:18:11 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Heiko Voigt <hvoigt@hvoigt.net>,
+	Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 17 02:26:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhYYM-00064S-Fn
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 02:18:10 +0100
+	id 1NhYgR-0002Ah-7J
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 02:26:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933863Ab0BQBRu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Feb 2010 20:17:50 -0500
-Received: from mail-iw0-f185.google.com ([209.85.223.185]:47057 "EHLO
-	mail-iw0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933839Ab0BQBRt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2010 20:17:49 -0500
-Received: by iwn15 with SMTP id 15so5907774iwn.19
-        for <git@vger.kernel.org>; Tue, 16 Feb 2010 17:17:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=9djmDXR5W7IqWn/fxlRvZGbTWH84FX+BHLZfIEi9Qa0=;
-        b=GHCp5EF3P5mxAKnuO2PebfWTZ1Ms7E6WbgWIwgX5WiUqyZMp1ospW4rWHuontgso0E
-         iCokqSaL2tY/CK+SBeVYjXsG4Vr9jEwZe96XL/zjg8UGDAiTcbfY8Xe/VViT7FSiaS63
-         QWwmeoeo5RuuHJOz1dEAATDVb+JPDA5B43GK4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=CagBUKMtByF5TA3NQuMPY8UadUPcTJUZKs9eoYy86ONq1xpk7IUjRGQMkRwfvhXxQB
-         ALoihf0rf9aTQMiVCc/1liZ+sKZSYxITV/+Tn2/YGgLTf2viKVADhWWKfrKqcqZTcpvi
-         PEZ/eJxuS0HnRh335gff8PmndTod1rGYpEbBk=
-Received: by 10.231.190.146 with SMTP id di18mr4153788ibb.19.1266369467902; 
-	Tue, 16 Feb 2010 17:17:47 -0800 (PST)
+	id S933876Ab0BQB0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 20:26:25 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48020 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933864Ab0BQB0X (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 20:26:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 716459AE17;
+	Tue, 16 Feb 2010 20:26:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NsVNT5pywbXlL5+9Hp20LHgu1Ko=; b=HKfXPW
+	92zD/TbIMA8l/PYrAqvxNpKPJsrEXyg6QXDQ7W4m983KAAasQBaA37vc3HlHrlf8
+	Hvc02LEo26qYNPWxLRGA7LJL1p52p82p52VL6bnDMtUjZCXm/Rf8XU2OsFyqHkIk
+	tRE7aZmSVW1BY6pNMFKmAU6LPwk1/te9eBsSg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JAAsCb/L38ei9vHM4o/r7wVOAdIPN+v1
+	hsQ5tUa3Wk1LSVR2QhxMLfjcZyymU9bE2azzCm5849DSW1DgkS5mhqC4yzYtctuS
+	eenifhptD2mQwxB8E+WO8jR2BouN6gGA4a09u/zx0qLIwPUf+1Ryq8uVqeL2MAUD
+	Mb/MExAdHk8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B4A89AE14;
+	Tue, 16 Feb 2010 20:26:15 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DDD8E9AE06; Tue, 16 Feb
+ 2010 20:26:08 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.1002170200370.20986@pacific.mpi-cbg.de>
+ (Johannes Schindelin's message of "Wed\, 17 Feb 2010 02\:01\:03 +0100
+ \(CET\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 70B1DD3C-1B63-11DF-8376-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140197>
 
-Since upgrading from 1.6.5.2 to 1.7.0 I've noticed a change in how
-git=A0svn=A0fetches from the Subversion repository on tags.=A0=A0Of cou=
-rse,
-for the repo I'm working with there are many more tags then branches.
-1.6.5.2 gives me=A0the following on a tag:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+>> The program can decide at runtime not to use threading even if the support
+>> is compiled in.  In such a case, mutexes are not necessary and left
+>> uninitialized.  But the code incorrectly tried to take and release the
+>> read_sha1_mutex unconditionally.
+>> 
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> Acked-by: Fredrik Kuivinen <frekui@gmail.com>
+>> ---
+>
+> Yes, this one looks much, much nicer.
 
-r333 =3D b15f3f20710a1e282fb6ff62c13fad64376ad2b4 (refs/remotes/trunk)
-=46ound possible branch point:http://bt011us013s/prod_repos/trunk
-=3D>http://bt011us013s/prod_repos/tags/3.09.1255, 333
-=46ound branch parent: (refs/remotes/tags/3.09.1255)
-b15f3f20710a1e282fb6ff62c13fad64376ad2b4
-=46ollowing parent with=A0do_switch
-Successfully followed parent
+The structure may be much nicer, but one remaining thing is that I do not
+think foo_locked() is a good name; IIRC, kernel folks use _locked() suffix
+when the caller is expected to already hold the lock.  So a typical naming
+convention goes like this:
 
-r334 =3D 77d132d69bc333e7c988a4f3af9d48a98dadf0d4 (refs/remotes/tags/3.=
-09.1255)
+	foo()
+        {
+        	lock();
+                foo_locked();
+                unlock();
+        }
 
-With 1.7.0:
-r333 =3D b15f3f20710a1e282fb6ff62c13fad64376ad2b4 (refs/remotes/trunk)
+but what the patch did was the other way around:
 
-=A0=A0=A0=A0=A0=A0=A0=A0A=A0=A0=A0=A0=A0=A0=A0Enterprise/Header.txt
-=A0=A0=A0=A0=A0=A0=A0=A0....
+	read_sha1_file_locked()
+        {
+        	lock();
+                read_sha1_file();
+                unlock();
+	}
 
-r334 =3D 2c0e6dd89e81e7d18288e135f40f193b2ff22018 (refs/remotes/tags/3.=
-09.1255)
+which is probably against the convention many readers of our codebase are
+already familiar with.
 
-The SHA1s are also different.
-
-It would be nice if the entire branch wasn't fetched.
-
-Robert
+We need a better name to unconfuse people, I think.
