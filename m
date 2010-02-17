@@ -1,73 +1,55 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [RFC PATCH v2 11/11] filter-branch: learn how to filter notes
-Date: Wed, 17 Feb 2010 20:59:26 +0100
-Message-ID: <4B7C4A9E.9030906@kdbg.org>
-References: <cover.1266361759.git.trast@student.ethz.ch> <a1bdef42de198dec4ec59c0d2b8b67e8656192d1.1266361759.git.trast@student.ethz.ch>
+From: James Pickens <jepicken@gmail.com>
+Subject: 'git status' on NFS performance regression in 1.7.0
+Date: Wed, 17 Feb 2010 13:08:12 -0700
+Message-ID: <885649361002171208j41405b9exdfc34034c905e96c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Feb 17 20:59:52 2010
+Content-Type: text/plain; charset=UTF-8
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 17 21:16:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nhq3m-0005fY-Dp
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 20:59:46 +0100
+	id 1NhqJW-0000nF-6r
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 21:16:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754161Ab0BQT7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2010 14:59:41 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:50158 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754048Ab0BQT7k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2010 14:59:40 -0500
-Received: from [77.118.62.16] (77.118.62.16.wireless.dyn.drei.com [77.118.62.16])
-	by bsmtp.bon.at (Postfix) with ESMTP id 34B741001C;
-	Wed, 17 Feb 2010 20:59:30 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <a1bdef42de198dec4ec59c0d2b8b67e8656192d1.1266361759.git.trast@student.ethz.ch>
+	id S1754855Ab0BQUPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2010 15:15:55 -0500
+Received: from mail-yw0-f197.google.com ([209.85.211.197]:48546 "EHLO
+	mail-yw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754846Ab0BQUPy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2010 15:15:54 -0500
+Received: by ywh35 with SMTP id 35so257106ywh.4
+        for <git@vger.kernel.org>; Wed, 17 Feb 2010 12:15:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=wELCMyH8nv4RQIt9GJ1tDzGFSGqgdxmrowoNYWzmURI=;
+        b=LkNfk84FiCeNY4z8PTNMKOLrKms4e/9rxLz9Ppomo8lQGeT2vUk7Hhvn+zxyVRQuhD
+         r4Mk+yM4lYuVdYphrVlpGuaQL5WyL03WTQR6WDl/FTBeXnkXRBIgQqgIp44wcycTLTpr
+         fhAMigTbLFPSBO63fTMTIL5TCaS4WXLI+LZcU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=ATQaD+l31ikZ/KUFSXQv2EoHW4A2koJP5cUvfaW59MY05iaIGiVNM2CajokkbVl59r
+         2Hy88VHE0V894Dizgamia5r4fIa8yQwKgSIvHXPNelEet9mFdue+fvdUSGeeiCIwW73F
+         Ox8iaeZFl4E1syNi8EMaXgwqG625On9QkNzbM=
+Received: by 10.91.97.14 with SMTP id z14mr2946491agl.0.1266437313042; Wed, 17 
+	Feb 2010 12:08:33 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140258>
 
-Thomas Rast schrieb:
-> +--notes-filter <command>::
-> +	This filter rewrites the notes (see linkgit:git-notes[1]).  It
-> +	gets the old notes on standard input, and its standard output
-> +	is written as the new note (overwriting any existing notes).
-> ++
-> +Defaults to doing nothing, unless the `notes.rewrite.filter-branch`
-> +option is set, in which case it copies the notes (i.e., defaults to
-> +`cat`).
-> ++
-> +In addition to the usual variables, GIT_NEW_COMMIT is set to the
-> +result of the rewriting so that the filter can get at the existing
-> +notes, if any.
+Hi,
 
-I think that this form of --notes-filter is not flexible enough.
+I noticed that 'git status' in version 1.7.0 is much slower than in 1.6.2.5
+on large work trees on NFS - averaging ~13 seconds runtime vs. ~2 seconds.
+I did a bit of debugging and found that 'git status' apparently doesn't use
+the multi-threaded preload_index any more, although some other commands
+like diff still use it.  Was it intentionally dropped from 'git status'?
 
-1. There is no possibility for the filter to decide whether the note 
-should be attached to the rewritten commit or not.
-
-2. The implementation is not concerned about different notes namespaces 
-(IIUC).
-
-3. There is probably more.
-
-One use-case that comes to mind is to move notes from one particular 
-namespace to a different one (and I mean move, not just copy). Don't know 
-if 'git notes' itself has such a feature.
-
-I am not a 'git notes' user at this time, nor do I know anything about the 
-implementation, nor did I follow any discussions about notes, hence, I'm 
-not in the position to judge what --notes-filter could be useful for. I 
-know I talked you into implementing it, but that is just because I dislike 
-that filter-branch calls a post-rewrite hook (that just doesn't sound 
-right to me, given the one-shot nature of filter-branch), and your 
-intention obviously was to transfer notes.
-
--- Hannes
+James
