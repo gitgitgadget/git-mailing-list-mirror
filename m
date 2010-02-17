@@ -1,91 +1,75 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: Question about git rebase --onto
-Date: Wed, 17 Feb 2010 10:25:24 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <4B7BB604.20205@obry.net>
-References: <4B6865A9.60603@obry.net> <7v636f7biw.fsf@alter.siamese.dyndns.org> <4B686CAC.7020103@obry.net> <7vhbpx3it2.fsf@alter.siamese.dyndns.org> <4B6AF9EE.3000205@obry.net> <7vr5p1gd2t.fsf@alter.siamese.dyndns.org>
-Reply-To: pascal@obry.net
+From: Siju George <sgeorge.ml@gmail.com>
+Subject: Re: XML Parsing Error: junk after document element
+Date: Wed, 17 Feb 2010 15:16:54 +0530
+Message-ID: <b713df2c1002170146xbf484b6u58e3babf247dd6de@mail.gmail.com>
+References: <b713df2c1002102347g70cc212et21d507d44bb5aead@mail.gmail.com>
+	 <m3ocjw82ai.fsf@localhost.localdomain>
+	 <b713df2c1002112023k757a54faq933b9a9bdacc7d1c@mail.gmail.com>
+	 <201002121148.37761.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 17 10:25:31 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 10:47:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nhg9w-000520-UY
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 10:25:29 +0100
+	id 1NhgUn-00022A-Gm
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 10:47:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932732Ab0BQJZV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2010 04:25:21 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:40422 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753101Ab0BQJZT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2010 04:25:19 -0500
-Received: by vws8 with SMTP id 8so622722vws.19
-        for <git@vger.kernel.org>; Wed, 17 Feb 2010 01:25:17 -0800 (PST)
-Received: by 10.220.107.21 with SMTP id z21mr5413597vco.197.1266398717408;
-        Wed, 17 Feb 2010 01:25:17 -0800 (PST)
-Received: from ?192.168.0.100? (AVelizy-154-1-68-29.w83-204.abo.wanadoo.fr [83.204.186.29])
-        by mx.google.com with ESMTPS id 31sm4060305vws.20.2010.02.17.01.25.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 17 Feb 2010 01:25:15 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
-In-Reply-To: <7vr5p1gd2t.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.0.1
+	id S932930Ab0BQJq4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Feb 2010 04:46:56 -0500
+Received: from mail-yx0-f200.google.com ([209.85.210.200]:39367 "EHLO
+	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932863Ab0BQJqz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Feb 2010 04:46:55 -0500
+Received: by yxe38 with SMTP id 38so5090988yxe.4
+        for <git@vger.kernel.org>; Wed, 17 Feb 2010 01:46:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=8xLsqdpPHCUzzlz4kgetoim9xuY02Gf/rPFHgLnV978=;
+        b=LOOVb+reIb+ba4rRhGpzynquA9zv+W5oQ3fNT8lgVlmibYJiXQEmUqqezI+vkqVocO
+         ySB2TKOMDTPOoqO7PwhiOJjrwqs4q6XcwEcGmzvBTBxH0m2gNprelgdAGMRwebK4wx1Q
+         JWNhGdmIyKMSEVWy4dE1VRjqde7HB68v3YAvI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=PeLzrs9Fuc0lrMY2Yt4OE2id3qEFmzl7sEd+1e93ImbWsGo0Q8XiMcI1Hx8oeMr6R+
+         DqWOmTm0X0GQYvjFvfxc+2O+Qv5nwnjwP+9hJtQ5L1UNUZ+5FkeVYSfoH/vLgmt1766B
+         DrMeH726hXsv+V0VAxF/aYhT3GF3G+BX/eYl8=
+Received: by 10.90.9.19 with SMTP id 19mr1146612agi.78.1266400014873; Wed, 17 
+	Feb 2010 01:46:54 -0800 (PST)
+In-Reply-To: <201002121148.37761.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140224>
 
-Junio,
+On Fri, Feb 12, 2010 at 4:18 PM, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+> You have two problems here. =A0First is that gitweb doesn't find your
+> projects because of problem with filesystem permissions.
+>
+> Second is what it looks misconfigured web server. =A0The second part,
+> starting after [OPML][TXT] is not from gitweb, but from a web server.
+> It looks like you have either two web servers, or two parts of web
+> server configuration, or some worker of web server that didn't get
+> updated configuration, and it doesn't have permissions to access
+> gitweb.cgi or doesn't have configuration to know what to do with
+> the above URL.
+>
 
-> Thanks for spending time to reproduce---and please do report (and preserve
-> the reproducible state if possible) when you see a breakage (like this
-> one, or some other form) next time.
+Hi once i changed the permissions of the git repositories every thing
+is looking fine :-)
 
-I have a reproducer this time.
+Thanks
 
-$ git --version
-git version 1.7.0.14.g7e948
-
-$ git clone http://git.sv.gnu.org/r/v2p.git
-$ cd v2p/
-
-$ git branch v3.1 origin/v3.1
-
-$ git co -b po/new-context-support origin/po/new-context-support
-
-$ git cherry -v master po/new-context-support
-+ bb8647179385ecf2a5053da9a4af9e24437a5b34 Modifications to use the new
-AWS's context implementation.
-+ 12db018f5a448869b1679550cb2fd0e33336a6c9 Minor reformatting.
-+ f7888edb7572ca6d62f35e594d231c7974bc9515 Fix testsuite to pass with
-the new context support.
-
-$ git rebase --onto v3.1 HEAD~3 HEAD
-
-At this point I'm on a detached HEAD.
-
-$ git status
-# Not currently on any branch.
-nothing to commit (working directory clean)
-
-Let me know if you need additional information.
-
-Pascal.
-
--- 
-
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|    http://www.obry.net  -  http://v2p.fr.eu.org
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
+--Siju
