@@ -1,56 +1,49 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Add `init.templatedir` configuration variable.
-Date: Wed, 17 Feb 2010 10:59:32 -0800
-Message-ID: <7v1vgjsn6z.fsf@alter.siamese.dyndns.org>
-References: <alpine.LNX.2.00.1002171242150.2477@vqena.qenxr.bet.am>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steven Drake <sdrake@xnet.co.nz>
-X-From: git-owner@vger.kernel.org Wed Feb 17 19:59:56 2010
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: [PATCH 0/6] fast-import updates
+Date: Wed, 17 Feb 2010 14:05:50 -0500
+Message-ID: <1266433556-1987-1-git-send-email-nico@fluxnic.net>
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 20:06:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nhp7o-00006n-0N
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 19:59:52 +0100
+	id 1NhpDu-0004rj-H1
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 20:06:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752903Ab0BQS7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2010 13:59:41 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33217 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751537Ab0BQS7k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2010 13:59:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D97389A870;
-	Wed, 17 Feb 2010 13:59:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=C28ym67ZTzoPsBCbRHcs32oWuYw=; b=bKXgjG6CDt1oUEZbmD5igzQ
-	4cFnwuqdA/1UnKX9INi2T5bbXbafwXLCLvAIMuMzqz37KLEXkzvpMpZvJYob4iwj
-	cNC61QzD1fMEH16igOwifRnSZtNDCIXtizFv8VlkA/Boan5KwxDV0O1mTBKZ4+nZ
-	HWDh/VB2nUi8jvd0pWXw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=fyDH653XF4+DU+yxRGaB+PQORt9K9PY5LWDjvupQA8KsnmKuE
-	ZWvCptW71/PcRtLNmXG7u0LI4rHGlL4Hp9gh2pCTt1KLRD+hD/RG/FKl0NWxDOTA
-	eWJcf2A26h32/ys0ZUPW56ydvT6jfjdGM2wUnohjzQAhAVvOuYS3aphkB0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6010A9A86D;
-	Wed, 17 Feb 2010 13:59:36 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BB2DB9A86A; Wed, 17 Feb
- 2010 13:59:33 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 97979A2A-1BF6-11DF-83A4-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753828Ab0BQTGE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2010 14:06:04 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:11748 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753793Ab0BQTGB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2010 14:06:01 -0500
+Received: from localhost.localdomain ([66.130.28.92])
+ by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KY000GRF2DZ9K50@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 17 Feb 2010 14:05:59 -0500 (EST)
+X-Mailer: git-send-email 1.7.0.23.gf5ef4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140246>
 
-Thanks; I will make a minor touch-ups to both of these patches and queue.
-You may want to add a few tests to t/t0001-init.sh before they get merged
-to 'next' branch and start cooking.
+Will follow a couple fast-import updates, with the most significant
+change being the ability for fast-import to produce pack index v2 by
+default.  Overall this should make fast-import produced data more imune
+to silent corruptions, and also lift the limit on the maximum pack size
+it could produce.
+
+[PATCH 1/6] fast-import: start using struct pack_idx_entry
+[PATCH 2/6] fast-import: use sha1write() for pack data
+[PATCH 3/6] fast-import: use write_idx_file() instead of custom code
+[PATCH 4/6] fast-import: make default pack size unlimited
+[PATCH 5/6] fast-import: honor pack.indexversion and pack.packsizelimit config vars
+[PATCH 6/6] fast-import: use the diff_delta() max_delta_size argument
+
+
+Nicolas
