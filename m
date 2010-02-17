@@ -1,109 +1,146 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC PATCH v2 11/11] filter-branch: learn how to filter notes
-Date: Thu, 18 Feb 2010 00:06:32 +0100
-Message-ID: <201002180006.36749.trast@student.ethz.ch>
-References: <cover.1266361759.git.trast@student.ethz.ch> <a1bdef42de198dec4ec59c0d2b8b67e8656192d1.1266361759.git.trast@student.ethz.ch> <4B7C4A9E.9030906@kdbg.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [patch] git svn slowness on win32
+Date: Wed, 17 Feb 2010 15:15:09 -0800
+Message-ID: <20100217231509.GA29664@dcvr.yhbt.net>
+References: <13237f021002160204o3c8af7a6i3e7105bd6bc43fa3@mail.gmail.com> <alpine.DEB.1.00.1002161130590.20986@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart3267163.MCLVsHf5fj";
-	protocol="application/pgp-signature"; micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, Johan Herland <johan@herland.net>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Feb 18 00:07:11 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: josh robb <josh_robb@fastmail.fm>
+X-From: git-owner@vger.kernel.org Thu Feb 18 00:15:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nhsz8-0006qM-DF
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 00:07:10 +0100
+	id 1Nht6z-0006qn-IQ
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 00:15:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757711Ab0BQXHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2010 18:07:04 -0500
-Received: from gwse.ethz.ch ([129.132.178.237]:47875 "EHLO gwse.ethz.ch"
+	id S1757849Ab0BQXPL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Feb 2010 18:15:11 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:48515 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757426Ab0BQXHA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2010 18:07:00 -0500
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.234.1; Thu, 18 Feb
- 2010 00:06:59 +0100
-Received: from thomas.localnet (84.74.100.59) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Thu, 18 Feb
- 2010 00:06:36 +0100
-User-Agent: KMail/1.13.0 (Linux/2.6.31.12-0.1-desktop; KDE/4.4.0; x86_64; ; )
-In-Reply-To: <4B7C4A9E.9030906@kdbg.org>
+	id S1757770Ab0BQXPJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2010 18:15:09 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66B6E1F4EF;
+	Wed, 17 Feb 2010 23:15:09 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.1002161130590.20986@pacific.mpi-cbg.de>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140269>
 
---nextPart3267163.MCLVsHf5fj
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Wednesday 17 February 2010 20:59:26 Johannes Sixt wrote:
-> I think that this form of --notes-filter is not flexible enough.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
 >=20
-> 1. There is no possibility for the filter to decide whether the note=20
-> should be attached to the rewritten commit or not.
-
-That's not 100% correct, but it's not your fault for not knowing: if
-you add an empty note, that's the same as removing it.
-
-> 2. The implementation is not concerned about different notes namespaces=20
-> (IIUC).
+> On Tue, 16 Feb 2010, josh robb wrote:
 >=20
-> 3. There is probably more.
+> > I'm using git svn (1.6.4.msysgit.0) within a WindowsXP VM running
+> > under VMWare fusion on OSX 10.5. For me (and at least one other per=
+son
+> > I know) git svn has been unbearably slow.
+> >=20
+> > My profiling shows that almost all of the git-svn runtime is being
+> > spent in DynaLoader (via SVN::Base::import) which I guess is slow i=
+n a
+> > virtualized windows environment. For example:
+> >=20
+> > $ time perl /libexec/git-core/git-svn rebase
+> > Current branch master is up to date.
+> >=20
+> > real 2m56.750s
+> > user 0m3.129s
+> > sys 2m39.232s
+> >=20
+> > I've been able to make=A0significant=A0(an order of=A0magnitude)
+> > improvements to it's performance by delaying SVN::Base::import from
+> > running until it's actually needed.=A0After making this change:
+> >=20
+> > $ time perl /libexec/git-core/git-svn rebase
+> > Current branch master is up to date.
+> >=20
+> > real 0m33.407s
+> > user 0m1.409s
+> > sys 0m23.054s
+> >=20
+> > git svn rebase -n goes from 3m7.046s to 0m10.312s.
+> >=20
+> > Would love to get some feedback/thoughts etc...
 >=20
-> One use-case that comes to mind is to move notes from one particular=20
-> namespace to a different one (and I mean move, not just copy). Don't know=
+> How about the following commit message (trying to follow=20
+> http://repo.or.cz/w/git.git?a=3Dblob;f=3DDocumentation/SubmittingPatc=
+hes;hb=3DHEAD):
+>=20
+> -- snip --
+> git svn: delay importing SVN::Base until it is needed
+>=20
+> Importing functions from a .dll into Git for Windows' perl is pretty =
+slow,
+> so let's avoid importing if it is not necessary.
+>=20
+> [... timing statistics here...]
+>=20
+> Signed-off-by: Josh Robb <josh_robb@fastmail.fm>
+> -- snap --
+
+Hi Josh,
+
+Your patch was missing a call to ::req_svn() in cmd_branch(), but
+otherwise it appears fine and passes all tests.
+
+Can you write a proper commit message + patch so we can apply
+it cleanly as Johannes suggested?  Thanks!
+
+(full diff below)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 473a0b9..224c29f 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -36,11 +36,13 @@ $ENV{TZ} =3D 'UTC';
+ $| =3D 1; # unbuffer STDOUT
 =20
-> if 'git notes' itself has such a feature.
->=20
-> I am not a 'git notes' user at this time, nor do I know anything about th=
-e=20
-> implementation, nor did I follow any discussions about notes, hence, I'm=
+ sub fatal (@) { print STDERR "@_\n"; exit 1 }
+-require SVN::Core; # use()-ing this causes segfaults for me... *shrug*
+-require SVN::Ra;
+-require SVN::Delta;
+-if ($SVN::Core::VERSION lt '1.1.0') {
+-	fatal "Need SVN::Core 1.1.0 or better (got $SVN::Core::VERSION)";
++sub _req_svn {
++	require SVN::Core; # use()-ing this causes segfaults for me... *shrug=
+*
++	require SVN::Ra;
++	require SVN::Delta;
++	if ($SVN::Core::VERSION lt '1.1.0') {
++		fatal "Need SVN::Core 1.1.0 or better (got $SVN::Core::VERSION)";
++	}
+ }
+ my $can_compress =3D eval { require Compress::Zlib; 1};
+ push @Git::SVN::Ra::ISA, 'SVN::Ra';
+@@ -730,6 +732,7 @@ sub cmd_branch {
+ 		$src=3D~s/^http:/https:/;
+ 	}
 =20
-> not in the position to judge what --notes-filter could be useful
-> for.
++	::_req_svn();
+ 	my $ctx =3D SVN::Client->new(
+ 		auth    =3D> Git::SVN::Ra::_auth_providers(),
+ 		log_msg =3D> sub {
+@@ -4859,6 +4862,8 @@ sub new {
+ 	$url =3D~ s!/+$!!;
+ 	return $RA if ($RA && $RA->{url} eq $url);
+=20
++	::_req_svn();
++
+ 	SVN::_Core::svn_config_ensure($config_dir, undef);
+ 	my ($baton, $callbacks) =3D SVN::Core::auth_open_helper(_auth_provide=
+rs);
+ 	my $config =3D SVN::Core::config_get_config($config_dir);
 
-I'm currently leaning towards declaring this the realm of
-=2D-post-rewrite, not --notes-filter.  I'm not saying that the former is
-the perfect / most convenient format in which such a hook could be
-specified, but I believe its input should just be pre and post rewrite
-sha1.  Using it to move notes, or whatever, should be up to the user.
-
-That's not to say that there shouldn't be some convenient interface to
-manage several notes trees, which I'm not yet clear on.
-
-> I know I talked you into implementing it, but that is just because I disl=
-ike=20
-> that filter-branch calls a post-rewrite hook (that just doesn't sound=20
-> right to me, given the one-shot nature of filter-branch), and your=20
-> intention obviously was to transfer notes.
-
-No (as I said in the original series leader) my original motivation
-was to have a hook that can record the pre-write sha1 in a note on the
-rewritten commit.  I noticed that it could also be used to transfer
-the notes to the rewritten commit, which was part of the reason why I
-implemented it.
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
---nextPart3267163.MCLVsHf5fj
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.12 (GNU/Linux)
-
-iEYEABECAAYFAkt8dnwACgkQqUud07tmzP1HMQCgl4kJNHEembCjwO1oSsBnVLCv
-X0cAnj+22HLnVuEK80uGs/IRyJl+z/ZR
-=qqUP
------END PGP SIGNATURE-----
-
---nextPart3267163.MCLVsHf5fj--
+--=20
+Eric Wong
