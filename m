@@ -1,103 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fix threaded grep for machines with only one cpu
-Date: Tue, 16 Feb 2010 17:26:06 -0800
-Message-ID: <7vvddwodox.fsf@alter.siamese.dyndns.org>
-References: <20100215225001.GA944@book.hvoigt.net>
- <7vwryet2cw.fsf@alter.siamese.dyndns.org>
- <7vocjpnc5v.fsf@alter.siamese.dyndns.org>
- <7vljetlx8r.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.1002160914140.20986@pacific.mpi-cbg.de>
- <7viq9wzq8g.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.1002170200370.20986@pacific.mpi-cbg.de>
+From: Steven Drake <sdrake@xnet.co.nz>
+Subject: Re: [PATCH] Add `log.decorate' configuration variable.
+Date: Wed, 17 Feb 2010 15:04:21 +1300 (NZDT)
+Message-ID: <alpine.LNX.2.00.1002171427080.3414@vqena.qenxr.bet.am>
+References: <alpine.LNX.2.00.1002171239430.2477@vqena.qenxr.bet.am> <7vljespt2l.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 17 02:26:32 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 03:16:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhYgR-0002Ah-7J
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 02:26:31 +0100
+	id 1NhZSo-00032e-1I
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 03:16:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933876Ab0BQB0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2010 20:26:25 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48020 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933864Ab0BQB0X (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2010 20:26:23 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 716459AE17;
-	Tue, 16 Feb 2010 20:26:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NsVNT5pywbXlL5+9Hp20LHgu1Ko=; b=HKfXPW
-	92zD/TbIMA8l/PYrAqvxNpKPJsrEXyg6QXDQ7W4m983KAAasQBaA37vc3HlHrlf8
-	Hvc02LEo26qYNPWxLRGA7LJL1p52p82p52VL6bnDMtUjZCXm/Rf8XU2OsFyqHkIk
-	tRE7aZmSVW1BY6pNMFKmAU6LPwk1/te9eBsSg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JAAsCb/L38ei9vHM4o/r7wVOAdIPN+v1
-	hsQ5tUa3Wk1LSVR2QhxMLfjcZyymU9bE2azzCm5849DSW1DgkS5mhqC4yzYtctuS
-	eenifhptD2mQwxB8E+WO8jR2BouN6gGA4a09u/zx0qLIwPUf+1Ryq8uVqeL2MAUD
-	Mb/MExAdHk8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B4A89AE14;
-	Tue, 16 Feb 2010 20:26:15 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DDD8E9AE06; Tue, 16 Feb
- 2010 20:26:08 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.1002170200370.20986@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Wed\, 17 Feb 2010 02\:01\:03 +0100
- \(CET\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 70B1DD3C-1B63-11DF-8376-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S933971Ab0BQCQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2010 21:16:11 -0500
+Received: from ananke.wxnz.net ([58.28.4.122]:49006 "EHLO ananke.wxnz.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933927Ab0BQCQJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2010 21:16:09 -0500
+Received: from idran.drake.org.nz (ip-118-90-92-203.xdsl.xnet.co.nz [118.90.92.203])
+	by ananke.wxnz.net (Postfix) with ESMTP id 4DF9F171CFB;
+	Wed, 17 Feb 2010 15:12:09 +1300 (NZDT)
+In-Reply-To: <7vljespt2l.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140198>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, 16 Feb 2010, Junio C Hamano wrote:
 
->> The program can decide at runtime not to use threading even if the support
->> is compiled in.  In such a case, mutexes are not necessary and left
->> uninitialized.  But the code incorrectly tried to take and release the
->> read_sha1_mutex unconditionally.
->> 
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> Acked-by: Fredrik Kuivinen <frekui@gmail.com>
->> ---
->
-> Yes, this one looks much, much nicer.
+> This needs some test to make sure that it triggers when configuration is
+> set, it doesn't when configuration is not set [...]
 
-The structure may be much nicer, but one remaining thing is that I do not
-think foo_locked() is a good name; IIRC, kernel folks use _locked() suffix
-when the caller is expected to already hold the lock.  So a typical naming
-convention goes like this:
+Done get wat you mean?
 
-	foo()
-        {
-        	lock();
-                foo_locked();
-                unlock();
-        }
+> [...] and it doesn't for commands
+> in log family when it shouldn't (most notably, format-patch).
 
-but what the patch did was the other way around:
+Good point, and looking at the code "log.decorate" only has an affect after
+cmd_log_init() is called, which is call by cmd_whatchanged(), cmd_show(), 
+cmd_log_reflog() and cmd_log() so only those command are affected
+(notably not format-patch).
 
-	read_sha1_file_locked()
-        {
-        	lock();
-                read_sha1_file();
-                unlock();
-	}
+However if thats not disirable, we could always add
+'whatchanged.decorate', 'show.decorate' and reflog.decorate'. 
+ 
+> > +log.decorate::
+> > +	Print out the ref names of any commits that are shown by the log
+> > +	command. If 'short' is specified, the ref name prefixes 'refs/heads/',
+> > +	'refs/tags/' and 'refs/remotes/' will not be printed. If 'full' is
+> > +	specified, the full ref name (including prefix) will be printed.
+> > +	This is the same as the log commands '--decorate' option.
+> 
+> This should be the same as --decorate option, so it should be possible to
+> set it as a boolean true to mean "short", i.e.
+> 
+> 	[log]
+>         	decorate
+> 		decorate = true
+> 
+> should be treated exactly the same way as
+> 
+> 	[log]
+>         	decorate = short
 
-which is probably against the convention many readers of our codebase are
-already familiar with.
+I thought about that but did not want start adding git_config_XXX()
+functions, but you want to add git_config_maybe_bool() then I would agree
+with add your patch on top (and you should do so).
 
-We need a better name to unconfuse people, I think.
+While on the subject of git_config I think die_bad_config() should be an
+extern (i.e. decleared in cache.h and a static function) so that it could
+be used in git_XXX_config functions for handling error.  Something like:
+
+diff --git a/builtin-log.c b/builtin-log.c
+index f096eea..a41a7bb 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -264,6 +264,8 @@ static int git_log_config(const char *var, const char *value, void *cb)
+ 			decoration_style = DECORATE_FULL_REFS;
+ 		else if (!strcmp(value, "short"))
+ 			decoration_style = DECORATE_SHORT_REFS;
++		else
++			die_bad_config(var);
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "log.showroot")) {
+
+-- 
+Steven
+UNIX is basically a simple operating system,
+but you have to be a genius to understand the simplicity  --- dmr
