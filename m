@@ -1,71 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Sergio Callegari <sergio.callegari@gmail.com>
 Subject: Re: Possible bug with git status in 1.7.0
-Date: Wed, 17 Feb 2010 11:21:36 -0800
-Message-ID: <7vvddvoegv.fsf@alter.siamese.dyndns.org>
-References: <loom.20100217T184109-183@post.gmane.org>
+Date: Wed, 17 Feb 2010 20:52:43 +0100
+Message-ID: <4B7C490B.8030902@gmail.com>
+References: <loom.20100217T184109-183@post.gmane.org> <7vvddvoegv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Sergio <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 17 20:21:51 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 20:53:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhpT4-0002Dq-FQ
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 20:21:50 +0100
+	id 1Nhpxz-0000rB-Kq
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 20:53:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754242Ab0BQTVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2010 14:21:45 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54696 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754224Ab0BQTVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2010 14:21:44 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BE999ACDA;
-	Wed, 17 Feb 2010 14:21:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tVk62r2MmusxJbcqj3MklIh2ooc=; b=aYdTvH
-	HkU9rXWxpW7PGEUZdDGU+TGVxv0fpzxWOSFs9qtDcA/VwGbhb8fwtcPQrMorlvni
-	he9OtQKjrX3F989l/WRT+wGmMQTgbTkLj/Ag2ZE/MSpiwPNg29l2JCDxJOdMd1Rb
-	4pXW4dOXmfBCzZYXQ73U9bPv/8BYUsbUKdHPc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NAuIHEvb0dmApCB/2bkGrnCfoFxvcINb
-	wupa4nCyflfqfOcH+ylp2fXi+ip/p/ice85BLiPbT7kxU8HUK3lmkyb5WcUtiw4m
-	zRqtp3hWx2zsFPIzawTRQVI6UPngOfkZRK3AN4SXxG2H3CYQT13eXBiEwz/IAo9J
-	l3AvXKN8mXo=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 191BA9ACD9;
-	Wed, 17 Feb 2010 14:21:40 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7E63A9ACD1; Wed, 17 Feb
- 2010 14:21:37 -0500 (EST)
-In-Reply-To: <loom.20100217T184109-183@post.gmane.org> (Sergio's message of
- "Wed\, 17 Feb 2010 19\:14\:28 +0000 \(UTC\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AC965724-1BF9-11DF-8036-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754740Ab0BQTxW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2010 14:53:22 -0500
+Received: from fg-out-1718.google.com ([72.14.220.153]:18415 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754561Ab0BQTxT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2010 14:53:19 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so372957fgg.1
+        for <git@vger.kernel.org>; Wed, 17 Feb 2010 11:53:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=g927jmWV+6Dr98KOZszQTxBoO57kYTQ9Nr1YhXdpzcc=;
+        b=h9Aj8aeXPHrokrhtwhy16vpPiPpUEF+ysRTwD3yAoS4YwUYPvyRrayY4GZnQSiiNLC
+         vG5gutbRMOCmntiyFgJ8txpcum+rf0CPxaSNr6z0EIOMUTZkGhIAxHc1FrmKMIzLRdBt
+         KiYHNFa+NIS+VQJIJH5lrjSnQrR3eGx3K20ps=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=ZdG0lb8vYRHIqtYy1pq2Ivc1zhegvMraDWA3eH4swmCKQyakHelK+ArTt7x05Ntsv/
+         zMnEWxNvL9JTSKJGESy0YZLXe7mB8EEXlLVBhqdeK503PgHH9fhPZxi7qpSI8NsZOSIq
+         EleAjcIAlxtS6Ze167qjKKiiiMERgW+f+ebGQ=
+Received: by 10.87.20.13 with SMTP id x13mr15092354fgi.67.1266436395422;
+        Wed, 17 Feb 2010 11:53:15 -0800 (PST)
+Received: from ?137.204.107.60? (i2-ve060.ingce.unibo.it [137.204.107.60])
+        by mx.google.com with ESMTPS id 12sm15671858fgg.27.2010.02.17.11.53.13
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 17 Feb 2010 11:53:14 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+In-Reply-To: <7vvddvoegv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140256>
 
-Sergio <sergio.callegari@gmail.com> writes:
-
-> if you have a submodule and the submodule contains
-> untracked files, "git status" in 1.7.0 keeps showing
-> the module as modified.
+Junio C Hamano wrote:
+> Sergio <sergio.callegari@gmail.com> writes:
 >
-> But of of course it is useless to "git add" the module
-> or to try to "git  commit -a", since the index entry is ok
+>   
+>> if you have a submodule and the submodule contains
+>> untracked files, "git status" in 1.7.0 keeps showing
+>> the module as modified.
+>>
+>> But of of course it is useless to "git add" the module
+>> or to try to "git  commit -a", since the index entry is ok
+>>     
+>
+> Of course it is useless to "git add" in the superproject, and this is
+> an intended bugfix.
+>
+> You are getting reminded that you either forgot to "git add" that file in
+> the submodule, or you forgot to add that file to .gitignore in the
+> submodule.
+>   
 
-Of course it is useless to "git add" in the superproject, and this is
-an intended bugfix.
+Thanks for the explanation!
 
-You are getting reminded that you either forgot to "git add" that file in
-the submodule, or you forgot to add that file to .gitignore in the
-submodule.
+The wording of the reminder is a bit unclear, though.  Suppose that the 
+problem is with submodule "mod".
+
+What you get from git status is a notice that something is modified but 
+not updated, with the following suggestion
+
+# Changed but not 
+updated:                                                                                      
+
+#   (use "git add <file>..." to update what will be committed)
+
+and then the notice about what is in fact modified
+
+#       modified:   mod
+
+
+So the first problem is that now git status provides a hint that may be 
+confusing.  One gets the idea that he needs to add mod (to store a new 
+commit id in the index) and not to add a file in mod.
+
+
+As a second issue, note that mod is in fact not really modified being that
+
+1) no tracked file in it has been modified.
+2) no new commit has been made
+
+and the fact is that from git status I cannot recognize anymore if the 
+module is really changed (the module commit id has changed) or has 
+uncommited changes (some tracked file is changed) or is merely polluted 
+by untracked files, so now I always need to explore the submodule.
+
+It is true that this can be solved putting more stuff in .gitignore.
+However, it might be a matter of taste, but I do not like putting all 
+byproducts in .gitignore  because not doing so allows me to 
+differentiate between
+
+- files that are just garbage
+- files that are not tracked but may be still precious
+
+and selectively clean either category using the -x or -X options of git 
+clean.
+
+
+So, it would be nice to improve the feedback of git status for this 
+particular case and possibly have an option to avoid status being so 
+wordy about untracked files.
+
+
+Sergio
