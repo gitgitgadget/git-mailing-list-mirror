@@ -1,58 +1,65 @@
-From: Sergio <sergio.callegari@gmail.com>
-Subject: Possible bug with git status in 1.7.0
-Date: Wed, 17 Feb 2010 19:14:28 +0000 (UTC)
-Message-ID: <loom.20100217T184109-183@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Gabriel <g2p.code@gmail.com>
+Subject: [PATCH] import-tars: properly import git-archive tarballs
+Date: Wed, 17 Feb 2010 20:20:52 +0100
+Message-ID: <1266434452-14532-1-git-send-email-g2p.code@gmail.com>
+Cc: Gabriel <g2p.code@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 17 20:15:02 2010
+X-From: git-owner@vger.kernel.org Wed Feb 17 20:21:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhpMT-0004TO-17
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 20:15:01 +0100
+	id 1NhpSW-0001if-Qq
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Feb 2010 20:21:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754100Ab0BQTOz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2010 14:14:55 -0500
-Received: from lo.gmane.org ([80.91.229.12]:58406 "EHLO lo.gmane.org"
+	id S1754222Ab0BQTVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2010 14:21:11 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:48084 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754090Ab0BQTOy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2010 14:14:54 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NhpMK-0004Lm-EA
-	for git@vger.kernel.org; Wed, 17 Feb 2010 20:14:52 +0100
-Received: from i2-ve060.ingce.unibo.it ([137.204.107.60])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 17 Feb 2010 20:14:52 +0100
-Received: from sergio.callegari by i2-ve060.ingce.unibo.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 17 Feb 2010 20:14:52 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 137.204.107.60 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100106 Ubuntu/9.10 (karmic) Firefox/3.5.7)
+	id S1754101Ab0BQTVK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2010 14:21:10 -0500
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id A69AA81816B;
+	Wed, 17 Feb 2010 20:21:03 +0100 (CET)
+Received: from localhost (pro75-5-88-162-203-35.fbx.proxad.net [88.162.203.35])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id C185A818112;
+	Wed, 17 Feb 2010 20:21:00 +0100 (CET)
+Received: from g2p by localhost with local (Exim 4.69)
+	(envelope-from <tobutaz+moulinex+mail+g2p@gmail.com>)
+	id 1NhpSB-0003qz-Ig; Wed, 17 Feb 2010 20:20:55 +0100
+X-Mailer: git-send-email 1.7.0.rc2.31.g618d1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140254>
 
-Hi,
+git-archive adds a special entry to the archives it creates,
+pax_global_header, containing the SHA1 of the exported commit.
 
-if you have a submodule and the submodule contains
-untracked files, "git status" in 1.7.0 keeps showing
-the module as modified.
+import-tars.perl extracted it as a file, the top directory of
+the archive became a subdirectory, and files moved with every
+imported tarball.
 
-But of of course it is useless to "git add" the module
-or to try to "git  commit -a", since the index entry is ok
+Now import-tars correctly ignores the comment.
 
-I do not know if this is an intended behavior, but it
-looks different from 1.6.6.1.
+Signed-off-by: Gabriel <g2p.code@gmail.com>
+---
+ contrib/fast-import/import-tars.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Sergio
+diff --git a/contrib/fast-import/import-tars.perl b/contrib/fast-import/import-tars.perl
+index 95438e1..a5170a1 100755
+--- a/contrib/fast-import/import-tars.perl
++++ b/contrib/fast-import/import-tars.perl
+@@ -108,6 +108,7 @@ foreach my $tar_file (@ARGV)
+ 			}
+ 		}
+ 		print FI "\n";
++		next if $typeflag eq 'g' && $name eq 'pax_global_header';
+ 
+ 		my $path;
+ 		if ($prefix) {
+-- 
+1.7.0.rc2.31.g618d1
