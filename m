@@ -1,116 +1,121 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH/RFC 3/3] git-gui: Do not suggest a gc if gc --auto would
- not do it
-Date: Thu, 18 Feb 2010 08:41:22 -0600
-Message-ID: <20100218144122.GC30520@progeny.tock>
-References: <20100218143431.GA30486@progeny.tock>
+From: Jason Baker <jbaker@zeomega.com>
+Subject: git-svn checksum mismatch
+Date: Thu, 18 Feb 2010 08:55:30 -0600
+Message-ID: <fa34f1941002180655n79430e79yc8658ce17e4e1093@mail.gmail.com>
+References: <fa34f1941002170821p66cf0ac7i9385b341c94993c3@mail.gmail.com>
+	 <20100218005347.GA8528@dcvr.yhbt.net>
+	 <fa34f1941002180652wb91c36bt8feba5c7f653701d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Mark Brown <broonie@sirena.org.uk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 18 15:41:26 2010
+X-From: git-owner@vger.kernel.org Thu Feb 18 15:55:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ni7ZF-0001Kg-AI
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 15:41:25 +0100
+	id 1Ni7n6-0003yg-PI
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 15:55:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757063Ab0BROlV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Feb 2010 09:41:21 -0500
-Received: from mail-yw0-f197.google.com ([209.85.211.197]:38194 "EHLO
-	mail-yw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755991Ab0BROlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 09:41:19 -0500
-Received: by ywh35 with SMTP id 35so1027670ywh.4
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 06:41:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=bNAGFKtSWmjAJGn/5yGTPzDl7ads7zMXH+nxidj65j0=;
-        b=tP50MAKam+oans17c7eNMfxue8AijI76e/VrSge9vMZkqtAGVKVsYHmol1/sjb8wF9
-         pPRUxsQO+NHLvTL4ibV3Ub7YlHQMeICSfw0DYkg0HSyTrmwrs4N90cBEuKcqPD4oNu2n
-         YucZoGSsXbcrjz9ejobWi1GXLMaRWx8n+WqYs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=A28IyXvYYtfp7YfBaK9bV1tS4MwzSuUaIlBSr6mg2tmfE+YrZZ/5BKuOd3v8EoFQ+f
-         sqUBW5P8Nj8b31+G0JOPYDDJne4UpbOH5VO+L/S20ZOV/tKlwi2UEmIDWoAYncP+cR3l
-         bIUN5rhTeIgAwbSYAHGL1Ij4XrOYTvnenGw90=
-Received: by 10.101.134.39 with SMTP id l39mr1968668ann.130.1266504079077;
-        Thu, 18 Feb 2010 06:41:19 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 16sm1787810gxk.5.2010.02.18.06.41.18
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 18 Feb 2010 06:41:18 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20100218143431.GA30486@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1758023Ab0BROze convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Feb 2010 09:55:34 -0500
+Received: from mail-fx0-f220.google.com ([209.85.220.220]:55296 "EHLO
+	mail-fx0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756662Ab0BROzd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Feb 2010 09:55:33 -0500
+Received: by fxm20 with SMTP id 20so9105210fxm.21
+        for <git@vger.kernel.org>; Thu, 18 Feb 2010 06:55:30 -0800 (PST)
+Received: by 10.216.171.145 with SMTP id r17mr4116971wel.182.1266504930059; 
+	Thu, 18 Feb 2010 06:55:30 -0800 (PST)
+In-Reply-To: <fa34f1941002180652wb91c36bt8feba5c7f653701d@mail.gmail.com>
+X-Google-Sender-Auth: 936809b0d9c709f8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140343>
 
-In particular, if the user has set gc.auto to 0 or some other value,
-respect that setting.
+On Wed, Feb 17, 2010 at 6:53 PM, Eric Wong <normalperson@yhbt.net> wrot=
+e:
+>
+> Jason Baker <jbaker@zeomega.com> wrote:
+> > Hey Eric,
+> >
+> > I'm emailing you because you're listed on the git-svn manpage. =A0I=
+'m trying
+> > to import an svn repository using git svn, and I'm running into a b=
+it of a
+> > problem:
+> >
+> > r57269 =3D f5bbaec2f7e8d866d794b421f68706baf81b16ec
+> > (jiva_model_0.6-Jiva-4.5.0)
+> > =A0 =A0 M =A0 =A0src/jiva_model/schema/episode.py
+> > =A0 =A0 M =A0 =A0src/jiva_model/schema/group.py
+> > Checksum mismatch: src/jiva_model/schema/member.py
+> > expected: d6f1b614f3ec9c757ab21ebdfd01e011
+> > =A0 =A0 got: a90dbcbdb3082deadecca9d1d00879bd
+> >
+> > I'm running git version 1.6.3.3 and git-svn version 1.6.3.3-2 on Ub=
+untu
+> > Karmic.
+> >
+> > I'm able to check out these files at this revision normally through=
+ svn.
+> > Does this mean that there's a problem somewhere in git svn? =A0Or d=
+o I need to
+> > do something more complex to reproduce it outside of git svn? =A0It=
+ is
+> > entirely possible that something's wrong with our svn repository.
+>
+> Hi Jason,
+>
+> It could be a problem with either the repo or git svn. =A0Is the repo
+> public by any chance? =A0If it's a smallish repo I'd be glad to try
+> reproducing it on my end.
 
-The gui-specific heuristic of assuming Windows filesystems will
-tolerate fewer loose objects has been carried over.
+Nope, it's a private repo and it's rather largeish.
 
-This patch vastly increases the loose object count threshold for a
-sort of compatibility with the console-based git programs.  The ideal
-threshold may be different since the user can easily turn down an
-offer to gc.  But for now, let us assume that a number of loose
-objects that is tolerable when working from the command line will also
-be tolerable in the gui.
+>
+> The checksum SVN relies on is just an MD5, so it should be easy to
+> test arbitrary revisions of it (svn cat -r$rev $URL@$rev | md5sum)
+> and see if there's an error for that repository.
 
-Unfortunately, this duplicates code from builtin-gc.c.  A proper fix
-would be involve teaching gc to cooperate with the gui more closely.
+This gives me something different from either value.=A0 :-/
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-That=E2=80=99s the end of the series.  Thoughts?
+$ svn cat -r57269
+$URL/jiva_model_0.6-Jiva-4.5.0/src/jiva_model/schema/member.py@57269 |
+md5sum
+b5a6b9473d602027b1fe9b5b9d993cc0=A0 -
 
- lib/database.tcl |   13 ++++++++++---
- 1 files changed, 10 insertions(+), 3 deletions(-)
+=A0(URL being the path to the root of the repo of course)
 
-diff --git a/lib/database.tcl b/lib/database.tcl
-index c8184de..4b07865 100644
---- a/lib/database.tcl
-+++ b/lib/database.tcl
-@@ -100,15 +100,22 @@ proc too_many_loose_objects {} {
- 	# distributed, we can check only one and get a reasonable
- 	# estimate.
- 	#
--	# Roughly based on the function of the same name in builtin-gc.c
-+	# Based on the function of the same name in builtin-gc.c
- 	#
- 	# 'git gc' should learn a new --porcelain option
- 	# so it can take care of this.
-+
-+	set gc_auto_threshold [get_config gc.auto]
-+	if {$gc_auto_threshold eq {}} {
-+		set gc_auto_threshold 6700
-+	}
-+	if {$gc_auto_threshold <=3D 0} {
-+		return 0
-+	}
- 	set ndirs 1
--	set limit 8
-+	set limit [expr {($gc_auto_threshold + 255) / 256}]
- 	if {[is_Windows]} {
- 		set ndirs 4
--		set limit 1
- 	}
-=20
- 	set count [llength [glob \
---=20
-1.7.0
+>
+> You could also try updating between two revisions:
+>
+> =A0svn co -r57269 $URL FOO # (57269 was the last successful one)
+>
+> =A0cd FOO
+> =A0svn up -r$NEXT_REV =A0 =A0 =A0# see if this errors out
+
+This works:
+
+$ svn co $URL/branches/jiva_model_0.6-Jiva-4.5.0/src/jiva_model/schema/
+-r 57269
+Checked out revision 57269.
+
+$ cd schema
+
+$ svn up -r 57270
+At revision 57270.
+
+So does this mean there's a problem on my side somewhere?
+
+>
+> > Also, is there a mailing list I should send questions like this to?
+>
+> The normal git mailing list, git@vger.kernel.org, but feel free to Cc=
+ me
+> to increase my chances of seeing it.
+
+Added that list to this email.=A0 Thanks!
