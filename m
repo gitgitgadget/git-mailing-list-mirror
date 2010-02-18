@@ -1,60 +1,75 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [PATCH] import-tars: properly import git-archive tarballs
-Date: Thu, 18 Feb 2010 10:40:13 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1002181037340.11095@ds9.cixit.se>
-References: <1266434452-14532-1-git-send-email-g2p.code@gmail.com>
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: [PATCH] Added hint about using .gitignore in git status while 
+	printing untracked files
+Date: Thu, 18 Feb 2010 15:18:19 +0530
+Message-ID: <e72faaa81002180148k47881f47qdfd5d268e4b2b44@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Gabriel <g2p.code@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 18 10:40:27 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 18 10:48:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ni2ry-0003XN-R1
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 10:40:27 +0100
+	id 1Ni2zi-0000kK-3B
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 10:48:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754376Ab0BRJkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 04:40:21 -0500
-Received: from upper-gw.cixit.se ([92.43.32.133]:51417 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753656Ab0BRJkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 04:40:18 -0500
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id o1I9eDxT019344
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 18 Feb 2010 10:40:13 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o1I9eD2J019340;
-	Thu, 18 Feb 2010 10:40:13 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <1266434452-14532-1-git-send-email-g2p.code@gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Thu, 18 Feb 2010 10:40:13 +0100 (CET)
+	id S1755133Ab0BRJsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 04:48:21 -0500
+Received: from mail-gx0-f227.google.com ([209.85.217.227]:47889 "EHLO
+	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755036Ab0BRJsU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 04:48:20 -0500
+Received: by gxk27 with SMTP id 27so2425168gxk.1
+        for <git@vger.kernel.org>; Thu, 18 Feb 2010 01:48:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=eVqSt6x0r08BnOfaDB+zCRManmCDKxitjVJQE9pmIkw=;
+        b=ebdoCNGNBnnmyApm0lVNq4tMJ4h0QV8AFtpRRKmBJi1DKpzZ/h/pjQv4e16s+waktO
+         xEF45bFqKwtUX+eXJ8CEoHUdz50PmJx/gvFbH2EU4yTDYPH+HptlgrEPCgkG4EEDRhZl
+         zWKrYa2Yd9jyCAinENS2L6eRXQt1iohXO9o8c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=eYgSAGkFlkBLJXbtq80FqzNmnRKHWcDRvIet6TOgfNlum2qlwpmCUGscazqemaneB6
+         hEe9lN5KH9OjASSGVf5N3yWALW2Yv2EUM8uNFaZAiM1hxRGbawblo5JhlmjXXacpATIC
+         CSAQmM9x9scFH9AHgirrbz5vuES1FmqB4071s=
+Received: by 10.91.52.20 with SMTP id e20mr5436669agk.47.1266486499147; Thu, 
+	18 Feb 2010 01:48:19 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140308>
 
-Gabriel:
+Added hint about using .gitignore in git status while printing untracked files
+Basically, many users don't come to know about .gitignore functionality in
+their starting stages of git and wonder over how to keep the build or doc files
+without tracking by git. So, if we add a line saying about gitignore
+while printing
+help to add untracked files in git status output, it can be very useful
 
-> git-archive adds a special entry to the archives it creates, 
-> pax_global_header, containing the SHA1 of the exported commit.
+Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+---
+ wt-status.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Interesting use-case.
+diff --git a/wt-status.c b/wt-status.c
+index 5807fc3..f17300f 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -100,6 +100,7 @@ static void
+wt_status_print_untracked_header(struct wt_status *s)
+ 	if (!advice_status_hints)
+ 		return;
+ 	color_fprintf_ln(s->fp, c, "#   (use \"git add <file>...\" to
+include in what will be committed)");
++	color_fprintf_ln(s->fp, c, "#   (add it's path to .gitignore to
+intentionally untrack it)");
+ 	color_fprintf_ln(s->fp, c, "#");
+ }
 
-> Now import-tars correctly ignores the comment.
-
-In the case where you actually would care, perhaps it should be added as a 
-comment to the default commit message? Something like "Imported from 
-$tar_file, created from commit $commit.".
-
--- 
-\\// Peter - http://www.softwolves.pp.se/
+--
