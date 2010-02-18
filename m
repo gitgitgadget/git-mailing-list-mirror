@@ -1,81 +1,70 @@
-From: Gabriel Filion <lelutin@gmail.com>
-Subject: RFD: git-bzr: anyone interested?
-Date: Thu, 18 Feb 2010 13:13:44 -0500
-Message-ID: <4B7D8358.1080108@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Teach "git add" and friends to be paranoid
+Date: Thu, 18 Feb 2010 10:16:04 -0800
+Message-ID: <7vtytee7ff.fsf@alter.siamese.dyndns.org>
+References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org>
+ <20100214011812.GA2175@dpotapov.dyndns.org>
+ <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org>
+ <201002181114.19984.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 18 19:14:00 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Zygo Blaxell <zblaxell@esightcorp.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Jonathan Nieder <jrnieder@gmail.com>, <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Feb 18 19:16:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiAsv-0008LA-Kp
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 19:13:58 +0100
+	id 1NiAvK-0001tb-K8
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 19:16:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753568Ab0BRSNw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 13:13:52 -0500
-Received: from qw-out-2122.google.com ([74.125.92.26]:27795 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753349Ab0BRSNv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 13:13:51 -0500
-Received: by qw-out-2122.google.com with SMTP id 8so60210qwh.37
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 10:13:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=zy0MmsHHEHzAq0MAdy8oSVhZUnZIvGEidKGoXFOwsmA=;
-        b=NSB8C9xAg5aD6bPgq5vHNeo4teas9G2aBEr2KERQL1FH6cJ2Ctig/AGHX52mwFTSqa
-         oLSuKZK5r3voec+tILtXguyRwk/f7xcOFfrefKwVt9pizHpL3y4X/p2TfEpBTvivTq2n
-         fSdcRJv7L2RKX2SQkcAM3RnP15j8oXuY6lOPs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=f7V6zOyBGoxRHSJrN237u7bWKYCfkOJt2vPYD+1iAio8l9YVm8fWjMkyzrKe6pKRu1
-         hePXZpfVdhYe0CPGyEDwlm0VZcKs7tpT4QXqikiYQwoOBhc9bVnc8Ca1yEF+MDDr9waf
-         vFEfDTdYz9kzt4Wr23QlH842ZQvVB+3rUp10c=
-Received: by 10.224.86.76 with SMTP id r12mr2750268qal.204.1266516826926;
-        Thu, 18 Feb 2010 10:13:46 -0800 (PST)
-Received: from ?192.168.10.101? (modemcable074.180-22-96.mc.videotron.ca [96.22.180.74])
-        by mx.google.com with ESMTPS id 22sm6839092qyk.10.2010.02.18.10.13.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 18 Feb 2010 10:13:46 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20100108 Lightning/1.0b1 Icedove/3.0
+	id S1753785Ab0BRSQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 13:16:21 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52680 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751645Ab0BRSQU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 13:16:20 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DADBB9BDA2;
+	Thu, 18 Feb 2010 13:16:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vmQIZQsoWrdGYDCoFYNNgECGMJ4=; b=hjvCyU
+	CQ82haWp6jUr60HNl/LXaK6LIzuouK+9QHwrpw7IX5Dev8Wf7VHtOgfYmuVnNdS0
+	7gtGrikrhwT2C4HNl0R5hiJ+Sqlr/3fKgWF8Vq0W5tpLZaO+eTqu8HA7eL4W27w3
+	x+2d1XfLLi6nFA1c9YRRZB/xStoHkU/A7+b5Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=t+rxQGc6YZNpnfH4FYEvpcffCbYZK/L0
+	dia9dnBMnGOyt2IFmiQNfyokyf0CyMsh5rFjaqQHj8+IPOtnu/+yehm5a3RlIPcs
+	DTYOJDK2p8KKIWSrcb+1NeoMPyy2J7ntj6cVM21K1+iJ3KhI8fJNILc5hazftz2p
+	efIg9KzutCk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3ED169BDA1;
+	Thu, 18 Feb 2010 13:16:13 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 77BE89BD9A; Thu, 18 Feb
+ 2010 13:16:05 -0500 (EST)
+In-Reply-To: <201002181114.19984.trast@student.ethz.ch> (Thomas Rast's
+ message of "Thu\, 18 Feb 2010 11\:14\:19 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B26550AE-1CB9-11DF-B57C-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140356>
 
-Hello,
+Thomas Rast <trast@student.ethz.ch> writes:
 
-I started collaborating on a script on github that tries to bring
-bidirectional integration of git with Bazaar repositories. It is the
-script originally written in ruby by Pieter de Bie and converted to a
-shell script. You can find it here:
+> This makes it sound as if the user is to blame, but IMHO we're just
+> not checking the input well enough.
 
-http://github.com/kfish/git-bzr
-
-There is probably much left to be done to call this script functional.
-Currently, it is possible to fetch revisions in a local branch, but I've
-had problems with pushing revisions.
-
-So, first things first: in order to make this thing see some substantial
-progress, I will surely need help from people who are well acquainted
-with git's internal plumbing, people from git-svn for their valuable
-experience with extraneous vcs integration and also with people
-acquainted with bzr's inner workings.
-
-Is there any interest from people of this mailing list to see this
-script make it to a usable state?
-If so, having some code review would be more than good. What do you
-recommend on doing: using this mailing list or putting one up that would
-be specific to the project?
-
--- 
-Gabriel Filion
+Honesty is very good.  An alternative implementation that does not hurt
+performance as much as the "paranoia" would, and checks "the input well
+enough" would be very welcome.
