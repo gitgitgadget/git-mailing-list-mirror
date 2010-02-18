@@ -1,151 +1,102 @@
-From: Sebastian Thiel <byronimo@gmail.com>
-Subject: Re: Bug Report ( including test script ): Non-Fastforward merges misses directory deletion
-Date: Thu, 18 Feb 2010 11:43:23 +0000 (UTC)
-Message-ID: <loom.20100218T113103-602@post.gmane.org>
-References: <loom.20100218T104300-858@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 18 12:44:03 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH 00/10] teach --progress to transport-related builtins
+Date: Thu, 18 Feb 2010 20:37:01 +0800
+Message-ID: <1266496631-3980-1-git-send-email-rctay89@gmail.com>
+Cc: "Jeff King" <peff@peff.net>,
+	"Sebastian Thiel" <byronimo@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 18 13:37:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ni4nY-000233-Pt
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 12:44:01 +0100
+	id 1Ni5dW-0003oa-1V
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 13:37:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757611Ab0BRLnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 06:43:50 -0500
-Received: from lo.gmane.org ([80.91.229.12]:40706 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757733Ab0BRLnt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 06:43:49 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Ni4nL-0001uB-HP
-	for git@vger.kernel.org; Thu, 18 Feb 2010 12:43:47 +0100
-Received: from 91-64-162-37-dynip.superkabel.de ([91.64.162.37])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 12:43:47 +0100
-Received: from byronimo by 91-64-162-37-dynip.superkabel.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 12:43:47 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 91.64.162.37 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.2pre) Gecko/20100218 Ubuntu/8.10 (intrepid) Namoroka/3.6.2pre)
+	id S1758135Ab0BRMhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 07:37:36 -0500
+Received: from mail-gx0-f227.google.com ([209.85.217.227]:64363 "EHLO
+	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758099Ab0BRMhf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 07:37:35 -0500
+Received: by gxk27 with SMTP id 27so2566099gxk.1
+        for <git@vger.kernel.org>; Thu, 18 Feb 2010 04:37:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=hSqHjD9t3xAmDJlpAUbh8bUkWpIeYoYmP4o/hJj1dgw=;
+        b=JGkyKSf3ZCT/iMD9iMSTprKjk6MYQzWT8cCAvF1WQ5SNIvCAfbV092qZ7hz0pVCfYw
+         Zjpu3FueqJz6PKn2IGm9FtD7FN33zC8DwRseaHimZswarj3ctj7dMncSKSOBcOGLUrC8
+         8OhnLpbx66pFyVyEF5waTA0nGMivOmMBAY2Xg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Y1MFd5BMn1SNceDbllLU+4+bhJhb/BreY/lvgFNkPDw+PA2sB9K1wTFd9Pl2DINsU2
+         skiFTKm2S92E/8w1O+IdQqYwbQbd8NpnQG/4yzuN9MEMasKIFd19lkCzAwnw/robTffi
+         LkxQmtt7bmLrBWVKOi8m5pFgQhjCO0tD/LGJo=
+Received: by 10.150.48.19 with SMTP id v19mr7795326ybv.172.1266496653865;
+        Thu, 18 Feb 2010 04:37:33 -0800 (PST)
+Received: from localhost.localdomain (cm91.zeta153.maxonline.com.sg [116.87.153.91])
+        by mx.google.com with ESMTPS id 21sm381013ywh.17.2010.02.18.04.37.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 18 Feb 2010 04:37:33 -0800 (PST)
+X-Mailer: git-send-email 1.7.0.20.gcb44ed
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140323>
 
-I did some additional testing and now this issue makes more sense to me. 
+This patch series adds --progress to:
 
-To me it appears as if merge, once it detects a file deletion, 
-internally uses git-rm to delete the affected files from the working tree. 
-Git-rm will only delete the file's immediate parent directory, but does not 
-consider other empty parent directories. 
-Given the working tree ...
+  - git-fetch
+  - git-pull
+  - git-push
 
-dir/subdir/subsubdir/file
+I suspect the most contentious issue in this patch series would be the
+logic that determines whether progress reporting is done. This is found
+in patch 6 for transport.c::transport_set_verbosity().
 
-... if git-rm receives only one file for deletion, i.e. 
+As a guide, I used Jeff's message (gmane#121065). The rules used are as
+follows (processing aborts when a rule is satisfied):
 
-git rm dir/subdir/subsubdir/file
+  1. Report progress, if force_progress is 1 (ie. --progress).
+  2. Don't report progress, if verbosity < 0 (ie. -q/--quiet).
+  3. Report progress if isatty(2) is 1.
 
-it will also delete subsubdir if it turns out to be empty after the deletion of
-file. This might already be too much as the user might have had a reason not to
-specify dir/subdir/subsubdir ( perhaps he wants to copy another file into it
-which sadly doesn't exist anymore ).
+This changes the current implementation such that if both --progress
+and --quiet are specified, progress is reported. I don't think this is
+a very significant change, but I think it makes sense, since I expect
+--progress to be mostly used by script writers or IDE integrators (to
+force progress reporting even if stderr is not a terminal).
 
+Contents:
 
-Conversely, if the user wants to delete a whole directory tree recursively, rm
-seems to resolve commands like  ...
+[PATCH 01/10] Documentation/git-pull.txt: mention --quiet and --verbose for fetching
+[PATCH 02/10] Documentation/git-push.txt: put --quiet before --verbose
+[PATCH 03/10] fetch: refactor verbosity option handling into transport.[ch]
+[PATCH 04/10] push: support multiple levels of verbosity
+[PATCH 05/10] clone: support multiple levels of verbosity
+[PATCH 06/10] transport->progress: use flag authoritatively
+[PATCH 07/10] push: learn --progress
+[PATCH 08/10] fetch: learn --progress
+[PATCH 09/10] pull: learn --progress
+[PATCH 10/10] transport: update flags to be in running order
 
-git rm -r dir
+ Documentation/fetch-options.txt |   11 ++++++++---
+ Documentation/git-push.txt      |   15 +++++++++++----
+ builtin-clone.c                 |   19 ++++++-------------
+ builtin-fetch.c                 |    7 +++----
+ builtin-push.c                  |   11 ++++++++---
+ git-pull.sh                     |    6 ++++--
+ transport-helper.c              |    4 +---
+ transport.c                     |   31 ++++++++++++++++++++++++++-----
+ transport.h                     |   15 ++++++++++-----
+ 9 files changed, 77 insertions(+), 42 deletions(-)
 
-... to a list of file paths in the index, and applies the same logic as
-previously mentioned. This results in unexpected behaviour regarding the working
-tree state, as it will leave 'dir/subdir' untouched although it was supposed to
-be deleted recursively ( /bin/rm -R would have done it )
-
-To my mind, this behaviour of git-rm is incorrect, when reading the docs I would
-come to the conclusion that it will in fact delete subdirectories recursively,
-although I could expect that 'dir' should stay as it only cares about
-subdirectories:
-
-"A leading directory name (e.g. dir to remove dir/file1 and dir/file2) can be
-given to remove all files in the directory, and recursively all sub-directories,
-but this requires the -r option to be explicitly given."
-
-Perhaps this behaviour is desired here, but it might be good to update the
-git-rm docs to clearly reflect that.
-
-Considering my previous findings about git-rm, the behaviour of git-merge is
-understandable. As git only tracks files, it would even be okay to keep possibly
-empty directories after a merge. The problem here is that git-merge in fact
-deletes empty parent directories after file deletions which implies it cares,
-but it does not do so recursively.
-I would suggest that it either does not touch the empty parent directories of
-deleted files at all or that it removes empty parent directories to more closely
-match the actual index.
-
-To increase the understanding for the severity of the working tree
-inconsistency, let me present the case I am working on. There is a file server
-with a git repository. It keeps its working tree up-to-date with the tree of the
-head commit at all times, hence empty folders may not exist as there are no
-empty trees. Clients push their changes into separate branches. A git-update
-hook checks it and will at some point allow the change to be merged into the
-checked-out main branch. If this merge involves a deletion that effectively
-removes directories, these would remain in the working tree if the merge ends up
-not to be fast-forwarded. This confuses the users as they see the server's
-working tree.
-
-I can workaround this issue by verifying that the merge was a fast-forward one.
-If this was not the case, I use git-clean to remove everything not in the index.
-
-To illustrate the git-rm recursive deletion issue, I appended the
-'test_git_rm_recursive' script.
-
-Please see this post as an amendment to my previous post.
-
-Thank you, 
-Sebastian
-
-This test exits with 3 and a comment.
---------------- test_git_rm -------------------
-#!/bin/bash
-reponame=testrepo_rm
-basedir=dir
-subdir=$basedir/subdir
-fileparentdir=$subdir/subsubdir
-filepath=$fileparentdir/file
-
-# setup git repo
-mkdir $reponame
-cd $reponame
-git init
-
-# make dir and file
-mkdir -p $fileparentdir
-echo data > $filepath
-
-# initial commit
-git add $filepath
-git commit -m "initial commit" 
-
-# delete the top-level dir - we expect recursive deletion as stated in the docs
-git rm -r $basedir
-
-# assertion - basedir must not exist, but even if it does,subdir must definitely 
-# not exist
-[[ ! -d $fileparentdir ]] || exit 2
-[[ ! -d $subdir ]] || echo "git-rm didn't delete subdirectories recursively" \
-&& exit 3
-[[ ! -d $basedir ]] || echo "Merge may suffer from this git-rm behaviour" \
-&& exit 4
+--
+Cheers,
+Ray Chuan
