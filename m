@@ -1,117 +1,73 @@
-From: Sebastian Thiel <byronimo@gmail.com>
-Subject: Bug Report ( including test script ): Non-Fastforward merges misses directory deletion
-Date: Thu, 18 Feb 2010 10:00:35 +0000 (UTC)
-Message-ID: <loom.20100218T104300-858@post.gmane.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] Teach "git add" and friends to be paranoid
+Date: Thu, 18 Feb 2010 11:14:19 +0100
+Message-ID: <201002181114.19984.trast@student.ethz.ch>
+References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org> <20100214011812.GA2175@dpotapov.dyndns.org> <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 18 11:01:16 2010
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Zygo Blaxell <zblaxell@esightcorp.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Jonathan Nieder <jrnieder@gmail.com>, <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 18 11:14:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ni3C3-0000ia-2O
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 11:01:11 +0100
+	id 1Ni3PL-0001L9-BU
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 11:14:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756049Ab0BRKBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 05:01:05 -0500
-Received: from lo.gmane.org ([80.91.229.12]:49323 "EHLO lo.gmane.org"
+	id S1756274Ab0BRKOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 05:14:49 -0500
+Received: from gwse.ethz.ch ([129.132.178.238]:50373 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755829Ab0BRKBD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 05:01:03 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Ni3Br-0000a5-Rq
-	for git@vger.kernel.org; Thu, 18 Feb 2010 11:00:59 +0100
-Received: from 91-64-162-37-dynip.superkabel.de ([91.64.162.37])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 11:00:59 +0100
-Received: from byronimo by 91-64-162-37-dynip.superkabel.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 11:00:59 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 91.64.162.37 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.2pre) Gecko/20100218 Ubuntu/8.10 (intrepid) Namoroka/3.6.2pre)
+	id S1755992Ab0BRKOs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 05:14:48 -0500
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Thu, 18 Feb
+ 2010 11:14:45 +0100
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Thu, 18 Feb
+ 2010 11:14:24 +0100
+User-Agent: KMail/1.13.0 (Linux/2.6.31.12-0.1-desktop; KDE/4.4.0; x86_64; ; )
+In-Reply-To: <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140313>
 
-Hello, 
+On Thursday 18 February 2010 02:16:23 Junio C Hamano wrote:
+> When creating a loose object, we normally mmap(2) the entire file, and
+> hash and then compress to write it out in two separate steps for
+> efficiency.
+> 
+> This is perfectly good for the intended use of git---nobody is supposed to
+> be insane enough to expect that it won't break anything to muck with the
+> contents of a file after telling git to index it and before getting the
+> control back from git.
 
-I recently recognized a bug that is related to the merge of deletions. 
-If there is a single file at path 'dir/subdir/file', and the file is deleted in
-one branch called 'del', git merge fails to delete 'dir' if 'del' is merged into
-another branch where the path still existed if --no-ff is given ( or if a
-fast-forward is not possible ). Apparently, it will only delete the immediate
-parent directory, but cannot work its way up to the remaining empty directories.
-If a fast-forward is possible, 'dir' will be deleted as one would expect it -
-perhaps git will internally just do a checkout which is implemented differently.
+This makes it sound as if the user is to blame, but IMHO we're just
+not checking the input well enough.  The user should never be able to
+corrupt the repository (without git noticing!) just by running a git
+command and manipulating the worktree in parallel.  The file data at
+any given time is just user input, and you also cannot (I hope;
+otherwise let's fix it!) corrupt the repository merely by typoing some
+command arguments.
 
-The issue could be reproduced on git 1.7.0 and 1.6.5, I have not tested other
-versions though.
+(Mucking around in .git is an entirely different matter, but that is
+off limits.)
 
-To reproduce the issue, execute the following script. It will exit with status 5
-to indicate the base top-level directory still exists.
+> This teaches the index_mem() codepath to be paranoid and hash and compress
+> the data after reading it in core.  The contents hashed may not match the
+> contents of the file in an insane use case, but at least this way the
+> result will be internally consistent.
 
-Regards, 
-Sebastian
+Doesn't that trigger on windows, where xmmap() already makes a copy?
 
---------------------------------------------------------------------------
-
-#!/bin/bash
-reponame=testrepo
-basedir=dir
-dirpath=$basedir/subdir
-filepath=$dirpath/file
-
-# setup git repo
-mkdir $reponame
-cd $reponame
-git init
-
-# make dir and file
-mkdir -p $dirpath
-echo data > $filepath
-
-# initial commit
-git add $dirpath
-git commit -m "initial commit"
-
-# create branch with deletion
-git co -b del
-git rm -r $dirpath
-git commit -m "deleted folder"
-
-# merge fast forward - it works
-git co master
-git merge del
-
-# assertion - directory must not exist
-[[ ! -d $dirpath ]] || exit 1
-[[ ! -d $basedir ]] || exit 2
-
-# undo merge, again with non-fastforward
-git reset --hard master~1
-
-# as a test, one can make a fast-forward impossible - the issue still shows up
-#echo "some data" > new_file
-#git add new_file
-#git commit -m "new file"
-#git merge del
-
-git merge --no-ff del
-
-# the directory should be gone, but effectively only the file is AND the files
-# empty parent directory
-[[ ! -f $filepath ]] || exit 3
-[[ ! -d $dirpath ]] || exit 4
-[[ ! -d $basedir ]] || exit 5
-
-echo "It worked actually !"
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
