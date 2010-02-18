@@ -1,101 +1,115 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Using trees for metatagging
-Date: Thu, 18 Feb 2010 22:00:08 +0100
-Message-ID: <201002182200.09100.johan@herland.net>
-References: <20100218041240.GA4127@lapse.rw.madduck.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/10] Documentation/git-pull.txt: mention --quiet and
+ --verbose for fetching
+Date: Thu, 18 Feb 2010 13:11:55 -0800
+Message-ID: <7vhbpe5jvo.fsf@alter.siamese.dyndns.org>
+References: <1266496631-3980-1-git-send-email-rctay89@gmail.com>
+ <1266496631-3980-2-git-send-email-rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Thu Feb 18 22:00:28 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Jeff King" <peff@peff.net>, "Sebastian Thiel" <byronimo@gmail.com>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 18 22:12:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiDU3-0005xV-BG
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 22:00:27 +0100
+	id 1NiDfU-0006UM-Lz
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 22:12:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752126Ab0BRVAW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Feb 2010 16:00:22 -0500
-Received: from smtp.opera.com ([213.236.208.81]:40773 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751808Ab0BRVAV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 16:00:21 -0500
-Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o1IL09ax004633
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 18 Feb 2010 21:00:14 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <20100218041240.GA4127@lapse.rw.madduck.net>
-Content-Disposition: inline
+	id S1752618Ab0BRVML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 16:12:11 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34418 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751858Ab0BRVMJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 16:12:09 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D8D39A0AD;
+	Thu, 18 Feb 2010 16:12:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hzSF2GrbDA5VYYXieushepS1hx0=; b=n/KX/2
+	3fVj3a8nCB2iNyxjoxL8rfWD9/Hf2q8EjSbynTyWczViHBxicBf6qUgq/8Aowrwv
+	6Ai+/une/UIWZ43k/nfWxkfSh1KCymxErl7uAaIP2DJOKiB9v46EKWXAGQ45lgCV
+	lxednVJ9rUSQ6DWUxUhdsZA/B7O2kR2fF3/5U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gOkW9Pau1urLZ1oOb2Oik96/pyCb4l7+
+	DRVfsFpIBiX3sLiO/kNg8zlkSyPmjGlAOvDcGmhcy/zqKvbwAXTLHlxAH/Jx3wYW
+	+ED+W9/rStnvhaEJ/B1O9gfF10CzDIoy4ZSLLcnk8ChE4P3N3Bu2VBnhwO25/vRU
+	M5+w7odaPTM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CF6E9A0A9;
+	Thu, 18 Feb 2010 16:12:03 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 307529A0A2; Thu, 18 Feb
+ 2010 16:11:56 -0500 (EST)
+In-Reply-To: <1266496631-3980-2-git-send-email-rctay89@gmail.com> (Tay Ray
+ Chuan's message of "Thu\, 18 Feb 2010 20\:37\:02 +0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4291A5E8-1CD2-11DF-8755-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140381>
 
-On Thursday 18 February 2010, martin f krafft wrote:
-> Git's object store uses trees mainly to represent a hierarchical
-> filesystem. It occurs to me that you could layer additional
-> hierarchies on top =E2=80=94 specifically, you could use it to track =
-subsets
-> of files, i.e. "tagging".
->
-> For instance you want some sort of representation for "the set of
-> files that need review". You /could/ create a new tree and reference
-> all files in that set as children. Now if you wanted to find out
-> what to review, you'd list the children of this tree. After
-> reviewing a file, you write a new tree with the set less that file's
-> ref.. Obviously, if you made changes to the file, it should be
-> reconnected to all other trees that referenced it.
->
-> I have a couple of questions about this:
->
-> 1. Does Git provide plumbing for me to find out which trees
->    reference a given blob? If not, I will have to iterate all trees
->    and record which ones have a given message as a child.
->
-> 2. Is there a way you can fathom by which unlinking a blob from the
->    main hierarchy also causes it to be unlinked from this meta tree
->    I am speaking of as well? Similarly, if a blob is rewritten, how
->    could I make sure it replaces the old blob in all referencing
->    trees?
->
-> 3. Am I right in assuming that I'd have to track a completely
->    seperate ancestry for this tree, that is create e.g. a commit
->    object, point refs/metatrees/mytree to it, and reference the tree
->    from the commit?
->
-> 4. Since this hierarchy is not really to be mapped into the
->    filesystem, how would one resolve conflicts when merging
->    ancestries? Of course it would be nice if I could check out this
->    meta tree into the filesystem, make changes, and be assured that
->    new blobs replace old blobs in other referencing trees, as per
->    (2.), but that's a pipedream maybe.
->
-> 5. Do you know of similar efforts? Are there must-reads out there,
->    apart from the design of Git?
+Tay Ray Chuan <rctay89@gmail.com> writes:
 
-Take a look at the (relatively) new notes feature. (See the jh/notes=20
-series in 'pu' and various recent discussions on this mailing list.)=20
-Git notes probably won't satisfy the exact requirements you list above,=
-=20
-but it _does_ tackle some parallel issues (e.g. how to maintain a tree=20
-that is not checked out, storing metadata associated with Git objects,=20
-etc.). If you take a step back and reconsider your original problem,=20
-you might find that it's solvable by using commit notes.
+> This reverts 90e4311 (git-pull: do not mention --quiet and --verbose
+> twice, Mon Sep 7 2009).
+>
+> Then, the subtitles "Options related to merging" and "Options related to
+> fetching" weren't present, and the options for git-merge and git-fetch
+> options were in a monolithic block.
+>
+> After 3f7a9b5 (Documentation/git-pull.txt: Add subtitles above included
+> option files, Thu Oct 22 2009), it is ok to repeat options in the
+> same document, since they are distinguished between those for git-merge
+> and git-fetch.
+>
+> Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 
-=46or example, you could add a simple note to each blob that has been=20
-reviewed, on the refs/notes/reviewed notes ref. You could then write a=20
-simple script (using "git notes list") that lists all blobs (i.e.=20
-files) without a corresponding note in refs/notes/reviewed.
+As the result of the change history, currently we mention -q/-v as if it
+only applies to the invocation of merge, giving an incorrect impression
+that they won't affect the invocation of fetch.
 
+While I agree that is a valid issue to address, I am not sure if repeating
+these in two sections is a good solution.  A reader will start scanning
+the OPTIONS section, finds -q (or -v) and notices it is listed in the
+"related to merging" subsection, and would stop there.  This change would
+not help such a reader.
 
-=2E..Johan
+It may make more sense to list the options that affects both fetch and
+merge at the beginning of the OPTIONS section before the merge/fetch
+subsections.  IOW, instead of removing ifndef::git-pull[] like your patch
+did, it would add ifndef::git-pull[] in the list of options on the merge
+side, and add pull specific description (e.g. "this is passed to both
+underlying fetch to squelch progress output of transfer, and underlying
+merge to squelch the output during the merging") in git-pull.txt.
 
---=20
-Johan Herland, <johan@herland.net>
-www.herland.net
+>  Documentation/fetch-options.txt |    2 --
+>  1 files changed, 0 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+> index fe716b2..83606f4 100644
+> --- a/Documentation/fetch-options.txt
+> +++ b/Documentation/fetch-options.txt
+> @@ -74,7 +74,6 @@ endif::git-pull[]
+>  	the command to specify non-default path for the command
+>  	run on the other end.
+>  
+> -ifndef::git-pull[]
+>  -q::
+>  --quiet::
+>  	Pass --quiet to git-fetch-pack and silence any other internally
+> @@ -83,4 +82,3 @@ ifndef::git-pull[]
+>  -v::
+>  --verbose::
+>  	Be verbose.
+> -endif::git-pull[]
+> -- 
+> 1.7.0.27.g5d71b
