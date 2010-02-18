@@ -1,77 +1,155 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: 'git mailinfo' whitespace bug
-Date: Thu, 18 Feb 2010 10:05:27 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.1002180936240.4141@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How to create patches for a merge?
+Date: Thu, 18 Feb 2010 10:10:13 -0800
+Message-ID: <7veikifm9m.fsf@alter.siamese.dyndns.org>
+References: <83d7aaa41002180340p2f9b7241h9c220b84ec5dd1d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-15?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>
-X-From: git-owner@vger.kernel.org Thu Feb 18 19:06:59 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Geoffrey Lee <geoffreyj.lee@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 18 19:10:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiAm4-000246-8Q
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 19:06:52 +0100
+	id 1NiApZ-0005Wf-NF
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 19:10:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753467Ab0BRSGU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 13:06:20 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:42060 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751425Ab0BRSGS (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Feb 2010 13:06:18 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o1II5S0V009817
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 18 Feb 2010 10:05:29 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o1II5RlF027307;
-	Thu, 18 Feb 2010 10:05:27 -0800
-X-X-Sender: torvalds@localhost.localdomain
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.448 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753482Ab0BRSKY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 13:10:24 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46872 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752733Ab0BRSKX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 13:10:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B8809BCE5;
+	Thu, 18 Feb 2010 13:10:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1VlPC1mq9x1wOhUCnYHu2tcwqxI=; b=kosqPK
+	TnvVZPSmzWZ4cOMTs7dEMLWlI5DaNbJht6V+hcut6ICxHVEkl1b3rh2RECw5Vnwz
+	/crjk+oKXWbjqxqZOUxAHXLCAaclI8/4XJ8XLxjHQk8utohmSPzRllZHSsEgP8xC
+	Iloq9dN/I0RruaeOPmrHCK9KCcIn0YzMH8inI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BDmAeYP/Uwsek2YUlImNFuENIxprARnJ
+	tAQ2WGeem7iMjgwUhQkqKYfl+FKptfBualden9akOcER68M1JDZLz+JjYkkzydZa
+	cX9OmF0qRsi4/A2Sf7K+QJR/S441f7Z9pibl7YBvE2I5I36ufrEeFuUNvcYpnU/7
+	lC3UtBIvhQk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 620AF9BCE4;
+	Thu, 18 Feb 2010 13:10:18 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 738349BCE3; Thu, 18 Feb
+ 2010 13:10:15 -0500 (EST)
+In-Reply-To: <83d7aaa41002180340p2f9b7241h9c220b84ec5dd1d@mail.gmail.com>
+ (Geoffrey Lee's message of "Thu\, 18 Feb 2010 03\:40\:07 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DEE7F02E-1CB8-11DF-80A3-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140353>
+
+Geoffrey Lee <geoffreyj.lee@gmail.com> writes:
+
+> This produces a merge conflict. In this scenario, "git format-patch
+> master..bar" only produces 3 patches, omitting "Commit M". How do I
+> deal with this?
+
+There is no provision for communicating how a conflict is resolved over
+patches.  The answer to your "How do I deal with *this*" question would be
+"It is up to you.", if your "*this*" is "I want to communicate this as a
+patch".  The steps to deal with "*this*" may go like this:
+
+ - Think what shape of patch you want to see in order to convey what
+   "Commit M" did to the recipient of your patch series.  First, try to
+   construct it, by hand if necessary, as a design of such a feature.
+
+ - How would a recipient "apply" such a patch?  As commonly used "patch"
+   implementations, including "git apply", may not be able to read the
+   above format, and they would certainly not create a merge commit, so
+   you need to design the recieving side as well.
+
+ - Then implement them ;-)
+
+The best I think of offhand to reproduce
+
+     B---M---D
+    /   /
+   A---C
+
+might go like this:
+
+ (1) Emit diff between (A,B) as usual;
+
+ (2) Emit diff between (A,C) as usual, but with additional information
+     usually not found in regular patches to help recipient that this
+     should be applied to the same commit as (1) is applied to;
+
+ (3) Emit diff between (B,M) and (C,M), but make sure that they won't be
+     seen as a patch to be applied by ordinary "patch" programs to avoid
+     mistakes at the recipient side.  Include some way to tell the
+     recipient that these two "patches" need to be applied to the results
+     of applying (1) and (2), and that the result needs to be recorded as
+     a merge between them.
+
+ (4) Emit D as usual;
+
+Then the recipient would start from something that resembles A (call it X)
+and do the following:
+
+ (5) Apply (1); call that result B'
+
+       B'
+      /
+     X
+
+ (6) Apply (2), following that additional insn to apply the patch to the
+     base of (5); call that result C'
+
+       B'
+      /
+     X---C'
+
+ (7) Apply (B,M) half of (3) to B' and call it M'
 
 
-'git mailinfo' removes the whitespace from the beginning of the email 
-body, but it does it incorrectly.
+       B'..M'
+      /
+     X---C'
 
-In particular, some people use indented paragraphs, like this:
+ (8) Apply (C,M) half of (3) to C' and call it M"
 
-	  Four-score and Four score and seven years ago our fathers 
-   brought forth, upon this continent, a new nation, conceived in Liberty, 
-   and dedicated to the proposition that all men are created equal.
+       B'--M' M"
+      /      .
+     X------C'
 
-	Now we are engaged in a great civil war, testing whether that 
-   nation, or any nation so conceived, and so dedicated, can long endure. 
-   We are met here on a great battlefield of that war. We have come to 
-   dedicate a portion of it as a final resting place for those who here 
-   gave their lives that that nation might live. It is altogether fitting 
-   and proper that we should do this.
+ (9) If M' and M" do not match (which can happen when A and X are majorly
+     different), merge them using X as their common ancestor, and resolve
+     conflicts as necessary, and call the result M'".
 
-   ...
+     If M' and M" do match, be happy and call either of them M'".
 
-and mailinfo will not just remove empty lines from the beginning of the 
-email body, it will also remove the _first_ indentation (but not any 
-others). Which makes the whole thing come out wrong.
+         B'..M'..M'"                B'..M'"
+        /       .       or         /   . 
+       /       M"                 X---C'
+      /       .
+     X-------C'
 
-I bisected it, and this bug was introduced almost two years ago. In commit 
-3b6121f69b2 ("git-mailinfo: use strbuf's instead of fixed buffers"), to be 
-exact. I'm pretty sure the bug is that handle_commit_msg() was changed to 
-use 'strbuf_ltrim()' for the 'still_looking' case.
+ (10) Record M'" as children of B' and C'.
 
-Before commit 3b6121f69b2, it would create a new variable that had the 
-trimmed results ("char *cp = line;"), after that commit it would just trim 
-the line itself. Which is correct for the case of it being a header, but 
-if it's the first non-header line, it's wrong.
+       B'--M'"
+      /   /
+     X---C'
 
-			Linus
+ (11) Apply (4); call that result D'
+
+        B'--M'"-D'
+      /   /
+     X---C'
+
+and you are done.
