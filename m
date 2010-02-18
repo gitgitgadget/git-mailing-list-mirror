@@ -1,77 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] show help message also for aliased commands
-Date: Wed, 17 Feb 2010 18:13:08 -0800
-Message-ID: <7v635vwatn.fsf@alter.siamese.dyndns.org>
-References: <1266456562-88841-1-git-send-email-patrick.sudowe@rwth-aachen.de>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: [PATCH] Handle failure of core.worktree to identify the working directory.
+Date: Thu, 18 Feb 2010 02:11:21 +0000
+Message-ID: <87iq9vgugf.fsf@users.sourceforge.net>
+References: <20100217121304.GA1623@tugrik.mns.mnsspb.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Patrick Sudowe <patrick.sudowe@rwth-aachen.de>
-X-From: git-owner@vger.kernel.org Thu Feb 18 03:13:47 2010
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Kirill Smelkov <kirr@mns.spb.ru>
+X-From: git-owner@vger.kernel.org Thu Feb 18 03:16:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nhvti-0007ex-F5
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 03:13:46 +0100
+	id 1Nhvvs-000093-CB
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 03:16:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756253Ab0BRCNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2010 21:13:41 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62124 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754036Ab0BRCNk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2010 21:13:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 260D09AC94;
-	Wed, 17 Feb 2010 21:13:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pEd4+2tawZiJtCtSTuATE7/tL9U=; b=j2ta4a
-	O0SIymTvPHj06ZdU4FMCNvhODzl3eNWatfQ9ePOIWUuNKdmp1nuBs1uV5QDtSGk2
-	hzW5iPUUvVzyjBQ45TCEezt16+msAOgHoh0hwycmTwllMdg11hv0h3g3zNu54AGb
-	Eox9rc3vf9JnAo5eZLEMnwPUG8wE5cJMd2pwA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UNFMHuTZ1p1OAk60YJQp2KlNn6/bp/+O
-	7hNPdUMNdoBkHsgFuPk8XCAM1YMjKYLNbagkeFAqKQsWBzuQDyWVvkIDOao/QRxh
-	MvS1YgDzlVxqV9TSiJWWzZ8xKbUhEkuko2O+z69aXvIm6xGfDsh1/hdy/LkP3X3a
-	/vZNk6aEnQw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F0EAA9AC8F;
-	Wed, 17 Feb 2010 21:13:37 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 941C59AC88; Wed, 17 Feb
- 2010 21:13:28 -0500 (EST)
-In-Reply-To: <1266456562-88841-1-git-send-email-patrick.sudowe@rwth-aachen.de> (Patrick
- Sudowe's message of "Thu\, 18 Feb 2010 02\:29\:22 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3997609E-1C33-11DF-8C6B-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932476Ab0BRCP4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2010 21:15:56 -0500
+Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:57062 "EHLO
+	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932449Ab0BRCPx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Feb 2010 21:15:53 -0500
+Received: from [172.23.170.145] (helo=anti-virus03-08)
+	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1Nhvvi-0002H7-2i; Thu, 18 Feb 2010 02:15:50 +0000
+Received: from [77.99.239.132] (helo=badger.patthoyts.tk)
+	by asmtp-out5.blueyonder.co.uk with esmtp (Exim 4.52)
+	id 1Nhvve-0004C0-Ea; Thu, 18 Feb 2010 02:15:46 +0000
+Received: by badger.patthoyts.tk (Postfix, from userid 1000)
+	id DCA9A13D389; Thu, 18 Feb 2010 02:15:45 +0000 (GMT)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+X-Url: http://www.patthoyts.tk/
+In-Reply-To: <20100217121304.GA1623@tugrik.mns.mnsspb.ru> (Kirill Smelkov's
+	message of "Wed, 17 Feb 2010 15:13:04 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.90 (usg-unix-v)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140288>
 
-Patrick Sudowe <patrick.sudowe@rwth-aachen.de> writes:
+Commit 21985a11 'git-gui: handle non-standard worktree locations' attempts
+to use either GIT_WORK_TREE or core.worktree to set the _gitworktree
+variable but these may not be set which leads to a failure to launch
+gitk to review history. Use _gitdir to set the location for a standard
+git layout where the parent of the .git directory is the working tree.
 
-> git help 'alias' currently only shows the actual git command
-> 'alias' refers to. This patch changes the behavior so that
-> the help for the actual git command is shown.
+Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+---
+>Git-gui as shipped with todays git.git master is a bit broken:
+>
+>in git.git master (v1.7.0-29-g6d81630), try running:
+>
+>    $ git gui blame xdiff-interface.h
+>
+>Then select first line 'd9ea d9ea   1 #ifndef XDIFF_INTERFACE_H', right
+>click to popup context menu, select "Show History Context" -->
+>
+>--> git gui errors with:
+>
+>    "Error: couldn't change working directory to "": no ...
+>
+>
+>Thanks,
+>Kirill
 
-I somehow think this is a horrible change.
+ git-gui.sh |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-I have "[alias] lg = log --oneline --no-merges" and I do appreciate that
-it tells the expansion, because I also have other similar ones like
-"[alias] lgm = log --notes-ref=amlog", "lgf", etc.
+diff --git a/git-gui.sh b/git-gui.sh
+index 8996d2d..ec81b15 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -1158,6 +1158,9 @@ apply_config
+ # try to set work tree from environment, falling back to core.worktree
+ if {[catch { set _gitworktree $env(GIT_WORK_TREE) }]} {
+ 	set _gitworktree [get_config core.worktree]
++	if {$_gitworktree eq ""} {
++		set _gitworktree [file dirname [file normalize $_gitdir]]
++	}
+ }
+ if {$_prefix ne {}} {
+ 	if {$_gitworktree eq {}} {
+-- 
+1.6.5.1.1367.gcd48
 
-I don't want the expansion to be erased by manual page of "log";
-typically the output from man is piped to less(1).
 
-Besides, I may not know what "log" does, but at least I studied what
-options it takes when coming up with the hardcoded leading options
-already.  I don't want to see the manual page of "log" by default when I
-ask git about "lg".  If git tells me "lg" expands to "log --oneline", and
-I do not remember what other options "log" takes, I'll ask git myself
-about "log", not "lg".
+-- 
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
