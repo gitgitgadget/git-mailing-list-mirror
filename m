@@ -1,53 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH] gitweb: Syntax highlighting support
-Date: Thu, 18 Feb 2010 11:04:34 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1002181103400.20986@pacific.mpi-cbg.de>
-References: <20100217212855.2014.49834.stgit@localhost.localdomain>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH] Added hint about using .gitignore in git status while 
+ printing untracked files
+Date: Thu, 18 Feb 2010 10:59:23 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1002181058450.11095@ds9.cixit.se>
+References: <e72faaa81002180148k47881f47qdfd5d268e4b2b44@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 18 10:58:13 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git List <git@vger.kernel.org>
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 18 10:59:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ni399-0007M0-JN
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 10:58:11 +0100
+	id 1Ni3Aa-0008Dz-9B
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 10:59:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755581Ab0BRJ54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 04:57:56 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37043 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755461Ab0BRJ5y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 04:57:54 -0500
-Received: (qmail invoked by alias); 18 Feb 2010 09:57:52 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp055) with SMTP; 18 Feb 2010 10:57:52 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18rAL4Zf1krQGJpXmR09V7GORlQLOdHCPWbzJxVoD
-	qkeWfGimpytpLx
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20100217212855.2014.49834.stgit@localhost.localdomain>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66000000000000003
+	id S1756189Ab0BRJ71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 04:59:27 -0500
+Received: from upper-gw.cixit.se ([92.43.32.133]:52088 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754827Ab0BRJ70 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 04:59:26 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id o1I9xNeY020547
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 18 Feb 2010 10:59:23 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o1I9xNEk020543;
+	Thu, 18 Feb 2010 10:59:23 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <e72faaa81002180148k47881f47qdfd5d268e4b2b44@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Thu, 18 Feb 2010 10:59:23 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140311>
 
-Hi,
+Pavan Kumar Sunkara:
 
-On Wed, 17 Feb 2010, Jakub Narebski wrote:
+> +	color_fprintf_ln(s->fp, c, "#   (add it's path to .gitignore to
+> intentionally untrack it)");
 
-> [jn: cherry picked from bc1ed6aafd9ee4937559535c66c8bddf1864bec6
->  in http://repo.or.cz/w/git/dscho.git, with a few changes]
+That should be "its", not "it is".
 
-Thanks. These changes are greatly appreciated, and I will try to find the 
-time to install this in our production system tomorrow.
-
-Ciao,
-Dscho
+-- 
+\\// Peter - http://www.softwolves.pp.se/
