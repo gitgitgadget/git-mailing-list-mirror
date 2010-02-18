@@ -1,128 +1,108 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: [PATCH] import-tars: Make it possible to include the original commit ID
-Date: Thu, 18 Feb 2010 14:24:21 +0100
-Message-ID: <20100218132709.8CEBA2FC07@perkele>
-References: <20100218140002.14f79853@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [RFC/PATCH 0/3] git-gui: =?utf-8?Q?Don?=
+	=?utf-8?B?4oCZdA==?= trigger garbage collection warning so easily
+Date: Thu, 18 Feb 2010 08:34:32 -0600
+Message-ID: <20100218143431.GA30486@progeny.tock>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: g2p.code@gmail.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Mark Brown <broonie@sirena.org.uk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 18 14:27:23 2010
+X-From: git-owner@vger.kernel.org Thu Feb 18 15:34:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ni6Pa-0004Xd-Ay
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 14:27:22 +0100
+	id 1Ni7Sn-0004Wm-Pu
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 15:34:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753427Ab0BRN1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 08:27:17 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:42846 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752888Ab0BRN1Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 08:27:16 -0500
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KY100EISHDBPL30@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 18 Feb 2010 14:27:11 +0100 (MET)
-Received: from perkele ([84.215.142.63]) by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KY100I1FHD9LR20@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 18 Feb 2010 14:27:10 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2010.2.18.131536
-Received: by perkele (Postfix, from userid 501)	id 8CEBA2FC07; Thu,
- 18 Feb 2010 14:27:09 +0100 (CET)
-In-reply-to: <20100218140002.14f79853@gmail.com>
+	id S1757393Ab0BROei convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Feb 2010 09:34:38 -0500
+Received: from mail-yx0-f200.google.com ([209.85.210.200]:38443 "EHLO
+	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757063Ab0BROeg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 09:34:36 -0500
+Received: by yxe38 with SMTP id 38so6430015yxe.4
+        for <git@vger.kernel.org>; Thu, 18 Feb 2010 06:34:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=GzVTJdKyZ9oe07/23ry+2HSqNUQwPyIN2r6XJ8afDPs=;
+        b=lfBPuzbXArMZGuecyuDtwFfWpIV3Bki1iDAvC6Z6zzyIe8kNkkOsFBrvvqlFT0wP4E
+         78cDsB78nrmNvuPk0/Z3cED4J42kaGMhZXYvD+xs3S94mE+Bx1ddzK6ja/R8TWemyndz
+         4lxtmhfdCcWOul6KZ+U2MZ2GDMy6I+Goi6rb8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        b=HonNGgzvlq+/MNmphYtMXapdZzlRFfZSKsUoE1HkLXa0IVMxmGasQ5gIND3LA/Sb3C
+         6UDDQGBb32p0CTBUS53xpeStndYjhVNdOYmX0h4PvGNADWaUtbhNS6HGi/XXSJhZGwoA
+         dBy4lG3vfJNwth/z+1PdUDx+MKd2RTGmfgmYo=
+Received: by 10.101.137.32 with SMTP id p32mr9507625ann.67.1266503671122;
+        Thu, 18 Feb 2010 06:34:31 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 8sm3678293yxb.43.2010.02.18.06.34.29
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 18 Feb 2010 06:34:30 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140339>
 
-Add an option --readpax which makes import-tars read the commit ID
-stored by git-archive, adding it to the default commit message.
+Using git gui from a repository tracking (for example) linux-next,
+there are almost always enough loose objects to trigger the garbage
+collection warning.  The default threshold for this warning is much
+more sensitive than the "as many objects as were in v0.99" rule that
+the command-line tools use, and the result might be considered even
+more invasive because the user has to hit yes before it starts
+packing, and it packs more thoroughly than the default gc --auto
+settings would.
 
-Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
----
-> Someone with stronger perl-fu to parse the hash comment could print on
-> stderr (keep me CC-ed if you do that):
->   This tarball was generated by git, from commit id $SHA1.
+Moreover, in repositories with many loose objects not referenced only
+by the reflog (like linux-next), the gc does not do any good.  Taken
+together, these things mean that every time a person runs git gui,
+they get a message asking them to forfeit a long period of time to
+accomplish nothing.
 
-Actually, having this information could be useful, for instance to create
-a "history-skipping" repository, and use bisect in that. When one finds
-which released version causes the problem, one can bisect in the
-original repository, using the commit ID indicated.
+This problem was reported by Mark Brown at <http://bugs.debian.org/4976=
+87>.
+My first thought was to add a =E2=80=9Cdon=E2=80=99t ask me again=E2=80=
+=9D check box to the
+dialog suggesting repacking, but my Tk fu is not up to it. :(
 
-This applies on top of your patch.
+The next best thing would be to make =E2=80=98git gui=E2=80=99 use gc -=
+-auto itself.
+I wonder:
 
- contrib/fast-import/import-tars.perl |   25 +++++++++++++++++++++++--
- 1 files changed, 23 insertions(+), 2 deletions(-)
+ - Could git gui use git gc?  I understand from commit bc7452f that
+   the output of git gc might not be stable enough for git gui to rely
+   on, but why not add a --porcelain option whose output is?
 
-diff --git a/contrib/fast-import/import-tars.perl b/contrib/fast-import/import-tars.perl
-index a5170a1..3451309 100755
---- a/contrib/fast-import/import-tars.perl
-+++ b/contrib/fast-import/import-tars.perl
-@@ -14,14 +14,20 @@
- ##
- ##  echo 'This is the commit message' > myfile.tar.bz2.msg
- ##  perl import-tars.perl --metainfo=msg myfile.tar.bz2
-+##
-+## Use --readpax to read the pax_global_header generated by git archive.
-+## The commit ID stored in the header will be appended to the default
-+## generated commit message for the imported tarball. If the parameter
-+## is not given, the pax_global_header is ignored.
- 
- use strict;
- use Getopt::Long;
- 
- my $metaext = '';
-+my $readpax;
- 
--die "usage: import-tars [--metainfo=extension] *.tar.{gz,bz2,lzma,xz,Z}\n"
--	unless GetOptions('metainfo=s' => \$metaext) && @ARGV;
-+die "usage: import-tars [--metainfo=extension] [--readpax] *.tar.{gz,bz2,lzma,xz,Z}\n"
-+	unless GetOptions('metainfo=s' => \$metaext, 'readpax' => \$readpax) && @ARGV;
- 
- my $branch_name = 'import-tars';
- my $branch_ref = "refs/heads/$branch_name";
-@@ -61,6 +67,7 @@ foreach my $tar_file (@ARGV)
- 	my $author_time = 0;
- 	my $next_mark = 1;
- 	my $have_top_dir = 1;
-+	my $orig_commitid = '';
- 	my ($top_dir, %files);
- 
- 	while (read(I, $_, 512) == 512) {
-@@ -95,6 +102,16 @@ foreach my $tar_file (@ARGV)
- 		$size = oct $size;
- 		$mtime = oct $mtime;
- 		next if $typeflag == 5; # directory
-+		if (defined $readpax && $typeflag eq 'g' && $name eq 'pax_global_header')
-+		{
-+			while ($size > 0 && read(I, $_, 512) == 512) {
-+				if (/52 comment=([0-9a-f]{40})/)
-+				{
-+					$orig_commitid = $1;
-+				}
-+			}
-+			next;
-+		}
- 
- 		print FI "blob\n", "mark :$next_mark\n";
- 		if ($typeflag == 2) { # symbolic link
-@@ -154,6 +171,10 @@ foreach my $tar_file (@ARGV)
- 			close MSG;
- 		}
- 	}
-+	elsif ($orig_commitid ne '')
-+	{
-+		$commit_msg .= "\n\nThis tarball was generated by git, from commit id\n$orig_commitid.";
-+	}
- 
- 	print FI <<EOF;
- commit $branch_ref
--- 
-1.7.0
+ - Should git gui run git gc --auto without asking for permission?
+   This is what the command line tools already do; with a GUI one
+   could further provide a button to cancel the gc without closing
+   the GUI.
+
+This series does the simplest thing I could figure out how to
+implement: it builds in the heuristic for counting loose objects from
+builtin-gc.c into git-gui (so it will respect the gc.auto
+configuration and by default will trigger much less often) and if that
+heuristic is satisfied, runs gc --auto.
+
+Advice?  Am I on the right track here?  Any advice for specifying an
+interface for a --porcelain option to do this the right way?
+
+Jonathan Nieder (3):
+  git-gui: factor out too_many_loose_objects routine from hint_gc
+  git-gui: Do not hold the user hostage with a full gc at startup
+  git-gui: Do not suggest a gc if gc --auto would not do it
+
+ lib/database.tcl |   40 +++++++++++++++++++++++++++++++++++-----
+ 1 files changed, 35 insertions(+), 5 deletions(-)
