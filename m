@@ -1,70 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFD] Deepen the git directory structure a bit.
-Date: Thu, 18 Feb 2010 12:24:02 -0800
-Message-ID: <7vbpfm9tst.fsf@alter.siamese.dyndns.org>
-References: <alpine.LFD.2.00.1002181010590.4141@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: Re: Is there something like a git format-patch --squash?
+Date: Thu, 18 Feb 2010 15:34:40 -0500
+Message-ID: <20100218203440.GA8110@coredump.intra.peff.net>
+References: <32541b131002181145w44d69e9eo150d08f34273cefb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Feb 18 21:24:18 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jon Seymour <jon.seymour@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 18 21:34:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiCv3-0003BY-BC
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 21:24:17 +0100
+	id 1NiD5D-0002l2-Jy
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 21:34:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750945Ab0BRUYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 15:24:12 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56213 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751255Ab0BRUYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 15:24:10 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AD889B879;
-	Thu, 18 Feb 2010 15:24:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wDT/BvHE6LFw5xrnrbFK/pKWECk=; b=eclqYF
-	pA7CrjYCRMA54QVsvg8iK9W5dqQF1QSkvsIgLnxsJXW3gOtwYUQF/aIPCmadGgc5
-	6VcvMNjB8YQG7wLoLuCUITEykTN+l7o6LJaAqDNQ/YUPXHtM2mDYgnmwLM2KOlCK
-	v8w9GzojA3D0dlFJGOWL6tG26EHWaPSq5xd5g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HXfFzBaVqw+RK7a4UjW1HLqmOXnjhHY0
-	ZbdDM5ZvqPHVIVqXc9MpIl/oFlG4RRMCxkVpUlci03PW/xiTV6YmlG4wa8902NHn
-	2C5L8qJc4Yo7O+nSXCrT5WKiAcAuK+wRB1n83i9oYdHZ5mfMuswXiKjFNMEj4siM
-	K+PfCasgvH8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BA28F9B875;
-	Thu, 18 Feb 2010 15:24:07 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EE0579B861; Thu, 18 Feb
- 2010 15:24:04 -0500 (EST)
-In-Reply-To: <alpine.LFD.2.00.1002181010590.4141@localhost.localdomain>
- (Linus Torvalds's message of "Thu\, 18 Feb 2010 10\:36\:29 -0800 \(PST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 90C55284-1CCB-11DF-8055-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752245Ab0BRUem convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Feb 2010 15:34:42 -0500
+Received: from peff.net ([208.65.91.99]:47334 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751255Ab0BRUel (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 15:34:41 -0500
+Received: (qmail 5304 invoked by uid 107); 18 Feb 2010 20:34:53 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 18 Feb 2010 15:34:53 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Feb 2010 15:34:40 -0500
+Content-Disposition: inline
+In-Reply-To: <32541b131002181145w44d69e9eo150d08f34273cefb@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140375>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Thu, Feb 18, 2010 at 02:45:54PM -0500, Avery Pennarun wrote:
 
-> I think this coul probably be done differently (I'm not proud of that ugly 
-> '-I. -Ibuiltin' addition to the CFLAGS, for example), and I think there 
-> are _other_ things we could also try to do to move files into 
-> subdirectories, but this was a fairly easy thing to basically script.
->
-> What do people think?
+> > Something like this (replace MY_START_BRANCH with your starting
+> > branch, and do this in a clone of your repository so you don't dest=
+roy
+> > anything by accident):
+> >
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0parent=3D""
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0git rev-list --first-parent --reverse =C2=
+=A0| while read commit; do
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if [ -z "$pa=
+rent" ]; then
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0git checkout -f $commit
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0git clean -fdx
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0else
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0git diff $parent $commit | git apply --index
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0git commit -C $commit
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0fi
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0parent=3D$co=
+mmit
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0done
+>=20
+> In the above, in the 'else' clause, what I really wanted was somethin=
+g like:
+>=20
+>    git format-patch --stdout --squash $parent..$commit
+>=20
+> with one big "| git am" at the end of the loop.
 
-I personally like the general direction you are going.  One minor detail I
-do not know about is whether to move "builtin.h" with others, or leave it
-at the top.  Also I don't particularly find "-I. -Ibuiltin/" ugly.  It
-would make sense to use "-I." and rewrite our '#include "xyzzy.h"' into
-'#include <xyzzy.h>' even if we were not doing this change.
+I don't think there is a way to do it automagically. Obviously you can
+use diff (as you did) to produce the diff, but how should the many
+commit messages be combined?
+
+Worst case, you could probably do it yourself by echoing the mail
+headers yourself, throwing all of the commit messages in the body, and
+then doing the diff:
+
+  me=3D`git var GIT_AUTHOR_IDENT | sed -e 's/>.*/>/'`
+  (echo "From: $me"
+   echo "Subject: Mega-squash of $commit"
+   echo
+   git log --format=3D"%s%n%n%b" $parent..$commit
+   echo ---
+   git diff $parent $commit
+  ) | git am
+
+But that's totally untested (also, do you really need $parent? In
+--first-parent --reverse, isn't it always going to be $commit^1?).
+
+But I think you can do it without diff application by just re-using the
+tree-state of each merge:
+
+  git rev-list --first-parent --reverse $from..$to |
+  last=3D$from
+  while read commit; do
+    last=3D`git cat-file commit $commit |
+          sed '1,/^$/d' |
+          git commit-tree $commit^{tree} -p $from`
+  done
+  git update-ref refs/heads/new $last
+
+But that isn't tested either. :) You might need to replace
+"$commit^{tree}" with an equivalent rev-parse.
+
+-Peff
