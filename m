@@ -1,57 +1,69 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: 'git status' on NFS performance regression in 1.7.0
-Date: Thu, 18 Feb 2010 09:46:31 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1002180943240.11095@ds9.cixit.se>
-References: <885649361002171208j41405b9exdfc34034c905e96c@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Re: [PATCH] fix threaded grep for machines with only one cpu
+Date: Thu, 18 Feb 2010 10:10:42 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1002181009440.20986@pacific.mpi-cbg.de>
+References: <20100215225001.GA944@book.hvoigt.net> <7vwryet2cw.fsf@alter.siamese.dyndns.org> <7vocjpnc5v.fsf@alter.siamese.dyndns.org> <7vljetlx8r.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.1002160914140.20986@pacific.mpi-cbg.de> <7viq9wzq8g.fsf@alter.siamese.dyndns.org>
+ <20100217224330.GB8029@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: Git ML <git@vger.kernel.org>
-To: James Pickens <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 18 09:46:41 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Thu Feb 18 10:04:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ni21w-0008TV-V6
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 09:46:41 +0100
+	id 1Ni2J3-00043u-JF
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 10:04:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753460Ab0BRIqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 03:46:36 -0500
-Received: from upper-gw.cixit.se ([92.43.32.133]:43781 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751955Ab0BRIqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 03:46:35 -0500
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id o1I8kWHJ016179
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 18 Feb 2010 09:46:32 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o1I8kVQI016175;
-	Thu, 18 Feb 2010 09:46:31 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <885649361002171208j41405b9exdfc34034c905e96c@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Thu, 18 Feb 2010 09:46:32 +0100 (CET)
+	id S1754078Ab0BRJEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 04:04:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35726 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753022Ab0BRJEB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 04:04:01 -0500
+Received: (qmail invoked by alias); 18 Feb 2010 09:03:59 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp014) with SMTP; 18 Feb 2010 10:03:59 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18/AGADqi8/jHm21Zlq7Ml+mSWPmQ+2GT6hmitED2
+	fHZWR/dUWCzW7a
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20100217224330.GB8029@book.hvoigt.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58999999999999997
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140305>
 
-James Pickens:
+Hi,
 
-> I noticed that 'git status' in version 1.7.0 is much slower than in 
-> 1.6.2.5 on large work trees on NFS - averaging ~13 seconds runtime vs. ~2 
-> seconds.
+On Wed, 17 Feb 2010, Heiko Voigt wrote:
 
-This applies to local disk as well. Where it used to be almost 
-instantaneous, I now see a wait of about three seconds on a checkout of 
-about 8,000 files.
+> On Tue, Feb 16, 2010 at 03:59:43PM -0800, Junio C Hamano wrote:
+> > -- >8 --
+> > Subject: Fix use of mutex in threaded grep
+> > 
+> > The program can decide at runtime not to use threading even if the support
+> > is compiled in.  In such a case, mutexes are not necessary and left
+> > uninitialized.  But the code incorrectly tried to take and release the
+> > read_sha1_mutex unconditionally.
+> > 
+> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> > Acked-by: Fredrik Kuivinen <frekui@gmail.com>
+> 
+> Just to be sure I just tested this one as well. If you like you can add 
+> a:
+> 
+> Tested-by: Heiko Voigt <hvoigt@hvoigt.net>
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+I have pushed the commit (at least the second-last :-) to 4msysgit's devel 
+already (in the vain hope to release a Git for Windows on Tuesday...)
+
+Ciao,
+Dscho
