@@ -1,77 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/RFC 3/3] git-gui: Do not suggest a gc if gc --auto
- would not do it
-Date: Thu, 18 Feb 2010 09:49:12 -0600
-Message-ID: <20100218154911.GA32372@progeny.tock>
-References: <20100218143431.GA30486@progeny.tock>
- <20100218144122.GC30520@progeny.tock>
+From: Zygo Blaxell <zblaxell@esightcorp.com>
+Subject: Re: [PATCH] Teach "git add" and friends to be paranoid
+Date: Thu, 18 Feb 2010 11:18:43 -0500
+Message-ID: <20100218161843.GB11733@gibbs.hungrycats.org>
+References: <201002131539.54142.trast@student.ethz.ch> <20100213162924.GA14623@Knoppix> <37fcd2781002131409r4166e496h9d12d961a2330914@mail.gmail.com> <20100213223733.GP24809@gibbs.hungrycats.org> <20100214011812.GA2175@dpotapov.dyndns.org> <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org> <20100218013822.GB15870@coredump.intra.peff.net> <alpine.LFD.2.00.1002172350080.1946@xanadu.home> <7vocjnqf5c.fsf@alter.siamese.dyndns.org> <5DDD89A9-900F-40AD-8F3F-F756D6E0AD6C@wincent.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Mark Brown <broonie@sirena.org.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 18 16:49:25 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@fluxnic.net>, Jeff King <peff@peff.net>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Feb 18 17:18:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ni8d2-0008MG-K2
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 16:49:24 +0100
+	id 1Ni95W-0005JN-9k
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 17:18:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758528Ab0BRPtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 10:49:14 -0500
-Received: from mail-gx0-f227.google.com ([209.85.217.227]:46615 "EHLO
-	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758515Ab0BRPtN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 10:49:13 -0500
-Received: by gxk27 with SMTP id 27so2800464gxk.1
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 07:49:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=h61xe4sJMw1n6XEXNuvyY6mggeRvt6/uldiKx6biosI=;
-        b=ZKVGh9Qg7YSJctjLTgdx41sLf7ev7X6VSG1IN8EE+okrPDGqduJnoZ/wlwrozv8GFk
-         SHmy5hI0AKG8Sv+eVb8Puz56+3fyfTepx7rRtubfzsssMJWu/ccmdxP7+My+1pTJXf9g
-         sjGPjtKqXiDEjY3mf4XqtXkWmbxhpSCtMGLJw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Q4YTpWgv7vx2rRxqUrlUisSTL2GIbiInojGAsruCvx66f/jzM7ae5IyhzPpZUwSdbs
-         LhtYAvr7b909v6KprN1ym/fQNY49khnxrs18Ka/JO4gn2Gm32N4ysvRyjiFJVYhwULgL
-         5VTgpXp0SdllQjCtPxdoNdomS9fv0pBOL7pWY=
-Received: by 10.101.174.12 with SMTP id b12mr3446168anp.120.1266508151953;
-        Thu, 18 Feb 2010 07:49:11 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 14sm1008994gxk.3.2010.02.18.07.49.10
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 18 Feb 2010 07:49:11 -0800 (PST)
+	id S1758336Ab0BRQSp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 11:18:45 -0500
+Received: from ip-70-38-54-39.static.privatedns.com ([70.38.54.39]:47677 "EHLO
+	ginevra.hungrycats.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758258Ab0BRQSo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 11:18:44 -0500
+X-Envelope-Mail-From: zblaxell@esightcorp.com
+X-Envelope-Mail-From: zblaxell@esightcorp.com
+X-Envelope-Mail-From: zblaxell@esightcorp.com
+X-Envelope-Mail-From: zblaxell@esightcorp.com
+X-Envelope-Mail-From: zblaxell@esightcorp.com
+X-Envelope-Mail-From: zblaxell@esightcorp.com
+X-Envelope-Mail-From: zblaxell@esightcorp.com
+X-Envelope-Mail-From: zblaxell@esightcorp.com
+X-Envelope-Mail-From: zblaxell@esightcorp.com
+Received: from gibbs.hungrycats.org (gibbs.vpn7.hungrycats.org [10.132.226.42])
+	by ginevra.hungrycats.org (Postfix) with ESMTP id 524DE8013;
+	Thu, 18 Feb 2010 11:18:43 -0500 (EST)
+Received: from zblaxell by gibbs.hungrycats.org with local (Exim 4.69)
+	(envelope-from <zblaxell@esightcorp.com>)
+	id 1Ni95P-0006LX-7O; Thu, 18 Feb 2010 11:18:43 -0500
 Content-Disposition: inline
-In-Reply-To: <20100218144122.GC30520@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <5DDD89A9-900F-40AD-8F3F-F756D6E0AD6C@wincent.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140349>
 
-Jonathan Nieder wrote:
+On Thu, Feb 18, 2010 at 08:27:28AM +0100, Wincent Colaiuta wrote:
+> Shouldn't a switch that hurts performance and is only needed for insane use cases default to off rather than on?
 
-> The gui-specific heuristic of assuming Windows filesystems will
-> tolerate fewer loose objects has been carried over.
+While I don't disagree that default off might(*) be a good idea,
+I do object to the categorization of this use case as 'insane'.
 
-Er, was carried over in a previous local patch but not this one.
-Sorry for the confusion.
+Neither the documentation for 'git add' nor its various aliases (e.g. 'git
+commit' with paths or -a, etc) mentions that any use of 'git add'
+might cause repository corruption under any circumstances.  Contrast with
+examples of repository-corrupting pitfalls in the man pages of tools
+such as 'git clone' and 'git gc'.
 
-Jonathan
+In fact, the language in the git add man page seems to suggest the
+opposite, using words like "snapshot" and pointing out several times
+that the index is intentionally immune to changes interleaved between
+'git add' and 'git commit' commands.
 
->  	set ndirs 1
-> -	set limit 8
-> +	set limit [expr {($gc_auto_threshold + 255) / 256}]
->  	if {[is_Windows]} {
->  		set ndirs 4
-> -		set limit 1
->  	}
+Common sense (for Unix users) is that the index is not immune to changes
+*during* git add, but nowhere in my wildest nightmares would I conceive
+that changes in file contents during git add would *corrupt the
+repository* and git would *fail to notice or give useful diagnostics*
+until *days or weeks later* after the corruption has already *spread to
+multiple repositories* through *git push with default options*.
+
+Now, if you want to put that text in the man pages of 'git add' and
+friends, and point out the paranoia switch there, I have nothing to
+object to.
+
+I also see nothing prohibiting concurrent file modification in some
+reasonable revision-control use cases.  What happens if I do a 'git
+commit -a' on, say, proprietary EDA tool data files or Microsoft Office
+documents, and those tools choose an unfortunate moment to automatically
+update files under revision control?  Granted, I can't really expect the
+repo to contain usable data, but what I do expect is another commit, or
+a rebased/amended commit, that fixes the mangled file's contents--not to
+be required to rebase on the commit's parent everything that comes
+after it, then purge my reflogs so 'git gc' will work again.
+
+Working directories on network filesystems might do all kinds of strange
+things, most of which aren't intentional.  It's one thing to commit a
+useless tree, and quite another to unintentionally commit an irretrievable
+one.
+
+(*) "might" be a good idea because there's been some evidence to suggest
+that a paranoid implementation of git add might perform better than the
+mmap-based one in all cases, if more work was done than anyone seems
+willing to do.
