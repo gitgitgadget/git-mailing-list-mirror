@@ -1,69 +1,67 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: A Visual Git Reference
-Date: Thu, 18 Feb 2010 20:53:03 +0800
-Message-ID: <be6fef0d1002180453j7fa6b663nf4619bcee0c6a185@mail.gmail.com>
-References: <ca433831002081134m698f531bwa22f0474db0cdcb@mail.gmail.com>
-	 <b4087cc51002171717i3a8052a9jbf8c59b4975c0e1c@mail.gmail.com>
-	 <ca433831002171739h7ae0de63hfdaa05841fbd388c@mail.gmail.com>
+From: Gabriel <g2p.code@gmail.com>
+Subject: Re: [PATCH] import-tars: properly import git-archive tarballs
+Date: Thu, 18 Feb 2010 14:00:02 +0100
+Message-ID: <20100218140002.14f79853@gmail.com>
+References: <1266434452-14532-1-git-send-email-g2p.code@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Witten <mfwitten@gmail.com>, git <git@vger.kernel.org>
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 18 13:53:20 2010
+Cc: Peter Krefting <peter@softwolves.pp.se>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 18 14:00:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ni5sd-0007cC-M0
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 13:53:20 +0100
+	id 1Ni5zV-0004ov-Ql
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 14:00:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758270Ab0BRMxJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Feb 2010 07:53:09 -0500
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:52823 "EHLO
-	mail-pv0-f46.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754349Ab0BRMxH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Feb 2010 07:53:07 -0500
-Received: by pvb32 with SMTP id 32so48821pvb.19
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 04:53:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0qh63hiO8/cb9mW10F2FMaBTYDn/AXMCdmuPhS0meYo=;
-        b=EMIVinkCE1ViOdJHgD8hNDzj0d2m3RVQ3oXxnsk9Z4q8Qi+2uKbIjoxXFyYbdxZAT9
-         04KGq9FQD2snsIPDfwaxGM4yXkKbP53njfp250nWjuqoBzcxf0BS3DKgQeEBucpPOj2B
-         3bCQ0vF29UGAYNYN/YEp8D2twBRk7EkgtZQpA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=KqdSo8QUZKZ2EqxGQ22tjFPnerQDcuWDxIk2WzJGIbtEWWuFnU3Y5Nj8JC5np+o4u6
-         ck00Wf7CWbEY8hNTYdMm49lzkhLsRoz7p+4hMmskGKbTWzzsGD1CTrUhJFQVUs8TyL0+
-         UHgpBzYCiq8hr2IKEUcNlHgw8vQU9VF2BzUjA=
-Received: by 10.142.56.16 with SMTP id e16mr6395090wfa.109.1266497583348; Thu, 
-	18 Feb 2010 04:53:03 -0800 (PST)
-In-Reply-To: <ca433831002171739h7ae0de63hfdaa05841fbd388c@mail.gmail.com>
+	id S1751440Ab0BRNAT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Feb 2010 08:00:19 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:43387 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751243Ab0BRNAS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Feb 2010 08:00:18 -0500
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 2866881808F;
+	Thu, 18 Feb 2010 14:00:10 +0100 (CET)
+Received: from localhost (pro75-5-88-162-203-35.fbx.proxad.net [88.162.203.35])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 1ED6181818E;
+	Thu, 18 Feb 2010 14:00:08 +0100 (CET)
+In-Reply-To: <1266434452-14532-1-git-send-email-g2p.code@gmail.com>
+X-Mailer: Claws Mail 3.7.2 (GTK+ 2.18.3; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140337>
 
-Hi,
+> Gabriel:
+> > git-archive adds a special entry to the archives it creates,=20
+> > pax_global_header, containing the SHA1 of the exported commit.
+>=20
+> Interesting use-case.
 
-On Thu, Feb 18, 2010 at 9:39 AM, Mark Lodato <lodatom@gmail.com> wrote:
-> The first paragraph has a link to an SVG version of the page. =A0It's
-> not the default since SVG support varies greatly between browsers.
+My use case really was a simple =E2=80=9Cimport a range of tarballs for
+bisecting=E2=80=9D. That they were from git was a surprise, but I don't=
+ have
+access to that repo, which for all I know is full of junk and not meant
+for publication, so I'm not trying to get the original history.
 
-Chrome 4 gives some parsing errors for the SVG files.
+I just want importing to work on tarballs found in the wild.
 
-  Error: Problem parsing d=3D""
+> > Now import-tars correctly ignores the comment.
+>=20
+> In the case where you actually would care, perhaps it should be added
+> as a comment to the default commit message? Something like "Imported
+> from $tar_file, created from commit $commit.".
 
-=46or example, line 5 of conventions.svg.
+Someone with stronger perl-fu to parse the hash comment could print on
+stderr (keep me CC-ed if you do that):
+  This tarball was generated by git, from commit id $SHA1.
 
---=20
-Cheers,
-Ray Chuan
+It will serve as a hint when the person doing the import has access to
+the original history. I don't think there's a point in keeping a sha1
+when there's no access; keeping it in the history would confuse people,
+or require sticking a longer explanation to each of these commits.
