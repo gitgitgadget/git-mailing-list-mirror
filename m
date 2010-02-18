@@ -1,107 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Is there something like a git format-patch --squash?
-Date: Thu, 18 Feb 2010 15:34:40 -0500
-Message-ID: <20100218203440.GA8110@coredump.intra.peff.net>
-References: <32541b131002181145w44d69e9eo150d08f34273cefb@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] (reverse) combined diff conflict style
+Date: Thu, 18 Feb 2010 12:34:31 -0800
+Message-ID: <7v1vgi8eqw.fsf@alter.siamese.dyndns.org>
+References: <1266521789-3617-1-git-send-email-bert.wesarg@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jon Seymour <jon.seymour@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 18 21:34:48 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 18 21:35:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiD5D-0002l2-Jy
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 21:34:47 +0100
+	id 1NiD5R-0002uA-6G
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 21:35:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752245Ab0BRUem convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Feb 2010 15:34:42 -0500
-Received: from peff.net ([208.65.91.99]:47334 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751255Ab0BRUel (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 15:34:41 -0500
-Received: (qmail 5304 invoked by uid 107); 18 Feb 2010 20:34:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 18 Feb 2010 15:34:53 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Feb 2010 15:34:40 -0500
-Content-Disposition: inline
-In-Reply-To: <32541b131002181145w44d69e9eo150d08f34273cefb@mail.gmail.com>
+	id S1753489Ab0BRUes (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 15:34:48 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36607 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752383Ab0BRUer (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 15:34:47 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CEFF49BA48;
+	Thu, 18 Feb 2010 15:34:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=ukhIQ4TIyJksz15ZpYz79AWIGNE=; b=qPvUVPkvte77vLS1Zrr2XNB
+	OTxYYCaJEYP1WYYEvshanLBoG3fDTNr4QPfYdK8abJ54+4zM7OL0dT4k5oJInCwv
+	oFh030q7Ed11HZCEtNqF2Ha86WqWTj1QPnyNNUn02JFjmfroCYLjLrJwrsBxuFY6
+	bwjm7R30R9emZ6u6IJ9o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=EhQ0EIunDG+x+2H+O0XNTK9qjr7wR874mnH9k3RsGFRyuqWbs
+	xD7wfmNQAQD+OV0Nj0oElGJ4+xZCQkWbqzyGccaZk1UFf1k+Z1cQmTBYE9gNnhjt
+	u696ngpBzwoHSPzKzgXbCxmW1REJNfGbBYX3bEuNphPxeZ9TZy8E3EVqeg=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 867959BA45;
+	Thu, 18 Feb 2010 15:34:40 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 419A19BA3A; Thu, 18 Feb
+ 2010 15:34:32 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 09E05BF4-1CCD-11DF-94BA-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140376>
 
-On Thu, Feb 18, 2010 at 02:45:54PM -0500, Avery Pennarun wrote:
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
-> > Something like this (replace MY_START_BRANCH with your starting
-> > branch, and do this in a clone of your repository so you don't dest=
-roy
-> > anything by accident):
-> >
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0parent=3D""
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0git rev-list --first-parent --reverse =C2=
-=A0| while read commit; do
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if [ -z "$pa=
-rent" ]; then
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0git checkout -f $commit
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0git clean -fdx
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0else
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0git diff $parent $commit | git apply --index
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0git commit -C $commit
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0fi
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0parent=3D$co=
-mmit
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0done
->=20
-> In the above, in the 'else' clause, what I really wanted was somethin=
-g like:
->=20
->    git format-patch --stdout --squash $parent..$commit
->=20
-> with one big "| git am" at the end of the loop.
+> ----- output ----
+>
+> 1
+> <<<<<<<
+>  -2
+> - 3
+> >>>>>>>
+> 4
+>
+> ------ end ------
+>
+> As you can see, the conflict region is way smaller as the diff3 one, but
+> keeps all information.
+>
+> I'm not doing much merges myself, so there are probably people out there who
+> can better judge the usefulness of this style.
 
-I don't think there is a way to do it automagically. Obviously you can
-use diff (as you did) to produce the diff, but how should the many
-commit messages be combined?
+As a format to review conflicted regions in a pager, this might be a good
+alternative representation.
 
-Worst case, you could probably do it yourself by echoing the mail
-headers yourself, throwing all of the commit messages in the body, and
-then doing the diff:
-
-  me=3D`git var GIT_AUTHOR_IDENT | sed -e 's/>.*/>/'`
-  (echo "From: $me"
-   echo "Subject: Mega-squash of $commit"
-   echo
-   git log --format=3D"%s%n%n%b" $parent..$commit
-   echo ---
-   git diff $parent $commit
-  ) | git am
-
-But that's totally untested (also, do you really need $parent? In
---first-parent --reverse, isn't it always going to be $commit^1?).
-
-But I think you can do it without diff application by just re-using the
-tree-state of each merge:
-
-  git rev-list --first-parent --reverse $from..$to |
-  last=3D$from
-  while read commit; do
-    last=3D`git cat-file commit $commit |
-          sed '1,/^$/d' |
-          git commit-tree $commit^{tree} -p $from`
-  done
-  git update-ref refs/heads/new $last
-
-But that isn't tested either. :) You might need to replace
-"$commit^{tree}" with an equivalent rev-parse.
-
--Peff
+But I doubt I would want to use this as a way for "git merge", "git am -3"
+and their friends to write a half-merged result out to the work tree for
+me to resolve.  With either --conflict=merge or --conflict=diff3, it is
+easy to pick lines from either side (you remove what is not needed in the
+final result), but with this format you always have to not just pick but
+remove the change marker at the beginning from the "these are good, I'd
+use them" lines.  And you have to do so for every single line you reuse
+from either side.
