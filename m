@@ -1,94 +1,79 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH] Teach "git add" and friends to be paranoid
-Date: Thu, 18 Feb 2010 16:30:20 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1002181604310.1946@xanadu.home>
-References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org>
- <20100214011812.GA2175@dpotapov.dyndns.org>
- <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org>
- <201002181114.19984.trast@student.ethz.ch>
- <7vtytee7ff.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1002181456230.1946@xanadu.home>
- <7v635ub8oa.fsf@alter.siamese.dyndns.org>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: [RFD] Deepen the git directory structure a bit.
+Date: Thu, 18 Feb 2010 16:50:14 -0500
+Message-ID: <32541b131002181350p245b7fbdw4398501b65835cac@mail.gmail.com>
+References: <alpine.LFD.2.00.1002181010590.4141@localhost.localdomain> 
+	<7vbpfm9tst.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Zygo Blaxell <zblaxell@esightcorp.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 18 22:30:28 2010
+X-From: git-owner@vger.kernel.org Thu Feb 18 22:50:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiDx5-0002mF-MO
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 22:30:28 +0100
+	id 1NiEGe-0000pX-U3
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 22:50:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753041Ab0BRVaW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 16:30:22 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:47683 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752658Ab0BRVaW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 16:30:22 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0KY200A3G3QKQC50@VL-MH-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 18 Feb 2010 16:30:21 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7v635ub8oa.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1758573Ab0BRVuf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Feb 2010 16:50:35 -0500
+Received: from mail-yx0-f180.google.com ([209.85.210.180]:64944 "EHLO
+	mail-yx0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753950Ab0BRVuf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Feb 2010 16:50:35 -0500
+Received: by yxe10 with SMTP id 10so1556219yxe.33
+        for <git@vger.kernel.org>; Thu, 18 Feb 2010 13:50:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=iWPfTaqyqSxUax8LOm7BDzq26haD3d0kVOHC/Pp8k3M=;
+        b=ZvxKzG1p1InN6Dg5eoK/GQ8A5YGLyvI7oUHJZyC7J1CToZyq3SAyTTT0hi6iljpC86
+         QvMRqPplk+MR2iv/9VXcXAvnRZqwBc9DvQDU2zIP8I0BY1tEJqgeT18PDg15rWinrypC
+         Avjm+QW/9clTvMuAPECC0v+ycSDGlh79IkpRQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=de8l/3HfxHuqnhst9S2ftN4xrkaX89WUfb9Aci1FuzU/tNK8qbrNDeZ9ZNIEzqaKlx
+         8/McTsZkbZsy3Hlro76i6oPbPQQUKb0wUZ9vjTNVCPTFy6ftZy6o3PCAeizxXG/n/oIc
+         djLJs5vh0DUR1YlmTMkigmkTiR1YEZXi7e2Xo=
+Received: by 10.150.55.17 with SMTP id d17mr373726yba.155.1266529834172; Thu, 
+	18 Feb 2010 13:50:34 -0800 (PST)
+In-Reply-To: <7vbpfm9tst.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140383>
 
-On Thu, 18 Feb 2010, Junio C Hamano wrote:
+On Thu, Feb 18, 2010 at 3:24 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+>> I think this coul probably be done differently (I'm not proud of tha=
+t ugly
+>> '-I. -Ibuiltin' addition to the CFLAGS, for example), and I think th=
+ere
+>> are _other_ things we could also try to do to move files into
+>> subdirectories, but this was a fairly easy thing to basically script=
+=2E
+>>
+>> What do people think?
+>
+> I personally like the general direction you are going. =A0One minor d=
+etail I
+> do not know about is whether to move "builtin.h" with others, or leav=
+e it
+> at the top.
 
-> Nicolas Pitre <nico@fluxnic.net> writes:
-> 
-> >> Honesty is very good.  An alternative implementation that does not hurt
-> >> performance as much as the "paranoia" would, and checks "the input well
-> >> enough" would be very welcome.
-> >
-> > Can't we rely on the mtime of the source file?  Sample it before 
-> > starting hashing it, then make sure it didn't change when done.
-> 
-> I suspect that opening to mmap(2), hashing once to compute the object
-> name, and deflating it to write it out, will all happen within the same
-> second, unless you are talking about a really huge file, or you started at
-> very near a second boundary.
+If you don't move it, then it'll continue to interfere with
+autocompletion.  Though maybe that's not a good enough reason :)
 
-How is the index dealing with this?  Surely if a file is added to the 
-index and modified within the same second then 'git status' will fail to 
-notice the changes.  I'm not familiar enough with that part of Git.
+Have fun,
 
-Alternatively, you could use the initial mtime sample to determine the 
-filesystem's time granularity by noticing how many LSBs are zero.  
-Let's say FAT should have a granularity of one second.  Then if the 
-mtime of the file is less than one second away before starting to hash 
-then just wait for one second.  If one second later the mtime has 
-changed and still less than a second away then abort.  If after the hash 
-the mtime has changed then abort.
-
-On a recent filesystem, it is likely that the mtime granularity is a 
-nanosecond.  Nevertheless the above algorithm should just work all the 
-same, although it is unlikely that the mtime will be within the current 
-nanosecond, hence the probability for having to do an initial wait is 
-almost zero.  On kernels without hires timers the granularity will be 
-like 10 ms.
-
-Of course you might be unlucky and the initial mtime sample happens to 
-be right on a whole second even on a high resolution mtime filesystem, 
-in which case the delay test will consider one second instead of 10 ms 
-or whatever.  but the probability is rather small that you'll end up 
-with all sub-second bits to be all zeroes causing a longer delay than 
-actually necessary, and this would matter only for files that would have 
-been modified within that second.  I don't think there is a reliable way 
-to enquire a filesystem+OS time stamping granularity.
-
-
-Nicolas
+Avery
