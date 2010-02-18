@@ -1,155 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to create patches for a merge?
-Date: Thu, 18 Feb 2010 10:10:13 -0800
-Message-ID: <7veikifm9m.fsf@alter.siamese.dyndns.org>
-References: <83d7aaa41002180340p2f9b7241h9c220b84ec5dd1d@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Teach "git add" and friends to be paranoid
+Date: Thu, 18 Feb 2010 12:12:47 -0600
+Message-ID: <20100218181247.GA1052@progeny.tock>
+References: <20100213162924.GA14623@Knoppix>
+ <37fcd2781002131409r4166e496h9d12d961a2330914@mail.gmail.com>
+ <20100213223733.GP24809@gibbs.hungrycats.org>
+ <20100214011812.GA2175@dpotapov.dyndns.org>
+ <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org>
+ <20100218013822.GB15870@coredump.intra.peff.net>
+ <alpine.LFD.2.00.1002172350080.1946@xanadu.home>
+ <7vocjnqf5c.fsf@alter.siamese.dyndns.org>
+ <5DDD89A9-900F-40AD-8F3F-F756D6E0AD6C@wincent.com>
+ <20100218161843.GB11733@gibbs.hungrycats.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Geoffrey Lee <geoffreyj.lee@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 18 19:10:32 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Wincent Colaiuta <win@wincent.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@fluxnic.net>, Jeff King <peff@peff.net>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Zygo Blaxell <zblaxell@esightcorp.com>
+X-From: git-owner@vger.kernel.org Thu Feb 18 19:12:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiApZ-0005Wf-NF
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 19:10:30 +0100
+	id 1NiArv-0007Xa-Ew
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 19:12:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753482Ab0BRSKY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 13:10:24 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46872 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752733Ab0BRSKX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 13:10:23 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B8809BCE5;
-	Thu, 18 Feb 2010 13:10:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1VlPC1mq9x1wOhUCnYHu2tcwqxI=; b=kosqPK
-	TnvVZPSmzWZ4cOMTs7dEMLWlI5DaNbJht6V+hcut6ICxHVEkl1b3rh2RECw5Vnwz
-	/crjk+oKXWbjqxqZOUxAHXLCAaclI8/4XJ8XLxjHQk8utohmSPzRllZHSsEgP8xC
-	Iloq9dN/I0RruaeOPmrHCK9KCcIn0YzMH8inI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BDmAeYP/Uwsek2YUlImNFuENIxprARnJ
-	tAQ2WGeem7iMjgwUhQkqKYfl+FKptfBualden9akOcER68M1JDZLz+JjYkkzydZa
-	cX9OmF0qRsi4/A2Sf7K+QJR/S441f7Z9pibl7YBvE2I5I36ufrEeFuUNvcYpnU/7
-	lC3UtBIvhQk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 620AF9BCE4;
-	Thu, 18 Feb 2010 13:10:18 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 738349BCE3; Thu, 18 Feb
- 2010 13:10:15 -0500 (EST)
-In-Reply-To: <83d7aaa41002180340p2f9b7241h9c220b84ec5dd1d@mail.gmail.com>
- (Geoffrey Lee's message of "Thu\, 18 Feb 2010 03\:40\:07 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: DEE7F02E-1CB8-11DF-80A3-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753165Ab0BRSMt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Feb 2010 13:12:49 -0500
+Received: from mail-yw0-f197.google.com ([209.85.211.197]:37057 "EHLO
+	mail-yw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752554Ab0BRSMs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 13:12:48 -0500
+Received: by ywh35 with SMTP id 35so1251901ywh.4
+        for <git@vger.kernel.org>; Thu, 18 Feb 2010 10:12:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=ZSU7hUFvhZJjjhauPeqIXgCQzca3u3+Azg2WiVYPCC0=;
+        b=ItdVGpBT+6zVjboRxp6NTNpUzQfpj3OCJCmdigcFGYRkZTwSYFlfo7g7hSsQQFM4hd
+         GBGxUIHrYbctyWPCCWkNfCUklUQfmKXXzqOe3bBhKJrpgLZ7sjNYSNdCPJbSjiYTm6LX
+         4M6weYZDDuW67js73yJq7G9EskY/pAnikyLdI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Tjx0YdC23bqosgUcsiHUYACYHsboyeuobvKyhaQ8xRJiBz/Szj6GoEu018VhgdU3Zf
+         /RR4fT1OJASUNMszm0qsO9xfsHHJze513pbkkan8sBPB/vW7aAvUQGjEE5X12SrH0CEY
+         /4yZw0Yik23Ga5lBiZg+TFcGTevPaSpOpu4R0=
+Received: by 10.90.18.27 with SMTP id 27mr4586669agr.20.1266516767832;
+        Thu, 18 Feb 2010 10:12:47 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 14sm1098095gxk.15.2010.02.18.10.12.45
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 18 Feb 2010 10:12:46 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20100218161843.GB11733@gibbs.hungrycats.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140354>
 
-Geoffrey Lee <geoffreyj.lee@gmail.com> writes:
+Zygo Blaxell wrote:
+> On Thu, Feb 18, 2010 at 08:27:28AM +0100, Wincent Colaiuta wrote:
+>> Shouldn't a switch that hurts performance and is only needed for
+>> insane use cases default to off rather than on?
+>
+> While I don't disagree that default off might(*) be a good idea,
+> I do object to the categorization of this use case as 'insane'.
 
-> This produces a merge conflict. In this scenario, "git format-patch
-> master..bar" only produces 3 patches, omitting "Commit M". How do I
-> deal with this?
+=46WIW I think default off would not be a good idea.  This talk of
+insane uses started from the idea that git is not so great for taking
+automatic snapshots, but as you pointed out, other situations can
+trigger this and the failure mode is pretty bad.
 
-There is no provision for communicating how a conflict is resolved over
-patches.  The answer to your "How do I deal with *this*" question would be
-"It is up to you.", if your "*this*" is "I want to communicate this as a
-patch".  The steps to deal with "*this*" may go like this:
+> (*) "might" be a good idea because there's been some evidence to sugg=
+est
+> that a paranoid implementation of git add might perform better than t=
+he
+> mmap-based one in all cases, if more work was done than anyone seems
+> willing to do.
 
- - Think what shape of patch you want to see in order to convey what
-   "Commit M" did to the recipient of your patch series.  First, try to
-   construct it, by hand if necessary, as a design of such a feature.
+What you are saying here seems a bit handwavy.  If you have some
+concrete ideas about what this paranoid implementation should look
+like, I encourage you to write a rough patch.  The two patches so far
+have indicated the relevant parts of sha1_file.c (index_fd at the
+beginning and write_sha1_file at the end of the pipeline,
+respectively).  Special cases include:
 
- - How would a recipient "apply" such a patch?  As commonly used "patch"
-   implementations, including "git apply", may not be able to read the
-   above format, and they would certainly not create a merge commit, so
-   you need to design the recieving side as well.
+ - The blob being added to the repository is a special file (e.g.,
+   pipe) specified on the 'git hash-object' command line: I think it=E2=
+=80=99s
+   fine if this is slow, but it should keep working.
 
- - Then implement them ;-)
+ - The blob was generated in memory (e.g. 'git apply --cached').
 
-The best I think of offhand to reproduce
+ - autocrlf conversion is on.  This means scanning through the file to
+   collect statistics on the dominant line ending, then scanning
+   through again to convert the file.
 
-     B---M---D
-    /   /
-   A---C
+ - some other filter is on.  This means sending the file as input to
+   a command, then slurping it up somewhere until its length has been
+   determined for the beginning of the blob header
 
-might go like this:
+ - The blob being added to the repository is already in the repository,
+   so it would be a waste of time to compress and write it again.
 
- (1) Emit diff between (A,B) as usual;
+Some of these already don=E2=80=99t have great performance for large fi=
+les
+(autocrlf and filters), and I suspect there is room for improvement
+for many of them.
 
- (2) Emit diff between (A,C) as usual, but with additional information
-     usually not found in regular patches to help recipient that this
-     should be applied to the same commit as (1) is applied to;
-
- (3) Emit diff between (B,M) and (C,M), but make sure that they won't be
-     seen as a patch to be applied by ordinary "patch" programs to avoid
-     mistakes at the recipient side.  Include some way to tell the
-     recipient that these two "patches" need to be applied to the results
-     of applying (1) and (2), and that the result needs to be recorded as
-     a merge between them.
-
- (4) Emit D as usual;
-
-Then the recipient would start from something that resembles A (call it X)
-and do the following:
-
- (5) Apply (1); call that result B'
-
-       B'
-      /
-     X
-
- (6) Apply (2), following that additional insn to apply the patch to the
-     base of (5); call that result C'
-
-       B'
-      /
-     X---C'
-
- (7) Apply (B,M) half of (3) to B' and call it M'
-
-
-       B'..M'
-      /
-     X---C'
-
- (8) Apply (C,M) half of (3) to C' and call it M"
-
-       B'--M' M"
-      /      .
-     X------C'
-
- (9) If M' and M" do not match (which can happen when A and X are majorly
-     different), merge them using X as their common ancestor, and resolve
-     conflicts as necessary, and call the result M'".
-
-     If M' and M" do match, be happy and call either of them M'".
-
-         B'..M'..M'"                B'..M'"
-        /       .       or         /   . 
-       /       M"                 X---C'
-      /       .
-     X-------C'
-
- (10) Record M'" as children of B' and C'.
-
-       B'--M'"
-      /   /
-     X---C'
-
- (11) Apply (4); call that result D'
-
-        B'--M'"-D'
-      /   /
-     X---C'
-
-and you are done.
+Jonathan
