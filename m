@@ -1,103 +1,84 @@
-From: Markus Elfring <Markus.Elfring@web.de>
-Subject: Re: Completion of error handling
-Date: Thu, 18 Feb 2010 16:11:03 +0100
-Message-ID: <4B7D5887.6050502@web.de>
-References: <4B68249F.6070004@web.de> <alpine.LFD.2.00.1002021324290.1681@xanadu.home> <4B740153.4010600@web.de> <4B7A79F0.1070100@op5.se>
+From: Zygo Blaxell <zblaxell@gibbs.hungrycats.org>
+Subject: Re: [PATCH] Teach "git add" and friends to be paranoid
+Date: Thu, 18 Feb 2010 10:32:49 -0500
+Message-ID: <20100218153249.GA11733@gibbs.hungrycats.org>
+References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org> <20100213121238.GA2559@progeny.tock> <20100213133951.GA14352@Knoppix> <201002131539.54142.trast@student.ethz.ch> <20100213162924.GA14623@Knoppix> <37fcd2781002131409r4166e496h9d12d961a2330914@mail.gmail.com> <20100213223733.GP24809@gibbs.hungrycats.org> <20100214011812.GA2175@dpotapov.dyndns.org> <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org> <7vzl37z6f3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@fluxnic.net>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Feb 18 16:11:29 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 18 16:33:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ni82A-000170-I4
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 16:11:18 +0100
+	id 1Ni8N7-00039V-7s
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 16:32:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758286Ab0BRPLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 10:11:12 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:58932 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758252Ab0BRPLL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 10:11:11 -0500
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate02.web.de (Postfix) with ESMTP id B411614EA9AF2;
-	Thu, 18 Feb 2010 16:11:09 +0100 (CET)
-Received: from [78.49.129.221] (helo=[192.168.1.202])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1Ni821-0005Db-00; Thu, 18 Feb 2010 16:11:09 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.5) Gecko/20091130 SUSE/3.0.0-1.1.1 Thunderbird/3.0
-In-Reply-To: <4B7A79F0.1070100@op5.se>
-X-Sender: Markus.Elfring@web.de
-X-Provags-ID: V01U2FsdGVkX1++LjxqQgH5Fgtgh8c66C1AJe1hjrdmX8DQL7LC
-	27HwN7ZhDMVSRtIxWpoGw9KIj1fMUFUqFzSdyc8uFtgapqKbCV
-	33/KeaU39bvQVhDWucGg==
+	id S1758367Ab0BRPcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 10:32:52 -0500
+Received: from ip-70-38-54-39.static.privatedns.com ([70.38.54.39]:35526 "EHLO
+	ginevra.hungrycats.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757716Ab0BRPcv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 10:32:51 -0500
+X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
+X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
+X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
+X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
+X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
+X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
+Received: from gibbs.hungrycats.org (gibbs.vpn7.hungrycats.org [10.132.226.42])
+	by ginevra.hungrycats.org (Postfix) with ESMTP id 17315770092;
+	Thu, 18 Feb 2010 10:32:50 -0500 (EST)
+Received: from zblaxell by gibbs.hungrycats.org with local (Exim 4.69)
+	(envelope-from <zblaxell@gibbs.hungrycats.org>)
+	id 1Ni8Mz-0005CK-W1; Thu, 18 Feb 2010 10:32:49 -0500
+Content-Disposition: inline
+In-Reply-To: <7vzl37z6f3.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140346>
 
+On Wed, Feb 17, 2010 at 05:20:00PM -0800, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> With a small fix to the test program earlier in the thread, this seems to
+> protect the repository; I didn't bother to assess the performance impact
+> of the patch, though.
+> 
+> Here is the corrected test.
 
-> That's an awful lot of text to read that's hardly relevant for a C
-> program. Most of it regards newbie stuff about how to handle reporting
-> an error when you can't use a C++ exception.
->   
+Depends on what you mean by "corrected" I suppose.
 
-I would like to quote a bit which shows the underlying issues with the
-used programming language.
-"...
-Exceptional events occur. But, since they are exceptional, they occur
-very rarely. This is exactly the problem with them. In programming
-courses you learn to always handle any possible event. But, in practice,
-most programmers just ignore them. If you look at this problem in
-detail, you see that these events are not ignored where they actually
-occur, but at some higher level.
-..."
+> # Thread 2:  loop until the repo is corrupted
+> while git fsck; do
+> 	# Note the implied 'git add' in 'commit -a'
+> 	# It will do the same with explicit 'git add'
+> 	git commit -a -m'Test' || break
 
+This is at least partly wrong--it will terminate prematurely if Thread
+1 gets stalled and fails to modify 'foo' during the loop (git commit
+normally refuses to commit a tree with no changes).  This can cause
+the test for the corruption bug to return false success results.
 
->
-> You keep on claiming that but haven't proven it in any way.
+If you add '--allow-empty' to the git commit command you will fix that
+case, but there might be others.  
 
-I do not want to prove this so far because return value ignorance might
-be a common and well-known (bad) coding practice.
-https://www.securecoding.cert.org/confluence/display/seccode/EXP12-C.+Do+not+ignore+values+returned+by+functions
+If git commit runs out of disk space, for example, the commit should
+fail, but the repository should still not be corrupt.  Future commits
+(for example after freeing some disk space) should eventually succeed.
+Really, the original loop was correct, and this new one isn't.
 
+> else
+> 	echo Repository is still healthy.  You are stupid.
 
->
-> Git is written in C, not C++. Using aspectc++ would mean requiring
-> the use of a C++ compiler, which git doesn't require today.
-
-It would be nice if C++ exceptions could be used here because they can
-not be ignored by default. I guess that the tool "AspectC++" will also
-work with C constructs. Do you find the tool "AspeCt-oriented C
-compiler" more appealing?
-
-
-> Now please stop trolling and find one of these bugs you keep talking
-> about but never showing.
-
-I would not say never. - Exceptional situations are usually expected to
-appear seldom.
-
-
-> We've made it painfully clear to you that we're interested in realworld
-> problems rather than potential ones, so all this "use this model for
-> development" just reeks of concept evangelism.
-
-The efforts for complete error code checking can be reduced by a mixture
-of function, class and advice libraries.
-
-
-> No real engineer likes that, which is why you're facing
-> such massive opposition on this list.
->   
-
-It takes a bit more time to become comfortable with evolving software
-technologies.
-
-Regards,
-Markus
+If git is working, you should never reach this line, because git
+fsck should not fail after executing any sequence of git porcelain
+operations--and this particular sequence is nothing but 'git commit'
+in a single thread.
