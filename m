@@ -1,53 +1,77 @@
-From: Markus Elfring <Markus.Elfring@web.de>
-Subject: Re: Better cooperation between checkouts and stashing
-Date: Thu, 18 Feb 2010 18:43:58 +0100
-Message-ID: <4B7D7C5E.7060807@web.de>
-References: <4B67227A.7030908@web.de> <7vhbq0wuy6.fsf@alter.siamese.dyndns.org> <4B71B574.3010609@web.de> <7vbpfy9nt4.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: 'git mailinfo' whitespace bug
+Date: Thu, 18 Feb 2010 10:05:27 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.1002180936240.4141@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 18 18:44:07 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-15?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>
+X-From: git-owner@vger.kernel.org Thu Feb 18 19:06:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiAQ3-0007aD-7s
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 18:44:07 +0100
+	id 1NiAm4-000246-8Q
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 19:06:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758426Ab0BRRoA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 12:44:00 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:33914 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757762Ab0BRRn7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 12:43:59 -0500
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 05D5814EADCE9;
-	Thu, 18 Feb 2010 18:43:58 +0100 (CET)
-Received: from [78.49.129.221] (helo=[192.168.1.202])
-	by smtp05.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1NiAPt-0002cd-00; Thu, 18 Feb 2010 18:43:57 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.5) Gecko/20091130 SUSE/3.0.0-1.1.1 Thunderbird/3.0
-In-Reply-To: <7vbpfy9nt4.fsf@alter.siamese.dyndns.org>
-X-Sender: Markus.Elfring@web.de
-X-Provags-ID: V01U2FsdGVkX1+9fdKLx75ldMyV5dFNaxf72s1IG8e6f37ddWWB
-	6XYm61BRMLihCL97bmYlHHTeWC4EPINYoHwWkPV9xBVVbPl97I
-	uXO8pFQ2r1BCZdjrV/UA==
+	id S1753467Ab0BRSGU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 13:06:20 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:42060 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751425Ab0BRSGS (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Feb 2010 13:06:18 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o1II5S0V009817
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 18 Feb 2010 10:05:29 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o1II5RlF027307;
+	Thu, 18 Feb 2010 10:05:27 -0800
+X-X-Sender: torvalds@localhost.localdomain
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.448 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140352>
 
 
-> I did say and still think that it would be good to have in the documentation 
-> a separate section that teaches the users what happens to their uncommitted 
-> changes when checking out a different branch (or an unnamed branch).
->   
+'git mailinfo' removes the whitespace from the beginning of the email 
+body, but it does it incorrectly.
 
-How are the chances to achieve progress on this issue?
+In particular, some people use indented paragraphs, like this:
 
-Regards,
-Markus
+	  Four-score and Four score and seven years ago our fathers 
+   brought forth, upon this continent, a new nation, conceived in Liberty, 
+   and dedicated to the proposition that all men are created equal.
+
+	Now we are engaged in a great civil war, testing whether that 
+   nation, or any nation so conceived, and so dedicated, can long endure. 
+   We are met here on a great battlefield of that war. We have come to 
+   dedicate a portion of it as a final resting place for those who here 
+   gave their lives that that nation might live. It is altogether fitting 
+   and proper that we should do this.
+
+   ...
+
+and mailinfo will not just remove empty lines from the beginning of the 
+email body, it will also remove the _first_ indentation (but not any 
+others). Which makes the whole thing come out wrong.
+
+I bisected it, and this bug was introduced almost two years ago. In commit 
+3b6121f69b2 ("git-mailinfo: use strbuf's instead of fixed buffers"), to be 
+exact. I'm pretty sure the bug is that handle_commit_msg() was changed to 
+use 'strbuf_ltrim()' for the 'still_looking' case.
+
+Before commit 3b6121f69b2, it would create a new variable that had the 
+trimmed results ("char *cp = line;"), after that commit it would just trim 
+the line itself. Which is correct for the case of it being a header, but 
+if it's the first non-header line, it's wrong.
+
+			Linus
