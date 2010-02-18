@@ -1,84 +1,62 @@
-From: Zygo Blaxell <zblaxell@gibbs.hungrycats.org>
-Subject: Re: [PATCH] Teach "git add" and friends to be paranoid
-Date: Thu, 18 Feb 2010 10:32:49 -0500
-Message-ID: <20100218153249.GA11733@gibbs.hungrycats.org>
-References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org> <20100213121238.GA2559@progeny.tock> <20100213133951.GA14352@Knoppix> <201002131539.54142.trast@student.ethz.ch> <20100213162924.GA14623@Knoppix> <37fcd2781002131409r4166e496h9d12d961a2330914@mail.gmail.com> <20100213223733.GP24809@gibbs.hungrycats.org> <20100214011812.GA2175@dpotapov.dyndns.org> <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org> <7vzl37z6f3.fsf@alter.siamese.dyndns.org>
+From: Hitoshi Mitake <mitake@dcl.info.waseda.ac.jp>
+Subject: Re: [PATCH v4 1/2] git-imap-send: Add CRAM-MD5 authenticate method
+ support
+Date: Fri, 19 Feb 2010 00:45:27 +0900
+Message-ID: <4B7D6097.6010700@dcl.info.waseda.ac.jp>
+References: <1265717345-2118-1-git-send-email-mitake@dcl.info.waseda.ac.jp> <1265974572-6282-1-git-send-email-mitake@dcl.info.waseda.ac.jp> <7vljeyp1rj.fsf@alter.siamese.dyndns.org> <4B764B67.1020402@dcl.info.waseda.ac.jp> <7vsk95sht6.fsf@alter.siamese.dyndns.org> <7v8watg04g.fsf@alter.siamese.dyndns.org> <4B7BB437.1060608@dcl.info.waseda.ac.jp> <7vocjnu32b.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@googlemail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 18 16:33:04 2010
+X-From: git-owner@vger.kernel.org Thu Feb 18 16:45:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ni8N7-00039V-7s
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 16:32:57 +0100
+	id 1Ni8ZO-0005cw-L0
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 16:45:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758367Ab0BRPcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 10:32:52 -0500
-Received: from ip-70-38-54-39.static.privatedns.com ([70.38.54.39]:35526 "EHLO
-	ginevra.hungrycats.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757716Ab0BRPcv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 10:32:51 -0500
-X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
-X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
-X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
-X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
-X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
-X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
-Received: from gibbs.hungrycats.org (gibbs.vpn7.hungrycats.org [10.132.226.42])
-	by ginevra.hungrycats.org (Postfix) with ESMTP id 17315770092;
-	Thu, 18 Feb 2010 10:32:50 -0500 (EST)
-Received: from zblaxell by gibbs.hungrycats.org with local (Exim 4.69)
-	(envelope-from <zblaxell@gibbs.hungrycats.org>)
-	id 1Ni8Mz-0005CK-W1; Thu, 18 Feb 2010 10:32:49 -0500
-Content-Disposition: inline
-In-Reply-To: <7vzl37z6f3.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1758493Ab0BRPpc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Feb 2010 10:45:32 -0500
+Received: from ns.dcl.info.waseda.ac.jp ([133.9.216.194]:55244 "EHLO
+	ns.dcl.info.waseda.ac.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758454Ab0BRPpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 10:45:31 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by ns.dcl.info.waseda.ac.jp (Postfix) with ESMTP id 44128EE499C;
+	Fri, 19 Feb 2010 00:45:29 +0900 (JST)
+X-Virus-Scanned: amavisd-new at dcl.info.waseda.ac.jp
+Received: from ns.dcl.info.waseda.ac.jp ([127.0.0.1])
+	by localhost (ns.dcl.info.waseda.ac.jp [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id u7siKNv9iL-G; Fri, 19 Feb 2010 00:45:28 +0900 (JST)
+Received: from [192.168.11.2] (FL1-122-130-141-251.tky.mesh.ad.jp [122.130.141.251])
+	by ns.dcl.info.waseda.ac.jp (Postfix) with ESMTP id 92328EE4998;
+	Fri, 19 Feb 2010 00:45:28 +0900 (JST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; ja; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
+In-Reply-To: <7vocjnu32b.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140347>
 
-On Wed, Feb 17, 2010 at 05:20:00PM -0800, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> With a small fix to the test program earlier in the thread, this seems to
-> protect the repository; I didn't bother to assess the performance impact
-> of the patch, though.
-> 
-> Here is the corrected test.
+(2010=E5=B9=B402=E6=9C=8818=E6=97=A5 03:31), Junio C Hamano wrote:
+> Hitoshi Mitake<mitake@dcl.info.waseda.ac.jp>  writes:
+>
+>>      response_64 =3D xmalloc(ENCODED_SIZE(resp_len));
+>> should be,
+>>      response_64 =3D xmalloc(ENCODED_SIZE(resp_len) + 1);
+>
+> Good catch.  Thanks for looking it over.
+>
+> This is _your_ contribution (I only made a minor fix-up or two), so I=
+'ll
+> apply this your v6 under your name.
 
-Depends on what you mean by "corrected" I suppose.
-
-> # Thread 2:  loop until the repo is corrupted
-> while git fsck; do
-> 	# Note the implied 'git add' in 'commit -a'
-> 	# It will do the same with explicit 'git add'
-> 	git commit -a -m'Test' || break
-
-This is at least partly wrong--it will terminate prematurely if Thread
-1 gets stalled and fails to modify 'foo' during the loop (git commit
-normally refuses to commit a tree with no changes).  This can cause
-the test for the corruption bug to return false success results.
-
-If you add '--allow-empty' to the git commit command you will fix that
-case, but there might be others.  
-
-If git commit runs out of disk space, for example, the commit should
-fail, but the repository should still not be corrupt.  Future commits
-(for example after freeing some disk space) should eventually succeed.
-Really, the original loop was correct, and this new one isn't.
-
-> else
-> 	echo Repository is still healthy.  You are stupid.
-
-If git is working, you should never reach this line, because git
-fsck should not fail after executing any sequence of git porcelain
-operations--and this particular sequence is nothing but 'git commit'
-in a single thread.
+OK, and thanks a lot for your time and review!
