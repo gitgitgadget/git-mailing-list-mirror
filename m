@@ -1,69 +1,70 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: A Visual Git Reference
-Date: Wed, 17 Feb 2010 20:39:43 -0500
-Message-ID: <ca433831002171739h7ae0de63hfdaa05841fbd388c@mail.gmail.com>
-References: <ca433831002081134m698f531bwa22f0474db0cdcb@mail.gmail.com> 
-	<b4087cc51002171717i3a8052a9jbf8c59b4975c0e1c@mail.gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Host refs to push are chosen (documentation error)?
+Date: Wed, 17 Feb 2010 20:51:27 -0500
+Message-ID: <32541b131002171751n454081a9w90f2957d7a40d87@mail.gmail.com>
+References: <201002171627.57599.arvidjaar@mail.ru> <be6fef0d1002170539v4384b355lb6be3e2f19b7b87b@mail.gmail.com> 
+	<32541b131002170939l261f396cpbee45f652fd96c77@mail.gmail.com> 
+	<20100218011620.GA15870@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 18 02:48:15 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Tay Ray Chuan <rctay89@gmail.com>,
+	Andrey Borzenkov <arvidjaar@mail.ru>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 18 02:51:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NhvV1-0002hE-1c
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 02:48:15 +0100
+	id 1NhvYY-0004lZ-UU
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Feb 2010 02:51:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932238Ab0BRBsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2010 20:48:09 -0500
-Received: from mail-yw0-f197.google.com ([209.85.211.197]:58602 "EHLO
+	id S1754697Ab0BRBvt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2010 20:51:49 -0500
+Received: from mail-yw0-f197.google.com ([209.85.211.197]:38993 "EHLO
 	mail-yw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751841Ab0BRBsI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2010 20:48:08 -0500
-Received: by ywh35 with SMTP id 35so555226ywh.4
-        for <git@vger.kernel.org>; Wed, 17 Feb 2010 17:48:06 -0800 (PST)
+	with ESMTP id S1754310Ab0BRBvs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2010 20:51:48 -0500
+Received: by ywh35 with SMTP id 35so557830ywh.4
+        for <git@vger.kernel.org>; Wed, 17 Feb 2010 17:51:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :from:date:message-id:subject:to:cc:content-type;
-        bh=FOiaAfUUcATxVFo2Ir6Rq8TeDfsnNIh+SQxFjwh/UqM=;
-        b=TIydYtfWdH6B2Xya0VXPPGJ9kEVxFin/83eAOqj1CSjc1H+TuyqiXkHRybrSPAXtfF
-         Kh8N8wiVFD4bOk3Uq1q7CEwzfre+RamXsWkg2vHVdzUfQUy6i4o3HUOOfsW3TVfHIhjj
-         fzu3a5w79YLYp5Kf1lvlGvnASmGd88M/+cJ0w=
+        bh=Bi/jhLIxgGPnKlrJqtM0BUD5nKSSbu9Tj6BTqPf50QA=;
+        b=b596JggRbU2FYXoCcPexOZhWcZMQbIYNot1lzCG8O92xe4DdtVUnaThYK8tEgGwPfG
+         v04z62QIvijYGbfxlgYpbcIQpWtpoZyMzSJLYFDUeOhn3Q8prCx8/o8EM5vh2i4zjnwD
+         C4zpfq8dgZmAKjsChXWHUBcYO5Ps0/t4VphmU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        b=bvsOIzeiiTBIUUb2cH1M+BHUEYOAiESOOHoPT3TaABJO/Pu+I+/J3BQLXQmC5jPTH9
-         IhM5ts7wGI6d4bIrqK8ahII8bgU/iURgX0i7zxIRcuaUb6lHhtNy3o67CcOyNFDQLF8o
-         QjmH9oGGYb6MTM96V9o8kt8bg8gpG3ikSIgSs=
-Received: by 10.91.21.25 with SMTP id y25mr1161205agi.19.1266457203666; Wed, 
-	17 Feb 2010 17:40:03 -0800 (PST)
-In-Reply-To: <b4087cc51002171717i3a8052a9jbf8c59b4975c0e1c@mail.gmail.com>
+        b=unlcb8WGu4R0rNON/9AzVfDNSQyjAynQA0bjGZp4eYx24sQTDWlaZUGGgfg5fc8JdB
+         WJzOgocuRcyxIjMSV8Z4mFt21fgxFYrH9/qKeUwj8NJl6RfQJ2YodnbkeFrf9lpaJVC0
+         AfxLysPUY1MHk0OQzlCjodcmSYEjGAY71e8zU=
+Received: by 10.151.118.2 with SMTP id v2mr2591506ybm.47.1266457907135; Wed, 
+	17 Feb 2010 17:51:47 -0800 (PST)
+In-Reply-To: <20100218011620.GA15870@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140283>
 
-The first paragraph has a link to an SVG version of the page.  It's
-not the default since SVG support varies greatly between browsers.
-Still, I'll consider making the images bigger.
+On Wed, Feb 17, 2010 at 8:16 PM, Jeff King <peff@peff.net> wrote:
+> Agreed. It's a minor point, but one that can mislead users who don't
+> know about packed refs. Maybe something like this?
 
-Thanks,
-Mark
+Wow, you really go all out.  Looks pretty good to me, except maybe this:
 
-On Wed, Feb 17, 2010 at 8:17 PM, Michael Witten <mfwitten@gmail.com> wrote:
-> On Mon, Feb 8, 2010 at 1:34 PM, Mark Lodato <lodatom@gmail.com> wrote:
->> All,
->>
->> I put together a "Visual Git Reference" containing visualizations of
->> the most common git commands, for people who prefer to see images over
->> text.
->
-> It would be great if you could output either larger images or
-> something that is resolution-independent like SVG.
->
+> ++
+> +For any of the `$GIT_DIR/refs` cases above, packed refs from
+> +`$GIT_DIR/packed-refs` may be substituted (e.g., a line with
+> +`refs/heads/master` in the packed-refs file would have the same
+> +precedence as the file `$GIT_DIR/refs/heads/master`).
+
+Are they really equal precedence?  How does git decide, when there's
+one of each?  I'd guess packed-refs might actually be strictly higher
+precedence, but I'm not sure.
+
+Avery
