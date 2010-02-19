@@ -1,61 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: 'git add' regression in git-1.7?
-Date: Fri, 19 Feb 2010 00:34:31 -0500
-Message-ID: <20100219053431.GB22645@coredump.intra.peff.net>
-References: <hll45t$50o$1@ger.gmane.org>
- <32541b131002182042p610fce4ex96efbffea9afe2ed@mail.gmail.com>
- <hll65c$87a$1@ger.gmane.org>
- <32541b131002182115t5501d0d1u19367a4d8e7627e4@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH resend] Documentation: pack-objects: Clarify --local's
+ semantics.
+Date: Thu, 18 Feb 2010 21:44:19 -0800
+Message-ID: <7vk4u9wzik.fsf@alter.siamese.dyndns.org>
+References: <1266550170-17013-1-git-send-email-nelhage@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: SungHyun Nam <goweol@gmail.com>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 19 06:34:39 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nelson Elhage <nelhage@MIT.EDU>
+X-From: git-owner@vger.kernel.org Fri Feb 19 06:44:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiLVe-00078b-VP
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 06:34:39 +0100
+	id 1NiLfH-00030L-9E
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 06:44:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752076Ab0BSFee convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 00:34:34 -0500
-Received: from peff.net ([208.65.91.99]:60960 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751317Ab0BSFed (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 00:34:33 -0500
-Received: (qmail 11279 invoked by uid 107); 19 Feb 2010 05:34:46 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 19 Feb 2010 00:34:46 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Feb 2010 00:34:31 -0500
-Content-Disposition: inline
-In-Reply-To: <32541b131002182115t5501d0d1u19367a4d8e7627e4@mail.gmail.com>
+	id S1752293Ab0BSFo3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 00:44:29 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53219 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752270Ab0BSFo2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 00:44:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3AE2C9B8C2;
+	Fri, 19 Feb 2010 00:44:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AJUGnsDbyJvqgDLLYKTRKwux/7c=; b=sSrA9v
+	KLA3F21WO9nQa/gKGOinM009Jf0A72coPlJh5oKRgPAmWZR1UnqGNtY+stv3mfj3
+	AY/ujNhJMQDnp2gdPvN8TTw1WHkkT5sH8yABIg7UcKG7sYGvi/WW4YacIwgNwpi1
+	yHg5BUnI9dVjjb93K0mPbPUTp0U1olk60U+a4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QkqO2UAw+sYNlomYBmMhoWfc7TKGmFKA
+	Gswer5ve4Hr9uWm0xtj/6Iz5RE+1rIg3DSbR3luncEg1V2oD+pkE4xA+OPI3XNSN
+	MMjNFgNG93czSXdO+sbiATabNEwHxz0Q/t/pFWhRu9yRM2N3ttsX3LwO4PJJci2A
+	5JEzpBmJAMU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 15E689B8C1;
+	Fri, 19 Feb 2010 00:44:25 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 894659B8BF; Fri, 19 Feb
+ 2010 00:44:21 -0500 (EST)
+In-Reply-To: <1266550170-17013-1-git-send-email-nelhage@mit.edu> (Nelson
+ Elhage's message of "Thu\, 18 Feb 2010 22\:29\:30 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D62F2982-1D19-11DF-8DC4-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140410>
 
-On Fri, Feb 19, 2010 at 12:15:02AM -0500, Avery Pennarun wrote:
+Nelson Elhage <nelhage@MIT.EDU> writes:
 
-> On Fri, Feb 19, 2010 at 12:04 AM, SungHyun Nam <goweol@gmail.com> wro=
-te:
-> > Well, before sending the previous email, I checked the
-> > RelNotes-1.7.*.txt, =C2=A0and could not find such a change by searc=
-hing
-> > 'git add'. =C2=A0So, I thought it's a regression.
->=20
-> As far as I know, git add has refused to add ignored files for as lon=
-g
-> as I can remember.  Maybe there was briefly a bug in this behaviour
-> that was later fixed...
->=20
-> If you use 'git bisect' on the git repo, you could probably discover
-> what happened, in case you're interested.
+> diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+> index f54d433..d8e5686 100644
+> --- a/Documentation/git-pack-objects.txt
+> +++ b/Documentation/git-pack-objects.txt
+> @@ -117,14 +117,13 @@ base-name::
+> ...
+>  --local::
+> -	This flag is similar to `--incremental`; instead of
+> -	ignoring all packed objects, it only ignores objects
+> -	that are packed and/or not in the local object store
+> -	(i.e. borrowed from an alternate).
+> +	This flag causes an object that is borrowed from an alternate
+> +	object store to be ignored even if it appears in the standard
+> +	input.
 
-It was intentional. Try 48ffef9 (ls-files: fix overeager pathspec
-optimization, 2010-01-08).
-
--Peff
+Thanks.  Comments from "packing" experts?
