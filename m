@@ -1,113 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Teach "git add" and friends to be paranoid
-Date: Thu, 18 Feb 2010 19:04:56 -0600
-Message-ID: <20100219010456.GA1789@progeny.tock>
-References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org>
- <20100214011812.GA2175@dpotapov.dyndns.org>
- <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org>
- <201002181114.19984.trast@student.ethz.ch>
- <7vtytee7ff.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1002181456230.1946@xanadu.home>
- <7v635ub8oa.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1002181604310.1946@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/10] teach --progress to transport-related builtins
+Date: Thu, 18 Feb 2010 17:26:02 -0800
+Message-ID: <7veikiyq1h.fsf@alter.siamese.dyndns.org>
+References: <1266496631-3980-1-git-send-email-rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Zygo Blaxell <zblaxell@esightcorp.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Fri Feb 19 02:04:57 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Jeff King" <peff@peff.net>, "Sebastian Thiel" <byronimo@gmail.com>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 02:26:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiHIf-0005XV-4u
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 02:04:57 +0100
+	id 1NiHdQ-0001KL-L4
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 02:26:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752624Ab0BSBEx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Feb 2010 20:04:53 -0500
-Received: from mail-yx0-f200.google.com ([209.85.210.200]:48308 "EHLO
-	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752513Ab0BSBEw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 20:04:52 -0500
-Received: by yxe38 with SMTP id 38so7020682yxe.4
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 17:04:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=vD/pnVo0u5NuX56QGRV1UUW7Ns/VqNs5KcrULmYdByo=;
-        b=v156ceAnDfx0PbmfkFd+NW5tPzH8BZA8AyxB710/It87pYOjprTDyQbu2XTEGArKHT
-         iY8xL6wo2OR2qLreJWgjwbV0lWdCSy241smzSmjGpdZLdnsvcM+vSSILpTm7QG8oBmzw
-         Fo+wiSL/G3bEetvzFdwJPo903hzx4bwTbngvg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=SMxRqW9LbyC2PxEk2MOHSPBvuB+py/byOmOyUYftn5lmaOoD9pvFWQudUeRPQQ6p8K
-         w1goE6Sldtkk7NgHgqKCtjeXbrhwRAXD2Iv9ulkXVgI3v/ZUmu+nep1TgVbt+lQAfESK
-         HkjvyTbRndjSPMV8F9AgZU+cwz5bcEuUN6+h0=
-Received: by 10.150.127.38 with SMTP id z38mr626945ybc.22.1266541491270;
-        Thu, 18 Feb 2010 17:04:51 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 6sm647019ywd.41.2010.02.18.17.04.49
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 18 Feb 2010 17:04:50 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1002181604310.1946@xanadu.home>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752920Ab0BSB0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 20:26:19 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43270 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752846Ab0BSB0T (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 20:26:19 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9ED2A9BB46;
+	Thu, 18 Feb 2010 20:26:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=dDbmuWSFq7msuM6eUCRrx30Is5k=; b=A0NSZNj+9OuWQ2CYOeO7TIs
+	b+WqaO+331sllL9lZDNqxRXgFnlc2zLnjwwdmHLQgRTDCe3TDVRAqdqcyeZvvbTY
+	56aiT2ltJ2mGg+gzxeD3L1DLavV+VYsu/l0Xdz4EoKWsLlQsNy3CMbcY+5nNdUU8
+	OIc9zb/tqiXuWe9UXWTs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=e79+elAjfh336H9Zhg79err8arpHUvpE0Fna2xQdxOLmwjBge
+	sIbPa4qsu+PO6AJKWQOXNuOs0nXkBQup7r9C9BaC6lPGVVuaDdP2iSVasn7B9a2Z
+	vxJ6Se+cV0F+lX9MEe9ti57m1e/hRMYyCxcoABNXbd4DaB+3UvdDL2aI8Q=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4955A9BB44;
+	Thu, 18 Feb 2010 20:26:10 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4F8ED9BB3F; Thu, 18 Feb
+ 2010 20:26:04 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C298499A-1CF5-11DF-9630-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140401>
 
-Nicolas Pitre wrote:
-> On Thu, 18 Feb 2010, Junio C Hamano wrote:
+Tay Ray Chuan <rctay89@gmail.com> writes:
 
->> I suspect that opening to mmap(2), hashing once to compute the objec=
-t
->> name, and deflating it to write it out, will all happen within the s=
-ame
->> second, unless you are talking about a really huge file, or you star=
-ted at
->> very near a second boundary.
+> This patch series adds --progress to:
 >
-> How is the index dealing with this?  Surely if a file is added to the=
-=20
-> index and modified within the same second then 'git status' will fail=
- to=20
-> notice the changes.  I'm not familiar enough with that part of Git.
+>   - git-fetch
+>   - git-pull
+>   - git-push
+>
+> I suspect the most contentious issue in this patch series would be the
+> logic that determines whether progress reporting is done. This is found
+> in patch 6 for transport.c::transport_set_verbosity().
+>
+> As a guide, I used Jeff's message (gmane#121065). The rules used are as
+> follows (processing aborts when a rule is satisfied):
+>
+>   1. Report progress, if force_progress is 1 (ie. --progress).
+>   2. Don't report progress, if verbosity < 0 (ie. -q/--quiet).
+>   3. Report progress if isatty(2) is 1.
+>
+> This changes the current implementation such that if both --progress
+> and --quiet are specified, progress is reported. I don't think this is
+> a very significant change, but I think it makes sense, since I expect
+> --progress to be mostly used by script writers or IDE integrators (to
+> force progress reporting even if stderr is not a terminal).
 
-See Documentation/technical/racy-git.txt and t/t0010-racy-git.sh.
-
-Short version: in the awful case, the timestamp of the index is the
-same as (or before) the timestamp of the file.  Git will notice this
-and re-hash the tracked file.
-
-> Alternatively, you could use the initial mtime sample to determine th=
-e=20
-> filesystem's time granularity by noticing how many LSBs are zero.
-
-Yuck.
-
-If such detection is going to happen, I would prefer to see it used
-once to determine the initial value of a per-repository configuration
-variable asking to speed up =E2=80=98git add=E2=80=99 and friends.
-
-Note that we are currently not using the nsec timestamps to make any
-important decisions, probably because in some filesystems they are
-unreliable when inode cache entries are evicted (not sure about the
-current status; does this work in NFS, for example?).  Within the
-short runtime of =E2=80=98git add=E2=80=99, I guess this would not be a=
-s much of a
-problem.
-
-Jonathan
+I gave a cursory look and they all looked sensible (except for 1/10
+on which I already commented separately).  Thanks.
