@@ -1,55 +1,53 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 4/7] git svn: Fix launching of pager
-Date: Fri, 19 Feb 2010 01:09:54 -0600
-Message-ID: <20100219070954.GD29916@progeny.tock>
+Subject: [PATCH 5/7] am: Fix launching of pager
+Date: Fri, 19 Feb 2010 01:12:03 -0600
+Message-ID: <20100219071203.GE29916@progeny.tock>
 References: <20100219065010.GA22258@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Sebastian Celis <sebastian@sebastiancelis.com>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>, Eric Wong <normalperson@yhbt.net>
+	Johannes Sixt <j6t@kdbg.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 19 08:09:57 2010
+X-From: git-owner@vger.kernel.org Fri Feb 19 08:12:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiMzs-0003aw-D1
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 08:09:56 +0100
+	id 1NiN1r-0004VQ-Vk
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 08:12:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754492Ab0BSHJv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 02:09:51 -0500
-Received: from mail-yx0-f200.google.com ([209.85.210.200]:46860 "EHLO
-	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754412Ab0BSHJu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 02:09:50 -0500
-Received: by yxe38 with SMTP id 38so7205080yxe.4
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 23:09:50 -0800 (PST)
+	id S1754525Ab0BSHLz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 02:11:55 -0500
+Received: from mail-yw0-f197.google.com ([209.85.211.197]:63230 "EHLO
+	mail-yw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754505Ab0BSHLy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 02:11:54 -0500
+Received: by ywh35 with SMTP id 35so1811628ywh.4
+        for <git@vger.kernel.org>; Thu, 18 Feb 2010 23:11:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=Km0Zmjva5vVIJDU1Dg8Lre0OcBBGyY0rGu/Tm2H6fEQ=;
-        b=Jh6+Yo74ei26nqJ2MnHmQxDubaM5hkWyvJjStNDHTE3ofhz3+yT+4/V7mqLC9L0uIS
-         2LadBD1Ljg4H7uc0qdjnz4VHOswmnpvseJvvLnKoVwlRO1dsmO53W6LhKJ14IyETAM/z
-         kmYrJ2TpBUO2BbU47SEK/opSaH5Zc0g2UNxr0=
+         :in-reply-to:user-agent;
+        bh=UidY4P9jNo+9K5e1aZ7HwJGtI/vz9ciVGDn2KZ66KbE=;
+        b=P/axMtA5qVwB0WIxuDf5o41pr9fhab7HNbfhNoMKyAsj2NtFx7GYCQlUK1vRX9d6rM
+         Ea9/Qgqbay30t2i4dCfuV3hdjG50/OJeDKXl+rNCM5465Q7isUx9n1OvaKpQYLVBzrrs
+         +7G5y+p98I59m+sQSYm15bigjNFzTt+fv0crY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=kMmla7Fqn6e9fMSbngzW+IfBLPYkHZRI4Obq/GJEpbX0PURj29iKAAsCL3YhsXd2iy
-         adlv4yxYR7SRPSQrAHDcRePey1HQBCnYMjAdhSEVPe8TpPLpuGcjtVwFy+p8zPnHZ99H
-         fJ5TrD/Wm92dlJog1pwuTnGJCfU4oP4gwV7dI=
-Received: by 10.101.134.17 with SMTP id l17mr11128793ann.74.1266563390225;
-        Thu, 18 Feb 2010 23:09:50 -0800 (PST)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=LLl8i4P7Gp9JlfmSv5+88yF1vDTqIbYBcvY6cGTDUl+Xov8UjlQO8QEt9ibfHqQllq
+         oecfCSMaN2ZXpt8/KF2SyzWzpuSkc7/NzI4pivY0YV2sAPU/IRePJCn78BDuWR6Hvv4b
+         0M4hbcxyt8jQwJhhc1W/cjMdEWqAVlM8dySeE=
+Received: by 10.101.190.21 with SMTP id s21mr7940427anp.12.1266563513459;
+        Thu, 18 Feb 2010 23:11:53 -0800 (PST)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 8sm4010464yxg.60.2010.02.18.23.09.44
+        by mx.google.com with ESMTPS id 14sm1551180gxk.15.2010.02.18.23.11.52
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 18 Feb 2010 23:09:45 -0800 (PST)
+        Thu, 18 Feb 2010 23:11:52 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20100219065010.GA22258@progeny.tock>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -57,63 +55,70 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140422>
 
-In commit dec543e (am -i, git-svn: use "git var GIT_PAGER"), I tried
-to teach git svn to defer to git var on what pager to use.  In the
-process, I introduced two bugs:
+The pagination functionality in git am has some problems:
 
- - The value set for $pager in config_pager has local scope, so
-   run_pager never sees it;
+ - It does not check if stdout is a tty, so it always paginates.
 
- - git var cannot tell whether git svn=E2=80=99s output is going to a
-   terminal, so the value chosen for $pager does not reflect that
-   information.
+ - If $GIT_PAGER uses any environment variables, they are being
+   ignored, since it does not run $GIT_PAGER through eval.
 
-=46ix them.
+ - If $GIT_PAGER is set to the empty string, instead of passing
+   output through to stdout, it tries to run $dotest/patch.
 
-Reported-by: Sebastian Celis <sebastian@sebastiancelis.com>
+Fix them.  While at it, move the definition of git_pager() to
+git-sh-setup so authors of other commands are not tempted to
+reimplement it with the same mistakes.
+
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Acked-by: Eric Wong <normalperson@yhbt.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-Eric Wong wrote:
+Same as before, included for reference.
 
-> Thanks Jonathan, confirmed this works with patch 2 of this series.
->
-> Acked-by: Eric Wong <normalperson@yhbt.net>
+ git-am.sh       |    5 +----
+ git-sh-setup.sh |   13 +++++++++++++
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-Thanks.
-
- git-svn.perl |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 265852f..473a0b9 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -5459,7 +5459,12 @@ sub git_svn_log_cmd {
-=20
- # adapted from pager.c
- sub config_pager {
--	chomp(my $pager =3D command_oneline(qw(var GIT_PAGER)));
-+	if (! -t *STDOUT) {
-+		$ENV{GIT_PAGER_IN_USE} =3D 'false';
-+		$pager =3D undef;
-+		return;
-+	}
-+	chomp($pager =3D command_oneline(qw(var GIT_PAGER)));
- 	if ($pager eq 'cat') {
- 		$pager =3D undef;
- 	}
-@@ -5467,7 +5472,7 @@ sub config_pager {
+diff --git a/git-am.sh b/git-am.sh
+index 3c08d53..b11af03 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -663,10 +663,7 @@ do
+ 		[eE]*) git_editor "$dotest/final-commit"
+ 		       action=again ;;
+ 		[vV]*) action=again
+-		       : ${GIT_PAGER=$(git var GIT_PAGER)}
+-		       : ${LESS=-FRSX}
+-		       export LESS
+-		       $GIT_PAGER "$dotest/patch" ;;
++		       git_pager "$dotest/patch" ;;
+ 		*)     action=again ;;
+ 		esac
+ 	    done
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index d56426d..44fb467 100755
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -107,6 +107,19 @@ git_editor() {
+ 	eval "$GIT_EDITOR" '"$@"'
  }
-=20
- sub run_pager {
--	return unless -t *STDOUT && defined $pager;
-+	return unless defined $pager;
- 	pipe my ($rfd, $wfd) or return;
- 	defined(my $pid =3D fork) or ::fatal "Can't fork: $!";
- 	if (!$pid) {
---=20
+ 
++git_pager() {
++	if test -t 1
++	then
++		GIT_PAGER=$(git var GIT_PAGER)
++	else
++		GIT_PAGER=cat
++	fi
++	: ${LESS=-FRSX}
++	export LESS
++
++	eval "$GIT_PAGER" '"$@"'
++}
++
+ sane_grep () {
+ 	GREP_OPTIONS= LC_ALL=C grep "$@"
+ }
+-- 
 1.7.0
