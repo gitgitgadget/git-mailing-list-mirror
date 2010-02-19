@@ -1,78 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC 7/7] t7006-pager: if stdout is not a terminal, make
- a new one
-Date: Fri, 19 Feb 2010 03:34:41 -0500
-Message-ID: <20100219083440.GC13691@coredump.intra.peff.net>
-References: <20100219065010.GA22258@progeny.tock>
- <20100219072331.GG29916@progeny.tock>
- <20100219080819.GA13691@coredump.intra.peff.net>
- <20100219081947.GA12975@progeny.tock>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Using test-lib.sh under GPLv3?
+Date: Fri, 19 Feb 2010 09:44:55 +0100
+Message-ID: <fabb9a1e1002190044o5d4feb53td255b1e49a2c969d@mail.gmail.com>
+References: <87ljf8pvxx.fsf@yoom.home.cworth.org> <87hbpwpoko.fsf@yoom.home.cworth.org> 
+	<5641883d1002060727ia4e6c16lf800a92fc8735430@mail.gmail.com> 
+	<201002081614.24284.sojkam1@fel.cvut.cz> <871vgr78lr.fsf@yoom.home.cworth.org> 
+	<87iqa2y0gz.fsf@steelpick.localdomain> <87r5oqe7mi.fsf@yoom.home.cworth.org> 
+	<871vgmki4f.fsf@steelpick.localdomain> <7vaav8hpfo.fsf@alter.siamese.dyndns.org> 
+	<87tytdiqob.fsf@steelpick.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org,
-	Sebastian Celis <sebastian@sebastiancelis.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 19 09:34:49 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>, Carl Worth <cworth@cworth.org>,
+	notmuch@notmuchmail.org, git@vger.kernel.org
+To: Michal Sojka <sojkam1@fel.cvut.cz>
+X-From: git-owner@vger.kernel.org Fri Feb 19 09:45:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiOK1-0007zu-83
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 09:34:49 +0100
+	id 1NiOUG-0007Fj-En
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 09:45:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751404Ab0BSIeo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 03:34:44 -0500
-Received: from peff.net ([208.65.91.99]:33869 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750879Ab0BSIen (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 03:34:43 -0500
-Received: (qmail 13584 invoked by uid 107); 19 Feb 2010 08:34:55 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 19 Feb 2010 03:34:55 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Feb 2010 03:34:41 -0500
-Content-Disposition: inline
-In-Reply-To: <20100219081947.GA12975@progeny.tock>
+	id S1751993Ab0BSIpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 03:45:17 -0500
+Received: from mail-pz0-f192.google.com ([209.85.222.192]:54897 "EHLO
+	mail-pz0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751775Ab0BSIpQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 03:45:16 -0500
+Received: by pzk30 with SMTP id 30so1089119pzk.22
+        for <git@vger.kernel.org>; Fri, 19 Feb 2010 00:45:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=fI1L6//jmdxoR8iV5S//jKkG2KbflYEZF9J9RfbMmOo=;
+        b=YoI92ANYwJg1OL+olITSty4UIFOXkv19V8CVxbaZBAyEHZCJUI/7XfuylMX/hp6MjF
+         C9bcV0x2Vd4WXvj4A3s3vo30ftDKx8fx0pwoeNWj8PdXAm6duYWG1uZqGLUjMvxy+jEu
+         NnNQI4axnDfcEfSGMevDLAGFNbmVmHmhQiEWw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=s2uTppKPDlT1HkeRWkplcUdfuTt4gW1z9q0cgcEcI0t0GdrUN7KMVd+7/NfoTlgRBP
+         /x407Ryq5XdEoYRLlfEB23XOaGW26yMKyXOsLCYG1zZ086RDY/Xbzum2+xtNUvrIDW7k
+         UoJnw8WnkvUXiygndBBRcJbWx2agZ7j8u3/Hs=
+Received: by 10.142.195.19 with SMTP id s19mr7271733wff.312.1266569115168; 
+	Fri, 19 Feb 2010 00:45:15 -0800 (PST)
+In-Reply-To: <87tytdiqob.fsf@steelpick.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140437>
 
-On Fri, Feb 19, 2010 at 02:19:47AM -0600, Jonathan Nieder wrote:
+Heya,
 
-> Jeff King wrote:
->=20
-> > Solaris 8 and 9 seem to be lacking it. Solaris 10 does have it. AIX=
- 5.2
-> > and 6.1 both have it.
-> >=20
-> > So it would mean some platforms couldn't run all tests. That is pro=
-bably
-> > good enough, given that most of our terminal-related bugs have not =
-been
-> > platform-specific problems.
->=20
-> Hmm, how about /dev/ptmx?  (One can check by replacing posix_openpt(.=
-=2E.)
-> with open("/dev/ptmx", ...) in the test-terminal.c I sent.)
+On Fri, Feb 19, 2010 at 09:19, Michal Sojka <sojkam1@fel.cvut.cz> wrote:
+> as you can read bellow, I'd like to use git's test-lib.sh in a GPLv3
+> project. Do you mind if I use your work in that file under GPLv3?
 
-Solaris 8 does have /dev/ptmx. Sorry, I wasn't able to test it, as my
-sol8 box is very vanilla right now, and I can't actually compile git on
-it (it doesn't even have gmake). :)
+I don't mind, go right ahead :).
 
-Maybe Brandon (cc'd) can try it.
+-- 
+Cheers,
 
-> No, not opposed.  Just lazy and not so interested in working on it.
-> I do not want to just take the implementation you provided because I
-> want to test the scripted git commands, too, though I haven=E2=80=99t=
- gotten
-> around to that.
-
-Ah, right, I forgot about scripts. That makes things a little uglier,
-but it should theoretically be possible.
-
--Peff
+Sverre Rabbelier
