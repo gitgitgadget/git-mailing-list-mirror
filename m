@@ -1,107 +1,87 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: RFD: git-bzr: anyone interested?
-Date: Fri, 19 Feb 2010 15:55:49 +0200
-Message-ID: <20100219135549.GA31796@Knoppix>
-References: <4B7D8358.1080108@gmail.com>
- <fabb9a1e1002181037n58d6942dpa63a57a23f506d9c@mail.gmail.com>
- <4B7E3856.3080609@gmail.com>
+From: Kirill Smelkov <kirr@mns.spb.ru>
+Subject: Re: [PATCH] Handle failure of core.worktree to identify the
+	working directory.
+Date: Fri, 19 Feb 2010 16:55:22 +0300
+Organization: Marine Bridge & Navigation Systems
+Message-ID: <20100219135522.GA27417@tugrik.mns.mnsspb.ru>
+References: <20100217121304.GA1623@tugrik.mns.mnsspb.ru> <87iq9vgugf.fsf@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Gabriel Filion <lelutin@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 19 14:56:08 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri Feb 19 14:58:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiTKx-0000aj-Od
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 14:56:08 +0100
+	id 1NiTNJ-0002dl-28
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 14:58:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752544Ab0BSNzy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 08:55:54 -0500
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:51789 "EHLO
-	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751864Ab0BSNzx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 08:55:53 -0500
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 533F38C368;
-	Fri, 19 Feb 2010 15:55:52 +0200 (EET)
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A07221404FB; Fri, 19 Feb 2010 15:55:52 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id 271B3E51C0;
-	Fri, 19 Feb 2010 15:55:50 +0200 (EET)
+	id S1751185Ab0BSN61 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 08:58:27 -0500
+Received: from mail.mnsspb.ru ([84.204.75.2]:39021 "EHLO mail.mnsspb.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750867Ab0BSN60 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 08:58:26 -0500
+Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
+	by mail.mnsspb.ru with esmtps id 1NiTMV-0005pX-LT; Fri, 19 Feb 2010 16:57:56 +0300
+Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.69)
+	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
+	id 1NiTKE-0007aP-CW; Fri, 19 Feb 2010 16:55:22 +0300
 Content-Disposition: inline
-In-Reply-To: <4B7E3856.3080609@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Antivirus: VAMS
+In-Reply-To: <87iq9vgugf.fsf@users.sourceforge.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140452>
 
-On Fri, Feb 19, 2010 at 02:05:58AM -0500, Gabriel Filion wrote:
+On Thu, Feb 18, 2010 at 02:11:21AM +0000, Pat Thoyts wrote:
+> Commit 21985a11 'git-gui: handle non-standard worktree locations' attempts
+> to use either GIT_WORK_TREE or core.worktree to set the _gitworktree
+> variable but these may not be set which leads to a failure to launch
+> gitk to review history. Use _gitdir to set the location for a standard
+> git layout where the parent of the .git directory is the working tree.
 > 
-> The Documentation/git-remote-helpers.txt file wasn't really of much help
-> .. It really only barely scratches the subject, but it does not mention
-> how remote-helpers really work internally (e.g. how do they get called:
-> based on protocol used in URLs?)
+> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+
+Now it works, thanks.
+
+Tested-by: Kirill Smelkov <kirr@mns.spb.ru>
+
+> >Git-gui as shipped with todays git.git master is a bit broken:
+> >
+> >in git.git master (v1.7.0-29-g6d81630), try running:
+> >
+> >    $ git gui blame xdiff-interface.h
+> >
+> >Then select first line 'd9ea d9ea   1 #ifndef XDIFF_INTERFACE_H', right
+> >click to popup context menu, select "Show History Context" -->
+> >
+> >--> git gui errors with:
+> >
+> >    "Error: couldn't change working directory to "": no ...
+> >
+> >
+> >Thanks,
+> >Kirill
 > 
-> I'm still trying to dig up information about how to actually build, test
-> and use a remote helper. I'll probably be reading code for examples.
-
-The remote helper is invoked with one or two parameters. 
-
-There are five cases to consider (as rule, first argument is name of
-remote [pseudo-remote in case URL was used] and the second argument is
-URL to use, if any):
-
-1) Remote <remote> without URL line but with VCS line value <helper> was used.
-
-The called program: git-remote-<helper>  [search $PATH for it].
-Number of arguements: 1
-1st argument: <remote>
-
-2) Remote <remote> with URL using <helper>::<string> syntax was used.
-
-The called program: git-remote-<helper>  [search $PATH for it].
-Number of arguments: 2
-1st argument: <remote>
-2st argument: <string>
-
-3) Remote <remote> with URL using <helper>://<rest-of-URL> syntax was used.
-
-The called program: git-remote-<helper>  [serch $PATH for it].
-Number of arguments: 2
-1st argument: <remote>
-2st argument: <helper>://<rest-of-URL>
-
-4) URL using <helper>::<string> syntax was used directly on command line.
-
-The called program: git-remote-<helper>  [serch $PATH for it].
-Number of arguments: 2
-1st argument: <helper>::<string>
-2st argument: <string>
-
-5) URL using <helper>://<rest-of-URL> syntax was used directly on command
-line.
-
-The called program: git-remote-<helper>  [serch $PATH for it].
-Number of arguments: 2
-1st argument: <helper>://<rest-of-URL>
-2st argument: <helper>://<rest-of-URL>
-
-
-Notes:
-
-- For 2) and 4), the helper name can only contain alphanumeric characters
-  0-9, A-Z and a-z.
-- For 3) and 5), the helper name can't be any of builtin protocols:
-  'rsync', 'file', 'git', 'ssh', 'git+ssh' nor 'ssh+git'.
-- <helper>::<string> is the strongest, followed by VCS line,
-  <helper>:://<rest-of-URL> is weakest.
-
--Ilari
+>  git-gui.sh |    3 +++
+>  1 files changed, 3 insertions(+), 0 deletions(-)
+> 
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 8996d2d..ec81b15 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -1158,6 +1158,9 @@ apply_config
+>  # try to set work tree from environment, falling back to core.worktree
+>  if {[catch { set _gitworktree $env(GIT_WORK_TREE) }]} {
+>  	set _gitworktree [get_config core.worktree]
+> +	if {$_gitworktree eq ""} {
+> +		set _gitworktree [file dirname [file normalize $_gitdir]]
+> +	}
+>  }
+>  if {$_prefix ne {}} {
+>  	if {$_gitworktree eq {}} {
