@@ -1,65 +1,68 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: Re: [RFD] Deepen the git directory structure a bit.
-Date: Fri, 19 Feb 2010 09:20:31 +0530
-Message-ID: <e72faaa81002181950q18a80f31p96d9f8f05c968e01@mail.gmail.com>
-References: <alpine.LFD.2.00.1002181010590.4141@localhost.localdomain>
-	 <46d6db661002181534r10a887b5gcc23435cb8952f13@mail.gmail.com>
+From: SungHyun Nam <goweol@gmail.com>
+Subject: 'git add' regression in git-1.7?
+Date: Fri, 19 Feb 2010 13:30:54 +0900
+Message-ID: <hll45t$50o$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Christian MICHON <christian.michon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 19 04:50:38 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 19 05:31:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiJsz-0004o1-V7
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 04:50:38 +0100
+	id 1NiKWS-0005PJ-5p
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 05:31:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754336Ab0BSDud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 22:50:33 -0500
-Received: from mail-yw0-f197.google.com ([209.85.211.197]:57351 "EHLO
-	mail-yw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754266Ab0BSDuc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 22:50:32 -0500
-Received: by ywh35 with SMTP id 35so1720755ywh.4
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 19:50:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=t8fInO06jYFoU8DwvOuupHT3goH7mtyOA6HSkZv32AQ=;
-        b=VAurICp1JTVDQ8+czYQAe/FkuEazpj7nRF6fyAAVl8jcxVnEKY/sIi8fg2wvqj+5YN
-         qW4X+AFkAjPxyBpbRH2/v8/gkMDpuP7fXYp6jMeDPSSblUxtk3SanoT0JAjSbojH4JQZ
-         qstK6FfwYy0i4BWJHf4VuLWxakjR+fZFigqqk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=gIL2Y08lY+fm27R4ScQvcEzCyYT2PQEsByBMSap+SPIXRw/Dis05zKI/PIdvfpqK5Z
-         hwfSlrXZJGrgMdxA1VKbEnu+jpOu2Cx0bux4InCwFMZv4Za7Tqb9GaqJU9rAwflSWgSC
-         Jpve2IpwYDLI2talpDBrIkC0Mvi3ExKWe0HZw=
-Received: by 10.90.15.14 with SMTP id 14mr3299110ago.2.1266551431715; Thu, 18 
-	Feb 2010 19:50:31 -0800 (PST)
-In-Reply-To: <46d6db661002181534r10a887b5gcc23435cb8952f13@mail.gmail.com>
+	id S1751520Ab0BSEbT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 23:31:19 -0500
+Received: from lo.gmane.org ([80.91.229.12]:54324 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751088Ab0BSEbS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 23:31:18 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NiKWJ-0005Mp-La
+	for git@vger.kernel.org; Fri, 19 Feb 2010 05:31:15 +0100
+Received: from 210.181.13.12 ([210.181.13.12])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 19 Feb 2010 05:31:15 +0100
+Received: from goweol by 210.181.13.12 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 19 Feb 2010 05:31:15 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 210.181.13.12
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; ko; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
+X-Stationery: 0.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140405>
 
->
-> maybe rather than just autocompletion, it does help new code to land
-> in the right place ? I think just for this reason at least it's a good
-> move.
->
-> I've a wild idea on a new command to add to git and I was pondering
-> between having it as a perl script or a builtin. Now I know where it
-> should go if I choose a builtin, provided you get a wide consensus.
->
+Hello,
 
-I agree with this. This will be very good to guys who want to start
-understanding the code completely
+'git add' does NOT add files in ignored path.
+
+When the .gitignore file contains:
+     tmp/
+If I do:
+     git add tmp/test.txt
+Nothing happens.
+
+If I removed 'tmp/' from the .gitignore, git add works
+fine.
+
+Because I have backup copies of GIT, I tested serveral versions.
+The version below works as expected.
+     git version 1.6.6.243.gff6d2
+
+And below does NOT work.
+     git version 1.7.0.rc1.7.gc0da5
+     git version 1.7.0.31.g1df487
+
+Thanks,
+namsh
