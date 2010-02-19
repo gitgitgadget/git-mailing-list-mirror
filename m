@@ -1,55 +1,55 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 3/7] git.1: Clarify the behavior of the --paginate option
-Date: Fri, 19 Feb 2010 01:06:39 -0600
-Message-ID: <20100219070639.GC29916@progeny.tock>
+Subject: [PATCH 4/7] git svn: Fix launching of pager
+Date: Fri, 19 Feb 2010 01:09:54 -0600
+Message-ID: <20100219070954.GD29916@progeny.tock>
 References: <20100219065010.GA22258@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Sebastian Celis <sebastian@sebastiancelis.com>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
+	Johannes Sixt <j6t@kdbg.org>, Eric Wong <normalperson@yhbt.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 19 08:06:40 2010
+X-From: git-owner@vger.kernel.org Fri Feb 19 08:09:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiMwg-0002AA-RG
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 08:06:39 +0100
+	id 1NiMzs-0003aw-D1
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 08:09:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754388Ab0BSHGd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 02:06:33 -0500
-Received: from mail-yx0-f200.google.com ([209.85.210.200]:49512 "EHLO
+	id S1754492Ab0BSHJv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 02:09:51 -0500
+Received: from mail-yx0-f200.google.com ([209.85.210.200]:46860 "EHLO
 	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754242Ab0BSHGb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 02:06:31 -0500
-Received: by yxe38 with SMTP id 38so7203598yxe.4
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 23:06:31 -0800 (PST)
+	with ESMTP id S1754412Ab0BSHJu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 02:09:50 -0500
+Received: by yxe38 with SMTP id 38so7205080yxe.4
+        for <git@vger.kernel.org>; Thu, 18 Feb 2010 23:09:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=cI+PtCzTq9QFBQKbyQO868acU0tNoMWilb5p0MZUhGk=;
-        b=nnT7Gzs0ZHdw5sLgbB70fRI1+NhfGN7IFMZLKhYPNf11787K34BEponqgveWtUk4Bn
-         j2sVlMZqhmS9fZiHBJC848jLccVfMSIM2ZzzpHI/Qpx6ymV2n1s9jBBukffgrI61Va3E
-         uCGcOlrorZXPezZvv67jrzKXv+pQB0ufjczCs=
+        bh=Km0Zmjva5vVIJDU1Dg8Lre0OcBBGyY0rGu/Tm2H6fEQ=;
+        b=Jh6+Yo74ei26nqJ2MnHmQxDubaM5hkWyvJjStNDHTE3ofhz3+yT+4/V7mqLC9L0uIS
+         2LadBD1Ljg4H7uc0qdjnz4VHOswmnpvseJvvLnKoVwlRO1dsmO53W6LhKJ14IyETAM/z
+         kmYrJ2TpBUO2BbU47SEK/opSaH5Zc0g2UNxr0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=Y88c3aExgNNr+sGtx3VoBo5gGVd9yottY1DFUVz+zLQjGJ8MZUhtQ1gczqX49xeEYa
-         kYH9ZSOZtGBTsJUsNF07tvn5H7FNtAxVzj+GYjEZ38lJKj9GlLezix7xY9kUilEr5WlE
-         5R7fXNtc28zUzwN/IsYRiJ53eaeFqQ5nviVMI=
-Received: by 10.101.132.14 with SMTP id j14mr11154752ann.58.1266563190815;
-        Thu, 18 Feb 2010 23:06:30 -0800 (PST)
+        b=kMmla7Fqn6e9fMSbngzW+IfBLPYkHZRI4Obq/GJEpbX0PURj29iKAAsCL3YhsXd2iy
+         adlv4yxYR7SRPSQrAHDcRePey1HQBCnYMjAdhSEVPe8TpPLpuGcjtVwFy+p8zPnHZ99H
+         fJ5TrD/Wm92dlJog1pwuTnGJCfU4oP4gwV7dI=
+Received: by 10.101.134.17 with SMTP id l17mr11128793ann.74.1266563390225;
+        Thu, 18 Feb 2010 23:09:50 -0800 (PST)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 15sm1268565gxk.2.2010.02.18.23.06.29
+        by mx.google.com with ESMTPS id 8sm4010464yxg.60.2010.02.18.23.09.44
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 18 Feb 2010 23:06:30 -0800 (PST)
+        Thu, 18 Feb 2010 23:09:45 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20100219065010.GA22258@progeny.tock>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -57,57 +57,63 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140421>
 
-The --paginate option is meant to negate the effect of an explicit or
-implicit pager.<cmd> =3D false setting.  Thus it turns the pager on if
-output is going to a terminal rather than unconditionally.
+In commit dec543e (am -i, git-svn: use "git var GIT_PAGER"), I tried
+to teach git svn to defer to git var on what pager to use.  In the
+process, I introduced two bugs:
 
-Explaining this requires mentioning configuration options very early
-in the manual, when some users might not be familiar with them yet.
-Provide some pointers to help: to the relevant section of git.1 for
-the configuration mechanism in general and to git-config.1 for the
-pager.<cmd> options.
+ - The value set for $pager in config_pager has local scope, so
+   run_pager never sees it;
 
+ - git var cannot tell whether git svn=E2=80=99s output is going to a
+   terminal, so the value chosen for $pager does not reflect that
+   information.
+
+=46ix them.
+
+Reported-by: Sebastian Celis <sebastian@sebastiancelis.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Acked-by: Eric Wong <normalperson@yhbt.net>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-Add a second paragraph to explain the less obvious part of the patch.
-Jeff reverse-engineered this all correctly in [1], but one shouldn=E2=80=
-=99t
-have to think that hard to see where a patch is coming from.
+Eric Wong wrote:
 
-http://thread.gmane.org/gmane.comp.version-control.git/139831/focus=3D1=
-39971
+> Thanks Jonathan, confirmed this works with patch 2 of this series.
+>
+> Acked-by: Eric Wong <normalperson@yhbt.net>
 
- Documentation/git.txt |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+Thanks.
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 01c4631..f26641a 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -229,7 +229,10 @@ help ...`.
+ git-svn.perl |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 265852f..473a0b9 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -5459,7 +5459,12 @@ sub git_svn_log_cmd {
 =20
- -p::
- --paginate::
--	Pipe all output into 'less' (or if set, $PAGER).
-+	Pipe all output into 'less' (or if set, $PAGER) if standard
-+	output is a terminal.  This overrides the `pager.<cmd>`
-+	configuration options (see the "Configuration Mechanism" section
-+	below).
+ # adapted from pager.c
+ sub config_pager {
+-	chomp(my $pager =3D command_oneline(qw(var GIT_PAGER)));
++	if (! -t *STDOUT) {
++		$ENV{GIT_PAGER_IN_USE} =3D 'false';
++		$pager =3D undef;
++		return;
++	}
++	chomp($pager =3D command_oneline(qw(var GIT_PAGER)));
+ 	if ($pager eq 'cat') {
+ 		$pager =3D undef;
+ 	}
+@@ -5467,7 +5472,7 @@ sub config_pager {
+ }
 =20
- --no-pager::
- 	Do not pipe git output into a pager.
-@@ -401,7 +404,8 @@ people.  Here is an example:
- ------------
-=20
- Various commands read from the configuration file and adjust
--their operation accordingly.
-+their operation accordingly.  See linkgit:git-config[1] for a
-+list.
-=20
-=20
- Identifier Terminology
+ sub run_pager {
+-	return unless -t *STDOUT && defined $pager;
++	return unless defined $pager;
+ 	pipe my ($rfd, $wfd) or return;
+ 	defined(my $pid =3D fork) or ::fatal "Can't fork: $!";
+ 	if (!$pid) {
 --=20
 1.7.0
