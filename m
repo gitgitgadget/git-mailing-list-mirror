@@ -1,89 +1,113 @@
-From: Gabriel Filion <lelutin@gmail.com>
-Subject: Re: RFD: git-bzr: anyone interested?
-Date: Fri, 19 Feb 2010 02:05:58 -0500
-Message-ID: <4B7E3856.3080609@gmail.com>
-References: <4B7D8358.1080108@gmail.com> <fabb9a1e1002181037n58d6942dpa63a57a23f506d9c@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 3/7] git.1: Clarify the behavior of the --paginate option
+Date: Fri, 19 Feb 2010 01:06:39 -0600
+Message-ID: <20100219070639.GC29916@progeny.tock>
+References: <20100219065010.GA22258@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sebastian Celis <sebastian@sebastiancelis.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 19 08:06:23 2010
+X-From: git-owner@vger.kernel.org Fri Feb 19 08:06:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiMwL-00021R-8n
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 08:06:17 +0100
+	id 1NiMwg-0002AA-RG
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 08:06:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753788Ab0BSHGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 02:06:12 -0500
-Received: from mail-qy0-f202.google.com ([209.85.221.202]:61084 "EHLO
-	mail-qy0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753356Ab0BSHGL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 02:06:11 -0500
-Received: by qyk40 with SMTP id 40so558816qyk.24
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 23:06:10 -0800 (PST)
+	id S1754388Ab0BSHGd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 02:06:33 -0500
+Received: from mail-yx0-f200.google.com ([209.85.210.200]:49512 "EHLO
+	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754242Ab0BSHGb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 02:06:31 -0500
+Received: by yxe38 with SMTP id 38so7203598yxe.4
+        for <git@vger.kernel.org>; Thu, 18 Feb 2010 23:06:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=MKmKKJNOAFmf2/MV6lku10HW+UJ6uIiXSz7yN8t0ZuE=;
-        b=xDofFh5Nv1sLkEcILlVfHoCjDtdKIAH9MKR6Llqb3zq2xGIsXoSVLcmbH+aOsyDluB
-         gvHKkuiHXVyTCyaSIF0OZe1dlqRMkPPnuRQ5pZ8dPDFNquiZbPJ9Ff0VfMPmuJsa4HJb
-         96ckmmxgv1od+kvFBXgyrvb70OhGPq/wa1b4M=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=cI+PtCzTq9QFBQKbyQO868acU0tNoMWilb5p0MZUhGk=;
+        b=nnT7Gzs0ZHdw5sLgbB70fRI1+NhfGN7IFMZLKhYPNf11787K34BEponqgveWtUk4Bn
+         j2sVlMZqhmS9fZiHBJC848jLccVfMSIM2ZzzpHI/Qpx6ymV2n1s9jBBukffgrI61Va3E
+         uCGcOlrorZXPezZvv67jrzKXv+pQB0ufjczCs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        b=nWPVIL/13CINYCn63Puf4JVRoSQ/DnKs6zIeskSaX0bCsNsfz/iOQ+WhM6eY87aVnO
-         r3g7+nkpPeZ1kmjOkrPap9TCWUvgKzuF2aHYWXIgADK+591DEyQ2VbSaPEDEpJU17h49
-         QuQF+ZPPOo0ZJyQL6yP8la5hJo6zbhAb0y7Tw=
-Received: by 10.224.63.41 with SMTP id z41mr3096526qah.294.1266563170128;
-        Thu, 18 Feb 2010 23:06:10 -0800 (PST)
-Received: from ?192.168.2.202? (dsl-152-38.aei.ca [66.36.152.38])
-        by mx.google.com with ESMTPS id 21sm7292285qyk.0.2010.02.18.23.06.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 18 Feb 2010 23:06:08 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20100108 Lightning/1.0b1 Icedove/3.0
-In-Reply-To: <fabb9a1e1002181037n58d6942dpa63a57a23f506d9c@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Y88c3aExgNNr+sGtx3VoBo5gGVd9yottY1DFUVz+zLQjGJ8MZUhtQ1gczqX49xeEYa
+         kYH9ZSOZtGBTsJUsNF07tvn5H7FNtAxVzj+GYjEZ38lJKj9GlLezix7xY9kUilEr5WlE
+         5R7fXNtc28zUzwN/IsYRiJ53eaeFqQ5nviVMI=
+Received: by 10.101.132.14 with SMTP id j14mr11154752ann.58.1266563190815;
+        Thu, 18 Feb 2010 23:06:30 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 15sm1268565gxk.2.2010.02.18.23.06.29
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 18 Feb 2010 23:06:30 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20100219065010.GA22258@progeny.tock>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140420>
 
-On 2010-02-18 13:37, Sverre Rabbelier wrote:
-> By implementing a
-> remote helper people can just clone a bzr url, and work with it in the
-> exact same way that they would interact with a regular git repository.
+The --paginate option is meant to negate the effect of an explicit or
+implicit pager.<cmd> =3D false setting.  Thus it turns the pager on if
+output is going to a terminal rather than unconditionally.
 
-This sounds great, it's exactly what I'm hoping to achieve with this
-project.
+Explaining this requires mentioning configuration options very early
+in the manual, when some users might not be familiar with them yet.
+Provide some pointers to help: to the relevant section of git.1 for
+the configuration mechanism in general and to git-config.1 for the
+pager.<cmd> options.
 
-> If you're interested have a look at
-> Documentation/git-remote-helpers.txt, and read the mailing list
-> archives on the subject.
-> 
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+Add a second paragraph to explain the less obvious part of the patch.
+Jeff reverse-engineered this all correctly in [1], but one shouldn=E2=80=
+=99t
+have to think that hard to see where a patch is coming from.
 
-The Documentation/git-remote-helpers.txt file wasn't really of much help
-.. It really only barely scratches the subject, but it does not mention
-how remote-helpers really work internally (e.g. how do they get called:
-based on protocol used in URLs?)
+http://thread.gmane.org/gmane.comp.version-control.git/139831/focus=3D1=
+39971
 
-I'm still trying to dig up information about how to actually build, test
-and use a remote helper. I'll probably be reading code for examples.
+ Documentation/git.txt |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
 
-Another detail hit me: external interaction in git seems like it's
-almost always using librairies. If I'm not mistaken, bzr does not have a
-separate library. So to have access to it's API, you need bzr to be
-installed. This is why the current git-bzr script is using bzr +
-bzr-fastimport plugin to do the job.
-Is it normal / acceptable for a remote helper to have such dependancies?
-
-And for the language used, maybe python could be logical if I can bind
-directly to Bazaar's API. Tell me what you think about this.
-
--- 
-Gabriel Filion
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 01c4631..f26641a 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -229,7 +229,10 @@ help ...`.
+=20
+ -p::
+ --paginate::
+-	Pipe all output into 'less' (or if set, $PAGER).
++	Pipe all output into 'less' (or if set, $PAGER) if standard
++	output is a terminal.  This overrides the `pager.<cmd>`
++	configuration options (see the "Configuration Mechanism" section
++	below).
+=20
+ --no-pager::
+ 	Do not pipe git output into a pager.
+@@ -401,7 +404,8 @@ people.  Here is an example:
+ ------------
+=20
+ Various commands read from the configuration file and adjust
+-their operation accordingly.
++their operation accordingly.  See linkgit:git-config[1] for a
++list.
+=20
+=20
+ Identifier Terminology
+--=20
+1.7.0
