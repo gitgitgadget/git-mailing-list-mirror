@@ -1,91 +1,198 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: Is git over http (git-http-push) ready for production ?
-Date: Fri, 19 Feb 2010 19:14:41 +0800
-Message-ID: <be6fef0d1002190314n4300aed3uc58d812b83342db2@mail.gmail.com>
-References: <hllp07$o78$1@ger.gmane.org>
+From: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <luksan@gmail.com>
+Subject: [PATCH] mailinfo: don't trim whitespace in the commit message
+Date: Fri, 19 Feb 2010 12:54:02 +0100
+Message-ID: <4B7E7BDA.4040701@gmail.com>
+References: <alpine.LFD.2.00.1002180936240.4141@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Fabien <fabien.ubuntu@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 19 12:14:48 2010
+Cc: =?ISO-8859-1?Q?Lukas_Sandstr=F6m?= <luksan@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Feb 19 13:04:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiQop-0005fi-Lx
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 12:14:48 +0100
+	id 1NiRax-0006Jr-Bn
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 13:04:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751689Ab0BSLOm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 06:14:42 -0500
-Received: from mail-iw0-f196.google.com ([209.85.223.196]:61215 "EHLO
-	mail-iw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750902Ab0BSLOl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Feb 2010 06:14:41 -0500
-Received: by iwn34 with SMTP id 34so592572iwn.15
-        for <git@vger.kernel.org>; Fri, 19 Feb 2010 03:14:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=t5+lV7pvyynQrr9h/VjEdfIKBjYP3U6N8JpLjza04WI=;
-        b=NoOuzWShSKFCiwUMUrTCk3FCGMhVbIiuUVvDcLrpblfGg+2x/pbLFUUa20cjBjqWxj
-         HAm9sjq4OJkc9FsvhixZ36dNbR1iGUF7fEgS/0U7TQbFiNmdjWdPBF3Wl3G17vt6zZDQ
-         j52pqQqhckcFtui3Ki8KDWybeObuJ0R6a5+vc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=DVjgDaYddE0AurwtkI9lJsqCz/hesBmBCHpwaWU1IDDFbQhHHVaK2/eGdmmSzEdbOa
-         Ah0VkPipA7hxik5m7ROIRGyjV/yq67ntEOGOvGJqo7EkYf2JAhi28lgB6Ae3jFvv1q8y
-         U6CdiH4CfcnLZIeSGOW8onRacvH9TyA0PORn8=
-Received: by 10.231.173.129 with SMTP id p1mr1554062ibz.85.1266578081143; Fri, 
-	19 Feb 2010 03:14:41 -0800 (PST)
-In-Reply-To: <hllp07$o78$1@ger.gmane.org>
+	id S1752217Ab0BSME0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 07:04:26 -0500
+Received: from atum.ita.chalmers.se ([129.16.4.148]:47836 "EHLO
+	atum.ita.chalmers.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750996Ab0BSMEY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 07:04:24 -0500
+X-Greylist: delayed 631 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 Feb 2010 07:04:24 EST
+Received: from [192.168.1.2] (153.29.227.87.static.kba.siw.siwnet.net [87.227.29.153])
+	(Authenticated sender: lukass)
+	by mail.chalmers.se (Postfix) with ESMTP id 84DC4844A;
+	Fri, 19 Feb 2010 12:53:52 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (X11/20100211)
+In-Reply-To: <alpine.LFD.2.00.1002180936240.4141@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140444>
 
-Hi,
+Previously any whitespace in the beginning of the first line
+of the commit message was trimmed, destroying any paragraph
+indentation. Move the whitespace trimming to check_header()
+instead, and preserve all commit message lines as-is in
+handle_commit_msg().
 
-On Fri, Feb 19, 2010 at 6:26 PM, Fabien <fabien.ubuntu@gmail.com> wrote=
-:
-> I had to delete the davlock file and restart apache to solve the issu=
-e.
+Signed-off-by: Lukas Sandstr=F6m <luksan@gmail.com>
+---
 
-I guess this is a regression. Before remote helpers were introduced,
-the dumb http-push program was able to release locks on the remote
-side on such signals.
+On 2010-02-18 19:05, Linus Torvalds wrote:
+> 'git mailinfo' removes the whitespace from the beginning of the email
+> body, but it does it incorrectly.
+>
+> In particular, some people use indented paragraphs, like this:
+>
+> 	  Four-score and Four score and seven years ago our fathers
+>    brought forth, upon this continent, a new nation, conceived in Lib=
+erty,
+>    and dedicated to the proposition that all men are created equal.
+>
+> 	Now we are engaged in a great civil war, testing whether that
+>    nation, or any nation so conceived, and so dedicated, can long end=
+ure.
+>    We are met here on a great battlefield of that war. We have come t=
+o
+>    dedicate a portion of it as a final resting place for those who he=
+re
+>    gave their lives that that nation might live. It is altogether fit=
+ting
+>    and proper that we should do this.
+>
+>    ...
+>
+> and mailinfo will not just remove empty lines from the beginning of t=
+he
+> email body, it will also remove the _first_ indentation (but not any
+> others). Which makes the whole thing come out wrong.
+>
+> I bisected it, and this bug was introduced almost two years ago. In c=
+ommit
+> 3b6121f69b2 ("git-mailinfo: use strbuf's instead of fixed buffers"), =
+to be
+> exact. I'm pretty sure the bug is that handle_commit_msg() was change=
+d to
+> use 'strbuf_ltrim()' for the 'still_looking' case.
+>
+> Before commit 3b6121f69b2, it would create a new variable that had th=
+e
+> trimmed results ("char *cp =3D line;"), after that commit it would ju=
+st trim
+> the line itself. Which is correct for the case of it being a header, =
+but
+> if it's the first non-header line, it's wrong.
+>
 
-> So, this operation doesn't seem really atomic ?
+This patch should fix it. Note that there was a test-case explicitly
+checking for this "trim first line" behaviour.
 
-Overall, git-push over dav isn't atomic. At most, it is atomic at the
-individual object level - for example, you won't get a blob with SHA-1
-"abc123" but hashes to a different SHA-1 value.
+/Lukas
 
-> Another problem I see is the password in clear text in ~/.netrc to av=
-oid
-> =A0to type passwords all the time.
+ builtin-mailinfo.c |   41 ++++++++++++++++++++++-------------------
+ t/t5100/msg0015    |    2 +-
+ 2 files changed, 23 insertions(+), 20 deletions(-)
 
-Might sound pathetic, but you could chmod it to make it readable only
-to yourself.
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index a50ac22..954dc11 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -283,11 +283,15 @@ static inline int cmp_header(const struct strbuf =
+*line, const char *hdr)
+ 			line->buf[len] =3D=3D ':' && isspace(line->buf[len + 1]);
+ }
 
-> Is there any plan to address this problem ? There used to be the same
-> case in subversion (yep, sorry for the comparison), and they finally
-> addressed that by supporting GNOME Keyring and KWallet.
-> For what I saw, http support is provided thru libcurl, so it may not =
-be
-> that easy.
+-static int check_header(const struct strbuf *line,
++static int check_header(const struct strbuf *line_in,
+ 				struct strbuf *hdr_data[], int overwrite)
+ {
+ 	int i, ret =3D 0, len;
+-	struct strbuf sb =3D STRBUF_INIT;
++	struct strbuf sb =3D STRBUF_INIT, sb2 =3D STRBUF_INIT, *line =3D &sb2=
+;
++
++	strbuf_addbuf(line, line_in);
++	strbuf_ltrim(line);
++
+ 	/* search for the interesting parts */
+ 	for (i =3D 0; header[i]; i++) {
+ 		int len =3D strlen(header[i]);
+@@ -339,6 +343,7 @@ static int check_header(const struct strbuf *line,
 
-You said it yourself. :)
+ check_header_out:
+ 	strbuf_release(&sb);
++	strbuf_release(&sb2);
+ 	return ret;
+ }
 
-If you really think .netrc isn't your cup of tea, you could tunnel thro=
-ugh ssh.
+@@ -773,27 +778,25 @@ static int is_scissors_line(const struct strbuf *=
+line)
 
+ static int handle_commit_msg(struct strbuf *line)
+ {
+-	static int still_looking =3D 1;
++	static int first_msg_line_found =3D 0;
++	size_t cnt;
+
+ 	if (!cmitmsg)
+-		return 0;
+-
+-	if (still_looking) {
+-		strbuf_ltrim(line);
+-		if (!line->len)
++		return 0; /* FIXME: shouldn't this be: return 1? */
++
++	if (!first_msg_line_found) {
++		if (use_inbody_headers)
++			if (check_header(line, s_hdr_data, 0))
++				return 0;
++		/* Check if the first line is all whitespace */
++		for (cnt =3D 0; isspace(line->buf[cnt]); cnt++)
++			; /* nothing */
++		if (line->len =3D=3D cnt)
++			/* Ignore the first line if it's only whitespace */
+ 			return 0;
++		first_msg_line_found =3D 1;
+ 	}
+
+-	if (use_inbody_headers && still_looking) {
+-		still_looking =3D check_header(line, s_hdr_data, 0);
+-		if (still_looking)
+-			return 0;
+-	} else
+-		/* Only trim the first (blank) line of the commit message
+-		 * when ignoring in-body headers.
+-		 */
+-		still_looking =3D 0;
+-
+ 	/* normalize the log message to UTF-8. */
+ 	if (metainfo_charset)
+ 		convert_to_utf8(line, charset.buf);
+@@ -804,7 +807,7 @@ static int handle_commit_msg(struct strbuf *line)
+ 			die_errno("Could not rewind output message file");
+ 		if (ftruncate(fileno(cmitmsg), 0))
+ 			die_errno("Could not truncate output message file at scissors");
+-		still_looking =3D 1;
++		first_msg_line_found =3D 0;
+
+ 		/*
+ 		 * We may have already read "secondary headers"; purge
+diff --git a/t/t5100/msg0015 b/t/t5100/msg0015
+index 9577238..4abb3d5 100644
+--- a/t/t5100/msg0015
++++ b/t/t5100/msg0015
+@@ -1,2 +1,2 @@
+-- a list
++  - a list
+   - of stuff
 --=20
-Cheers,
-Ray Chuan
+1.6.6.1
