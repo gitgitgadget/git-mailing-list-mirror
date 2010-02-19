@@ -1,58 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Using test-lib.sh under GPLv3?
-Date: Fri, 19 Feb 2010 11:39:04 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1002191138280.20986@pacific.mpi-cbg.de>
-References: <87ljf8pvxx.fsf@yoom.home.cworth.org> <87hbpwpoko.fsf@yoom.home.cworth.org> <5641883d1002060727ia4e6c16lf800a92fc8735430@mail.gmail.com> <201002081614.24284.sojkam1@fel.cvut.cz> <871vgr78lr.fsf@yoom.home.cworth.org> <87iqa2y0gz.fsf@steelpick.localdomain>
- <87r5oqe7mi.fsf@yoom.home.cworth.org> <871vgmki4f.fsf@steelpick.localdomain> <7vaav8hpfo.fsf@alter.siamese.dyndns.org> <87tytdiqob.fsf@steelpick.localdomain>
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: Re: [PATCH] Fix signal handler
+Date: Fri, 19 Feb 2010 12:05:47 +0100
+Message-ID: <4B7E708B.60006@web.de>
+References: <4B684F5F.7020409@web.de> <20100202205849.GA14385@sigill.intra.peff.net> <4B71A2EE.8070708@web.de> <4B72E81B.3020900@web.de> <20100210173348.GA5091@coredump.intra.peff.net> <4B76A985.9070809@web.de> <20100214064745.GC20630@coredump.intra.peff.net> <7vsk94qfuy.fsf@alter.siamese.dyndns.org> <4B7D6B7A.1090004@web.de> <7veikib96d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Carl Worth <cworth@cworth.org>, notmuch@notmuchmail.org,
-	git@vger.kernel.org
-To: Michal Sojka <sojkam1@fel.cvut.cz>
-X-From: git-owner@vger.kernel.org Fri Feb 19 11:32:39 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 12:05:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiQA0-0003MW-90
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 11:32:36 +0100
+	id 1NiQgH-0000At-EJ
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 12:05:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753409Ab0BSKcY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 05:32:24 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36047 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752460Ab0BSKcX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 05:32:23 -0500
-Received: (qmail invoked by alias); 19 Feb 2010 10:32:20 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp055) with SMTP; 19 Feb 2010 11:32:20 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18sZB5/I18s/Dzlhkbt2pYjN56iryWTcmJeOLkAJU
-	ehPVS9n8M2lB/J
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <87tytdiqob.fsf@steelpick.localdomain>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.69999999999999996
+	id S1751938Ab0BSLFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 06:05:51 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:33527 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751364Ab0BSLFv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 06:05:51 -0500
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate01.web.de (Postfix) with ESMTP id D1354147F8E19;
+	Fri, 19 Feb 2010 12:05:49 +0100 (CET)
+Received: from [78.49.9.17] (helo=[192.168.1.202])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1NiQg9-0001gL-00; Fri, 19 Feb 2010 12:05:49 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.5) Gecko/20091130 SUSE/3.0.0-1.1.1 Thunderbird/3.0
+In-Reply-To: <7veikib96d.fsf@alter.siamese.dyndns.org>
+X-Sender: Markus.Elfring@web.de
+X-Provags-ID: V01U2FsdGVkX1/D875w1yxfB/Jpu2qtVm07D2+Le9hbEoG/PIkg
+	LzxTnQt6XrSLitok1Dt56fobDduJ7+GcbILeA32vpC1Dmvh/Dd
+	/O4+vjF4Lz3lIPsD799A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140442>
 
-Hi,
 
-On Fri, 19 Feb 2010, Michal Sojka wrote:
+> How would I be able to read your mind to see if you will decide to send a polished update?
+>   
 
-> as you can read bellow, I'd like to use git's test-lib.sh in a GPLv3 
-> project. Do you mind if I use your work in that file under GPLv3?
+You indicated that my patch and the discussion about it was "not quite
+ready yet" so far. I try to collect further suggestions for the next
+refinement.
 
-I do not mind, but I would like to ask that you contribute the 
-improvements back under GPLv2.
-
-Thanks,
-Johannes
+Regards,
+Markus
