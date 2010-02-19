@@ -1,82 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] Allow Git repositories to be shared using POSIX ACLs
-Date: Fri, 19 Feb 2010 09:52:26 -0800
-Message-ID: <7vsk8xjep1.fsf@alter.siamese.dyndns.org>
-References: <1266597207-32036-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Jacob Helwig <jacob.helwig@gmail.com>
+Subject: Re: [PATCH v2] Documentation: Fix indentation problem in
+ git-commit(1)
+Date: Fri, 19 Feb 2010 09:54:11 -0800
+Message-ID: <20100219175411.GA388@vfb-9.home>
+References: <201002151008.31980.trast@student.ethz.ch>
+ <1266237186-8065-1-git-send-email-jacob.helwig@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Feb 19 18:52:44 2010
+Cc: Thomas Rast <trast@student.ethz.ch>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 19 19:00:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiX1w-000144-GU
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 18:52:44 +0100
+	id 1NiX9a-0007PO-1E
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 19:00:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754544Ab0BSRwd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 12:52:33 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53943 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754512Ab0BSRwc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 12:52:32 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E7589B44D;
-	Fri, 19 Feb 2010 12:52:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=hRHE7tm7XCR3AvSJ/Qy7Uh5IrvY=; b=K0pkLamV94DoIl4I18wunVs
-	vcqrTUiNwwT00hvmxTvfxfDS0RFdZIIpW4JpLyB43vna33zI851GHdOFg45ytKr5
-	UwY9WGSFzfb9vsBLnvekgDXE1y4SrOva0c9ohS6CnnIr/rwcXwwsysaqKcJ5wwEC
-	aaIV2jcAS5x80Hc2HMJI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=APP0m+gX+IV5gcq7gOvucIEan0NXtq9a492a0Dtosu9W7mHMP
-	17X6M7JqD0HVr469A2jxVDUkYW4VHi3Il/qPpJ5XoJdRXww2adKKjMTQN4XHWUKT
-	Svy3jHW7iLIVXR2MeFd7zQhEHfijc/vnKcmVb4XEiLT7GFNDHgxIcY4e44=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 371E49B44C;
-	Fri, 19 Feb 2010 12:52:30 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7F6A29B448; Fri, 19 Feb
- 2010 12:52:27 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8CA2856E-1D7F-11DF-AC04-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754684Ab0BSSAd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 13:00:33 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:2652 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754662Ab0BSSAc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 13:00:32 -0500
+Received: by fg-out-1718.google.com with SMTP id l26so404988fgb.1
+        for <git@vger.kernel.org>; Fri, 19 Feb 2010 10:00:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=tkslTHM9h7RwPlG1RrUJGFVKCwh8UP6Eau3srFaHQ1I=;
+        b=immCwooW7jSV4KhjSsIuCAub088g7ZZv6cGiFAVAi8gXLT2EOI+qXyH0+/Z8+SwvNM
+         PX/zoPlPXQL6Md5/5leYlEu485H9e6T/g60FNR8Xj6fJ2+O97cZTzx+6BPJhJF/XMgM5
+         ugqqlQMwFH6PmrVGD3ucW5ftqIhxJpgDZ6TkQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ap1huCiPVasI4wdYyMyX/KJL8VQILfm73xg+YqwEibA6bmn/08udCF9Mmbpmj7KsFB
+         i6gxXROH91x73B0Q0/52OdfRlUeRBgzQzH/gk8XuO8Jtf5YR2xzrS9nJeCuEqlXiO6U9
+         LrHWP+zlF9PrMVpQukIP03RUF/H8iPFZYll6k=
+Received: by 10.87.66.11 with SMTP id t11mr16836268fgk.18.1266602059100;
+        Fri, 19 Feb 2010 09:54:19 -0800 (PST)
+Received: from vfb-9.home ([96.225.220.117])
+        by mx.google.com with ESMTPS id 14sm187123fxm.13.2010.02.19.09.54.15
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 19 Feb 2010 09:54:17 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1266237186-8065-1-git-send-email-jacob.helwig@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140475>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+On 04:33 Mon 15 Feb     , Jacob Helwig wrote:
+> Ever since the "See linkgit:git-config[1]..." paragraph was added to the
+> description for --untracked-files (d6293d1), the paragraphs for the
+> following options were indented at the same level as the "See
+> linkgit:git-config[1]" paragraph.  This problem showed up in the
+> manpages, but not in the HTML documentation.
+> 
+> While this does fix the alignment of the options following
+> --untracked-files in the manpage, the "See linkgit..." portion of the
+> description does not retain its previous indentation level in the
+> manpages, or HTML documentation.
+> 
+> Signed-off-by: Jacob Helwig <jacob.helwig@gmail.com>
+> Acked-by: Thomas Rast <trast@student.ethz.ch>
+> ---
+> 
+> When adding the caveat to the commit message, the introductory comment
+> paragraph I had before seemed to fit better; I decided to go with a
+> version of it, instead.
+> 
+>  Documentation/git-commit.txt |    6 +++---
+>  1 files changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+> index e99bb14..64fb458 100644
+> --- a/Documentation/git-commit.txt
+> +++ b/Documentation/git-commit.txt
+> @@ -197,13 +197,13 @@ FROM UPSTREAM REBASE" section in linkgit:git-rebase[1].)
+>  	Show untracked files (Default: 'all').
+>  +
+>  The mode parameter is optional, and is used to specify
+> -the handling of untracked files. The possible options are:
+> +the handling of untracked files.
+> ++
+> +The possible options are:
+>  +
+> ---
+>  	- 'no'     - Show no untracked files
+>  	- 'normal' - Shows untracked files and directories
+>  	- 'all'    - Also shows individual files in untracked directories.
+> ---
+>  +
+>  See linkgit:git-config[1] for configuration variable
+>  used to change the default for when the option is not
+> -- 
+> 1.7.0
+> 
 
-> In short: if a user wants to share a git repository using POSIX
-> filesystem ACLs, it seems everything works except pack file creation.
-> The problem is that we create the file with a mode 0600, i.e. no
-> permission for group,...
+I haven't seen any further discussion on this after I sent out a v2 with
+Thomas's suggested change to the commit message, and I didn't want to
+let the problem that this is trying to address fall through the cracks.
 
-Modulo that it is more like "we let mkstemp() to choose whatever file
-mode", this is a good analysis.
+Does anyone have any comments on the v2 of this change?
 
-I think some versions of glibc used to have mkstemp() that creates 0644 or
-0664, meaning that the modes left by various implementations of mkstemp()
-are different from each other, and also different from what we want.  With
-aef5aed (pack-objects: quickfix for permission modes., 2007-04-22) and
-b6b32cc (Fix 'quickfix' on pack-objects., 2007-04-22), were attempts to
-work around that issue.
-
-By not using mkstemp() from the platform but having our own would allow us
-to not even worry about this issue (this can be seen by the removal of a
-call to umask() in [PATCH 4/4]).  I see your patches as a "bite-the-bullet
-and do the right thing" solution.
-
-> The test-case is really weak: ideally, we should have a real test with
-> several users interacting. But that's hardly scriptable in a portable
-> way, so the only testcase I added relies on getfacl and "ls -l" to find
-> out if the result is correct. However, I did some manual testing, and
-> as far as I can say, Git works very well with ACLs with this patch.
-
-Thanks.
+-- 
+Jacob Helwig
