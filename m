@@ -1,93 +1,104 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/RFC 7/7] t7006-pager: if stdout is not a terminal, make
- a new one
-Date: Fri, 19 Feb 2010 02:19:47 -0600
-Message-ID: <20100219081947.GA12975@progeny.tock>
-References: <20100219065010.GA22258@progeny.tock>
- <20100219072331.GG29916@progeny.tock>
- <20100219080819.GA13691@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: 'git add' regression in git-1.7?
+Date: Fri, 19 Feb 2010 03:24:45 -0500
+Message-ID: <20100219082445.GB13691@coredump.intra.peff.net>
+References: <hll45t$50o$1@ger.gmane.org>
+ <32541b131002182042p610fce4ex96efbffea9afe2ed@mail.gmail.com>
+ <hll65c$87a$1@ger.gmane.org>
+ <32541b131002182115t5501d0d1u19367a4d8e7627e4@mail.gmail.com>
+ <20100219053431.GB22645@coredump.intra.peff.net>
+ <20100219060249.GD22645@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Sebastian Celis <sebastian@sebastiancelis.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 19 09:19:46 2010
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	SungHyun Nam <goweol@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 09:24:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiO5S-0007ur-2d
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 09:19:46 +0100
+	id 1NiOAO-0002L7-Lm
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 09:24:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752222Ab0BSITl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 03:19:41 -0500
-Received: from mail-gx0-f227.google.com ([209.85.217.227]:42038 "EHLO
-	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751774Ab0BSITk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 03:19:40 -0500
-Received: by gxk27 with SMTP id 27so3814700gxk.1
-        for <git@vger.kernel.org>; Fri, 19 Feb 2010 00:19:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=4bcX5vb1XgPQEM7BkCs5383wRlY+APv2BRkWHqpGP1Y=;
-        b=P6kQJvbXuKMduDQjXtK8SWXpzfKzq0IESOMdqhanZx0XRDgBsx0XM9jTwtOAdkm99Q
-         Wn8u2OWUYFjWi8zHRi/WcM2u15UWd8Kk5Cwro+AO5ax2EOer7DLeyI9vMbEsCpKYiCOP
-         5kfWGoAMz+9vCZaWOk8tz0pMhWpie3i9L/K9Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=Zb+cSl/1x1LkXH9LoL/evdfy2ONg5LRHwyx7b+yX4x3aflASNOE2MlqWHv/fXfPYnN
-         6Flb6zaSabGyDdcNa70A9c3l5QGa2c/Z+Cnp71RWVSRPNggHFfxS25xSsoCaJZnwNoeA
-         2E36q8sngRHWg95rkmjT2bNNNTgKg9bF16kAc=
-Received: by 10.101.189.30 with SMTP id r30mr3019760anp.70.1266567579505;
-        Fri, 19 Feb 2010 00:19:39 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 13sm2425917gxk.4.2010.02.19.00.19.38
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 19 Feb 2010 00:19:38 -0800 (PST)
+	id S1752621Ab0BSIYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 03:24:47 -0500
+Received: from peff.net ([208.65.91.99]:45722 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752473Ab0BSIYr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 03:24:47 -0500
+Received: (qmail 13524 invoked by uid 107); 19 Feb 2010 08:24:59 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 19 Feb 2010 03:24:59 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Feb 2010 03:24:45 -0500
 Content-Disposition: inline
-In-Reply-To: <20100219080819.GA13691@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20100219060249.GD22645@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140434>
 
-Jeff King wrote:
+On Fri, Feb 19, 2010 at 01:02:49AM -0500, Jeff King wrote:
 
-> Solaris 8 and 9 seem to be lacking it. Solaris 10 does have it. AIX 5=
-=2E2
-> and 6.1 both have it.
->=20
-> So it would mean some platforms couldn't run all tests. That is proba=
-bly
-> good enough, given that most of our terminal-related bugs have not be=
-en
-> platform-specific problems.
+> But this is a little disturbing still:
+> 
+>   $ git init
+>   $ mkdir dir
+>   $ touch dir/sub
+>   $ touch root
+>   $ echo dir >.gitignore
+>   $ echo root >>.gitignore
+> 
+>   $ git add root
+>   The following paths are ignored by one of your .gitignore files:
+>   root
+>   Use -f if you really want to add them.
+>   fatal: no files added
+>   $ echo $?
+>   128
+> 
+>   $ git add dir
+>   The following paths are ignored by one of your .gitignore files:
+>   dir
+>   Use -f if you really want to add them.
+>   fatal: no files added
+>   $ echo $?
+>   128
+> 
+>   $ git add dir/sub
+>   $ echo $?
+>   0
+> 
+> but we didn't actually add the file.
 
-Hmm, how about /dev/ptmx?  (One can check by replacing posix_openpt(...=
-)
-with open("/dev/ptmx", ...) in the test-terminal.c I sent.)
+Junio,
 
-> Still, it seems like just wrapping isatty would be simpler. I guess y=
-ou
-> are opposed to carrying around test-specific code in the main git
-> binary?
+This seems to be caused by dir.c:treat_one_path. In the first few lines:
 
-No, not opposed.  Just lazy and not so interested in working on it.
-I do not want to just take the implementation you provided because I
-want to test the scripted git commands, too, though I haven=E2=80=99t g=
-otten
-around to that.
+        int exclude = excluded(dir, path, &dtype);
+        if (exclude && (dir->flags & DIR_COLLECT_IGNORED)
+            && in_pathspec(path, *len, simplify))
+                dir_add_ignored(dir, path, *len);
 
-Jonathan
+we see that the prefix "dir" is excluded, but it is not in our pathspec
+("dir/sub"), so we do not add it to the ignored list.
+
+This is related to your recent 48ffef9 (ls-files: fix overeager pathspec
+optimization, 2010-01-08), as before then we actually didn't consider
+"dir/sub" to be ignored at all.  The in_pathspec check did not originate
+there; it's from my e96980e (builtin-add: simplify (and increase
+accuracy of) exclude handling, 2007-06-12). But it is definitely still
+necessary.
+
+I'm not sure of the right way to fix this. We can drop further down into
+the directory hierarchy when doing COLLECT_IGNORED and look for actual
+files, but that may have a negative performance impact. Perhaps we can
+go further only if we are a prefix of a pathspec. Or maybe there is some
+way to be more clever.
+
+I dunno. I'm out of ideas for the evening, and since you looked at this
+not too long ago, I thought you might have some insight.
+
+-Peff
