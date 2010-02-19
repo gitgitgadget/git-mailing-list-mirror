@@ -1,85 +1,69 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: 16 gig, 350,000 file repository
-Date: Fri, 19 Feb 2010 10:27:03 +0100
-Message-ID: <40aa078e1002190127m4c9d5565obb792c77e29baf28@mail.gmail.com>
-References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org>
-	 <20100214011812.GA2175@dpotapov.dyndns.org>
-	 <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org>
-	 <201002181114.19984.trast@student.ethz.ch>
-	 <7vtytee7ff.fsf@alter.siamese.dyndns.org>
-	 <alpine.LFD.2.00.1002181456230.1946@xanadu.home>
-	 <19325.40682.729141.973125@blake.zopyra.com>
-	 <alpine.LFD.2.00.1002181556320.1946@xanadu.home>
-Reply-To: kusmabite@gmail.com
+From: Geoffrey Lee <geoffreyj.lee@gmail.com>
+Subject: Re: How to create patches for a merge?
+Date: Fri, 19 Feb 2010 02:25:14 -0800
+Message-ID: <83d7aaa41002190225o3255248re1581a86e1346f28@mail.gmail.com>
+References: <83d7aaa41002180340p2f9b7241h9c220b84ec5dd1d@mail.gmail.com>
+	 <20100218203738.GB8110@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Fri Feb 19 10:27:21 2010
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 19 11:26:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiP8q-0005sk-6h
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 10:27:20 +0100
+	id 1NiQ33-00060C-PO
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 11:25:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752367Ab0BSJ1M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 04:27:12 -0500
-Received: from mail-ew0-f216.google.com ([209.85.219.216]:48327 "EHLO
-	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752172Ab0BSJ1G convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Feb 2010 04:27:06 -0500
-Received: by ewy8 with SMTP id 8so10480839ewy.29
-        for <git@vger.kernel.org>; Fri, 19 Feb 2010 01:27:03 -0800 (PST)
+	id S1753061Ab0BSKZQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 05:25:16 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:40827 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752969Ab0BSKZP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Feb 2010 05:25:15 -0500
+Received: by pwj8 with SMTP id 8so1965610pwj.19
+        for <git@vger.kernel.org>; Fri, 19 Feb 2010 02:25:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=ELLNi0tWZR4RDxAfcuSX1sS4pcCnnmMIuRqxXy/QEgk=;
-        b=s+fxJBMOtO/IFUlbDu8nzL7swcBCHeJI+XLPlWxpiFo4DtiLf6yLw/Fn3IBW4jHNxG
-         lGRio99KavkpW2kKP3Cv4p68/agS4gGgu+WT5NaWhe/9MzCGbfzYLBaoByHvAbywQlqY
-         mB0dr1KYutqbXyXEp4aYH91IoDnHcINiQjjtM=
+        bh=Xl4FZE1T/kXkEqz9CsuL9a6zArpe1rOJGemqbfX1snM=;
+        b=f/BDRegw8a8JqXIO8mYpIvQPzvd0AkeQV4twR4MhWAjBdeugeXVUHPy7m/9++sgBg5
+         AyqhEwv1r7ab/DO+5wuKFjPOVv0KRr9oeSJ9H4k4Sb1QjYBuv8k9zwVbRdoJppXi2ffs
+         dUR4KX6CUSBEwnFT8C6GVjrzO3y/Jp4IXm3/s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=lJ0iE8g/GUdDtWbBREY1x14jl4YwZjkmehjc4/IyGf+gl46+j4YffFGZPxCe+e4s9C
-         ilzUw8px9ni9nue0R23/krdZZfYhf+klJhJ28Bvx5AixGOU6i/EkGMmo/EaB3TjkGv3L
-         zQoo0ENCLaGXfUnCl22kO9Gc7KFlRiRZlWqi8=
-Received: by 10.216.88.207 with SMTP id a57mr949766wef.200.1266571623171; Fri, 
-	19 Feb 2010 01:27:03 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.00.1002181556320.1946@xanadu.home>
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=aZXP7lUkrt81vOeQNaX2l5PtJMyogQfZ7CrNRIChDZhY/tP6CoDnDP6lSgab19ZY7C
+         Km7O6eKg8dMLqMymGzT5UdBZHivsJNsszqnG7i1d9nvHWIQat6MgU/WDgpi7CuLs/YiI
+         ttRVFdysNmiE8wYmqAT0sJzObgXDXeyQhlEb8=
+Received: by 10.142.1.35 with SMTP id 35mr7348499wfa.344.1266575114706; Fri, 
+	19 Feb 2010 02:25:14 -0800 (PST)
+In-Reply-To: <20100218203738.GB8110@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140439>
 
-On Thu, Feb 18, 2010 at 9:58 PM, Nicolas Pitre <nico@fluxnic.net> wrote=
-:
-> On Thu, 18 Feb 2010, Bill Lear wrote:
+On Thu, Feb 18, 2010 at 12:37 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Feb 18, 2010 at 03:40:07AM -0800, Geoffrey Lee wrote:
 >
->> I'm starting a new, large project and would like a quick bit of advi=
-ce.
->>
->> Bringing in a set of test cases and other files from a ClearCase
->> repository resulted in a 350,000 file git repo of about 16 gigabytes=
-=2E
->>
->> The time to clone over a fast network was about 250 minutes. =A0I co=
-uld
->> not verify if the repo had been packed properly, etc.
+>> When I use=C2=A0"git format-patch", it doesn't seem to include merge=
+s. How
+>> can I perform a merge and then e-mail it to someone as a set of
+>> patches?
 >
-> I'd start from there. =A0If you didn't do a 'git gc --aggressive' aft=
-er
-> the import then it is quite likely that your repo isn't well packed.
->
-> Of course you'll need a big machine to repack this.
+> Is it important that it be patches, or simply that it go over email? =
+In
+> the latter case, you can use "git bundle" to create a set of commits,
+> including merges, and send them to the remote.
 
-Something like this? http://www.gadgetopia.com/images/big_machine.jpg
+I was not aware of "git bundle". That does exactly what I need. Thanks!
 
---=20
-Erik "kusma" Faye-Lund
+-Geoffrey Lee
