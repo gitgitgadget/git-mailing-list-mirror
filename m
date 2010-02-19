@@ -1,118 +1,99 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2 0/7] Re: 'git svn log' no longer uses the pager
-Date: Fri, 19 Feb 2010 00:50:10 -0600
-Message-ID: <20100219065010.GA22258@progeny.tock>
+Subject: [PATCH 1/7] Fix 'git var' usage synopsis
+Date: Fri, 19 Feb 2010 00:51:57 -0600
+Message-ID: <20100219065156.GA29916@progeny.tock>
+References: <20100219065010.GA22258@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Sebastian Celis <sebastian@sebastiancelis.com>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Johannes Sixt <j6t@kdbg.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 19 07:50:34 2010
+X-From: git-owner@vger.kernel.org Fri Feb 19 07:51:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiMh6-0001a4-7b
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 07:50:32 +0100
+	id 1NiMiR-0002AG-2F
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 07:51:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752022Ab0BSGu1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 01:50:27 -0500
-Received: from mail-yx0-f200.google.com ([209.85.210.200]:40622 "EHLO
-	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750756Ab0BSGu0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 01:50:26 -0500
-Received: by yxe38 with SMTP id 38so7196614yxe.4
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 22:50:25 -0800 (PST)
+	id S1753484Ab0BSGvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 01:51:51 -0500
+Received: from mail-gx0-f227.google.com ([209.85.217.227]:32841 "EHLO
+	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752287Ab0BSGvu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 01:51:50 -0500
+Received: by gxk27 with SMTP id 27so3751899gxk.1
+        for <git@vger.kernel.org>; Thu, 18 Feb 2010 22:51:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition
-         :content-transfer-encoding:user-agent;
-        bh=9zHrFDmvX4U78g4/L5gSS0IVsEFz2P+9dm/uBrTKKVs=;
-        b=DgonHW++sN2XkGL1Qtd2ShmAmepEET9ZU4douSq4WzARQxrj/O3pu2mMvChQxmT9Lz
-         A8JrXWw++57Fcu0N66X65foB+nWDNkrqZucmnY+2/tnlGiBHht/PWc8jdiDfsAgBwZBC
-         N1szJxOxPhoFl+FKHTC5uKqtVgKCohE8z/CaI=
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=8o/iAWKwYrfwHYYB2evWHA4HCyjNEEH9tWkAZ8jThsE=;
+        b=VG7a1rG3VRP51LTyE4Ufms+UcqaiATmgabgODzLKsDpKhvk6W32HITJ0a+6GJVWvMe
+         be3KMDuo9lSq2K3cAfDt3nB5wZi4nPJ3GqhVhmoiiXEPVcQ3tbSzK1Px364P80wF4Jv5
+         o980N51NAX4265jucYLuR29bgMAnn2Jx6+rKk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        b=NYGOh0jDy6FyvmUy++ApaG4jsxs4g4ammVTSaRWxGi3N3UcTJED4g9m/ovoCZVd799
-         AmfEZ10vnVbIdUyNxxPfSCMNHZIlZhZUcYoyA1JFDs+YICLdl2ulfsM1kTLNzvCqyERq
-         fHzBKvK0EhvlHqnnBb04xukZKLBC4EbhPkG0U=
-Received: by 10.90.62.2 with SMTP id k2mr4460944aga.56.1266562205146;
-        Thu, 18 Feb 2010 22:50:05 -0800 (PST)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=OvEQQA9q6vzqoL5APmN79z197VuvDDvWnDFEh7jqHYngg5kOnDIGnh+yVmxnThNQ5J
+         Hfm8+cag+fhqNUZ9NXrvhDeGEB3Qj5gLcXnVjnoUvG0I+uqGic7Z+GaLC2x5l4fXfPdo
+         c9ymx8Uq+wfZ2Y1U47Rw12qMCrOEImLF4BUTs=
+Received: by 10.91.160.30 with SMTP id m30mr6743611ago.1.1266562309177;
+        Thu, 18 Feb 2010 22:51:49 -0800 (PST)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm3999918yxe.57.2010.02.18.22.50.02
+        by mx.google.com with ESMTPS id 15sm1259735gxk.2.2010.02.18.22.51.48
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 18 Feb 2010 22:50:03 -0800 (PST)
+        Thu, 18 Feb 2010 22:51:48 -0800 (PST)
 Content-Disposition: inline
+In-Reply-To: <20100219065010.GA22258@progeny.tock>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140417>
 
-Here is a replacement for the jn/maint-fix-pager series currently in
-pu.  As for the previous version, the point is to fix the breakage
-from dec543 (am -i, git-svn: use "git var GIT_PAGER", 2009-10-30)=20
-reported at http://thread.gmane.org/gmane.comp.version-control.git/1398=
-31
-I also added some new tests to make sure pagination works in other
-ways.
+The parameter to 'git var' is not optional.
 
-In this version, patches 1-5 are the same fixes as before, with
-commit messages tweaked to take into account feedback from the
-previous round.  You can see what they fix by using 'git svn log'
-and the '(v)iew' option of 'git am --interactive', which both
-stopped paginating output in commit dec543.  You can see what they
-don=E2=80=99t break by running some other command such as 'git log' in
-circumstances where its output is not supposed to be paginated.
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+Same as v1, probably should be ejected from the series.  I am
+including it for reference anyway.
 
-The test in patch 6 has some fixes that didn=E2=80=99t make it to pu la=
-st
-time.  To avoid risk of spewing useless output to /dev/tty, the
-tests requiring a terminal only run with the --verbose option.
-
-Patch 7 is the one I am most interested in feedback about.  It allows
-automatic runs of tests without a real terminal by creating its own
-pty as needed.  But it might be a portability nightmare: is
-posix_openpt widely available?  Will open("/dev/ptmx", ...) do just
-as well most places?  And how important is it that these tests run
-on the most obscure platforms?
-
-Because these questions are still up in the air for me, I do not
-think patch 7 is suitable for use outside pu yet.  What I would most
-like to hear is that /dev/ptmx works often enough, because that is
-a condition that can be tested for at runtime without adding
-complication to the Makefile.  But if that is not the case, there
-are other options.
-
-Jonathan Nieder (7):
-  Fix 'git var' usage synopsis
-  Make 'git var GIT_PAGER' always print the configured pager
-  git.1: Clarify the behavior of the --paginate option
-  git svn: Fix launching of pager
-  am: Fix launching of pager
-  tests: Add tests for automatic use of pager
-  t7006-pager: if stdout is not a terminal, make a new one
-
- .gitignore                |    1 +
  Documentation/git-var.txt |    2 +-
- Documentation/git.txt     |    8 ++-
- Makefile                  |    6 ++
- builtin-var.c             |    4 +-
- cache.h                   |    2 +-
- git-am.sh                 |    5 +-
- git-sh-setup.sh           |   13 ++++
- git-svn.perl              |    9 ++-
- pager.c                   |    6 +-
- t/t7006-pager.sh          |  171 +++++++++++++++++++++++++++++++++++++=
-++++++++
- test-terminal.c           |   62 ++++++++++++++++
- 12 files changed, 274 insertions(+), 15 deletions(-)
- create mode 100644 t/t7006-pager.sh
- create mode 100644 test-terminal.c
+ builtin-var.c             |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
+index bb98182..458f3e2 100644
+--- a/Documentation/git-var.txt
++++ b/Documentation/git-var.txt
+@@ -8,7 +8,7 @@ git-var - Show a git logical variable
+ 
+ SYNOPSIS
+ --------
+-'git var' [ -l | <variable> ]
++'git var' ( -l | <variable> )
+ 
+ DESCRIPTION
+ -----------
+diff --git a/builtin-var.c b/builtin-var.c
+index 2280518..e6ee7bc 100644
+--- a/builtin-var.c
++++ b/builtin-var.c
+@@ -6,7 +6,7 @@
+ #include "cache.h"
+ #include "exec_cmd.h"
+ 
+-static const char var_usage[] = "git var [-l | <variable>]";
++static const char var_usage[] = "git var (-l | <variable>)";
+ 
+ static const char *editor(int flag)
+ {
+-- 
+1.7.0
