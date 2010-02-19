@@ -1,230 +1,115 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 2/4] Move gitmkstemps to path.c
-Date: Fri, 19 Feb 2010 17:33:25 +0100
-Message-ID: <1266597207-32036-3-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH 1/4] Add a testcase for ACL with restrictive umask.
+Date: Fri, 19 Feb 2010 17:33:24 +0100
+Message-ID: <1266597207-32036-2-git-send-email-Matthieu.Moy@imag.fr>
 References: <1266597207-32036-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 19 17:37:14 2010
+X-From: git-owner@vger.kernel.org Fri Feb 19 17:37:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiVqi-0007ZV-Q7
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 17:37:05 +0100
+	id 1NiVrF-00085l-0s
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 17:37:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753185Ab0BSQg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 11:36:58 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:37239 "EHLO rominette.imag.fr"
+	id S1752383Ab0BSQhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 11:37:32 -0500
+Received: from imag.imag.fr ([129.88.30.1]:40395 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752383Ab0BSQg5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 11:36:57 -0500
+	id S1752126Ab0BSQhc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 11:37:32 -0500
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o1JGVRji005306
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o1JGXc25021254
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 19 Feb 2010 17:31:28 +0100
+	Fri, 19 Feb 2010 17:33:38 +0100 (CET)
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1NiVnO-0006F4-GK; Fri, 19 Feb 2010 17:33:38 +0100
+	id 1NiVnO-0006F3-FX; Fri, 19 Feb 2010 17:33:38 +0100
 Received: from moy by bauges.imag.fr with local (Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1NiVnO-0008Lf-F3; Fri, 19 Feb 2010 17:33:38 +0100
+	id 1NiVnO-0008Lb-EK; Fri, 19 Feb 2010 17:33:38 +0100
 X-Mailer: git-send-email 1.7.0.rc2.4.gc602c4
 In-Reply-To: <1266597207-32036-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 19 Feb 2010 17:31:28 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o1JGVRji005306
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 19 Feb 2010 17:33:38 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1267201888.39168@HZTVSsUOVwQr1XiCTEiaiA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140463>
 
-This function used to be only a compatibility function, but we're
-going to extend it and actually use it, so make it part of Git.
+Right now, Git creates unreadable pack files on non-shared
+repositories when the user has a umask of 077, even when the default
+ACLs for the directory would give read/write access to a specific
+user.
 
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- Makefile          |    1 -
- compat/mkstemps.c |   70 -----------------------------------------------------
- path.c            |   69 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 69 insertions(+), 71 deletions(-)
- delete mode 100644 compat/mkstemps.c
+ t/t1304-default-acl.sh |   49 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 49 insertions(+), 0 deletions(-)
+ create mode 100755 t/t1304-default-acl.sh
 
-diff --git a/Makefile b/Makefile
-index 7bf2fca..4387d42 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1200,7 +1200,6 @@ ifdef NO_MKDTEMP
- endif
- ifdef NO_MKSTEMPS
- 	COMPAT_CFLAGS += -DNO_MKSTEMPS
--	COMPAT_OBJS += compat/mkstemps.o
- endif
- ifdef NO_UNSETENV
- 	COMPAT_CFLAGS += -DNO_UNSETENV
-diff --git a/compat/mkstemps.c b/compat/mkstemps.c
-deleted file mode 100644
-index 14179c8..0000000
---- a/compat/mkstemps.c
-+++ /dev/null
-@@ -1,70 +0,0 @@
--#include "../git-compat-util.h"
--
--/* Adapted from libiberty's mkstemp.c. */
--
--#undef TMP_MAX
--#define TMP_MAX 16384
--
--int gitmkstemps(char *pattern, int suffix_len)
--{
--	static const char letters[] =
--		"abcdefghijklmnopqrstuvwxyz"
--		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
--		"0123456789";
--	static const int num_letters = 62;
--	uint64_t value;
--	struct timeval tv;
--	char *template;
--	size_t len;
--	int fd, count;
--
--	len = strlen(pattern);
--
--	if (len < 6 + suffix_len) {
--		errno = EINVAL;
--		return -1;
--	}
--
--	if (strncmp(&pattern[len - 6 - suffix_len], "XXXXXX", 6)) {
--		errno = EINVAL;
--		return -1;
--	}
--
--	/*
--	 * Replace pattern's XXXXXX characters with randomness.
--	 * Try TMP_MAX different filenames.
--	 */
--	gettimeofday(&tv, NULL);
--	value = ((size_t)(tv.tv_usec << 16)) ^ tv.tv_sec ^ getpid();
--	template = &pattern[len - 6 - suffix_len];
--	for (count = 0; count < TMP_MAX; ++count) {
--		uint64_t v = value;
--		/* Fill in the random bits. */
--		template[0] = letters[v % num_letters]; v /= num_letters;
--		template[1] = letters[v % num_letters]; v /= num_letters;
--		template[2] = letters[v % num_letters]; v /= num_letters;
--		template[3] = letters[v % num_letters]; v /= num_letters;
--		template[4] = letters[v % num_letters]; v /= num_letters;
--		template[5] = letters[v % num_letters]; v /= num_letters;
--
--		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, 0600);
--		if (fd > 0)
--			return fd;
--		/*
--		 * Fatal error (EPERM, ENOSPC etc).
--		 * It doesn't make sense to loop.
--		 */
--		if (errno != EEXIST)
--			break;
--		/*
--		 * This is a random value.  It is only necessary that
--		 * the next TMP_MAX values generated by adding 7777 to
--		 * VALUE are different with (module 2^32).
--		 */
--		value += 7777;
--	}
--	/* We return the null string if we can't find a unique file name.  */
--	pattern[0] = '\0';
--	errno = EINVAL;
--	return -1;
--}
-diff --git a/path.c b/path.c
-index d1fccbd..60f5b78 100644
---- a/path.c
-+++ b/path.c
-@@ -157,6 +157,75 @@ int git_mkstemps(char *path, size_t len, const char *template, int suffix_len)
- 	return mkstemps(path, suffix_len);
- }
- 
-+/* Adapted from libiberty's mkstemp.c. */
+diff --git a/t/t1304-default-acl.sh b/t/t1304-default-acl.sh
+new file mode 100755
+index 0000000..4ee44a1
+--- /dev/null
++++ b/t/t1304-default-acl.sh
+@@ -0,0 +1,49 @@
++#!/bin/sh
++#
++# Copyright (c) 2010 Matthieu Moy
++#
 +
-+#undef TMP_MAX
-+#define TMP_MAX 16384
++test_description='Test repository with default ACL'
 +
-+int gitmkstemps(char *pattern, int suffix_len)
-+{
-+	static const char letters[] =
-+		"abcdefghijklmnopqrstuvwxyz"
-+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-+		"0123456789";
-+	static const int num_letters = 62;
-+	uint64_t value;
-+	struct timeval tv;
-+	char *template;
-+	size_t len;
-+	int fd, count;
++. ./test-lib.sh
 +
-+	len = strlen(pattern);
++# We need an arbitrary other user give permission to using ACLs. root
++# is a good candidate: exists on all unices, and it has permission
++# anyway, so we don't create a security hole running the testsuite.
 +
-+	if (len < 6 + suffix_len) {
-+		errno = EINVAL;
-+		return -1;
-+	}
++if ! setfacl -Rm u:root:rwx .; then
++    say "Skipping ACL tests: unable to use setfacl"
++    test_done
++fi
 +
-+	if (strncmp(&pattern[len - 6 - suffix_len], "XXXXXX", 6)) {
-+		errno = EINVAL;
-+		return -1;
-+	}
++setfacl -Rm d:u:"$LOGNAME":rwx .
++setfacl -Rm d:u:root:rwx .
 +
-+	/*
-+	 * Replace pattern's XXXXXX characters with randomness.
-+	 * Try TMP_MAX different filenames.
-+	 */
-+	gettimeofday(&tv, NULL);
-+	value = ((size_t)(tv.tv_usec << 16)) ^ tv.tv_sec ^ getpid();
-+	template = &pattern[len - 6 - suffix_len];
-+	for (count = 0; count < TMP_MAX; ++count) {
-+		uint64_t v = value;
-+		/* Fill in the random bits. */
-+		template[0] = letters[v % num_letters]; v /= num_letters;
-+		template[1] = letters[v % num_letters]; v /= num_letters;
-+		template[2] = letters[v % num_letters]; v /= num_letters;
-+		template[3] = letters[v % num_letters]; v /= num_letters;
-+		template[4] = letters[v % num_letters]; v /= num_letters;
-+		template[5] = letters[v % num_letters]; v /= num_letters;
++touch file.txt
++git add file.txt
++git commit -m "init"
 +
-+		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, 0600);
-+		if (fd > 0)
-+			return fd;
-+		/*
-+		 * Fatal error (EPERM, ENOSPC etc).
-+		 * It doesn't make sense to loop.
-+		 */
-+		if (errno != EEXIST)
-+			break;
-+		/*
-+		 * This is a random value.  It is only necessary that
-+		 * the next TMP_MAX values generated by adding 7777 to
-+		 * VALUE are different with (module 2^32).
-+		 */
-+		value += 7777;
-+	}
-+	/* We return the null string if we can't find a unique file name.  */
-+	pattern[0] = '\0';
-+	errno = EINVAL;
-+	return -1;
++modebits () {
++	ls -l "$1" | sed -e 's|^\(..........\).*|\1|'
 +}
 +
- int validate_headref(const char *path)
- {
- 	struct stat st;
++test_expect_failure 'git gc does not break ACLs with restrictive umask' '
++	umask 077 &&
++	git gc &&
++	actual=$(modebits .git/objects/pack/*.pack) &&
++	case "$actual" in
++	-r--r-----*)
++		: happy
++		;;
++	*)
++		false
++		;;
++	esac &&
++	getfacl .git/objects/pack/*.pack > actual &&
++	grep -q "user:root:rwx" actual &&
++	grep -q "user:${LOGNAME}:rwx" actual &&
++	grep -q "mask::r--" actual &&
++	grep -q "group::---" actual
++'
++
++test_done
 -- 
 1.7.0.rc2.4.gc602c4
