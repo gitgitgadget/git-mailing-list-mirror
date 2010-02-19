@@ -1,79 +1,60 @@
-From: Robert Zeh <robert.allan.zeh@gmail.com>
-Subject: Re: Git svn fetches entire trunk on tags (change from 1.6.5.2 to 1.7.0)
-Date: Fri, 19 Feb 2010 06:14:00 -0600
-Message-ID: <F3657B42-F723-4656-A86E-3117B355D6C0@gmail.com>
-References: <5CFEDDA0-6C6B-43DF-8BB4-E303E91C24EF@gmail.com> <20100218000620.GA7123@dcvr.yhbt.net>
-Mime-Version: 1.0 (iPhone Mail 7D11)
-Content-Type: text/plain;
-	charset=us-ascii;
-	format=flowed;
-	delsp=yes
+From: Gabriel <g2p.code@gmail.com>
+Subject: Re: RFD: git-bzr: anyone interested?
+Date: Fri, 19 Feb 2010 12:52:18 +0000 (UTC)
+Message-ID: <loom.20100219T134421-90@post.gmane.org>
+References: <4B7D8358.1080108@gmail.com> <fabb9a1e1002181037n58d6942dpa63a57a23f506d9c@mail.gmail.com>  <4B7E3856.3080609@gmail.com> <fabb9a1e1002182349h923d4acv55d9a41a249d4f51@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Andrew Myrick <amyrick@apple.com>, Sam Vilain <sam@vilain.net>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Feb 19 13:14:18 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 19 13:52:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiRkP-0006o1-J0
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 13:14:17 +0100
+	id 1NiSLi-0007Wr-Vb
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 13:52:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068Ab0BSMOM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 07:14:12 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:59623 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751090Ab0BSMOK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 07:14:10 -0500
-Received: by vws11 with SMTP id 11so449vws.19
-        for <git@vger.kernel.org>; Fri, 19 Feb 2010 04:14:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:references:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:x-mailer
-         :mime-version:subject:date:cc;
-        bh=GxnW4f71AMTI+p58LubqpNMdsLp3rykAaTjjNrywgbc=;
-        b=k+TMWDYh3RLwV2gw2yPB7I9px3SnuXBKKCfjkJ0vgOS2SSvhEDqxlCtVqC8xvC5/Mb
-         fcDbCtlhVuXZ4I3rqQ3n+UzG8qwY7QmpEWvhsfsabLmrddE7oXt1lUwqX6U6WFFE/tC8
-         QBSUlr/JltMMXXyBYAf6LcU3i4USzIvn1I9G0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=references:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:x-mailer:mime-version:subject:date:cc;
-        b=IqwQog3PIWC1y8I42HM7rX7434q5Drhn/LOdoQzmaX/FQj7BJAEvpBBKQ4tGVWCAfC
-         Jn96mGTNBj8Y83eSTUp3WKdcnv3muE/wOpA2pESyfMpruIpGtJQCAz21aoSKHghfPHOh
-         aqxeSmQ2+uyrPjfsNaK0HCONAdLAQQ1ZmXjAk=
-Received: by 10.220.125.8 with SMTP id w8mr4133125vcr.48.1266581649152;
-        Fri, 19 Feb 2010 04:14:09 -0800 (PST)
-Received: from ?10.80.66.231? (mobile-166-137-139-057.mycingular.net [166.137.139.57])
-        by mx.google.com with ESMTPS id 25sm484140vws.12.2010.02.19.04.14.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 19 Feb 2010 04:14:08 -0800 (PST)
-In-Reply-To: <20100218000620.GA7123@dcvr.yhbt.net>
-X-Mailer: iPhone Mail (7D11)
+	id S1753950Ab0BSMwp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 07:52:45 -0500
+Received: from lo.gmane.org ([80.91.229.12]:49147 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752285Ab0BSMwo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 07:52:44 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NiSLa-0007Rr-Qj
+	for git@vger.kernel.org; Fri, 19 Feb 2010 13:52:42 +0100
+Received: from pro75-5-88-162-203-35.fbx.proxad.net ([88.162.203.35])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 19 Feb 2010 13:52:42 +0100
+Received: from g2p.code by pro75-5-88-162-203-35.fbx.proxad.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 19 Feb 2010 13:52:42 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 88.162.203.35 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.3a2pre) Gecko/20100217 Minefield/3.7a2pre)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140447>
 
+Sverre Rabbelier writes:
+> > I'm still trying to dig up information about how to actually build, test
+> > and use a remote helper. I'll probably be reading code for examples.
+> 
+> Perhaps you could benefit from looking at my git-remote-hg code so
+> far, I'll put it up on github [0] today as 'remote-hg'. If you're too
+> soon you'll see commit 21215675c as the head, which isn't that useful,
+> in that case just look again later :P.
+> 
+> [0] http://github.com/SRabbelier/git
 
-On Feb 17, 2010, at 6:06 PM, Eric Wong <normalperson@yhbt.net> wrote:
-
-> Robert Zeh <robert.allan.zeh@gmail.com> wrote:
->> On Feb 17, 2010, at 5:23 PM, Eric Wong <normalperson@yhbt.net> wrote:
->>> There was a rather large amount of changes between 1.6.5.2 so some
->>> regressions could've slipped in.  A bisection would definitely help
->>> us track down the cause.
->>
->> I will attempt a bisection Thursday.
->
-> Awesome, thanks.
-
-I now believe the real problem is that I had an ignore-paths set in  
-the repo that fetched the entire trunk on branch.  Is this expected?
-
-Robert
->
+FWIW, I'm interested in that remote-vcs code, but never figured out where it
+was published. TIA for pushing it.
+I'll be using it to better integrate fast-import based backup scripts.
