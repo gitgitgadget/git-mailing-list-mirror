@@ -1,124 +1,95 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 5/7] am: Fix launching of pager
-Date: Fri, 19 Feb 2010 01:12:03 -0600
-Message-ID: <20100219071203.GE29916@progeny.tock>
-References: <20100219065010.GA22258@progeny.tock>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [RFC] (reverse) combined diff conflict style
+Date: Fri, 19 Feb 2010 08:15:15 +0100
+Message-ID: <36ca99e91002182315i25ad527dt553d79628734b02f@mail.gmail.com>
+References: <1266521789-3617-1-git-send-email-bert.wesarg@googlemail.com>
+	 <7v1vgi8eqw.fsf@alter.siamese.dyndns.org>
+	 <36ca99e91002181243y371ce2f5i7136d8fbe6837b6b@mail.gmail.com>
+	 <7vocjlx056.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sebastian Celis <sebastian@sebastiancelis.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 19 08:12:00 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 08:15:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiN1r-0004VQ-Vk
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 08:12:00 +0100
+	id 1NiN5B-00060b-4e
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 08:15:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754525Ab0BSHLz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 02:11:55 -0500
-Received: from mail-yw0-f197.google.com ([209.85.211.197]:63230 "EHLO
-	mail-yw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754505Ab0BSHLy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 02:11:54 -0500
-Received: by ywh35 with SMTP id 35so1811628ywh.4
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 23:11:53 -0800 (PST)
+	id S1754471Ab0BSHPT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 02:15:19 -0500
+Received: from fg-out-1718.google.com ([72.14.220.153]:12199 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754370Ab0BSHPR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Feb 2010 02:15:17 -0500
+Received: by fg-out-1718.google.com with SMTP id l26so182797fgb.1
+        for <git@vger.kernel.org>; Thu, 18 Feb 2010 23:15:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=UidY4P9jNo+9K5e1aZ7HwJGtI/vz9ciVGDn2KZ66KbE=;
-        b=P/axMtA5qVwB0WIxuDf5o41pr9fhab7HNbfhNoMKyAsj2NtFx7GYCQlUK1vRX9d6rM
-         Ea9/Qgqbay30t2i4dCfuV3hdjG50/OJeDKXl+rNCM5465Q7isUx9n1OvaKpQYLVBzrrs
-         +7G5y+p98I59m+sQSYm15bigjNFzTt+fv0crY=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xYqfNd4NKczOtznyGVsqhQ09dVp7RBLxIivviKOgjKc=;
+        b=tixPfnx4B3HshkzHJ+pSYpAgwdPrwLLqrMbJFCCgFlEqlrKOeothym3OxvrYLqs1Qt
+         rFJsr32TkBn/D1t5UNPA6vczCXA7z+0VuEosaNxfPOYAabTAn3vnx9b2zt7iRa+Hn/rZ
+         84SfrnOh4+We+bEWZ16lDrxmu5Kz8EqYa9Crs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=LLl8i4P7Gp9JlfmSv5+88yF1vDTqIbYBcvY6cGTDUl+Xov8UjlQO8QEt9ibfHqQllq
-         oecfCSMaN2ZXpt8/KF2SyzWzpuSkc7/NzI4pivY0YV2sAPU/IRePJCn78BDuWR6Hvv4b
-         0M4hbcxyt8jQwJhhc1W/cjMdEWqAVlM8dySeE=
-Received: by 10.101.190.21 with SMTP id s21mr7940427anp.12.1266563513459;
-        Thu, 18 Feb 2010 23:11:53 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 14sm1551180gxk.15.2010.02.18.23.11.52
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 18 Feb 2010 23:11:52 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20100219065010.GA22258@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rD8DyJ7a5r8/U452nnvufKbXhv9qlK73qDqRFAxa5UuJz+Q2LD9VMvPToBdDULSuBl
+         Z/uH2SYk6O2v/Z0fNExhi2Ks/vqzuNov+AWKauO/88xT1UoIQ//+GUPrAImYiCD7dgSN
+         j/mtMSXPK7nfkj9NIdZMFhXXjxLjxFCixA3K8=
+Received: by 10.223.15.154 with SMTP id k26mr8646146faa.77.1266563715590; Thu, 
+	18 Feb 2010 23:15:15 -0800 (PST)
+In-Reply-To: <7vocjlx056.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140423>
 
-The pagination functionality in git am has some problems:
+[ Sorry, I removed the list by mistake. CC'ed again ]
 
- - It does not check if stdout is a tty, so it always paginates.
+On Fri, Feb 19, 2010 at 06:30, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> Bert Wesarg <bert.wesarg@googlemail.com> writes:
+>> I use two programmed short-cuts in my editor for this. The first
+>> 'applies' the diff, i.e. it keeps all lines prefixed with ' ' or '+'
+>> and deletes lines with '-', and then removes the first column. The
+>> second 'reverses' a diff, i.e. exchanges '+' with '-' and vice versa=
+=2E
+>> With these two operations I find it easier to resolve the conflict
+>> than with the mege/diff3 presentation.
+>>
+>> I'm also convinced, that it is currently impossible to implement thi=
+s
+>> conflict style in the xdiff library. So it will probably be forever
+>> some 'external solution'.
+>
+> Why not?
+>
+> IIUC, your approach is to postprocess output diff3 style merge.
+>
+> =C2=A0- First define your style as a new "conflict style" and store i=
+t in
+> =C2=A0 git_xmerge_style to pass it around. =C2=A0"checkout --conflict=
+=3Dbert" would
+> =C2=A0 learn this style automatically.
+>
+> =C2=A0- In ll_xdl_merge(), we usually call xdl_merge() and return dir=
+ectly its
+> =C2=A0 return value. =C2=A0When style is "bert", instead of doing tha=
+t, you pass
+> =C2=A0 "diff3 style" and drive xdl_merge(), _but_ you do not return. =
+=C2=A0Instead,
+> =C2=A0 you do your postprocessing right there and then return the res=
+ult.
+Thanks for this pointer. That looks really doable. Will report back lat=
+er.
 
- - If $GIT_PAGER uses any environment variables, they are being
-   ignored, since it does not run $GIT_PAGER through eval.
-
- - If $GIT_PAGER is set to the empty string, instead of passing
-   output through to stdout, it tries to run $dotest/patch.
-
-Fix them.  While at it, move the definition of git_pager() to
-git-sh-setup so authors of other commands are not tempted to
-reimplement it with the same mistakes.
-
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Same as before, included for reference.
-
- git-am.sh       |    5 +----
- git-sh-setup.sh |   13 +++++++++++++
- 2 files changed, 14 insertions(+), 4 deletions(-)
-
-diff --git a/git-am.sh b/git-am.sh
-index 3c08d53..b11af03 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -663,10 +663,7 @@ do
- 		[eE]*) git_editor "$dotest/final-commit"
- 		       action=again ;;
- 		[vV]*) action=again
--		       : ${GIT_PAGER=$(git var GIT_PAGER)}
--		       : ${LESS=-FRSX}
--		       export LESS
--		       $GIT_PAGER "$dotest/patch" ;;
-+		       git_pager "$dotest/patch" ;;
- 		*)     action=again ;;
- 		esac
- 	    done
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index d56426d..44fb467 100755
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -107,6 +107,19 @@ git_editor() {
- 	eval "$GIT_EDITOR" '"$@"'
- }
- 
-+git_pager() {
-+	if test -t 1
-+	then
-+		GIT_PAGER=$(git var GIT_PAGER)
-+	else
-+		GIT_PAGER=cat
-+	fi
-+	: ${LESS=-FRSX}
-+	export LESS
-+
-+	eval "$GIT_PAGER" '"$@"'
-+}
-+
- sane_grep () {
- 	GREP_OPTIONS= LC_ALL=C grep "$@"
- }
--- 
-1.7.0
+Bert
