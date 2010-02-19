@@ -1,71 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Using test-lib.sh under GPLv3?
-Date: Fri, 19 Feb 2010 22:04:37 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1002192204050.20986@pacific.mpi-cbg.de>
-References: <87ljf8pvxx.fsf@yoom.home.cworth.org> <87hbpwpoko.fsf@yoom.home.cworth.org> <5641883d1002060727ia4e6c16lf800a92fc8735430@mail.gmail.com> <201002081614.24284.sojkam1@fel.cvut.cz> <871vgr78lr.fsf@yoom.home.cworth.org> <87iqa2y0gz.fsf@steelpick.localdomain>
- <87r5oqe7mi.fsf@yoom.home.cworth.org> <871vgmki4f.fsf@steelpick.localdomain> <7vaav8hpfo.fsf@alter.siamese.dyndns.org> <87tytdiqob.fsf@steelpick.localdomain> <alpine.DEB.1.00.1002191138280.20986@pacific.mpi-cbg.de> <873a0xhwxs.fsf@yoom.home.cworth.org>
+From: Laine Walker-Avina <lwalkera@pasco.com>
+Subject: Git has bad performance when traversing change-sets with large PPM 
+	files
+Date: Fri, 19 Feb 2010 13:24:05 -0800
+Message-ID: <dfb660301002191324i7aeca7f5x990501bbca1475a9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Michal Sojka <sojkam1@fel.cvut.cz>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	notmuch@notmuchmail.org, git@vger.kernel.org
-To: Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Fri Feb 19 21:58:01 2010
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 19 22:24:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiZvE-0006Wy-59
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 21:58:00 +0100
+	id 1NiaKf-0008UD-1v
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 22:24:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756123Ab0BSU5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 15:57:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43534 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756094Ab0BSU5y (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 15:57:54 -0500
-Received: (qmail invoked by alias); 19 Feb 2010 20:57:51 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp006) with SMTP; 19 Feb 2010 21:57:51 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/scdA7utrsfZJulSyt/qtGh2PjEyoMO9lBDhQMHM
-	lRWGjoc4rRyTrc
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <873a0xhwxs.fsf@yoom.home.cworth.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.60999999999999999
+	id S1754862Ab0BSVYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 16:24:10 -0500
+Received: from qw-out-2122.google.com ([74.125.92.24]:7524 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754613Ab0BSVYF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 16:24:05 -0500
+Received: by qw-out-2122.google.com with SMTP id 8so97739qwh.37
+        for <git@vger.kernel.org>; Fri, 19 Feb 2010 13:24:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type;
+        bh=/gjl9hnDdm/UsYLUUp8ei9ygQElDmklhgYClkgXncTY=;
+        b=culbOzKs2H3uEi4jPoQW/iyZj8C8YxUVkR5UXUTXAPD6qYYdaCmFqylYCww6VfNOka
+         2cKYoHxiDQHzm1mJMlx7UlqLn6BbRK2vvX2tRPlIbFoGZAbUeEuSVmmZl2uqNv0CKGZ6
+         fm6/flvpkEUZ3zICsnjf6eXGP5TzhtZWd0R9Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=jJbEr9aqAbyOD7nr7gyp5gf9xZzuDdxjkcNrTDIFpdztiMao0eV1UJaS9Pf6tdkPbn
+         ZcNHdp0RuyOyBRarICYuSZ8944bQNJ8Q12Pb5S33WQxL0d1EU2WAn62MZtmeDUBLvdG4
+         kjZ+PDPh4MzaLI4Nqj7nO8Y4sp7wpK+ory9Z8=
+Received: by 10.224.27.37 with SMTP id g37mr536797qac.124.1266614645301; Fri, 
+	19 Feb 2010 13:24:05 -0800 (PST)
+X-Google-Sender-Auth: 4673548d940e4ae8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140483>
 
-Hi,
+Steps to reproduce:
 
-On Fri, 19 Feb 2010, Carl Worth wrote:
+1. Create a new git repo and add a 640x480 PPM image in ASCII format
+2. Add a .gitattributes file with the line "*.ppm binary"
+3. Commit the PPM file
+4. Change the PPM image's contents
+5. Add and commit
+6. Try to do a git rebase -i to the initial commit
+7. Watch the CPU peg at 100%
 
-> On Fri, 19 Feb 2010 11:39:04 +0100 (CET), Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > On Fri, 19 Feb 2010, Michal Sojka wrote:
-> > 
-> > > as you can read bellow, I'd like to use git's test-lib.sh in a GPLv3 
-> > > project. Do you mind if I use your work in that file under GPLv3?
-> > 
-> > I do not mind, but I would like to ask that you contribute the 
-> > improvements back under GPLv2.
-> 
-> Thanks everyone for your agreement.
-> 
-> And yes, we'll contribute back any improvements under GPLv2.
-> 
-> I think the most clear step forward would be for test-lib.sh to be
-> updated in the git repository with an explicit licensing blurb
-> reflecting this agreement.
+I'm using git version 1.6.3.3
 
-Sure. If you make an appropriate patch, I'll ACK it.
+Please CC me, I'm not on the list.
 
-Ciao,
-Dscho
+Thanks,
+-- 
+Laine Walker-Avina
+Firmware Engineer
+PASCO scientific
