@@ -1,70 +1,85 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Using test-lib.sh under GPLv3?
-Date: Fri, 19 Feb 2010 09:44:55 +0100
-Message-ID: <fabb9a1e1002190044o5d4feb53td255b1e49a2c969d@mail.gmail.com>
-References: <87ljf8pvxx.fsf@yoom.home.cworth.org> <87hbpwpoko.fsf@yoom.home.cworth.org> 
-	<5641883d1002060727ia4e6c16lf800a92fc8735430@mail.gmail.com> 
-	<201002081614.24284.sojkam1@fel.cvut.cz> <871vgr78lr.fsf@yoom.home.cworth.org> 
-	<87iqa2y0gz.fsf@steelpick.localdomain> <87r5oqe7mi.fsf@yoom.home.cworth.org> 
-	<871vgmki4f.fsf@steelpick.localdomain> <7vaav8hpfo.fsf@alter.siamese.dyndns.org> 
-	<87tytdiqob.fsf@steelpick.localdomain>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: 16 gig, 350,000 file repository
+Date: Fri, 19 Feb 2010 10:27:03 +0100
+Message-ID: <40aa078e1002190127m4c9d5565obb792c77e29baf28@mail.gmail.com>
+References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org>
+	 <20100214011812.GA2175@dpotapov.dyndns.org>
+	 <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org>
+	 <201002181114.19984.trast@student.ethz.ch>
+	 <7vtytee7ff.fsf@alter.siamese.dyndns.org>
+	 <alpine.LFD.2.00.1002181456230.1946@xanadu.home>
+	 <19325.40682.729141.973125@blake.zopyra.com>
+	 <alpine.LFD.2.00.1002181556320.1946@xanadu.home>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Johannes Sixt <j6t@kdbg.org>, Carl Worth <cworth@cworth.org>,
-	notmuch@notmuchmail.org, git@vger.kernel.org
-To: Michal Sojka <sojkam1@fel.cvut.cz>
-X-From: git-owner@vger.kernel.org Fri Feb 19 09:45:28 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Fri Feb 19 10:27:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiOUG-0007Fj-En
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 09:45:25 +0100
+	id 1NiP8q-0005sk-6h
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 10:27:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751993Ab0BSIpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 03:45:17 -0500
-Received: from mail-pz0-f192.google.com ([209.85.222.192]:54897 "EHLO
-	mail-pz0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751775Ab0BSIpQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 03:45:16 -0500
-Received: by pzk30 with SMTP id 30so1089119pzk.22
-        for <git@vger.kernel.org>; Fri, 19 Feb 2010 00:45:15 -0800 (PST)
+	id S1752367Ab0BSJ1M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 04:27:12 -0500
+Received: from mail-ew0-f216.google.com ([209.85.219.216]:48327 "EHLO
+	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752172Ab0BSJ1G convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Feb 2010 04:27:06 -0500
+Received: by ewy8 with SMTP id 8so10480839ewy.29
+        for <git@vger.kernel.org>; Fri, 19 Feb 2010 01:27:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=fI1L6//jmdxoR8iV5S//jKkG2KbflYEZF9J9RfbMmOo=;
-        b=YoI92ANYwJg1OL+olITSty4UIFOXkv19V8CVxbaZBAyEHZCJUI/7XfuylMX/hp6MjF
-         C9bcV0x2Vd4WXvj4A3s3vo30ftDKx8fx0pwoeNWj8PdXAm6duYWG1uZqGLUjMvxy+jEu
-         NnNQI4axnDfcEfSGMevDLAGFNbmVmHmhQiEWw=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ELLNi0tWZR4RDxAfcuSX1sS4pcCnnmMIuRqxXy/QEgk=;
+        b=s+fxJBMOtO/IFUlbDu8nzL7swcBCHeJI+XLPlWxpiFo4DtiLf6yLw/Fn3IBW4jHNxG
+         lGRio99KavkpW2kKP3Cv4p68/agS4gGgu+WT5NaWhe/9MzCGbfzYLBaoByHvAbywQlqY
+         mB0dr1KYutqbXyXEp4aYH91IoDnHcINiQjjtM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=s2uTppKPDlT1HkeRWkplcUdfuTt4gW1z9q0cgcEcI0t0GdrUN7KMVd+7/NfoTlgRBP
-         /x407Ryq5XdEoYRLlfEB23XOaGW26yMKyXOsLCYG1zZ086RDY/Xbzum2+xtNUvrIDW7k
-         UoJnw8WnkvUXiygndBBRcJbWx2agZ7j8u3/Hs=
-Received: by 10.142.195.19 with SMTP id s19mr7271733wff.312.1266569115168; 
-	Fri, 19 Feb 2010 00:45:15 -0800 (PST)
-In-Reply-To: <87tytdiqob.fsf@steelpick.localdomain>
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=lJ0iE8g/GUdDtWbBREY1x14jl4YwZjkmehjc4/IyGf+gl46+j4YffFGZPxCe+e4s9C
+         ilzUw8px9ni9nue0R23/krdZZfYhf+klJhJ28Bvx5AixGOU6i/EkGMmo/EaB3TjkGv3L
+         zQoo0ENCLaGXfUnCl22kO9Gc7KFlRiRZlWqi8=
+Received: by 10.216.88.207 with SMTP id a57mr949766wef.200.1266571623171; Fri, 
+	19 Feb 2010 01:27:03 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.1002181556320.1946@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140438>
 
-Heya,
+On Thu, Feb 18, 2010 at 9:58 PM, Nicolas Pitre <nico@fluxnic.net> wrote=
+:
+> On Thu, 18 Feb 2010, Bill Lear wrote:
+>
+>> I'm starting a new, large project and would like a quick bit of advi=
+ce.
+>>
+>> Bringing in a set of test cases and other files from a ClearCase
+>> repository resulted in a 350,000 file git repo of about 16 gigabytes=
+=2E
+>>
+>> The time to clone over a fast network was about 250 minutes. =A0I co=
+uld
+>> not verify if the repo had been packed properly, etc.
+>
+> I'd start from there. =A0If you didn't do a 'git gc --aggressive' aft=
+er
+> the import then it is quite likely that your repo isn't well packed.
+>
+> Of course you'll need a big machine to repack this.
 
-On Fri, Feb 19, 2010 at 09:19, Michal Sojka <sojkam1@fel.cvut.cz> wrote:
-> as you can read bellow, I'd like to use git's test-lib.sh in a GPLv3
-> project. Do you mind if I use your work in that file under GPLv3?
+Something like this? http://www.gadgetopia.com/images/big_machine.jpg
 
-I don't mind, go right ahead :).
-
--- 
-Cheers,
-
-Sverre Rabbelier
+--=20
+Erik "kusma" Faye-Lund
