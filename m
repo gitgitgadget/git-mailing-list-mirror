@@ -1,68 +1,71 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Possible bug with git status in 1.7.0
-Date: Fri, 19 Feb 2010 21:55:52 +0100
-Message-ID: <4B7EFAD8.9040309@web.de>
-References: <loom.20100217T184109-183@post.gmane.org> <7vvddvoegv.fsf@alter.siamese.dyndns.org> <4B7C490B.8030902@gmail.com> <4B7C5711.8060708@web.de> <4B7EBF7B.3090703@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Using test-lib.sh under GPLv3?
+Date: Fri, 19 Feb 2010 22:04:37 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1002192204050.20986@pacific.mpi-cbg.de>
+References: <87ljf8pvxx.fsf@yoom.home.cworth.org> <87hbpwpoko.fsf@yoom.home.cworth.org> <5641883d1002060727ia4e6c16lf800a92fc8735430@mail.gmail.com> <201002081614.24284.sojkam1@fel.cvut.cz> <871vgr78lr.fsf@yoom.home.cworth.org> <87iqa2y0gz.fsf@steelpick.localdomain>
+ <87r5oqe7mi.fsf@yoom.home.cworth.org> <871vgmki4f.fsf@steelpick.localdomain> <7vaav8hpfo.fsf@alter.siamese.dyndns.org> <87tytdiqob.fsf@steelpick.localdomain> <alpine.DEB.1.00.1002191138280.20986@pacific.mpi-cbg.de> <873a0xhwxs.fsf@yoom.home.cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sergio Callegari <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 19 21:56:35 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Michal Sojka <sojkam1@fel.cvut.cz>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	notmuch@notmuchmail.org, git@vger.kernel.org
+To: Carl Worth <cworth@cworth.org>
+X-From: git-owner@vger.kernel.org Fri Feb 19 21:58:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiZto-0005Sq-Rg
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 21:56:33 +0100
+	id 1NiZvE-0006Wy-59
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 21:58:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756035Ab0BSU42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 15:56:28 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:44877 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751775Ab0BSU41 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 15:56:27 -0500
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 3208814EDD3F5;
-	Fri, 19 Feb 2010 21:55:53 +0100 (CET)
-Received: from [80.128.101.87] (helo=[192.168.178.26])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1NiZtA-0002Q8-00; Fri, 19 Feb 2010 21:55:52 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
-In-Reply-To: <4B7EBF7B.3090703@gmail.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19VbXjZNRD9Zo2Hxz55mjiFlg2pJO+BjPNEI1Jc
-	v5e0V7uMGyhQQIeZsfaD0xosFW9qVb1TgibWjk4KqXWbx231Lw
-	LR0pOgKtrWoHrFHPLhug==
+	id S1756123Ab0BSU5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 15:57:55 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43534 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756094Ab0BSU5y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 15:57:54 -0500
+Received: (qmail invoked by alias); 19 Feb 2010 20:57:51 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp006) with SMTP; 19 Feb 2010 21:57:51 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/scdA7utrsfZJulSyt/qtGh2PjEyoMO9lBDhQMHM
+	lRWGjoc4rRyTrc
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <873a0xhwxs.fsf@yoom.home.cworth.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.60999999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140482>
 
-Am 19.02.2010 17:42, schrieb Sergio Callegari:
-> Yes! My ideal behavior (if I am not asking too much) would be trying to
-> keep the status as little wordy as possible (1 line per submodule)
+Hi,
+
+On Fri, 19 Feb 2010, Carl Worth wrote:
+
+> On Fri, 19 Feb 2010 11:39:04 +0100 (CET), Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > On Fri, 19 Feb 2010, Michal Sojka wrote:
+> > 
+> > > as you can read bellow, I'd like to use git's test-lib.sh in a GPLv3 
+> > > project. Do you mind if I use your work in that file under GPLv3?
+> > 
+> > I do not mind, but I would like to ask that you contribute the 
+> > improvements back under GPLv2.
 > 
-> e.g. something like
+> Thanks everyone for your agreement.
 > 
-> #       modified module (commit id):   mod1
-> #       modified module (modified files): mod2
-> #    modified module (untracked files): mod3
-> #       modified module (modified files, untracked files): mod4
-> #    modified module (commit id, modified files, untracked files): mod5
+> And yes, we'll contribute back any improvements under GPLv2.
+> 
+> I think the most clear step forward would be for test-lib.sh to be
+> updated in the git repository with an explicit licensing blurb
+> reflecting this agreement.
 
-Yup, one line per submodule should be enough. But maybe it's nicer to
-have the details /after/ the submodule name:
+Sure. If you make an appropriate patch, I'll ACK it.
 
-#	modified:   mod1 (Submodule has new commit(s), modified content, untracked content)
-
-Then it fits more nicely with the output for files, no?
-
-We could drop the "Submodule has " if people see it as a waste of screen
-estate. Also i have no strong feelings about "content", i just happen to
-think it is more appropriate as submodules can contain not only files but
-other submodules too. Opinions?
-
-Will send a patch for discussion as soon as i have something to show ...
+Ciao,
+Dscho
