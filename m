@@ -1,81 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/10] teach --progress to transport-related builtins
-Date: Thu, 18 Feb 2010 17:26:02 -0800
-Message-ID: <7veikiyq1h.fsf@alter.siamese.dyndns.org>
-References: <1266496631-3980-1-git-send-email-rctay89@gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: RFD: best way to automatically rewrite a git DAG as a linear 
+	history?
+Date: Thu, 18 Feb 2010 22:13:45 -0500
+Message-ID: <32541b131002181913t24989addr84b612787a2f8c48@mail.gmail.com>
+References: <2cfc40321002171835j107d2cdcr5f7667d769bf391e@mail.gmail.com> 
+	<20100218051129.GD10970@coredump.intra.peff.net> <2cfc40321002181704i73eb87demd03faaddf9bb108@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	"Jeff King" <peff@peff.net>, "Sebastian Thiel" <byronimo@gmail.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 19 02:26:26 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 04:14:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiHdQ-0001KL-L4
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 02:26:25 +0100
+	id 1NiJJw-0003BY-KU
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 04:14:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752920Ab0BSB0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 20:26:19 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43270 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752846Ab0BSB0T (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 20:26:19 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9ED2A9BB46;
-	Thu, 18 Feb 2010 20:26:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=dDbmuWSFq7msuM6eUCRrx30Is5k=; b=A0NSZNj+9OuWQ2CYOeO7TIs
-	b+WqaO+331sllL9lZDNqxRXgFnlc2zLnjwwdmHLQgRTDCe3TDVRAqdqcyeZvvbTY
-	56aiT2ltJ2mGg+gzxeD3L1DLavV+VYsu/l0Xdz4EoKWsLlQsNy3CMbcY+5nNdUU8
-	OIc9zb/tqiXuWe9UXWTs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=e79+elAjfh336H9Zhg79err8arpHUvpE0Fna2xQdxOLmwjBge
-	sIbPa4qsu+PO6AJKWQOXNuOs0nXkBQup7r9C9BaC6lPGVVuaDdP2iSVasn7B9a2Z
-	vxJ6Se+cV0F+lX9MEe9ti57m1e/hRMYyCxcoABNXbd4DaB+3UvdDL2aI8Q=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4955A9BB44;
-	Thu, 18 Feb 2010 20:26:10 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4F8ED9BB3F; Thu, 18 Feb
- 2010 20:26:04 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C298499A-1CF5-11DF-9630-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754191Ab0BSDOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 22:14:09 -0500
+Received: from mail-yx0-f200.google.com ([209.85.210.200]:33546 "EHLO
+	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754163Ab0BSDOI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 22:14:08 -0500
+Received: by yxe38 with SMTP id 38so7095892yxe.4
+        for <git@vger.kernel.org>; Thu, 18 Feb 2010 19:14:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=xy72VVDHFy5y/L+o61NebbLIXLMphiDlB8teme4f5v0=;
+        b=V3sECFu/Wg50IZSNY1GQ5mtl1tL2TnJVd2GEU1gCqGUH6idDfh/cxN9t86/jU8r57D
+         Pv/9c+kgTOrd2jk4o97z5Y2FT2TNjKqj5pV8p5zfI7mjT0mENHPAifHO1LX7JR1kSdDn
+         jYaEX09+YubGMSqeTH9XXFr8B+g68yqjKkWj8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=LO9iXPAJ+ckw3Mq5Lfb3NR+uManamR3clSSzSjPDxC0Tz7bmSvv6hI9vYcAuZgYO6E
+         UVw23YVVRuqpMNBHlPGUoQxSMLrANtrhWmu/s0VQyust4itZqnoWZANkfzWusVxCzb2U
+         kYjS66qvcVe3I0+HVRUpffPNGhl6mLDwi8vbA=
+Received: by 10.150.209.11 with SMTP id h11mr2597213ybg.300.1266549245097; 
+	Thu, 18 Feb 2010 19:14:05 -0800 (PST)
+In-Reply-To: <2cfc40321002181704i73eb87demd03faaddf9bb108@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140402>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
+On Thu, Feb 18, 2010 at 8:04 PM, Jon Seymour <jon.seymour@gmail.com> wrote:
+> Avery's script almost does what I need, except the rewritten diffs
+> corresponding to the merge commits introduces unnecessary noise (from
+> upstream deltas) in the series and potentially complicate eventual
+> merges of the linear history back into the upstream.
 
-> This patch series adds --progress to:
->
->   - git-fetch
->   - git-pull
->   - git-push
->
-> I suspect the most contentious issue in this patch series would be the
-> logic that determines whether progress reporting is done. This is found
-> in patch 6 for transport.c::transport_set_verbosity().
->
-> As a guide, I used Jeff's message (gmane#121065). The rules used are as
-> follows (processing aborts when a rule is satisfied):
->
->   1. Report progress, if force_progress is 1 (ie. --progress).
->   2. Don't report progress, if verbosity < 0 (ie. -q/--quiet).
->   3. Report progress if isatty(2) is 1.
->
-> This changes the current implementation such that if both --progress
-> and --quiet are specified, progress is reported. I don't think this is
-> a very significant change, but I think it makes sense, since I expect
-> --progress to be mostly used by script writers or IDE integrators (to
-> force progress reporting even if stderr is not a terminal).
+You're never going to get the "linear" history merged back upstream
+until you fix the inconsistencies.  At least, no sensible upstream
+should accept the patches.
 
-I gave a cursory look and they all looked sensible (except for 1/10
-on which I already commented separately).  Thanks.
+Using the linearization mechanism you propose, you end up producing a
+false history: one in which, other than at certain checkpoints, the
+code doesn't even work.  What's the point of such a history?  It
+neither reflects the true development history (ie. pre-linearization)
+nor a more useful, idealized version of history (ie. one that compiles
+at every point and adds features in a rational order and is useful for
+git bisect).
+
+It doesn't even provide something useful for patch review, since half
+your patches will have randomly-selected conflict resolutions (ie.
+changes to unrelated code that never should have changed) thrown in.
+You'd be better off reviewing patches from the original history, and
+just ignoring merge commits, which is what 'git format-patch' or just
+'git log -p' would do automatically.
+
+The result is also still not suitable for submission upstream: the
+sync points (where the files actually match what the developer had in
+his tree) are the only places where the code is even likely to
+compile, and yet they *also* include all the code brought in by prior
+merges, which you already said include code that shouldn't go
+upstream.
+
+The linearization script I gave you at least has these interesting
+characteristics:
+
+- If the original history compiled at every point, then the linearized
+history does too.
+
+- It is an accurate representation of the successive states of the
+tree experienced by the original developer.
+
+- You can use 'git rebase' to incrementally rearrange and combine
+patches until they make enough sense to submit upstream.
+
+- It is easy to separate out merges (which usually don't need patch
+review) from individual patches (which do).
+
+- If some merges added useless code, you can remove them completely
+with rebase by just removing a single patch from the list.
+
+Of course, even with this script, it will still take work (rebasing)
+to produce code that's polished and ready to go upstream.  But I'm not
+sure there's a way to automate that without producing interim versions
+that are much, much worse.
+
+Have fun,
+
+Avery
