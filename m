@@ -1,65 +1,105 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [BUG] ? - git log :/text results are strange
-Date: Fri, 19 Feb 2010 23:34:52 +0100
-Message-ID: <201002192334.52495.trast@student.ethz.ch>
-References: <76c5b8581002191350h61d6d8c2jd0245c0963fcc85f@mail.gmail.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCH] documentation: update the "Pushing changes to a public 
+	repository" section
+Date: Sat, 20 Feb 2010 00:09:11 +0100
+Message-ID: <adf1fd3d1002191509y60f4e411kfe2c0e8e580d4df9@mail.gmail.com>
+References: <4df72b1a1002190845o2cbde92btb8804e2467ffda51@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 19 23:35:01 2010
+Cc: git@vger.kernel.org
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 20 00:09:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NibR7-0004Rr-5F
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 23:35:01 +0100
+	id 1NibyL-00055r-QS
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 00:09:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756063Ab0BSWe4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 17:34:56 -0500
-Received: from gwse.ethz.ch ([129.132.178.237]:6315 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755664Ab0BSWez convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Feb 2010 17:34:55 -0500
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.234.1; Fri, 19 Feb
- 2010 23:34:52 +0100
-Received: from thomas.localnet (217.162.250.31) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Fri, 19 Feb
- 2010 23:34:53 +0100
-User-Agent: KMail/1.13.0 (Linux/2.6.31.12-0.1-desktop; KDE/4.4.0; x86_64; ; )
-In-Reply-To: <76c5b8581002191350h61d6d8c2jd0245c0963fcc85f@mail.gmail.com>
+	id S1755946Ab0BSXJO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2010 18:09:14 -0500
+Received: from mail-fx0-f219.google.com ([209.85.220.219]:36735 "EHLO
+	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753259Ab0BSXJN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Feb 2010 18:09:13 -0500
+Received: by fxm19 with SMTP id 19so652765fxm.21
+        for <git@vger.kernel.org>; Fri, 19 Feb 2010 15:09:12 -0800 (PST)
+Received: by 10.103.84.32 with SMTP id m32mr1025290mul.69.1266620951979; Fri, 
+	19 Feb 2010 15:09:11 -0800 (PST)
+In-Reply-To: <4df72b1a1002190845o2cbde92btb8804e2467ffda51@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140493>
 
-On Friday 19 February 2010 22:50:39 Eugene Sajine wrote:
-> When I=E2=80=99m executing
-> $ git log :/fix
->=20
-> I expect to see commits with messages starting from word =E2=80=9Cfix=
-=E2=80=9D only
+On Fri, Feb 19, 2010 at 5:45 PM, Elia Pinto <gitter.spiros@gmail.com> w=
+rote:
+> Extracted from git v1.7.0 Release Notes:
+>
+> * "git push" into a branch that is currently checked out (i.e. pointe=
+d at by
+> =A0 HEAD in a repository that is not bare) is refused by default.
+>
+> Update the user manual where necessary
 
-You're not putting the puzzle together in the right way.  The chain
-goes roughly like this:
+It is a good change. I have some comments below, but I prefer when the
+docs explain first the current behavior and afterwards, as a note or
+alike, the prior behavior. Like this?
 
-* git-log wants to know what its arguments resolve to
+-repository that has a checked-out working tree, but the working tree
+-will not be updated by the push.  This may lead to unexpected results =
+if
+-the branch you push to is the currently checked-out branch!
++repository that has a checked-out working tree, but not into a branch =
+that is
++currently checked out (i.e. pointed at by HEAD in a repository that is=
+ not
++bare), as it is refused by default. This is not allowed by default bec=
+ause
++this may lead to unexpected results. Note that prior to the version 1.=
+7 it was
++allowed.
 
-  * (the internal equivalent of) git-rev-parse works out that :/fix is
-    a525d2a, as it (apparently) is the youngest commit with a message
-    starting with 'fix' (see man git-rev-parse)
+> ---
+> =A0Documentation/user-manual.txt | =A0 12 ++++++++----
+> =A01 files changed, 8 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manua=
+l.txt
+> index fe6fb72..0897839 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -1963,10 +1963,14 @@ As with `git fetch`, `git push` will complain
+> if this does not result in a
+> =A0handling this case.
+>
+> =A0Note that the target of a "push" is normally a
+> -<<def_bare_repository,bare>> repository. =A0You can also push to a
+> -repository that has a checked-out working tree, but the working tree
+> -will not be updated by the push. =A0This may lead to unexpected resu=
+lts if
+> -the branch you push to is the currently checked-out branch!
+> +<<def_bare_repository,bare>> repository. =A0Until the version 1.7 yo=
+u could
 
-* git-log feeds a525d2a to the revision walker
+This implies that in 1.7 you can.
 
-  * the revision walker starts outputting commits backwards through
-    history, starting from a525d2a
+> +also push to a repository that has a checked-out working tree,
+> +but the working tree will not be updated by the push. =A0This might =
+lead to
+> +unexpected results if the branch you pushed to was the currently che=
+cked-out
+> +branch! From 1.7.0 git push" into a branch that is currently checked=
+ out
 
-and unsurprisingly, the log you pasted is just 'git log a525d2a'.
+Missing ".
 
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+> +(i.e. pointed at by =A0 HEAD in a repository that is not bare)
+> +is refused by default.
+> +
+
+Thanks,
+Santi
