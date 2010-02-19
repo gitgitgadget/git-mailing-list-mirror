@@ -1,173 +1,113 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: RFD: best way to automatically rewrite a git DAG as a linear 
-	history?
-Date: Fri, 19 Feb 2010 12:04:15 +1100
-Message-ID: <2cfc40321002181704i73eb87demd03faaddf9bb108@mail.gmail.com>
-References: <2cfc40321002171835j107d2cdcr5f7667d769bf391e@mail.gmail.com>
-	 <20100218051129.GD10970@coredump.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Teach "git add" and friends to be paranoid
+Date: Thu, 18 Feb 2010 19:04:56 -0600
+Message-ID: <20100219010456.GA1789@progeny.tock>
+References: <20100211234753.22574.48799.reportbug@gibbs.hungrycats.org>
+ <20100214011812.GA2175@dpotapov.dyndns.org>
+ <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org>
+ <201002181114.19984.trast@student.ethz.ch>
+ <7vtytee7ff.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1002181456230.1946@xanadu.home>
+ <7v635ub8oa.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1002181604310.1946@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>, apenwarr@gmail.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 19 02:04:22 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Zygo Blaxell <zblaxell@esightcorp.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Fri Feb 19 02:04:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiHI5-0005AW-QX
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 02:04:22 +0100
+	id 1NiHIf-0005XV-4u
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 02:04:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752220Ab0BSBEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 20:04:16 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:38019 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751788Ab0BSBEQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2010 20:04:16 -0500
-Received: by pwj8 with SMTP id 8so1780806pwj.19
-        for <git@vger.kernel.org>; Thu, 18 Feb 2010 17:04:15 -0800 (PST)
+	id S1752624Ab0BSBEx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Feb 2010 20:04:53 -0500
+Received: from mail-yx0-f200.google.com ([209.85.210.200]:48308 "EHLO
+	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752513Ab0BSBEw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 20:04:52 -0500
+Received: by yxe38 with SMTP id 38so7020682yxe.4
+        for <git@vger.kernel.org>; Thu, 18 Feb 2010 17:04:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=pUAfLdYXNamEbs1XSCPwPuUIE1oob3V6IhdYn78iyGM=;
-        b=ww+4D1Nr2wsbCPgtjrXgrtaxbzRbfGDiDh+yWRISh5B5o/eXTUhWI+nhTD243anbjS
-         5+AygpjbfBjgUGGzzj5SUu+4lXhMAXrZi/viYM/evUIMRorbPk3XOXFHg9sLAZF5iE9t
-         FFX5MCn5GLxJp4Uh/8yEcFs6QSNTs4UcDsEBc=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=vD/pnVo0u5NuX56QGRV1UUW7Ns/VqNs5KcrULmYdByo=;
+        b=v156ceAnDfx0PbmfkFd+NW5tPzH8BZA8AyxB710/It87pYOjprTDyQbu2XTEGArKHT
+         iY8xL6wo2OR2qLreJWgjwbV0lWdCSy241smzSmjGpdZLdnsvcM+vSSILpTm7QG8oBmzw
+         Fo+wiSL/G3bEetvzFdwJPo903hzx4bwTbngvg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=jooCCyrPH/7MvlqXLMYhDTMM3Edb1tCIncd8PQ7jjB2e1j4aDddUoicW6e8O3ppz+b
-         OTqVdEVha0CMqXSg1HyPBRCWB/QqB9qgaCVg9jKhzraKsZrqMoAc9bv6wvf3Gy7B+abV
-         2QsBu6qFJIYDdkKsAKTViQaYMt+M3aHYUtJPc=
-Received: by 10.114.49.7 with SMTP id w7mr7101271waw.34.1266541455516; Thu, 18 
-	Feb 2010 17:04:15 -0800 (PST)
-In-Reply-To: <20100218051129.GD10970@coredump.intra.peff.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=SMxRqW9LbyC2PxEk2MOHSPBvuB+py/byOmOyUYftn5lmaOoD9pvFWQudUeRPQQ6p8K
+         w1goE6Sldtkk7NgHgqKCtjeXbrhwRAXD2Iv9ulkXVgI3v/ZUmu+nep1TgVbt+lQAfESK
+         HkjvyTbRndjSPMV8F9AgZU+cwz5bcEuUN6+h0=
+Received: by 10.150.127.38 with SMTP id z38mr626945ybc.22.1266541491270;
+        Thu, 18 Feb 2010 17:04:51 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 6sm647019ywd.41.2010.02.18.17.04.49
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 18 Feb 2010 17:04:50 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.1002181604310.1946@xanadu.home>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140400>
 
-Jeff,
+Nicolas Pitre wrote:
+> On Thu, 18 Feb 2010, Junio C Hamano wrote:
 
-The use case is extracting a patch series from a developer who has
-been frequently pulling (and thus merging) with an upstream but has
-not successfully delivered anything upstream.
+>> I suspect that opening to mmap(2), hashing once to compute the objec=
+t
+>> name, and deflating it to write it out, will all happen within the s=
+ame
+>> second, unless you are talking about a really huge file, or you star=
+ted at
+>> very near a second boundary.
+>
+> How is the index dealing with this?  Surely if a file is added to the=
+=20
+> index and modified within the same second then 'git status' will fail=
+ to=20
+> notice the changes.  I'm not familiar enough with that part of Git.
 
-I want to be able to unpick the upstream merge history and reconstruct
-a reasonable faithful representation of the developer's edits in a
-linear series of commits that can then be reviewed, edited, squashed,
-re-ordered as necessary as part of integration activities. I also want
-to handle the cases where a (bad) upstream rebase occurred or the
-developer has (incorrectly) merged with history from a peer that has
-also not been integrated upstream
+See Documentation/technical/racy-git.txt and t/t0010-racy-git.sh.
 
-This places a useful constraint on the DAG rewrite that I need to do -
-I can restrict the rewrite to the reverse of linear traversal from the
-developer's current head back to the first commit that has not been
-integrated upstream.
+Short version: in the awful case, the timestamp of the index is the
+same as (or before) the timestamp of the file.  Git will notice this
+and re-hash the tracked file.
 
-Avery's script almost does what I need, except the rewritten diffs
-corresponding to the merge commits introduces unnecessary noise (from
-upstream deltas) in the series and potentially complicate eventual
-merges of the linear history back into the upstream.
+> Alternatively, you could use the initial mtime sample to determine th=
+e=20
+> filesystem's time granularity by noticing how many LSBs are zero.
 
-What I am doing at the moment is doing a piece-wise replacement of
-each merge with an equivalent rebase  from the other branch of the
-merge, starting with the oldest merge. While doing this, there arises
-the possibility of a merge conflict between a commit made by the
-developer and a commit on the other branch of the merge. For my
-purposes, at the point of the pick where the conflict is detected, the
-conflicted blob is resolved in favour of the developer's blob. This
-technically introduces an error into the history since resolving the
-conflict in this way is almost certainly not correct. However, it does
-mean that all subsequent picks on that segment for that blob will
-apply correctly. At the end of each the rewrite of each segment, the
-conflicted blob is replaced with the result of the developer's
-original merge so that the introduced error is then corrected with a
-perfect correction (assuming the developer did a sane merge in the
-first place). In effect, each conflict introduces two deltas into the
-history - one to enable the subsequent picks to apply cleanly and one
-to reapply the developer's original resolution of the conflict.
+Yuck.
 
-This approach has several consequences:
+If such detection is going to happen, I would prefer to see it used
+once to determine the initial value of a per-repository configuration
+variable asking to speed up =E2=80=98git add=E2=80=99 and friends.
 
-* the rewrite is completely automated
-* by construction, the tree will be consistent with developer's tree
-at the commit corresponding to each merge the developer did.
-* there is one commit in the rewritten history for each commit in the
-original history + two commits for each auto-resolved conflict (one
-that introduces the error to and one that later corrects it using the
-developer's merge)
+Note that we are currently not using the nsec timestamps to make any
+important decisions, probably because in some filesystems they are
+unreliable when inode cache entries are evicted (not sure about the
+current status; does this work in NFS, for example?).  Within the
+short runtime of =E2=80=98git add=E2=80=99, I guess this would not be a=
+s much of a
+problem.
 
-It is true that the rewritten history does contain periods where the
-intervening commits are not strictly consistent (periods between the
-error introducing delta and its subsequent correction), but if this is
-really important, these can be resolved with an interactive rebase as
-required. On the otherhand, rewritten history will be fully consistent
-at well-specified points - particularly at commits corresponding to
-the original merge commits and on any segment that was not affected by
-a merge conflict.
-
-Regards,
-
-jon seymour.
-
-On 18/02/2010, at 16:11, Jef King <peff@peff.net> wrote:
-
-> On Thu, Feb 18, 2010 at 01:35:07PM +1100, Jon Seymour wrote:
->
->> Does the git toolset currently support rewriting a restricted git DAG
->> as a linear history in a completely automated way?
->
-> Not really. It's a hard problem in the general case. Consider a
-> history
-> like:
->
->    B
->   / \
->  A   D
->   \ /
->    C
->
-> That is, two branches fork, each make a commit, and then merge. You
-> want
-> something like:
->
->  A--B--C'
->
-> If there is a merge conflict when making D, then you know that B and C
-> conflict. In this simple case, you can apply the same conflict
-> resolution used in D to the creation of C' (in other words, you use
-> the
-> combined tree state given in D as the tree for C'). But what if C is a
-> string of commits? Some of the conflict resolution in D will be
-> applicable to some of the conflicts you will encounter when rebasing
-> C,
-> but you don't know which.
->
-> One simple strategy would be to squash all side-branch development
-> into
-> a single commit. So you would turn:
->
->    B--C--D
->   /       \
->  A         H
->   \       /
->    E--F--G
->
-> into
->
->  A--B--C--D--X
->
-> where X has the same tree as H, but contains all of the commit
-> messages
-> of E, F, and G.
->
-> You are of course losing quite a bit of information there, but you
-> haven't really told us what your use case is, so I don't know whether
-> that's unacceptable or not.
->
-> -Peff
+Jonathan
