@@ -1,181 +1,230 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 4/6 v2] Use git_mkstemp_mode and xmkstemp_mode in odb_mkstemp, not chmod later.
-Date: Sat, 20 Feb 2010 00:21:56 +0100
-Message-ID: <1266621718-4879-4-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH 2/6] Move gitmkstemps to path.c
+Date: Sat, 20 Feb 2010 00:21:54 +0100
+Message-ID: <1266621718-4879-2-git-send-email-Matthieu.Moy@imag.fr>
 References: <vpq7hq8stjt.fsf@bauges.imag.fr>
 Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Feb 20 00:22:40 2010
+X-From: git-owner@vger.kernel.org Sat Feb 20 00:23:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NicBC-0006Zm-Vo
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 00:22:39 +0100
+	id 1NicBi-0006xO-9w
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 00:23:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756190Ab0BSXWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 18:22:34 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:41528 "EHLO shiva.imag.fr"
+	id S1756209Ab0BSXXF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 18:23:05 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:57486 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755745Ab0BSXWd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 18:22:33 -0500
+	id S1755745Ab0BSXXD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 18:23:03 -0500
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o1JNJvd2018189
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o1JNJwsg018092
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 20 Feb 2010 00:19:57 +0100
+	Sat, 20 Feb 2010 00:19:58 +0100
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1NicAk-0001DK-81; Sat, 20 Feb 2010 00:22:10 +0100
+	id 1NicAk-0001DI-70; Sat, 20 Feb 2010 00:22:10 +0100
 Received: from moy by bauges.imag.fr with local (Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1NicAk-0001HT-6e; Sat, 20 Feb 2010 00:22:10 +0100
+	id 1NicAk-0001HN-5P; Sat, 20 Feb 2010 00:22:10 +0100
 X-Mailer: git-send-email 1.7.0.rc2.92.gb6a04
 In-Reply-To: <vpq7hq8stjt.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 20 Feb 2010 00:19:57 +0100 (CET)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 20 Feb 2010 00:19:58 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o1JNJwsg018092
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1267226399.66002@u7PeZgUp1nB1QY6IRLeRrg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140497>
 
-We used to create 0600 files, and then use chmod to set the group and
-other permission bits to the umask. This usually has the same effect
-as a normal file creation with a umask.
-
-But in the presence of ACLs, the group permission plays the role of
-the ACL mask: the "g" bits of newly created files are chosen according
-to default ACL mask of the directory, not according to the umask, and
-doing a chmod() on these "g" bits affect the ACL's mask instead of
-actual group permission.
-
-In other words, creating files with 0600 and then doing a chmod to the
-umask creates files which are unreadable by users allowed in the
-default ACL. To create the files without breaking ACLs, we let the
-umask do it's job at the file's creation time, and get rid of the
-later chmod.
+This function used to be only a compatibility function, but we're
+going to extend it and actually use it, so make it part of Git.
 
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
-Change since v1:
+ Makefile          |    1 -
+ compat/mkstemps.c |   70 -----------------------------------------------------
+ path.c            |   69 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 69 insertions(+), 71 deletions(-)
+ delete mode 100644 compat/mkstemps.c
 
-+	/*
-+	 * we let the umask do its job, don't try to be more
-+	 * restrictive except to remove write permission.
-+	 */
-+	int mode = 0444;
-
-=> the 0666 became a 0444 to create the file read-only (+typo in comment).
-
- builtin-pack-objects.c |   18 ++----------------
- t/t1304-default-acl.sh |    2 +-
- wrapper.c              |   10 +++++++---
- 3 files changed, 10 insertions(+), 20 deletions(-)
-
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index e1d3adf..539e75d 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -464,9 +464,6 @@ static int write_one(struct sha1file *f,
- 	return 1;
- }
- 
--/* forward declaration for write_pack_file */
--static int adjust_perm(const char *path, mode_t mode);
+diff --git a/Makefile b/Makefile
+index 7bf2fca..4387d42 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1200,7 +1200,6 @@ ifdef NO_MKDTEMP
+ endif
+ ifdef NO_MKSTEMPS
+ 	COMPAT_CFLAGS += -DNO_MKSTEMPS
+-	COMPAT_OBJS += compat/mkstemps.o
+ endif
+ ifdef NO_UNSETENV
+ 	COMPAT_CFLAGS += -DNO_UNSETENV
+diff --git a/compat/mkstemps.c b/compat/mkstemps.c
+deleted file mode 100644
+index 14179c8..0000000
+--- a/compat/mkstemps.c
++++ /dev/null
+@@ -1,70 +0,0 @@
+-#include "../git-compat-util.h"
 -
- static void write_pack_file(void)
- {
- 	uint32_t i = 0, j;
-@@ -523,21 +520,17 @@ static void write_pack_file(void)
- 		}
- 
- 		if (!pack_to_stdout) {
--			mode_t mode = umask(0);
- 			struct stat st;
- 			const char *idx_tmp_name;
- 			char tmpname[PATH_MAX];
- 
--			umask(mode);
--			mode = 0444 & ~mode;
+-/* Adapted from libiberty's mkstemp.c. */
 -
- 			idx_tmp_name = write_idx_file(NULL, written_list,
- 						      nr_written, sha1);
- 
- 			snprintf(tmpname, sizeof(tmpname), "%s-%s.pack",
- 				 base_name, sha1_to_hex(sha1));
- 			free_pack_by_name(tmpname);
--			if (adjust_perm(pack_tmp_name, mode))
-+			if (adjust_shared_perm(pack_tmp_name))
- 				die_errno("unable to make temporary pack file readable");
- 			if (rename(pack_tmp_name, tmpname))
- 				die_errno("unable to rename temporary pack file");
-@@ -565,7 +558,7 @@ static void write_pack_file(void)
- 
- 			snprintf(tmpname, sizeof(tmpname), "%s-%s.idx",
- 				 base_name, sha1_to_hex(sha1));
--			if (adjust_perm(idx_tmp_name, mode))
-+			if (adjust_shared_perm(idx_tmp_name))
- 				die_errno("unable to make temporary index file readable");
- 			if (rename(idx_tmp_name, tmpname))
- 				die_errno("unable to rename temporary index file");
-@@ -2125,13 +2118,6 @@ static void get_object_list(int ac, const char **av)
- 		loosen_unused_packed_objects(&revs);
- }
- 
--static int adjust_perm(const char *path, mode_t mode)
+-#undef TMP_MAX
+-#define TMP_MAX 16384
+-
+-int gitmkstemps(char *pattern, int suffix_len)
 -{
--	if (chmod(path, mode))
+-	static const char letters[] =
+-		"abcdefghijklmnopqrstuvwxyz"
+-		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+-		"0123456789";
+-	static const int num_letters = 62;
+-	uint64_t value;
+-	struct timeval tv;
+-	char *template;
+-	size_t len;
+-	int fd, count;
+-
+-	len = strlen(pattern);
+-
+-	if (len < 6 + suffix_len) {
+-		errno = EINVAL;
 -		return -1;
--	return adjust_shared_perm(path);
+-	}
+-
+-	if (strncmp(&pattern[len - 6 - suffix_len], "XXXXXX", 6)) {
+-		errno = EINVAL;
+-		return -1;
+-	}
+-
+-	/*
+-	 * Replace pattern's XXXXXX characters with randomness.
+-	 * Try TMP_MAX different filenames.
+-	 */
+-	gettimeofday(&tv, NULL);
+-	value = ((size_t)(tv.tv_usec << 16)) ^ tv.tv_sec ^ getpid();
+-	template = &pattern[len - 6 - suffix_len];
+-	for (count = 0; count < TMP_MAX; ++count) {
+-		uint64_t v = value;
+-		/* Fill in the random bits. */
+-		template[0] = letters[v % num_letters]; v /= num_letters;
+-		template[1] = letters[v % num_letters]; v /= num_letters;
+-		template[2] = letters[v % num_letters]; v /= num_letters;
+-		template[3] = letters[v % num_letters]; v /= num_letters;
+-		template[4] = letters[v % num_letters]; v /= num_letters;
+-		template[5] = letters[v % num_letters]; v /= num_letters;
+-
+-		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, 0600);
+-		if (fd > 0)
+-			return fd;
+-		/*
+-		 * Fatal error (EPERM, ENOSPC etc).
+-		 * It doesn't make sense to loop.
+-		 */
+-		if (errno != EEXIST)
+-			break;
+-		/*
+-		 * This is a random value.  It is only necessary that
+-		 * the next TMP_MAX values generated by adding 7777 to
+-		 * VALUE are different with (module 2^32).
+-		 */
+-		value += 7777;
+-	}
+-	/* We return the null string if we can't find a unique file name.  */
+-	pattern[0] = '\0';
+-	errno = EINVAL;
+-	return -1;
 -}
--
- int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- {
- 	int use_internal_rev_list = 0;
-diff --git a/t/t1304-default-acl.sh b/t/t1304-default-acl.sh
-index 4ee44a1..b8e9c34 100755
---- a/t/t1304-default-acl.sh
-+++ b/t/t1304-default-acl.sh
-@@ -27,7 +27,7 @@ modebits () {
- 	ls -l "$1" | sed -e 's|^\(..........\).*|\1|'
+diff --git a/path.c b/path.c
+index d1fccbd..60f5b78 100644
+--- a/path.c
++++ b/path.c
+@@ -157,6 +157,75 @@ int git_mkstemps(char *path, size_t len, const char *template, int suffix_len)
+ 	return mkstemps(path, suffix_len);
  }
  
--test_expect_failure 'git gc does not break ACLs with restrictive umask' '
-+test_expect_success 'git gc does not break ACLs with restrictive umask' '
- 	umask 077 &&
- 	git gc &&
- 	actual=$(modebits .git/objects/pack/*.pack) &&
-diff --git a/wrapper.c b/wrapper.c
-index 673762f..9c71b21 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -277,10 +277,14 @@ int git_inflate(z_streamp strm, int flush)
- int odb_mkstemp(char *template, size_t limit, const char *pattern)
- {
- 	int fd;
--
++/* Adapted from libiberty's mkstemp.c. */
++
++#undef TMP_MAX
++#define TMP_MAX 16384
++
++int gitmkstemps(char *pattern, int suffix_len)
++{
++	static const char letters[] =
++		"abcdefghijklmnopqrstuvwxyz"
++		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
++		"0123456789";
++	static const int num_letters = 62;
++	uint64_t value;
++	struct timeval tv;
++	char *template;
++	size_t len;
++	int fd, count;
++
++	len = strlen(pattern);
++
++	if (len < 6 + suffix_len) {
++		errno = EINVAL;
++		return -1;
++	}
++
++	if (strncmp(&pattern[len - 6 - suffix_len], "XXXXXX", 6)) {
++		errno = EINVAL;
++		return -1;
++	}
++
 +	/*
-+	 * we let the umask do its job, don't try to be more
-+	 * restrictive except to remove write permission.
++	 * Replace pattern's XXXXXX characters with randomness.
++	 * Try TMP_MAX different filenames.
 +	 */
-+	int mode = 0444;
- 	snprintf(template, limit, "%s/%s",
- 		 get_object_directory(), pattern);
--	fd = mkstemp(template);
-+	fd = git_mkstemp_mode(template, mode);
- 	if (0 <= fd)
- 		return fd;
- 
-@@ -289,7 +293,7 @@ int odb_mkstemp(char *template, size_t limit, const char *pattern)
- 	snprintf(template, limit, "%s/%s",
- 		 get_object_directory(), pattern);
- 	safe_create_leading_directories(template);
--	return xmkstemp(template);
-+	return xmkstemp_mode(template, mode);
- }
- 
- int odb_pack_keep(char *name, size_t namesz, unsigned char *sha1)
++	gettimeofday(&tv, NULL);
++	value = ((size_t)(tv.tv_usec << 16)) ^ tv.tv_sec ^ getpid();
++	template = &pattern[len - 6 - suffix_len];
++	for (count = 0; count < TMP_MAX; ++count) {
++		uint64_t v = value;
++		/* Fill in the random bits. */
++		template[0] = letters[v % num_letters]; v /= num_letters;
++		template[1] = letters[v % num_letters]; v /= num_letters;
++		template[2] = letters[v % num_letters]; v /= num_letters;
++		template[3] = letters[v % num_letters]; v /= num_letters;
++		template[4] = letters[v % num_letters]; v /= num_letters;
++		template[5] = letters[v % num_letters]; v /= num_letters;
++
++		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, 0600);
++		if (fd > 0)
++			return fd;
++		/*
++		 * Fatal error (EPERM, ENOSPC etc).
++		 * It doesn't make sense to loop.
++		 */
++		if (errno != EEXIST)
++			break;
++		/*
++		 * This is a random value.  It is only necessary that
++		 * the next TMP_MAX values generated by adding 7777 to
++		 * VALUE are different with (module 2^32).
++		 */
++		value += 7777;
++	}
++	/* We return the null string if we can't find a unique file name.  */
++	pattern[0] = '\0';
++	errno = EINVAL;
++	return -1;
++}
++
+ int validate_headref(const char *path)
+ {
+ 	struct stat st;
 -- 
 1.7.0.rc2.92.gb6a04
