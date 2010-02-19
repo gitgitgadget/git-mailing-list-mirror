@@ -1,125 +1,97 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 4/4] utf8.c: speculatively assume utf-8 in strbuf_add_wrapped_text()
-Date: Fri, 19 Feb 2010 23:20:44 +0100
-Message-ID: <4B7F0EBC.4060209@lsrfire.ath.cx>
-References: <4B7F0D08.6040608@lsrfire.ath.cx>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: unexpected git-merge result
+Date: Fri, 19 Feb 2010 14:27:44 -0800
+Message-ID: <7vaav4amjj.fsf@alter.siamese.dyndns.org>
+References: <loom.20100219T202452-35@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 19 23:20:50 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dale Rowley <ddrowley3@juno.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 23:28:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NibDO-0002AP-BA
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 23:20:50 +0100
+	id 1NibKN-0007QS-FG
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 23:28:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755892Ab0BSWUq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 17:20:46 -0500
-Received: from india601.server4you.de ([85.25.151.105]:33441 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755849Ab0BSWUp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 17:20:45 -0500
-Received: from [10.0.1.100] (p57B7E04C.dip.t-dialin.net [87.183.224.76])
-	by india601.server4you.de (Postfix) with ESMTPSA id 0A5542F806C;
-	Fri, 19 Feb 2010 23:20:43 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
-In-Reply-To: <4B7F0D08.6040608@lsrfire.ath.cx>
+	id S1755910Ab0BSW1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 17:27:53 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34723 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754963Ab0BSW1w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 17:27:52 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DCE09B756;
+	Fri, 19 Feb 2010 17:27:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+qc5QoHj+L7xusg09Svn/56Mdzs=; b=Xfkido
+	EgEqmdjmGX91X+LFI7B0KkdGndjCNHxukOMrfCOfNOWMw/sTvg6wDZtGrz0r9/lP
+	MfRfZ1utAqT+FMnt2fzZOSnygNSCyg84Iiv+bYgGBp4T5XsrXzmi5iqA2ZwQ2fRt
+	psK7nHUfrJxXgEwqNLr4HilH4xMCSZa0LQNg4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RR0cr31l7CJdISgzjOCSjsaWAQAodVbP
+	NVSaICf4FvwqFxPpu5OQIkpnSz0NHUgHiFvhWWJ8tZ9pjtIto+21aaTE3bOBJKG5
+	xThb5xAAZjR0Vk6F1jYwmZdenmOzFKEMv3NY/454cQV71hSfT53pIyn4u33Ccn6i
+	qnqXMrMsaO0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 46CF29B752;
+	Fri, 19 Feb 2010 17:27:48 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9831E9B750; Fri, 19 Feb
+ 2010 17:27:45 -0500 (EST)
+In-Reply-To: <loom.20100219T202452-35@post.gmane.org> (Dale Rowley's message
+ of "Fri\, 19 Feb 2010 21\:35\:54 +0000 \(UTC\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 022AFCAA-1DA6-11DF-A0B3-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140491>
 
-is_utf8() works by calling utf8_width() for each character at the
-supplied location.  In strbuf_add_wrapped_text(), we do that anyway
-while wrapping the lines.  So instead of checking the encoding
-beforehand, optimistically assume that it's utf-8 and wrap along
-until an invalid character is hit, and when that happens start over.
+Dale Rowley <ddrowley3@juno.com> writes:
 
-This pays off if the text consists only of valid utf-8 characters.
-The following command was run against the Linux kernel repo with
-git 1.7.0:
+> Our branch history looked something like the following:
+>
+>   B---C
+>  /     \
+> A---D---E---H
+>      \     /
+>       F---G
+>
+> In commit D a few lines were added to a file, and then in commit G the same
+> lines were removed. When branches E and G were merged, those lines unexpectedly
+> re-appeared in the merge commit (H), even though no other commits had touched
+> that file.
+>
+> I think I understand why this happened: git-merge-base reports that the
+> common ancestor for E and G is A.
 
-	$ time git log --format='%b' v2.6.32 >/dev/null
+Do you?  I don't.
 
-	real	0m2.679s
-	user	0m2.580s
-	sys	0m0.100s
+D is the merge base between E and G.  A and D are both common ancestor
+between E and G, but because D is a descendant of A, A is not a merge
+base (the definition of merge-base is "common ancestors none of whose
+children is common ancestor").  A is not.
 
-	$ time git log --format='%w(60,4,8)%b' >/dev/null
+Are you sure you really have ancestry relationship between D and G?  If
+the history were like this:
 
-	real	0m4.342s
-	user	0m4.230s
-	sys	0m0.110s
+   B---C
+  /     \
+ A---D---E---H
+  \         /
+   F-------G
 
-And with this patch series:
+and both D and F add the same set of "few lines", and G removes it, then I
+can understand how you would get these "removed by G" lines appear in H,
+as the side branch F--G didn't have no net effect on these lines and D is
+the only one that added them.
 
-	$ time git log --format='%w(60,4,8)%b' >/dev/null
-
-	real	0m3.741s
-	user	0m3.630s
-	sys	0m0.110s
-
-So the cost of wrapping is reduced to 70% in this case.
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
-Missing: numbers for a non-utf-8 repo.
-
- utf8.c |   23 +++++++++++++++++------
- 1 files changed, 17 insertions(+), 6 deletions(-)
-
-diff --git a/utf8.c b/utf8.c
-index 87437b0..84cfc72 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -324,16 +324,21 @@ static size_t display_mode_esc_sequence_len(const char *s)
-  * consumed (and no extra indent is necessary for the first line).
-  */
- int strbuf_add_wrapped_text(struct strbuf *buf,
--		const char *text, int indent, int indent2, int width)
-+		const char *text, int indent1, int indent2, int width)
- {
--	int w = indent, assume_utf8 = is_utf8(text);
--	const char *bol = text, *space = NULL;
-+	int indent, w, assume_utf8 = 1;
-+	const char *bol, *space, *start = text;
-+	size_t orig_len = buf->len;
- 
- 	if (width <= 0) {
--		strbuf_add_indented_text(buf, text, indent, indent2);
-+		strbuf_add_indented_text(buf, text, indent1, indent2);
- 		return 1;
- 	}
- 
-+retry:
-+	bol = text;
-+	w = indent = indent1;
-+	space = NULL;
- 	if (indent < 0) {
- 		w = -indent;
- 		space = text;
-@@ -385,9 +390,15 @@ new_line:
- 			}
- 			continue;
- 		}
--		if (assume_utf8)
-+		if (assume_utf8) {
- 			w += utf8_width(&text, NULL);
--		else {
-+			if (!text) {
-+				assume_utf8 = 0;
-+				text = start;
-+				strbuf_setlen(buf, orig_len);
-+				goto retry;
-+			}
-+		} else {
- 			w++;
- 			text++;
- 		}
--- 
-1.7.0
+It can happen if F is a cherry-pick of D and G is a revert of F, for
+example.
