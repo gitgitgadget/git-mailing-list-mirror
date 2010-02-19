@@ -1,67 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 0/4] Allow Git repositories to be shared using POSIX ACLs
-Date: Fri, 19 Feb 2010 17:33:23 +0100
-Message-ID: <1266597207-32036-1-git-send-email-Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 19 17:34:27 2010
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: Gittor: Project initiated
+Date: Fri, 19 Feb 2010 22:06:08 +0530
+Message-ID: <e72faaa81002190836i5e9610dfx1728b50646d8c2cb@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Petr Baudis <pasky@suse.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Scott Chacon <schacon@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 19 17:36:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiVo4-0004Z2-NF
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 17:34:21 +0100
+	id 1NiVpy-0006cY-4l
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 17:36:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751621Ab0BSQeP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 11:34:15 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:37868 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750879Ab0BSQeO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 11:34:14 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o1JGVRX7005303
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 19 Feb 2010 17:31:27 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NiVnO-0006F2-FR; Fri, 19 Feb 2010 17:33:38 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NiVnO-0008LZ-DO; Fri, 19 Feb 2010 17:33:38 +0100
-X-Mailer: git-send-email 1.7.0.rc2.4.gc602c4
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 19 Feb 2010 17:31:27 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o1JGVRX7005303
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1267201888.38297@Z5Ma2kKrwZF394qv3pbMIw
+	id S1752356Ab0BSQgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 11:36:12 -0500
+Received: from mail-yx0-f200.google.com ([209.85.210.200]:33462 "EHLO
+	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752618Ab0BSQgK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 11:36:10 -0500
+Received: by yxe38 with SMTP id 38so215674yxe.4
+        for <git@vger.kernel.org>; Fri, 19 Feb 2010 08:36:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=/QC6Eqk0LF1mnnydc2F+lAm2NGg7nV/juiIjr9ZY87g=;
+        b=Y5NpYVm+cJtdyXSpZnA8fWDpDmAwAMqWKSYkKO0IICul9VSEVvlutnSaEHHcP9fVvU
+         0KCxHxlJaor26ToBbzPjPXYrHRiwyAMacCOAlOZs/wcqnmtUk5ncB7SDVugtEiYG4plM
+         xSgBpJ66uClALDH9nkakdA9RDf0fnNEkooekU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=cK1xs20fo3C5xXWKiFUi4VfZiXIerdFFsMLtuHr5iK3NrgmbCzM/KBOfp4uqhSXLa4
+         4dRzQvhT1RDjGMSIaIAmoOxHr5M0Z9txDOAPPF4Il3d1Hreno6Jp7qT0DVaGqDH4JkNp
+         CBgBXEajLAhH4oWG8HG8FAOHuNxXFNotorpsA=
+Received: by 10.90.7.29 with SMTP id 29mr7227485agg.16.1266597368450; Fri, 19 
+	Feb 2010 08:36:08 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140460>
 
-I talked about the problem earlier:
+Hi,
 
-http://thread.gmane.org/gmane.comp.version-control.git/136720
+  I am Pavan Kumar Sunkara who proposed a project for writing a web
+based GUI client for git. Mailing list archive is here:
+http://article.gmane.org/gmane.comp.version-control.git/139690 .
 
-In short: if a user wants to share a git repository using POSIX
-filesystem ACLs, it seems everything works except pack file creation.
-The problem is that we create the file with a mode 0600, i.e. no
-permission for group, but the semantics of ACL is that this group
-permission is used as ACL umask when the file has ACLs (don't ask me
-why, I never understood the rational, but that's how it works).
+ By the suggestion from Petr Baudis. I have started this project this
+week and wrote the basic code to get it started.
+ I hosted it in http://github.com/pkumar/Gittor.
 
-Instead, if we let the umask do its job at the time of file creation,
-then the pack file is created with the correct permission bits and
-ACLs, and we don't need to chmod it after the fact. This is what this
-patch serie does.
+The functionalities possible for now:
+* Clone/Create repository
+* Add existing repository to the client
+* View Status
+* Commit with -a flag (-s is optional)
 
-The test-case is really weak: ideally, we should have a real test with
-several users interacting. But that's hardly scriptable in a portable
-way, so the only testcase I added relies on getfacl and "ls -l" to find
-out if the result is correct. However, I did some manual testing, and
-as far as I can say, Git works very well with ACLs with this patch.
+In order to give you an immediate view of this, I created a wiki in
+github with screenshots, so that you can see for youself how this
+works, even before you try this.
+http://wiki.github.com/pkumar/Gittor/
+
+The current code is just 1% of what I am planning. Read the README to
+learn how to install, start and uninstall this.
+Feedback is appreciated.
+
+-pavan
