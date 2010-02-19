@@ -1,75 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH resend] Documentation: pack-objects: Clarify --local's
- semantics.
-Date: Thu, 18 Feb 2010 21:44:19 -0800
-Message-ID: <7vk4u9wzik.fsf@alter.siamese.dyndns.org>
-References: <1266550170-17013-1-git-send-email-nelhage@mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug Report ( including test script ): Non-Fastforward merges
+ misses directory deletion
+Date: Fri, 19 Feb 2010 00:57:21 -0500
+Message-ID: <20100219055721.GC22645@coredump.intra.peff.net>
+References: <loom.20100218T104300-858@post.gmane.org>
+ <loom.20100218T113103-602@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nelson Elhage <nelhage@MIT.EDU>
-X-From: git-owner@vger.kernel.org Fri Feb 19 06:44:36 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Sebastian Thiel <byronimo@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 06:57:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiLfH-00030L-9E
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 06:44:35 +0100
+	id 1NiLrt-0008Lv-4R
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 06:57:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752293Ab0BSFo3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 00:44:29 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53219 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752270Ab0BSFo2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 00:44:28 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3AE2C9B8C2;
-	Fri, 19 Feb 2010 00:44:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AJUGnsDbyJvqgDLLYKTRKwux/7c=; b=sSrA9v
-	KLA3F21WO9nQa/gKGOinM009Jf0A72coPlJh5oKRgPAmWZR1UnqGNtY+stv3mfj3
-	AY/ujNhJMQDnp2gdPvN8TTw1WHkkT5sH8yABIg7UcKG7sYGvi/WW4YacIwgNwpi1
-	yHg5BUnI9dVjjb93K0mPbPUTp0U1olk60U+a4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QkqO2UAw+sYNlomYBmMhoWfc7TKGmFKA
-	Gswer5ve4Hr9uWm0xtj/6Iz5RE+1rIg3DSbR3luncEg1V2oD+pkE4xA+OPI3XNSN
-	MMjNFgNG93czSXdO+sbiATabNEwHxz0Q/t/pFWhRu9yRM2N3ttsX3LwO4PJJci2A
-	5JEzpBmJAMU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 15E689B8C1;
-	Fri, 19 Feb 2010 00:44:25 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 894659B8BF; Fri, 19 Feb
- 2010 00:44:21 -0500 (EST)
-In-Reply-To: <1266550170-17013-1-git-send-email-nelhage@mit.edu> (Nelson
- Elhage's message of "Thu\, 18 Feb 2010 22\:29\:30 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D62F2982-1D19-11DF-8DC4-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752483Ab0BSF5Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 00:57:24 -0500
+Received: from peff.net ([208.65.91.99]:55718 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752090Ab0BSF5X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 00:57:23 -0500
+Received: (qmail 11383 invoked by uid 107); 19 Feb 2010 05:57:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 19 Feb 2010 00:57:36 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Feb 2010 00:57:21 -0500
+Content-Disposition: inline
+In-Reply-To: <loom.20100218T113103-602@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140411>
 
-Nelson Elhage <nelhage@MIT.EDU> writes:
+On Thu, Feb 18, 2010 at 11:43:23AM +0000, Sebastian Thiel wrote:
 
-> diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-> index f54d433..d8e5686 100644
-> --- a/Documentation/git-pack-objects.txt
-> +++ b/Documentation/git-pack-objects.txt
-> @@ -117,14 +117,13 @@ base-name::
-> ...
->  --local::
-> -	This flag is similar to `--incremental`; instead of
-> -	ignoring all packed objects, it only ignores objects
-> -	that are packed and/or not in the local object store
-> -	(i.e. borrowed from an alternate).
-> +	This flag causes an object that is borrowed from an alternate
-> +	object store to be ignored even if it appears in the standard
-> +	input.
+> To me it appears as if merge, once it detects a file deletion,
+> internally uses git-rm to delete the affected files from the working
+> tree.  Git-rm will only delete the file's immediate parent directory,
+> but does not consider other empty parent directories.
 
-Thanks.  Comments from "packing" experts?
+Hmm. It seems to be a bug.
+
+-- >8 --
+Subject: [PATCH] rm: fix bug in recursive subdirectory removal
+
+If we remove a path in a/deep/subdirectory, we should try to
+remove as many trailing components as possible (i.e.,
+subdirectory, then deep, then a). However, the test for the
+return value of rmdir was reversed, so we only ever deleted
+at most one level.
+
+The fix is in remove_path, so "apply" and "merge-recursive"
+also are fixed.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This was introduced by Alex's 4a92d1b (Add remove_path: a function to
+remove as much as possible of a path, 2008-09-27), which ironically
+complained about bugs in the code it was replacing. :)
+
+As an added bonus, we used to see a failed rmdir as success and keep
+walking backwards. So now we are avoiding some useless rmdir calls on
+the parent directories (think of the microseconds we must be saving!).
+
+ dir.c         |    2 +-
+ t/t3600-rm.sh |    8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletions(-)
+
+diff --git a/dir.c b/dir.c
+index 67c3af6..133c333 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1044,7 +1044,7 @@ int remove_path(const char *name)
+ 		slash = dirs + (slash - name);
+ 		do {
+ 			*slash = '\0';
+-		} while (rmdir(dirs) && (slash = strrchr(dirs, '/')));
++		} while (rmdir(dirs) == 0 && (slash = strrchr(dirs, '/')));
+ 		free(dirs);
+ 	}
+ 	return 0;
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index 76b1bb4..0aaf0ad 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -271,4 +271,12 @@ test_expect_success 'choking "git rm" should not let it die with cruft' '
+ 	test "$status" != 0
+ '
+ 
++test_expect_success 'rm removes subdirectories recursively' '
++	mkdir -p dir/subdir/subsubdir &&
++	echo content >dir/subdir/subsubdir/file &&
++	git add dir/subdir/subsubdir/file &&
++	git rm -f dir/subdir/subsubdir/file &&
++	! test -d dir
++'
++
+ test_done
+-- 
+1.7.0.77.gb5742
