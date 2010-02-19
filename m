@@ -1,82 +1,65 @@
-From: Nelson Elhage <nelhage@MIT.EDU>
-Subject: [PATCH resend] Documentation: pack-objects: Clarify --local's semantics.
-Date: Thu, 18 Feb 2010 22:29:30 -0500
-Message-ID: <1266550170-17013-1-git-send-email-nelhage@mit.edu>
-Cc: git@vger.kernel.org, Nelson Elhage <nelhage@mit.edu>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 19 04:34:45 2010
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: Re: [RFD] Deepen the git directory structure a bit.
+Date: Fri, 19 Feb 2010 09:20:31 +0530
+Message-ID: <e72faaa81002181950q18a80f31p96d9f8f05c968e01@mail.gmail.com>
+References: <alpine.LFD.2.00.1002181010590.4141@localhost.localdomain>
+	 <46d6db661002181534r10a887b5gcc23435cb8952f13@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Christian MICHON <christian.michon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 04:50:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiJdc-0005NT-2M
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 04:34:44 +0100
+	id 1NiJsz-0004o1-V7
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 04:50:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754301Ab0BSDei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2010 22:34:38 -0500
-Received: from DMZ-MAILSEC-SCANNER-1.MIT.EDU ([18.9.25.12]:60426 "EHLO
-	dmz-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754272Ab0BSDei (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Feb 2010 22:34:38 -0500
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Feb 2010 22:34:37 EST
-X-AuditID: 1209190c-b7cfcae00000096b-47-4b7e059ff201
-Received: from mailhub-auth-3.mit.edu (MAILHUB-AUTH-3.MIT.EDU [18.9.21.43])
-	by dmz-mailsec-scanner-1.mit.edu (Symantec Brightmail Gateway) with SMTP id 20.8B.02411.F950E7B4; Thu, 18 Feb 2010 22:29:35 -0500 (EST)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id o1J3TZp0002893;
-	Thu, 18 Feb 2010 22:29:35 -0500
-Received: from PHANATIQUE.MIT.EDU (c-71-192-160-118.hsd1.nh.comcast.net [71.192.160.118])
-	(authenticated bits=0)
-        (User authenticated as nelhage@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o1J3TsaZ025180
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 18 Feb 2010 22:29:55 -0500 (EST)
-X-Mailer: git-send-email 1.6.6.30.g1e6fd
-X-Brightmail-Tracker: AAAAARLva3Q=
+	id S1754336Ab0BSDud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2010 22:50:33 -0500
+Received: from mail-yw0-f197.google.com ([209.85.211.197]:57351 "EHLO
+	mail-yw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754266Ab0BSDuc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2010 22:50:32 -0500
+Received: by ywh35 with SMTP id 35so1720755ywh.4
+        for <git@vger.kernel.org>; Thu, 18 Feb 2010 19:50:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=t8fInO06jYFoU8DwvOuupHT3goH7mtyOA6HSkZv32AQ=;
+        b=VAurICp1JTVDQ8+czYQAe/FkuEazpj7nRF6fyAAVl8jcxVnEKY/sIi8fg2wvqj+5YN
+         qW4X+AFkAjPxyBpbRH2/v8/gkMDpuP7fXYp6jMeDPSSblUxtk3SanoT0JAjSbojH4JQZ
+         qstK6FfwYy0i4BWJHf4VuLWxakjR+fZFigqqk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=gIL2Y08lY+fm27R4ScQvcEzCyYT2PQEsByBMSap+SPIXRw/Dis05zKI/PIdvfpqK5Z
+         hwfSlrXZJGrgMdxA1VKbEnu+jpOu2Cx0bux4InCwFMZv4Za7Tqb9GaqJU9rAwflSWgSC
+         Jpve2IpwYDLI2talpDBrIkC0Mvi3ExKWe0HZw=
+Received: by 10.90.15.14 with SMTP id 14mr3299110ago.2.1266551431715; Thu, 18 
+	Feb 2010 19:50:31 -0800 (PST)
+In-Reply-To: <46d6db661002181534r10a887b5gcc23435cb8952f13@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140404>
 
-The current documentation suggests that --local also ignores any
-objects in local packs, which is incorrect. Change the language to be
-clearer and more parallel to the other options that ignore objects.
+>
+> maybe rather than just autocompletion, it does help new code to land
+> in the right place ? I think just for this reason at least it's a good
+> move.
+>
+> I've a wild idea on a new command to add to git and I was pondering
+> between having it as a perl script or a builtin. Now I know where it
+> should go if I choose a builtin, provided you get a wide consensus.
+>
 
-While we're at it, fix a trivial error in --incremental's
-documentation.
-
-Signed-off-by: Nelson Elhage <nelhage@mit.edu>
----
- This is an unmodified resend of a patch I sent about a month ago
- which received no response.
-
- Documentation/git-pack-objects.txt |    9 ++++-----
- 1 files changed, 4 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index f54d433..d8e5686 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -117,14 +117,13 @@ base-name::
- 	standard input.
- 
- --incremental::
--	This flag causes an object already in a pack ignored
-+	This flag causes an object already in a pack to be ignored
- 	even if it appears in the standard input.
- 
- --local::
--	This flag is similar to `--incremental`; instead of
--	ignoring all packed objects, it only ignores objects
--	that are packed and/or not in the local object store
--	(i.e. borrowed from an alternate).
-+	This flag causes an object that is borrowed from an alternate
-+	object store to be ignored even if it appears in the standard
-+	input.
- 
- --non-empty::
-         Only create a packed archive if it would contain at
--- 
-1.6.6.30.g1e6fd
+I agree with this. This will be very good to guys who want to start
+understanding the code completely
