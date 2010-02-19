@@ -1,122 +1,61 @@
-From: Carl Worth <cworth-4HiWtcSh4w0dnm+yROfE0A@public.gmane.org>
-Subject: Re: Using test-lib.sh under GPLv3?
-Date: Fri, 19 Feb 2010 11:01:19 -0800
-Message-ID: <873a0xhwxs.fsf@yoom.home.cworth.org>
-References: <87ljf8pvxx.fsf@yoom.home.cworth.org>
-	<87hbpwpoko.fsf@yoom.home.cworth.org>
-	<5641883d1002060727ia4e6c16lf800a92fc8735430@mail.gmail.com>
-	<201002081614.24284.sojkam1@fel.cvut.cz>
-	<871vgr78lr.fsf@yoom.home.cworth.org>
-	<87iqa2y0gz.fsf@steelpick.localdomain>
-	<87r5oqe7mi.fsf@yoom.home.cworth.org>
-	<871vgmki4f.fsf@steelpick.localdomain>
-	<7vaav8hpfo.fsf@alter.siamese.dyndns.org>
-	<87tytdiqob.fsf@steelpick.localdomain>
-	<alpine.DEB.1.00.1002191138280.20986@pacific.mpi-cbg.de>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Is git over http (git-http-push) ready for production ?
+Date: Fri, 19 Feb 2010 11:05:12 -0800
+Message-ID: <ec874dac1002191105m6022ecdfv932a7e52eb66eb32@mail.gmail.com>
+References: <hllp07$o78$1@ger.gmane.org> <20100219140419.GB31796@Knoppix> 
+	<hlm9i0$ghd$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="===============0651457811=="
-Cc: Johannes Sixt <j6t-FFprn4rPSa4@public.gmane.org>, notmuch-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org,
-	Pierre Habouzit <madcoder-8fiUuRrzOP0dnm+yROfE0A@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
-	Sverre Rabbelier <srabbelier-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-To: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>, Michal Sojka
-	<sojkam1-jQs2MHkdoM/twjQa/ONI9g@public.gmane.org>
-X-From: notmuch-bounces-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org Fri Feb 19 20:01:27 2010
-Return-path: <notmuch-bounces-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org>
-Envelope-to: gmn-notmuch@m.gmane.org
-Received: from u15218177.onlinehome-server.com ([82.165.184.25] helo=olra.theworths.org)
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Fabien <fabien.ubuntu@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 20:05:45 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <notmuch-bounces-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org>)
-	id 1NiY6Q-0005Lc-Rh
-	for gmn-notmuch@m.gmane.org; Fri, 19 Feb 2010 20:01:27 +0100
-Received: from localhost (localhost [127.0.0.1])
-	by olra.theworths.org (Postfix) with ESMTP id 14BCF431FC9;
-	Fri, 19 Feb 2010 11:01:26 -0800 (PST)
-X-Virus-Scanned: Debian amavisd-new at olra.theworths.org
-Received: from olra.theworths.org ([127.0.0.1])
-	by localhost (olra.theworths.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3rH1ALmFNr0x; Fri, 19 Feb 2010 11:01:23 -0800 (PST)
-Received: from olra.theworths.org (localhost [127.0.0.1])
-	by olra.theworths.org (Postfix) with ESMTP id 02A22431FC3;
-	Fri, 19 Feb 2010 11:01:23 -0800 (PST)
-X-Original-To: notmuch-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org
-Delivered-To: notmuch-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org
-Received: from localhost (localhost [127.0.0.1])
-	by olra.theworths.org (Postfix) with ESMTP id 8C75C431FBF
-	for <notmuch-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org>; Fri, 19 Feb 2010 11:01:21 -0800 (PST)
-X-Virus-Scanned: Debian amavisd-new at olra.theworths.org
-Received: from olra.theworths.org ([127.0.0.1])
-	by localhost (olra.theworths.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id g+MlNwKzseoh; Fri, 19 Feb 2010 11:01:19 -0800 (PST)
-Received: from yoom.home.cworth.org (localhost [127.0.0.1])
-	by olra.theworths.org (Postfix) with ESMTP id C5C55431FBD;
-	Fri, 19 Feb 2010 11:01:19 -0800 (PST)
-Received: by yoom.home.cworth.org (Postfix, from userid 1000)
-	id 7E4A825427A; Fri, 19 Feb 2010 11:01:19 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.1002191138280.20986-s7p20SfEDVYSIUCEfyCKUYQuADTiUCJX@public.gmane.org>
-X-BeenThere: notmuch-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org
-X-Mailman-Version: 2.1.13
-Precedence: list
-List-Id: "Use and development of the notmuch mail system."
-	<notmuch.notmuchmail.org>
-List-Unsubscribe: <http://notmuchmail.org/mailman/options/notmuch>,
-	<mailto:notmuch-request-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org?subject=unsubscribe>
-List-Archive: <http://notmuchmail.org/pipermail/notmuch>
-List-Post: <mailto:notmuch-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org>
-List-Help: <mailto:notmuch-request-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org?subject=help>
-List-Subscribe: <http://notmuchmail.org/mailman/listinfo/notmuch>,
-	<mailto:notmuch-request-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org?subject=subscribe>
-Sender: notmuch-bounces-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org
-Errors-To: notmuch-bounces-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140477>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1NiYAZ-0000Cg-B9
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Feb 2010 20:05:43 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752618Ab0BSTFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 14:05:34 -0500
+Received: from mail-ew0-f228.google.com ([209.85.219.228]:37799 "EHLO
+	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751521Ab0BSTFd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 14:05:33 -0500
+Received: by ewy28 with SMTP id 28so481496ewy.28
+        for <git@vger.kernel.org>; Fri, 19 Feb 2010 11:05:32 -0800 (PST)
+Received: by 10.216.172.203 with SMTP id t53mr3468685wel.56.1266606332187; 
+	Fri, 19 Feb 2010 11:05:32 -0800 (PST)
+In-Reply-To: <hlm9i0$ghd$1@ger.gmane.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140478>
 
---===============0651457811==
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
+On Fri, Feb 19, 2010 at 7:08 AM, Fabien <fabien.ubuntu@gmail.com> wrote:
+> Ilari Liusvaara wrote:
+>> 1.6.6 introduced Smart HTTP. It is much more efficient, can run hooks and
+>> has same kind of atomicity guarantees as ssh://, but it has few shorcomings:
+>>
+>> - Requires server support (CGI script & Git 1.6.6+)
+>> - Hook messages don't work (at least with 1.6.6.X/1.7.0.X)
+>> - Requires 1.6.6+ on client side
+>> - Authentication still sucks (no surprise, auth with HTTP just plain sucks).
+>
+> Ok, thanks ! I wasn't aware of this new feature.
+> I'll give it a try.
+> What do you mean by "Hook messages don't work" ?
 
---=-=-=
-Content-Transfer-Encoding: quoted-printable
+Normally over ssh:// output from a hook script is sent to the client's
+stderr stream.  This is handled by the SSH connection itself, not by
+Git, as SSH has two data channels from server to client (stdout,
+stderr).  Under http:// we only have one data stream, so only the git
+data that normally goes over stdout gets sent to  the client.  The
+hook messages that are sent to stderr wind up in the HTTP server's
+error log file.
 
-On Fri, 19 Feb 2010 11:39:04 +0100 (CET), Johannes Schindelin <Johannes.Sch=
-indelin-Mmb7MZpHnFY@public.gmane.org> wrote:
-> On Fri, 19 Feb 2010, Michal Sojka wrote:
->=20
-> > as you can read bellow, I'd like to use git's test-lib.sh in a GPLv3=20
-> > project. Do you mind if I use your work in that file under GPLv3?
->=20
-> I do not mind, but I would like to ask that you contribute the=20
-> improvements back under GPLv2.
-
-Thanks everyone for your agreement.
-
-And yes, we'll contribute back any improvements under GPLv2.
-
-I think the most clear step forward would be for test-lib.sh to be
-updated in the git repository with an explicit licensing blurb
-reflecting this agreement. The most convenient would be something using
-the standard language of "either version 2 of the License, or (at your
-option) any later version".
-
-Then, any generic improvements we make within notmuch, (such as a --tap
-option or whatever), I'll be sure to pass on to the git community.
-
-Thanks again,
-
-=2DCarl
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iD8DBQFLft//6JDdNq8qSWgRAsnWAJ9kJ0HbT1dZMdA694l8gJskTAocHgCfYy0e
-tObx6v2wRUzboKeGhCXjTQA=
-=WSgi
------END PGP SIGNATURE-----
---=-=-=--
-
---===============0651457811==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+I've posted patches to multiplex these messages into the git data
+stream, but as far as I know, they aren't in a shipping version of Git
+yet.
