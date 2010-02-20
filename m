@@ -1,117 +1,99 @@
-From: Pat Thoyts <patthoyts@googlemail.com>
-Subject: Re: [PATCH] git-gui: fix usage of themed widgets variable
-Date: Sat, 20 Feb 2010 18:47:12 +0000
-Message-ID: <a5b261831002201047r153a067btb7d2a9cf96617df4@mail.gmail.com>
-References: <20100220180114.GB15561@book.hvoigt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/6] git_mkstemps_mode: don't set errno to EINVAL for any
+ error.
+Date: Sat, 20 Feb 2010 10:13:12 -0800
+Message-ID: <7v4olbpyh3.fsf@alter.siamese.dyndns.org>
+References: <vpq7hq8stjt.fsf@bauges.imag.fr>
+ <1266621718-4879-5-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org, 
-	msysGit Mailinglist <msysgit@googlegroups.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: 3My6ASwkOBy0YJccQXhcbPXXPUNVJRU.LXVVbhbPRcPXXPUNPaXdYb.LXV@groups.bounces.google.com Sat Feb 20 20:42:39 2010
-Return-path: <3My6ASwkOBy0YJccQXhcbPXXPUNVJRU.LXVVbhbPRcPXXPUNPaXdYb.LXV@groups.bounces.google.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yx0-f154.google.com ([209.85.210.154])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sat Feb 20 20:53:07 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <3My6ASwkOBy0YJccQXhcbPXXPUNVJRU.LXVVbhbPRcPXXPUNPaXdYb.LXV@groups.bounces.google.com>)
-	id 1NiuMl-0003ez-Hi
-	for gcvm-msysgit@m.gmane.org; Sat, 20 Feb 2010 19:47:47 +0100
-Received: by yxe26 with SMTP id 26sf3706093yxe.25
-        for <gcvm-msysgit@m.gmane.org>; Sat, 20 Feb 2010 10:47:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:x-beenthere:received:received:received
-         :received:received-spf:received:mime-version:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc
-         :x-original-authentication-results:x-original-sender:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:x-thread-url
-         :x-message-url:sender:list-subscribe:list-unsubscribe:content-type
-         :content-transfer-encoding;
-        bh=8OLKk58aBZZKB9F6lakohaeAtGLuoqPZn28CNi1JELE=;
-        b=TXGsY+56Y6GoAsbYPyTwGX98tABgRGLhDqKfmGeedG4OouLlLjCo2V1kMvj8X66A+1
-         F0OlycWvvalTOn20cvmsyj9mcmbqGFkrcUrbm+IGN7ECFRkhqi0MfVdVnVUtgZijZS9g
-         SanCXNeEzTfXrxYSbRpBC2MhE7M0gOuI/qc40=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:x-original-authentication-results
-         :x-original-sender:precedence:mailing-list:list-id:list-post
-         :list-help:list-archive:x-thread-url:x-message-url:sender
-         :list-subscribe:list-unsubscribe:content-type
-         :content-transfer-encoding;
-        b=l44xluCpjEOlfczWwvfEoDlCpPa8o5rBc9Z1yK88GVJlO/YvgY2w8eBpNSvsSZmqfF
-         2HMuvfut7rm8xFCD/nDiGbTVPz9Fvykh8WkDA0YA1RYzoGTqu81Tzn+m+vmvbwa6OX1a
-         KVwYVxuSFpCOW0E7sRP7SyjGTo5eXlxayFYfQ=
-Received: by 10.91.91.20 with SMTP id t20mr6648agl.22.1266691636483;
-        Sat, 20 Feb 2010 10:47:16 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.213.50.10 with SMTP id x10ls1504594ebf.3.p; Sat, 20 Feb 2010 
-	10:47:14 -0800 (PST)
-Received: by 10.213.70.206 with SMTP id e14mr55182ebj.8.1266691634222;
-        Sat, 20 Feb 2010 10:47:14 -0800 (PST)
-Received: by 10.213.70.206 with SMTP id e14mr55181ebj.8.1266691634191;
-        Sat, 20 Feb 2010 10:47:14 -0800 (PST)
-Received: from mail-ew0-f224.google.com (mail-ew0-f224.google.com [209.85.219.224])
-        by gmr-mx.google.com with ESMTP id 12si232065ewy.2.2010.02.20.10.47.13;
-        Sat, 20 Feb 2010 10:47:13 -0800 (PST)
-Received-SPF: pass (google.com: domain of patthoyts@googlemail.com designates 209.85.219.224 as permitted sender) client-ip=209.85.219.224;
-Received: by mail-ew0-f224.google.com with SMTP id 24so1156079ewy.6
-        for <msysgit@googlegroups.com>; Sat, 20 Feb 2010 10:47:13 -0800 (PST)
-Received: by 10.216.162.202 with SMTP id y52mr690255wek.76.1266691632541; Sat, 
-	20 Feb 2010 10:47:12 -0800 (PST)
-In-Reply-To: <20100220180114.GB15561@book.hvoigt.net>
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: 
-	domain of patthoyts@googlemail.com designates 209.85.219.224 as permitted 
-	sender) smtp.mail=patthoyts@googlemail.com; dkim=pass (test mode) 
-	header.i=@googlemail.com
-X-Original-Sender: patthoyts@googlemail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, 
-	<mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-X-Thread-Url: http://groups.google.com/group/msysgit/t/61aaff59563ed5ea
-X-Message-Url: http://groups.google.com/group/msysgit/msg/8ba6e101b84932aa
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
-	<mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140545>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1NitpZ-000804-L3
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 19:13:30 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756794Ab0BTSNY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Feb 2010 13:13:24 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60887 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756785Ab0BTSNX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Feb 2010 13:13:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 38B889B167;
+	Sat, 20 Feb 2010 13:13:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dwquhlxMZwZNs8P5o8gVJIjxufQ=; b=vjVMuC
+	BvHQFcqtmm+ZrP61rKTtw+/dGjDpMjfQ+E5g/a5MXA71aro5ZWHaRTJg6a1KFSET
+	WGhkkmrIuGkt5cN3OidRAeScozpiccHusPrbdIWglE47P79Q6J99PbitZcW3UMH4
+	VE8DWeD4Rz3Mgtq5Bo7ovINKsgtrYsY9xwNKk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FvoePP4sndku/cEx+wD3eD0TlL1VjXsL
+	bVr9eE/URAQG1qmG2jN4RYf/3Cy9ENaDCdpbE2kTIgIwQQpOlmbiFnHQbK5ADotv
+	qUXs6hdr/npZ/+TEhVH2dZkyA2Q2ndsTkaURRQwLLYVWc/5G/72vMJ1sGp+kobs0
+	nP4YDKlVFcw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 109A69B166;
+	Sat, 20 Feb 2010 13:13:17 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 58D6A9B165; Sat, 20 Feb
+ 2010 13:13:14 -0500 (EST)
+In-Reply-To: <1266621718-4879-5-git-send-email-Matthieu.Moy@imag.fr>
+ (Matthieu Moy's message of "Sat\, 20 Feb 2010 00\:21\:57 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9E399930-1E4B-11DF-B64E-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140546>
 
-On 20 February 2010 18:01, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> There was one forgotten global so NS was not visible to the method
-> which resulted in an error.
->
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 > ---
-> =C2=A0git-gui/lib/status_bar.tcl | =C2=A0 =C2=A01 +
-> =C2=A01 files changed, 1 insertions(+), 0 deletions(-)
+>  path.c |    4 +++-
+>  1 files changed, 3 insertions(+), 1 deletions(-)
 >
-> diff --git a/git-gui/lib/status_bar.tcl b/git-gui/lib/status_bar.tcl
-> index 5fe3aad..95cb449 100644
-> --- a/git-gui/lib/status_bar.tcl
-> +++ b/git-gui/lib/status_bar.tcl
-> @@ -39,6 +39,7 @@ method _oneline_pack {} {
-> =C2=A0}
->
-> =C2=A0constructor two_line {path} {
-> + =C2=A0 =C2=A0 =C2=A0 global NS
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0set w $path
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0set w_l $w.l
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0set w_c $w.c
-> --
-> 1.7.0.m5.rc2.13.g7abfa.dirty
+> diff --git a/path.c b/path.c
+> index 005b836..2886eb6 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -222,7 +222,9 @@ int git_mkstemps_mode(char *pattern, int suffix_len, int mode)
+>  	}
+>  	/* We return the null string if we can't find a unique file name.  */
+>  	pattern[0] = '\0';
+> -	errno = EINVAL;
+> +	/* Make sure errno signals an error on failure */
+> +	if (errno <= 0)
+> +		errno = EINVAL;
+>  	return -1;
+>  }
 
-The commit message should mention what triggered the error I think -
-but this patch is clearly correct.
-You can have a
+Please explain this change a bit better.
 
-Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+A successful call into system library does not have to clear errno (POSIX
+even says "no function in ... POSIX ... shall set errno to 0"), and you do
+not clear errno to zero anywhere in this function either, so it looks as
+if you are reading an undefined errno and basing your action on that
+result.
 
-if you like :)
+Because TMP_MAX is non-zero, you are always reading from errno left by
+open() in the loop, so the above paragraph is a misunderstanding.  But
+that needs to be in the log message, no?
 
-Pat Thoyts.
+I think you are trying to avoid stomping on the errno when we broke out of
+the loop early, due to getting an error.  But errno is always valid at
+this point in this codepath, and errno.h macros shall expand to integer
+constant expressions with type int, distinct positive values.  So I think
+you can safely remove the assignment without "if (errno <= 0)".  Returning
+EINVAL from a variant of mkstemp when the error is anything but "The last
+six characters were not XXXXXX" is wrong.
