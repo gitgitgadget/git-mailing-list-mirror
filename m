@@ -1,73 +1,88 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] rebase -i: avoid --cherry-pick when rebasing to a direct ancestor
-Date: Sat, 20 Feb 2010 01:02:15 +0100
-Message-ID: <201002200102.15777.trast@student.ethz.ch>
-References: <dfb660301002191324i7aeca7f5x990501bbca1475a9@mail.gmail.com> <d1a75633daa062b25527dfb0675673480974c940.1266620423.git.trast@student.ethz.ch>
+Subject: [PATCH] t1450: fix testcases that were wrongly expecting failure
+Date: Sat, 20 Feb 2010 01:18:44 +0100
+Message-ID: <491d6695b46414db1721235759fa1887421c9915.1266625101.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Laine Walker-Avina <lwalkera@pasco.com>
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 20 01:02:45 2010
+X-From: git-owner@vger.kernel.org Sat Feb 20 01:19:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nico0-0000TP-N3
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 01:02:45 +0100
+	id 1Nid3z-0003CX-8d
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 01:19:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753042Ab0BTACk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 19:02:40 -0500
-Received: from gwse.ethz.ch ([129.132.178.237]:59915 "EHLO gwse.ethz.ch"
+	id S1755624Ab0BTATK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 19:19:10 -0500
+Received: from gwse.ethz.ch ([129.132.178.237]:32503 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752371Ab0BTACj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 19:02:39 -0500
+	id S1754323Ab0BTATI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 19:19:08 -0500
 Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
  (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sat, 20 Feb
- 2010 01:02:36 +0100
-Received: from thomas.localnet (217.162.250.31) by mail.ethz.ch
+ 2010 01:19:04 +0100
+Received: from localhost.localdomain (217.162.250.31) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sat, 20 Feb
- 2010 01:02:16 +0100
-User-Agent: KMail/1.13.0 (Linux/2.6.31.12-0.1-desktop; KDE/4.4.0; x86_64; ; )
-In-Reply-To: <d1a75633daa062b25527dfb0675673480974c940.1266620423.git.trast@student.ethz.ch>
+ 2010 01:18:44 +0100
+X-Mailer: git-send-email 1.7.0.139.gd1a75.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140507>
 
-On Saturday 20 February 2010 00:30:52 Thomas Rast wrote:
-> Ordinary 'rebase -i' reads the commits to rebase with (roughly)
-> 
->   git rev-list --left-right --cherry-pick $upstream...
-> 
-> which gives it the feature of skipping commits that are already
-> present in $upstream.  However, in the common use-case of rewriting a
-> few commits up to an ancestor, as in 'git rebase -i HEAD~3', the
-> --cherry-pick is useless since there are no commits to compare to.
-[...]
-> The --cherry-pick mechanism itself could get a similar optimization,
-> but I don't know that code.
+Almost exactly a year ago in 02a6552 (Test fsck a bit harder), I
+introduced two testcases that were expecting failure.
 
-Or maybe it's as simple as this?
+However, the only bug was that the testcases wrote *blobs* because I
+forgot to pass -t tag to hash-object.  Fix this, and then adjust the
+rest of the test to properly check the result.
 
-diff --git i/revision.c w/revision.c
-index 438cc87..29721ec 100644
---- i/revision.c
-+++ w/revision.c
-@@ -547,6 +547,9 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
- 			right_count++;
- 	}
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+ t/t1450-fsck.sh |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index a22632f..49cae3e 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -66,12 +66,12 @@ tagger T A Gger <tagger@example.com> 1234567890 -0000
+ This is an invalid tag.
+ EOF
  
-+	if (!left_count || !right_count)
-+		return;
-+
- 	left_first = left_count < right_count;
- 	init_patch_ids(&ids);
- 	if (revs->diffopt.nr_paths) {
-
+-test_expect_failure 'tag pointing to nonexistent' '
+-	tag=$(git hash-object -w --stdin < invalid-tag) &&
++test_expect_success 'tag pointing to nonexistent' '
++	tag=$(git hash-object -t tag -w --stdin < invalid-tag) &&
+ 	echo $tag > .git/refs/tags/invalid &&
+-	git fsck --tags 2>out &&
++	test_must_fail git fsck --tags >out &&
+ 	cat out &&
+-	grep "could not load tagged object" out &&
++	grep "broken link" out &&
+ 	rm .git/refs/tags/invalid
+ '
+ 
+@@ -84,12 +84,12 @@ tagger T A Gger <tagger@example.com> 1234567890 -0000
+ This is an invalid tag.
+ EOF
+ 
+-test_expect_failure 'tag pointing to something else than its type' '
+-	tag=$(git hash-object -w --stdin < wrong-tag) &&
++test_expect_success 'tag pointing to something else than its type' '
++	tag=$(git hash-object -t tag -w --stdin < wrong-tag) &&
+ 	echo $tag > .git/refs/tags/wrong &&
+-	git fsck --tags 2>out &&
++	test_must_fail git fsck --tags 2>out &&
+ 	cat out &&
+-	grep "some sane error message" out &&
++	grep "error in tag.*broken links" out &&
+ 	rm .git/refs/tags/wrong
+ '
+ 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.7.0.139.gd1a75.dirty
