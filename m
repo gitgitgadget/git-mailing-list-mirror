@@ -1,88 +1,102 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] t1450: fix testcases that were wrongly expecting failure
-Date: Sat, 20 Feb 2010 01:18:44 +0100
-Message-ID: <491d6695b46414db1721235759fa1887421c9915.1266625101.git.trast@student.ethz.ch>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: [PATCH/RFC 7/7] t7006-pager: if stdout is not a terminal, make
+ a new one
+Date: Fri, 19 Feb 2010 18:29:21 -0600
+Message-ID: <setkR9a6yaRMOU11ekUmlY6ty8nNSPCcidBKotdDxpQsZLCxc54hKw@cipher.nrlssc.navy.mil>
+References: <20100219065010.GA22258@progeny.tock> <20100219072331.GG29916@progeny.tock> <20100219080819.GA13691@coredump.intra.peff.net> <20100219081947.GA12975@progeny.tock> <20100219083440.GC13691@coredump.intra.peff.net> <28d--OB9y5MtIy1nJel2Km6d5sqJ3yX6fVUhecDU5ehJUYJmZlE0-A@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 20 01:19:17 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org,
+	Sebastian Celis <sebastian@sebastiancelis.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Feb 20 01:29:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nid3z-0003CX-8d
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 01:19:15 +0100
+	id 1NidE9-0002Bm-I5
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 01:29:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755624Ab0BTATK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 19:19:10 -0500
-Received: from gwse.ethz.ch ([129.132.178.237]:32503 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754323Ab0BTATI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 19:19:08 -0500
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sat, 20 Feb
- 2010 01:19:04 +0100
-Received: from localhost.localdomain (217.162.250.31) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sat, 20 Feb
- 2010 01:18:44 +0100
-X-Mailer: git-send-email 1.7.0.139.gd1a75.dirty
+	id S1755563Ab0BTA3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 19:29:32 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:48186 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751854Ab0BTA3b (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 19:29:31 -0500
+Received: by mail.nrlssc.navy.mil id o1K0TLlp032467; Fri, 19 Feb 2010 18:29:21 -0600
+In-Reply-To: <28d--OB9y5MtIy1nJel2Km6d5sqJ3yX6fVUhecDU5ehJUYJmZlE0-A@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 20 Feb 2010 00:29:22.0103 (UTC) FILETIME=[BF611470:01CAB1C3]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140508>
 
-Almost exactly a year ago in 02a6552 (Test fsck a bit harder), I
-introduced two testcases that were expecting failure.
+>> On Fri, Feb 19, 2010 at 02:19:47AM -0600, Jonathan Nieder wrote:
+>>
+>>> Jeff King wrote:
+>>>
+>>>> Solaris 8 and 9 seem to be lacking it. Solaris 10 does have it. AIX 5.2
+>>>> and 6.1 both have it.
+>>>>
+>>>> So it would mean some platforms couldn't run all tests. That is probably
+>>>> good enough, given that most of our terminal-related bugs have not been
+>>>> platform-specific problems.
+>>> Hmm, how about /dev/ptmx?  (One can check by replacing posix_openpt(...)
+>>> with open("/dev/ptmx", ...) in the test-terminal.c I sent.)
 
-However, the only bug was that the testcases wrote *blobs* because I
-forgot to pass -t tag to hash-object.  Fix this, and then adjust the
-rest of the test to properly check the result.
+Didn't work on Solaris 7.  I applied your series on top of master with the
+change you described.  Here's the diff:
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- t/t1450-fsck.sh |   16 ++++++++--------
- 1 files changed, 8 insertions(+), 8 deletions(-)
+diff --git a/test-terminal.c b/test-terminal.c
+index f4d6a71..6408a7d 100644
+--- a/test-terminal.c
++++ b/test-terminal.c
+@@ -6,7 +6,7 @@ static void newtty(int *master, int *slave)
+        int fd;
+        const char *term;
+ 
+-       fd = posix_openpt(O_RDWR|O_NOCTTY);
++       fd = open("/dev/ptmx", O_RDWR|O_NOCTTY);
+        if (fd == -1 || grantpt(fd) || unlockpt(fd) || !(term = ptsname(fd)))
+                die_errno("Could not allocate a new pseudo-terminal");
+        *master = fd;
 
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index a22632f..49cae3e 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -66,12 +66,12 @@ tagger T A Gger <tagger@example.com> 1234567890 -0000
- This is an invalid tag.
- EOF
- 
--test_expect_failure 'tag pointing to nonexistent' '
--	tag=$(git hash-object -w --stdin < invalid-tag) &&
-+test_expect_success 'tag pointing to nonexistent' '
-+	tag=$(git hash-object -t tag -w --stdin < invalid-tag) &&
- 	echo $tag > .git/refs/tags/invalid &&
--	git fsck --tags 2>out &&
-+	test_must_fail git fsck --tags >out &&
- 	cat out &&
--	grep "could not load tagged object" out &&
-+	grep "broken link" out &&
- 	rm .git/refs/tags/invalid
- '
- 
-@@ -84,12 +84,12 @@ tagger T A Gger <tagger@example.com> 1234567890 -0000
- This is an invalid tag.
- EOF
- 
--test_expect_failure 'tag pointing to something else than its type' '
--	tag=$(git hash-object -w --stdin < wrong-tag) &&
-+test_expect_success 'tag pointing to something else than its type' '
-+	tag=$(git hash-object -t tag -w --stdin < wrong-tag) &&
- 	echo $tag > .git/refs/tags/wrong &&
--	git fsck --tags 2>out &&
-+	test_must_fail git fsck --tags 2>out &&
- 	cat out &&
--	grep "some sane error message" out &&
-+	grep "error in tag.*broken links" out &&
- 	rm .git/refs/tags/wrong
- '
- 
--- 
-1.7.0.139.gd1a75.dirty
+
+Here's the result of the terminal test:
+
+  # ./test-terminal sh -c "test -t 1"
+  # echo $?
+  1
+
+
+And here's the output of t7006-pager:
+*** t7006-pager.sh ***
+*   ok 1: set up terminal for tests
+* no usable terminal, so skipping some tests
+*   ok 2: setup
+* skip 3: some commands use a pager
+* skip 4: some commands do not use a pager
+*   ok 5: no pager when stdout is a pipe
+*   ok 6: no pager when stdout is a regular file
+* skip 7: git --paginate rev-list uses a pager
+*   ok 8: no pager even with --paginate when stdout is a pipe
+* skip 9: no pager with --no-pager
+*   ok 10: tests can detect color
+*   ok 11: no color when stdout is a regular file
+* skip 12: color when writing to a pager
+*   ok 13: color when writing to a file intended for a pager
+*   ok 14: determine default pager
+* skip 15: default pager is used by default
+* skip 16: PAGER overrides default pager
+* skip 17: core.pager overrides PAGER
+* skip 18: GIT_PAGER overrides core.pager
+* passed all 18 test(s)
+
+hth,
+-brandon
