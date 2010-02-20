@@ -1,87 +1,79 @@
-From: Jelmer Vernooij <jelmer@samba.org>
-Subject: Storing (hidden) per-commit metadata
-Date: Fri, 19 Feb 2010 18:11:25 +0100
-Message-ID: <1266599485.29753.54.camel@ganieda>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] rebase -i: avoid --cherry-pick when rebasing to a direct ancestor
+Date: Sat, 20 Feb 2010 14:38:29 +0100
+Message-ID: <201002201438.29635.trast@student.ethz.ch>
+References: <dfb660301002191324i7aeca7f5x990501bbca1475a9@mail.gmail.com> <201002200102.15777.trast@student.ethz.ch> <20100220072728.GA12168@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-4Eh5q+m6DS6hMYDxeFs7"
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 20 13:58:01 2010
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Laine Walker-Avina <lwalkera@pasco.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Feb 20 14:38:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiouD-0003BD-3z
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 13:57:57 +0100
+	id 1NipXg-0006S7-3Z
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 14:38:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755028Ab0BTM5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Feb 2010 07:57:43 -0500
-Received: from gwenhwyvar.vernstok.nl ([92.243.4.181]:40894 "EHLO
-	gwenhwyvar.vernstok.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753474Ab0BTM5m (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Feb 2010 07:57:42 -0500
-Received: from ganieda (localhost [127.0.0.1])
-	by gwenhwyvar.vernstok.nl (Postfix) with ESMTP id 4B78A2663F;
-	Sat, 20 Feb 2010 12:58:57 +0000 (UTC)
-Received: by ganieda (Postfix, from userid 1000)
-	id 77C8B5ED1D; Fri, 19 Feb 2010 18:11:26 +0100 (CET)
-X-Mailer: Evolution 2.28.2 
+	id S1753690Ab0BTNic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Feb 2010 08:38:32 -0500
+Received: from gwse.ethz.ch ([129.132.178.238]:48702 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752544Ab0BTNic (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Feb 2010 08:38:32 -0500
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sat, 20 Feb
+ 2010 14:38:30 +0100
+Received: from thomas.localnet (217.162.250.31) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sat, 20 Feb
+ 2010 14:38:29 +0100
+User-Agent: KMail/1.13.0 (Linux/2.6.31.12-0.1-desktop; KDE/4.4.0; x86_64; ; )
+In-Reply-To: <20100220072728.GA12168@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140528>
 
+On Saturday 20 February 2010 08:27:28 Jeff King wrote:
+> But it is probably the source of the slowness to xdiff that
+> gigantic files.
 
---=-4Eh5q+m6DS6hMYDxeFs7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+BTW, here's a weird data point:
 
-To allow round-tripping pushes from Bazaar into Git, I'm looking for a
-good place to store Bazaar semantics that can not be represented in Git
-at the moment. This data should ideally be hidden from the user as much
-as possible; it would e.g. contain mappings from git hashes to Bazaar
-ids.=20
+$ ls -l a b
+-rw-r--r-- 1 thomas users 3300765 2010-02-20 12:48 a
+-rw-r--r-- 1 thomas users 3253762 2010-02-20 12:48 b
+$ time diff -u a b | wc -l
+54530
 
-One option would be to store it (as hg-git does) at the bottom of each
-git commit message. However, given the amount of data and the its kind,
-it would be annoying to have it displayed by e.g. "git show" or "git
-log".
+real    0m0.644s
+user    0m0.562s
+sys     0m0.044s
+$ time git diff --no-index a b >/dev/null
 
-Some people have suggested I use the new git notes to store this
-metadata, but I haven't quite figured out how to add notes that aren't
-displayed by git log/show and are still propagated along with the
-revision. Is that at all possible using notes, and are they the right
-thing to use here?
+real    0m22.848s
+user    0m21.956s
+sys     0m0.137s
+$ time git diff --no-index --patience a b >/dev/null
 
-There also doesn't appear to be any documentation on notes in
-Documentation/technical at the moment. I'm happy to contribute some if
-somebody can provide pointers.
+real    0m19.508s
+user    0m18.673s
+sys     0m0.273s
 
-Cheers,
+'a' and 'b' are two pnm's as per the OPs specification, I made 'a' a
+gradient and 'b' the same with two crosses drawn over it.  You can
+find them at
 
-Jelmer
+  http://thomasrast.ch/download/slow-diff-pnms.zip
 
---=-4Eh5q+m6DS6hMYDxeFs7
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+if you want to reproduce.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+So what on earth does 'diff' do that makes it 35 times as fast?
 
-iQIcBAABAgAGBQJLfsYzAAoJEACAbyvXKaRXAR8P/juj+V4JZI0TlMUvSwfN5xgc
-FsDTytvuHq76G3Pl6njS1/nb5XZoVpDWMaJYw5FgBM3T4njN7Jdpwmo7d9bmYGB3
-kGms9lmGfq9DuxI3lgQQoAPsYrzHcT5mdnRiIFQLAI5amN/83vIpqF9cIMHHEHRT
-uGtLe0B/x9A84SimAXwPjo1zr0+5E4yOLOneAaiDaJo5NvE/Ys4VJLNg+RoNm17Z
-/TtkrvA8sd2Et6xC3v8gXQ71+1HsouLajSE+X2qNLjrK17aTXY6bwnpIpXXnmsnz
-bC8HC2mHbKZJlsYGDWjrEqCIaxuzXw4vXzN5dF0tGbyD/BXQQNKoyuFvAUdKz1R1
-rBD/Byw6UfGAHP+Gyl8dLvOXFkMkFL4eqbHtxfRH3l1OQVvRDkULC8luBeMq/Ip4
-M6pRxkQzJfisPZS+OWdT1tVawi/v0HpawSCtqicKdG7Gw4L94KE60G6mh3M1WKGS
-TEdiCnH1RB7Slf/mRZZZIh5OgbVolLXi7BiGkxuvS+3NSioLi67l3bmKKvQk9JNB
-KgbjbpIdBOykIoOPxoD+skI7qO2bnMnnbSaMRYCWb5XkLeeCCWi8IygJaMJpK6D3
-knrDeTWXerEidb5ToelLbiunlemhw07o/kRutPcVC8M2x7syBn5iW7JdL11Ak/pP
-ESYKjDLJ8EBTvLLK2xYE
-=KwYL
------END PGP SIGNATURE-----
-
---=-4Eh5q+m6DS6hMYDxeFs7--
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
