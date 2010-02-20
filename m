@@ -1,56 +1,72 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [BUG] ? - git log :/text results are strange
-Date: Sat, 20 Feb 2010 00:45:59 +0100
-Message-ID: <201002200045.59908.trast@student.ethz.ch>
-References: <76c5b8581002191350h61d6d8c2jd0245c0963fcc85f@mail.gmail.com> <201002192334.52495.trast@student.ethz.ch> <76c5b8581002191541x95c3378je6f0528c11aaba4f@mail.gmail.com>
+Subject: Re: [PATCH] rebase -i: avoid --cherry-pick when rebasing to a direct ancestor
+Date: Sat, 20 Feb 2010 01:02:15 +0100
+Message-ID: <201002200102.15777.trast@student.ethz.ch>
+References: <dfb660301002191324i7aeca7f5x990501bbca1475a9@mail.gmail.com> <d1a75633daa062b25527dfb0675673480974c940.1266620423.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset="iso-8859-15"
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 20 00:46:10 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Laine Walker-Avina <lwalkera@pasco.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 20 01:02:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NicXx-0005eY-MF
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 00:46:10 +0100
+	id 1Nico0-0000TP-N3
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 01:02:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752112Ab0BSXqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2010 18:46:04 -0500
-Received: from gwse.ethz.ch ([129.132.178.238]:29552 "EHLO gwse.ethz.ch"
+	id S1753042Ab0BTACk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2010 19:02:40 -0500
+Received: from gwse.ethz.ch ([129.132.178.237]:59915 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751828Ab0BSXqC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2010 18:46:02 -0500
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sat, 20 Feb
- 2010 00:46:02 +0100
+	id S1752371Ab0BTACj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2010 19:02:39 -0500
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sat, 20 Feb
+ 2010 01:02:36 +0100
 Received: from thomas.localnet (217.162.250.31) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sat, 20 Feb
- 2010 00:46:00 +0100
+ 2010 01:02:16 +0100
 User-Agent: KMail/1.13.0 (Linux/2.6.31.12-0.1-desktop; KDE/4.4.0; x86_64; ; )
-In-Reply-To: <76c5b8581002191541x95c3378je6f0528c11aaba4f@mail.gmail.com>
+In-Reply-To: <d1a75633daa062b25527dfb0675673480974c940.1266620423.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140506>
 
-On Saturday 20 February 2010 00:41:32 Eugene Sajine wrote:
-> oh. I see, thanks!
+On Saturday 20 February 2010 00:30:52 Thomas Rast wrote:
+> Ordinary 'rebase -i' reads the commits to rebase with (roughly)
 > 
-> I had to do
+>   git rev-list --left-right --cherry-pick $upstream...
 > 
-> $git log --pretty=oneline | grep fix
-> 
-> to get what i wanted...
+> which gives it the feature of skipping commits that are already
+> present in $upstream.  However, in the common use-case of rewriting a
+> few commits up to an ancestor, as in 'git rebase -i HEAD~3', the
+> --cherry-pick is useless since there are no commits to compare to.
+[...]
+> The --cherry-pick mechanism itself could get a similar optimization,
+> but I don't know that code.
 
-Well, you can also do
+Or maybe it's as simple as this?
 
-  git log --grep=fix --pretty=oneline
-
-Sorry for not mentioning that in my first reply...
+diff --git i/revision.c w/revision.c
+index 438cc87..29721ec 100644
+--- i/revision.c
++++ w/revision.c
+@@ -547,6 +547,9 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
+ 			right_count++;
+ 	}
+ 
++	if (!left_count || !right_count)
++		return;
++
+ 	left_first = left_count < right_count;
+ 	init_patch_ids(&ids);
+ 	if (revs->diffopt.nr_paths) {
 
 -- 
 Thomas Rast
