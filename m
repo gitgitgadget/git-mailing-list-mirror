@@ -1,67 +1,108 @@
-From: Andrew Benton <b3nton@gmail.com>
-Subject: Configuring git to for forget removed files
-Date: Sat, 20 Feb 2010 10:37:39 +0000
-Message-ID: <4B7FBB73.70004@gmail.com>
+From: Sergio Callegari <sergio.callegari@gmail.com>
+Subject: Re: Possible bug with git status in 1.7.0
+Date: Sat, 20 Feb 2010 12:05:02 +0100
+Message-ID: <4B7FC1DE.2020802@gmail.com>
+References: <loom.20100217T184109-183@post.gmane.org> <7vvddvoegv.fsf@alter.siamese.dyndns.org> <4B7C490B.8030902@gmail.com> <4B7C5711.8060708@web.de> <4B7EBF7B.3090703@gmail.com> <4B7EFAD8.9040309@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 20 11:37:51 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sat Feb 20 12:05:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nimib-0007Ey-5Y
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 11:37:49 +0100
+	id 1Nin9B-0008EA-GX
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 12:05:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754080Ab0BTKhn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Feb 2010 05:37:43 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:51392 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753474Ab0BTKhm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Feb 2010 05:37:42 -0500
-Received: by ewy28 with SMTP id 28so1056005ewy.28
-        for <git@vger.kernel.org>; Sat, 20 Feb 2010 02:37:41 -0800 (PST)
+	id S1754200Ab0BTLFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Feb 2010 06:05:11 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:52710 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753198Ab0BTLFJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Feb 2010 06:05:09 -0500
+Received: by vws11 with SMTP id 11so347378vws.19
+        for <git@vger.kernel.org>; Sat, 20 Feb 2010 03:05:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=hAPIdUZvuw4vcfc1fA5yZtzhk2uZV91cAyuXN6+ddRA=;
-        b=oCGRjow4s3ZqZLMTOJm2UTpC0cvjWOW2grE4UGanKQoUqtlrdOdxeYZYgn0T56lSla
-         DjZfFBcD9QJ+9BVJEzmsdZncsBwQwT6OXbdCFEjjPGg1xGpU0NCL4uGShHByIQMVbWr6
-         F3k2UyceT6xe18Go7gi31iQ8N3luriLtXOo0M=
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=4XhSi5aVV4jUABYelJlw4cRbJsY2nMe3zry9dYYQsxI=;
+        b=fkeY8FYOviIkV7CsMPkTdP1gvukWPGb3H6Eu91kYAa7AGqoVA9sBLqq4zwrL8mKJqJ
+         w79PsMF+3WdNTqWKjKgAzsR9gy07AzeyEO4ga+cxHyJulLGQxXSMPTCgD7AB6l0AB+ZH
+         GFfP+0FCnl9r87h6RDWXfg8HSWmSeALVk6Qc0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=V09RiP+4/LtG+kiz+EEde2+9cvwjGUVx8n2NgDNq0UtLNAY/bN3XcfMlRil/bTDuOh
-         FgsV4Ngx5rCu8fRHGXQovanQmBmAbiTckEOzWJhk7lpLh5SwpkIW3NJXeeuIBYXGBIa+
-         /pisi5RFsGRYpFVCHqKOcfZITpnLDEpADeAHA=
-Received: by 10.213.99.142 with SMTP id u14mr1899109ebn.29.1266662261140;
-        Sat, 20 Feb 2010 02:37:41 -0800 (PST)
-Received: from ?192.168.1.5? ([86.112.48.122])
-        by mx.google.com with ESMTPS id 13sm692966ewy.13.2010.02.20.02.37.40
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=D/tv5/a1LHrD0iCzAGWHETvgRc5zUwWjyifo8pFN9xpL2bqwBUt3TPZMsxgDh2aJ5v
+         EZdA5LG6F6kuoH4d5U11NcsWv3WpeBOLjjsJ+eKd7CGui7C8TaJG9Ew9krVny0EyxXjh
+         DnZmx6TqapuQFoMJLHoeFRC/vuOn5422Mi9Oo=
+Received: by 10.220.88.170 with SMTP id a42mr5208143vcm.144.1266663906591;
+        Sat, 20 Feb 2010 03:05:06 -0800 (PST)
+Received: from ?192.168.1.101? (adsl-ull-240-174.51-151.net24.it [151.51.174.240])
+        by mx.google.com with ESMTPS id 35sm10341591vws.0.2010.02.20.03.05.03
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 20 Feb 2010 02:37:40 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.3a2pre) Gecko/20100212 Shredder/3.2a1pre
+        Sat, 20 Feb 2010 03:05:04 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+In-Reply-To: <4B7EFAD8.9040309@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140525>
 
-Hello world
-I have a project that I store in a git repository. It's a bunch of source tarballs and
-some bash scripts to compile it all. Git makes it easy to distribute any changes I make
-across the computers I run. The problem I have is that over time the repository gets ever
-larger. When I update to a newer version of something I git rm the old tarball but git
-still keeps a copy and the folder grows ever larger. At the moment the only solution I
-have is to periodically rm -rf .git and start again. This works but is less than ideal
-because I lose all the history for my build scripts.
-What I would like is to be able to tell git to not keep a copy of anything that has been
-git rm. The build scripts never get removed, only altered so their history would be
-preserved. Is it possible to make git delete its backup copies of removed files?
+Jens Lehmann wrote:
+> Yup, one line per submodule should be enough. But maybe it's nicer to
+> have the details /after/ the submodule name:
+>
+> #	modified:   mod1 (Submodule has new commit(s), modified content, untracked content)
+>
+> Then it fits more nicely with the output for files, no?
+>
+> We could drop the "Submodule has " if people see it as a waste of screen
+> estate. Also i have no strong feelings about "content", i just happen to
+> think it is more appropriate as submodules can contain not only files but
+> other submodules too. Opinions?
+>
+> Will send a patch for discussion as soon as i have something to show ...
+>   
+How about
 
-Andy
+#	modified:   mod1 (submodule: new commit(s), modified content, untracked content)
+
+trying to assure that what comes after the ":" is a list of comma 
+separated properties.
+
+This can make the thing easier to parse.  I know that there is a "git 
+status ---porcelain" but from my understanding it will not be possible 
+to get this kind of information from that command since its output 
+format is frozen and not extensible, so many could resort to try to 
+parse the "normal" git status output to get all the info about 
+submodules at once.
+
+Even better would be to have a "--interface_level 2" to go with 
+---porcelain, to be able to pass this info even there.
+
+BTW... about the --porcelain option, I wonder if considering an alias to 
+--parseable could be on the list.  The plumbing/porcelain metaphor is 
+really nice, but a --porcelain option can probably be a bit confusing 
+for the beginner getting a
+
+usage: git status [options] [--] <filepattern>...
+
+    -v, --verbose         be verbose
+    -s, --short           show status concisely
+    --porcelain           show porcelain output format
+    -z, --null            terminate entries with NUL
+    -u, --untracked-files[=<mode>]
+                          show untracked files, optional modes: all, 
+normal, no. (Default: all)
+
+considering that status is probably the first command the beginner may 
+come into.
+
+Sergio
