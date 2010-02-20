@@ -1,74 +1,57 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Configuring git to for forget removed files
-Date: Sat, 20 Feb 2010 13:50:25 -0500
-Message-ID: <32541b131002201050l35c095a0i1b525e8be7812e59@mail.gmail.com>
-References: <4B7FBB73.70004@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-p4: fix bug in symlink handling
+Date: Sat, 20 Feb 2010 11:22:15 -0800
+Message-ID: <7vsk8vk908.fsf@alter.siamese.dyndns.org>
+References: <6682cfcf1002160044i7aacd1b0t7bb351380b1bd27c@mail.gmail.com>
+ <20100220140500.GA23423@arf.padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Andrew Benton <b3nton@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 20 20:18:56 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Evan Powers <evan.powers@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, Simon Hausmann <simon@lst.de>,
+	Luke Diamand <luke@diamand.org>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Sat Feb 20 20:34:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NiuPj-0003xX-Vw
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 19:50:52 +0100
+	id 1NiuuT-0007w3-02
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 20:22:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753688Ab0BTSur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Feb 2010 13:50:47 -0500
-Received: from mail-yx0-f200.google.com ([209.85.210.200]:40722 "EHLO
-	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753268Ab0BTSuq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Feb 2010 13:50:46 -0500
-Received: by yxe38 with SMTP id 38so1195785yxe.4
-        for <git@vger.kernel.org>; Sat, 20 Feb 2010 10:50:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=DGwl1GopRfto6kiQrW59Uv81+CfiIi/bPAkTtfZwdC0=;
-        b=xrDmGV3Tg4nqwwNK8BwuxUrzc8eEyOatI1SCgX7L5sai3jTHumUTkBICoBy47sYazf
-         k2juPvuLDhi6KW4MYt1qD/ig2nauWTibQiiLxHh15j6AIPuQZHLEQ2byDJ9owS/xPJjM
-         D+5g38uwrmyOlpqQEM/5QuDagdJMlHyFkHU8c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=CWw839TfUibMFD2ogyBufYNYMq/ZVUANUERZ2ZYZSkSt3HZLPDJBixG3+aHj3bLy0u
-         ahgl0+SAjXDlpBERRfTyLeGLTnOcMHchnnz2rELv+QfoOtqxrUQvS8m9XtZ7iuT2QKr7
-         8+aA4ISx4jTerj2LObqHVPEOEysNaTY0gMluE=
-Received: by 10.151.88.17 with SMTP id q17mr4263911ybl.193.1266691845137; Sat, 
-	20 Feb 2010 10:50:45 -0800 (PST)
-In-Reply-To: <4B7FBB73.70004@gmail.com>
+	id S1755331Ab0BTTWa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Feb 2010 14:22:30 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54111 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752297Ab0BTTWa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Feb 2010 14:22:30 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AB4649B9DC;
+	Sat, 20 Feb 2010 14:22:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=UZjQ7//1/mjBL+E7D9ZSDGVsXOE=; b=srtjCuQ18inugxrwQsy0Y71
+	CKsUUItFb4G6KCDF5FSlxHNWGS67TwjzW6ojovbdguxgtN2yh2wQFH25lY6pw2KK
+	cVH7gQ88UbbNYuqtOBbI3hAZ7f9XqFddO4oyf6hK0vK/ItxiXfS/pBPf71n+1ZaG
+	8gOFTFKUPgjCVDUG9mgY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=D2ViYCRxvumvSesMxsHTZ/VTDe/vo1QnSfAKLkQWc2Z7OtqDf
+	eiDDZMEN/OetPvn0u/+TKxUETuCUHs1IQVPxdQ1rshmvpVyl+tAeN1+7a9e8nSQL
+	MD+rSMcWTk1MVC/1faD/ub1Q+So+tbNqDda310Z4M2s3MWxdL6fdWoVI7s=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5305F9B9DA;
+	Sat, 20 Feb 2010 14:22:24 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 127259B9CF; Sat, 20 Feb
+ 2010 14:22:16 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4630B66A-1E55-11DF-A1B0-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140544>
 
-On Sat, Feb 20, 2010 at 5:37 AM, Andrew Benton <b3nton@gmail.com> wrote:
-> I have a project that I store in a git repository. It's a bunch of source
-> tarballs and
-> some bash scripts to compile it all. Git makes it easy to distribute any
-> changes I make
-> across the computers I run. The problem I have is that over time the
-> repository gets ever
-> larger. When I update to a newer version of something I git rm the old
-> tarball but git
-> still keeps a copy and the folder grows ever larger.
-
-You can use 'git filter-branch', as Tim already mentioned, or use a
-git 'shallow clone' to only get the most recent versions of things.
-
-Alternatively, have you thought about storing *uncompressed* tarballs
-in git instead of compressed ones?  Then when you update to a newer
-version, git can compute an xdelta from one to the other and store
-only the changes.  That means you can have full history *and* not
-waste too much disk space.  Git compresses the objects anyway when it
-stores them in the repository.
-
-Have fun,
-
-Avery
+Thanks; will apply to 'maint'.
