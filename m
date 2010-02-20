@@ -1,183 +1,150 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [RFC PATCH v3 05/12] rebase -i: invoke post-rewrite hook
-Date: Sat, 20 Feb 2010 23:16:26 +0100
-Message-ID: <edc03a936871649ad935d85c25b8a10aa9d516ab.1266703765.git.trast@student.ethz.ch>
+Subject: [RFC PATCH v3 10/12] filter-branch: invoke post-rewrite hook
+Date: Sat, 20 Feb 2010 23:16:31 +0100
+Message-ID: <dc9d990e10afbe262bbb5e12a8c33483bdd15198.1266703765.git.trast@student.ethz.ch>
 References: <cover.1266703765.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
 	Johan Herland <johan@herland.net>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 20 23:40:34 2010
+X-From: git-owner@vger.kernel.org Sat Feb 20 23:40:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nixe8-0006OX-8P
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 23:17:56 +0100
+	id 1Nixe6-0006OX-HS
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 23:17:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756929Ab0BTWRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Feb 2010 17:17:38 -0500
+	id S1756910Ab0BTWRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Feb 2010 17:17:21 -0500
 Received: from gwse.ethz.ch ([129.132.178.238]:6942 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756864Ab0BTWRF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Feb 2010 17:17:05 -0500
+	id S1756689Ab0BTWRO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Feb 2010 17:17:14 -0500
 Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
  (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sat, 20 Feb
  2010 23:16:57 +0100
 Received: from localhost.localdomain (217.162.250.31) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sat, 20 Feb
- 2010 23:16:37 +0100
+ 2010 23:16:39 +0100
 X-Mailer: git-send-email 1.7.0.137.gfe3f1
 In-Reply-To: <cover.1266703765.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140560>
 
-Aside from the same issue that rebase also has (remembering the
-original commit across a conflict resolution), rebase -i brings an
-extra twist: We need to defer writing the rewritten list in the case
-of {squash,fixup} because their rewritten result should be the last
-commit in the squashed group.
+With a twist: since this is supposed to be the be-all end-all of
+rewriting, we give the user the chance to override the hook.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- git-rebase--interactive.sh   |   39 +++++++++++++++++++++
- t/t5407-post-rewrite-hook.sh |   78 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 117 insertions(+), 0 deletions(-)
+ Documentation/git-filter-branch.txt |    7 ++++++-
+ git-filter-branch.sh                |   21 +++++++++++++++++++++
+ t/t5407-post-rewrite-hook.sh        |   28 ++++++++++++++++++++++++++++
+ 3 files changed, 55 insertions(+), 1 deletions(-)
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 5735859..fc4f7e9 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -96,6 +96,13 @@ AUTHOR_SCRIPT="$DOTEST"/author-script
- # command is processed, this file is deleted.
- AMEND="$DOTEST"/amend
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index 020028c..28a705f 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 	[--index-filter <command>] [--parent-filter <command>]
+ 	[--msg-filter <command>] [--commit-filter <command>]
+ 	[--tag-name-filter <command>] [--subdirectory-filter <directory>]
+-	[--prune-empty]
++	[--prune-empty] [--post-rewrite <command>]
+ 	[--original <namespace>] [-d <directory>] [-f | --force]
+ 	[--] [<rev-list options>...]
  
-+# For the post-rewrite hook, we make a list of rewritten commits and
-+# their new sha1s.  The rewritten-pending list keeps the sha1s of
-+# commits that have been processed, but not committed yet,
-+# e.g. because they are waiting for a 'squash' command.
-+REWRITTEN_LIST="$DOTEST"/rewritten-list
-+REWRITTEN_PENDING="$DOTEST"/rewritten-pending
-+
- PRESERVE_MERGES=
- STRATEGY=
- ONTO=
-@@ -198,6 +205,7 @@ make_patch () {
- }
+@@ -182,6 +182,11 @@ the nearest ancestor that was not excluded.
+ 	of the `git commit-tree "$@"` idiom in your commit filter to make that
+ 	happen.
  
- die_with_patch () {
-+	echo "$1" > "$DOTEST"/conflicted-sha
- 	make_patch "$1"
- 	git rerere
- 	die "$2"
-@@ -348,6 +356,7 @@ pick_one_preserving_merges () {
- 				printf "%s\n" "$msg" > "$GIT_DIR"/MERGE_MSG
- 				die_with_patch $sha1 "Error redoing merge $sha1"
- 			fi
-+			echo "$sha1 $(git rev-parse HEAD^0)" >> "$REWRITTEN_LIST"
- 			;;
- 		*)
- 			output git cherry-pick "$@" ||
-@@ -425,6 +434,26 @@ die_failed_squash() {
- 	die_with_patch $1 ""
- }
++--post-rewrite <command>::
++	Overrides the post-rewrite hook (if you have one).  To bypass
++	the hook for this invocation, pass `:`.  See
++	linkgit:githooks[1].
++
+ --original <namespace>::
+ 	Use this option to set the namespace where the original commits
+ 	will be stored. The default value is 'refs/original'.
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 88fb0f0..301c497 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -101,6 +101,7 @@ USAGE="[--env-filter <command>] [--tree-filter <command>]
+             [--index-filter <command>] [--parent-filter <command>]
+             [--msg-filter <command>] [--commit-filter <command>]
+             [--tag-name-filter <command>] [--subdirectory-filter <directory>]
++	    [--post-rewrite <command>]
+             [--original <namespace>] [-d <directory>] [-f | --force]
+             [<rev-list options>...]"
  
-+flush_rewritten_pending() {
-+	test -s "$REWRITTEN_PENDING" || return
-+	newsha1="$(git rev-parse HEAD^0)"
-+	sed "s/$/ $newsha1/" < "$REWRITTEN_PENDING" >> "$REWRITTEN_LIST"
-+	rm -f "$REWRITTEN_PENDING"
-+}
+@@ -126,6 +127,13 @@ orig_namespace=refs/original/
+ force=
+ prune_empty=
+ remap_to_ancestor=
 +
-+record_in_rewritten() {
-+	oldsha1="$(git rev-parse $1)"
-+	echo "$oldsha1" >> "$REWRITTEN_PENDING"
++if test -x "$GIT_DIR"/hooks/post-rewrite; then
++	post_rewrite=$(git rev-parse --sq-quote "$GIT_DIR"/hooks/post-rewrite)
++else
++	post_rewrite=:
++fi
 +
-+	case "$(peek_next_command)" in
-+	    squash|s|fixup|f)
+ while :
+ do
+ 	case "$1" in
+@@ -190,6 +198,10 @@ do
+ 		filter_subdir="$OPTARG"
+ 		remap_to_ancestor=t
+ 		;;
++	--post-rewrite)
++		post_rewrite="$OPTARG"
++		post_rewrite_given=t
 +		;;
-+	    *)
-+		flush_rewritten_pending
-+		;;
-+	esac
-+}
-+
- do_next () {
- 	rm -f "$MSG" "$AUTHOR_SCRIPT" "$AMEND" || exit
- 	read command sha1 rest < "$TODO"
-@@ -438,6 +467,7 @@ do_next () {
- 		mark_action_done
- 		pick_one $sha1 ||
- 			die_with_patch $sha1 "Could not apply $sha1... $rest"
-+		record_in_rewritten $sha1
+ 	--original)
+ 		orig_namespace=$(expr "$OPTARG/" : '\(.*[^/]\)/*$')/
  		;;
- 	reword|r)
- 		comment_for_reflog reword
-@@ -446,6 +476,7 @@ do_next () {
- 		pick_one $sha1 ||
- 			die_with_patch $sha1 "Could not apply $sha1... $rest"
- 		git commit --amend --no-post-rewrite
-+		record_in_rewritten $sha1
- 		;;
- 	edit|e)
- 		comment_for_reflog edit
-@@ -454,6 +485,7 @@ do_next () {
- 		pick_one $sha1 ||
- 			die_with_patch $sha1 "Could not apply $sha1... $rest"
- 		make_patch $sha1
-+		record_in_rewritten "$sha1"
- 		git rev-parse --verify HEAD > "$AMEND"
- 		warn "Stopped at $sha1... $rest"
- 		warn "You can amend the commit now, with"
-@@ -509,6 +541,7 @@ do_next () {
- 			rm -f "$SQUASH_MSG" "$FIXUP_MSG"
- 			;;
- 		esac
-+		record_in_rewritten $sha1
- 		;;
- 	*)
- 		warn "Unknown command: $command $sha1 $rest"
-@@ -537,6 +570,11 @@ do_next () {
- 		test ! -f "$DOTEST"/verbose ||
- 			git diff-tree --stat $(cat "$DOTEST"/head)..HEAD
- 	} &&
-+	if test -x "$GIT_DIR"/hooks/post-rewrite &&
-+		test -s "$REWRITTEN_LIST"; then
-+		"$GIT_DIR"/hooks/post-rewrite rebase < "$REWRITTEN_LIST"
-+		true # we don't care if this hook failed
-+	fi &&
- 	rm -rf "$DOTEST" &&
- 	git gc --auto &&
- 	warn "Successfully rebased and updated $HEADNAME."
-@@ -685,6 +723,7 @@ first and then run 'git rebase --continue' again."
- 				test -n "$amend" && git reset --soft $amend
- 				die "Could not commit staged changes."
- 			}
-+			record_in_rewritten "$(cat "$DOTEST"/conflicted-sha)"
- 		fi
+@@ -358,6 +370,10 @@ while read commit parents; do
+ 	@SHELL_PATH@ -c "$filter_commit" "git commit-tree" \
+ 		$(git write-tree) $parentstr < ../message > ../map/$commit ||
+ 			die "could not write rewritten commit"
++	new_commit=$(map $commit)
++	if test $commit != $new_commit; then
++		echo $commit $new_commit >> "$workdir"/../rewritten
++	fi
+ done <../revs
  
- 		require_clean_work_tree
+ # If we are filtering for paths, as in the case of a subdirectory
+@@ -484,6 +500,11 @@ if [ "$filter_tag_name" ]; then
+ fi
+ 
+ cd ../..
++
++if test -s "$workdir"/../rewritten; then
++	eval "$post_rewrite" 'filter-branch < "$workdir"/../rewritten'
++fi
++
+ rm -rf "$tempdir"
+ 
+ trap - 0
 diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index 1ecaa4b..488d4a0 100755
+index 488d4a0..fa81fd4 100755
 --- a/t/t5407-post-rewrite-hook.sh
 +++ b/t/t5407-post-rewrite-hook.sh
-@@ -79,4 +79,82 @@ EOF
+@@ -157,4 +157,32 @@ EOF
  	verify_hook_input
  '
  
-+test_expect_success 'git rebase -m' '
++test_expect_success 'git filter-branch' '
 +	git reset --hard D &&
 +	clear_hook_input &&
-+	test_must_fail git rebase -m --onto A B &&
-+	echo C > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
++	git filter-branch -f --tree-filter "touch newfile" B..HEAD &&
++	echo filter-branch >expected.args &&
 +	cat >expected.data <<EOF &&
 +$(git rev-parse C) $(git rev-parse HEAD^)
 +$(git rev-parse D) $(git rev-parse HEAD)
@@ -185,67 +152,20 @@ index 1ecaa4b..488d4a0 100755
 +	verify_hook_input
 +'
 +
-+test_expect_success 'git rebase -m --skip' '
++test_expect_success 'git filter-branch (no-op)' '
 +	git reset --hard D &&
 +	clear_hook_input &&
-+	test_must_fail git rebase --onto A B &&
-+	test_must_fail git rebase --skip &&
-+	echo D > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
++	git filter-branch -f B..HEAD &&
++	test ! -f post-rewrite.args &&
++	test ! -f post-rewrite.data
 +'
 +
-+. "$TEST_DIRECTORY"/lib-rebase.sh
-+
-+set_fake_editor
-+
-+test_expect_success 'git rebase -i (unchanged)' '
++test_expect_success 'git filter-branch --post-rewrite :' '
 +	git reset --hard D &&
 +	clear_hook_input &&
-+	FAKE_LINES="1 2" test_must_fail git rebase -i --onto A B &&
-+	echo C > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse C) $(git rev-parse HEAD^)
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
-+'
-+
-+test_expect_success 'git rebase -i (skip)' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	FAKE_LINES="2" test_must_fail git rebase -i --onto A B &&
-+	echo D > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
-+'
-+
-+test_expect_success 'git rebase -i (squash)' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	FAKE_LINES="1 squash 2" test_must_fail git rebase -i --onto A B &&
-+	echo C > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse C) $(git rev-parse HEAD)
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
++	git filter-branch -f --post-rewrite : --tree-filter "touch newfile" B..HEAD &&
++	test ! -f post-rewrite.args &&
++	test ! -f post-rewrite.data
 +'
 +
  test_done
