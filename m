@@ -1,164 +1,103 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [RFC PATCH v3 04/12] rebase: invoke post-rewrite hook
-Date: Sat, 20 Feb 2010 23:16:25 +0100
-Message-ID: <fbeb0b749b3335953ad6e73558f0b6c2d69235d5.1266703765.git.trast@student.ethz.ch>
+Subject: [RFC PATCH v3 02/12] Documentation: document post-rewrite hook
+Date: Sat, 20 Feb 2010 23:16:23 +0100
+Message-ID: <a58dc7185725f009447910137827a1a2949de510.1266703765.git.trast@student.ethz.ch>
 References: <cover.1266703765.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
 	Johan Herland <johan@herland.net>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 20 23:42:54 2010
+X-From: git-owner@vger.kernel.org Sat Feb 20 23:42:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nixda-0006LF-E6
+	id 1NixdZ-0006LF-Ra
 	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 23:17:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756886Ab0BTWRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Feb 2010 17:17:09 -0500
+	id S1756870Ab0BTWRG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Feb 2010 17:17:06 -0500
 Received: from gwse.ethz.ch ([129.132.178.238]:6942 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756805Ab0BTWRE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Feb 2010 17:17:04 -0500
+	id S1756689Ab0BTWQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Feb 2010 17:16:59 -0500
 Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
  (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sat, 20 Feb
  2010 23:16:56 +0100
 Received: from localhost.localdomain (217.162.250.31) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sat, 20 Feb
- 2010 23:16:37 +0100
+ 2010 23:16:36 +0100
 X-Mailer: git-send-email 1.7.0.137.gfe3f1
 In-Reply-To: <cover.1266703765.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140565>
 
-We have to deal with two separate code paths: a normal rebase, which
-actually goes through git-am; and rebase {-m|-s}.
+This defines the behaviour of the post-rewrite hook support, which
+will be implemented in the following patches.
 
-The only small issue with both is that they need to remember the
-original sha1 across a possible conflict resolution.  rebase -m
-already puts this information in $dotest/current, and we just
-introduce a similar file for git-am.
-
-Note that in git-am, the hook really only runs when coming from
-git-rebase: the code path that sets the $dotest/original-commit file
-is guarded by a test for $dotest/rebasing.
+We deliberately do not document how often the hook will be invoked per
+rewriting command, but the interface is designed to keep that at
+"once".  This would currently not matter too much, since both rebase
+and filter-branch are shellscripts and spawn many processes anyway.
+However, when a fast sequencer in C is implemented, it will be
+beneficial to only have to run the hook once.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- git-am.sh                    |   10 ++++++++++
- git-rebase.sh                |    5 +++++
- t/t5407-post-rewrite-hook.sh |   30 ++++++++++++++++++++++++++++++
- 3 files changed, 45 insertions(+), 0 deletions(-)
+ Documentation/githooks.txt |   36 ++++++++++++++++++++++++++++++++++++
+ 1 files changed, 36 insertions(+), 0 deletions(-)
 
-diff --git a/git-am.sh b/git-am.sh
-index 3c08d53..56428b4 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -575,6 +575,7 @@ do
- 			echo "Patch is empty.  Was it split wrong?"
- 			stop_here $this
- 		}
-+		rm -f "$dotest/original-commit"
- 		if test -f "$dotest/rebasing" &&
- 			commit=$(sed -e 's/^From \([0-9a-f]*\) .*/\1/' \
- 				-e q "$dotest/$msgnum") &&
-@@ -582,6 +583,7 @@ do
- 		then
- 			git cat-file commit "$commit" |
- 			sed -e '1,/^$/d' >"$dotest/msg-clean"
-+			echo "$commit" > "$dotest/original-commit"
- 		else
- 			{
- 				sed -n '/^Subject/ s/Subject: //p' "$dotest/info"
-@@ -768,6 +770,10 @@ do
- 	git update-ref -m "$GIT_REFLOG_ACTION: $FIRSTLINE" HEAD $commit $parent ||
- 	stop_here $this
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 87e2c03..41895e9 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -317,6 +317,42 @@ This hook is invoked by 'git gc --auto'. It takes no parameter, and
+ exiting with non-zero status from this script causes the 'git gc --auto'
+ to abort.
  
-+	if test -f "$dotest/original-commit"; then
-+		echo "$(cat "$dotest/original-commit") $commit" >> "$dotest/rewritten"
-+	fi
++post-rewrite
++~~~~~~~~~~~~
 +
- 	if test -x "$GIT_DIR"/hooks/post-applypatch
- 	then
- 		"$GIT_DIR"/hooks/post-applypatch
-@@ -776,6 +782,10 @@ do
- 	go_next
- done
- 
-+if test -s "$dotest"/rewritten && test -x "$GIT_DIR"/hooks/post-rewrite; then
-+	"$GIT_DIR"/hooks/post-rewrite rebase < "$dotest"/rewritten
-+fi
++This hook is invoked by commands that rewrite commits (`git commit
++--amend`, 'git-rebase', 'git-filter-branch').  Its first argument
++denotes the command it was invoked by: currently one of `amend`,
++`rebase`, or `filter-branch`.  Further command-dependent arguments may
++be passed in the future.
 +
- git gc --auto
- 
- rm -fr "$dotest"
-diff --git a/git-rebase.sh b/git-rebase.sh
-index fb4fef7..52f8b9b 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -79,6 +79,7 @@ continue_merge () {
- 		then
- 			printf "Committed: %0${prec}d " $msgnum
- 		fi
-+		echo "$cmt $(git rev-parse HEAD^0)" >> "$dotest/rewritten"
- 	else
- 		if test -z "$GIT_QUIET"
- 		then
-@@ -151,6 +152,10 @@ move_to_original_branch () {
- 
- finish_rb_merge () {
- 	move_to_original_branch
-+	if test -x "$GIT_DIR"/hooks/post-rewrite &&
-+		test -s "$dotest"/rewritten; then
-+		"$GIT_DIR"/hooks/post-rewrite rebase < "$dotest"/rewritten
-+	fi
- 	rm -r "$dotest"
- 	say All done.
- }
-diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index 1020af9..1ecaa4b 100755
---- a/t/t5407-post-rewrite-hook.sh
-+++ b/t/t5407-post-rewrite-hook.sh
-@@ -49,4 +49,34 @@ test_expect_success 'git commit --amend --no-post-rewrite' '
- 	test ! -f post-rewrite.data
- '
- 
-+test_expect_success 'git rebase' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	test_must_fail git rebase --onto A B &&
-+	echo C > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse C) $(git rev-parse HEAD^)
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
-+'
++The hook receives a list of the rewritten commits on stdin, in the
++format
 +
-+test_expect_success 'git rebase --skip' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	test_must_fail git rebase --onto A B &&
-+	test_must_fail git rebase --skip &&
-+	echo D > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
-+'
++  <old-sha1> SP <new-sha1> [ SP <extra-info> ] LF
 +
- test_done
++The 'extra-info' is again command-dependent.  If it is empty, the
++preceding SP is also omitted.  Currently, no commands pass any
++'extra-info'.
++
++The following command-specific comments apply:
++
++rebase::
++	For the 'squash' and 'fixup' operation, all commits that were
++	squashed are listed as being rewritten to the squashed commit.
++	This means that there will be several lines sharing the same
++	'new-sha1'.
++
++filter-branch::
++	Commits that were processed by 'git-filter-branch', but not
++	changed, are not included in the list.  If the list is empty
++	after this filtering, the hook is not invoked at all.
++
++There is no default 'post-rewrite' hook, but see the
++`post-receive-copy-notes` script in `contrib/hooks` for an example
++that copies your git-notes to the rewritten commits.
++
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 -- 
 1.7.0.59.g783f8
