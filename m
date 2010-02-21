@@ -1,60 +1,73 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Storing (hidden) per-commit metadata
-Date: Sun, 21 Feb 2010 01:34:33 -0500
-Message-ID: <20100221063433.GA2840@coredump.intra.peff.net>
-References: <1266599485.29753.54.camel@ganieda>
- <1266687636-sup-7641@ben-laptop>
- <32541b131002201057t31fc8a6aydb0942171fe1b8c8@mail.gmail.com>
+Subject: Re: [PATCH v4 7/7] t7006-pager: if stdout is not a terminal, make
+ a new one
+Date: Sun, 21 Feb 2010 02:30:59 -0500
+Message-ID: <20100221073058.GC2840@coredump.intra.peff.net>
+References: <20100219065010.GA22258@progeny.tock>
+ <20100219071857.GF29916@progeny.tock>
+ <7v8wanq0c3.fsf@alter.siamese.dyndns.org>
+ <20100221020317.GA7651@progeny.tock>
+ <20100221020922.GB7651@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Ben Gamari <bgamari@gmail.com>, git <git@vger.kernel.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 21 08:23:05 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Sebastian Celis <sebastian@sebastiancelis.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 21 08:34:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nj5Or-0004yt-Bk
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Feb 2010 07:34:41 +0100
+	id 1Nj6HT-0007CC-Dx
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Feb 2010 08:31:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753153Ab0BUGef (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Feb 2010 01:34:35 -0500
-Received: from peff.net ([208.65.91.99]:59147 "EHLO peff.net"
+	id S1752972Ab0BUHbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Feb 2010 02:31:00 -0500
+Received: from peff.net ([208.65.91.99]:45786 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752925Ab0BUGee (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Feb 2010 01:34:34 -0500
-Received: (qmail 8076 invoked by uid 107); 21 Feb 2010 06:34:48 -0000
+	id S1751579Ab0BUHa7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Feb 2010 02:30:59 -0500
+Received: (qmail 8292 invoked by uid 107); 21 Feb 2010 07:31:13 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 21 Feb 2010 01:34:48 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 21 Feb 2010 01:34:34 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 21 Feb 2010 02:31:13 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 21 Feb 2010 02:30:59 -0500
 Content-Disposition: inline
-In-Reply-To: <32541b131002201057t31fc8a6aydb0942171fe1b8c8@mail.gmail.com>
+In-Reply-To: <20100221020922.GB7651@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140599>
 
-On Sat, Feb 20, 2010 at 01:57:31PM -0500, Avery Pennarun wrote:
+On Sat, Feb 20, 2010 at 08:09:22PM -0600, Jonathan Nieder wrote:
 
-> As for git-notes, they sound like they would be useful for this sort
-> of thing.  I haven't tried them yet, but my understanding is that
-> notes anywhere other than the "default" notes ref are not shown in
-> commit messages, so you can use them for whatever you want.
+> Testing pagination requires (fake or real) access to a terminal so we
+> can see whether the pagination automatically kicks in, which makes it
+> hard to get good coverage when running tests without --verbose.  There
+> are a number of ways to work around that:
+> 
+>  - Replace all isatty calls with calls to a custom xisatty wrapper
+>    that usually checks for a terminal but can be overridden for tests.
+>    This would be workable, but it would require implementing xisatty
+>    separately in three languages (C, shell, and perl) and making sure
+>    that any code that is to be tested always uses the wrapper.
+> 
+>  - Redirect stdout to /dev/tty.  This would be problematic because
+>    there might be no terminal available, and even if a terminal is
+>    available, it might not be appropriate to spew output to it.
+> 
+>  - Create a new pseudo-terminal on the fly and capture its output.
+> 
+> This patch implements the third approach.
 
-I would want to hear more about the actual data being stored. The
-strength of notes is that you can _change_ them after the commit has
-been created. And the price you pay is that they are more annoying to
-move around, because they are in a totally different ref.
+Just to wrap up my end of this patch discussion, I think the approach
+you take here is the sanest one. While it would be nice to get test
+coverage on every system, I don't think it is worth the effort of
+trying to write portable terminal creation code. And this way at least
+the code in git is fairly minimal.
 
-If this is data that is being generated at the time the commit is
-created and then set in stone, then it probably should be part of the
-commit object.
-
-If the only problem is that the data is ugly in "git show", then perhaps
-we need a "suppress these pseudo-headers" feature for showing logs. It
-keeps them easily available for inspection or for --grep, but most of
-the time you would not see them.
+So looks good to me.
 
 -Peff
