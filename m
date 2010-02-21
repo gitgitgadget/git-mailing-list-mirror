@@ -2,100 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=0.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
-Received: (qmail 13244 invoked by uid 107); 21 Feb 2010 15:23:58 -0000
+X-Spam-Status: No, score=0.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+Received: (qmail 15388 invoked by uid 107); 21 Feb 2010 17:43:52 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Sun, 21 Feb 2010 10:23:57 -0500
+    by peff.net (qpsmtpd/0.40) with ESMTP; Sun, 21 Feb 2010 12:43:51 -0500
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752470Ab0BUPXi (ORCPT <rfc822;peff@peff.net>);
-	Sun, 21 Feb 2010 10:23:38 -0500
-Received: from mail-iw0-f177.google.com ([209.85.223.177]:50486 "EHLO
-	mail-iw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752416Ab0BUPXa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Feb 2010 10:23:30 -0500
-Received: by mail-iw0-f177.google.com with SMTP id 7so1601473iwn.4
-        for <git@vger.kernel.org>; Sun, 21 Feb 2010 07:23:30 -0800 (PST)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=wjKf3SQY476n47lPZVrmJ9jUFqbONFjitOg69r8/GhU=;
-        b=tv2vZbtIpXz/WoBawH3gpTqMqwIczFXcIwz9c1lYV2hDtOpCajqmj0ksav2k11xJM1
-         T0JdXwqhlr1D+yKVOxdJ965kfR9YrQbQJdtbY4Y+oT1QbyPbYxJJrdYJSrduDBbxjErA
-         5nEPZNPThygG209OCjPl8jEptYHmuXYWSsiTY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=EtW283ZhgSYUmbTFfpvpQj/k5RngsFBSwW1TbpI3nPUoNnYbwkfHLInH8TuJ1qFKK5
-         KLFkabj1YZhTZVd4aDoHdw8pdgQOfabLsD2d2rIYkxFV59OC4sh/KXpEDbvjrfmhuF7l
-         bYmLDKw7QlTnljfg4LPhWirr9yd9ai396vk9Q=
-MIME-Version: 1.0
-Received: by 10.231.168.133 with SMTP id u5mr3110508iby.29.1266765810102; Sun, 
-	21 Feb 2010 07:23:30 -0800 (PST)
-In-Reply-To: <20100221105707.GA22534@localhost>
-References: <1266721708-1060-1-git-send-email-rctay89@gmail.com>
-	 <1266721708-1060-6-git-send-email-rctay89@gmail.com>
-	 <20100221103820.GA5166@localhost> <20100221105707.GA22534@localhost>
-Date:	Sun, 21 Feb 2010 23:23:30 +0800
-Message-ID: <be6fef0d1002210723j742c0d8ex86b9d552f924408f@mail.gmail.com>
-Subject: Re: [PATCH 5/7] http: init and cleanup separately from http-walker
-From:	Tay Ray Chuan <rctay89@gmail.com>
-To:	Clemens Buchacher <drizzd@aon.at>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Mike Hommey <mh@glandium.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+	id S1753039Ab0BURnc (ORCPT <rfc822;peff@peff.net>);
+	Sun, 21 Feb 2010 12:43:32 -0500
+Received: from landau.phys.spbu.ru ([195.19.235.38]:49330 "EHLO
+	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752990Ab0BURnb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Feb 2010 12:43:31 -0500
+X-Greylist: delayed 1429 seconds by postgrey-1.27 at vger.kernel.org; Sun, 21 Feb 2010 12:43:31 EST
+Received: by landau.phys.spbu.ru (Postfix, from userid 509)
+	id 08FCD17B663; Sun, 21 Feb 2010 20:19:40 +0300 (MSK)
+Date:	Sun, 21 Feb 2010 20:19:40 +0300
+From:	Kirill Smelkov <kirr@landau.phys.spbu.ru>
+To:	Miklos Vajna <vmiklos@frugalware.org>, Petr Baudis <pasky@ucw.cz>
+Cc:	Kirill Smelkov <kirr@mns.spb.ru>, git@vger.kernel.org
+Subject: Re: [BUG] girocco + git-svn: trunk is not propagated to master
+Message-ID: <20100221171939.GA10166@landau.phys.spbu.ru>
+References: <20100219132206.GA13734@tugrik.mns.mnsspb.ru> <20100220234200.GS12429@genesis.frugalware.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20100220234200.GS12429@genesis.frugalware.org>
+Organization: St.Petersburg State University
+User-Agent: Mutt/1.5.6i
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+On Sun, Feb 21, 2010 at 12:42:00AM +0100, Miklos Vajna wrote:
+> On Fri, Feb 19, 2010 at 04:22:07PM +0300, Kirill Smelkov <kirr@mns.spb.ru> wrote:
+> > ---- taskd/clone.sh ----
+> > svn://*)
+> >     GIT_DIR=. git svn fetch
+> >     # Neat Trick suggested by Miklos Vajna
+> >     GIT_DIR=. git config remote.origin.url .
+> >     GIT_DIR=. git config remote.origin.fetch +refs/remotes/heads/*:refs/heads/*
+> >     GIT_DIR=. git config remote.origin.fetch +refs/remotes/trunk:refs/heads/master
+> >     GIT_DIR=. git config remote.origin.fetch +refs/remotes/tags/*:refs/tags/*
+> >     GIT_DIR=. git fetch
+> 
+> Here is the original blog post:
+> 
+> http://vmiklos.hu/blog/svn-ggit-conversion-using-git-svn
 
-On Sun, Feb 21, 2010 at 6:57 PM, Clemens Buchacher <drizzd@aon.at> wrote:
-> On Sun, Feb 21, 2010 at 11:38:20AM +0100, Clemens Buchacher wrote:
->> On Sun, Feb 21, 2010 at 11:08:26AM +0800, Tay Ray Chuan wrote:
->> > diff --git a/http-fetch.c b/http-fetch.c
->> [...]
->>
->>         add_fill_function(walker, (int (*)(void *)) fill_active_slot);
->>
->> already deals with curl functionality. So even though I think it technically
->> doesn't break, I would prefer if this dependency were still expressed in the
->> code.
->>
->> > @@ -88,6 +90,7 @@ int main(int argc, const char **argv)
->> >  "status code.  Suggest running 'git fsck'.\n");
->> >     }
->> >
->> > +   http_cleanup();
->> >     walker_free(walker);
->> >
->> >     free(rewritten_url);
->>
->> Same as above.
->
-> But I think this is still valid.
+Thanks
 
-regarding the order of invocation - I could put http_cleanup() after
-walker_free().
+> > ---- jobd/update.sh ----
+> > svn://*)
+> >         GIT_DIR=. bang git svn fetch
+> >         GIT_DIR=. bang git fetch
+> > 
+> > 
+> > But it seems it does not work. First I see there is a need for quoting,
+> > so e.g. 
+> > 
+> > -   GIT_DIR=. git config remote.origin.fetch +refs/remotes/heads/*:refs/heads/*
+> > +   GIT_DIR=. git config remote.origin.fetch '+refs/remotes/heads/*:refs/heads/*'
+> > 
+> > but I'm not sure it will fix the problem.
+> 
+> When I tried this technique in ooo-build, I did not need quoting. Though
+> it won't hurt, sure.
 
-Perhaps I can express this dependency with a comment in that area in
-http-fetch.c and/or http-walker::cleanup()?
+Yes it should work as is, but quoting wildcards is defensive. Just in
+case.
 
-  Don't invoke http_cleanup() yet, we might still need to perform http
-operations in http-walker.
+> > Can we do something about it please?
+> 
+> Did you get any error message?
 
-(Separately, on re-reading the code, I noticed that
-http-walker::cleanup() calls http_cleanup() again, so I dropped that
-invocation from http-walker.)
+No, it sent me an email that cloning was ok and that was it...
 
+
+... I think I've found the problem -- it's that we need to use
+`git config --add` in order to setup multivars. Please find patches below.
+Petr, if everything is ok with them, could you please apply it? Thanks.
+
+
+From fd625c71d1f6ec88bd58faaca24da29c1fb8b5b3 Mon Sep 17 00:00:00 2001
+From: Kirill Smelkov <kirr@mns.spb.ru>
+Date: Sun, 21 Feb 2010 20:02:00 +0300
+Subject: [PATCH 1/2] taskd/clone: Don't forget to use 'git config --add' for multivars setup
+
+Neat Trick suggested by Miklos Vajna setups origin remote as '.' and
+also setups 3 refspecs for remotes.origin.fetch.
+
+The trick is nice indeed, but in order to setup config multivar, one
+have to use explicit --add option for `git config' (*) or else old var
+value is just replaced.
+
+The problem showed in svn-mirror repositories with stale master (was not
+updating from trunk) and also as lack of branches -- that's
+understandable -- we had '+refs/remotes/tags/*:refs/tags/*' config last,
+and tags were working OK.
+
+Fix it.
+
+(*) explicit --add was needed since 89c4afe0 (Add --add option to
+    git-repo-config) in git.git, which dates to git v1.4.4.2-225-g89c4afe
+---
+ taskd/clone.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/taskd/clone.sh b/taskd/clone.sh
+index 962c526..0f5d6fa 100755
+--- a/taskd/clone.sh
++++ b/taskd/clone.sh
+@@ -28,8 +28,8 @@ case "$url" in
+ 		# Neat Trick suggested by Miklos Vajna
+ 		GIT_DIR=. git config remote.origin.url .
+ 		GIT_DIR=. git config remote.origin.fetch +refs/remotes/heads/*:refs/heads/*
+-		GIT_DIR=. git config remote.origin.fetch +refs/remotes/trunk:refs/heads/master
+-		GIT_DIR=. git config remote.origin.fetch +refs/remotes/tags/*:refs/tags/*
++		GIT_DIR=. git config --add remote.origin.fetch +refs/remotes/trunk:refs/heads/master
++		GIT_DIR=. git config --add remote.origin.fetch +refs/remotes/tags/*:refs/tags/*
+ 		GIT_DIR=. git fetch
+ 		;;
+ 	darcs://*)
 -- 
-Cheers,
-Ray Chuan
+1.7.0.50.g50c1
+
+
+
+From 79477bd2cdc60574eb4a07d2dc2c97d9fa663e27 Mon Sep 17 00:00:00 2001
+From: Kirill Smelkov <kirr@mns.spb.ru>
+Date: Sun, 21 Feb 2010 20:11:09 +0300
+Subject: [PATCH 2/2] taskd/clone: quote shell metacharacters where appropriate
+
+At present this involves svn mirror setup -- refspec mappings contain
+shell wildcards. Quote them just in case.
+---
+ taskd/clone.sh |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/taskd/clone.sh b/taskd/clone.sh
+index 0f5d6fa..cfcb3b1 100755
+--- a/taskd/clone.sh
++++ b/taskd/clone.sh
+@@ -27,9 +27,9 @@ case "$url" in
+ 		GIT_DIR=. git svn fetch
+ 		# Neat Trick suggested by Miklos Vajna
+ 		GIT_DIR=. git config remote.origin.url .
+-		GIT_DIR=. git config remote.origin.fetch +refs/remotes/heads/*:refs/heads/*
+-		GIT_DIR=. git config --add remote.origin.fetch +refs/remotes/trunk:refs/heads/master
+-		GIT_DIR=. git config --add remote.origin.fetch +refs/remotes/tags/*:refs/tags/*
++		GIT_DIR=. git config remote.origin.fetch '+refs/remotes/heads/*:refs/heads/*'
++		GIT_DIR=. git config --add remote.origin.fetch '+refs/remotes/trunk:refs/heads/master'
++		GIT_DIR=. git config --add remote.origin.fetch '+refs/remotes/tags/*:refs/tags/*'
+ 		GIT_DIR=. git fetch
+ 		;;
+ 	darcs://*)
+-- 
+1.7.0.50.g50c1
+
