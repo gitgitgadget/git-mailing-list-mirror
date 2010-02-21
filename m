@@ -1,130 +1,73 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 7/7] remote-curl: init walker only when needed
-Date: Sun, 21 Feb 2010 11:08:28 +0800
-Message-ID: <1266721708-1060-8-git-send-email-rctay89@gmail.com>
-References: <1266721708-1060-1-git-send-email-rctay89@gmail.com>
-Cc: "Clemens Buchacher" <drizzd@aon.at>,
-	"Mike Hommey" <mh@glandium.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Feb 21 04:38:26 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH v3 06/12] notes: implement 'git notes copy --stdin'
+Date: Sat, 20 Feb 2010 19:31:15 -0800
+Message-ID: <7v8wan464c.fsf@alter.siamese.dyndns.org>
+References: <cover.1266703765.git.trast@student.ethz.ch>
+ <3559e59dd81bd3fb94196c399e1640681a323147.1266703765.git.trast@student.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>, Johan Herland <johan@herland.net>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sun Feb 21 04:40:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nj2C8-0004kQ-Fg
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Feb 2010 04:09:20 +0100
+	id 1Nj2Xn-0005r5-UA
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Feb 2010 04:31:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757171Ab0BUDJC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Feb 2010 22:09:02 -0500
-Received: from qw-out-2122.google.com ([74.125.92.27]:49688 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757166Ab0BUDI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Feb 2010 22:08:59 -0500
-Received: by qw-out-2122.google.com with SMTP id 8so262931qwh.37
-        for <git@vger.kernel.org>; Sat, 20 Feb 2010 19:08:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=4v6o4omVbgd7fmyT1gvCZoMyrZ/rwqSD/j+T5UePXv4=;
-        b=vjTZgLp0p6ai8tL9oYo16jkYGgG9AHxnhPap8vY6j6eqGwyBM4cIscVPWpQVLSrzMj
-         OIEtuTDuOwhiJDE95z8QmBSuSF9W+uaiipJIA1sAtQMvPrWiiZDle5KIOudR9eCsM/jT
-         gXMEXVDEfKA5o4KxLor+use6KyhLFsgTGDxwQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=kKvD6eXaUd+B7LLo72a4DJ3nTzTr9yshnxbX6zLZyd1NdvkPgs/7fAm2Zy55e6mTlg
-         8c9KuWblWic8qemOfq6M/MfKaCWdCHgyKG4dicb/38/4CtWcIrLIY1nxC6w0TTS0EXjD
-         oo6wGEI0VogPx0HJ9nHiJKh1AT/1OlONS4YMQ=
-Received: by 10.224.18.168 with SMTP id w40mr4776958qaa.114.1266721739117;
-        Sat, 20 Feb 2010 19:08:59 -0800 (PST)
-Received: from localhost.localdomain (cm91.zeta153.maxonline.com.sg [116.87.153.91])
-        by mx.google.com with ESMTPS id 22sm1412717qyk.14.2010.02.20.19.08.56
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 20 Feb 2010 19:08:58 -0800 (PST)
-X-Mailer: git-send-email 1.7.0.20.gcb44ed
-In-Reply-To: <1266721708-1060-1-git-send-email-rctay89@gmail.com>
+	id S1757189Ab0BUDbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Feb 2010 22:31:31 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33656 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757181Ab0BUDba (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Feb 2010 22:31:30 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 634A19BD96;
+	Sat, 20 Feb 2010 22:31:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rhSdeUqtJkCfvSRJ5MBSMbFsx+o=; b=qn3XZ/
+	Mkps6uhHiu8QfV8euzqI82GeK+GvPOkIfo1zy8B8z5f8CNN4Kkl04MxvdtcCYDTi
+	StrbHhVqcI+7Du7F42g3UbCgm0qCt1k9BQmmQo2W8pBbea+tvkYcO0MlQBxq9AqQ
+	R37QFeyPs3tjXW8fZcXMOA8rPbJlsuqDZyVU4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jKbmZO6u4cazdA69F2O05WxHwZse8qRE
+	IQnd0iEnVwqRNGVXBlGdTECf9haficjBlCFMhY0P3xK4FwnzAuBeYx1Syv9sYHmg
+	I9urPFdpzO17RL0THbGMv7ZqDrN5UGl6w8CG+OrwEFw+hDjNeHhEOP4CDyNU01cW
+	nJwBfZT4yOM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 13B219BD95;
+	Sat, 20 Feb 2010 22:31:25 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7F0D39BD94; Sat, 20 Feb
+ 2010 22:31:18 -0500 (EST)
+In-Reply-To: <3559e59dd81bd3fb94196c399e1640681a323147.1266703765.git.trast@student.ethz.ch> (Thomas Rast's message of "Sat\, 20 Feb 2010 23\:16\:27 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9694028A-1E99-11DF-BF00-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140586>
 
-Invoke get_http_walker() only when fetching with the dumb protocol.
-Additionally, add an invocation to walker_free() after we're done using
-the walker.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
----
- remote-curl.c |   13 +++----------
- 1 files changed, 3 insertions(+), 10 deletions(-)
+> diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+> index 0dfff82..634d213 100755
+> --- a/t/t3301-notes.sh
+> +++ b/t/t3301-notes.sh
+> @@ -683,4 +683,36 @@ test_expect_success 'cannot copy note from object without notes' '
+> ...
+> +test_expect_success 'git notes copy --stdin' '
+> +	(echo $(git rev-parse HEAD~3) $(git rev-parse HEAD^); \
+> +	echo $(git rev-parse HEAD~2) $(git rev-parse HEAD)) |
+> +	git notes copy --stdin &&
+> +	git log -2 > output &&
+> +	strip_then_cmp expect output &&
 
-diff --git a/remote-curl.c b/remote-curl.c
-index 5ace99e..b76bfcb 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -10,7 +10,6 @@
- 
- static struct remote *remote;
- static const char *url;
--static struct walker *walker;
- 
- struct options {
- 	int verbosity;
-@@ -22,12 +21,6 @@ struct options {
- };
- static struct options options;
- 
--static void init_walker(void)
--{
--	if (!walker)
--		walker = get_http_walker(url);
--}
--
- static int set_option(const char *name, const char *value)
- {
- 	if (!strcmp(name, "verbosity")) {
-@@ -119,7 +112,6 @@ static struct discovery* discover_refs(const char *service)
- 	}
- 	refs_url = strbuf_detach(&buffer, NULL);
- 
--	init_walker();
- 	http_ret = http_get_strbuf(refs_url, &buffer, HTTP_NO_CACHE);
- 
- 	/* try again with "plain" url (no ? or & appended) */
-@@ -501,7 +493,6 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
- 	struct child_process client;
- 	int err = 0;
- 
--	init_walker();
- 	memset(&client, 0, sizeof(client));
- 	client.in = -1;
- 	client.out = -1;
-@@ -553,6 +544,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
- 
- static int fetch_dumb(int nr_heads, struct ref **to_fetch)
- {
-+	struct walker *walker;
- 	char **targets = xmalloc(nr_heads * sizeof(char*));
- 	int ret, i;
- 
-@@ -561,13 +553,14 @@ static int fetch_dumb(int nr_heads, struct ref **to_fetch)
- 	for (i = 0; i < nr_heads; i++)
- 		targets[i] = xstrdup(sha1_to_hex(to_fetch[i]->old_sha1));
- 
--	init_walker();
-+	walker = get_http_walker(url);
- 	walker->get_all = 1;
- 	walker->get_tree = 1;
- 	walker->get_history = 1;
- 	walker->get_verbosely = options.verbosity >= 3;
- 	walker->get_recover = 0;
- 	ret = walker_fetch(walker, nr_heads, targets, NULL, NULL);
-+	walker_free(walker);
- 
- 	for (i = 0; i < nr_heads; i++)
- 		free(targets[i]);
--- 
-1.7.0.26.gbfa16
+Huh?
