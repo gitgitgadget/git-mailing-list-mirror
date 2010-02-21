@@ -2,64 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-Received: (qmail 13127 invoked by uid 107); 21 Feb 2010 14:38:52 -0000
+X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
+Received: (qmail 13226 invoked by uid 107); 21 Feb 2010 15:23:56 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Sun, 21 Feb 2010 09:38:50 -0500
+    by peff.net (qpsmtpd/0.40) with ESMTP; Sun, 21 Feb 2010 10:23:54 -0500
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752114Ab0BUOic (ORCPT <rfc822;peff@peff.net>);
-	Sun, 21 Feb 2010 09:38:32 -0500
-Received: from lo.gmane.org ([80.91.229.12]:33539 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751702Ab0BUOib (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Feb 2010 09:38:31 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NjCVd-00078E-I5
-	for git@vger.kernel.org; Sun, 21 Feb 2010 15:10:09 +0100
-Received: from xdsl-89-0-181-135.netcologne.de ([89.0.181.135])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 21 Feb 2010 15:10:09 +0100
-Received: from Ralf.Wildenhues by xdsl-89-0-181-135.netcologne.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 21 Feb 2010 15:10:09 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To:	git@vger.kernel.org
-From:	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-Subject: gitk: window size for Edit View, Preferences
-Date:	Sun, 21 Feb 2010 12:50:57 +0000 (UTC)
-Message-ID: <loom.20100221T134554-488@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 89.0.181.135 (Mozilla/5.0 (X11; U; Linux i686; en; rv:1.9.0.18) Gecko/20080528 Epiphany/2.22)
+	id S1752332Ab0BUPX1 (ORCPT <rfc822;peff@peff.net>);
+	Sun, 21 Feb 2010 10:23:27 -0500
+Received: from mail-iw0-f177.google.com ([209.85.223.177]:50486 "EHLO
+	mail-iw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751957Ab0BUPX0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Feb 2010 10:23:26 -0500
+Received: by iwn7 with SMTP id 7so1601473iwn.4
+        for <git@vger.kernel.org>; Sun, 21 Feb 2010 07:23:23 -0800 (PST)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ensGU2K3460JQ1cNBdc4O6XbJJJLGCiWKoYtGlOKcdo=;
+        b=w0P9QU8LZ5WIjSpilVDRjFTnhVFC3aVBrRf/IvTtbYswr1rH5xO+ClzAVsZCFxooJB
+         RfLe2ouWGNjte5rAT8My6B6AbSi2uAZX3/UiwPlst14L7U8AvKnNfRBVPk+6orhHBOu/
+         A+KsS1DVVoOUp28JZUrdS2w9QzP367GIxZ0UU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=JhNOVtkltppKpx2rVYf1zUBgCeh3T6guBLobOmr3vGXjCoMODRUaEPKdRDteO8a6Io
+         tSKKHnhcRdLs+NQk0LoT7FB/EA2k6pC3GhWvtEpsw1ltUYXC33D9yf1nyaFgWrbnyt6q
+         wRfbI7GnFl+E091ABrsPXbnEI0NcvywlX06uY=
+MIME-Version: 1.0
+Received: by 10.231.154.68 with SMTP id n4mr1208985ibw.72.1266765803734; Sun, 
+	21 Feb 2010 07:23:23 -0800 (PST)
+In-Reply-To: <20100221104015.GB5166@localhost>
+References: <1266721708-1060-1-git-send-email-rctay89@gmail.com>
+	 <1266721708-1060-4-git-send-email-rctay89@gmail.com>
+	 <20100221104015.GB5166@localhost>
+Date:	Sun, 21 Feb 2010 23:23:23 +0800
+Message-ID: <be6fef0d1002210723t2cb55460n4dcc1d27ebef03fd@mail.gmail.com>
+Subject: Re: [PATCH 3/7] http-push: remove useless condition
+From:	Tay Ray Chuan <rctay89@gmail.com>
+To:	Clemens Buchacher <drizzd@aon.at>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Mike Hommey <mh@glandium.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-(resend of a message from yesterday; apologies if the other did get through)
+Hi,
 
-I gave a short introduction to git a while ago, demonstrating
-gitk from a netbook.  The "Edit View" window was not resizable
-to fit on the screen, also the window manager disallowed moving
-it up enough to get to the buttons adjusting the sorting.
+On Sun, Feb 21, 2010 at 6:40 PM, Clemens Buchacher <drizzd@aon.at> wrote:
+> On Sun, Feb 21, 2010 at 11:08:24AM +0800, Tay Ray Chuan wrote:
+>> -                     if (push_verbosely || 1)
+>> +                     if (push_verbosely)
+>>                               fprintf(stderr, "'%s': up-to-date\n", ref->name);
+>
+> Just a minor nit-pick. If you end up doing a resend, maybe you could change
+> the commit message to this one, since you're actually adding a condition
+> that was previously disabled, not removing it.
 
-I'm sure this is double PEBKAC (not using a good WM or configuring
-it right, not adjusting font size), but still, a vertical ruler
-for this as well as the Preferences and Key Binding Help windows
-would be handy, and probably a quick two-line change for somebody
-with better Tcl/Tk than me.
+yes, that makes sense..
 
-Barring a patch, I'd be glad about pointers, too.
-
-Thanks for git and gitk!
-Ralf
-
-
+-- 
+Cheers,
+Ray Chuan
