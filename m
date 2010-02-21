@@ -1,75 +1,105 @@
-From: Gabriel Filion <lelutin@gmail.com>
-Subject: Re: Storing (hidden) per-commit metadata
-Date: Mon, 22 Feb 2010 00:11:30 -0500
-Message-ID: <4B821202.8070700@gmail.com>
-References: <1266599485.29753.54.camel@ganieda>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH 5/7] http: init and cleanup separately from http-walker
+Date: Sun, 21 Feb 2010 11:57:07 +0100
+Message-ID: <20100221105707.GA22534@localhost>
+References: <1266721708-1060-1-git-send-email-rctay89@gmail.com>
+ <1266721708-1060-6-git-send-email-rctay89@gmail.com>
+ <20100221103820.GA5166@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Jelmer Vernooij <jelmer@samba.org>
-X-From: git-owner@vger.kernel.org Mon Feb 22 06:51:35 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Mike Hommey <mh@glandium.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 21 12:55:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjQa9-0007At-0v
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 06:11:45 +0100
+	id 1Nj9V3-0008AI-3O
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Feb 2010 11:57:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751150Ab0BVFLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 00:11:35 -0500
-Received: from qw-out-2122.google.com ([74.125.92.27]:26403 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750940Ab0BVFLe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 00:11:34 -0500
-Received: by qw-out-2122.google.com with SMTP id 8so409455qwh.37
-        for <git@vger.kernel.org>; Sun, 21 Feb 2010 21:11:34 -0800 (PST)
+	id S1751143Ab0BUK5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Feb 2010 05:57:16 -0500
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:40724 "EHLO
+	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751130Ab0BUK5P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Feb 2010 05:57:15 -0500
+Received: by fxm5 with SMTP id 5so1550501fxm.29
+        for <git@vger.kernel.org>; Sun, 21 Feb 2010 02:57:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=m9TwgWcDaJR5sMpzQuvOV2rx4TxU06EooBVIBqGaqEo=;
-        b=RfkDzgxGNVIJuXWNAyg6M5O8KKpi0g62b2a56MqXTRewig/jWAg1P8pfqtJIeNvn5m
-         oaVUpYE0X0QOjgduhwVJoOfSutakuscbb075/5hetdIjOMjsO+x56G8lRn0piLPwb9HF
-         48HuTcSGkO55bv94pPCUhqyXNUavxiDT+yDF8=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=6UneYGhS8/BuQbgA2eQo3lhk7AvD8Gms5bFg3LmzVJg=;
+        b=c5Ievdn/WvBWi5aUp5up8kpqE7+pIqxNwJumOmTKqiqu0xCSw93zGJ1lE4qAd3642K
+         Qn9f9XpMHeNAe+aX2BUs5Bz+REqho2nNlOPRs/vmzJpMrZnlXdg32TcHfzcQlRPY7M4A
+         V0KI8fXxdTbLpkhKrO/tWvObayz1MXjdMqoyU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=SlL0jOm1N7IdzZYFwoqqyGwZ2cDCQcQ++wSLUwf3gYkWxi6CpbxL/vNlLihlF2WG/X
-         n8XDp2OK77x+qTig4e5fBdizklJC6yo3Z53bKVWJ56Gq3l4KTxplVsTF3WQID8L+mLJ2
-         B+u9BNnG8xIrvO2iT6ezlR2mQGLJOmySNKo6s=
-Received: by 10.224.109.1 with SMTP id h1mr4554377qap.131.1266815493868;
-        Sun, 21 Feb 2010 21:11:33 -0800 (PST)
-Received: from ?192.168.2.202? (dsl-147-130.aei.ca [66.36.147.130])
-        by mx.google.com with ESMTPS id 20sm2331670qyk.13.2010.02.21.21.11.32
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=iAFvcPyTN6bjLobaVf7OH6VHz2PG1rd7XlBpE2KQLAS/aRycG2d8AB7ZPsKv6+7Rfj
+         Iag+b/twAIJQOxxpLL+Y7tt+COwjgctfle1xmEzp59a8DOZKx4mHdPHZsnphtEUKkqn4
+         PhVXOyjOD4zvhvWHRa7Wnlb8Qa6TktCYV2sbs=
+Received: by 10.103.126.29 with SMTP id d29mr2421215mun.28.1266749833823;
+        Sun, 21 Feb 2010 02:57:13 -0800 (PST)
+Received: from darc.lan (p549A7DE9.dip.t-dialin.net [84.154.125.233])
+        by mx.google.com with ESMTPS id y2sm9759653mug.19.2010.02.21.02.57.12
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 21 Feb 2010 21:11:33 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20100108 Lightning/1.0b1 Icedove/3.0
-In-Reply-To: <1266599485.29753.54.camel@ganieda>
+        Sun, 21 Feb 2010 02:57:13 -0800 (PST)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1Nj9Up-0005sg-Lh; Sun, 21 Feb 2010 11:57:07 +0100
+Content-Disposition: inline
+In-Reply-To: <20100221103820.GA5166@localhost>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140608>
 
-Hello,
-
-On 2010-02-19 12:11, Jelmer Vernooij wrote:
-> To allow round-tripping pushes from Bazaar into Git, I'm looking for a
-> good place to store Bazaar semantics that can not be represented in Git
-> at the moment. This data should ideally be hidden from the user as much
-> as possible; it would e.g. contain mappings from git hashes to Bazaar
-> ids. 
+On Sun, Feb 21, 2010 at 11:38:20AM +0100, Clemens Buchacher wrote:
+> On Sun, Feb 21, 2010 at 11:08:26AM +0800, Tay Ray Chuan wrote:
+> > diff --git a/http-fetch.c b/http-fetch.c
+> [...]
+> > @@ -69,7 +70,8 @@ int main(int argc, const char **argv)
+> >  		url = rewritten_url;
+> >  	}
+> >  
+> > -	walker = get_http_walker(url, NULL);
+> > +	http_init(NULL);
+> > +	walker = get_http_walker(url);
+> >  	walker->get_tree = get_tree;
+> >  	walker->get_history = get_history;
+> >  	walker->get_all = get_all;
 > 
-What are you currently using for interacting with Bazaar repositories?
+> You changed the order of get_http_walker and http_init. But
 
-If you already have code for a remote helper, I would be interested in
-helping you out. I started a discussion recently on this list about
-staring such a script. Would you be willing to collaborate on having
-this implemented?
+Umh, actually you didn't. Sorry about that.
 
--- 
-Gabriel Filion
+> 
+>         add_fill_function(walker, (int (*)(void *)) fill_active_slot);
+> 
+> already deals with curl functionality. So even though I think it technically
+> doesn't break, I would prefer if this dependency were still expressed in the
+> code.
+> 
+> > @@ -88,6 +90,7 @@ int main(int argc, const char **argv)
+> >  "status code.  Suggest running 'git fsck'.\n");
+> >  	}
+> >  
+> > +	http_cleanup();
+> >  	walker_free(walker);
+> >  
+> >  	free(rewritten_url);
+> 
+> Same as above.
+
+But I think this is still valid.
+
+Clemens
