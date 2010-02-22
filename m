@@ -1,64 +1,60 @@
-From: "Scott R. Godin" <scottg.wp-hackers@mhg2.com>
-Subject: Re: apologies for the test, but I can't tell if I'm getting through
-Date: Mon, 22 Feb 2010 11:46:25 -0500
-Organization: MAD House Graphics
-Message-ID: <hlucd2$kur$1@dough.gmane.org>
-References: <hlu9d5$65e$1@dough.gmane.org>
+From: Dale Rowley <ddrowley3@juno.com>
+Subject: Re: unexpected git-merge result
+Date: Mon, 22 Feb 2010 17:24:33 +0000 (UTC)
+Message-ID: <loom.20100222T173851-763@post.gmane.org>
+References: <loom.20100219T202452-35@post.gmane.org> <7vaav4amjj.fsf@alter.siamese.dyndns.org> <loom.20100220T031401-572@post.gmane.org> <20100222054425.GC10191@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 22 17:46:45 2010
+X-From: git-owner@vger.kernel.org Mon Feb 22 18:24:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjbQg-0001RE-I3
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 17:46:42 +0100
+	id 1Njc1c-0004DL-Tj
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 18:24:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752610Ab0BVQqi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 11:46:38 -0500
-Received: from lo.gmane.org ([80.91.229.12]:41393 "EHLO lo.gmane.org"
+	id S1752365Ab0BVRYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 12:24:48 -0500
+Received: from lo.gmane.org ([80.91.229.12]:42958 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752538Ab0BVQqh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 11:46:37 -0500
+	id S1752020Ab0BVRYr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 12:24:47 -0500
 Received: from list by lo.gmane.org with local (Exim 4.69)
 	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NjbQa-0001Pb-Gb
-	for git@vger.kernel.org; Mon, 22 Feb 2010 17:46:36 +0100
-Received: from pool-71-187-150-2.nwrknj.fios.verizon.net ([71.187.150.2])
+	id 1Njc1U-0004AY-Ju
+	for git@vger.kernel.org; Mon, 22 Feb 2010 18:24:44 +0100
+Received: from proxy2b.external.lmco.com ([192.91.147.35])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 22 Feb 2010 17:46:36 +0100
-Received: from scottg.wp-hackers by pool-71-187-150-2.nwrknj.fios.verizon.net with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Mon, 22 Feb 2010 18:24:44 +0100
+Received: from ddrowley3 by proxy2b.external.lmco.com with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 22 Feb 2010 17:46:36 +0100
+        for <git@vger.kernel.org>; Mon, 22 Feb 2010 18:24:44 +0100
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: pool-71-187-150-2.nwrknj.fios.verizon.net
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7) Gecko/20100120 Fedora/3.0.1-1.fc11 Lightning/1.0b2pre Thunderbird/3.0.1
-In-Reply-To: <hlu9d5$65e$1@dough.gmane.org>
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 192.91.147.35 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.11) Gecko/2009060200 SUSE/3.0.11-5.2 Firefox/3.0.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140697>
 
-On 02/22/2010 10:55 AM, Scott R. Godin wrote:
-> if someone could respond to this so that I know my messages are being
-> posted to the list, I would be most appreciative. I'd sent one earlier
-> but having gotten zero responses in four days, I'm mildly concerned that
-> the gmane.org interface isn't forwarding me properly to the list, or
-> that I'm bouncing around the middle somewhere.
->
-> direct email confirmation is preferred so as to not clutter the list any
-> further.
+Dmitry Potapov <dpotapov <at> gmail.com> writes:
 
-Thanks to those that replied. looks like I am indeed getting through.
+> > 
+> > G only removed a few of the lines that were brought over in the cherry-pick
+> > (D'), so it was surprising when they re-appeared in H. 
+> 
+> git merge does 3-way merge, which means that it does not look at whole
+> history but only on the current state and the merge base.
 
-
--- 
-(please respond to the list as opposed to my email box directly,
-unless you are supplying private information you don't want public
-on the list)
+Yes, but my point is that this is the wrong thing to do in the case that I
+described above. If you explicitly remove some content in your branch, then it's
+bad when a merge causes it to re-appear without even any conflicts. The opposite
+is also possible (you add content to your branch and it silently disappears
+during a merge), so shouldn't this be a big concern?
