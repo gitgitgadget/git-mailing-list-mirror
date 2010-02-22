@@ -1,65 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Storing (hidden) per-commit metadata
-Date: Sun, 21 Feb 2010 09:49:28 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1002210945490.20986@pacific.mpi-cbg.de>
-References: <1266599485.29753.54.camel@ganieda> <1266687636-sup-7641@ben-laptop> <32541b131002201057t31fc8a6aydb0942171fe1b8c8@mail.gmail.com> <20100221063433.GA2840@coredump.intra.peff.net>
+From: Gabriel Filion <lelutin@gmail.com>
+Subject: Re: RFD: git-bzr: anyone interested?
+Date: Sun, 21 Feb 2010 23:53:11 -0500
+Message-ID: <4B820DB7.20406@gmail.com>
+References: <4B7D8358.1080108@gmail.com> <fabb9a1e1002181037n58d6942dpa63a57a23f506d9c@mail.gmail.com> 	<4B7E3856.3080609@gmail.com> <fabb9a1e1002182349h923d4acv55d9a41a249d4f51@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Ben Gamari <bgamari@gmail.com>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Feb 21 10:57:21 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 06:33:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nj7Or-0002fH-7k
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Feb 2010 09:42:49 +0100
+	id 1NjQQQ-000332-8R
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 06:01:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754713Ab0BUImo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Feb 2010 03:42:44 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43674 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754473Ab0BUImn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Feb 2010 03:42:43 -0500
-Received: (qmail invoked by alias); 21 Feb 2010 08:42:40 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp044) with SMTP; 21 Feb 2010 09:42:40 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/nTDU630Hn5DCVHKp5UlN4awlRRz8sufqD3ND7U/
-	KTcj2xgL4lFK49
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20100221063433.GA2840@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68999999999999995
+	id S1750820Ab0BVFBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 00:01:37 -0500
+Received: from qw-out-2122.google.com ([74.125.92.24]:14453 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750712Ab0BVFBg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 00:01:36 -0500
+Received: by qw-out-2122.google.com with SMTP id 8so408192qwh.37
+        for <git@vger.kernel.org>; Sun, 21 Feb 2010 21:01:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=GhARmpgcZBtL2Y1uam3Y0/PM3L7DXoKqWEKLHSQM50Q=;
+        b=RAN7+XaRNHnmAz3BXIHsTjcm2jjRzsicHK6Ic/X3C3VNUegB2cbo50nwKMGpONsI71
+         RtobWbmy0RKtnbvZ5GiCWi7C+6iu048LynXc8jpBRQpIM8vzj1dMRfxbbkBgxnJVcWPZ
+         nL45nNMq0vwzsBwYP/ALF5ma9OR/mSh18j4T8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=VZUql5EvBuky1i0rEQfUewoW/o0p3d+OVwr7qyAv3P40kEa/Tkf/6usjlXxXu1jm3j
+         ivaBDN8U+CSiaDrCdawTq1nOQy3xOnhSjaFYNaskHJSG82g/BtoJxywrrMRSMs9SWzt4
+         K1nTxa0UOQmnOk+jUR7bP2nmnY1IRRSP1cdZo=
+Received: by 10.224.95.162 with SMTP id d34mr5614428qan.196.1266814394957;
+        Sun, 21 Feb 2010 20:53:14 -0800 (PST)
+Received: from ?192.168.2.202? (dsl-152-38.aei.ca [66.36.152.38])
+        by mx.google.com with ESMTPS id 23sm2323820qyk.3.2010.02.21.20.53.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 21 Feb 2010 20:53:13 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20100108 Lightning/1.0b1 Icedove/3.0
+In-Reply-To: <fabb9a1e1002182349h923d4acv55d9a41a249d4f51@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140606>
 
-Hi,
+On 2010-02-19 02:49, Sverre Rabbelier wrote:
+> Heya,
+> 
+> [please do not cull the cc list, it is considered rude on this list]
+> 
+Oh .. sorry for that. I will keep this in mind from now on.
 
-On Sun, 21 Feb 2010, Jeff King wrote:
+> Perhaps you could benefit from looking at my git-remote-hg code so
+> far, I'll put it up on github [0] today as 'remote-hg'.
+> [...]
+> Yup, that would make sense, you could put your code in
+> /git_remote_helpers/bzr/, alongside with the to-be-added
+> /git_remote_helpers/hg and /git_remote_helpers/cvs.
+> 
+> [0] http://github.com/SRabbelier/git
+> 
+Thanks. I'm sure it'll be helpful.
 
-> If the only problem is that the data is ugly in "git show", then perhaps 
-> we need a "suppress these pseudo-headers" feature for showing logs. It 
-> keeps them easily available for inspection or for --grep, but most of 
-> the time you would not see them.
+I'm probably not going to push anything in the short future, cause I'd
+like to experiment a bit and think things through before starting to
+code. But the bzr remote helper code should be in my git clone on
+github. This way interested people can follow along and comment on the
+progress (more discussions will come on this list)
 
-Whoa. Even more processing to do for each commit during a "git log" run? 
-You know, other people are working on _accelerating_ git log as we speak!
+http://github.com/lelutin/git
 
-And really, while I can understand that the OP wanted to hide the 
-information, I am really against that. For example, when I see a log with 
-git-svn footers, it gives me _additional_ information which I actually 
-like (it tells me where these commits really come from). If they do not 
-need bidirectional, they can skip those footers.
-
-But I do agree that it is better to put the information into the same 
-objects rather than notes, lest the information get out-of-sync.
-
-Ciao,
-Dscho
+-- 
+Gabriel Filion
