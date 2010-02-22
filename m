@@ -1,76 +1,70 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Disable OpenSSL SHA1 implementation by default
-Date: Mon, 22 Feb 2010 06:23:26 -0500
-Message-ID: <20100222112326.GA21929@coredump.intra.peff.net>
-References: <20100222110814.GA3247@progeny.tock>
+Subject: Re: What's cooking in git.git (Feb 2010, #05; Sun, 21)
+Date: Mon, 22 Feb 2010 05:52:03 -0500
+Message-ID: <20100222105203.GB16531@coredump.intra.peff.net>
+References: <7vtytacebd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>,
-	Robert Shearman <robertshearman@gmail.com>,
-	Ben Walton <bwalton@artsci.utoronto.ca>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 13:20:11 2010
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 13:26:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjWNx-0007lq-4Q
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 12:23:33 +0100
+	id 1NjVtd-0003k0-5W
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 11:52:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752139Ab0BVLX2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Feb 2010 06:23:28 -0500
-Received: from peff.net ([208.65.91.99]:49374 "EHLO peff.net"
+	id S1752264Ab0BVKwH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 05:52:07 -0500
+Received: from peff.net ([208.65.91.99]:51990 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751773Ab0BVLX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 06:23:27 -0500
-Received: (qmail 26184 invoked by uid 107); 22 Feb 2010 11:23:41 -0000
+	id S1752209Ab0BVKwG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 05:52:06 -0500
+Received: (qmail 24876 invoked by uid 107); 22 Feb 2010 10:52:18 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 22 Feb 2010 06:23:41 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Feb 2010 06:23:26 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 22 Feb 2010 05:52:18 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Feb 2010 05:52:03 -0500
 Content-Disposition: inline
-In-Reply-To: <20100222110814.GA3247@progeny.tock>
+In-Reply-To: <7vtytacebd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140673>
 
-On Mon, Feb 22, 2010 at 05:08:14AM -0600, Jonathan Nieder wrote:
+On Sun, Feb 21, 2010 at 04:19:18PM -0800, Junio C Hamano wrote:
 
-> The OpenSSL SHA-1 routine is about as fast as block-sha1, but linking
-> to libcrypto slows down the startup of git commands by an appreciable
-> amount.  Use the BLK_SHA1 implementation by default instead.
+> * cp/add-u-pathspec (2010-02-09) 2 commits
+>  - test for add with non-existent pathspec
+>  - git add -u: die on unmatched pathspec
+> 
+> I am a bit torn on this one.  Traditionally we never complained on
+> unmatched pathspec when talking about tracked files.  If we were to go
 
-What is your definition of "about as fast"? I benchmarked up to a 20%
-slow-down a while back:
+True, though most of those pathspecs for tracked files are when viewing
+diffs. It seems more inconsistent here because "git add foo" complains
+but "git add -u foo" does not. So I think this one is definitely worth
+fixing.
 
-  http://article.gmane.org/gmane.comp.version-control.git/126995
+> this route, I think we should probably enhance the "run_diff_files" and
+> friends in such a way that they mark matched pathspecs, in a way similar
+> to match_pathspec() in dir.c does, and report unmatched ones based on
+> that result, instead of adding an extra pass to scan the index.  The same
+> goes for pathspec_matches() in builtin-grep.c
 
-Now my complaint then was specifically about removing openssl sha1
-support entirely, and I have no problem with setting OPENSSL_SHA1 in my
-build options, but it does make sense to me that the default should
-be whatever is fastest for most people. And that means benchmarking
-blk_sha1 versus the libcrypto linking slow-down on several machines to
-get actual numbers.
+Are you proposing to check pathspecs of tracked files for typos in other
+places, or simply indicating an alternative implementation to fix this
+problem?
 
-Unfortunately, I think we may end up with an apples-to-oranges
-comparison, as sha1-heavy tasks are affected one way, and scripted
-many-git-invocation tasks the other way.
-
-> Typed =E2=80=9Cmake NO_OPENSSL=3D1=E2=80=9D for the umpteenth time to=
-day, but this time
-> I thought I should something about it.
-
-echo 'NO_OPENSSL=3D1' >config.mak ?
-
-> -ifndef NO_OPENSSL
-> +ifdef OPENSSL_TLS
-> +	BASIC_CFLAGS +=3D -DOPENSSL_TLS
-> +	USE_OPENSSL =3D Yes
-> +endif
-
-Doesn't this flip the default for using TLS on imap-send?
+Either way, I think we need _something_ here. If you are volunteering to
+work on the alternative, fine, but otherwise (and even if it is just for
+a while until the other materializes), I would just as soon have the
+existing fix.
 
 -Peff
+
+PS Somewhat related, have you had a chance to read my:
+
+  http://article.gmane.org/gmane.comp.version-control.git/140434
