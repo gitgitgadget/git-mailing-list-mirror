@@ -1,84 +1,72 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: Branching a subset of your working tree
-Date: Mon, 22 Feb 2010 13:44:32 -0800
-Message-ID: <a038bef51002221344ic966a22x939824fa31020bff@mail.gmail.com>
-References: <ron1-F4D522.13070422022010@news.gmane.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 4/4] Use git_mkstemp_mode and xmkstemp_mode in odb_mkstemp, not chmod later.
+Date: Mon, 22 Feb 2010 23:11:15 +0100
+Message-ID: <vpqaav0or98.fsf@bauges.imag.fr>
+References: <1266597207-32036-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1266597207-32036-5-git-send-email-Matthieu.Moy@imag.fr>
+	<7vy6inekxq.fsf@alter.siamese.dyndns.org>
+	<vpqfx4tln64.fsf@bauges.imag.fr>
+	<7veikdau4i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ron Garret <ron1@flownet.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 22:44:42 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 23:15:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Njg50-00085v-Qa
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 22:44:39 +0100
+	id 1NjgYl-00027C-JU
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 23:15:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754414Ab0BVVoe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Feb 2010 16:44:34 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:48025 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754329Ab0BVVod convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2010 16:44:33 -0500
-Received: by pwj8 with SMTP id 8so3097858pwj.19
-        for <git@vger.kernel.org>; Mon, 22 Feb 2010 13:44:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=4HN5yxENsf0daSBJ9eP+nUeW4QPvXcXP/Gpkz3a6clU=;
-        b=W40f5pXXFV8ZCseV1cihhe7U1wNjGFibA2o39ytqXvQkVZUm3WkacPxkM9EAe1SpmE
-         fMbJIxscFa2x1RqpStbvEso2RJlQjVvlQHxKlsdH/VI/H19iwONpq/XT1w+5RBkc58nz
-         txZsbOjhYweT8Eq6s0S+qOhvVM/U3Jok2BD7U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ExQWDkqJfpLvZSRdsh+V8VFL0HHwnGzCK6f1gpSfZ0SKoGVL568bYo4iPPVZ8bY/q/
-         bTipkwP6uKfi43V0A1FN5FoEYehq4NjLxuMBXEaX7PgoHoSFVYyIAIZL4a0DUgnj6u8C
-         0WX6ZG7znpTS/sM8yguVYpSH00t3Qw8xwaMtA=
-Received: by 10.114.214.21 with SMTP id m21mr4749209wag.213.1266875072344; 
-	Mon, 22 Feb 2010 13:44:32 -0800 (PST)
-In-Reply-To: <ron1-F4D522.13070422022010@news.gmane.org>
+	id S1754414Ab0BVWPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 17:15:17 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:52757 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753431Ab0BVWPP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 17:15:15 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o1MM8rQi022639
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 22 Feb 2010 23:08:53 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NjgUl-0007b2-LR; Mon, 22 Feb 2010 23:11:15 +0100
+In-Reply-To: <7veikdau4i.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Mon\, 22 Feb 2010 12\:33\:01 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 22 Feb 2010 23:08:54 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140718>
 
-On Mon, Feb 22, 2010 at 1:07 PM, Ron Garret <ron1@flownet.com> wrote:
-> What is the recommended way to create a branch that contains a subset=
- of
-> your working tree? =C2=A0The use case is creating a distribution bran=
-ch that
-> will be pushed out to a server and I only want to include files that =
-are
-> ready to be released.
->
-> Thanks,
-> rg
+Junio C Hamano <gitster@pobox.com> writes:
 
-Well we did something similar at $dayjob. We had a repository
-consisting of code we wanted to release under the LGPL and code we
-wanted to keep private.
+> On another box with FC11 (git.git directory is on an ext4 partition), here
+> is what "sh -x t1304-default.acl.sh -i -v" gives me when run in
+> 'pu'.
 
-We ended up using git filter-branch to create 2 new repositories with
-commit histories one for the GPL stuff and one for the proprietary
-stuff. We then started working on them as 2 separate repositories.
+Actually, it wasn't such a subtle configuration. You have umask=022 on
+your machine, and I had umask=077 on the one I did the test. My test
+script was setting umask after . test-lib.sh, it should have done it
+before (so that the created repository is created with restrictive
+umask right away).
 
-This is possibly a different use case for your situation. We were
-happy to wear the fact that our developers would have to re-clone the
-2 repos but it sounds like you may want to be able to submit common
-code when it is logically complete.
+While I was there, I also added a testcase for object files.
 
-Another suggestion would be to use branches instead of separate repos.
-This similar to how git.git is run. i.e. "master" is the stable
-branch, "next" is the proving ground for features that have been
-cooked sufficiently and "pu" is where new topics get introduced
-(disclaimer: this may be an inaccurate representation of how git.git
-is _actually_ run but you get the gist). This of course assumes you
-are happy for the unstable code to be visible.
+> By the way, here is what the same command gets when run on FreeBSD 8.0
+> [...]
+> + setfacl -Rm u:root:rwx .
+> setfacl: illegal option -- R
+
+Thanks. I fixed the script not to use -R. But that's without any
+warranty, I don't have a FreeBSD machine for testing ...
+
+New serie comming soon, which should adress all your comments.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
