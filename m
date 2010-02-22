@@ -1,60 +1,89 @@
-From: Dale Rowley <ddrowley3@juno.com>
-Subject: Re: unexpected git-merge result
-Date: Mon, 22 Feb 2010 17:24:33 +0000 (UTC)
-Message-ID: <loom.20100222T173851-763@post.gmane.org>
-References: <loom.20100219T202452-35@post.gmane.org> <7vaav4amjj.fsf@alter.siamese.dyndns.org> <loom.20100220T031401-572@post.gmane.org> <20100222054425.GC10191@dpotapov.dyndns.org>
+From: Zygo Blaxell <zblaxell@gibbs.hungrycats.org>
+Subject: Re: [PATCH] Teach "git add" and friends to be paranoid
+Date: Mon, 22 Feb 2010 12:31:22 -0500
+Message-ID: <20100222173122.GG11733@gibbs.hungrycats.org>
+References: <20100214011812.GA2175@dpotapov.dyndns.org> <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org> <20100219082813.GB17952@dpotapov.dyndns.org> <7v635tkta7.fsf@alter.siamese.dyndns.org> <7v8waniue8.fsf@alter.siamese.dyndns.org> <20100221072142.GA5829@dpotapov.dyndns.org> <7vhbpas7ut.fsf@alter.siamese.dyndns.org> <20100222033553.GA10191@dpotapov.dyndns.org> <7vwry5pxg8.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1002221033120.1946@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 22 18:24:54 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Mon Feb 22 18:31:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Njc1c-0004DL-Tj
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 18:24:53 +0100
+	id 1Njc82-00082N-7k
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 18:31:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752365Ab0BVRYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 12:24:48 -0500
-Received: from lo.gmane.org ([80.91.229.12]:42958 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752020Ab0BVRYr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 12:24:47 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Njc1U-0004AY-Ju
-	for git@vger.kernel.org; Mon, 22 Feb 2010 18:24:44 +0100
-Received: from proxy2b.external.lmco.com ([192.91.147.35])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 22 Feb 2010 18:24:44 +0100
-Received: from ddrowley3 by proxy2b.external.lmco.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 22 Feb 2010 18:24:44 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 192.91.147.35 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.11) Gecko/2009060200 SUSE/3.0.11-5.2 Firefox/3.0.11)
+	id S1752522Ab0BVRbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 12:31:25 -0500
+Received: from ip-70-38-54-39.static.privatedns.com ([70.38.54.39]:41639 "EHLO
+	ginevra.hungrycats.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752471Ab0BVRbY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 12:31:24 -0500
+X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
+X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
+X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
+X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
+X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
+X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
+X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
+Received: from gibbs.hungrycats.org (gibbs.vpn7.hungrycats.org [10.132.226.42])
+	by ginevra.hungrycats.org (Postfix) with ESMTP id 11DBB801C;
+	Mon, 22 Feb 2010 12:31:23 -0500 (EST)
+Received: from zblaxell by gibbs.hungrycats.org with local (Exim 4.69)
+	(envelope-from <zblaxell@gibbs.hungrycats.org>)
+	id 1Njc7u-0000qS-Uh; Mon, 22 Feb 2010 12:31:22 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.1002221033120.1946@xanadu.home>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140698>
 
-Dmitry Potapov <dpotapov <at> gmail.com> writes:
-
+On Mon, Feb 22, 2010 at 10:40:59AM -0500, Nicolas Pitre wrote:
+> On Sun, 21 Feb 2010, Junio C Hamano wrote:
+> > Dmitry Potapov <dpotapov@gmail.com> writes:
+> > > But overall the outcome is clear -- read() is always a winner.
 > > 
-> > G only removed a few of the lines that were brought over in the cherry-pick
-> > (D'), so it was surprising when they re-appeared in H. 
+> > "... a winner, below 128kB; above that the difference is within noise and
+> > measurement error"?
 > 
-> git merge does 3-way merge, which means that it does not look at whole
-> history but only on the current state and the merge base.
+> read() is not always a winner.  A read() call will always have the data 
+> duplicated in memory.  Especially with large files, it is more efficient 
+> on the system as a whole to mmap() a 50 MB file rather than allocating 
+> an extra 50 MB of anonymous memory that cannot be paged out (except to 
+> the swap file which would be yet another data duplication).  With mmap() 
+> when there is memory pressure the read-only mapped memory is simply 
+> dropped with no extra IO.
 
-Yes, but my point is that this is the wrong thing to do in the case that I
-described above. If you explicitly remove some content in your branch, then it's
-bad when a merge causes it to re-appear without even any conflicts. The opposite
-is also possible (you add content to your branch and it silently disappears
-during a merge), so shouldn't this be a big concern?
+That holds if you're comparing read() and mmap() of the entire file as a
+single chunk, instead of in fixed-size chunks at the sweet spot between
+syscall overhead and CPU cache size.
+
+If you're read()ing a chunk at a time into a fixed size buffer, and
+doing sha1 and deflate in chunks, the data should be copied once into CPU
+cache, processed with both algorithms, and replaced with new data from
+the next chunk.  The data will be copied from the page cache instead
+of directly mapped, which is a small overhead, but setting up the page
+map in mmap() also a small overhead, so you have to use benchmarks to
+know which of the overheads is smaller.  It might be that there's no
+one answer that applies to all CPU configurations.
+
+If you're doing mmap() and sha1 and deflate of a 50MB file in two
+separate passes that are the same size as the file, you load 50MB of
+data into CPU cache at least twice, you get two sets of associated
+things like TLB misses, and if the file is very large, you page it from
+disk twice.  So it might make sense to process in chunks regardless
+of read() vs mmap() fetching the data.
+
+If you're malloc()ing 50MB, you're wasting memory and CPU bandwidth
+making up pages full of zeros before you've even processed the first byte.
+I don't see how that could ever be faster for large file cases.
