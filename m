@@ -1,68 +1,67 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2 6/7] tests: Add tests for automatic use of pager
-Date: Mon, 22 Feb 2010 09:19:45 +0100
-Message-ID: <4B823E21.1060707@viscovery.net>
-References: <20100219065010.GA22258@progeny.tock> <20100219071857.GF29916@progeny.tock> <7v8wanq0c3.fsf@alter.siamese.dyndns.org> <20100221020317.GA7651@progeny.tock>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sebastian Celis <sebastian@sebastiancelis.com>,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 10:17:24 2010
+From: Tuomas Suutari <tuomas.suutari@gmail.com>
+Subject: git-svn detects some merges incorrectly from svn:mergeinfo
+Date: Mon, 22 Feb 2010 09:57:19 +0200
+Message-ID: <1266825442-32107-1-git-send-email-tuomas.suutari@gmail.com>
+Cc: Tuomas Suutari <tuomas.suutari@gmail.com>,
+	Sam Vilain <sam@vilain.net>, Eric Wong <normalperson@yhbt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 22 10:29:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjTWO-00081K-V7
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 09:20:05 +0100
+	id 1NjTB7-00050C-CY
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 08:58:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752872Ab0BVITw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 03:19:52 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:57801 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752733Ab0BVITu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 03:19:50 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NjTW5-0005mf-RP; Mon, 22 Feb 2010 09:19:46 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 8F2801660F;
-	Mon, 22 Feb 2010 09:19:45 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <20100221020317.GA7651@progeny.tock>
-X-Spam-Score: 1.9 (+)
+	id S1752132Ab0BVH54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 02:57:56 -0500
+Received: from mail-fx0-f219.google.com ([209.85.220.219]:44130 "EHLO
+	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751171Ab0BVH5z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 02:57:55 -0500
+Received: by fxm19 with SMTP id 19so2147720fxm.1
+        for <git@vger.kernel.org>; Sun, 21 Feb 2010 23:57:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=upO25b/FBxa2AdcX9aj+HHIIj62adBTCW7l7pwS6VpE=;
+        b=PN7Q23K+CsT94DFl2ep7DdKmS6lRBZKIIX/+R63uh5iHaxT0/eTeZZGoPevWOj1mVx
+         YmzT3nw/m81KE/Kbx+LqWLkb1KB/+OCfJ71NI7ESFNmNfK6dgEOaXQ1Ouhb4k1NhYJRl
+         NceZ7O+fkCo8AmusSebnPvfUDlkBCelWKEcN4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=PUz51WxYTxqJljFW58NANBe8ROjwjZx+LCsDGGNi7MuPzwHg9J8kVhK/5Ron2eljYW
+         huCbkYVPn6S1JHZacMEx93kdSQBHPLSQo+NCA5hqVo5fHvgePmcexJQwTXU8x/8+Nkxg
+         jJdZODDZIdH9FSxQtknhLIoXbUYYxhOvbuUD0=
+Received: by 10.87.9.39 with SMTP id m39mr1857695fgi.73.1266825474491;
+        Sun, 21 Feb 2010 23:57:54 -0800 (PST)
+Received: from localhost.localdomain (ws-26-184.laitilanpuhelin.fi [188.123.26.184])
+        by mx.google.com with ESMTPS id e3sm4952313fga.16.2010.02.21.23.57.53
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 21 Feb 2010 23:57:54 -0800 (PST)
+X-Mailer: git-send-email 1.7.0.86.g7501
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140648>
 
-Don't the following pager settings suffer from a race condition?
+Hi,
 
-> +	cat > $less <<-EOF &&
-> +	#!$SHELL_PATH
-> +	: > default_pager_used
-> +	EOF
+Now that git-svn detects merges from svn:mergeinfo, I thought it's
+time to re-import some of my SVN repos with git-svn. Detecting of the
+merges worked mostly well, but when inspecting the imported history
+with gitk, I found some incorrectly detected merges.
 
-> +	PAGER=": > PAGER_used" &&
+This patch series adds a test case and a fix for the case.
 
-> +	PAGER=: &&
+I was a bit uncertain if the fix should go to parents_exclude function
+or to "cater for merges which merge commits from multiple branches"
+section of find_extra_svn_parents function. I chose the latter and at
+least it does the trick.
 
-> +	git config core.pager ": > core.pager_used" &&
-
-> +	git config core.pager : &&
-> +	GIT_PAGER=": > GIT_PAGER_used" &&
-
-They depend on that the subsequent 'git log' writes to the pipe (and does
-not fill it) before the pager can run. If the pager runs first and
-completes, and then 'git log' writes to the pipe, it will die from
-SIGPIPE, won't it?
-
-I suggest to rewrite all ':' to something that processes stdin, eg. 'wc'
-(not 'cat', because this is a magic token).
-
--- Hannes
+-- 
+Tuomas
