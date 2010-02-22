@@ -1,115 +1,88 @@
-From: Tuomas Suutari <tuomas.suutari@gmail.com>
-Subject: Re: [PATCH 3/3] git-svn: Fix discarding of extra parents from svn:mergeinfo
-Date: Mon, 22 Feb 2010 20:04:55 +0200
-Message-ID: <201002222004.55898.tuomas.suutari@gmail.com>
-References: <1266825442-32107-1-git-send-email-tuomas.suutari@gmail.com> <1266825442-32107-4-git-send-email-tuomas.suutari@gmail.com> <201002221057.35088.trast@student.ethz.ch>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH] Teach "git add" and friends to be paranoid
+Date: Mon, 22 Feb 2010 21:05:45 +0300
+Message-ID: <37fcd2781002221005l2a8ecb64y3be84eaaacd27cdc@mail.gmail.com>
+References: <20100214011812.GA2175@dpotapov.dyndns.org>
+	 <20100219082813.GB17952@dpotapov.dyndns.org>
+	 <7v635tkta7.fsf@alter.siamese.dyndns.org>
+	 <7v8waniue8.fsf@alter.siamese.dyndns.org>
+	 <20100221072142.GA5829@dpotapov.dyndns.org>
+	 <7vhbpas7ut.fsf@alter.siamese.dyndns.org>
+	 <20100222033553.GA10191@dpotapov.dyndns.org>
+	 <7vwry5pxg8.fsf@alter.siamese.dyndns.org>
+	 <alpine.LFD.2.00.1002221033120.1946@xanadu.home>
+	 <20100222173122.GG11733@gibbs.hungrycats.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
-	Eric Wong <normalperson@yhbt.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Feb 22 19:05:13 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Zygo Blaxell <zblaxell@gibbs.hungrycats.org>
+X-From: git-owner@vger.kernel.org Mon Feb 22 19:05:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Njcee-0005uI-GY
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 19:05:12 +0100
+	id 1NjcfJ-0006CF-Ix
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 19:05:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753684Ab0BVSFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 13:05:05 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:62933 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753493Ab0BVSFC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 13:05:02 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so547797fga.1
-        for <git@vger.kernel.org>; Mon, 22 Feb 2010 10:05:01 -0800 (PST)
+	id S1753758Ab0BVSFs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 13:05:48 -0500
+Received: from mail-fx0-f219.google.com ([209.85.220.219]:62285 "EHLO
+	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753555Ab0BVSFr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 13:05:47 -0500
+Received: by fxm19 with SMTP id 19so2787245fxm.21
+        for <git@vger.kernel.org>; Mon, 22 Feb 2010 10:05:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        bh=CYs51TlKOcXHG7e+jhYoaIQMj08+a+DMb1jk/E6Dftg=;
-        b=cKJAF6XO0vJ4uKeiK8LsdZzk/fQ5wo65heO4O4lvXxEczbJd8pF90Z6HvXZsecC8yA
-         WB0DwXaGRd42YNs/aHDhqAEaByYOL/Hz3F0mAjlyx32RSDJZH8FejqUBxR/N469gNtWR
-         ZlGvOsLtVI9ImOVPGXWiOljOGXn9dFrklvTKw=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=qCeKWOKaowxFKJV8T3kSWJdhldz7dAF6Sp3+fMN6484=;
+        b=jAaxsd8tg4qJ4Bho9amb3GBmSGPTSgs7/m3phRakmq28kwDbQ3nP60LaAm9N6V85yQ
+         qNWsO8BLbvZU6vWo2um8i5RDH9jrzoUT+V/yQD0l8VZoGyTgBiSySppZnSD9I/X3ES6/
+         /rRb7Djvf4K5/qui+ON0GXKMI/DHltsMH70v0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding:message-id;
-        b=t1cqCTos5H5orUVGGHwmaSRQI/1ZXJ4DAhemMvNRPl6opij3D4mkMMehwowv/Myfgf
-         6uihTxUVM/Ng4Iwh0eOmr4TkWFYFjjU4TT67nH2BMAXY9sizit2qdMEg0X13wiln8kiR
-         oQblvBbRernEkCAk6hKw2Lcw5TNnXCVDIiiX4=
-Received: by 10.86.236.26 with SMTP id j26mr7349941fgh.77.1266861901415;
-        Mon, 22 Feb 2010 10:05:01 -0800 (PST)
-Received: from mikrohiiri.localnet (ws-26-184.laitilanpuhelin.fi [188.123.26.184])
-        by mx.google.com with ESMTPS id e3sm6367035fga.1.2010.02.22.10.04.57
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 22 Feb 2010 10:04:57 -0800 (PST)
-User-Agent: KMail/1.12.3 (Linux/2.6.31-gentoo-r6; KDE/4.3.3; i686; ; )
-In-Reply-To: <201002221057.35088.trast@student.ethz.ch>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=L5Q7qD5htPTVgeojIv0TfNAInsP995NZvgWoNrVK1QP/dUo2mqW5YbLI8/uSyA/YCC
+         ukkb8sJXEUCVkhZraVWN/MZyybXuxYhjhVHXCega1LE5OiXzo81RgMPIOhuhwe9RzciM
+         kDIV/n9/5spsBzyoq+mYdjATqlOxSDLDjq48E=
+Received: by 10.239.146.210 with SMTP id x18mr1658175hba.77.1266861945580; 
+	Mon, 22 Feb 2010 10:05:45 -0800 (PST)
+In-Reply-To: <20100222173122.GG11733@gibbs.hungrycats.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140702>
 
-On Mon 2010-02-22 11:57:34 Thomas Rast wrote:
-> On Monday 22 February 2010 08:57:22 Tuomas Suutari wrote:
-> > Use merge-base rather than rev-list for detecting if a parent is an
-> > ancestor of another, because rev-list gives incorrect results
-> > sometimes.
-> 
-[...]
-> 
-> I think you swapped the test (or I got confused, which is entirely
-> possible).
-
-Ah, seems so. I was already writing a long reply explaining why rev-list 
-can't be used but only merge-base just to realize that, indeed, rev-list can 
-be used after all. The code just used to discard the wrong parent.
-
-> Let I = $new_parents[$i] and J = $new_parents[$j].  The
-> old one was
-> 
->   test -z "$(git rev-list -1 I..J)"
-> 
-> which reads "unless there are any commits on J which are not on I",
-> i.e., it fails unless J is an ancestor of I.
+On Mon, Feb 22, 2010 at 8:31 PM, Zygo Blaxell
+<zblaxell@gibbs.hungrycats.org> wrote:
 >
-> But the new one is
-> 
->   "$(git merge-base I J)" == I.
-> 
-> so suddenly I must be an ancestor of J.
->
-> Is that what you were fixing?
+> If you're read()ing a chunk at a time into a fixed size buffer, and
+> doing sha1 and deflate in chunks, the data should be copied once into CPU
+> cache, processed with both algorithms, and replaced with new data from
+> the next chunk.
 
-Yes.
+Currently, we calculate SHA-1, then lookup whether the object with this
+SHA-1 exists, and if it does not, then deflate and write it to the
+object storage. So, we avoid deflate and write cost if this object
+already exists. Moreover, when we deflate data, we create the temporary
+file in the same directory where the target object will be stored, thus
+avoiding cross-directory rename (which is important for some reason, but
+I don't remember why).  So, creating the temporary file requires the
+knowledge first two digits of SHA-1, which you cannot know without
+calculation SHA-1.
 
-> Because I don't think the 'rev-list -1'
-> test is any worse than the merge-base test.
+So, the idea of processing file in chunks is very attractive, but it has
+two drawbacks:
+1. extra cost (deflating+writing) when the object is already stored
+2. some issues with cross-directory renaming
 
-You're right. I failed to see that I can get the same results by swapping $i 
-with $j in the undef($new_parents[$i]) statement.
 
-My pitfall was that I considered only changing the "if ( !$revs )" part to 
-"if ( $revs )" with the rev-list approach. That wouldn't have worked, 
-because then the other test case, included in PATCH 2, would have failed.
-(When there are two distinct branches merged to one.)
-
-> If it's not, please tell
-> us what you are fixing.  Either way, please change the commit message
-> appropriately.
-
-Yes, the commit message was horrible. I was hoping that, by writing a test 
-case as a "description" about the problem, I would avoid writing so much 
-English... ;)
-
-I will send another patch soon. Hopefully with better commit message.
-
--- 
-Tuomas
+Dmitry
