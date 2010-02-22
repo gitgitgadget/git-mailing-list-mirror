@@ -1,109 +1,115 @@
-From: Tim Visher <tim.visher@gmail.com>
-Subject: Re: Configuring git to for forget removed files
-Date: Sat, 20 Feb 2010 10:41:02 -0500
-Message-ID: <c115fd3c1002200741l25f32685t998a19e76922a2d2@mail.gmail.com>
-References: <4B7FBB73.70004@gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] sha1_file: don't malloc the whole compressed result when
+ writing out objects
+Date: Sun, 21 Feb 2010 20:35:48 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1002211950250.1946@xanadu.home>
+References: <alpine.LFD.2.00.1002202323500.1946@xanadu.home>
+ <7vd3zys79d.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1002211522120.1946@xanadu.home>
+ <7v3a0umdb8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Andrew Benton <b3nton@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 20 16:41:30 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 03:08:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NirST-0001Cf-FB
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Feb 2010 16:41:29 +0100
+	id 1NjNGg-0002oQ-Fr
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 02:39:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756057Ab0BTPlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Feb 2010 10:41:24 -0500
-Received: from mail-gx0-f217.google.com ([209.85.217.217]:48267 "EHLO
-	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754919Ab0BTPlX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Feb 2010 10:41:23 -0500
-Received: by gxk9 with SMTP id 9so1308021gxk.8
-        for <git@vger.kernel.org>; Sat, 20 Feb 2010 07:41:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=tZXrBft79ER9CENxKUhLwgSqEwYsDrLg5ZyCDhB/W2w=;
-        b=ft1XvsRoq68XF1i6NDKvthTnzzpkN3DTIjDPiF9DVo49W7v4sCO+O9EipIjUBdTHch
-         ZgvCts67LPaNFbVMww20FGECbwQA4JfARbM1bKd6GMj9kYZlUuCxFLsOnFsQNVfnX3lD
-         o5XOY6HZyDuDHs1EjETmJPDKz5xs65E2BUWFI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=xsPfkU2xgH7Xpm3FUFX3H+bR0YkKV+8Wr7iPjZOYnfBiKiH96TGd4uwChs6g1fwOqh
-         UuioM81wpkPVR3swuXe+lsOuJW9ivcaqo7jaxqwsS0DZP/1ZIqfAuausYf5+nHgXuV06
-         Pi/qNfBIPiPDqIfxJ/iltG7OGiwjZ6zBhd98Y=
-Received: by 10.100.17.12 with SMTP id 12mr46995anq.179.1266680482414; Sat, 20 
-	Feb 2010 07:41:22 -0800 (PST)
-In-Reply-To: <4B7FBB73.70004@gmail.com>
+	id S1754212Ab0BVBjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Feb 2010 20:39:19 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:15116 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754066Ab0BVBjS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Feb 2010 20:39:18 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0KY70077TZ3OYX70@VL-MR-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 21 Feb 2010 20:35:48 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7v3a0umdb8.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140534>
 
-Hi Andy,
+On Sun, 21 Feb 2010, Junio C Hamano wrote:
 
-On Sat, Feb 20, 2010 at 5:37 AM, Andrew Benton <b3nton@gmail.com> wrote:
-> I have a project that I store in a git repository. It's a bunch of source
-> tarballs and some bash scripts to compile it all. Git makes it easy to
-> distribute any changes I make across the computers I run. The problem I have
-> is that over time the repository gets ever larger. When I update to a newer
-> version of something I git rm the old tarball but git still keeps a copy and
-> the folder grows ever larger. At the moment the only solution I have is to
-> periodically rm -rf .git and start again. This works but is less than ideal
-> because I lose all the history for my build scripts.
->
-> What I would like is to be able to tell git to not keep a copy of anything
-> that has been git rm. The build scripts never get removed, only altered so
-> their history would be preserved. Is it possible to make git delete its backup
-> copies of removed files?
+> Nicolas Pitre <nico@fluxnic.net> writes:
+> 
+> >  	/* Then the data itself.. */
+> >  	stream.next_in = buf;
+> >  	stream.avail_in = len;
+> >  	do {
+> > +		unsigned char *in0 = stream.next_in;
+> >  		ret = deflate(&stream, Z_FINISH);
+> > +		git_SHA1_Update(&c, in0, stream.next_in - in0);
+> 
+> Actually, I have to take my earlier comment back.  This is not "paranoia".
+> 
+> I do not see anything that protects the memory area between in0 and
+> stream.next_in from getting modified while deflate() nor SHA1_Update() run
+> from the outside.
 
-I don't know if I can really speak to your hoped for conclusion
-although `git filter-branch` is where you want to look for rewriting
-history.  However, that's also an entirely impractical solution if
-your repo is at all public because it would completely break sharing.
+So what?
 
-That being said, have you thought of changing your repo strategy?
-IMHO, storing binary blobs that change at all regularly in _any_ SCMS
-is a problem waiting to happen.  It's different if you have assets
-that are fairly stable like images for a system's UI or dependencies
-that have been stabilized, but that doesn't sound like your situation.
+> Unless you copy the data away to somewhere stable at
+> the beginning of each iteration of this loop and run deflate() and
+> SHA1_Update(), you cannot have "paranoia".
 
-As a thought, why not try to do something along the lines of
-maintaining a symlink to whatever tarballs your project currently
-depends on as a 'foolib-latest' and then having a separate directory
-that has a file that you can change.  You could maintain backups of
-that using a tool like rsync (since you obviously aren't concerned
-with maintaining history there) rather than git.  Then you could
-decide arbitrarily how many backups you want to make and try to
-maintain what version of the file went with which commit in your repo.
- The main problem I see with that is that you loose a lot of the
-advantages of having a SCMS because you can't reliably checkout a
-previous commit and build it; at least not without some very serious
-effort.
+No.
 
-Another possible solution if you maintain the sources that are
-generating the tarballs is to treat the tarballs as artifacts of the
-build rather than as assets that should be managed by the SCMS.  In
-that way, you might spend more time during each build but your repo
-would be much cleaner and would have the added advantage of being able
-to completely build itself at every commit point.
+The whole point is to detect data incoherencyes.
 
-Anyway, just food for thought.
+So current sequence of events is as follows:
+
+T0	write_sha1_file_prepare() is called
+T1	start initial SHA1 computation on data buffer
+T2	in the middle of initial SHA1 computation
+T3	end of initial SHA1 computation -> object name is determined
+T4	write_loose_object() is called
+...	enter the write loop
+T5+n	deflate() called on buffer n
+T6+n	git_SHA1_Update(() called on the same buffer n
+T7+n	deflated data written out
+...
+Tend	abort if result of T6+n doesn't match object name from T3
+
+So... what can happen:
+
+1) Data is externally modified before T5+n: deflated data and its CRC32 
+   will be coherent with the SHA1 computed in T6+n, but incoherent with 
+   the SHA1 used for the object name. Wrong data is written to the 
+   object even if it will inflate OK. We really want to prevent that 
+   from happening. The test in Tend will fail.
+
+2) Data is externally modified between T5+n and T6+n: the deflated data 
+   and CRC32 will be coherent with the object name but incoherent with 
+   the parano_sha1.  Although written data will be OK, this is way too 
+   close from being wrong, and the test in Tend will fail.  If there is 
+   more than one round into the loop and the external modifications are 
+   large enough then this becomes the same as case 1 above.
+
+3) Data is externally modified in T2: again the test in Tend will fail.
+
+So in all possible cases I can think of, the write will abort.  No copy 
+buffer needed, no filesystem mtime required, etc.  If the whole data is 
+not stable between T1 and Tend then the object is not added to the 
+repository.  Of course it is possible that the data be modified at the 
+beginning of the file while the loop in T[5-7] is passed that point.  
+But still, there is no data inconsistency at that point.
+
+> My comment about "trickier" is about determining the size of that buffer
+> used as "somewhere stable".
+
+We don't care about such buffer.
 
 
--- 
-
-In Christ,
-
-Timmy V.
-
-http://burningones.com/
-http://five.sentenc.es/ - Spend less time on e-mail
+Nicolas
