@@ -1,121 +1,115 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH] Teach "git add" and friends to be paranoid
-Date: Mon, 22 Feb 2010 13:01:13 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1002221238110.1946@xanadu.home>
-References: <20100214011812.GA2175@dpotapov.dyndns.org>
- <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org>
- <20100219082813.GB17952@dpotapov.dyndns.org>
- <7v635tkta7.fsf@alter.siamese.dyndns.org>
- <7v8waniue8.fsf@alter.siamese.dyndns.org>
- <20100221072142.GA5829@dpotapov.dyndns.org>
- <7vhbpas7ut.fsf@alter.siamese.dyndns.org>
- <20100222033553.GA10191@dpotapov.dyndns.org>
- <7vwry5pxg8.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1002221033120.1946@xanadu.home>
- <20100222173122.GG11733@gibbs.hungrycats.org>
+From: Tuomas Suutari <tuomas.suutari@gmail.com>
+Subject: Re: [PATCH 3/3] git-svn: Fix discarding of extra parents from svn:mergeinfo
+Date: Mon, 22 Feb 2010 20:04:55 +0200
+Message-ID: <201002222004.55898.tuomas.suutari@gmail.com>
+References: <1266825442-32107-1-git-send-email-tuomas.suutari@gmail.com> <1266825442-32107-4-git-send-email-tuomas.suutari@gmail.com> <201002221057.35088.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Zygo Blaxell <zblaxell@gibbs.hungrycats.org>
-X-From: git-owner@vger.kernel.org Mon Feb 22 19:01:21 2010
+Content-Type: Text/Plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	Eric Wong <normalperson@yhbt.net>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Feb 22 19:05:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Njcav-0004Ln-JI
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 19:01:21 +0100
+	id 1Njcee-0005uI-GY
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 19:05:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753342Ab0BVSBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 13:01:15 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:35605 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752972Ab0BVSBO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 13:01:14 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KY90075E8Q1VS70@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 22 Feb 2010 13:01:14 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20100222173122.GG11733@gibbs.hungrycats.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1753684Ab0BVSFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 13:05:05 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:62933 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753493Ab0BVSFC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 13:05:02 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so547797fga.1
+        for <git@vger.kernel.org>; Mon, 22 Feb 2010 10:05:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:message-id;
+        bh=CYs51TlKOcXHG7e+jhYoaIQMj08+a+DMb1jk/E6Dftg=;
+        b=cKJAF6XO0vJ4uKeiK8LsdZzk/fQ5wo65heO4O4lvXxEczbJd8pF90Z6HvXZsecC8yA
+         WB0DwXaGRd42YNs/aHDhqAEaByYOL/Hz3F0mAjlyx32RSDJZH8FejqUBxR/N469gNtWR
+         ZlGvOsLtVI9ImOVPGXWiOljOGXn9dFrklvTKw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding:message-id;
+        b=t1cqCTos5H5orUVGGHwmaSRQI/1ZXJ4DAhemMvNRPl6opij3D4mkMMehwowv/Myfgf
+         6uihTxUVM/Ng4Iwh0eOmr4TkWFYFjjU4TT67nH2BMAXY9sizit2qdMEg0X13wiln8kiR
+         oQblvBbRernEkCAk6hKw2Lcw5TNnXCVDIiiX4=
+Received: by 10.86.236.26 with SMTP id j26mr7349941fgh.77.1266861901415;
+        Mon, 22 Feb 2010 10:05:01 -0800 (PST)
+Received: from mikrohiiri.localnet (ws-26-184.laitilanpuhelin.fi [188.123.26.184])
+        by mx.google.com with ESMTPS id e3sm6367035fga.1.2010.02.22.10.04.57
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 22 Feb 2010 10:04:57 -0800 (PST)
+User-Agent: KMail/1.12.3 (Linux/2.6.31-gentoo-r6; KDE/4.3.3; i686; ; )
+In-Reply-To: <201002221057.35088.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140701>
 
-On Mon, 22 Feb 2010, Zygo Blaxell wrote:
-
-> On Mon, Feb 22, 2010 at 10:40:59AM -0500, Nicolas Pitre wrote:
-> > On Sun, 21 Feb 2010, Junio C Hamano wrote:
-> > > Dmitry Potapov <dpotapov@gmail.com> writes:
-> > > > But overall the outcome is clear -- read() is always a winner.
-> > > 
-> > > "... a winner, below 128kB; above that the difference is within noise and
-> > > measurement error"?
-> > 
-> > read() is not always a winner.  A read() call will always have the data 
-> > duplicated in memory.  Especially with large files, it is more efficient 
-> > on the system as a whole to mmap() a 50 MB file rather than allocating 
-> > an extra 50 MB of anonymous memory that cannot be paged out (except to 
-> > the swap file which would be yet another data duplication).  With mmap() 
-> > when there is memory pressure the read-only mapped memory is simply 
-> > dropped with no extra IO.
+On Mon 2010-02-22 11:57:34 Thomas Rast wrote:
+> On Monday 22 February 2010 08:57:22 Tuomas Suutari wrote:
+> > Use merge-base rather than rev-list for detecting if a parent is an
+> > ancestor of another, because rev-list gives incorrect results
+> > sometimes.
 > 
-> That holds if you're comparing read() and mmap() of the entire file as a
-> single chunk, instead of in fixed-size chunks at the sweet spot between
-> syscall overhead and CPU cache size.
+[...]
+> 
+> I think you swapped the test (or I got confused, which is entirely
+> possible).
 
-Obviously.  But we currently don't have the infrastructure to do chunked 
-read of the input data.  I think we should do that eventually, by 
-applying the pack windowing code to input files as well.  That would 
-make memory usage constant even for huge files, but this is much more 
-complicated to support especially for data fed through stdin.
+Ah, seems so. I was already writing a long reply explaining why rev-list 
+can't be used but only merge-base just to realize that, indeed, rev-list can 
+be used after all. The code just used to discard the wrong parent.
 
-> If you're read()ing a chunk at a time into a fixed size buffer, and
-> doing sha1 and deflate in chunks, the data should be copied once into CPU
-> cache, processed with both algorithms, and replaced with new data from
-> the next chunk.  The data will be copied from the page cache instead
-> of directly mapped, which is a small overhead, but setting up the page
-> map in mmap() also a small overhead, so you have to use benchmarks to
-> know which of the overheads is smaller.  It might be that there's no
-> one answer that applies to all CPU configurations.
+> Let I = $new_parents[$i] and J = $new_parents[$j].  The
+> old one was
+> 
+>   test -z "$(git rev-list -1 I..J)"
+> 
+> which reads "unless there are any commits on J which are not on I",
+> i.e., it fails unless J is an ancestor of I.
+>
+> But the new one is
+> 
+>   "$(git merge-base I J)" == I.
+> 
+> so suddenly I must be an ancestor of J.
+>
+> Is that what you were fixing?
 
-Normally mmap() has more overhead than read().  However mmap() provides 
-much nicer properties than read() by simplifying the code a lot, and by 
-letting the OS manage memory pressure much more gracefully.
+Yes.
 
-> If you're doing mmap() and sha1 and deflate of a 50MB file in two
-> separate passes that are the same size as the file, you load 50MB of
-> data into CPU cache at least twice, you get two sets of associated
-> things like TLB misses, and if the file is very large, you page it from
-> disk twice.  So it might make sense to process in chunks regardless
-> of read() vs mmap() fetching the data.
+> Because I don't think the 'rev-list -1'
+> test is any worse than the merge-base test.
 
-We do have to make two separate passes anyway.  The first pass is to 
-hash the data only, and if that hash already exists in the object store 
-then we call it done and skip over the deflate process which is still 
-the dominant cost.  And that happens quite often.
+You're right. I failed to see that I can get the same results by swapping $i 
+with $j in the undef($new_parents[$i]) statement.
 
-However, with a really large file, then it becomes advantageous to 
-simply do the hash and deflate in parallel one chunk at a time, and 
-simply discard the newly created objects if it happens to already 
-exists.  That's the whole idea behind the newly introduced 
-core.bigFileThreshold config variable (but the code to honor it in 
-sha1_file.c doesn't exist yet).
+My pitfall was that I considered only changing the "if ( !$revs )" part to 
+"if ( $revs )" with the rev-list approach. That wouldn't have worked, 
+because then the other test case, included in PATCH 2, would have failed.
+(When there are two distinct branches merged to one.)
 
-> If you're malloc()ing 50MB, you're wasting memory and CPU bandwidth
-> making up pages full of zeros before you've even processed the first byte.
-> I don't see how that could ever be faster for large file cases.
+> If it's not, please tell
+> us what you are fixing.  Either way, please change the commit message
+> appropriately.
 
-It can't.  This is why read() is not much better than mmap() in those 
-cases.
+Yes, the commit message was horrible. I was hoping that, by writing a test 
+case as a "description" about the problem, I would avoid writing so much 
+English... ;)
 
+I will send another patch soon. Hopefully with better commit message.
 
-Nicolas
+-- 
+Tuomas
