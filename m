@@ -1,117 +1,107 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Storing (hidden) per-commit metadata
-Date: Mon, 22 Feb 2010 08:17:48 +0300
-Message-ID: <20100222051748.GB10191@dpotapov.dyndns.org>
-References: <1266599485.29753.54.camel@ganieda>
- <1266687636-sup-7641@ben-laptop>
- <32541b131002201057t31fc8a6aydb0942171fe1b8c8@mail.gmail.com>
- <20100221063433.GA2840@coredump.intra.peff.net>
- <1266754646.12035.23.camel@ganieda>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] sha1_file: don't malloc the whole compressed result when
+ writing out objects
+Date: Sun, 21 Feb 2010 21:30:41 -0800
+Message-ID: <7v635p4z26.fsf@alter.siamese.dyndns.org>
+References: <alpine.LFD.2.00.1002202323500.1946@xanadu.home>
+ <7vd3zys79d.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1002211522120.1946@xanadu.home>
+ <7v3a0umdb8.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1002211950250.1946@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Avery Pennarun <apenwarr@gmail.com>,
-	Ben Gamari <bgamari@gmail.com>, git <git@vger.kernel.org>
-To: Jelmer Vernooij <jelmer@samba.org>
-X-From: git-owner@vger.kernel.org Mon Feb 22 07:05:11 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Mon Feb 22 07:05:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjQgB-0001iN-Hn
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 06:17:59 +0100
+	id 1NjQsx-0008As-Bx
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 06:31:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751386Ab0BVFRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 00:17:53 -0500
-Received: from mail-fx0-f213.google.com ([209.85.220.213]:46126 "EHLO
-	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751093Ab0BVFRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 00:17:52 -0500
-Received: by fxm5 with SMTP id 5so2283932fxm.29
-        for <git@vger.kernel.org>; Sun, 21 Feb 2010 21:17:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=bjOTsIqny8dwn7eappdI3UKmqlpokurDw6qp6tqplDs=;
-        b=IW3htOgArd7nvWu5algqLcHk6yGdhLjy4YkDzyPsys7Sj6fIxi6Yy8jxwY2jxOH3oN
-         L4REqdGsJYNF1WxilsGs0DEvQm7glKLvZ3hgPVCVP5JJU5ovKYGK40sj3alkT4PmHaUn
-         i1v5RbhYNrDGryHSdgmjVD7v+wAJaS1dMLHJo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=MTnwi1SeOXYDbi9lJQudCL/phVWWHzX96nocsmf1us157njR4C3Js7IgvuICjDfwMa
-         NL2SGlk344dHOm3HjsYPG2aPiq41wq9l6tdAhUWfNW/vjHX9uYZIjc7DeXi1BmTYJceD
-         cqCL7ccWBrJcsKjhg0P8IVMHeWXT3+o4PVQsM=
-Received: by 10.103.81.20 with SMTP id i20mr3062934mul.21.1266815870856;
-        Sun, 21 Feb 2010 21:17:50 -0800 (PST)
-Received: from localhost (ppp91-77-227-64.pppoe.mtu-net.ru [91.77.227.64])
-        by mx.google.com with ESMTPS id j10sm13402474mue.0.2010.02.21.21.17.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 21 Feb 2010 21:17:50 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1266754646.12035.23.camel@ganieda>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751291Ab0BVFa7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 00:30:59 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58589 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750953Ab0BVFa6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 00:30:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3EAC39B17E;
+	Mon, 22 Feb 2010 00:30:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SMrGFkNUMuMMHlxgHb3BvFuMta8=; b=MR7JFz
+	aTFJCoWcGzYsMarWcVLE9Lc3SUiEOcNdJgRAfSVdq54EAOD4uZXqPYDyV9N0dA5L
+	NO5tNGTq09U9XHEyT+ev2NaxxvphbPSFZ7r1LV+2B08VZLlc6XkJIB39VWoYGHq4
+	rX228wsyk7ArNw/blYiBHugzvnUyqNj4gatag=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gaWjfNgfMMgZBDl9UW4n9beHQoM2i6ia
+	oKECMV5bpghAd+WGS2QoYKiMAvBZFAy4pGf+6KZVH0OWt99ROOfoVhW/vYH8Oaxf
+	X9y3U4erpkX7xKWTwQe32bot+5U5JL5frLdyyKJSU8K9egE3Yzp2Fjm5jJIVYheo
+	QkVRy+hAg8U=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B2B19B17D;
+	Mon, 22 Feb 2010 00:30:53 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CE13E9B17A; Mon, 22 Feb
+ 2010 00:30:48 -0500 (EST)
+In-Reply-To: <alpine.LFD.2.00.1002211950250.1946@xanadu.home> (Nicolas
+ Pitre's message of "Sun\, 21 Feb 2010 20\:35\:48 -0500 \(EST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 71702A26-1F73-11DF-A9D4-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140613>
 
-On Sun, Feb 21, 2010 at 01:17:26PM +0100, Jelmer Vernooij wrote:
-> 
-> For each file we would need to store:
-> 
->  * the Bazaar revision id
->  * any Bazaar revision properties. This is typically a list of URLs of
-> bugs that were fixed, name of the branch the commit was on, any
-> additional parents, or anything arbitrary set by plugins (e.g. the
-> rebase plugin sets 'rebase-of' to the id of the original revision)
->  * For each file that was added or moved around in the revision, a path
-> to fileid mapping
->  * Optionally, a list of ghost parent ids and "unusual" revisions for
-> each file but these should be rare.
-> 
-> This is at least a couple of lines of data and in some cases a lot more.
-> I would rather avoid confronting git users who don't care about Bazaar
-> with it.
+Nicolas Pitre <nico@fluxnic.net> writes:
 
-The problem with storying this meta data in the commit object is that
-any newly created commits in Git will not have this information, and you
-probably have to add it later when you export these commits to Bazaar,
-which means that the history in Git should be re-written, and Git users
-will have to rebase their branches from one commit to another that are
-identical except this Bazaar-specific information, which you try to hide
-from them. So much for don't care about Bazaar!
+> The whole point is to detect data incoherencyes.
 
-In other words, no matter what git-log displays, as long as you put this
-meta data wherever it changes commit-id, it is visible to Git users, and
-trying to hide this fact is utterly stupid.
+Yes.  We want to make sure that the SHA-1 we compute is over what we fed
+deflate().
 
-There are many ways to store Bazaar data in Git without confronting git
-users who don't care about Bazaar with it. For instance, you can create
-a separate branch that will hold this meta data.
+> So current sequence of events is as follows:
+>
+> T0	write_sha1_file_prepare() is called
+> T1	start initial SHA1 computation on data buffer
+> T2	in the middle of initial SHA1 computation
+> T3	end of initial SHA1 computation -> object name is determined
+> T4	write_loose_object() is called
+> ...	enter the write loop
+> T5+n	deflate() called on buffer n
+> T6+n	git_SHA1_Update(() called on the same buffer n
+> T7+n	deflated data written out
+> ...
+> Tend	abort if result of T6+n doesn't match object name from T3
+>
+> So... what can happen:
+>
+> 1) Data is externally modified before T5+n: deflated data and its CRC32 
+>    will be coherent with the SHA1 computed in T6+n, but incoherent with 
+>    the SHA1 used for the object name. Wrong data is written to the 
+>    object even if it will inflate OK. We really want to prevent that 
+>    from happening. The test in Tend will fail.
+>
+> 2) Data is externally modified between T5+n and T6+n: the deflated data 
+>    and CRC32 will be coherent with the object name but incoherent with 
+>    the parano_sha1.  Although written data will be OK, this is way too 
+>    close from being wrong, and the test in Tend will fail.  If there is 
+>    more than one round into the loop and the external modifications are 
+>    large enough then this becomes the same as case 1 above.
+>
+> 3) Data is externally modified in T2: again the test in Tend will fail.
+>
+> So in all possible cases I can think of, the write will abort.
 
-   master      bzr/master
+There is one pathological case.
 
-      /---------o
-     o          |
-     |          |
-     |/---------o
-     o          |
-     |          |
-
-Commits on bzr/master are fast-forward merges that have the same tree-id
-as corresponding commits on master, but the commit message contains
-Bazaar specific information. So, if someone does not care about Bazaar,
-this is a throw away branch for him. Also, there is no problem to add
-Bazaar specific information to any git commit later when it is pushed
-to Bazaar. The only problem is if you try to rebase commits that were
-pushed to Bazaar, but AFAIK Bazaar does not support overwriting history,
-so you cannot expect anything good of this attempt anyway. The published
-history should not rebased.
-
-
-Dmitry
+Immediately before T5+n (or between T5+n and T6+n), the external process
+changes the data deflate() is working on, but before T6+n, the external
+process changes the data back.  Two SHA-1's computed may match, but it is
+not a hash over what was deflated(); you won't be able to abort.
