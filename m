@@ -1,80 +1,113 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2010, #05; Sun, 21)
-Date: Mon, 22 Feb 2010 09:17:18 +0100
-Message-ID: <6672d0161002220017u7270c637k83a796cfc8730a64@mail.gmail.com>
-References: <7vtytacebd.fsf@alter.siamese.dyndns.org>
-	 <4B8233DE.7050106@viscovery.net>
-	 <7v4ol9lngk.fsf@alter.siamese.dyndns.org>
+From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+Subject: [PATCH] Teach Girocco to mirror http:// style SVN repos
+Date: Mon, 22 Feb 2010 11:50:29 +0300
+Organization: St.Petersburg State University
+Message-ID: <20100222085029.GA28744@landau.phys.spbu.ru>
+References: <20100219132206.GA13734@tugrik.mns.mnsspb.ru> <20100220234200.GS12429@genesis.frugalware.org> <20100221171939.GA10166@landau.phys.spbu.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 10:33:04 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Kirill Smelkov <kirr@mns.spb.ru>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Mon Feb 22 10:35:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjTTr-0007ft-Ae
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 09:17:27 +0100
+	id 1NjU05-0002t4-FI
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 09:50:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752402Ab0BVIRV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Feb 2010 03:17:21 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:58421 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751292Ab0BVIRU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2010 03:17:20 -0500
-Received: by ewy28 with SMTP id 28so2455114ewy.28
-        for <git@vger.kernel.org>; Mon, 22 Feb 2010 00:17:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=dbMmEkOjDiyz4VPhClQQMl8zuCSUNfHstUSEWnC5c4I=;
-        b=ecF1c0ywV2dqVb1PldNk0uH9//Q1wWsbj9utMdPYTTqTMCobWAi5bStzMVm9WtK2N/
-         RxTBbQ8U6O5Gpfmkhn83tblc1IPFvBFQvfqyI2EuVciwOJVGSo7PEPrZ8uyCt71PeTMB
-         OhRIbBUrcQDlYJmZEuys1NtQXNPB9UQBdnSyU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=k54TEygvDLbhC1PbVapdFByUFMdO3054sMOlLD2QDnmigrU779DGkkW9CHGOIttfAw
-         XmcWg9A9K19V3OyqAYexKtZ+g0irBSxX6hDkQybI7XdjR6ZaZP3GujtP9ND55kn8rHhe
-         mvAn7OOkiRGagBR14WtSBCouFmv6fFY2lmXJ4=
-Received: by 10.216.87.143 with SMTP id y15mr737026wee.42.1266826638503; Mon, 
-	22 Feb 2010 00:17:18 -0800 (PST)
-In-Reply-To: <7v4ol9lngk.fsf@alter.siamese.dyndns.org>
+	id S1751564Ab0BVIuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 03:50:32 -0500
+Received: from landau.phys.spbu.ru ([195.19.235.38]:55976 "EHLO
+	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751329Ab0BVIub (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 03:50:31 -0500
+Received: by landau.phys.spbu.ru (Postfix, from userid 509)
+	id D79C517B663; Mon, 22 Feb 2010 11:50:29 +0300 (MSK)
+Content-Disposition: inline
+In-Reply-To: <20100221171939.GA10166@landau.phys.spbu.ru>
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140651>
 
-On Mon, Feb 22, 2010 at 8:49 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->
-> In the meantime, please run "git log --oneline --first-parent master.=
-=2Epu",
-> pick "ce8d258 Merge 'jn/maint-fix-pager'" from the output, and use th=
-e
-> second parent ce8d258^2 instead.
+On Sun, Feb 21, 2010 at 08:19:39PM +0300, Kirill Smelkov wrote:
+> ... I think I've found the problem -- it's that we need to use
+> `git config --add` in order to setup multivars. Please find patches below.
+> Petr, if everything is ok with them, could you please apply it? Thanks.
 
-I use a simple Perl script called create-topic-branches.
-It can be found here:
+And also, while at it, I was always dreaming about http:// style svn
+mirroring support at repo.or.cz . Petr, they say dreams always come
+true. Could you please apply it?
 
-http://gist.github.com/275033
 
-When it is run, it will print the "git branch" commands needed
-to create the topic branches. Either copy and paste the
-commands for the branches you are interested in,
-or do something like this:
+>From 7cb7218b23c7ab89609a812137e1d621603aabc6 Mon Sep 17 00:00:00 2001
+From: Kirill Smelkov <kirr@mns.spb.ru>
+Date: Mon, 22 Feb 2010 11:37:35 +0300
+Subject: [PATCH] Teach Girocco to mirror http:// style SVN repos
 
-create-topic-branches next..pu | grep bg/ | sh
+Currently we can mirror svn:// repos, but http:// is assumed to be used
+for Git. Teach the tool to use svn+http:// style urls for http:// svn
+repositories.
 
-which will create local branches for any of my own
-branches that are currently included in 'pu'.
+This is very needed, because most SVN hosting services only provide
+http:// style access to their services. e.g. google code, python.org,
+etc...
 
---=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+This has not been tested on full Girocco installation - just partly. But
+if it works, let's also add svn+https later.
+---
+ Girocco/Util.pm |    2 +-
+ jobd/update.sh  |    2 +-
+ taskd/clone.sh  |    6 ++++--
+ 3 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/Girocco/Util.pm b/Girocco/Util.pm
+index e2f7854..969cb3c 100644
+--- a/Girocco/Util.pm
++++ b/Girocco/Util.pm
+@@ -111,7 +111,7 @@ sub valid_web_url {
+ }
+ sub valid_repo_url {
+ 	$_ = $_[0];
+-	/^(http|git|svn|darcs|bzr):\/\/[a-zA-Z0-9-.:]+(\/[_\%a-zA-Z0-9.\/~-]*)?$/;
++	/^(http|git|svn(\+http)?|darcs|bzr):\/\/[a-zA-Z0-9-.:]+(\/[_\%a-zA-Z0-9.\/~-]*)?$/;
+ }
+ 
+ 
+diff --git a/jobd/update.sh b/jobd/update.sh
+index e09ef95..65e0455 100755
+--- a/jobd/update.sh
++++ b/jobd/update.sh
+@@ -38,7 +38,7 @@ mail="$(config_get owner)"
+ bang git for-each-ref --format '%(refname)	%(objectname)' >.refs-before
+ 
+ case "$url" in
+-	svn://*)
++	svn://* | svn+http://*)
+ 		GIT_DIR=. bang git svn fetch
+ 		GIT_DIR=. bang git fetch
+ 		;;
+diff --git a/taskd/clone.sh b/taskd/clone.sh
+index cfcb3b1..e634388 100755
+--- a/taskd/clone.sh
++++ b/taskd/clone.sh
+@@ -22,8 +22,10 @@ mail="$(config_get owner)"
+ # Initial mirror
+ echo "Initiating mirroring..."
+ case "$url" in
+-	svn://*)
+-		GIT_DIR=. git svn init -s "$url"
++	svn://* | svn+http://*)
++		# we just remote svn+ here, so svn+http://... becomes http://...
++		svnurl="${url#svn+}"
++		GIT_DIR=. git svn init -s "$svnurl"
+ 		GIT_DIR=. git svn fetch
+ 		# Neat Trick suggested by Miklos Vajna
+ 		GIT_DIR=. git config remote.origin.url .
+-- 
+1.7.0.50.g50c1
