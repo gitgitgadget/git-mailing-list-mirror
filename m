@@ -1,79 +1,82 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH] git-gui: fix worktree initialization with empty prefix
-Date: Mon, 22 Feb 2010 16:39:45 +0100
-Message-ID: <cb7bb73a1002220739j1eaae417je9358458f653ef7e@mail.gmail.com>
-References: <vpqaav1llpn.fsf@bauges.imag.fr> <1266851964-13044-1-git-send-email-giuseppe.bilotta@gmail.com> 
-	<vpqsk8t1e1g.fsf@bauges.imag.fr>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] Teach "git add" and friends to be paranoid
+Date: Mon, 22 Feb 2010 10:40:59 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1002221033120.1946@xanadu.home>
+References: <20100213162924.GA14623@Knoppix>
+ <37fcd2781002131409r4166e496h9d12d961a2330914@mail.gmail.com>
+ <20100213223733.GP24809@gibbs.hungrycats.org>
+ <20100214011812.GA2175@dpotapov.dyndns.org>
+ <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org>
+ <20100219082813.GB17952@dpotapov.dyndns.org>
+ <7v635tkta7.fsf@alter.siamese.dyndns.org>
+ <7v8waniue8.fsf@alter.siamese.dyndns.org>
+ <20100221072142.GA5829@dpotapov.dyndns.org>
+ <7vhbpas7ut.fsf@alter.siamese.dyndns.org>
+ <20100222033553.GA10191@dpotapov.dyndns.org>
+ <7vwry5pxg8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Feb 22 16:40:24 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Zygo Blaxell <zblaxell@esightcorp.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 16:41:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjaOU-0007GI-4t
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 16:40:22 +0100
+	id 1NjaPI-0007cK-8g
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 16:41:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753720Ab0BVPkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 10:40:15 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:64120 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753259Ab0BVPkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 10:40:14 -0500
-Received: by ewy28 with SMTP id 28so2857315ewy.28
-        for <git@vger.kernel.org>; Mon, 22 Feb 2010 07:40:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=pm80e25cEDUC6Z2EnXBI/KenTBx18qu42le7s+vb+Wc=;
-        b=lT9OI4ueejVcOS847nrASXQGjkhuOMPz6kM1NL3/hBT8ngh5wDDhHm5yVrUuL75uOh
-         2wA9GuEVSI+mhnswdNAaWVu+sbUcGh7Kma8wSioY8b3digDJGc8HVEi+Do6U5pfGOtDN
-         ADUIP8/W1oECMc5prQFM7g3LWyUR0FTxcqgU4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=iMmq/Idk8vh598xAe7gjQUG+gTaqMwWW/T1GkqzLT1MYAuOM0q2pjgzoQcQBZw8Ajl
-         IrejoWmWfg5vApXYg2vO4GOSa1z4YnQCHvG/qbQpCC5Ax4UwNXbxubfC5krIvBtFHjCM
-         YwA08w2f8udyx9RSRJq5yADB7IiKmrp83jQWo=
-Received: by 10.213.44.9 with SMTP id y9mr1438433ebe.71.1266853206309; Mon, 22 
-	Feb 2010 07:40:06 -0800 (PST)
-In-Reply-To: <vpqsk8t1e1g.fsf@bauges.imag.fr>
+	id S1754090Ab0BVPlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 10:41:05 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:58829 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753770Ab0BVPlD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 10:41:03 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KY9003RY28BHWM0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 22 Feb 2010 10:41:00 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7vwry5pxg8.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140692>
 
-On Mon, Feb 22, 2010 at 4:32 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
->
->> This is sort of a chicken-and-egg problem, because we should only
->> bother setting the worktree if we are not in a bare repository, but
->> an unset worktree is one of the conditions we check to see if we have
->> a bare repository.
->>
->> Maintain the same sequence of checks, but swap the check for bareness
->> support and bareness of repository, and check again for an unset
->> worktree if we are not in the bare case.
+On Sun, 21 Feb 2010, Junio C Hamano wrote:
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+> Dmitry Potapov <dpotapov@gmail.com> writes:
+> 
+> > If you look at speed-up numbers, you can think that the numbers are
+> > unstable, but in fact, the best time in 5 runs does not differ more
+> > than 0.01s between those trials. But because difference for >=128Kb
+> > is 0.05s or less, the accuracy of the above numbers is less than 25%.
+> 
+> Then wouldn't it make the following statement...
+> 
+> > But overall the outcome is clear -- read() is always a winner.
+> 
+> "... a winner, below 128kB; above that the difference is within noise and
+> measurement error"?
 
->
-> Tested-by: Matthieu Moy <Matthieu.Moy@imag.fr>
->
-> (don't forget Signed-off-by)
+read() is not always a winner.  A read() call will always have the data 
+duplicated in memory.  Especially with large files, it is more efficient 
+on the system as a whole to mmap() a 50 MB file rather than allocating 
+an extra 50 MB of anonymous memory that cannot be paged out (except to 
+the swap file which would be yet another data duplication).  With mmap() 
+when there is memory pressure the read-only mapped memory is simply 
+dropped with no extra IO.
 
-Damn. Thanks. I just set format.signoff so I won't forget again.
+So when read() is not _significantly_ faster than mmap() then it should 
+not be used.
 
-> Thanks,
 
-Thank you for spotting and testing this.
-
--- 
-Giuseppe "Oblomov" Bilotta
+Nicolas
