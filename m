@@ -1,170 +1,138 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH 2/2] submodules: ensure clean environment when operating in a submodule
-Date: Tue, 23 Feb 2010 00:31:58 +0100
-Message-ID: <1266881518-11213-2-git-send-email-giuseppe.bilotta@gmail.com>
-References: <7vsk8s274t.fsf@alter.siamese.dyndns.org>
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	msysGit Mailinglist <msysgit@googlegroups.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+From: dborowitz@google.com
+Subject: [PATCH] Document shallow/unshallow/deepen protocol request and response.
+Date: Mon, 22 Feb 2010 15:47:37 -0800
+Message-ID: <1266882457-21665-1-git-send-email-dborowitz@google.com>
+Cc: Dave Borowitz <dborowitz@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 23 00:32:43 2010
+X-From: git-owner@vger.kernel.org Tue Feb 23 00:48:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Njhlb-0005EQ-Ei
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 00:32:43 +0100
+	id 1Nji1A-0001ga-Bz
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 00:48:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755238Ab0BVXcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 18:32:16 -0500
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:63314 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755162Ab0BVXcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 18:32:12 -0500
-Received: by wwf26 with SMTP id 26so527049wwf.19
-        for <git@vger.kernel.org>; Mon, 22 Feb 2010 15:32:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=Aug1ujyvuIxERrenw3XzRWO9ZC328fW50iipspzMmC8=;
-        b=xiY4cg1MfLPuRe+8FA2KXXBGvlzNs25/RdjFu5Dzy16ZwOdCvRy5Jfc6uS6WEVYqq6
-         EknO1TkBq0aBr0zpg/WoyBvBuIq9ygV46Uhkw5sgC9dHhg6Ae4+sm6YHwu1SXzRZEgRO
-         IK36L2ol9HzcBgrGZeBXSiAXf6h94b+PAPhPY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=f50jW58ehgSnBvAdtgzUrbYaP1qsY+XduOaktMWWvdFjDIgi9BrYUwu9AOL3L8jNsK
-         OZH/hCxD34elZ6U/AiZN3XXKsrsEjWoRszLVOqkJeCnxTynT5HxrsNcS+W1tWJf0u6jY
-         iNiT3ntdemNk2pl4ys4BWodS1vCR2Tx85N8Mc=
-Received: by 10.216.89.138 with SMTP id c10mr352478wef.47.1266881530604;
-        Mon, 22 Feb 2010 15:32:10 -0800 (PST)
-Received: from localhost ([151.60.177.169])
-        by mx.google.com with ESMTPS id i6sm16265093gve.20.2010.02.22.15.32.08
+	id S1752020Ab0BVXsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 18:48:43 -0500
+Received: from smtp-out.google.com ([216.239.33.17]:20697 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750801Ab0BVXsm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 18:48:42 -0500
+Received: from kpbe13.cbf.corp.google.com (kpbe13.cbf.corp.google.com [172.25.105.77])
+	by smtp-out.google.com with ESMTP id o1MNmd7a031465
+	for <git@vger.kernel.org>; Mon, 22 Feb 2010 23:48:39 GMT
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
+	t=1266882520; bh=ZlXCONa7a+UL6Cilae8E5clpoh4=;
+	h=From:To:Cc:Subject:Date:Message-Id;
+	b=AmepaHOlstaPXylTdq0M6Yxh4c/JX5bQyPcLWQTTy5m/2aE2LDHQjucJYyXTfvXXN
+	 p5VIxf8uDqBFtUA0+0pKg==
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=from:to:cc:subject:date:message-id:x-mailer:x-system-of-record;
+	b=PxSd7q7r/Kw+AaNljEKyM6l2md85n3COgk7Nx/VsQbXtDbN9x/uMM41VOIFuN1qNE
+	RkGnFUE3FVwWWFUlvs06w==
+Received: from fxm26 (fxm26.prod.google.com [10.184.13.26])
+	by kpbe13.cbf.corp.google.com with ESMTP id o1MNmaiP014646
+	for <git@vger.kernel.org>; Mon, 22 Feb 2010 17:48:38 -0600
+Received: by fxm26 with SMTP id 26so727746fxm.13
+        for <git@vger.kernel.org>; Mon, 22 Feb 2010 15:48:36 -0800 (PST)
+Received: by 10.103.48.23 with SMTP id a23mr144417muk.77.1266882516498;
+        Mon, 22 Feb 2010 15:48:36 -0800 (PST)
+Received: from localhost.localdomain (serval.mtv.corp.google.com [172.18.104.63])
+        by mx.google.com with ESMTPS id w5sm902507mue.52.2010.02.22.15.48.34
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 22 Feb 2010 15:32:08 -0800 (PST)
-X-Mailer: git-send-email 1.7.0.200.g5ba36.dirty
-In-Reply-To: <7vsk8s274t.fsf@alter.siamese.dyndns.org>
+        Mon, 22 Feb 2010 15:48:35 -0800 (PST)
+X-Mailer: git-send-email 1.7.0.rc2.28.gf476c0
+X-System-Of-Record: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140742>
 
-git-submodule used to take care of clearing GIT_DIR whenever it operated
-on a submodule index or configuration, but forgot to unset GIT_WORK_TREE
-or other repo-local variables. This which would lead to failures e.g.
-when GIT_WORK_TREE was set.
+From: Dave Borowitz <dborowitz@google.com>
 
-This only happened in very unusual contexts such as operating on the
-main worktree from outside of it, but since "git-gui: set GIT_DIR and
-GIT_WORK_TREE after setup" (a9fa11fe5bd5978bb) such failures could also
-be provoked by invoking an external tool such as "git submodule update"
-from the Git Gui in a standard setup.
+This patch fixes a TODO in the pack protocol documentation about the
+protocol for shallow clones. I'll be the first to admit I may not
+understand shallow clones fully, but this patch is hopefully a good
+starting point.
 
-Solve by using the newly introduced clear_local_git_env() shell function
-to ensure that all repo-local environment variables are unset.
-
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- git-submodule.sh |   20 ++++++++++----------
- 1 files changed, 10 insertions(+), 10 deletions(-)
+ Documentation/technical/pack-protocol.txt |   36 +++++++++++++++++++++-------
+ 1 files changed, 27 insertions(+), 9 deletions(-)
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 5869c00..1ea4143 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -222,7 +222,7 @@ cmd_add()
+diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
+index 9a5cdaf..d3392f5 100644
+--- a/Documentation/technical/pack-protocol.txt
++++ b/Documentation/technical/pack-protocol.txt
+@@ -194,6 +194,7 @@ effect, out of what the server said it could do with the first 'want' line.
  
- 		module_clone "$path" "$realrepo" "$reference" || exit
- 		(
--			unset GIT_DIR
-+			clear_local_git_env
- 			cd "$path" &&
- 			# ash fails to wordsplit ${branch:+-b "$branch"...}
- 			case "$branch" in
-@@ -278,7 +278,7 @@ cmd_foreach()
- 			name=$(module_name "$path")
- 			(
- 				prefix="$prefix$path/"
--				unset GIT_DIR
-+				clear_local_git_env
- 				cd "$path" &&
- 				eval "$@" &&
- 				if test -n "$recursive"
-@@ -434,7 +434,7 @@ cmd_update()
- 			module_clone "$path" "$url" "$reference"|| exit
- 			subsha1=
- 		else
--			subsha1=$(unset GIT_DIR; cd "$path" &&
-+			subsha1=$(clear_local_git_env; cd "$path" &&
- 				git rev-parse --verify HEAD) ||
- 			die "Unable to find current revision in submodule path '$path'"
- 		fi
-@@ -454,7 +454,7 @@ cmd_update()
+ ----
+   upload-request    =  want-list
++		       shallow-request
+ 		       have-list
+ 		       compute-end
  
- 			if test -z "$nofetch"
- 			then
--				(unset GIT_DIR; cd "$path" &&
-+				(clear_local_git_env; cd "$path" &&
- 					git-fetch) ||
- 				die "Unable to fetch in submodule path '$path'"
- 			fi
-@@ -477,14 +477,14 @@ cmd_update()
- 				;;
- 			esac
+@@ -204,6 +205,11 @@ effect, out of what the server said it could do with the first 'want' line.
+   first-want        =  PKT-LINE("want" SP obj-id SP capability-list LF)
+   additional-want   =  PKT-LINE("want" SP obj-id LF)
  
--			(unset GIT_DIR; cd "$path" && $command "$sha1") ||
-+			(clear_local_git_env; cd "$path" && $command "$sha1") ||
- 			die "Unable to $action '$sha1' in submodule path '$path'"
- 			say "Submodule path '$path': $msg '$sha1'"
- 		fi
++  shallow-request   =  *shallow-line
++		       deepen-line
++  shallow-line      =  PKT-LINE("shallow" SP obj-id LF)
++  deepen-line       =  PKT-LINE("deepen" SP 1*DIGIT LF)
++
+   have-list         =  *have-line
+   have-line         =  PKT-LINE("have" SP obj-id LF)
+   compute-end       =  flush-pkt / PKT-LINE("done")
+@@ -215,15 +221,23 @@ discovery phase as 'want' lines. Clients MUST send at least one
+ obj-id in a 'want' command which did not appear in the response
+ obtained through ref discovery.
  
- 		if test -n "$recursive"
- 		then
--			(unset GIT_DIR; cd "$path" && cmd_update $orig_args) ||
-+			(clear_local_git_env; cd "$path" && cmd_update $orig_args) ||
- 			die "Failed to recurse into submodule path '$path'"
- 		fi
- 	done
-@@ -492,7 +492,7 @@ cmd_update()
+-If client is requesting a shallow clone, it will now send a 'deepen'
+-line with the depth it is requesting.
++If client is requesting a shallow clone, it will now send a 'shallow'
++line for each shallow commit it currently has, followed by a 'deepen'
++line for the depth it is requesting.
++
++The server will respond to a shallow clone request with several
++'shallow'/'unshallow' lines. The server MUST send one 'shallow' line for
++each new commit that will be shallow following the deepen operation, and
++the server MUST send one 'unshallow' line for each shallow commit the
++client has that will no longer be shallow after the deepen. The server
++SHOULD NOT send 'shallow' lines for shallow commits the client has that
++remain shallow. The server MUST NOT mention an obj-id in an 'unshallow'
++line that the client did not mention in a corresponding 'shallow' line.
  
- set_name_rev () {
- 	revname=$( (
--		unset GIT_DIR
-+		clear_local_git_env
- 		cd "$1" && {
- 			git describe "$2" 2>/dev/null ||
- 			git describe --tags "$2" 2>/dev/null ||
-@@ -760,7 +760,7 @@ cmd_status()
- 		else
- 			if test -z "$cached"
- 			then
--				sha1=$(unset GIT_DIR; cd "$path" && git rev-parse --verify HEAD)
-+				sha1=$(clear_local_git_env; cd "$path" && git rev-parse --verify HEAD)
- 				set_name_rev "$path" "$sha1"
- 			fi
- 			say "+$sha1 $displaypath$revname"
-@@ -770,7 +770,7 @@ cmd_status()
- 		then
- 			(
- 				prefix="$displaypath/"
--				unset GIT_DIR
-+				clear_local_git_env
- 				cd "$path" &&
- 				cmd_status $orig_args
- 			) ||
-@@ -821,7 +821,7 @@ cmd_sync()
- 		if test -e "$path"/.git
- 		then
- 		(
--			unset GIT_DIR
-+			clear_local_git_env
- 			cd "$path"
- 			remote=$(get_default_remote)
- 			say "Synchronizing submodule url for '$name'"
+ Once all the "want"s (and optional 'deepen') are transferred,
+ clients MUST send a flush-pkt. If the client has all the references
+ on the server, client flushes and disconnects.
+ 
+-TODO: shallow/unshallow response and document the deepen command in the ABNF.
+-
+ Now the client will send a list of the obj-ids it has using 'have'
+ lines.  In multi_ack mode, the canonical implementation will send up
+ to 32 of these at a time, then will send a flush-pkt.  The canonical
+@@ -289,11 +303,15 @@ if there is no common base found.
+ Then the server will start sending its packfile data.
+ 
+ ----
+-  server-response = *ack_multi ack / nak
+-  ack_multi       = PKT-LINE("ACK" SP obj-id ack_status LF)
+-  ack_status      = "continue" / "common" / "ready"
+-  ack             = PKT-LINE("ACK SP obj-id LF)
+-  nak             = PKT-LINE("NAK" LF)
++  server-response  = [shallow-response]
++		    *ack_multi ack / nak
++  shallow-response = *shallow-line
++		     *unshallow-line
++  unshallow-line   = PKT-LINE("unshallow" SP obj-id LF)
++  ack_multi        = PKT-LINE("ACK" SP obj-id ack_status LF)
++  ack_status       = "continue" / "common" / "ready"
++  ack              = PKT-LINE("ACK SP obj-id LF)
++  nak              = PKT-LINE("NAK" LF)
+ ----
+ 
+ A simple clone may look like this (with no 'have' lines):
 -- 
-1.7.0.200.g5ba36.dirty
+1.7.0.rc2.28.gf476c0
