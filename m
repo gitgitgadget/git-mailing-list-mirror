@@ -1,86 +1,88 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: Re: [BUG] git gui blame: Show History Context broken since 
-	29e5573d
-Date: Tue, 23 Feb 2010 00:29:03 +0100
-Message-ID: <cb7bb73a1002221529r6aee3202l5b6609b59aea01fd@mail.gmail.com>
-References: <vpqaav1llpn.fsf@bauges.imag.fr> <cb7bb73a1002220718p6b6621der6df062cd2f490d89@mail.gmail.com> 
-	<20100222223802.GA9898@book.hvoigt.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Feb 23 00:29:34 2010
+Subject: [PATCH 1/2] shell setup: clear_local_git_env() function
+Date: Tue, 23 Feb 2010 00:31:57 +0100
+Message-ID: <1266881518-11213-1-git-send-email-giuseppe.bilotta@gmail.com>
+References: <7vsk8s274t.fsf@alter.siamese.dyndns.org>
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	msysGit Mailinglist <msysgit@googlegroups.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 23 00:32:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjhiV-0004MO-Fl
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 00:29:31 +0100
+	id 1NjhlB-00056i-Gg
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 00:32:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754939Ab0BVX31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 18:29:27 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:34944 "EHLO
+	id S1755161Ab0BVXcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 18:32:10 -0500
+Received: from mail-ew0-f228.google.com ([209.85.219.228]:65315 "EHLO
 	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754854Ab0BVX30 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 18:29:26 -0500
-Received: by ewy28 with SMTP id 28so3402714ewy.28
-        for <git@vger.kernel.org>; Mon, 22 Feb 2010 15:29:24 -0800 (PST)
+	with ESMTP id S1755099Ab0BVXcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 18:32:07 -0500
+Received: by ewy28 with SMTP id 28so3404811ewy.28
+        for <git@vger.kernel.org>; Mon, 22 Feb 2010 15:32:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=l9Cr5lQt2+c7kjZY0yuqEqzCQceJtssCtb1KME2VNfA=;
-        b=gvEq2T8FMr33JgYDDZ4q8Ucvf/quVb3XKo+LSF2eJK13WNCiOpb3F2o4KUWa7peusb
-         Mf/NvNN40UsKLCzUYoqWi3AntMJ7/S5RiI+ji7e/H9bVa7Hfv/X4ivO+ZThFsBwTBg8i
-         8o//j6pgEQkqgOAp37WJ/OYv1Z3Y5mX++Kddc=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=rg5cVeY10nqcZ2o83GQpU4insS3WHKQkMwPQsIRe/fo=;
+        b=NqhSySes5oUX794ozQKKicmljbQz1P/qx3LccVqKwQGBKoZcakwRptfCv7s+ghIkuf
+         OLdpOIfzZi/Fcgoo2D3gTCj7MgsAjCD8RUPVpRHK4A1WXGzmPHnRsTREIWolnmASfH1k
+         BmKZxuBU2KIretFLhcz41zi6+Yp/wSAvywSCM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=LT44PYMmf9CBeJ5zvYemn1LzQY0yumOXhRf9c8GS7QgbstB+ajM1Edc6N2yfdIBs4Q
-         St+yn8UkIeB63QI4bASRd+xqZU42H2L8rx06OWGWBzaJcon2OouN56W0frLoPAb8Zbq7
-         7SI3HUmrJqSoEhS6stfoCQheg6Bic7QqECQxA=
-Received: by 10.213.97.83 with SMTP id k19mr9459484ebn.22.1266881363223; Mon, 
-	22 Feb 2010 15:29:23 -0800 (PST)
-In-Reply-To: <20100222223802.GA9898@book.hvoigt.net>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=anNvornvMWk7bc7SCYCoMKymTt6PfiYXgNRnxfirZ4IemerdXUeYi3N86JqGijhGW8
+         Lonp376XVsxo0pgJ/YTmGpaqnZSkJpRKVwvALzb4fcsh4R2Qr8/KT3Phs8GBP3Hg0SrS
+         sld7QK7XKcC4yfn7GOdxZtM6fLbFbzY8e0qY8=
+Received: by 10.216.87.194 with SMTP id y44mr3857394wee.157.1266881525545;
+        Mon, 22 Feb 2010 15:32:05 -0800 (PST)
+Received: from localhost ([151.60.177.169])
+        by mx.google.com with ESMTPS id m5sm16180475gve.12.2010.02.22.15.32.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 22 Feb 2010 15:32:04 -0800 (PST)
+X-Mailer: git-send-email 1.7.0.200.g5ba36.dirty
+In-Reply-To: <7vsk8s274t.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140740>
 
-On Mon, Feb 22, 2010 at 11:38 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> On Mon, Feb 22, 2010 at 04:18:11PM +0100, Giuseppe Bilotta wrote:
->> On Mon, Feb 22, 2010 at 9:27 AM, Matthieu Moy
->> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> > Hi,
->> >
->> > In "git gui blame", right-clicking on the left fringe and chosing
->> > "Show History Context" in the context-menu doesn't work for me in the
->> > latest git. It says:
->> >
->> > couldn't change working directory to "": no such file or directory
->>
->> Definitely my fault. _gitworktree was not being set up correctly when
->> support for bare repositories was enabled and the repo was not bare
->> (like in the blame case). Patch incoming, can you see if it does the
->> job for you? It seems to fix it here.
->
-> Isn't this the same bug as this one fixes:
->
-> http://article.gmane.org/gmane.comp.version-control.git/140288
->
-> cheers Heiko
+Introduce an auxiliary function to clear all repo-local environment
+variables. This should be invoked by any shell script that switches
+repository during execution, to ensure that the environment is clean
+and that things such as the git dir and worktree are set up correctly.
 
-Interesting, I missed that patch. However, I strongly suspect that
-patch is not correct, since in that case the setup of gitworktree is
-done before checking for bareness, meaning that when working in
-somerepo.git (bare repo) for which the config flag is not set, it
-might misdetect the situation as being in the non-bare case. I believe
-my fix to be more correct in this regard.
+Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+---
+ git-sh-setup.sh |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
 
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index 7a09566..d382879 100644
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -172,6 +172,15 @@ get_author_ident_from_commit () {
+ 	LANG=C LC_ALL=C sed -ne "$pick_author_script"
+ }
+ 
++# Clear repo-local GIT_* environment variables. Useful when switching to
++# another repository (e.g. when entering a submodule)
++clear_local_git_env() {
++	unset	GIT_DIR GIT_WORKTREE GIT_OBJECT_DIRECTORY \
++		GIT_INDEX_FILE GIT_GRAFT_FILE GIT_CONFIG \
++		GIT_NO_REPLACE_OBJECTS
++
++}
++
+ # Make sure we are in a valid repository of a vintage we understand,
+ # if we require to be in a git repository.
+ if test -z "$NONGIT_OK"
 -- 
-Giuseppe "Oblomov" Bilotta
+1.7.0.200.g5ba36.dirty
