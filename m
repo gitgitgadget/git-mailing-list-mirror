@@ -1,75 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Feb 2010, #05; Sun, 21)
-Date: Sun, 21 Feb 2010 23:49:15 -0800
-Message-ID: <7v4ol9lngk.fsf@alter.siamese.dyndns.org>
-References: <7vtytacebd.fsf@alter.siamese.dyndns.org>
- <4B8233DE.7050106@viscovery.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 5/6] git_mkstemps_mode: don't set errno to EINVAL for any error.
+Date: Mon, 22 Feb 2010 08:36:19 +0100
+Message-ID: <vpq7hq5n2mk.fsf@bauges.imag.fr>
+References: <vpq7hq8stjt.fsf@bauges.imag.fr>
+	<1266621718-4879-5-git-send-email-Matthieu.Moy@imag.fr>
+	<7v4olbpyh3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Feb 22 09:31:44 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 09:32:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjT2p-0003y4-Fg
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 08:49:31 +0100
+	id 1NjT2e-0003wq-7T
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 08:49:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752422Ab0BVHtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 02:49:25 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50914 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752352Ab0BVHtY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 02:49:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 903469C0C6;
-	Mon, 22 Feb 2010 02:49:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9SmxgUavaYVxY43B9MbbJmZFBy8=; b=jkM1iq
-	z7QpLkwI2Vxv7eutRnGNK7NhPJNsUGzQaUsG6t401OC/OGxZBL6BFUB7YjAWjsC+
-	A8F3zZepXQWCcaAkkmC1tCI1mjV5A69TSx+qprnwxDBNMTfzG4325kpB+q9zYPVi
-	6SD6SMUf6iXRbFwPA1qKf3+o3xTLyHyIPu9x0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=i43Ehx7zpSW22KQB8rO9IHYupmfdbSpb
-	UBxNCa9TOPPyAPpO5Drcjr7ms/CSEIgxZElgjN/iBIfXnaFSXswaS8ECyhIBj5b5
-	S0k712PWfafoYSxepOSIO/PQewjIWGgHPv4+IxraaGtwBMcTdM0F3Jdlmuncb6+J
-	8Z7vN7QzAOI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 18EF39C0C4;
-	Mon, 22 Feb 2010 02:49:20 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA62D9C0C3; Mon, 22 Feb
- 2010 02:49:17 -0500 (EST)
-In-Reply-To: <4B8233DE.7050106@viscovery.net> (Johannes Sixt's message of
- "Mon\, 22 Feb 2010 08\:35\:58 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C93E72FE-1F86-11DF-9899-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752239Ab0BVHtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 02:49:01 -0500
+Received: from imag.imag.fr ([129.88.30.1]:48993 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751292Ab0BVHtB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 02:49:01 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o1M7aJau019256
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 22 Feb 2010 08:36:19 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NjSq3-0002cu-CH; Mon, 22 Feb 2010 08:36:19 +0100
+In-Reply-To: <7v4olbpyh3.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Sat\, 20 Feb 2010 10\:13\:12 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 22 Feb 2010 08:36:19 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140642>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Since you do not publish your topic branches, I'd appreciate if you could
-> include the SHA1 of the topic heads in the headlines, for example:
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 >
-> * jn/maint-fix-pager 2d3ca21 (2010-02-20) 7 commits
+>> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+>> ---
+>>  path.c |    4 +++-
+>>  1 files changed, 3 insertions(+), 1 deletions(-)
+>>
+>> diff --git a/path.c b/path.c
+>> index 005b836..2886eb6 100644
+>> --- a/path.c
+>> +++ b/path.c
+>> @@ -222,7 +222,9 @@ int git_mkstemps_mode(char *pattern, int suffix_len, int mode)
+>>  	}
+>>  	/* We return the null string if we can't find a unique file name.  */
+>>  	pattern[0] = '\0';
+>> -	errno = EINVAL;
+>> +	/* Make sure errno signals an error on failure */
+>> +	if (errno <= 0)
+>> +		errno = EINVAL;
+>>  	return -1;
+>>  }
 >
-> This way I could copy-paste the branch name and SHA1 to a 'git branch -f'
-> command to track the topic manually.
+> Please explain this change a bit better.
 
-That is understandable, but I do not foresee it happening anytime soon, as
-it would involve quite a lot of changes to the generate-compare-update
-infrastructure, and I wouldn't be touching it unless I have absolutely
-nothing else to do.
+I think we agree about the
 
-In the meantime, please run "git log --oneline --first-parent master..pu",
-pick "ce8d258 Merge 'jn/maint-fix-pager'" from the output, and use the
-second parent ce8d258^2 instead.
+-	errno = EINVAL;
+
+part. Setting errno to EINVAL unconditionally means discarding the
+errno left from open(), so we can't know the reason for failure
+anymore with this line.
+
+> Because TMP_MAX is non-zero, you are always reading from errno left by
+> open() in the loop, so the above paragraph is a misunderstanding.  But
+> that needs to be in the log message, no?
+
+Will add a sentence, yes.
+
+> I think you are trying to avoid stomping on the errno when we broke out of
+> the loop early, due to getting an error.  But errno is always valid at
+> this point in this codepath, and errno.h macros shall expand to integer
+> constant expressions with type int, distinct positive values.  So I think
+> you can safely remove the assignment without "if (errno <= 0)".  Returning
+> EINVAL from a variant of mkstemp when the error is anything but "The last
+> six characters were not XXXXXX" is wrong.
+
+Just removing the line would work with the current code, but this "if
+(errno <= 0) errno = EINVAL;" allows enforcing the invariant that
+errno > 0 when reaching "return -1" in a simple and reliable way (i.e.
+changing the for loop later cannot break this invariant by mistake).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
