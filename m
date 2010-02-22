@@ -1,118 +1,142 @@
-From: Steve Diver <squelch@think.zenbe.com>
-Subject: Re: [RFC] Is using git describe resilient enough for setting the
-  build version of git?
-Date: Sun, 21 Feb 2010 08:42:15 +0000
-Message-ID: <4B80F1E7.4030803@think.zenbe.com>
-References: <4B8082ED.7020505@think.zenbe.com> <32541b131002202207s7e9794cdg94d4bc305a0e9213@mail.gmail.com>
+From: Gabriel Filion <lelutin@gmail.com>
+Subject: Re: RFD: git-bzr: anyone interested?
+Date: Sun, 21 Feb 2010 23:42:54 -0500
+Message-ID: <4B820B4E.7050405@gmail.com>
+References: <4B7D8358.1080108@gmail.com> <fabb9a1e1002181037n58d6942dpa63a57a23f506d9c@mail.gmail.com> <4B7E3856.3080609@gmail.com> <20100219135549.GA31796@Knoppix>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 21 10:42:52 2010
+Cc: git@vger.kernel.org
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Mon Feb 22 06:24:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nj7OY-0002dV-Mo
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Feb 2010 09:42:31 +0100
+	id 1NjQ8S-0004Js-6P
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 05:43:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754498Ab0BUImX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Feb 2010 03:42:23 -0500
-Received: from smb-out-1.zenbe.com ([67.228.244.51]:60618 "EHLO
-	smb-out-1.zenbe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754119Ab0BUImW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Feb 2010 03:42:22 -0500
-Received: from cl1.app01.zenbe.com (ec2-174-129-108-13.compute-1.amazonaws.com [174.129.108.13])
-	by smb-out-1.zenbe.com (Postfix) with ESMTPSA id 235F8242441;
-	Sun, 21 Feb 2010 02:42:22 -0600 (CST)
-X-DKIM: Sendmail DKIM Filter v2.5.4 smb-out-1.zenbe.com 235F8242441
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zenbe.com; s=smb;
-	t=1266741742; i=@think.zenbe.com; bh=WG+JLokcJcAutuLj0Vah3xdmoN2NE6
-	pIVPaS4hInX8s=; h=Message-ID:Date:From:MIME-Version:To:CC:Subject:
-	 References:In-Reply-To:Content-Type:Content-Transfer-Encoding; b=o
-	6yglUShEg1ez8SRbHEbqiz5TeG1n+aQxLYL9pL0jwZjExG/o1pu/MJ0gKImaTxaDAe4
-	GY+3NoBMsbF9K1QqOn9REzYicpovtOIqPxokchR5whmoKKuygorNjvulFUl3alxR5Ws
-	MDDQBXlJcGKNNrXe1kaYARWPyOxw1NRSYmy8=
-Received: from cl1.mailapp01.zenbe.com (domU-12-31-39-00-78-F6.compute-1.internal [10.254.127.4])
-	by cl1.app01.zenbe.com (Postfix) with ESMTP id A0B70321F7;
-	Sun, 21 Feb 2010 08:42:21 +0000 (UTC)
-Received: from [10.0.0.16] (unknown [78.145.130.107])
-	by cl1.app01.zenbe.com (Postfix) with ESMTP id 2C249340A6;
-	Sun, 21 Feb 2010 08:42:18 +0000 (UTC)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.7) Gecko/20100111 Lightning/1.0b1 Thunderbird/3.0.1
-In-Reply-To: <32541b131002202207s7e9794cdg94d4bc305a0e9213@mail.gmail.com>
+	id S1754668Ab0BVEnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Feb 2010 23:43:00 -0500
+Received: from qw-out-2122.google.com ([74.125.92.24]:40368 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754568Ab0BVEnA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Feb 2010 23:43:00 -0500
+Received: by qw-out-2122.google.com with SMTP id 8so405868qwh.37
+        for <git@vger.kernel.org>; Sun, 21 Feb 2010 20:42:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=IQaeEpioPGnQ+0F4h93ljUjlbPalitUQKJWyYrSt4QM=;
+        b=SLnA+20oNVKx9m/IPTAk3B6o0iPBBiLh0q3NPtOUn3bcyv909RFu6YaDOYHSYDC4Vy
+         g1LUkuw/mKIl9mICIgKnT/5HcZN6h3/gZEeOHmd1cWkgSwVIJygRmdPiTE+YIE2Sp2Mv
+         JXLXY9QT7hxIfX3Q8WAk8sWNm/TxWbHbv0XvY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=c3096f8/g9x1QQ4x22raA3Zvr6/8xGavC0vQAmsfKTbdJHROsqms34kBLUBSz1ZvrE
+         aS0PB7T4HGNlXhV29yKPyLno/IKDkEDRs8Oc7UqLoUI28E63y1fv6b7A4RirsOMT37+L
+         vDolvF/mikMAPjMtejOfPFWQQnxdaBe2KGR/4=
+Received: by 10.224.95.164 with SMTP id d36mr5591678qan.95.1266813778959;
+        Sun, 21 Feb 2010 20:42:58 -0800 (PST)
+Received: from ?192.168.2.202? (dsl-152-38.aei.ca [66.36.152.38])
+        by mx.google.com with ESMTPS id 20sm2310037qyk.13.2010.02.21.20.42.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 21 Feb 2010 20:42:56 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20100108 Lightning/1.0b1 Icedove/3.0
+In-Reply-To: <20100219135549.GA31796@Knoppix>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140604>
 
-On 21/02/2010 06:07, Avery Pennarun wrote:
->
-> On Sat, Feb 20, 2010 at 7:48 PM, Steve Diver<squelch@think.zenbe.com>  wrote:
->> Reading the manual entry for "git describe"[1] there is a note saying that
->> the hash suffix does not guarantee disambiguity, and given that a tag may be
->> incorrect or missing, there is a chance - albeit with diminishing odds -
->> that the 5 digit hash/tag combination might lead to some obscure problems at
->> some point along the line.
+On 2010-02-19 08:55, Ilari Liusvaara wrote:
+> On Fri, Feb 19, 2010 at 02:05:58AM -0500, Gabriel Filion wrote:
 >>
->> The chance of this happening really is low, but there is a chance all the
->> same. We cannot foresee all errors, but identifying, and further reducing
->> the odds of some must be good. Without doing the math, a guess would be that
->> the probability of a repeat 5 digit abbreviated hash suffix increases the
->> longer a tagged version is in place, so never will be 100% safe.
->
-> Not really.  Note that the number *before* the hash is the number of
-> commits between your version and the tag.  So the only way to get an
-> actual undetectable overlap would be to have two commits that are both
-> the same number of commits on top of the given tag, *and* both start
-> with the same first five digits.  It's just not very likely at all.
-> Besides which, using the hash code feature of git-describe is most
-> useful for the short periods between versions, not as a long-term
-> thing.  After a new release comes out it's unlikely anyone will care
-> if the previous hash prefixes were overlapping.
->
-Thanks for pointing that out, and I concede that it is most unlikely. 
-Testing for a minor build revision is probably not a good idea anyway. I 
-was thinking along the lines of testing for version integrity.
-
->> I may be wrong, but the only scenario where I see DEF_VER being used by
->> GIT-VERSION-GEN, would be when there are no tags for git describe to
->> retrieve. ie "git pull --no-tags"
+>> The Documentation/git-remote-helpers.txt file wasn't really of much help
+>> .. It really only barely scratches the subject, but it does not mention
+>> how remote-helpers really work internally (e.g. how do they get called:
+>> based on protocol used in URLs?)
 >>
->> If my understanding is correct, DEF_VER is unique and set at the same time
->> as the tagged version, so wouldn't it be desirable to cross check, or
->> include this value instead of relying solely on the tag when present during
->> the generation of GIT-VERSION-FILE at build time?
->
-> If I recall correctly, the main reason for DEF_VER is when building
-> git from a tarball, in which case 'git describe' wouldn't be able to
-> tell you anything useful.
->
-I suppose my point is that relying on the tag alone via git describe, 
-does not guarantee the correct displayed version. The actual minor build 
-is less important. This was the only mechanism that allowed me to 
-recognise something was amiss. It is the major version number that 
-interests me.
+>> I'm still trying to dig up information about how to actually build, test
+>> and use a remote helper. I'll probably be reading code for examples.
+> 
+> The remote helper is invoked with one or two parameters. 
+> 
+> There are five cases to consider (as rule, first argument is name of
+> remote [pseudo-remote in case URL was used] and the second argument is
+> URL to use, if any):
+> 
+> 1) Remote <remote> without URL line but with VCS line value <helper> was used.
+> 
+> The called program: git-remote-<helper>  [search $PATH for it].
+> Number of arguements: 1
+> 1st argument: <remote>
+> 
+> 2) Remote <remote> with URL using <helper>::<string> syntax was used.
+> 
+> The called program: git-remote-<helper>  [search $PATH for it].
+> Number of arguments: 2
+> 1st argument: <remote>
+> 2st argument: <string>
+> 
+> 3) Remote <remote> with URL using <helper>://<rest-of-URL> syntax was used.
+> 
+> The called program: git-remote-<helper>  [serch $PATH for it].
+> Number of arguments: 2
+> 1st argument: <remote>
+> 2st argument: <helper>://<rest-of-URL>
+> 
+> 4) URL using <helper>::<string> syntax was used directly on command line.
+> 
+> The called program: git-remote-<helper>  [serch $PATH for it].
+> Number of arguments: 2
+> 1st argument: <helper>::<string>
+> 2st argument: <string>
+> 
+> 5) URL using <helper>://<rest-of-URL> syntax was used directly on command
+> line.
+> 
+> The called program: git-remote-<helper>  [serch $PATH for it].
+> Number of arguments: 2
+> 1st argument: <helper>://<rest-of-URL>
+> 2st argument: <helper>://<rest-of-URL>
+> 
+> 
+> Notes:
+> 
+> - For 2) and 4), the helper name can only contain alphanumeric characters
+>   0-9, A-Z and a-z.
+> - For 3) and 5), the helper name can't be any of builtin protocols:
+>   'rsync', 'file', 'git', 'ssh', 'git+ssh' nor 'ssh+git'.
+> - <helper>::<string> is the strongest, followed by VCS line,
+>   <helper>:://<rest-of-URL> is weakest.
+> 
 
-Take for example a client application that tests for the git version, 
-avoids problems in older versions, and utilizes features from the latest 
-and greatest. This could all happen at run time, and would be fairly 
-resilient, except for when the version is incorrectly applied.
+This will prove quite useful! This summary should be inspired upon to
+add details about how remote helpers are called in the documentation.
 
-If the client app used the output from my 1.7.0 build which was 
-incorrectly labelled, it would not try to use feature x or would fail 
-with a prompt to install a newer version. The situation could be far 
-more serious if the advertised version was 1.7.0 based on a rogue tag, 
-and the build was 1.5.0 - extreme and unlikely, but hopefully 
-illustrates my point
+I created a dummy remote helper script to test how things are called. I
+was successful in having a remote created with URL
+bzr://some.server/path to be handed down to the script git-remote-bzr.
 
-What I am suggesting is that DEF_VER is not only used as fail over where 
-git describe does not yield anything useful, but is also used for 
-"checks and balances" purposes where git describe generates something 
-different from DEF_VER.
+However, when I tried creating a git-remote-bzr+ssh link pointing to the
+git-remote-bzr script so that URLs like bzr+ssh://something/somewhere
+(this is how ssh is used with Bazaar) got handed down to the dummy
+script, it kept saying the "bzr+ssh" protocol wasn't handled. So, it
+would seem I can't have special characters in the helper script name.
 
-Steve
+How could I get this protocol to be handled by the remote helper? Having
+to type bzr::bzr+ssh://something/somewhere looks like a really awkward
+thing to write. Also, requiring users to add something to a protocol
+that already identifies the type of remote repository (and, that is
+already well known and used by users of bzr) is not interesting in a
+usability point of view.
+
+-- 
+Gabriel Filion
