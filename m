@@ -1,89 +1,96 @@
-From: Zygo Blaxell <zblaxell@gibbs.hungrycats.org>
-Subject: Re: [PATCH] Teach "git add" and friends to be paranoid
-Date: Mon, 22 Feb 2010 12:31:22 -0500
-Message-ID: <20100222173122.GG11733@gibbs.hungrycats.org>
-References: <20100214011812.GA2175@dpotapov.dyndns.org> <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org> <20100219082813.GB17952@dpotapov.dyndns.org> <7v635tkta7.fsf@alter.siamese.dyndns.org> <7v8waniue8.fsf@alter.siamese.dyndns.org> <20100221072142.GA5829@dpotapov.dyndns.org> <7vhbpas7ut.fsf@alter.siamese.dyndns.org> <20100222033553.GA10191@dpotapov.dyndns.org> <7vwry5pxg8.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1002221033120.1946@xanadu.home>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] sha1_file: don't malloc the whole compressed result when
+ writing out objects
+Date: Mon, 22 Feb 2010 12:36:39 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1002221233000.1946@xanadu.home>
+References: <alpine.LFD.2.00.1002202323500.1946@xanadu.home>
+ <7vd3zys79d.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1002211522120.1946@xanadu.home>
+ <7v3a0umdb8.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1002211950250.1946@xanadu.home>
+ <7v635p4z26.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1002220034540.1946@xanadu.home>
+ <7v8walyesu.fsf@alter.siamese.dyndns.org>
+ <7v4ol9vl0l.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Mon Feb 22 18:31:41 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 18:36:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Njc82-00082N-7k
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 18:31:30 +0100
+	id 1NjcD7-0002JV-Ps
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 18:36:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752522Ab0BVRbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 12:31:25 -0500
-Received: from ip-70-38-54-39.static.privatedns.com ([70.38.54.39]:41639 "EHLO
-	ginevra.hungrycats.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752471Ab0BVRbY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 12:31:24 -0500
-X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
-X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
-X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
-X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
-X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
-X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
-X-Envelope-Mail-From: zblaxell@gibbs.hungrycats.org
-Received: from gibbs.hungrycats.org (gibbs.vpn7.hungrycats.org [10.132.226.42])
-	by ginevra.hungrycats.org (Postfix) with ESMTP id 11DBB801C;
-	Mon, 22 Feb 2010 12:31:23 -0500 (EST)
-Received: from zblaxell by gibbs.hungrycats.org with local (Exim 4.69)
-	(envelope-from <zblaxell@gibbs.hungrycats.org>)
-	id 1Njc7u-0000qS-Uh; Mon, 22 Feb 2010 12:31:22 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1002221033120.1946@xanadu.home>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752633Ab0BVRgl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 12:36:41 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:49290 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752297Ab0BVRgk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 12:36:40 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0KY9009HN7L33BA0@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 22 Feb 2010 12:36:39 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7v4ol9vl0l.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140699>
 
-On Mon, Feb 22, 2010 at 10:40:59AM -0500, Nicolas Pitre wrote:
-> On Sun, 21 Feb 2010, Junio C Hamano wrote:
-> > Dmitry Potapov <dpotapov@gmail.com> writes:
-> > > But overall the outcome is clear -- read() is always a winner.
-> > 
-> > "... a winner, below 128kB; above that the difference is within noise and
-> > measurement error"?
+On Sun, 21 Feb 2010, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> read() is not always a winner.  A read() call will always have the data 
-> duplicated in memory.  Especially with large files, it is more efficient 
-> on the system as a whole to mmap() a 50 MB file rather than allocating 
-> an extra 50 MB of anonymous memory that cannot be paged out (except to 
-> the swap file which would be yet another data duplication).  With mmap() 
-> when there is memory pressure the read-only mapped memory is simply 
-> dropped with no extra IO.
+> > Nicolas Pitre <nico@fluxnic.net> writes:
+> >
+> >> And what real life case would trigger this?  Given the size of the 
+> >> window for this to happen, what are your chances?
+> >
+> >> Of course the odds for me to be struck by lightning also exist.  And if 
+> >> I work really really hard at it then I might be able to trigger that 
+> >> pathological case above even before the next thunderstorm.  But in 
+> >> practice I'm hardly concerned by either of those possibilities.
+> >
+> > The real life case for any of this triggers for me is zero, as I won't be
+> > mistreating git as a continuous & asynchronous back-up tool.
+> >
+> > But then that would make the whole discussion moot.  There are people who
+> > file "bug reports" with an artificial reproduction recipe built around a
+> > loop that runs dd continuously overwriting a file while "git add" is asked
+> > to add it.
+> 
+> Having said all that, I like your approach better.  It is not worth paying
+> the price of unnecessary memcpy(3) that would _only_ help catching the
+> insanely artificial test case, but your patch strikes a good balance of
+> small overhead to catch the easier-to-trigger (either by stupidity, malice
+> or mistake) cases.
 
-That holds if you're comparing read() and mmap() of the entire file as a
-single chunk, instead of in fixed-size chunks at the sweet spot between
-syscall overhead and CPU cache size.
+I think it also catches the bad RAM case which is probably more common 
+too.
 
-If you're read()ing a chunk at a time into a fixed size buffer, and
-doing sha1 and deflate in chunks, the data should be copied once into CPU
-cache, processed with both algorithms, and replaced with new data from
-the next chunk.  The data will be copied from the page cache instead
-of directly mapped, which is a small overhead, but setting up the page
-map in mmap() also a small overhead, so you have to use benchmarks to
-know which of the overheads is smaller.  It might be that there's no
-one answer that applies to all CPU configurations.
+> So I am tempted to discard the "paranoia" patch, and replace with your two
+> patches, with the following caveats in the log message.
+> 
+> --- /var/tmp/2	2010-02-21 22:23:30.000000000 -0800
+> +++ /var/tmp/1	2010-02-21 22:23:22.000000000 -0800
+> @@ -21,7 +21,9 @@
+>      deflate operation has consumed that data, and make sure it matches
+>      with the expected SHA1.  This way we can rely on the CRC32 checked by
+>      the inflate operation to provide a good indication that the data is still
+> -    coherent with its SHA1 hash.
+> +    coherent with its SHA1 hash.  One pathological case we ignore is when
+> +    the data is modified before (or during) deflate call, but changed back
+> +    before it is hashed.
 
-If you're doing mmap() and sha1 and deflate of a 50MB file in two
-separate passes that are the same size as the file, you load 50MB of
-data into CPU cache at least twice, you get two sets of associated
-things like TLB misses, and if the file is very large, you page it from
-disk twice.  So it might make sense to process in chunks regardless
-of read() vs mmap() fetching the data.
+ACK.
 
-If you're malloc()ing 50MB, you're wasting memory and CPU bandwidth
-making up pages full of zeros before you've even processed the first byte.
-I don't see how that could ever be faster for large file cases.
+
+Nicolas
