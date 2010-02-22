@@ -1,93 +1,84 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Storing (hidden) per-commit metadata
-Date: Mon, 22 Feb 2010 17:20:13 +0300
-Message-ID: <20100222142013.GA7863@dpotapov.dyndns.org>
-References: <1266687636-sup-7641@ben-laptop>
- <32541b131002201057t31fc8a6aydb0942171fe1b8c8@mail.gmail.com>
- <20100221063433.GA2840@coredump.intra.peff.net>
- <1266754646.12035.23.camel@ganieda>
- <20100222051748.GB10191@dpotapov.dyndns.org>
- <1266832607.31769.37.camel@ganieda>
- <20100222112845.GE10191@dpotapov.dyndns.org>
- <1266839972.4575.38.camel@ganieda>
- <20100222130836.GG10191@dpotapov.dyndns.org>
- <1266846289.4575.69.camel@ganieda>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] am: remove rebase-apply directory before gc
+Date: Mon, 22 Feb 2010 08:35:46 -0600
+Message-ID: <20100222143545.GA4791@progeny.tock>
+References: <20100222140911.30949.49607.reportbug@rakim.wolfsonmicro.main>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Avery Pennarun <apenwarr@gmail.com>,
-	Ben Gamari <bgamari@gmail.com>, git <git@vger.kernel.org>
-To: Jelmer Vernooij <jelmer@samba.org>
-X-From: git-owner@vger.kernel.org Mon Feb 22 15:21:24 2010
+Cc: Mark Brown <broonie@debian.org>, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 22 15:35:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjZA2-0003oa-SI
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 15:21:23 +0100
+	id 1NjZNw-0000RJ-JC
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 15:35:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753443Ab0BVOUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 09:20:20 -0500
-Received: from mail-fx0-f219.google.com ([209.85.220.219]:40942 "EHLO
-	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753401Ab0BVOUR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 09:20:17 -0500
-Received: by fxm19 with SMTP id 19so2538205fxm.21
-        for <git@vger.kernel.org>; Mon, 22 Feb 2010 06:20:16 -0800 (PST)
+	id S1753470Ab0BVOfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 09:35:39 -0500
+Received: from mail-yx0-f200.google.com ([209.85.210.200]:62511 "EHLO
+	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753371Ab0BVOfi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 09:35:38 -0500
+Received: by yxe38 with SMTP id 38so2506988yxe.4
+        for <git@vger.kernel.org>; Mon, 22 Feb 2010 06:35:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=F1PmH98LOOiocoLgbmQxlL9Sod4riu0zYMbka8ktNDo=;
-        b=BxN2jon/Uv3qSRDemIPAoqV/Rq98L8UUhVzYismPLxa3XG6X00YX1U5HwAHL9L4wNq
-         1EBg3qt2pzumJxiJXuiWYvlTXUlVnHTSq/3veVzrp5NlA5531Wf4rJLWuLXnvwylNLeR
-         xytctuPQ56DpdbNEufHg8aO6fWaqgMHB6j8Rk=
+        bh=scpZ6Kjvg2FUu9I4oaEIK0kGPDLCa2cquUzZ4fOd9xY=;
+        b=qi62fCgKeE9RBzzwJHNkzVLLzcy/tWhATOCeBr1PB83iZ9STMZ31nVW40oC7a0+X9b
+         sh6g/iR60MN3Cg6u0A2GumklNsSR9tZAwRZfwuPJ+HpBQtqToK6yK5fHB0LqF6bNHETw
+         EQkfI7Pi/tw0YMY4P2NVBrk726zkn1GUbR/Kw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=UC00kbUqIuUUzIt7mvMDvCmvYFGGTF9VaIq/eiMjjVQ9CvaVKz2FatjbR3TDejzKZD
-         AA1xCkTTB6umOwOlUwdTGxZGtOx8gCntVGMtUhoWzNWO3C7HLyNRzA2mqrYK1HqqQRdT
-         SGPyivdYcr5P3Rr/aZ0YlkBeeqy159SwKFegM=
-Received: by 10.223.29.199 with SMTP id r7mr7470627fac.73.1266848416203;
-        Mon, 22 Feb 2010 06:20:16 -0800 (PST)
-Received: from localhost (ppp91-77-227-64.pppoe.mtu-net.ru [91.77.227.64])
-        by mx.google.com with ESMTPS id 13sm1511080fxm.14.2010.02.22.06.20.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 22 Feb 2010 06:20:15 -0800 (PST)
+        b=pcMTAT5xPdL0Qhzd57XoXNT7xtuhRYdyq/Hgm3xI0AKH9G6sA/DbQBLXVYl3NXIHZ0
+         glaMttiinKyp6qYtuSR5s3OPHq7vfR0pHI3UUuEtgeG7D49qMJ7i9CREnxHxnuxrkRPV
+         oj46/1IjT6mfIBbGgZtkJwiYKtDCgEDoWI4sg=
+Received: by 10.90.177.9 with SMTP id z9mr1467223age.93.1266849337350;
+        Mon, 22 Feb 2010 06:35:37 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 14sm3421140gxk.7.2010.02.22.06.35.36
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 22 Feb 2010 06:35:36 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <1266846289.4575.69.camel@ganieda>
+In-Reply-To: <20100222140911.30949.49607.reportbug@rakim.wolfsonmicro.main>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140685>
 
-On Mon, Feb 22, 2010 at 02:44:49PM +0100, Jelmer Vernooij wrote:
-> On Mon, 2010-02-22 at 16:08 +0300, Dmitry Potapov wrote:
-> > I am not sure that the commit object is the right place to store that
-> > metadata, but hidding this information is even more problematic. Let's
-> > suppose that someone cherry-pick your Bazaar originated commit. Now when
-> > you try to synchronize with Bazaar, your synchronizer will see that it
-> > has some Bazaar revision ID and branch name, but, in fact, it is new
-> > commit on a completely different branch...
-> I don't see how the fact that the bzr-git/hg-git data is being hidden is
-> the problem in the scenario you mention.
+When git am does an automatic gc it doesn't clean up the rebase-apply
+directory until after this has finished.  This means that if the user
+aborts the gc then future am or rebase operations will report that an
+existing operation is in progress, which is undesirable and confusing.
 
-Because you can easily remove that information manually when you cherry-pick
-some commit. It is more difficult to do when it is hidden.
+Reported by Mark Brown <broonie@debian.org> through
+http://bugs.debian.org/570966
 
-> It'd be nice if this sort of information was discarded by "git rebase",
-> but that's another good reason to treat it in a different way from the
-> commit message instead.
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ git-am.sh |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
 
-Well, I do not see any other place in the commit object aside the commit
-message where you can easily put information, and I do not think it is a
-good idea for "git rebase" to edit the commit message automatically.
-Maybe, you should look at git-notes. (I don't know enough about them to
-tell whether they are suitable or not).
-
-
-Dmitry
+diff --git a/git-am.sh b/git-am.sh
+index 3c08d53..ebfbee5 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -776,6 +776,5 @@ do
+ 	go_next
+ done
+ 
+-git gc --auto
+-
+ rm -fr "$dotest"
++git gc --auto
+-- 
+1.7.0
