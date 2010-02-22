@@ -1,148 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 3/6] git_mkstemp_mode, xmkstemp_mode: variants of gitmkstemps with mode argument.
-Date: Mon, 22 Feb 2010 23:32:13 +0100
-Message-ID: <1266877936-13537-4-git-send-email-Matthieu.Moy@imag.fr>
-References: <1266597207-32036-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: nhat minh le <nhat.minh.le@huoc.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Feb 22 23:42:58 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] submodules: ensure clean environment when operating in a
+ submodule
+Date: Mon, 22 Feb 2010 14:43:38 -0800
+Message-ID: <7vljek51t1.fsf@alter.siamese.dyndns.org>
+References: <20100218203726.GD12660@book.hvoigt.net>
+ <1266877015-7943-1-git-send-email-giuseppe.bilotta@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	msysGit Mailinglist <msysgit@googlegroups.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 23:43:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjgzQ-00040t-PD
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 23:42:57 +0100
+	id 1Njh0P-0004LU-Me
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 23:43:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754787Ab0BVWmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 17:42:52 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:58940 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754365Ab0BVWmv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 17:42:51 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o1MMUAHX028149
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 22 Feb 2010 23:30:10 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NjgpK-0007kh-JV; Mon, 22 Feb 2010 23:32:30 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NjgpK-0003XN-IR; Mon, 22 Feb 2010 23:32:30 +0100
-X-Mailer: git-send-email 1.7.0.54.gb6a04.dirty
-In-Reply-To: <1266597207-32036-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 22 Feb 2010 23:30:10 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o1MMUAHX028149
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1267482611.34009@OZzWRn7p6KNPExK07p6oNQ
+	id S1754822Ab0BVWnx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 17:43:53 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41552 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754365Ab0BVWnw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 17:43:52 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0ED2D9CDAB;
+	Mon, 22 Feb 2010 17:43:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6Bas3YGK0tafbpt4WDPQHeMRCNU=; b=rTUNM6
+	ugMHHn1CgCJ76H5L5u4giHhJWsJt/GuBXKpDyYMZtghBhgiZuYeHgDLsmRmqAZSw
+	to7sZYPjizwBg9TigxPJ1lR0rDjMjWqyVKuD/nD0Z/U5jr6ftSWgX9NgG7b4NyCu
+	vKpqgxxKOt+szYtT3RubLeX9vWu/OJroWPy+U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xjQe2FN4i/EbxT7I4t22Td6/I0aD6k6X
+	Bri0nIH/7LetpYkGZpDh3cT05sWozMeNJybysu6l87Sez6sHdYe94yv80KtVJxVj
+	8pbVG7bs16GBptMhtjX+/V/peUgtRStgQDwzD39P0UwpljwkcgS1QjrzWLT4Mbvy
+	Fmzj2D/UPZA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B13589CDA9;
+	Mon, 22 Feb 2010 17:43:45 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC8EE9CDA5; Mon, 22 Feb
+ 2010 17:43:39 -0500 (EST)
+In-Reply-To: <1266877015-7943-1-git-send-email-giuseppe.bilotta@gmail.com>
+ (Giuseppe Bilotta's message of "Mon\, 22 Feb 2010 23\:16\:55 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: BC15796A-2003-11DF-8D1F-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140733>
 
-gitmkstemps emulates the behavior of mkstemps, which is usually used
-to create files in a shared directory like /tmp/, hence, it creates
-files with permission 0600.
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-Add git_mkstemps_mode() that allows us to specify the desired mode, and
-make git_mkstemps() a wrapper that always uses 0600 to call it. Later we
-will use git_mkstemps_mode() when creating pack files.
+> I'm pretty confident fixing this on the submodules side is the more correct
+> approach, since otherwise even a simple
+> $ GIT_WORK_TREE=. git submodule update
+> on the command-line can fail.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- cache.h   |    4 ++++
- path.c    |   16 ++++++++++++++--
- wrapper.c |   10 ++++++++++
- 3 files changed, 28 insertions(+), 2 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index d478eff..0319637 100644
---- a/cache.h
-+++ b/cache.h
-@@ -641,6 +641,10 @@ int git_mkstemp(char *path, size_t n, const char *template);
- 
- int git_mkstemps(char *path, size_t n, const char *template, int suffix_len);
- 
-+/* set default permissions by passing mode arguments to open(2) */
-+int git_mkstemps_mode(char *pattern, int suffix_len, int mode);
-+int git_mkstemp_mode(char *pattern, int mode);
-+
- /*
-  * NOTE NOTE NOTE!!
-  *
-diff --git a/path.c b/path.c
-index ab2e368..925039a 100644
---- a/path.c
-+++ b/path.c
-@@ -162,7 +162,7 @@ int git_mkstemps(char *path, size_t len, const char *template, int suffix_len)
- #undef TMP_MAX
- #define TMP_MAX 16384
- 
--int gitmkstemps(char *pattern, int suffix_len)
-+int git_mkstemps_mode(char *pattern, int suffix_len, int mode)
- {
- 	static const char letters[] =
- 		"abcdefghijklmnopqrstuvwxyz"
-@@ -204,7 +204,7 @@ int gitmkstemps(char *pattern, int suffix_len)
- 		template[4] = letters[v % num_letters]; v /= num_letters;
- 		template[5] = letters[v % num_letters]; v /= num_letters;
- 
--		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, 0600);
-+		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, mode);
- 		if (fd > 0)
- 			return fd;
- 		/*
-@@ -226,6 +226,17 @@ int gitmkstemps(char *pattern, int suffix_len)
- 	return -1;
- }
- 
-+int git_mkstemp_mode(char *pattern, int mode)
-+{
-+	/* mkstemp is just mkstemps with no suffix */
-+	return git_mkstemps_mode(pattern, 0, mode);
-+}
-+
-+int gitmkstemps(char *pattern, int suffix_len)
-+{
-+	return git_mkstemps_mode(pattern, suffix_len, 0600);
-+}
-+
- int validate_headref(const char *path)
- {
- 	struct stat st;
-@@ -718,3 +729,4 @@ int daemon_avoid_alias(const char *p)
- 		}
- 	}
- }
-+
-diff --git a/wrapper.c b/wrapper.c
-index 0e3e20a..673762f 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -204,6 +204,16 @@ int xmkstemp(char *template)
- 	return fd;
- }
- 
-+int xmkstemp_mode(char *template, int mode)
-+{
-+	int fd;
-+
-+	fd = git_mkstemp_mode(template, mode);
-+	if (fd < 0)
-+		die_errno("Unable to create temporary file");
-+	return fd;
-+}
-+
- /*
-  * zlib wrappers to make sure we don't silently miss errors
-  * at init time.
--- 
-1.7.0.54.gb6a04.dirty
+True; while I didn't bother to check what the codepaths after these
+unsetting do, I suspect you should also think about what effect it has to
+have other GIT_* environment variables seep through to them (GIT_INDEX_FILE,
+GIT_CONFIG and GIT_OBJECT_DIRECTORY come to mind).  You would probably
+want to have a single shell helper function to unset even if you end up
+deciding that it is sufficient to clear GIT_DIR and GIT_WORK_TREE and
+nothing else.
