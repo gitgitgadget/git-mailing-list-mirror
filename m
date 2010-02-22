@@ -1,184 +1,76 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: working out where git-rebase is up to?
-Date: Mon, 22 Feb 2010 11:49:32 +0100
-Message-ID: <201002221149.32504.trast@student.ethz.ch>
-References: <2cfc40321002220209pe1942ecucb3716f60bf05d32@mail.gmail.com> <201002221126.47372.trast@student.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Disable OpenSSL SHA1 implementation by default
+Date: Mon, 22 Feb 2010 06:23:26 -0500
+Message-ID: <20100222112326.GA21929@coredump.intra.peff.net>
+References: <20100222110814.GA3247@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 13:13:16 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>,
+	Robert Shearman <robertshearman@gmail.com>,
+	Ben Walton <bwalton@artsci.utoronto.ca>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 13:20:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjVr9-0003PQ-LH
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 11:49:40 +0100
+	id 1NjWNx-0007lq-4Q
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 12:23:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751961Ab0BVKtf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 05:49:35 -0500
-Received: from gwse.ethz.ch ([129.132.178.237]:7449 "EHLO gwse.ethz.ch"
+	id S1752139Ab0BVLX2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Feb 2010 06:23:28 -0500
+Received: from peff.net ([208.65.91.99]:49374 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751838Ab0BVKte (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 05:49:34 -0500
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.234.1; Mon, 22 Feb
- 2010 11:49:34 +0100
-Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Mon, 22 Feb
- 2010 11:49:32 +0100
-User-Agent: KMail/1.13.0 (Linux/2.6.31.12-0.1-desktop; KDE/4.4.0; x86_64; ; )
-In-Reply-To: <201002221126.47372.trast@student.ethz.ch>
+	id S1751773Ab0BVLX1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 06:23:27 -0500
+Received: (qmail 26184 invoked by uid 107); 22 Feb 2010 11:23:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 22 Feb 2010 06:23:41 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Feb 2010 06:23:26 -0500
+Content-Disposition: inline
+In-Reply-To: <20100222110814.GA3247@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140672>
 
-On Monday 22 February 2010 11:26:47 Thomas Rast wrote:
-> On Monday 22 February 2010 11:09:18 Jon Seymour wrote:
-> > For my funky "compensating rebases" I need to know where an automated
-> > rebase has stopped. In particular, I need to know the sha1 of the
-> > commit that caused the rebase to stop.
-> > 
-> > No doubt rebase is tracking this info, but is there a supported way to
-> > discover it?
-> 
-> It's in .git/rebase-merge/done (and .git/rebase-merge/git-rebase-todo
-> for the remaining TODO file).  Maybe we should add a 'git rebase
-> --whydiditstop' command ;-)
+On Mon, Feb 22, 2010 at 05:08:14AM -0600, Jonathan Nieder wrote:
 
-Here's a lightly tested draft patch.  I should stop stealing work time
-for this, but you're welcome to fill in docs and tests and submit it.
+> The OpenSSL SHA-1 routine is about as fast as block-sha1, but linking
+> to libcrypto slows down the startup of git commands by an appreciable
+> amount.  Use the BLK_SHA1 implementation by default instead.
 
-diff --git i/git-rebase--interactive.sh w/git-rebase--interactive.sh
-index 415ae72..d34c057 100755
---- i/git-rebase--interactive.sh
-+++ w/git-rebase--interactive.sh
-@@ -13,7 +13,7 @@
- OPTIONS_KEEPDASHDASH=
- OPTIONS_SPEC="\
- git-rebase [-i] [options] [--] <upstream> [<branch>]
--git-rebase [-i] (--continue | --abort | --skip)
-+git-rebase [-i] (--continue | --abort | --skip | --status)
- --
-  Available options are
- v,verbose          display a diffstat of what changed upstream
-@@ -26,6 +26,7 @@ i,interactive      always used (no-op)
- continue           continue rebasing process
- abort              abort rebasing process and restore original branch
- skip               skip current patch and continue rebasing process
-+status	           show where the rebasing process stopped
- no-verify          override pre-rebase hook from stopping the operation
- root               rebase all reachable commmits up to the root(s)
- autosquash         move commits that begin with squash!/fixup! under -i
-@@ -103,6 +104,10 @@ AMEND="$DOTEST"/amend
- REWRITTEN_LIST="$DOTEST"/rewritten-list
- REWRITTEN_PENDING="$DOTEST"/rewritten-pending
- 
-+# This file holds the status message that we showed to the user when
-+# stopping, so that it can be retrieved by 'git rebase --status'.
-+STATUS="$DOTEST"/status
-+
- PRESERVE_MERGES=
- STRATEGY=
- ONTO=
-@@ -204,11 +209,16 @@ make_patch () {
- 		get_author_ident_from_commit "$1" > "$AUTHOR_SCRIPT"
- }
- 
-+status_message () {
-+	cat >> "$STATUS"
-+	"$1" "$(cat "$STATUS")"
-+}
-+
- die_with_patch () {
- 	echo "$1" > "$DOTEST"/stopped-sha
- 	make_patch "$1"
- 	git rerere
--	die "$2"
-+	status_message die "$2"
- }
- 
- die_abort () {
-@@ -429,8 +439,10 @@ die_failed_squash() {
- 	mv "$SQUASH_MSG" "$MSG" || exit
- 	rm -f "$FIXUP_MSG"
- 	cp "$MSG" "$GIT_DIR"/MERGE_MSG || exit
--	warn
--	warn "Could not apply $1... $2"
-+	status_message warn <<EOF
-+
-+Could not apply $1... $2
-+EOF
- 	die_with_patch $1 ""
- }
- 
-@@ -455,7 +467,7 @@ record_in_rewritten() {
- }
- 
- do_next () {
--	rm -f "$MSG" "$AUTHOR_SCRIPT" "$AMEND" || exit
-+	rm -f "$MSG" "$AUTHOR_SCRIPT" "$AMEND" "$STATUS" || exit
- 	read command sha1 rest < "$TODO"
- 	case "$command" in
- 	'#'*|''|noop)
-@@ -487,15 +499,17 @@ do_next () {
- 		echo "$1" > "$DOTEST"/stopped-sha
- 		make_patch $sha1
- 		git rev-parse --verify HEAD > "$AMEND"
--		warn "Stopped at $sha1... $rest"
--		warn "You can amend the commit now, with"
--		warn
--		warn "	git commit --amend"
--		warn
--		warn "Once you are satisfied with your changes, run"
--		warn
--		warn "	git rebase --continue"
--		warn
-+		status_message warn <<EOF
-+Stopped at $sha1... $rest
-+You can amend the commit now, with
-+
-+	git commit --amend
-+
-+Once you are satisfied with your changes, run
-+
-+	git rebase --continue
-+
-+EOF
- 		exit 0
- 		;;
- 	squash|s|fixup|f)
-@@ -767,6 +781,24 @@ first and then run 'git rebase --continue' again."
- 
- 		output git reset --hard && do_rest
- 		;;
-+	--status)
-+		is_standalone "$@" || usage
-+		warn "Your rebase stopped at the following action:"
-+		warn
-+		warn "    $(tail -1 "$DOTEST"/done)"
-+		warn
-+		next="$(sed -n -e "/^#/d" -e '/^$/d' -e "/ /p" -e "q" < "$TODO")"
-+		if test -n "$next"; then
-+			warn "The next action will be:"
-+			warn
-+			warn "    $next"
-+		else
-+			warn "There are no more actions left after this one."
-+		fi
-+		warn
-+		cat "$STATUS" >&2
-+		exit
-+		;;
- 	-s)
- 		case "$#,$1" in
- 		*,*=*)
+What is your definition of "about as fast"? I benchmarked up to a 20%
+slow-down a while back:
 
+  http://article.gmane.org/gmane.comp.version-control.git/126995
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Now my complaint then was specifically about removing openssl sha1
+support entirely, and I have no problem with setting OPENSSL_SHA1 in my
+build options, but it does make sense to me that the default should
+be whatever is fastest for most people. And that means benchmarking
+blk_sha1 versus the libcrypto linking slow-down on several machines to
+get actual numbers.
+
+Unfortunately, I think we may end up with an apples-to-oranges
+comparison, as sha1-heavy tasks are affected one way, and scripted
+many-git-invocation tasks the other way.
+
+> Typed =E2=80=9Cmake NO_OPENSSL=3D1=E2=80=9D for the umpteenth time to=
+day, but this time
+> I thought I should something about it.
+
+echo 'NO_OPENSSL=3D1' >config.mak ?
+
+> -ifndef NO_OPENSSL
+> +ifdef OPENSSL_TLS
+> +	BASIC_CFLAGS +=3D -DOPENSSL_TLS
+> +	USE_OPENSSL =3D Yes
+> +endif
+
+Doesn't this flip the default for using TLS on imap-send?
+
+-Peff
