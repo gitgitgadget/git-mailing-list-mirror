@@ -1,60 +1,148 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [BUG] git gui blame: Show History Context broken since
-	29e5573d
-Date: Mon, 22 Feb 2010 23:38:44 +0100
-Message-ID: <20100222223802.GA9898@book.hvoigt.net>
-References: <vpqaav1llpn.fsf@bauges.imag.fr> <cb7bb73a1002220718p6b6621der6df062cd2f490d89@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 23:38:56 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 3/6] git_mkstemp_mode, xmkstemp_mode: variants of gitmkstemps with mode argument.
+Date: Mon, 22 Feb 2010 23:32:13 +0100
+Message-ID: <1266877936-13537-4-git-send-email-Matthieu.Moy@imag.fr>
+References: <1266597207-32036-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: nhat minh le <nhat.minh.le@huoc.org>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Feb 22 23:42:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjgvU-0002Wa-GD
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 23:38:52 +0100
+	id 1NjgzQ-00040t-PD
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 23:42:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754729Ab0BVWir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 17:38:47 -0500
-Received: from darksea.de ([83.133.111.250]:42021 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754483Ab0BVWir (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 17:38:47 -0500
-Received: (qmail 12657 invoked from network); 22 Feb 2010 23:38:44 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 22 Feb 2010 23:38:44 +0100
-Content-Disposition: inline
-In-Reply-To: <cb7bb73a1002220718p6b6621der6df062cd2f490d89@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1754787Ab0BVWmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 17:42:52 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:58940 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754365Ab0BVWmv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 17:42:51 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o1MMUAHX028149
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 22 Feb 2010 23:30:10 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1NjgpK-0007kh-JV; Mon, 22 Feb 2010 23:32:30 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1NjgpK-0003XN-IR; Mon, 22 Feb 2010 23:32:30 +0100
+X-Mailer: git-send-email 1.7.0.54.gb6a04.dirty
+In-Reply-To: <1266597207-32036-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 22 Feb 2010 23:30:10 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o1MMUAHX028149
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1267482611.34009@OZzWRn7p6KNPExK07p6oNQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140732>
 
-On Mon, Feb 22, 2010 at 04:18:11PM +0100, Giuseppe Bilotta wrote:
-> On Mon, Feb 22, 2010 at 9:27 AM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
-> > Hi,
-> >
-> > In "git gui blame", right-clicking on the left fringe and chosing
-> > "Show History Context" in the context-menu doesn't work for me in the
-> > latest git. It says:
-> >
-> > couldn't change working directory to "": no such file or directory
-> 
-> Definitely my fault. _gitworktree was not being set up correctly when
-> support for bare repositories was enabled and the repo was not bare
-> (like in the blame case). Patch incoming, can you see if it does the
-> job for you? It seems to fix it here.
+gitmkstemps emulates the behavior of mkstemps, which is usually used
+to create files in a shared directory like /tmp/, hence, it creates
+files with permission 0600.
 
-Isn't this the same bug as this one fixes:
+Add git_mkstemps_mode() that allows us to specify the desired mode, and
+make git_mkstemps() a wrapper that always uses 0600 to call it. Later we
+will use git_mkstemps_mode() when creating pack files.
 
-http://article.gmane.org/gmane.comp.version-control.git/140288
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ cache.h   |    4 ++++
+ path.c    |   16 ++++++++++++++--
+ wrapper.c |   10 ++++++++++
+ 3 files changed, 28 insertions(+), 2 deletions(-)
 
-cheers Heiko
+diff --git a/cache.h b/cache.h
+index d478eff..0319637 100644
+--- a/cache.h
++++ b/cache.h
+@@ -641,6 +641,10 @@ int git_mkstemp(char *path, size_t n, const char *template);
+ 
+ int git_mkstemps(char *path, size_t n, const char *template, int suffix_len);
+ 
++/* set default permissions by passing mode arguments to open(2) */
++int git_mkstemps_mode(char *pattern, int suffix_len, int mode);
++int git_mkstemp_mode(char *pattern, int mode);
++
+ /*
+  * NOTE NOTE NOTE!!
+  *
+diff --git a/path.c b/path.c
+index ab2e368..925039a 100644
+--- a/path.c
++++ b/path.c
+@@ -162,7 +162,7 @@ int git_mkstemps(char *path, size_t len, const char *template, int suffix_len)
+ #undef TMP_MAX
+ #define TMP_MAX 16384
+ 
+-int gitmkstemps(char *pattern, int suffix_len)
++int git_mkstemps_mode(char *pattern, int suffix_len, int mode)
+ {
+ 	static const char letters[] =
+ 		"abcdefghijklmnopqrstuvwxyz"
+@@ -204,7 +204,7 @@ int gitmkstemps(char *pattern, int suffix_len)
+ 		template[4] = letters[v % num_letters]; v /= num_letters;
+ 		template[5] = letters[v % num_letters]; v /= num_letters;
+ 
+-		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, 0600);
++		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, mode);
+ 		if (fd > 0)
+ 			return fd;
+ 		/*
+@@ -226,6 +226,17 @@ int gitmkstemps(char *pattern, int suffix_len)
+ 	return -1;
+ }
+ 
++int git_mkstemp_mode(char *pattern, int mode)
++{
++	/* mkstemp is just mkstemps with no suffix */
++	return git_mkstemps_mode(pattern, 0, mode);
++}
++
++int gitmkstemps(char *pattern, int suffix_len)
++{
++	return git_mkstemps_mode(pattern, suffix_len, 0600);
++}
++
+ int validate_headref(const char *path)
+ {
+ 	struct stat st;
+@@ -718,3 +729,4 @@ int daemon_avoid_alias(const char *p)
+ 		}
+ 	}
+ }
++
+diff --git a/wrapper.c b/wrapper.c
+index 0e3e20a..673762f 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -204,6 +204,16 @@ int xmkstemp(char *template)
+ 	return fd;
+ }
+ 
++int xmkstemp_mode(char *template, int mode)
++{
++	int fd;
++
++	fd = git_mkstemp_mode(template, mode);
++	if (fd < 0)
++		die_errno("Unable to create temporary file");
++	return fd;
++}
++
+ /*
+  * zlib wrappers to make sure we don't silently miss errors
+  * at init time.
+-- 
+1.7.0.54.gb6a04.dirty
