@@ -1,123 +1,86 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH] submodules: ensure clean environment when operating in a submodule
-Date: Mon, 22 Feb 2010 23:16:55 +0100
-Message-ID: <1266877015-7943-1-git-send-email-giuseppe.bilotta@gmail.com>
-References: <20100218203726.GD12660@book.hvoigt.net>
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	msysGit Mailinglist <msysgit@googlegroups.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 22 23:17:30 2010
+From: =?UTF-8?B?IkFsZWphbmRybyBSLiBTZWRlw7FvIg==?= <asedeno@MIT.EDU>
+Subject: Re: Storing (hidden) per-commit metadata
+Date: Mon, 22 Feb 2010 17:13:34 -0500
+Message-ID: <4B83018E.3020608@mit.edu>
+References: <1266599485.29753.54.camel@ganieda>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Jelmer Vernooij <jelmer@samba.org>
+X-From: git-owner@vger.kernel.org Mon Feb 22 23:18:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Njgam-0002yF-Nu
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 23:17:29 +0100
+	id 1Njgc3-0003Wh-1s
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 23:18:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754751Ab0BVWRP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 17:17:15 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:46962 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754694Ab0BVWRN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 17:17:13 -0500
-Received: by ewy28 with SMTP id 28so3332419ewy.28
-        for <git@vger.kernel.org>; Mon, 22 Feb 2010 14:17:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=H1FypegybXns7QpAu22zBIWAACEgrPcprelaDlruKoQ=;
-        b=GisdDAw7OBaa8bzY65Uf+SWnwBrUJBvzLzhxecyyToKR91xj6yIKjTcrufRJSt1Ny+
-         8AVtXXOmn1HtaMNwvC1Cj3uy7GGGkBpIEUWZn2C9Z9JgEFeYKuPL6Ol+Ijs2CXyPiMvR
-         Q0OOqFxVKy2QZ1fAmzKx23ZzbZiIjH+KO4PcU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=UyNDc7FjqvIwp3oz2VhGYAWRK0RJSg7S/IjaxVhr9iT1hOjAsZi4MnBgkMLeaUUr6d
-         p1/uT2RSolLpb9SLaFe74zUivNtZtgw9VT7s9gJKchY14PYdzD3yefBVv5cHbIjxDUQv
-         5Bg9B1fSteR2lnA1t3hc1oWgSPvplcI5OEpr4=
-Received: by 10.216.184.205 with SMTP id s55mr1240459wem.149.1266877031702;
-        Mon, 22 Feb 2010 14:17:11 -0800 (PST)
-Received: from localhost ([151.60.177.169])
-        by mx.google.com with ESMTPS id x6sm16073980gvf.13.2010.02.22.14.17.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 22 Feb 2010 14:17:10 -0800 (PST)
-X-Mailer: git-send-email 1.7.0.200.g5ba36
-In-Reply-To: <20100218203726.GD12660@book.hvoigt.net>
+	id S1754602Ab0BVWSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 17:18:42 -0500
+Received: from DMZ-MAILSEC-SCANNER-1.MIT.EDU ([18.9.25.12]:61334 "EHLO
+	dmz-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754498Ab0BVWSl (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2010 17:18:41 -0500
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Feb 2010 17:18:41 EST
+X-AuditID: 1209190c-b7cfcae00000096b-01-4b8301940f24
+Received: from mailhub-auth-2.mit.edu (MAILHUB-AUTH-2.MIT.EDU [18.7.62.36])
+	by dmz-mailsec-scanner-1.mit.edu (Symantec Brightmail Gateway) with SMTP id D4.9D.02411.491038B4; Mon, 22 Feb 2010 17:13:40 -0500 (EST)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id o1MMDduD004343;
+	Mon, 22 Feb 2010 17:13:40 -0500
+Received: from darkmatter.mit.edu (DARKMATTER.MIT.EDU [18.238.2.175])
+	(authenticated bits=0)
+        (User authenticated as smtp/darkmatter.mit.edu@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o1MMDwC0016327
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 22 Feb 2010 17:13:59 -0500 (EST)
+Received: by darkmatter.mit.edu (Postfix, from userid 108)
+	id 0626E14C010; Mon, 22 Feb 2010 17:13:38 -0500 (EST)
+Received: from [18.238.2.136] (JABUN.MIT.EDU [18.238.2.136])
+	by darkmatter.mit.edu (Postfix) with ESMTPSA id 95DC814C00F;
+	Mon, 22 Feb 2010 17:13:37 -0500 (EST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
+In-Reply-To: <1266599485.29753.54.camel@ganieda>
+X-Enigmail-Version: 1.0.1
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140720>
 
-git-submodule takes care of clearing GIT_DIR whenever it operates
-on a submodule index or configuration, but forgot to unset GIT_WORK_TREE
-before operating on the submodule worktree, which would lead to failures
-when GIT_WORK_TREE was set.
+On 02/19/2010 12:11 PM, Jelmer Vernooij wrote:
+> To allow round-tripping pushes from Bazaar into Git, I'm looking for a
+> good place to store Bazaar semantics that can not be represented in Git
+> at the moment. This data should ideally be hidden from the user as much
+> as possible; it would e.g. contain mappings from git hashes to Bazaar
+> ids.
 
-This only happened in very unusual contexts such as operating on the
-main worktree from outside of it, but since "git-gui: set GIT_DIR and
-GIT_WORK_TREE after setup" (a9fa11fe5bd5978bb) such failures could also
-be provoked by invoking an external tool such as "git submodule update"
-from the Git GUI in a standard setup.
+I've been having similar thoughts for git-svn, since I am working with a
+very large svn repository that uses svn:keywords and svn:externals in a
+few places. I've written some scripts to parse the git-svn
+unhandled.log, but that does not propagate to other git clones of the
+repo, and rebuilding the log is about as expensive as cloning the svn
+repo again. Also, querying for externals is slow, presumably because
+git-svn needs to talk to svn to fetch them.
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- git-submodule.sh |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+So far, I have been leaning towards having an optional tree associated
+with commits, in which metadata could be stored. This metadata tree
+would be propagated by git clone, used by remote helper scripts, and be
+quite ignorable if unneeded. The metadata tree would use sub-trees for
+namespaces. For instance, a sub-tree called git-svn would contain the
+revision map, externals, ignores, properties, etc.
 
-The bug (git submodules not working in Git GUI since my patch) was spotted by
-Heiko Voigt working on/with msysgit, and he kindly provided a recipe to
-replicate it:
-http://article.gmane.org/gmane.comp.version-control.msysgit/8755
+This isn't fully thought out yet, and I'm not even sure if it would
+work, or be backwards-compatible. However, since the topic came up, I
+figured I should mention what I had so far.
 
-I'm pretty confident fixing this on the submodules side is the more correct
-approach, since otherwise even a simple
-$ GIT_WORK_TREE=. git submodule update
-on the command-line can fail.
+Preemptive: No, I don't like svn:keywords, but I can't just ignore them.
 
-I also believe this is material for git maint.
+Preemptive: Yes, I considered notes in a different GIT_NOTES_REF, but I
+feel those are too loosely coupled to the commits. I could be wrong, and
+have not completely dismissed them yet.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 5869c00..69afc84 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -223,6 +223,7 @@ cmd_add()
- 		module_clone "$path" "$realrepo" "$reference" || exit
- 		(
- 			unset GIT_DIR
-+			unset GIT_WORK_TREE
- 			cd "$path" &&
- 			# ash fails to wordsplit ${branch:+-b "$branch"...}
- 			case "$branch" in
-@@ -279,6 +280,7 @@ cmd_foreach()
- 			(
- 				prefix="$prefix$path/"
- 				unset GIT_DIR
-+				unset GIT_WORK_TREE
- 				cd "$path" &&
- 				eval "$@" &&
- 				if test -n "$recursive"
-@@ -477,7 +479,7 @@ cmd_update()
- 				;;
- 			esac
- 
--			(unset GIT_DIR; cd "$path" && $command "$sha1") ||
-+			(unset GIT_DIR; unset GIT_WORK_TREE; cd "$path" && $command "$sha1") ||
- 			die "Unable to $action '$sha1' in submodule path '$path'"
- 			say "Submodule path '$path': $msg '$sha1'"
- 		fi
-@@ -771,6 +773,7 @@ cmd_status()
- 			(
- 				prefix="$displaypath/"
- 				unset GIT_DIR
-+				unset GIT_WORK_TREE
- 				cd "$path" &&
- 				cmd_status $orig_args
- 			) ||
--- 
-1.7.0.199.g49ef3.dirty
+-Alejandro
