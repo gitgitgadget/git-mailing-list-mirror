@@ -1,86 +1,74 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH] submodules: ensure clean environment when operating in a 
-	submodule
-Date: Mon, 22 Feb 2010 23:56:39 +0100
-Message-ID: <cb7bb73a1002221456q6c113675i7453e0115814c99c@mail.gmail.com>
-References: <20100218203726.GD12660@book.hvoigt.net> <1266877015-7943-1-git-send-email-giuseppe.bilotta@gmail.com> 
-	<7vljek51t1.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] submodules: ensure clean environment when operating in a
+  submodule
+Date: Mon, 22 Feb 2010 15:16:50 -0800
+Message-ID: <7vsk8s274t.fsf@alter.siamese.dyndns.org>
+References: <20100218203726.GD12660@book.hvoigt.net>
+ <1266877015-7943-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <7vljek51t1.fsf@alter.siamese.dyndns.org>
+ <cb7bb73a1002221456q6c113675i7453e0115814c99c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
 	Heiko Voigt <hvoigt@hvoigt.net>,
 	msysGit Mailinglist <msysgit@googlegroups.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 23:57:13 2010
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 23 00:17:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjhDD-0000pS-0a
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 23:57:11 +0100
+	id 1NjhWc-0007aY-QO
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 00:17:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754758Ab0BVW5G convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Feb 2010 17:57:06 -0500
-Received: from mail-ew0-f228.google.com ([209.85.219.228]:46267 "EHLO
-	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754643Ab0BVW5F convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2010 17:57:05 -0500
-Received: by ewy28 with SMTP id 28so3373060ewy.28
-        for <git@vger.kernel.org>; Mon, 22 Feb 2010 14:56:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=C0x19bKXLfWiPPPxoDNo+Zi6heXBhUh5UnPbmCbUkXg=;
-        b=FD8ny8pGCLMmhbbj776o02Gk952TDZMCi7Pr7rE282PgDMTGtDgLzAunZxB8QS5zF2
-         vJfzfTQFwPUew1dfijavoMx/nG5I833o+r8eEbvjjwOYGTbAfJGpqqUfFUXyK03qe9oL
-         NkiNRaatMDlmFCQNiYwP+I3Auh79d2JCTn/4I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=CJdVHPsX1Q8K9JoYjsuSL4CG4FVu0r7jOKAw2HZJH+lAZpdivJN2Y9Y/oulswUl4X+
-         elp989p6WQZaX5YFlTtAyPpSjX469wKHmjMKh6DZ28m6xBzMWWiii49d771RZ5IPJk5Z
-         o472EWf0midBJkIfdMQig4U8OAa0K5mcABWig=
-Received: by 10.213.58.138 with SMTP id g10mr1682009ebh.85.1266879419277; Mon, 
-	22 Feb 2010 14:56:59 -0800 (PST)
-In-Reply-To: <7vljek51t1.fsf@alter.siamese.dyndns.org>
+	id S1754890Ab0BVXRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 18:17:09 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42587 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754858Ab0BVXRF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 18:17:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 75BD59C3D5;
+	Mon, 22 Feb 2010 18:17:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3Bv+m1ZcMWmSBvFMbI8az+eSjLc=; b=ksnEoA
+	cX53vU8y2cetptyDTlzdySxPoH8FLub7lX4Cykg3Lr2picd7FsaTOl9a/jWBzgYq
+	LeFlQ6nlj56PBiJqV9g4L+2iWOeSvT8CgMK5jDQ/iJTcspCQ6kcsvm9uLBD2cZpK
+	VX6WTCl/O2mlgheXV60lmS4JHa8ZTkjnM+840=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ixU+EiHsTBJ2RRRA+YkAD4AKtYUu1YwY
+	WD3dHx7mJJrmbbnGHySba0W2oj0C6vJ7GLi/RZyieYk1JfEqJuBcR05H7mrHSq2l
+	ia27wp38u8QFDLygXQfDuhxQ510CyMxtAcr9i6CXuJxp/fMlr0+M/Wy6FQ4igBhk
+	xb1/NeHDaR8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 213CE9C3D4;
+	Mon, 22 Feb 2010 18:16:58 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 12B839C3D2; Mon, 22 Feb
+ 2010 18:16:51 -0500 (EST)
+In-Reply-To: <cb7bb73a1002221456q6c113675i7453e0115814c99c@mail.gmail.com>
+ (Giuseppe Bilotta's message of "Mon\, 22 Feb 2010 23\:56\:39 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 5FA64A06-2008-11DF-A857-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140736>
 
-On Mon, Feb 22, 2010 at 11:43 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
->
->> I'm pretty confident fixing this on the submodules side is the more =
-correct
->> approach, since otherwise even a simple
->> $ GIT_WORK_TREE=3D. git submodule update
->> on the command-line can fail.
->
-> True; while I didn't bother to check what the codepaths after these
-> unsetting do, I suspect you should also think about what effect it ha=
-s to
-> have other GIT_* environment variables seep through to them (GIT_INDE=
-X_FILE,
-> GIT_CONFIG and GIT_OBJECT_DIRECTORY come to mind). =A0You would proba=
-bly
-> want to have a single shell helper function to unset even if you end =
-up
-> deciding that it is sufficient to clear GIT_DIR and GIT_WORK_TREE and
-> nothing else.
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-Good point. All GIT_* env variables should be resent when descending
-into a submodule. Is there a way to loop over them, or do I have to do
-something horrible like env | grep ^GIT_ | cut -f1 -d=3D  to get the
-list?
+> Good point. All GIT_* env variables should be resent when descending
+> into a submodule. Is there a way to loop over them, or do I have to do
+> something horrible like env | grep ^GIT_ | cut -f1 -d=  to get the
+> list?
 
+I would suggest to enumerate only what you care about explicitly, without
+consulting the user's environment.  The user may have variables you do not
+know about and not related to git at all.
 
---=20
-Giuseppe "Oblomov" Bilotta
+IOW, don't try to be too clever for your own good ;-)
