@@ -1,125 +1,119 @@
-From: Steve Diver <squelch@think.zenbe.com>
-Subject: [RFC] Is using git describe resilient enough for setting the build
- version of git?
-Date: Sun, 21 Feb 2010 00:48:45 +0000
-Message-ID: <4B8082ED.7020505@think.zenbe.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH] Teach "git add" and friends to be paranoid
+Date: Mon, 22 Feb 2010 06:35:54 +0300
+Message-ID: <20100222033553.GA10191@dpotapov.dyndns.org>
+References: <20100213162924.GA14623@Knoppix>
+ <37fcd2781002131409r4166e496h9d12d961a2330914@mail.gmail.com>
+ <20100213223733.GP24809@gibbs.hungrycats.org>
+ <20100214011812.GA2175@dpotapov.dyndns.org>
+ <7vljer1gyg.fsf_-_@alter.siamese.dyndns.org>
+ <20100219082813.GB17952@dpotapov.dyndns.org>
+ <7v635tkta7.fsf@alter.siamese.dyndns.org>
+ <7v8waniue8.fsf@alter.siamese.dyndns.org>
+ <20100221072142.GA5829@dpotapov.dyndns.org>
+ <7vhbpas7ut.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Feb 21 02:05:31 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Zygo Blaxell <zblaxell@esightcorp.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 05:28:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nj09G-0005Ag-DQ
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Feb 2010 01:58:14 +0100
+	id 1NjP5k-0003QJ-7s
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 04:36:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755471Ab0BUA6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Feb 2010 19:58:00 -0500
-Received: from smb-out-1.zenbe.com ([67.228.244.51]:60237 "EHLO
-	smb-out-1.zenbe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755332Ab0BUA57 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Feb 2010 19:57:59 -0500
-X-Greylist: delayed 528 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Feb 2010 19:57:59 EST
-Received: from cl1.app01.zenbe.com (ec2-174-129-108-13.compute-1.amazonaws.com [174.129.108.13])
-	by smb-out-1.zenbe.com (Postfix) with ESMTPSA id A72CD2423D7;
-	Sat, 20 Feb 2010 18:49:02 -0600 (CST)
-X-DKIM: Sendmail DKIM Filter v2.5.4 smb-out-1.zenbe.com A72CD2423D7
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zenbe.com; s=smb;
-	t=1266713342; i=@think.zenbe.com; bh=AusK51gVTjjumyBn/jk/+a6XI1zMko
-	INIjiqPK1uWnQ=; h=Message-ID:Date:From:MIME-Version:To:CC:Subject:
-	 Content-Type:Content-Transfer-Encoding; b=I1Td0tg/KSqiyFKZG07kWUsH
-	TMfMosPXlYZCkrbOV2WZXYC6FlDpMhwduzVEHIQsgyCE/l9g/xj1RGsPevQXLzvpQ7a
-	/emtz+CdvMiSfRuKC+vMbk7jdOyN9wYdQu3B44rxEwzM04Oqr2ZjgvKTfRxldjl11UC
-	OFPln9vYoO74I=
-Received: from cl1.mailapp01.zenbe.com (domU-12-31-39-00-78-F6.compute-1.internal [10.254.127.4])
-	by cl1.app01.zenbe.com (Postfix) with ESMTP id 036E5321F7;
-	Sun, 21 Feb 2010 00:49:01 +0000 (UTC)
-Received: from [10.0.0.16] (unknown [92.27.58.103])
-	by cl1.app01.zenbe.com (Postfix) with ESMTP id C8699340A6;
-	Sun, 21 Feb 2010 00:48:54 +0000 (UTC)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.7) Gecko/20100111 Lightning/1.0b1 Thunderbird/3.0.1
+	id S1754543Ab0BVDf7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Feb 2010 22:35:59 -0500
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:64410 "EHLO
+	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754502Ab0BVDf7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Feb 2010 22:35:59 -0500
+Received: by fxm5 with SMTP id 5so2231636fxm.29
+        for <git@vger.kernel.org>; Sun, 21 Feb 2010 19:35:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=IyXwbXSClyy0+UxXl0nC1YUz7BCigiLYF6nFsmMT/jM=;
+        b=v2MYDjMN61ocDorAv2r/cYywdeozqYnxIjNTr48oz+jIevJZn3kMx48Ml8iir3o2yL
+         APd4jm86rTAyNQnRdAUuk27lFmfADyMpJDx33KmFR1K7B2a/Iad/VkKlSXV4GpE8DC45
+         UjBUq3eUeIv0qMpqMtSMz4oUSnFrbNzJ/9WYQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=abejTY7PLR2o+iQTZ4mNbLzC7JsHGWgdzokzsGDPQa4+ApEZ3Vu1Liu+4Z4Y7Dnucn
+         0JPwaKmKEaFDgfWdri9h/pMHdGrdiJTsE1y2F+04p0OJWTHAHvl+NXvUWaL7165fqcLT
+         M+ljuFjW679TOrpOVsGKvSsSlHQiP3xIcAnKk=
+Received: by 10.102.169.39 with SMTP id r39mr10412330mue.126.1266809757056;
+        Sun, 21 Feb 2010 19:35:57 -0800 (PST)
+Received: from localhost (ppp91-77-227-64.pppoe.mtu-net.ru [91.77.227.64])
+        by mx.google.com with ESMTPS id 25sm13158232mul.20.2010.02.21.19.35.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 21 Feb 2010 19:35:55 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vhbpas7ut.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140577>
 
-Hi,
+On Sun, Feb 21, 2010 at 11:32:10AM -0800, Junio C Hamano wrote:
+> 
+> 32*1024 sounds like a better cut-off to me.  After that, doubling the size
+> does not get comparable gain, and numbers get unstable (notice the glitch
+> around 256kB).
 
-I recently ran into a problem with the displayed version number for a 
-build of MSysgit. After much head scratching on my part, and divine 
-intervention from Dscho given his intimate knowledge of the codebase, 
-was it resolved.
+The reduction of speed-up after 32Kb is most likely due to L1 cache
+size, which is 32Kb data per core on Core 2, and L2 cache is shared
+among cores and is considerably slow. I have run my test a few more
+times, and here are results:
 
-My problem was that although I had checked out the tip of devel branch, 
-every time I ran make, my build version was incorrect, although the hash 
-suffix corresponded to the tip of the devel branch.
+   1 - 39.25%
+   2 - 30.00%
+   4 - 17.79%
+   8 - 11.76%
+  16 - 7.58%
+  32 - 5.38%
+  64 - 3.89%
+ 128 - 2.87%
+ 256 - 2.31%
+ 512 - 2.92%
+1024 - 1.14%
 
-$ make
-GIT_VERSION = 1.6.4.msysgit.0.2049.g91809
-...
+and here is one more re-run starting with 32Kb:
 
-I was expecting to see 1.7.0 as the version which had been merged a few 
-days ago, and simply inspecting the files did not reveal where the 
-discrepancy originated.
+  32 - 5.38%
+  64 - 3.89%
+ 128 - 2.29%
+ 256 - 2.91%
+ 512 - 2.92%
+1024 - 1.14%
 
-I had been concentrating on GIT-VERSION-GEN to see how the version was 
-generated, and then comparing between two machines - one with a 
-successful build showing correct version and the other not, but both 
-showing 1.7.0 as DEF_VER and apparently identical repositories - 
-Johannes then replied to my query with a request to fetch some tags 
-which had been overlooked. Viewing the two repositories graphically side 
-by side immediately revealed that the build with the incorrect version 
-label did not have recent tags, and it was not the files I should have 
-been diffing, but comparing the output of "git describe". Problem solved 
-after fetching the new tags.
+If you look at speed-up numbers, you can think that the numbers are
+unstable, but in fact, the best time in 5 runs does not differ more
+than 0.01s between those trials. But because difference for >=128Kb
+is 0.05s or less, the accuracy of the above numbers is less than 25%.
+But overall the outcome is clear -- read() is always a winner.
 
-This has been a most beneficial learning exercise for me, and I am most 
-grateful, and heartened I was on the right track, but I think I also see 
-a potential problem.
+It would be interesting to see what difference Nehalem, which has a
+smaller but much faster L2 cache than Core 2. It may perform better
+at larger sizes up to 256Kb.
 
-GIT-VERSION-GEN sets a default value DEF_VER according to the version at 
-the time.
-
-The two most recent being 1.6.6.2 at revision 82221 and 1.7.0 at e923e
-
-However, in the absence of a version, the script uses "git describe" to 
-retrieve the latest tag, and goes on to use this to create the version 
-file along with the hash suffix at the current HEAD. In my case, the 
-latest tag was 1.6.4 but I was building from the latest source at 
-revision 91809.
-
-Reading the manual entry for "git describe"[1] there is a note saying 
-that the hash suffix does not guarantee disambiguity, and given that a 
-tag may be incorrect or missing, there is a chance - albeit with 
-diminishing odds - that the 5 digit hash/tag combination might lead to 
-some obscure problems at some point along the line.
-
-The chance of this happening really is low, but there is a chance all 
-the same. We cannot foresee all errors, but identifying, and further 
-reducing the odds of some must be good. Without doing the math, a guess 
-would be that the probability of a repeat 5 digit abbreviated hash 
-suffix increases the longer a tagged version is in place, so never will 
-be 100% safe. Relying on the build version alone is not a good test 
-under most circumstances, but in my case I could see that the hash was 
-correct and the displayed version was unexpected. The other way around 
-or one of those rare occasions of a repeat would have gone completely 
-unnoticed.
-
-I may be wrong, but the only scenario where I see DEF_VER being used by 
-GIT-VERSION-GEN, would be when there are no tags for git describe to 
-retrieve. ie "git pull --no-tags"
-
-If my understanding is correct, DEF_VER is unique and set at the same 
-time as the tagged version, so wouldn't it be desirable to cross check, 
-or include this value instead of relying solely on the tag when present 
-during the generation of GIT-VERSION-FILE at build time?
+Anyway, based on above data, I believe that the proper cut-off should be
+at least 64Kb, because additional 32Kb (from 32Kb to 64Kb) is about of
+2.5% of total memory that git consumes anyway, and it gives you speed-up
+around 3.5%...
 
 
-Steve
 
-1. http://www.kernel.org/pub/software/scm/git/docs/git-describe.html
+Dmitry
