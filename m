@@ -1,80 +1,115 @@
-From: Avi Kivity <avi@redhat.com>
-Subject: Re: Feature request: separate namespace for remote tags
-Date: Mon, 22 Feb 2010 20:35:04 +0200
-Message-ID: <4B82CE58.8060902@redhat.com>
-References: <4B827C48.9060601@redhat.com> <32541b131002221022h57c6bf05mdeb8d27cdbbd1f54@mail.gmail.com>
+From: Jelmer Vernooij <jelmer@samba.org>
+Subject: Re: Storing (hidden) per-commit metadata
+Date: Mon, 22 Feb 2010 20:13:13 +0100
+Message-ID: <1266865993.11527.49.camel@ganieda>
+References: <1266687636-sup-7641@ben-laptop>
+	 <32541b131002201057t31fc8a6aydb0942171fe1b8c8@mail.gmail.com>
+	 <20100221063433.GA2840@coredump.intra.peff.net>
+	 <1266754646.12035.23.camel@ganieda>
+	 <20100222051748.GB10191@dpotapov.dyndns.org>
+	 <1266832607.31769.37.camel@ganieda>
+	 <20100222112845.GE10191@dpotapov.dyndns.org>
+	 <1266839972.4575.38.camel@ganieda>
+	 <20100222130836.GG10191@dpotapov.dyndns.org>
+	 <1266846289.4575.69.camel@ganieda>
+	 <20100222142013.GA7863@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 19:35:18 2010
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-pqzDjHa7KcW90KESpuGn"
+Cc: Jeff King <peff@peff.net>, Avery Pennarun <apenwarr@gmail.com>,
+	Ben Gamari <bgamari@gmail.com>, git <git@vger.kernel.org>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 20:14:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Njd7m-00012k-DY
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 19:35:18 +0100
+	id 1NjdjR-0002u9-In
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 20:14:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753039Ab0BVSfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 13:35:12 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:8647 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752522Ab0BVSfL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 13:35:11 -0500
-Received: from int-mx03.intmail.prod.int.phx2.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com [10.5.11.16])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id o1MIZ93G001229
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Mon, 22 Feb 2010 13:35:09 -0500
-Received: from firebolt.argo.co.il (vpn-6-49.tlv.redhat.com [10.35.6.49])
-	by int-mx03.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id o1MIZ5O8008617;
-	Mon, 22 Feb 2010 13:35:06 -0500
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100120 Fedora/3.0.1-1.fc12 Thunderbird/3.0.1
-In-Reply-To: <32541b131002221022h57c6bf05mdeb8d27cdbbd1f54@mail.gmail.com>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.16
+	id S1754460Ab0BVTN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 14:13:27 -0500
+Received: from gwenhwyvar.vernstok.nl ([92.243.4.181]:60801 "EHLO
+	gwenhwyvar.vernstok.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754397Ab0BVTNZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 14:13:25 -0500
+Received: from ganieda (localhost [127.0.0.1])
+	by gwenhwyvar.vernstok.nl (Postfix) with ESMTP id 84CD6265F8;
+	Mon, 22 Feb 2010 19:14:52 +0000 (UTC)
+Received: by ganieda (Postfix, from userid 1000)
+	id CE16A14FC68; Mon, 22 Feb 2010 20:13:21 +0100 (CET)
+In-Reply-To: <20100222142013.GA7863@dpotapov.dyndns.org>
+X-Mailer: Evolution 2.28.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140708>
 
-On 02/22/2010 08:22 PM, Avery Pennarun wrote:
-> On Mon, Feb 22, 2010 at 7:44 AM, Avi Kivity<avi@redhat.com>  wrote:
->    
->> Currently, 'git remote add foo ...' will allocate a separate namespace for
->> foo branches (refs/remotes/foo/*) but will store foo tags in the main tag
->> namespace (refs/tags/*).  This leads to several problems:
->>
->> - the main tag namespace becomes polluted with zillions of tags
->> - if the tags from a remote conflict with a local (or perhaps another
->> remote) tag, information is lost
->> - 'git remote rm' will not delete the remote tags, and so 'git gc' will not
->> recover much of the space used by the remote
->>      
-> I've sometimes wished for such a feature myself.  When merging things
-> using git-subtree, for example, you can easily end up importing
-> "v1.2.3" type tags from two different projects and causing yourself
-> total confusion.
->
-> However, just dividing the tags into namespaces removes one of the
-> nicest features of tags, which is that they uniquely identify a
-> particular revision across all repositories.  The whole point is that
-> ap/v1.2.3 isn't ever supposed to differ from origin/v1.2.3.
->    
 
-That's why I suggested not creating ap/v1.2.3 if it matches 
-refs/tags/v1.2.3 (a clone would default to using regs/tags, not 
-refs/remote-tags/origin).  If they don't match, at least you don't lost 
-information.
+--=-pqzDjHa7KcW90KESpuGn
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> One option would be to split the tags into namespaces, but then
-> automatically search all namespaces when looking for a particular tag.
->   Then when you drop a particular remote, you'd lose all its tags, but
-> if you *don't* drop that remote, things look like they always have.
->    
+On Mon, 2010-02-22 at 17:20 +0300, Dmitry Potapov wrote:
+> On Mon, Feb 22, 2010 at 02:44:49PM +0100, Jelmer Vernooij wrote:
+> > On Mon, 2010-02-22 at 16:08 +0300, Dmitry Potapov wrote:
+> > > I am not sure that the commit object is the right place to store that
+> > > metadata, but hidding this information is even more problematic. Let'=
+s
+> > > suppose that someone cherry-pick your Bazaar originated commit. Now w=
+hen
+> > > you try to synchronize with Bazaar, your synchronizer will see that i=
+t
+> > > has some Bazaar revision ID and branch name, but, in fact, it is new
+> > > commit on a completely different branch...
+> > I don't see how the fact that the bzr-git/hg-git data is being hidden i=
+s
+> > the problem in the scenario you mention.
+> Because you can easily remove that information manually when you cherry-p=
+ick
+> some commit. It is more difficult to do when it is hidden.
+My point is that if you don't make it part of the user-visible commit
+message there is no need to remove it at all, it'll just disappear by
+itself.
 
-Yes.
+> > It'd be nice if this sort of information was discarded by "git rebase",
+> > but that's another good reason to treat it in a different way from the
+> > commit message instead.
+> Well, I do not see any other place in the commit object aside the commit
+> message where you can easily put information, and I do not think it is a
+> good idea for "git rebase" to edit the commit message automatically.
+> Maybe, you should look at git-notes. (I don't know enough about them to
+> tell whether they are suitable or not).
+Some other people have suggested putting e.g. a RFC822-style header in
+the commit message field and using the headers in that to allow custom
+revision properties, only displaying the body in "git log", "git show"
+etc. What do you think about that?
 
--- 
-Do not meddle in the internals of kernels, for they are subtle and quick to panic.
+Cheers,
+
+Jelmer
+
+--=-pqzDjHa7KcW90KESpuGn
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQIcBAABAgAGBQJLgtdIAAoJEACAbyvXKaRXsocP/ip4VawEkddl8Tc6sNdjYEsp
+Q6Lp/TqGvAjoUh/OpAbM9D9P9h93tlDq7dOsZCO+p2xsvKd52x+FKkEGsLshiwZR
+o/nVLudN+xqM0wuYSwTdgBPsMkHgvYTcgx/sp0hTwa/GHSjCvcXiJVnqeza89xy5
+Hh7LUhEyRQHh5ZvET5r503yAG9vEQTLTuR2ew2Jzq8mcLsT2FtSARbUOysVBaPMg
+lP9IvRMqacCe2AfmXICEkP1v1TI2SKEz9HVbqEROjRXXt6NuOJk+7dGS9CzWr5Tt
+Ujx//EYZM82dxdGaLNRVJF2F0BEDnLCozPsCUMuxgMwhUtnn+0H5ek6+pt62sXA8
+hPm5wfZfajllpiF4LnDOQw2Z/93z25eir7C3vDNVo0KRfcZDvt1cTQYPZyZFZCkF
+lLWpDKimFzjKclYFhYjqkxBelJqBkIHul+Oa1ij6ihh0iMhX8rAx0FEUd+N6IzdG
+UaAscUpQzkeJijZdP3gTSDtO8HXYtrTsUkN4dsCa8JDrN+VxdPtpX1lvZiYNb3Ma
+Ubq8zCpAZJjxj6Gx1CmIMplLkTGvN6tyxQ6uj0gf7jGl/Cgbd8XUBfC1uAfAalfE
+uStlVVp9TgaLk2CHdLIp9TYhuuWzlNN7sPg51rrnlCAkEjm1xRQ1kBGWSSG109Lt
+MEcKtlOz3rIkZYrXLIXG
+=WaMy
+-----END PGP SIGNATURE-----
+
+--=-pqzDjHa7KcW90KESpuGn--
