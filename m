@@ -1,231 +1,86 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 2/6] Move gitmkstemps to path.c
-Date: Mon, 22 Feb 2010 23:32:12 +0100
-Message-ID: <1266877936-13537-3-git-send-email-Matthieu.Moy@imag.fr>
-References: <1266597207-32036-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: nhat minh le <nhat.minh.le@huoc.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Feb 22 23:55:24 2010
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] submodules: ensure clean environment when operating in a 
+	submodule
+Date: Mon, 22 Feb 2010 23:56:39 +0100
+Message-ID: <cb7bb73a1002221456q6c113675i7453e0115814c99c@mail.gmail.com>
+References: <20100218203726.GD12660@book.hvoigt.net> <1266877015-7943-1-git-send-email-giuseppe.bilotta@gmail.com> 
+	<7vljek51t1.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	msysGit Mailinglist <msysgit@googlegroups.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 23:57:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjhBR-0000Eo-UB
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 23:55:22 +0100
+	id 1NjhDD-0000pS-0a
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Feb 2010 23:57:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754851Ab0BVWzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 17:55:15 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:43621 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754758Ab0BVWzO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 17:55:14 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o1MMU9ZK028145
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 22 Feb 2010 23:30:09 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NjgpJ-0007ke-R8; Mon, 22 Feb 2010 23:32:29 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NjgpJ-0003XK-Pv; Mon, 22 Feb 2010 23:32:29 +0100
-X-Mailer: git-send-email 1.7.0.54.gb6a04.dirty
-In-Reply-To: <1266597207-32036-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 22 Feb 2010 23:30:09 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o1MMU9ZK028145
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1267482609.6797@S9BcmYTO+3yCQrGNTXBWUA
+	id S1754758Ab0BVW5G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Feb 2010 17:57:06 -0500
+Received: from mail-ew0-f228.google.com ([209.85.219.228]:46267 "EHLO
+	mail-ew0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754643Ab0BVW5F convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2010 17:57:05 -0500
+Received: by ewy28 with SMTP id 28so3373060ewy.28
+        for <git@vger.kernel.org>; Mon, 22 Feb 2010 14:56:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=C0x19bKXLfWiPPPxoDNo+Zi6heXBhUh5UnPbmCbUkXg=;
+        b=FD8ny8pGCLMmhbbj776o02Gk952TDZMCi7Pr7rE282PgDMTGtDgLzAunZxB8QS5zF2
+         vJfzfTQFwPUew1dfijavoMx/nG5I833o+r8eEbvjjwOYGTbAfJGpqqUfFUXyK03qe9oL
+         NkiNRaatMDlmFCQNiYwP+I3Auh79d2JCTn/4I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=CJdVHPsX1Q8K9JoYjsuSL4CG4FVu0r7jOKAw2HZJH+lAZpdivJN2Y9Y/oulswUl4X+
+         elp989p6WQZaX5YFlTtAyPpSjX469wKHmjMKh6DZ28m6xBzMWWiii49d771RZ5IPJk5Z
+         o472EWf0midBJkIfdMQig4U8OAa0K5mcABWig=
+Received: by 10.213.58.138 with SMTP id g10mr1682009ebh.85.1266879419277; Mon, 
+	22 Feb 2010 14:56:59 -0800 (PST)
+In-Reply-To: <7vljek51t1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140735>
 
-This function used to be only a compatibility function, but we're
-going to extend it and actually use it, so make it part of Git.
+On Mon, Feb 22, 2010 at 11:43 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+>
+>> I'm pretty confident fixing this on the submodules side is the more =
+correct
+>> approach, since otherwise even a simple
+>> $ GIT_WORK_TREE=3D. git submodule update
+>> on the command-line can fail.
+>
+> True; while I didn't bother to check what the codepaths after these
+> unsetting do, I suspect you should also think about what effect it ha=
+s to
+> have other GIT_* environment variables seep through to them (GIT_INDE=
+X_FILE,
+> GIT_CONFIG and GIT_OBJECT_DIRECTORY come to mind). =A0You would proba=
+bly
+> want to have a single shell helper function to unset even if you end =
+up
+> deciding that it is sufficient to clear GIT_DIR and GIT_WORK_TREE and
+> nothing else.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- Makefile          |    1 -
- compat/mkstemps.c |   70 -----------------------------------------------------
- path.c            |   69 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 69 insertions(+), 71 deletions(-)
- delete mode 100644 compat/mkstemps.c
+Good point. All GIT_* env variables should be resent when descending
+into a submodule. Is there a way to loop over them, or do I have to do
+something horrible like env | grep ^GIT_ | cut -f1 -d=3D  to get the
+list?
 
-diff --git a/Makefile b/Makefile
-index 7bf2fca..4387d42 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1200,7 +1200,6 @@ ifdef NO_MKDTEMP
- endif
- ifdef NO_MKSTEMPS
- 	COMPAT_CFLAGS += -DNO_MKSTEMPS
--	COMPAT_OBJS += compat/mkstemps.o
- endif
- ifdef NO_UNSETENV
- 	COMPAT_CFLAGS += -DNO_UNSETENV
-diff --git a/compat/mkstemps.c b/compat/mkstemps.c
-deleted file mode 100644
-index 14179c8..0000000
---- a/compat/mkstemps.c
-+++ /dev/null
-@@ -1,70 +0,0 @@
--#include "../git-compat-util.h"
--
--/* Adapted from libiberty's mkstemp.c. */
--
--#undef TMP_MAX
--#define TMP_MAX 16384
--
--int gitmkstemps(char *pattern, int suffix_len)
--{
--	static const char letters[] =
--		"abcdefghijklmnopqrstuvwxyz"
--		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
--		"0123456789";
--	static const int num_letters = 62;
--	uint64_t value;
--	struct timeval tv;
--	char *template;
--	size_t len;
--	int fd, count;
--
--	len = strlen(pattern);
--
--	if (len < 6 + suffix_len) {
--		errno = EINVAL;
--		return -1;
--	}
--
--	if (strncmp(&pattern[len - 6 - suffix_len], "XXXXXX", 6)) {
--		errno = EINVAL;
--		return -1;
--	}
--
--	/*
--	 * Replace pattern's XXXXXX characters with randomness.
--	 * Try TMP_MAX different filenames.
--	 */
--	gettimeofday(&tv, NULL);
--	value = ((size_t)(tv.tv_usec << 16)) ^ tv.tv_sec ^ getpid();
--	template = &pattern[len - 6 - suffix_len];
--	for (count = 0; count < TMP_MAX; ++count) {
--		uint64_t v = value;
--		/* Fill in the random bits. */
--		template[0] = letters[v % num_letters]; v /= num_letters;
--		template[1] = letters[v % num_letters]; v /= num_letters;
--		template[2] = letters[v % num_letters]; v /= num_letters;
--		template[3] = letters[v % num_letters]; v /= num_letters;
--		template[4] = letters[v % num_letters]; v /= num_letters;
--		template[5] = letters[v % num_letters]; v /= num_letters;
--
--		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, 0600);
--		if (fd > 0)
--			return fd;
--		/*
--		 * Fatal error (EPERM, ENOSPC etc).
--		 * It doesn't make sense to loop.
--		 */
--		if (errno != EEXIST)
--			break;
--		/*
--		 * This is a random value.  It is only necessary that
--		 * the next TMP_MAX values generated by adding 7777 to
--		 * VALUE are different with (module 2^32).
--		 */
--		value += 7777;
--	}
--	/* We return the null string if we can't find a unique file name.  */
--	pattern[0] = '\0';
--	errno = EINVAL;
--	return -1;
--}
-diff --git a/path.c b/path.c
-index 79aa104..ab2e368 100644
---- a/path.c
-+++ b/path.c
-@@ -157,6 +157,75 @@ int git_mkstemps(char *path, size_t len, const char *template, int suffix_len)
- 	return mkstemps(path, suffix_len);
- }
- 
-+/* Adapted from libiberty's mkstemp.c. */
-+
-+#undef TMP_MAX
-+#define TMP_MAX 16384
-+
-+int gitmkstemps(char *pattern, int suffix_len)
-+{
-+	static const char letters[] =
-+		"abcdefghijklmnopqrstuvwxyz"
-+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-+		"0123456789";
-+	static const int num_letters = 62;
-+	uint64_t value;
-+	struct timeval tv;
-+	char *template;
-+	size_t len;
-+	int fd, count;
-+
-+	len = strlen(pattern);
-+
-+	if (len < 6 + suffix_len) {
-+		errno = EINVAL;
-+		return -1;
-+	}
-+
-+	if (strncmp(&pattern[len - 6 - suffix_len], "XXXXXX", 6)) {
-+		errno = EINVAL;
-+		return -1;
-+	}
-+
-+	/*
-+	 * Replace pattern's XXXXXX characters with randomness.
-+	 * Try TMP_MAX different filenames.
-+	 */
-+	gettimeofday(&tv, NULL);
-+	value = ((size_t)(tv.tv_usec << 16)) ^ tv.tv_sec ^ getpid();
-+	template = &pattern[len - 6 - suffix_len];
-+	for (count = 0; count < TMP_MAX; ++count) {
-+		uint64_t v = value;
-+		/* Fill in the random bits. */
-+		template[0] = letters[v % num_letters]; v /= num_letters;
-+		template[1] = letters[v % num_letters]; v /= num_letters;
-+		template[2] = letters[v % num_letters]; v /= num_letters;
-+		template[3] = letters[v % num_letters]; v /= num_letters;
-+		template[4] = letters[v % num_letters]; v /= num_letters;
-+		template[5] = letters[v % num_letters]; v /= num_letters;
-+
-+		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, 0600);
-+		if (fd > 0)
-+			return fd;
-+		/*
-+		 * Fatal error (EPERM, ENOSPC etc).
-+		 * It doesn't make sense to loop.
-+		 */
-+		if (errno != EEXIST)
-+			break;
-+		/*
-+		 * This is a random value.  It is only necessary that
-+		 * the next TMP_MAX values generated by adding 7777 to
-+		 * VALUE are different with (module 2^32).
-+		 */
-+		value += 7777;
-+	}
-+	/* We return the null string if we can't find a unique file name.  */
-+	pattern[0] = '\0';
-+	errno = EINVAL;
-+	return -1;
-+}
-+
- int validate_headref(const char *path)
- {
- 	struct stat st;
--- 
-1.7.0.54.gb6a04.dirty
+
+--=20
+Giuseppe "Oblomov" Bilotta
