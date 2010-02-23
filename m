@@ -1,281 +1,83 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v5 06/11] rebase -i: invoke post-rewrite hook
-Date: Tue, 23 Feb 2010 01:42:24 +0100
-Message-ID: <87f20b987fa7a389e89f8931d553de7095d2bc86.1266885599.git.trast@student.ethz.ch>
-References: <cover.1266885599.git.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 00/11] several notes refs, post-rewrite, notes
+ rewriting
+Date: Mon, 22 Feb 2010 16:49:02 -0800
+Message-ID: <7v1vgcpyip.fsf@alter.siamese.dyndns.org>
+References: <cover.1266703765.git.trast@student.ethz.ch>
+ <cover.1266885599.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	Johan Herland <johan@herland.net>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 23 01:43:46 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>, Johan Herland <johan@herland.net>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Feb 23 01:49:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjisM-0002rD-5m
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 01:43:46 +0100
+	id 1Njixn-0004ZQ-HE
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 01:49:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752977Ab0BWAn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 19:43:26 -0500
-Received: from gwse.ethz.ch ([129.132.178.237]:48627 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752702Ab0BWAnA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 19:43:00 -0500
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.234.1; Tue, 23 Feb
- 2010 01:42:51 +0100
-Received: from localhost.localdomain (84.74.100.59) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Tue, 23 Feb
- 2010 01:42:33 +0100
-X-Mailer: git-send-email 1.7.0.218.g73a398
-In-Reply-To: <cover.1266885599.git.trast@student.ethz.ch>
+	id S1752102Ab0BWAtS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 19:49:18 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57898 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751964Ab0BWAtR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 19:49:17 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C3C4F9C220;
+	Mon, 22 Feb 2010 19:49:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NAU788ikFTONlckg8BZd2+QTC8I=; b=rTOfkL
+	9GlY2h2aaRxmecfgo1cC06iZuYuLSbyTX+R4kaM1RgtGb2Y746HkGEAffAJniYvw
+	JUc/EddmgLc7GoBAk7e1EwJmjD2epBdWYv8PTLVx0FTKnD+1PpDgTf5zuLk9gMCY
+	Hbk7fChF5BwCZ551KqXFpyOpg8iMW/yChj6BY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eshKaL49YRkIDg2Z/hCmAEYduzHcj2qc
+	RooBAU1N/duvdmm0jUTY4CWhhtuHCf0Qy6PPX7GWpk2kL9Lrs3efduWHH3CCrBPR
+	X5o5SvH0zO7My3MHWspbl00zJg0u7cgywZspg5lwKsymOFolj0LObP6dqFciTs0t
+	9tXg4d13VCU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A7519C21A;
+	Mon, 22 Feb 2010 19:49:10 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6E7579C218; Mon, 22 Feb
+ 2010 19:49:04 -0500 (EST)
+In-Reply-To: <cover.1266885599.git.trast@student.ethz.ch> (Thomas Rast's
+ message of "Tue\, 23 Feb 2010 01\:42\:18 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 41338AE0-2015-11DF-9496-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140757>
 
-Aside from the same issue that rebase also has (remembering the
-original commit across a conflict resolution), rebase -i brings an
-extra twist: We need to defer writing the rewritten list in the case
-of {squash,fixup} because their rewritten result should be the last
-commit in the squashed group.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+>> Yuck.  If you know what needs to be done, do that before other poeple add
+>> more options, please.
+>
+> *shrug*
+>
+> I was trying to be smart and save a call to git_config() when we know
+> we don't care about the config anyway.  After all it does read a bunch
+> of files.
 
+You can set a flag to skip reading the trees (which is the expensive part)
+you know you are not going to use to optimize out the expensive part of
+the code, no?
 
- git-rebase--interactive.sh   |   46 +++++++++++++++++++++-
- t/t5407-post-rewrite-hook.sh |   90 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 135 insertions(+), 1 deletions(-)
+>> Perhaps I am not reading your code right in which case this part needs a
+>> bit more commenting?
+>
+> The catch is in the '&& t->ref'.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 5735859..564f6ac 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -96,6 +96,13 @@ AUTHOR_SCRIPT="$DOTEST"/author-script
- # command is processed, this file is deleted.
- AMEND="$DOTEST"/amend
- 
-+# For the post-rewrite hook, we make a list of rewritten commits and
-+# their new sha1s.  The rewritten-pending list keeps the sha1s of
-+# commits that have been processed, but not committed yet,
-+# e.g. because they are waiting for a 'squash' command.
-+REWRITTEN_LIST="$DOTEST"/rewritten-list
-+REWRITTEN_PENDING="$DOTEST"/rewritten-pending
-+
- PRESERVE_MERGES=
- STRATEGY=
- ONTO=
-@@ -198,6 +205,7 @@ make_patch () {
- }
- 
- die_with_patch () {
-+	echo "$1" > "$DOTEST"/stopped-sha
- 	make_patch "$1"
- 	git rerere
- 	die "$2"
-@@ -348,6 +356,7 @@ pick_one_preserving_merges () {
- 				printf "%s\n" "$msg" > "$GIT_DIR"/MERGE_MSG
- 				die_with_patch $sha1 "Error redoing merge $sha1"
- 			fi
-+			echo "$sha1 $(git rev-parse HEAD^0)" >> "$REWRITTEN_LIST"
- 			;;
- 		*)
- 			output git cherry-pick "$@" ||
-@@ -425,6 +434,26 @@ die_failed_squash() {
- 	die_with_patch $1 ""
- }
- 
-+flush_rewritten_pending() {
-+	test -s "$REWRITTEN_PENDING" || return
-+	newsha1="$(git rev-parse HEAD^0)"
-+	sed "s/$/ $newsha1/" < "$REWRITTEN_PENDING" >> "$REWRITTEN_LIST"
-+	rm -f "$REWRITTEN_PENDING"
-+}
-+
-+record_in_rewritten() {
-+	oldsha1="$(git rev-parse $1)"
-+	echo "$oldsha1" >> "$REWRITTEN_PENDING"
-+
-+	case "$(peek_next_command)" in
-+	    squash|s|fixup|f)
-+		;;
-+	    *)
-+		flush_rewritten_pending
-+		;;
-+	esac
-+}
-+
- do_next () {
- 	rm -f "$MSG" "$AUTHOR_SCRIPT" "$AMEND" || exit
- 	read command sha1 rest < "$TODO"
-@@ -438,6 +467,7 @@ do_next () {
- 		mark_action_done
- 		pick_one $sha1 ||
- 			die_with_patch $sha1 "Could not apply $sha1... $rest"
-+		record_in_rewritten $sha1
- 		;;
- 	reword|r)
- 		comment_for_reflog reword
-@@ -446,6 +476,7 @@ do_next () {
- 		pick_one $sha1 ||
- 			die_with_patch $sha1 "Could not apply $sha1... $rest"
- 		git commit --amend --no-post-rewrite
-+		record_in_rewritten $sha1
- 		;;
- 	edit|e)
- 		comment_for_reflog edit
-@@ -453,6 +484,7 @@ do_next () {
- 		mark_action_done
- 		pick_one $sha1 ||
- 			die_with_patch $sha1 "Could not apply $sha1... $rest"
-+		echo "$1" > "$DOTEST"/stopped-sha
- 		make_patch $sha1
- 		git rev-parse --verify HEAD > "$AMEND"
- 		warn "Stopped at $sha1... $rest"
-@@ -509,6 +541,7 @@ do_next () {
- 			rm -f "$SQUASH_MSG" "$FIXUP_MSG"
- 			;;
- 		esac
-+		record_in_rewritten $sha1
- 		;;
- 	*)
- 		warn "Unknown command: $command $sha1 $rest"
-@@ -537,6 +570,11 @@ do_next () {
- 		test ! -f "$DOTEST"/verbose ||
- 			git diff-tree --stat $(cat "$DOTEST"/head)..HEAD
- 	} &&
-+	if test -x "$GIT_DIR"/hooks/post-rewrite &&
-+		test -s "$REWRITTEN_LIST"; then
-+		"$GIT_DIR"/hooks/post-rewrite rebase < "$REWRITTEN_LIST"
-+		true # we don't care if this hook failed
-+	fi &&
- 	rm -rf "$DOTEST" &&
- 	git gc --auto &&
- 	warn "Successfully rebased and updated $HEADNAME."
-@@ -571,7 +609,12 @@ skip_unnecessary_picks () {
- 		esac
- 		echo "$command${sha1:+ }$sha1${rest:+ }$rest" >&$fd
- 	done <"$TODO" >"$TODO.new" 3>>"$DONE" &&
--	mv -f "$TODO".new "$TODO" ||
-+	mv -f "$TODO".new "$TODO" &&
-+	case "$(peek_next_command)" in
-+	squash|s|fixup|f)
-+		record_in_rewritten "$ONTO"
-+		;;
-+	esac ||
- 	die "Could not skip unnecessary pick commands"
- }
- 
-@@ -685,6 +728,7 @@ first and then run 'git rebase --continue' again."
- 				test -n "$amend" && git reset --soft $amend
- 				die "Could not commit staged changes."
- 			}
-+			record_in_rewritten "$(cat "$DOTEST"/stopped-sha)"
- 		fi
- 
- 		require_clean_work_tree
-diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index 1ecaa4b..e1fccc4 100755
---- a/t/t5407-post-rewrite-hook.sh
-+++ b/t/t5407-post-rewrite-hook.sh
-@@ -79,4 +79,94 @@ EOF
- 	verify_hook_input
- '
- 
-+test_expect_success 'git rebase -m' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	test_must_fail git rebase -m --onto A B &&
-+	echo C > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse C) $(git rev-parse HEAD^)
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
-+'
-+
-+test_expect_success 'git rebase -m --skip' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	test_must_fail git rebase --onto A B &&
-+	test_must_fail git rebase --skip &&
-+	echo D > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
-+'
-+
-+. "$TEST_DIRECTORY"/lib-rebase.sh
-+
-+set_fake_editor
-+
-+test_expect_success 'git rebase -i (unchanged)' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	FAKE_LINES="1 2" test_must_fail git rebase -i --onto A B &&
-+	echo C > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse C) $(git rev-parse HEAD^)
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
-+'
-+
-+test_expect_success 'git rebase -i (skip)' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	FAKE_LINES="2" test_must_fail git rebase -i --onto A B &&
-+	echo D > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
-+'
-+
-+test_expect_success 'git rebase -i (squash)' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	FAKE_LINES="1 squash 2" test_must_fail git rebase -i --onto A B &&
-+	echo C > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse C) $(git rev-parse HEAD)
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
-+'
-+
-+test_expect_success 'git rebase -i (fixup without conflict)' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	FAKE_LINES="1 fixup 2" git rebase -i B &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<EOF &&
-+$(git rev-parse C) $(git rev-parse HEAD)
-+$(git rev-parse D) $(git rev-parse HEAD)
-+EOF
-+	verify_hook_input
-+'
-+
- test_done
--- 
-1.7.0.218.g73a398
+Ahh, Ok, so that was what I didn't see.  Perhaps it needs to say t->ref is
+set only under such and such conditions.  I am reasonably sure the next
+person who needs to change this part of the code would appreciate such a
+comment and that person may even be you 3 months from now.
