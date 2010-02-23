@@ -1,41 +1,41 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] format-patch: learn to fill comment section of email from notes
-Date: Tue, 23 Feb 2010 18:34:36 +0100
-Message-ID: <6cf9010742df96e0c68ef8adc1ab392c08525bc2.1266946262.git.trast@student.ethz.ch>
-References: <201002231810.18960.trast@student.ethz.ch>
+Subject: [PATCH] BROKEN -- format-patch: learn to fill comment section of email from notes
+Date: Tue, 23 Feb 2010 18:34:56 +0100
+Message-ID: <fe0d69eba1b0265c0ca913831ba26e643062f8eb.1266946248.git.trast@student.ethz.ch>
+References: <6cf9010742df96e0c68ef8adc1ab392c08525bc2.1266946262.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
 	Johan Herland <johan@herland.net>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 23 18:35:02 2010
+X-From: git-owner@vger.kernel.org Tue Feb 23 18:35:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Njyez-0005kh-IB
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 18:35:02 +0100
+	id 1NjyfC-0005qF-5c
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 18:35:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751564Ab0BWRe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2010 12:34:56 -0500
-Received: from gwse.ethz.ch ([129.132.178.237]:41783 "EHLO gwse.ethz.ch"
+	id S1751806Ab0BWRfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2010 12:35:05 -0500
+Received: from gwse.ethz.ch ([129.132.178.238]:15136 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750863Ab0BWRez (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2010 12:34:55 -0500
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.234.1; Tue, 23 Feb
- 2010 18:34:55 +0100
+	id S1751665Ab0BWRfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2010 12:35:04 -0500
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Tue, 23 Feb
+ 2010 18:35:00 +0100
 Received: from localhost.localdomain (129.132.210.179) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Tue, 23 Feb
- 2010 18:34:38 +0100
+ 2010 18:34:58 +0100
 X-Mailer: git-send-email 1.7.0.218.g73a398
-In-Reply-To: <201002231810.18960.trast@student.ethz.ch>
+In-Reply-To: <6cf9010742df96e0c68ef8adc1ab392c08525bc2.1266946262.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140819>
 
 Teach git-format-patch a new option --comment-notes (with config
 format.commentNotes) which takes a notes ref argument.  These notes
@@ -43,9 +43,11 @@ are then added to the patch email between the --- separator and the
 diffstat/diff.
 
 This is somewhat tricky because the pretty-printing code has no
-control whatsoever over the --- and the diffstat, and there be dragons
-in the newline-producing code inside show_log().  Try not to disturb
-them, and patch around only outside show_log().
+control whatsoever over the --- and the diffstat.  To fix that, move
+the associated code down into show_log(), which can set options in the
+pretty_print_context.  Extend the latter with fields for an arbitrary
+string, to be inserted after commit message and after notes.  Use
+those to place the --- appropriately.
 
 To ensure correctness of the resulting email, extend the existing rule
 (separator if not 'oneline' format and --patch-with-stat) to also
@@ -54,20 +56,15 @@ include a separator if there are notes and a patch will be included.
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
 
-So here's the promised patch.  This is sort-of-RFC; it's not part of
-the series because I don't want the latter to block on this one if
-anyone suggests changes.
-
-I'll follow up with a broken version to prove the point about the
-dragons I made above, if anyone wants to try fixing it.
 
  Documentation/config.txt           |    6 ++
  Documentation/git-format-patch.txt |   10 ++++
  builtin-log.c                      |   12 +++++
- log-tree.c                         |   14 +++++-
- pretty.c                           |    2 +-
+ commit.h                           |    2 +
+ log-tree.c                         |   38 ++++++++++-----
+ pretty.c                           |   19 ++++++-
  t/t4014-format-patch.sh            |   91 ++++++++++++++++++++++++++++++++++++
- 6 files changed, 133 insertions(+), 2 deletions(-)
+ 7 files changed, 162 insertions(+), 16 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
 index dffe1f6..a9e27db 100644
@@ -158,8 +155,21 @@ index e7ea088..f85837d 100644
  	argc = setup_revisions(argc, argv, &rev, "HEAD");
  	if (argc > 1)
  		die ("unrecognized argument: %s", argv[1]);
+diff --git a/commit.h b/commit.h
+index 3cf5166..44bcf5a 100644
+--- a/commit.h
++++ b/commit.h
+@@ -68,6 +68,8 @@ struct pretty_print_context
+ 	int abbrev;
+ 	const char *subject;
+ 	const char *after_subject;
++	const char *after_message;
++	const char *after_notes;
+ 	enum date_mode date_mode;
+ 	int need_8bit_cte;
+ 	int show_notes;
 diff --git a/log-tree.c b/log-tree.c
-index d3ae969..9830be8 100644
+index d3ae969..93e0f48 100644
 --- a/log-tree.c
 +++ b/log-tree.c
 @@ -7,6 +7,7 @@
@@ -170,49 +180,88 @@ index d3ae969..9830be8 100644
  
  struct decoration name_decoration = { "object names" };
  
-@@ -457,6 +458,7 @@ int log_tree_diff_flush(struct rev_info *opt)
+@@ -413,6 +414,30 @@ void show_log(struct rev_info *opt)
+ 	ctx.abbrev = opt->diffopt.abbrev;
+ 	ctx.after_subject = extra_headers;
+ 	ctx.reflog_info = opt->reflog_info;
++
++	ctx.after_message = NULL;
++	/*
++	 * In formats other than 'oneline', add an extra newline.  In
++	 * addition, add the triple-dash separator between message and
++	 * diff if there is a diffstat coming or we are showing notes
++	 * in 'email' format.  Otherwise, 'git am' would include the
++	 * diffstat or notes in the commit message when applying the
++	 * commit.
++	 */
++	if ((opt->diffopt.output_format & ~DIFF_FORMAT_NO_OUTPUT) &&
++	    opt->verbose_header &&
++	    opt->commit_format != CMIT_FMT_ONELINE) {
++		int pch = DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_PATCH;
++		int patch_with_stat = (pch & opt->diffopt.output_format) == pch;
++		if (opt->commit_format == CMIT_FMT_EMAIL
++		    && (opt->show_notes || patch_with_stat))
++			ctx.after_message = "---\n";
++		else if (opt->commit_format != CMIT_FMT_EMAIL && patch_with_stat)
++			ctx.after_notes = "---\n";
++		else
++			ctx.after_notes = "\n";
++	}
++
+ 	pretty_print_commit(opt->commit_format, commit, &msgbuf, &ctx);
+ 
+ 	if (opt->add_signoff)
+@@ -457,20 +482,7 @@ int log_tree_diff_flush(struct rev_info *opt)
  	}
  
  	if (opt->loginfo && !opt->no_commit_id) {
-+		const unsigned char *sha1 = opt->loginfo->commit->object.sha1;
- 		/* When showing a verbose header (i.e. log message),
- 		 * and not in --pretty=oneline format, we would want
- 		 * an extra newline between the end of log and the
-@@ -467,10 +469,20 @@ int log_tree_diff_flush(struct rev_info *opt)
- 		    opt->verbose_header &&
- 		    opt->commit_format != CMIT_FMT_ONELINE) {
- 			int pch = DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_PATCH;
+-		/* When showing a verbose header (i.e. log message),
+-		 * and not in --pretty=oneline format, we would want
+-		 * an extra newline between the end of log and the
+-		 * output for readability.
+-		 */
+ 		show_log(opt);
+-		if ((opt->diffopt.output_format & ~DIFF_FORMAT_NO_OUTPUT) &&
+-		    opt->verbose_header &&
+-		    opt->commit_format != CMIT_FMT_ONELINE) {
+-			int pch = DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_PATCH;
 -			if ((pch & opt->diffopt.output_format) == pch)
-+			if ((pch & opt->diffopt.output_format) == pch
-+			    || (opt->commit_format == CMIT_FMT_EMAIL
-+				&& opt->show_notes))
- 				printf("---");
- 			putchar('\n');
- 		}
-+		if (opt->commit_format == CMIT_FMT_EMAIL && opt->show_notes) {
-+			struct strbuf sb = STRBUF_INIT;
-+			putchar('\n');
-+			format_note(NULL, sha1, &sb, NULL, 0);
-+			fwrite(sb.buf, 1, sb.len, stdout);
-+			strbuf_release(&sb);
-+			putchar('\n');
-+		}
+-				printf("---");
+-			putchar('\n');
+-		}
  	}
  	diff_flush(&opt->diffopt);
  	return 1;
 diff --git a/pretty.c b/pretty.c
-index 6ba3da8..10d7812 100644
+index 6ba3da8..4fc855e 100644
 --- a/pretty.c
 +++ b/pretty.c
-@@ -1095,7 +1095,7 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
+@@ -1095,9 +1095,22 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
  	if (fmt == CMIT_FMT_EMAIL && sb->len <= beginning_of_body)
  		strbuf_addch(sb, '\n');
  
 -	if (context->show_notes)
-+	if (context->show_notes && fmt != CMIT_FMT_EMAIL)
- 		format_display_notes(commit->object.sha1, sb, encoding,
- 				     NOTES_SHOW_HEADER | NOTES_INDENT);
+-		format_display_notes(commit->object.sha1, sb, encoding,
+-				     NOTES_SHOW_HEADER | NOTES_INDENT);
++	if (context->after_message)
++		strbuf_addstr(sb, context->after_message);
++
++	if (context->show_notes) {
++		if (fmt == CMIT_FMT_EMAIL) {
++			strbuf_addch(sb, '\n');
++			format_note(NULL, commit->object.sha1, sb, encoding, 0);
++			strbuf_addch(sb, '\n');
++		} else {
++			format_display_notes(commit->object.sha1, sb, encoding,
++					     NOTES_SHOW_HEADER | NOTES_INDENT);
++		}
++	}
++
++	if (context->after_notes)
++		strbuf_addstr(sb, context->after_notes);
  
+ 	free(reencoded);
+ }
 diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
 index f2a2aaa..653e50a 100755
 --- a/t/t4014-format-patch.sh
