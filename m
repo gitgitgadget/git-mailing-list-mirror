@@ -1,87 +1,75 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: git gui create desktop icon currently does not work
-Date: Wed, 24 Feb 2010 00:02:38 +0100
-Message-ID: <20100223230238.GD11271@book.hvoigt.net>
-References: <20100223224955.GB11271@book.hvoigt.net> <cb7bb73a1002231454j4720b28ei20c10de37e929fde@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] pull: fix 'git pull --all' when current branch is
+ tracking remote that is not last in the list of remotes
+Date: Tue, 23 Feb 2010 15:02:59 -0800
+Message-ID: <7vtyt75zdo.fsf@alter.siamese.dyndns.org>
+References: <1266965731-4208-1-git-send-email-michael.lukashov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: msysGit Mailinglist <msysgit@googlegroups.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 24 00:02:47 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Lukashov <michael.lukashov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 24 00:03:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nk3mA-00068j-8Y
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 00:02:46 +0100
+	id 1Nk3md-0006IF-0x
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 00:03:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754460Ab0BWXCl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Feb 2010 18:02:41 -0500
-Received: from darksea.de ([83.133.111.250]:49090 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753249Ab0BWXCl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2010 18:02:41 -0500
-Received: (qmail 17657 invoked from network); 24 Feb 2010 00:02:39 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 24 Feb 2010 00:02:39 +0100
-Content-Disposition: inline
-In-Reply-To: <cb7bb73a1002231454j4720b28ei20c10de37e929fde@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1754539Ab0BWXDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2010 18:03:10 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63258 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754489Ab0BWXDG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2010 18:03:06 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ED9409CC06;
+	Tue, 23 Feb 2010 18:03:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; s=sasl; bh=ODUbVV5QE8jVQ5YllsrOeIxXX00=; b=H5AOet
+	JdDpX+kW+zNEgwGgtaIvOU09eKDnDvQMk0lGezTQI/qwJo8ou+xaRajZLDF+YjIE
+	ELo49P40uySmF8hHrkZ+h5OiYC6rsbeWXPcoXG1B66ospbjkUDnWh2/9xQc35VdQ
+	lUMliSyAmlZMAOKkbMwwYAkPmzTFv2/LProtk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EI7oLUZASJ+X2WLsGyIR2NaumtSmu4XL
+	VTyMiu2LaKO3AjatLbLnCn53NpHE82GxJm/LkOkwjsrDrZaeilmoVPxsqlgp60ww
+	Ei4MWoiT1JoUpVtquCa2YuUoYOSEQV6R+W1ZFRFeBAOtk9vQSQ7TKWsIpVggFyxo
+	UFOBSO023bk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CB6989CC05;
+	Tue, 23 Feb 2010 18:03:03 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3201D9CC04; Tue, 23 Feb
+ 2010 18:03:01 -0500 (EST)
+In-Reply-To: <1266965731-4208-1-git-send-email-michael.lukashov@gmail.com>
+ (Michael Lukashov's message of "Tue\, 23 Feb 2010 22\:55\:31 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 98C7D35A-20CF-11DF-A05E-E038EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140865>
 
-On Tue, Feb 23, 2010 at 11:54:40PM +0100, Giuseppe Bilotta wrote:
-> On Tue, Feb 23, 2010 at 11:49 PM, Heiko Voigt <hvoigt@hvoigt.net> wro=
-te:
-[...]
-> > From 5c22c39d530ffb308826629d974048d30cd32e53 Mon Sep 17 00:00:00 2=
-001
-> > From: Heiko Voigt <hvoigt@hvoigt.net>
-> > Date: Tue, 23 Feb 2010 10:40:14 +0100
-> > Subject: [PATCH 1/2] git-gui: fix usage of _gitworktree when creati=
-ng shortcut for windows
-> >
-> > Signed-off-by: Heiko Voigt <heiko.voigt@mahr.de>
-> > ---
-> > =A0git-gui/lib/shortcut.tcl | =A0 =A02 +-
-> > =A01 files changed, 1 insertions(+), 1 deletions(-)
-> >
-> > diff --git a/git-gui/lib/shortcut.tcl b/git-gui/lib/shortcut.tcl
-> > index 79c1888..8cad0e2 100644
-> > --- a/git-gui/lib/shortcut.tcl
-> > +++ b/git-gui/lib/shortcut.tcl
-> > @@ -16,7 +16,7 @@ proc do_windows_shortcut {} {
-> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 =A0[info nameofexecutable] \
-> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 =A0[file normalize $::argv0] \
-> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 =A0] \
-> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 [file normalize [$_gitworktree]]
-> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 [file normalize $_gitworktree]
-> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0} err]} {
-> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0error_popup [strcat =
-[mc "Cannot write shortcut:"] "\n\n$err"]
-> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0}
->=20
-> Ouch. Yes, I think your patch is obviously correct.
->=20
-> (I'll go sit in a corner with my 'TCL Dunce' cap on for a while ...)
+Michael Lukashov <michael.lukashov@gmail.com> writes:
 
-No problem obviously nobody else saw this, but please test your patches
-in the future. That could have avoided this one.
+> diff --git a/git-pull.sh b/git-pull.sh
+> index 38331a8..fcde096 100755
+> --- a/git-pull.sh
+> +++ b/git-pull.sh
+> @@ -214,7 +214,11 @@ test true = "$rebase" && {
+>  	done
+>  }
+>  orig_head=$(git rev-parse -q --verify HEAD)
+> -git fetch $verbosity --update-head-ok "$@" || exit 1
+> +if test -e "$GIT_DIR"/FETCH_HEAD
+> +then
+> +	rm "$GIT_DIR"/FETCH_HEAD 2>/dev/null
+> +fi
 
-One thing which is missing from my patch is the cygwin part which, as I
-saw from your original patch, has the same problem.
-
-cheers Heiko
+When is it sane to ignore an error from this "rm", especially after you
+made sure that it exists?
