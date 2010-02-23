@@ -1,83 +1,87 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] test-lib.sh: Add explicit license detail, with change from GPLv2 to GPLv2+.
-Date: Tue, 23 Feb 2010 07:48:54 +0100
-Message-ID: <vpqeikcmoq1.fsf@bauges.imag.fr>
-References: <87ljf8pvxx.fsf@yoom.home.cworth.org>
-	<87hbpwpoko.fsf@yoom.home.cworth.org>
-	<5641883d1002060727ia4e6c16lf800a92fc8735430@mail.gmail.com>
-	<201002081614.24284.sojkam1@fel.cvut.cz>
-	<871vgr78lr.fsf@yoom.home.cworth.org>
-	<87iqa2y0gz.fsf@steelpick.localdomain>
-	<87r5oqe7mi.fsf@yoom.home.cworth.org>
-	<871vgmki4f.fsf@steelpick.localdomain>
-	<7vaav8hpfo.fsf@alter.siamese.dyndns.org>
-	<87tytdiqob.fsf@steelpick.localdomain>
-	<alpine.DEB.1.00.1002191138280.20986@pacific.mpi-cbg.de>
-	<873a0xhwxs.fsf@yoom.home.cworth.org>
-	<alpine.DEB.1.00.1002192204050.20986@pacific.mpi-cbg.de>
-	<87eikfhec1.fsf@yoom.home.cworth.org>
-	<7vaav3bnr5.fsf@alter.siamese.dyndns.org>
-	<87y6ilf4w7.fsf@yoom.home.cworth.org>
-	<7vljekipnd.fsf@alter.siamese.dyndns.org>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH 1/2] shell setup: clear_local_git_env() function
+Date: Tue, 23 Feb 2010 08:55:45 +0100
+Message-ID: <cb7bb73a1002222355s38fda032g99623f44d6200fbc@mail.gmail.com>
+References: <7vsk8s274t.fsf@alter.siamese.dyndns.org> <1266881518-11213-1-git-send-email-giuseppe.bilotta@gmail.com> 
+	<4B837A73.8010406@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Carl Worth <cworth@cworth.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Michal Sojka <sojkam1@fel.cvut.cz>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	notmuch@notmuchmail.org, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 23 07:49:50 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	msysGit Mailinglist <msysgit@googlegroups.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Feb 23 08:56:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Njoab-0002cV-QX
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 07:49:50 +0100
+	id 1Njpct-0001Vl-V2
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 08:56:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752221Ab0BWGto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2010 01:49:44 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:53414 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751638Ab0BWGtn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2010 01:49:43 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o1N6kWCT015507
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 23 Feb 2010 07:46:32 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NjoZi-0002KB-Qr; Tue, 23 Feb 2010 07:48:54 +0100
-In-Reply-To: <7vljekipnd.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Mon\, 22 Feb 2010 19\:42\:30 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 23 Feb 2010 07:46:33 +0100 (CET)
+	id S1751254Ab0BWH4J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Feb 2010 02:56:09 -0500
+Received: from ey-out-2122.google.com ([74.125.78.26]:42561 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750863Ab0BWH4I convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Feb 2010 02:56:08 -0500
+Received: by ey-out-2122.google.com with SMTP id d26so783201eyd.19
+        for <git@vger.kernel.org>; Mon, 22 Feb 2010 23:56:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xqLtuPMQ4CV+zvmvkPbSz+gEJOXTzWI2ucWdJ0/GD8I=;
+        b=L/RW5KHsknYlNAbw5LFtqTODTCNMyalZ6TeDJ2Fnyh4JG/a+LykIPPM96/AUcaJrDN
+         LxGCj4/3myedeVyJUrm17Xv1R+780XbH75UveaZ4tzJEAhjKOsQNu4XP3RtFaAbGtc81
+         pqpgdKDWQZYXjnFbQrNfj5Q+ayTwdZ6qGf+Lk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=e+ENCmG4oDUgbDeneonUY05ZgiaYStLiequ56L3uOnZtrwkQuvWW8szUpRVsxhK6/w
+         +PfoPGUWxAm2mOvqgXMvqiPAeLGSnV7kvOScg47B7KPGBnakEzCVcer8ucR0Sod8XLLW
+         WWEHBF1PGe2VSCoWgzsyyr93dB22z9Ceq05UM=
+Received: by 10.213.1.143 with SMTP id 15mr4699669ebf.42.1266911765129; Mon, 
+	22 Feb 2010 23:56:05 -0800 (PST)
+In-Reply-To: <4B837A73.8010406@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140773>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->> http://thread.gmane.org/gmane.mail.notmuch.general/1389/focus=140156
-[...]
->> Meanwhile, a message ID lives forever and can be used in multiple
->> contexts.
+On Tue, Feb 23, 2010 at 7:49 AM, Johannes Sixt <j.sixt@viscovery.net> w=
+rote:
+> Giuseppe Bilotta schrieb:
+>> +# Clear repo-local GIT_* environment variables. Useful when switchi=
+ng to
+>> +# another repository (e.g. when entering a submodule)
+>> +clear_local_git_env() {
+>> + =A0 =A0 unset =A0 GIT_DIR GIT_WORKTREE GIT_OBJECT_DIRECTORY \
+>> + =A0 =A0 =A0 =A0 =A0 =A0 GIT_INDEX_FILE GIT_GRAFT_FILE GIT_CONFIG \
+>> + =A0 =A0 =A0 =A0 =A0 =A0 GIT_NO_REPLACE_OBJECTS
 >
-> Oh, I never said "do not use message ID".  I said "message ID alone is not
-> good enough for most people". 
+> IMO, this list should be in sync with the one you find in
+> connect.c:git_connect() around line 611. They have the same purpose.
 
-FWIW, gmane allows links of the form
+Ah, interesting, I was looking for such a list but only found the more
+generic one in cache.h
+By comparing them it would seem they serve the same purpose, indeed. I
+notice that the connect.c is missing GIT_CONFIG (which _must_ be unset
+for us). I also notice that the connect.c one unsets the alternate DB;
+I had doubts about it when preparing the list in this case.
 
-http://mid.gmane.org/7vaav8hpfo.fsf@alter.siamese.dyndns.org
+I will resend a new patch to replace this one, syncing the two lists.
 
-which have the advantage of being simple to use, and still contain the
-necessary information to get the message in case gmane dies.
+> (And, BTW, a vertical list would be more readable than a mixed
+> horizontal+vertical list, IMVHO.)
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I tend to conserve vertical space, but I have no particular objection t=
+o that.
+
+--=20
+Giuseppe "Oblomov" Bilotta
