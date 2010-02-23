@@ -1,82 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] rerere: fix memory leak if rerere images can't be read
-Date: Tue, 23 Feb 2010 22:26:40 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1002232225480.3980@intel-tinevez-2-302>
-References: <1266955913-4943-1-git-send-email-bert.wesarg@googlemail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: Re: [BUG] git gui blame: Show History Context broken since
+	29e5573d
+Date: Tue, 23 Feb 2010 22:30:38 +0100
+Message-ID: <20100223213035.GE10932@book.hvoigt.net>
+References: <vpqaav1llpn.fsf@bauges.imag.fr> <cb7bb73a1002220718p6b6621der6df062cd2f490d89@mail.gmail.com> <20100222223802.GA9898@book.hvoigt.net> <cb7bb73a1002221529r6aee3202l5b6609b59aea01fd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 23 22:26:58 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 23 22:30:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nk2HS-0004Ag-CK
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 22:26:58 +0100
+	id 1Nk2LI-0005om-Ta
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 22:30:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753891Ab0BWV0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2010 16:26:53 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45130 "HELO mail.gmx.net"
+	id S1754160Ab0BWVao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2010 16:30:44 -0500
+Received: from darksea.de ([83.133.111.250]:50317 "HELO darksea.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753779Ab0BWV0w (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2010 16:26:52 -0500
-Received: (qmail invoked by alias); 23 Feb 2010 21:26:42 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp007) with SMTP; 23 Feb 2010 22:26:42 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19CcU9TmVRCYYjKXOaGOwtXcbVbc/sf8egYCGkk0j
-	R/7nBHdUFUfIBR
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <1266955913-4943-1-git-send-email-bert.wesarg@googlemail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53000000000000003
+	id S1754103Ab0BWVan (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2010 16:30:43 -0500
+Received: (qmail 17259 invoked from network); 23 Feb 2010 22:30:39 +0100
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 23 Feb 2010 22:30:39 +0100
+Content-Disposition: inline
+In-Reply-To: <cb7bb73a1002221529r6aee3202l5b6609b59aea01fd@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140843>
 
-Hi,
+On Tue, Feb 23, 2010 at 12:29:03AM +0100, Giuseppe Bilotta wrote:
+> On Mon, Feb 22, 2010 at 11:38 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+> > On Mon, Feb 22, 2010 at 04:18:11PM +0100, Giuseppe Bilotta wrote:
+> >> On Mon, Feb 22, 2010 at 9:27 AM, Matthieu Moy
+> >> <Matthieu.Moy@grenoble-inp.fr> wrote:
+> >> > Hi,
+> >> >
+> >> > In "git gui blame", right-clicking on the left fringe and chosing
+> >> > "Show History Context" in the context-menu doesn't work for me in the
+> >> > latest git. It says:
+> >> >
+> >> > couldn't change working directory to "": no such file or directory
+> >>
+> >> Definitely my fault. _gitworktree was not being set up correctly when
+> >> support for bare repositories was enabled and the repo was not bare
+> >> (like in the blame case). Patch incoming, can you see if it does the
+> >> job for you? It seems to fix it here.
+> >
+> > Isn't this the same bug as this one fixes:
+> >
+> > http://article.gmane.org/gmane.comp.version-control.git/140288
+> >
+> > cheers Heiko
+> 
+> Interesting, I missed that patch. However, I strongly suspect that
+> patch is not correct, since in that case the setup of gitworktree is
+> done before checking for bareness, meaning that when working in
+> somerepo.git (bare repo) for which the config flag is not set, it
+> might misdetect the situation as being in the non-bare case. I believe
+> my fix to be more correct in this regard.
 
-On Tue, 23 Feb 2010, Bert Wesarg wrote:
+Good to know. I already picked that one into my private repo and did not
+experience any problems with it, but that might be due to the fact that
+I have never tried to open git gui on bare repos.
 
-> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
-> ---
->  rerere.c |    6 ++++--
->  1 files changed, 4 insertions(+), 2 deletions(-)
-
-Looks good to me, except...
-
-> diff --git a/rerere.c b/rerere.c
-> index d1d3e75..9ca4cb8 100644
-> --- a/rerere.c
-> +++ b/rerere.c
-> @@ -364,16 +364,17 @@ static int find_conflict(struct string_list *conflict)
->  static int merge(const char *name, const char *path)
->  {
->  	int ret;
-> -	mmfile_t cur, base, other;
-> +	mmfile_t cur = {NULL, 0}, base = {NULL, 0}, other = {NULL, 0};
->  	mmbuffer_t result = {NULL, 0};
->  
->  	if (handle_file(path, NULL, rerere_path(name, "thisimage")) < 0)
->  		return 1;
->  
-> +	ret = 1;
-
-This initialization can come earlier, at declaration time.
-
->  	if (read_mmfile(&cur, rerere_path(name, "thisimage")) ||
->  			read_mmfile(&base, rerere_path(name, "preimage")) ||
->  			read_mmfile(&other, rerere_path(name, "postimage")))
-> -		return 1;
-> +		goto out;
->  	ret = ll_merge(&result, path, &base, &cur, "", &other, "", 0);
->  	if (!ret) {
->  		FILE *f = fopen(path, "w");
-
-Ciao,
-Dscho
+cheers Heiko
