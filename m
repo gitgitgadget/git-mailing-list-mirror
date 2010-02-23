@@ -1,138 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] add-interactive: fix bogus diff header line ordering
-Date: Mon, 22 Feb 2010 17:50:48 -0800
-Message-ID: <7v7hq4n2iv.fsf@alter.siamese.dyndns.org>
-References: <20100222103256.GA10557@coredump.intra.peff.net>
- <7vbpfg6h80.fsf@alter.siamese.dyndns.org>
- <20100223005645.GB3254@coredump.intra.peff.net>
- <20100223010544.GC3254@coredump.intra.peff.net>
+From: Tim Stoakes <tim@stoakes.net>
+Subject: Re: [PATCH/RFC] git-svn: Allow multiple branch and tag patterns
+Date: Tue, 23 Feb 2010 13:20:17 +1030
+Message-ID: <20100223025017.GB4906@mail.stoakes.net>
+References: <c8b3bef91002221429l3b277429l56f4e4cac4fdeb43@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 23 02:51:11 2010
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Michael Olson <mwolson@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Feb 23 03:59:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjjvX-0001wS-CT
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 02:51:07 +0100
+	id 1Njl08-0005yx-Ry
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 03:59:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752181Ab0BWBvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 20:51:00 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41238 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750766Ab0BWBu7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 20:50:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E5F39CB52;
-	Mon, 22 Feb 2010 20:50:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EzeBrzl302jOdQKDwFksV+4OzxM=; b=j0V6iu
-	l9ehsPv9ILsJ+a3FTuaUqoAyYhPkWSNjyhd5AlTNFsByM0ur78YhMR10dsyR2+q0
-	P8y4ZtD9EQTXrnzdFlXhJ+GqVnXZRG4MBoe+lG81Ez0pYDpziHk98qeBHzcEbcXk
-	Zrq1mXk+TAQsYR9MAuM7DG13W/xjrQoPNUuoc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nKgMpayND9AQJFMMJh/kvdCzK2Uv+kUT
-	Lz3et13hyyfHXyAJuQDKW3qek7JiQIYjA0wJtKcCi4zyCc3XjnZ63IHhXYyKajVa
-	gAPZgBqV+Yj6eVFt9UCCpUbrqDiwbsepJQk2TtU3/YR5nsSSWNCMwxhgporX2Mqm
-	CCMpGqLPdRU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 25B499CB51;
-	Mon, 22 Feb 2010 20:50:56 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B28069CB50; Mon, 22 Feb
- 2010 20:50:50 -0500 (EST)
-In-Reply-To: <20100223010544.GC3254@coredump.intra.peff.net> (Jeff King's
- message of "Mon\, 22 Feb 2010 20\:05\:44 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E1F14F96-201D-11DF-967F-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753345Ab0BWC7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 21:59:49 -0500
+Received: from outbound-mail04.westnet.com.au ([203.10.1.245]:23143 "EHLO
+	outbound-mail04.westnet.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753157Ab0BWC7s (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2010 21:59:48 -0500
+X-Greylist: delayed 560 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Feb 2010 21:59:47 EST
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvsEAGLRgkvKrYlp/2dsb2JhbACbAXS7NYRrBA
+X-IronPort-AV: E=Sophos;i="4.49,523,1262534400"; 
+   d="scan'208";a="21777993"
+Received: from dsl-202-173-137-105.sa.westnet.com.au (HELO mail.stoakes.net) ([202.173.137.105])
+  by outbound-mail04.westnet.com.au with ESMTP/TLS/ADH-CAMELLIA256-SHA; 23 Feb 2010 10:50:21 +0800
+Received: from noodle.stoakes.net (unknown [192.168.20.220])
+	by mail.stoakes.net (Postfix) with ESMTP id BFC271A400C;
+	Tue, 23 Feb 2010 13:20:17 +1030 (CST)
+Received: by noodle.stoakes.net (Postfix, from userid 1000)
+	id 88F857F0BC; Tue, 23 Feb 2010 13:20:17 +1030 (CST)
+Mail-Followup-To: Michael Olson <mwolson@gnu.org>, git@vger.kernel.org,
+	Eric Wong <normalperson@yhbt.net>
+Content-Disposition: inline
+In-Reply-To: <c8b3bef91002221429l3b277429l56f4e4cac4fdeb43@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140764>
 
-Jeff King <peff@peff.net> writes:
+Michael Olson(mwolson@gnu.org)@220210-14:29:
+> This change allows multiple branch and tag patterns to be specified in
+> .git/config for git-svn projects.  This is useful for fetching several
+> different parts out of the namespace of an svn repository.
+> Additionally, a new repeatable directive called "skip" has been added
+> to specify a specific tag or branch to ignore.
+> 
+> Signed-off-by: Michael W. Olson <mwolson@gnu.org>
+> ---
+> I've been using this patch regularly for over a year on a very large
+> svn repository.
+> 
+> This patch is known to work on git 1.6.3.3 specifically.  Once I get a
+> few responses about whether or not it is useful, I'll rebase it
+> against the git.git master branch.
 
->> ...  Hmm. I am not sure we would even need to treat hunks
->> individually...the misplaced header lines should always be part of the
->> _first_ hunk.
->
-> Like this.
+Yes please!
 
-Looks much better ;-).  Thanks.
+Tim
 
->
->  git-add--interactive.perl |   24 +++++++++++++++++++++++-
->  t/t2016-checkout-patch.sh |    8 ++++++++
->  2 files changed, 31 insertions(+), 1 deletions(-)
->
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index cd43c34..21f1330 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -957,6 +957,28 @@ sub coalesce_overlapping_hunks {
->  	return @out;
->  }
->  
-> +sub reassemble_patch {
-> +	my $head = shift;
-> +	my @patch;
-> +
-> +	# Include everything in the header except the beginning of the diff.
-> +	push @patch, (grep { !/^[-+]{3}/ } @$head);
-> +
-> +	# Then include any headers from the hunk lines, which must
-> +	# come before any actual hunk.
-> +	while (@_ && $_[0] !~ /^@/) {
-> +		push @patch, shift;
-> +	}
-> +
-> +	# Then begin the diff.
-> +	push @patch, grep { /^[-+]{3}/ } @$head;
-> +
-> +	# And then the actual hunks.
-> +	push @patch, @_;
-> +
-> +	return @patch;
-> +}
-> +
->  sub color_diff {
->  	return map {
->  		colored((/^@/  ? $fraginfo_color :
-> @@ -1453,7 +1475,7 @@ sub patch_update_file {
->  
->  	if (@result) {
->  		my $fh;
-> -		my @patch = (@{$head->{TEXT}}, @result);
-> +		my @patch = reassemble_patch($head->{TEXT}, @result);
->  		my $apply_routine = $patch_mode_flavour{APPLY};
->  		&$apply_routine(@patch);
->  		refresh();
-> diff --git a/t/t2016-checkout-patch.sh b/t/t2016-checkout-patch.sh
-> index 4d1c2e9..2144184 100755
-> --- a/t/t2016-checkout-patch.sh
-> +++ b/t/t2016-checkout-patch.sh
-> @@ -66,6 +66,14 @@ test_expect_success 'git checkout -p HEAD^' '
->  	verify_state dir/foo parent parent
->  '
->  
-> +test_expect_success 'git checkout -p handles deletion' '
-> +	set_state dir/foo work index &&
-> +	rm dir/foo &&
-> +	(echo n; echo y) | git checkout -p &&
-> +	verify_saved_state bar &&
-> +	verify_state dir/foo index index
-> +'
-> +
->  # The idea in the rest is that bar sorts first, so we always say 'y'
->  # first and if the path limiter fails it'll apply to bar instead of
->  # dir/foo.  There's always an extra 'n' to reject edits to dir/foo in
-> -- 
-> 1.7.0.207.g88f1
+-- 
+Tim Stoakes
