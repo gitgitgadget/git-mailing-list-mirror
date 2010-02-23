@@ -1,91 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] bash: improve aliased command recognition
-Date: Tue, 23 Feb 2010 14:11:20 -0800
-Message-ID: <7v3a0rd2lz.fsf@alter.siamese.dyndns.org>
-References: <20100131191936.GA30466@neumann>
- <cover.1266958460.git.szeder@ira.uka.de>
- <90724961a941edd1317514dea0a1c64112dab61d.1266958460.git.szeder@ira.uka.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] rerere: fix memory leak if rerere images can't be read
+Date: Tue, 23 Feb 2010 23:12:54 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1002232312090.3980@intel-tinevez-2-302>
+References: <1266955913-4943-1-git-send-email-bert.wesarg@googlemail.com>  <alpine.DEB.1.00.1002232225480.3980@intel-tinevez-2-302> <36ca99e91002231356u189b80ebka7ae8caf89ab9c10@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	David Rhodes Clymer <david@zettazebra.com>,
-	Teemu Matilainen <teemu.matilainen@iki.fi>, git@vger.kernel.org
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue Feb 23 23:11:41 2010
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1187285035-1266963178=:3980"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 23 23:13:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nk2yj-0007XG-1o
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 23:11:41 +0100
+	id 1Nk30I-0008GH-Jc
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 23:13:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754363Ab0BWWLg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Feb 2010 17:11:36 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33330 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754346Ab0BWWLf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Feb 2010 17:11:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 549939C2AD;
-	Tue, 23 Feb 2010 17:11:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Anvt//JUh/U/
-	6JGi6+b6ihfdMa8=; b=TDPkvf7xyIgqBuinYKSg40FC449f2VplnRiO48PY8pr6
-	S2VbtdgyMEBETiMQwapsSjSbQn80R92QVGQUk2EDfsX1YNhQn4YE1FKTu+bp2Vvp
-	f+xDD6gOWwchjTNIdBFfXgWADzzRfkMLlsPQWjkOc5nIrULHS9/GydFWeii0c44=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=rcCMSH
-	PoMnNDbfOxPs6RTuFyTf3jFVJERPyGVGr+SOj2S2f+8xJZtVxwNRYrTtwLQPBjyg
-	qMXiijMZSZFYuBmGq7sCRWBskg/bSHCUZuoioIASaG/WqN/QlDKeyz++TgqD4/rQ
-	4Pte/ADv48lCigpfgBybRgeviMpw99o+S2MGY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E32539C2A4;
-	Tue, 23 Feb 2010 17:11:27 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E68EB9C2A1; Tue, 23 Feb
- 2010 17:11:21 -0500 (EST)
-In-Reply-To: <90724961a941edd1317514dea0a1c64112dab61d.1266958460.git.szeder@ira.uka.de>
- ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Tue\, 23 Feb 2010 22\:02\:57
- +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 637AE0CC-20C8-11DF-83E3-E038EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754383Ab0BWWNO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2010 17:13:14 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50644 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754370Ab0BWWNN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2010 17:13:13 -0500
+Received: (qmail invoked by alias); 23 Feb 2010 22:12:59 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp070) with SMTP; 23 Feb 2010 23:12:59 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1825dZVBlw2NRpEFPqJ0f7ohkE9tLTnkg8qjmyt85
+	Zxr46B0rKca8ki
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <36ca99e91002231356u189b80ebka7ae8caf89ab9c10@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55000000000000004
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140855>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> [alias]
->     lgm =3D "!sh -c 'GIT_NOTES_REF=3Drefs/notes/amlog git log \"$@\" =
-|| :' -"
+--8323329-1187285035-1266963178=:3980
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Tue, 23 Feb 2010, Bert Wesarg wrote:
+
+> On Tue, Feb 23, 2010 at 22:26, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
 >
-> The full parsing of a shell command alias like that in the completion
-> code is clearly unfeasible.  However, we can easily improve on aliase=
-d
-> command recognition by eleminating stuff that is definitely not a git
-> command: shell commands (anything starting with '!'), command line
-> options (anything starting with '-'), environment variables (anything
-> with a '=3D' in it), and git itself.  This way the above alias would =
-be
-> handled correctly, and the completion script would correctly recogniz=
-e
-> "log" as the aliased git command.
+> > On Tue, 23 Feb 2010, Bert Wesarg wrote:
+> >
+> >> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> >> ---
+> >>  rerere.c |    6 ++++--
+> >>  1 files changed, 4 insertions(+), 2 deletions(-)
+> >
+> > Looks good to me, except...
+> >
+> >> diff --git a/rerere.c b/rerere.c
+> >> index d1d3e75..9ca4cb8 100644
+> >> --- a/rerere.c
+> >> +++ b/rerere.c
+> >> @@ -364,16 +364,17 @@ static int find_conflict(struct string_list *conflict)
+> >>  static int merge(const char *name, const char *path)
+> >>  {
+> >>       int ret;
+> >> -     mmfile_t cur, base, other;
+> >> +     mmfile_t cur = {NULL, 0}, base = {NULL, 0}, other = {NULL, 0};
+> >>       mmbuffer_t result = {NULL, 0};
+> >>
+> >>       if (handle_file(path, NULL, rerere_path(name, "thisimage")) < 0)
+> >>               return 1;
+> >>
+> >> +     ret = 1;
+> >
+> > This initialization can come earlier, at declaration time.
+> I thought about it, but I think it is clearer to put just in front of
+> the condition which may fail.
 
-I personally do not think such a heuristic is worth the trouble (both f=
-or
-writing and maintaining the completion code nor runtime overhead to
-iterate over words on the expansion).
+Well, to _this_ developer, it is clearer when a variable has been 
+initialized in any case. No need to think about how it could be used 
+uninitialized. But if you insist...
 
-I vaguely recall somebody floated an idea to tell completion code that
-"you may not know what lgm is, but it takes the same set of options as
-log" (either via config or a shell function---I don't recall the detail=
-s).
-I think that would be a lot more robust, efficient and easy to explain
-solution to the same problem.
+Ciao,
+Dscho
+
+--8323329-1187285035-1266963178=:3980--
