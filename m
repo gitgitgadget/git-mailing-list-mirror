@@ -1,78 +1,56 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCHv2 1/2] shell setup: clear_local_git_env() function
-Date: Tue, 23 Feb 2010 21:25:24 +0100
-Message-ID: <4B8439B4.9030605@web.de>
-References: <cb7bb73a1002222355s38fda032g99623f44d6200fbc@mail.gmail.com> <1266913829-14533-2-git-send-email-giuseppe.bilotta@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [GITK PATCH 2/3] gitk: support path filters even in 
+ subdirectories
+Date: Tue, 23 Feb 2010 21:22:44 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1002232122110.3980@intel-tinevez-2-302>
+References: <f579dd581002200847o340a3eb9l50d0f1329d4e2c23@mail.gmail.com>  <alpine.DEB.1.00.1002201847290.20986@pacific.mpi-cbg.de>  <a5b261831002200948v3c01708dv3e42d08d42e3119@mail.gmail.com>  <alpine.DEB.1.00.1002201920350.20986@pacific.mpi-cbg.de> 
+ <alpine.DEB.1.00.1002231748320.3980@intel-tinevez-2-302>  <alpine.DEB.1.00.1002231810020.3980@intel-tinevez-2-302> <f579dd581002231137t71bb034fl429fd03a2c0d681c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	msysGit Mailinglist <msysgit@googlegroups.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 23 21:25:43 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Pat Thoyts <patthoyts@googlemail.com>,
+	Paul Mackerras <paulus@samba.org>, msysgit@googlegroups.com,
+	git@vger.kernel.org
+To: Kirill <kirillathome@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 23 21:29:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nk1K7-0002Oz-IV
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 21:25:39 +0100
+	id 1Nk1O4-00047K-JJ
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 21:29:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753426Ab0BWUZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2010 15:25:34 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:44484 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751411Ab0BWUZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2010 15:25:33 -0500
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 4FB04148C5DC8;
-	Tue, 23 Feb 2010 21:25:32 +0100 (CET)
-Received: from [80.128.55.61] (helo=[192.168.178.26])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1Nk1Jz-0007ux-00; Tue, 23 Feb 2010 21:25:31 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
-In-Reply-To: <1266913829-14533-2-git-send-email-giuseppe.bilotta@gmail.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/HBKEj3UcsmS01Wkgs4M68Xk4pd9g1vn/CunGv
-	twx9CFNT45IvcUNQlZriq5F+ZoHOteIrlHeorEP0roAzvdfYSt
-	TMfSPkBTgC3pjJ9VTCWQ==
+	id S1753925Ab0BWU3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2010 15:29:40 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50678 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752649Ab0BWU3j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2010 15:29:39 -0500
+Received: (qmail invoked by alias); 23 Feb 2010 20:22:47 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp069) with SMTP; 23 Feb 2010 21:22:47 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+o9bd3ImmohV5rdtDM0Jkro/CFe/lVx/NX3RmzIS
+	c7b1Z8I1JfPIBz
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <f579dd581002231137t71bb034fl429fd03a2c0d681c@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.75
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140831>
 
-Am 23.02.2010 09:30, schrieb Giuseppe Bilotta:
-> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-> index 7a09566..f1be832 100644
-> --- a/git-sh-setup.sh
-> +++ b/git-sh-setup.sh
-> @@ -172,6 +172,21 @@ get_author_ident_from_commit () {
->  	LANG=C LC_ALL=C sed -ne "$pick_author_script"
->  }
->  
-> +# Clear repo-local GIT_* environment variables. Useful when switching to
-> +# another repository (e.g. when entering a submodule). See also the env
-> +# list in git_connect()
-> +clear_local_git_env() {
-> +	unset	GIT_ALTERNATE_OBJECT_DIRECTORIES \
-> +		GIT_CONFIG \
-> +		GIT_DIR \
-> +		GIT_GRAFT_FILE \
-> +		GIT_INDEX_FILE \
-> +		GIT_NO_REPLACE_OBJECTS \
-> +		GIT_OBJECT_DIRECTORY \
-> +		GIT_WORKTREE
+Hi,
 
-Shouldn't that last one be GIT_WORK_TREE?
+On Tue, 23 Feb 2010, Kirill wrote:
 
+> I believe the fact that pathprefix is set only under several conditions, 
+> the invocation without arguments is broken.
 
-> +
-> +}
-> +
->  # Make sure we are in a valid repository of a vintage we understand,
->  # if we require to be in a git repository.
->  if test -z "$NONGIT_OK"
+You are absolutely correct!
+
+Will fix and push to work/gitk-dashdash-dot,
+Dscho
