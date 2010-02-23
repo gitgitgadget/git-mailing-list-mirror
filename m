@@ -1,136 +1,91 @@
 From: Kirill <kirillathome@gmail.com>
-Subject: Re: [GITK PATCH 2/3] gitk: support path filters even in 
+Subject: Re: [GITK PATCH 3/3] gitk: strip prefix from filenames in 
 	subdirectories
-Date: Tue, 23 Feb 2010 14:37:37 -0500
-Message-ID: <f579dd581002231137t71bb034fl429fd03a2c0d681c@mail.gmail.com>
+Date: Tue, 23 Feb 2010 14:42:29 -0500
+Message-ID: <f579dd581002231142v6a937ac0xdc9618f2a468989d@mail.gmail.com>
 References: <f579dd581002200847o340a3eb9l50d0f1329d4e2c23@mail.gmail.com>
 	 <alpine.DEB.1.00.1002201847290.20986@pacific.mpi-cbg.de>
 	 <a5b261831002200948v3c01708dv3e42d08d42e3119@mail.gmail.com>
 	 <alpine.DEB.1.00.1002201920350.20986@pacific.mpi-cbg.de>
 	 <alpine.DEB.1.00.1002231748320.3980@intel-tinevez-2-302>
 	 <alpine.DEB.1.00.1002231810020.3980@intel-tinevez-2-302>
+	 <alpine.DEB.1.00.1002231811021.3980@intel-tinevez-2-302>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Cc: Pat Thoyts <patthoyts@googlemail.com>, Paul Mackerras <paulus@samba.org>, msysgit@googlegroups.com, 
+Cc: Pat Thoyts <patthoyts@googlemail.com>,
+	Paul Mackerras <paulus@samba.org>, msysgit@googlegroups.com,
 	git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: 3hS6ESwwJB4Mrpypssh0ovtlnthps.jvttz5znp0nvvnslnyv1wz.jvt@groups.bounces.google.com Tue Feb 23 20:38:01 2010
-Return-path: <3hS6ESwwJB4Mrpypssh0ovtlnthps.jvttz5znp0nvvnslnyv1wz.jvt@groups.bounces.google.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yx0-f139.google.com ([209.85.210.139])
+X-From: git-owner@vger.kernel.org Tue Feb 23 20:42:42 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <3hS6ESwwJB4Mrpypssh0ovtlnthps.jvttz5znp0nvvnslnyv1wz.jvt@groups.bounces.google.com>)
-	id 1Nk0a0-00018S-Uq
-	for gcvm-msysgit@m.gmane.org; Tue, 23 Feb 2010 20:38:01 +0100
-Received: by mail-yx0-f139.google.com with SMTP id 3sf1590354yxe.3
-        for <gcvm-msysgit@m.gmane.org>; Tue, 23 Feb 2010 11:38:00 -0800 (PST)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Nk0eW-0003A2-7m
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 20:42:40 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751710Ab0BWTme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2010 14:42:34 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:63537 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751216Ab0BWTmd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2010 14:42:33 -0500
+Received: by ey-out-2122.google.com with SMTP id d26so23451eyd.19
+        for <git@vger.kernel.org>; Tue, 23 Feb 2010 11:42:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:x-beenthere:received:received:received
-         :received:received-spf:received:mime-version:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc
-         :x-original-authentication-results:x-original-sender:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:x-thread-url
-         :x-message-url:sender:list-subscribe:list-unsubscribe:content-type
-         :content-transfer-encoding;
-        bh=fV5fofclxjH+/3dDDwgUgD1B6Cutww14JVHvZBbqIV4=;
-        b=zjGDEbBjQ03cPdxHA/WtQwW7Str8rqoSsUFiTXxMtkLBgEEdVxd6jAs5Vll1K5Cs0y
-         i3kfMIiqPDC6Ng7hVEDm3BlUMN4HpCsJ6llfdh1yDcOCZzIR/kf1ytixakKDOvvr8UI3
-         KZgZAFGY60fUy/j4SkMjaSCSy9tIFzRp3unsY=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=ZBSpctDni2M/NWOcKBAHunTEdPwoZXCfOEm3LneyRSo=;
+        b=KgPbj4uacz6J5CQv9PfBlfq9Mbx99vDAOP9IOCF1OWHtmfq9vsUce7YCrP7mENtF8K
+         g8A6re64P4LXM+YeJX4bHTKEUOJcwi4sbSnE/dSzr0kytb8eKvD9qb5h033enVCDtE9x
+         eyIsFIFOmNm/xvo3WauJ5SuBnGsF1I+nLMVrE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:x-original-authentication-results
-         :x-original-sender:precedence:mailing-list:list-id:list-post
-         :list-help:list-archive:x-thread-url:x-message-url:sender
-         :list-subscribe:list-unsubscribe:content-type
-         :content-transfer-encoding;
-        b=JG8FEuJIRi7PYV2ZZHS7pQTTQHdZ9KN7JxzRFbZS9jof+56xo0hz42NsjLFDPiz3f9
-         JoCv09rjpDhLfGs//uqt57oiUoGwTPoMH849Ijc4XtJEBU7077dXl7tZBeeH53ODU6h7
-         Eq91H1GootoWdULqUvuLRvolLR5X+4LIVMJp4=
-Received: by 10.150.188.6 with SMTP id l6mr49186ybf.82.1266953861647;
-        Tue, 23 Feb 2010 11:37:41 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.213.44.133 with SMTP id a5ls25703ebf.1.p; Tue, 23 Feb 2010 
-	11:37:40 -0800 (PST)
-Received: by 10.213.63.75 with SMTP id a11mr1339892ebi.19.1266953860168;
-        Tue, 23 Feb 2010 11:37:40 -0800 (PST)
-Received: by 10.213.63.75 with SMTP id a11mr1339891ebi.19.1266953860145;
-        Tue, 23 Feb 2010 11:37:40 -0800 (PST)
-Received: from mail-ew0-f216.google.com (mail-ew0-f216.google.com [209.85.219.216])
-        by gmr-mx.google.com with ESMTP id 11si55666ewy.1.2010.02.23.11.37.39;
-        Tue, 23 Feb 2010 11:37:39 -0800 (PST)
-Received-SPF: pass (google.com: domain of kirillathome@gmail.com designates 209.85.219.216 as permitted sender) client-ip=209.85.219.216;
-Received: by ewy8 with SMTP id 8so369551ewy.32
-        for <msysgit@googlegroups.com>; Tue, 23 Feb 2010 11:37:39 -0800 (PST)
-Received: by 10.216.91.18 with SMTP id g18mr2423790wef.203.1266953858313; Tue, 
-	23 Feb 2010 11:37:38 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.1002231810020.3980@intel-tinevez-2-302>
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: 
-	domain of kirillathome@gmail.com designates 209.85.219.216 as permitted 
-	sender) smtp.mail=kirillathome@gmail.com; dkim=pass (test mode) 
-	header.i=@gmail.com
-X-Original-Sender: kirillathome@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, 
-	<mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-X-Thread-Url: http://groups.google.com/group/msysgit/t/69f026c732a13b2
-X-Message-Url: http://groups.google.com/group/msysgit/msg/fe0d7a7d38947a82
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
-	<mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140825>
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=lxuPuJwXjZCbwgumkV1FFETyZvJrLXR74cmg4EgIndI2u9T0WnJzPMi4yVRaR6bwdz
+         pevwCcN1/ckuuMh0ra+mub4CYUNyPlc+JwQVeI5ljw200nf44Q/SR7nLHCQ8Sp/TAk0r
+         hMkpwvw3ZCiNAXgrIqzCNMi2KsV31ZDOvb1bU=
+Received: by 10.216.161.148 with SMTP id w20mr2230337wek.117.1266954150222; 
+	Tue, 23 Feb 2010 11:42:30 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.1002231811021.3980@intel-tinevez-2-302>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140826>
 
 Hi,
 
-Dscho, at first, thank you so much for working on the issue!
-In general the series work. At least, it passes my limited testing
-from the original message. However...
+On Tue, Feb 23, 2010 at 12:12 PM, Johannes Schindelin wrote:
+>
+> Again in the lower right panel, where the file names of the files touched
+> by the current commit are clickable: let's not show the prefix when we
+> are in a subdirectory, as it wastes precious screen estate conveying
+> information the user already knows.
+Unfortunately, it seems to be too aggressive, leading to a misleading
+display. When gitk is invoked from a subdirectory but without the
+filter, the lower right panel displays some paths, relative to the
+root of the work tree, and some, relative to the wd:
 
-On Tue, Feb 23, 2010 at 12:10 PM, Johannes Schindelin wrote:
->
-> Even when running inside a subdirectory, "gitk HEAD -- ." should work.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> =A0gitk-git/gitk | =A0 =A06 +++++-
-> =A01 files changed, 5 insertions(+), 1 deletions(-)
->
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 553922f..bad9ebc 100644
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -7340,9 +7340,12 @@ proc startdiff {ids} {
-> =A0}
->
-> =A0proc path_filter {filter name} {
-> + =A0 =A0global pathprefix
-> =A0 =A0 foreach p $filter {
-> =A0 =A0 =A0 =A0if {$p =3D=3D "."} {
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 return 1
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 set p $pathprefix
-> + =A0 =A0 =A0 } else {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 set p $pathprefix$p
-> =A0 =A0 =A0 =A0}
-> =A0 =A0 =A0 =A0set l [string length $p]
-> =A0 =A0 =A0 =A0if {[string index $p end] eq "/"} {
-> @@ -11585,6 +11588,7 @@ readrefs
->
-> =A0if {$cmdline_files ne {} || $revtreeargs ne {} || $revtreeargscmd ne {=
-}} {
-> =A0 =A0 # create a view for the files/dirs specified on the command line
-> + =A0 =A0set pathprefix [exec git rev-parse --show-prefix]
-I believe the fact that pathprefix is set only under several
-conditions, the invocation without arguments is broken.
+$ # fresh netinstall with checked out devel's
+$ cd /
+$ gitk --all & # 1
+$ cd /bin
+$ gitk --all & # 2
 
-My .02
+1. bin/move-wiki.sh when devel is selected; share/WinGit/install.iss -
+when installer-improvements is selected (that's correct)
+
+2. move-wiki.sh on devel; share/WinGit/install.iss on installer-improvements
+That's misleading.
+
+And honestly, I'm not that advanced in gitk use, so somebody will
+probably have to do some more testing.
+
+Thanks!
 
 --
 Kirill.
