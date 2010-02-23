@@ -1,92 +1,82 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] rerere: fix memory leak if rerere images can't be read
-Date: Tue, 23 Feb 2010 22:56:20 +0100
-Message-ID: <36ca99e91002231356u189b80ebka7ae8caf89ab9c10@mail.gmail.com>
-References: <1266955913-4943-1-git-send-email-bert.wesarg@googlemail.com>
-	 <alpine.DEB.1.00.1002232225480.3980@intel-tinevez-2-302>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Create /gitk as a symlink to gitk-git/gitk-wish.
+Date: Tue, 23 Feb 2010 13:56:35 -0800
+Message-ID: <7vtyt7ehv0.fsf@alter.siamese.dyndns.org>
+References: <1266536738-2933-1-git-send-email-apenwarr@gmail.com>
+ <32541b131002231047y4dc49f85s56ba91e6bc7bf16c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 23 22:56:36 2010
+Cc: git@vger.kernel.org, paulus@samba.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 23 22:56:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nk2k2-0000Z8-3s
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 22:56:30 +0100
+	id 1Nk2kL-0000eZ-ML
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 22:56:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754209Ab0BWV4X convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Feb 2010 16:56:23 -0500
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:40984 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754020Ab0BWV4W convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Feb 2010 16:56:22 -0500
-Received: by bwz1 with SMTP id 1so1444531bwz.21
-        for <git@vger.kernel.org>; Tue, 23 Feb 2010 13:56:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=7/DNoBtRJou/9qaXxsi/yjVaE/L+Iq1SO6k9w/Tyc0Q=;
-        b=r6wgSAX6Yf7BcZWpe/py1rFJfY4nNPZPeKu+Xv8peHV02TUErg1hAS5RFcQoynjrKQ
-         9uu6+o76IVpCFog+YbBjRNlRHJtSr2yUC7BtxT06XpkQyXFCebkXGaIg9Xh9Q5hEAj9G
-         q59hQBlaiuFoXwP/eCEj9ePeCVTc2Oz2WEV7c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=p/4p6hny7JFikiy3ZHtct7xyKgF2w7DcSNujR/fDpRftr1NAeHnhAE1ZSgKSpIyEj9
-         UyUqL8ep1slInPlSdtO+kRZxhLinooMiGBgMZXt8aqKR6ZVTC/I/fhRberFVIHoQ0J6Y
-         6L3E9zTwe4sa6Um99Lm8G02z9eOVoosdmVt78=
-Received: by 10.204.13.69 with SMTP id b5mr3266271bka.196.1266962180863; Tue, 
-	23 Feb 2010 13:56:20 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.1002232225480.3980@intel-tinevez-2-302>
+	id S1754232Ab0BWV4o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Feb 2010 16:56:44 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41702 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754020Ab0BWV4o convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Feb 2010 16:56:44 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BAFB69CFB5;
+	Tue, 23 Feb 2010 16:56:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=JLVlIG7TdGgQhIzAYJ+j68Okx
+	Ks=; b=VrwkcwyqWok6Ml2FVDadztrd4v8IZPeFupRjVMZfYV8jCqwah6a81Bv4l
+	hntQWfJ5CKNQ0asvR2lQYUV/raglrt72JrxKmHBuMCvC/ZwFh80l96jX+2DpCRQX
+	08uohI3tKYc5yNHWa8gFGEd2cl4Im+yZET3FG9h83fEWd7G8GI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=pkzfULM1x7oQDzZQUmV
+	iA95QABII6RmmY+kQ0rs9eqoTl6VvvMh0SNJcZphvvzEMB2E7erd6VjFSrL3lGvH
+	9cSRHwOPxANSVEdkPoRPw2WeHR3k+XyXZ4fh7ArQ015hwS31bEHDYnWh+ueZ+KKP
+	2kU/aYQ9ntUsubwhiFqcfSCo=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 854E99CFAF;
+	Tue, 23 Feb 2010 16:56:40 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A1799CFAD; Tue, 23 Feb
+ 2010 16:56:36 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 528F9B38-20C6-11DF-81C7-E038EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140850>
 
-On Tue, Feb 23, 2010 at 22:26, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Tue, 23 Feb 2010, Bert Wesarg wrote:
->
->> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
->> ---
->> =C2=A0rerere.c | =C2=A0 =C2=A06 ++++--
->> =C2=A01 files changed, 4 insertions(+), 2 deletions(-)
->
-> Looks good to me, except...
->
->> diff --git a/rerere.c b/rerere.c
->> index d1d3e75..9ca4cb8 100644
->> --- a/rerere.c
->> +++ b/rerere.c
->> @@ -364,16 +364,17 @@ static int find_conflict(struct string_list *c=
-onflict)
->> =C2=A0static int merge(const char *name, const char *path)
->> =C2=A0{
->> =C2=A0 =C2=A0 =C2=A0 int ret;
->> - =C2=A0 =C2=A0 mmfile_t cur, base, other;
->> + =C2=A0 =C2=A0 mmfile_t cur =3D {NULL, 0}, base =3D {NULL, 0}, othe=
-r =3D {NULL, 0};
->> =C2=A0 =C2=A0 =C2=A0 mmbuffer_t result =3D {NULL, 0};
->>
->> =C2=A0 =C2=A0 =C2=A0 if (handle_file(path, NULL, rerere_path(name, "=
-thisimage")) < 0)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 1;
->>
->> + =C2=A0 =C2=A0 ret =3D 1;
->
-> This initialization can come earlier, at declaration time.
-I thought about it, but I think it is clearer to put just in front of
-the condition which may fail.
+Avery Pennarun <apenwarr@gmail.com> writes:
 
-Bye,
-Bert
+> On Thu, Feb 18, 2010 at 6:45 PM, Avery Pennarun <apenwarr@gmail.com> =
+wrote:
+>> In earlier versions of git, you could add the git source dir to your=
+ PATH
+>> and the 'gitk' command would work. =C2=A0At some point, this stopped=
+ working
+>> because the file formerly known as gitk is now gitk-git/gitk-wish.
+>>
+>> Have the Makefile automatically generate a symlink to it when buildi=
+ng, to
+>> restore the earlier functionality.
+>>
+>> Signed-off-by: Avery Pennarun <apenwarr@gmail.com>
+>
+> Any comments on this one?
+
+To be honest, I am not terribly interested, as it seems to affect only
+people who build from source.  They know what they are doing and are
+assumed to be capable of adjusting the environments for testing and
+developing git.
+
+Having said that, adding anything missing to bin-wrappers/ would make m=
+ore
+sense these days, I think.
