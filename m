@@ -1,55 +1,64 @@
-From: Markus Elfring <Markus.Elfring@web.de>
+From: Sverre Rabbelier <srabbelier@gmail.com>
 Subject: Re: APIs for automatic patch generation
-Date: Tue, 23 Feb 2010 18:04:34 +0100
-Message-ID: <4B840AA2.3010604@web.de>
-References: <4B803AB8.30304@web.de>
+Date: Tue, 23 Feb 2010 18:07:13 +0100
+Message-ID: <fabb9a1e1002230907u6471efa5w234a5dabfa4ba5e1@mail.gmail.com>
+References: <4B803AB8.30304@web.de> <4B840AA2.3010604@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 23 18:04:42 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Markus Elfring <Markus.Elfring@web.de>
+X-From: git-owner@vger.kernel.org Tue Feb 23 18:07:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjyBd-00009y-TR
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 18:04:42 +0100
+	id 1NjyEc-0001je-KC
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 18:07:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753191Ab0BWREg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2010 12:04:36 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:56839 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752522Ab0BWREg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2010 12:04:36 -0500
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 13197148BB1F1
-	for <git@vger.kernel.org>; Tue, 23 Feb 2010 18:04:35 +0100 (CET)
-Received: from [78.49.33.20] (helo=[192.168.1.202])
-	by smtp06.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1NjyBW-0006Gf-00
-	for git@vger.kernel.org; Tue, 23 Feb 2010 18:04:35 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.5) Gecko/20091130 SUSE/3.0.0-1.1.1 Thunderbird/3.0
-In-Reply-To: <4B803AB8.30304@web.de>
-X-Sender: Markus.Elfring@web.de
-X-Provags-ID: V01U2FsdGVkX1+C/h0z0n5/vG4XFPGbWmyQx4r4w5xR1g+n7onx
-	Hj0IhwmLP8IrxmdiM2ytm1DcOSFiFYYiLSMyy2kjq+cErenJQE
-	sOOzJir6Usvgw96ToHUA==
+	id S1753577Ab0BWRHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2010 12:07:37 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:40226 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753514Ab0BWRHg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2010 12:07:36 -0500
+Received: by pwj8 with SMTP id 8so3966617pwj.19
+        for <git@vger.kernel.org>; Tue, 23 Feb 2010 09:07:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=0DqHicTrPtyGfAjlg3YT93ItcCZNNUB/tQXKkx3AXv0=;
+        b=nxIGFHbmqmrKFl8hy78DpNC3rkKfXEmjEGmuA99SSPaB2XwqmTRuvIFea7Z/SC5c4j
+         Z5IVkoXgTA1dG5/vL86jOZiF8hrTXk6G8J/kczSRK4sGv4s2oNWlpfLtpTibAMJOfriz
+         n6YNYl0Cne4cmzwkt+dTz5f3ZdVvAbmcc8vOo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=YKZkiY4vAY1KTTZbTu+qaodBugJuHONv0Hom5jR2J8W8lguWDO9rPTW45woxZgbT6G
+         t12n4PhIOB7lJN0n2uQY0G5A1mj2iY3webUHdPRmMgUtR9xuTJdo5XrrR0tJuASmjxq+
+         l0gR3X3nHh31xAU4WobxQ2NvE4dfvqP9yF98M=
+Received: by 10.142.59.3 with SMTP id h3mr186577wfa.93.1266944855455; Tue, 23 
+	Feb 2010 09:07:35 -0800 (PST)
+In-Reply-To: <4B840AA2.3010604@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140812>
 
-Hello,
+Heya,
 
-The commands "git diff" and "git format-patch" contain functionality that I
-would like to reuse for my little application in a C++ class library.
+On Tue, Feb 23, 2010 at 18:04, Markus Elfring <Markus.Elfring@web.de> wrote:
+> The commands "git diff" and "git format-patch" contain functionality that I
+> would like to reuse for my little application in a C++ class library.
 
-Which functions exist in a C API that can provide the following data?
-- a line like "index 8d16832..358c98b 100644"
-- range specifications for difference hunks
-- mail construction
+Until libgit2 is done, just shell out and call 'git format-patch'.
 
-Regards,
-Markus
+[0] http://git.wiki.kernel.org/index.php/SoC2010Ideas#libgit2
+
+-- 
+Cheers,
+
+Sverre Rabbelier
