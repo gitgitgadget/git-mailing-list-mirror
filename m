@@ -1,64 +1,82 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: APIs for automatic patch generation
-Date: Tue, 23 Feb 2010 18:07:13 +0100
-Message-ID: <fabb9a1e1002230907u6471efa5w234a5dabfa4ba5e1@mail.gmail.com>
-References: <4B803AB8.30304@web.de> <4B840AA2.3010604@web.de>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v5 02/11] Support showing notes from more than one notes tree
+Date: Tue, 23 Feb 2010 18:10:18 +0100
+Message-ID: <201002231810.18960.trast@student.ethz.ch>
+References: <cover.1266885599.git.trast@student.ethz.ch> <3dbcdcf1a364d14968c07e99564acb232c6a5c43.1266885599.git.trast@student.ethz.ch> <7vsk8sn2o3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Markus Elfring <Markus.Elfring@web.de>
-X-From: git-owner@vger.kernel.org Tue Feb 23 18:07:49 2010
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+	Johan Herland <johan@herland.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 23 18:10:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjyEc-0001je-KC
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 18:07:46 +0100
+	id 1NjyHe-0003Ci-Ah
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 18:10:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753577Ab0BWRHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2010 12:07:37 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:40226 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753514Ab0BWRHg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2010 12:07:36 -0500
-Received: by pwj8 with SMTP id 8so3966617pwj.19
-        for <git@vger.kernel.org>; Tue, 23 Feb 2010 09:07:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=0DqHicTrPtyGfAjlg3YT93ItcCZNNUB/tQXKkx3AXv0=;
-        b=nxIGFHbmqmrKFl8hy78DpNC3rkKfXEmjEGmuA99SSPaB2XwqmTRuvIFea7Z/SC5c4j
-         Z5IVkoXgTA1dG5/vL86jOZiF8hrTXk6G8J/kczSRK4sGv4s2oNWlpfLtpTibAMJOfriz
-         n6YNYl0Cne4cmzwkt+dTz5f3ZdVvAbmcc8vOo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=YKZkiY4vAY1KTTZbTu+qaodBugJuHONv0Hom5jR2J8W8lguWDO9rPTW45woxZgbT6G
-         t12n4PhIOB7lJN0n2uQY0G5A1mj2iY3webUHdPRmMgUtR9xuTJdo5XrrR0tJuASmjxq+
-         l0gR3X3nHh31xAU4WobxQ2NvE4dfvqP9yF98M=
-Received: by 10.142.59.3 with SMTP id h3mr186577wfa.93.1266944855455; Tue, 23 
-	Feb 2010 09:07:35 -0800 (PST)
-In-Reply-To: <4B840AA2.3010604@web.de>
+	id S1752426Ab0BWRKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2010 12:10:49 -0500
+Received: from gwse.ethz.ch ([129.132.178.238]:29261 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752127Ab0BWRKs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2010 12:10:48 -0500
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Tue, 23 Feb
+ 2010 18:10:47 +0100
+Received: from thomas.localnet (129.132.210.179) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Tue, 23 Feb
+ 2010 18:10:26 +0100
+User-Agent: KMail/1.13.0 (Linux/2.6.31.12-0.1-desktop; KDE/4.4.0; x86_64; ; )
+In-Reply-To: <7vsk8sn2o3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140813>
 
-Heya,
+On Tuesday 23 February 2010 02:47:40 Junio C Hamano wrote:
+> Thomas Rast <trast@student.ethz.ch> writes:
+> > * remove NOTES_SHOW_HEADER_WITH_REF distinction
+> 
+> Note that there is a leftover caller that uses the symbol without noticing
+> that it has been retired.  I'll fix it up locally when I queue the series
+> to 'pu'.
 
-On Tue, Feb 23, 2010 at 18:04, Markus Elfring <Markus.Elfring@web.de> wrote:
-> The commands "git diff" and "git format-patch" contain functionality that I
-> would like to reuse for my little application in a C++ class library.
+Thanks.  That was the breakage I hinted at in the last mail last
+night; since it (hopefully) was the only problem with the series, I'll
+dispense with the replacement for now.
 
-Until libgit2 is done, just shell out and call 'git format-patch'.
+> > @@ -68,6 +70,9 @@ struct non_note {
+> >  
+> >  struct notes_tree default_notes_tree;
+> >  
+> > +struct string_list display_notes_refs;
+> > +struct notes_tree **display_notes_trees;
+> 
+> Unlike default_notes_tree, the above two can become static, as you made
+> the new logic better contained to this file and accessible only via
+> accessor functions.
 
-[0] http://git.wiki.kernel.org/index.php/SoC2010Ideas#libgit2
+Oh, so that's what you hinted at with the 'extern' question...
+
+> As you are retiring format_note() as a public interface, and instead
+> making format_display_notes() as the primary API for the callers, the
+
+I still need it for the "format-patch from notes" patch, to be posted
+soonish.  So unless someone comes up with an alternative for that, it
+stays a public interface.
+
+> former should be made static to notes.c along with the large comment
+> describing how to call it.  It may also be worth telling people how to
+> call this new public interface with similar comment here.
+
+You caught me on my comment laziness...  I suspect even the ones I can
+add won't match Johan's excellent comments :-)
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+Thomas Rast
+trast@{inf,student}.ethz.ch
