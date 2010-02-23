@@ -1,71 +1,58 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH] Allow '+', '-' and '.' in remote helper names
-Date: Tue, 23 Feb 2010 14:48:33 +0100
-Message-ID: <4B83DCB1.5050905@gnu.org>
-References: <1266928428-19075-1-git-send-email-ilari.liusvaara@elisanet.fi>
+From: Michael Olson <mwolson@gnu.org>
+Subject: Re: [PATCH/RFC] git-svn: Allow multiple branch and tag patterns
+Date: Tue, 23 Feb 2010 06:41:23 -0800
+Message-ID: <c8b3bef91002230641u3f831470m2b887e9479ca6cb2@mail.gmail.com>
+References: <c8b3bef91002221429l3b277429l56f4e4cac4fdeb43@mail.gmail.com> 
+	<4B83B303.50408@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Tue Feb 23 14:54:55 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Feb 23 15:42:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjvDz-0003Av-0R
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 14:54:55 +0100
+	id 1Njvxa-0007B6-Eg
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 15:42:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752604Ab0BWNyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2010 08:54:50 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:10864 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752281Ab0BWNyt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2010 08:54:49 -0500
-Received: by ey-out-2122.google.com with SMTP id d26so880806eyd.19
-        for <git@vger.kernel.org>; Tue, 23 Feb 2010 05:54:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=UXkwAKKqd4J5Twsp/QGmH71xq2r2bHvo2xD5gMncb04=;
-        b=hNe+brOzSXr4LUUp95wW5Ue/iwCpQl92jD5aYix5oIHdi9AaJ93AwNfHjGATxte3/L
-         qsq4eYJVfZZjqQN4r2vkuYSPCZ5moCndy6sdhH8WP+S3fkPg4gQrrcJnud7BWNQDkhdC
-         WxJB7qlzRxQK0ndmMi5byCChwyX1zJMRSN2ss=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=PcZh/xq+b4q3wMqNbuSOk4UA6a5/8vl240a57bWtjo6q7XmBlWatqF7E45rOyXbprQ
-         FFYR30V6JyCIVbef6cS/NXFhUJJLYi5Fs72fXnFmSzT3jOJ3uwP+9b5UCq0pslh7vhyD
-         jcEt/KDo0CX6aUW25gdHL4yUKVAlpdNjDOFcA=
-Received: by 10.213.96.5 with SMTP id f5mr554351ebn.92.1266932923582;
-        Tue, 23 Feb 2010 05:48:43 -0800 (PST)
-Received: from yakj.usersys.redhat.com (93-34-208-53.ip51.fastwebnet.it [93.34.208.53])
-        by mx.google.com with ESMTPS id 14sm29534ewy.10.2010.02.23.05.48.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 23 Feb 2010 05:48:39 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100120 Fedora/3.0.1-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.1
-In-Reply-To: <1266928428-19075-1-git-send-email-ilari.liusvaara@elisanet.fi>
+	id S1752977Ab0BWOlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2010 09:41:47 -0500
+Received: from mail-pz0-f174.google.com ([209.85.222.174]:56447 "EHLO
+	mail-pz0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752524Ab0BWOlq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2010 09:41:46 -0500
+X-Greylist: delayed 58311 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Feb 2010 09:41:46 EST
+Received: by pzk4 with SMTP id 4so597978pzk.21
+        for <git@vger.kernel.org>; Tue, 23 Feb 2010 06:41:46 -0800 (PST)
+Received: by 10.142.65.22 with SMTP id n22mr10063614wfa.113.1266936105040; 
+	Tue, 23 Feb 2010 06:41:45 -0800 (PST)
+X-Originating-IP: [99.66.24.246]
+In-Reply-To: <4B83B303.50408@drmicha.warpmail.net>
+X-Google-Sender-Auth: b37b0b9c6e833a5d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140802>
 
-On 02/23/2010 01:33 PM, Ilari Liusvaara wrote:
-> According to relevant RFCs, in addition to alphanumerics, the following
-> characters are valid in URL scheme parts: '+', '-' and '.', but
-> currently only alphanumerics are allowed in remote helper names.
+> I'm sorry, but we have this (multiple branch/tag lines) since 1.6.4, see
 >
-> Allow those three characters in remote helper names (both 'foo://' and
-> 'foo::' syntax).
+> 6224406 (git svn: Support multiple branch and tag paths in the svn
+> repository., 2009-06-23)
 
-I think '+' could be special-cased in that, for example, "svn+ssh://" 
-should still invoke an hypothetic git-remote-svn helper.  There is no 
-use yet for this feature, but I'm sure that foreign VCS helpers would 
-use it.
+Neat, that definitely does what I want.
 
-Paolo
+> The skip directive may be obsoleted by
+>
+> 0757620 (git-svn: allow subset of branches/tags to be specified in glob
+> spec, 2010-01-23)
+
+This, not as much, since I want to be able to exclude a specific
+pattern rather than include specific patterns.  I'll have to try out a
+newer git version to see if that workaround is still needed for my
+(admittedly bizarre) setup.
+
+-- 
+Michael Olson  |  http://mwolson.org/
