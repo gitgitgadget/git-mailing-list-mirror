@@ -1,74 +1,73 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Wrap RUNTIME_PREFIX warning in a compile-time condition
-Date: Tue, 23 Feb 2010 11:10:42 +0100
-Message-ID: <4B83A9A2.5080500@viscovery.net>
-References: <4B839282.1020605@viscovery.net> <alpine.DEB.1.00.1002231041230.20986@pacific.mpi-cbg.de> <4B83A330.5080403@viscovery.net> <alpine.DEB.1.00.1002231103170.20986@pacific.mpi-cbg.de>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH/RFC] git-svn: Allow multiple branch and tag patterns
+Date: Tue, 23 Feb 2010 11:50:43 +0100
+Message-ID: <4B83B303.50408@drmicha.warpmail.net>
+References: <c8b3bef91002221429l3b277429l56f4e4cac4fdeb43@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 23 11:10:53 2010
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Michael Olson <mwolson@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Feb 23 11:50:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjrjA-00053b-Dc
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 11:10:52 +0100
+	id 1NjsLd-0003kV-4o
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 11:50:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752181Ab0BWKKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2010 05:10:45 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:23678 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751654Ab0BWKKo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2010 05:10:44 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Njrj0-00031S-IZ; Tue, 23 Feb 2010 11:10:42 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 4A29B1660F;
-	Tue, 23 Feb 2010 11:10:42 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <alpine.DEB.1.00.1002231103170.20986@pacific.mpi-cbg.de>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.9 (+)
+	id S1751893Ab0BWKu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2010 05:50:27 -0500
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:53035 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751746Ab0BWKu0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Feb 2010 05:50:26 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 11C6DE1B99;
+	Tue, 23 Feb 2010 05:50:26 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Tue, 23 Feb 2010 05:50:26 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=VoLcfpKYv3veY4MtkVfQ5zp70dE=; b=a43J0IudG1tp3ah14OpkwFC1hhO7+EWe09aldeVB1w2sete6oezlF+fvXJTSLiHvTZAvrxa2fHkKtYEwFvYcMjxK/NNGT7vBpUPjNuf8zyfX2RL7OXXKFmQDKqhlfkpXOf3gJ55WY4+A7q7PfVnF9bk6HSGVGa9OOPy2S0HbJjE=
+X-Sasl-enc: H77tl+oNGbTmiYxITJ4MVsN6I3XS+4/wU4BuojYeyFhF 1266922225
+Received: from localhost.localdomain (p3EE2A92E.dip0.t-ipconnect.de [62.226.169.46])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 38DD44BC3C2;
+	Tue, 23 Feb 2010 05:50:25 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9pre) Gecko/20100222 Lightning/1.0b2pre Shredder/3.0.3pre
+In-Reply-To: <c8b3bef91002221429l3b277429l56f4e4cac4fdeb43@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140785>
 
-Johannes Schindelin schrieb:
-> On Tue, 23 Feb 2010, Johannes Sixt wrote:
->> Johannes Schindelin schrieb:
->>> On Tue, 23 Feb 2010, Johannes Sixt wrote:
->>>> With this patch, individual developers can disable the warning by setting
->>>>
->>>>    BASIC_CFLAGS += -DNO_WARN_RUNTIME_PREFIX
->>>>
->>>> in config.mak.
->>> Would this option not prefer to be a runtime option?
->> No. The warning is utterly useless IMO and extremely annoying, and the
->> only reason that it still survives is because you disagree. ;-)
+Michael Olson venit, vidit, dixit 22.02.2010 23:29:
+> This change allows multiple branch and tag patterns to be specified in
+> .git/config for git-svn projects.  This is useful for fetching several
+> different parts out of the namespace of an svn repository.
+> Additionally, a new repeatable directive called "skip" has been added
+> to specify a specific tag or branch to ignore.
 > 
-> I have been convinced of things before. It just takes a good argument.
+> Signed-off-by: Michael W. Olson <mwolson@gnu.org>
+> ---
+> I've been using this patch regularly for over a year on a very large
+> svn repository.
+> 
+> This patch is known to work on git 1.6.3.3 specifically.  Once I get a
+> few responses about whether or not it is useful, I'll rebase it
+> against the git.git master branch.  Some further documentation
+> (perhaps just a relevant example or two) would also need to be added
+> to the git-svn manpage.
 
-The good argument is:
+I'm sorry, but we have this (multiple branch/tag lines) since 1.6.4, see
 
-With this patch in upstream git, I have more time to spend on testing
-topics from pu and to write new topics on top of vanilla master because I
-don't need to apply my private patch all over the place (and back it out
-before I submit patches).
+6224406 (git svn: Support multiple branch and tag paths in the svn
+repository., 2009-06-23)
 
-Whether the option is compile-time or runtime is secondary. The option is
-*for me*,[*] and I prefer it compile-time. *For you* nothing changes
-regardless of compile-time or runtime (or do you think you would set the
-option?).
+The skip directive may be obsoleted by
 
-[*] As I said, nobody else seems to complain.
+0757620 (git-svn: allow subset of branches/tags to be specified in glob
+spec, 2010-01-23)
 
--- Hannes
+Cheers,
+Michael
