@@ -1,146 +1,174 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH v2] add-interactive: fix bogus diff header line ordering
-Date: Mon, 22 Feb 2010 20:05:44 -0500
-Message-ID: <20100223010544.GC3254@coredump.intra.peff.net>
-References: <20100222103256.GA10557@coredump.intra.peff.net>
- <7vbpfg6h80.fsf@alter.siamese.dyndns.org>
- <20100223005645.GB3254@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 02/11] Support showing notes from more than one notes
+ tree
+Date: Mon, 22 Feb 2010 17:47:40 -0800
+Message-ID: <7vsk8sn2o3.fsf@alter.siamese.dyndns.org>
+References: <cover.1266885599.git.trast@student.ethz.ch>
+ <3dbcdcf1a364d14968c07e99564acb232c6a5c43.1266885599.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 23 02:06:24 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+	Johan Herland <johan@herland.net>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Feb 23 02:48:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NjjED-0000ia-SS
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 02:06:22 +0100
+	id 1Njjsa-0000kw-8t
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 02:48:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753299Ab0BWBFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 20:05:45 -0500
-Received: from peff.net ([208.65.91.99]:50364 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753275Ab0BWBFo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 20:05:44 -0500
-Received: (qmail 4051 invoked by uid 107); 23 Feb 2010 01:05:58 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 22 Feb 2010 20:05:58 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Feb 2010 20:05:44 -0500
-Content-Disposition: inline
-In-Reply-To: <20100223005645.GB3254@coredump.intra.peff.net>
+	id S1753267Ab0BWBrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 20:47:55 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39064 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752667Ab0BWBrx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 20:47:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7558C9CA9F;
+	Mon, 22 Feb 2010 20:47:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=8GLDOVynJ/YiMydMYu9rwoc2w2Y=; b=GuY53wA0l4+Ud06e0JB2Jkp
+	gAdFwKGueTKd1C9Bzlj1txVuEXcmweTy6Kx/UmydV0zcgR9DYAEwzoH/SJGSI6Xp
+	IX8U1M8hp6AGJQMQIBXqui5u4IagUxDVdMtjzeAiN1ZuuZKcHwkiGSSqU5Qs7MXQ
+	GEFpE47Eawy0IWA8X4y0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=Zrjn8JJKdoVtjVE4EJUxVGdb6x6gvA2H/Ig4qDHgGx0ydqdtD
+	VLb0XPkevuyz/LbYjrPq5IC/TggoP2BxdC+afnI4nPlnHG7/6oqVSTnspzUKnBKE
+	+5vK8fqXqHrwBj0MLQh0PtFJD1dl3Vz5HHkX8/7xQVOmDQNp4Ni7VYN3G0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 325219CA9E;
+	Mon, 22 Feb 2010 20:47:48 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B64A49CA9B; Mon, 22 Feb
+ 2010 20:47:42 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 71EA1D5E-201D-11DF-9DF1-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140762>
 
-When we look at a patch for adding hunks interactively, we
-first split it into a header and a list of hunks. Some of
-the header lines, such as mode changes and deletion, however,
-become their own selectable hunks. Later when we reassemble
-the patch, we simply concatenate the header and the selected
-hunks. This leads to patches like this:
+Thomas Rast <trast@student.ethz.ch> writes:
 
-  diff --git a/file b/file
-  index d95f3ad..0000000
-  --- a/file
-  +++ /dev/null
-  deleted file mode 100644
-  @@ -1 +0,0 @@
-  -content
+> Changes since v4:
+> * introduce --show-notes=<ref> and --[no-]standard-notes
 
-Notice how the deletion comes _after_ the ---/+++ lines,
-when it should come before.
+Nicer, much nicer.
 
-In many cases, we can get away with this as git-apply
-accepts the slightly bogus input. However, in the specific
-case of a deletion line that is being applied via "apply
--R", this malformed patch triggers an assert in git-apply.
-This comes up when discarding a deletion via "git checkout
--p".
+> * remove NOTES_SHOW_HEADER_WITH_REF distinction
 
-Rather than try to make git-apply accept our odd input,
-let's just reassemble the patch in the correct order.
+Note that there is a leftover caller that uses the symbol without noticing
+that it has been retired.  I'll fix it up locally when I queue the series
+to 'pu'.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-On Mon, Feb 22, 2010 at 07:56:45PM -0500, Jeff King wrote:
+> * parse config even if we don't care about it
 
-> Nope, good catch. Maybe this should specifically be hoisting known git
-> header lines back into the header? Or perhaps a better logic would be to
-> treat each hunk individually, but just take all lines before the "@@"
-> hunk header? Hmm. I am not sure we would even need to treat hunks
-> individually...the misplaced header lines should always be part of the
-> _first_ hunk.
+Parsing is good, and not reading trees is very good.
 
-Like this.
+It is silly to put yourself down after doing both of these very well by
+saying "even if we don't care about it"---you obviously do care about
+making it earier for other people to build on top of your code.  Otherwise
+you would have left the code unchanged from the previous round ;-).
 
- git-add--interactive.perl |   24 +++++++++++++++++++++++-
- t/t2016-checkout-patch.sh |    8 ++++++++
- 2 files changed, 31 insertions(+), 1 deletions(-)
+> diff --git a/notes.c b/notes.c
+> index 3ba3e6d..ee54a42 100644
+> --- a/notes.c
+> +++ b/notes.c
+> @@ -5,6 +5,8 @@
+>  #include "utf8.h"
+>  #include "strbuf.h"
+>  #include "tree-walk.h"
+> +#include "string-list.h"
+> +#include "refs.h"
+>  
+>  /*
+>   * Use a non-balancing simple 16-tree structure with struct int_node as
+> @@ -68,6 +70,9 @@ struct non_note {
+>  
+>  struct notes_tree default_notes_tree;
+>  
+> +struct string_list display_notes_refs;
+> +struct notes_tree **display_notes_trees;
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index cd43c34..21f1330 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -957,6 +957,28 @@ sub coalesce_overlapping_hunks {
- 	return @out;
- }
- 
-+sub reassemble_patch {
-+	my $head = shift;
-+	my @patch;
-+
-+	# Include everything in the header except the beginning of the diff.
-+	push @patch, (grep { !/^[-+]{3}/ } @$head);
-+
-+	# Then include any headers from the hunk lines, which must
-+	# come before any actual hunk.
-+	while (@_ && $_[0] !~ /^@/) {
-+		push @patch, shift;
-+	}
-+
-+	# Then begin the diff.
-+	push @patch, grep { /^[-+]{3}/ } @$head;
-+
-+	# And then the actual hunks.
-+	push @patch, @_;
-+
-+	return @patch;
-+}
-+
- sub color_diff {
- 	return map {
- 		colored((/^@/  ? $fraginfo_color :
-@@ -1453,7 +1475,7 @@ sub patch_update_file {
- 
- 	if (@result) {
- 		my $fh;
--		my @patch = (@{$head->{TEXT}}, @result);
-+		my @patch = reassemble_patch($head->{TEXT}, @result);
- 		my $apply_routine = $patch_mode_flavour{APPLY};
- 		&$apply_routine(@patch);
- 		refresh();
-diff --git a/t/t2016-checkout-patch.sh b/t/t2016-checkout-patch.sh
-index 4d1c2e9..2144184 100755
---- a/t/t2016-checkout-patch.sh
-+++ b/t/t2016-checkout-patch.sh
-@@ -66,6 +66,14 @@ test_expect_success 'git checkout -p HEAD^' '
- 	verify_state dir/foo parent parent
- '
- 
-+test_expect_success 'git checkout -p handles deletion' '
-+	set_state dir/foo work index &&
-+	rm dir/foo &&
-+	(echo n; echo y) | git checkout -p &&
-+	verify_saved_state bar &&
-+	verify_state dir/foo index index
-+'
-+
- # The idea in the rest is that bar sorts first, so we always say 'y'
- # first and if the path limiter fails it'll apply to bar instead of
- # dir/foo.  There's always an extra 'n' to reject edits to dir/foo in
--- 
-1.7.0.207.g88f1
+Unlike default_notes_tree, the above two can become static, as you made
+the new logic better contained to this file and accessible only via
+accessor functions.
+
+> @@ -828,6 +833,76 @@ int combine_notes_ignore(unsigned char *cur_sha1,
+> ...
+> +static const char *default_notes_ref()
+
+I'll s/_ref()/_ref(void)/ here.
+
+> diff --git a/notes.h b/notes.h
+> index bad03cc..7650254 100644
+> --- a/notes.h
+> +++ b/notes.h
+> @@ -198,4 +198,22 @@ int for_each_note(struct notes_tree *t, int flags, each_note_fn fn,
+>  void format_note(struct notes_tree *t, const unsigned char *object_sha1,
+>  		struct strbuf *sb, const char *output_encoding, int flags);
+>  
+> +
+> +struct string_list;
+> +
+> +struct display_notes_opt
+> +{
+> +	int suppress_default_notes : 1;
+> +	struct string_list *extra_notes_refs;
+> +};
+> +
+> +void init_display_notes(struct display_notes_opt *opt);
+> +void format_display_notes(const unsigned char *object_sha1,
+> +			  struct strbuf *sb, const char *output_encoding, int flags);
+> +
+
+As you are retiring format_note() as a public interface, and instead
+making format_display_notes() as the primary API for the callers, the
+former should be made static to notes.c along with the large comment
+describing how to call it.  It may also be worth telling people how to
+call this new public interface with similar comment here.
+
+> @@ -1096,8 +1096,8 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
+>  		strbuf_addch(sb, '\n');
+>  
+>  	if (context->show_notes)
+> -		format_note(NULL, commit->object.sha1, sb, encoding,
+> -			    NOTES_SHOW_HEADER | NOTES_INDENT);
+> +		format_display_notes(commit->object.sha1, sb, encoding,
+> +				     NOTES_SHOW_HEADER_WITH_REF | NOTES_INDENT);
+
+I'll s/_WITH_REF// here.
+
+> diff --git a/revision.c b/revision.c
+> index 29721ec..d6e842e 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1191,9 +1192,29 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+>  	} else if (!strcmp(arg, "--show-notes")) {
+>  		revs->show_notes = 1;
+>  		revs->show_notes_given = 1;
+> +	} else if (!prefixcmp(arg, "--show-notes=")) {
+> +		struct strbuf buf = STRBUF_INIT;
+> +		revs->show_notes = 1;
+> +		revs->show_notes_given = 1;
+> +		if (!revs->notes_opt.extra_notes_refs)
+> +			revs->notes_opt.extra_notes_refs = xcalloc(1, sizeof(struct string_list));
+> +		if (!prefixcmp(arg+13, "refs/"))
+> +			/* happy */;
+> +		else if (!prefixcmp(arg+13, "notes/"))
+> +			strbuf_addstr(&buf, "refs/");
+> +		else
+> +			strbuf_addstr(&buf, "refs/notes/");
+> +		strbuf_addstr(&buf, arg+13);
+> +		string_list_append(strbuf_detach(&buf, NULL),
+> +				   revs->notes_opt.extra_notes_refs);
+
+Nice; multiple --show-notes=... will accumulate in the order given.  I
+knew you won't be stupid to make this a colon separated string, but I had
+to double check ;-).
