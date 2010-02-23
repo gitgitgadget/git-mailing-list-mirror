@@ -1,103 +1,74 @@
-From: Tay Ray Chuan <rctay89-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-Subject: Re: [PATCH] test-lib.sh: Add explicit license detail,
-	with change 	from GPLv2 to GPLv2+.
-Date: Tue, 23 Feb 2010 11:51:58 +0800
-Message-ID: <be6fef0d1002221951j77bd5fcjfdee33aa41e5fdbe@mail.gmail.com>
-References: <87ljf8pvxx.fsf@yoom.home.cworth.org>
-	<7vaav8hpfo.fsf@alter.siamese.dyndns.org>
-	<87tytdiqob.fsf@steelpick.localdomain>
-	<alpine.DEB.1.00.1002191138280.20986@pacific.mpi-cbg.de>
-	<873a0xhwxs.fsf@yoom.home.cworth.org>
-	<alpine.DEB.1.00.1002192204050.20986@pacific.mpi-cbg.de>
-	<87eikfhec1.fsf@yoom.home.cworth.org>
-	<7vaav3bnr5.fsf@alter.siamese.dyndns.org>
-	<87y6ilf4w7.fsf@yoom.home.cworth.org>
-	<7vljekipnd.fsf@alter.siamese.dyndns.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] merge: --no-ff configuration setting
+Date: Mon, 22 Feb 2010 21:55:26 -0800
+Message-ID: <4B836DCE.7010606@gmail.com>
+References: <1266807555-86199-1-git-send-email-bryanalves@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Cc: Johannes Sixt <j6t-FFprn4rPSa4@public.gmane.org>,
-	Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>,
-	Pierre Habouzit <madcoder-8fiUuRrzOP0dnm+yROfE0A@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
-	notmuch-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org, Sverre Rabbelier <srabbelier-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-To: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-X-From: notmuch-bounces-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org Tue Feb 23 04:52:05 2010
-Return-path: <notmuch-bounces-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org>
-Envelope-to: gmn-notmuch@m.gmane.org
-Received: from u15218177.onlinehome-server.com ([82.165.184.25] helo=olra.theworths.org)
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Bryan Alves <bryanalves@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 23 06:55:37 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <notmuch-bounces-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org>)
-	id 1NjloZ-0004T3-Px
-	for gmn-notmuch@m.gmane.org; Tue, 23 Feb 2010 04:52:04 +0100
-Received: from localhost (localhost [127.0.0.1])
-	by olra.theworths.org (Postfix) with ESMTP id 410B5431FC4;
-	Mon, 22 Feb 2010 19:52:03 -0800 (PST)
-X-Virus-Scanned: Debian amavisd-new at olra.theworths.org
-Received: from olra.theworths.org ([127.0.0.1])
-	by localhost (olra.theworths.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rfnuyU0IEQAa; Mon, 22 Feb 2010 19:52:02 -0800 (PST)
-Received: from olra.theworths.org (localhost [127.0.0.1])
-	by olra.theworths.org (Postfix) with ESMTP id CDD7E431FBF;
-	Mon, 22 Feb 2010 19:52:01 -0800 (PST)
-X-Original-To: notmuch-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org
-Delivered-To: notmuch-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org
-Received: from localhost (localhost [127.0.0.1])
-	by olra.theworths.org (Postfix) with ESMTP id E76A1431FBC
-	for <notmuch-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org>; Mon, 22 Feb 2010 19:52:00 -0800 (PST)
-X-Virus-Scanned: Debian amavisd-new at olra.theworths.org
-Received: from olra.theworths.org ([127.0.0.1])
-	by localhost (olra.theworths.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sNh5OHpsnLqk for <notmuch-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org>;
-	Mon, 22 Feb 2010 19:52:00 -0800 (PST)
-Received: from mail-iw0-f192.google.com (mail-iw0-f192.google.com
-	[209.85.223.192])
-	by olra.theworths.org (Postfix) with ESMTP id 490AB431FAE
-	for <notmuch-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org>; Mon, 22 Feb 2010 19:52:00 -0800 (PST)
-Received: by iwn30 with SMTP id 30so1723538iwn.32
-	for <notmuch-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org>; Mon, 22 Feb 2010 19:51:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma;
-	h=domainkey-signature:mime-version:received:in-reply-to:references
-	:date:message-id:subject:from:to:cc:content-type
-	:content-transfer-encoding;
-	bh=GczG6oN1CW9YKWC3hkfa5aErYQHDC3g/gKOC56a8UyM=;
-	b=UTKnNuDlwKeGNi7Q6GkedkKQ/Mvutjl0htfSHkGW+iPfa9Fw4JhVIY0qJthJxCPsbD
-	xOVaFQ3n0Qjnikwkh2vCl1S+lNZhGaafdbbbr+4/YsuGzijdJk1x9FEspeB2eSWiPwp6
-	SeKFadXcXL9uy5s9yhrpWRhZ0FghbMihn2uVU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma;
-	h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-	:cc:content-type:content-transfer-encoding;
-	b=MuKJVx+pRUwuQC2XxRRQ/9R5TNWH1qJGIGEjMXNMW/5kj8mUNduq/JtE+q2E3sUdOW
-	HjG5cFKNWjlpWzOjPSUH9z2oVhlOqt8yxjzdIEPCrXmCL7pVPGaID7YtimjAbFW4D4Qs
-	D8qs+fg3iOxfmgqNvs4tV+MLnD2xZlkZKgm7Y=
-Received: by 10.231.160.149 with SMTP id n21mr1788784ibx.93.1266897119008; 
-	Mon, 22 Feb 2010 19:51:59 -0800 (PST)
-In-Reply-To: <7vljekipnd.fsf-s2KvWo2KEQL18tm6hw+yZpy9Z0UEorGK@public.gmane.org>
-X-BeenThere: notmuch-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org
-X-Mailman-Version: 2.1.13
-Precedence: list
-List-Id: "Use and development of the notmuch mail system."
-	<notmuch.notmuchmail.org>
-List-Unsubscribe: <http://notmuchmail.org/mailman/options/notmuch>,
-	<mailto:notmuch-request-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org?subject=unsubscribe>
-List-Archive: <http://notmuchmail.org/pipermail/notmuch>
-List-Post: <mailto:notmuch-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org>
-List-Help: <mailto:notmuch-request-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org?subject=help>
-List-Subscribe: <http://notmuchmail.org/mailman/listinfo/notmuch>,
-	<mailto:notmuch-request-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org?subject=subscribe>
-Sender: notmuch-bounces-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org
-Errors-To: notmuch-bounces-gxuj+Tv9EO5zyzON3hdc1g@public.gmane.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140767>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Njnk8-0001vz-Ao
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 06:55:36 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751310Ab0BWFzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2010 00:55:31 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:43505 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751254Ab0BWFza (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2010 00:55:30 -0500
+Received: by gwj16 with SMTP id 16so363809gwj.19
+        for <git@vger.kernel.org>; Mon, 22 Feb 2010 21:55:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=/aW7Qaw78WFXLqllb892pSGTelhrqDcBMocJv083y34=;
+        b=hUuaVnLDT827HuR9yRIVy6nZQftbmxeS9Mh+yIOsPvd6lk+7ztJPm2zvurDyxB2CC8
+         1WPJTo2KWYDpSprIPTuiQQvdE8YEMNVqL4GhM9KrP5Y3IFPFSlsxJnoD71z0WoKt+eAg
+         pknV7aI0N5SByKM4y2AuyTXVnUeXvefvmmeMs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=OccoI/jpKV1WTcMd4zgz+kH6OP1sfekHTXKhpbz0mbidoCG3RF+BQZRqcOQrqHNjVM
+         63h/YpWoWTaGDe1++TFW56TkPH9epuQfUOPB7a7JcHkD0MKFGX+lXlmVBMxknujqGysh
+         dXSO7Xf6AZjFeJxGtJ0oJ0pPcfy/iTFcB41jw=
+Received: by 10.150.120.30 with SMTP id s30mr1892806ybc.284.1266904529327;
+        Mon, 22 Feb 2010 21:55:29 -0800 (PST)
+Received: from ?192.168.1.5? (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id 23sm78249yxe.19.2010.02.22.21.55.27
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 22 Feb 2010 21:55:28 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7pre) Gecko/20091214 Shredder/3.0.1pre
+In-Reply-To: <1266807555-86199-1-git-send-email-bryanalves@gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140768>
 
-Hi,
+On 02/21/2010 06:59 PM, Bryan Alves wrote:
+> Add a new configuration option, merge.allowfastforward
+>
+> When set to false, causes --no-ff to be the default behavior
+> for merges. When set to true, or not present, the default
+> behavior is unchanged, and acts like --ff is set.
 
-On Tue, Feb 23, 2010 at 11:42 AM, Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org> wrote:
-> FWIW, I only said "_at least_ you need consent from them", and it was not
-> meant to be an exhaustive list. =A0"blame -C -C -C" may tell you more.
+The subject says --no-ff configuration but the option is for --ff.
+Sounds confusing. In other words, shouldn't it be
+merge.disallowfastforward or merge.nofastforward? Or maybe the subject
+should be "merge: --ff configuration setting"
 
-Without substantial analysis, "blame" alone is not sufficient - it
-does not show which work was original, or derivative.
+Also could you just use branch.<name>.mergeoptions and not introduce yet
+another config option? Or maybe there's some reasoning why you always
+want to have merge commits in your workflow?
 
--- =
-
-Cheers,
-Ray Chuan
+Finally if this goes in please add a description to Documentation/config.txt
