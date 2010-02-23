@@ -1,7 +1,7 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v5 07/11] notes: implement 'git notes copy --stdin'
-Date: Tue, 23 Feb 2010 01:42:25 +0100
-Message-ID: <ca7ae014d3e7f59e627bc72fbdda8b8f89e7469f.1266885599.git.trast@student.ethz.ch>
+Subject: [PATCH v5 08/11] notes: implement helpers needed for note copying during rewrite
+Date: Tue, 23 Feb 2010 01:42:26 +0100
+Message-ID: <52e4eb4a01db6a31c3e5395227ee1f78af835139.1266885599.git.trast@student.ethz.ch>
 References: <cover.1266885599.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
@@ -14,18 +14,18 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Njirw-0002hf-75
+	id 1Njirv-0002hf-Go
 	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 01:43:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752905Ab0BWAnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2010 19:43:11 -0500
+	id S1752901Ab0BWAnK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2010 19:43:10 -0500
 Received: from gwse.ethz.ch ([129.132.178.237]:48627 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752650Ab0BWAnE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 19:43:04 -0500
+	id S1752528Ab0BWAnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2010 19:43:05 -0500
 Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
  (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.234.1; Tue, 23 Feb
- 2010 01:42:51 +0100
+ 2010 01:42:52 +0100
 Received: from localhost.localdomain (84.74.100.59) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Tue, 23 Feb
  2010 01:42:33 +0100
@@ -35,224 +35,403 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140752>
 
-This implements a mass-copy command that takes a sequence of lines in
-the format
+Implement helper functions to load the rewriting config, and to
+actually copy the notes.  Also document the config.
 
-  <from-sha1> SP <to-sha1> [ SP <rest> ] LF
-
-on stdin, and copies each <from-sha1>'s notes to the <to-sha1>.  The
-<rest> is ignored.  The intent, of course, is that this can read the
-same input that the 'post-rewrite' hook gets.
-
-The copy_note() function is exposed for everyone's and in particular
-the next commit's use.
+Secondly, also implement an undocumented --for-rewrite=<cmd> option to
+'git notes copy' which is used like --stdin, but also puts the
+configuration for <cmd> into effect.  It will be needed to support the
+copying in git-rebase.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
 
+Changes since v4:
+* doc tweaks
+* enforce full qualification of refs
 
- Documentation/git-notes.txt |   12 ++++++++-
- builtin-notes.c             |   56 ++++++++++++++++++++++++++++++++++++++++++-
- notes.c                     |   20 +++++++++++++++
- notes.h                     |    9 +++++++
- t/t3301-notes.sh            |   34 ++++++++++++++++++++++++++
- 5 files changed, 129 insertions(+), 2 deletions(-)
+ Documentation/config.txt    |   30 +++++++
+ Documentation/git-notes.txt |    4 +
+ Documentation/githooks.txt  |    4 +
+ builtin-notes.c             |  139 +++++++++++++++++++++++++++++--
+ builtin.h                   |   18 ++++
+ cache.h                     |    2 +
+ t/t3301-notes.sh            |  195 +++++++++++++++++++++++++++++++++++++++++++
+ t/test-lib.sh               |    2 +
+ 8 files changed, 386 insertions(+), 8 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e077445..dffe1f6 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1324,6 +1324,36 @@ The effective value of "core.notesRef" (possibly overridden by
+ GIT_NOTES_REF) is also implicitly added to the list of refs to be
+ displayed.
+ 
++notes.rewrite.<command>::
++	When rewriting commits with <command> (currently `amend` or
++	`rebase`) and this variable is set to `true`, git
++	automatically copies your notes from the original to the
++	rewritten commit.  Defaults to `true`, but see
++	"notes.rewriteRef" below.
+++
++This setting can be overridden with the `GIT_NOTES_REWRITE_REF`
++environment variable, which must be a colon separated list of refs or
++globs.
++
++notes.rewriteMode::
++	When copying notes during a rewrite (see the
++	"notes.rewrite.<command>" option), determines what to do if
++	the target commit already has a note.  Must be one of
++	`overwrite`, `concatenate`, or `ignore`.  Defaults to
++	`concatenate`.
+++
++This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
++environment variable.
++
++notes.rewriteRef::
++	When copying notes during a rewrite, specifies the (fully
++	qualified) ref whose notes should be copied.  The ref may be a
++	glob, in which case notes in all matching refs will be copied.
++	You may also specify this configuration several times.
+++
++Does not have a default value; you must configure this variable to
++enable note rewriting.
++
+ pack.window::
+ 	The size of the window used by linkgit:git-pack-objects[1] when no
+ 	window size is given on the command line. Defaults to 10.
 diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index 14f73b9..f67cb6a 100644
+index f67cb6a..92f1249 100644
 --- a/Documentation/git-notes.txt
 +++ b/Documentation/git-notes.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- [verse]
- 'git notes' [list [<object>]]
- 'git notes' add [-f] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
--'git notes' copy [-f] <from-object> <to-object>
-+'git notes' copy [-f] ( --stdin | <from-object> <to-object> )
- 'git notes' append [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
- 'git notes' edit [<object>]
- 'git notes' show [<object>]
-@@ -55,6 +55,16 @@ copy::
- 	objects has none. (use -f to overwrite existing notes to the
- 	second object). This subcommand is equivalent to:
- 	`git notes add [-f] -C $(git notes list <from-object>) <to-object>`
-++
-+In `\--stdin` mode, take lines in the format
-++
-+----------
-+<from-object> SP <to-object> [ SP <rest> ] LF
-+----------
-++
-+on standard input, and copy the notes from each <from-object> to its
-+corresponding <to-object>.  (The optional `<rest>` is ignored so that
-+the command can read the input given to the `post-rewrite` hook.)
+@@ -34,6 +34,10 @@ the empty string.  Alternatively, you can set it to a different ref,
+ something like "refs/notes/bugzilla".  This setting can be overridden
+ by the environment variable "GIT_NOTES_REF".
  
- append::
- 	Append to the notes of an existing object (defaults to HEAD).
++See the description of "notes.rewrite.<command>" in
++linkgit:git-config[1] for a way of carrying your notes across commands
++that rewrite commits.
++
+ 
+ SUBCOMMANDS
+ -----------
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index a741769..7183aa9 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -335,6 +335,10 @@ The 'extra-info' is again command-dependent.  If it is empty, the
+ preceding SP is also omitted.  Currently, no commands pass any
+ 'extra-info'.
+ 
++The hook always runs after the automatic note copying (see
++"notes.rewrite.<command>" in linkgit:git-config.txt) has happened, and
++thus has access to these notes.
++
+ The following command-specific comments apply:
+ 
+ rebase::
 diff --git a/builtin-notes.c b/builtin-notes.c
-index 123ecad..daeb14e 100644
+index daeb14e..026cfd3 100644
 --- a/builtin-notes.c
 +++ b/builtin-notes.c
-@@ -278,6 +278,46 @@ int commit_notes(struct notes_tree *t, const char *msg)
+@@ -16,6 +16,7 @@
+ #include "exec_cmd.h"
+ #include "run-command.h"
+ #include "parse-options.h"
++#include "string-list.h"
+ 
+ static const char * const git_notes_usage[] = {
+ 	"git notes [list [<object>]]",
+@@ -278,14 +279,121 @@ int commit_notes(struct notes_tree *t, const char *msg)
  	return 0;
  }
  
-+int notes_copy_from_stdin(int force)
+-int notes_copy_from_stdin(int force)
++
++combine_notes_fn *parse_combine_notes_fn(const char *v)
 +{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct notes_tree *t;
-+	int ret = 0;
-+
-+	init_notes(NULL, NULL, NULL, 0);
-+	t = &default_notes_tree;
-+
-+	while (strbuf_getline(&buf, stdin, '\n') != EOF) {
-+		unsigned char from_obj[20], to_obj[20];
-+		struct strbuf **split;
-+		int err;
-+
-+		split = strbuf_split(&buf, ' ');
-+		if (!split[0] || !split[1])
-+			die("Malformed input line: '%s'.", buf.buf);
-+		strbuf_rtrim(split[0]);
-+		strbuf_rtrim(split[1]);
-+		if (get_sha1(split[0]->buf, from_obj))
-+			die("Failed to resolve '%s' as a valid ref.", split[0]->buf);
-+		if (get_sha1(split[1]->buf, to_obj))
-+			die("Failed to resolve '%s' as a valid ref.", split[1]->buf);
-+
-+		err = copy_note(t, from_obj, to_obj, force, combine_notes_overwrite);
-+
-+		if (err) {
-+			error("Failed to copy notes from '%s' to '%s'",
-+			      split[0]->buf, split[1]->buf);
-+			ret = 1;
-+		}
-+
-+		strbuf_list_free(split);
-+	}
-+
-+	commit_notes(t, "Notes added by 'git notes copy'");
-+	free_notes(t);
-+	return ret;
++	if (!strcasecmp(v, "overwrite"))
++		return combine_notes_overwrite;
++	else if (!strcasecmp(v, "ignore"))
++		return combine_notes_ignore;
++	else if (!strcasecmp(v, "concatenate"))
++		return combine_notes_concatenate;
++	else
++		return NULL;
 +}
 +
- int cmd_notes(int argc, const char **argv, const char *prefix)
- {
- 	struct notes_tree *t;
-@@ -287,7 +327,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 	char logmsg[100];
- 
- 	int list = 0, add = 0, copy = 0, append = 0, edit = 0, show = 0,
--	    remove = 0, prune = 0, force = 0;
-+	    remove = 0, prune = 0, force = 0, from_stdin = 0;
- 	int given_object = 0, i = 1, retval = 0;
- 	struct msg_arg msg = { 0, 0, STRBUF_INIT };
- 	struct option options[] = {
-@@ -301,6 +341,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 		OPT_CALLBACK('C', "reuse-message", &msg, "OBJECT",
- 			   "reuse specified note object", parse_reuse_arg),
- 		OPT_BOOLEAN('f', "force", &force, "replace existing notes"),
-+		OPT_BOOLEAN(0, "stdin", &from_stdin, "read objects from stdin"),
- 		OPT_END()
- 	};
- 
-@@ -349,8 +390,21 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_notes_usage, options);
- 	}
- 
-+	if (!copy && from_stdin) {
-+		error("cannot use --stdin with %s subcommand.", argv[0]);
-+		usage_with_options(git_notes_usage, options);
-+	}
-+
- 	if (copy) {
- 		const char *from_ref;
-+		if (from_stdin) {
-+			if (argc > 1) {
-+				error("too many parameters");
-+				usage_with_options(git_notes_usage, options);
-+			} else {
-+				return notes_copy_from_stdin(force);
-+			}
-+		}
- 		if (argc < 3) {
- 			error("too few parameters");
- 			usage_with_options(git_notes_usage, options);
-diff --git a/notes.c b/notes.c
-index ee54a42..9246358 100644
---- a/notes.c
-+++ b/notes.c
-@@ -1187,3 +1187,23 @@ void format_display_notes(const unsigned char *object_sha1,
- 		format_note(display_notes_trees[i], object_sha1, sb,
- 			    output_encoding, flags);
- }
-+
-+int copy_note(struct notes_tree *t,
-+	      const unsigned char *from_obj, const unsigned char *to_obj,
-+	      int force, combine_notes_fn combine_fn)
++static int notes_rewrite_config(const char *k, const char *v, void *cb)
 +{
-+	const unsigned char *note = get_note(t, from_obj);
-+	const unsigned char *existing_note = get_note(t, to_obj);
-+
-+	if (!force && existing_note)
-+		return 1;
-+
-+	if (note)
-+		add_note(t, to_obj, note, combine_fn);
-+	else if (existing_note) {
-+		add_note(t, to_obj, null_sha1, combine_fn);
-+	} else
-+		remove_note(t, to_obj);
++	struct notes_rewrite_cfg *c = cb;
++	if (!prefixcmp(k, "notes.rewrite.") && !strcmp(k+14, c->cmd)) {
++		c->enabled = git_config_bool(k, v);
++		return 0;
++	} else if (!c->mode_from_env && !strcmp(k, "notes.rewritemode")) {
++		if (!v)
++			config_error_nonbool(k);
++		c->combine = parse_combine_notes_fn(v);
++		if (!c->combine) {
++			error("Bad notes.rewriteMode value: '%s'", v);
++			return 1;
++		}
++		return 0;
++	} else if (!c->refs_from_env && !strcmp(k, "notes.rewriteref")) {
++		/* note that a refs/ prefix is implied in the
++		 * underlying for_each_glob_ref */
++		if (!prefixcmp(v, "refs/notes/"))
++			string_list_add_refs_by_glob(c->refs, v);
++		else
++			warning("Refusing to rewrite notes in %s"
++				" (outside of refs/notes/)", v);
++		return 0;
++	}
 +
 +	return 0;
 +}
-diff --git a/notes.h b/notes.h
-index 7650254..ec613ca 100644
---- a/notes.h
-+++ b/notes.h
-@@ -100,6 +100,15 @@ void add_note(struct notes_tree *t, const unsigned char *object_sha1,
- 		const unsigned char *object_sha1);
- 
- /*
-+ * Copy a note from one object to another in the given notes_tree.
-+ *
-+ * Fails if the to_obj already has a note unless 'force' is true.
-+ */
-+int copy_note(struct notes_tree *t,
-+	      const unsigned char *from_obj, const unsigned char *to_obj,
-+	      int force, combine_notes_fn combine_fn);
 +
-+/*
-  * Flags controlling behaviour of for_each_note()
-  *
-  * Default behaviour of for_each_note() is to traverse every single note object
++
++struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd)
++{
++	struct notes_rewrite_cfg *c = xmalloc(sizeof(struct notes_rewrite_cfg));
++	const char *rewrite_mode_env = getenv(GIT_NOTES_REWRITE_MODE_ENVIRONMENT);
++	const char *rewrite_refs_env = getenv(GIT_NOTES_REWRITE_REF_ENVIRONMENT);
++	c->cmd = cmd;
++	c->enabled = 1;
++	c->combine = combine_notes_concatenate;
++	c->refs = xcalloc(1, sizeof(struct string_list));
++	c->refs->strdup_strings = 1;
++	c->refs_from_env = 0;
++	c->mode_from_env = 0;
++	if (rewrite_mode_env) {
++		c->mode_from_env = 1;
++		c->combine = parse_combine_notes_fn(rewrite_mode_env);
++		if (!c->combine)
++			error("Bad " GIT_NOTES_REWRITE_MODE_ENVIRONMENT
++			      " value: '%s'", rewrite_mode_env);
++	}
++	if (rewrite_refs_env) {
++		c->refs_from_env = 1;
++		string_list_add_refs_from_colon_sep(c->refs, rewrite_refs_env);
++	}
++	git_config(notes_rewrite_config, c);
++	if (!c->enabled || !c->refs->nr) {
++		string_list_clear(c->refs, 0);
++		free(c->refs);
++		free(c);
++		return NULL;
++	}
++	c->trees = load_notes_trees(c->refs);
++	string_list_clear(c->refs, 0);
++	free(c->refs);
++	return c;
++}
++
++int copy_note_for_rewrite(struct notes_rewrite_cfg *c,
++			  const unsigned char *from_obj, const unsigned char *to_obj)
++{
++	int ret = 0;
++	int i;
++	for (i = 0; c->trees[i]; i++)
++		ret = copy_note(c->trees[i], from_obj, to_obj, 1, c->combine) || ret;
++	return ret;
++}
++
++void finish_copy_notes_for_rewrite(struct notes_rewrite_cfg *c)
++{
++	int i;
++	for (i = 0; c->trees[i]; i++) {
++		commit_notes(c->trees[i], "Notes added by 'git notes copy'");
++		free_notes(c->trees[i]);
++	}
++	free(c->trees);
++	free(c);
++}
++
++int notes_copy_from_stdin(int force, const char *rewrite_cmd)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
++	struct notes_rewrite_cfg *c = NULL;
+ 	struct notes_tree *t;
+ 	int ret = 0;
+ 
+-	init_notes(NULL, NULL, NULL, 0);
+-	t = &default_notes_tree;
++	if (rewrite_cmd) {
++		c = init_copy_notes_for_rewrite(rewrite_cmd);
++		if (!c)
++			return 0;
++	} else {
++		init_notes(NULL, NULL, NULL, 0);
++		t = &default_notes_tree;
++	}
+ 
+ 	while (strbuf_getline(&buf, stdin, '\n') != EOF) {
+ 		unsigned char from_obj[20], to_obj[20];
+@@ -302,7 +410,11 @@ int notes_copy_from_stdin(int force)
+ 		if (get_sha1(split[1]->buf, to_obj))
+ 			die("Failed to resolve '%s' as a valid ref.", split[1]->buf);
+ 
+-		err = copy_note(t, from_obj, to_obj, force, combine_notes_overwrite);
++		if (rewrite_cmd)
++			err = copy_note_for_rewrite(c, from_obj, to_obj);
++		else
++			err = copy_note(t, from_obj, to_obj, force,
++					combine_notes_overwrite);
+ 
+ 		if (err) {
+ 			error("Failed to copy notes from '%s' to '%s'",
+@@ -313,8 +425,12 @@ int notes_copy_from_stdin(int force)
+ 		strbuf_list_free(split);
+ 	}
+ 
+-	commit_notes(t, "Notes added by 'git notes copy'");
+-	free_notes(t);
++	if (!rewrite_cmd) {
++		commit_notes(t, "Notes added by 'git notes copy'");
++		free_notes(t);
++	} else {
++		finish_copy_notes_for_rewrite(c);
++	}
+ 	return ret;
+ }
+ 
+@@ -330,6 +446,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 	    remove = 0, prune = 0, force = 0, from_stdin = 0;
+ 	int given_object = 0, i = 1, retval = 0;
+ 	struct msg_arg msg = { 0, 0, STRBUF_INIT };
++	const char *rewrite_cmd = NULL;
+ 	struct option options[] = {
+ 		OPT_GROUP("Notes options"),
+ 		OPT_CALLBACK('m', "message", &msg, "MSG",
+@@ -342,6 +459,8 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 			   "reuse specified note object", parse_reuse_arg),
+ 		OPT_BOOLEAN('f', "force", &force, "replace existing notes"),
+ 		OPT_BOOLEAN(0, "stdin", &from_stdin, "read objects from stdin"),
++		OPT_STRING(0, "for-rewrite", &rewrite_cmd, "command",
++			   "load rewriting config for <command> (implies --stdin)"),
+ 		OPT_END()
+ 	};
+ 
+@@ -390,6 +509,10 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(git_notes_usage, options);
+ 	}
+ 
++	if (!copy && rewrite_cmd) {
++		error("cannot use --for-rewrite with %s subcommand.", argv[0]);
++		usage_with_options(git_notes_usage, options);
++	}
+ 	if (!copy && from_stdin) {
+ 		error("cannot use --stdin with %s subcommand.", argv[0]);
+ 		usage_with_options(git_notes_usage, options);
+@@ -397,12 +520,12 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 
+ 	if (copy) {
+ 		const char *from_ref;
+-		if (from_stdin) {
++		if (from_stdin || rewrite_cmd) {
+ 			if (argc > 1) {
+ 				error("too many parameters");
+ 				usage_with_options(git_notes_usage, options);
+ 			} else {
+-				return notes_copy_from_stdin(force);
++				return notes_copy_from_stdin(force, rewrite_cmd);
+ 			}
+ 		}
+ 		if (argc < 3) {
+diff --git a/builtin.h b/builtin.h
+index cdf9847..8aebe61 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -20,6 +20,24 @@ extern int commit_tree(const char *msg, unsigned char *tree,
+ 		struct commit_list *parents, unsigned char *ret,
+ 		const char *author);
+ extern int commit_notes(struct notes_tree *t, const char *msg);
++
++struct notes_rewrite_cfg
++{
++	struct notes_tree **trees;
++	const char *cmd;
++	int enabled;
++	combine_notes_fn *combine;
++	struct string_list *refs;
++	int refs_from_env;
++	int mode_from_env;
++};
++
++combine_notes_fn *parse_combine_notes_fn(const char *v);
++struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd);
++int copy_note_for_rewrite(struct notes_rewrite_cfg *c,
++			  const unsigned char *from_obj, const unsigned char *to_obj);
++void finish_copy_notes_for_rewrite(struct notes_rewrite_cfg *c);
++
+ extern int check_pager_config(const char *cmd);
+ 
+ extern int cmd_add(int argc, const char **argv, const char *prefix);
+diff --git a/cache.h b/cache.h
+index ee4ae3e..39450bc 100644
+--- a/cache.h
++++ b/cache.h
+@@ -388,6 +388,8 @@ static inline enum object_type object_type(unsigned int mode)
+ #define GIT_NOTES_REF_ENVIRONMENT "GIT_NOTES_REF"
+ #define GIT_NOTES_DEFAULT_REF "refs/notes/commits"
+ #define GIT_NOTES_DISPLAY_REF_ENVIRONMENT "GIT_NOTES_DISPLAY_REF"
++#define GIT_NOTES_REWRITE_REF_ENVIRONMENT "GIT_NOTES_REWRITE_REF"
++#define GIT_NOTES_REWRITE_MODE_ENVIRONMENT "GIT_NOTES_REWRITE_MODE"
+ 
+ extern int is_bare_repository_cfg;
+ extern int is_bare_repository(void);
 diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index cb7166f..60ad6a1 100755
+index 60ad6a1..aeec90a 100755
 --- a/t/t3301-notes.sh
 +++ b/t/t3301-notes.sh
-@@ -776,4 +776,38 @@ test_expect_success 'cannot copy note from object without notes' '
- 	test_must_fail git notes copy HEAD^ HEAD
+@@ -810,4 +810,199 @@ test_expect_success 'git notes copy --stdin' '
+ 	test "$(git notes list HEAD^)" = "$(git notes list HEAD~3)"
  '
  
 +cat > expect << EOF
-+commit e5d4fb5698d564ab8c73551538ecaf2b0c666185
++commit 37a0d4cba38afef96ba54a3ea567e6dac575700b
 +Author: A U Thor <author@example.com>
-+Date:   Thu Apr 7 15:25:13 2005 -0700
++Date:   Thu Apr 7 15:27:13 2005 -0700
 +
-+    13th
++    15th
++
++commit be28d8b4d9951ad940d229ee3b0b9ee3b1ec273d
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:26:13 2005 -0700
++
++    14th
++EOF
++
++test_expect_success 'git notes copy --for-rewrite (unconfigured)' '
++	test_commit 14th &&
++	test_commit 15th &&
++	(echo $(git rev-parse HEAD~3) $(git rev-parse HEAD^); \
++	echo $(git rev-parse HEAD~2) $(git rev-parse HEAD)) |
++	git notes copy --for-rewrite=foo &&
++	git log -2 > output &&
++	test_cmp expect output
++'
++
++cat > expect << EOF
++commit 37a0d4cba38afef96ba54a3ea567e6dac575700b
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:27:13 2005 -0700
++
++    15th
 +
 +Notes (other):
 +    yet another note
 +$whitespace
 +    yet another note
 +
-+commit 7038787dfe22a14c3867ce816dbba39845359719
++commit be28d8b4d9951ad940d229ee3b0b9ee3b1ec273d
 +Author: A U Thor <author@example.com>
-+Date:   Thu Apr 7 15:24:13 2005 -0700
++Date:   Thu Apr 7 15:26:13 2005 -0700
 +
-+    12th
++    14th
 +
 +Notes (other):
 +    other note
@@ -260,16 +439,166 @@ index cb7166f..60ad6a1 100755
 +    yet another note
 +EOF
 +
-+test_expect_success 'git notes copy --stdin' '
++test_expect_success 'git notes copy --for-rewrite (enabled)' '
++	git config notes.rewriteMode overwrite &&
++	git config notes.rewriteRef "refs/notes/*" &&
 +	(echo $(git rev-parse HEAD~3) $(git rev-parse HEAD^); \
 +	echo $(git rev-parse HEAD~2) $(git rev-parse HEAD)) |
-+	git notes copy --stdin &&
++	git notes copy --for-rewrite=foo &&
 +	git log -2 > output &&
-+	test_cmp expect output &&
-+	test "$(git notes list HEAD)" = "$(git notes list HEAD~2)" &&
-+	test "$(git notes list HEAD^)" = "$(git notes list HEAD~3)"
++	test_cmp expect output
 +'
 +
++test_expect_success 'git notes copy --for-rewrite (disabled)' '
++	git config notes.rewrite.bar false &&
++	echo $(git rev-parse HEAD~3) $(git rev-parse HEAD) |
++	git notes copy --for-rewrite=bar &&
++	git log -2 > output &&
++	test_cmp expect output
++'
++
++cat > expect << EOF
++commit 37a0d4cba38afef96ba54a3ea567e6dac575700b
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:27:13 2005 -0700
++
++    15th
++
++Notes (other):
++    a fresh note
++EOF
++
++test_expect_success 'git notes copy --for-rewrite (overwrite)' '
++	git notes add -f -m"a fresh note" HEAD^ &&
++	echo $(git rev-parse HEAD^) $(git rev-parse HEAD) |
++	git notes copy --for-rewrite=foo &&
++	git log -1 > output &&
++	test_cmp expect output
++'
++
++test_expect_success 'git notes copy --for-rewrite (ignore)' '
++	git config notes.rewriteMode ignore &&
++	echo $(git rev-parse HEAD^) $(git rev-parse HEAD) |
++	git notes copy --for-rewrite=foo &&
++	git log -1 > output &&
++	test_cmp expect output
++'
++
++cat > expect << EOF
++commit 37a0d4cba38afef96ba54a3ea567e6dac575700b
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:27:13 2005 -0700
++
++    15th
++
++Notes (other):
++    a fresh note
++    another fresh note
++EOF
++
++test_expect_success 'git notes copy --for-rewrite (append)' '
++	git notes add -f -m"another fresh note" HEAD^ &&
++	git config notes.rewriteMode concatenate &&
++	echo $(git rev-parse HEAD^) $(git rev-parse HEAD) |
++	git notes copy --for-rewrite=foo &&
++	git log -1 > output &&
++	test_cmp expect output
++'
++
++cat > expect << EOF
++commit 37a0d4cba38afef96ba54a3ea567e6dac575700b
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:27:13 2005 -0700
++
++    15th
++
++Notes (other):
++    a fresh note
++    another fresh note
++    append 1
++    append 2
++EOF
++
++test_expect_success 'git notes copy --for-rewrite (append two to one)' '
++	git notes add -f -m"append 1" HEAD^ &&
++	git notes add -f -m"append 2" HEAD^^ &&
++	(echo $(git rev-parse HEAD^) $(git rev-parse HEAD);
++	echo $(git rev-parse HEAD^^) $(git rev-parse HEAD)) |
++	git notes copy --for-rewrite=foo &&
++	git log -1 > output &&
++	test_cmp expect output
++'
++
++test_expect_success 'git notes copy --for-rewrite (append empty)' '
++	git notes remove HEAD^ &&
++	echo $(git rev-parse HEAD^) $(git rev-parse HEAD) |
++	git notes copy --for-rewrite=foo &&
++	git log -1 > output &&
++	test_cmp expect output
++'
++
++cat > expect << EOF
++commit 37a0d4cba38afef96ba54a3ea567e6dac575700b
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:27:13 2005 -0700
++
++    15th
++
++Notes (other):
++    replacement note 1
++EOF
++
++test_expect_success 'GIT_NOTES_REWRITE_MODE works' '
++	git notes add -f -m"replacement note 1" HEAD^ &&
++	echo $(git rev-parse HEAD^) $(git rev-parse HEAD) |
++	GIT_NOTES_REWRITE_MODE=overwrite git notes copy --for-rewrite=foo &&
++	git log -1 > output &&
++	test_cmp expect output
++'
++
++cat > expect << EOF
++commit 37a0d4cba38afef96ba54a3ea567e6dac575700b
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:27:13 2005 -0700
++
++    15th
++
++Notes (other):
++    replacement note 2
++EOF
++
++test_expect_success 'GIT_NOTES_REWRITE_REF works' '
++	git config notes.rewriteMode overwrite &&
++	git notes add -f -m"replacement note 2" HEAD^ &&
++	git config --unset-all notes.rewriteRef &&
++	echo $(git rev-parse HEAD^) $(git rev-parse HEAD) |
++	GIT_NOTES_REWRITE_REF=refs/notes/commits:refs/notes/other \
++		git notes copy --for-rewrite=foo &&
++	git log -1 > output &&
++	test_cmp expect output
++'
++
++test_expect_success 'GIT_NOTES_REWRITE_REF overrides config' '
++	git config notes.rewriteRef refs/notes/other &&
++	git notes add -f -m"replacement note 3" HEAD^ &&
++	echo $(git rev-parse HEAD^) $(git rev-parse HEAD) |
++	GIT_NOTES_REWRITE_REF= git notes copy --for-rewrite=foo &&
++	git log -1 > output &&
++	test_cmp expect output
++'
  test_done
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index c814e9c..4caad9f 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -56,6 +56,8 @@ unset SHA1_FILE_DIRECTORIES
+ unset SHA1_FILE_DIRECTORY
+ unset GIT_NOTES_REF
+ unset GIT_NOTES_DISPLAY_REF
++unset GIT_NOTES_REWRITE_REF
++unset GIT_NOTES_REWRITE_MODE
+ GIT_MERGE_VERBOSITY=5
+ export GIT_MERGE_VERBOSITY
+ export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
 -- 
 1.7.0.218.g73a398
