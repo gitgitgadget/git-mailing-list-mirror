@@ -1,90 +1,78 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH] rerere: fix memory leak if rerere images can't be read
-Date: Tue, 23 Feb 2010 21:11:53 +0100
-Message-ID: <1266955913-4943-1-git-send-email-bert.wesarg@googlemail.com>
-Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 23 21:12:06 2010
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCHv2 1/2] shell setup: clear_local_git_env() function
+Date: Tue, 23 Feb 2010 21:25:24 +0100
+Message-ID: <4B8439B4.9030605@web.de>
+References: <cb7bb73a1002222355s38fda032g99623f44d6200fbc@mail.gmail.com> <1266913829-14533-2-git-send-email-giuseppe.bilotta@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	msysGit Mailinglist <msysgit@googlegroups.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 23 21:25:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nk16z-0004vc-J8
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 21:12:05 +0100
+	id 1Nk1K7-0002Oz-IV
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 21:25:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754038Ab0BWUMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2010 15:12:00 -0500
-Received: from mail-fx0-f219.google.com ([209.85.220.219]:34427 "EHLO
-	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752948Ab0BWUL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2010 15:11:59 -0500
-Received: by fxm19 with SMTP id 19so4237925fxm.21
-        for <git@vger.kernel.org>; Tue, 23 Feb 2010 12:11:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=gQgSUDpQedlImWdD1jyyQn8J+DhQKqitUALyGoRhCQE=;
-        b=kxENySRE97QoZhqSUQdazRjoJTF0lZrKLHsJ3tDuvRRgcW4MPHnUBst0e7iZxCQYpY
-         VNSqlqaH5/6AaI1kebKnrBEPViA/BzVaOnj2OrwSaXNr+/qmI3d0YuiPZE2B6W2FFfVe
-         ST9FJNuG3SMyKWvNFU4vWSX17JiW2tIyX3gwI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=s8iWpPpUKQz0vEUmIE5wzpP21hbPlvm7B6w0Onwug2fJMY55u5EeJp7+vdzf1uQ4kj
-         UFZEboDbM74/dU2n/U95O33LCRQ6Wsj8j+768krbbDzW9f5ohl+odv+1Tzc4Z1tBzfSc
-         ZK2esH/3yLAI8OVHu0R7fNS5I6sKsmY2P/G3Y=
-Received: by 10.87.40.26 with SMTP id s26mr2637838fgj.72.1266955917949;
-        Tue, 23 Feb 2010 12:11:57 -0800 (PST)
-Received: from localhost (drsd-4dbd880b.pool.mediaWays.net [77.189.136.11])
-        by mx.google.com with ESMTPS id l12sm12231469fgb.27.2010.02.23.12.11.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 23 Feb 2010 12:11:56 -0800 (PST)
-X-Mailer: git-send-email 1.7.0.500.ge51cb
+	id S1753426Ab0BWUZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2010 15:25:34 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:44484 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751411Ab0BWUZd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2010 15:25:33 -0500
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 4FB04148C5DC8;
+	Tue, 23 Feb 2010 21:25:32 +0100 (CET)
+Received: from [80.128.55.61] (helo=[192.168.178.26])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1Nk1Jz-0007ux-00; Tue, 23 Feb 2010 21:25:31 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
+In-Reply-To: <1266913829-14533-2-git-send-email-giuseppe.bilotta@gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/HBKEj3UcsmS01Wkgs4M68Xk4pd9g1vn/CunGv
+	twx9CFNT45IvcUNQlZriq5F+ZoHOteIrlHeorEP0roAzvdfYSt
+	TMfSPkBTgC3pjJ9VTCWQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140830>
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- rerere.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+Am 23.02.2010 09:30, schrieb Giuseppe Bilotta:
+> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+> index 7a09566..f1be832 100644
+> --- a/git-sh-setup.sh
+> +++ b/git-sh-setup.sh
+> @@ -172,6 +172,21 @@ get_author_ident_from_commit () {
+>  	LANG=C LC_ALL=C sed -ne "$pick_author_script"
+>  }
+>  
+> +# Clear repo-local GIT_* environment variables. Useful when switching to
+> +# another repository (e.g. when entering a submodule). See also the env
+> +# list in git_connect()
+> +clear_local_git_env() {
+> +	unset	GIT_ALTERNATE_OBJECT_DIRECTORIES \
+> +		GIT_CONFIG \
+> +		GIT_DIR \
+> +		GIT_GRAFT_FILE \
+> +		GIT_INDEX_FILE \
+> +		GIT_NO_REPLACE_OBJECTS \
+> +		GIT_OBJECT_DIRECTORY \
+> +		GIT_WORKTREE
 
-diff --git a/rerere.c b/rerere.c
-index d1d3e75..9ca4cb8 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -364,16 +364,17 @@ static int find_conflict(struct string_list *conflict)
- static int merge(const char *name, const char *path)
- {
- 	int ret;
--	mmfile_t cur, base, other;
-+	mmfile_t cur = {NULL, 0}, base = {NULL, 0}, other = {NULL, 0};
- 	mmbuffer_t result = {NULL, 0};
- 
- 	if (handle_file(path, NULL, rerere_path(name, "thisimage")) < 0)
- 		return 1;
- 
-+	ret = 1;
- 	if (read_mmfile(&cur, rerere_path(name, "thisimage")) ||
- 			read_mmfile(&base, rerere_path(name, "preimage")) ||
- 			read_mmfile(&other, rerere_path(name, "postimage")))
--		return 1;
-+		goto out;
- 	ret = ll_merge(&result, path, &base, &cur, "", &other, "", 0);
- 	if (!ret) {
- 		FILE *f = fopen(path, "w");
-@@ -387,6 +388,7 @@ static int merge(const char *name, const char *path)
- 				     strerror(errno));
- 	}
- 
-+out:
- 	free(cur.ptr);
- 	free(base.ptr);
- 	free(other.ptr);
--- 
-1.7.0.500.ge51cb
+Shouldn't that last one be GIT_WORK_TREE?
+
+
+> +
+> +}
+> +
+>  # Make sure we are in a valid repository of a vintage we understand,
+>  # if we require to be in a git repository.
+>  if test -z "$NONGIT_OK"
