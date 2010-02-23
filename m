@@ -1,100 +1,86 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: [PATCH 1/1] Use GIT_ASKPASS environment to launch thirdpart UI app to get password
-Date: Tue, 23 Feb 2010 19:11:03 +0800
-Message-ID: <1266923463-2828-1-git-send-email-lznuaa@gmail.com>
-Cc: Frank Li <lznuaa@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 23 12:18:36 2010
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] Print RUNTIME_PREFIX warning only when GIT_TRACE is set
+Date: Tue, 23 Feb 2010 12:42:56 +0100
+Message-ID: <4B83BF40.4070802@viscovery.net>
+References: <4B839282.1020605@viscovery.net> <alpine.DEB.1.00.1002231041230.20986@pacific.mpi-cbg.de> <4B83A330.5080403@viscovery.net> <alpine.DEB.1.00.1002231103170.20986@pacific.mpi-cbg.de> <4B83A9A2.5080500@viscovery.net> <alpine.DEB.1.00.1002231201260.3980@intel-tinevez-2-302>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 23 12:43:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Njsmh-000228-7y
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 12:18:35 +0100
+	id 1NjtAW-00028v-Gq
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Feb 2010 12:43:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751310Ab0BWLS3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2010 06:18:29 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:43174 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750863Ab0BWLS2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2010 06:18:28 -0500
-Received: by pwj8 with SMTP id 8so3717702pwj.19
-        for <git@vger.kernel.org>; Tue, 23 Feb 2010 03:18:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=OQHxiG5jwWonYMYCUXgWgsq0/FT13uXqz+0bvMfohvA=;
-        b=o6+J8+yRubmW79pJuf3IO9YoBOJjDHlslGNBEa/JSB19ZdL1HeYgAuugSamfcJXvyq
-         VsW2bj0nS9aQ9jU7caoc0re2+hgo0QJAGUcLU5Nkc2NhBqc9oO2FL7UvpKZ2bnoHEC0d
-         mdt0rNefPGNK65XPJq1igE35te3FJy5jVboQY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=wTo4tJcpp4GzC8Q0JiXnjvdGyXPFD4a/D/QbA+Ow+dmTPPBfukKhj5PDL29jNlJFia
-         7XcPhuwU4Kum/1kTyA4oiTacW14RCrMXC64d69nNX77DgVqFJDBJlUUyceXYJwGJIY1Z
-         Xib6rYx3F/MX8iD6eYM8kqRc8lySPEWKKGmBE=
-Received: by 10.114.187.7 with SMTP id k7mr1877306waf.153.1266923482471;
-        Tue, 23 Feb 2010 03:11:22 -0800 (PST)
-Received: from localhost ([222.67.191.196])
-        by mx.google.com with ESMTPS id 23sm608467pzk.10.2010.02.23.03.11.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 23 Feb 2010 03:11:22 -0800 (PST)
-X-Mailer: git-send-email 1.6.5.1.1367.gcd48
+	id S1751959Ab0BWLnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2010 06:43:06 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:52644 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751712Ab0BWLnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2010 06:43:05 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NjtAH-0006ba-Un; Tue, 23 Feb 2010 12:42:58 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id D13B51660F;
+	Tue, 23 Feb 2010 12:42:56 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <alpine.DEB.1.00.1002231201260.3980@intel-tinevez-2-302>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.9 (+)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140788>
 
-Default git-svn read charactor from terminal to get password. GUI will
-wait forever because don't know password need input.
+From: Johannes Sixt <j6t@kdbg.org>
 
-Signed-off-by: Frank Li <lznuaa@gmail.com>
+When RUNTIME_PREFIX is enabled, the installation prefix is derived by
+trying a limited set of known locations where the git executable can
+reside. If none of these is found, a warning is emitted.
+
+When git is built in a directory that matches neither of these known names,
+the warning would always be emitted when the uninstalled executable is run.
+This is a problem on Windows, where gitk picks the uninstalled git when
+invoked from the build directory and gets confused by the warning.
+
+Print the warning only when GIT_TRACE is set.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- git-svn.perl |   27 +++++++++++++++++----------
- 1 files changed, 17 insertions(+), 10 deletions(-)
+Johannes Schindelin schrieb:
+> P.S.: I cannot recall defending the warning, but I might have thought it a 
+> good idea at some stage. This is no longer so.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 265852f..f9f104e 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -3966,18 +3966,25 @@ sub username {
- 
- sub _read_password {
- 	my ($prompt, $realm) = @_;
--	print STDERR $prompt;
--	STDERR->flush;
--	require Term::ReadKey;
--	Term::ReadKey::ReadMode('noecho');
- 	my $password = '';
--	while (defined(my $key = Term::ReadKey::ReadKey(0))) {
--		last if $key =~ /[\012\015]/; # \n\r
--		$password .= $key;
-+	if (exists $ENV{GIT_ASKPASS}) {
-+		open(PH, "$ENV{GIT_ASKPASS} \"$prompt\" |");
-+		$password = <PH>;
-+		$password =~ s/[\012\015]//; # \n\r
-+		close(PH);
-+	} else {
-+		print STDERR $prompt;
-+		STDERR->flush;
-+		require Term::ReadKey;
-+		Term::ReadKey::ReadMode('noecho');
-+		while (defined(my $key = Term::ReadKey::ReadKey(0))) {
-+			last if $key =~ /[\012\015]/; # \n\r
-+			$password .= $key;
-+		}
-+		Term::ReadKey::ReadMode('restore');
-+		print STDERR "\n";
-+		STDERR->flush;
+I do recall you defended it; good to know that you changed your mind.
+
+Thanks,
+-- Hannes
+
+ exec_cmd.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/exec_cmd.c b/exec_cmd.c
+index 408e4e5..b2c07c7 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -28,7 +28,7 @@ const char *system_path(const char *path)
+ 	    !(prefix = strip_path_suffix(argv0_path, BINDIR)) &&
+ 	    !(prefix = strip_path_suffix(argv0_path, "git"))) {
+ 		prefix = PREFIX;
+-		fprintf(stderr, "RUNTIME_PREFIX requested, "
++		trace_printf("RUNTIME_PREFIX requested, "
+ 				"but prefix computation failed.  "
+ 				"Using static fallback '%s'.\n", prefix);
  	}
--	Term::ReadKey::ReadMode('restore');
--	print STDERR "\n";
--	STDERR->flush;
- 	$password;
- }
- 
 -- 
 1.7.0.83.g241b9.dirty
