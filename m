@@ -1,7 +1,7 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv3 3/5] rev-parse: --local-env-vars option
-Date: Wed, 24 Feb 2010 00:35:34 +0100
-Message-ID: <1266968136-11129-4-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCHv3 5/5] submodules: ensure clean environment when operating in a submodule
+Date: Wed, 24 Feb 2010 00:35:36 +0100
+Message-ID: <1266968136-11129-6-git-send-email-giuseppe.bilotta@gmail.com>
 References: <1266968136-11129-1-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Heiko Voigt <hvoigt@hvoigt.net>,
@@ -11,95 +11,162 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 24 00:36:16 2010
+X-From: git-owner@vger.kernel.org Wed Feb 24 00:36:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nk4IY-0001Ms-VO
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 00:36:15 +0100
+	id 1Nk4Ia-0001Ms-37
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 00:36:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754763Ab0BWXf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2010 18:35:57 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:43945 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754749Ab0BWXfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2010 18:35:54 -0500
-Received: by mail-wy0-f174.google.com with SMTP id 21so876637wya.19
-        for <git@vger.kernel.org>; Tue, 23 Feb 2010 15:35:53 -0800 (PST)
+	id S1754803Ab0BWXgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2010 18:36:06 -0500
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:51835 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754758Ab0BWXgC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2010 18:36:02 -0500
+Received: by mail-ww0-f46.google.com with SMTP id 26so1011731wwf.19
+        for <git@vger.kernel.org>; Tue, 23 Feb 2010 15:36:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=le7q23VLv7h+mtwb+SwtkWb643lHAWwQgoyOIcNFW8E=;
-        b=WNmCvNJ1Eh5fEqf5sCIq0orgAUuDjIbt1XWKlqIJRaQbmvW4WsDtlipei30gpLJsmz
-         DQU3+tjRc3eXwHq0EG+jdp0RVdE8SIhZlfd212Yt4T4gxGsLW4D1PP2xwFb1ooZhL24I
-         y0htbFlgwJiYnTgIdVhr5rrHrgoaH2USNyO88=
+        bh=VS451I+z+u0UJqi9GtL5DLpheuBZwDU5fJjj3oqV1Es=;
+        b=gqD5M1+UrtRNnIaaANsqhff06/LsV4h8bgOlivxfP64hvhOAoo/xVbDl+2PruGMka/
+         mrcDzIoXmQCfpwuV9iPjQ9Wm0VKs3iuzix6lkYhxoiK/f24AOSef0WhUgq4EAdO1yc7F
+         0EkvG+mR/eq1CWhSuFqv0JIxH5hZN+YjcfQik=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=cAMsxiZ1MmWqmYhpTomjDdskpceoGCDB/UT64ZY5vP+O8YLQyxe00LaquPoliX2CAX
-         XIrBCJxS5CC4HtpGKGFU297mq3voekbGLyEZTbCXs/8urEW2nFf19Mj5DvBgztYer8Mb
-         RcjfNSDbVp96mMG3bNJQzvfjSreXMtL/TliEA=
-Received: by 10.216.89.193 with SMTP id c43mr2181573wef.221.1266968153406;
-        Tue, 23 Feb 2010 15:35:53 -0800 (PST)
+        b=gKxSn3zrIbYFOnPJZP8eeafpyrpkzMBBHISh2iyhg7llfA96akbIJ60TOJPI/vAwre
+         6cBJbYpO783faEFXK9edxL9TgNU2f5YtcZ+3mdDC7MlNfLnUlrr/dY3D8ayrpHLt1i5w
+         8Xc8CwQNDrCE0gxXySG2vbYApqwTSjJSOo9EQ=
+Received: by 10.216.154.70 with SMTP id g48mr1195803wek.109.1266968158318;
+        Tue, 23 Feb 2010 15:35:58 -0800 (PST)
 Received: from localhost ([151.60.179.236])
-        by mx.google.com with ESMTPS id i6sm20765003gve.20.2010.02.23.15.35.52
+        by mx.google.com with ESMTPS id u14sm20132670gvf.2.2010.02.23.15.35.57
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 23 Feb 2010 15:35:52 -0800 (PST)
+        Tue, 23 Feb 2010 15:35:57 -0800 (PST)
 X-Mailer: git-send-email 1.7.0.200.g5ba36.dirty
 In-Reply-To: <1266968136-11129-1-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140872>
 
-This prints the list of repo-local environment variables.
+git-submodule used to take care of clearing GIT_DIR whenever it operated
+on a submodule index or configuration, but forgot to unset GIT_WORK_TREE
+or other repo-local variables. This would lead to failures e.g. when
+GIT_WORK_TREE was set.
+
+This only happened in very unusual contexts such as operating on the
+main worktree from outside of it, but since "git-gui: set GIT_DIR and
+GIT_WORK_TREE after setup" (a9fa11fe5bd5978bb) such failures could also
+be provoked by invoking an external tool such as "git submodule update"
+from the Git Gui in a standard setup.
+
+Solve by using the newly introduced clear_local_git_env() shell function
+to ensure that all repo-local environment variables are unset.
 
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- Documentation/git-rev-parse.txt |    6 ++++++
- builtin-rev-parse.c             |    8 ++++++++
- 2 files changed, 14 insertions(+), 0 deletions(-)
+ git-submodule.sh |   20 ++++++++++----------
+ 1 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index 1a613aa..8db600f 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -148,6 +148,12 @@ shown.  If the pattern does not contain a globbing character (`?`,
- --is-bare-repository::
- 	When the repository is bare print "true", otherwise "false".
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 5869c00..1ea4143 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -222,7 +222,7 @@ cmd_add()
  
-+--local-env-vars::
-+	List the GIT_* environment variables that are local to the
-+	repository (e.g. GIT_DIR or GIT_WORK_TREE, but not GIT_EDITOR).
-+	Only the names of the variables are listed, not their value,
-+	even if they are set.
-+
- --short::
- --short=number::
- 	Instead of outputting the full SHA1 values of object names try to
-diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
-index a8c5043..ab7b520 100644
---- a/builtin-rev-parse.c
-+++ b/builtin-rev-parse.c
-@@ -455,7 +455,15 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 	if (argc > 1 && !strcmp("--sq-quote", argv[1]))
- 		return cmd_sq_quote(argc - 2, argv + 2);
+ 		module_clone "$path" "$realrepo" "$reference" || exit
+ 		(
+-			unset GIT_DIR
++			clear_local_git_env
+ 			cd "$path" &&
+ 			# ash fails to wordsplit ${branch:+-b "$branch"...}
+ 			case "$branch" in
+@@ -278,7 +278,7 @@ cmd_foreach()
+ 			name=$(module_name "$path")
+ 			(
+ 				prefix="$prefix$path/"
+-				unset GIT_DIR
++				clear_local_git_env
+ 				cd "$path" &&
+ 				eval "$@" &&
+ 				if test -n "$recursive"
+@@ -434,7 +434,7 @@ cmd_update()
+ 			module_clone "$path" "$url" "$reference"|| exit
+ 			subsha1=
+ 		else
+-			subsha1=$(unset GIT_DIR; cd "$path" &&
++			subsha1=$(clear_local_git_env; cd "$path" &&
+ 				git rev-parse --verify HEAD) ||
+ 			die "Unable to find current revision in submodule path '$path'"
+ 		fi
+@@ -454,7 +454,7 @@ cmd_update()
  
-+	if (argc > 0 && !strcmp("--local-env-vars", argv[1])) {
-+		unsigned int i = 0;
-+		const char *var;
-+		while (var = local_repo_env[i++])
-+			printf("%s\n", var);
-+		return 0;
-+	}
- 	if (argc > 1 && !strcmp("-h", argv[1]))
-+
- 		usage(builtin_rev_parse_usage);
+ 			if test -z "$nofetch"
+ 			then
+-				(unset GIT_DIR; cd "$path" &&
++				(clear_local_git_env; cd "$path" &&
+ 					git-fetch) ||
+ 				die "Unable to fetch in submodule path '$path'"
+ 			fi
+@@ -477,14 +477,14 @@ cmd_update()
+ 				;;
+ 			esac
  
- 	prefix = setup_git_directory();
+-			(unset GIT_DIR; cd "$path" && $command "$sha1") ||
++			(clear_local_git_env; cd "$path" && $command "$sha1") ||
+ 			die "Unable to $action '$sha1' in submodule path '$path'"
+ 			say "Submodule path '$path': $msg '$sha1'"
+ 		fi
+ 
+ 		if test -n "$recursive"
+ 		then
+-			(unset GIT_DIR; cd "$path" && cmd_update $orig_args) ||
++			(clear_local_git_env; cd "$path" && cmd_update $orig_args) ||
+ 			die "Failed to recurse into submodule path '$path'"
+ 		fi
+ 	done
+@@ -492,7 +492,7 @@ cmd_update()
+ 
+ set_name_rev () {
+ 	revname=$( (
+-		unset GIT_DIR
++		clear_local_git_env
+ 		cd "$1" && {
+ 			git describe "$2" 2>/dev/null ||
+ 			git describe --tags "$2" 2>/dev/null ||
+@@ -760,7 +760,7 @@ cmd_status()
+ 		else
+ 			if test -z "$cached"
+ 			then
+-				sha1=$(unset GIT_DIR; cd "$path" && git rev-parse --verify HEAD)
++				sha1=$(clear_local_git_env; cd "$path" && git rev-parse --verify HEAD)
+ 				set_name_rev "$path" "$sha1"
+ 			fi
+ 			say "+$sha1 $displaypath$revname"
+@@ -770,7 +770,7 @@ cmd_status()
+ 		then
+ 			(
+ 				prefix="$displaypath/"
+-				unset GIT_DIR
++				clear_local_git_env
+ 				cd "$path" &&
+ 				cmd_status $orig_args
+ 			) ||
+@@ -821,7 +821,7 @@ cmd_sync()
+ 		if test -e "$path"/.git
+ 		then
+ 		(
+-			unset GIT_DIR
++			clear_local_git_env
+ 			cd "$path"
+ 			remote=$(get_default_remote)
+ 			say "Synchronizing submodule url for '$name'"
 -- 
 1.7.0.200.g5ba36.dirty
