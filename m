@@ -1,162 +1,68 @@
-From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
-Subject: [PATCH v2 3/4] t4124: Add additional tests of --whitespace=fix
-Date: Wed, 24 Feb 2010 20:24:30 +0100
-Message-ID: <4B857CEE.5090109@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] shortlog: do not stall when there is no input
+Date: Wed, 24 Feb 2010 11:31:39 -0800
+Message-ID: <7vvddmmnvo.fsf@alter.siamese.dyndns.org>
+References: <201002242020.27801.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 24 20:30:56 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Michele Ballabio <barra_cuda@katamail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 24 20:31:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkMwg-0001Qt-PJ
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 20:30:55 +0100
+	id 1NkMxc-0001rL-2B
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 20:31:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757755Ab0BXTaq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Feb 2010 14:30:46 -0500
-Received: from mail-ew0-f212.google.com ([209.85.219.212]:57961 "EHLO
-	mail-ew0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757741Ab0BXTaq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 14:30:46 -0500
-Received: by ewy4 with SMTP id 4so1219194ewy.28
-        for <git@vger.kernel.org>; Wed, 24 Feb 2010 11:30:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=Z6WzOn9vZUrUfZ6nTgP2YREPVY6R+d6nAbL2Y9Rcz5A=;
-        b=pFtqd6S0ycEQyZ7PdIZlvgsm9q0K2gOCnRWKZotgZjXCHRT6NygeLAEICU/aBJJsH9
-         j0ybdfuYWFoxsEvFuQUc7ICGCEUt1sRbukFT7ZzjtWZxfBbMoPG2kx1qP6wETexSN2vv
-         ZooWbWPoYcShhkcFctCszgH7OtKQOMjOwfpMQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=tvDX6DKXGRip2AjJkG2d5UMFNWjFHL89NmCutkZaUBphowQC39RwRJlb5SNR49P8nK
-         VMNz2eB4IMs3ocIR0YAiQpGpY7LV5Kd5DXJxEtDIYkuC2dtnRDmUvs3OWXzArbR2jdy7
-         wgqkGIBeBmJ3u6fbpRMKO7Auvwx3f7Qk2hJH4=
-Received: by 10.213.50.140 with SMTP id z12mr143907ebf.89.1267039471889;
-        Wed, 24 Feb 2010 11:24:31 -0800 (PST)
-Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
-        by mx.google.com with ESMTPS id 5sm354538eyf.35.2010.02.24.11.24.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 24 Feb 2010 11:24:31 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
+	id S1757757Ab0BXTbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 14:31:46 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58006 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757675Ab0BXTbp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 14:31:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CE089C313;
+	Wed, 24 Feb 2010 14:31:45 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Mnpxr57+/U7h8Jl5DgWeTUYHnog=; b=nNCuPb
+	GR3/SKHnVKCGlsggWmu7e5H2BYvmeSMokLyaUB7hKq2yexwwuoviKlbibBgt2+39
+	JXdid4o+3Xs50RJCA1jD1Yo3XgxPUhWVodPBlboBo96kBShdLNLWzqSP0e4IA+x9
+	eUiGcW9zrOoHz07jCDBaYtjaSO7HZd5D97mFo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XaVAU0U1iqfJObcmMjo15lK53JKCSFBS
+	EaC1vPrLtnMudKhohG09eYck+4gwZ9n6kmAVmlUPfO4B0lnO9lXVZKHDWZMRQGCe
+	l4QjHPi6JAZYgDKyXP8aaNnJKFQoLAMG/abl4rG9K6RNnLHfgp/wUnEBZfcd0adI
+	14mDLxjyaSI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B9829C30E;
+	Wed, 24 Feb 2010 14:31:43 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 770B29C30D; Wed, 24 Feb
+ 2010 14:31:40 -0500 (EST)
+In-Reply-To: <201002242020.27801.barra_cuda@katamail.com> (Michele Ballabio's
+ message of "Wed\, 24 Feb 2010 20\:20\:27 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3CDC9538-217B-11DF-B159-E038EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140979>
 
-Signed-off-by: Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>
----
- t/t4124-apply-ws-rule.sh |   85 ++++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 85 insertions(+), 0 deletions(-)
+Michele Ballabio <barra_cuda@katamail.com> writes:
 
-diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
-index ca26397..c783710 100755
---- a/t/t4124-apply-ws-rule.sh
-+++ b/t/t4124-apply-ws-rule.sh
-@@ -261,4 +261,89 @@ test_expect_success 'blank but not empty at EOF' '
- 	grep "new blank line at EOF" error
- '
-=20
-+test_expect_success 'applying beyond EOF requires one non-blank contex=
-t line' '
-+	{ echo; echo; echo; echo; } >one &&
-+	git add one &&
-+	{ echo b; } >>one &&
-+	git diff -- one >patch &&
-+
-+	git checkout one &&
-+	{ echo a; echo; } >one &&
-+	cp one expect &&
-+	test_must_fail git apply --whitespace=3Dfix patch &&
-+	test_cmp one expect
-+'
-+
-+test_expect_success 'tons of blanks at EOF should not apply' '
-+	for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16; do
-+		echo; echo; echo; echo;
-+	done >one &&
-+	git add one &&
-+	echo a >>one &&
-+	git diff -- one >patch &&
-+
-+	>one &&
-+	test_must_fail git apply --whitespace=3Dfix patch
-+'
-+
-+test_expect_success 'missing blank line at end with --whitespace=3Dfix=
-' '
-+	echo a >one &&
-+	echo >>one &&
-+	git add one &&
-+	echo b >>one &&
-+	cp one expect &&
-+	git diff -- one >patch &&
-+	echo a >one &&
-+	test_must_fail git apply patch &&
-+	git apply --whitespace=3Dfix patch &&
-+	test_cmp one expect
-+'
-+
-+test_expect_success 'two missing blank lines at end with --whitespace=3D=
-fix' '
-+	{ echo a; echo; echo b; echo c; } >one &&
-+	cp one no-blank-lines &&
-+	{ echo; echo; } >>one &&
-+	git add one &&
-+	echo d >>one &&
-+	cp one expect &&
-+	echo >>one &&
-+	git diff -- one >patch &&
-+	mv no-blank-lines one &&
-+	test_must_fail git apply patch &&
-+	git apply --whitespace=3Dfix patch &&
-+	test_cmp one expect
-+'
-+
-+test_expect_success 'shrink file with tons of missing blanks at end of=
- file' '
-+	{ echo a; echo b; echo c; } >one &&
-+	cp one no-blank-lines &&
-+	for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16; do
-+		echo; echo; echo; echo;
-+	done >>one &&
-+	git add one &&
-+	echo a >one &&
-+	cp one expect &&
-+	git diff -- one >patch &&
-+	mv no-blank-lines one &&
-+	test_must_fail git apply patch &&
-+	git apply --whitespace=3Dfix patch &&
-+	test_cmp one expect
-+'
-+
-+test_expect_success 'shrink file with tons of missing blanks at end of=
- file' '
-+	{ echo a; echo b; echo c; } >one &&
-+	cp one no-blank-lines &&
-+	for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16; do
-+		echo; echo; echo; echo;
-+	done >>one &&
-+	git add one &&
-+	echo a >one &&
-+	cp one expect &&
-+	git diff -- one >patch &&
-+	mv no-blank-lines one &&
-+	test_must_fail git apply patch &&
-+	git apply --whitespace=3Dfix patch &&
-+	test_cmp one expect
-+'
-+
- test_done
---=20
-1.7.0
+> A simple "git shortlog" outside of a git repository used to stall
+> waiting for an input. Fix this by testing with isatty() before
+> calling read_from_stdin().
+
+I'd actually prefer doing what "git commit" does.  Give a helpful hint
+that it is waiting for input from the standard input, but do read from
+standard input as the program is instructed to do.
+
+That way people who drive the program with expect will not be broken ;-)
+but that is a minor point.
