@@ -1,68 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] shortlog: do not stall when there is no input
-Date: Wed, 24 Feb 2010 11:31:39 -0800
-Message-ID: <7vvddmmnvo.fsf@alter.siamese.dyndns.org>
-References: <201002242020.27801.barra_cuda@katamail.com>
+From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
+Subject: [PATCH v2 0/4] Apply blanks at EOF
+Date: Wed, 24 Feb 2010 20:23:56 +0100
+Message-ID: <4B857CCC.7080809@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Michele Ballabio <barra_cuda@katamail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 24 20:31:52 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 24 20:31:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkMxc-0001rL-2B
+	id 1NkMxc-0001rL-JC
 	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 20:31:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757757Ab0BXTbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1757762Ab0BXTbs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Feb 2010 14:31:48 -0500
+Received: from mail-ew0-f212.google.com ([209.85.219.212]:52915 "EHLO
+	mail-ew0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757739Ab0BXTbq (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 24 Feb 2010 14:31:46 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58006 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757675Ab0BXTbp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 14:31:45 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CE089C313;
-	Wed, 24 Feb 2010 14:31:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Mnpxr57+/U7h8Jl5DgWeTUYHnog=; b=nNCuPb
-	GR3/SKHnVKCGlsggWmu7e5H2BYvmeSMokLyaUB7hKq2yexwwuoviKlbibBgt2+39
-	JXdid4o+3Xs50RJCA1jD1Yo3XgxPUhWVodPBlboBo96kBShdLNLWzqSP0e4IA+x9
-	eUiGcW9zrOoHz07jCDBaYtjaSO7HZd5D97mFo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XaVAU0U1iqfJObcmMjo15lK53JKCSFBS
-	EaC1vPrLtnMudKhohG09eYck+4gwZ9n6kmAVmlUPfO4B0lnO9lXVZKHDWZMRQGCe
-	l4QjHPi6JAZYgDKyXP8aaNnJKFQoLAMG/abl4rG9K6RNnLHfgp/wUnEBZfcd0adI
-	14mDLxjyaSI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B9829C30E;
-	Wed, 24 Feb 2010 14:31:43 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 770B29C30D; Wed, 24 Feb
- 2010 14:31:40 -0500 (EST)
-In-Reply-To: <201002242020.27801.barra_cuda@katamail.com> (Michele Ballabio's
- message of "Wed\, 24 Feb 2010 20\:20\:27 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3CDC9538-217B-11DF-B159-E038EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+Received: by ewy4 with SMTP id 4so1219910ewy.28
+        for <git@vger.kernel.org>; Wed, 24 Feb 2010 11:31:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:content-type
+         :content-transfer-encoding;
+        bh=P8h6ehkoCE8CEa/wJWol11oIJC5FTfbJUOsKRRO3Y9E=;
+        b=fJM2DYLzARsSUb8s8FdVU4OxzPbWz6w9+w0qdfA/tBTT8ND4oryJ1ZI0Y5HEQMOVEj
+         ZbcKWPigbEX7+Mxe3PYthvESESjoVxP6o1b22mwzluLT+PAJo5g1qBFgH8UZ1X31a4Xf
+         cqppMGc5tmaeWyYnEyPpRVHYfblcXikFv418o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=cOFP2QIy9b90c9m+/PAbfU9PkfKErIOT4UpaQ6P3Hk5gA1ft9JeI9ZIeawIfd5JbIW
+         VFNefWdzyNLJMaqWxlJM63Guyu2YFpVAHZCG123h1EMkwhrceYH3xBPxmmQ3w+0vMSwq
+         dgqx4wgUu35Pm/FSegmwNIv7BspY9litmyerQ=
+Received: by 10.213.1.143 with SMTP id 15mr645760ebf.55.1267039438823;
+        Wed, 24 Feb 2010 11:23:58 -0800 (PST)
+Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
+        by mx.google.com with ESMTPS id 23sm359111eya.42.2010.02.24.11.23.57
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 24 Feb 2010 11:23:57 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140980>
 
-Michele Ballabio <barra_cuda@katamail.com> writes:
+Here is my revised patch series.=20
 
-> A simple "git shortlog" outside of a git repository used to stall
-> waiting for an input. Fix this by testing with isatty() before
-> calling read_from_stdin().
+Bj=C3=B6rn Gustavsson (4):
+  apply: Remove the quick rejection test
+    Now a separate commit for removing the quick reject and
+    clarifying another test, as well as a new test case.
 
-I'd actually prefer doing what "git commit" does.  Give a helpful hint
-that it is waiting for input from the standard input, but do read from
-standard input as the program is instructed to do.
+  apply: Allow blank context lines to match beyond EOF
+    At least one non-blank context line must now match before
+    the end of file. Rewrote my own changes in the beginning
+    of match_fragment() in a way that I think is clearer.
 
-That way people who drive the program with expect will not be broken ;-)
-but that is a minor point.
+  t4124: Add additional tests of --whitespace=3Dfix
+    More test cases.
+
+  t3417: Add test cases for "rebase --whitespace=3Dfix"
+    No changes.
+
+ builtin-apply.c                  |  146 ++++++++++++++++++++++++++++++=
+-------
+ t/t3417-rebase-whitespace-fix.sh |  126 ++++++++++++++++++++++++++++++=
+++
+ t/t4104-apply-boundary.sh        |    9 +++
+ t/t4124-apply-ws-rule.sh         |   85 ++++++++++++++++++++++
+ 4 files changed, 338 insertions(+), 28 deletions(-)
+ create mode 100755 t/t3417-rebase-whitespace-fix.sh
