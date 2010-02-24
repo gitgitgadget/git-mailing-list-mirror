@@ -1,64 +1,87 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCHv4 6/6] is_submodule_modified(): clear environment properly
-Date: Wed, 24 Feb 2010 09:06:01 +0100
-Message-ID: <4B84DDE9.8000301@viscovery.net>
-References: <1266996196-25978-1-git-send-email-giuseppe.bilotta@gmail.com> <1266996196-25978-7-git-send-email-giuseppe.bilotta@gmail.com>
+From: Frank Li <lznuaa@gmail.com>
+Subject: Re: [PATCH 1/1] Use GIT_ASKPASS environment to launch thirdpart UI 
+	app to get password
+Date: Wed, 24 Feb 2010 16:13:01 +0800
+Message-ID: <1976ea661002240013j164fc875o469c0dcdf74afe0c@mail.gmail.com>
+References: <1266923463-2828-1-git-send-email-lznuaa@gmail.com>
+	 <20100224051307.GA3232@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	msysGit Mailinglist <msysgit@googlegroups.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 24 09:06:15 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 24 09:13:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkCG6-0005Nq-9e
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 09:06:14 +0100
+	id 1NkCMo-0008Gd-2k
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 09:13:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753476Ab0BXIGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 03:06:07 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:25112 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753132Ab0BXIGG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 03:06:06 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NkCFu-0003Wa-FP; Wed, 24 Feb 2010 09:06:02 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 3099A1660F;
-	Wed, 24 Feb 2010 09:06:02 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <1266996196-25978-7-git-send-email-giuseppe.bilotta@gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1752702Ab0BXINF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Feb 2010 03:13:05 -0500
+Received: from mail-gx0-f217.google.com ([209.85.217.217]:56867 "EHLO
+	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751528Ab0BXIND convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Feb 2010 03:13:03 -0500
+Received: by gxk9 with SMTP id 9so4878803gxk.8
+        for <git@vger.kernel.org>; Wed, 24 Feb 2010 00:13:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NrxO3tKKFIoSkQ899sQnw1QzeYQLmeP5shtjQ6P2hyg=;
+        b=CFnRQkKQnpopFcTBUVfX8J2VMbndCgKmzTlNo0rximv/RbJAjOgYH/uBoOSpS0jiW3
+         RitwBMp+76/ctgbKPVDeVb3A9BRiR3jWlO71OAlmkHQqMmSWYsGNDxEKVVH5K9j75NjK
+         0o1H/nbAaLWNfFkEo+OVr6tLN3M2R7YfLvKGU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Witx0d9Ua3ek1bc5A82nyOIxJ5vI6H5rjs5llvw8baSdWHD4A3TMYKSWYkaI+O/tDE
+         IwQzPFyC3YNaeHEUv1gIR3+1St70s81xkOVCYUPhK0DYLnceZP+SNHPnSDgUe/dfAz8z
+         ENEFYui9jKvkSNSbDwO8572hM9ZvOBrMyU98o=
+Received: by 10.150.118.14 with SMTP id q14mr1997288ybc.105.1266999181948; 
+	Wed, 24 Feb 2010 00:13:01 -0800 (PST)
+In-Reply-To: <20100224051307.GA3232@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140918>
 
-Giuseppe Bilotta schrieb:
-> +	const char *env[local_repo_env_size+2];
+> -- >8 --
+> Subject: [PATCH] git-svn: Support retrieving passwords with GIT_ASKPA=
+SS
+>
+> git-svn reads passwords from an interactive terminal.
+> This behavior causes GUIs to hang waiting for git-svn to
+> complete.
+>
+> Fix this problem by allowing a password-retrieving command
+> to be specified in GIT_ASKPASS. =A0SSH_ASKPASS is supported
+> as a fallback when GIT_ASKPASS is not provided.
+>
 
-Variable sized arrays are prohibited.
+Okay, I will change it.
 
->  	struct strbuf buf = STRBUF_INIT;
->  
-> +	/* Copy local_repo_env to env, letting i
-> +	   rest at the last NULL */
-> +	while (env[i] = local_repo_env[i])
-> +		++i; /* do nothing */
-> +
+>
+> I think Junio mentioned this in passing but I'll repeat it.
+>
+> Many users already have SSH_ASKPASS defined. =A0It would be very
+> nice if we supported SSH_ASKPASS as a fallback when GIT_ASKPASS
+> is not provided.
+>
 
-This looks very inconsistent: At the one hand, you use l_r_e_size to
-allocate the space, but then you iterate over it assuming that the list is
-(also) NULL-terminated. But this is only a minor nit.
+I consider add such fallback at git.c.  when user use git svn,  git
+main program will be called firstly.
+git main entry will check if GIT_ASKPASS and SSH_ASKPASS, if
+SSH_ASKPASS set but GIT_ASKPASS not set,
+GIT_ASKPASS will be set as SSH_ASKPASS.
 
--- Hannes
+Do you think we needs add such check at git-svn.perl ?
+
+best regards
+=46rank Li
