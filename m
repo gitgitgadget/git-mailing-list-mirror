@@ -1,105 +1,97 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: git-push segfault
-Date: Wed, 24 Feb 2010 13:05:44 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.1002241218390.14365@iabervon.org>
-References: <20100224.082728.16634.0@webmail17.dca.untd.com> <20100224170853.GA4756@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "ddrowley3@juno.com" <ddrowley3@juno.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 24 19:06:00 2010
+From: Tuomas Suutari <tuomas.suutari@gmail.com>
+Subject: [PATCH 1/2] git-svn: Fix merge detecting with rewrite-root
+Date: Wed, 24 Feb 2010 20:09:01 +0200
+Message-ID: <1267034942-31581-1-git-send-email-tuomas.suutari@gmail.com>
+Cc: Tuomas Suutari <tuomas.suutari@gmail.com>,
+	Sam Vilain <sam@vilain.net>, Eric Wong <normalperson@yhbt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 24 19:09:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkLcM-0002iQ-Vf
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 19:05:51 +0100
+	id 1NkLfx-00058G-O3
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 19:09:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754819Ab0BXSFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 13:05:46 -0500
-Received: from iabervon.org ([66.92.72.58]:44447 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754630Ab0BXSFp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 13:05:45 -0500
-Received: (qmail 1038 invoked by uid 1000); 24 Feb 2010 18:05:44 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 24 Feb 2010 18:05:44 -0000
-In-Reply-To: <20100224170853.GA4756@coredump.intra.peff.net>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1755009Ab0BXSJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 13:09:29 -0500
+Received: from fg-out-1718.google.com ([72.14.220.153]:15254 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754630Ab0BXSJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 13:09:28 -0500
+Received: by fg-out-1718.google.com with SMTP id e12so428757fga.1
+        for <git@vger.kernel.org>; Wed, 24 Feb 2010 10:09:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=Ord2XCVJv7Wej24s2U0yN+9eBAQb6xA2x+IBIX5qAMg=;
+        b=YTb+6BNHb32J1nnVQXIC9qCT++5/6mP1KP10CLxDCgKOPAYJx6eh+OPmEK6F+Dq/hr
+         xRuHJTg3Ffau3xIde9WpIyK79TLb/txOsBiXm3E0mfqA1L3F8RTX/KGXMY8muPi+ZO2A
+         h4d8GwyCTGUGj2Tiic88qXQmlMCW3S0i1h9pQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=wCo1Y1p0O766QcHHmFhI7VrvJhG1KTbuGMFbrfFt0aUf9bl/iZH3hRvKZWLIY80zai
+         9tTW1pxdDGn8t5utC6EFYNbSTOx2ng0AC3bYEEZ9qvySOtbIKCsdd1OX9XXennQfHcHu
+         UYWfENEH2a1sHmB5ok2ef+S1fqIoQJUF+SaUU=
+Received: by 10.87.68.17 with SMTP id v17mr620277fgk.20.1267034966435;
+        Wed, 24 Feb 2010 10:09:26 -0800 (PST)
+Received: from localhost.localdomain (ws-26-184.laitilanpuhelin.fi [188.123.26.184])
+        by mx.google.com with ESMTPS id l19sm11598420fgb.0.2010.02.24.10.09.24
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 24 Feb 2010 10:09:25 -0800 (PST)
+X-Mailer: git-send-email 1.7.0.2.ged48
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140964>
 
-On Wed, 24 Feb 2010, Jeff King wrote:
+Detecting of merges from svn:mergeinfo or svk merge tickets failed
+with rewrite-root option. This fixes it.
 
-> On Wed, Feb 24, 2010 at 04:27:28PM +0000, ddrowley3@juno.com wrote:
-> 
-> > ./test.sh: line 12:  3686 Segmentation fault      (core dumped) git
-> > push
-> > 
-> > I reproduced this consistently on 2 different machines with 2
-> > different versions of git, so it must have something to do with my
-> > ~/.gitconfig. Yep - if I remove the following from my .gitconfig, then
-> > the seg fault goes away:
-> > 
-> > [push]
-> >     default = tracking
-> 
-> Thanks, I can see it now. The patch below should fix it.
-> 
-> Note, however, that you will still get a failure for "git push remote",
-> as your config is set up to push tracking branches by default, and you
-> don't have one here.
-> 
-> I'm a little unsure of the patch. Arguably branch_get should not be
-> setting branch->merge_nr to 1, as there is nothing in branch->merge. On
-> the other hand, branch->merge_name _does_ have one element, so perhaps
-> it is an error in the caller to assume that branch->merge_nr and
-> branch->merge necessarily correspond. Daniel, this looks like your code.
-> Comments?
+Signed-off-by: Tuomas Suutari <tuomas.suutari@gmail.com>
+---
+Hi again,
 
-I think it would be worthwhile to have branch->merge, branch->merge_nr, 
-and branch->merge_name all match, even if branch->remote is NULL, by 
-discarding the merge_name if the remote isn't specified.
+now I found another problem while importing SVN repo with git-svn.
 
-It might also be wise to check branch_has_merge_config() instead of the 
-test below, in any case, to match how the other code paths determine 
-whether there is tracking configured.
+To speed-up the import, I copied the SVN repo with rsync to localhost
+and used file:// URL for the import, but because I want to be able to
+track the history with svn+ssh:// later, I used the rewrite-root
+option. That seemed to break the merge detecting.
 
-> -- >8 --
-> Subject: [PATCH] push: fix segfault for odd config
-> 
-> If you have a branch.$X.merge config option, but no
-> branch.$X.remote, and your configuration tries to push
-> tracking branches, git will segfault.
-> 
-> The problem is that even though branch->merge_nr is 1, you
-> don't actually have an upstream since there is no remote.
-> Other callsites generally check explicitly that
-> branch->merge is not NULL, so let's do that here, too.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  builtin-push.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/builtin-push.c b/builtin-push.c
-> index 5633f0a..f7bc2b2 100644
-> --- a/builtin-push.c
-> +++ b/builtin-push.c
-> @@ -68,7 +68,7 @@ static void setup_push_tracking(void)
->  	struct branch *branch = branch_get(NULL);
->  	if (!branch)
->  		die("You are not currently on a branch.");
-> -	if (!branch->merge_nr)
-> +	if (!branch->merge_nr || !branch->merge)
->  		die("The current branch %s is not tracking anything.",
->  		    branch->name);
->  	if (branch->merge_nr != 1)
-> -- 
-> 1.7.0.215.g2da3b.dirty
-> 
-> 
+With this patch the merge detecting works also with rewrite-root
+option, but since there are no comments why the $self->rewrite_root
+was used in the first place, I have no idea, if this is the right
+thing to do.
+
+ git-svn.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 265852f..1cbddca 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2993,7 +2993,7 @@ sub find_extra_svk_parents {
+ 	for my $ticket ( @tickets ) {
+ 		my ($uuid, $path, $rev) = split /:/, $ticket;
+ 		if ( $uuid eq $self->ra_uuid ) {
+-			my $url = $self->rewrite_root || $self->{url};
++			my $url = $self->{url};
+ 			my $repos_root = $url;
+ 			my $branch_from = $path;
+ 			$branch_from =~ s{^/}{};
+@@ -3201,7 +3201,7 @@ sub find_extra_svn_parents {
+ 	# are now marked as merge, we can add the tip as a parent.
+ 	my @merges = split "\n", $mergeinfo;
+ 	my @merge_tips;
+-	my $url = $self->rewrite_root || $self->{url};
++	my $url = $self->{url};
+ 	my $uuid = $self->ra_uuid;
+ 	my %ranges;
+ 	for my $merge ( @merges ) {
+-- 
+1.7.0.2.ged48
