@@ -1,79 +1,78 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH 1/3] t9151: Fix a few commits in the SVN dump
-Date: Thu, 25 Feb 2010 12:14:20 +1300
-Message-ID: <4B85B2CC.3090509@vilain.net>
-References: <1266825442-32107-1-git-send-email-tuomas.suutari@gmail.com> <1266825442-32107-2-git-send-email-tuomas.suutari@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Tuomas Suutari <tuomas.suutari@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 00:23:28 2010
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCHv5 0/5] repo-local env vars handling
+Date: Thu, 25 Feb 2010 00:34:13 +0100
+Message-ID: <1267054458-11877-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	msysGit Mailinglist <msysgit@googlegroups.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 25 00:34:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkQZk-0006GE-2A
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 00:23:28 +0100
+	id 1NkQkR-0002nx-Hm
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 00:34:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758349Ab0BXXXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 18:23:23 -0500
-Received: from bertrand.catalyst.net.nz ([202.78.240.40]:51188 "EHLO
-	mail.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756178Ab0BXXXW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 18:23:22 -0500
-X-Greylist: delayed 538 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Feb 2010 18:23:22 EST
-Received: from localhost (localhost [127.0.0.1])
-	by mail.catalyst.net.nz (Postfix) with ESMTP id 086B232EA1;
-	Thu, 25 Feb 2010 12:14:21 +1300 (NZDT)
-X-Virus-Scanned: Debian amavisd-new at catalyst.net.nz
-Received: from mail.catalyst.net.nz ([127.0.0.1])
-	by localhost (bertrand.catalyst.net.nz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Kaxo85VcbEQv; Thu, 25 Feb 2010 12:14:20 +1300 (NZDT)
-Received: from [IPv6:2404:130:0:1000:21d:7dff:fe90:5fe0] (unknown [IPv6:2404:130:0:1000:21d:7dff:fe90:5fe0])
-	(Authenticated sender: samv)
-	by mail.catalyst.net.nz (Postfix) with ESMTPSA id 926E532815;
-	Thu, 25 Feb 2010 12:14:20 +1300 (NZDT)
-User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
-In-Reply-To: <1266825442-32107-2-git-send-email-tuomas.suutari@gmail.com>
-X-Enigmail-Version: 0.95.0
+	id S1758551Ab0BXXe0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 18:34:26 -0500
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:61827 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758420Ab0BXXeZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 18:34:25 -0500
+Received: by wwf26 with SMTP id 26so1593994wwf.19
+        for <git@vger.kernel.org>; Wed, 24 Feb 2010 15:34:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=/ai1NWL8APhUn+FLqPp/5lRajJc0ZMr26mMR+W8nLGE=;
+        b=pmz3ZVB1C6ZzSEtI/mSBhSMXRyRYwxjXRepErXexQIfQMZ0E5OfPHceY0bx2rN6rpX
+         LyvdSnkK52xPYB8pCZEE6cOJtxe7QEZo/InO4Utu77dNYRnC6Ld/kf+/mqyGQXIr5HjY
+         vXwq8eZdGv7EjnLFNFw7PWWJJuVLEXkx9zSQQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=DkAEhVDFMNVTlsrs6pEDz4FU4/S4QxlQcTL1V14swO8kR6mQBEqTOZmsChuz71yuW0
+         8Ayp+j+rpHARSSUeFpfjf9t918eRzIuzgzENCf1/5VrdQA7YVhRkITght/11ZIQqoPrk
+         tWblmOc/KnW2FZS/KdbcArVwdtEF2RFWUb5Vk=
+Received: by 10.216.165.148 with SMTP id e20mr283576wel.29.1267054464335;
+        Wed, 24 Feb 2010 15:34:24 -0800 (PST)
+Received: from localhost ([151.60.179.236])
+        by mx.google.com with ESMTPS id g9sm23873747gvc.18.2010.02.24.15.34.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 24 Feb 2010 15:34:23 -0800 (PST)
+X-Mailer: git-send-email 1.7.0.212.g5b851b.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141003>
 
-Tuomas Suutari wrote:
-> A few "svn cp" commands and commit commands were executed in incorrect
-> order. Therefore some of the desired commits were missing and some
-> were committed with wrong revision number in the commit message. This
-> made it hard to compare the produced git repository with the SVN
-> repository.
->
-> The dump file is updated too, but only the relevant parts and with
-> hand-edited timestamps to make history linear.
->   
+Changes from the previous iteration:
 
->  say "Make PARTIAL branch"
->  svn update
-> -i=$(commit $i "make partial branch")
->  svn cp trunk/subdir branches/partial
-> +i=$(commit $i "make partial branch")
->  
->  say "Make a commit to PARTIAL"
->  svn update
-> @@ -194,13 +194,13 @@ cd ../../
->  
->  say "Tagging trunk"
->  svn update
-> -i=$(commit $i "tagging v1.0")
->  svn cp trunk tags/v1.0
-> +i=$(commit $i "tagging v1.0")
->   
+* the first two patches were squashed together
+* local_repo_env_size is now a #define to the number of non-NULL entries in 
+  the list of repo-local env vars. The last patch is consequently adjusted.
 
-Whoops.  Yes, that looks eminently sensible, probably my fault :-).
+Giuseppe Bilotta (5):
+  Refactor list of of repo-local env vars
+  rev-parse: --local-env-vars option
+  shell setup: clear_local_git_env() function
+  submodules: ensure clean environment when operating in a submodule
+  is_submodule_modified(): clear environment properly
 
-Acked-by: Sam Vilain <sam@vilain.net>
-
-Sam
+ Documentation/git-rev-parse.txt |    6 ++++++
+ builtin-rev-parse.c             |    8 ++++++++
+ cache.h                         |    8 ++++++++
+ connect.c                       |   14 ++------------
+ environment.c                   |   15 +++++++++++++++
+ git-sh-setup.sh                 |    7 +++++++
+ git-submodule.sh                |   20 ++++++++++----------
+ submodule.c                     |   21 +++++++++++----------
+ 8 files changed, 67 insertions(+), 32 deletions(-)
