@@ -1,80 +1,175 @@
-From: Ian Hobson <ian@ianhobson.co.uk>
-Subject: Re: Handling non-git config files
-Date: Wed, 24 Feb 2010 18:27:50 +0000
-Message-ID: <4B856FA6.4050808@ianhobson.co.uk>
-References: <8440EA2C12E50645A68C4AA9887166513FC19C@SERVER.webdezign.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 3/3] fetch --all/--multiple: keep all the fetched branch
+ information
+Date: Wed, 24 Feb 2010 11:02:05 -0800
+Message-ID: <7vpr3uqwya.fsf_-_@alter.siamese.dyndns.org>
+References: <1267035726-2815-1-git-send-email-gitster@pobox.com>
+ <1267035726-2815-2-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Richard Lee <richard@webdezign.co.uk>
-X-From: git-owner@vger.kernel.org Wed Feb 24 19:43:18 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Lukashov <michael.lukashov@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 24 20:02:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkMCb-0007P2-W7
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 19:43:18 +0100
+	id 1NkMV5-0008Po-6D
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 20:02:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757530Ab0BXSnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 13:43:12 -0500
-Received: from queueout01-winn.ispmail.ntl.com ([81.103.221.31]:63575 "EHLO
-	queueout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757382Ab0BXSnL (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Feb 2010 13:43:11 -0500
-X-Greylist: delayed 921 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Feb 2010 13:43:10 EST
-Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout02-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20100224182748.WBQS4474.mtaout02-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>
-          for <git@vger.kernel.org>; Wed, 24 Feb 2010 18:27:48 +0000
-Received: from jupiter.ianhobson.co.uk ([86.12.69.89])
-          by aamtaout03-winn.ispmail.ntl.com
-          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
-          id <20100224182748.KIXB2093.aamtaout03-winn.ispmail.ntl.com@jupiter.ianhobson.co.uk>
-          for <git@vger.kernel.org>; Wed, 24 Feb 2010 18:27:48 +0000
-Received: (qmail 22143 invoked by uid 453); 24 Feb 2010 18:27:46 -0000
-X-Virus-Checked: Checked by ClamAV on ianhobson.co.uk
-Received: from pc-00012.ianhobson.co.uk (HELO [192.168.0.12]) (192.168.0.12)
-    by ianhobson.co.uk (qpsmtpd/0.40) with ESMTP; Wed, 24 Feb 2010 18:27:45 +0000
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <8440EA2C12E50645A68C4AA9887166513FC19C@SERVER.webdezign.local>
-X-Cloudmark-Analysis: v=1.1 cv=1ggfb5FlKZQUfF3vzm9UBYZ2uTfLsbs/8dSljwg5+mE= c=1 sm=0 a=Oh8D53mqLQd77L9eggoA:9 a=Cubwwa4HWokI2cgHK_EA:7 a=BIsWlLbjxtT7Sxfum4xkBrRUzpQA:4 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1757536Ab0BXTCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 14:02:18 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59292 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757364Ab0BXTCR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 14:02:17 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B52A9CD79;
+	Wed, 24 Feb 2010 14:02:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6CB4og6P+KXb4L47736Oro5phYc=; b=BVr0GX
+	BwWAUkpDo3sKmSOjEO0O+BbTRYDsWCS8hxNo1OmmyuCXGQUwCKEGqpO9ZxTKLJBl
+	u8d1pepfHP77bDn6wKJGQogdaI8IukysAwN30TUlsi3CPz+wyMzrBd5t3d3tDnxH
+	ryphs5omcRkwu3YsifXkaGq9rmls47f+aima8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jNHbYT1+aS+9O3nDCLInMd5G36Tem8WT
+	7nxY0KxLCqdvj8eguCJBccLlS/mKUH0XGlmM5pOBnJiNRxpVaxPCeFVFpJpKO225
+	afHaioP6VdsQMEeBxFOGq7zBfVLCUcYENfUMOOGkqqSmnPH69DCEF7GHBZAUqN3/
+	OvVFeBukjYk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1838D9CD76;
+	Wed, 24 Feb 2010 14:02:12 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 20C519CD73; Wed, 24 Feb
+ 2010 14:02:07 -0500 (EST)
+In-Reply-To: <1267035726-2815-2-git-send-email-gitster@pobox.com> (Junio C.
+ Hamano's message of "Wed\, 24 Feb 2010 10\:22\:06 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1D49ADA4-2177-11DF-8361-E038EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140970>
 
-Richard Lee wrote:
-> So my quesstion is that is there any way to have several checked out
-> copies of a git repo each with their own slightly different config
-> files, yet still being able to perform git operations with respect to a
-> centralised repository as if they were identical?
->
->   
-Hi Richard,
+Since "git fetch" learned "--all" and "--multiple" options, it has become
+tempting for users to say "git pull --all".  Even though it may fetch from
+remotes that do not need to be fetched from for merging with the current
+branch, it is handy.
 
-Yes. They are called branches :)
+"git fetch" however clears the list of fetched branches every time it
+contacts a different remote.  Unless the current branch is configured to
+merge with a branch from a remote that happens to be the last in the list
+of remotes that are contacted, "git pull" that fetches from multiple
+remotes will not be able to find the branch it should be merging with.
 
-What I do is have a branch for each version that I need.
+Make "fetch" clear FETCH_HEAD (unless --append is given) and then append
+the list of branches fetched to it (even when --apend is not given).  That
+way, "pull" will be able to find the data for the branch being merged in
+FETCH_HEAD no matter where the remote appears in the list of remotes to be
+contacted by "git fetch".
 
-To fix a problem I checkout master, make the repair, and commit.
+Reported-by: Michael Lukashov
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Then to deploy that change I perform three steps (for each production 
-version).
+ * This obviously builds on top of the earlier two clean-up patches.
 
-git checkout <clientBranch>
-git rebase master
-rsync to the production server (ignoring .git and temp files)
+ builtin-fetch.c         |   29 ++++++++++++++++++++++-------
+ t/t5521-pull-options.sh |   18 ++++++++++++++++++
+ 2 files changed, 40 insertions(+), 7 deletions(-)
 
-All the differences between versions - config files, images, logos, etc 
-- are all included in the GIT,
-repo and I don't have to worry about them. To set up the branches, I 
-simply checked out a new branch for each and applied the changes for 
-that production version, and committed. It works very well in practise. 
-(Do take care to checkout the version you want to work on before you 
-start work, or you may have to lose your work to recover!).
-
-Ian
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index 61b2e40..b059d65 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -651,6 +651,17 @@ static void check_not_current_branch(struct ref *ref_map)
+ 			    "of non-bare repository", current_branch->refname);
+ }
+ 
++static int truncate_fetch_head(void)
++{
++	char *filename = git_path("FETCH_HEAD");
++	FILE *fp = fopen(filename, "w");
++
++	if (!fp)
++		return error("cannot open %s: %s\n", filename, strerror(errno));
++	fclose(fp);
++	return 0;
++}
++
+ static int do_fetch(struct transport *transport,
+ 		    struct refspec *refs, int ref_count)
+ {
+@@ -672,11 +683,9 @@ static int do_fetch(struct transport *transport,
+ 
+ 	/* if not appending, truncate FETCH_HEAD */
+ 	if (!append && !dry_run) {
+-		char *filename = git_path("FETCH_HEAD");
+-		FILE *fp = fopen(filename, "w");
+-		if (!fp)
+-			return error("cannot open %s: %s\n", filename, strerror(errno));
+-		fclose(fp);
++		int errcode = truncate_fetch_head();
++		if (errcode)
++			return errcode;
+ 	}
+ 
+ 	ref_map = get_ref_map(transport, refs, ref_count, tags, &autotags);
+@@ -784,8 +793,8 @@ static int add_remote_or_group(const char *name, struct string_list *list)
+ static int fetch_multiple(struct string_list *list)
+ {
+ 	int i, result = 0;
+-	const char *argv[10] = { "fetch" };
+-	int argc = 1;
++	const char *argv[11] = { "fetch", "--append" };
++	int argc = 2;
+ 
+ 	if (dry_run)
+ 		argv[argc++] = "--dry-run";
+@@ -804,6 +813,12 @@ static int fetch_multiple(struct string_list *list)
+ 	else if (verbosity < 0)
+ 		argv[argc++] = "-q";
+ 
++	if (!append && !dry_run) {
++		int errcode = truncate_fetch_head();
++		if (errcode)
++			return errcode;
++	}
++
+ 	for (i = 0; i < list->nr; i++) {
+ 		const char *name = list->items[i].string;
+ 		argv[argc] = name;
+diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
+index 84059d8..1b06691 100755
+--- a/t/t5521-pull-options.sh
++++ b/t/t5521-pull-options.sh
+@@ -72,4 +72,22 @@ test_expect_success 'git pull --force' '
+ 	)
+ '
+ 
++test_expect_success 'git pull --all' '
++	mkdir clonedmulti &&
++	(cd clonedmulti && git init &&
++	cat >>.git/config <<-\EOF &&
++	[remote "one"]
++		url = ../parent
++		fetch = refs/heads/*:refs/remotes/one/*
++	[remote "two"]
++		url = ../parent
++		fetch = refs/heads/*:refs/remotes/two/*
++	[branch "master"]
++		remote = one
++		merge = refs/heads/master
++	EOF
++	git pull --all
++	)
++'
++
+ test_done
+-- 
+1.7.0.207.gac4ec
