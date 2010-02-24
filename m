@@ -1,97 +1,73 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv3 2/5] connect: use static list of repo-local env vars
-Date: Wed, 24 Feb 2010 08:33:15 +0100
-Message-ID: <cb7bb73a1002232333o2470b8d5x3dd9bd22dd30764e@mail.gmail.com>
-References: <1266968136-11129-1-git-send-email-giuseppe.bilotta@gmail.com> 
-	<1266968136-11129-3-git-send-email-giuseppe.bilotta@gmail.com> 
-	<4B84D1BD.2030908@viscovery.net>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] BROKEN -- format-patch: learn to fill comment section
+ of email from notes
+Date: Tue, 23 Feb 2010 23:45:46 -0800
+Message-ID: <4B84D92A.8060804@gmail.com>
+References: <6cf9010742df96e0c68ef8adc1ab392c08525bc2.1266946262.git.trast@student.ethz.ch> <fe0d69eba1b0265c0ca913831ba26e643062f8eb.1266946248.git.trast@student.ethz.ch> <201002231837.11245.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	msysGit Mailinglist <msysgit@googlegroups.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Feb 24 08:33:44 2010
+	Johannes Sixt <j6t@kdbg.org>, Johan Herland <johan@herland.net>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Feb 24 08:45:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkBkc-00075D-Jc
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 08:33:43 +0100
+	id 1NkBwU-0004uw-LM
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 08:45:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753014Ab0BXHdh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Feb 2010 02:33:37 -0500
-Received: from mail-ew0-f212.google.com ([209.85.219.212]:44051 "EHLO
-	mail-ew0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752181Ab0BXHdh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Feb 2010 02:33:37 -0500
-Received: by ewy4 with SMTP id 4so694502ewy.28
-        for <git@vger.kernel.org>; Tue, 23 Feb 2010 23:33:35 -0800 (PST)
+	id S1755852Ab0BXHpv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 02:45:51 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:48790 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755814Ab0BXHpu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 02:45:50 -0500
+Received: by mail-gw0-f46.google.com with SMTP id 16so999897gwj.19
+        for <git@vger.kernel.org>; Tue, 23 Feb 2010 23:45:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=n2QNaGcPEBFVUJrp5O8mhlMsG47riIuzk6iHVoAx+js=;
-        b=M2HzQurKoQvDB5C4fS92C1VJ7SQJm5th+hBbLTVemlKUbw4BnLxSeG98ZCWo5wIJnQ
-         wRiOtiYDiBpt0ggU9n5C9H4aCpL2n/SP1vNAeeM9uKQfhKvfK5LNUZX8KNpSO+Rln/a3
-         JEfqhxFZT6tG6eh95IQS6XGEN3BMb1QLavKhM=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=CnPt1Bbk0R6J4ztjQwS7KyFcSiVnWfWw9D2oXjp5BpY=;
+        b=r/+8jfBVX0o/GSj33ADcFDLrsClURimzAKIy+dm33r9wpcRiQpxtJRe5ozzZmhsR8u
+         4kbG023O5hodcUdspXFlZQclWzz7Ph2D6FoMUMJ8qk9GypJ/wqQDjGTEBT4D7AcU4EN1
+         3mb77P1IRTqKOGgSpFcm5USg73FlOGbqw/iCQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=wS2RtxT1Xn50RBRICpNXYlfqPkYotUdOuDLV3Bb8U/l62sfMyccxlqF0t2NNqTKct4
-         GW4sT55x6qSiXQJXqAiMtz6kod4YELP+F3tHNJyNypp2ppxI9gigMTXv96I0mSlirftw
-         XsqPCUXX8zj1e7Nl5Iopc9LQ4Eo8qJKvXA3h8=
-Received: by 10.213.49.140 with SMTP id v12mr6659432ebf.6.1266996815259; Tue, 
-	23 Feb 2010 23:33:35 -0800 (PST)
-In-Reply-To: <4B84D1BD.2030908@viscovery.net>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=GgKW9x3DUrULtE5zSM3NXJfYt3i64xwhN0DC5+uADyDpOeiewrTIQ3I2373LknUM32
+         4Nla9BHAy1uuAtJQBySG4rvrwx0sgWmTeAywiwH98W7uJoxMOsTfwo5piUKkta8RhVIt
+         1++7sfI6FCVI51lNTLswzje7YzsnJ4Cd0BUec=
+Received: by 10.100.15.19 with SMTP id 19mr2111424ano.72.1266997549905;
+        Tue, 23 Feb 2010 23:45:49 -0800 (PST)
+Received: from ?192.168.1.5? (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id 6sm624337yxg.66.2010.02.23.23.45.47
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 23 Feb 2010 23:45:49 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7pre) Gecko/20091214 Shredder/3.0.1pre
+In-Reply-To: <201002231837.11245.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140915>
 
-Doh. I knew I should have waitied a little more before sending the new
-series ...
-
-On Wed, Feb 24, 2010 at 8:14 AM, Johannes Sixt <j.sixt@viscovery.net> w=
-rote:
-> Giuseppe Bilotta schrieb:
->> - =A0 =A0 =A0 =A0 =A0 =A0 /* remove these from the environment */
+On 02/23/2010 09:37 AM, Thomas Rast wrote:
+> On Tuesday 23 February 2010 18:34:56 Thomas Rast wrote:
+>> [PATCH] BROKEN -- format-patch: learn to fill comment section of email from notes
 >
-> You shouldn't remove this comment.
+> BTW, I forgot to say: the breakage is visible in either t4013 or
+> t4014, depending which way you tweak the newlines.
 
-Right. I should probably rephrase it a little, though.
+Last time I tried to touch the code in this area I gave up. It looks
+like you're experiencing the same problem where pretty formats cause
+problems in the tests. I would love to see this sorted out so I can
+resurrect my dead topic "log-tree: always add --- marker when options
+are patch and a stat".
 
->> - =A0 =A0 =A0 =A0 =A0 =A0 const char *env[] =3D {
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ALTERNATE_DB_ENVIRONMENT,
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 DB_ENVIRONMENT,
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 GIT_DIR_ENVIRONMENT,
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 GIT_WORK_TREE_ENVIRONMENT,
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 GRAFT_ENVIRONMENT,
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 INDEX_ENVIRONMENT,
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 NO_REPLACE_OBJECTS_ENVIRON=
-MENT,
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 NULL
->> - =A0 =A0 =A0 =A0 =A0 =A0 };
->> - =A0 =A0 =A0 =A0 =A0 =A0 conn->env =3D env;
->> + =A0 =A0 =A0 =A0 =A0 =A0 conn->env =3D local_repo_env;
->
-> IMO, you should squash this patch and the previous one under the subj=
-ect
-> "Move list of repo-local environment variables to a public place", an=
-d
-> that public place could be environment.c instead of a new file cache.=
-c
-> (the name "cache.c" is definitely wrong).
-
-The list is now the right place (v4). The squashing is most definitely
-a good idea, gives a better idea of the code movement.
-
---=20
-Giuseppe "Oblomov" Bilotta
+Good luck!
