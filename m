@@ -1,98 +1,48 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: Re: [PATCH v2 2/4] apply: Allow blank context lines to match beyond 
-	EOF
-Date: Thu, 25 Feb 2010 00:02:52 +0100
-Message-ID: <6672d0161002241502h2f80b511j445465fdc2fd16ab@mail.gmail.com>
-References: <4B857CE4.4000201@gmail.com>
-	 <7vaauyfj3k.fsf@alter.siamese.dyndns.org>
+From: Nick Triantos <nick@perceptivepixel.com>
+Subject: Roadmap to better handle big files?
+Date: Wed, 24 Feb 2010 18:00:33 -0500
+Message-ID: <B85968F5-E7C2-499D-A8BE-0160BA575F10@perceptivepixel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 00:03:02 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 25 00:05:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkQFv-0005X5-LY
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 00:03:00 +0100
+	id 1NkQIc-0006mb-CR
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 00:05:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758150Ab0BXXCy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Feb 2010 18:02:54 -0500
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:38742 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754841Ab0BXXCx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Feb 2010 18:02:53 -0500
-Received: by wwf26 with SMTP id 26so1580457wwf.19
-        for <git@vger.kernel.org>; Wed, 24 Feb 2010 15:02:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=CLSPWqh649NlUnNYLbbE9gSmqSQli0YxJwUqmyRZRqw=;
-        b=MqfRZYOoFk//5ACkiwGMVucnkPUnLkqaZSYkAF75ziilazmq5/Ve6KFest1lA//K1U
-         ZwZNzlwYX3x1R52GxgeOU7G78Yws/vVZkopdSIR7odiG+Z25s2VoGexGPkaNOt70PUy5
-         L9ykk6cTgZNZkzKZBPgztgjWi7iqj1nBPLLuA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=AipM9uxBszxndkb56zW2kXKStlef5KGDtwHtiEZESn+ILTHygUqX0Vr1lOT3Ene2Hb
-         EzPs3aW4yP1s0rtXUo77umGSWczvcdEjnnpa1R+DonLFjQB7CFZPL9yC3LkD2T6dsNJm
-         kZqkbVMiIy5MkH7NakcefDHwUl6i64CTDMhGo=
-Received: by 10.216.90.142 with SMTP id e14mr259079wef.85.1267052572229; Wed, 
-	24 Feb 2010 15:02:52 -0800 (PST)
-In-Reply-To: <7vaauyfj3k.fsf@alter.siamese.dyndns.org>
+	id S1758163Ab0BXXFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 18:05:41 -0500
+Received: from relay.ihostexchange.net ([66.46.182.58]:32954 "EHLO
+	relay.ihostexchange.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757910Ab0BXXFk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Feb 2010 18:05:40 -0500
+X-Greylist: delayed 303 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Feb 2010 18:05:40 EST
+Received: from VMBX125.ihostexchange.net ([192.168.40.5]) by
+ hub108.ihostexchange.net ([66.46.182.58]) with mapi; Wed, 24 Feb 2010
+ 18:00:35 -0500
+Thread-Topic: Roadmap to better handle big files?
+Thread-Index: Acq1pSw034+LiTO3Rn6Xv9yOobrqyA==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140999>
 
-2010/2/24 Junio C Hamano <gitster@pobox.com>:
-> Very nicely done.
+Hi,
 
-Thanks! :)
+Is there any planned functionality to better support large files in git?  (> 100MB / file)
 
-> On the other hand "limit" does not have such a good definition, other=
- than
-> as a work around to bypass line-number check when we are trying to ma=
-tch
-> at the end. =C2=A0It might be cleaner to read if we move the problema=
-tic "line
-> numbers must match" logic and eliminate this variable, like the attac=
-hed
-> patch does on top of this one.
+We've been happily using git but we now have some files which we'd very much like to have under the same version control as our source code, and some of those files have been as large as 450MB/file.  We are looking at chunking the file up before commiting it to git, but is there any plan to better support chunking of these files during repacks or other operations?  Right now, it appears either the whole file, or the whole collection of files in a commit (not sure which) can need to be resident in memory up to twice, from reading various places on the web.  Our poor 32-bit server is barfing on this.  We are going to put more RAM and a 64bit OS on the machine, but this still seems like an unnecessary design decision.
 
-Yes, your version is better. Having a "limit" variable no longer makes
-sense (my original patch used "limit" in two places). Feel free to
-squeeze it in.
-
-> I couldn't figure out how this would interact with the ignore_ws_chan=
-ge
-> codepath, though. =C2=A0That one shows a clear sign of being bolted o=
-n as an
-> afterthought (once you fall into that "if()" statement you will not c=
-ome
-> back).
-
-Yes, it does seem bolted on.
-
-I haven't looked much at that if() statement, because I
-sort of assumed that because of the return it couldn't do any
-harm.
-
-It is too late in my time zone for me to think clearly, but it does
-seem that I was wrong and that I'll need to do some changes in
-that "if()" statement, and also write some more tests for
-the combination of --whitespace=3Dfix and --ignore-space-change.
-
-I'll be back another day.
-
-Thanks for the review.
-
---=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+thanks very much,
+-Nick
