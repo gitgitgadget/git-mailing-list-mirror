@@ -1,81 +1,104 @@
-From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
-Subject: [PATCH v2 0/4] Apply blanks at EOF
-Date: Wed, 24 Feb 2010 20:23:56 +0100
-Message-ID: <4B857CCC.7080809@gmail.com>
+From: "Scott R. Godin" <scottg.wp-hackers@mhg2.com>
+Subject: Re: [RFE] pre/post-stash hooks
+Date: Wed, 24 Feb 2010 14:31:55 -0500
+Organization: MAD House Graphics
+Message-ID: <hm3urb$1nf$1@dough.gmane.org>
+References: <hlmi1o$fk5$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 24 20:31:57 2010
+X-From: git-owner@vger.kernel.org Wed Feb 24 20:32:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkMxc-0001rL-JC
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 20:31:52 +0100
+	id 1NkMy4-00025d-FF
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 20:32:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757762Ab0BXTbs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Feb 2010 14:31:48 -0500
-Received: from mail-ew0-f212.google.com ([209.85.219.212]:52915 "EHLO
-	mail-ew0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757739Ab0BXTbq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 14:31:46 -0500
-Received: by ewy4 with SMTP id 4so1219910ewy.28
-        for <git@vger.kernel.org>; Wed, 24 Feb 2010 11:31:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=P8h6ehkoCE8CEa/wJWol11oIJC5FTfbJUOsKRRO3Y9E=;
-        b=fJM2DYLzARsSUb8s8FdVU4OxzPbWz6w9+w0qdfA/tBTT8ND4oryJ1ZI0Y5HEQMOVEj
-         ZbcKWPigbEX7+Mxe3PYthvESESjoVxP6o1b22mwzluLT+PAJo5g1qBFgH8UZ1X31a4Xf
-         cqppMGc5tmaeWyYnEyPpRVHYfblcXikFv418o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=cOFP2QIy9b90c9m+/PAbfU9PkfKErIOT4UpaQ6P3Hk5gA1ft9JeI9ZIeawIfd5JbIW
-         VFNefWdzyNLJMaqWxlJM63Guyu2YFpVAHZCG123h1EMkwhrceYH3xBPxmmQ3w+0vMSwq
-         dgqx4wgUu35Pm/FSegmwNIv7BspY9litmyerQ=
-Received: by 10.213.1.143 with SMTP id 15mr645760ebf.55.1267039438823;
-        Wed, 24 Feb 2010 11:23:58 -0800 (PST)
-Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
-        by mx.google.com with ESMTPS id 23sm359111eya.42.2010.02.24.11.23.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 24 Feb 2010 11:23:57 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
+	id S1757769Ab0BXTcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 14:32:15 -0500
+Received: from lo.gmane.org ([80.91.229.12]:59516 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757765Ab0BXTcO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 14:32:14 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NkMxt-0001z5-IW
+	for git@vger.kernel.org; Wed, 24 Feb 2010 20:32:09 +0100
+Received: from pool-71-187-150-2.nwrknj.fios.verizon.net ([71.187.150.2])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 24 Feb 2010 20:32:09 +0100
+Received: from scottg.wp-hackers by pool-71-187-150-2.nwrknj.fios.verizon.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 24 Feb 2010 20:32:09 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: pool-71-187-150-2.nwrknj.fios.verizon.net
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7) Gecko/20100120 Fedora/3.0.1-1.fc11 Lightning/1.0b2pre Thunderbird/3.0.1
+In-Reply-To: <hlmi1o$fk5$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140981>
 
-Here is my revised patch series.=20
+giving this a bump since I haven't received any replies on it yet, and 
+it's a valid question, IMHO.
 
-Bj=C3=B6rn Gustavsson (4):
-  apply: Remove the quick rejection test
-    Now a separate commit for removing the quick reject and
-    clarifying another test, as well as a new test case.
+On 02/19/2010 12:33 PM, Scott R. Godin wrote:
+> While I had known about git stash, and just never used it, I'd finally
+> gotten to the point where it was needed, only to discover something that
+> I found interesting.
+>
+> My use case may a bit rare at the moment, I'll admit, but not at all
+> far-fetched, and probably growing in usage as time goes on.
+>
+> In contrib/hooks is the script 'setgitperms.perl' which, when added to
+> pre-commit, post-merge, and post-checkout, makes sure to track the file
+> permissions fully, not just +/-x. This can be vitally important for
+> webdevelopers who must keep certain permissions on certain directories,
+> such as for e-commerce solutions like Magento, etc, so that the clients
+> may upload new product images through the interface rather than via ftp.
+>
+> However when I recently used stash to push some changes aside while I
+> did something else first, and then ran git stash pop, I realized that
+> there weren't any hooks that would enable setgitperms.perl to be
+> ensuring/tracking the file permissions are applied correctly after stash
+> usage.
+>
+> Granted that full directory/file permissions may not be all that
+> important to some of you coders, but I can assure you that web
+> developers may not see it that way.
+>
+> Again granted, I could probably set up a Makefile, but not everyone
+> knows how to do that (particularly those webdevelopers who aren't coders
+> who would typically be familiar with Makefiles.
+>
+> Also granted I could probably find a way to work around this issue with
+> an alias, but my thought is that I shouldn't have to.
+>
+> There are some of us who exist who have this funny thought that
+> computers should be able to do things for us without us having to
+> explicitly tell them to, specifically, every time. We'd prefer to set
+> things up generally "just do this EVERY time for EVERYthing" and forget
+> about it, and let the computer handle it. I'm sure you're familiar with
+> us, since we are us. :-)
+>
+> So, with this in mind, in addition to requesting pre/post-stash hooks
+> just for this alone, I'd like to solicit some thought from the rest of
+> you as to potential possible usages/requirements for said hooks for
+> reasons _other_ than running 'setgitperms.perl'
+>
+> Are there any reasons why pre/post-stash hooks _shouldn't_ exist?
+>
+> How difficult would it be to implement?
+>
 
-  apply: Allow blank context lines to match beyond EOF
-    At least one non-blank context line must now match before
-    the end of file. Rewrote my own changes in the beginning
-    of match_fragment() in a way that I think is clearer.
 
-  t4124: Add additional tests of --whitespace=3Dfix
-    More test cases.
-
-  t3417: Add test cases for "rebase --whitespace=3Dfix"
-    No changes.
-
- builtin-apply.c                  |  146 ++++++++++++++++++++++++++++++=
--------
- t/t3417-rebase-whitespace-fix.sh |  126 ++++++++++++++++++++++++++++++=
-++
- t/t4104-apply-boundary.sh        |    9 +++
- t/t4124-apply-ws-rule.sh         |   85 ++++++++++++++++++++++
- 4 files changed, 338 insertions(+), 28 deletions(-)
- create mode 100755 t/t3417-rebase-whitespace-fix.sh
+-- 
+(please respond to the list as opposed to my email box directly,
+unless you are supplying private information you don't want public
+on the list)
