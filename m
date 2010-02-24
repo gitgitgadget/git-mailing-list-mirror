@@ -1,135 +1,97 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: confusion over git-cherry-pick, git-merge and git-cherry
-Date: Thu, 25 Feb 2010 00:07:01 +0100
-Message-ID: <201002250007.01934.trast@student.ethz.ch>
-References: <20100224213923.GV14244@morganstanley.com>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv4 1/6] environment: static list of repo-local env vars
+Date: Thu, 25 Feb 2010 00:11:05 +0100
+Message-ID: <cb7bb73a1002241511w1ed2e5e7pbc4565b81a6a1039@mail.gmail.com>
+References: <1266996196-25978-1-git-send-email-giuseppe.bilotta@gmail.com> 
+	<1266996196-25978-2-git-send-email-giuseppe.bilotta@gmail.com> 
+	<7vhbp64odi.fsf@alter.siamese.dyndns.org> <cb7bb73a1002241120i4bbbce0bl50460c76db0c6529@mail.gmail.com> 
+	<7vocjemnnq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Kevin Green <Kevin.T.Green@morganstanley.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 00:07:35 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>,
+	msysGit Mailinglist <msysgit@googlegroups.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 00:11:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkQKI-0007bf-Qp
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 00:07:31 +0100
+	id 1NkQOC-00013q-2o
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 00:11:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758195Ab0BXXH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 18:07:26 -0500
-Received: from gwse.ethz.ch ([129.132.178.237]:27806 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758181Ab0BXXHZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 18:07:25 -0500
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.234.1; Thu, 25 Feb
- 2010 00:07:23 +0100
-Received: from thomas.localnet (84.74.100.59) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Thu, 25 Feb
- 2010 00:07:02 +0100
-User-Agent: KMail/1.13.0 (Linux/2.6.31.12-0.1-desktop; KDE/4.4.0; x86_64; ; )
-In-Reply-To: <20100224213923.GV14244@morganstanley.com>
+	id S1758310Ab0BXXL1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Feb 2010 18:11:27 -0500
+Received: from mail-ew0-f220.google.com ([209.85.219.220]:53896 "EHLO
+	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758228Ab0BXXL0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Feb 2010 18:11:26 -0500
+Received: by ewy20 with SMTP id 20so1291656ewy.21
+        for <git@vger.kernel.org>; Wed, 24 Feb 2010 15:11:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=fidru1ElauBx3ruvR8W3WxLIHSTQKa35qHucSKbhjog=;
+        b=dTVVpxFyV/MY0/DGe1NFtA73TK6bxbdUCicZe2Wo+t1hI1ctVmE7/jfgRoEohsDRYe
+         AyKTQv8w9Rl01nINHjwEaLyFnVkG9MWRwBVb3RJCP3cPazUMQdNtcEicoo6t/bpZbvZ4
+         BBVQn6qZJD3MfzYaLVFK+h2g98eRy8XjJIzAA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Z0ncPouvdTBsEAPjFtXD88czhJBXc6J4dxqX7d2OYH/4+peaTCAb5x6IGiJO5utMdh
+         2zjqB2+m/QOS546idi/HpMfv1MFCq/j8gAnsY2JVQe+MdqJWNRhsMIKfs6l4dqCaBW9E
+         Cvvz/iAL04hyvHGpeC1ywUe6cAMVHQpHJiplw=
+Received: by 10.213.109.219 with SMTP id k27mr803444ebp.37.1267053085118; Wed, 
+	24 Feb 2010 15:11:25 -0800 (PST)
+In-Reply-To: <7vocjemnnq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141001>
 
-On Wednesday 24 February 2010 22:39:23 Kevin Green wrote:
->   Here's what the history currently looks like:
+On Wed, Feb 24, 2010 at 8:36 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 >
+>> On Wed, Feb 24, 2010 at 4:58 PM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>>> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+>>>
+>>>> +/* Repository-local GIT_* environment variables */
+>>>> +const char *const local_repo_env[] =3D {
+>>>> + =A0 =A0 ALTERNATE_DB_ENVIRONMENT,
+>>>> + =A0 =A0 CONFIG_ENVIRONMENT,
+>>>> + =A0 =A0 DB_ENVIRONMENT,
+>>>> + =A0 =A0 GIT_DIR_ENVIRONMENT,
+>>>> + =A0 =A0 GIT_WORK_TREE_ENVIRONMENT,
+>>>> + =A0 =A0 GRAFT_ENVIRONMENT,
+>>>> + =A0 =A0 INDEX_ENVIRONMENT,
+>>>> + =A0 =A0 NO_REPLACE_OBJECTS_ENVIRONMENT,
+>>>> + =A0 =A0 NULL
+>>>> +};
+>>>> +
+>>>> +const unsigned int local_repo_env_size =3D ARRAY_SIZE(local_repo_=
+env);
+>>>
+>>> This does not look very useful for two reasons.
 >
->                       B'-----M beta
->                     /       /
->                o---A---B---C alpha
->
->
-> I would expect git-cherry to recognize that B' has the same content as
-> B and thus show me a '-' sign in front.  Instead, I get the following
-> output from 'git-cherry alpha beta'
->
->   $ git cherry alpha beta
->   + B'
-[...]
-> Can someone please explain to me why git-cherry doesn't notice that the
-> duplicate commit has the same content?  Shouldn't it?   Shouldn't I get
-> the following output:
->
->   $ git cherry alpha beta
->   - B'
+> By the way, I said "frustrating" but didn't mean we should bend backw=
+ards.
+> The earlier one is more than Ok, and is certainly better than having
+> local_repo_env_size that is not very useful in practice.
 
-The problem here is that when looking at the range alpha..beta as
-above, git-cherry only filters out commits in beta..alpha.  I suspect
-this is an optimization decision, to avoid having to scan more
-history.  It's sort-of implied in the manpage when talking about the
-fork-point [which is an extremely old term for the merge-base from the
-very first docs back in 52a22d1 ([PATCH] Subject: [PATCH] Add some
-documentation., 2005-08-26)!].
+But I'd like a manually-set local_repo_env_size than the gimmicks
+necessary if it's not there (plus the runtime failure). If there are
+no other corrections, I'll send a new series (that also squashes the
+first two patches per Johannes' suggestion) and the #define
 
-Now of course your merge means beta..alpha is empty.
-
-By the way, git log --left-right --cherry-pick alpha...beta does the
-same.
-
-> To give some further background on what I'm trying to do, I would like
-> to prevent changes getting made in the beta branch that don't already
-> exist in alpha.  I'm enforcing this with a server side hook that does a
-> git-cherry and checks if any of the lines start with a '+'.  This works
-> great until I allow changes to be cherry-picked from alpha.  The first
-> cherry-pick works, but then when the whole of alpha is later merged in,
-> the hook fails to allow any subsequent push to 'beta'.
-
-I tried to come up with a neat solution, possibly using boundary
-commits, but unfortunately there seems to be another problem.  Suppose
-your history is this:
-
-  *   79a8170 (HEAD, beta) Merge branch 'alpha' into beta
-  |\
-  | * 5c8e233 (alpha) Revert "B"
-  * | 26f9c5f B
-  | * 1d5e497 B
-  | * a1eaae7 bar
-  |/
-  * 8c675da foo
-
-I.e., after B was cherry-picked over to beta, it was reverted on
-alpha.  In the presumed "unstable" and "more stable" branch I'm
-reading into your model, this probably indicates that B was bad and
-needs to be thrown out.
-
-The merge, however, appears to "resurrect" the change because it only
-looks at the differences between the merge-base (foo) and alpha/beta,
-respectively.  This is the right behaviour for a merge: one side did a
-change B where the other did nothing.
-
-So no matter how well you filter your beta branch, this model doesn't
-give the right results anyway.
-
-That being said, you can obviously brute force your idea by checking
-whether all patch ids in 'git log -p old-beta..beta | git patch-id'
-also appear in 'git log -p alpha | git patch-id', where 'old-beta' is
-what the hook got as the old value of 'beta'.  It will just get
-unbearably slow really quick because the latter is an unrestricted
-'log' and runs all the way back to your history *while generating
-diffs*, so you'll want to cache that list and only add the new ones as
-they arrive.
-
-> The output of git-log looks like this (which is also unfortunate):
->
->   $ git log --pretty=oneline
->   M  Merge branch 'alpha' into beta
->   B' change 2
->   C  change 3
->   B  change 2
->   A  change 1
->   o  initial commit
-
-Why is that unfortunate?
-
-If you mean the ordering, look into --topo-order or --date-order.
-
---
-Thomas Rast
-trast@{inf,student}.ethz.ch
+--=20
+Giuseppe "Oblomov" Bilotta
