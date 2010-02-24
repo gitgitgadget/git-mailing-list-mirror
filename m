@@ -1,117 +1,147 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv4 1/6] environment: static list of repo-local env vars
-Date: Wed, 24 Feb 2010 20:20:14 +0100
-Message-ID: <cb7bb73a1002241120i4bbbce0bl50460c76db0c6529@mail.gmail.com>
-References: <1266996196-25978-1-git-send-email-giuseppe.bilotta@gmail.com> 
-	<1266996196-25978-2-git-send-email-giuseppe.bilotta@gmail.com> 
-	<7vhbp64odi.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
+Subject: [PATCH v2 1/4] apply: Remove the quick rejection test
+Date: Wed, 24 Feb 2010 20:24:11 +0100
+Message-ID: <4B857CDB.3070603@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>,
-	msysGit Mailinglist <msysgit@googlegroups.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 24 20:20:43 2010
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 24 20:24:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkMmp-0005Yf-1G
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 20:20:43 +0100
+	id 1NkMqK-0007ES-P1
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 20:24:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757637Ab0BXTUh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Feb 2010 14:20:37 -0500
-Received: from mail-ew0-f212.google.com ([209.85.219.212]:59357 "EHLO
-	mail-ew0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757610Ab0BXTUg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Feb 2010 14:20:36 -0500
-Received: by ewy4 with SMTP id 4so1212134ewy.28
-        for <git@vger.kernel.org>; Wed, 24 Feb 2010 11:20:34 -0800 (PST)
+	id S1757667Ab0BXTYQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Feb 2010 14:24:16 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:63598 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757640Ab0BXTYP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 14:24:15 -0500
+Received: by ey-out-2122.google.com with SMTP id 25so25818eya.19
+        for <git@vger.kernel.org>; Wed, 24 Feb 2010 11:24:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:content-type
          :content-transfer-encoding;
-        bh=lxpauZi3tHIMLlj1n0/nIcEiL73czQE3suHIux5s/tE=;
-        b=OA7jYRt4wjP1NGBSwoZQu27Swi6Ey/t/Po4Y8df89QKe9BvKJQl7Nhs2k11ZPN/mwt
-         vticMt7wQN8Dx23VFvrPCv3JdZ9RVYwRve93fJ44VT4gGh0M5M/nkaUoEn+PPyF7gQer
-         q6+U7g1KNI2kbk0ddt0hQUuLdRcBgekkSCB78=
+        bh=sYoETukcy3+SVw+psNTxG9/BXoAmyZqW7BbxQQoALuY=;
+        b=t2C6iz+ZvRBaBNGzIPjMJtLDnmmkbvFidb0KcafiaCEfXZy+Mv07d1QOHTAYCScb1m
+         CCarQrT1E5QpZLAB9KSIzmQF4oqv7AKooO85kZUMRgytD7RNxYbc1Wf9Q1wxQcSFlN3v
+         XvpaVNXRBlJUTuv/zaGro3lFb7UXAtQziLYbI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZD74jb18cwxAPy30jMkRkfIZa2wWqRIzv1Yrc3iWj7PsXQUSLnrj4FopvV85/7iM4b
-         BqCxS0wAYQBYpPr1B4yyFnE+UR8+P1aM/qhiBKmWdVg8y6dKVU2sijZzEA3LVD0RY/2J
-         pmWIXF++Avfyuh8Nx/SDNv0aGjo5Um6h1Tufg=
-Received: by 10.213.100.160 with SMTP id y32mr631120ebn.49.1267039234205; Wed, 
-	24 Feb 2010 11:20:34 -0800 (PST)
-In-Reply-To: <7vhbp64odi.fsf@alter.siamese.dyndns.org>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=xTVw+NLUk5rldkB4eAYo1yisYBfR3MP9CMZj+SCNWhEvs5P64/Xe4pOtCPF0S2r7hN
+         y6PaST0JLBIL3ZEVHOiRcLpiL68Sm2JoF25Ka2k1dqQGVTQIV+6QxEdUeKdS++YqybwL
+         Jmxw39hKVTxDlr59Wti8x8/oq3TSzBy2aZdfI=
+Received: by 10.213.107.143 with SMTP id b15mr157630ebp.72.1267039453501;
+        Wed, 24 Feb 2010 11:24:13 -0800 (PST)
+Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
+        by mx.google.com with ESMTPS id 5sm277413eyf.11.2010.02.24.11.24.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 24 Feb 2010 11:24:13 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140974>
 
-On Wed, Feb 24, 2010 at 4:58 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
->
->> +/* Repository-local GIT_* environment variables */
->> +const char *const local_repo_env[] =3D {
->> + =A0 =A0 ALTERNATE_DB_ENVIRONMENT,
->> + =A0 =A0 CONFIG_ENVIRONMENT,
->> + =A0 =A0 DB_ENVIRONMENT,
->> + =A0 =A0 GIT_DIR_ENVIRONMENT,
->> + =A0 =A0 GIT_WORK_TREE_ENVIRONMENT,
->> + =A0 =A0 GRAFT_ENVIRONMENT,
->> + =A0 =A0 INDEX_ENVIRONMENT,
->> + =A0 =A0 NO_REPLACE_OBJECTS_ENVIRONMENT,
->> + =A0 =A0 NULL
->> +};
->> +
->> +const unsigned int local_repo_env_size =3D ARRAY_SIZE(local_repo_en=
-v);
->
-> This does not look very useful for two reasons.
->
-> =A0- It counts the NULL at the tail, so the number is one-off; you ca=
-nnot
-> =A0 say
->
-> =A0 =A0 =A0 =A0for (i =3D 0; i < local_repo_env_size; i++)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0do_something_to(local_repo_env[i]);
+In the next commit, we will make it possible for blank context
+lines to match beyond of the file. That means that a hunk with
+a preimage that has more lines than present in the file may
+be possible to successfully apply. Therefore, we must remove
+the quick rejection test in find_pos().
 
-This is obviously very easy to fix by decrementing the size by 1 in
-the definition.
+find_pos() will already work correctly without the quick
+rejection test, but that might not be obvious. Therefore,
+comment the test for handling out-of-range line numbers in
+find_pos() and cast the "line" variable to the same (unsigned)
+type as img->nr.
 
-> =A0- local_repo_env_size is not a compile time constant, so you canno=
-t do:
->
-> =A0 =A0 =A0 =A0const char *env[local_repo_env_size + 20];
-> =A0 =A0 =A0 =A0memcpy(env, local_repo_env, sizeof(env[0]) * local_rep=
-o_env_size);
-> =A0 =A0 =A0 =A0for (i =3D local_repo_env_size; i < ARRAY_SIZE(env); i=
-++)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0add_more_to(env + i, ...);
+What are performance implications of removing the quick
+rejection test?
 
-Indeed, I was just discussing this on the other thread. I personally
-have no objection to using this C99 feature.
+It can only help "git apply" to reject a patch faster. For example,
+if I have a file with one million lines and a patch that removes
+slightly more than 50 percent of the lines and try to apply that
+patch twice, the second attempt will fail slightly faster
+with the test than without (based on actual measurements).
 
-I guess #defining local_repo_env_size in cache.h, and keeping it
-up-to-date when local_repo_env is updated is the best alternative.
-This can be done in such a way that if it the array needs expansion,
-forgetting to update its size is catched at compile time, but not for
-contraction. Of course we don't expect that it will contract. The
-disadvantage of this is that a change in cache.h requires an almost
-complete recompile because almost everything depends on it. It's a
-minor disadvantage, when compared to other approaches (double-walking
-the list or other stuff).
+However, there is the pathological case of a patch with many
+more context lines than the default three, and applying that patch
+using "git apply -C1". Without the rejection test, the running
+time will be roughly proportional to the number of context lines
+times the size of the file. That could be handled by writing
+a more complicated rejection test (it would have to count the
+number of blanks at the end of the preimage), but I don't find
+that worth doing until there is a real-world use case that
+would benfit from it.
 
-(Of course, I still wonder what's wrong with C99 VLAs, but anyway).
+It would be possible to keep the quick rejection test if
+--whitespace=3Dfix is not given, but I don't like that from
+a testing point of view.
 
+Signed-off-by: Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>
+---
+ builtin-apply.c           |   11 ++++++-----
+ t/t4104-apply-boundary.sh |    9 +++++++++
+ 2 files changed, 15 insertions(+), 5 deletions(-)
+
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 2a1004d..e1f849d 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -2002,11 +2002,8 @@ static int find_pos(struct image *img,
+ 	unsigned long backwards, forwards, try;
+ 	int backwards_lno, forwards_lno, try_lno;
+=20
+-	if (preimage->nr > img->nr)
+-		return -1;
+-
+ 	/*
+-	 * If match_begining or match_end is specified, there is no
++	 * If match_beginning or match_end is specified, there is no
+ 	 * point starting from a wrong line that will never match and
+ 	 * wander around and wait for a match at the specified end.
+ 	 */
+@@ -2015,7 +2012,11 @@ static int find_pos(struct image *img,
+ 	else if (match_end)
+ 		line =3D img->nr - preimage->nr;
+=20
+-	if (line > img->nr)
++	/*
++	 * Because the comparison is unsigned, the following test
++	 * will also take care of a negative line number.
++	 */
++	if ((size_t) line > img->nr)
+ 		line =3D img->nr;
+=20
+ 	try =3D 0;
+diff --git a/t/t4104-apply-boundary.sh b/t/t4104-apply-boundary.sh
+index 0e3ce36..1a74248 100755
+--- a/t/t4104-apply-boundary.sh
++++ b/t/t4104-apply-boundary.sh
+@@ -134,4 +134,13 @@ test_expect_success 'two lines' '
+=20
+ '
+=20
++test_expect_success 'apply patch with 3 context lines matching at end'=
+ '
++	{ echo a; echo b; echo c; echo d; } >file &&
++	git add file &&
++	echo e >>file &&
++	git diff >patch &&
++	>file &&=09
++	test_must_fail git apply patch
++'
++
+ test_done
 --=20
-Giuseppe "Oblomov" Bilotta
+1.7.0
