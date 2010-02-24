@@ -1,160 +1,87 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git as an sfc member project
-Date: Wed, 24 Feb 2010 08:22:05 -0800
-Message-ID: <20100224162205.GA20340@spearce.org>
-References: <20100224154452.GA25872@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] fallback SSH_ASKPASS when GIT_ASKPASS not set
+Date: Wed, 24 Feb 2010 08:24:22 -0800
+Message-ID: <7vocje38ll.fsf@alter.siamese.dyndns.org>
+References: <1267024554-3288-1-git-send-email-lznuaa@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 24 17:22:21 2010
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Frank Li <lznuaa@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 24 17:24:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkK0A-0004dx-VJ
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 17:22:19 +0100
+	id 1NkK2S-0007X3-OM
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 17:24:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757272Ab0BXQWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 11:22:12 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:58772 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757266Ab0BXQWL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 11:22:11 -0500
-Received: by gwj16 with SMTP id 16so1191996gwj.19
-        for <git@vger.kernel.org>; Wed, 24 Feb 2010 08:22:10 -0800 (PST)
-Received: by 10.150.248.24 with SMTP id v24mr333821ybh.148.1267028529641;
-        Wed, 24 Feb 2010 08:22:09 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 5sm794737yxg.28.2010.02.24.08.22.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 24 Feb 2010 08:22:07 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20100224154452.GA25872@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1757083Ab0BXQYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 11:24:35 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37558 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756863Ab0BXQYe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 11:24:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EB529C9F4;
+	Wed, 24 Feb 2010 11:24:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=I2+xeGVR8jXixiiHhHp1qswXX38=; b=ABW2KK
+	czNAu1QBGhlKVWxFiJwcvT9GZZTZybZ6JGl9Ogg5LWmBq6GfdRpko/p8c8MWfOKf
+	OJQAa4mS+RvKf48f9cuZf+Y0MR/JSAnkNQxbIi+OwGkZTrcA9C4wgmbupPdcMp6n
+	w1p6eH6hAW4DyMo+Zh394lNMQAWEpwV3CNufw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XWmv4+6eN6o/AKsIB9L67apbweY3mXwg
+	0NRCPC4SbaAKjBKq43UthvNH/j9yuviRMGSkd0mDMnO35WP8/R3aQ3kzfztprrrH
+	Pe1kNgk+c/99ZMGAxIhqkZHtzA94UsHC+cYDk0dMJEBBzwvUbR7i+MupWcTOcvGl
+	ZSEzt5tfnlk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 11FA69C9F0;
+	Wed, 24 Feb 2010 11:24:28 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 55B609C9E6; Wed, 24 Feb
+ 2010 11:24:24 -0500 (EST)
+In-Reply-To: <1267024554-3288-1-git-send-email-lznuaa@gmail.com> (Frank Li's
+ message of "Wed\, 24 Feb 2010 23\:15\:54 +0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 144B0A9C-2161-11DF-A421-E038EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140952>
 
-Thanks for getting this started!
+Frank Li <lznuaa@gmail.com> writes:
 
-Jeff King <peff@peff.net> wrote:
-> >    * Detailed description of the project.
-> 
-> Git is a free & open source, distributed version control system
-> designed to handle everything from small to very large projects with
-> speed and efficiency.
-> 
-> Every Git clone is a full-fledged repository with complete history and
-> full revision tracking capabilities, not dependent on network access or
-> a central server. Branching and merging are fast and easy to do.
-> 
-> Projects using git include the Linux kernel, X.org, Perl, Gnome, Ruby on
-> Rails, Wine, and more.
+> If GIT_ASKPASS is not set and SSH_ASKPASS set, GIT_ASKPASS will
+> use SSH_ASKPASS. If GIT_ASKPASS set and SSH_ASKPASS is not set,
+> SSH_ASKPASS will use GIT_ASKPASS.
 
-<plug type="shameless" for="$DAY_JOB">
-You could also mention the Android Open Source Project.  Every one  
-of those Android handsets on the market... the VCS used by the
-team that engineered those is Git, preciously because it allows
-the handset builder to manage their changes.
+If both are set and to different values, what should happen?
 
-We wouldn't have 8+ devices on the market without Git.
+I think the basic idea is sound, but I am not sure if we should fallback
+on both ways.  If both GIT_ASKPASS and SSH_ASKPASS are set, the user is
+probably telling us to use GIT_ASKPASS when git does something, similar to
+how GIT_EDITOR and EDITOR interacts.
 
-:-)
-</plug>
- 
-> >    * FLOSS License(s) used by the project
-> 
-> Core git is licensed under GPLv2. JGit, a pure-Java implementation of
-> git, is licensed under the Eclipse Distribution License.
+So probably the patch to implement the fallback should be more like
 
-Slightly reworded:
+	if (SSH_ASKPASS is set but not GIT_ASKPASS)
+        	set GIT_ASKPASS from SSH_ASKPASS
 
-  The core git code is licensed under GPLv2.
+and then the password prompter should use GIT_ASKPASS exclusively.
 
-  The JGit code, a pure-Java implementation of git, is licensed under
-  the Eclipse Distribution License, which is a new-style BSD license.
+Of course, when we _do_ spawn ssh ourselves internally in connect.c, we
+may have to export the value of GIT_ASKPASS as SSH_ASKPASS at the call
+site to honor the user's request to use GIT_ASKPASS while in git (that is
+part of "use GIT_ASKPASS exclusively").
 
+But it feels wrong if we exported SSH_ASKPASS set from GIT_ASKPASS when
+spawning processes in other codepaths, especially if SSH_ASKPASS is set
+(or unset) differently from GIT_ASKPASS.
 
-> >    * Roadmap for future development.
-> 
-> Git is currently a stable, widely-used version control system. We
-> continue to accept enhancements and bug fixes, with a new major release
-> about every 18 months, minor releases every 2-3 months, and bugfix
-> releases every few weeks. The development remains highly distributed,
-> with 281 individual contributors during the past year.
-
-I'm not sure this really answers their question.  I think we
-should make it clear WTF is going on with Git and its "roadmap".
-How about this instead?
-
-  Git is a stable, widely-used version control system.  The majority
-  of the key functionality is already implemented.  Consequently the
-  project does not maintain a formal roadmap, but instead accepts
-  a wide range of relevant enhancements and fixes directly from
-  the user community.
-
-  Based on prior history, major new releases occur about every 18
-  months, minor releases about every 2-3 months, and maintenance
-  releases every few weeks.  Development is highly distributed,
-  with over 280 individual contributors during the past 12 months,
-  and over 730 contributors since the project's inception.
-
-
-> >    * link to the website.
-> 
-> http://git-scm.org
-
-http://www.eclipse.org/jgit/
- 
-
-> >    * Link to the code repository.
-> 
-> http://git.kernel.org/?p=git/git.git
-
-http://repo.or.cz/w/jgit.git
-
-
-> >    * Brief history of the project, including past governance decisions.
-> 
-> [JGit?]
-
-JGit was started in 2006 by Shawn Pearce to provide an efficient,
-portable implementation of Git for Java based applications.  The
-project moved to the Eclipse Foundation in late 2009, but remains a
-standalone component and is widely embedded in non-Eclipse software.
-
- 
-> >    * Existing for-profit or non-profit affiliations, funding
-> >      relationships, or other agreements that the project or its leaders
-> >      have with other organizations.
-> 
-> Git has participated in the Google Summer of Code.
-> 
-> [Eclipse affiliations for JGit?]
-
-JGit is hosted by the Eclipse Foundation, and is run in accordance
-with the foundation's development processes.
-
- 
-> >    * Names, email addresses, and affiliations of key developers, past and
-> >      present.
-...
-> Shawn O. Pearce <spearce@spearce.org>
-
-Well, if you want to list current affiliations for me, I guess I can
-now claim:
-
- * Google employee
- * Eclipse Foundation project committer
- * Apache Software Foundation project committer
-
-Also, JGit has Robin Rosenberg <robin.rosenberg@dewire.com> as
-a key developer.  If you are listing JGit on the application,
-I think he deserves the credit too.
- 
--- 
-Shawn.
+Shawn is CC'ed as git-gui currently honors only SSH_ASKPASS and this patch
+changes the behaviour slightly.
