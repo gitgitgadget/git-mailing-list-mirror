@@ -1,80 +1,60 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: [PATCH] shortlog: warn the user when there is no input
-Date: Wed, 24 Feb 2010 21:49:03 +0100
-Message-ID: <201002242149.03662.barra_cuda@katamail.com>
-References: <201002242020.27801.barra_cuda@katamail.com> <7vvddmmnvo.fsf@alter.siamese.dyndns.org>
+From: Craig de Stigter <craig.destigter@koordinates.com>
+Subject: git-svn fails with non-alphanumeric SVN authors
+Date: Thu, 25 Feb 2010 09:47:40 +1300
+Message-ID: <e260aad41002241247r180d5477kd18f5cbee8109634@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 24 21:46:44 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 24 21:47:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkO84-0000Il-IX
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 21:46:44 +0100
+	id 1NkO94-0000hm-H1
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 21:47:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758037Ab0BXUqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 15:46:39 -0500
-Received: from smtp186-pc.aruba.it ([62.149.157.186]:42056 "HELO
-	smtp2-pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1757992Ab0BXUqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 15:46:39 -0500
-Received: (qmail 12192 invoked by uid 89); 24 Feb 2010 20:46:31 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on smtp2-pc.ad.aruba.it
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.5 required=5.0 tests=BAYES_00,RDNS_NONE
-	autolearn=ham version=3.2.5
-Received: from unknown (HELO darkstar.localnet) (barra?cuda@katamail.com@78.134.77.18)
-  by smtp2-pc.ad.aruba.it with SMTP; 24 Feb 2010 20:46:31 -0000
-User-Agent: KMail/1.11.4 (Linux/2.6.32.8-mike-1mike; KDE/4.2.4; i686; ; )
-In-Reply-To: <7vvddmmnvo.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1758050Ab0BXUrm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 15:47:42 -0500
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:47704 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758041Ab0BXUrl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 15:47:41 -0500
+Received: by pvb32 with SMTP id 32so1021552pvb.19
+        for <git@vger.kernel.org>; Wed, 24 Feb 2010 12:47:41 -0800 (PST)
+Received: by 10.142.248.4 with SMTP id v4mr176825wfh.258.1267044460572; Wed, 
+	24 Feb 2010 12:47:40 -0800 (PST)
+X-Google-Sender-Auth: 8a50de7723a404d9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140987>
 
-A simple "git shortlog" outside of a git repository stalls
-waiting for an input. Check if that's the case by testing with
-isatty() before read_from_stdin(), and warn the user like
-"git commit" does in a similar case.
+Hi list
 
-Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
----
-On Wednesday 24 February 2010, Junio C Hamano wrote:
-> Michele Ballabio <barra_cuda@katamail.com> writes:
-> 
-> > A simple "git shortlog" outside of a git repository used to stall
-> > waiting for an input. Fix this by testing with isatty() before
-> > calling read_from_stdin().
-> 
-> I'd actually prefer doing what "git commit" does.  Give a helpful hint
-> that it is waiting for input from the standard input, but do read from
-> standard input as the program is instructed to do.
+I'm trying to use git-svn to move our subversion to git. Some of the
+authors in our SVN repository are x.509 identifiers, so my authors
+file has some entries like this:
+   /C=NZ/ST=New Zealand/L=Auckland/O=Koordinates
+Ltd/OU=IS/CN=cdestigter = Craig de Stigter
+<craig.destigter@koordinates.com>
 
-Ok.
+git-svn doesn't like that - it fails saying:
+   Author: /C=NZ/ST=New Zealand/L=Auckland/O=Koordinates
+Ltd/OU=IS/CN=cdestigter not defined in ./authors.txt file
 
- builtin-shortlog.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+I presume it is choking on either the spaces or the '=' characters in
+the SVN username?
 
-diff --git a/builtin-shortlog.c b/builtin-shortlog.c
-index b3b055f..22668b4 100644
---- a/builtin-shortlog.c
-+++ b/builtin-shortlog.c
-@@ -295,6 +295,8 @@ parse_done:
- 	if (!nongit && !rev.pending.nr && isatty(0))
- 		add_head_to_pending(&rev);
- 	if (rev.pending.nr == 0) {
-+		if (isatty(0))
-+			fprintf(stderr, "(reading log message from standard input)\n");
- 		read_from_stdin(&log);
- 	}
- 	else
--- 
-1.7.0
+Comments / workarounds / fixes welcome... I'm avoiding messing with
+git-svn myself since I have no perl knowledge at all.
+
+Thanks for any help
+Craig de Stigter
+
+--
+Koordinates Ltd
+PO Box 1604, Shortland St, Auckland, New Zealand
+Phone +64-9-966 0433 Fax +64-9-969 0045
+Web http://www.koordinates.com
