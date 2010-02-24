@@ -1,88 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 06/11] rebase -i: invoke post-rewrite hook
-Date: Tue, 23 Feb 2010 22:15:10 -0800
-Message-ID: <7vaauzcg7l.fsf@alter.siamese.dyndns.org>
-References: <cover.1266885599.git.trast@student.ethz.ch>
- <87f20b987fa7a389e89f8931d553de7095d2bc86.1266885599.git.trast@student.ethz.ch>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [GIT GUI PATCH] git-gui: fix open explorer window on Windows 7
+Date: Wed, 24 Feb 2010 07:22:33 +0100
+Message-ID: <cb7bb73a1002232222r354a2ec7l9ea4cfd1c101e8c6@mail.gmail.com>
+References: <20100223225243.GC11271@book.hvoigt.net> <201002240114.11634.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-	Johan Herland <johan@herland.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Feb 24 07:15:29 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Heiko Voigt <hvoigt@hvoigt.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Wed Feb 24 07:23:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkAWv-0006sn-1I
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 07:15:29 +0100
+	id 1NkAeL-0000gz-Kd
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 07:23:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754480Ab0BXGPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 01:15:23 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56218 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752300Ab0BXGPW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 01:15:22 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E91129CB7B;
-	Wed, 24 Feb 2010 01:15:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fL2VjNHK0Sv79Zty/KMawJDGAV8=; b=odeYha
-	DBShO0tcqnCxl8aCE8Bg0TOanHX7Mpta/QSXQyAe8Q5MtMG1w0HFS8UrOhW+oyT3
-	q7VcDTyQs8wyy/8RncP/7ID9uFSq6OyAJTcCEHFZppX31eWGoJBTdCaF9MCtlB7j
-	NuY1zNjDrWi6W2Llk8dKm05rPlqEkZqyhjL9c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EVFljEZBHJaXDChsiOqslokc1MRij7Rw
-	Z0FHc60hf5J7lmf2iRG2iFz5obqXn38/yxmyaKTfPpALX56L1Npe/bPn3ZE/Yt2J
-	QYQgaX5Ppyqlw2Dt4JJowWRHyRfBzSa9jFrRrCxxYYZB/kmmWrkZSpdwzz7aIG0E
-	N5tYG3gghGo=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A9F0A9CB79;
-	Wed, 24 Feb 2010 01:15:17 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8927A9CB78; Wed, 24 Feb
- 2010 01:15:12 -0500 (EST)
-In-Reply-To: <87f20b987fa7a389e89f8931d553de7095d2bc86.1266885599.git.trast@student.ethz.ch> (Thomas Rast's message of "Tue\, 23 Feb 2010 01\:42\:24 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FA91C60E-210B-11DF-AB3F-E038EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752943Ab0BXGWz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Feb 2010 01:22:55 -0500
+Received: from mail-ew0-f212.google.com ([209.85.219.212]:56005 "EHLO
+	mail-ew0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751381Ab0BXGWy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Feb 2010 01:22:54 -0500
+Received: by ewy4 with SMTP id 4so674345ewy.28
+        for <git@vger.kernel.org>; Tue, 23 Feb 2010 22:22:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ibFFSAeXqC69tb6CUj5YVHw1Yc7Ys/M0vH6essyhU1Q=;
+        b=uJFgFFYdzVhR6wRkaxPUjddmg2yP0/yP6xeFzryaQ+7bz2HvwOlcFmCajSk0hGuT9w
+         RMo2HUKjx4QlCJBrwraZjrGQ3+YJ9zDO124R41EuJkd8bAeDsxy8lYqtmpfd7eRktSFN
+         5jYT8WYzVOkUV311gh1PLVPUkU1GG87OaoS9Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=UP/qCrEI4waupKJOGP8M2GePc+OprurOedWp4KYxBaMkZ1DBEbBdmQpVd9MmQGMVWa
+         mBSP3aJnKkMSKRJnLBJ0fNvdc3zEHweDYAWWRzpTIqCC7OJW/NgNlN7sUDosYskg78oj
+         sqAzIKJ1MKyIlmoY64XY2lHMBj5w/UmiqTzAY=
+Received: by 10.213.24.17 with SMTP id t17mr10931995ebb.19.1266992573125; Tue, 
+	23 Feb 2010 22:22:53 -0800 (PST)
+In-Reply-To: <201002240114.11634.markus.heidelberg@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140902>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+On Wed, Feb 24, 2010 at 1:14 AM, Markus Heidelberg
+<markus.heidelberg@web.de> wrote:
+>
+> Ah, this doesn't look like what it looked like back then. Commit
+> 21985a113 (git-gui: handle non-standard worktree locations) changed i=
+t,
+> removing the [file nativename]. I don't know if this was by accident,
+> but there is another place, where it was changed in a different manne=
+r:
 
-> +test_expect_success 'git rebase -i (unchanged)' '
-> +	git reset --hard D &&
-> +	clear_hook_input &&
-> +	FAKE_LINES="1 2" test_must_fail git rebase -i --onto A B &&
+My fault, and yes it was by accident.
 
-This
+> Compare
+>
+> - =A0 =A0 =A0 eval exec $explorer [list [file nativename [file dirnam=
+e [gitdir]]]] &
+> + =A0 =A0 =A0 eval exec $explorer $_gitworktree &
+>
+> with
+>
+> -wm title . "[appname] ([reponame]) [file normalize [file dirname [gi=
+tdir]]]"
+> +wm title . "[appname] ([reponame]) [file normalize $_gitworktree]"
+>
+> Maybe _gitworktree should be normalized or nativenamified when it is =
+set
+> and then will work everywhere it is used for every platform?
 
-> ...
-> +test_expect_success 'git rebase -i (skip)' '
-> +	git reset --hard D &&
-> +	clear_hook_input &&
-> +	FAKE_LINES="2" test_must_fail git rebase -i --onto A B &&
+The only issue with that would be that GIT_DIR and GIT_WORK_TREE are
+(re)inizialized
+from _gitdir and _gitworktree, so it would not be safe if git on
+Windows works better with unix-style rather than native paths. If git
+on windows handles native paths fine, it should be no problem.
 
-and this
-
-> ...
-> +test_expect_success 'git rebase -i (squash)' '
-> +	git reset --hard D &&
-> +	clear_hook_input &&
-> +	FAKE_LINES="1 squash 2" test_must_fail git rebase -i --onto A B &&
-
-and this need to be fixed to something like
-
-	( FAKE_LINES=... &&
-          export FAKE_LINES &&
-          test_must_fail git ... ) &&
-
-for Bourne-shell portability.  test_must_fail is a shell function and the
-usual one-shot-assignment-to-export rule does not apply.
+--=20
+Giuseppe "Oblomov" Bilotta
