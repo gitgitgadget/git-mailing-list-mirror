@@ -1,63 +1,89 @@
-From: Pat Thoyts <patthoyts@googlemail.com>
-Subject: Re: [msysGit] [GIT GUI PATCH] git-gui: fix open explorer window on 
-	Windows 7
-Date: Wed, 24 Feb 2010 12:15:03 +0000
-Message-ID: <a5b261831002240415l5447ac94wd80c162fc9492fd5@mail.gmail.com>
-References: <20100223225243.GC11271@book.hvoigt.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Wed Feb 24 13:15:15 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH v2 01/10] Documentation/git-clone: mention progress in -v
+Date: Wed, 24 Feb 2010 20:50:20 +0800
+Message-ID: <1267015829-5344-2-git-send-email-rctay89@gmail.com>
+References: <1267015829-5344-1-git-send-email-rctay89@gmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>,
+	"Sebastian Thiel" <byronimo@googlemail.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 24 13:50:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkG95-0007za-5T
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 13:15:15 +0100
+	id 1NkGha-00058b-5l
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 13:50:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756468Ab0BXMPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 07:15:08 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:45487 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751497Ab0BXMPF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 07:15:05 -0500
-Received: by wya21 with SMTP id 21so1145350wya.19
-        for <git@vger.kernel.org>; Wed, 24 Feb 2010 04:15:04 -0800 (PST)
+	id S1756798Ab0BXMus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 07:50:48 -0500
+Received: from mail-qy0-f179.google.com ([209.85.221.179]:64550 "EHLO
+	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751497Ab0BXMuq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 07:50:46 -0500
+Received: by mail-qy0-f179.google.com with SMTP id 9so338835qyk.5
+        for <git@vger.kernel.org>; Wed, 24 Feb 2010 04:50:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=05kNiH5r3cj0L3on3NRGDNRvY4+86C0vok4i59vJJgY=;
-        b=P5t76a+srZBAXLNilNJKQ7df7tMGqsL90+T5giUmKxNuTeCrfkFUX79s3Xt6Zl2mFs
-         RsPAFz6gXMcXhrVJv3VCYEg4P7mH/L8l7f4TrOZDT4TaILcnrghku2qNH9sDZ6BenvF/
-         yOh9xnW3SqsNnt4BAltCZpbEGzLvcIce5xDiU=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=r4XfCn+UUIiWtRG2KFSwWUy9IQSGr03WRKlTYearGFk=;
+        b=Rp4zAbOJ1qnyXd1wANqlhkqs6+yvFI6BcC3CIxtDS4xQca0lCyo+YpW3g5G85hcq/D
+         Kbj0IxldLTupGN+7Q5N+kuTol+wIP9zExbLluhT/1e6x0nRETS+KtAqfI9yucR/u+XK/
+         uJW6j8NClX6p0ULXrRMyLW2J7zbnpccvIt8RQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=miG7h2a4GO+3x4LVTdASy/+V27aJUI70+FLS6fwrO4c15H61m3pNcWV510WcO0CfS4
-         2EQ6HmUt+2U0ILv0paO3NCWUBdDNnALXBLi6sHQ4S86uxZRHZym7368PQOvOzifklqEG
-         qAh9Yx9hsSAtzaxWWhGrELLDyj9Sl905oGOVw=
-Received: by 10.216.91.18 with SMTP id g18mr3081600wef.203.1267013703837; Wed, 
-	24 Feb 2010 04:15:03 -0800 (PST)
-In-Reply-To: <20100223225243.GC11271@book.hvoigt.net>
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=vieQX6DWNn0ORuAErsip3SgaygKNW9gJrIi4OV3lrbUHNAIxO6/a0kgVuWB5tp/z99
+         Fz3JYlzs1DbD3gB3Q1gLuNiub1/i+XhJSZ80+f8F7K+fxdXoCI59qtQJ22Mur1eR2WWD
+         xQzPyEXIHPFzW2ouy0PhDHPqDRt8HYvKr41JQ=
+Received: by 10.229.189.79 with SMTP id dd15mr477614qcb.3.1267015846447;
+        Wed, 24 Feb 2010 04:50:46 -0800 (PST)
+Received: from localhost.localdomain (cm91.zeta153.maxonline.com.sg [116.87.153.91])
+        by mx.google.com with ESMTPS id 23sm253680qyk.15.2010.02.24.04.50.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 24 Feb 2010 04:50:46 -0800 (PST)
+X-Mailer: git-send-email 1.7.0.20.gcb44ed
+In-Reply-To: <1267015829-5344-1-git-send-email-rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140930>
 
-On 23 February 2010 22:52, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> It seems that Windows 7's explorer is not capable to cope with paths
-> that contain forward slashes as path seperator. We thus substitute slash
-> with the platforms native backslash.
->
+After 5a518ad (clone: use --progress to force progress reporting),
+-v/--verbose did not affect whether progress status was reported to
+stderr, and users accustomed to using -v to do so since 21188b1
+(Implement git clone -v) may be confused.
 
-What bug are you actually addressing here? How can I reproduce it? My
-experience on Windows 7 is that there is no problem but I assume I'm
-doing a different operation. If I use the git-gui  "Explore working
-copy" it opens the Windows explorer for me just fine.
+Mitigate such risks by stating -v does not affect progress in the
+documentation.
+
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
+
+New in v2.
+
+This should have been done with 5a518ad (clone: use --progress to
+force progress reporting), as per Miklos's suggestion
+(<20091227012032.GE25474@genesis.frugalware.org>).
+
+ Documentation/git-clone.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 88ea624..75b9848 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -102,7 +102,8 @@ objects from the source repository into a pack in the cloned repository.
+
+ --verbose::
+ -v::
+-	Run verbosely.
++	Run verbosely. Does not affect the reporting of progress status
++	to the standard error stream.
+
+ --progress::
+ 	Progress status is reported on the standard error stream
+--
+1.7.0.20.gcb44ed
