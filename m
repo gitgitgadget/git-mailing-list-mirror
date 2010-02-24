@@ -1,112 +1,98 @@
-From: Erick Mattos <erick.mattos@gmail.com>
-Subject: Re: [PATCH] git checkout -b: unparent the new branch with -o
-Date: Wed, 24 Feb 2010 19:40:23 -0300
-Message-ID: <55bacdd31002241440n5266edcagbe0954127f072b5d@mail.gmail.com>
-References: <1266960007-16127-1-git-send-email-erick.mattos@gmail.com> 
-	<7viq9nfwg8.fsf@alter.siamese.dyndns.org> <55bacdd31002241423i10ee177cnda545c9aac071b39@mail.gmail.com>
+From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
+Subject: Re: [PATCH v2 2/4] apply: Allow blank context lines to match beyond 
+	EOF
+Date: Thu, 25 Feb 2010 00:02:52 +0100
+Message-ID: <6672d0161002241502h2f80b511j445465fdc2fd16ab@mail.gmail.com>
+References: <4B857CE4.4000201@gmail.com>
+	 <7vaauyfj3k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 24 23:40:50 2010
+X-From: git-owner@vger.kernel.org Thu Feb 25 00:03:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkPuT-0000n1-V9
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 23:40:50 +0100
+	id 1NkQFv-0005X5-LY
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 00:03:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758502Ab0BXWko convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Feb 2010 17:40:44 -0500
-Received: from mail-gx0-f217.google.com ([209.85.217.217]:49876 "EHLO
-	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758482Ab0BXWko convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Feb 2010 17:40:44 -0500
-Received: by gxk9 with SMTP id 9so5320299gxk.8
-        for <git@vger.kernel.org>; Wed, 24 Feb 2010 14:40:43 -0800 (PST)
+	id S1758150Ab0BXXCy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Feb 2010 18:02:54 -0500
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:38742 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754841Ab0BXXCx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Feb 2010 18:02:53 -0500
+Received: by wwf26 with SMTP id 26so1580457wwf.19
+        for <git@vger.kernel.org>; Wed, 24 Feb 2010 15:02:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=nXwL+ugjty3Tsabm+a/Em0Vcx5OHYVNIbtZKSkTiP4E=;
-        b=bx8rJHy+FJZcVElyaHPWD8GUf/e+tV1RL0ysubF9wRy6WEyNv7u50DfmlfhPsx4r3s
-         Uuzk0eZgaIc3wXzXtslbcVIHYD7pi1H6R4afZwBeZ365VuOZD/SF2eAwd3zzb9eDADuL
-         SVE+Rk8wgZ6cW+MFIbPY5Tr/aemoBeRna9PIg=
+        bh=CLSPWqh649NlUnNYLbbE9gSmqSQli0YxJwUqmyRZRqw=;
+        b=MqfRZYOoFk//5ACkiwGMVucnkPUnLkqaZSYkAF75ziilazmq5/Ve6KFest1lA//K1U
+         ZwZNzlwYX3x1R52GxgeOU7G78Yws/vVZkopdSIR7odiG+Z25s2VoGexGPkaNOt70PUy5
+         L9ykk6cTgZNZkzKZBPgztgjWi7iqj1nBPLLuA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=btSV5TLIfrCO56jyh7eXHJssUDHEtmXpt/yA2KORK0+WauNesWo2SPHEMxnHo64AS/
-         h3+1JarhGfRO/lQdUmQ6bP+ELraixgD1p704VRWYxGOjHl41XZCR9Ej1lLbmcZh1XNNA
-         jdgCyhAb68kQBaU7HpUCEIxW7cROFe0dxLWlg=
-Received: by 10.151.16.5 with SMTP id t5mr294780ybi.264.1267051243147; Wed, 24 
-	Feb 2010 14:40:43 -0800 (PST)
-In-Reply-To: <55bacdd31002241423i10ee177cnda545c9aac071b39@mail.gmail.com>
+        b=AipM9uxBszxndkb56zW2kXKStlef5KGDtwHtiEZESn+ILTHygUqX0Vr1lOT3Ene2Hb
+         EzPs3aW4yP1s0rtXUo77umGSWczvcdEjnnpa1R+DonLFjQB7CFZPL9yC3LkD2T6dsNJm
+         kZqkbVMiIy5MkH7NakcefDHwUl6i64CTDMhGo=
+Received: by 10.216.90.142 with SMTP id e14mr259079wef.85.1267052572229; Wed, 
+	24 Feb 2010 15:02:52 -0800 (PST)
+In-Reply-To: <7vaauyfj3k.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140998>
 
-Sorry for the e-mail sent wrong (GMANE/140995).  The message was
-screwed by gmail by sending it in HTML which git list blocked.  I had
-to forward another and mistakenly copied Junio's.
+2010/2/24 Junio C Hamano <gitster@pobox.com>:
+> Very nicely done.
 
-2010/2/24 Erick Mattos <erick.mattos@gmail.com>:
-> Erick Mattos <erick.mattos@gmail.com> writes:
->
->> A good example to show the need of this option is a Debian folder of=
- control
->> files. =C2=A0Whenever a maintainer needs to debianize a source code =
-to build
->> packages he needs to add a folder called Debian with a lot of files =
-inside it.
->> Those files are connected to the source code of the program but they=
- are not
->> really part of the program development. =C2=A0On this situation usin=
-g the new
->> option, that maintainer would do:
->>
->> =C2=A0 =C2=A0 =C2=A0 git checkout -ob debian
->> =C2=A0 =C2=A0 =C2=A0 git clean -df
->> =C2=A0 =C2=A0 =C2=A0 mkdir Debian
->> =C2=A0 =C2=A0 =C2=A0 add all control files
->> =C2=A0 =C2=A0 =C2=A0 ...hack it enough...
->> =C2=A0 =C2=A0 =C2=A0 git add Debian
->> =C2=A0 =C2=A0 =C2=A0 git commit
->
-> I do not think that is a good example.
->
-> If you have an extract of an upstream tarball, say frotz-1.42.tar.gz,=
- and
-> you are not porting anything older than that version, why not have tw=
-o
-> branches, frotz and master, and do things this way?
->
-> =C2=A0- frotz (or "vanilla" or "upstream") that keeps track of the "v=
-endor
-> =C2=A0drop" without debian/ directory;
->
-> =C2=A0- master that forks from frotz and adds "debian/" and nothing e=
-lse; and
->
-> =C2=A0- any other topic branches that either fork from frotz if you a=
-re fixing
-> =C2=A0upstream bug (or enhancing the vanilla version), or fork from m=
-aster if
-> =C2=A0you are fixing or enhancing the debianization.
->
-> When you receive frotz-1.43.tar.gz, you will advance 'frotz' branch w=
-ith
-> it, and probably fork maint-1.42 branch from master so that you can k=
-eep
-> supporting older debianized frotz, while merging frotz into master so=
- that
-> you can prepare a debianized version of newer package.
->
-> Your debianization will _never_ be totally independent of the vendor
-> version, so there is no good reason to have it as a rootless branch.
->
+Thanks! :)
+
+> On the other hand "limit" does not have such a good definition, other=
+ than
+> as a work around to bypass line-number check when we are trying to ma=
+tch
+> at the end. =C2=A0It might be cleaner to read if we move the problema=
+tic "line
+> numbers must match" logic and eliminate this variable, like the attac=
+hed
+> patch does on top of this one.
+
+Yes, your version is better. Having a "limit" variable no longer makes
+sense (my original patch used "limit" in two places). Feel free to
+squeeze it in.
+
+> I couldn't figure out how this would interact with the ignore_ws_chan=
+ge
+> codepath, though. =C2=A0That one shows a clear sign of being bolted o=
+n as an
+> afterthought (once you fall into that "if()" statement you will not c=
+ome
+> back).
+
+Yes, it does seem bolted on.
+
+I haven't looked much at that if() statement, because I
+sort of assumed that because of the return it couldn't do any
+harm.
+
+It is too late in my time zone for me to think clearly, but it does
+seem that I was wrong and that I'll need to do some changes in
+that "if()" statement, and also write some more tests for
+the combination of --whitespace=3Dfix and --ignore-space-change.
+
+I'll be back another day.
+
+Thanks for the review.
+
+--=20
+Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
