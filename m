@@ -1,96 +1,64 @@
-From: Tuomas Suutari <tuomas.suutari@gmail.com>
-Subject: [PATCH 2/2] t9150,t9151: Add rewrite-root option to init
-Date: Wed, 24 Feb 2010 20:09:02 +0200
-Message-ID: <1267034942-31581-2-git-send-email-tuomas.suutari@gmail.com>
-References: <1267034942-31581-1-git-send-email-tuomas.suutari@gmail.com>
-Cc: Tuomas Suutari <tuomas.suutari@gmail.com>,
-	Sam Vilain <sam@vilain.net>, Eric Wong <normalperson@yhbt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 24 19:09:47 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git as an sfc member project
+Date: Wed, 24 Feb 2010 10:12:30 -0800
+Message-ID: <7vmxyytsdt.fsf@alter.siamese.dyndns.org>
+References: <20100224154452.GA25872@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 24 19:13:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkLg6-0005FY-S4
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 19:09:43 +0100
+	id 1NkLj3-0007Rl-4L
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 19:12:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755227Ab0BXSJf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 13:09:35 -0500
-Received: from mail-fx0-f219.google.com ([209.85.220.219]:62040 "EHLO
-	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754794Ab0BXSJd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 13:09:33 -0500
-Received: by fxm19 with SMTP id 19so5362917fxm.21
-        for <git@vger.kernel.org>; Wed, 24 Feb 2010 10:09:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=UrRFMEiLV79DOFEtJ3YsQb0aKqHxMjjdzPgJfiwCNBY=;
-        b=snhBP7AduJbtgCdJ0mt7tCYMx1m008fCRFpYm0B9ZIX+thWdL3gl3rVNNaT80/d2Xk
-         NWwkWpcitNTs5UbaZH/x/3Nt1BhYFVaTMcvMXb7XYTJM5YRIm0r7XA16SkbQcazcEJ18
-         JfjGSLPb8fYlH89/0IlIcDRnTWiVA7m4lyFTE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=tzoJTaW7CwVFBsPUfHe6Bh4StdJM0WIpr00VLoDhPwqfSYKB8NaFJGiO6EKHi4u5F1
-         cSMmSPJYuIZY3bDD8wWy6o7MII9KeDK8T/u4utTT4QA6L2Bv3r2AeTev/Ge3sXNgcfPL
-         DYbXS2+bwHmqxvK5GkhNUrlejJoHcg5p6So8c=
-Received: by 10.87.47.3 with SMTP id z3mr504280fgj.70.1267034971665;
-        Wed, 24 Feb 2010 10:09:31 -0800 (PST)
-Received: from localhost.localdomain (ws-26-184.laitilanpuhelin.fi [188.123.26.184])
-        by mx.google.com with ESMTPS id l19sm11598420fgb.0.2010.02.24.10.09.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 24 Feb 2010 10:09:30 -0800 (PST)
-X-Mailer: git-send-email 1.7.0.2.ged48
-In-Reply-To: <1267034942-31581-1-git-send-email-tuomas.suutari@gmail.com>
+	id S1757447Ab0BXSMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 13:12:40 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39106 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757382Ab0BXSMj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 13:12:39 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EBECF9C3D5;
+	Wed, 24 Feb 2010 13:12:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; s=sasl; bh=AoCzyuOuZ15Qugvi2lk+qrynsas=; b=fX06Qy
+	L+q0s50A7N/zMR5zj5s61phd8IDcFjsZ/HHl4g/f08QzrHjyaWCCC1LYzOwmDNKW
+	ARabe4t3+6OCtAf3NTeQ/xRSeKvRl09WPizxSfcZXMzcdJxM09CFyvsjpQkf9zss
+	kkcs6rGWuiLGLYrPN0aIekxqYVspYCy91qzN0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RqcBigZqelzPw4Ya2110L2YCMfXfyawO
+	OTHjfdGnVX1VRpJ15t08Ap3qDRTRNe7l8zZUzpMIxytNPwZrR5vI0lqRo+pQxIgv
+	AWGsfH1kDZ6jLbY+RpAtXNbwatstiBHfttw5Efs36OYS5IjzTtIErT+eUHT3LHtZ
+	RzAN8n4Nlu8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 98E6E9C3D3;
+	Wed, 24 Feb 2010 13:12:34 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 16D109C3CC; Wed, 24 Feb
+ 2010 13:12:31 -0500 (EST)
+In-Reply-To: <20100224154452.GA25872@coredump.intra.peff.net> (Jeff King's
+ message of "Wed\, 24 Feb 2010 10\:44\:53 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 2E949BFC-2170-11DF-8971-E038EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140966>
 
-The rewrite-root option seems to be a bit problematic with merge
-detecting, so it's better to have a merge detecting test with it
-turned on.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Tuomas Suutari <tuomas.suutari@gmail.com>
----
+>>    * Existing for-profit or non-profit affiliations, funding
+>>      relationships, or other agreements that the project or its leaders
+>>      have with other organizations.
 
-This is mainly for supporting the first patch. Try applying this
-before the first patch to see the problem it addresses.
-
-After this is applied, then there are no merge detecting tests without
-rewrite-root. Could this be a problem?
-
- t/t9150-svk-mergetickets.sh |    1 +
- t/t9151-svn-mergeinfo.sh    |    1 +
- 2 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/t/t9150-svk-mergetickets.sh b/t/t9150-svk-mergetickets.sh
-index 5358142..24c2421 100755
---- a/t/t9150-svk-mergetickets.sh
-+++ b/t/t9150-svk-mergetickets.sh
-@@ -11,6 +11,7 @@ test_expect_success 'load svk depot' "
- 	svnadmin load -q '$rawsvnrepo' \
- 	  < '$TEST_DIRECTORY/t9150/svk-merge.dump' &&
- 	git svn init --minimize-url -R svkmerge \
-+	  --rewrite-root=http://svn.example.org \
- 	  -T trunk -b branches '$svnrepo' &&
- 	git svn fetch --all
- 	"
-diff --git a/t/t9151-svn-mergeinfo.sh b/t/t9151-svn-mergeinfo.sh
-index 3569c62..c415775 100755
---- a/t/t9151-svn-mergeinfo.sh
-+++ b/t/t9151-svn-mergeinfo.sh
-@@ -11,6 +11,7 @@ test_expect_success 'load svn dump' "
- 	svnadmin load -q '$rawsvnrepo' \
- 	  < '$TEST_DIRECTORY/t9151/svn-mergeinfo.dump' &&
- 	git svn init --minimize-url -R svnmerge \
-+	  --rewrite-root=http://svn.example.org \
- 	  -T trunk -b branches '$svnrepo' &&
- 	git svn fetch --all
- 	"
--- 
-1.7.0.2.ged48
+Part of my git time used to be funded jointly by my employer and NEC, but
+the latter is not anymore.  I need to look for sponsors.
