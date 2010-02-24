@@ -1,48 +1,56 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: Roadmap to better handle big files?
-Date: Wed, 24 Feb 2010 18:39:22 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1002241837510.1946@xanadu.home>
-References: <B85968F5-E7C2-499D-A8BE-0160BA575F10@perceptivepixel.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Repository Shootout - let the voice of GIT users be heard
+Date: Thu, 25 Feb 2010 00:57:26 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1002250055200.20986@pacific.mpi-cbg.de>
+References: <27714310.post@talk.nabble.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Nick Triantos <nick@perceptivepixel.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 00:49:26 2010
+Cc: git@vger.kernel.org
+To: AssemblaSM <assemblasocialmedia@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 00:50:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkQyr-0001I8-Df
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 00:49:25 +0100
+	id 1NkR02-0001mu-1M
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 00:50:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758602Ab0BXXtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 18:49:20 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:48601 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758420Ab0BXXtU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 18:49:20 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0KYD0095VDPMNNA0@VL-MR-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 24 Feb 2010 18:39:22 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <B85968F5-E7C2-499D-A8BE-0160BA575F10@perceptivepixel.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1758621Ab0BXXud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 18:50:33 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43711 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758420Ab0BXXud (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 18:50:33 -0500
+Received: (qmail invoked by alias); 24 Feb 2010 23:50:30 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp063) with SMTP; 25 Feb 2010 00:50:30 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Gq0pSXfhGsz3Rggq23DSt5KayDXFCDpDhXWwFSb
+	vR6/IBVnJscSA/
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <27714310.post@talk.nabble.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.70999999999999996
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141011>
 
-On Wed, 24 Feb 2010, Nick Triantos wrote:
+Hi,
 
-> Hi,
-> 
-> Is there any planned functionality to better support large files in git?  (> 100MB / file)
+On Wed, 24 Feb 2010, AssemblaSM wrote:
 
-Yes.  It's just a matter of available time to implement it.
+> We are conducting a short survey about the SCM systems that you use
+> professionally and personally and why.
 
+What is in it for the people taking the time? From your message, I have 
+the impression that there is no benefit for me whatsoever to fill out the 
+survey, but possibly half an hour (or more) of net time lost on hacking.
 
-Nicolas
+It is not enough for me to know that you conduct "some survey".
+
+Ciao,
+Dscho
