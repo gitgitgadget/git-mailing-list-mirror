@@ -1,97 +1,79 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv4 1/6] environment: static list of repo-local env vars
-Date: Thu, 25 Feb 2010 00:11:05 +0100
-Message-ID: <cb7bb73a1002241511w1ed2e5e7pbc4565b81a6a1039@mail.gmail.com>
-References: <1266996196-25978-1-git-send-email-giuseppe.bilotta@gmail.com> 
-	<1266996196-25978-2-git-send-email-giuseppe.bilotta@gmail.com> 
-	<7vhbp64odi.fsf@alter.siamese.dyndns.org> <cb7bb73a1002241120i4bbbce0bl50460c76db0c6529@mail.gmail.com> 
-	<7vocjemnnq.fsf@alter.siamese.dyndns.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH 1/3] t9151: Fix a few commits in the SVN dump
+Date: Thu, 25 Feb 2010 12:14:20 +1300
+Message-ID: <4B85B2CC.3090509@vilain.net>
+References: <1266825442-32107-1-git-send-email-tuomas.suutari@gmail.com> <1266825442-32107-2-git-send-email-tuomas.suutari@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>,
-	msysGit Mailinglist <msysgit@googlegroups.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 00:11:35 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Tuomas Suutari <tuomas.suutari@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 00:23:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkQOC-00013q-2o
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 00:11:32 +0100
+	id 1NkQZk-0006GE-2A
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 00:23:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758310Ab0BXXL1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Feb 2010 18:11:27 -0500
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:53896 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758228Ab0BXXL0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Feb 2010 18:11:26 -0500
-Received: by ewy20 with SMTP id 20so1291656ewy.21
-        for <git@vger.kernel.org>; Wed, 24 Feb 2010 15:11:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=fidru1ElauBx3ruvR8W3WxLIHSTQKa35qHucSKbhjog=;
-        b=dTVVpxFyV/MY0/DGe1NFtA73TK6bxbdUCicZe2Wo+t1hI1ctVmE7/jfgRoEohsDRYe
-         AyKTQv8w9Rl01nINHjwEaLyFnVkG9MWRwBVb3RJCP3cPazUMQdNtcEicoo6t/bpZbvZ4
-         BBVQn6qZJD3MfzYaLVFK+h2g98eRy8XjJIzAA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Z0ncPouvdTBsEAPjFtXD88czhJBXc6J4dxqX7d2OYH/4+peaTCAb5x6IGiJO5utMdh
-         2zjqB2+m/QOS546idi/HpMfv1MFCq/j8gAnsY2JVQe+MdqJWNRhsMIKfs6l4dqCaBW9E
-         Cvvz/iAL04hyvHGpeC1ywUe6cAMVHQpHJiplw=
-Received: by 10.213.109.219 with SMTP id k27mr803444ebp.37.1267053085118; Wed, 
-	24 Feb 2010 15:11:25 -0800 (PST)
-In-Reply-To: <7vocjemnnq.fsf@alter.siamese.dyndns.org>
+	id S1758349Ab0BXXXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 18:23:23 -0500
+Received: from bertrand.catalyst.net.nz ([202.78.240.40]:51188 "EHLO
+	mail.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756178Ab0BXXXW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 18:23:22 -0500
+X-Greylist: delayed 538 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Feb 2010 18:23:22 EST
+Received: from localhost (localhost [127.0.0.1])
+	by mail.catalyst.net.nz (Postfix) with ESMTP id 086B232EA1;
+	Thu, 25 Feb 2010 12:14:21 +1300 (NZDT)
+X-Virus-Scanned: Debian amavisd-new at catalyst.net.nz
+Received: from mail.catalyst.net.nz ([127.0.0.1])
+	by localhost (bertrand.catalyst.net.nz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Kaxo85VcbEQv; Thu, 25 Feb 2010 12:14:20 +1300 (NZDT)
+Received: from [IPv6:2404:130:0:1000:21d:7dff:fe90:5fe0] (unknown [IPv6:2404:130:0:1000:21d:7dff:fe90:5fe0])
+	(Authenticated sender: samv)
+	by mail.catalyst.net.nz (Postfix) with ESMTPSA id 926E532815;
+	Thu, 25 Feb 2010 12:14:20 +1300 (NZDT)
+User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
+In-Reply-To: <1266825442-32107-2-git-send-email-tuomas.suutari@gmail.com>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141002>
 
-On Wed, Feb 24, 2010 at 8:36 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+Tuomas Suutari wrote:
+> A few "svn cp" commands and commit commands were executed in incorrect
+> order. Therefore some of the desired commits were missing and some
+> were committed with wrong revision number in the commit message. This
+> made it hard to compare the produced git repository with the SVN
+> repository.
 >
->> On Wed, Feb 24, 2010 at 4:58 PM, Junio C Hamano <gitster@pobox.com> =
-wrote:
->>> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
->>>
->>>> +/* Repository-local GIT_* environment variables */
->>>> +const char *const local_repo_env[] =3D {
->>>> + =A0 =A0 ALTERNATE_DB_ENVIRONMENT,
->>>> + =A0 =A0 CONFIG_ENVIRONMENT,
->>>> + =A0 =A0 DB_ENVIRONMENT,
->>>> + =A0 =A0 GIT_DIR_ENVIRONMENT,
->>>> + =A0 =A0 GIT_WORK_TREE_ENVIRONMENT,
->>>> + =A0 =A0 GRAFT_ENVIRONMENT,
->>>> + =A0 =A0 INDEX_ENVIRONMENT,
->>>> + =A0 =A0 NO_REPLACE_OBJECTS_ENVIRONMENT,
->>>> + =A0 =A0 NULL
->>>> +};
->>>> +
->>>> +const unsigned int local_repo_env_size =3D ARRAY_SIZE(local_repo_=
-env);
->>>
->>> This does not look very useful for two reasons.
->
-> By the way, I said "frustrating" but didn't mean we should bend backw=
-ards.
-> The earlier one is more than Ok, and is certainly better than having
-> local_repo_env_size that is not very useful in practice.
+> The dump file is updated too, but only the relevant parts and with
+> hand-edited timestamps to make history linear.
+>   
 
-But I'd like a manually-set local_repo_env_size than the gimmicks
-necessary if it's not there (plus the runtime failure). If there are
-no other corrections, I'll send a new series (that also squashes the
-first two patches per Johannes' suggestion) and the #define
+>  say "Make PARTIAL branch"
+>  svn update
+> -i=$(commit $i "make partial branch")
+>  svn cp trunk/subdir branches/partial
+> +i=$(commit $i "make partial branch")
+>  
+>  say "Make a commit to PARTIAL"
+>  svn update
+> @@ -194,13 +194,13 @@ cd ../../
+>  
+>  say "Tagging trunk"
+>  svn update
+> -i=$(commit $i "tagging v1.0")
+>  svn cp trunk tags/v1.0
+> +i=$(commit $i "tagging v1.0")
+>   
 
---=20
-Giuseppe "Oblomov" Bilotta
+Whoops.  Yes, that looks eminently sensible, probably my fault :-).
+
+Acked-by: Sam Vilain <sam@vilain.net>
+
+Sam
