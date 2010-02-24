@@ -1,146 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: git as an sfc member project
-Date: Wed, 24 Feb 2010 10:44:53 -0500
-Message-ID: <20100224154452.GA25872@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv4 1/6] environment: static list of repo-local env vars
+Date: Wed, 24 Feb 2010 07:58:17 -0800
+Message-ID: <7vhbp64odi.fsf@alter.siamese.dyndns.org>
+References: <1266996196-25978-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <1266996196-25978-2-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 24 16:45:03 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>,
+	msysGit Mailinglist <msysgit@googlegroups.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 24 16:58:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkJQ6-0001t6-8n
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 16:45:02 +0100
+	id 1NkJdR-0000NC-3S
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Feb 2010 16:58:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756789Ab0BXPo5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 10:44:57 -0500
-Received: from peff.net ([208.65.91.99]:53150 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755674Ab0BXPo4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 10:44:56 -0500
-Received: (qmail 4043 invoked by uid 107); 24 Feb 2010 15:45:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 24 Feb 2010 10:45:11 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Feb 2010 10:44:53 -0500
-Content-Disposition: inline
+	id S1756849Ab0BXP6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 10:58:37 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40333 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756794Ab0BXP6g (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 10:58:36 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A596C9C440;
+	Wed, 24 Feb 2010 10:58:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=12YeKli2SJ5L1P9ulubwWBb56gQ=; b=xlP40w0w1bWh0Zw7LjrA3G0
+	UMKUIgYcO4zd/X6M6mj+Yr41Y0Jh+BTggxZmDpyBcmIkE7Vhe0Gal7oa7BPDvru/
+	EHFluVaC3TINVqNi7/khKbef7ifkxKV1PhRqZfLQP4NnVUM/y2PDgEX+sfpgrvfK
+	hTR8mR1EH3TqlQuo03iQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=yaE/BFUUhXQLYIPSmhosWH0Yi5Q+d5xobW595P2+zYQy5Vvk1
+	ZobJkZbNHsXKx5eamjhReSbXNOEkJgxeZ/I5QAt8qOvyTQmt4a54thJX1ff9PJmu
+	FEPo9OedL7FBTEc5IqKBD2ZWX5OK6Mx+63UUhxOR+LrlzGBc0PIOrohP4o=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 34CCC9C438;
+	Wed, 24 Feb 2010 10:58:28 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EDA909C42D; Wed, 24 Feb
+ 2010 10:58:19 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 728C2FA4-215D-11DF-B513-E038EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/140949>
 
-A while back I mentioned that we had some leftover GSoC money, and
-suggested joining the Software Freedom Conservancy as a member project:
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-  http://article.gmane.org/gmane.comp.version-control.git/134435
+> +/* Repository-local GIT_* environment variables */
+> +const char *const local_repo_env[] = {
+> +	ALTERNATE_DB_ENVIRONMENT,
+> +	CONFIG_ENVIRONMENT,
+> +	DB_ENVIRONMENT,
+> +	GIT_DIR_ENVIRONMENT,
+> +	GIT_WORK_TREE_ENVIRONMENT,
+> +	GRAFT_ENVIRONMENT,
+> +	INDEX_ENVIRONMENT,
+> +	NO_REPLACE_OBJECTS_ENVIRONMENT,
+> +	NULL
+> +};
+> +
+> +const unsigned int local_repo_env_size = ARRAY_SIZE(local_repo_env);
 
-People seemed to think it was a good idea, so I have gone in that
-direction. The short of it is:
+This does not look very useful for two reasons.
 
-  1. They now have our money. :) I was able to donate the money to them
-     before the new year, which makes things much easier tax-wise. The
-     money is earmarked for git, contingent upon us becoming a member
-     project. If, for whatever reason, we do not do so during 2010, then
-     the money reverts to the SFC general fund.
+ - It counts the NULL at the tail, so the number is one-off; you cannot
+   say
 
-  2. I've exchanged emails with Bradley Kuhn, the president of the SFC.
-     He was very positive about git becoming a member project. The SFC
-     board has a semi-annual meeting to vote on accepting new member
-     projects, and they will be meeting soon. We just need to fill out
-     the application materials and get them to Bradley in the next
-     week.
+	for (i = 0; i < local_repo_env_size; i++)
+		do_something_to(local_repo_env[i]);
 
-The materials are below. They're not very long, and I have tried to fill
-them out as best I can. There are a few parts that could be elaborated
-on (mostly related to JGit, which I have included under the umbrella of
-the git project, and about which I am mostly ignorant). And of course I
-am open to suggestions and corrections.
+ - local_repo_env_size is not a compile time constant, so you cannot do:
 
--- >8 --
-
->    * Detailed description of the project.
-
-Git is a free & open source, distributed version control system
-designed to handle everything from small to very large projects with
-speed and efficiency.
-
-Every Git clone is a full-fledged repository with complete history and
-full revision tracking capabilities, not dependent on network access or
-a central server. Branching and merging are fast and easy to do.
-
-Projects using git include the Linux kernel, X.org, Perl, Gnome, Ruby on
-Rails, Wine, and more.
-
->    * FLOSS License(s) used by the project
-
-Core git is licensed under GPLv2. JGit, a pure-Java implementation of
-git, is licensed under the Eclipse Distribution License.
-
->    * Roadmap for future development.
-
-Git is currently a stable, widely-used version control system. We
-continue to accept enhancements and bug fixes, with a new major release
-about every 18 months, minor releases every 2-3 months, and bugfix
-releases every few weeks. The development remains highly distributed,
-with 281 individual contributors during the past year.
-
->    * link to the website.
-
-http://git-scm.org
-
->    * Link to the code repository.
-
-http://git.kernel.org/?p=git/git.git
-
->    * Have you ever had funds held by the project, or by any individual
->      on behalf of the projects?  How and for what did you spend those
->      funds?
-
-Yes. We received funds from participating in the Google Summer of Code
-in 2008 and 2009. Those funds were disbursed to individual project
-members, and used for transportation and lodging of members attending
-the GSoC mentor summit and the GitTogether, our annual mini-conference
-for developers.  The remainder of the funds were sent to the SFC.
-
->    * Brief history of the project, including past governance decisions.
-
-Git was started by Linus Torvalds in April of 2005. In July of 2005,
-Junio C Hamano became the maintainer. Junio maintains sole control of
-the codebase, accepting changes from other developers (both frequent
-contributers and one-time patch submitters). For participation in the
-Google Summer of Code, Shawn Pearce has served as the project
-administrator.
-
-[JGit?]
-
->    * Existing for-profit or non-profit affiliations, funding
->      relationships, or other agreements that the project or its leaders
->      have with other organizations.
-
-Git has participated in the Google Summer of Code.
-
-[Eclipse affiliations for JGit?]
-
->    * Names, email addresses, and affiliations of key developers, past and
->      present.
-
-Junio C Hamano <gitster@pobox.com>
-Shawn O. Pearce <spearce@spearce.org>
-Linus Torvalds <torvalds@linux-foundation.org>
-Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Eric Wong <normalperson@yhbt.net>
-Jeff King <peff@peff.net>
-Jakub Narebski <jnareb@gmail.com>
-Nicolas Pitre <nico@fluxnic.net>
-Paul Mackerras <paulus@samba.org>
-Christian Couder <chriscool@tuxfamily.org>
-
-[This is basically "shortlog -ns | head". I am happy to make it shorter
-or longer if people think it should be. Affiliations?]
-
->    * Information about any past for-profit or non-profit organizational
->      affiliations the project has had.
-
-None.
+	const char *env[local_repo_env_size + 20];
+	memcpy(env, local_repo_env, sizeof(env[0]) * local_repo_env_size);
+	for (i = local_repo_env_size; i < ARRAY_SIZE(env); i++)
+		add_more_to(env + i, ...);
