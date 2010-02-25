@@ -1,65 +1,93 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 2/3] Different views on a repository
-Date: Thu, 25 Feb 2010 10:01:43 +0100
-Message-ID: <4B863C77.8040304@drmicha.warpmail.net>
-References: <cover.1267029680.git.agruen@suse.de>	<f409d0cde7939a833708ed92f86605dbbdd64a49.1267029680.git.agruen@suse.de> <92fea2335b73265b04d64fcc217055e1170f5e16.1267029680.git.agruen@suse.de>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 1/1] Use GIT_ASKPASS environment to launch thirdpart UI
+	app to get password
+Date: Thu, 25 Feb 2010 01:15:01 -0800
+Message-ID: <20100225091500.GB2903@gmail.com>
+References: <1266923463-2828-1-git-send-email-lznuaa@gmail.com> <20100224051307.GA3232@gmail.com> <1976ea661002240013j164fc875o469c0dcdf74afe0c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Andreas Gruenbacher <agruen@suse.de>
-X-From: git-owner@vger.kernel.org Thu Feb 25 10:04:37 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>
+To: Frank Li <lznuaa@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 10:15:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkZe8-0002gi-GU
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 10:04:36 +0100
+	id 1NkZoa-0007Oi-3E
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 10:15:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753304Ab0BYJEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2010 04:04:11 -0500
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:39624 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752233Ab0BYJEI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Feb 2010 04:04:08 -0500
-Received: from compute1.internal (compute1 [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 2DE2EE27B6;
-	Thu, 25 Feb 2010 04:04:05 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 25 Feb 2010 04:04:05 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=C8MlJszXTojhJ5I/07jd7fykhJM=; b=dFLgu/867mXPeMMVtjPb7xVN4BBYvccIrU6TIf7EJF6J5JV/GPDWS6eL01RCmy3fwwu+FSpy7RCIlAsJZsI7siVsdzgTCILIYeLFDEHsI14te7ow9rnGm7Q/4rQ8GkejB2KPZsQhpDNFsnfi2CwVTU3WC5tA0FrrZCndHBuIw9A=
-X-Sasl-enc: Kh7J/Fm0gOkOZRVfpr8kxJhmvA6OP3Qmg2EYd55ww1Em 1267088644
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 97334D6E8;
-	Thu, 25 Feb 2010 04:04:04 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9pre) Gecko/20100222 Lightning/1.0b2pre Shredder/3.0.3pre
-In-Reply-To: <92fea2335b73265b04d64fcc217055e1170f5e16.1267029680.git.agruen@suse.de>
+	id S1753425Ab0BYJPI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Feb 2010 04:15:08 -0500
+Received: from mail-yx0-f182.google.com ([209.85.210.182]:36723 "EHLO
+	mail-yx0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752233Ab0BYJPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 04:15:07 -0500
+Received: by yxe12 with SMTP id 12so991824yxe.33
+        for <git@vger.kernel.org>; Thu, 25 Feb 2010 01:15:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=Rq4P3xhjmLS6Z1+wHTVoh2UNNJiW6rZWDqKpqV4TNHo=;
+        b=oQpBvbs8vDBJOVvwbjAIMv5K9joxhnt72BuHu1z+cG3p5G6ocdl/0nK08wMkOt+Jon
+         eTyyLnYVm5xKT0TJ+ha195OhAf4pzjRXBD0bpcCwGZs3dKmJlcEtWozQOqyHjH0eI37k
+         SI9HP3qPDDREEurIV70xPknsKJS6aims3Orzg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=GuN0Lt3bu2iJt7HW5dVe3nAZqjm2491VIwq03ueHolwCyT8dRVoZMW0TSRo2JYcyKd
+         GgYCq7OkU7Zsq3iwTFJ+WF60e57FExHdxhfHxu7V6JYX9X/XRbhTtlgjiqaKjI0Tbu0P
+         59D+U4cqmHaMlZR/a9k9GdGhfsP/2tn0BcSEY=
+Received: by 10.150.65.3 with SMTP id n3mr1229221yba.322.1267089305962;
+        Thu, 25 Feb 2010 01:15:05 -0800 (PST)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id 4sm1482023ywi.6.2010.02.25.01.15.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 25 Feb 2010 01:15:05 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1976ea661002240013j164fc875o469c0dcdf74afe0c@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141036>
 
-Andreas Gruenbacher venit, vidit, dixit 24.02.2010 16:57:
-> Add --view options in upload-pack and receive-pack so that a repository
-> on the server side can be made to look like several independent
-> repositories on the client side.
-> 
-> This is implemented by transforming ref names: for example, with
-> --view=one/, refs/heads/one/master on the server will look like
-> refs/heads/master to the client, refs/tags/one/v1 will look like
-> refs/tags/v1, etc.
-> 
-> This allows to transparently share repositories on the server which
-> have a lot of objects in common without complicating things for the
-> client, and without breaking garbage collection.
+On Wed, Feb 24, 2010 at 04:13:01PM +0800, Frank Li wrote:
+>=20
+> > Many users already have SSH_ASKPASS defined. =C2=A0It would be very
+> > nice if we supported SSH_ASKPASS as a fallback when GIT_ASKPASS
+> > is not provided.
+> >
+>=20
+> I consider add such fallback at git.c.  when user use git svn,  git
+> main program will be called firstly.
+> git main entry will check if GIT_ASKPASS and SSH_ASKPASS, if
+> SSH_ASKPASS set but GIT_ASKPASS not set,
+> GIT_ASKPASS will be set as SSH_ASKPASS.
+>=20
+> Do you think we needs add such check at git-svn.perl ?
+>=20
+> best regards
+> Frank Li
 
-Just from this description, I can't see why the same can't be done with
-appropriate refspecs. (A helper for doing that would be more welcome, of
-course.)
+Interesting question.  I had never thought of moving the
+fallback to git.
 
-Maybe a few tests and documentation (i.e. examples, not just the option
-description) would clear this up?
+I would have done it in the script as a localized fix but
+I definately see the value in aiding scripts from
+all having to implement this same fallback, though:
 
-Michael
+	$ENV{GIT_ASKPASS} ||=3D $ENV{SSH_ASKPASS};
+
+If Junio, Eric, and the git list think that this should
+live in git instead then by all means.
+
+--=20
+		David
