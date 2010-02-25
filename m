@@ -1,76 +1,66 @@
-From: Nick Triantos <nick@perceptivepixel.com>
-Subject: Re: Roadmap to better handle big files?
-Date: Wed, 24 Feb 2010 19:02:16 -0500
-Message-ID: <2009C5FE-F0B7-4D64-BF5C-04087E17EDF1@perceptivepixel.com>
-References: <B85968F5-E7C2-499D-A8BE-0160BA575F10@perceptivepixel.com>
- <m3fx4qmbwr.fsf@localhost.localdomain>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: Repository Shootout - let the voice of GIT users be heard
+Date: Thu, 25 Feb 2010 00:10:11 +0000
+Message-ID: <43d8ce651002241610j56d50afam98392486560cb356@mail.gmail.com>
+References: <27714310.post@talk.nabble.com>
+	 <alpine.DEB.1.00.1002250055200.20986@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 25 01:02:26 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: AssemblaSM <assemblasocialmedia@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 25 01:10:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkRBS-0006vm-8H
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 01:02:26 +0100
+	id 1NkRJ5-0001nt-Bh
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 01:10:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758634Ab0BYACV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 19:02:21 -0500
-Received: from relay.ihostexchange.net ([66.46.182.52]:44832 "EHLO
-	relay.ihostexchange.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758523Ab0BYACU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Feb 2010 19:02:20 -0500
-Received: from VMBX125.ihostexchange.net ([192.168.40.5]) by
- HUB102.ihostexchange.net ([66.46.182.52]) with mapi; Wed, 24 Feb 2010
- 19:02:18 -0500
-Thread-Topic: Roadmap to better handle big files?
-Thread-Index: Acq1rcso6W3nUogORBKfr/PGidCTnA==
-In-Reply-To: <m3fx4qmbwr.fsf@localhost.localdomain>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1758626Ab0BYAKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 19:10:13 -0500
+Received: from mail-pz0-f174.google.com ([209.85.222.174]:60434 "EHLO
+	mail-pz0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758523Ab0BYAKM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 19:10:12 -0500
+Received: by pzk4 with SMTP id 4so96325pzk.21
+        for <git@vger.kernel.org>; Wed, 24 Feb 2010 16:10:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=mSJHBN8MXzh50o/1G0yR0BG504mS3H6Kw247rj4QO2E=;
+        b=PLAgaxjp09LtkXkIMxROhyuoqDaYlY+IYttEUWjziCFEp3k8RO5M6UOm0YuoL7Kvw9
+         4O9V8Hx6m8yCkRMToZwBOerp00Wxe4StIl/sy6v1OQQ23N7gqhUwt7felzcgpWZJMukh
+         OVhFbUsvCaEJrNAsgRP4Ly5FvybIe8jwaovkY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=VflRJY9lScRlEsv5gp7P4A1I/Z5717B9BqycG2Q9bOlXvSLHh2DYHnVY7PTGQEjclM
+         hCWLMCs3H1TbxLcdXEJxgpBiyhhVnqjyYuwMvsFcOwo4lrnyAuXa5sp+fZS2k+vtUtgz
+         Rm7jsWVJsMQE1ihMIrbf368Js2jdAB4FbMyF8=
+Received: by 10.114.163.9 with SMTP id l9mr282734wae.5.1267056611621; Wed, 24 
+	Feb 2010 16:10:11 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.1002250055200.20986@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141014>
 
-Thanks.  I had looked at that project, but the logo being a piece of poop sort of scared me away from it (and it looked to be very early on in their design work so far)...
+On 24 February 2010 23:57, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Wed, 24 Feb 2010, AssemblaSM wrote:
+>
+>> We are conducting a short survey about the SCM systems that you use
+>> professionally and personally and why.
+>
+> What is in it for the people taking the time? From your message, I have
+> the impression that there is no benefit for me whatsoever to fill out the
+> survey, but possibly half an hour (or more) of net time lost on hacking.
 
-thanks!
--Nick
-
-On Feb 24, 2010, at 3:51 PM, Jakub Narebski wrote:
-
-> Nick Triantos <nick@perceptivepixel.com> writes:
-> 
->> Is there any planned functionality to better support large files in
->> git?  (> 100MB / file)
->> 
->> We've been happily using git but we now have some files which we'd
->> very much like to have under the same version control as our source
->> code, and some of those files have been as large as 450MB/file.  We
->> are looking at chunking the file up before commiting it to git, but
->> is there any plan to better support chunking of these files during
->> repacks or other operations?  Right now, it appears either the whole
->> file, or the whole collection of files in a commit (not sure which)
->> can need to be resident in memory up to twice, from reading various
->> places on the web.  Our poor 32-bit server is barfing on this.  We
->> are going to put more RAM and a 64bit OS on the machine, but this
->> still seems like an unnecessary design decision.
-> 
-> Git has a roadmap???
-> 
-> More seriously, take a look at git-bigfiles project (fork):
-> http://caca.zoy.org/wiki/git-bigfiles
-> 
-> HTH
-> --
-> Jakub Narebski
-> Poland
-> ShadeHawk on #git
+It was 6 questions.  Maybe 20 tick boxes in total.  I completed it in
+about the same time it took you to moan about it.
