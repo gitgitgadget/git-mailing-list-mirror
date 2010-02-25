@@ -1,58 +1,48 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Fix gitmkdtemp: correct test for mktemp() return value
-Date: Thu, 25 Feb 2010 19:05:46 +0100
-Message-ID: <vpqzl2xdwcl.fsf@bauges.imag.fr>
-References: <4B864A7B.9000500@flexerasoftware.com>
-	<7veik99q4q.fsf@alter.siamese.dyndns.org>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: Re: Roadmap to better handle big files?
+Date: Thu, 25 Feb 2010 11:06:10 -0700
+Message-ID: <4B86BC12.9080201@workspacewhiz.com>
+References: <B85968F5-E7C2-499D-A8BE-0160BA575F10@perceptivepixel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Filippo Negroni <fnegroni@flexerasoftware.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 19:07:23 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Nick Triantos <nick@perceptivepixel.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 19:13:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nki7N-0003tx-Np
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 19:07:22 +0100
+	id 1NkiCr-0007CK-3d
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 19:13:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933204Ab0BYSHQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2010 13:07:16 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:60772 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933195Ab0BYSHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2010 13:07:14 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o1PI3HLa016176
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 25 Feb 2010 19:03:17 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Nki5q-00007U-D3; Thu, 25 Feb 2010 19:05:46 +0100
-In-Reply-To: <7veik99q4q.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 25 Feb 2010 09\:33\:41 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 25 Feb 2010 19:03:17 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o1PI3HLa016176
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1267725799.19195@mfSzLqtjluqLPHLe9y4Tqw
+	id S933030Ab0BYSMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2010 13:12:55 -0500
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:53880 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932876Ab0BYSMz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 13:12:55 -0500
+X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Feb 2010 13:12:55 EST
+Received: (qmail 8045 invoked by uid 399); 25 Feb 2010 11:06:12 -0700
+Received: from unknown (HELO ?192.168.1.2?) (jjensen@workspacewhiz.com@75.231.4.206)
+  by hsmail.qwknetllc.com with ESMTPAM; 25 Feb 2010 11:06:12 -0700
+X-Originating-IP: 75.231.4.206
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.8) Gecko/20100216 Lightning/1.0b2pre Thunderbird/3.0.2
+In-Reply-To: <B85968F5-E7C2-499D-A8BE-0160BA575F10@perceptivepixel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141061>
 
-Junio C Hamano <gitster@pobox.com> writes:
+----- Original Message -----
+From: Nick Triantos
+Date: 2/24/2010 4:00 PM
+> Is there any planned functionality to better support large files in git?  (>  100MB / file)
+>    
+I once used Git alternates to point to a network share filled with the 
+really large files hashed into a .git/objects directory.  It worked, 
+although it was slower than having the entire repository locally.
 
-> Next time please do not quote the mbox header lines (i.e. start your body
-> with "In gitmkdtemp, the return value ...".
-
-... or just use "git send-email", which does the trick for you.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Josh
