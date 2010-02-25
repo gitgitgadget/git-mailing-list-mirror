@@ -1,71 +1,65 @@
-From: Andreas Gruenbacher <agruen@suse.de>
-Subject: Re: [PATCH 2/3] Different views on a repository
-Date: Thu, 25 Feb 2010 10:25:22 +0100
-Organization: SUSE Labs
-Message-ID: <201002251025.22881.agruen@suse.de>
-References: <cover.1267029680.git.agruen@suse.de> <92fea2335b73265b04d64fcc217055e1170f5e16.1267029680.git.agruen@suse.de> <4B863C77.8040304@drmicha.warpmail.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: compat/mkdtemp.c: patch for gitmkdtemp() compatibility implementation
+Date: Thu, 25 Feb 2010 10:31:19 +0100
+Message-ID: <vpqy6ih4q6w.fsf@bauges.imag.fr>
+References: <4B863C58.7010105@flexerasoftware.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Feb 25 10:25:38 2010
+To: Filippo Negroni <fnegroni@flexerasoftware.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 10:31:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkZyR-0005tP-GA
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 10:25:35 +0100
+	id 1Nka4G-0008RK-B4
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 10:31:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753780Ab0BYJZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2010 04:25:28 -0500
-Received: from cantor2.suse.de ([195.135.220.15]:49374 "EHLO mx2.suse.de"
+	id S1753684Ab0BYJba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2010 04:31:30 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:47322 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753788Ab0BYJZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2010 04:25:26 -0500
-Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.221.2])
-	by mx2.suse.de (Postfix) with ESMTP id F30E68726A;
-	Thu, 25 Feb 2010 10:25:24 +0100 (CET)
-User-Agent: KMail/1.12.2 (Linux/2.6.31.12-0.1-desktop; KDE/4.3.1; x86_64; ; )
-In-Reply-To: <4B863C77.8040304@drmicha.warpmail.net>
+	id S1753538Ab0BYJb2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 04:31:28 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o1P9SpKa023105
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 25 Feb 2010 10:28:51 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Nka3z-0000Tp-AL; Thu, 25 Feb 2010 10:31:19 +0100
+In-Reply-To: <4B863C58.7010105@flexerasoftware.com> (Filippo Negroni's message of "Thu\, 25 Feb 2010 09\:01\:12 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 25 Feb 2010 10:28:51 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o1P9SpKa023105
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1267694932.45669@iU4O9uOPu6r6M2JJK9mq1w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141039>
 
-On Thursday 25 February 2010 10:01:43 Michael J Gruber wrote:
-> Andreas Gruenbacher venit, vidit, dixit 24.02.2010 16:57:
-> > Add --view options in upload-pack and receive-pack so that a repository
-> > on the server side can be made to look like several independent
-> > repositories on the client side.
-> >
-> > This is implemented by transforming ref names: for example, with
-> > --view=one/, refs/heads/one/master on the server will look like
-> > refs/heads/master to the client, refs/tags/one/v1 will look like
-> > refs/tags/v1, etc.
-> >
-> > This allows to transparently share repositories on the server which
-> > have a lot of objects in common without complicating things for the
-> > client, and without breaking garbage collection.
-> 
-> Just from this description, I can't see why the same can't be done with
-> appropriate refspecs. (A helper for doing that would be more welcome, of
-> course.)
+Thanks for your contribution to git. However ...
 
-You mean on the client side? The problem then is that a simple "git clone" 
-would not do the right thing anymore; you would still expose server-side 
-implementation details to clients. Clients shouldn't have to bother with this 
-added complexity. (They might not even have access to some of the views.) When 
-you do the mapping server-side, you can split or merge repositories as needed 
-without the clients even noticing.
+Filippo Negroni <fnegroni@flexerasoftware.com> writes:
 
-> Maybe a few tests and documentation (i.e. examples, not just the option
-> description) would clear this up?
+> Please let me know if you need the patch in any other way.
 
-Indeed, I should add some more background info.
+Please, read
+
+http://repo.or.cz/w/git.git?a=blob;f=Documentation/SubmittingPatches;hb=HEAD
+
+especially about inlining the patch and Signed-off-by, to make it easy
+and legally possible for our maintainer to apply your patch.
 
 Thanks,
-Andreas
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
