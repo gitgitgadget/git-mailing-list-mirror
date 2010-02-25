@@ -1,80 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] notes: fix malformed tree entry
-Date: Wed, 24 Feb 2010 21:58:12 -0800
-Message-ID: <7vocjdkgaz.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johan Herland <johan@herland.net>
+From: jacky.liye@gmail.com
+Subject: [PATCH] refactor commit_graft_pos using general sha1_pos function
+Date: Thu, 25 Feb 2010 14:57:27 -0500
+Message-ID: <1267127847-6172-1-git-send-email-jacky.liye@gmail.com>
+Cc: jackylee <jacky.liye@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 25 06:58:30 2010
+X-From: git-owner@vger.kernel.org Thu Feb 25 08:04:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkWk0-0004OI-FT
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 06:58:28 +0100
+	id 1NkXle-0001b8-1y
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 08:04:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753278Ab0BYF6X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2010 00:58:23 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53470 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752568Ab0BYF6X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2010 00:58:23 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CE6959A5FC;
-	Thu, 25 Feb 2010 00:58:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=dbxp
-	Efy2kQmpJBW9Q8+cSHiVKbI=; b=fyKxr8SkGpZHq/gAWooo4p3pD2GdYMDxZa9G
-	623L1YBmTsnc1j9eHJpqmXV5UmVt+qClItTKOR1w82p3mhJs5RHLi32CNy89Au7X
-	n51WkcC+YlyWSrOs0MouUSgdlXZZJq9tQ0vsNhC31+rNmkuzTvHtGqsg/Sh83kKP
-	V2O1ERM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:from:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
-	HZ5eJHYF2rYZX583gvCF4+fB3tmkAZcnecLuD1t+LUNh16KwjzgfWAP1/s7DK+2f
-	/1BFZSKfc9ZtdkV31n6OUpZZtBlUONnw4Xkk7bjeVn2oitQ4kwDVbWrNz/RoMs6i
-	zTk9TH7lee2aVRzRZW7HkFZKjp4ZASHW4tNPX0rIRF4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A49749A5FB;
-	Thu, 25 Feb 2010 00:58:17 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C9FE09A5FA; Thu, 25 Feb
- 2010 00:58:14 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C4FFFE62-21D2-11DF-8BD1-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752386Ab0BYHEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2010 02:04:07 -0500
+Received: from mail-pz0-f194.google.com ([209.85.222.194]:43821 "EHLO
+	mail-pz0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752344Ab0BYHEG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 02:04:06 -0500
+X-Greylist: delayed 385 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Feb 2010 02:04:06 EST
+Received: by pzk32 with SMTP id 32so480376pzk.4
+        for <git@vger.kernel.org>; Wed, 24 Feb 2010 23:04:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=/s29UpSaAlzNDH8LWrA7pNMjadTkeEa/2yC7zfATxuU=;
+        b=O7jnfeQgC+n86pdPF2bloVvYbxwqtXBLa1JUDM2gBKDxpYREOWTPEJ030/LoxwQXKF
+         u224/vXcBJL4sGOjz1qmwOLQHKOi3jcEoVA9ycJ5WVudsiiX12AJjQgTp/JpKrtCbzpE
+         W2S0DSxBi0H6CF4DQmBfvf12cV42kLqQJ0RsA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=XxTzRluVwnGELKO0aDSOw/bIvETtREU5KqlGdeN+78IcPkjVS+h1I4uycvO58H8guj
+         FJzAnFJsnSlEbAQfM7f0aGivB1nCIZ7+1B6My7vTYh7jhUpQZ0FmpSolqRoLEAY7Mhbd
+         pV74VIZLhQe16Kf1uV1kwWd++t63ZEXnGYgNM=
+Received: by 10.140.56.21 with SMTP id e21mr381925rva.164.1267081059823;
+        Wed, 24 Feb 2010 22:57:39 -0800 (PST)
+Received: from localhost.localdomain ([118.229.143.5])
+        by mx.google.com with ESMTPS id 20sm1731753pzk.11.2010.02.24.22.57.37
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 24 Feb 2010 22:57:39 -0800 (PST)
+X-Mailer: git-send-email 1.6.3.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141029>
 
-The mode bits for entries in a tree object should be an octal number
-with minimum number of digits.  Do not pad it with 0 to the left.
+From: jackylee <jacky.liye@gmail.com>
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+Signed-off-by: jacky.liye <jacky.liye@gmail.com>
 ---
- * This comes from 61a7cca (Notes API: write_notes_tree(): Store the notes
-   tree in the database, 2010-02-13)
+ commit.c |   23 +++++++----------------
+ 1 files changed, 7 insertions(+), 16 deletions(-)
 
- notes.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/notes.c b/notes.c
-index 3ba3e6d..a4f9926 100644
---- a/notes.c
-+++ b/notes.c
-@@ -624,8 +624,8 @@ static void write_tree_entry(struct strbuf *buf, unsigned int mode,
- 		const char *path, unsigned int path_len, const
- 		unsigned char *sha1)
+diff --git a/commit.c b/commit.c
+index 731191e..c44d091 100644
+--- a/commit.c
++++ b/commit.c
+@@ -6,6 +6,7 @@
+ #include "diff.h"
+ #include "revision.h"
+ #include "notes.h"
++#include "sha1-lookup.h"
+ 
+ int save_commit_buffer = 1;
+ 
+@@ -78,24 +79,14 @@ static unsigned long parse_commit_date(const char *buf, const char *tail)
+ 
+ static struct commit_graft **commit_graft;
+ static int commit_graft_alloc, commit_graft_nr;
+-
++static const unsigned char *commit_graft_access(size_t index, void *table)
++{
++	struct commit_graft **grafts = table;
++	return (const unsigned char *)grafts[index];
++}
+ static int commit_graft_pos(const unsigned char *sha1)
  {
--		strbuf_addf(buf, "%06o %.*s%c", mode, path_len, path, '\0');
--		strbuf_add(buf, sha1, 20);
-+	strbuf_addf(buf, "%o %.*s%c", mode, path_len, path, '\0');
-+	strbuf_add(buf, sha1, 20);
+-	int lo, hi;
+-	lo = 0;
+-	hi = commit_graft_nr;
+-	while (lo < hi) {
+-		int mi = (lo + hi) / 2;
+-		struct commit_graft *graft = commit_graft[mi];
+-		int cmp = hashcmp(sha1, graft->sha1);
+-		if (!cmp)
+-			return mi;
+-		if (cmp < 0)
+-			hi = mi;
+-		else
+-			lo = mi + 1;
+-	}
+-	return -lo - 1;
++	return sha1_pos(sha1, commit_graft, commit_graft_nr, commit_graft_access);
  }
  
- static void tree_write_stack_init_subtree(struct tree_write_stack *tws,
+ int register_commit_graft(struct commit_graft *graft, int ignore_dups)
 -- 
-1.7.0.227.g2f3f2
+1.6.3.3
