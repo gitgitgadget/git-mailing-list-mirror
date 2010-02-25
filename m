@@ -1,143 +1,65 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH maint] Windows: redirect f[re]open("/dev/null") to f[re]open("nul")
-Date: Thu, 25 Feb 2010 21:03:44 +0100
-Message-ID: <4B86D7A0.2010007@viscovery.net>
-References: <4B86399E.3090508@viscovery.net> <20100225162032.GA3527@cthulhu> <7vtyt59rjg.fsf@alter.siamese.dyndns.org>
+From: James Pickens <jepicken@gmail.com>
+Subject: Re: [RFC][PATCH 0/3] Different views on a repository
+Date: Thu, 25 Feb 2010 13:13:25 -0700
+Message-ID: <885649361002251213j4c48f720ree7e70848aafaef5@mail.gmail.com>
+References: <cover.1267029680.git.agruen@suse.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Larry D'Anna <larry@elder-gods.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 21:03:56 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Andreas Gruenbacher <agruen@suse.de>
+X-From: git-owner@vger.kernel.org Thu Feb 25 21:13:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkjwA-0005Ji-SO
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 21:03:55 +0100
+	id 1Nkk5n-00029C-UG
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 21:13:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933574Ab0BYUDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2010 15:03:49 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:51350 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S933525Ab0BYUDs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2010 15:03:48 -0500
-Received: from [192.168.0.202] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 7294710029;
-	Thu, 25 Feb 2010 21:03:43 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <7vtyt59rjg.fsf@alter.siamese.dyndns.org>
+	id S933618Ab0BYUNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2010 15:13:49 -0500
+Received: from mail-gx0-f217.google.com ([209.85.217.217]:46937 "EHLO
+	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933614Ab0BYUNr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 15:13:47 -0500
+Received: by gxk9 with SMTP id 9so6030266gxk.8
+        for <git@vger.kernel.org>; Thu, 25 Feb 2010 12:13:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=EC8BSzzOggP/NyYtCrsg+ynHNInBTt/rjXhYj4WfW1Y=;
+        b=AyYABMvWLRUgm7aaMvdVA3dXa9ak0ZocJjmiCiLC0+Skn6iZsp8zo4mqCx1JHrDPUU
+         PZDVhoxwH85hK3j7V/kqohBasGDoXXgXhG1r6Z9GROqa/ywVyRxMyGqFn9ets69FfiCN
+         +QQGRktl+zmTxn8diskFliCcxkrcGp+TqDOfE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=ljnaeEjr3HejheIqufeT2sbmnK91UKrLkw2K/t4osPJEgZzgJ594lTJiq9zxFcMbbL
+         +7MkbLaWJFoaflQuRC6enj/ZukDbnbU6QfwrRx9kxY7Pcig3ykAJhdciOk9rq4Ol+Do1
+         l74I7dpj1OSw9SqHT+O0BRhPw3ca8R4175sQs=
+Received: by 10.231.147.70 with SMTP id k6mr683330ibv.55.1267128825153; Thu, 
+	25 Feb 2010 12:13:45 -0800 (PST)
+In-Reply-To: <cover.1267029680.git.agruen@suse.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141065>
 
-From: Johannes Sixt <j6t@kdbg.org>
+On Wed, Feb 24, 2010, Andreas Gruenbacher <agruen@suse.de> wrote:
+> we have a use case with groups of repositories which share lots of
+> objects, but which are logically independent.  There is no strict
+> hierarchy between the repositories, the development modl is arbitrary.
+> The alternates mechanism for sharig objects between repositories won't
+> work.
 
-On Windows, the equivalent of "/dev/null" is "nul". This implements
-compatibility wrappers around fopen() and freopen() that check for this
-particular file name.
+Can you elaborate on why alternates won't work?
 
-The new tests exercise code paths where this is relevant.
+> The best idea I came up with so far to solve this
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
-Junio C Hamano schrieb:
-> Larry D'Anna <larry@elder-gods.org> writes:
->> Doesn't store_updated_refs do this too?
-> 
-> I think there is no problem, as the patch covers that case, too.
+Solve what?  You didn't mention any specific problem.  Are you just trying
+to save disk space by not storing multiple copies of the same objects?
 
-Nevertheless, we should do this, but this is now not specific to
-ld/maint-diff-quiet-w anymore.
-
--- Hannes
-
-  compat/mingw.c        |   16 ++++++++++++++++
-  compat/mingw.h        |    6 ++++++
-  t/t5510-fetch.sh      |    7 +++++++
-  t/t6023-merge-file.sh |    4 ++++
-  4 files changed, 33 insertions(+), 0 deletions(-)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 5edf152..02c6c07 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -140,6 +140,22 @@ int mingw_open (const char *filename, int oflags, ...)
-  	return fd;
-  }
-
-+#undef fopen
-+FILE *mingw_fopen (const char *filename, const char *otype)
-+{
-+	if (!strcmp(filename, "/dev/null"))
-+		filename = "nul";
-+	return fopen(filename, otype);
-+}
-+
-+#undef freopen
-+FILE *mingw_freopen (const char *filename, const char *otype, FILE *stream)
-+{
-+	if (filename && !strcmp(filename, "/dev/null"))
-+		filename = "nul";
-+	return freopen(filename, otype, stream);
-+}
-+
-  /*
-   * The unit of FILETIME is 100-nanoseconds since January 1, 1601, UTC.
-   * Returns the 100-nanoseconds ("hekto nanoseconds") since the epoch.
-diff --git a/compat/mingw.h b/compat/mingw.h
-index f53bcca..3347362 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -170,6 +170,12 @@ int link(const char *oldpath, const char *newpath);
-  int mingw_open (const char *filename, int oflags, ...);
-  #define open mingw_open
-
-+FILE *mingw_fopen (const char *filename, const char *otype);
-+#define fopen mingw_fopen
-+
-+FILE *mingw_freopen (const char *filename, const char *otype, FILE *stream);
-+#define freopen mingw_freopen
-+
-  char *mingw_getcwd(char *pointer, int len);
-  #define getcwd mingw_getcwd
-
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 6659972..462fc64 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -342,6 +342,13 @@ test_expect_success 'fetch into the current branch with --update-head-ok' '
-
-  '
-
-+test_expect_success 'fetch --dry-run' '
-+
-+	rm -f .git/FETCH_HEAD &&
-+	git fetch --dry-run . &&
-+	! test -f .git/FETCH_HEAD
-+'
-+
-  test_expect_success "should be able to fetch with duplicate refspecs" '
-          mkdir dups &&
-          cd dups &&
-diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
-index 6291307..d605024 100755
---- a/t/t6023-merge-file.sh
-+++ b/t/t6023-merge-file.sh
-@@ -64,6 +64,10 @@ cp new1.txt test.txt
-  test_expect_success "merge without conflict" \
-  	"git merge-file test.txt orig.txt new2.txt"
-
-+cp new1.txt test.txt
-+test_expect_success "merge without conflict (--quiet)" \
-+	"git merge-file --quiet test.txt orig.txt new2.txt"
-+
-  cp new1.txt test2.txt
-  test_expect_success "merge without conflict (missing LF at EOF)" \
-  	"git merge-file test2.txt orig.txt new2.txt"
--- 
-1.7.0.1287.g50986
+James
