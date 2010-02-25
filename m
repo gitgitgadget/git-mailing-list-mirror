@@ -1,97 +1,180 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH] git-gui: fix "Explore Working Copy" for Windows again
-Date: Thu, 25 Feb 2010 01:14:22 +0100
-Message-ID: <201002250114.23322.markus.heidelberg@web.de>
-References: <20100223225243.GC11271@book.hvoigt.net> <cb7bb73a1002232222r354a2ec7l9ea4cfd1c101e8c6@mail.gmail.com> <a5b261831002240412x30490e25wbec74cdbc1d0ebd2@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH] builtin-notes: Minor (mostly parse_options-related) fixes
+Date: Thu, 25 Feb 2010 01:48:11 +0100
+Message-ID: <201002250148.11487.johan@herland.net>
+References: <1266096518-2104-1-git-send-email-johan@herland.net>
+ <4B792347.8070208@gmail.com> <201002160247.49719.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Pat Thoyts <patthoyts@googlemail.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Feb 25 01:14:02 2010
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Stephen Boyd <bebarino@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Feb 25 01:48:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkRMf-0003D7-FL
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 01:14:01 +0100
+	id 1NkRtt-0008Qd-U9
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 01:48:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758662Ab0BYAN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 19:13:57 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:52019 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758523Ab0BYAN4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 19:13:56 -0500
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 33ECE14FC3D51;
-	Thu, 25 Feb 2010 01:13:55 +0100 (CET)
-Received: from [91.19.13.83] (helo=pluto.localnet)
-	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #314)
-	id 1NkRMY-00021E-00; Thu, 25 Feb 2010 01:13:55 +0100
-User-Agent: KMail/1.12.3 (Linux/2.6.30-gentoo-r8; KDE/4.3.3; i686; ; )
-In-Reply-To: <a5b261831002240412x30490e25wbec74cdbc1d0ebd2@mail.gmail.com>
-Jabber-ID: markus.heidelberg@web.de
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1/6QEHiPiqaoKCcGu/IvrosheHllj5g2i/99xh3
-	jX0Y7d9Kin/HxSf6Ug/PRnMru/uPOVOHHcwXCEx2ckGlv5x1wT
-	GDLzdJ7ouoCHQ7pjOoeg==
+	id S1758664Ab0BYAsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 19:48:17 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:33173 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758557Ab0BYAsQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 19:48:16 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KYD0019VGWEUE90@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 25 Feb 2010 01:48:14 +0100 (MET)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KYD00412GWC8K10@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 25 Feb 2010 01:48:14 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2010.2.25.3337
+User-Agent: KMail/1.13.0 (Linux/2.6.32-ARCH; KDE/4.4.0; x86_64; ; )
+In-reply-to: <201002160247.49719.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141017>
 
-It has already been fixed in commit 454efb47 (git-gui (Win): make
-"Explore Working Copy" more robust, 2009-04-01), but has been broken in
-commit 21985a11 (git-gui: handle non-standard worktree locations,
-2010-01-23) by accidentally replacing too much with a new variable.
+Use PARSE_OPT_NONEG to disallow --no-<option> for --message, --file,
+--reedit-message and --reuse-message. --no-<option> does not make sense
+for these options, and specifying PARSE_OPT_NONEG simplifies the code in
+the option-handling callbacks.
 
-The problem can be reproduced when starting git-gui from within a
-subdirectory. The solution is to convert the path name, explorer.exe is
-invoked with, to a platform native name.
+Also, use strbuf_addch(... '\n') instead of strbuf_addstr(... "\n") in
+couple of places.
 
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+Finally, improve the short-help by dividing the options into two OPT_GROUPs.
+
+Suggested-by: Stephen Boyd <bebarino@gmail.com>
+Signed-off-by: Johan Herland <johan@herland.net>
 ---
 
-> > > Maybe _gitworktree should be normalized or nativenamified when it is set
-> > > and then will work everywhere it is used for every platform?
+On Tuesday 16 February 2010, Johan Herland wrote:
+> On Monday 15 February 2010, Stephen Boyd wrote:
+> > On 02/13/2010 01:28 PM, Johan Herland wrote:
+> > > @@ -199,6 +203,40 @@ static int parse_file_arg(const struct option
+
+[...]
+
+> > > +	if (!arg)
+> > > +		return -1;
 > > 
-> > The only issue with that would be that GIT_DIR and GIT_WORK_TREE are
-> > (re)inizialized
-> > from _gitdir and _gitworktree, so it would not be safe if git on
-> > Windows works better with unix-style rather than native paths. If git
-> > on windows handles native paths fine, it should be no problem.
+> > This is impossible unless you're using the PARSE_OPT_OPTARG flag or
+> > allowing negation (i.e. --no-reuse-mesage). You should probably make
+> > the two callback options PARSE_OPT_NONEG and then drop this if
+> > statement. Same applies to some of the other callbacks not introduced
+> > in this patch.
 > 
-> Tcl internally uses unix type path separators but once you export this
-> path to the operating system you may need to ensure it is a native
-> path. Typically that means when calling [exec]. [open] is a tcl
-> command and will deal with a path variable in either style. The Tcl
-> exec man page has some notes on the compatibility issues.
+> Thanks. Fixed locally. Will be part of the next iteration.
+> 
+> > > +
+> > > +	if (msg->buf.len)
+> > > +		strbuf_addstr(&(msg->buf), "\n");
+> > > +
+> > 
+> > Use strbuf_addch()? I saw this in a couple other patches too.
+> 
+> Of course. Thanks for noticing. Fixed locally. Will be part of the next
+> iteration.
 
-So this should be the obvious solution.
+I never got around to submitting the next jh/notes iteration before it was
+merged to 'next', so here are Stephen's suggestions as a separate patch on
+top of 'next'. AFAICS it does not conflict with tr/notes-display in 'pu'.
 
- git-gui.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 8996d2d..7184afa 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -2101,7 +2101,7 @@ proc do_explore {} {
- 		# freedesktop.org-conforming system is our best shot
- 		set explorer "xdg-open"
- 	}
--	eval exec $explorer $_gitworktree &
-+	eval exec $explorer [list [file nativename $_gitworktree]] &
- }
+Have fun! :)
+
+...Johan
+
+
+ builtin-notes.c |   38 +++++++++++++++++---------------------
+ 1 files changed, 17 insertions(+), 21 deletions(-)
+
+diff --git a/builtin-notes.c b/builtin-notes.c
+index 123ecad..feb710a 100644
+--- a/builtin-notes.c
++++ b/builtin-notes.c
+@@ -171,12 +171,9 @@ static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct msg_arg *msg = opt->value;
  
- set is_quitting 0
+-	if (!arg)
+-		return -1;
+-
+ 	strbuf_grow(&(msg->buf), strlen(arg) + 2);
+ 	if (msg->buf.len)
+-		strbuf_addstr(&(msg->buf), "\n");
++		strbuf_addch(&(msg->buf), '\n');
+ 	strbuf_addstr(&(msg->buf), arg);
+ 	stripspace(&(msg->buf), 0);
+ 
+@@ -188,11 +185,8 @@ static int parse_file_arg(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct msg_arg *msg = opt->value;
+ 
+-	if (!arg)
+-		return -1;
+-
+ 	if (msg->buf.len)
+-		strbuf_addstr(&(msg->buf), "\n");
++		strbuf_addch(&(msg->buf), '\n');
+ 	if (!strcmp(arg, "-")) {
+ 		if (strbuf_read(&(msg->buf), 0, 1024) < 0)
+ 			die_errno("cannot read '%s'", arg);
+@@ -212,11 +206,8 @@ static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
+ 	enum object_type type;
+ 	unsigned long len;
+ 
+-	if (!arg)
+-		return -1;
+-
+ 	if (msg->buf.len)
+-		strbuf_addstr(&(msg->buf), "\n");
++		strbuf_addch(&(msg->buf), '\n');
+ 
+ 	if (get_sha1(arg, object))
+ 		die("Failed to resolve '%s' as a valid ref.", arg);
+@@ -291,15 +282,20 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 	int given_object = 0, i = 1, retval = 0;
+ 	struct msg_arg msg = { 0, 0, STRBUF_INIT };
+ 	struct option options[] = {
+-		OPT_GROUP("Notes options"),
+-		OPT_CALLBACK('m', "message", &msg, "MSG",
+-			     "note contents as a string", parse_msg_arg),
+-		OPT_CALLBACK('F', "file", &msg, "FILE",
+-			     "note contents in a file", parse_file_arg),
+-		OPT_CALLBACK('c', "reedit-message", &msg, "OBJECT",
+-			   "reuse and edit specified note object", parse_reedit_arg),
+-		OPT_CALLBACK('C', "reuse-message", &msg, "OBJECT",
+-			   "reuse specified note object", parse_reuse_arg),
++		OPT_GROUP("Notes contents options"),
++		{ OPTION_CALLBACK, 'm', "message", &msg, "MSG",
++			"note contents as a string", PARSE_OPT_NONEG,
++			parse_msg_arg},
++		{ OPTION_CALLBACK, 'F', "file", &msg, "FILE",
++			"note contents in a file", PARSE_OPT_NONEG,
++			parse_file_arg},
++		{ OPTION_CALLBACK, 'c', "reedit-message", &msg, "OBJECT",
++			"reuse and edit specified note object", PARSE_OPT_NONEG,
++			parse_reedit_arg},
++		{ OPTION_CALLBACK, 'C', "reuse-message", &msg, "OBJECT",
++			"reuse specified note object", PARSE_OPT_NONEG,
++			parse_reuse_arg},
++		OPT_GROUP("Other options"),
+ 		OPT_BOOLEAN('f', "force", &force, "replace existing notes"),
+ 		OPT_END()
+ 	};
 -- 
-1.7.0.52.gb3f79
+1.7.0.rc1.141.gd3fd
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
