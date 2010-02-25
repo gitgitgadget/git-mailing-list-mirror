@@ -1,103 +1,101 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-Received: (qmail 31493 invoked by uid 107); 22 Feb 2010 19:57:42 -0000
+X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
+Received: (qmail 21170 invoked by uid 107); 25 Feb 2010 19:26:46 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Mon, 22 Feb 2010 14:57:41 -0500
+    by peff.net (qpsmtpd/0.40) with ESMTP; Thu, 25 Feb 2010 14:26:44 -0500
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754200Ab0BVT5T (ORCPT <rfc822;peff@peff.net>);
-	Mon, 22 Feb 2010 14:57:19 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:65112 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754114Ab0BVT5S (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2010 14:57:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EBC949CD94;
-	Mon, 22 Feb 2010 14:57:17 -0500 (EST)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=zJnwgwLrcUB80Za/QeyAAqwDooI=; b=yUT5lx+odKGmtMBA4jNx7U1
-	a3bGgNuTMu4LfHwyz51y7LFa694rKG2nV0l7Byo8/dJJ/Y0GbI11pmWqL5mCthgV
-	kPbRQq+gUOciZ0gfgeUQRTJas1gTOMY5bqfMCVGjCb5Yl2rx6ycfrf2lGWe5teE4
-	igMZEIx9Jeklp5/6KTKY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=OuRHdQmAl6kS1/+9Gxzuz4Fcn7Vse0E+JnZKz5zRC3izCoDiJ
-	lclgvK17BclDn6iZN8AXBZ6cK/o2qAGoX8Dh7hnzZEjr7BhmTuc89cHA0ARJdY9o
-	62d1+q1AsccsiZG8FanfeiiCunRluVL6ybI0uLDYtHXFlAQ/BaYFVg7rtY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A05289CD8D;
-	Mon, 22 Feb 2010 14:57:13 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AE1DC9CD8B; Mon, 22 Feb
- 2010 14:57:08 -0500 (EST)
-To:	Don Zickus <dzickus@redhat.com>
-Cc:	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Lukas =?utf-8?Q?Sandstr=C3=B6m?= <lukass@etek.chalmers.se>
-Subject: Re: 'git mailinfo' whitespace bug
-References: <alpine.LFD.2.00.1002180936240.4141@localhost.localdomain>
- <7vzl343160.fsf@alter.siamese.dyndns.org> <20100222151344.GK3062@redhat.com>
-From:	Junio C Hamano <gitster@pobox.com>
-Date:	Mon, 22 Feb 2010 11:57:07 -0800
-Message-ID: <7vocjhcacs.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-Pobox-Relay-ID: 78591478-1FEC-11DF-B49F-D83AEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932897Ab0BYT0W (ORCPT <rfc822;peff@peff.net>);
+	Thu, 25 Feb 2010 14:26:22 -0500
+Received: from mail-pz0-f194.google.com ([209.85.222.194]:39658 "EHLO
+	mail-pz0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932633Ab0BYT0V (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 14:26:21 -0500
+Received: by pzk32 with SMTP id 32so893720pzk.4
+        for <git@vger.kernel.org>; Thu, 25 Feb 2010 11:26:21 -0800 (PST)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:to;
+        bh=uUtj65I46YCbIR4AKcX75dQMCM+d0pfApsjbLcLEQgc=;
+        b=tlsvtlrnF55D1iBVKoIlwpL5Z3bsT7EY0zV7XwmAaP3Keo0oN//T1nnVkpXhlF6z+E
+         MAWw9MbOUU3sjvGpUDnXnf24XnmEaR+EunBBtCAMqZcbPiPjT+WI1eZsx/PWfcpXLuvB
+         nYyCHCX9PUNWN9qRuhS3rn27yoO9dKSogIFCY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=g2LoftAVOnCn3ikZy+cfBpLmp4eGdUnDQKYYPGeREG6qQVlG0Zrrhr7BZioSd275PY
+         O5blaDu0lG3y0rjq6g+noRqkgNgvSKOKCDeHSBszEzjEGOA+1FOl4c5T1nLwUs9rYClh
+         2jRyPDyTr48QTAcBG3tUNNRPwxjIox4bDIWuo=
+Received: by 10.142.121.10 with SMTP id t10mr833060wfc.152.1267125981119;
+        Thu, 25 Feb 2010 11:26:21 -0800 (PST)
+Received: from localhost.localdomain ([70.102.219.22])
+        by mx.google.com with ESMTPS id 20sm2370860pzk.7.2010.02.25.11.26.20
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 25 Feb 2010 11:26:20 -0800 (PST)
+From:	Jacob Helwig <jacob.helwig@gmail.com>
+To:	git@vger.kernel.org
+Cc:	Jacob Helwig <jacob.helwig@gmail.com>,
+	Mark Levedahl <mlevedahl@gmail.com>
+Subject: [PATCH] submodule: Improve handling of relative submodule URLs.
+Date:	Thu, 25 Feb 2010 11:28:29 -0800
+Message-Id: <1267126109-14638-1-git-send-email-jacob.helwig@gmail.com>
+X-Mailer: git-send-email 1.7.0.91.g53050
+To:	git@vger.kernel.org
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Don Zickus <dzickus@redhat.com> writes:
+Relative URLs only worked with <proto>://<host>/<location> style URLs, and
+would break when cloning a repository using <user>@<host>:<location> (scp)
+style "URL"s.
 
->> But when is it correct to ltrim a header line?  It means we are going to
->> accept a header (or header-looking line in body) that is indented.  I
->> don't know why 87ab799 (builtin-mailinfo.c 2007-03-12) was coded that way.
->
-> In regards to 87ab799, I just deleted and pasted it from the function
-> handle_inbody_header (which you can see from that commit).  The original
-> code for those lines came from ae448e3854d8b6e7e37aa88fa3917f5dd97f3210.
+When a submodule's URL was set to "../submodule.git", and the repository
+using it was cloned from "git@example.com:repo.git", git would try to
+clone the submodule from "git@example.com:repo.git/submodule.git", which
+would not likely work.
 
-Thanks for clarifying.  The one in ae448e3 (mailinfo: ignore blanks after
-in-body headers., 2006-06-17) was about removing blank lines before the
-in-body headers begin, and never about removing indentation of the first
-in-body header.  Admittedly, it was also being lenient and skipped over
-lines that are not empty but all whitespaces, and if we apply the quoted
-patch we will be retroactively tightening the rule, but I somehow do not
-think people would care.
+This updates resolve_relative_url to handle the scp style URLs.
 
->>  builtin-mailinfo.c |    3 +--
->>  t/t5100/msg0015    |    2 +-
->>  2 files changed, 2 insertions(+), 3 deletions(-)
->> 
->> diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
->> index a50ac22..ce2ef6b 100644
->> --- a/builtin-mailinfo.c
->> +++ b/builtin-mailinfo.c
->> @@ -779,8 +779,7 @@ static int handle_commit_msg(struct strbuf *line)
->>  		return 0;
->>  
->>  	if (still_looking) {
->> -		strbuf_ltrim(line);
->> -		if (!line->len)
->> +		if (!line->len || (line->len == 1 && line->buf[0] == '\n'))
->>  			return 0;
->>  	}
+Signed-off-by: Jacob Helwig <jacob.helwig@gmail.com>
+---
+ git-submodule.sh |    9 +++++----
+ 1 files changed, 5 insertions(+), 4 deletions(-)
 
-We probably could do something like
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 664f217..97787a3 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -37,18 +37,19 @@ resolve_relative_url ()
+ 	while test -n "$url"
+ 	do
+ 		case "$url" in
+-		../*)
++		..[/:]*)
+ 			url="${url#../}"
+-			remoteurl="${remoteurl%/*}"
++			remoteurl="$(echo "$remoteurl" | sed -e 's|\(.*[/:]\).*|\1|')"
+ 			;;
+-		./*)
++		.[/:]*)
+ 			url="${url#./}"
++			remoteurl="$remoteurl/"
+ 			;;
+ 		*)
+ 			break;;
+ 		esac
+ 	done
+-	echo "$remoteurl/${url%/}"
++	echo "$remoteurl${url#[/:]}"
+ }
+ 
+ #
+-- 
+1.7.0.91.g310a
 
-	if (still_looking) {
-        	if (strspn(line->buf, " \t\n") == line->len)
-			return 0;
-	}
-
-to keep people with blank but not empty lines before the first in-body
-header happy.  I somehow don't think it is worth it, but what would I
-know...
