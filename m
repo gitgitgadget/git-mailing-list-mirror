@@ -1,104 +1,121 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [GIT GUI PATCH] git-gui: fix open explorer window 
-	on Windows 7
-Date: Thu, 25 Feb 2010 21:30:11 +0100
-Message-ID: <20100225202949.GA12637@book.hvoigt.net>
-References: <20100223225243.GC11271@book.hvoigt.net> <a5b261831002240415l5447ac94wd80c162fc9492fd5@mail.gmail.com>
+From: Christian MICHON <christian.michon@gmail.com>
+Subject: Re: few questions from a git newbie
+Date: Thu, 25 Feb 2010 21:35:38 +0100
+Message-ID: <46d6db661002251235w2be39d11l5faa69a2bfddf653@mail.gmail.com>
+References: <20100225202634.6a687a6c@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
-To: Pat Thoyts <patthoyts@googlemail.com>
-X-From: 32N2GSwYKB4gt70us5t70us5.zq5y4A4su5s00sxqs30614.o0y@groups.bounces.google.com Thu Feb 25 21:30:40 2010
-Return-path: <32N2GSwYKB4gt70us5t70us5.zq5y4A4su5s00sxqs30614.o0y@groups.bounces.google.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-gx0-f188.google.com ([209.85.217.188])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Levente Kovacs <leventelist@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 21:35:49 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <32N2GSwYKB4gt70us5t70us5.zq5y4A4su5s00sxqs30614.o0y@groups.bounces.google.com>)
-	id 1NkkM3-0002Hz-7L
-	for gcvm-msysgit@m.gmane.org; Thu, 25 Feb 2010 21:30:39 +0100
-Received: by gxk4 with SMTP id 4sf5953220gxk.6
-        for <gcvm-msysgit@m.gmane.org>; Thu, 25 Feb 2010 12:30:38 -0800 (PST)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1NkkR2-0005Ex-R1
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 21:35:49 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S933551Ab0BYUfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2010 15:35:43 -0500
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:49093 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933362Ab0BYUfm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 15:35:42 -0500
+Received: by bwz1 with SMTP id 1so3218339bwz.21
+        for <git@vger.kernel.org>; Thu, 25 Feb 2010 12:35:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:x-beenthere:received:received:received
-         :received:received-spf:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:in-reply-to:user-agent
-         :x-original-authentication-results:x-original-sender:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:x-thread-url
-         :x-message-url:sender:list-subscribe:list-unsubscribe:content-type
-         :content-disposition;
-        bh=3N8i0n1K7vlBH0fGN8UWkuE0NgcOn5IVsUjCqnctyzc=;
-        b=wTfQ+L/aoRoXvLaLhjM3lRGZGBmoFFINVTdCIPf3K8maLU0C8Pco88TyNdQodydQzT
-         QoOE1wgdFX7UAhD41JZxwx4UjIQS5mBlYaqSf8CLARczKfKxs2jhuYdlOZAZEf7gaqtn
-         ljM8t9t+MYr9SiGwKLRy8rK4OxargP8aKIfNc=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=xg7FyS5qVU5i2B2n1kavNA0X/4PNqWwCu9SoDaANPAA=;
+        b=xPMGUhcUlgWZ4+HvtT+kzCAsP1oEqT8RlHStvCCpuwse+yU359G5k5eE+SA3ljm6wS
+         sAb71ZDFx1Bul2sC9V4/H5lbujLvCYUxFW0rZJ+oF6RXWwdprpSZXbyuQpiFcCXzs5K4
+         eRFjdNS8XbXKEYUTUGNk7Nr8Ro4C0mb2ddgOA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
-         :references:mime-version:in-reply-to:user-agent
-         :x-original-authentication-results:x-original-sender:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:x-thread-url
-         :x-message-url:sender:list-subscribe:list-unsubscribe:content-type
-         :content-disposition;
-        b=aY1YG+vU9k4uu8LgumB5JSbt3CPPYuALWTPi2kyNKDdSoUTSZj+ThhhuROVmqWRgSS
-         5wXU3koU3DcgX9gIfqXb9apUi66DbZ0Ve5oRtjZuZT8ZfswDk2eHbYRKVQmYfGloUjwa
-         doTerLDZlGqGeeUm7/TXGzowUwLZl90jBpyAc=
-Received: by 10.91.82.19 with SMTP id j19mr84023agl.27.1267129816842;
-        Thu, 25 Feb 2010 12:30:16 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.204.27.2 with SMTP id g2ls167683bkc.0.p; Thu, 25 Feb 2010 
-	12:30:14 -0800 (PST)
-Received: by 10.204.0.84 with SMTP id 20mr13520bka.26.1267129814279;
-        Thu, 25 Feb 2010 12:30:14 -0800 (PST)
-Received: by 10.204.0.84 with SMTP id 20mr13519bka.26.1267129814236;
-        Thu, 25 Feb 2010 12:30:14 -0800 (PST)
-Received: from darksea.de (darksea.de [83.133.111.250])
-        by gmr-mx.google.com with SMTP id 12si860759bwz.13.2010.02.25.12.30.14;
-        Thu, 25 Feb 2010 12:30:14 -0800 (PST)
-Received-SPF: neutral (google.com: 83.133.111.250 is neither permitted nor denied by best guess record for domain of hvoigt@hvoigt.net) client-ip=83.133.111.250;
-Received: (qmail 26348 invoked from network); 25 Feb 2010 21:30:12 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 25 Feb 2010 21:30:12 +0100
-In-Reply-To: <a5b261831002240415l5447ac94wd80c162fc9492fd5@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Original-Authentication-Results: gmr-mx.google.com; spf=neutral (google.com: 
-	83.133.111.250 is neither permitted nor denied by best guess record for 
-	domain of hvoigt@hvoigt.net) smtp.mail=hvoigt@hvoigt.net
-X-Original-Sender: hvoigt@hvoigt.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, 
-	<mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-X-Thread-Url: http://groups.google.com/group/msysgit/t/582d6c373f657ad2
-X-Message-Url: http://groups.google.com/group/msysgit/msg/f4f8ed0ed51b3627
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
-	<mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141068>
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=XaT2hj+G5PtyYwiR9ANPcUuhxr8VSdxQnpbJruH5UWzwfeuXcaAdhxGIumOsRvU7uG
+         bQAM67DWJjqutqw//8tYruEV6bPl4Puf1GYkK610fvaXFX0wqanBLLzolxXjtQIQnsjZ
+         pMHlmicC4P9I6e0xiC0n5lNacUe5ccweViG/M=
+Received: by 10.204.16.194 with SMTP id p2mr167183bka.32.1267130138999; Thu, 
+	25 Feb 2010 12:35:38 -0800 (PST)
+In-Reply-To: <20100225202634.6a687a6c@gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141069>
 
-On Wed, Feb 24, 2010 at 12:15:03PM +0000, Pat Thoyts wrote:
-> On 23 February 2010 22:52, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> > It seems that Windows 7's explorer is not capable to cope with paths
-> > that contain forward slashes as path seperator. We thus substitute slash
-> > with the platforms native backslash.
-> >
-> 
-> What bug are you actually addressing here? How can I reproduce it? My
-> experience on Windows 7 is that there is no problem but I assume I'm
-> doing a different operation. If I use the git-gui  "Explore working
-> copy" it opens the Windows explorer for me just fine.
+On Thu, Feb 25, 2010 at 8:26 PM, Levente Kovacs <leventelist@gmail.com> wrote:
+> Hi,
+>
+>
+> I am a git newbie, so forgive my ignorance.
 
-Very strange, again another inconsistency between Windowses? I can
-reproduce this even on Windows XP. I am using the current devel branches
-of msysgit (msysgit and git). It happens when using the
-"Repository->Explore working copy" menu item. The Windows 7 I tested
-this on is 32-bit Professional. Which Windows 7 are you using?
+We all started as padawans. :-)
 
-cheers Heiko
+> I've set up a working system with gitosis.
+
+Gitosis has no commits since mid September 2009. I would suggest to
+move to gitolite with a very easy setups, especially for newbies. I'll
+actually answer more on the rest of your questions as if you would be
+using gitolite and not gitosis.
+
+>
+> http://logonex.eu/git/
+>
+> Currently I can add a repository by doing the following
+> stuff:
+>
+> edit gitosis.conf
+>
+> ssh git@server
+> mkdir REPO.git
+> cd REPO.git
+> git --bare init
+> exit
+
+With gitolite, you clone the gitolite-admin on a remote machine, as
+the user who has the admins ssh keys. Under the hood, you still
+somehow do ssh, but with gitolite, all it takes is to edit
+gitolite.conf, push your changes and the bare repo gets automatically
+created on the server.
+
+>
+> git clone git@server:REPO.git
+> cd REPO
+> git remote add REPO git@server:REPO.git
+> touch .gitignore
+> git add .gitignore
+> git commit -a
+> git push origin master
+>
+> Is this flow is the "right way"? How can I add a repository without ssh'ing to
+> the server?
+
+If you cloned it, you should not need to add remotes. If you're a
+newbie, I would suggest to use 'git gui' and 'gitk' until you're fully
+familiar with the command line.
+
+>
+> Next question is about SVN.
+>
+
+I'll pass the rest of the email. Never got brainw@shed by SVN...
+
+> How can I make gitosis to hide certain repositories?
+
+You meant on your gitweb ? The first thing you need to do is actually
+to secure your gitweb access. Back again to gitolite, a 'ssh gitolite
+info' will actually tell you the repos you've access on only. So all
+the rest of repos are hidden somehow. Keep in mind to remove gitweb if
+you need hidden stuff.
+
+Good luck.
+
+-- 
+Christian
+--
+http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
