@@ -1,67 +1,182 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: Re: [PATCH 3/3] fallback SSH_ASKPASS when GIT_ASKPASS not set
-Date: Thu, 25 Feb 2010 09:37:07 +0800
-Message-ID: <1976ea661002241737s74e0b9d3q30ba3f6632980fa2@mail.gmail.com>
-References: <1267024554-3288-1-git-send-email-lznuaa@gmail.com>
-	 <7vocje38ll.fsf@alter.siamese.dyndns.org>
+From: Pat Thoyts <patthoyts@googlemail.com>
+Subject: Re: [GITK PATCH 2/3] gitk: support path filters even in 
+	subdirectories
+Date: Thu, 25 Feb 2010 01:51:31 +0000
+Message-ID: <a5b261831002241751v5294af48rac8b5f52ba6cb045@mail.gmail.com>
+References: <f579dd581002200847o340a3eb9l50d0f1329d4e2c23@mail.gmail.com>
+	 <alpine.DEB.1.00.1002201847290.20986@pacific.mpi-cbg.de>
+	 <a5b261831002200948v3c01708dv3e42d08d42e3119@mail.gmail.com>
+	 <alpine.DEB.1.00.1002201920350.20986@pacific.mpi-cbg.de>
+	 <alpine.DEB.1.00.1002231748320.3980@intel-tinevez-2-302>
+	 <alpine.DEB.1.00.1002231810020.3980@intel-tinevez-2-302>
+	 <f579dd581002231137t71bb034fl429fd03a2c0d681c@mail.gmail.com>
+	 <alpine.DEB.1.00.1002232122110.3980@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 02:37:16 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Kirill <kirillathome@gmail.com>, Paul Mackerras <paulus@samba.org>,
+	msysgit@googlegroups.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 25 02:51:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkSfE-0002vl-5O
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 02:37:16 +0100
+	id 1NkSt9-00089e-5T
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 02:51:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758736Ab0BYBhJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Feb 2010 20:37:09 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:59165 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753386Ab0BYBhI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Feb 2010 20:37:08 -0500
-Received: by gwj16 with SMTP id 16so1439144gwj.19
-        for <git@vger.kernel.org>; Wed, 24 Feb 2010 17:37:07 -0800 (PST)
+	id S1758727Ab0BYBve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 20:51:34 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:46930 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753199Ab0BYBvd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 20:51:33 -0500
+Received: by wya21 with SMTP id 21so1546555wya.19
+        for <git@vger.kernel.org>; Wed, 24 Feb 2010 17:51:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
+        d=googlemail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=gZZ4hcgTIfYhcXsZpc/2ZNH4ziQAE2qS8eLOI9Mo/+g=;
-        b=QE1f5Z+gMHN+cOakKqFD8CtvCmQiHuYz+PP63Rf/b+fBsPpM0nA8a0gjhKc4inDv/7
-         55m4fYqlGe3q8npATjrNLYWa0wvVOu5xlooyslnvQMRLIED6p8plkRSA4DMvTW16e2vD
-         pe9qQ0EoyxXTdBLgFKFkUzupDO1u/dZyX3mMA=
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=KQ8jRQ9AdhGhnTfMOx6O8xIwaWOLUiWO2aVIf6tQcUc=;
+        b=nkjucBFThw7gy5tnY8Jb8MGwvj4UFndtTZKtQxryXHTXCzCNKoJuwhSIXTo6qpvnWR
+         Y1SNUTvjt+2/UwJRfqqHaGu/34lqQ0QS+TpppStewqFfg/D1DQJ9U1OnNlr28kG7pu+U
+         Rc4ym6Pk2ZqAko0YPuxjvQKLXI01SSH3x0XBw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
+        d=googlemail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Vo0WWAB32TQ8R6DumohN0AKZTnNZOr+QiS/Qd/PI0CC7Mu1KSiJ5J2V2I2SJG84DOq
-         FjXSUo5BO+aCeIGzv56yjCWQ2APzBpZm4mBfgHcwfcJzWuIFIvmN3CuAl9b4K8iOhWwd
-         o26wrCY7orTKZPKOumX/9maND3/4hNCmC88jo=
-Received: by 10.151.18.38 with SMTP id v38mr577166ybi.274.1267061827488; Wed, 
-	24 Feb 2010 17:37:07 -0800 (PST)
-In-Reply-To: <7vocje38ll.fsf@alter.siamese.dyndns.org>
+         :cc:content-type;
+        b=ZOqHZIqKhG1FMEndLOOdFIaGwh611lIKaWhNPqeKN4ZpLktUB4AT/r2MH0+ysbZkHw
+         H38iVKNF+LtW49uc+MUhuOiMa2gT7yMNyDMCkxO9zmI06+JxKwosql9ldrfZdfeJdHSW
+         0BRYndTM4NQ/OtbNxFFInBsQPyNBOARiF2aC0=
+Received: by 10.216.86.7 with SMTP id v7mr295965wee.137.1267062691864; Wed, 24 
+	Feb 2010 17:51:31 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.1002232122110.3980@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141020>
 
-> So probably the patch to implement the fallback should be more like
+On 23 February 2010 20:22, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
 >
-> =A0 =A0 =A0 =A0if (SSH_ASKPASS is set but not GIT_ASKPASS)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0set GIT_ASKPASS from SSH_ASKPASS
+> On Tue, 23 Feb 2010, Kirill wrote:
 >
+>> I believe the fact that pathprefix is set only under several conditions,
+>> the invocation without arguments is broken.
+>
+> You are absolutely correct!
+>
+> Will fix and push to work/gitk-dashdash-dot,
+> Dscho
 
-do you means just keep these?
+This doesn't seem to work for me. We are trying to have the file tree
+window display filenames when 'gitk -- .' is used and with your patch
+this isn't happening when I apply this to gitk. I broke out the
+path_filter function into a separate test to play with it a bit. It
+seems this function is trying to match a path prefix to the provided
+file name so here is a test script with three implementations. The
+original, dscho's new one (git rev-parse --show-prefix returns an
+empty string when run in the toplevel directory so I force the
+'pathprefix' variable for the tests).
 
-+       if (!getenv("GIT_ASKPASS") && getenv("SSH_ASKPASS"))
-+               setenv("GIT_ASKPASS", getenv("SSH_ASKPASS"), 1);
+With this script I get the following results:
+C:\src\gitk>tclsh told.tcl
+original-2 failed . gitk expected 1 got 0
+original-3 failed ./ gitk expected 1 got 0
+original-5 failed ./po po/de.po expected 1 got 0
+dscho-2 failed . gitk expected 1 got 0
+dscho-3 failed ./ gitk expected 1 got 0
+dscho-5 failed ./po po/de.po expected 1 got 0
 
+So it looks like a simple string match on a normalized path works ok.
+[file normalize $name] doesn't require the target file to exists btw.
 
-best regards
-=46rank Li
+--- test script begins ---
+
+proc path_filter_orig {filter name} {
+    foreach p $filter {
+        set l [string length $p]
+	if {[string index $p end] eq "/"} {
+	    if {[string compare -length $l $p $name] == 0} {
+		return 1
+	    }
+	} else {
+	    if {[string compare -length $l $p $name] == 0 &&
+		([string length $name] == $l ||
+		 [string index $name $l] eq "/")} {
+		return 1
+	    }
+	}
+    }
+    return 0
+}
+
+proc path_filter_dscho {filter name} {
+    set pathprefix ""
+    foreach p $filter {
+        if {$p == "."} {
+            set p $pathprefix
+        } else {
+            set p $pathprefix$p
+        }
+        set l [string length $p]
+	if {[string index $p end] eq "/"} {
+	    if {[string compare -length $l $p $name] == 0} {
+		return 1
+	    }
+	} else {
+	    if {[string compare -length $l $p $name] == 0 &&
+		([string length $name] == $l ||
+		 [string index $name $l] eq "/")} {
+		return 1
+	    }
+	}
+    }
+    return 0
+}
+
+proc path_filter {filter name} {
+    set name [file normalize $name]
+    foreach p $filter {
+        set p [file normalize $p]
+        if {[string equal $p $name] || [string match $p* $name]} {
+            return 1
+        }
+    }
+    return 0
+}
+
+set tests {
+    1  ""   gitk   0
+    2  .    gitk   1
+    3  ./   gitk   1
+    4  po   po/de.po  1
+    5  ./po po/de.po 1
+    6  po   gitk   0
+    7  po   a/b    0
+    8  a    a/b/c  1
+}
+
+foreach {id filter name result} $tests {
+    set testresult [path_filter_orig $filter $name]
+    if {$testresult != $result} {
+        puts "original-$id failed $filter $name expected $result got
+$testresult"
+    }
+}
+
+foreach {id filter name result} $tests {
+    set testresult [path_filter_dscho $filter $name]
+    if {$testresult != $result} {
+        puts "dscho-$id failed $filter $name expected $result got $testresult"
+    }
+}
+
+foreach {id filter name result} $tests {
+    set testresult [path_filter $filter $name]
+    if {$testresult != $result} {
+        puts "new-$id failed $filter $name expected $result got $testresult"
+    }
+}
