@@ -1,69 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Repository Shootout - let the voice of GIT users be heard
-Date: Thu, 25 Feb 2010 10:41:15 +0100
-Message-ID: <vpqzl2x1wlg.fsf@bauges.imag.fr>
-References: <27714310.post@talk.nabble.com>
-	<alpine.DEB.1.00.1002250055200.20986@pacific.mpi-cbg.de>
+From: Filippo Negroni <fnegroni@flexerasoftware.com>
+Subject: [PATCH] Fix gitmkdtemp: correct test for mktemp() return value
+Date: Thu, 25 Feb 2010 10:01:31 +0000
+Message-ID: <4B864A7B.9000500@flexerasoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: AssemblaSM <assemblasocialmedia@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 25 10:41:24 2010
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Feb 25 11:02:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkaDk-0003xO-5Q
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 10:41:24 +0100
+	id 1NkaXk-0004o7-1q
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 11:02:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753841Ab0BYJlT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2010 04:41:19 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:33986 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753538Ab0BYJlS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2010 04:41:18 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o1P9ckQC022682
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 25 Feb 2010 10:38:46 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NkaDb-0000ga-Fl; Thu, 25 Feb 2010 10:41:15 +0100
-In-Reply-To: <alpine.DEB.1.00.1002250055200.20986@pacific.mpi-cbg.de> (Johannes Schindelin's message of "Thu\, 25 Feb 2010 00\:57\:26 +0100 \(CET\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 25 Feb 2010 10:38:46 +0100 (CET)
+	id S1753692Ab0BYKB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2010 05:01:56 -0500
+Received: from tx2ehsobe005.messaging.microsoft.com ([65.55.88.15]:6167 "EHLO
+	TX2EHSOBE010.bigfish.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753390Ab0BYKBz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 05:01:55 -0500
+Received: from mail128-tx2-R.bigfish.com (10.9.14.244) by
+ TX2EHSOBE010.bigfish.com (10.9.40.30) with Microsoft SMTP Server id
+ 8.1.240.5; Thu, 25 Feb 2010 10:01:54 +0000
+Received: from mail128-tx2 (localhost [127.0.0.1])	by
+ mail128-tx2-R.bigfish.com (Postfix) with ESMTP id CEEDB78837D;	Thu, 25 Feb
+ 2010 10:01:54 +0000 (UTC)
+X-SpamScore: 2
+X-BigFish: VPS2(zba6lz936eMab9bha4b1kzz1202hzzz2dh6bh43h61h)
+X-Spam-TCS-SCL: 0:0
+Received: from mail128-tx2 (localhost.localdomain [127.0.0.1]) by mail128-tx2
+ (MessageSwitch) id 1267092109554516_21636; Thu, 25 Feb 2010 10:01:49 +0000
+ (UTC)
+Received: from TX2EHSMHS026.bigfish.com (unknown [10.9.14.251])	by
+ mail128-tx2.bigfish.com (Postfix) with ESMTP id 4101A11013A;	Thu, 25 Feb 2010
+ 10:01:36 +0000 (UTC)
+Received: from schexch.acresso.com (64.244.204.10) by TX2EHSMHS026.bigfish.com
+ (10.9.99.126) with Microsoft SMTP Server id 14.0.482.39; Thu, 25 Feb 2010
+ 10:01:33 +0000
+Received: from mhexch.acresso.com ([10.41.0.8]) by schexch.acresso.com with
+ Microsoft SMTPSVC(6.0.3790.3959);	 Thu, 25 Feb 2010 04:01:33 -0600
+Received: from [10.41.10.67] ([10.41.10.67]) by mhexch.acresso.com with
+ Microsoft SMTPSVC(6.0.3790.3959);	 Thu, 25 Feb 2010 10:01:32 +0000
+User-Agent: Thunderbird 2.0.0.23 (X11/20090820)
+X-OriginalArrivalTime: 25 Feb 2010 10:01:32.0094 (UTC) FILETIME=[81B6BDE0:01CAB601]
+X-Reverse-DNS: unknown
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141042>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>From 5e3b362cdd86150de901312c01beac9596b7e2ba Mon Sep 17 00:00:00 2001
+From: Filippo Negroni <fnegroni@flexerasoftware.com>
+Date: Thu, 25 Feb 2010 09:39:56 +0000
+Subject: [PATCH] Fix gitmkdtemp: correct test for mktemp() return value
 
-> Hi,
->
-> On Wed, 24 Feb 2010, AssemblaSM wrote:
->
->> We are conducting a short survey about the SCM systems that you use
->> professionally and personally and why.
->
-> What is in it for the people taking the time?
+In gitmkdtemp, the return value of mktemp is not tested correctly.
+mktemp() always returns its 'template' argument, even upon failre.
+Upon failure, mktemp sets template to be an empty string: its first character is '\0'.
+This patch ensures the return value of mktemp is correctly tested by dereferencing the pointer returned by it.
 
-Increase the number of people saying that Git is cool, one more step
-towards world domination ;-).
+Signed-off-by: Filippo Negroni <fnegroni@flexerasoftware.com>
+---
+ compat/mkdtemp.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-OTOH, the survey results will probably be very biaised (depending on
-who received the call), so I doubt the result will actually give a
-hint on which VCS is most popular.
-
-> From your message, I have the impression that there is no benefit
-> for me whatsoever to fill out the survey, but possibly half an hour
-> (or more) of net time lost on hacking.
-
-I did it, it's actually a few minutes, not half an hour.
-
+diff --git a/compat/mkdtemp.c b/compat/mkdtemp.c
+index 34d4b49..1136119 100644
+--- a/compat/mkdtemp.c
++++ b/compat/mkdtemp.c
+@@ -2,7 +2,7 @@
+ 
+ char *gitmkdtemp(char *template)
+ {
+-       if (!mktemp(template) || mkdir(template, 0700))
++       if (!*mktemp(template) || mkdir(template, 0700))
+                return NULL;
+        return template;
+ }
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.6.4
