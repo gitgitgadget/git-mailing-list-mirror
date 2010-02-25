@@ -1,66 +1,77 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: Repository Shootout - let the voice of GIT users be heard
-Date: Thu, 25 Feb 2010 00:10:11 +0000
-Message-ID: <43d8ce651002241610j56d50afam98392486560cb356@mail.gmail.com>
-References: <27714310.post@talk.nabble.com>
-	 <alpine.DEB.1.00.1002250055200.20986@pacific.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: AssemblaSM <assemblasocialmedia@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 25 01:10:21 2010
+From: Nelson Elhage <nelhage@MIT.EDU>
+Subject: Re: What's cooking in git.git (Feb 2010, #06; Tue, 23)
+Date: Wed, 24 Feb 2010 19:11:23 -0500
+Message-ID: <1267056683-6697-1-git-send-email-nelhage@mit.edu>
+References: <7v635nsa37.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1002241004010.1946@xanadu.home> <7v635m6w0r.fsf@alter.siamese.dyndns.org>
+Cc: Nicolas Pitre <nico@fluxnic.net>, git@vger.kernel.org,
+	Nelson Elhage <nelhage@mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 01:13:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkRJ5-0001nt-Bh
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 01:10:19 +0100
+	id 1NkRMC-000335-Ro
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 01:13:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758626Ab0BYAKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 19:10:13 -0500
-Received: from mail-pz0-f174.google.com ([209.85.222.174]:60434 "EHLO
-	mail-pz0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758523Ab0BYAKM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 19:10:12 -0500
-Received: by pzk4 with SMTP id 4so96325pzk.21
-        for <git@vger.kernel.org>; Wed, 24 Feb 2010 16:10:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=mSJHBN8MXzh50o/1G0yR0BG504mS3H6Kw247rj4QO2E=;
-        b=PLAgaxjp09LtkXkIMxROhyuoqDaYlY+IYttEUWjziCFEp3k8RO5M6UOm0YuoL7Kvw9
-         4O9V8Hx6m8yCkRMToZwBOerp00Wxe4StIl/sy6v1OQQ23N7gqhUwt7felzcgpWZJMukh
-         OVhFbUsvCaEJrNAsgRP4Ly5FvybIe8jwaovkY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=VflRJY9lScRlEsv5gp7P4A1I/Z5717B9BqycG2Q9bOlXvSLHh2DYHnVY7PTGQEjclM
-         hCWLMCs3H1TbxLcdXEJxgpBiyhhVnqjyYuwMvsFcOwo4lrnyAuXa5sp+fZS2k+vtUtgz
-         Rm7jsWVJsMQE1ihMIrbf368Js2jdAB4FbMyF8=
-Received: by 10.114.163.9 with SMTP id l9mr282734wae.5.1267056611621; Wed, 24 
-	Feb 2010 16:10:11 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.1002250055200.20986@pacific.mpi-cbg.de>
+	id S1758659Ab0BYAN2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 19:13:28 -0500
+Received: from DMZ-MAILSEC-SCANNER-1.MIT.EDU ([18.9.25.12]:62675 "EHLO
+	dmz-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758523Ab0BYAN1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Feb 2010 19:13:27 -0500
+X-AuditID: 1209190c-b7cfcae00000096b-dd-4b85c0a67f56
+Received: from mailhub-auth-3.mit.edu (MAILHUB-AUTH-3.MIT.EDU [18.9.21.43])
+	by dmz-mailsec-scanner-1.mit.edu (Symantec Brightmail Gateway) with SMTP id 88.8D.02411.6A0C58B4; Wed, 24 Feb 2010 19:13:26 -0500 (EST)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id o1P0DPoJ024125;
+	Wed, 24 Feb 2010 19:13:25 -0500
+Received: from PHANATIQUE.MIT.EDU (c-71-192-160-118.hsd1.nh.comcast.net [71.192.160.118])
+	(authenticated bits=0)
+        (User authenticated as nelhage@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o1P0DMvg022112
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 24 Feb 2010 19:13:23 -0500 (EST)
+X-Mailer: git-send-email 1.6.6.30.g1e6fd
+In-Reply-To: <7v635m6w0r.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: AAAAAhMHvRwTB8eX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141015>
 
-On 24 February 2010 23:57, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Wed, 24 Feb 2010, AssemblaSM wrote:
->
->> We are conducting a short survey about the SCM systems that you use
->> professionally and personally and why.
->
-> What is in it for the people taking the time? From your message, I have
-> the impression that there is no benefit for me whatsoever to fill out the
-> survey, but possibly half an hour (or more) of net time lost on hacking.
+You should probably fix --honor-pack-keep while you're at it.
 
-It was 6 questions.  Maybe 20 tick boxes in total.  I completed it in
-about the same time it took you to moan about it.
+(I assume this should probably get squashed into your patch, but I'm
+sending it as another patch, because I'm unsure of the etiquette on
+resending an edited version of someone else's patch)
+
+- Nelson
+
+---- >8 ----
+Subject: pack-objects documentation: Fix --honor-pack-keep as well.
+
+Signed-off-by: Nelson Elhage <nelhage@mit.edu>
+---
+ Documentation/git-pack-objects.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index 1deaa65..8ed09c0 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -115,8 +115,8 @@ base-name::
+ 
+ --honor-pack-keep::
+ 	This flag causes an object already in a local pack that
+-	has a .keep file to be ignored, even if it appears in the
+-	standard input.
++	has a .keep file to be ignored, even if it it would have
++	otherwise been packed.
+ 
+ --incremental::
+ 	This flag causes an object already in a pack to be ignored
+-- 
+1.6.6.30.g1e6fd
