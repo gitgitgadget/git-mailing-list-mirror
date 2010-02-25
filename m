@@ -1,152 +1,85 @@
-From: Steven Drake <sdrake@xnet.co.nz>
-Subject: Re: [PATCH] Add `[decorate]' configuration section.
-Date: Fri, 26 Feb 2010 11:44:11 +1300 (NZDT)
-Message-ID: <alpine.LNX.2.00.1002261131190.19126@vqena.qenxr.bet.am>
-References: <16c38171fc04cee7bdc607bb4c6586925b15278c.1266394059.git.sdrake@xnet.co.nz> <7vr5ojwy38.fsf@alter.siamese.dyndns.org>
+From: Pat Thoyts <patthoyts@googlemail.com>
+Subject: Re: [PATCH] git-gui: fix "Explore Working Copy" for Windows again
+Date: Thu, 25 Feb 2010 23:00:17 +0000
+Message-ID: <a5b261831002251500i2628946fo1bc2f7070f682702@mail.gmail.com>
+References: <20100223225243.GC11271@book.hvoigt.net>
+	 <cb7bb73a1002232222r354a2ec7l9ea4cfd1c101e8c6@mail.gmail.com>
+	 <a5b261831002240412x30490e25wbec74cdbc1d0ebd2@mail.gmail.com>
+	 <201002250114.23322.markus.heidelberg@web.de>
+	 <20100225204451.GB12637@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 23:52:17 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Markus Heidelberg <markus.heidelberg@web.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Fri Feb 26 00:00:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkmZ7-00047Y-FJ
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 23:52:17 +0100
+	id 1Nkmh3-0002UX-Oj
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 00:00:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934342Ab0BYWwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2010 17:52:12 -0500
-Received: from ananke.wxnz.net ([58.28.4.122]:53185 "EHLO ananke.wxnz.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934287Ab0BYWwL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2010 17:52:11 -0500
-Received: from idran.drake.org.nz (ip-118-90-92-73.xdsl.xnet.co.nz [118.90.92.73])
-	by ananke.wxnz.net (Postfix) with ESMTP id 9F1D31709BB;
-	Fri, 26 Feb 2010 11:52:08 +1300 (NZDT)
-In-Reply-To: <7vr5ojwy38.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S934446Ab0BYXAW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2010 18:00:22 -0500
+Received: from mail-ew0-f220.google.com ([209.85.219.220]:54981 "EHLO
+	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934441Ab0BYXAU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 18:00:20 -0500
+Received: by ewy20 with SMTP id 20so1879927ewy.21
+        for <git@vger.kernel.org>; Thu, 25 Feb 2010 15:00:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=yLmqzKJ7aqr/auSEuu0cjj4SUl4O2TnpNSZLU/fC4iI=;
+        b=MAcAcX4Qmk+q9rsSE1YGMugZ2pnU6YMAJ6RqnYFFcXPTQXZ3sukQLGOHP8XzOnxYJ6
+         RWN72oqyWi7QkxV5JhMKTb3Zb2M4nDf+sy011+9+1wyTasClgUJyxp8Yg6k6gOrLDs/f
+         /0lKFYydXVCZgKz+lOIQajcq9TbufMWxima38=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=mYW6sdEarsDqUqMvt0+rzBmKSTwIldxkJvUZxtwzsjLEEuPyspXwaXFBa2D+Y88m9Q
+         C+7pkM/I74WOB6F6ouvyvdAdoz2dWLQpGP3c37x90BYBJhFkClebCFtpLq13IJrWdv3E
+         PEBbsLSNuV8bIzmuL70RAbxmII3WGzyNEVKtY=
+Received: by 10.216.87.13 with SMTP id x13mr492964wee.12.1267138817994; Thu, 
+	25 Feb 2010 15:00:17 -0800 (PST)
+In-Reply-To: <20100225204451.GB12637@book.hvoigt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141077>
 
-Sorry for taking so  long to reply to your email, got destracted.
- 
-On Wed, 17 Feb 2010, Junio C Hamano wrote:
-> Steven Drake <sdrake@xnet.co.nz> writes:
-> 
-> > This can be used to enable the display of ref names of commits that are
-> > shown by log commands.  Each of the log commands (whatchanged, show,
-> > reflog, and log) can be enable separately.
-> >
-> > e.g:
-> > 	[decorate]
-> > 		log
-> > 		reflog
-> 
-> What is the reason to set these configuration differently except "because
-> we can"? 
+On 25 February 2010 20:44, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+> On Thu, Feb 25, 2010 at 01:14:22AM +0100, Markus Heidelberg wrote:
+>> It has already been fixed in commit 454efb47 (git-gui (Win): make
+>> "Explore Working Copy" more robust, 2009-04-01), but has been broken in
+>> commit 21985a11 (git-gui: handle non-standard worktree locations,
+>> 2010-01-23) by accidentally replacing too much with a new variable.
+>>
+>> The problem can be reproduced when starting git-gui from within a
+>> subdirectory. The solution is to convert the path name, explorer.exe is
+>> invoked with, to a platform native name.
+>>
+>> Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+>> ---
+>
+> I can confirm that this does fix the issue which is actually also
+> apparent on Windows XP. If no objections occur I would apply this to the
+> devel branch for msysgit.
+>
+> cheers Heiko
 
-Basicly yes, but I did this when I was looking at what you said in a reply
-about the "log.decorate" changes, I.E.
+Agreed - the loss of the [file nativename] around the path is the
+fault. Replacement with
+eval exec $explorer [list [file nativename $_gitworktree]] &
+will be sufficient for all platforms (the [list] protects any spaces
+in the path against the eval).
 
-  On Tue, 16 Feb 2010, Junio C Hamano wrote:
-  > I was not worried about what your change does.  I am worried about
-  > protecting what the code after your change currently does from future
-  > changes done by other people while you are not actively watching the
-  > patches in flight on this list.
-
-But that can easly be with the patch below.
-
-> Also, if it is a good idea to allow setting them independently,
-> you would need to make it easier for people who want to set them all to
-> the same value, e.g. "[decorate] logfamily = short" or something.
-
-Good Idea!
-
-> I somehow find the older "log.decorate" much more natural and the changes
-> from it to this version not worth it, but maybe it is just me.
-
-I agree with you, I just thought having a single "[decorate]" section in the
-config file was cleaner.  But nomater which way around it was done someone
-would want t done the other way around.
-
---- >8 ---
-Subject: [PATCH 1/1] log.decorate: future proofing against builtin-log.c changes
-
-Instead of directly setting 'decoration_style' in git_log_config() we set
-an intermediate variable, then for each of the commands we want
-'log.decorate' to have an affect 'decoration_style' is set from the
-intermediate.
-
-This is to protect against future change to cmd_log_init() and how it is
-used or the commands 'log.decorate' affects.
-
-Signed-off-by: Steven Drake <sdrake@xnet.co.nz>
----
- builtin-log.c |   12 ++++++++----
- 1 files changed, 8 insertions(+), 4 deletions(-)
-
-diff --git a/builtin-log.c b/builtin-log.c
-index 0afba31..91712e6 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -24,7 +24,7 @@
- static const char *default_date_mode = NULL;
- 
- static int default_show_root = 1;
--static int decoration_style;
-+static int default_decoration_style, decoration_style;
- static const char *fmt_patch_subject_prefix = "PATCH";
- static const char *fmt_pretty;
- 
-@@ -269,9 +269,9 @@ static int git_log_config(const char *var, const char *value, void *cb)
- 	if (!strcmp(var, "log.date"))
- 		return git_config_string(&default_date_mode, var, value);
- 	if (!strcmp(var, "log.decorate")) {
--		decoration_style = parse_decoration_style(var, value);
--		if (decoration_style < 0)
--			decoration_style = 0; /* maybe warn? */
-+		default_decoration_style = parse_decoration_style(var, value);
-+		if (default_decoration_style < 0)
-+			default_decoration_style = 0; /* maybe warn? */
- 		return 0;
- 	}
- 	if (!strcmp(var, "log.showroot")) {
-@@ -286,6 +286,7 @@ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 
- 	git_config(git_log_config, NULL);
-+	decoration_style = default_decoration_style;
- 
- 	if (diff_use_color_default == -1)
- 		diff_use_color_default = git_use_color_default;
-@@ -353,6 +354,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 	int i, count, ret = 0;
- 
- 	git_config(git_log_config, NULL);
-+	decoration_style = default_decoration_style;
- 
- 	if (diff_use_color_default == -1)
- 		diff_use_color_default = git_use_color_default;
-@@ -429,6 +431,7 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 
- 	git_config(git_log_config, NULL);
-+	decoration_style = default_decoration_style;
- 
- 	if (diff_use_color_default == -1)
- 		diff_use_color_default = git_use_color_default;
-@@ -462,6 +465,7 @@ int cmd_log(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 
- 	git_config(git_log_config, NULL);
-+	decoration_style = default_decoration_style;
- 
- 	if (diff_use_color_default == -1)
- 		diff_use_color_default = git_use_color_default;
--- 
-1.6.6
+Pat Thoyts
