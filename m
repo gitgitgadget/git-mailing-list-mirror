@@ -1,65 +1,107 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH jh/notes] t3301-notes: insert a shbang line in ./fake_editor.sh
-Date: Thu, 25 Feb 2010 11:39:50 +0100
-Message-ID: <4B865376.9030209@viscovery.net>
+From: =?ISO-8859-1?Q?Fabian_K=F6ssel?= <mok4sin@googlemail.com>
+Subject: Re: [RFD] Deepen the git directory structure a bit.
+Date: Thu, 25 Feb 2010 11:58:52 +0100
+Message-ID: <4B8657EC.8060302@googlemail.com>
+References: <alpine.LFD.2.00.1002181010590.4141@localhost.localdomain> <alpine.LFD.2.00.1002220830550.4141@localhost.localdomain> <7v7hq46gwe.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johan Herland <johan@herland.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 11:40:02 2010
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 25 11:58:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nkb8T-0006SM-O1
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 11:40:02 +0100
+	id 1NkbQd-00067S-DL
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 11:58:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759167Ab0BYKj4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2010 05:39:56 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:40422 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759138Ab0BYKjz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2010 05:39:55 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Nkb8I-0007aw-L9; Thu, 25 Feb 2010 11:39:51 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 612C21660F;
-	Thu, 25 Feb 2010 11:39:50 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1753379Ab0BYK6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2010 05:58:42 -0500
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:50258 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752083Ab0BYK6l (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 05:58:41 -0500
+Received: by bwz1 with SMTP id 1so2694210bwz.21
+        for <git@vger.kernel.org>; Thu, 25 Feb 2010 02:58:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=3yccpzCTE4s/MxIUS7ne9GAOkfaU9ZKSXgpIi6/0gEI=;
+        b=KYUaK2NxRQiOPJDrUF21LT+g+ah03Fv4QwQHH7E9B6Wg6jsS3FffkOL8J+bLczS+AH
+         gW5UUnqtOenlZW2V6kj9a2to12F8LSVJLQIXaqNxOs86O/K96p4xZcSs++P8urBivtxG
+         eD7ukUez7WcrPFHRvkX07D141aJR57fqAEYQE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        b=rpjIBQDB43wVLM6X8FewsLb2I+7tcK6KLMemKZO+PEFqUCK/JmS/Qa2oGmsE6QNQMx
+         I1nuj0wIsvV+YfI3B1QwMt9b6N9I/4mXd25uMflgRwiez7EYll0GdzTT4U/d3RDpqtaB
+         E+P62WZqefQn9XOrge1h02ehDH/xMMKA8ARz0=
+Received: by 10.204.34.195 with SMTP id m3mr593783bkd.190.1267095520141;
+        Thu, 25 Feb 2010 02:58:40 -0800 (PST)
+Received: from ?192.168.2.105? (dslb-088-065-142-140.pools.arcor-ip.net [88.65.142.140])
+        by mx.google.com with ESMTPS id 13sm3390522bwz.7.2010.02.25.02.58.39
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 25 Feb 2010 02:58:39 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.23) Gecko/20091001 Thunderbird/2.0.0.23 Mnenhy/0.7.6.666
+In-Reply-To: <7v7hq46gwe.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141044>
 
-From: Johannes Sixt <j6t@kdbg.org>
+On 22.02.2010 23:32, Junio C Hamano wrote:
+> I'll queue with a trivial addition of "rm builtin/*.o" to the "make
+clean"
+> target.  I am not looking forward to merging the result of this with
+other
+> topics, though... X-<.
 
-This is required on Windows because git-notes is now a built-in
-rather than a shell script.
+Just out of curiosity, how do you actually merge such a relatively big
+rename with other branches?
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- t/t3301-notes.sh |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+I haven't found a pleasant way yet to merge rename+modification in one
+branch and modification on an old path in another branch.
 
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index 90178f9..37b9687 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -8,6 +8,7 @@ test_description='Test commit notes'
- . ./test-lib.sh
 
- cat > fake_editor.sh << \EOF
-+#!/bin/sh
- echo "$MSG" > "$1"
- echo "$MSG" >& 2
- EOF
--- 
-1.7.0.1285.g1a907.dirty
+There is git file-merge theirs base ours . But it only seems to take
+filenames and no git object specifications. It would be very handy if
+something like
+
+git file-merge bfile HEAD^:afile afile
+
+would be possible.
+
+
+For clearification, here an example
+
+
+echo "First line" > afile
+
+git add .
+git commit -m "First commit in master"
+
+git checkout -b mybranch
+
+echo "Second line in mybranch" >> afile
+git mv afile bfile
+
+git commit -a -m "Change and rename in mybranch"
+
+git checkout master
+
+echo "Changed first line in master" > afile
+
+git commit -a -m "changed afile"
+
+git merge mybranch
+
+
+Regards
+
+Fabian
