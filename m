@@ -1,183 +1,109 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: [BUG] bugs in clean, status, bisect, and send-email
-Date: Wed, 24 Feb 2010 22:28:41 -0500
-Message-ID: <ca433831002241928hef29dadu39f93bc1a8460331@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 09/11] rebase: support automatic notes copying
+Date: Wed, 24 Feb 2010 19:58:45 -0800
+Message-ID: <7vd3zurmoa.fsf@alter.siamese.dyndns.org>
+References: <cover.1266885599.git.trast@student.ethz.ch>
+ <4623296da9ed82447718b46c72e6a22ff0152fc0.1266885599.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 25 04:29:11 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+	Johan Herland <johan@herland.net>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Feb 25 04:59:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkUPW-0006Vl-Vp
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 04:29:11 +0100
+	id 1NkUsh-0006sF-76
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 04:59:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758835Ab0BYD3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2010 22:29:05 -0500
-Received: from mail-yw0-f197.google.com ([209.85.211.197]:47064 "EHLO
-	mail-yw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754936Ab0BYD3C (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2010 22:29:02 -0500
-Received: by ywh35 with SMTP id 35so2979983ywh.4
-        for <git@vger.kernel.org>; Wed, 24 Feb 2010 19:29:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:content-type;
-        bh=eySh0oAfQQQzESyZWWCxZyz4A+LXRHc3v07vep66Bek=;
-        b=UNjwzKWv80xy6KPTZGx3WkpgpPKePnrbsSa/oVLJ1iujr+RK+4x5QJCrySB4yaFTaP
-         CVLqdsVYSj/19GMz63YCRRbgUnZAvXvRCRQeiGeaPZro4yKTuvvPkqP/dpLO230rcWTa
-         wcopZQG3CacTQCpcNjndKkIB4CN1McBeYwzeM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=Yu6Mw+WW014T5ejgHznQo6hH35dg+0fuzPo5Uj2M+3wt3SmD3Od4kmLaRyRP2yszGI
-         sLGvR5QxLQ5WJCwX3myuMAGNtVwn/rTZam9GpkciOBR6olynefGCGn7H1HikfGmeUbt6
-         stWaQNrlhp4s9oZpRrc/nZFFi/JpZHhdzKb4M=
-Received: by 10.90.245.1 with SMTP id s1mr686694agh.72.1267068541111; Wed, 24 
-	Feb 2010 19:29:01 -0800 (PST)
+	id S932145Ab0BYD7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2010 22:59:00 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57221 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932111Ab0BYD7A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2010 22:59:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E655C9C500;
+	Wed, 24 Feb 2010 22:58:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6p3tkN1uv79AedTagO4/11CYtB8=; b=JDz99b
+	k7sufUwnaIoEKTOmWvC4bCk1qKtTS02ETKD3+T0rD3PlpTpJ5NeqPlmGRvkWP2XG
+	+MH/1KUY+m92UD6Cs/s82bmYC6qaC459WIASWr5uGCe0m6HhdoX/5o8gNhMpo840
+	s9WLzjJOo+ACFYWkZJAHUNEh9Mjvs+2dKivgY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mBP3OmTECQIg6oil9SsqCLlwol5/eCnn
+	XGY7eT55A8AyNl1xMmKZC7kEVI48/j7xCJiNhvsv7vzKf7M20CFmqKiDBe29+gnI
+	SlCR9usuRLiqp79MMpjK7lFXncS2Y3hmOLueJ+d5QdGBmGSQyUq7pd37l/78DxRx
+	22FVMitLtek=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A0B249C4FF;
+	Wed, 24 Feb 2010 22:58:53 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 474E29C4FE; Wed, 24 Feb
+ 2010 22:58:48 -0500 (EST)
+In-Reply-To: <4623296da9ed82447718b46c72e6a22ff0152fc0.1266885599.git.trast@student.ethz.ch> (Thomas Rast's message of "Tue\, 23 Feb 2010 01\:42\:27 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 16EAAC42-21C2-11DF-AAA6-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141024>
 
-I noticed the following four bugs but don't have time to investigate
-further, let alone make test cases or fix them.  If someone else wants
-to tackle these, great.  If not, I'll try to research them more when I
-get free time, which won't be for a while.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-All of the following have been tested with git 1.7.0, and the first
-three examples use a new, empty repository.
+> Luckily, all the support already happens to be there.
+>
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 
-$ mkdir test_dir
-$ cd test_dir
-$ git init
+I did my first "rebase -i / commit --amend / rebase --continue" cycle with
+this series, and it correctly carried notes I keep track of Message-Id of
+original patches with.  Good job.
 
+After looking at the output from "git log refs/notes/amlog", I have a few
+observations, though.
 
-1. git-clean removes directories when a glob partially matches
+ - "git notes add" and friends honor GIT_COMMITER_* and GIT_AUTHOR_* as
+   usual.  Since I use post-applypatch hook to record the message-id from
+   "git am", I ended up getting my notes written by original submitters.
 
-If the pathspec given to 'git clean' has the potential to match a file
-in a subdirectory (even if no matching file exists in that directory),
-the entire directory is removed.  In the following example, none of
-the commands should try to remove dir/.
+ - The log messages are mostly useless.  The scripted implementation said
+   "Annotate 6d8094a8aa32c30ff39c6b8609acb8d057ccb5e5" which was not the
+   most informative, but the new one says "Notes added by 'git notes add'".
 
-$ mkdir dir
-$ touch dir/file
-$ git clean -nd 'x*'
-$ git clean -nd '*.c'
-Would remove dir/
-$ git clean -nd 'd*j'
-Would remove dir/
+I haven't thought things through thoroughly, and I am not complaining, but
+it may be worth thinking about what the "commit"-ness of generations of
+notes tree _should_ mean.
 
+As we are recording the history of how the set of my notes have grown over
+time, I think it is natural to expect that the user can record who is
+recording this notes tree at what time for what reason, just like a
+regular commit does.
 
-2. git-status globs only match untracked files, not staged or unmodified
+ - "added by 'git notes add'" is just as immaterial as "commit log edited
+   with vi".  'copied via notes.rebase.rewrite hook' would make much more
+   sense.
 
-The last command should show that b.c is staged and modified, but
-instead it shows absolutely nothing.  If this is intended behavior,
-it's certainly not what I would expect.
+ - "git notes add" already uses -m option to take the text used as note
+   (i.e. payload of the commit); the user may need a way to affect the
+   commit log message to record why the note is added (or modified).
 
-$ touch a.txt b.c
-$ git status
-# On branch master
-#
-# Initial commit
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       a.txt
-#       b.c
-nothing added to commit but untracked files present (use "git add" to track)
-$ git status -- '*.c'
-# On branch master
-#
-# Initial commit
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       b.c
-nothing added to commit but untracked files present (use "git add" to track)
-$ git add b.c
-$ echo foo >> b.c
-$ git status
-# On branch master
-#
-# Initial commit
-#
-# Changes to be committed:
-#   (use "git rm --cached <file>..." to unstage)
-#
-#       new file:   b.c
-#
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#       modified:   b.c
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       a.txt
-$ git status -- '*.c'
-# On branch master
-#
-# Initial commit
-#
-nothing to commit (create/copy files and use "git add" to track)
+ - As to the determination of committer/author identity, I think what the
+   code currently does (i.e. honor the environment and user.* config) is
+   perfectly sane, but at the same time I think it would be surprising for
+   unsuspecting users.  We may want to advise users about this in the
+   documentation.
 
+But the above is merely my personal feeling on the "notes history".
 
-3. git-send-email does not accept -h option
-
-All other git sub-commands accept -h, so it would probably be a good
-idea to implement it for 'git send-email' as well.
-
-$ git send-email -h
-usage: git format-patch [options] [<since> | <revision range>]
-
-    -n, --numbered        use [PATCH n/m] even with a single patch
-    -N, --no-numbered     use [PATCH] even with multiple patches
-    -s, --signoff         add Signed-off-by:
-    --stdout              print patches to standard out
-    --cover-letter        generate a cover letter
-    --numbered-files      use simple number sequence for output file names
-    --suffix <sfx>        use <sfx> instead of '.patch'
-    --start-number <n>    start numbering patches at <n> instead of 1
-    --subject-prefix <prefix>
-                          Use [<prefix>] instead of [PATCH]
-    -o, --output-directory <dir>
-                          store resulting files in <dir>
-    -k, --keep-subject    don't strip/add [PATCH]
-    --no-binary           don't output binary diffs
-    --ignore-if-in-upstream
-                          don't include a patch matching a commit upstream
-    -p, --no-stat         show patch format instead of default (patch + stat)
-
-Messaging
-    --add-header <header>
-                          add email header
-    --cc <email>          add Cc: header
-    --in-reply-to <message-id>
-                          make first mail a reply to <message-id>
-    --attach[=<boundary>]
-                          attach the patch
-    --inline[=<boundary>]
-                          inline the patch
-    --thread[=<style>]    enable message threading, styles: shallow, deep
-
-format-patch -o /tmp/ipOBB8AaCU -h: command returned error: 129
-
-
-4. git-bisect fails if a pathspec is given that matches no commits
-
-It says there are -1 revisions left.  I have no idea what it does
-after that.  The following example uses git.git.
-
-$ git bisect start v1.7.0 v1.6.6 -- 'foobar'
-Bisecting: -1 revisions left to test after this (roughly 0 steps)
-[f2a37151d4624906e34a9bcafb2ad79d0e8cb7ec] Fix memory leak in helper
-method for disconnect
+The notes implementation (from the scripted one to the one in 'pu') seems
+to take quite a different view and is designed as if aspects other than
+the topology and the tree each "commit" object records are not useful at
+all, and commits are used to implement the notes history only because the
+ancestry might help when we later implement merges of notes histories.  I
+think that could also be a _valid_ position to take.
