@@ -1,68 +1,93 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: [RFC/PATCH] notes: rework subcommands and parse options
-Date: Thu, 25 Feb 2010 13:26:19 -0500
-Message-ID: <32c343771002251026n6d55ea7csbdb4c8899bb5fded@mail.gmail.com>
-References: <1267086261-7675-1-git-send-email-bebarino@gmail.com>
+From: Levente Kovacs <leventelist@gmail.com>
+Subject: few questions from a git newbie
+Date: Thu, 25 Feb 2010 20:26:34 +0100
+Organization: logonex.eu
+Message-ID: <20100225202634.6a687a6c@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 19:26:32 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 25 20:30:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkiPu-0005yB-Ea
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 19:26:30 +0100
+	id 1NkjQ2-0004va-Uu
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 20:30:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933281Ab0BYS0Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Feb 2010 13:26:25 -0500
-Received: from ey-out-2122.google.com ([74.125.78.25]:38580 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933234Ab0BYS0X convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Feb 2010 13:26:23 -0500
-Received: by ey-out-2122.google.com with SMTP id 25so131845eya.19
-        for <git@vger.kernel.org>; Thu, 25 Feb 2010 10:26:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VdsTJmBzwqTlxDRUCbf+TUy9+EUsaWCClZ0cJmfWmb4=;
-        b=Ro9DJAtdl6orRvJqB2L3S9OYh+sj77l53YiD3PZg0zDpgWM5+3EaJGjw2X7IE1CK84
-         FHrG4OjrBcTPryARWBkb50rcXhcauIsLYNeA896pQL7a6lhhiFFuRmByD7akCtI88V+S
-         HkCdw4Peyv8nOCJAtPbH0d+axWlswajn7rDwk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Kamz5KOcpwB+ObIANTrajAliXiR/zC1nytzEAGGdlf7iITHjeQKJEpirtupdh15P9/
-         8/GbZfTG62eOzaOekhgXXL6rX1uQembIA5C80n+eQNKPGFxzR8ei/8E/1ZZ2QJ0GHE86
-         1afTAMPdLcqJfzJ2zOkz8PEQzSErf6mOJGU9M=
-Received: by 10.216.89.12 with SMTP id b12mr959306wef.93.1267122379755; Thu, 
-	25 Feb 2010 10:26:19 -0800 (PST)
-In-Reply-To: <1267086261-7675-1-git-send-email-bebarino@gmail.com>
+	id S933377Ab0BYTaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2010 14:30:09 -0500
+Received: from lo.gmane.org ([80.91.229.12]:32809 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932882Ab0BYTaF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 14:30:05 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NkjPP-0004XY-LX
+	for git@vger.kernel.org; Thu, 25 Feb 2010 20:30:03 +0100
+Received: from fxip-006cc.externet.hu ([92.52.216.204])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 25 Feb 2010 20:30:03 +0100
+Received: from leventelist by fxip-006cc.externet.hu with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 25 Feb 2010 20:30:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: fxip-006cc.externet.hu
+X-Newsreader: Claws Mail 3.7.5 (GTK+ 2.18.7; x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141063>
 
-On Thu, Feb 25, 2010 at 3:24 AM, Stephen Boyd <bebarino@gmail.com> wrot=
-e:
->
-> + =C2=A0 =C2=A0 =C2=A0 else {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result =3D error("=
-Unknown subcommand: %s", argv[0]);
-> + =C2=A0 =C2=A0 =C2=A0 }
+Hi,
 
-In the case where an unknown subcommand was given, shouldn't the usage
-instructions be printed?  i.e. add the following after the error()?
 
-    usage_with_options(git_notes_usage, options);
+I am a git newbie, so forgive my ignorance.
 
--Tim
+I've set up a working system with gitosis.
+
+http://logonex.eu/git/
+
+Currently I can add a repository by doing the following
+stuff:
+
+edit gitosis.conf
+
+ssh git@server
+mkdir REPO.git
+cd REPO.git
+git --bare init
+exit
+
+git clone git@server:REPO.git
+cd REPO
+git remote add REPO git@server:REPO.git
+touch .gitignore
+git add .gitignore
+git commit -a
+git push origin master
+
+Is this flow is the "right way"? How can I add a repository without ssh'ing to
+the server?
+
+Next question is about SVN.
+
+I was using SVN, and now I am migrating from SVN to git. I could import
+everything to a new repository. However, I want to reorganize my stuff, and
+break it to several repositories. Can I move directories to other
+repositories? Or can I partially import a directory from SVN to another
+directory in a git repository?
+
+How can I make gitosis to hide certain repositories?
+
+Thank you very much for your answers.
+
+Levente
+
+-- 
+Levente Kovacs
+http://logonex.eu
