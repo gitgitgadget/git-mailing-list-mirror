@@ -1,121 +1,58 @@
-From: Christian MICHON <christian.michon@gmail.com>
-Subject: Re: few questions from a git newbie
-Date: Thu, 25 Feb 2010 21:35:38 +0100
-Message-ID: <46d6db661002251235w2be39d11l5faa69a2bfddf653@mail.gmail.com>
-References: <20100225202634.6a687a6c@gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH] git-gui: fix "Explore Working Copy" for Windows again
+Date: Thu, 25 Feb 2010 21:44:53 +0100
+Message-ID: <20100225204451.GB12637@book.hvoigt.net>
+References: <20100223225243.GC11271@book.hvoigt.net> <cb7bb73a1002232222r354a2ec7l9ea4cfd1c101e8c6@mail.gmail.com> <a5b261831002240412x30490e25wbec74cdbc1d0ebd2@mail.gmail.com> <201002250114.23322.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Levente Kovacs <leventelist@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 21:35:49 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Pat Thoyts <patthoyts@googlemail.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Thu Feb 25 21:45:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkkR2-0005Ex-R1
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 21:35:49 +0100
+	id 1Nkka7-0001sE-GZ
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Feb 2010 21:45:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933551Ab0BYUfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2010 15:35:43 -0500
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:49093 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933362Ab0BYUfm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2010 15:35:42 -0500
-Received: by bwz1 with SMTP id 1so3218339bwz.21
-        for <git@vger.kernel.org>; Thu, 25 Feb 2010 12:35:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=xg7FyS5qVU5i2B2n1kavNA0X/4PNqWwCu9SoDaANPAA=;
-        b=xPMGUhcUlgWZ4+HvtT+kzCAsP1oEqT8RlHStvCCpuwse+yU359G5k5eE+SA3ljm6wS
-         sAb71ZDFx1Bul2sC9V4/H5lbujLvCYUxFW0rZJ+oF6RXWwdprpSZXbyuQpiFcCXzs5K4
-         eRFjdNS8XbXKEYUTUGNk7Nr8Ro4C0mb2ddgOA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=XaT2hj+G5PtyYwiR9ANPcUuhxr8VSdxQnpbJruH5UWzwfeuXcaAdhxGIumOsRvU7uG
-         bQAM67DWJjqutqw//8tYruEV6bPl4Puf1GYkK610fvaXFX0wqanBLLzolxXjtQIQnsjZ
-         pMHlmicC4P9I6e0xiC0n5lNacUe5ccweViG/M=
-Received: by 10.204.16.194 with SMTP id p2mr167183bka.32.1267130138999; Thu, 
-	25 Feb 2010 12:35:38 -0800 (PST)
-In-Reply-To: <20100225202634.6a687a6c@gmail.com>
+	id S933705Ab0BYUo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2010 15:44:59 -0500
+Received: from darksea.de ([83.133.111.250]:54984 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933629Ab0BYUo6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 15:44:58 -0500
+Received: (qmail 26398 invoked from network); 25 Feb 2010 21:44:54 +0100
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 25 Feb 2010 21:44:54 +0100
+Content-Disposition: inline
+In-Reply-To: <201002250114.23322.markus.heidelberg@web.de>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141070>
 
-On Thu, Feb 25, 2010 at 8:26 PM, Levente Kovacs <leventelist@gmail.com> wrote:
-> Hi,
->
->
-> I am a git newbie, so forgive my ignorance.
+On Thu, Feb 25, 2010 at 01:14:22AM +0100, Markus Heidelberg wrote:
+> It has already been fixed in commit 454efb47 (git-gui (Win): make
+> "Explore Working Copy" more robust, 2009-04-01), but has been broken in
+> commit 21985a11 (git-gui: handle non-standard worktree locations,
+> 2010-01-23) by accidentally replacing too much with a new variable.
+> 
+> The problem can be reproduced when starting git-gui from within a
+> subdirectory. The solution is to convert the path name, explorer.exe is
+> invoked with, to a platform native name.
+> 
+> Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+> ---
 
-We all started as padawans. :-)
+I can confirm that this does fix the issue which is actually also
+apparent on Windows XP. If no objections occur I would apply this to the
+devel branch for msysgit.
 
-> I've set up a working system with gitosis.
-
-Gitosis has no commits since mid September 2009. I would suggest to
-move to gitolite with a very easy setups, especially for newbies. I'll
-actually answer more on the rest of your questions as if you would be
-using gitolite and not gitosis.
-
->
-> http://logonex.eu/git/
->
-> Currently I can add a repository by doing the following
-> stuff:
->
-> edit gitosis.conf
->
-> ssh git@server
-> mkdir REPO.git
-> cd REPO.git
-> git --bare init
-> exit
-
-With gitolite, you clone the gitolite-admin on a remote machine, as
-the user who has the admins ssh keys. Under the hood, you still
-somehow do ssh, but with gitolite, all it takes is to edit
-gitolite.conf, push your changes and the bare repo gets automatically
-created on the server.
-
->
-> git clone git@server:REPO.git
-> cd REPO
-> git remote add REPO git@server:REPO.git
-> touch .gitignore
-> git add .gitignore
-> git commit -a
-> git push origin master
->
-> Is this flow is the "right way"? How can I add a repository without ssh'ing to
-> the server?
-
-If you cloned it, you should not need to add remotes. If you're a
-newbie, I would suggest to use 'git gui' and 'gitk' until you're fully
-familiar with the command line.
-
->
-> Next question is about SVN.
->
-
-I'll pass the rest of the email. Never got brainw@shed by SVN...
-
-> How can I make gitosis to hide certain repositories?
-
-You meant on your gitweb ? The first thing you need to do is actually
-to secure your gitweb access. Back again to gitolite, a 'ssh gitolite
-info' will actually tell you the repos you've access on only. So all
-the rest of repos are hidden somehow. Keep in mind to remove gitweb if
-you need hidden stuff.
-
-Good luck.
-
--- 
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
+cheers Heiko
