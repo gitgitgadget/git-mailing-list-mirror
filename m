@@ -1,79 +1,63 @@
-From: Andreas Gruenbacher <agruen@suse.de>
-Subject: Re: [RFC][PATCH 0/3] Different views on a repository
-Date: Fri, 26 Feb 2010 13:01:39 +0100
-Organization: SUSE Labs
-Message-ID: <201002261301.39243.agruen@suse.de>
-References: <cover.1267029680.git.agruen@suse.de> <c376da901002252012s507a6921q922e606bdce4b4fa@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git as an sfc member project
+Date: Fri, 26 Feb 2010 07:25:54 -0500
+Message-ID: <20100226122554.GA10198@coredump.intra.peff.net>
+References: <20100224154452.GA25872@coredump.intra.peff.net>
+ <201002241844.37207.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Adam Brewster <adambrewster@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 13:01:47 2010
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Fri Feb 26 13:26:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nkyt8-0001c5-Ke
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 13:01:47 +0100
+	id 1NkzGz-0005Ca-4l
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 13:26:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935729Ab0BZMBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2010 07:01:41 -0500
-Received: from cantor2.suse.de ([195.135.220.15]:37919 "EHLO mx2.suse.de"
+	id S935856Ab0BZM0B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2010 07:26:01 -0500
+Received: from peff.net ([208.65.91.99]:53505 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935641Ab0BZMBk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2010 07:01:40 -0500
-Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.221.2])
-	by mx2.suse.de (Postfix) with ESMTP id 1B58F890B6;
-	Fri, 26 Feb 2010 13:01:40 +0100 (CET)
-User-Agent: KMail/1.12.2 (Linux/2.6.31.12-0.1-desktop; KDE/4.3.1; x86_64; ; )
-In-Reply-To: <c376da901002252012s507a6921q922e606bdce4b4fa@mail.gmail.com>
+	id S935863Ab0BZMZ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2010 07:25:59 -0500
+Received: (qmail 31912 invoked by uid 107); 26 Feb 2010 12:26:13 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 26 Feb 2010 07:26:13 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Feb 2010 07:25:54 -0500
+Content-Disposition: inline
+In-Reply-To: <201002241844.37207.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141124>
 
-On Friday 26 February 2010 05:12:45 Adam Brewster wrote:
-> The idea was to push from all of my repositories into a super repository
-> with a fancy (and auto-generated) refspec.  The actual code is
-> impenetrable, but reconstructing it in everybody's favorite IDE, gmail, I
-> came up with
+On Wed, Feb 24, 2010 at 06:44:37PM +0100, Christian Couder wrote:
+
+> > Junio C Hamano <gitster@pobox.com>
+> > Shawn O. Pearce <spearce@spearce.org>
+> > Linus Torvalds <torvalds@linux-foundation.org>
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> > Eric Wong <normalperson@yhbt.net>
+> > Jeff King <peff@peff.net>
+> > Jakub Narebski <jnareb@gmail.com>
+> > Nicolas Pitre <nico@fluxnic.net>
+> > Paul Mackerras <paulus@samba.org>
+> > Christian Couder <chriscool@tuxfamily.org>
 > 
-> #!/bin/bash
-> PROJECTS=$HOME/projects
-> SUPER=$HOME/projects/.git-super-repo
-> 
-> [[ -d "$SUPER" ]] || \
->   (mkdir "$SUPER"; git --git-dir="$SUPER" init)
-> 
-> for i in $PROJECTS/*/.git; do
->   name=$(basename "$(dirname "$0")")
->   echo "$SUPER/objects" > $i/.git/objects/info/alternates
->   git --git-dir="$i" push -f "$SUPER" "*:refs/$name/*"
-> done
-> 
-> git --git-dir="$SUPER" gc --aggressive
-> 
-> for i in $PROJECTS/*/.git; do
->   git --git-dir="$i" repack -Ad #unnecessary?
->   git --git-dir="$i" gc --aggressive
-> done
+> I am very happy to be considered a key developer in your list, but it seems 
+> unfair for both Johannes Sixt and Simon Hausmann as they have a higher commit 
+> count than I have. So you should perhaps add them too. Or did you count lines 
+> of code?
 
-I see, when multiple projects share the same objects, you push them into those 
-projects independently first, and the script will later move them to $SUPER.
+No, I used "shortlog -nse" because I wanted the email addresses, but
+that short-changes people who have patches under multiple addresses.
+Some of them I just removed duplicates (like Linus), but for some people
+it bumped them off the top 10 list.
 
-> Clearly I can lose data if I try to rebase $SUPER or something, but I think
-> it's pretty safe for normal use.
+I'll fix that in the next iteration.
 
-It looks safe unless somebody messes with $SUPER.  A lot of repacking will 
-still occur as part of moving stuff to $SUPER, though.
-
-I was trying to set things up so that this extra work won't be necessary in 
-the first place.
-
-Thanks!
-
-Andreas
+-Peff
