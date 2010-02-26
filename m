@@ -1,85 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/3] git-core: Support retrieving passwords with
- GIT_ASKPASS
-Date: Thu, 25 Feb 2010 23:50:12 -0800
-Message-ID: <7vr5o84erv.fsf@alter.siamese.dyndns.org>
-References: <1267143154-5020-1-git-send-email-lznuaa@gmail.com>
- <4B87797D.7030905@viscovery.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Having keywords without value is not a global error.
+Date: Fri, 26 Feb 2010 09:19:28 +0100
+Message-ID: <81b0412b1002260019r3d5268f2x4b48051409e0c8f5@mail.gmail.com>
+References: <c28821e9079f35e7267a1e7381ccf7793c12bf24.1267156694.git.sdrake@xnet.co.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Frank Li <lznuaa@gmail.com>, git@vger.kernel.org, gitster@pobox.com
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Feb 26 08:50:30 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Steven Drake <sdrake@xnet.co.nz>
+X-From: git-owner@vger.kernel.org Fri Feb 26 09:19:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nkuxy-0005DC-5y
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 08:50:30 +0100
+	id 1NkvQ8-0000Mm-2m
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 09:19:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935477Ab0BZHuZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2010 02:50:25 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46915 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935446Ab0BZHuY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2010 02:50:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E8769DB7D;
-	Fri, 26 Feb 2010 02:50:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2OsLzBHZUiptb91VgwZeei/Ys5g=; b=m/40JT
-	dnHIss8DAhOqCuhs8xx/T+PxgoMVKjcRCL/Yd9DEPimMwh8NK2f47MYupLVqgrL9
-	tlxsX0xmlsxi82gRKuph3IURYm0j4vpknM+zwD5kMs4Y5Jl9bMqtmvXOYNY0iZPQ
-	hTZ7iDWxQuvWos0USdz8kRaPuUWGijCDGKgz4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EH0V067VhZPkxbO/m5H88YDtiOzgrEkq
-	8VSIV5424QoJpxOVjwE6NyjrcGrLAdMOwmVRxd/dtByO6umHwahjmHTT9EEVo0KW
-	3+l7/Fq4tvlP3/I4VyaAQX702+LcEx2lon3GYXo4Fq8w3eX0nIb3HTJLiAItuuON
-	Ai085HqFfXA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D97D89DB7C;
-	Fri, 26 Feb 2010 02:50:18 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E00929DB76; Fri, 26 Feb
- 2010 02:50:13 -0500 (EST)
-In-Reply-To: <4B87797D.7030905@viscovery.net> (Johannes Sixt's message of
- "Fri\, 26 Feb 2010 08\:34\:21 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 95923F12-22AB-11DF-A064-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S935532Ab0BZITb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Feb 2010 03:19:31 -0500
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:63160 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935455Ab0BZITa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Feb 2010 03:19:30 -0500
+Received: by bwz1 with SMTP id 1so160964bwz.21
+        for <git@vger.kernel.org>; Fri, 26 Feb 2010 00:19:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=fwOnZ+rMhcu3/Fz7gaSiOk+eGYFBMlIz9A5pqPMPKKY=;
+        b=iehs4ECmksXpdwUNOZvU2XhjRmNNgyslK60M2heqPbbfu6yQsM0MjxuoagM6tugsdj
+         Nxcwcn6paPA2y58gFxCVi5r4mrmW48RSJ30UusU7HBRX6zNBNzxhLeOmpTofEUvohtk7
+         vlsL9jFVqvwSy+BJT1soWSNO5OagEC+2qBLvQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Cpv7+O1kxxG6/nrTij6uJRcbfNXEyKWFDO+iVGPo+NXZP1+TJKN+uXMlrzrFoaI6Cq
+         4RFwnJnXfmt7iQ9kLHopEju/zqOGMnV06ZHEgt4mbCmj0dGz51AN5UVfYfc5JqK6pAsH
+         N6ZQ2At/xbgzt1nvwYiAlguHYYVauMryt2ORQ=
+Received: by 10.204.16.83 with SMTP id n19mr30586bka.96.1267172368441; Fri, 26 
+	Feb 2010 00:19:28 -0800 (PST)
+In-Reply-To: <c28821e9079f35e7267a1e7381ccf7793c12bf24.1267156694.git.sdrake@xnet.co.nz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141113>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
-
-> BTW, to save a level of indentation, you could handle the "trivial" case
-> early like this:
+On Fri, Feb 26, 2010 at 05:00, Steven Drake <sdrake@xnet.co.nz> wrote:
+> It is not a good Idea to give a config_error for _any_ keyword withou=
+t a
+> value as it means that
 >
-> 	if (!askpass || !*askpass)
-> 		return get_pass(prompt);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0[section]
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0keyword
 >
-> and continue without an 'else' branch.
+> sytle can not be using for setting bool type keyword.
 
-That is a good advice in general.
-
-Also, when you have a way unbalanced if ... else ... where else clause is
-very small, it usually is much easier to read if you invert the logic to
-make if part smaller.
-
-> OTOH, it may be worthwhile to set
->
-> 		pass.use_shell = 1;
->
-> to allow commands that are not just a single plain word. But perhaps this
-> has security implications - I don't know.
-
-How does SSH_ASKPASS gets interpreted by other programs?  I think we
-should follow that example.
-
-Other than that, I agree with everything you said in your review.  Thanks.
+Typo: sytle (style?)
