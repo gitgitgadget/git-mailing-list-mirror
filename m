@@ -1,157 +1,142 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: Meta-variable naming convention in documentation
-Date: Fri, 26 Feb 2010 17:51:03 -0500
-Message-ID: <ca433831002261451k3164d413y77d4989239862f30@mail.gmail.com>
-References: <ca433831002252055l37292cf6v868cc407f0be7250@mail.gmail.com> 
-	<7vfx4oeeol.fsf@alter.siamese.dyndns.org>
+From: Adam Simpkins <simpkins@facebook.com>
+Subject: [PATCH] prune: honor --expire=never
+Date: Fri, 26 Feb 2010 13:59:16 -0800
+Message-ID: <20100226215916.GF5116@facebook.com>
+Reply-To: Adam Simpkins <simpkins@facebook.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 23:51:32 2010
+Content-Type: text/plain; charset="us-ascii"
+To: <git@vger.kernel.org>, <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 27 00:42:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nl91u-000081-Oa
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 23:51:31 +0100
+	id 1Nl9pS-0005al-24
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Feb 2010 00:42:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966487Ab0BZWvZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Feb 2010 17:51:25 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:62865 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966484Ab0BZWvY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Feb 2010 17:51:24 -0500
-Received: by gyh20 with SMTP id 20so301913gyh.19
-        for <git@vger.kernel.org>; Fri, 26 Feb 2010 14:51:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=HdoN3WuAuQ5JDtEyonfY0+goPwI09Rh0SLU6MU7z0HI=;
-        b=bLMe7L1rh7CGBviqeb+IBd7VAKOex1pn8We4GW8wvHe6uYAQ1YLaLSVMYSh3zCcgm/
-         w1KJ+hm+cJUAvgVkSepSekclwANIp+0OXziJW1H6fuGoIJDlf9yD1wHmQT0Es0ArR5Yi
-         8xl5VLQTR5i4/TyFPDMmL9NsddPqYENrIbMQw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=X+Y/FkPG6KpQ4urEtiRY18IQdVAdLzRkOaVTojtvtJv28VHa12t9RZKI4NQ/0nZ4BU
-         Q+sSRlPBw/FoCfgrJbSokbSD5JfAVTDBLvZJ1HW7GZ6uB3Sk/kw00k2bX96gQ9B9eHTD
-         o5jEXb2WS34nWNbukWkv/b8PqD5mCbFWe4ztg=
-Received: by 10.90.40.17 with SMTP id n17mr1129445agn.3.1267224683368; Fri, 26 
-	Feb 2010 14:51:23 -0800 (PST)
-In-Reply-To: <7vfx4oeeol.fsf@alter.siamese.dyndns.org>
+	id S966588Ab0BZXmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2010 18:42:36 -0500
+Received: from mailout-snc1.facebook.com ([69.63.179.25]:44171 "EHLO
+	mailout-snc1.facebook.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966562Ab0BZXmf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2010 18:42:35 -0500
+X-Greylist: delayed 5798 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Feb 2010 18:42:34 EST
+Received: from mail.thefacebook.com ([192.168.18.104])
+	by pp01.snc1.tfbnw.net (8.14.3/8.14.3) with ESMTP id o1QLx3wh009308
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT);
+	Fri, 26 Feb 2010 13:59:03 -0800
+Received: from simpkins (192.168.18.252) by mail.TheFacebook.com
+ (192.168.18.104) with Microsoft SMTP Server (TLS) id 8.2.213.0; Fri, 26 Feb
+ 2010 13:59:17 -0800
+Received: from simpkins by simpkins with local (Exim 4.69)	(envelope-from
+ <simpkins@facebook.com>)	id 1Nl8DM-0005ul-UJ; Fri, 26 Feb 2010 13:59:16 -0800
+Mail-Followup-To: git@vger.kernel.org, gitster@pobox.com
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.8161:2.4.5,1.2.40,4.0.166
+ definitions=2010-02-26_06:2010-02-06,2010-02-26,2010-02-25 signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141160>
 
-On Fri, Feb 26, 2010 at 12:42 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Mark Lodato <lodatom@gmail.com> writes:
->
->> The following accept exact filenames or directories. =C2=A0If a dire=
-ctory,
->> this matches all files within that directory recursively.
->>
->> =C2=A0 =C2=A0 =C2=A0 git-archive =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 path =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0fdir
->>
->> =C2=A0 =C2=A0 =C2=A0 git-bisect =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0<paths>/<pathspec> =C2=A0 =C2=A0 =C2=A0fdir =C2=A0 =C2=A0(f)
->
-> What does the gap between these two mean? =C2=A0Do you mean "bisect a=
-nd later
-> are not in the 'exact filenames or directories' group"?
+Previously, prune treated an expiration time of 0 to mean that no
+expire argument was supplied, and everything should be pruned.  As a
+result, "prune --expire=never" would prune all unreachable objects,
+regardless of their timestamps.
 
-Each of the three types is divided in two, separated by a blank line.
-The first group, all without (f) at the end, die if one of the paths
-given on the command line does not exist.  The second group, all with
-(f) at the end, do not complain if any of the paths do not match
-anything.  I called the latter group "filtering" for lack of a better
-term.
+prune can be called with --expire=never automatically by gc, when the
+gc.pruneExpire configuration is set to "never".
 
-So, git-archive, git-add, git-checkout, git-commit, git-rm all take
-pathspecs (the first using diff logic, the rest using ls-files logic),
-but they complain if any of the pathspecs do not match.  It's probably
-not worth documenting this, but it may be worth implementing
---ignore-unmatch for all but git-rm (which already has it.)
+Signed-off-by: Adam Simpkins <simpkins@facebook.com>
+---
+ builtin-prune.c  |    7 +++++--
+ t/t5304-prune.sh |   32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+), 2 deletions(-)
 
-Similarly, it may be a nice option to have a --warn-unmatch option (or
-a configuration variable) to warn (or possibly die) if any of the
-pathspecs hit nothing.   Then again, maybe it's not worth the trouble.
-
-It appears that git-diff-tree and git-ls-tree take some sort of
-pathspec - it ignores unmatching patterns, but it does not allow
-globbing or directory matches.
-
-> In general, unless the command takes only one filesystem entity (e.g.=
- in
-> "format-patch -o <dir>", <dir> cannot be anything but a single direct=
-ory;
-> in "blame <file>", <file> cannot be anything but a single file)
-
-In this case, I suggest that we use the same meta-variable always:
-<file> or <dir>, or a more specific thing like <source>.
-
-> you never
-> give a single "filename" to git command. =C2=A0Even when you say "git=
- add
-> Makefile", you are _not_ giving a filename that is "M' "a" "k" "e" ..=
-=2E;
-> you are giving a _pattern_ to be matched with files git would find by
-> traversing the filesystem. =C2=A0In the case of "Makefile", it may ha=
-ppen to
-> match only one single file.
->
-> This pattern is called "pathspec", and commands that can take one pat=
-hspec
-> can always take more than one.
-
-In these cases, I think we should always use the meta-variable
-<pathspec> - never <path>, <file>, etc.
-
-> I think it would make sense to document which ones are concrete paths
-> (e.g. "blame takes a filename" vs "diff takes zero or more pathspecs"=
-),
-> but it would not make much sense to document the two different pathsp=
-ecs.
-> The effort is better spent at fixing the difference --- obviously we =
-would
-> eventually want to be able to say "git diff 'lib/*.h'".
-
-You're right, it's not worth having two different meta-variables, but
-I do think it is worth noting in the documentation.  In git(1), we
-could have something like the following:
-
-<pathspec>::
-	Indicates a pattern for filtering paths.  Matches are either exact,
-	a leading directory, or a glob(7) pattern on the entire path.
-	For example, "doc/help.txt" matches "doc/help.txt", "doc",
-	"*.txt", and "d*t", but not "do", "help.txt", or "help.*".
-
-<dir>::
-<file>::
-	Indicates a physical file or directory relative to
-	the current directory.
-
-(Note: the current document says "almost always relative to the root
-of the tree structure `GIT_INDEX_FILE` describes."  Is this true?)
-
-Then, for the diff logic commands, we could document that they do not
-accept globs.  For example, in git-diff(1):
-
-<pathspec>...::
-	If given, limit the diff to paths matching the given parameters.
-	(Does not accept glob(7) patterns.)
-
-Once the logic is unified, and these commands do accept globs, we can
-just remove the note.
-
-Mark
+diff --git a/builtin-prune.c b/builtin-prune.c
+index 4675f60..ce43271 100644
+--- a/builtin-prune.c
++++ b/builtin-prune.c
+@@ -7,6 +7,8 @@
+ #include "parse-options.h"
+ #include "dir.h"
+ 
++#define ALWAYS_EXPIRE ((unsigned int)-1)
++
+ static const char * const prune_usage[] = {
+ 	"git prune [-n] [-v] [--expire <time>] [--] [<head>...]",
+ 	NULL
+@@ -18,7 +20,7 @@ static unsigned long expire;
+ static int prune_tmp_object(const char *path, const char *filename)
+ {
+ 	const char *fullpath = mkpath("%s/%s", path, filename);
+-	if (expire) {
++	if (expire != ALWAYS_EXPIRE) {
+ 		struct stat st;
+ 		if (lstat(fullpath, &st))
+ 			return error("Could not stat '%s'", fullpath);
+@@ -34,7 +36,7 @@ static int prune_tmp_object(const char *path, const char *filename)
+ static int prune_object(char *path, const char *filename, const unsigned char *sha1)
+ {
+ 	const char *fullpath = mkpath("%s/%s", path, filename);
+-	if (expire) {
++	if (expire != ALWAYS_EXPIRE) {
+ 		struct stat st;
+ 		if (lstat(fullpath, &st))
+ 			return error("Could not stat '%s'", fullpath);
+@@ -139,6 +141,7 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+ 	};
+ 	char *s;
+ 
++	expire = ALWAYS_EXPIRE;
+ 	save_commit_buffer = 0;
+ 	read_replace_refs = 0;
+ 	init_revisions(&revs, prefix);
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+index 3c6687a..e2ed13d 100755
+--- a/t/t5304-prune.sh
++++ b/t/t5304-prune.sh
+@@ -148,6 +148,38 @@ test_expect_success 'gc --prune=<date>' '
+ 
+ '
+ 
++test_expect_success 'gc --prune=never' '
++
++	add_blob &&
++	git gc --prune=never &&
++	test -f $BLOB_FILE &&
++	git gc --prune=now &&
++	test ! -f $BLOB_FILE
++
++'
++
++test_expect_success 'gc respects gc.pruneExpire=never' '
++
++	git config gc.pruneExpire never &&
++	add_blob &&
++	git gc &&
++	test -f $BLOB_FILE &&
++	git config gc.pruneExpire now &&
++	git gc &&
++	test ! -f $BLOB_FILE
++
++'
++
++test_expect_success 'prune --expire=never' '
++
++	add_blob &&
++	git prune --expire=never &&
++	test -f $BLOB_FILE &&
++	git prune &&
++	test ! -f $BLOB_FILE
++
++'
++
+ test_expect_success 'gc: prune old objects after local clone' '
+ 	add_blob &&
+ 	test-chmtime =-$((2*$week+1)) $BLOB_FILE &&
+-- 
+1.6.3.3
