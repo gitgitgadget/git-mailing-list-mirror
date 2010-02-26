@@ -1,73 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add `[decorate]' configuration section.
-Date: Thu, 25 Feb 2010 15:12:21 -0800
-Message-ID: <7vk4u0rju2.fsf@alter.siamese.dyndns.org>
-References: <16c38171fc04cee7bdc607bb4c6586925b15278c.1266394059.git.sdrake@xnet.co.nz>
- <7vr5ojwy38.fsf@alter.siamese.dyndns.org>
- <alpine.LNX.2.00.1002261131190.19126@vqena.qenxr.bet.am>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steven Drake <sdrake@xnet.co.nz>
-X-From: git-owner@vger.kernel.org Fri Feb 26 00:12:35 2010
+From: Frank Li <lznuaa@gmail.com>
+Subject: [PATCH v2 1/3] git-svn: Support retrieving passwords with GIT_ASKPASS
+Date: Fri, 26 Feb 2010 08:07:25 +0800
+Message-ID: <1267142845-3040-1-git-send-email-lznuaa@gmail.com>
+References: <3.SQo>
+Cc: davvid@gmail.com, Frank Li <lznuaa@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 26 01:08:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nkmsl-0001G1-Bq
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 00:12:35 +0100
+	id 1Nknkr-0003P3-8t
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 01:08:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934466Ab0BYXMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2010 18:12:30 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59213 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934449Ab0BYXM3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2010 18:12:29 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BED19DADF;
-	Thu, 25 Feb 2010 18:12:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=XLK08tRZ+KAmE8SsZ8+n6nsGrAk=; b=G2/yT5SY07rJLViOlS5Fo1X
-	+dQv8b1DMqHDge2MoJFsJjppiwlG/pJ3umrssKMag37d18SctRkBZ1eFSUOINxSP
-	UYlltMc8rEt1kdoffLqcDRYUp0W6ivh3aCP+Ge+2NBSgJSx7ZRjoXW2cp6a620sg
-	mI6KvhcZAUDPu2nq2QP4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=OqbrWzVTAR17aMrPiJr0wCdag+5dv8HW8cOIsb4JwA86W+IpN
-	rtx/tpQvQdArukOYfZO5ZRHULmbQr6P5SGw+jWC4wn2ocoeaX0YJ9fneYsEYO7RB
-	qe5MDFr6clQK9edTCmzcNj/cLnMgNq/4ciCptn0lekMevboKODBZTij+TI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 53CE99DADE;
-	Thu, 25 Feb 2010 18:12:25 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BB3339DADB; Thu, 25 Feb
- 2010 18:12:22 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3C4C5D22-2263-11DF-8346-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S934670Ab0BZAIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2010 19:08:17 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:48686 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934583Ab0BZAIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 19:08:16 -0500
+Received: by gwj16 with SMTP id 16so2088496gwj.19
+        for <git@vger.kernel.org>; Thu, 25 Feb 2010 16:08:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=YUJ/hybCjGwaBksqW8uyV6V9PnPzlgvLVWsTCuQOcHg=;
+        b=BUNZJMBMW58A4DvNu5bG0dYgKmfJTt2n0CkEUzBYp0rNdLt/vVpsPEfg3OkBHv2djh
+         waTbl99I4pz5HNN9QGUJrlOckOoss8kPF8lrDwsWOuUVPOfdXw+U/qSNnrNDt8NgtNwa
+         2WhAMLR70xfArgdA+gRoLreGYm8VoSvAG6VyA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Dqgn/SJX1qNKeVqNYusfytydZB64z2UZXlBqTM8fnU6BiPvKGVvoQ8VM7THKbZSnYN
+         WFyBzj46ybXJC5mrOjPAxj9PwZW4EwCXp/rObkFAt5oQ7qyVoB7hMdS2bcxP5jD/O6jW
+         6CVGYvdH8csgWK9SRSU27k1JrUMgZ8R7sOePY=
+Received: by 10.101.131.20 with SMTP id i20mr146418ann.45.1267142893553;
+        Thu, 25 Feb 2010 16:08:13 -0800 (PST)
+Received: from localhost ([114.93.102.82])
+        by mx.google.com with ESMTPS id 14sm460009gxk.11.2010.02.25.16.08.11
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 25 Feb 2010 16:08:13 -0800 (PST)
+X-Mailer: git-send-email 1.6.5.1.1367.gcd48
+In-Reply-To: <3.SQo>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141079>
 
-Steven Drake <sdrake@xnet.co.nz> writes:
+git-svn reads passwords from an interactive terminal.
+This behavior cause GUIs to hang waiting for git-svn to
+complete
 
->   On Tue, 16 Feb 2010, Junio C Hamano wrote:
->   > I was not worried about what your change does.  I am worried about
->   > protecting what the code after your change currently does from future
->   > changes done by other people while you are not actively watching the
->   > patches in flight on this list.
->
-> But that can easly be with the patch below.
+Fix this problem by allowing a password-retrieving command
+to be specified in GIT_ASKPASS. SSH_ASKPASS is supported
+as a fallback when GIT_ASKPASS is not provided.
 
-What does that buy us?  "future changes" can revert your patch to
-builtin-log.c easily.
+Signed-off-by: Frank Li <lznuaa@gmail.com>
+---
+ git-svn.perl |   37 +++++++++++++++++++++++++++----------
+ 1 files changed, 27 insertions(+), 10 deletions(-)
 
-I was talking about having tests in the test suite; any "future changes"
-that breaks the output your series has established would not pass if you
-specify what the expected output should be there.  Of course they can
-change the test pattern in their patches, but then we will immediately
-know they are changing the output.
+diff --git a/git-svn.perl b/git-svn.perl
+index 265852f..cd39792 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -31,6 +31,16 @@ if (! exists $ENV{SVN_SSH}) {
+ 	}
+ }
+ 
++if (! exists $ENV{GIT_ASKPASS}) {
++	if (exists $ENV{SSH_ASKPASS}) {
++		$ENV{GIT_ASKPASS} = $ENV{SSH_ASKPASS};
++		if ($^O eq 'msys') {
++                        $ENV{GIT_ASKPASS} =~ s/\\/\\\\/g;
++                        $ENV{GIT_ASKPASS} =~ s/(.*)/"$1"/;
++                }
++	}
++}
++
+ $Git::SVN::Log::TZ = $ENV{TZ};
+ $ENV{TZ} = 'UTC';
+ $| = 1; # unbuffer STDOUT
+@@ -3966,18 +3976,25 @@ sub username {
+ 
+ sub _read_password {
+ 	my ($prompt, $realm) = @_;
+-	print STDERR $prompt;
+-	STDERR->flush;
+-	require Term::ReadKey;
+-	Term::ReadKey::ReadMode('noecho');
+ 	my $password = '';
+-	while (defined(my $key = Term::ReadKey::ReadKey(0))) {
+-		last if $key =~ /[\012\015]/; # \n\r
+-		$password .= $key;
++	if (exists $ENV{GIT_ASKPASS}) {
++		open(PH, "$ENV{GIT_ASKPASS} \"$prompt\" |");
++		$password = <PH>;
++		$password =~ s/[\012\015]//; # \n\r
++		close(PH);
++	} else {
++		print STDERR $prompt;
++		STDERR->flush;
++		require Term::ReadKey;
++		Term::ReadKey::ReadMode('noecho');
++		while (defined(my $key = Term::ReadKey::ReadKey(0))) {
++			last if $key =~ /[\012\015]/; # \n\r
++			$password .= $key;
++		}
++		Term::ReadKey::ReadMode('restore');
++		print STDERR "\n";
++		STDERR->flush;
+ 	}
+-	Term::ReadKey::ReadMode('restore');
+-	print STDERR "\n";
+-	STDERR->flush;
+ 	$password;
+ }
+ 
+-- 
+1.7.0.85.g37fda.dirty
