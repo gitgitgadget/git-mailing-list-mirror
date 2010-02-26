@@ -1,107 +1,66 @@
-From: jackylee <jacky.liye@gmail.com>
-Subject: [PATCH] refactor commit_graft_pos using general sha1_pos function
-Date: Fri, 26 Feb 2010 10:42:10 -0500
-Message-ID: <4B87EBD2.3060007@gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH] refactor commit_graft_pos using general sha1_pos function
+Date: Fri, 26 Feb 2010 11:04:25 +0800
+Message-ID: <be6fef0d1002251904q59e12149lc3010b3587b00f8c@mail.gmail.com>
+References: <4B87EBD2.3060007@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 26 03:42:34 2010
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: jackylee <jacky.liye@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 26 04:04:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nkq9y-0001Iz-7f
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 03:42:34 +0100
+	id 1NkqVG-0007wh-5l
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 04:04:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935040Ab0BZCmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2010 21:42:20 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:35536 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934998Ab0BZCmT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2010 21:42:19 -0500
-Received: by gyh20 with SMTP id 20so1606508gyh.19
-        for <git@vger.kernel.org>; Thu, 25 Feb 2010 18:42:18 -0800 (PST)
+	id S935058Ab0BZDE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2010 22:04:28 -0500
+Received: from mail-iw0-f182.google.com ([209.85.223.182]:38364 "EHLO
+	mail-iw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935031Ab0BZDE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 22:04:27 -0500
+Received: by iwn12 with SMTP id 12so5900317iwn.21
+        for <git@vger.kernel.org>; Thu, 25 Feb 2010 19:04:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=CbzfpgNLWrOjenyQ+tz3qTfebZE+RH4DECSgni0nsD8=;
-        b=IoOnyskHGCyEwr/omfZsusQkNi4pjcvGkim4jd0jZSHFsef4Cv28hX2AlGbHICnrYp
-         vbvvXmUwcKLRVwSwkn+neJ6vXLKFhebXu6S1AsXTfrjvvYobRmJjAZYgmlbNcWAK0Iv5
-         I7rNXnoBEHiQGlLOe9Fz+vXijD3hXx6Y52umA=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=X7G1L7RobhkCQZGJYpAcBAxsuoE7aCoULnZsCHDHJJY=;
+        b=m8y3QoDiHn0lfaH/B0l6Lk0r2lJwF2vy3F/Kv8ZE1loWAQotga7J3ebai9b7H46zKU
+         LRhP0YpRUbLEbWpMX5qdVvmuZfagNJfBZPdvQvdOkJ/ufutPpb5gYDZKxDM4qKYGL7Rn
+         nbj9+b3Kpm1Q469Ne294pJqE3nW008ktY+1yk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=XJJR6J6G3Noi/TrU+e8Mwg/7L4cOE9sXzKeR5WA+IdjKwLfwwyQo0ZF4BI2QDztRPO
-         se9krsQMVCwE8ay3te4N1kC16gMlVqCA+yMh5HhsnzsTGglTzT5QHL42idyUPLI8m/7Q
-         hU/CbwNLup6ZdmFOMnACatVOKpyLXae52SOmk=
-Received: by 10.101.183.4 with SMTP id k4mr336734anp.39.1267152138840;
-        Thu, 25 Feb 2010 18:42:18 -0800 (PST)
-Received: from ?118.229.143.5? ([118.229.143.5])
-        by mx.google.com with ESMTPS id 4sm2831065ywg.39.2010.02.25.18.42.17
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 25 Feb 2010 18:42:18 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=P4BM4KPH5tntCqPM7qmMR7xZxHgCiC09di7Nbp2V12hZEsHbBkwNVeM0+joMvuU8p5
+         M8FALFFrYRKQzEXFZY4kYCGRqO4UVfbscNHRf/fk/AG3M6bYcX4ZrMsRyh1Xpg6LPlNC
+         KKqeYlrzIlDJWcT2bhKx5r1FrHbQ7XImGr4II=
+Received: by 10.231.146.4 with SMTP id f4mr81622ibv.21.1267153466031; Thu, 25 
+	Feb 2010 19:04:26 -0800 (PST)
+In-Reply-To: <4B87EBD2.3060007@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141091>
 
-code cleanup according to git janitor page, replace sha1 lookup function with "sha1_pos" general binary search function
+Hi,
 
-Signed-off-by: jacky.liye <jacky.liye@gmail.com>
----
- commit.c |   23 +++++++----------------
- 1 files changed, 7 insertions(+), 16 deletions(-)
+On Fri, Feb 26, 2010 at 11:42 PM, jackylee <jacky.liye@gmail.com> wrote:
+> code cleanup according to git janitor page, replace sha1 lookup function with "sha1_pos" general binary search function
+>
+> Signed-off-by: jacky.liye <jacky.liye@gmail.com>
 
-diff --git a/commit.c b/commit.c
-index 731191e..c44d091 100644
---- a/commit.c
-+++ b/commit.c
-@@ -6,6 +6,7 @@
- #include "diff.h"
- #include "revision.h"
- #include "notes.h"
-+#include "sha1-lookup.h"
- 
- int save_commit_buffer = 1;
- 
-@@ -78,24 +79,14 @@ static unsigned long parse_commit_date(const char *buf, const char *tail)
- 
- static struct commit_graft **commit_graft;
- static int commit_graft_alloc, commit_graft_nr;
--
-+static const unsigned char *commit_graft_access(size_t index, void *table)
-+{
-+	struct commit_graft **grafts = table;
-+	return (const unsigned char *)grafts[index];
-+}
- static int commit_graft_pos(const unsigned char *sha1)
- {
--	int lo, hi;
--	lo = 0;
--	hi = commit_graft_nr;
--	while (lo < hi) {
--		int mi = (lo + hi) / 2;
--		struct commit_graft *graft = commit_graft[mi];
--		int cmp = hashcmp(sha1, graft->sha1);
--		if (!cmp)
--			return mi;
--		if (cmp < 0)
--			hi = mi;
--		else
--			lo = mi + 1;
--	}
--	return -lo - 1;
-+	return sha1_pos(sha1, commit_graft, commit_graft_nr, commit_graft_access);
- }
- 
- int register_commit_graft(struct commit_graft *graft, int ignore_dups)
+please sign off with your real name. See
+
+  http://repo.or.cz/w/git.git?a=blob;f=Documentation/SubmittingPatches;hb=HEAD
+
+for the importance of the sign-off.
+
 -- 
-1.6.3.3
+Cheers,
+Ray Chuan
