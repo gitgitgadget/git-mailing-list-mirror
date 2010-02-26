@@ -1,85 +1,100 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: [PATCH] Disable OpenSSL SHA1 implementation by default
-Date: Thu, 25 Feb 2010 23:11:59 -0500
-Message-ID: <ca433831002252011r3d3459a2xca7535300cd6630f@mail.gmail.com>
-References: <20100222110814.GA3247@progeny.tock> <20100222112326.GA21929@coredump.intra.peff.net>
+From: Adam Brewster <adambrewster@gmail.com>
+Subject: Re: [RFC][PATCH 0/3] Different views on a repository
+Date: Thu, 25 Feb 2010 23:30:33 -0500
+Message-ID: <c376da901002252030p49126bf5tc5ffdca9f2ad13c1@mail.gmail.com>
+References: <cover.1267029680.git.agruen@suse.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Robert Shearman <robertshearman@gmail.com>,
-	Ben Walton <bwalton@artsci.utoronto.ca>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 26 05:12:29 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Andreas Gruenbacher <agruen@suse.de>
+X-From: git-owner@vger.kernel.org Fri Feb 26 05:30:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkrYw-0002TI-K5
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 05:12:26 +0100
+	id 1Nkrqa-0007Ta-RI
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 05:30:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759474Ab0BZEMV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Feb 2010 23:12:21 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:37326 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757230Ab0BZEMV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Feb 2010 23:12:21 -0500
-Received: by gyh20 with SMTP id 20so1638988gyh.19
-        for <git@vger.kernel.org>; Thu, 25 Feb 2010 20:12:19 -0800 (PST)
+	id S935201Ab0BZEaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2010 23:30:35 -0500
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:61240 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935174Ab0BZEae (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 23:30:34 -0500
+Received: by bwz1 with SMTP id 1so86036bwz.21
+        for <git@vger.kernel.org>; Thu, 25 Feb 2010 20:30:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QFnC9DpNSafH5iN070MbgF2C1Z50YlhngXhxBc3PIp8=;
-        b=sCx2sicJ13795g1FTqBzC5q4Xy26tRQkpWjtMxrRNeHUmEHPvG+jJTiuYkOezebYMO
-         fpSZY1O3eIIzkYNj0K/SpBGpqUalVRRXX6ZBhyQgTe54iQW3JZEDi6U6bbmsPX2VAD5s
-         FLTBoksiIDZazxwikmPGjSVxkZVq/8Xmy31DA=
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=Q9xPyrBFMxxirde3AI8fOQlKzXRgWgt4mZQwmJmH1lI=;
+        b=YY2tmbJnuA/aB7n0DVsHqWiQSL9XkIezLjN2Q5VXH0pA3Uye2FvBR4ozboXUEI9lK3
+         Fusv+JVn5Wz50z4ZD5VVvq1CCfsXdOFI2K+tOSRNcyFsb3lq6gTfKPs4vqtbmbAuCWue
+         Mb7BkPMeWkEEjjsfxyMOtO/A3p19IlMOYB/Qw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=usgV8mbcTTzRxC0Ll6G0gLmycTEA60tQXL4A+gNYI0KBM8PpXfz+AeYY25CW8OuU2m
-         UDiHyyVm4yPueEwrX9wPnxGf9zzaTMy9LGscJPyaeHJdK9/M/mTfcY4tLm3soONra/6x
-         ULAKo+00LuG1XcFhb54jt8JEvSTxaZSbRdyow=
-Received: by 10.91.163.2 with SMTP id q2mr799906ago.33.1267157539156; Thu, 25 
-	Feb 2010 20:12:19 -0800 (PST)
-In-Reply-To: <20100222112326.GA21929@coredump.intra.peff.net>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=mMV4n7mfM4prV1iKBI1uFE/uOWUqNIYTWsEJ5gmoafL2Zfr+fuOFeukriykiOjMNKe
+         B+Gy1yAe6e6eTwucpus/s2tweXsS6wURLdpGCxexM8Pyjw3oHHq6yuh7Vj7iJQDRv7Ja
+         54dtwLiAlkqYJBPm0pdeglViRSBIYOhIcWVmQ=
+Received: by 10.204.135.154 with SMTP id n26mr569361bkt.18.1267158633515; Thu, 
+	25 Feb 2010 20:30:33 -0800 (PST)
+In-Reply-To: <cover.1267029680.git.agruen@suse.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141103>
 
-On Mon, Feb 22, 2010 at 6:23 AM, Jeff King <peff@peff.net> wrote:
-> On Mon, Feb 22, 2010 at 05:08:14AM -0600, Jonathan Nieder wrote:
+On Wed, Feb 24, 2010 at 11:41 AM, Andreas Gruenbacher <agruen@suse.de>wrote:
+
+> Hello,
 >
->> The OpenSSL SHA-1 routine is about as fast as block-sha1, but linkin=
-g
->> to libcrypto slows down the startup of git commands by an appreciabl=
-e
->> amount. =C2=A0Use the BLK_SHA1 implementation by default instead.
+> we have a use case with groups of repositories which share lots of
+> objects, but which are logically independent.  There is no strict
+> hierarchy between the repositories, the development modl is arbitrary.
+> The alternates mechanism for sharig objects between repositories won't
+> work.
 >
-> What is your definition of "about as fast"? I benchmarked up to a 20%
-> slow-down a while back:
 
-=46or what it's worth, here are my numbers from running git-fsck on my
-x86-64 machine.  It appears that BLK-SHA1 is slightly faster.  If you
-know a better benchmark to run, let me know.  Perhaps it would be good
-to write some sort of suite to test this, and let people post their
-results to some website.
+I don't know what you're trying to accomplish, but for what it's
+worth, I do something similar with a couple of shell scripts.
 
-make git-fsck
-=2E/git-fsck  66.75s user 0.28s system 99% cpu 1:07.17 total
-=2E/git-fsck  66.70s user 1.28s system 99% cpu 1:08.06 total
-=2E/git-fsck  66.77s user 0.63s system 99% cpu 1:07.42 total
+My goal was to make bundles (basically thin packs) smaller by taking
+advantage of files I knew were available on the far side of the
+air-gap even if they weren't in a the repository I was bundling that
+particular day.
 
-make BLK_SHA1=3D1 git-fsck
-=2E/git-fsck  65.60s user 0.65s system 99% cpu 1:06.26 total
-=2E/git-fsck  65.39s user 0.65s system 99% cpu 1:06.06 total
-=2E/git-fsck  65.24s user 1.36s system 100% cpu 1:06.60 total
+The idea was to push from all of my repositories into a super
+repository with a fancy (and auto-generated) refspec.  The actual code
+is impenetrable, but reconstructing it in everybody's favorite IDE,
+gmail, I came up with
 
-Core 2 Duo E6300 1.86 GHz (2MB L2 cache), 2GB memory
-Ubuntu 9.10 x86-64, gcc 4.4.1, git v1.7.0-90-g251a495
+#!/bin/bash
+PROJECTS=$HOME/projects
+SUPER=$HOME/projects/.git-super-repo
+
+[[ -d "$SUPER" ]] || \
+ (mkdir "$SUPER"; git --git-dir="$SUPER" init)
+
+for i in $PROJECTS/*/.git; do
+ name=$(basename "$(dirname "$0")")
+ echo "$SUPER/objects" > $i/.git/objects/info/alternates
+ git --git-dir="$i" push -f "$SUPER" "*:refs/$name/*"
+done
+
+git --git-dir="$SUPER" gc --aggressive
+
+for i in $PROJECTS/*/.git; do
+ git --git-dir="$i" repack -Ad #unnecessary?
+ git --git-dir="$i" gc --aggressive
+done
+
+Clearly I can lose data if I try to rebase $SUPER or something, but I
+think it's pretty safe for normal use.
+
+In your case, the "projects" are called "views".
+
+Adam
