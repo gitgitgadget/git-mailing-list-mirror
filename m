@@ -1,66 +1,63 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH] refactor commit_graft_pos using general sha1_pos function
-Date: Fri, 26 Feb 2010 11:04:25 +0800
-Message-ID: <be6fef0d1002251904q59e12149lc3010b3587b00f8c@mail.gmail.com>
-References: <4B87EBD2.3060007@gmail.com>
+From: Lin Mac <mkl0301@gmail.com>
+Subject: How to move a big branches to a new base?
+Date: Fri, 26 Feb 2010 11:18:28 +0800
+Message-ID: <10d816431002251918vf13a5e8uf0396aa861081bcc@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: jackylee <jacky.liye@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 04:04:34 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 26 04:25:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NkqVG-0007wh-5l
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 04:04:34 +0100
+	id 1NkqpG-0005q4-BK
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 04:25:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935058Ab0BZDE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2010 22:04:28 -0500
-Received: from mail-iw0-f182.google.com ([209.85.223.182]:38364 "EHLO
-	mail-iw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935031Ab0BZDE1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2010 22:04:27 -0500
-Received: by iwn12 with SMTP id 12so5900317iwn.21
-        for <git@vger.kernel.org>; Thu, 25 Feb 2010 19:04:26 -0800 (PST)
+	id S935095Ab0BZDZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2010 22:25:08 -0500
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:45855 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935056Ab0BZDZH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 22:25:07 -0500
+Received: by pvb32 with SMTP id 32so1544502pvb.19
+        for <git@vger.kernel.org>; Thu, 25 Feb 2010 19:25:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=X7G1L7RobhkCQZGJYpAcBAxsuoE7aCoULnZsCHDHJJY=;
-        b=m8y3QoDiHn0lfaH/B0l6Lk0r2lJwF2vy3F/Kv8ZE1loWAQotga7J3ebai9b7H46zKU
-         LRhP0YpRUbLEbWpMX5qdVvmuZfagNJfBZPdvQvdOkJ/ufutPpb5gYDZKxDM4qKYGL7Rn
-         nbj9+b3Kpm1Q469Ne294pJqE3nW008ktY+1yk=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=slTy8vqjamonwoFF6HnAs5LRWecNCOdmuDcBpOMJdMY=;
+        b=eq0f0ECeHaXrd87/Mg4hgKIOq8uk6JysRb3EgMSdrnmOHAmWAvsLZcBLDXWQBI9CNk
+         voSjpLzbmxgetye/MTE5rJKqS2FSZKqYWy+ZSlQI94egt6Va5lBjJLmqKGImetisXOBl
+         KDB/XkPG1a8g16POlzjYQWEhSpGs90rjHGRMA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=P4BM4KPH5tntCqPM7qmMR7xZxHgCiC09di7Nbp2V12hZEsHbBkwNVeM0+joMvuU8p5
-         M8FALFFrYRKQzEXFZY4kYCGRqO4UVfbscNHRf/fk/AG3M6bYcX4ZrMsRyh1Xpg6LPlNC
-         KKqeYlrzIlDJWcT2bhKx5r1FrHbQ7XImGr4II=
-Received: by 10.231.146.4 with SMTP id f4mr81622ibv.21.1267153466031; Thu, 25 
-	Feb 2010 19:04:26 -0800 (PST)
-In-Reply-To: <4B87EBD2.3060007@gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=HFLQYTSWToaGeK3NubjMqUUQaHtyptWShNVWkaeXOWf5ODIh4wYyxP/zYRm8WqueSS
+         XD6rPpZNBcTlzV3FsBXEL+anWYa10QPhIjwKst70siwTIlH6nXZ542YTJkxG6nh1OG48
+         oSr04ZvZ4CHQDs02v9XIyo/FwrSnqtzbyhSAo=
+Received: by 10.143.26.39 with SMTP id d39mr421687wfj.33.1267154308802; Thu, 
+	25 Feb 2010 19:18:28 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141092>
 
 Hi,
 
-On Fri, Feb 26, 2010 at 11:42 PM, jackylee <jacky.liye@gmail.com> wrote:
-> code cleanup according to git janitor page, replace sha1 lookup function with "sha1_pos" general binary search function
->
-> Signed-off-by: jacky.liye <jacky.liye@gmail.com>
+I have a branch that have about 10 descendent branches. Now I would
+like to move this branch, and all the descendent branches, to a new
+base, and I might need to do so quiet frequently before I merge it to
+master branch.
 
-please sign off with your real name. See
+My "dirty" way is to rebase step by step, it takes about 15-20
+rebases, but the branches is somehow complicated, and this seems
+error-prone to me.
 
-  http://repo.or.cz/w/git.git?a=blob;f=Documentation/SubmittingPatches;hb=HEAD
+Is there a more clean way to do so?
 
-for the importance of the sign-off.
+Thanks in advance.
 
--- 
-Cheers,
-Ray Chuan
+Best Regards,
+Mac Lin
