@@ -1,101 +1,82 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] bash: support user-supplied completion scripts for
-	user's git commands
-Date: Fri, 26 Feb 2010 16:27:10 +0100
-Message-ID: <20100226152710.GA17460@neumann>
-References: <9b69cfcf1001290457s6b7fad6cs5a915f16a11f5782@mail.gmail.com>
-	<20100129151127.GA21821@spearce.org>
-	<7v4om4kdt3.fsf@alter.siamese.dyndns.org>
-	<20100129175950.GE21821@spearce.org>
-	<7vockciyb8.fsf@alter.siamese.dyndns.org>
-	<20100129190642.GA31303@neumann>
-	<7viqakireb.fsf@alter.siamese.dyndns.org>
+From: Tim Visher <tim.visher@gmail.com>
+Subject: Re: Different Fetch and Push URLs?
+Date: Fri, 26 Feb 2010 10:32:30 -0500
+Message-ID: <c115fd3c1002260732x79f44d8ft6bff9d9b4f226402@mail.gmail.com>
+References: <c115fd3c1002260701u11cf506fq747d7217d31eba59@mail.gmail.com> 
+	<20100226152043.GA26963@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	David Rhodes Clymer <david@zettazebra.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 16:28:04 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 26 16:32:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nl269-0002ZW-3m
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 16:27:25 +0100
+	id 1Nl2BW-0006l3-Ba
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 16:32:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965042Ab0BZP1S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Feb 2010 10:27:18 -0500
-Received: from francis.fzi.de ([141.21.7.5]:20237 "EHLO exchange.fzi.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S965011Ab0BZP1R (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2010 10:27:17 -0500
-Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 26 Feb 2010 16:27:11 +0100
-Content-Disposition: inline
-In-Reply-To: <7viqakireb.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 26 Feb 2010 15:27:11.0660 (UTC) FILETIME=[2A9DA6C0:01CAB6F8]
+	id S965074Ab0BZPcx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Feb 2010 10:32:53 -0500
+Received: from mail-yw0-f197.google.com ([209.85.211.197]:55306 "EHLO
+	mail-yw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965046Ab0BZPcw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Feb 2010 10:32:52 -0500
+Received: by ywh35 with SMTP id 35so92915ywh.4
+        for <git@vger.kernel.org>; Fri, 26 Feb 2010 07:32:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=41k1f4ZyZHbLrWwS7MQNk4aGjT9MDM1k+bvwBTEvK34=;
+        b=vzX7RRhixWpAfYzx+z+LEJ7Lra1uHFW+Y8uy7WgygSFU4wVVEF1sTaQ64SWWvBtypv
+         y+Hiz13R3PatAYqgwOu0yHgPGdaUzumGK0cOvuDfo4HLdy6r9nKxs+NhtYbNA5HEaoUI
+         aGA8p3BNxJjlQoFeNCei9L3PgqU5Y4bU/B21o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=wKn8A2OF6tEGPvFGTWSw2DDg7viR2NJWJ1FllG8hz6nqejmiOSJvxh2a2TQg9JVUr3
+         Of+EJ+8J+Kwo/utwW+nGQVOt3wSnRApOKerXMChzagTFhA6/T4PV02Avg16eR/Jm/glW
+         ZjoGDJGm/0Uxu1PVsi52xQxQvxvnO3jXvC9Ro=
+Received: by 10.101.155.38 with SMTP id h38mr844133ano.131.1267198371135; Fri, 
+	26 Feb 2010 07:32:51 -0800 (PST)
+In-Reply-To: <20100226152043.GA26963@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141134>
 
-Hi,
+On Fri, Feb 26, 2010 at 10:20 AM, Jeff King <peff@peff.net> wrote:
+> On Fri, Feb 26, 2010 at 10:01:40AM -0500, Tim Visher wrote:
+>
+>> My work situation leaves me in a situation where I can clone from my
+>> central repo but I can't push there. =C2=A0Is it possible and does i=
+t make
+>> any sense to have a single remote with one URL that I pull from and
+>> another than I push to? =C2=A0I only ask because I was looking at th=
+e
+>> output of `git remote show` and noticed that there are 2 URLs. =C2=A0=
+If it
+>> is possible, how do I do it? =C2=A0I looked in `.git/config` and the=
+re's
+>> only 1 URL there.
+>
+> Try "remote.*.pushurl". It's in git-config(1) and in git-push(1) unde=
+r
+> "Named remote in configuration file".
 
-On Fri, Jan 29, 2010 at 12:32:12PM -0800, Junio C Hamano wrote:
-> Admittedly, we have already taken over _git_foo (and "_git") namespac=
-e,
-> and anybody who uses bash with the completion support cannot write th=
-eir
-> own shell function with these names for purposes that are unrelated t=
-o
-> completion,
+Thanks, both of you.  That worked like a charm.
 
-Actually, the "_" namespace is taken over by bash completion in
-general, so writing shell functions starting with "_" is probably
-not a good idea anyway.  E.g. to see all non-completion-related shell
-functions you can do a "declare -F |grep -v ' _'", but if you name
-shell functions not related to completion as _git_foo(), then this
-will no longer work.
+--=20
 
-> so in that sense, the patch is not introducing a new problem,
-> but making it a documented interface and casting it in stone will mak=
-e the
-> namespace contamination issue harder to rectify later.
->=20
-> So if we were to go in the direction as the patch proposes (which I t=
-hink
-> is a good idea), we might want to rename them to __git_completion_foo=
- or
-> something that is less likely to collide with whatever names users mi=
-ght
-> want to use. It is my understanding that the only published interface=
- so
-> far is __git_ps1.
+In Christ,
 
-I would say that __git_ps1() is the only interface that is advertised
-as being public.  If someone is unsatisfied with the completion
-script, because he wanted completion for a custom git command or for a
-frequently used plumbing command, then I bet he just reused existing
-functions, e.g. when he needed refs, he just used __git_refs(), or
-when he needed git log's options, he used _git_log().  I did that,
-probably others too.  If we were to rename completion functions, these
-people's setup will break (although they will likely get merge
-conflicts caused by this patch anyway).  On the other hand: should we
-really care that much about such users, who use non-pulic interfaces
-from contrib/ ?
+Timmy V.
 
-Having said all that, I don't really care either way.  If you or Shawn
-would prefer to have the completion functions renamed, I will do a
-s/this/that/ preparation patch for the series.  BTW, Mercurial's
-completion script uses _hg_cmd_foo() for hg commands and
-_hg_ext_bar() for extensions, so we might as well be a bit consistent,
-and call our completion functions _git_cmd_foo().
-
-
-Best,
-G=E1bor
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
