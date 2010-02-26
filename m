@@ -1,79 +1,82 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: [PATCH] Disable OpenSSL SHA1 implementation by default
-Date: Fri, 26 Feb 2010 16:33:23 -0500
-Message-ID: <ca433831002261333n4165d450k40e5feae72937cdc@mail.gmail.com>
-References: <20100222110814.GA3247@progeny.tock> <20100222112326.GA21929@coredump.intra.peff.net> 
-	<ca433831002252011r3d3459a2xca7535300cd6630f@mail.gmail.com> 
-	<20100226093633.GA9609@coredump.intra.peff.net>
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: Re: Fwd: gitweb trouble on fedora
+Date: Fri, 26 Feb 2010 13:38:45 -0800
+Message-ID: <4B883F65.6050909@eaglescrag.net>
+References: <f71da3d1002261329o1ec140f0y9ad56a61b26ccbfc@mail.gmail.com> <f71da3d1002261332s671d0010h7d196569ec8c911@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Robert Shearman <robertshearman@gmail.com>,
-	Ben Walton <bwalton@artsci.utoronto.ca>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 26 22:36:07 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Brent Payne <brent.payne@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 26 22:39:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nl7qS-0001ru-1g
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 22:35:36 +0100
+	id 1Nl7uO-00052f-7n
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 22:39:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966206Ab0BZVf3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Feb 2010 16:35:29 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:36161 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966162Ab0BZVf2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Feb 2010 16:35:28 -0500
-Received: by gyh20 with SMTP id 20so271484gyh.19
-        for <git@vger.kernel.org>; Fri, 26 Feb 2010 13:35:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=wEfbFEIU74gM+SSaYIEiBNKxBGXlaeH8RTIghF6kb7g=;
-        b=qdocLWVn4wbtvXFGzzXrYb145j+wcYuftu/SAot0+0iL6nDbmFrv15ShrbGe/jwMuV
-         3S11LCEoN1AclA4OwEJGHAhpCHXWKd1AuuQ7ab4+b+s+St8Gq9dBib7pvG/Rp9opg9Nv
-         EmYjxKlTKRsJtzdC9AoUVoINjGRedPysephU0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=nSb+Nua1CifWf+cSnF7sv/C6olfimk/c2tG/HIP/pdj97qXylHShAYaV+p+cU8s1WE
-         mRS3Y2746zK82Gv+IhAqJTbnnNA+SFL3WcGIg0NnUnPBlEz/NkVtAJO//vTOhOblRSie
-         wYfuo0pcIhU08R42T9ZQbBMLFebWMco4Hr+oM=
-Received: by 10.90.40.31 with SMTP id n31mr1006703agn.76.1267220125430; Fri, 
-	26 Feb 2010 13:35:25 -0800 (PST)
-In-Reply-To: <20100226093633.GA9609@coredump.intra.peff.net>
+	id S966274Ab0BZViw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2010 16:38:52 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:51175 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966285Ab0BZViu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2010 16:38:50 -0500
+Received: from voot-cruiser.eaglescrag.net (173-21-222-212.client.mchsi.com [173.21.222.212])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.3/8.14.3) with ESMTP id o1QLcj26016838
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Fri, 26 Feb 2010 13:38:46 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100120 Fedora/3.0.1-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.1
+In-Reply-To: <f71da3d1002261332s671d0010h7d196569ec8c911@mail.gmail.com>
+X-Enigmail-Version: 1.0
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Fri, 26 Feb 2010 13:38:46 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141154>
 
-On Fri, Feb 26, 2010 at 4:36 AM, Jeff King <peff@peff.net> wrote:
-> Dropping the openssl link dependency gives:
->
-> =C2=A0stock, make -j4 test (best of 3):
-> =C2=A057.43user 74.60system 1:09.48elapsed 190%CPU
->
-> =C2=A0NO_OPENSSL=3DTooSlow, make -j4 test (best of 3):
-> =C2=A050.64user 68.74system 1:03.48elapsed 188%CPU
->
-> Which is almost a 12% speedup by dropping openssl.
+Brent,
 
-I got about an 8% speedup on this test.
+Make sure that /var/cache/git is owned by apache.  I assume your using
+gitweb-caching as opposed to gitweb on fedora.  This is a fedora bug
+though and should be filed on bugzilla.redhat.com
 
-master
-make -j4 test  216.72s user 296.83s system 171% cpu 4:58.80 total
-make -j4 test  217.21s user 293.97s system 171% cpu 4:58.53 total
-make -j4 test  216.08s user 293.76s system 165% cpu 5:08.39 total
+- John 'Warthog9' Hawley
 
-master + this patch
-make -j4 test  199.21s user 258.88s system 159% cpu 4:47.60 total
-make -j4 test  198.61s user 264.40s system 168% cpu 4:35.42 total
-make -j4 test  197.12s user 268.74s system 169% cpu 4:35.33 total
+On 02/26/2010 01:32 PM, Brent Payne wrote:
+> plain text version
+> 
+> ---------- Forwarded message ----------
+> From: Brent Payne <brent.payne@gmail.com>
+> Date: Fri, Feb 26, 2010 at 1:29 PM
+> Subject: gitweb trouble on fedora
+> To: git@vger.kernel.org
+> 
+> 
+> I'm new to about everything, but I've hit my head on the wall for a
+> couple of hours, went through the gitweb README and INSTALL, online
+> tutorial, everything.
+> 
+> I am having trouble getting gitweb running on a fedora box with apache.
+> 
+> The apache error is
+> [Fri Feb 26 13:21:25 2010] [error] [client 127.0.0.1] [Fri Feb 26
+> 13:21:25 2010] gitweb.cgi: Can't opendir(/var/cache/git): Permission
+> denied
+> [Fri Feb 26 13:21:25 2010] [error] [client 127.0.0.1] [Fri Feb 26
+> 13:21:25 2010] gitweb.cgi:  at /var/www/cgi-bin/gitweb.cgi line 2432
+> 
+> 
+> Can anyone guess at what I'm doing wrong?
+> 
+> Thanks,
+> Brent
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
