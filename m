@@ -1,63 +1,79 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: Re: [PATCH v2 2/3] git-core: Support retrieving passwords with 
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH v2 1/3] git-svn: Support retrieving passwords with
 	GIT_ASKPASS
-Date: Fri, 26 Feb 2010 18:01:10 +0800
-Message-ID: <1976ea661002260201s75ef6185x3f89742d58f12222@mail.gmail.com>
-References: <1267143154-5020-1-git-send-email-lznuaa@gmail.com>
-	 <4B87797D.7030905@viscovery.net>
+Date: Fri, 26 Feb 2010 02:05:25 -0800
+Message-ID: <20100226100525.GC22579@dcvr.yhbt.net>
+References: <1267142845-3040-1-git-send-email-lznuaa@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Feb 26 11:01:20 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, davvid@gmail.com
+To: Frank Li <lznuaa@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 26 11:05:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nkx0X-0006Vi-No
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 11:01:18 +0100
+	id 1Nkx4e-0000HX-JS
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 11:05:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932978Ab0BZKBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2010 05:01:12 -0500
-Received: from mail-yw0-f197.google.com ([209.85.211.197]:47495 "EHLO
-	mail-yw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932641Ab0BZKBL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2010 05:01:11 -0500
-Received: by ywh35 with SMTP id 35so3829545ywh.4
-        for <git@vger.kernel.org>; Fri, 26 Feb 2010 02:01:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=HwKcZP3/L9EhdairvbjXyDWm+IZnTD1z/yPv93ce3Dg=;
-        b=gUD2yJv7Dl/Mx0BJ+n9Ns8RDfGV1qziLBptGJpaMFjZ+Ata0wL+HHrZyxCyQEhhYYN
-         mNziRTp2OVfoSvmBWAbKamjNpDEw62lFqXwOrsKYIpyzwgbsi0zglMQZicmbRk95Dz/r
-         R8rXs43RS2N0ZlwveFM/z4GJS7Sa+NlyAtJM8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=S0W+klyhgWIov76nLczjcp1ZTrpc7MevtOZwwGtgCv3UKqEfPSN5K0yQ3bjsUWNO2P
-         +uNcs4QsGP311HjSoiizlPoTdiPxERyHMMmZUl+z4T9vvhgXIEP5iGaMGxExZufZ/wjU
-         bg7Ek+t/nN0fyyR8GXe1nYkU31Iwz0fEwnhME=
-Received: by 10.150.127.40 with SMTP id z40mr273186ybc.308.1267178470381; Fri, 
-	26 Feb 2010 02:01:10 -0800 (PST)
-In-Reply-To: <4B87797D.7030905@viscovery.net>
+	id S1751546Ab0BZKF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2010 05:05:26 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:46264 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751388Ab0BZKF0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2010 05:05:26 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id C270F1F488;
+	Fri, 26 Feb 2010 10:05:25 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1267142845-3040-1-git-send-email-lznuaa@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141121>
 
->
-> You handle the return value in different ways. getpass() returns a pointer
-> to a static buffer, but in the 'then' branch you return an allocated
-> buffer. Not that it matters a lot, though. You could add a comment that
-> you are aware that the memory is leaked.
->
+Frank Li <lznuaa@gmail.com> wrote:
+> git-svn reads passwords from an interactive terminal.
+> This behavior cause GUIs to hang waiting for git-svn to
+> complete
+> 
+> Fix this problem by allowing a password-retrieving command
+> to be specified in GIT_ASKPASS. SSH_ASKPASS is supported
+> as a fallback when GIT_ASKPASS is not provided.
+> 
+> Signed-off-by: Frank Li <lznuaa@gmail.com>
+> ---
+>  git-svn.perl |   37 +++++++++++++++++++++++++++----------
+>  1 files changed, 27 insertions(+), 10 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 265852f..cd39792 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -31,6 +31,16 @@ if (! exists $ENV{SVN_SSH}) {
+>  	}
+>  }
+>  
+> +if (! exists $ENV{GIT_ASKPASS}) {
+> +	if (exists $ENV{SSH_ASKPASS}) {
+> +		$ENV{GIT_ASKPASS} = $ENV{SSH_ASKPASS};
+> +		if ($^O eq 'msys') {
+> +                        $ENV{GIT_ASKPASS} =~ s/\\/\\\\/g;
+> +                        $ENV{GIT_ASKPASS} =~ s/(.*)/"$1"/;
+> +                }
+> +	}
+> +}
+> +
 
-How about my branch also use static buffer, so there are not memory leak.
+Hi Frank,
 
-best regards
-Frank Li
+Since this logic isn't SVN-specific, can we get this in Git.pm
+and/or git-var so other tools can use it?
+
+Thanks
+
+-- 
+Eric Wong
