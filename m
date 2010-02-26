@@ -1,67 +1,95 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: Re: [PATCH 1/1] Use GIT_ASKPASS environment to launch thirdpart UI 
-	app to get password
-Date: Fri, 26 Feb 2010 08:15:35 +0800
-Message-ID: <1976ea661002251615o2373c527y613c2e9c7b90d98e@mail.gmail.com>
-References: <1266923463-2828-1-git-send-email-lznuaa@gmail.com>
-	 <20100224051307.GA3232@gmail.com>
-	 <1976ea661002240013j164fc875o469c0dcdf74afe0c@mail.gmail.com>
-	 <20100225091500.GB2903@gmail.com>
+From: Timur Tabi <timur@freescale.com>
+Subject: Re: How can I tell if a file has been updated upstream?
+Date: Thu, 25 Feb 2010 18:18:51 -0600
+Message-ID: <ed82fe3e1002251618g750764bm82b0653770554dcf@mail.gmail.com>
+References: <ed82fe3e1002050823gec57827j184c9c4cff4f4a45@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 01:15:44 2010
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 26 01:19:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nknrr-0006Lw-3H
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 01:15:43 +0100
+	id 1NknvZ-0007px-5D
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 01:19:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934689Ab0BZAPh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Feb 2010 19:15:37 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:47762 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934593Ab0BZAPg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Feb 2010 19:15:36 -0500
-Received: by gyh20 with SMTP id 20so1548815gyh.19
-        for <git@vger.kernel.org>; Thu, 25 Feb 2010 16:15:35 -0800 (PST)
+	id S934748Ab0BZATR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2010 19:19:17 -0500
+Received: from mail-fx0-f219.google.com ([209.85.220.219]:63764 "EHLO
+	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934701Ab0BZATN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2010 19:19:13 -0500
+Received: by fxm19 with SMTP id 19so6907990fxm.21
+        for <git@vger.kernel.org>; Thu, 25 Feb 2010 16:19:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ecFRSWGAukFiyxW9BVnv5z8EEv54xussimbJHtVcW+g=;
-        b=DaPKBnpFfrYzI1xbbLbg0gLT2UHnXaEDR1L5ObMkgOclFs1WVO5mJpQ/zCF+qmP0uW
-         Ar/tcBYLFbN8nnNTnkdhzJ/lL1ctvbxuJ8pcB4E6IfmstgtMx+4Y+kfpfyLKQpev+0Ix
-         KLVnRwEO+/9MkZZlmp9B44Ft2xjvNjtSLxNjI=
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to
+         :content-type;
+        bh=3yOTSzq8KotGlqRodwgarazJEvikKA8VEObvKc6xj9s=;
+        b=v4fOwbY8rpZqi1elY+Z7Nggz13Rx4tUvSSB8Labk2Jc5TNz8/+ZHj8IZrYYDWA8pBU
+         x2FHLEBjKd1OM2r6MkAIf+Grqe7ZrVOK0rou/3Ri6VUEJkAwUWi6l9Ff0hoI/SjwYZaR
+         01kTY7q4lb+nMU/Lz77aN5M9n6+MomlCFVnuo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=E0/4puHqExW+/SFDdD0vY0itgS6B9ZNoxNETevD659nm+qfR4tUNyaIAXeIxCFA2Bv
-         GNxc9FaxjUuMHT0yZnMfQMXiXa97uIW7UaMYvG2GAWpqyF0PnL2/mPrs199ytMPZtV44
-         i1Vu3evhv7uLokNGDr9KWU5QT/jZCkppZl3js=
-Received: by 10.150.235.11 with SMTP id i11mr676485ybh.289.1267143335657; Thu, 
-	25 Feb 2010 16:15:35 -0800 (PST)
-In-Reply-To: <20100225091500.GB2903@gmail.com>
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:content-type;
+        b=svo4G+0OZRFXlFSUg+ul8YA9yYF8RsVYcZMUCh51c8HE1QOOU0QAvP//qxXwXf/+Dh
+         uBqyo8M+HPJKNynx6uJY0O8QDmf1gzCW5ndAmJyOJ7abcFh4dND36+wepuFWHwutpxPZ
+         Qld58b9NWa5ItUN0rj/VuoBcGsOHPqCRnsrlI=
+Received: by 10.239.190.19 with SMTP id v19mr33999hbh.171.1267143551109; Thu, 
+	25 Feb 2010 16:19:11 -0800 (PST)
+In-Reply-To: <ed82fe3e1002050823gec57827j184c9c4cff4f4a45@mail.gmail.com>
+X-Google-Sender-Auth: f5f7d714a7ebbaae
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141084>
 
->
-> I would have done it in the script as a localized fix but
-> I definately see the value in aiding scripts from
-> all having to implement this same fallback, though:
->
-> =A0 =A0 =A0 =A0$ENV{GIT_ASKPASS} ||=3D $ENV{SSH_ASKPASS};
->
+On Fri, Feb 5, 2010 at 10:23 AM, Timur Tabi <timur@freescale.com> wrote:
+> Is there a way for me to tell if a particular file in my repository
+> has an update in the upstream repository?
 
-Add it at [PATCH v2 1/3] git-svn: Support retrieving passwords with GIT=
-_ASKPASS
+Thanks to everyone who replied.  Here's what I came up with:
+
+def check_for_updates():
+    # Get the path to our script.  This should be a git repository.
+    script_path = os.path.dirname(os.path.realpath(__file__))
+
+    # Determine the upstream URL
+    p = subprocess.Popen(['git', 'config', '-f', script_path + '/.git/config',
+        '--get', 'remote.origin.url'],
+        shell=False, stdout=subprocess.PIPE, stderr=open(os.devnull, 'w'))
+    url = p.communicate()[0].strip()
+    if not url:
+        # The script is not running from a git repository
+        return
+
+    # Determine the HEAD of the upstream repository
+    p = subprocess.Popen(['git', 'ls-remote', url, 'HEAD'],
+        shell=False, stdout=subprocess.PIPE, stderr=open(os.devnull, 'w'))
+    sha = p.communicate()[0].split()
+    if not sha:
+        # Something is wrong with the upstream repository
+        return
+    sha = sha[0] # The SHA of the upstream head
+
+    # Check if the remote SHA is in the local repository.
+    # git --git-dir=/home/b04825/bin/.git show-ref HEAD
+    p = subprocess.Popen(['git', '--git-dir=' + script_path + '/.git',
+        'log', '-1', sha],
+        shell=False, stdout=subprocess.PIPE, stderr=open(os.devnull, 'w'))
+    if not p.communicate()[0]:
+        # If we can't find the SHA locally, then it means that the local
+        # repository is out of date.  We pretend that it means that this script
+        # is out of date.
+        print 'There is an update for this script available.  Please
+pull from the remote'
+        print 'repository (e.g. "cd %s; git pull")' % script_path
+
+-- 
+Timur Tabi
+Linux kernel developer at Freescale
