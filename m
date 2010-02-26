@@ -1,90 +1,115 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Having keywords without value is not a global error.
-Date: Thu, 25 Feb 2010 21:14:49 -0800
-Message-ID: <7vk4u0efxy.fsf@alter.siamese.dyndns.org>
-References: <c28821e9079f35e7267a1e7381ccf7793c12bf24.1267156694.git.sdrake@xnet.co.nz>
+Subject: Re: Meta-variable naming convention in documentation
+Date: Thu, 25 Feb 2010 21:42:02 -0800
+Message-ID: <7vfx4oeeol.fsf@alter.siamese.dyndns.org>
+References: <ca433831002252055l37292cf6v868cc407f0be7250@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steven Drake <sdrake@xnet.co.nz>
-X-From: git-owner@vger.kernel.org Fri Feb 26 06:15:04 2010
+Cc: git list <git@vger.kernel.org>
+To: Mark Lodato <lodatom@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 26 06:42:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NksXY-0002nY-Dp
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 06:15:04 +0100
+	id 1Nksxw-0001s5-38
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Feb 2010 06:42:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751106Ab0BZFO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2010 00:14:58 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56509 "EHLO
+	id S1752016Ab0BZFmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2010 00:42:14 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53772 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750976Ab0BZFO5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2010 00:14:57 -0500
+	with ESMTP id S1751622Ab0BZFmM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2010 00:42:12 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 182A49DB10;
-	Fri, 26 Feb 2010 00:14:57 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F1D579DEEB;
+	Fri, 26 Feb 2010 00:42:10 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VlpJKxBdPfxJI39z4W28DbUqhQQ=; b=cbYZUO
-	KSipaPznjGIkjqbnkZUWYXBu9zqI+TmSUAR56nxTZB0fV2ijydv+xIVTF2hre8b0
-	1Ak/jJfBCriJjKmIi2dDPuQma0N9wM5o5SDxxhnGp1Si1koO1Ll2xKYPVeth6sNk
-	+aTAyygolApQdPaydaUQe7EHIkhjBtuPDEsUo=
+	:content-type; s=sasl; bh=9GIG4oABplS4C0iDc3h3TF+5Fk8=; b=DljfQ8
+	Bc7buNQ7eaSGfA5vgkFzED5F1DEkFkSiEOxgEbgQOttgDWTQnTOzjVhCNsViqBtT
+	XETFFeM/QswNLIbI6P/MP70LN/e9jS8qb3/H/N0DkfEcTXim9TyouGgRPULZtJtp
+	hb/7HiuSws/b2/6Oyj6Jhi7LmrIJrNP92O5LA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xDeQoP6cbozIB3WDgSfpYBlvgD+qpAoh
-	T1aFrikX77i+khPEFh5MaT4PoFXeNbiaSXdtbt7TNu8pUYIPWCuALYqRsgb4ZMs8
-	R5vysmJDbZh3ozQsBeAzOuxQ4D350GVHMXSaAiGht1PAlJiIXIhX261t/HSXjMeK
-	ydeIsyNluTw=
+	:content-type; q=dns; s=sasl; b=ZPlqYj5F8w40HIFG3+NIB4TE5RQsDXvO
+	daOIKOPGOgQwVAzyANWUpgwLlXRrBQCLSNitac6BKru/bjq1Nb7JPqqYXtweufum
+	da6LdFFWzvVxmqgvsrRKhBaK0dKr4MNMJKsqKhKpKLwEE2UaXPcHO+tSKIJJDaW4
+	yiQKoRc7dzU=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D7AB39DB0F;
-	Fri, 26 Feb 2010 00:14:54 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CC6709DEEA;
+	Fri, 26 Feb 2010 00:42:08 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E63CC9DB0B; Fri, 26 Feb
- 2010 00:14:51 -0500 (EST)
-In-Reply-To: <c28821e9079f35e7267a1e7381ccf7793c12bf24.1267156694.git.sdrake@xnet.co.nz>
- (Steven Drake's message of "Fri\, 26 Feb 2010 17\:00\:20 +1300")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 798E09DED7; Fri, 26 Feb
+ 2010 00:42:05 -0500 (EST)
+In-Reply-To: <ca433831002252055l37292cf6v868cc407f0be7250@mail.gmail.com>
+ (Mark Lodato's message of "Thu\, 25 Feb 2010 23\:55\:08 -0500")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E007D0A4-2295-11DF-9A1E-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: ADF1F1C2-2299-11DF-A362-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141107>
 
-Steven Drake <sdrake@xnet.co.nz> writes:
+Mark Lodato <lodatom@gmail.com> writes:
 
-> It is not a good Idea to give a config_error for _any_ keyword without a
-> value as it means that
+> The following accept exact filenames or directories.  If a directory,
+> this matches all files within that directory recursively.
 >
-> 	[section]
-> 		keyword
+> 	git-archive		path			fdir
 >
-> sytle can not be using for setting bool type keyword.
->
-> Signed-off-by: Steven Drake <sdrake@xnet.co.nz>
-> ---
->  builtin/init-db.c |    2 --
->  1 files changed, 0 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/init-db.c b/builtin/init-db.c
-> index 9273942..edc40ff 100644
-> --- a/builtin/init-db.c
-> +++ b/builtin/init-db.c
-> @@ -170,8 +170,6 @@ static void copy_templates(const char *template_dir)
->  
->  static int git_init_db_config(const char *k, const char *v, void *cb)
->  {
-> -	if (!v)
-> -		return config_error_nonbool(k);
->  	if (!strcmp(k, "init.templatedir"))
->  		return git_config_pathname(&init_db_template_dir, k, v);
+> 	git-bisect		<paths>/<pathspec>	fdir	(f)
 
-But then don't you need to catch init.templatedir does have a string
-value?
+What does the gap between these two mean?  Do you mean "bisect and later
+are not in the 'exact filenames or directories' group"?
 
->  
-> -- 
-> 1.6.6
+In general, unless the command takes only one filesystem entity (e.g. in
+"format-patch -o <dir>", <dir> cannot be anything but a single directory;
+in "blame <file>", <file> cannot be anything but a single file), you never
+give a single "filename" to git command.  Even when you say "git add
+Makefile", you are _not_ giving a filename that is "M' "a" "k" "e" ...;
+you are giving a _pattern_ to be matched with files git would find by
+traversing the filesystem.  In the case of "Makefile", it may happen to
+match only one single file.
+
+This pattern is called "pathspec", and commands that can take one pathspec
+can always take more than one.
+
+Unfortunately, for historical reasons, there are two semantics of
+pathspec, and at least three implementations of pathspec logic.
+
+ - diff family (diff, log, show, rev-list) does not support glob.  The
+   pattern is matched either as a leading directory path, or exact name.
+
+ - ls-files family (I think "clean" also uses the logic internally) does
+   support glob.  The pattern is matched either as a leading directory
+   path, exact name, or a glob.
+
+ - grep implements the same logic as ls-files but uses a newer
+   implementation better suited for optimized tree traversal.
+
+And there are higher level commands that internally use logic from either
+diff family or ls-files family.  You can guess which pathspec is used if
+you think about how you would implement what they do.  For example:
+
+ - "add <pathspec>" traverses the work tree using ls-files logic and adds
+   found files to the index.
+
+ - "add -u <pathspec>" compares the index and the work tree using
+   diff-files logic and adds paths with differences to the index.
+
+ - "status" uses "diff-index --cached" logic to come up with 'Changed to
+   be committed' list, "diff-files" logic to come up with 'Changed but not
+   updated' list, and "ls-files" logic to list 'Untracked' files.
+
+Unifying the two different semantics of pathspecs is one of the suggested
+topics for GSoC, by the way.
+
+I think it would make sense to document which ones are concrete paths
+(e.g. "blame takes a filename" vs "diff takes zero or more pathspecs"),
+but it would not make much sense to document the two different pathspecs.
+The effort is better spent at fixing the difference --- obviously we would
+eventually want to be able to say "git diff 'lib/*.h'".
