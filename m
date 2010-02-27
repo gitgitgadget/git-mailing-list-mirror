@@ -1,144 +1,108 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 4/5] grep: Colorize filename, line number, and separator
-Date: Sat, 27 Feb 2010 12:43:46 +0100
-Message-ID: <4B890572.5040604@lsrfire.ath.cx>
-References: <1267246670-19118-1-git-send-email-lodatom@gmail.com> <1267246670-19118-5-git-send-email-lodatom@gmail.com>
+From: Steve Folly <steve@spfweb.co.uk>
+Subject: Re: Retrospectively add alternates to a repository?
+Date: Sat, 27 Feb 2010 11:43:55 +0000 (UTC)
+Message-ID: <loom.20100227T123539-643@post.gmane.org>
+References: <loom.20100227T004822-959@post.gmane.org> <be6fef0d1002261837g794e8df2yc92261d46f3235bd@mail.gmail.com> <20100227083418.GC27191@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 27 12:44:23 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 27 12:44:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NlL5q-000671-Ks
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Feb 2010 12:44:22 +0100
+	id 1NlL6L-0006H7-Qk
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Feb 2010 12:44:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966305Ab0B0LoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Feb 2010 06:44:19 -0500
-Received: from india601.server4you.de ([85.25.151.105]:53115 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966278Ab0B0LoK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2010 06:44:10 -0500
-Received: from [10.0.1.100] (p57B7EFC1.dip.t-dialin.net [87.183.239.193])
-	by india601.server4you.de (Postfix) with ESMTPSA id C7FCB2F80BF;
-	Sat, 27 Feb 2010 12:44:08 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.8) Gecko/20100216 Thunderbird/3.0.2
-In-Reply-To: <1267246670-19118-5-git-send-email-lodatom@gmail.com>
+	id S966298Ab0B0LoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Feb 2010 06:44:17 -0500
+Received: from lo.gmane.org ([80.91.229.12]:33914 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965569Ab0B0LoH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2010 06:44:07 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NlL5Z-00060e-KZ
+	for git@vger.kernel.org; Sat, 27 Feb 2010 12:44:05 +0100
+Received: from cpc1-haye16-0-0-cust629.haye.cable.virginmedia.com ([92.234.82.118])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 27 Feb 2010 12:44:05 +0100
+Received: from steve by cpc1-haye16-0-0-cust629.haye.cable.virginmedia.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 27 Feb 2010 12:44:05 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 92.234.82.118 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_2; en-gb) AppleWebKit/531.21.8 (KHTML, like Gecko) Version/4.0.4 Safari/531.21.10)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141195>
 
-Am 27.02.2010 05:57, schrieb Mark Lodato:
-> Colorize the filename, line number, and separator in git grep output, as
-> GNU grep does.  The colors are customizable through color.grep.<slot>.
-> The default is to only color the separator (in cyan), since this gives
-> the biggest legibility increase without overwhelming the user with
-> colors.  GNU grep also defaults cyan for the separator, but defaults to
-> magenta for the filename and to green for the line number, as well.
+Jeff King <peff <at> peff.net> writes:
+
 > 
-> There are a few differences from GNU grep:
+> On Sat, Feb 27, 2010 at 10:37:25AM +0800, Tay Ray Chuan wrote:
 > 
-> 1. With --name-only, GNU grep colors the filenames, but we do not.  I do
->    not see any point to making everything the same color.
+> > yes, just make sure the objects/info/alternates file points to the
+> > location of that cloned repo's object directory; for example:
+> > 
+> >   $ echo /path/to/cloned/repo/.git/objects > .git/objects/info/alternates
+> 
+> You will probably want to then get rid of anything in the child that is
+> now available in the alternates repository.
+> 
+> I would have thought "git repack -adl" works, but I think there is
+> something a little funny in the logic. It reports "nothing new to pack",
+> but does not delete the loose objects. But packing first then worked:
+> 
+>   $ git clone large-parent child
+>   $ echo $PWD/large-parent/.git/objects >child/.git/objects/info/alternates
+>   $ cd child
+> 
+>   $ du -sh .git/objects
+>   51M     .git/objects
+> 
+>   $ git repack -adl && du -sh .git/objects
+>   Nothing new to pack.
+>   51M     .git/objects
+> 
+>   $ git repack -ad && du -sh .git/objects
+>   Counting objects: 3, done.
+>   Delta compression using up to 2 threads.
+>   Compressing objects: 100% (2/2), done.
+>   Writing objects: 100% (3/3), done.
+>   Total 3 (delta 0), reused 0 (delta 0)
+>   51M     .git/objects
+> 
+>   $ git repack -adl && du -sh .git/objects
+>   Nothing new to pack.
+>   20K     .git/objects
+> 
+> -Peff
+> 
 
-I guess they did it for consistency, so when you see "magenta" you think
-"filename", and because it can be turned off with a switch.  With your
-patch all filenames are coloured the same, too, by the way: using the
-default foreground colour. :)
+Excellent, this is exactly what I need. Thanks very much Tay
+ and Jeff.
 
-> diff --git a/builtin-grep.c b/builtin-grep.c
-> index dcc3d48..43b952b 100644
-> --- a/builtin-grep.c
-> +++ b/builtin-grep.c
-> @@ -289,6 +289,7 @@ static int wait_all(void)
->  static int grep_config(const char *var, const char *value, void *cb)
->  {
->  	struct grep_opt *opt = cb;
-> +	char *color = NULL;
->  
->  	switch (userdiff_config(var, value)) {
->  	case 0: break;
-> @@ -296,17 +297,24 @@ static int grep_config(const char *var, const char *value, void *cb)
->  	default: return 0;
->  	}
->  
-> -	if (!strcmp(var, "color.grep")) {
-> +	if (!strcmp(var, "color.grep"))
->  		opt->color = git_config_colorbool(var, value, -1);
-> -		return 0;
-> -	}
-> -	if (!strcmp(var, "color.grep.match")) {
-> -		if (!value)
-> -			return config_error_nonbool(var);
-> -		color_parse(value, var, opt->color_match);
-> -		return 0;
-> -	}
-> -	return git_color_default_config(var, value, cb);
-> +	else if (!strcmp(var, "color.grep.filename"))
-> +		color = opt->color_filename;
-> +	else if (!strcmp(var, "color.grep.linenumber"))
-> +		color = opt->color_lineno;
-> +	else if (!strcmp(var, "color.grep.match"))
-> +		color = opt->color_match;
-> +	else if (!strcmp(var, "color.grep.separator"))
-> +		color = opt->color_sep;
-> +	else
-> +		return git_color_default_config(var, value, cb);
-> +	if (!value)
-> +		return config_error_nonbool(var);
+I now have a plan to write a script to attach and
+detach repositories to and from local mirrors on demand:
 
-color.grep without a value used to turn on colourization, now it seems
-to error out.
+attach = 
+    echo "/path/to/mirror" > .git/objects/info/alternates && 
+    git repack -adl && 
+    git repack -ad && 
+    git repack -adl
 
-> +	color_parse(value, var, color);
-> +	if (!strcmp(color, GIT_COLOR_RESET))
-> +		color[0] = '\0';
+detach = 
+    git repack -a && 
+    rm .git/objects/info/alternates
 
-This turns off colouring if the user specified "reset" as the colour,
-right?  Interesting optimization, but is it really needed?  Perhaps it's
-just me, but I'd give the user the requested "<reset>text<reset>"
-sequence if she asked for it, even if it's longer than and looks the
-same as "text" alone.
 
-> diff --git a/grep.c b/grep.c
-> index a0864f1..132798d 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -506,35 +506,52 @@ static int next_match(struct grep_opt *opt, char *bol, char *eol,
->  	return hit;
->  }
->  
-> +static void output_color(struct grep_opt *opt, const void *data, size_t size,
-> +			 const char *color)
-> +{
-> +	if (opt->color && color && color[0]) {
-> +		opt->output(opt, color, strlen(color));
-> +		opt->output(opt, data, size);
-> +		opt->output(opt, GIT_COLOR_RESET, strlen(GIT_COLOR_RESET));
-> +	}
-> +	else
-
-	} else
-
-> +		opt->output(opt, data, size);
-> +}
-> +
-> +static void output_sep(struct grep_opt *opt, char sign)
-> +{
-> +	if (opt->null_following_name) {
-> +		sign = '\0';
-> +		opt->output(opt, &sign, 1);
-> +	} else
-
-	if (opt->null_following_name)
-		opt->output(opt, "", 1);
-	else
-
-> +		output_color(opt, &sign, 1, opt->color_sep);
-> +}
+Cheers,
+Steve
