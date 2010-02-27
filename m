@@ -1,70 +1,86 @@
-From: Jan Niklas Hasse <jhasse@gmail.com>
-Subject: Re: Error on push (unable to create temporary sha1 filename)
-Date: Sat, 27 Feb 2010 14:16:49 +0100
-Message-ID: <8dacd7b31002270516g63b84112g606da2a585764467@mail.gmail.com>
-References: <8dacd7b31002231311q46c1c3b9o63c57fabe696f2ea@mail.gmail.com>
-	 <be6fef0d1002231654r4fe08149qa937bbd9cc83d6a2@mail.gmail.com>
-	 <8dacd7b31002270438ve59e43djd44e2866b697d3ab@mail.gmail.com>
-	 <be6fef0d1002270501j124540c5g36a6a97142f4a7fc@mail.gmail.com>
+From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
+Subject: [PATCH v3 0/5] Apply blanks at EOF
+Date: Sat, 27 Feb 2010 14:51:39 +0100
+Message-ID: <4B89236B.5050708@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 27 14:17:06 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 27 14:52:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NlMXX-0005ye-OS
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Feb 2010 14:17:04 +0100
+	id 1NlN5B-0006a5-15
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Feb 2010 14:51:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968309Ab0B0NQx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Feb 2010 08:16:53 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:43296 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S968272Ab0B0NQu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2010 08:16:50 -0500
-Received: by gyh20 with SMTP id 20so478932gyh.19
-        for <git@vger.kernel.org>; Sat, 27 Feb 2010 05:16:49 -0800 (PST)
+	id S968328Ab0B0Nvn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Feb 2010 08:51:43 -0500
+Received: from mail-ew0-f220.google.com ([209.85.219.220]:55312 "EHLO
+	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S968320Ab0B0Nvn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2010 08:51:43 -0500
+Received: by ewy20 with SMTP id 20so535804ewy.21
+        for <git@vger.kernel.org>; Sat, 27 Feb 2010 05:51:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=A8rNIeUDlnjx1yo+i/8Xor1987pSyFFwiqyxsroel6M=;
-        b=E6QBdqbquL3Ejc5qW4EDCUus5iAnzGptzNg3flk0bWBUikUP6HdN9/up17UbdIg84m
-         Y04y/o/UAfrlZ55hnMtv4sVzAagVvgyyuzvXMgQkGG5U3QztFGz28nxNzURC9eLLVp/i
-         rgH/Ql0k1ZYpTqCa0c/yrhZ2g4pDqtSCXSKMc=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:content-type
+         :content-transfer-encoding;
+        bh=yTxvfcgG1aGjciLm40dodPOXXywIHfV66tc6qUFw294=;
+        b=TqRgktETvVDQ+mBv1PJY5/hDm/Rq5eYhng1GC1vzGIQMyl49a7n3Bp/aKyWyN1P48a
+         OLlrmddTMsciP8VTW3YB2R8J5fDsXtgT0dMy98IzlAMH70BYTLXEd1Y9C23/8VTreVnL
+         SSe4rIBhMTz7mhQofX2yoEoXojpQn2IforP2k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=grfkUesFQc8qi4vN/Ba5kwSrPyuP58DLhSHq47KyxGyL7p5gnPS0eAwq4U3BO8nwe1
-         WXkYo+LNoBwFmAgXv5u1kRC8h+ones1QDfnBjjGk2LmbtBPabHAllyfnIDw1V3oTTdEm
-         azuraaGbjbjY76/Y0iQSO3EMaKaFrFjSk/cp8=
-Received: by 10.101.3.34 with SMTP id f34mr2605350ani.135.1267276609589; Sat, 
-	27 Feb 2010 05:16:49 -0800 (PST)
-In-Reply-To: <be6fef0d1002270501j124540c5g36a6a97142f4a7fc@mail.gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=Fg84tcQ6Y1hZlWXxunLwHn1n57Jvy2YI2j2gA0kBsIdYEJJI2f3MNbFw9dnISqFWfb
+         vFos/yMsZ2bR0puSMZTFjghcl9thsQAK5X9F9UEq4tFQ+wii2oUfB2CLhXB6AS4sO/Vt
+         DRAL1W0MYfhvEnf8TQzcRnd2dWhpN3mm2TQbk=
+Received: by 10.213.59.145 with SMTP id l17mr943100ebh.56.1267278701499;
+        Sat, 27 Feb 2010 05:51:41 -0800 (PST)
+Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
+        by mx.google.com with ESMTPS id 10sm4578795eyd.36.2010.02.27.05.51.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 27 Feb 2010 05:51:40 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141206>
 
-On Sat, Feb 27, 2010 at 2:01 PM, Tay Ray Chuan <rctay89@gmail.com> wrote:
-> running out of ideas. Could you post the output of "ls -lR .git/objects" ?
+Here is my third attempt.
 
-Yes:
-$ ls -LR .git/objects
-.git/objects:
-info  pack
+Bj=C3=B6rn Gustavsson (5):
+  apply: Don't unnecessarily update line lengths in the preimage
+    As far as I understand, there was a completely unnecessary update
+    of line lengths which I have got rid of.
 
-.git/objects/info:
-packs
+  apply: Remove the quick rejection test
+    Unchanged (except for a minor correction of the commit message).
 
-.git/objects/pack:
-pack-34230f05b0351f54be4f3770abca7e483c5592c9.idx
-pack-34230f05b0351f54be4f3770abca7e483c5592c9.pack
-$
+  apply: Allow blank context lines to match beyond EOF
+    Included Junio's suggested clean-up that eliminates the "limit" var=
+iable.
 
-I'm using git version 1.6.3.3 btw. Thanks for the help so far!
+    Now handling --ignore-space-change.
+
+  t4124: Add additional tests of --whitespace=3Dfix
+    Added some more test cases and modified several tests to
+    run "git apply" both with and without the --ignore-space-change
+    option.
+
+  t3417: Add test cases for "rebase --whitespace=3Dfix"
+    Unchanged.
+
+ builtin-apply.c                  |  184 +++++++++++++++++++++++++++++-=
+--------
+ t/t3417-rebase-whitespace-fix.sh |  126 ++++++++++++++++++++++++++
+ t/t4104-apply-boundary.sh        |    9 ++
+ t/t4124-apply-ws-rule.sh         |  119 ++++++++++++++++++++++++
+ 4 files changed, 397 insertions(+), 41 deletions(-)
+ create mode 100755 t/t3417-rebase-whitespace-fix.sh
