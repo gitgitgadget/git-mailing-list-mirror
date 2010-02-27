@@ -1,75 +1,76 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: Meta-variable naming convention in documentation
-Date: Fri, 26 Feb 2010 21:41:22 -0500
-Message-ID: <ca433831002261841i2b0edab6nf1a6e9170c3ba3c@mail.gmail.com>
-References: <ca433831002252055l37292cf6v868cc407f0be7250@mail.gmail.com> 
-	<7vfx4oeeol.fsf@alter.siamese.dyndns.org> <ca433831002261451k3164d413y77d4989239862f30@mail.gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH 3/3] git-push: make git push --dry-run --porcelain exit 
+	with status 0 even if updates will be rejected
+Date: Sat, 27 Feb 2010 10:44:14 +0800
+Message-ID: <be6fef0d1002261844u5082b5bv90d46852218f632e@mail.gmail.com>
+References: <cover.1267216808.git.larry@elder-gods.org>
+	 <6d253d15b5174c3982bcc434b7c2b361712d20cb.1267216808.git.larry@elder-gods.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 27 03:41:48 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Larry D'Anna" <larry@elder-gods.org>
+X-From: git-owner@vger.kernel.org Sat Feb 27 03:44:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NlCcm-0005L3-DW
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Feb 2010 03:41:48 +0100
+	id 1NlCfE-00061e-CV
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Feb 2010 03:44:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759557Ab0B0Cln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2010 21:41:43 -0500
-Received: from mail-gx0-f227.google.com ([209.85.217.227]:55177 "EHLO
-	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759532Ab0B0Clm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2010 21:41:42 -0500
-Received: by gxk27 with SMTP id 27so478779gxk.1
-        for <git@vger.kernel.org>; Fri, 26 Feb 2010 18:41:42 -0800 (PST)
+	id S967547Ab0B0CoQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Feb 2010 21:44:16 -0500
+Received: from mail-iw0-f182.google.com ([209.85.223.182]:42992 "EHLO
+	mail-iw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759532Ab0B0CoO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Feb 2010 21:44:14 -0500
+Received: by iwn12 with SMTP id 12so790626iwn.21
+        for <git@vger.kernel.org>; Fri, 26 Feb 2010 18:44:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=kBHsYBo2rmh3ksCc+vh6/lx9t5IJP0ZgLiQe2vFVFIk=;
-        b=A/Yjr9Ix2HJrOvI+hCrXSe94/N+juf02tYkhXeEqNtLEggiAd/dAnDtlBpEEYq+5uU
-         CEbIrA+90IYVgVJs3KA8BZaNu9Zr8GwAL6Q/KuRdTRx546PhArpo1okq3LfzpNsJcPNQ
-         DwDXYjA2gER3XJ9yi+/O4Pm/COg0FjX263UYU=
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=O6u7RgHn+Dy4Ufk7wuSYGxxU3QQNPjldqqlS9NYsaD8=;
+        b=KbXbdS/EeWofz4ayEWwAc7IlyLWv32/1qnlowipdlrD5A45izm3ayMhbr2FuOMxUTi
+         Kk4XHIkHTBz9TbJVbO8t1bwbTzWRJyV/+QQ/+9o6w3Zvp4wfp/HbwIWfBaXV+vDURo/x
+         w/yCKIMfUQC80O3nGc1ZyJUzWPoypje3X1dzY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=DljnHOJwjnBYMsPbBYXy32ZYTWG/nQQdHl2kYSHu47Kd/UPnV8A3WA+8kAjnAEyhoF
-         Ti3rZ7IAQoh0KTYWYa7VE+Ml27DOE0H3D6VHLO2M/pMxu8FefJJPZ4V6geBnho4iTdTO
-         r9rQVI/g567PTQBciE5h/lgh6vZbadguxZQDY=
-Received: by 10.91.19.17 with SMTP id w17mr1239594agi.54.1267238502103; Fri, 
-	26 Feb 2010 18:41:42 -0800 (PST)
-In-Reply-To: <ca433831002261451k3164d413y77d4989239862f30@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SGHeJl61qLfCUZ48Gzqltp1YQfyKweAS/at3UCVMMjKmjx6lv6MrcemIHdDaq0ujIQ
+         WKyymn3Ic1f2AHnCnE1JI+yEMYXoSY5rBzvP8SaX7bbCMOOLgG9BPaevcLLCQrArRtm/
+         ng/lTy+1n9ZjbfsDgpkW5kX9YDxZUPNr1EONU=
+Received: by 10.231.144.207 with SMTP id a15mr337169ibv.94.1267238654265; Fri, 
+	26 Feb 2010 18:44:14 -0800 (PST)
+In-Reply-To: <6d253d15b5174c3982bcc434b7c2b361712d20cb.1267216808.git.larry@elder-gods.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141167>
 
-On a similar note, what do you think about dropping the term
-<tree-ish> and just using <tree> everywhere?  The only command that
-only accepts a <tree>, and not a <tree-ish>, is git-commit-tree.  For
-example, `git commit-tree master' fails, but `git commit-tree
-master^{tree}' works.  This can easily be written in the
-documentation, or the program can be fixed so it also accepts a
-<tree-ish> like everything else.  (git-grep(1) uses the term <tree>,
-but this should be <tree-ish>.)
+Hi,
 
-I imagine a similar thing can be done with <commit> vs <commit-ish> vs
-<committish>, but I haven't verified this.  <commit-ish> is only used
-in git(1) and builtin-revert.c, and <committish> is only used in
-git-describe(1), git-fast-import(1), git-name-rev(1), git-shortlog(1),
-gitcli(1), and builtin-describe.c.  I would guess that all the other
-commands that say <commit> really accept a <commit-ish>, but perhaps
-this is not true.
+On Sat, Feb 27, 2010 at 4:44 AM, Larry D'Anna <larry@elder-gods.org> wr=
+ote:
+> The script calling git push --dry-run --porcelain can see clearly fro=
+m the
+> output that the updates will be rejected. =A0However, it will probabl=
+y need to
+> distinguish this condition from the push failing for other reasons, s=
+uch as the
+> remote not being reachable.
+>
+> Signed-off-by: Larry D'Anna <larry@elder-gods.org>
 
-I also think <rev> should be replaced with <commit>, unless this means
-something different.
+I thought that in the previous iteration, the status won't be touched
+anymore? You agreed too:
 
-If you give the go-ahead, I'll work on a patch to do this.
+  <20100210055529.GA1566@cthulhu>
 
+--=20
 Cheers,
-Mark
+Ray Chuan
