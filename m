@@ -1,108 +1,56 @@
-From: Steve Folly <steve@spfweb.co.uk>
-Subject: Re: Retrospectively add alternates to a repository?
-Date: Sat, 27 Feb 2010 11:43:55 +0000 (UTC)
-Message-ID: <loom.20100227T123539-643@post.gmane.org>
-References: <loom.20100227T004822-959@post.gmane.org> <be6fef0d1002261837g794e8df2yc92261d46f3235bd@mail.gmail.com> <20100227083418.GC27191@coredump.intra.peff.net>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 4/5] grep: Colorize filename, line number, and separator
+Date: Sat, 27 Feb 2010 12:53:00 +0100
+Message-ID: <4B89079C.8030206@lsrfire.ath.cx>
+References: <1267246670-19118-1-git-send-email-lodatom@gmail.com> <1267246670-19118-5-git-send-email-lodatom@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 27 12:44:54 2010
+Cc: git@vger.kernel.org
+To: Mark Lodato <lodatom@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 27 12:53:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NlL6L-0006H7-Qk
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Feb 2010 12:44:54 +0100
+	id 1NlLEf-00014W-Mr
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Feb 2010 12:53:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966298Ab0B0LoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Feb 2010 06:44:17 -0500
-Received: from lo.gmane.org ([80.91.229.12]:33914 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965569Ab0B0LoH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2010 06:44:07 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NlL5Z-00060e-KZ
-	for git@vger.kernel.org; Sat, 27 Feb 2010 12:44:05 +0100
-Received: from cpc1-haye16-0-0-cust629.haye.cable.virginmedia.com ([92.234.82.118])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 27 Feb 2010 12:44:05 +0100
-Received: from steve by cpc1-haye16-0-0-cust629.haye.cable.virginmedia.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 27 Feb 2010 12:44:05 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 92.234.82.118 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_2; en-gb) AppleWebKit/531.21.8 (KHTML, like Gecko) Version/4.0.4 Safari/531.21.10)
+	id S966166Ab0B0LxW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Feb 2010 06:53:22 -0500
+Received: from india601.server4you.de ([85.25.151.105]:39305 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966055Ab0B0LxV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2010 06:53:21 -0500
+Received: from [10.0.1.100] (p57B7EFC1.dip.t-dialin.net [87.183.239.193])
+	by india601.server4you.de (Postfix) with ESMTPSA id CC72E2F80BF;
+	Sat, 27 Feb 2010 12:53:19 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.8) Gecko/20100216 Thunderbird/3.0.2
+In-Reply-To: <1267246670-19118-5-git-send-email-lodatom@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141196>
 
-Jeff King <peff <at> peff.net> writes:
+Forgot one thing in my earlier reply:
 
-> 
-> On Sat, Feb 27, 2010 at 10:37:25AM +0800, Tay Ray Chuan wrote:
-> 
-> > yes, just make sure the objects/info/alternates file points to the
-> > location of that cloned repo's object directory; for example:
-> > 
-> >   $ echo /path/to/cloned/repo/.git/objects > .git/objects/info/alternates
-> 
-> You will probably want to then get rid of anything in the child that is
-> now available in the alternates repository.
-> 
-> I would have thought "git repack -adl" works, but I think there is
-> something a little funny in the logic. It reports "nothing new to pack",
-> but does not delete the loose objects. But packing first then worked:
-> 
->   $ git clone large-parent child
->   $ echo $PWD/large-parent/.git/objects >child/.git/objects/info/alternates
->   $ cd child
-> 
->   $ du -sh .git/objects
->   51M     .git/objects
-> 
->   $ git repack -adl && du -sh .git/objects
->   Nothing new to pack.
->   51M     .git/objects
-> 
->   $ git repack -ad && du -sh .git/objects
->   Counting objects: 3, done.
->   Delta compression using up to 2 threads.
->   Compressing objects: 100% (2/2), done.
->   Writing objects: 100% (3/3), done.
->   Total 3 (delta 0), reused 0 (delta 0)
->   51M     .git/objects
-> 
->   $ git repack -adl && du -sh .git/objects
->   Nothing new to pack.
->   20K     .git/objects
-> 
-> -Peff
-> 
+Am 27.02.2010 05:57, schrieb Mark Lodato:
+> @@ -548,12 +565,9 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+>  				break;
+>  
+>  			opt->output(opt, bol, match.rm_so);
+> -			opt->output(opt, opt->color_match,
+> -				    strlen(opt->color_match));
+> -			opt->output(opt, bol + match.rm_so,
+> -				    (int)(match.rm_eo - match.rm_so));
+> -			opt->output(opt, GIT_COLOR_RESET,
+> -				    strlen(GIT_COLOR_RESET));
+> +			output_color(opt, bol + match.rm_so,
+> +				     (int)(match.rm_eo - match.rm_so),
+> +				     opt->color_match);
 
-Excellent, this is exactly what I need. Thanks very much Tay
- and Jeff.
-
-I now have a plan to write a script to attach and
-detach repositories to and from local mirrors on demand:
-
-attach = 
-    echo "/path/to/mirror" > .git/objects/info/alternates && 
-    git repack -adl && 
-    git repack -ad && 
-    git repack -adl
-
-detach = 
-    git repack -a && 
-    rm .git/objects/info/alternates
-
-
-Cheers,
-Steve
+The third parameter of output_color() (and of ->output(), so you didn't
+introduce this, of course) is a size_t, so why cast to int?  Is a cast
+needed at all?
