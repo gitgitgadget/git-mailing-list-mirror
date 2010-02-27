@@ -1,209 +1,91 @@
-From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
-Subject: [PATCH v3 5/5] t3417: Add test cases for "rebase --whitespace=fix"
-Date: Sat, 27 Feb 2010 14:52:50 +0100
-Message-ID: <4B8923B2.8020609@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 27 14:53:28 2010
+From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+Subject: [PATCH 1/4] git-mailsplit: Show parameter '--keep-cr' in usage and documentation
+Date: Sat, 27 Feb 2010 15:20:25 +0100
+Message-ID: <1267280428-18223-2-git-send-email-stefan.hahn@s-hahn.de>
+References: <1266080362-24760-1-git-send-email-stefan.hahn@s-hahn.de>
+Cc: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 27 15:21:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NlN6H-00081x-Uc
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Feb 2010 14:52:58 +0100
+	id 1NlNXd-0008BS-1I
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Feb 2010 15:21:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968360Ab0B0Nww convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Feb 2010 08:52:52 -0500
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:55312 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S968349Ab0B0Nww (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2010 08:52:52 -0500
-Received: by mail-ew0-f220.google.com with SMTP id 20so535804ewy.21
-        for <git@vger.kernel.org>; Sat, 27 Feb 2010 05:52:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=kV5ZYXl1c/Mb1R8xBlRv1uMPFMd0XytCv2vz6xBd0kY=;
-        b=Nz9gOybW17j1lln7BQ0Tpn9/tbqoQq7y0Li3FCsxejNJUPscX3nTqLHwswhXP4g0+S
-         S4QFu34e2891gC0xrO3tnsgccBrkhN4PmJT4kb/2okfkSJalsnxZUEPpKBLFa1CweA00
-         bT29RUlgeVkQ8Q0bRtRpINpfp+PdYg74QPbdA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=wo6LB0K5bYUiXEJRflcE3oX5jo2ledusnDcE/d4x5p/A5himFsV6fqyFGut3rSimx2
-         4p49XEn2iYK3EZphQ0v6s/TBfOjbeMSdNBe0iJQxw0yGSneu/SeMUpH8xRW3EkV8Vy8z
-         mVzPQKTuTO/x8nxS6HvucdZMbTBpUbNyxKgK4=
-Received: by 10.213.40.133 with SMTP id k5mr1219771ebe.94.1267278771382;
-        Sat, 27 Feb 2010 05:52:51 -0800 (PST)
-Received: from ?10.0.1.10? (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
-        by mx.google.com with ESMTPS id 23sm5027478eya.10.2010.02.27.05.52.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 27 Feb 2010 05:52:50 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
+	id S968394Ab0B0OUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Feb 2010 09:20:54 -0500
+Received: from moutng.kundenserver.de ([212.227.126.186]:64180 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S968378Ab0B0OUw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2010 09:20:52 -0500
+Received: from scotty.home (port-92-203-94-156.dynamic.qsc.de [92.203.94.156])
+	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
+	id 0LeyRX-1NOfeR2RMF-00qhtj; Sat, 27 Feb 2010 15:20:50 +0100
+Received: from scotty.home (hs@localhost [127.0.0.1])
+	by scotty.home (8.14.3/8.14.3/Debian-5) with ESMTP id o1REKli0019199;
+	Sat, 27 Feb 2010 15:20:47 +0100
+Received: (from hs@localhost)
+	by scotty.home (8.14.3/8.14.3/Submit) id o1REKlDQ019197;
+	Sat, 27 Feb 2010 15:20:47 +0100
+X-Mailer: git-send-email 1.7.0.98.g42448
+In-Reply-To: <1266080362-24760-1-git-send-email-stefan.hahn@s-hahn.de>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=ALL_TRUSTED autolearn=failed
+	version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on scotty.home
+X-Virus-Scanned: clamav-milter 0.95.3 at scotty
+X-Virus-Status: Clean
+X-Provags-ID: V01U2FsdGVkX18zllQWrlFIqIvVQe3EJyKcr9ebuNs5VgaM0EQ
+ wcplL+llcR3Sn8lI4cf4MdXVUds3CrYxEfC+xSsOu9fcvY0uJc
+ MytW7ksr2Y9p5i1mA79qg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141212>
 
-The command "git rebase --whitespace=3Dfix HEAD~<N>" is supposed to
-only clean up trailing whitespace, and the expectation is that it
-cannot fail.
-
-Unfortunately, if one commit adds a blank line at the end of a file
-and a subsequent commit adds more non-blank lines after the blank
-line, "git apply" (used indirectly by "git rebase") will fail to apply
-the patch of the second commit.
-
-Signed-off-by: Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>
+Signed-off-by: Stefan-W. Hahn <stefan.hahn@s-hahn.de>
 ---
- t/t3417-rebase-whitespace-fix.sh |  126 ++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 126 insertions(+), 0 deletions(-)
- create mode 100755 t/t3417-rebase-whitespace-fix.sh
+ Documentation/git-mailsplit.txt |    5 ++++-
+ builtin-mailsplit.c             |    2 +-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/t/t3417-rebase-whitespace-fix.sh b/t/t3417-rebase-whitespa=
-ce-fix.sh
-new file mode 100755
-index 0000000..220a740
---- /dev/null
-+++ b/t/t3417-rebase-whitespace-fix.sh
-@@ -0,0 +1,126 @@
-+#!/bin/sh
+diff --git a/Documentation/git-mailsplit.txt b/Documentation/git-mailsplit.txt
+index 5cc94ec..a634485 100644
+--- a/Documentation/git-mailsplit.txt
++++ b/Documentation/git-mailsplit.txt
+@@ -7,7 +7,7 @@ git-mailsplit - Simple UNIX mbox splitter program
+ 
+ SYNOPSIS
+ --------
+-'git mailsplit' [-b] [-f<nn>] [-d<prec>] -o<directory> [--] [<mbox>|<Maildir>...]
++'git mailsplit' [-b] [-f<nn>] [-d<prec>] [--keep-cr] -o<directory> [--] [<mbox>|<Maildir>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -43,6 +43,9 @@ OPTIONS
+ 	Skip the first <nn> numbers, for example if -f3 is specified,
+ 	start the numbering with 0004.
+ 
++--keep-cr::
++	Do not remove `\r` from lines ending with `\r\n`.
 +
-+test_description=3D'git rebase --whitespace=3Dfix
-+
-+This test runs git rebase --whitespace=3Dfix and make sure that it wor=
-ks.
-+'
-+
-+. ./test-lib.sh
-+
-+# prepare initial revision of "file" with a blank line at the end
-+cat >file <<EOF
-+a
-+b
-+c
-+
-+EOF
-+
-+# expected contents in "file" after rebase
-+cat >expect-first <<EOF
-+a
-+b
-+c
-+EOF
-+
-+# prepare second revision of "file"
-+cat >second <<EOF
-+a
-+b
-+c
-+
-+d
-+e
-+f
-+
-+
-+
-+
-+EOF
-+
-+# expected contents in second revision after rebase
-+cat >expect-second <<EOF
-+a
-+b
-+c
-+
-+d
-+e
-+f
-+EOF
-+
-+test_expect_success 'blank line at end of file; extend at end of file'=
- '
-+	git commit --allow-empty -m "Initial empty commit" &&
-+	git add file && git commit -m first &&
-+	mv second file &&
-+	git add file &&	git commit -m second &&
-+	git rebase --whitespace=3Dfix HEAD^^ &&
-+	git diff --exit-code HEAD^:file expect-first &&
-+	test_cmp file expect-second
-+'
-+
-+# prepare third revision of "file"
-+sed -e's/Z//' >third <<EOF
-+a
-+b
-+c
-+
-+d
-+e
-+f
-+    Z
-+ Z
-+h
-+i
-+j
-+k
-+l
-+EOF
-+
-+sed -e's/ //g' <third >expect-third
-+
-+test_expect_success 'two blanks line at end of file; extend at end of =
-file' '
-+	cp third file && git add file && git commit -m third &&
-+	git rebase --whitespace=3Dfix HEAD^^ &&
-+	git diff --exit-code HEAD^:file expect-second &&
-+	test_cmp file expect-third
-+'
-+
-+test_expect_success 'same, but do not remove trailing spaces' '
-+	git config core.whitespace "-blank-at-eol" &&
-+	git reset --hard HEAD^ &&
-+	cp third file && git add file && git commit -m third &&
-+	git rebase --whitespace=3Dfix HEAD^^
-+	git diff --exit-code HEAD^:file expect-second &&
-+	test_cmp file third
-+'
-+
-+sed -e's/Z//' >beginning <<EOF
-+a
-+		    Z
-+       Z
-+EOF
-+
-+cat >expect-beginning <<EOF
-+a
-+
-+
-+1
-+2
-+3
-+4
-+5
-+EOF
-+
-+test_expect_success 'at beginning of file' '
-+	git config core.whitespace "blank-at-eol" &&
-+	cp beginning file &&
-+	git commit -m beginning file &&
-+	for i in 1 2 3 4 5; do
-+		echo $i
-+	done >> file &&
-+	git commit -m more file	&&
-+	git rebase --whitespace=3Dfix HEAD^^ &&
-+	test_cmp file expect-beginning
-+'
-+
-+test_done
---=20
-1.7.0
+ Author
+ ------
+ Written by Linus Torvalds <torvalds@osdl.org>
+diff --git a/builtin-mailsplit.c b/builtin-mailsplit.c
+index 207e358..cdfc1b7 100644
+--- a/builtin-mailsplit.c
++++ b/builtin-mailsplit.c
+@@ -10,7 +10,7 @@
+ #include "strbuf.h"
+ 
+ static const char git_mailsplit_usage[] =
+-"git mailsplit [-d<prec>] [-f<n>] [-b] -o<directory> [<mbox>|<Maildir>...]";
++"git mailsplit [-d<prec>] [-f<n>] [-b] [--keep-cr] -o<directory> [<mbox>|<Maildir>...]";
+ 
+ static int is_from_line(const char *line, int len)
+ {
+-- 
+1.7.0.98.g42448
