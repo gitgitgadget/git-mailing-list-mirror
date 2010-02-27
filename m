@@ -1,128 +1,80 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: [PATCH 2/5] Add GIT_COLOR_BOLD_* and GIT_COLOR_BG_*
-Date: Fri, 26 Feb 2010 23:57:47 -0500
-Message-ID: <1267246670-19118-3-git-send-email-lodatom@gmail.com>
-References: <1267246670-19118-1-git-send-email-lodatom@gmail.com>
-Cc: Mark Lodato <lodatom@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 27 05:54:47 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH 3/4] git-push: make git push --porcelain print "Done"
+Date: Sat, 27 Feb 2010 13:22:58 +0800
+Message-ID: <be6fef0d1002262122u1a7396f4jefbab1cb9a484229@mail.gmail.com>
+References: <cover.1267245870.git.larry@elder-gods.org>
+	 <22ec18ddf7cc504addf7929e2543c60d836d2467.1267245870.git.larry@elder-gods.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Larry D'Anna" <larry@elder-gods.org>
+X-From: git-owner@vger.kernel.org Sat Feb 27 06:23:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NlEhT-0007hl-EL
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Feb 2010 05:54:47 +0100
+	id 1NlF94-0001cX-UE
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Feb 2010 06:23:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967862Ab0B0EyY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2010 23:54:24 -0500
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:51848 "EHLO
-	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967841Ab0B0EyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2010 23:54:14 -0500
-Received: by mail-qy0-f179.google.com with SMTP id 9so475291qyk.5
-        for <git@vger.kernel.org>; Fri, 26 Feb 2010 20:54:13 -0800 (PST)
+	id S1751029Ab0B0FXB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Feb 2010 00:23:01 -0500
+Received: from mail-iw0-f182.google.com ([209.85.223.182]:37405 "EHLO
+	mail-iw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750922Ab0B0FXA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Feb 2010 00:23:00 -0500
+Received: by iwn12 with SMTP id 12so866422iwn.21
+        for <git@vger.kernel.org>; Fri, 26 Feb 2010 21:22:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=Qnl+Avlvk36LqfefDrsqWqnRrV58BoqBnXNt6kV3P5A=;
-        b=VCqb+VpSpOLzUHOhj1mwbrvjWUZKzwj/BTaaVvCxXnG0K0/xrCUm2RMW0+QYGjamRb
-         p29JhV1ny5EmSYnEBSe4esN9yYdaWlWu+nZhv9DVdfiMOZPdn5pj7PkeWCROcQnRHC1v
-         AuYq4D5DAoJbfk+fkks7Z8pY0SbF4YKiiwHaU=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=b/Y1Bkoq2R527DWIGc0jeCV7gqHOy2QXCWeQeK+vrFI=;
+        b=uYW7qJ0NGCmO8QC4uyD16tpRm7xHb90QbVZYI7jhdAQYePOWeQgKAXvDiBCZEzz+tL
+         uetN76DdfWeePTERdvRWA1bJla1SewH8kpi8MRGyPtLMJVSopC+0TBhPtfyajk0gKoq0
+         KDGEvRW51u4QyzeudG0p9MtrNa/LfHyMlHR/Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=tU32G+Q9wzMkAEXLhFu5OMI9MN8gG2I5JO1+bM2bXmD51chwyfZOixlMGUgLA3iYcw
-         V84DX0hhTLFSTenV8Cwyecq+bJ0wMfJEHCmSuBWiOWQEVPo5WzWdrLJLZPsUPO6f/HnO
-         EiWMZuVQNAJqwpKDHH+xbdjLREjWzXrspL1W4=
-Received: by 10.224.87.19 with SMTP id u19mr809881qal.8.1267246453743;
-        Fri, 26 Feb 2010 20:54:13 -0800 (PST)
-Received: from localhost.localdomain (c-68-50-174-152.hsd1.dc.comcast.net [68.50.174.152])
-        by mx.google.com with ESMTPS id 20sm622133qyk.12.2010.02.26.20.54.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 26 Feb 2010 20:54:13 -0800 (PST)
-X-Mailer: git-send-email 1.7.0
-In-Reply-To: <1267246670-19118-1-git-send-email-lodatom@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=tqLFcANWeKaznE+sCOY7bEKwr96ihm6ySnPXRaoAiND3mkiY85O7nnE4IVXNkY7GOw
+         C3vM4Pf8iZ/+XbQaHrWcraduZyMKCvDWtrbtRgKbrh+TD/Hb8G4TqbbfhgBuDUInn8wt
+         6OpU97lI4T8Iw7bhjKoqTI4kesNtB4W1I7b4w=
+Received: by 10.231.151.207 with SMTP id d15mr1061115ibw.44.1267248178149; 
+	Fri, 26 Feb 2010 21:22:58 -0800 (PST)
+In-Reply-To: <22ec18ddf7cc504addf7929e2543c60d836d2467.1267245870.git.larry@elder-gods.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141189>
 
-Add GIT_COLOR_BOLD_* macros to set both bold and the color in one
-sequence.  This saves two characters of output ("ESC [ m", minus ";")
-and makes the code more readable.
+Hi,
 
-Add the remaining GIT_COLOR_BG_* macros to make the list complete.
-The white and black colors are not included since they look bad on most
-terminals.
+On Sat, Feb 27, 2010 at 12:52 PM, Larry D'Anna <larry@elder-gods.org> w=
+rote:
+> The script calling git push --porcelain --dry-run can see clearly fro=
+m the
+> output if an update was rejected. =A0However, it will probably need t=
+o distinguish
+> this condition from the push failing for other reasons, such as the r=
+emote not
+> being reachable.
+>
+> This patch modifies git push --porcelain to print "Done" after the re=
+st of its
+> output unless any errors have occurred. =A0For the purpose of the "Do=
+ne" line,
+> knowing a ref will be rejected in a --dry-run does not count as an er=
+ror.
+> Actual rejections in non --dry-run pushes do count as errors.
+>
+> Signed-off-by: Larry D'Anna <larry@elder-gods.org>
 
-Signed-off-by: Mark Lodato <lodatom@gmail.com>
----
- builtin-grep.c |    2 +-
- color.h        |   11 +++++++++++
- graph.c        |   12 ++++++------
- 3 files changed, 18 insertions(+), 7 deletions(-)
+Acked-by: Tay Ray Chuan <rctay89@gmail.com>
 
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 552ef1f..dcc3d48 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -871,7 +871,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	opt.regflags = REG_NEWLINE;
- 	opt.max_depth = -1;
- 
--	strcpy(opt.color_match, GIT_COLOR_RED GIT_COLOR_BOLD);
-+	strcpy(opt.color_match, GIT_COLOR_BOLD_RED);
- 	opt.color = -1;
- 	git_config(grep_config, &opt);
- 	if (opt.color == -1)
-diff --git a/color.h b/color.h
-index 3cb4b7f..bfeea1f 100644
---- a/color.h
-+++ b/color.h
-@@ -18,7 +18,18 @@
- #define GIT_COLOR_BLUE		"\033[34m"
- #define GIT_COLOR_MAGENTA	"\033[35m"
- #define GIT_COLOR_CYAN		"\033[36m"
-+#define GIT_COLOR_BOLD_RED	"\033[1;31m"
-+#define GIT_COLOR_BOLD_GREEN	"\033[1;32m"
-+#define GIT_COLOR_BOLD_YELLOW	"\033[1;33m"
-+#define GIT_COLOR_BOLD_BLUE	"\033[1;34m"
-+#define GIT_COLOR_BOLD_MAGENTA	"\033[1;35m"
-+#define GIT_COLOR_BOLD_CYAN	"\033[1;36m"
- #define GIT_COLOR_BG_RED	"\033[41m"
-+#define GIT_COLOR_BG_GREEN	"\033[42m"
-+#define GIT_COLOR_BG_YELLOW	"\033[43m"
-+#define GIT_COLOR_BG_BLUE	"\033[44m"
-+#define GIT_COLOR_BG_MAGENTA	"\033[45m"
-+#define GIT_COLOR_BG_CYAN	"\033[46m"
- 
- /*
-  * This variable stores the value of color.ui
-diff --git a/graph.c b/graph.c
-index 6746d42..e6bbcaa 100644
---- a/graph.c
-+++ b/graph.c
-@@ -80,12 +80,12 @@ static char column_colors[][COLOR_MAXLEN] = {
- 	GIT_COLOR_BLUE,
- 	GIT_COLOR_MAGENTA,
- 	GIT_COLOR_CYAN,
--	GIT_COLOR_BOLD GIT_COLOR_RED,
--	GIT_COLOR_BOLD GIT_COLOR_GREEN,
--	GIT_COLOR_BOLD GIT_COLOR_YELLOW,
--	GIT_COLOR_BOLD GIT_COLOR_BLUE,
--	GIT_COLOR_BOLD GIT_COLOR_MAGENTA,
--	GIT_COLOR_BOLD GIT_COLOR_CYAN,
-+	GIT_COLOR_BOLD_RED,
-+	GIT_COLOR_BOLD_GREEN,
-+	GIT_COLOR_BOLD_YELLOW,
-+	GIT_COLOR_BOLD_BLUE,
-+	GIT_COLOR_BOLD_MAGENTA,
-+	GIT_COLOR_BOLD_CYAN,
- };
- 
- #define COLUMN_COLORS_MAX (ARRAY_SIZE(column_colors))
--- 
-1.7.0
+--=20
+Cheers,
+Ray Chuan
