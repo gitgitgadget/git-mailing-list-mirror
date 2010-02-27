@@ -1,64 +1,81 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Explicitly adding ignored files in subdirectories not working
-Date: Sat, 27 Feb 2010 18:03:42 +0100
-Message-ID: <fabb9a1e1002270903l4852efb4j5b95ee0481743326@mail.gmail.com>
-References: <fabb9a1e1002231307o2c3499e6k3f1026f71a544b16@mail.gmail.com> 
-	<20100224045958.GA2385@coredump.intra.peff.net> <fabb9a1e1002270459h55fbd1c0o509106e035402810@mail.gmail.com> 
-	<7v4ol239aq.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/5] grep: Colorize filename, line number, and separator
+Date: Sat, 27 Feb 2010 09:08:33 -0800
+Message-ID: <7vy6ie1u9a.fsf@alter.siamese.dyndns.org>
+References: <1267246670-19118-1-git-send-email-lodatom@gmail.com>
+ <1267246670-19118-5-git-send-email-lodatom@gmail.com>
+ <4B89079C.8030206@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 27 18:04:19 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sat Feb 27 18:09:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NlQ5R-0001nl-TF
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Feb 2010 18:04:18 +0100
+	id 1NlQA0-00040C-3p
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Feb 2010 18:09:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030339Ab0B0REL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Feb 2010 12:04:11 -0500
-Received: from mail-pz0-f190.google.com ([209.85.222.190]:59941 "EHLO
-	mail-pz0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030326Ab0B0REC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2010 12:04:02 -0500
-Received: by pzk28 with SMTP id 28so891373pzk.1
-        for <git@vger.kernel.org>; Sat, 27 Feb 2010 09:04:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=nVx72QIiwiONgb1qbS364q6act6ug08ufUOV3RnDz2U=;
-        b=Gu3xmERVBNVDSjxNBCSAuoZ9zBO2W4GhVLlcH0HYV2IbP8tWxzKqA3BFI6nTyITx1T
-         1WbmucPQ0DLnwm6TadzLl6j4bNKAt84MedGY2Hw6XjDmEYCOci63sTksgGTZHCwtGztu
-         KsOqv04TIlGVU6k9c+s5oDkudTCqpizmnAvic=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=kMCOX95Hjc8at8idW+6a2rSlRRYGTfmRuhXQzFwHf+HWxyyDGvVF5zME8cBh9sSZAM
-         kp5IvaJfRqftCck/KpFiwkfcbctjIKco+8xuwowvKdQ5WI5Nv2JaCgJokD9dhn1A2Ako
-         BmP/E4TlBUwzkySvKWIWq4yNucT6HN9ZL5bhU=
-Received: by 10.142.6.32 with SMTP id 32mr1182908wff.6.1267290242132; Sat, 27 
-	Feb 2010 09:04:02 -0800 (PST)
-In-Reply-To: <7v4ol239aq.fsf@alter.siamese.dyndns.org>
+	id S968632Ab0B0RIp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Feb 2010 12:08:45 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50422 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S968612Ab0B0RIn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Feb 2010 12:08:43 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D07C69DE38;
+	Sat, 27 Feb 2010 12:08:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=o8j1rqM6J3WU
+	08/eFqDE3s+C2Os=; b=gD+8e3rkxORMcrkbYcw8ohYh5Y1kH8qwdM6LoKonIime
+	+83t5g3zmpZ6ZG9NXegTe+Fh5cl2hDn/HRrleP0T/PMY116E3e52HDDFFiU3+jSU
+	bc+gIcEsJeQe7+fhj+3zv+WDZDImLLy0/dj/ZtWpRo542fJrasH1/wKq0+1tqNU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hLWA56
+	ICF5iy2B99gcSdHX/E4fdZqXCUsf7KyyOMNuFS2bn5rGKXL+pbSzncZQO4BpkS3x
+	OKXL9hjvrEbpB4uZGIhgDl8X5soHbnHw0VE219RKCYqfn5qd5jMrnopWSAyVXwuV
+	JqIUEmr87gIONZ41b50MBEgl/xSiBsRn5/Dnw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DB4D9DE37;
+	Sat, 27 Feb 2010 12:08:39 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D3F9B9DE2C; Sat, 27 Feb
+ 2010 12:08:35 -0500 (EST)
+In-Reply-To: <4B89079C.8030206@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of "Sat\, 27 Feb 2010 12\:53\:00 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: BFFDF8B4-23C2-11DF-90EB-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141219>
 
-Heya,
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-On Sat, Feb 27, 2010 at 17:58, Junio C Hamano <gitster@pobox.com> wrote:
-> The thread is still in my inbox but haven't had a chance to allocate
-> enough time to look at the issue yet.
+>> -			opt->output(opt, bol + match.rm_so,
+>> -				    (int)(match.rm_eo - match.rm_so));
+>
+> The third parameter of output_color() (and of ->output(), so you didn=
+'t
+> introduce this, of course) is a size_t, so why cast to int?  Is a cas=
+t
+> needed at all?
 
-Understandable, I'll be patient until then :).
+I don't think so.
 
--- 
-Cheers,
-
-Sverre Rabbelier
+Earlier in 747a322 (grep: cast printf %.*s "precision" argument explici=
+tly
+to int, 2009-03-08), I casted the difference between two regoff_t you w=
+ere
+feeding to printf's "%.*s" as a length, introduced by 7e8f59d (grep: co=
+lor
+patterns in output, 2009-03-07), and 5b594f4 (Threaded grep, 2010-01-25=
+)
+carried that cast over without thinking.
