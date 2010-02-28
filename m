@@ -1,108 +1,77 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] sha1_name: fix segfault caused by invalid index access
-Date: Sun, 28 Feb 2010 17:38:42 +0100
-Message-ID: <1267375122-13039-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] sha1_name: fix segfault caused by invalid index access
+Date: Sun, 28 Feb 2010 10:13:22 -0800
+Message-ID: <7vocj9cjp9.fsf@alter.siamese.dyndns.org>
 References: <vpq7hpxl4cp.fsf@bauges.imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Feb 28 17:38:55 2010
+ <1267375122-13039-1-git-send-email-Matthieu.Moy@imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sun Feb 28 19:14:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NlmAQ-0004vS-AL
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Feb 2010 17:38:54 +0100
+	id 1NlneF-00038o-Fu
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Feb 2010 19:13:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030414Ab0B1Qit (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Feb 2010 11:38:49 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:59461 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030382Ab0B1Qis (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2010 11:38:48 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o1SGa62l028525
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 28 Feb 2010 17:36:06 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NlmAH-0004Kh-I9; Sun, 28 Feb 2010 17:38:45 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NlmAH-0003Oz-H2; Sun, 28 Feb 2010 17:38:45 +0100
-X-Mailer: git-send-email 1.7.0.231.g97960.dirty
-In-Reply-To: <vpq7hpxl4cp.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 28 Feb 2010 17:36:06 +0100 (CET)
+	id S1754669Ab0B1SNc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Feb 2010 13:13:32 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:32849 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754394Ab0B1SNc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Feb 2010 13:13:32 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DF5679E89B;
+	Sun, 28 Feb 2010 13:13:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HUFUaHP5jUjoK7gYLI1UeeTfOs4=; b=L/6Khn
+	O4XrHjFwNwzu8QXTswGEtTmw/XNet9A20xw7hVwZeDOpRbz4sGjMznpt97VrHUx+
+	IftkgLFw8J6XfezledZzzitXREE0xxE6e61osOsElF2R/XWi5cQZ8b9CpTGpmUYZ
+	+sasU4NT7CCf6HKPc6dxCOBRVFyPuqWuRpZcs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pYI75S9x8+4Rt6xKEP4OfxuuyZjSjYbB
+	NVZf/7jc+UR40qs4PPOsBIvnGBXwZbPvgGT9XE0QLw73lDpughnCY2kCLEOfFN8I
+	3BAL7xexVlUmwS8/AITuEE4BbLvAX1bpoBbGuL+CzeZdhk7WRF9/4MdoXkNMle+p
+	1RmVvMtQMNw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BB2339E89A;
+	Sun, 28 Feb 2010 13:13:27 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14C139E899; Sun, 28 Feb
+ 2010 13:13:24 -0500 (EST)
+In-Reply-To: <1267375122-13039-1-git-send-email-Matthieu.Moy@imag.fr>
+ (Matthieu Moy's message of "Sun\, 28 Feb 2010 17\:38\:42 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F7E7E55A-2494-11DF-BD9B-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141258>
 
-009fee477 (Detailed diagnosis when parsing an object name fails,
-2009-12-07) introduced some invalid index access, inspired by the code of
-get_sha1_with_mode_1, which loops over the index entries having the same
-name. In the diagnosis, we just want to find whether one entry with the
-name is in the index, which is the case iff cache_name_pos's return value
-is positive.
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-Trying anything complex on negative value is not only useless, but also
-buggy here, since pos could end up being greater than active_nr, causing
-a segfault in active_cache[pos]. This is always the case in bare
-repositories, and happens when calling "git show :inexistant" if
-"inexistant" is greater than the last index entry in alphabetical order.
+> -	if (pos < 0)
+> -		pos = -pos - 1;
+> -	ce = active_cache[pos];
+> -	if (ce_namelen(ce) == namelen &&
+> -	    !memcmp(ce->name, filename, namelen))
+> +	if (pos >= 0) {
+> +		ce = active_cache[pos];
 
-Bug report and initial fix by Markus Heidelberg
-<markus.heidelberg@web.de>.
+A positive return value of cache_name_pos() is "I found a merged entry
+with that name at this index" while a negative is "I would insert at this
+index if you give me a merged entry with that name".
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- sha1_name.c |   16 ++++++----------
- 1 files changed, 6 insertions(+), 10 deletions(-)
-
-diff --git a/sha1_name.c b/sha1_name.c
-index 43884c6..fbbe3b4 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -990,15 +990,13 @@ static void diagnose_invalid_index_path(int stage,
- 
- 	/* Wrong stage number? */
- 	pos = cache_name_pos(filename, namelen);
--	if (pos < 0)
--		pos = -pos - 1;
--	ce = active_cache[pos];
--	if (ce_namelen(ce) == namelen &&
--	    !memcmp(ce->name, filename, namelen))
-+	if (pos >= 0) {
-+		ce = active_cache[pos];
- 		die("Path '%s' is in the index, but not at stage %d.\n"
- 		    "Did you mean ':%d:%s'?",
- 		    filename, stage,
- 		    ce_stage(ce), filename);
-+	}
- 
- 	/* Confusion between relative and absolute filenames? */
- 	fullnamelen = namelen + strlen(prefix);
-@@ -1006,15 +1004,13 @@ static void diagnose_invalid_index_path(int stage,
- 	strcpy(fullname, prefix);
- 	strcat(fullname, filename);
- 	pos = cache_name_pos(fullname, fullnamelen);
--	if (pos < 0)
--		pos = -pos - 1;
--	ce = active_cache[pos];
--	if (ce_namelen(ce) == fullnamelen &&
--	    !memcmp(ce->name, fullname, fullnamelen))
-+	if (pos >= 0) {
-+		ce = active_cache[pos];
- 		die("Path '%s' is in the index, but not '%s'.\n"
- 		    "Did you mean ':%d:%s'?",
- 		    fullname, filename,
- 		    ce_stage(ce), fullname);
-+	}
- 
- 	if (!lstat(filename, &st))
- 		die("Path '%s' exists on disk, but not in the index.", filename);
--- 
-1.7.0.231.g97960.dirty
+The latter is what the name comparison logic is about.  The caller asked
+for filename, and the return value may point at an existing entry (in
+which case you do not even need to memcmp(), but it doesn't hurt and
+simplifies the code).  The nagative one with compensation could be
+pointing at an unrelated entry, or an unmerged entry with filename you
+asked, which sorts higher than a merged entry with the same name.
