@@ -1,84 +1,215 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: [PATCH 4/5] grep: Colorize filename, line number, and separator
-Date: Sun, 28 Feb 2010 15:15:40 -0500
-Message-ID: <ca433831002281215i66af2401n221813466f2ffa85@mail.gmail.com>
-References: <1267246670-19118-1-git-send-email-lodatom@gmail.com> 
-	<1267246670-19118-5-git-send-email-lodatom@gmail.com> <4B89079C.8030206@lsrfire.ath.cx> 
-	<7vy6ie1u9a.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 28 21:16:12 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH/RFC 1/2 v2] gitweb: Syntax highlighting support
+Date: Sun, 28 Feb 2010 21:28:09 +0100
+Message-ID: <1267388890-30305-1-git-send-email-jnareb@gmail.com>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 28 21:28:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NlpYg-0003jD-7d
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Feb 2010 21:16:10 +0100
+	id 1NlpkZ-00008l-So
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Feb 2010 21:28:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1032010Ab0B1UQE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Feb 2010 15:16:04 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:42621 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031966Ab0B1UQB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 Feb 2010 15:16:01 -0500
-Received: by gwb19 with SMTP id 19so720930gwb.19
-        for <git@vger.kernel.org>; Sun, 28 Feb 2010 12:16:00 -0800 (PST)
+	id S1032020Ab0B1U2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Feb 2010 15:28:20 -0500
+Received: from mail-fx0-f219.google.com ([209.85.220.219]:61872 "EHLO
+	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031970Ab0B1U2U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Feb 2010 15:28:20 -0500
+Received: by fxm19 with SMTP id 19so138667fxm.21
+        for <git@vger.kernel.org>; Sun, 28 Feb 2010 12:28:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sndFHq1rJl4qJ/MTCDfWVOx7Xo0x+VEIjDNlIJDXwTw=;
-        b=SZs+t2eIO3BiKTLv2ypt5yEM2cxV1iMROJdsQQ6I5+4gMdwd5SJZXlbdTi0o3YQ1bS
-         RqW9dd7JRiaqEl5Q3W1LO/vMPFYoyhyue/Kw7YdMmz2jgjN09Vuas2sH9wFWE5iZGrYq
-         HRKYG6gP/W5XsZ8kieXpUNEt3xTYpzu4I1VuY=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=tbO/4NVeiTEDCLyHfvY3qLfEwaU25U4LzEpppfEEYiA=;
+        b=YPnZX9bqA5nQh6SyJMo12WmnB0LXDEOTKwJzZzPD5ShVanFLH8oQjYEA7YF15/Vba8
+         zru7FbqNzKd8BWRMsjm9HK3D4A5g+LJXfkuyaKunQsFaA4q/wJ3tt9CVa9gqMKpES3Tp
+         xq3dG2Ie8bx583E0vhPMBtD3NCEfDe4aEoaiU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=cLfH7S/s0LkdjUvZEnbE56FfXplYsk47t++kubnAuvu2zS0hbTo3pSNkM4PqmtEkTg
-         Y2bcfHeMrvF8UBV0L2zTxiLbrbz92mGKwpEZkt+SHAjPURmgNMRnxpU8Lxzq1yZ/zE/D
-         az73+RVdKBSas7WAuLtX7oO0FWjNY8elKY4mw=
-Received: by 10.90.40.17 with SMTP id n17mr2816494agn.3.1267388160126; Sun, 28 
-	Feb 2010 12:16:00 -0800 (PST)
-In-Reply-To: <7vy6ie1u9a.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=jTwnMXU+9iO7TvmCtNNY8xBIKFty2SmSKQDQgjIOlIAzkrb4k00mscTW44VI6hs9BZ
+         HxQyjtOY8y3YXlMdxyRKcljbaP+Vy1CVVJJHsJEKVODbG5x3pnnKOOgGP4m8jr8QEYlF
+         y1jnPjpDc8qtOC1Jt21oeyAUdUFSPmmA7SfPI=
+Received: by 10.87.66.40 with SMTP id t40mr254731fgk.68.1267388896695;
+        Sun, 28 Feb 2010 12:28:16 -0800 (PST)
+Received: from localhost.localdomain (abwn28.neoplus.adsl.tpnet.pl [83.8.237.28])
+        by mx.google.com with ESMTPS id l12sm2855592fgb.17.2010.02.28.12.28.15
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 28 Feb 2010 12:28:15 -0800 (PST)
+X-Mailer: git-send-email 1.6.6.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141269>
 
-On Sat, Feb 27, 2010 at 12:08 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->
->>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0opt->output(opt, bol + match.rm_so,
->>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(int)(match.rm_eo - match.=
-rm_so));
->>
->> The third parameter of output_color() (and of ->output(), so you did=
-n't
->> introduce this, of course) is a size_t, so why cast to int? =C2=A0Is=
- a cast
->> needed at all?
->
-> I don't think so.
->
-> Earlier in 747a322 (grep: cast printf %.*s "precision" argument expli=
-citly
-> to int, 2009-03-08), I casted the difference between two regoff_t you=
- were
-> feeding to printf's "%.*s" as a length, introduced by 7e8f59d (grep: =
-color
-> patterns in output, 2009-03-07), and 5b594f4 (Threaded grep, 2010-01-=
-25)
-> carried that cast over without thinking.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Ok.  I'll remove the cast.  Should I note this in the commit message?
+It requires the 'highlight' program to do all the heavy-lifting.
+
+This is loosely based on Daniel Svensson's and Sham Chukoury's work in
+gitweb-xmms2.git (it cannot be cherry-picked, as gitweb-xmms2 first forked
+wildly, then not contributed back, and then went stale).
+
+[jn: cherry picked from bc1ed6aafd9ee4937559535c66c8bddf1864bec6
+ in http://repo.or.cz/w/git/dscho.git, with a few changes]
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Compared to the version in Dscho repository, it makes gitweb do line
+numbering by itself, instead of making 'highlight' do it... and then
+rewriting it to conform to the rest of gitweb.  It also leaves tab
+expansion to gitweb, for 'blob' view to look the same with and without
+syntax hightlighting enabled.
+
+The list of supported extensions is widened, and syntax is decided
+based on basename, not on whole pathname (which might be a mistake).
+Also the '.in' suffix is stripped if it is present (so 'git.spec.in'
+file would use 'spec' syntax).
+
+Note that gitweb.css contains default 'highlight' style, but perhaps
+other style would be better fit for deafule gitweb CSS.
+
+ gitweb/gitweb.css  |   18 ++++++++++++++
+ gitweb/gitweb.perl |   65 +++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 82 insertions(+), 1 deletions(-)
+
+diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+index 50067f2..4132aab 100644
+--- a/gitweb/gitweb.css
++++ b/gitweb/gitweb.css
+@@ -572,3 +572,21 @@ span.match {
+ div.binary {
+ 	font-style: italic;
+ }
++
++/* Style definition generated by highlight 2.4.5, http://www.andre-simon.de/ */
++
++/* Highlighting theme definition: */
++
++.num    { color:#2928ff; }
++.esc    { color:#ff00ff; }
++.str    { color:#ff0000; }
++.dstr   { color:#818100; }
++.slc    { color:#838183; font-style:italic; }
++.com    { color:#838183; font-style:italic; }
++.dir    { color:#008200; }
++.sym    { color:#000000; }
++.line   { color:#555555; }
++.kwa    { color:#000000; font-weight:bold; }
++.kwb    { color:#830000; }
++.kwc    { color:#000000; font-weight:bold; }
++.kwd    { color:#010181; }
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 32b04a4..5b85581 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -227,6 +227,36 @@ our %avatar_size = (
+ # Leave it undefined (or set to 'undef') to turn off load checking.
+ our $maxload = 300;
+ 
++# syntax highlighting
++our %highlight_type = (
++	# match by basename
++	'SConstruct' => 'py',
++	'Program' => 'py',
++	'Library' => 'py',
++	'Makefile' => 'make',
++	# match by extension
++	'\.py$' => 'py', # Python
++	'\.c$' => 'c',
++	'\.h$' => 'c',
++	'\.cpp$' => 'cpp',
++	'\.cxx$' => 'cpp',
++	'\.rb$' => 'ruby',
++	'\.java$' => 'java',
++	'\.css$' => 'css',
++	'\.php3?$' => 'php',
++	'\.sh$' => 'sh', # Bash / shell script
++	'\.pl$' => 'pl', # Perl
++	'\.js$' => 'js', # JavaScript
++	'\.tex$' => 'tex', # TeX and LaTeX
++	'\.bib$' => 'bib', # BibTeX
++	'\.x?html$' => 'xml',
++	'\.xml$' => 'xml',
++	'\.awk$' => 'awk',
++	'\.bat$' => 'bat', # DOS Batch script
++	'\.ini$' => 'ini',
++	'\.spec$' => 'spec', # RPM Spec
++);
++
+ # You define site-wide feature defaults here; override them with
+ # $GITWEB_CONFIG as necessary.
+ our %feature = (
+@@ -445,6 +475,19 @@ our %feature = (
+ 	'javascript-actions' => {
+ 		'override' => 0,
+ 		'default' => [0]},
++
++	# Syntax highlighting support. This is based on Daniel Svensson's
++	# and Sham Chukoury's work in gitweb-xmms2.git.
++	# It requires the 'highlight' program, and therefore is disabled
++	# by default.
++
++	# To enable system wide have in $GITWEB_CONFIG
++	# $feature{'highlight'}{'default'} = [1];
++
++	'highlight' => {
++		'sub' => sub { feature_bool('highlight', @_) },
++		'override' => 0,
++		'default' => [0]},
+ );
+ 
+ sub gitweb_get_feature {
+@@ -5340,6 +5383,7 @@ sub git_blob {
+ 	open my $fd, "-|", git_cmd(), "cat-file", "blob", $hash
+ 		or die_error(500, "Couldn't cat $file_name, $hash");
+ 	my $mimetype = blob_mimetype($fd, $file_name);
++	# use 'blob_plain' (aka 'raw') view for files that cannot be displayed
+ 	if ($mimetype !~ m!^(?:text/|image/(?:gif|png|jpeg)$)! && -B $fd) {
+ 		close $fd;
+ 		return git_blob_plain($mimetype);
+@@ -5347,6 +5391,25 @@ sub git_blob {
+ 	# we can have blame only for text/* mimetype
+ 	$have_blame &&= ($mimetype =~ m!^text/!);
+ 
++	my $have_highlight = gitweb_check_feature('highlight');
++	my $syntax;
++	if ($have_highlight && defined($file_name)) {
++		my $basename = basename($file_name, '.in');
++		foreach my $regexp (keys %highlight_type) {
++			if ($basename =~ /$regexp/) {
++				$syntax = $highlight_type{$regexp};
++				last;
++			}
++		}
++
++		if ($syntax) {
++			close $fd;
++			open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
++			          "highlight --xhtml --fragment -t 8 --syntax $syntax |"
++				or die_error(500, "Couldn't open file or run syntax highlighter");
++		}
++	}
++
+ 	git_header_html(undef, $expires);
+ 	my $formats_nav = '';
+ 	if (defined $hash_base && (my %co = parse_commit($hash_base))) {
+@@ -5398,7 +5461,7 @@ sub git_blob {
+ 			$line = untabify($line);
+ 			printf "<div class=\"pre\"><a id=\"l%i\" href=\"" . href(-replay => 1)
+ 				. "#l%i\" class=\"linenr\">%4i</a> %s</div>\n",
+-			       $nr, $nr, $nr, esc_html($line, -nbsp=>1);
++			       $nr, $nr, $nr, $syntax ? $line : esc_html($line, -nbsp=>1);
+ 		}
+ 	}
+ 	close $fd
+-- 
+1.6.6.1
