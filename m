@@ -1,69 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] merge-file: add option to specify the marker size
-Date: Sun, 28 Feb 2010 12:13:22 -0800
-Message-ID: <7viq9h3yql.fsf@alter.siamese.dyndns.org>
-References: <972adf380be481b5e8d031481586e9c34da2cbb7.1267385538.git.bert.wesarg@googlemail.com>
+From: Mark Lodato <lodatom@gmail.com>
+Subject: Re: [PATCH 4/5] grep: Colorize filename, line number, and separator
+Date: Sun, 28 Feb 2010 15:14:40 -0500
+Message-ID: <ca433831002281214q14e6e62bj54cf7227cd32873b@mail.gmail.com>
+References: <1267246670-19118-1-git-send-email-lodatom@gmail.com> 
+	<1267246670-19118-5-git-send-email-lodatom@gmail.com> <4B890572.5040604@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 28 21:13:37 2010
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sun Feb 28 21:15:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NlpWC-0002Wu-GF
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Feb 2010 21:13:36 +0100
+	id 1NlpXi-0003Gg-N6
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Feb 2010 21:15:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031979Ab0B1UNb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Feb 2010 15:13:31 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56894 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031966Ab0B1UNa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2010 15:13:30 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CA129D40F;
-	Sun, 28 Feb 2010 15:13:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jb9s+JI+oySn4jeadoe3QIaYK/Q=; b=E0hFjR
-	4P5lgbnHMl1NuR2iqgllIgLcgEwhMwZngKIc6B9RKy5i9XYXAAVL2SYT032C32Rl
-	wo4vwZYp+083SO8NN4Eu7tXWrBWjM12SwuwX8PUXkoKm9NuwmyVGJB1l2L2uwup7
-	Rsqtd2NAjrThYpWd0eEbHaMQ1ipNNt8EYWbi0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kL7NCwFyHvCz3fppHb0GzaZ2hU9nAtSO
-	c9NIXmgR04yAFEyehPFs5/D5D1Qsn0WrhNBgynfL3dLtJDtasi19+c0rYUvlYivq
-	GcTC1deGfuusa58NtZTHiUwlq9E9rEnN/ll1T3B6zw8qUlDtn4eR40Cr9sSAjlPo
-	Mw7cNXX8rRE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 795E19D40E;
-	Sun, 28 Feb 2010 15:13:26 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E53139D40D; Sun, 28 Feb
- 2010 15:13:23 -0500 (EST)
-In-Reply-To: <972adf380be481b5e8d031481586e9c34da2cbb7.1267385538.git.bert.wesarg@googlemail.com> (Bert Wesarg's message of "Sun\, 28 Feb 2010 20\:56\:19 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: BAAFB12A-24A5-11DF-ACD8-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1031991Ab0B1UPE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Feb 2010 15:15:04 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:37481 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031988Ab0B1UPB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Feb 2010 15:15:01 -0500
+Received: by gyh20 with SMTP id 20so840504gyh.19
+        for <git@vger.kernel.org>; Sun, 28 Feb 2010 12:15:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=IQjsztX3euZdFPxHCpvpeUt/tRnn2C+u3ERmZ7n/vXk=;
+        b=sCMp5WgkHLajF66JeKJHfzGUW9vZbOwNGILiwjmlIcDMaZjYDDkciDdgUzaIEAVxB9
+         P6M+uNpVoHs6SlABIW23+TdVwkAZc0Pi6GYH8Uu/GozC/Unen8B3hLL4LW3r5HRactFV
+         d4NZyWwf/zDZ8gbpYBVvNhDR/d+yDp7v12oKo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=plAUgnba7evybqYh/FXaEqnlJd4BNCNog8Kx2TbYFipckf3kKeuXpsbH5iOsijrW+/
+         HZ4I7OWyJfLuDdKJT7264uexG/A9JpDeBNdvRMb9NafVizzpOcfDh5XIhJNp8d6E4pi5
+         gG1yMN1ZjxSQxhTbJT5Yro8K8x8aj8123FRV0=
+Received: by 10.91.55.39 with SMTP id h39mr2793561agk.77.1267388100142; Sun, 
+	28 Feb 2010 12:15:00 -0800 (PST)
+In-Reply-To: <4B890572.5040604@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141266>
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
-
-> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+On Sat, Feb 27, 2010 at 6:43 AM, Ren=C3=A9 Scharfe
+<rene.scharfe@lsrfire.ath.cx> wrote:
+> Am 27.02.2010 05:57, schrieb Mark Lodato:
+>> 1. With --name-only, GNU grep colors the filenames, but we do not. =C2=
+=A0I do
+>> =C2=A0 =C2=A0not see any point to making everything the same color.
 >
-> ---
->
-> This can probably improved in a way, that the marker size will be taken
-> from attributes. This could be done by an explicit --marker-size-by-path
-> option or an option which names one of the three input files as a git
-> path.
+> I guess they did it for consistency, so when you see "magenta" you th=
+ink
+> "filename", and because it can be turned off with a switch. =C2=A0Wit=
+h your
+> patch all filenames are coloured the same, too, by the way: using the
+> default foreground colour. :)
 
-You don't want any option that is specifically about "marker size".  An
-option to specify the path to take attributes for would be the right way
-to go.  You might want to see "hash-object --path" for an inspiration.
+Yes, I think I understand the reasoning, but to me it is very
+annoying.  However, if there is a consensus that we should follow GNU
+grep in this regard, I will do it.
+
+>> diff --git a/builtin-grep.c b/builtin-grep.c
+>> + =C2=A0 =C2=A0 if (!value)
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return config_error_nonb=
+ool(var);
+>
+> color.grep without a value used to turn on colourization, now it seem=
+s
+> to error out.
+
+Oops, that should be "if (color && !value)".  I will fix in next respin=
+=2E
+
+>> + =C2=A0 =C2=A0 color_parse(value, var, color);
+>> + =C2=A0 =C2=A0 if (!strcmp(color, GIT_COLOR_RESET))
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 color[0] =3D '\0';
+>
+> This turns off colouring if the user specified "reset" as the colour,
+> right?
+
+Yes.
+
+> Interesting optimization, but is it really needed? Perhaps it's
+> just me, but I'd give the user the requested "<reset>text<reset>"
+> sequence if she asked for it, even if it's longer than and looks the
+> same as "text" alone.
+
+The problem is that there's no way to say "no color".  A blank value
+and "reset" both come to the same thing.  I would rather have as
+little markup as possible in the output, and this tweak is very
+simple.  While this is not strictly necessary, it does make the output
+identical to the pre-patch output if you disable all the new colors
+(just grep.color.separator, by default.)
+
+>> + =C2=A0 =C2=A0 }
+>> + =C2=A0 =C2=A0 else
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0} else
+
+Oops, thanks.
+
+>> + =C2=A0 =C2=A0 if (opt->null_following_name) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sign =3D '\0';
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 opt->output(opt, &sign, =
+1);
+>> + =C2=A0 =C2=A0 } else
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (opt->null_following_name)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0opt->output(op=
+t, "", 1);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0else
+
+Personally, I find your suggestion less readable.  My version is only
+one line longer but makes the code completely obvious, whereas the
+one-liner requires a second of thought.  Anyone else care to comment
+on this?
