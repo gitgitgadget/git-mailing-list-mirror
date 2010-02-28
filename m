@@ -1,66 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] make union merge an xdl merge favor
-Date: Sun, 28 Feb 2010 12:15:42 -0800
-Message-ID: <7vwrxx2k29.fsf@alter.siamese.dyndns.org>
-References: <972adf380be481b5e8d031481586e9c34da2cbb7.1267385538.git.bert.wesarg@googlemail.com> <17999fdb3ff374156acb7fc670426265fa27b94b.1267385538.git.bert.wesarg@googlemail.com>
+From: Mark Lodato <lodatom@gmail.com>
+Subject: Re: [PATCH 4/5] grep: Colorize filename, line number, and separator
+Date: Sun, 28 Feb 2010 15:15:40 -0500
+Message-ID: <ca433831002281215i66af2401n221813466f2ffa85@mail.gmail.com>
+References: <1267246670-19118-1-git-send-email-lodatom@gmail.com> 
+	<1267246670-19118-5-git-send-email-lodatom@gmail.com> <4B89079C.8030206@lsrfire.ath.cx> 
+	<7vy6ie1u9a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
 	git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 28 21:16:01 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 28 21:16:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NlpYT-0003cz-JT
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Feb 2010 21:15:57 +0100
+	id 1NlpYg-0003jD-7d
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Feb 2010 21:16:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1032000Ab0B1UPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Feb 2010 15:15:53 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59071 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031966Ab0B1UPw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2010 15:15:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 111A29D448;
-	Sun, 28 Feb 2010 15:15:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gnCn1qWF/3IZCWnHP/gMIPOPz9U=; b=BXMvUM
-	goMuu0GcZDlIYth1Enj/ua20VR5O8WYdBjoIU/RlOk53U8ncULCF3hsfEtdpLZ1i
-	v5fkmmX8ktvG7H9Y49PQMA6sEjPksCAZkLDygCXl3PZGwMlykt1z6GG6HIWJRK+Y
-	XCCRsq91rp5oTlzYGrnGWl/vJWnogNxSqu658=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wZb9eVMFTXJs2RpU2UsXfqMYDIjsHb9I
-	h/fZ4x4nvQYbioGtycGC5GalCBqoQhS2QuuNw1cYsBK4F3i28Ka4ss9fqwJLPw3g
-	dE0YvI+DC7vTbuhsp3GZcakpZbkpDRKIYPx0tV++1DhCRJ9XoZS18zUIZXsQkFtu
-	UIcZA1Z6ZSw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CD8D49D444;
-	Sun, 28 Feb 2010 15:15:48 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1E11B9D443; Sun, 28 Feb
- 2010 15:15:43 -0500 (EST)
-In-Reply-To: <17999fdb3ff374156acb7fc670426265fa27b94b.1267385538.git.bert.wesarg@googlemail.com> (Bert Wesarg's message of "Sun\, 28 Feb 2010 20\:56\:20 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0F873D4E-24A6-11DF-B415-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1032010Ab0B1UQE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Feb 2010 15:16:04 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:42621 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031966Ab0B1UQB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Feb 2010 15:16:01 -0500
+Received: by gwb19 with SMTP id 19so720930gwb.19
+        for <git@vger.kernel.org>; Sun, 28 Feb 2010 12:16:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=sndFHq1rJl4qJ/MTCDfWVOx7Xo0x+VEIjDNlIJDXwTw=;
+        b=SZs+t2eIO3BiKTLv2ypt5yEM2cxV1iMROJdsQQ6I5+4gMdwd5SJZXlbdTi0o3YQ1bS
+         RqW9dd7JRiaqEl5Q3W1LO/vMPFYoyhyue/Kw7YdMmz2jgjN09Vuas2sH9wFWE5iZGrYq
+         HRKYG6gP/W5XsZ8kieXpUNEt3xTYpzu4I1VuY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=cLfH7S/s0LkdjUvZEnbE56FfXplYsk47t++kubnAuvu2zS0hbTo3pSNkM4PqmtEkTg
+         Y2bcfHeMrvF8UBV0L2zTxiLbrbz92mGKwpEZkt+SHAjPURmgNMRnxpU8Lxzq1yZ/zE/D
+         az73+RVdKBSas7WAuLtX7oO0FWjNY8elKY4mw=
+Received: by 10.90.40.17 with SMTP id n17mr2816494agn.3.1267388160126; Sun, 28 
+	Feb 2010 12:16:00 -0800 (PST)
+In-Reply-To: <7vy6ie1u9a.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141268>
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
+On Sat, Feb 27, 2010 at 12:08 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>
+>>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0opt->output(opt, bol + match.rm_so,
+>>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(int)(match.rm_eo - match.=
+rm_so));
+>>
+>> The third parameter of output_color() (and of ->output(), so you did=
+n't
+>> introduce this, of course) is a size_t, so why cast to int? =C2=A0Is=
+ a cast
+>> needed at all?
+>
+> I don't think so.
+>
+> Earlier in 747a322 (grep: cast printf %.*s "precision" argument expli=
+citly
+> to int, 2009-03-08), I casted the difference between two regoff_t you=
+ were
+> feeding to printf's "%.*s" as a length, introduced by 7e8f59d (grep: =
+color
+> patterns in output, 2009-03-07), and 5b594f4 (Threaded grep, 2010-01-=
+25)
+> carried that cast over without thinking.
 
-> The current union merge driver is implemented as an post process.  But the
-> xdl_merge code is quite capable to produce the result by itself.  Therefore
-> move to it there and teach git-merge-file a new --union option.
-
-I like the idea of patch 2 and 3 but they are independent of what we do
-(or don't do) to merge-file.  Could you flip the order of the patches so
-that 2 and 3 can go first?
+Ok.  I'll remove the cast.  Should I note this in the commit message?
