@@ -1,82 +1,161 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/5] grep: Colorize filename, line number, and separator
-Date: Sun, 28 Feb 2010 11:29:44 -0800
-Message-ID: <7vd3zp88gn.fsf@alter.siamese.dyndns.org>
-References: <1267246670-19118-1-git-send-email-lodatom@gmail.com>
- <1267246670-19118-5-git-send-email-lodatom@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 28 20:29:59 2010
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [PATCH 1/3] merge-file: add option to specify the marker size
+Date: Sun, 28 Feb 2010 20:56:19 +0100
+Message-ID: <972adf380be481b5e8d031481586e9c34da2cbb7.1267385538.git.bert.wesarg@googlemail.com>
+Cc: Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 28 20:56:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nlopy-000113-TN
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Feb 2010 20:29:59 +0100
+	id 1NlpFj-0003G6-HH
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Feb 2010 20:56:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936555Ab0B1T3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Feb 2010 14:29:53 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61682 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936578Ab0B1T3w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2010 14:29:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BFFB9EF5B;
-	Sun, 28 Feb 2010 14:29:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=VFvwZNMJyLZusD23xVYL++2KLFk=; b=hHKWwLRKJzqa3KrYcLOKMxr
-	QZ5apcJyCTYZ0iKXkK+MAghHyo1ct8ntgRG8tOMd9lLSxVsg9gz1j4gL+vW0bX1d
-	kiUO/Kdl0+sSHg5pkjz1vPbaptK1HWjyRD+ClGLS8tiz7n6E8L2GdSffxfdtKbI6
-	p/mhQtAtxQlrOS6S8tIk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=KaI9VZwRraC3UghfldwQ6gDgJ8VirwlzadhfA0Yvua9IaTbpn
-	n+1oga1cOs/Cwa7MVRW4quaJDyi46oMrPVOlL6uW7WtSwS1ZOUq4f+Hd9rvsdiiI
-	FyKdruvWRe+gw9IA8cY+9j34bisAiVVMt7Za29RC83Lju4ntWoYgyK4/QU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 26FE79EF59;
-	Sun, 28 Feb 2010 14:29:49 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9198C9EF58; Sun, 28 Feb
- 2010 14:29:46 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A2A1590E-249F-11DF-ABF8-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1031940Ab0B1T4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Feb 2010 14:56:30 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:50896 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031932Ab0B1T43 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Feb 2010 14:56:29 -0500
+Received: by fg-out-1718.google.com with SMTP id d23so664722fga.1
+        for <git@vger.kernel.org>; Sun, 28 Feb 2010 11:56:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=bdY+xMndqzbpkY6+EeB/K2ysxRZjy4ACd5QMuQLtpmU=;
+        b=UVVosY4mvMV15Dn+dbjwvJ5zPo+3erCHXftLc5p+u2DOLXna3r9Bf4GJ3y0f2hi8eG
+         y2wFTWc2kqEjvQedSYW5/hVN5Zj08PrEhjIZ1b0uwk6cqKqvQb3Lz8oXRRXTyWLJJa4x
+         wJv8Jxd0AIz0Z3L1tgedNvHeVV/Fzj641H/O4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=MPuq5VzbsNvsSwQImMTolrf/7wnlC3sB/ZaQjU+vlB3EhqBz0H0tzbzftJRxAw/7m+
+         favkf6N2aMngEBreEtJ5ucu/Ah0xoklerX7OUI3I59+Bx6Axka7hK2XPNMetRXRHxRHb
+         JboZN//0SW3CPvRdHrK5SURpvhSZMxchD1D+A=
+Received: by 10.103.126.40 with SMTP id d40mr2810287mun.23.1267386983648;
+        Sun, 28 Feb 2010 11:56:23 -0800 (PST)
+Received: from localhost (p5B0F7A0D.dip.t-dialin.net [91.15.122.13])
+        by mx.google.com with ESMTPS id 7sm13830655mup.3.2010.02.28.11.56.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 28 Feb 2010 11:56:22 -0800 (PST)
+X-Mailer: git-send-email 1.7.0.584.g2da2b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141262>
 
-Mark Lodato <lodatom@gmail.com> writes:
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 
-> +color.grep.<slot>::
-> +	Use customized color for grep colorization.  `<slot>` specifies which
-> +	part of the line to use the specified color, and is one of
-> ++
-> +--
-> +`filename`:::
-> +	filename prefix (when not using `-h`)
-> +`linenumber`:::
+---
 
-Why do I get a feeling that I already said something about three colons?
+This can probably improved in a way, that the marker size will be taken
+from attributes. This could be done by an explicit --marker-size-by-path
+option or an option which names one of the three input files as a git
+path.
 
- ... goes and looks ...
+For example:
 
-Ah, it wasn't to you.  Please see:
+ $ echo "foo conflict-marker-size=32" > .gitattributes
+ $ git merge-file --marker-size-by-path=foo fileA fileB fileC
 
-  http://thread.gmane.org/gmane.comp.version-control.git/139014/focus=139343
+=> marker size would be 32
 
-BUT.
+Or:
 
-I tried the three-colons notation with AsciiDoc 8.2.7 and it seems to take
-it as enumeration items that are nested a level deeper, so this might be
-safe.
+ $ echo "fileC conflict-marker-size=32" > .gitattributes
+ $ git merge-file --marker-size-by-source=theirs fileA fileB fileC
 
-But the last sentence about color.branch.<slot> is indented as if it is a
-part of description for "separator" slot, which you may want to fix
-regardless.
+=> marker size would be 32
+
+ Documentation/git-merge-file.txt |    5 +++--
+ builtin-merge-file.c             |    1 +
+ t/t6023-merge-file.sh            |   37 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 41 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-merge-file.txt b/Documentation/git-merge-file.txt
+index 234269a..a5b9c1f 100644
+--- a/Documentation/git-merge-file.txt
++++ b/Documentation/git-merge-file.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git merge-file' [-L <current-name> [-L <base-name> [-L <other-name>]]]
+-	[--ours|--theirs] [-p|--stdout] [-q|--quiet]
++	[--ours|--theirs] [-p|--stdout] [-q|--quiet] [--marker-size=<n>]
+ 	<current-file> <base-file> <other-file>
+ 
+ 
+@@ -37,7 +37,8 @@ normally outputs a warning and brackets the conflict with lines containing
+ If there are conflicts, the user should edit the result and delete one of
+ the alternatives.  When `--ours` or `--theirs` option is in effect, however,
+ these conflicts are resolved favouring lines from `<current-file>` or
+-lines from `<other-file>` respectively.
++lines from `<other-file>` respectively.  The length of the conflict markers
++can be given with the `--marker-size` option.
+ 
+ The exit value of this program is negative on error, and the number of
+ conflicts otherwise. If the merge was clean, the exit value is 0.
+diff --git a/builtin-merge-file.c b/builtin-merge-file.c
+index 1e70073..57d757c 100644
+--- a/builtin-merge-file.c
++++ b/builtin-merge-file.c
+@@ -39,6 +39,7 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+ 			    XDL_MERGE_FAVOR_OURS),
+ 		OPT_SET_INT(0, "theirs", &favor, "for conflicts, use their version",
+ 			    XDL_MERGE_FAVOR_THEIRS),
++		OPT_INTEGER(0, "marker-size", &xmp.marker_size, "for conflicts, use this marker size"),
+ 		OPT__QUIET(&quiet),
+ 		OPT_CALLBACK('L', NULL, names, "name",
+ 			     "set labels for file1/orig_file/file2", &label_cb),
+diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
+index d605024..5034dd1 100755
+--- a/t/t6023-merge-file.sh
++++ b/t/t6023-merge-file.sh
+@@ -215,4 +215,41 @@ test_expect_success '"diff3 -m" style output (2)' '
+ 	test_cmp expect actual
+ '
+ 
++cat >expect <<\EOF
++Dominus regit me,
++<<<<<<<<<< new8.txt
++et nihil mihi deerit;
++
++
++
++
++In loco pascuae ibi me collocavit;
++super aquam refectionis educavit me.
++||||||||||
++et nihil mihi deerit.
++In loco pascuae ibi me collocavit,
++super aquam refectionis educavit me;
++==========
++et nihil mihi deerit,
++
++
++
++
++In loco pascuae ibi me collocavit --
++super aquam refectionis educavit me,
++>>>>>>>>>> new9.txt
++animam meam convertit,
++deduxit me super semitas jusitiae,
++propter nomen suum.
++Nam et si ambulavero in medio umbrae mortis,
++non timebo mala, quoniam TU mecum es:
++virga tua et baculus tuus ipsa me consolata sunt.
++EOF
++
++test_expect_success 'marker size' '
++	test_must_fail git merge-file -p --marker-size=10 \
++		new8.txt new5.txt new9.txt >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+1.7.0.584.g2da2b
