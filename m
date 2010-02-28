@@ -1,105 +1,119 @@
-From: Thomas Schwinge <thomas@schwinge.name>
-Subject: [PATCH] tg-delete: Handle the case where the branch has been removed already, but the base is still left.
-Date: Sun, 28 Feb 2010 12:39:34 +0100
-Message-ID: <1267357174-21417-1-git-send-email-thomas@schwinge.name>
-Cc: git@vger.kernel.org, Thomas Schwinge <thomas@schwinge.name>
-To: u.kleine-koenig@pengutronix.de
-X-From: git-owner@vger.kernel.org Sun Feb 28 12:40:56 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb: Simple file based output caching TODO
+Date: Sun, 28 Feb 2010 12:51:23 +0100
+Message-ID: <201002281251.26520.jnareb@gmail.com>
+References: <1266349005-15393-1-git-send-email-jnareb@gmail.com> <201002280354.51366.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	John 'Warthog9' Hawley <warthog9@kernel.org>,
+	Petr Baudis <pasky@suse.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 28 12:51:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NlhW1-0002Mz-5l
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Feb 2010 12:40:53 +0100
+	id 1NlhgY-0006Gx-CE
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Feb 2010 12:51:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751504Ab0B1Lkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Feb 2010 06:40:47 -0500
-Received: from smtprelay03.ispgateway.de ([80.67.31.26]:48123 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751145Ab0B1Lkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2010 06:40:46 -0500
-Received: from [79.210.50.103] (helo=stokes.schwinge.homeip.net)
-	by smtprelay03.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <thomas@dirichlet.schwinge.homeip.net>)
-	id 1NlhVr-0007Gj-7s
-	for git@vger.kernel.org; Sun, 28 Feb 2010 12:40:43 +0100
-Received: (qmail 32225 invoked from network); 28 Feb 2010 11:40:36 -0000
-Received: from dslb-084-057-207-194.pools.arcor-ip.net (84.57.207.194)
-  by stokes.schwinge.homeip.net with QMQP; 28 Feb 2010 11:40:36 -0000
-Received: (nullmailer pid 21440 invoked by uid 1000);
-	Sun, 28 Feb 2010 11:39:34 -0000
-X-Mailer: git-send-email 1.6.0.4
-X-Df-Sender: thomas@schwinge.name
+	id S965319Ab0B1Lvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Feb 2010 06:51:38 -0500
+Received: from fg-out-1718.google.com ([72.14.220.157]:61563 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751591Ab0B1Lvh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Feb 2010 06:51:37 -0500
+Received: by fg-out-1718.google.com with SMTP id d23so563435fga.1
+        for <git@vger.kernel.org>; Sun, 28 Feb 2010 03:51:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=sLBBWAJJkzd+KTekZwQrvnLATzI6ggBlBeiO7MMbNdM=;
+        b=GyAwJ7sbZoTlL1ItJ+jeSlgcV8cwxPVpwBMXT5PFEgZlfldg7C+/68ZceF3oDbCkLz
+         /vWTVJLjRbuvajjhfjwdUN0/KOBEVO9WhgfdVxIjmeRrCkLTtt+JvUP89wb9zduG/TRm
+         Q8yTvCxpIxH32Pgg8w3vsSKjYIm25uaqn2mls=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=AAtR6m2dAkF35RvzA13l/6G5DcZuTTMfUYqAa3Oi79jQTdNCU+ZRaQiQMdm15ssn13
+         1SqRJJJSLDzWm5g74SgMzgjVg9PeSI9CStqjgrev93Ku+b3YSVdHQAXj1vvknhnWbOmp
+         HOB1LQNSrIXx3gd2vpBPi4joLyKUXzu/2hGNw=
+Received: by 10.87.47.3 with SMTP id z3mr4986946fgj.70.1267357895741;
+        Sun, 28 Feb 2010 03:51:35 -0800 (PST)
+Received: from ?192.168.1.13? (abwn28.neoplus.adsl.tpnet.pl [83.8.237.28])
+        by mx.google.com with ESMTPS id e20sm7330442fga.10.2010.02.28.03.51.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 28 Feb 2010 03:51:34 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201002280354.51366.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141248>
 
-A user might have used 'git branch -D B' to remove the branch B, and then
-certain TopGit commands complain, because the base of branch B is still there.
----
- README       |    4 ++++
- tg-delete.sh |   15 ++++++++-------
- 2 files changed, 12 insertions(+), 7 deletions(-)
+> Here is the list of things that needs to be addressed in the future 
+> next (v4) version of this series, hopefully finally not an RFC.
+> 
+> * The caching engine (GitwebCache::SimpleFileCache) starts with default
+>   expire time of "never" (-1), while later it uses gitweb defaults when
+>   adaptive caching lifetime is added (20 / 1200 seconds).  This (slight)
+>   inconsistency should be fixed, either by using default of "never", or
+>   by using gitweb defaults for caching engine defaults in both patches:
+>     gitweb/cache.pm - Stat-based cache expiration
+>     gitweb/cache.pm - Adaptive cache expiration time
+> 
+>   Note that caching engine defaults are *independent* of gitweb's 
+>   defaults in %cache_options.
+> 
+> * Describe (better than it is now) in comments or in commit message
+>   why Temp::File is used for 'atomic write' _without_ locking (even
+>   when there might be more than one process (re)generating the same
+>   cache entry simultaneously).
+> 
+> * [improvement].  When using locking after
+>     gitweb/cache.pm - Use locking to avoid 'cache miss stampede' problem
+>   it is ensured that only one process would (re)generate cache entry.
+>   Therefore Temp::File is not needed for temporary file; the temporary
+>   file can have constant name.  This should improve performance a bit.
+> 
+>   But this might be unnecessary complication.
+> 
+> * Show information about when page was generated in the footer always
+>   when caching is enabled; currently it is shown only if caching *and*
+>   'timed' feature is enabled 
+>     gitweb: Use Cache::Cache compatibile (get, set) output caching
+> 
+> * Actually check that using alternate caching engine works.  It can be
+>   done (what is described in gitweb/README) by setting $cache to either
+>   cache engine class (package) name, or to cache object (instantiated
+>   cache).
+> 
+> * [cleanup] Remove commented out alternate solutions (commented out
+>   code).
+> 
+> * Benchmark overhead of caching, and performance of caching, perhaps for
+>   different caching engines including original patch by J.H.
 
-diff --git a/README b/README
-index 495c70b..fc74ff8 100644
---- a/README
-+++ b/README
-@@ -244,6 +244,10 @@ tg delete
- 	only empty branch (base == head); use '-f' to remove
- 	non-empty branch.
- 
-+	The '-f' option is also useful to force removal of a branch's base, if
-+	you used 'git branch -D B' to remove the branch B, and then certain
-+	TopGit commands complain, because the base of branch B is still there.
-+
- 	Currently, this command will _NOT_ remove the branch from
- 	the dependency list in other branches. You need to take
- 	care of this _manually_. This is even more complicated
-diff --git a/tg-delete.sh b/tg-delete.sh
-index ab121c2..e1eea17 100644
---- a/tg-delete.sh
-+++ b/tg-delete.sh
-@@ -3,7 +3,7 @@
- # (c) Petr Baudis <pasky@suse.cz>  2008
- # GPLv2
- 
--force= # Whether to delete non-empty branch
-+force= # Whether to delete non-empty branch, or branch where only the base is left.
- name=
- 
- 
-@@ -28,21 +28,22 @@ done
- 
- [ -n "$name" ] || die "no branch name specified"
- branchrev="$(git rev-parse --verify "$name" 2>/dev/null)" ||
--	die "invalid branch name: $name"
-+	if [ -n "$force" ]; then
-+		info "invalid branch name: $name; assuming it has been deleted already"
-+	else
-+		die "invalid branch name: $name"
-+	fi
- baserev="$(git rev-parse --verify "refs/top-bases/$name" 2>/dev/null)" ||
- 	die "not a TopGit topic branch: $name"
- ! git symbolic-ref HEAD >/dev/null || [ "$(git symbolic-ref HEAD)" != "refs/heads/$name" ] ||
- 	die "cannot delete your current branch"
- 
--nonempty=
--branch_empty "$name" || nonempty=1
--
--[ -z "$nonempty" ] || [ -n "$force" ] || die "branch is non-empty: $name"
-+[ -z "$force" ] && { branch_empty "$name" || die "branch is non-empty: $name"; }
- 
- 
- ## Wipe out
- 
- git update-ref -d "refs/top-bases/$name" "$baserev"
--git update-ref -d "refs/heads/$name" "$branchrev"
-+[ -z "$branchrev" ] || git update-ref -d "refs/heads/$name" "$branchrev"
- 
- # vim:noet
+* Turn off 'blame_incremental' view (and links to it) when caching is
+  enabled.  It doesn't make sense without support for "tee"-ing output
+  in caching engine (or to be more exact in the output capturing
+  engine), i.e. without printing output while capturing it.  
+
+  Also currently it doesn't work anyway, for some reason.
+
+* Check why git_generating_data_html, i.e. the "Generating..." 
+  subroutine doesn't add '.' as activity indicator and fix it.
+  Test if the trick employed by it works in other browsers.
+
 -- 
-1.6.0.4
+Jakub Narebski
+Poland
