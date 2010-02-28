@@ -1,56 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 0/4] Using git-mailsplit in mixed line ending
- environment
-Date: Sun, 28 Feb 2010 13:18:07 -0800
-Message-ID: <7vvddhukj4.fsf@alter.siamese.dyndns.org>
-References: <1266080362-24760-1-git-send-email-stefan.hahn@s-hahn.de>
- <1267280428-18223-1-git-send-email-stefan.hahn@s-hahn.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
-X-From: git-owner@vger.kernel.org Sun Feb 28 22:18:23 2010
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] bisect: error out when passing bad path parameters
+Date: Sun, 28 Feb 2010 23:19:09 +0100
+Message-ID: <20100228221910.2217.70167.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Mark Lodato <lodatom@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 28 23:20:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NlqWt-0002IL-58
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Feb 2010 22:18:23 +0100
+	id 1NlrUX-0004qI-0Z
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Feb 2010 23:20:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1032082Ab0B1VSP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Feb 2010 16:18:15 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41196 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1032041Ab0B1VSO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2010 16:18:14 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BF3F09DBF5;
-	Sun, 28 Feb 2010 16:18:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=d8SN2ftBLo8S+nEqUgWPPSiFfoY=; b=lAppGqU6uIMtfV5B/gJ87G1
-	ZurOEqxhRh4C3Yh+yP3SmoyG4AgQSf1oJMtMKZ2t2rQH5XtWnqBak9CMMNbOcsVs
-	dhc46NbPi2UjG3uNI9AdSuuSCatldMfk3U91jqKOWbSxTqcKgHZsWJDXd/Gysh4o
-	3aZ9qxhh/Cj38IEKfpUk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=eRlBx+CSokorH+7EnsoOIcfIpRuErlMlGkN4/hfa5kwrgsi2G
-	kT6ehq7mW8tOJzSrxAyOw+QiGoz0JIzAjWYGLANO+GEpLu8z04E2R1YhRLIQqIfS
-	w1Bg2144opMiFWOTVBJkCItSPC6CXK9RjfsELakak8ife2ZYCnxszs1K9o=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D34D9DBF4;
-	Sun, 28 Feb 2010 16:18:11 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 160779DBF3; Sun, 28 Feb
- 2010 16:18:08 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C66A0F02-24AE-11DF-83E6-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1032115Ab0B1WTz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Feb 2010 17:19:55 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:47054 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1032112Ab0B1WTy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Feb 2010 17:19:54 -0500
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id DC032818073;
+	Sun, 28 Feb 2010 23:19:47 +0100 (CET)
+Received: from style.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id BEDEB8180E2;
+	Sun, 28 Feb 2010 23:19:44 +0100 (CET)
+X-git-sha1: 192eb18ddbe114777b052805173d33cadbbdc9aa 
+X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141276>
 
-Thanks, will queue.
+As reported by Mark Lodato, "git bisect", when it was started with
+path parameters that match no commit was kind of working without
+taking account of path parameters and was reporting something like:
+
+Bisecting: -1 revisions left to test after this (roughly 0 steps)
+
+It is more correct and safer to just error out in this case, before
+displaying the revisions left, so this patch does just that.
+
+Note that this bug is very old, it exists at least since v1.5.5.
+And it is possible to detect that case earlier in the bisect
+algorithm, but it is not clear that it would be an improvement to
+error out earlier, on the contrary it may change the behavior of
+"git rev-list --bisect-all" for example, which is currently correct.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ bisect.c                    |    6 ++++++
+ t/t6030-bisect-porcelain.sh |    5 +++++
+ 2 files changed, 11 insertions(+), 0 deletions(-)
+
+diff --git a/bisect.c b/bisect.c
+index 6dc27ee..b556b11 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -986,6 +986,12 @@ int bisect_next_all(const char *prefix)
+ 		exit(1);
+ 	}
+ 
++	if (!all) {
++		fprintf(stderr, "No testable commit found.\n"
++			"Maybe you started with bad path parameters?\n");
++		exit(4);
++	}
++
+ 	bisect_rev = revs.commits->item->object.sha1;
+ 	memcpy(bisect_rev_hex, sha1_to_hex(bisect_rev), 41);
+ 
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index c51865f..3b042aa 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -567,6 +567,11 @@ test_expect_success 'skipping away from skipped commit' '
+ 	test "$para3" = "$PARA_HASH3"
+ '
+ 
++test_expect_success 'erroring out when using bad path parameters' '
++	test_must_fail git bisect start $PARA_HASH7 $HASH1 -- foobar 2> error.txt &&
++	grep "bad path parameters" error.txt
++'
++
+ #
+ #
+ test_done
+-- 
+1.7.0.321.g2d270
