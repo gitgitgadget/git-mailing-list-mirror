@@ -1,168 +1,161 @@
 From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH 1/4] make union merge an xdl merge favor
-Date: Mon,  1 Mar 2010 22:46:25 +0100
-Message-ID: <b34a72b5be427e4ccbdd01d7b8f53683dfd80175.1267479461.git.bert.wesarg@googlemail.com>
+Subject: [RFC/PATCH 3/4] merge-file: add option to specify the marker size
+Date: Mon,  1 Mar 2010 22:46:27 +0100
+Message-ID: <0e7f1f44fa4a9150eb788740b70e4ad05ce2ca3b.1267479461.git.bert.wesarg@googlemail.com>
+References: <b34a72b5be427e4ccbdd01d7b8f53683dfd80175.1267479461.git.bert.wesarg@googlemail.com>
 Cc: git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 01 22:46:41 2010
+X-From: git-owner@vger.kernel.org Mon Mar 01 22:46:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NmDRo-0000bo-3w
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 22:46:40 +0100
+	id 1NmDS2-0000k2-RG
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 22:46:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752485Ab0CAVqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Mar 2010 16:46:35 -0500
-Received: from mail-bw0-f212.google.com ([209.85.218.212]:46151 "EHLO
+	id S1752649Ab0CAVqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Mar 2010 16:46:42 -0500
+Received: from mail-bw0-f212.google.com ([209.85.218.212]:43579 "EHLO
 	mail-bw0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751615Ab0CAVqe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Mar 2010 16:46:34 -0500
-Received: by bwz4 with SMTP id 4so2233909bwz.28
-        for <git@vger.kernel.org>; Mon, 01 Mar 2010 13:46:33 -0800 (PST)
+	with ESMTP id S1752521Ab0CAVqj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Mar 2010 16:46:39 -0500
+Received: by bwz4 with SMTP id 4so2234000bwz.28
+        for <git@vger.kernel.org>; Mon, 01 Mar 2010 13:46:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=oAll/krtmBJtJCwXaKoEi6eaCH+Uxop20j6084ZBs54=;
-        b=AWjhjTJsldwBB5I9FrBzM1LsEAaW4ZMJ5O0cFabk5hDAOGkJpm1BgrsDZnUlU/M6Em
-         GZCEhtOgztP0mlabecwBM4/LzJS5EjttTR9EcGnJWkI92C7FLUEAKGgt7UbuOnosEeH5
-         OY8nVvfwEvrzWIcwMQ/dMzv3Uwg4a/ewJ1Jl4=
+         :message-id:x-mailer:in-reply-to:references:in-reply-to:references;
+        bh=r1cz61RbySREZfvevC1XeQpHb/ctwTqCEQVFxAnJzXE=;
+        b=PEYKjKv5bxq8gBE54k9htYHAg2N8oWMDa9PAt5NlovttXZB6qSWP7LlB5H5X+0Qz6P
+         VOyA+pzJ5wH4ckgu//vw6GT8qTQlO7RE30B0EHYbRqBX+08cmCFB66pm/SXgcE1ERNCU
+         Nl4c2wO1TgT9+FqhchAWL6hLNtr1xaR5f965U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=ltX2kYJjNnoVy8JWuLIVzU6am1KYHpwQec9YmQvpgCYJ7d4eioNTEzFqcSDYaIUuAw
-         BN3ORdmVvJng2qT52xFWv8P1/xG5lsnSAO7w+ciw120BBrQ3OwkwmIXqf92tXq/1py0Q
-         dPy3GvkiXkKQz0NTyg2K9v9nuskJbzwrYtczc=
-Received: by 10.204.29.10 with SMTP id o10mr3538271bkc.82.1267479991491;
-        Mon, 01 Mar 2010 13:46:31 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Z2h7TL7IDVKUASrwee1kjG22GLqG2AaUPAELm+lncjM9c0V5UCwC4Gwk/vzUmeNSNy
+         vddlNQSnIQYyPLiUAAYBz8toknQ4hyp3GyMJOdeq9oIp2QhpjriaPizhj3XAcKNmRA5y
+         CV0RjgKn6tB9xGYHdOBE/V2+0JSfQFYDiMI6Y=
+Received: by 10.204.3.216 with SMTP id 24mr3608199bko.30.1267479997766;
+        Mon, 01 Mar 2010 13:46:37 -0800 (PST)
 Received: from localhost (drsd-4dbd936b.pool.mediaWays.net [77.189.147.107])
-        by mx.google.com with ESMTPS id s17sm927393bkd.12.2010.03.01.13.46.30
+        by mx.google.com with ESMTPS id p13sm927754bkp.9.2010.03.01.13.46.36
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 01 Mar 2010 13:46:31 -0800 (PST)
+        Mon, 01 Mar 2010 13:46:37 -0800 (PST)
 X-Mailer: git-send-email 1.7.0.584.g2da2b
+In-Reply-To: <b34a72b5be427e4ccbdd01d7b8f53683dfd80175.1267479461.git.bert.wesarg@googlemail.com>
+In-Reply-To: <b34a72b5be427e4ccbdd01d7b8f53683dfd80175.1267479461.git.bert.wesarg@googlemail.com>
+References: <b34a72b5be427e4ccbdd01d7b8f53683dfd80175.1267479461.git.bert.wesarg@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141357>
 
-The current union merge driver is implemented as an post process.  But the
-xdl_merge code is quite capable to produce the result by itself.  Therefore
-move it there.
+This adds the abbility to specify the conflict marker size for merges outside
+a git repository.
 
 Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 ---
- ll-merge.c     |   43 +++++--------------------------------------
- xdiff/xdiff.h  |    1 +
- xdiff/xmerge.c |   20 +++++++++++++-------
- 3 files changed, 19 insertions(+), 45 deletions(-)
 
-diff --git a/ll-merge.c b/ll-merge.c
-index 4c7f11b..a4b2f4c 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -98,44 +98,11 @@ static int ll_union_merge(const struct ll_merge_driver *drv_unused,
- 			  mmfile_t *src2, const char *name2,
- 			  int flag, int marker_size)
- {
--	char *src, *dst;
--	long size;
--	int status, saved_style;
--
--	/* We have to force the RCS "merge" style */
--	saved_style = git_xmerge_style;
--	git_xmerge_style = 0;
--	status = ll_xdl_merge(drv_unused, result, path_unused,
--			      orig, src1, NULL, src2, NULL,
--			      flag, marker_size);
--	git_xmerge_style = saved_style;
--	if (status <= 0)
--		return status;
--	size = result->size;
--	src = dst = result->ptr;
--	while (size) {
--		char ch;
--		if ((marker_size < size) &&
--		    (*src == '<' || *src == '=' || *src == '>')) {
--			int i;
--			ch = *src;
--			for (i = 0; i < marker_size; i++)
--				if (src[i] != ch)
--					goto not_a_marker;
--			if (src[marker_size] != '\n')
--				goto not_a_marker;
--			src += marker_size + 1;
--			size -= marker_size + 1;
--			continue;
--		}
--	not_a_marker:
--		do {
--			ch = *src++;
--			*dst++ = ch;
--			size--;
--		} while (ch != '\n' && size);
--	}
--	result->size = dst - result->ptr;
-+	/* Use union favor */
-+	flag = (flag & 1) | (XDL_MERGE_FAVOR_UNION << 1);
-+	return ll_xdl_merge(drv_unused, result, path_unused,
-+			    orig, src1, NULL, src2, NULL,
-+			    flag, marker_size);
- 	return 0;
- }
+For merges inside a git repository, there is a proposed idea to use a --path
+argument like git hash-object to get the marker size from git attributes.
+Which I'm all for it. A second proposal is to give attributes as arguments to
+git merge-file, which I suspect involves very intrusive changes.
+
+There where also a suggestion that merge-file should support file arguments
+that points to blob objects (ie. master:Makefile). I think the --path argument
+would fit this usecase too.
+
+There is also currently no sane upper bound for marker sizes. Neither in
+the git attribute case nor in this patch.
+
+ Documentation/git-merge-file.txt |    5 +++--
+ builtin-merge-file.c             |    2 ++
+ t/t6023-merge-file.sh            |   37 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 42 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-merge-file.txt b/Documentation/git-merge-file.txt
+index 234269a..a5b9c1f 100644
+--- a/Documentation/git-merge-file.txt
++++ b/Documentation/git-merge-file.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git merge-file' [-L <current-name> [-L <base-name> [-L <other-name>]]]
+-	[--ours|--theirs] [-p|--stdout] [-q|--quiet]
++	[--ours|--theirs] [-p|--stdout] [-q|--quiet] [--marker-size=<n>]
+ 	<current-file> <base-file> <other-file>
  
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index 3f6229e..22614d5 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -61,6 +61,7 @@ extern "C" {
- /* merge favor modes */
- #define XDL_MERGE_FAVOR_OURS 1
- #define XDL_MERGE_FAVOR_THEIRS 2
-+#define XDL_MERGE_FAVOR_UNION 3
- #define XDL_MERGE_FAVOR(flags) (((flags)>>4) & 3)
- #define XDL_MERGE_FLAGS(level, style, favor) ((level)|(style)|((favor)<<4))
  
-diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-index 8cbe45e..c901ecb 100644
---- a/xdiff/xmerge.c
-+++ b/xdiff/xmerge.c
-@@ -28,6 +28,7 @@ typedef struct s_xdmerge {
- 	 * 0 = conflict,
- 	 * 1 = no conflict, take first,
- 	 * 2 = no conflict, take second.
-+	 * 3 = no conflict, take both.
- 	 */
- 	int mode;
- 	/*
-@@ -230,14 +231,19 @@ static int xdl_fill_merge_buffer(xdfenv_t *xe1, const char *name1,
- 			size = fill_conflict_hunk(xe1, name1, xe2, name2,
- 						  size, i, style, m, dest,
- 						  marker_size);
--		else if (m->mode == 1)
--			size += xdl_recs_copy(xe1, i, m->i1 + m->chg1 - i, 0,
-+		else if (m->mode & 3) {
-+			/* Before conflicting part */
-+			size += xdl_recs_copy(xe1, i, m->i1 - i, 0,
- 					      dest ? dest + size : NULL);
--		else if (m->mode == 2)
--			size += xdl_recs_copy(xe2, m->i2 - m->i1 + i,
--					      m->i1 + m->chg2 - i, 0,
--					      dest ? dest + size : NULL);
--		else
-+			/* Postimage from side #1 */
-+			if (m->mode & 1)
-+				size += xdl_recs_copy(xe1, m->i1, m->chg1, 1,
-+						      dest ? dest + size : NULL);
-+			/* Postimage from side #2 */
-+			if (m->mode & 2)
-+				size += xdl_recs_copy(xe2, m->i2, m->chg2, 1,
-+						      dest ? dest + size : NULL);
-+		} else
- 			continue;
- 		i = m->i1 + m->chg1;
- 	}
+@@ -37,7 +37,8 @@ normally outputs a warning and brackets the conflict with lines containing
+ If there are conflicts, the user should edit the result and delete one of
+ the alternatives.  When `--ours` or `--theirs` option is in effect, however,
+ these conflicts are resolved favouring lines from `<current-file>` or
+-lines from `<other-file>` respectively.
++lines from `<other-file>` respectively.  The length of the conflict markers
++can be given with the `--marker-size` option.
+ 
+ The exit value of this program is negative on error, and the number of
+ conflicts otherwise. If the merge was clean, the exit value is 0.
+diff --git a/builtin-merge-file.c b/builtin-merge-file.c
+index 3389dd0..c1a35b9 100644
+--- a/builtin-merge-file.c
++++ b/builtin-merge-file.c
+@@ -41,6 +41,8 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+ 			    XDL_MERGE_FAVOR_OURS),
+ 		OPT_SET_INT(0, "theirs", &xmp.favor, "for conflicts, use their version",
+ 			    XDL_MERGE_FAVOR_THEIRS),
++		OPT_INTEGER(0, "marker-size", &xmp.marker_size,
++			    "for conflicts, use this marker size"),
+ 		OPT__QUIET(&quiet),
+ 		OPT_CALLBACK('L', NULL, names, "name",
+ 			     "set labels for file1/orig_file/file2", &label_cb),
+diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
+index d605024..5034dd1 100755
+--- a/t/t6023-merge-file.sh
++++ b/t/t6023-merge-file.sh
+@@ -215,4 +215,41 @@ test_expect_success '"diff3 -m" style output (2)' '
+ 	test_cmp expect actual
+ '
+ 
++cat >expect <<\EOF
++Dominus regit me,
++<<<<<<<<<< new8.txt
++et nihil mihi deerit;
++
++
++
++
++In loco pascuae ibi me collocavit;
++super aquam refectionis educavit me.
++||||||||||
++et nihil mihi deerit.
++In loco pascuae ibi me collocavit,
++super aquam refectionis educavit me;
++==========
++et nihil mihi deerit,
++
++
++
++
++In loco pascuae ibi me collocavit --
++super aquam refectionis educavit me,
++>>>>>>>>>> new9.txt
++animam meam convertit,
++deduxit me super semitas jusitiae,
++propter nomen suum.
++Nam et si ambulavero in medio umbrae mortis,
++non timebo mala, quoniam TU mecum es:
++virga tua et baculus tuus ipsa me consolata sunt.
++EOF
++
++test_expect_success 'marker size' '
++	test_must_fail git merge-file -p --marker-size=10 \
++		new8.txt new5.txt new9.txt >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 1.7.0.584.g2da2b
