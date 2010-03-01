@@ -1,109 +1,117 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH] mail: Ask for the SMTP credentials before sending 
-	the messages
-Date: Mon, 1 Mar 2010 15:46:13 +0000
-Message-ID: <b0943d9e1003010746l1d4208bas48fcfba36efa5605@mail.gmail.com>
-References: <20100212161150.12036.62592.stgit@pc1117.cambridge.arm.com>
-	 <1266015411.25535.21.camel@mj>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: Re: error when installing 1.7.0.1: "ImportError: No module named
+ distutils.core"
+Date: Mon, 1 Mar 2010 11:15:41 -0500
+Message-ID: <20100301161541.GM29188@inocybe.localdomain>
+References: <20100301144000.GA17135@cs-wsok.swansea.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Karl Wiberg <kha@treskal.com>,
-	Alex Chiang <achiang@hp.com>
-To: Pavel Roskin <proski@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Mar 01 16:46:27 2010
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="HBXo5IaYAxUG7vuS"
+Cc: git@vger.kernel.org
+To: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
+X-From: git-owner@vger.kernel.org Mon Mar 01 17:16:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nm7p7-0004TB-Gq
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 16:46:21 +0100
+	id 1Nm8Hq-00058W-Gk
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 17:16:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751362Ab0CAPqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Mar 2010 10:46:16 -0500
-Received: from mail-fx0-f219.google.com ([209.85.220.219]:61581 "EHLO
-	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751020Ab0CAPqP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Mar 2010 10:46:15 -0500
-Received: by fxm19 with SMTP id 19so852260fxm.21
-        for <git@vger.kernel.org>; Mon, 01 Mar 2010 07:46:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=8NeDYOiSnKxehDYau5SQxTGXvReAMhXhwAQAmKZN4GA=;
-        b=tx50bSTYNt/aFJTPeDrjH4HcDw3Gv8HFtg1Aa68j/wARL1q/s+pMDSH1UmeRkKORXg
-         qVVDPdulL/oyY/imGs12+J6kcsNFeMjBjhR2AvTQf4GHEeeW7OCK0bfMNr9ixC3BpchI
-         JRkJHvvSzmkVhNNrC5PR/MBOLwEzki19ROphs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=YTc1DwlcbFJTx1zyGYE3vry55VqTi69b+UgMl3biyXVHfUFbOBB67wPUzofb5n6DVh
-         KzbC8zj84JLsrpfGcKPjqhn1oRQzksRWF3bgn4DGMQDWSW5hJYzVPo1DZZrhvSo+Ajng
-         f1M6ezS9UUrQGKrifQyMB/8MY1oqmUDOtN8II=
-Received: by 10.223.57.133 with SMTP id c5mr5238967fah.11.1267458373765; Mon, 
-	01 Mar 2010 07:46:13 -0800 (PST)
-In-Reply-To: <1266015411.25535.21.camel@mj>
+	id S1751257Ab0CAQPu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Mar 2010 11:15:50 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61896 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750844Ab0CAQPt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Mar 2010 11:15:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 60ED19EAD7;
+	Mon,  1 Mar 2010 11:15:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+	:cc:subject:message-id:references:mime-version:content-type
+	:in-reply-to; s=sasl; bh=2SEvMo+lhvPpWiBjau8mD8WJKdY=; b=wmQWz43
+	WY8So8xYmYr1eCkmm7h+o4deAnisA6o165WiwR2JpNTbUf3MmgbYZBCTkoE03vkR
+	2w42LUx+GaIpvheFg8C/bYU6thgbKD4QZUllEScKQIxOONK+zugzvSL97LMzaIGl
+	bZUxoe8YxBfnciBwG71ETY8m6TpjIWdDU4cY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+	:subject:message-id:references:mime-version:content-type
+	:in-reply-to; q=dns; s=sasl; b=vtF+wuK7C1jz7oloahQaujaE9oWWbccKG
+	vDLfiCEFyo7IxvOi8c+Ao3ha/uzlm76buvDxNykZrcSKILYCvGtSTADujyAcEhHd
+	0V1LyUqWqNKuVyrfAJse8jK0u7HjBJN5cZV1j0ZxALWmHgRGx1rPuzox1hytiwF4
+	1bDIl3KyHs=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B0FA9EAD6;
+	Mon,  1 Mar 2010 11:15:46 -0500 (EST)
+Received: from inocybe.localdomain (unknown [98.117.251.177]) (using TLSv1
+ with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 40BC89EAD5; Mon,  1 Mar
+ 2010 11:15:44 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20100301144000.GA17135@cs-wsok.swansea.ac.uk>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Pobox-Relay-ID: B135F4D0-254D-11DF-9D47-D033EE7EF46B-09356542!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141326>
 
-On 12 February 2010 22:56, Pavel Roskin <proski@gnu.org> wrote:
-> On Fri, 2010-02-12 at 16:11 +0000, Catalin Marinas wrote:
->> The original implementation was asking for the SMTP password on every
->> patch sent. This patch only asks the password once before sending or
->> even editing the cover message and patches.
+
+--HBXo5IaYAxUG7vuS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Oliver Kullmann wrote:
+> I've installed 1.6.6.2, but now when
+> installing 1.7.0.1 (same machine) I get
 >
-> I don't have time to investigate at the moment, but "make test" fails in
-> t1900-mail.sh on the "proposed" branch, which includes this patch:
+> make[3]: Leaving directory `/home/csoliver/SAT-Algorithmen/OKplatform/Ext=
+ernalSources/builds/Git/git-1.7.0.1/perl'
+> make[2]: Leaving directory `/home/csoliver/SAT-Algorithmen/OKplatform/Ext=
+ernalSources/builds/Git/git-1.7.0.1/perl'
+> make[2]: Entering directory `/home/csoliver/SAT-Algorithmen/OKplatform/Ex=
+ternalSources/builds/Git/git-1.7.0.1/git_remote_helpers'
+> Traceback (most recent call last):
+>   File "setup.py", line 5, in ?
+>     from distutils.core import setup
+> ImportError: No module named distutils.core
+>
+>
+> I'm using
+>
+> make configure
+> sh ./configure --prefix=3DInstallDir
+> make all
 
-The patch was converting the message headers to Header objects rather
-than strings so that the long-line folding is done using "\n " rather
-than "\n\t" (Outlook cannot handle the latter correctly). But it looks
-like the Python library assumes that they are strings and getting
-"content-type" fails (I would say Python bug).
+If you have no need for the git_remote_helpers (and unless you are
+working on adding a git remote helper in python, I don't think you
+do), you can pass --without-python to configure.  I think that's the
+right way using configure, I use make directly and pass NO_PYTHON =3D 1
+for the time being.
 
-Anyway, I change the patch so that it only converts the the Subject
-header which is the one that bothers me most:
-
-
-commit 1b0c0113861681974b8905dbe10a57f6831ecb87
-Author: Catalin Marinas <catalin.marinas@gmail.com>
-Date:   Fri Feb 12 15:36:37 2010 +0000
-
-    mail: Use space rather than tab for long subject header folding
-
-    The default Python implementation (at least 2.5 and earlier) fold long
-    e-mail header lines by inserting "\n\t". This causes issues with some
-    e-mail clients that remove both "\n\t". The RFC2822 shows that folding
-    should be done with "\n ". The Python workaround is to use a Header
-    object instead of a string when setting the message headers.
-
-    Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
-
-diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
-index d0334b4..ed55fd9 100644
---- a/stgit/commands/mail.py
-+++ b/stgit/commands/mail.py
-@@ -426,6 +426,13 @@ def __encode_message(msg):
-         new_val = ' '.join(words)
-         msg.replace_header(header, new_val)
-
-+    # replace the Subject string with a Header() object otherwise the long
-+    # line folding is done using "\n\t" rather than "\n ", causing issues with
-+    # some e-mail clients
-+    subject = msg.get('subject', '')
-+    msg.replace_header('subject',
-+                       email.Header.Header(subject, header_name = 'subject'))
-+
-     # encode the body and set the MIME and encoding headers
-     if msg.is_multipart():
-         for p in msg.get_payload():
+--=20
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+There are no differences but differences of degree between different
+degrees of difference and no difference.
+    -- William James, under nitrous oxide; 1882
 
 
+--HBXo5IaYAxUG7vuS
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
--- 
-Catalin
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iQFDBAEBCAAtBQJLi+goJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
+bXouYXNjAAoJEEMlk4u+rwzjRZkH/R5ZJtPYTpH+nX/hQ+SG+bTRY15RdZi/HvEp
+YOuII5/99w4WEd1W9MgdM67+2hlOUnTD/Wt68+Ac74en0gRzmCchSvAaErElUaWS
+kN1T0/1NzhpT4b4Pg87AIIMcSNKWqp/fV35DSXiRUe4CawlrnVqhGJxPN+IS8NnJ
+pj/213f2uCjfySHAIAHCqz5+5zNhla41qXBUJFKWPBzWyvfbAwWNJ9jV4AS1qH3f
+wpgZ6t+lcBHaL6Xj4T6dIT+YaK8Ypr/uRHPN0bhpPNdtFEywU8yEn7Ll6dEYaxxl
+axkLQ6uOFNTUuMSP4syv7L3UzsrbEwrFdgKb/2SQn294vD2qn30=
+=zXBb
+-----END PGP SIGNATURE-----
+
+--HBXo5IaYAxUG7vuS--
