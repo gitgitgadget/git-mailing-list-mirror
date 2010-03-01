@@ -1,65 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git as an sfc member project
-Date: Mon, 1 Mar 2010 05:58:21 -0500
-Message-ID: <20100301105821.GB25069@coredump.intra.peff.net>
-References: <20100224154452.GA25872@coredump.intra.peff.net>
- <m3k4u2mxdr.fsf@localhost.localdomain>
- <20100226123945.GD10198@coredump.intra.peff.net>
- <201002261656.47740.jnareb@gmail.com>
+From: Yuriy Kaminskiy <yumkam@mail.ru>
+Subject: Re: 'Deepen' after "git clone --depth=1"?
+Date: Mon, 01 Mar 2010 14:13:18 +0300
+Message-ID: <hmg7gf$gq9$1@dough.gmane.org>
+References: <81f018ac1002281955g1461abb3q815f9a45c13fb515@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 01 11:58:32 2010
+Content-Type: text/plain; charset=KOI8-R
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 01 12:20:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nm3KZ-0008QP-D9
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 11:58:31 +0100
+	id 1Nm3fY-0001UX-JN
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 12:20:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750955Ab0CAK60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Mar 2010 05:58:26 -0500
-Received: from peff.net ([208.65.91.99]:34564 "EHLO peff.net"
+	id S1751061Ab0CALUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Mar 2010 06:20:05 -0500
+Received: from lo.gmane.org ([80.91.229.12]:49427 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750844Ab0CAK6Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Mar 2010 05:58:25 -0500
-Received: (qmail 8711 invoked by uid 107); 1 Mar 2010 10:58:43 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 01 Mar 2010 05:58:43 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Mar 2010 05:58:21 -0500
-Content-Disposition: inline
-In-Reply-To: <201002261656.47740.jnareb@gmail.com>
+	id S1751033Ab0CALUE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Mar 2010 06:20:04 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Nm3fP-0001Pa-4L
+	for git@vger.kernel.org; Mon, 01 Mar 2010 12:20:03 +0100
+Received: from ppp79-139-243-63.pppoe.spdop.ru ([79.139.243.63])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 01 Mar 2010 12:20:03 +0100
+Received: from yumkam by ppp79-139-243-63.pppoe.spdop.ru with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 01 Mar 2010 12:20:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: ppp79-139-243-63.pppoe.spdop.ru
+User-Agent: Icedove 1.5.0.14eol (X11/20090105)
+In-Reply-To: <81f018ac1002281955g1461abb3q815f9a45c13fb515@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141317>
 
-On Fri, Feb 26, 2010 at 04:56:44PM +0100, Jakub Narebski wrote:
+On 01.03.2010 06:55, Phil Miller wrote:
+> Suppose I want to make a shallow clone of a repository for some
+> size-sensitive application. I may later want to fill out the complete
+> history of that repository, so that I can work with it as if I had
+> done a full-depth clone to begin with. Is there an existing porcelain
+> command/option to produce that effect? If not, is there a fundamental
+> reason why this couldn't be implemented? It looks like this is
+> something fetch-pack should be able to do, but its documentation
+> doesn't seem to describe how. Also, the man page for fetch appears to
+> lie, in that --depth=n (where n is greater than the clone depth)
+> doesn't have any noticeable effect.
 
-> > > I wouldn't say I am "key developer"...
-> > 
-> > Well, you have a lot of commits, anyway. ;)
-> 
-> Well, there are mainly (310 out of 398 in whole lifetime of git) about
-> gitweb, which is rather disconnected subsystem of git, started by
-> Kay Sievers.
+Last time I've tried (1.6.x),
+   git fetch --depth=n
+indeed, did nothing, but
+   git fetch --depth=n origin master
+worked (deepened history; but it seems it redownloaded (some) objects).
 
-True. In the final version I included you, but I marked up people with
-their areas (so Paul is marked as "gitk", you are "gitweb", I note that
-Shawn is the git-gui maintainer as well as the JGit maintainer, etc).
-
-> > Yeah, I thought about that list, but it is very long. Honestly even
-> > putting ten people on the list seems long to me. I think git has a very
-> > different distribution of committers than many other projects.
-> 
-> Well, it at least lists contributors by subsystem...
-
-Good point. I kept the list in the application itself more compact, but
-gave a link to git-scm.com/about (as Julian suggested) for a longer list
-of committers, and directly linked to Junio's MaintNotes to get more
-details on what people are working on.
-
--Peff
+> If the answer is simply "no one's written the code to do it yet", I'll
+> be happy to provide the necessary round tuits.
