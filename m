@@ -1,211 +1,213 @@
-From: =?UTF-8?q?Henrik=20Grubbstr=C3=B6m?= <grubba@grubba.org>
-Subject: [PATCH 4/4] convert: Added core.refilteronadd feature.
-Date: Mon,  1 Mar 2010 17:16:58 +0100
-Message-ID: <1267460218-1172-4-git-send-email-grubba@grubba.org>
-References: <1267460218-1172-1-git-send-email-grubba@grubba.org>
- <1267460218-1172-2-git-send-email-grubba@grubba.org>
- <1267460218-1172-3-git-send-email-grubba@grubba.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Henrik=20Grubbstr=C3=B6m=20 (Grubba) ?= 
-	<grubba@grubba.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 01 17:50:26 2010
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: Better cooperation between checkouts and stashing
+Date: Mon, 01 Mar 2010 09:02:39 -0800 (PST)
+Message-ID: <4b8bf32f.0706c00a.26cb.691d@mx.google.com>
+References: <4B67227A.7030908@web.de> <7vhbq0wuy6.fsf@alter.siamese.dyndns.org> <4B898F97.90706@web.de> <7vr5o6s5xf.fsf@alter.siamese.dyndns.org> <4B8B9BF1.10408@web.de>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Markus Elfring <Markus.Elfring@web.de>
+X-From: git-owner@vger.kernel.org Mon Mar 01 18:02:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nm8p3-0001P2-Ge
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 17:50:22 +0100
+	id 1Nm917-00010Q-RF
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 18:02:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751461Ab0CAQtz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Mar 2010 11:49:55 -0500
-Received: from mail.roxen.com ([212.247.29.220]:38009 "EHLO mail.roxen.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751132Ab0CAQty (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Mar 2010 11:49:54 -0500
-X-Greylist: delayed 1968 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Mar 2010 11:49:53 EST
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.roxen.com (Postfix) with ESMTP id 16D436280FD
-	for <git@vger.kernel.org>; Mon,  1 Mar 2010 17:17:06 +0100 (CET)
-X-Virus-Scanned: amavisd-new at roxen.com
-Received: from mail.roxen.com ([212.247.29.220])
-	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1hrZyvla-2sR; Mon,  1 Mar 2010 17:17:05 +0100 (CET)
-Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
-	by mail.roxen.com (Postfix) with ESMTP id D90A96280ED;
-	Mon,  1 Mar 2010 17:17:05 +0100 (CET)
-Received: from shipon.roxen.com (localhost [127.0.0.1])
-	by shipon.roxen.com (8.13.8+Sun/8.13.8) with ESMTP id o21GH5mm001233;
-	Mon, 1 Mar 2010 17:17:05 +0100 (CET)
-Received: (from grubba@localhost)
-	by shipon.roxen.com (8.13.8+Sun/8.13.8/Submit) id o21GH5Mx001232;
-	Mon, 1 Mar 2010 17:17:05 +0100 (CET)
-X-Mailer: git-send-email 1.6.4.122.g6ffd7
-In-Reply-To: <1267460218-1172-3-git-send-email-grubba@grubba.org>
+	id S1751435Ab0CARCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Mar 2010 12:02:43 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:51331 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751295Ab0CARCm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Mar 2010 12:02:42 -0500
+Received: by gyh20 with SMTP id 20so1237933gyh.19
+        for <git@vger.kernel.org>; Mon, 01 Mar 2010 09:02:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:cc
+         :subject:in-reply-to:references;
+        bh=un/eT+NGDmcv1NCFyNvtEioZA9aKx6QmcTvhHfez318=;
+        b=lxcA0VPVUgPrZnqjXjXHgXpBqNqvf2FkU5ak4pFbDeJGiLij+SvoyFa616pa3mst87
+         Q7z1ZL/YNuBRG966mDbKqbHl2YlqMNVT2zXqLr3YUshwwo2Jt+8ilzWfE2Uiide804q2
+         NdEXliWQOn4e0NojWmCIOXgp7qpRpBPYD7j4w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:cc:subject:in-reply-to:references;
+        b=jQi4ZEjNwNd1+NqkWQRwCHp/Jm9fQUI1eAdKY5CngsiXFA7HXqyfo7YvrRc7NpHTJ7
+         ZSkSQNKQxMMEHSwQnYGA/902yKIhvV3oVpP9uZ9w5rifN6v8lE07aYVtnBfEglsoG4Ec
+         N661cUWRL2fmnb0TuZY+wIGB3kDG36vOaVuiM=
+Received: by 10.101.130.35 with SMTP id h35mr5264658ann.109.1267462961111;
+        Mon, 01 Mar 2010 09:02:41 -0800 (PST)
+Received: from gmail.com (tor-proxy.fejk.se [66.90.75.206])
+        by mx.google.com with ESMTPS id 7sm1250566ywf.40.2010.03.01.09.02.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 01 Mar 2010 09:02:39 -0800 (PST)
+In-Reply-To: <4B8B9BF1.10408@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141331>
 
-=46rom: Henrik Grubbstr=C3=B6m (Grubba) <grubba@grubba.org>
 
-When having $Id$ tags in other versioning systems, it is customary
-to recalculate the tags in the source on commit or equvivalent.
-This commit adds a configuration option to git that causes source
-files to pass through a conversion roundtrip when added to the index.
+To Junio in particular: See the very bottom of this email.
 
-Signed-off-by: Henrik Grubbstr=C3=B6m <grubba@grubba.org>
----
- Documentation/config.txt |    6 +++++
- cache.h                  |    1 +
- config.c                 |    5 ++++
- environment.c            |    1 +
- sha1_file.c              |   57 ++++++++++++++++++++++++++++++++++++++=
-++++++++
- 5 files changed, 70 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 664de6b..900b095 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -533,6 +533,12 @@ core.sparseCheckout::
- 	Enable "sparse checkout" feature. See section "Sparse checkout" in
- 	linkgit:git-read-tree[1] for more information.
-=20
-+core.refilterOnAdd::
-+	Enable "refilter on add" feature. This causes source files to be
-+	behave as if they were checked out after a linkgit:git-add[1].
-+	This is typically usefull if eg the `ident` attribute is active,
-+	in which case the $Id$ tags will be updated.
-+
- add.ignore-errors::
- 	Tells 'git add' to continue adding files when some files cannot be
- 	added due to indexing errors. Equivalent to the '--ignore-errors'
-diff --git a/cache.h b/cache.h
-index 1c9f491..beb60f9 100644
---- a/cache.h
-+++ b/cache.h
-@@ -540,6 +540,7 @@ extern int read_replace_refs;
- extern int fsync_object_files;
- extern int core_preload_index;
- extern int core_apply_sparse_checkout;
-+extern int core_refilter_on_add;
-=20
- enum safe_crlf {
- 	SAFE_CRLF_FALSE =3D 0,
-diff --git a/config.c b/config.c
-index 6963fbe..b1db505 100644
---- a/config.c
-+++ b/config.c
-@@ -523,6 +523,11 @@ static int git_default_core_config(const char *var=
-, const char *value)
- 		return 0;
- 	}
-=20
-+	if (!strcmp(var, "core.refilteronadd")) {
-+		core_refilter_on_add =3D git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	/* Add other config variables here and to Documentation/config.txt. *=
-/
- 	return 0;
- }
-diff --git a/environment.c b/environment.c
-index 739ec27..eed7ef1 100644
---- a/environment.c
-+++ b/environment.c
-@@ -52,6 +52,7 @@ enum object_creation_mode object_creation_mode =3D OB=
-JECT_CREATION_MODE;
- char *notes_ref_name;
- int grafts_replace_parents =3D 1;
- int core_apply_sparse_checkout;
-+int core_refilter_on_add;
-=20
- /* Parallel index stat data preload? */
- int core_preload_index =3D 0;
-diff --git a/sha1_file.c b/sha1_file.c
-index fd8c5df..f2659cb 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2459,6 +2459,54 @@ int index_fd(unsigned char *sha1, int fd, struct=
- stat *st, int write_object,
- 	return ret;
- }
-=20
-+static int refilter_fd(int fd, struct stat *st, const char *path)
-+{
-+	int ret =3D -1;
-+	size_t size =3D xsize_t(st->st_size);
-+	struct strbuf gbuf =3D STRBUF_INIT;
-+
-+	if (!S_ISREG(st->st_mode)) {
-+		struct strbuf sbuf =3D STRBUF_INIT;
-+		if (strbuf_read(&sbuf, fd, 4096) >=3D 0)
-+			ret =3D convert_to_git(path, sbuf.buf, sbuf.len, &gbuf, safe_crlf, =
-0);
-+		else
-+			ret =3D -1;
-+		strbuf_release(&sbuf);
-+	} else if (size) {
-+		void *buf =3D xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
-+		ret =3D convert_to_git(path, buf, size, &gbuf, safe_crlf, 0);
-+		munmap(buf, size);
-+	} else
-+		ret =3D -1;
-+
-+	if (ret > 0) {
-+		/* Something happened during conversion to git.
-+		 * Now convert it back, and save the result.
-+		 */
-+		struct strbuf obuf =3D STRBUF_INIT;
-+
-+		lseek(fd, 0, SEEK_SET);
-+
-+		if (convert_to_working_tree(path, gbuf.buf, gbuf.len, &obuf)) {
-+			if (write_or_whine(fd, obuf.buf, obuf.len, path))
-+				ftruncate(fd, obuf.len);
-+			else
-+				ret =3D -1;
-+		} else {
-+			if (write_or_whine(fd, gbuf.buf, gbuf.len, path))
-+				ftruncate(fd, gbuf.len);
-+			else
-+				ret =3D -1;
-+		}
-+
-+		strbuf_release(&obuf);
-+	}
-+	strbuf_release(&gbuf);
-+
-+	close(fd);
-+	return ret;
-+}
-+
- int index_path(unsigned char *sha1, const char *path, struct stat *st,=
- int write_object)
- {
- 	int fd;
-@@ -2473,6 +2521,15 @@ int index_path(unsigned char *sha1, const char *=
-path, struct stat *st, int write
- 		if (index_fd(sha1, fd, st, write_object, OBJ_BLOB, path) < 0)
- 			return error("%s: failed to insert into database",
- 				     path);
-+		if (write_object && core_refilter_on_add) {
-+			fd =3D open(path, O_RDWR);
-+			if (fd < 0)
-+				return error("open(\"%s\"): %s", path,
-+					     strerror(errno));
-+			if (refilter_fd(fd, st, path) < 0)
-+				return error("%s: failed to refilter file",
-+					     path);
-+		}
- 		break;
- 	case S_IFLNK:
- 		if (strbuf_readlink(&sb, path, st->st_size)) {
---=20
-1.6.4.122.g6ffd7
+On Mon, Mar 1, 2010 at 04:50, Markus Elfring <Markus.Elfring@web.de> wrote:
+>>  - The branch you happen to have checked out was 'next', but the solution
+>>    is a bugfix, and should go to 'maint'.
+>>
+>> Now, at this point, you want to checkout 'maint' without losing your local
+>> change.  The paths you touched with your quick fix are often not different
+>> between the two branches, and "checkout maint" will checkout the branch
+>> while keeping your local changes intact.
+>
+> Does the wording in the manual fit to the mentioned software development practice?
+>
+> "When <paths> are not given, this command switches branches by updating the
+> index, working tree, and HEAD to reflect the specified branch."
+>
+> I see a need for further clarifications of the involved details.
+
+Junio pointed out that the documentation is currently lacking:
+
+  [Unfortunately,] I don't see anything that states
+  clearly that "checkout" is designed to carry your
+  local changes across in any documentation (I gave
+  a cursory look to the user manual, tutorial and
+  checkout manual page). Probably "git checkout --help"
+  needs a "Switching branches" section, just like the
+  planned enhancement for "Detached HEAD" section.
+
+In other words, the documentation NEEDS to be updated to include
+the explanation and rationale that Junio also supplied:
+
+  Checking out another branch (branch switching) is
+  designed to carry your local modification across
+  with you. This is to allow you to start working on
+  something, realize that your changes are better suited
+  for another branch, and at that point after the fact
+  "git checkout" that other branch, while keeping what
+  you have done so far.
+
+  If the original branch you started your work from and
+  the branch you are checking out have different contents
+  in files you have changed (aka "your changes conflict
+  at the paths level"), without -m option, "git checkout"
+  refuses to check out the other branch, because it will
+  need a three-way merge to carry your changes forward,
+  and you might not be prepared to resolve conflicts
+  resulting from such a merge.
+
+  In practice, however, your changes often don't conflict
+  with the changes between the branches at the paths
+  level, and "git checkout" lets you carry your local
+  changes across just fine. I'd say this is the majority
+  of the case especially for experienced git users, as
+  they tend to commit in smaller and more logical units
+  than those from other SCM background.
+
+and Junio expanded on this later:
+
+  It is important to understand that a local change does
+  not belong to your current branch (it does not belong to
+  _any_ branch). It belongs to you, and you can take it
+  around while switching between branches. And that is a
+  big time-saving feature.
+  
+  This lets you work like this:
+  
+   - You are reading a mailing list message that
+   asks for help, and you know the solution---you
+   can give the help real quick.
+  
+   - You hack in whatever branch that happen to be
+   checked out. The change is perfect, it works.
+  
+   - The branch you happen to have checked out
+   was 'next', but the solution is a bugfix, and
+   should go to 'maint'.
+  
+  Now, at this point, you want to checkout 'maint' without
+  losing your local change. The paths you touched with
+  your quick fix are often not different between the two
+  branches, and "checkout maint" will checkout the branch
+  while keeping your local changes intact. All that is
+  left for you to do is to run another round of test to
+  make sure that your fix didn't depend on anything not
+  in 'maint' and commit the change with appropriate log
+  message, and then you can go back to whatever you were
+  doing with "checkout next".
+  
+  When the change involves paths that were touched
+  between 'maint' and 'next', of course you won't be
+  able to switch without merging the local change to the
+  difference between 'next' and 'maint'. There are a few
+  workflows to deal with such a case, and the easiest is
+  "checkout -m", if you are confident that you can resolve
+  it.
+
+  In a case where "checkout -m" would result in a conflict
+  too big to resolve, the original fix you made would not
+  be applicable to 'maint' (iow, you should have solved it
+  differently starting from 'maint'), and you may end up
+  doing "reset --hard" and start from scratch, but that is
+  a rare worst case.
+
+  I said it is rare, because you would notice, while doing
+  the "quick fix" based on 'next' codebase, that the code
+  you are touching have changed since 'maint' and won't be
+  applicable to its final destination (by that time you
+  know you are "fixing"), and you won't waste too much
+  time continuing to work in a checkout of 'next'.
+
+I think it would be a great contribution if you could clean up
+Junio's explanation and submit a patch that includes it in the
+documentation for "git checkout".
+
+> - Would it be useful if it will become configurable if the corresponding
+> contents will also be automatically restored by a checkout?
+
+>From what you've said, I think you essentially want to implement
+"git checkout" with something like the following (this hack is **not**
+meant as a solution; it is only meant to illustrate what I think is
+Markus Elfring's desire):
+
+  # Utility:
+
+    get_stash_id()
+    {
+      local branch=$(git rev-parse --symbolic-full-name HEAD)
+      [ $branch = HEAD ] && return 1 # don't stash for detached HEAD
+      echo -n "$branch" | md5sum | awk -F" " '{print $1}'
+    }
+
+  # New implementation:
+
+    checkout()
+    {
+      # Stash local modifications (including index modifications) if
+      # necessary, using an easily identifiable message known as the
+      # 'stash id':
+
+	local stash_id
+        stash_id=$(get_stash_id) &&
+          git stash save -q "$stash_id" ||    # Save local modifications
+            git reset --hard HEAD             # Throw away changes on detached HEAD
+
+      # Do the checkout that was requested:
+
+        git checkout "$@"
+
+      # Unstash previously stashed local modifications (including
+      # index modifications) if they were automatically stashed
+      # before (the lookup is done with the relevant 'stash id'):
+
+        stash_id=$(get_stash_id)                                            &&
+          stash_id=$(git stash list | awk -F': ' "/$stash_id/ {print \$1}") &&
+            [ -n "$stash_id" ]                                              &&
+              git stash pop --index "$stash_id"
+    }
+
+Sincerely,
+Michael Witten
