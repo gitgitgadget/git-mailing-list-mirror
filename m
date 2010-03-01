@@ -1,127 +1,87 @@
-From: Eli Barzilay <eli@barzilay.org>
-Subject: Re: gitweb problem?
-Date: Mon, 01 Mar 2010 06:51:58 -0500
-Message-ID: <m3zl2suun5.fsf@winooski.ccs.neu.edu>
-References: <m34ol0wmze.fsf@winooski.ccs.neu.edu>
-	<m3bpf8mj5k.fsf@localhost.localdomain>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH v2 00/12] add --ff option to cherry-pick
+Date: Mon, 01 Mar 2010 13:34:46 +0100
+Message-ID: <4B8BB466.1000909@gnu.org>
+References: <20100228222038.2260.25016.chriscool@tuxfamily.org> <4B8B78BB.8050008@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 01 12:52:21 2010
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Stephen Boyd <bebarino@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Mar 01 13:35:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nm4Ad-0007hl-Lr
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 12:52:20 +0100
+	id 1Nm4q9-0001hp-Jt
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 13:35:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751226Ab0CALwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Mar 2010 06:52:14 -0500
-Received: from lo.gmane.org ([80.91.229.12]:43866 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751192Ab0CALwN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Mar 2010 06:52:13 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Nm4AV-0007e9-6z
-	for git@vger.kernel.org; Mon, 01 Mar 2010 12:52:11 +0100
-Received: from winooski.ccs.neu.edu ([129.10.115.117])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 01 Mar 2010 12:52:11 +0100
-Received: from eli by winooski.ccs.neu.edu with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 01 Mar 2010 12:52:11 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: winooski.ccs.neu.edu
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-Cancel-Lock: sha1:ABi1tZzUqB8snN5iorsKqnofXk0=
+	id S1751374Ab0CAMey (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Mar 2010 07:34:54 -0500
+Received: from ey-out-2122.google.com ([74.125.78.25]:39691 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751363Ab0CAMew (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Mar 2010 07:34:52 -0500
+Received: by ey-out-2122.google.com with SMTP id 25so209793eya.5
+        for <git@vger.kernel.org>; Mon, 01 Mar 2010 04:34:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=juvq/AVqajABBhe8GW9KY2uwcYWpn+wY2+2G/DMjo4s=;
+        b=xsAUn+j7cDyV2i1L6O/KL+n+iwkWpOID5c4YBcJjcmdz98hWjSVDnkZMhDQ04N8gn1
+         SnbRnwKl/3TbZuxaSdsoAaN7DOBjC/imTTryGk3nt1h6yU1PsHL3loPh1/qTmW8xV9hY
+         Q44nZXL3WHk+urwqt1436MFYVpLgZk7nVkUcg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=xdiS8UkLY3m6jdUd7mnHXZAFaZw9HnghMIvpIiBTlI+/EybxhE4dmGlfK07qah9Pd7
+         S7mmHX2Ze1OIg3W4GI+AQuRD+hMvcVomhC4WZ4wSf6qJvU1OFtbYj5aiyjQJtIX2bSPz
+         7u41fRaNnE2lSJi5ogeHi5lJTQBYvlYPDDxS8=
+Received: by 10.213.26.138 with SMTP id e10mr3123762ebc.80.1267446891242;
+        Mon, 01 Mar 2010 04:34:51 -0800 (PST)
+Received: from yakj.usersys.redhat.com (nat-pool-brq-t.redhat.com [209.132.186.34])
+        by mx.google.com with ESMTPS id 15sm2249823ewy.4.2010.03.01.04.34.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 01 Mar 2010 04:34:48 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100120 Fedora/3.0.1-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.1
+In-Reply-To: <4B8B78BB.8050008@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141319>
 
-Jakub Narebski <jnareb@gmail.com> writes:
-
-> Eli Barzilay <eli@barzilay.org> writes:
+On 03/01/2010 09:20 AM, Johannes Sixt wrote:
+> Christian Couder schrieb:
+>> The goal of this patch series is to make it possible for "git cherry-pick"
+>> to fast forward instead of creating a new commit if the cherry picked commit
+>> has the same parent as the one we are cherry-picking on.
 >
->> Whenever I view the toplevel gitweb page (running as a cgi script
->> under apache), but not when in a specific repo, I get this in my error
->> log:
->> 
->> gitweb.cgi: Use of uninitialized value $git_dir in concatenation (.) or string at /home/git/gitweb/gitweb.cgi line 2065.
->> fatal: error processing config file(s)
->> gitweb.cgi: Use of uninitialized value $git_dir in concatenation (.) or string at /home/git/gitweb/gitweb.cgi line 2221.
->> gitweb.cgi: Use of uninitialized value $git_dir in concatenation (.) or string at /home/git/gitweb/gitweb.cgi line 2218.
->> 
->> (taken verbatim from the apache error log, removed uninteresting line
->> prefixes.)
->
-> In the future (or if my diagnosis would turn out to be incorrect)
-> could you please show which lines are those (in *your* gitweb.cgi),
-> or at least provide gitweb version?  Changes to gitweb can render
-> such line numbers invalid.
+> Why don't you just divert to 'git merge --ff' in this case?
 
-Sorry, I should have mentioned that this is from 1.7.0 -- my file is
-not modified, and built with no changes to the defaults except for
-prefix=/usr/local.  In any case, the script -- with the test that I
-added -- is at http://tmp.barzilay.org/x1 .
+Because the purpose of the series is exactly to replace
 
+   if A^ == HEAD; then
+     git merge --ff A   # or git reset --hard A
+   else
+     git cherry-pick A
+   fi
 
->> I'm using the pathinfo option, so perhaps there is a problem with
->> that setup?
->
-> In the future (or if my diagnosis would turn out to be incorrect)
-> could you please include relevant parts of $GITWEB_CONFIG (by
-> default it is gitweb_config.perl), at least which features you have
-> enabled, and how they are configured?
+with a single "git cherry-pick --ff A".
 
-http://tmp.barzilay.org/x2 (but see below).
+An alternative would be the old ff-strategy series which would allow 
+something like
 
+   git merge --ff=only A || git cherry-pick A
 
->> Looking at the source, the last two line numbers are in
->> `git_get_project_config' -- so my guess is that the code is trying to
->> get the options from the repository config file even when showing the
->> toplevel page.  Based on this, and also guessing that $git_dir is
->> unset when viewing the toplevel page, I added
->> 
->> 	return unless (defined $git_dir);
->> 
->> to the top (of the `git_get_project_config' function), and I get no
->> warnings and everything works as it should.
->> 
->> (Disclaimer: I can barely read perl, and I'm a git newbie, so all of
->> this can be due to some other stupid mistake.)
->
-> That looks like lack of hardening against pilot error.  The
-> git_get_project_config should never be run when $git_dir is not set,
-> as it is meant to access *project* config.
->
-> But at the top of git_project_list_body subroutine, which is
-> responsible for generating toplevel page with list of projects, we
-> have:
-> 	my $check_forks = gitweb_check_feature('forks');
-> and a bit later
-> 	my $show_ctags = gitweb_check_feature('ctags');
->
-> Now both of those features are marked as not supporting project specific
-> override.  It might be that you by accident set $feature{XXX}{'override'}
-> to true... but I might be mistaken.
-
-No, that's not it.  I've tracked all calls to
-`git_get_project_config', and the two offending calls are the ones in
-`feature_snapshot' and `feature_avatar'.  I then verified that
-commenting out these two lines in my config
-
-  $feature{'snapshot'}{'override'} = 1;
-  $feature{'avatar'}{'override'} = 1;
-
-avoids the calls -- and the comments indicate that it should be fine
-to do that.
-
--- 
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
-                    http://barzilay.org/                   Maze is Life!
+Paolo
