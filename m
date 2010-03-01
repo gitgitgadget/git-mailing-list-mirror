@@ -1,68 +1,173 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] make union merge an xdl merge favor
-Date: Mon, 01 Mar 2010 01:01:20 -0800
-Message-ID: <7vaausza8v.fsf@alter.siamese.dyndns.org>
-References: <972adf380be481b5e8d031481586e9c34da2cbb7.1267385538.git.bert.wesarg@googlemail.com> <17999fdb3ff374156acb7fc670426265fa27b94b.1267385538.git.bert.wesarg@googlemail.com> <7vwrxx2k29.fsf@alter.siamese.dyndns.org> <36ca99e91002282257i7f07f035o15d8d64e062ee94e@mail.gmail.com>
+Subject: [ANNOUNCE] Git 1.7.0.1
+Date: Mon, 01 Mar 2010 01:08:27 -0800
+Message-ID: <7vfx4kxvck.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 01 10:01:39 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Mon Mar 01 10:08:56 2010
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nm1VP-00088d-8V
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 10:01:35 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Nm1cV-00038O-HU
+	for glk-linux-kernel-3@lo.gmane.org; Mon, 01 Mar 2010 10:08:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750839Ab0CAJBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Mar 2010 04:01:30 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54785 "EHLO
+	id S1751021Ab0CAJIl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 1 Mar 2010 04:08:41 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59864 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750812Ab0CAJB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Mar 2010 04:01:29 -0500
+	with ESMTP id S1750696Ab0CAJIj convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 1 Mar 2010 04:08:39 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BB159D70B;
-	Mon,  1 Mar 2010 04:01:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zkLB391hplRgdvxSDiAMVj2SDZQ=; b=lOpprj
-	9XfqhaBE6dD/tms3X+fLE+rA41Y6hlx3RWohIgazc3B6HOcxsC8V2Z303uTYd7cN
-	0FAEeozPZJEbTzaNfyia/VyljCeoEcwthmEDvbV6+GeiM7JVFsH3LoXdqMFuLHsY
-	Nczai8yAWfzat9A3OHZW5iqF2oLYioZPoLk+8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mt2PlcqK6pkl5IJX2RH9mXEKV2deRGPW
-	5ulU3h3R7thyTAB09c7JU0Hw94M8FPCAU7eOBwoEm42otRAa3KVAV9ct6k0uqu5E
-	UkQ+biMF0FsMxITpMYhIfmU4QJ3iE5ExA9F38guTJoGGdY7lzAjSgBl9gfMRbdVJ
-	15EStgBjb/Q=
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D14CC9D79A;
+	Mon,  1 Mar 2010 04:08:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=k6CLAdPT5C/rDY9+v7VJot73l
+	60=; b=See1DAlHwQsqwuz9q0uCBxTs/uBxJCocjjTjixWNqOqU5R26xj/QZqQMJ
+	D3VhHk24BLwHj9PAJVPCcmoWjZ49WDn+AhHZxAkXQ1OK11z4+Tvo1xLhA+RsewEQ
+	yaEWm9gWtcECPlHjX63Rr2nTYfdDPdHsXCEsFyTWYntkMrLRHI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=RkYBUmCVyGb++WnT/ul
+	1SamBQwkrEr2bxh7HctbwRnn7BzEQEjjl+/GpgIwQfKE0C+t1UsViNfDh1fXddoS
+	pcdc7ZUGdSc1Xckqrq2OOXpDP3l5ov4HWjYapvZwMZrGWFAVbTyk1XB1JV+xPWqk
+	VSoPmOSEr2XPlf6TY4LFL9Do=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 079D09D709;
-	Mon,  1 Mar 2010 04:01:25 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DF979D798;
+	Mon,  1 Mar 2010 04:08:34 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5F3009D708; Mon,  1 Mar
- 2010 04:01:21 -0500 (EST)
-In-Reply-To: <36ca99e91002282257i7f07f035o15d8d64e062ee94e@mail.gmail.com>
- (Bert Wesarg's message of "Mon\, 1 Mar 2010 07\:57\:40 +0100")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 01FAF9D792; Mon,  1 Mar
+ 2010 04:08:28 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 03A1A9C2-2511-11DF-BA83-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
+X-Pobox-Relay-ID: 03A48C36-2512-11DF-AE2B-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141307>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141308>
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
+The latest maintenance release Git 1.7.0.1 is available at the
+usual places:
 
-> WIll do. On a side note: I plan to support the --union option also for
-> git-checkout. Would that be a good idea?
+  http://www.kernel.org/pub/software/scm/git/
 
-What does it do?  Resolve conflicted paths using union merge at checkout
-time?  That somehow feels like a dirty "because we can, and I only care
-about union" hack to me.
+  git-1.7.0.1.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.7.0.1.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.7.0.1.tar.{gz,bz2}		(preformatted docs)
 
-I am mildly against "merge-file --union" in the first place.  The part I
-actually liked in [2/3] was the removal of postprocessing.
+The RPM binary packages for a few architectures are found in:
+
+  RPMS/$arch/git-*-1.7.0.1-1.fc11.$arch.rpm	(RPM)
+
+Git v1.7.0.1 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+
+=46ixes since v1.7.0
+------------------
+
+ * In a freshly created repository "rev-parse HEAD^0" complained that
+   it is dangling symref, even though "rev-parse HEAD" didn't.
+
+ * "git show :no-such-name" tried to access the index without bounds
+   check, leading to a potential segfault.
+
+ * Message from "git cherry-pick" was harder to read and use than neces=
+sary
+   when it stopped due to conflicting changes.
+
+ * We referred to ".git/refs/" throughout the documentation when we
+   meant to talk about abstract notion of "ref namespace".  Because
+   people's repositories often have packed refs these days, this was
+   confusing.
+
+ * "git diff --output=3D/path/that/cannot/be/written" did not correctly
+   error out.
+
+ * "git grep -e -pattern-that-begin-with-dash paths..." could not be
+   spelled as "git grep -- -pattern-that-begin-with-dash paths..." whic=
+h
+   would be a GNU way to use "--" as "end of options".
+
+ * "git grep" compiled with threading support tried to access an
+   uninitialized mutex on boxes with a single CPU.
+
+ * "git stash pop -q --index" failed because the unnecessary --index
+   option was propagated to "git stash drop" that is internally run at =
+the
+   end.
+
+And other minor fixes and documentation updates.
+
+----------------------------------------------------------------
+
+Changes since v1.7.0 are as follows:
+
+Bert Wesarg (2):
+      Documentation: mention conflict marker size argument (%L) for mer=
+ge driver
+      rerere: fix memory leak if rerere images can't be read
+
+Evan Powers (1):
+      git-p4: fix bug in symlink handling
+
+Jacob Helwig (1):
+      Documentation: Fix indentation problem in git-commit(1)
+
+Jeff King (9):
+      accept "git grep -- pattern"
+      cherry-pick: rewrap advice message
+      cherry-pick: refactor commit parsing code
+      cherry-pick: format help message as strbuf
+      cherry-pick: show commit name instead of sha1
+      cherry-pick: prettify the advice message
+      dwim_ref: fix dangling symref warning
+      docs: don't talk about $GIT_DIR/refs/ everywhere
+      rm: fix bug in recursive subdirectory removal
+
+Johannes Sixt (1):
+      t3301-notes: insert a shbang line in ./fake_editor.sh
+
+Jonathan Nieder (1):
+      am: remove rebase-apply directory before gc
+
+Junio C Hamano (6):
+      Typofixes outside documentation area
+      Start 1.7.0 maintenance track
+      Fix use of mutex in threaded grep
+      Prepare 1.7.0.1 release notes
+      Update 1.7.0.1 release notes
+      Git 1.7.0.1
+
+Larry D'Anna (1):
+      diff: make sure --output=3D/bad/path is caught
+
+Mark Lodato (2):
+      grep documentation: clarify what files match
+      Remove reference to GREP_COLORS from documentation
+
+Markus Heidelberg (1):
+      sha1_name: fix segfault caused by invalid index access
+
+Matt Kraai (1):
+      commit: quote the user name in the example
+
+Pete Harlan (1):
+      Remove hyphen from "git-command" in two error messages
+
+Ren=C3=A9 Scharfe (1):
+      fix minor memory leak in get_tree_entry()
+
+Stephen Boyd (1):
+      Documentation: describe --thin more accurately
+
+Thomas Rast (2):
+      stash pop: remove 'apply' options during 'drop' invocation
+      t1450: fix testcases that were wrongly expecting failure
