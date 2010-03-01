@@ -1,52 +1,85 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Add new option in the right click menu in git gui
-Date: Mon, 1 Mar 2010 18:12:29 +0100
-Message-ID: <20100301171222.GA35830@book.hvoigt.net>
-References: <7fce93be1002181511v1c671f82u7f3d7cc6e3512bab@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Better cooperation between checkouts and stashing
+Date: Mon, 01 Mar 2010 09:23:23 -0800
+Message-ID: <7v1vg4ufas.fsf@alter.siamese.dyndns.org>
+References: <4B67227A.7030908@web.de>
+ <7vhbq0wuy6.fsf@alter.siamese.dyndns.org> <4B898F97.90706@web.de>
+ <7vr5o6s5xf.fsf@alter.siamese.dyndns.org> <4B8B9BF1.10408@web.de>
+ <4b8bf32f.0706c00a.26cb.691d@mx.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Sylvain Rabot <sylvain@abstraction.fr>
-X-From: git-owner@vger.kernel.org Mon Mar 01 18:12:39 2010
+Cc: Markus Elfring <Markus.Elfring@web.de>, git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 01 18:23:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nm9Ab-00075A-6A
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 18:12:37 +0100
+	id 1Nm9LI-00060t-8l
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 18:23:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751527Ab0CARMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Mar 2010 12:12:31 -0500
-Received: from darksea.de ([83.133.111.250]:42524 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751515Ab0CARMa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Mar 2010 12:12:30 -0500
-Received: (qmail 9480 invoked from network); 1 Mar 2010 18:12:28 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 1 Mar 2010 18:12:28 +0100
-Content-Disposition: inline
-In-Reply-To: <7fce93be1002181511v1c671f82u7f3d7cc6e3512bab@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1751481Ab0CARXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Mar 2010 12:23:34 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63590 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751295Ab0CARXd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Mar 2010 12:23:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D8DE9E5C7;
+	Mon,  1 Mar 2010 12:23:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bGj9PcOMQnM8lCb307V7i2GaR64=; b=u2DsoN
+	zCJNdSDa8/1IsTlLr3/cNcEklBwMorGHm9YRfXtIYlV1001wy55tsLtA0nW2PzTB
+	TjnuO5T2Bh1f862LThvXFN3xutX+kzF58vmphP3bXeSdIh0pTwWi4rw/60Flrpma
+	5cBUo7g/XZEh4etsgTCemnH1e5GKusHIC4FG8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=j1m8AHuPb4U6U8TTLWQxuqQWZlUBZqXX
+	KKFxUomYtkGm6CLe0bQzRcDlgtMYVEtLajDqyohlESXU1b6WuuzoM4C4T7vAW2Nj
+	EGYwGD7Wh1VG0N7VD5zL/T7m+YrDaiC0PfsWtRBqZ+LCWsgRBW2TM0aYj13bRu6V
+	tr9sTFsEqZ0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C6A89E5C6;
+	Mon,  1 Mar 2010 12:23:29 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 87DAF9E5C2; Mon,  1 Mar
+ 2010 12:23:25 -0500 (EST)
+In-Reply-To: <4b8bf32f.0706c00a.26cb.691d@mx.google.com> (Michael Witten's
+ message of "Mon\, 01 Mar 2010 09\:02\:39 -0800 \(PST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 27106740-2557-11DF-A109-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141335>
 
-On Fri, Feb 19, 2010 at 12:11:57AM +0100, Sylvain Rabot wrote:
-> Hi,
-> 
-> In case of conflicts it is possible in git gui, through the right
-> click menu, to use local or remote versions, but, unless I missed
-> something, it is not possible, after using the merge tool, to add
-> merged files to the index.
-> 
-> It would be nice if we could add merged files in the index directly in git gui.
+>Michael Witten <mfwitten@gmail.com> writes:
 
-I do not see anything missing. After resolving a conflict you usually
-just need to add the files (in git gui click on the icon of the file).
-Am I missing something? This is the usual conflict resolution workflow
-for git, I see no need for an extra menu option.
+> ..., I think you essentially want to implement
+> "git checkout" with something like the following (this hack is **not**
+> meant as a solution; it is only meant to illustrate what I think is
+> Markus Elfring's desire):
 
-cheers Heiko
+Your "checkout" needs a bit better error checking.  For example, you don't
+want to "reset --hard" when stash failed for whatever reason.
+
+For performance and cleanliness reasons, it should first try a branch
+switch, and only after seeing it fail due to local changes, perform your
+stash-unstash magic.  You would probably want to use the usual "stash
+save", as you will be consuming the stashed change yourself as its first
+user, and "pop" will clear it if things resolve cleanly, or the stash will
+be left as the first element to make it easy to re-attempt the conflict
+resolution.  No need for stash-id nor special casing of detached HEAD
+situation.
+
+And it should do all that only under "-m" option, i.e. when the user
+indicated that s/he is willilng to face conflict resolution while
+switching.  That would be a genuine improvement compared to the current
+system (and I suspect it would be easier to implement).  "checkout -m" so
+far has been as bad as "CVS/SVN update" in that it can get you into an
+unresolvable mess without a chance to go back and retry.  autostash will
+remedy that.
