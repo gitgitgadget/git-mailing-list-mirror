@@ -1,63 +1,46 @@
-From: Markus Elfring <Markus.Elfring@web.de>
-Subject: Re: Better cooperation between checkouts and stashing
-Date: Mon, 01 Mar 2010 11:50:25 +0100
-Message-ID: <4B8B9BF1.10408@web.de>
-References: <4B67227A.7030908@web.de> <7vhbq0wuy6.fsf@alter.siamese.dyndns.org> <4B898F97.90706@web.de> <7vr5o6s5xf.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git as an sfc member project
+Date: Mon, 1 Mar 2010 05:53:28 -0500
+Message-ID: <20100301105328.GA25069@coredump.intra.peff.net>
+References: <20100224154452.GA25872@coredump.intra.peff.net>
+ <20100226125916.GA12650@coredump.intra.peff.net>
+ <2b203beb1823fe320af0c8a520a7818d@212.159.54.234>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 01 11:50:32 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Mon Mar 01 11:53:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nm3Cp-0004eh-IV
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 11:50:31 +0100
+	id 1Nm3Fr-0006GM-Vi
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 11:53:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750956Ab0CAKu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Mar 2010 05:50:26 -0500
-Received: from fmmailgate03.web.de ([217.72.192.234]:55115 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750865Ab0CAKuZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Mar 2010 05:50:25 -0500
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 8D4CC14107C7D;
-	Mon,  1 Mar 2010 11:50:24 +0100 (CET)
-Received: from [78.48.194.16] (helo=[192.168.1.202])
-	by smtp07.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1Nm3Ci-00077d-00; Mon, 01 Mar 2010 11:50:24 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.5) Gecko/20091130 SUSE/3.0.0-1.1.1 Thunderbird/3.0
-In-Reply-To: <7vr5o6s5xf.fsf@alter.siamese.dyndns.org>
-X-Sender: Markus.Elfring@web.de
-X-Provags-ID: V01U2FsdGVkX1+2d2yT+1wVhNlrLfbb7n1GGUP6l1k2Ipf6sBIh
-	dqevLBfPxRGc9SvBnDW3AD0ywQNUsGIqVxJ5y7d1YlSTuJYl9W
-	b9wWk5LABT3Q7TfY5C3g==
+	id S1751019Ab0CAKxf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Mar 2010 05:53:35 -0500
+Received: from peff.net ([208.65.91.99]:53746 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750947Ab0CAKxe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Mar 2010 05:53:34 -0500
+Received: (qmail 8669 invoked by uid 107); 1 Mar 2010 10:53:52 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 01 Mar 2010 05:53:52 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Mar 2010 05:53:28 -0500
+Content-Disposition: inline
+In-Reply-To: <2b203beb1823fe320af0c8a520a7818d@212.159.54.234>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141314>
 
->  - The branch you happen to have checked out was 'next', but the solution
->    is a bugfix, and should go to 'maint'.
-> 
-> Now, at this point, you want to checkout 'maint' without losing your local
-> change.  The paths you touched with your quick fix are often not different
-> between the two branches, and "checkout maint" will checkout the branch
-> while keeping your local changes intact.
+On Fri, Feb 26, 2010 at 01:14:27PM +0000, Julian Phillips wrote:
 
-Does the wording in the manual fit to the mentioned software development practice?
+> You could mention that a more complete list of developers is available at
+> http://www.git-scm.com/about at the bottom of the page?
 
-"When <paths> are not given, this command switches branches by updating the
-index, working tree, and HEAD to reflect the specified branch."
+Thanks, that's a good suggestion.
 
-I see a need for further clarifications of the involved details.
-- Only the focus will be set on the specified branch.
-- Would it be useful if it will become configurable if the corresponding
-contents will also be automatically restored by a checkout?
-
-Regards,
-Markus
+-Peff
