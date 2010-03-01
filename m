@@ -1,74 +1,87 @@
-From: Jacob Helwig <jacob.helwig@gmail.com>
-Subject: Re: failed to push
-Date: Mon, 1 Mar 2010 13:27:03 -0800
-Message-ID: <2793902788222999372@unknownmsgid>
-References: <4B8C2E68.3020507@gnu.org>
-Mime-Version: 1.0 (iPhone Mail 7E18)
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT <git@vger.kernel.org>
-To: "bkorb@gnu.org" <bkorb@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Mar 01 22:27:18 2010
+From: Sylvain Rabot <sylvain@abstraction.fr>
+Subject: Re: Add new option in the right click menu in git gui
+Date: Mon, 01 Mar 2010 22:29:31 +0100
+Message-ID: <1267478971.4400.5.camel@kheops>
+References: <7fce93be1002181511v1c671f82u7f3d7cc6e3512bab@mail.gmail.com>
+	 <20100301171222.GA35830@book.hvoigt.net>
+Reply-To: sylvain@abstraction.fr
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-nJPTkqdITn5ic8dwnCdz"
+Cc: git <git@vger.kernel.org>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Mon Mar 01 22:29:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NmD94-0004Ic-89
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 22:27:18 +0100
+	id 1NmDBM-0005hB-Gr
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 22:29:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752204Ab0CAV1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Mar 2010 16:27:12 -0500
-Received: from mail-pz0-f179.google.com ([209.85.222.179]:40736 "EHLO
-	mail-pz0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751809Ab0CAV1L (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Mar 2010 16:27:11 -0500
-Received: by pzk9 with SMTP id 9so2256545pzk.25
-        for <git@vger.kernel.org>; Mon, 01 Mar 2010 13:27:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:references:from:in-reply-to:mime-version:date
-         :received:message-id:subject:to:cc:content-type;
-        bh=h8L0umdaasJatF2/am/DGJI5UbCEu8hqc3WBD91Nryg=;
-        b=i6PjOIVGJ8NHRsAe3/2Tn7op1W4SIoq9apJlT172IWttjfam/C2H6mOF1kzy1dtX1A
-         BV78Caw570LZB1GYKR3rk72eMktzWIASlm8H2pSRLF/WxWIN2bjrg1l+3sg3XDsaBbki
-         A+V6XUxqVsj30o8PPHyVHGMH8QeJByBvcyf4M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=references:from:in-reply-to:mime-version:date:message-id:subject:to
-         :cc:content-type;
-        b=nrm1LVTK1RaqJU3CU6zUJxwRN1U3cxJbs1q4MV5EFmO7hI+qufmP2VplhOPjpKTwaA
-         uf73+2O8rlU47ChhwpjkNR/AfcAfDP1BejzHLdH2bgaMk5KohIpNiPRTQ15c/Vg59uLM
-         +npguuydraC9FT4/94loL2N7fjRLi/4uCBEDQ=
-In-Reply-To: <4B8C2E68.3020507@gnu.org>
-Received: by 10.141.124.7 with SMTP id b7mr2813897rvn.25.1267478830785; Mon, 
-	01 Mar 2010 13:27:10 -0800 (PST)
+	id S1752412Ab0CAV3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Mar 2010 16:29:35 -0500
+Received: from mail-bw0-f212.google.com ([209.85.218.212]:35371 "EHLO
+	mail-bw0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751263Ab0CAV3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Mar 2010 16:29:35 -0500
+Received: by bwz4 with SMTP id 4so2214477bwz.28
+        for <git@vger.kernel.org>; Mon, 01 Mar 2010 13:29:33 -0800 (PST)
+Received: by 10.204.3.216 with SMTP id 24mr3587092bko.30.1267478973593;
+        Mon, 01 Mar 2010 13:29:33 -0800 (PST)
+Received: from ?192.168.0.77? (smj33-1-82-233-66-33.fbx.proxad.net [82.233.66.33])
+        by mx.google.com with ESMTPS id 15sm2373346bwz.12.2010.03.01.13.29.32
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 01 Mar 2010 13:29:32 -0800 (PST)
+In-Reply-To: <20100301171222.GA35830@book.hvoigt.net>
+X-Mailer: Evolution 2.28.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141353>
 
-On Mar 1, 2010, at 13:15, Bruce Korb <bkorb@gnu.org> wrote:
 
-> Hi,
->
-> This message has no meaning at all.  I know it failed to push.
-> I can tell from the comment "[rejected]".  It would be nice
-> to know *WHY* it was rejected so I can fix the problem.
-> How do I determine the cause, please?  Thank you!!  Regards, Bruce
->
-> $ git push
-> To ssh://bkorb@autogen.git.sourceforge.net/gitroot/autogen/autogen
-> ! [rejected]        master -> master (non-fast forward)
-> error: failed to push some refs to 'ssh://bkorb@autogen.git.sourceforge.net
-> /gitroot/autogen/autogen'
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+--=-nJPTkqdITn5ic8dwnCdz
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-It tells you right there at the end of the rejected line. The push
-would have resulted in a non-fast-forward update of the branch.
+On Mon, 2010-03-01 at 18:12 +0100, Heiko Voigt wrote:
+> On Fri, Feb 19, 2010 at 12:11:57AM +0100, Sylvain Rabot wrote:
+> > Hi,
+> >=20
+> > In case of conflicts it is possible in git gui, through the right
+> > click menu, to use local or remote versions, but, unless I missed
+> > something, it is not possible, after using the merge tool, to add
+> > merged files to the index.
+> >=20
+> > It would be nice if we could add merged files in the index directly in =
+git gui.
+>=20
+> I do not see anything missing. After resolving a conflict you usually
+> just need to add the files (in git gui click on the icon of the file).
+> Am I missing something? This is the usual conflict resolution workflow
+> for git, I see no need for an extra menu option.
+>=20
+> cheers Heiko
 
-To "fix" this, you need the current commit pointed to by the branch as
-one of the ancestors of the commits you're trying to push.
+Haaaaaaa, I don't know how many times I tried to do a right click on the
+path itself but I never had the idea to click the icon :P
+
+Thanks.
+
+--=20
+Sylvain Rabot <sylvain@abstraction.fr>
+
+--=-nJPTkqdITn5ic8dwnCdz
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkuMMboACgkQ+TklUoyVcyfnAQCfbRiBBsqxKgT6UtLGTaNXtEQQ
+ok8AnREPyeQjhCwUnSsskzImk2aESeIw
+=6dVY
+-----END PGP SIGNATURE-----
+
+--=-nJPTkqdITn5ic8dwnCdz--
