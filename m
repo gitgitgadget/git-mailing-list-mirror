@@ -1,68 +1,52 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: error when installing 1.7.0.1: "ImportError: No module named 
-	distutils.core"
-Date: Mon, 1 Mar 2010 19:32:24 +0100
-Message-ID: <fabb9a1e1003011032r61577a2cr21a1fa61154c2d76@mail.gmail.com>
-References: <20100301144000.GA17135@cs-wsok.swansea.ac.uk> 
-	<be6fef0d1003010715l31d7b49bs36ee69685e1684e8@mail.gmail.com> 
-	<fabb9a1e1003010724g7c4d2517v1515b846e288713a@mail.gmail.com> 
-	<bb49d06f73fe23be76e16089ce8b251c@212.159.54.234>
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: Re: Better cooperation between checkouts and stashing
+Date: Mon, 01 Mar 2010 19:29:25 +0100
+Message-ID: <4B8C0785.30505@web.de>
+References: <4B67227A.7030908@web.de> <7vhbq0wuy6.fsf@alter.siamese.dyndns.org> <4B898F97.90706@web.de> <7vr5o6s5xf.fsf@alter.siamese.dyndns.org> <4B8B9BF1.10408@web.de> <7v1vg4ufas.fsf@alter.siamese.dyndns.org> <4b8c0420.5544f10a.2eb2.ffffb4c4@mx.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Tay Ray Chuan <rctay89@gmail.com>,
-	Johan Herland <johan@herland.net>,
-	Oliver Kullmann <O.Kullmann@swansea.ac.uk>, git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Mon Mar 01 19:33:08 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 01 19:33:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NmAQM-0000iY-6O
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 19:32:58 +0100
+	id 1NmAQt-0001Bk-KF
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 19:33:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753351Ab0CAScr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Mar 2010 13:32:47 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:41858 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753318Ab0CAScp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Mar 2010 13:32:45 -0500
-Received: by pwj8 with SMTP id 8so1821327pwj.19
-        for <git@vger.kernel.org>; Mon, 01 Mar 2010 10:32:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=c6b+IR94s+jinvNdZNLivKBp1yrgGuq2wMWH5yyEOqs=;
-        b=P2d+vqxYv91W2upNZWc0EnfiQb0E+iNC2n1zu9CsYxH6kB/wpwrOGqX01ZFchiKnag
-         wwAZmU9Oo7nFfGpqGUBStw97bUT7f1uSFhpSvQhTkkWKf7aJeCcdYX1Z+ImbTHc1eqow
-         FagAZ38cuqyr+9VDr9uenzVmSA04dVfbE4v6A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=ejOlnx3ALPNRB0lOH5EpwJzl6ltZ61reJdKsYd0/zDyFkuqbRTujBorDp8A/bbEep7
-         bEkNN1phCOl0cH+W40rxD6JR+h4W0xQvcsE2oQ7CjPcCNcp1uD074QfHx6a7CfEVeQC9
-         wMFr2yCWuFakzBGY1dLGQxLCwbU577mE6YdKE=
-Received: by 10.142.151.5 with SMTP id y5mr2803036wfd.70.1267468364544; Mon, 
-	01 Mar 2010 10:32:44 -0800 (PST)
-In-Reply-To: <bb49d06f73fe23be76e16089ce8b251c@212.159.54.234>
+	id S1753361Ab0CASc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Mar 2010 13:32:56 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:39594 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753353Ab0CAScy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Mar 2010 13:32:54 -0500
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 9837C150E565B;
+	Mon,  1 Mar 2010 19:32:19 +0100 (CET)
+Received: from [78.48.194.16] (helo=[192.168.1.202])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1NmAMx-0005cT-00; Mon, 01 Mar 2010 19:29:27 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.5) Gecko/20091130 SUSE/3.0.0-1.1.1 Thunderbird/3.0
+In-Reply-To: <4b8c0420.5544f10a.2eb2.ffffb4c4@mx.google.com>
+X-Provags-ID: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141341>
 
-Heya,
+> Markus Elfring's goal (I think) is to associate local modifications with
+> a particular branch, *not* carry them across branches; that is, the goal
+> is to stash local modifications away when we leave a branch and only pop
+> them off the stash when we RETURN to that same branch.
 
-On Mon, Mar 1, 2010 at 19:21, Julian Phillips <julian@quantumfyre.co.uk> wrote:
-> Something like the following in the Makefile perhaps?
+You are right. - I am especially interested in this use case.
 
-Indeed, I reckon there's some style issues there, but something along
-those lines yes :).
+I would like to stress the relationships of files for a specific software
+development task
 
--- 
-Cheers,
-
-Sverre Rabbelier
+Regards,
+Markus
