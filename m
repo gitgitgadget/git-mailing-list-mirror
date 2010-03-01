@@ -1,52 +1,76 @@
-From: Markus Elfring <Markus.Elfring@web.de>
-Subject: Re: Better cooperation between checkouts and stashing
-Date: Mon, 01 Mar 2010 19:29:25 +0100
-Message-ID: <4B8C0785.30505@web.de>
-References: <4B67227A.7030908@web.de> <7vhbq0wuy6.fsf@alter.siamese.dyndns.org> <4B898F97.90706@web.de> <7vr5o6s5xf.fsf@alter.siamese.dyndns.org> <4B8B9BF1.10408@web.de> <7v1vg4ufas.fsf@alter.siamese.dyndns.org> <4b8c0420.5544f10a.2eb2.ffffb4c4@mx.google.com>
+From: "Mike.lifeguard" <mike.lifeguard@gmail.com>
+Subject: Gitweb: Scan dir for repos & show these other specified repos
+Date: Mon, 01 Mar 2010 15:15:51 -0400
+Message-ID: <4B8C1267.2050301@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 01 19:33:36 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 01 20:16:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NmAQt-0001Bk-KF
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 19:33:32 +0100
+	id 1NmB61-0004lc-JM
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Mar 2010 20:16:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753361Ab0CASc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Mar 2010 13:32:56 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:39594 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753353Ab0CAScy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Mar 2010 13:32:54 -0500
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 9837C150E565B;
-	Mon,  1 Mar 2010 19:32:19 +0100 (CET)
-Received: from [78.48.194.16] (helo=[192.168.1.202])
-	by smtp06.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1NmAMx-0005cT-00; Mon, 01 Mar 2010 19:29:27 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.5) Gecko/20091130 SUSE/3.0.0-1.1.1 Thunderbird/3.0
-In-Reply-To: <4b8c0420.5544f10a.2eb2.ffffb4c4@mx.google.com>
-X-Provags-ID: 
+	id S1751896Ab0CATP4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Mar 2010 14:15:56 -0500
+Received: from mail-qy0-f179.google.com ([209.85.221.179]:53824 "EHLO
+	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751820Ab0CATPz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Mar 2010 14:15:55 -0500
+Received: by qyk9 with SMTP id 9so1529031qyk.5
+        for <git@vger.kernel.org>; Mon, 01 Mar 2010 11:15:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=UCaOhQamhuSIzYen2Gur+V+DJne0bzkDvybo+w40CQM=;
+        b=rOsyZoyhJ1lQehqSYuLDQTNPYTJdgwu70zwDasiMjpCYhl4cIaIyuiC5mIKuqtPDZm
+         4VfeuA7akUjjBr2ShlZFNwO7GBxaw13WI1rHUPf4O0H0PTTnsbN7x2lOU8Ac5pVCSHWw
+         SVfL3DnQscbq5b6emWmMlt05d4mVwtUPwQf1I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        b=v2nDlxLuzXVdidzbwmPW5+86lLqWoOYJNQ7XizSWdu+XpLslhdvd3vO5o5KQno2fCu
+         /0Gd1kk9RKFwG4ReXb6jDhMnnyILKmQipvzzEy1Ha+0CWOOFPcUHKEOiGVjkuxon2a2l
+         6iZggntbacKZBNNRZk13vXr2q508ZnsUkSMKE=
+Received: by 10.229.88.19 with SMTP id y19mr678143qcl.46.1267470954923;
+        Mon, 01 Mar 2010 11:15:54 -0800 (PST)
+Received: from ?192.168.0.6? (hlfxns0169w-142177063200.pppoe-dynamic.High-Speed.ns.bellaliant.net [142.177.63.200])
+        by mx.google.com with ESMTPS id 35sm32078732vws.0.2010.03.01.11.15.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 01 Mar 2010 11:15:53 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.23) Gecko/20090817 Thunderbird/2.0.0.23 Mnenhy/0.7.6.0
+X-Enigmail-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141342>
 
-> Markus Elfring's goal (I think) is to associate local modifications with
-> a particular branch, *not* carry them across branches; that is, the goal
-> is to stash local modifications away when we leave a branch and only pop
-> them off the stash when we RETURN to that same branch.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-You are right. - I am especially interested in this use case.
+Hello,
 
-I would like to stress the relationships of files for a specific software
-development task
+Is it possible to have gitweb show all repositories in /path/to/wherever
+and also show some other repositories at particular locations like
+/home/user/git/repo1 and /home/user2/git/repo2 ? Or better yet, scan
+multiple dirs? Currently I can only see how to do one or the other
+within a single gitweb installation. I suppose I could run two of them...
 
-Regards,
-Markus
+Thanks for the help.
+
+- -Mike
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkuMEmQACgkQst0AR/DaKHuYiQCeL3EoeUCr676lbwE2PIZK2tk3
+7dsAoMpBmKoZZj3LV1zKLVqtIpFIiIii
+=YDlg
+-----END PGP SIGNATURE-----
