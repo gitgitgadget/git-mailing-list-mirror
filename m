@@ -1,72 +1,66 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Only the config file changes ...
-Date: Tue, 02 Mar 2010 14:16:23 +0100
-Message-ID: <4B8D0FA7.8070206@drmicha.warpmail.net>
-References: <70786312428882320720829319256948501508-Webmail@me.com>
+From: Anca Emanuel <anca.emanuel@gmail.com>
+Subject: Google Gerrit
+Date: Tue, 2 Mar 2010 16:10:57 +0200
+Message-ID: <c1fb08351003020610q25b85b60hf9362aabc4b0126f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jez Caudle <gitmailinglist@me.com>
-X-From: git-owner@vger.kernel.org Tue Mar 02 14:18:57 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+To: linux-kernel <linux-kernel@vger.kernel.org>, sop <sop@google.com>,
+	git <git@vger.kernel.org>
+X-From: linux-kernel-owner@vger.kernel.org Tue Mar 02 15:11:19 2010
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NmS00-0007Ex-QB
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Mar 2010 14:18:57 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1NmSoZ-0006FN-BU
+	for glk-linux-kernel-3@lo.gmane.org; Tue, 02 Mar 2010 15:11:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753137Ab0CBNSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Mar 2010 08:18:52 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:44121 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752718Ab0CBNSv (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Mar 2010 08:18:51 -0500
-Received: from compute1.internal (compute1 [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 83FF5E2F05;
-	Tue,  2 Mar 2010 08:18:50 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 02 Mar 2010 08:18:50 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=iDAb2hifEFl2Pvb/nkfDTMPqTeM=; b=mFOrYJ1XswSaADq9eUN4n3F/WHkGzZmhz9qpFqQIG8D9DxuUfIfk/molURCxK1X1SKt9SrxS494SKeefkhhFFiO8JNLl+c5nt+t/R+wCnZ9dzyAQcleFtYsZH4y0fcEdOXOirYr6iRFH+dS+20Spe3mVXLCHVSrpsEiwV4DBHMA=
-X-Sasl-enc: KlAx5N8RBCXhh003DsNM1jSMUehwOMlbRDEHMlilkVcR 1267535930
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id E47F449F2A5;
-	Tue,  2 Mar 2010 08:18:49 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9pre) Gecko/20100301 Lightning/1.0b2pre Shredder/3.0.3pre
-In-Reply-To: <70786312428882320720829319256948501508-Webmail@me.com>
-Sender: git-owner@vger.kernel.org
+	id S1753188Ab0CBOLA (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 2 Mar 2010 09:11:00 -0500
+Received: from mail-fx0-f219.google.com ([209.85.220.219]:59915 "EHLO
+	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751352Ab0CBOK7 (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 2 Mar 2010 09:10:59 -0500
+Received: by fxm19 with SMTP id 19so314941fxm.21
+        for <multiple recipients>; Tue, 02 Mar 2010 06:10:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=OATj+F6Ut4gcS7zU3mW6bIrGkKCu844j8xgwXIhTA5k=;
+        b=FHAWW/TH+zRFIimN+p9jembBsVbUj8qkNGdjzKa6X5R5xESfJ72Vc5vT264oeJMJ5B
+         i8zLv1VyB45EanDg8mPA8vT/9grCpKa5InviESs/40Ln8N2OItvrGkBnsr4eYyVXDQeH
+         hqSwCqNJQo6/Z35Srvc/tKKUTAN2gX/nPuU0w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=GhExPX7LZ/sx6eNz6gU+WGHFHM47Zo3Q+7HcEyAqkuyp6Bc+VkzFPPZYifEe+FNjx8
+         u72MCTZMUK3WAgPAVrcM0sq/+V/BgHIXU/Qw3CCZrlQyr4JKIndw4xvogFlAXu80Mc9p
+         ZUXddnkUVJOWBUHqDHPpwB5HR7wL8wJU7dN04=
+Received: by 10.87.66.24 with SMTP id t24mr6503348fgk.75.1267539057138; Tue, 
+	02 Mar 2010 06:10:57 -0800 (PST)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141394>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141395>
 
-Jez Caudle venit, vidit, dixit 02.03.2010 13:06:
-> Hi I'm new to Git and I've read the manual and tried my best to
-> understand it.
-> 
-> I have a project that is going to have many versions, all the same
-> except for the config file, the unit/functional tests and some
-> display information.
-> 
-> I have seen that I can create branches and then merge them. I
-> wondered if I could create a branch, change the config file
-> information and then decree that the config file in the new branch is
-> not merged.
-> 
-> I read about sub modules but they didn't seam relevant.
-> 
-> Am I barking up the wrong tree here?
+Hi, what do you think about Google Gerrit ? http://code.google.com/p/gerrit/
 
-You're fellow dogs may need more details in order to decide that ;)
+see it in action here: http://review.source.android.com
 
-In general, I would recommend one branch (be it master) for changes
-which apply to all clients (I guess that's what you mean by "versions,
-all the same except..."), and one branch each for specific changes (to
-config etc.).
+quote:
+"Gerrit is a web based code review system, facilitating online code
+reviews for projects using the Git version control system.
+Gerrit makes reviews easier by showing changes in a side-by-side
+display, and allowing inline comments to be added by any reviewer.
+Gerrit simplifies Git based project maintainership by permitting any
+authorized user to submit changes to the master Git repository, rather
+than requiring all approved changes to be merged in by hand by the
+project maintainer. This functionality enables a more centralized
+usage of Git."
 
-Then just make sure to merge in the right direction, i.e. merge the
-general, common branch into the specific ones.
+git needs an friendly UI, web based is the future.
 
-Cheers,
-Michael
+Maybe an integration with Wave.
