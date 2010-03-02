@@ -1,66 +1,88 @@
-From: Anca Emanuel <anca.emanuel@gmail.com>
-Subject: Google Gerrit
-Date: Tue, 2 Mar 2010 16:10:57 +0200
-Message-ID: <c1fb08351003020610q25b85b60hf9362aabc4b0126f@mail.gmail.com>
+From: Jez Caudle <jezcaudle@me.com>
+Subject: Re: Only the config file changes ...
+Date: Tue, 02 Mar 2010 13:26:15 +0000
+Message-ID: <1463530E-F729-46CA-881D-A89E6CF89241@me.com>
+References: <70786312428882320720829319256948501508-Webmail@me.com>
+ <4B8D0FA7.8070206@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: linux-kernel <linux-kernel@vger.kernel.org>, sop <sop@google.com>,
-	git <git@vger.kernel.org>
-X-From: linux-kernel-owner@vger.kernel.org Tue Mar 02 15:11:19 2010
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Jez Caudle <gitmailinglist@me.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Mar 02 15:26:52 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1NmSoZ-0006FN-BU
-	for glk-linux-kernel-3@lo.gmane.org; Tue, 02 Mar 2010 15:11:11 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1NmT3j-0000GK-EZ
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Mar 2010 15:26:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753188Ab0CBOLA (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 2 Mar 2010 09:11:00 -0500
-Received: from mail-fx0-f219.google.com ([209.85.220.219]:59915 "EHLO
-	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751352Ab0CBOK7 (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 2 Mar 2010 09:10:59 -0500
-Received: by fxm19 with SMTP id 19so314941fxm.21
-        for <multiple recipients>; Tue, 02 Mar 2010 06:10:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=OATj+F6Ut4gcS7zU3mW6bIrGkKCu844j8xgwXIhTA5k=;
-        b=FHAWW/TH+zRFIimN+p9jembBsVbUj8qkNGdjzKa6X5R5xESfJ72Vc5vT264oeJMJ5B
-         i8zLv1VyB45EanDg8mPA8vT/9grCpKa5InviESs/40Ln8N2OItvrGkBnsr4eYyVXDQeH
-         hqSwCqNJQo6/Z35Srvc/tKKUTAN2gX/nPuU0w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=GhExPX7LZ/sx6eNz6gU+WGHFHM47Zo3Q+7HcEyAqkuyp6Bc+VkzFPPZYifEe+FNjx8
-         u72MCTZMUK3WAgPAVrcM0sq/+V/BgHIXU/Qw3CCZrlQyr4JKIndw4xvogFlAXu80Mc9p
-         ZUXddnkUVJOWBUHqDHPpwB5HR7wL8wJU7dN04=
-Received: by 10.87.66.24 with SMTP id t24mr6503348fgk.75.1267539057138; Tue, 
-	02 Mar 2010 06:10:57 -0800 (PST)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1753337Ab0CBO0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Mar 2010 09:26:46 -0500
+Received: from asmtpout028.mac.com ([17.148.16.103]:51330 "EHLO
+	asmtpout028.mac.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752362Ab0CBO0p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Mar 2010 09:26:45 -0500
+X-Greylist: delayed 3613 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Mar 2010 09:26:45 EST
+Received: from [192.168.1.3] ([89.241.40.67])
+ by asmtp028.mac.com (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec
+ 16 2008; 32bit)) with ESMTPSA id <0KYN002NDPBRYK80@asmtp028.mac.com> for
+ git@vger.kernel.org; Tue, 02 Mar 2010 05:26:21 -0800 (PST)
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ ipscore=0 phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0
+ reason=mlx engine=5.0.0-0908210000 definitions=main-1003020078
+In-reply-to: <4B8D0FA7.8070206@drmicha.warpmail.net>
+X-Mailer: Apple Mail (2.1077)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141395>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141396>
 
-Hi, what do you think about Google Gerrit ? http://code.google.com/p/gerrit/
+Sounds good.
 
-see it in action here: http://review.source.android.com
+The only problem being I find a bug in version C. I fix it in version C, now I want to merge that change back to the master and then out to A,B and then D.
 
-quote:
-"Gerrit is a web based code review system, facilitating online code
-reviews for projects using the Git version control system.
-Gerrit makes reviews easier by showing changes in a side-by-side
-display, and allowing inline comments to be added by any reviewer.
-Gerrit simplifies Git based project maintainership by permitting any
-authorized user to submit changes to the master Git repository, rather
-than requiring all approved changes to be merged in by hand by the
-project maintainer. This functionality enables a more centralized
-usage of Git."
 
-git needs an friendly UI, web based is the future.
+I'm still reading my Git book but I'm thinking of doing it this way:
 
-Maybe an integration with Wave.
+Master has it's own repository.
+Each version has it's own repository that is created by cloning the Master and then removing all the files that are not specific removed from the repository.
+When changes are made to the master then simply copy all the non-specific files to each of the versions.
+
+Then I can run my unit/functional tests agains each version and if they all pass - deploy.
+
+Jez.
+
+On 2 Mar 2010, at 13:16, Michael J Gruber wrote:
+
+> Jez Caudle venit, vidit, dixit 02.03.2010 13:06:
+>> Hi I'm new to Git and I've read the manual and tried my best to
+>> understand it.
+>> 
+>> I have a project that is going to have many versions, all the same
+>> except for the config file, the unit/functional tests and some
+>> display information.
+>> 
+>> I have seen that I can create branches and then merge them. I
+>> wondered if I could create a branch, change the config file
+>> information and then decree that the config file in the new branch is
+>> not merged.
+>> 
+>> I read about sub modules but they didn't seam relevant.
+>> 
+>> Am I barking up the wrong tree here?
+> 
+> You're fellow dogs may need more details in order to decide that ;)
+> 
+> In general, I would recommend one branch (be it master) for changes
+> which apply to all clients (I guess that's what you mean by "versions,
+> all the same except..."), and one branch each for specific changes (to
+> config etc.).
+> 
+> Then just make sure to merge in the right direction, i.e. merge the
+> general, common branch into the specific ones.
+> 
+> Cheers,
+> Michael
