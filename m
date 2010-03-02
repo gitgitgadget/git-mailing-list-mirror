@@ -1,167 +1,140 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v2 5/7] http: init and cleanup separately from http-walker
-Date: Tue,  2 Mar 2010 18:49:29 +0800
-Message-ID: <1267526971-5552-6-git-send-email-rctay89@gmail.com>
-References: <1267526971-5552-1-git-send-email-rctay89@gmail.com>
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Clemens Buchacher" <drizzd@aon.at>,
-	"Mike Hommey" <mh@glandium.org>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 02 11:50:19 2010
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: failed to push
+Date: Tue, 2 Mar 2010 12:44:26 +0100
+Message-ID: <40aa078e1003020344v5316dad4h5a53ea59ea9f0758@mail.gmail.com>
+References: <4B8C2E68.3020507@gnu.org> <4B8C303E.7050605@gmail.com>
+	 <a038bef51003011342j3d761d0cmd96d8641f96ed15@mail.gmail.com>
+	 <4B8C38E5.7090305@gnu.org>
+Reply-To: kusmabite@gmail.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Chris Packham <judge.packham@gmail.com>, GIT <git@vger.kernel.org>
+To: bkorb@gnu.org
+X-From: git-owner@vger.kernel.org Tue Mar 02 12:44:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NmPg7-0003k4-Ku
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Mar 2010 11:50:15 +0100
+	id 1NmQWg-00053W-Np
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Mar 2010 12:44:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752666Ab0CBKuD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Mar 2010 05:50:03 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:59584 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752643Ab0CBKt7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Mar 2010 05:49:59 -0500
-Received: by gwb15 with SMTP id 15so33072gwb.19
-        for <git@vger.kernel.org>; Tue, 02 Mar 2010 02:49:58 -0800 (PST)
+	id S1751714Ab0CBLo3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Mar 2010 06:44:29 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:39529 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750811Ab0CBLo2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Mar 2010 06:44:28 -0500
+Received: by wya21 with SMTP id 21so75287wya.19
+        for <git@vger.kernel.org>; Tue, 02 Mar 2010 03:44:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=7t10e1maM0x0kFGw2WIaCZqO4AfxJTBwJv5d3/G3E9g=;
-        b=qO6IMW+a7BCGxKKocZ4TzCwIqF79H7extU4+R6kjSBUJ2FxjLFCYq3Rk6W3QmOGV+P
-         +VsFP2hqlEkNk4SDnAbrs8fbvXYWNyC3WV9TP7iEWoZ73UQSygFcmxnwNqtrbfXLaql/
-         gA4C8UDryUWCCtiohK5RgyawotW/6fpMVa3R4=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=e859evzO22M4Q4R6VGhn5fyAayGe/1M1REoqR9JQ7QA=;
+        b=YKEwNi/32EwFB3/k2NPH8Q/Cw6G4o3BgZVI9k1iB0X3+th2WXBz0PQUQAZt58AHuQY
+         +oKFIxaZFTF2MlDtYujbRCdLcycSHTzZz7dZoI8Y9hw8NUPowinzeNCAOxCv+wCtJUnZ
+         jyWu4zg05avLlaGjY5D375TpQpn23f3eWB3BQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=YQhoRNH7PwroGXlTUjWBrbBMxDztxng75OqpCVLHb6xohUWvUWZJSQll/K6GE/gora
-         ZpYSV7voErspjhWrKwhMCDZTBkggIFbc1iiBkFlEbHzsoPEm3EV9QmwZ2OVBcwSoQplE
-         eUxvWT25rZVL6+UmUsrJTIuU1YuzcDZOjL4FQ=
-Received: by 10.101.4.28 with SMTP id g28mr360346ani.68.1267526998008;
-        Tue, 02 Mar 2010 02:49:58 -0800 (PST)
-Received: from localhost.localdomain (cm212.zeta152.maxonline.com.sg [116.87.152.212])
-        by mx.google.com with ESMTPS id 13sm2393991gxk.12.2010.03.02.02.49.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 02 Mar 2010 02:49:57 -0800 (PST)
-X-Mailer: git-send-email 1.7.0.1.241.g6604f
-In-Reply-To: <1267526971-5552-1-git-send-email-rctay89@gmail.com>
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=l16eM79VOmdYPSvftLWaxcG1cQwtsz7wIdpw6NCopMFLY97JiW5XkwmElRbRbVV/Gj
+         J4zj37DDBdS0YdqtTz52Hxv5PGs72rYWAZf8eHf6oIYQSMke9Im6AAkEgOcU/B8VZ/nf
+         PBBiq3X4VeqtA6Ef3vJmIhtd+iyoC+nhWyA2g=
+Received: by 10.216.86.148 with SMTP id w20mr3763557wee.112.1267530266824; 
+	Tue, 02 Mar 2010 03:44:26 -0800 (PST)
+In-Reply-To: <4B8C38E5.7090305@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141388>
 
-Previously, all our http operations were done with http-walker. With the
-new remote-curl helper, we find ourselves using http methods outside of
-http-walker - for example, fetching info/refs.
+On Mon, Mar 1, 2010 at 11:00 PM, Bruce Korb <bkorb@gnu.org> wrote:
+> Hi,
+>
+> Thank you-all for your replies.
+>
+> Chris Packham wrote:
+>>>> To ssh://bkorb@autogen.git.sourceforge.net/gitroot/autogen/autogen
+>>>> =A0! [rejected] =A0 =A0 =A0 =A0master -> master (non-fast forward)
+>>>> error: failed to push some refs to 'ssh://bkorb@autogen.git.source=
+forge.net/gitroot/autogen/autogen'
+>
+> CF:
+>> It tells you right there at the end of the rejected line. The push
+>> would have resulted in a non-fast-forward update of the branch.
+>
+> "non-fast forward" is not very helpful either.
+>
 
-Accomodate this by separating http_init() and http_cleanup() invocations
-from http-walker.
+How so? "git help glossary" gives you a description of what a
+fast-forward is. In my installed copy, it's spelled without a dash,
+though. But that's a minor nit, I still found it easily.
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
----
- http-fetch.c  |    5 ++++-
- http-walker.c |    6 +-----
- remote-curl.c |    7 ++++++-
- walker.h      |    2 +-
- 4 files changed, 12 insertions(+), 8 deletions(-)
+>> This basically means that the push you have attempted is not a simpl=
+e
+>> fast forward. This basically means that the commit your work is base=
+d
+>> on is not present in the remote or that there have been other pushes
+>> to the remote and you need to pull them into your repository to hand=
+le
+>> any merging.
+>
+> Since the sequence was:
+> =A0git commit
+> =A0git push
+> =A0<more editing>
+> =A0git commit --amend
+> =A0git push
+>
+> the neophyte (me) is not going to know that this produces an un-pulle=
+d
+> delta.
+>
 
-diff --git a/http-fetch.c b/http-fetch.c
-index ffd0ad7..762c750 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "exec_cmd.h"
-+#include "http.h"
- #include "walker.h"
- 
- static const char http_fetch_usage[] = "git http-fetch "
-@@ -69,7 +70,8 @@ int main(int argc, const char **argv)
- 		url = rewritten_url;
- 	}
- 
--	walker = get_http_walker(url, NULL);
-+	http_init(NULL);
-+	walker = get_http_walker(url);
- 	walker->get_tree = get_tree;
- 	walker->get_history = get_history;
- 	walker->get_all = get_all;
-@@ -89,6 +91,7 @@ int main(int argc, const char **argv)
- 	}
- 
- 	walker_free(walker);
-+	http_cleanup();
- 
- 	free(rewritten_url);
- 
-diff --git a/http-walker.c b/http-walker.c
-index 508e355..ef99ae6 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -559,18 +559,14 @@ static void cleanup(struct walker *walker)
- 		free(data);
- 		walker->data = NULL;
- 	}
--
--	http_cleanup();
- }
- 
--struct walker *get_http_walker(const char *url, struct remote *remote)
-+struct walker *get_http_walker(const char *url)
- {
- 	char *s;
- 	struct walker_data *data = xmalloc(sizeof(struct walker_data));
- 	struct walker *walker = xmalloc(sizeof(struct walker));
- 
--	http_init(remote);
--
- 	data->alt = xmalloc(sizeof(*data->alt));
- 	data->alt->base = xmalloc(strlen(url) + 1);
- 	strcpy(data->alt->base, url);
-diff --git a/remote-curl.c b/remote-curl.c
-index d388120..1e13fb5 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -25,7 +25,7 @@ static struct options options;
- static void init_walker(void)
- {
- 	if (!walker)
--		walker = get_http_walker(url, remote);
-+		walker = get_http_walker(url);
- }
- 
- static int set_option(const char *name, const char *value)
-@@ -811,6 +811,8 @@ int main(int argc, const char **argv)
- 		url = remote->url[0];
- 	}
- 
-+	http_init(remote);
-+
- 	do {
- 		if (strbuf_getline(&buf, stdin, '\n') == EOF)
- 			break;
-@@ -856,5 +858,8 @@ int main(int argc, const char **argv)
- 		}
- 		strbuf_reset(&buf);
- 	} while (1);
-+
-+	http_cleanup();
-+
- 	return 0;
- }
-diff --git a/walker.h b/walker.h
-index 8a149e1..95e5765 100644
---- a/walker.h
-+++ b/walker.h
-@@ -34,6 +34,6 @@ int walker_fetch(struct walker *impl, int targets, char **target,
- 
- void walker_free(struct walker *walker);
- 
--struct walker *get_http_walker(const char *url, struct remote *remote);
-+struct walker *get_http_walker(const char *url);
- 
- #endif /* WALKER_H */
--- 
-1.7.0.26.gbfa16
+"git help commit" gives a warning about this when documenting --amend,
+and links to the full description in the rebase-documentation.
+
+>> In a DVCS like git all commits happen locally, the only time commits
+>> are sent to the remote repo are when you've pushed so 'git commit
+>> --amend' or 'git gui' with the amend box ticked only makes the chang=
+e
+>> locally it won't implicitly figure out that a commit has been pushed
+>> out into the ether. One rule of thumb with git (I think it applies t=
+o
+>> most DVCSes) is not to amend a commit that has been pushed for this
+>> very reason.
+>
+> Then please be kind enough to put a *CAUTION* button next to
+> the amend button and have it bring up something that gives you
+> a little warning.
+
+That sounds to me like a good idea. Care enough to make a patch.
+
+> GIT *could* have been written in a way that
+> causes the remote repo to become synced with my local repo,
+> but apparently it was not and there was not adequate warning.
+>
+
+That would have caused problems for anyone who cloned. But yes,
+git-gui might benefit from a warning here.
+
+>> =A0- or -
+>>
+>> =A0 git push -f
+>
+> This fails with the same "non-fast forward" rejection message. =A0:(
+
+I've seen this on sourceforge as well, it seems they have some extra
+checks (hooks?) to disallow pushing rebased branches. The best thing
+would be not to rewrite it. But if you INSIST, what worked for me was
+to delete the branch and then re-pushing it. Something like this "git
+push remote-name :branch-name && git push remote-name branch-name"
+
+
+--=20
+Erik "kusma" Faye-Lund
