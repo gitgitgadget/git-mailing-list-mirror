@@ -1,89 +1,82 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v2 4/7] http-walker: cleanup more thoroughly
-Date: Tue,  2 Mar 2010 18:49:28 +0800
-Message-ID: <1267526971-5552-5-git-send-email-rctay89@gmail.com>
+Subject: [PATCH v2 6/7] remote-curl: use http_fetch_ref() instead of walker wrapper
+Date: Tue,  2 Mar 2010 18:49:30 +0800
+Message-ID: <1267526971-5552-7-git-send-email-rctay89@gmail.com>
 References: <1267526971-5552-1-git-send-email-rctay89@gmail.com>
 Cc: "Junio C Hamano" <gitster@pobox.com>,
 	"Clemens Buchacher" <drizzd@aon.at>,
 	"Mike Hommey" <mh@glandium.org>
 To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 02 11:50:15 2010
+X-From: git-owner@vger.kernel.org Tue Mar 02 11:50:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NmPg7-0003k4-2T
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Mar 2010 11:50:15 +0100
+	id 1NmPg8-0003k4-60
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Mar 2010 11:50:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752650Ab0CBKt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Mar 2010 05:49:59 -0500
-Received: from mail-gx0-f227.google.com ([209.85.217.227]:40884 "EHLO
-	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752629Ab0CBKt4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Mar 2010 05:49:56 -0500
-Received: by gxk27 with SMTP id 27so49434gxk.1
-        for <git@vger.kernel.org>; Tue, 02 Mar 2010 02:49:55 -0800 (PST)
+	id S1752681Ab0CBKuK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Mar 2010 05:50:10 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:55210 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752662Ab0CBKuC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Mar 2010 05:50:02 -0500
+Received: by mail-gy0-f174.google.com with SMTP id 20so34198gyh.19
+        for <git@vger.kernel.org>; Tue, 02 Mar 2010 02:50:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=KhGtEL9kDrT+TLx5GCn1Y11lr3R7lUq+To93oAtQD8A=;
-        b=DFhEWT4lf683tEiOt0F1jU9VgywMiPHWSuajXHk9gcTzuGREYLp3IMVChK3Y6xX3kW
-         DimX0Vqo1XP7Vc+yxsfCafShDNvL5N1TAkPu04KP6PH2jVHNYJ7mxetWRefqynZ8knv3
-         Cxlif3HnC7KB94d7gR7ADhWRnoTwhaeCXNYvo=
+        bh=wzLci8NQEZck/GbSjZ+jCGF8fegwdPKOQTUc7c1OpBo=;
+        b=RP9zoUwyjCu7jD52O/xG5+xmE23yz+738FmT/eJ3DpXRx2WJXVcuOmbKoQIR3+MGF6
+         Jo+tFwCqzad5KXQ5KPWZ//9Ux+XYNFcK4BuA5bsxFMP79ZVQETrB6JZjISW9mhVjPR5p
+         O+yF81vpcs1bpRDdhr0h/rRUBfzosxotFaywM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=KxUzLK5RNwNyejit4UyYwJAxpUjMfX0BsMUGeCousBvwTMRHrbS0acpUU/7Otpo3Y6
-         OhkznuIsskVAC/ysz4oDi8E9aQ7P9fFf12vtRWG80YC0C/GMLpXjh2bCbrkQ9+8NysY+
-         kAuYCOcJMSvtlB9aYtZA8AQV+edEEtvkTvlTA=
-Received: by 10.101.105.14 with SMTP id h14mr344589anm.65.1267526995441;
-        Tue, 02 Mar 2010 02:49:55 -0800 (PST)
+        b=pl41+hCN+gyKVFbb5qEC7oJ73aK6j/LaNDGd7AYEhsNluVERgjM66RgSP/lfNMtmDF
+         KVXqQzEyZtEqnMxOYRQSI+Hg/7u+0SxOnBCGtueGPM3yNVoqRdukfl5g3X1zWubJUpjr
+         lx+xUCBY0hdK/ytKzUq7akehLVU7hFiUF2GZI=
+Received: by 10.101.189.30 with SMTP id r30mr252914anp.70.1267527000583;
+        Tue, 02 Mar 2010 02:50:00 -0800 (PST)
 Received: from localhost.localdomain (cm212.zeta152.maxonline.com.sg [116.87.152.212])
-        by mx.google.com with ESMTPS id 13sm2393991gxk.12.2010.03.02.02.49.53
+        by mx.google.com with ESMTPS id 13sm2393991gxk.12.2010.03.02.02.49.58
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 02 Mar 2010 02:49:55 -0800 (PST)
+        Tue, 02 Mar 2010 02:50:00 -0800 (PST)
 X-Mailer: git-send-email 1.7.0.1.241.g6604f
 In-Reply-To: <1267526971-5552-1-git-send-email-rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141382>
+
+The http-walker implementation of walker->fetch_ref() doesn't do
+anything special compared to http_fetch_ref() anyway.
+
+Remove init_walker() invocation before fetching the ref, since we aren't
+using the walker wrapper and don't need a walker instance anymore.
 
 Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
- http-walker.c |   17 +++++++++++++++++
- 1 files changed, 17 insertions(+), 0 deletions(-)
+ remote-curl.c |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
 
-diff --git a/http-walker.c b/http-walker.c
-index 700bc13..508e355 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -543,6 +543,23 @@ static int fetch_ref(struct walker *walker, struct ref *ref)
+diff --git a/remote-curl.c b/remote-curl.c
+index 1e13fb5..5ace99e 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -250,9 +250,8 @@ static struct ref *parse_info_refs(struct discovery *heads)
+ 		i++;
+ 	}
  
- static void cleanup(struct walker *walker)
- {
-+	struct walker_data *data = walker->data;
-+	struct alt_base *alt, *alt_next;
-+
-+	if (data) {
-+		alt = data->alt;
-+		while (alt) {
-+			alt_next = alt->next;
-+
-+			free(alt->base);
-+			free(alt);
-+
-+			alt = alt_next;
-+		}
-+		free(data);
-+		walker->data = NULL;
-+	}
-+
- 	http_cleanup();
- }
- 
+-	init_walker();
+ 	ref = alloc_ref("HEAD");
+-	if (!walker->fetch_ref(walker, ref) &&
++	if (!http_fetch_ref(url, ref) &&
+ 	    !resolve_remote_symref(ref, refs)) {
+ 		ref->next = refs;
+ 		refs = ref;
 -- 
 1.7.0.26.gbfa16
