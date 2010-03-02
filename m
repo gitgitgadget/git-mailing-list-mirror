@@ -1,55 +1,65 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: Identifying the branch a clone was cloned from
-Date: Wed, 3 Mar 2010 00:15:30 +0100
-Message-ID: <adf1fd3d1003021515t765b8acawa28196693da21681@mail.gmail.com>
-References: <27761617.post@talk.nabble.com>
+From: Levente Kovacs <leventelist@gmail.com>
+Subject: Re: split up a repository
+Date: Wed, 3 Mar 2010 00:21:32 +0100
+Organization: logonex.eu
+Message-ID: <20100303002132.5df20326@gmail.com>
+References: <20100302011226.76fda85d@gmail.com>
+	<fabb9a1e1003020240h81f3e99wea1185c080a03b0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: jateeq <jawad_atiq@hotmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 03 00:15:38 2010
+To: Avery Pennarun <apenwarr@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 03 00:18:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NmbJR-0006p5-V0
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 00:15:38 +0100
+	id 1NmbMb-0008NC-5H
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 00:18:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753196Ab0CBXPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Mar 2010 18:15:33 -0500
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:63376 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752074Ab0CBXPc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Mar 2010 18:15:32 -0500
-Received: by bwz1 with SMTP id 1so260675bwz.21
-        for <git@vger.kernel.org>; Tue, 02 Mar 2010 15:15:31 -0800 (PST)
-Received: by 10.204.152.153 with SMTP id g25mr5190153bkw.158.1267571730479; 
-	Tue, 02 Mar 2010 15:15:30 -0800 (PST)
-In-Reply-To: <27761617.post@talk.nabble.com>
+	id S1752364Ab0CBXSs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Mar 2010 18:18:48 -0500
+Received: from mail-xsmtp1.externet.hu ([212.40.96.152]:35494 "EHLO
+	mail-xsmtp1.externet.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752100Ab0CBXSs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Mar 2010 18:18:48 -0500
+Received: (qmail 10206 invoked from network); 2 Mar 2010 23:18:44 -0000
+Received: from fxip-006cc.externet.hu (HELO mail.logonex.eu) (?@92.52.216.204)
+  by 0 with ESMTP; 2 Mar 2010 23:18:44 -0000
+Received: from localhost.localdomain (jive.levalinux.org [192.168.1.1])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mail.logonex.eu (Postfix) with ESMTPS id 4A98714AB52;
+	Wed,  3 Mar 2010 00:18:44 +0100 (CET)
+In-Reply-To: <fabb9a1e1003020240h81f3e99wea1185c080a03b0@mail.gmail.com>
+X-Mailer: Claws Mail 3.7.5 (GTK+ 2.18.7; x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141422>
 
-On Tue, Mar 2, 2010 at 10:45 PM, jateeq <jawad_atiq@hotmail.com> wrote:
->
-> Hey guys,
->
-> I have a repository with over 10 branches. I clone from branch 2, and some
-> time after the operation I need to find out what branch in the remote I
-> cloned from. Anyone know the command for that?
+On Tue, 2 Mar 2010 11:40:41 +0100
+Sverre Rabbelier <srabbelier@gmail.com> wrote:
 
-If you mean from which branch you forked a given branch it is
-specified in the branch.<name>.remote and branch.<name>.merge + some
-logic. To get it you can use the branchname@{upstream} syntax (new in
-1.7.0) or use this command:
+> Sounds like a job for.... subtree man!
 
-git for-each-ref --format='%(upstream)' refs/heads/branchname
+Yes, it seems!
 
-But maybe we can help more if you say what you want to accomplish with
-this information and not this specific detail.
+Ok. Really newbie question here. Just before I start to mess up my
+repositories. I've cloned the git-subtree, and the install script would put
+the script into /usr/lib/git-core. Is there any way to install the script
+somewhere under /usr/local ?
 
-HTH,
-Santi
+Thanks,
+
+-- 
+Levente Kovacs
+http://logonex.eu
+
+-- 
+Levente Kovacs
+http://logonex.eu
