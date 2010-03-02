@@ -1,70 +1,66 @@
 From: Eli Barzilay <eli@barzilay.org>
-Subject: Re: gitweb problem?
-Date: Mon, 01 Mar 2010 23:40:08 -0500
-Message-ID: <m3vddfuyjb.fsf@winooski.ccs.neu.edu>
-References: <m34ol0wmze.fsf@winooski.ccs.neu.edu>
-	<m3bpf8mj5k.fsf@localhost.localdomain>
-	<m3zl2suun5.fsf@winooski.ccs.neu.edu>
-	<m37hpwma9u.fsf@localhost.localdomain>
+Subject: Remote operations synchronization, and hooks
+Date: Tue, 02 Mar 2010 00:09:46 -0500
+Message-ID: <m3r5o3ux5x.fsf@winooski.ccs.neu.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 02 05:40:43 2010
+X-From: git-owner@vger.kernel.org Tue Mar 02 06:10:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NmJuQ-0004my-1h
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Mar 2010 05:40:38 +0100
+	id 1NmKMy-00038I-HT
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Mar 2010 06:10:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751536Ab0CBEkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Mar 2010 23:40:22 -0500
-Received: from lo.gmane.org ([80.91.229.12]:57093 "EHLO lo.gmane.org"
+	id S1750817Ab0CBFJ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Mar 2010 00:09:59 -0500
+Received: from lo.gmane.org ([80.91.229.12]:53582 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750903Ab0CBEkW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Mar 2010 23:40:22 -0500
+	id S1750767Ab0CBFJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Mar 2010 00:09:59 -0500
 Received: from list by lo.gmane.org with local (Exim 4.69)
 	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NmJu7-0004bM-WE
-	for git@vger.kernel.org; Tue, 02 Mar 2010 05:40:20 +0100
+	id 1NmKMn-00035K-V5
+	for git@vger.kernel.org; Tue, 02 Mar 2010 06:09:57 +0100
 Received: from winooski.ccs.neu.edu ([129.10.115.117])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Mar 2010 05:40:19 +0100
+        for <git@vger.kernel.org>; Tue, 02 Mar 2010 06:09:57 +0100
 Received: from eli by winooski.ccs.neu.edu with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Mar 2010 05:40:19 +0100
+        for <git@vger.kernel.org>; Tue, 02 Mar 2010 06:09:57 +0100
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@dough.gmane.org
 X-Gmane-NNTP-Posting-Host: winooski.ccs.neu.edu
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-Cancel-Lock: sha1:7ubTKxDxWqPwpLJO0yix3UdX0uo=
+Cancel-Lock: sha1:hbhcP5sKVadQtX8EkTclhb5iJBs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141375>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Is there any kind of synchronization with remote operations?  That is,
+can there be any race conditions if multiple clients connect?  I'm
+assuming that such operations are safe, but I couldn't find a place
+with a concrete description.
 
-> BTW. the first line number is in git_cmd invoked (called) from
-> git_get_project_config.
+More specifically, I'm wondering about writing hooks (specifically, a
+`post-receive' hook), and it would make things convenient if I knew
+that it was called synchronously.
 
-(Oh yeah, I forgot about that one, sorry.)
-
-> [...]
->
-> The last solution, while requiring most work, has the advantage of
-> being able to do override via user (~apache/.gitconfig) or system
-> (/etc/gitconfig) gitweb config file.  But I am not sure if it is
-> worth it...
-
-Thanks for the fix!  As for the point above, isn't the whole point of
-the feature system to do this kind of toplevel configuration possible?
-(If so, it sounds like a concrete explanation for why it's not worth
-the effort: it only makes it possible to specify the defaults in a
-toplevel .gitconfig file, which could be nice but probably confusing.)
+And a related question: is there somewhere a summary of how the hooks
+are called for each operation?  The githooks man page specifies some
+of the relationships but a list with how each operation perform its
+work would be much more convenient to read through.  For example, if a
+remote update had a list of operations with "grab lock" in the
+beginning and a "release lock" after running the `post-receive' hook,
+then I wouldn't have the above question.  Also, it's unclear how
+`post-update' is related to `post-receive' -- there's one comment in
+the man entry for the former that makes it sound like it is supersedes
+by the latter, but there's nothing explicit about it.
 
 -- 
           ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
