@@ -1,75 +1,88 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] t9119-git-svn-info.sh: test with svn 1.6.* as well
-Date: Wed,  3 Mar 2010 18:08:24 +0100
-Message-ID: <d16ad252f24db9274bc9a5bcab959524eab823ed.1267636051.git.git@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 03 18:11:10 2010
+From: Jeff King <peff@peff.net>
+Subject: Re: 3 failures on test t9100 (svn)
+Date: Wed, 3 Mar 2010 12:23:02 -0500
+Message-ID: <20100303172302.GA10168@coredump.intra.peff.net>
+References: <20100302194518.GA12942@vidovic>
+ <20100302212806.GA21413@coredump.intra.peff.net>
+ <20100303005804.GA17120@vidovic>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Wed Mar 03 18:23:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nms6A-0006NR-Fi
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 18:11:02 +0100
+	id 1NmsHx-0006Zn-Tg
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 18:23:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753456Ab0CCRK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Mar 2010 12:10:57 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:45893 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751831Ab0CCRK4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Mar 2010 12:10:56 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id CEB30E226E;
-	Wed,  3 Mar 2010 12:10:55 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Wed, 03 Mar 2010 12:10:55 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=XbcDk2PhXJ9XmuBwQETA8axR2fI=; b=l3CiqNU8IleuVcOwa8oUDgpPifw7edQqlHsFcqn+his543lO7ibaKs6LutZG+/TRCUGcUxpIxAdNQaVEcDiDbx/0RskUJTnlgG0TdiwK1aS5mv19BhlYJsyA2Fd71SKPqOwfgEyCyuTgbsBCF71llOZ7QkMFkfSfRg6vW+4MuxE=
-X-Sasl-enc: tZHixFB68KywNCJCJn5rq19bMVA+NMoFrhANrVWldhXN 1267636255
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 256DE4CA08A;
-	Wed,  3 Mar 2010 12:10:54 -0500 (EST)
-X-Mailer: git-send-email 1.7.0.1.241.g6604f
+	id S1753926Ab0CCRXI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Mar 2010 12:23:08 -0500
+Received: from peff.net ([208.65.91.99]:45800 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753297Ab0CCRXG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Mar 2010 12:23:06 -0500
+Received: (qmail 13182 invoked by uid 107); 3 Mar 2010 17:23:23 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 03 Mar 2010 12:23:23 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Mar 2010 12:23:02 -0500
+Content-Disposition: inline
+In-Reply-To: <20100303005804.GA17120@vidovic>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141459>
 
-All tests in t9119 were disabled for subversion versions other than
-1.[45].*. Adjust the single test where svn 1.6.* output is slightly
-different to ignore the differing line, and make the test script
-run with subversion 1.[456].*.
+On Wed, Mar 03, 2010 at 01:58:04AM +0100, Nicolas Sebrecht wrote:
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- t/t9119-git-svn-info.sh |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+> >   GIT_TEST_CMP=3D'diff -u'
+> >   test_cmp() {
+> >     $GIT_TEST_CMP "$@"
+> >   }
+> >=20
+> > which _should_ split the "diff -u" on whitespace.
+>=20
+> I've tried with these exact lines without more success.
 
-diff --git a/t/t9119-git-svn-info.sh b/t/t9119-git-svn-info.sh
-index 95741cb..eff4ae2 100755
---- a/t/t9119-git-svn-info.sh
-+++ b/t/t9119-git-svn-info.sh
-@@ -7,9 +7,10 @@ test_description='git svn info'
- . ./lib-git-svn.sh
- 
- # Tested with: svn, version 1.4.4 (r25188)
-+# Tested with: svn, version 1.6.[12345689]
- v=`svn_cmd --version | sed -n -e 's/^svn, version \(1\.[0-9]*\.[0-9]*\).*$/\1/p'`
- case $v in
--1.[45].*)
-+1.[456].*)
- 	;;
- *)
- 	say "skipping svn-info test (SVN version: $v not supported)"
-@@ -166,7 +167,7 @@ test_expect_success 'info added-directory' "
- 		git add added-directory &&
- 	cd .. &&
- 	(cd svnwc; svn info added-directory) \
--		> expected.info-added-directory &&
-+		| grep -v \"Repository UUID\" > expected.info-added-directory &&
- 	(cd gitwc; git svn info added-directory) \
- 		> actual.info-added-directory &&
- 	test_cmp expected.info-added-directory actual.info-added-directory
--- 
-1.7.0.1.241.g6604f
+That's weird. Can you test this in each of your shells:
+
+  foo() {
+    echo "in foo, arg=3D$1"
+  }
+  VARIABLE=3D'foo bar'
+  $VARIABLE
+
+It should print "in foo, arg=3Dbar". If it doesn't, then the shell is
+broken.
+
+Also, can you confirm that you aren't setting SHELL_PATH in the Makefil=
+e
+(or in your environment) when building and testing git?
+
+>   $ ls -ld $(which sh)
+>   lrwxrwxrwx 1 root root 4 f=C3=A9vr. 13  2009 /bin/sh -> bash
+>   $ bash --version
+>   GNU bash, version 3.2.39(1)-release (x86_64-pc-linux-gnu)
+
+I have this same version of bash on my Debian stable box, and it passes
+the test I outlined above. So perhaps there is something more subtle
+going on.
+
+> That said, I did the svn tests because sometimes I have reproductible
+> errors with 'git svn fetch' or 'git svn clone'. I'm not sure how both
+> problems could be related... git-svn is a Perl script. The given mess=
+age
+> for this one is "error: died with signal 11" from what I remember (bu=
+t
+> I'm sure about the "signal 11" part).
+
+I doubt they are related. This test_cmp problem is a problem in the tes=
+t
+harness, but it may be masking actual problems by giving false
+negatives.
+
+-Peff
