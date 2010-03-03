@@ -1,76 +1,86 @@
-From: =?iso-8859-1?Q?Henrik_Grubbstr=F6m?= <grubba@grubba.org>
-Subject: Re: [PATCH 2/4] convert: Keep foreign $Id$ on checkout.
-Date: Wed, 3 Mar 2010 12:36:26 +0100 (CET)
-Organization: Roxen Internet Software AB
-Message-ID: <Pine.GSO.4.63.1003031140110.1164@shipon.roxen.com>
-References: <1267460218-1172-1-git-send-email-grubba@grubba.org>
- <1267460218-1172-2-git-send-email-grubba@grubba.org> <7vfx4imcpl.fsf@alter.siamese.dyndns.org>
+From: Bruce Stephens <bruce.stephens@isode.com>
+Subject: Re: Which VCS besides git?
+Date: Wed, 03 Mar 2010 12:12:16 +0000
+Message-ID: <80fx4hbo4f.fsf@tiny.isode.net>
+References: <201003021455.52483.karlis.repsons@gmail.com>
+            <m3y6ialn3z.fsf@localhost.localdomain>
+            <201003021622.22196.karlis.repsons@gmail.com>
+            <201003030241.16959.jnareb@gmail.com>
+            <94a0d4531003030358q276a8e9bue086a8ec06aba395@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-342241519-1267613498=:1164"
-Cc: git@vger.kernel.org, grubba@grubba.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 03 13:10:35 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	=?utf-8?Q?K=C4=81rlis?= Repsons <karlis.repsons@gmail.com>,
+	git <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 03 13:19:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NmnOx-0002F5-BT
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 13:10:07 +0100
+	id 1NmnXJ-00004s-30
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 13:18:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753944Ab0CCMJz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Mar 2010 07:09:55 -0500
-Received: from mail.roxen.com ([212.247.29.220]:49111 "EHLO mail.roxen.com"
+	id S1752227Ab0CCMSW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Mar 2010 07:18:22 -0500
+Received: from rufus.isode.com ([62.3.217.251]:42664 "EHLO rufus.isode.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753876Ab0CCMJy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Mar 2010 07:09:54 -0500
-X-Greylist: delayed 2001 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Mar 2010 07:09:54 EST
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.roxen.com (Postfix) with ESMTP id A002662811B;
-	Wed,  3 Mar 2010 12:36:28 +0100 (CET)
-X-Virus-Scanned: amavisd-new at roxen.com
-Received: from mail.roxen.com ([212.247.29.220])
-	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lJL9D5xDg-ew; Wed,  3 Mar 2010 12:36:27 +0100 (CET)
-Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
-	by mail.roxen.com (Postfix) with ESMTP id 12506628121;
-	Wed,  3 Mar 2010 12:36:26 +0100 (CET)
-X-X-Sender: grubba@shipon.roxen.com
-In-Reply-To: <7vfx4imcpl.fsf@alter.siamese.dyndns.org>
-Content-ID: <Pine.GSO.4.63.1003031151430.1164@shipon.roxen.com>
+	id S1751767Ab0CCMSV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Mar 2010 07:18:21 -0500
+X-Greylist: delayed 362 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Mar 2010 07:18:20 EST
+Received: from tiny.isode.net (shiny.isode.com [62.3.217.250]) 
+          by rufus.isode.com (submission channel) via TCP with ESMTPA 
+          id <S45SIAAu7r0w@rufus.isode.com>; Wed, 3 Mar 2010 12:12:16 +0000
+Received: by tiny.isode.net (sSMTP sendmail emulation);
+          Wed, 03 Mar 2010 12:12:16 +0000
+X-Hashcash: 1:20:100303:git@vger.kernel.org::kTHxW7vCeNXiqV2T:0000000000000000000000000000000000000000001nxK
+X-Hashcash: 1:20:100303:karlis.repsons@gmail.com::0cKHfWJ3oAMuAO/Q:00000000000000000000000000000000000002UAq
+X-Hashcash: 1:20:100303:jnareb@gmail.com::bmI3OXF4WK5yIsXz:06spZ
+X-Hashcash: 1:20:100303:felipe.contreras@gmail.com::t6xq2/srrpbvRiB2:00000000000000000000000000000000000Eoba
+In-Reply-To: <94a0d4531003030358q276a8e9bue086a8ec06aba395@mail.gmail.com>
+	(Felipe Contreras's message of "Wed, 3 Mar 2010 13:58:41 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141448>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
----559023410-342241519-1267613498=:1164
-Content-Type: TEXT/PLAIN; CHARSET=iso-8859-1; FORMAT=flowed
-Content-Transfer-Encoding: 8BIT
-Content-ID: <Pine.GSO.4.63.1003031151431.1164@shipon.roxen.com>
+[...]
 
-On Tue, 2 Mar 2010, Junio C Hamano wrote:
+> That's not exactly correct. Monotone works very differently; a
+> revision doesn't include the ancestry, that's handled in a separate
+> structure, so the revision hash doesn't tell you anything about the
+> ancestry.
 
-> Henrik Grubbström <grubba@grubba.org> writes:
+Not so.  Long ago that was the case (ancestry was via certs), but that's
+not been the case for a long time.  There are (in retrospect) obvious
+advantages in including the ancestry in the hash.
+
+> In fact, a revision doesn't contain anything, the data is handled by
+> "certs", and certs can be added later.
+
+Revisions lack date, author, branch, commit message, but include
+ancestry and the actual changes (which files/directories have changed
+and how).
+
+> For example, it's possible to clone a repository and then add a second
+> commit message to a bunch of revisions. The revision hash doesn't
+> change. Instead, they ensure security by signing every piece of data
+> about a commit (commit date, author, commit message). So it's possible
+> to have multiple commit dates, authors, messages, etc. each signed by
+> a different person.
 >
->> If there are foreign $Id$ keywords in the repository, they are most
->> likely there for a reason.
->
-> If so what is the user doing by using "ident" attribute?
+> I'm not really fond of this approach :P
 
-Example:
+It has the nice feature that many people can create merges, and if they
+create exactly the same merge (from exactly the same parents) then only
+one revision results (just with multiple certs decorating it).
 
-   The user has recently converted from a different versioning system,
-   and kept the $Id$ tags from that system verbatim since they have been
-   refered to by external systems (eg bug reports, etc).
-
-   Having the ident property active (with my patches) will cause the $Id$
-   tag to be zapped as soon as (but not before) the file is altered.
-
---
-Henrik Grubbström					grubba@grubba.org
-Roxen Internet Software AB				grubba@roxen.com
----559023410-342241519-1267613498=:1164--
+(Monotone has changed since I last used it but I think the above is
+still true.  There's been discussion about larger certs (rather than
+having separate certs for branch, date, author, message, to have just
+one covering the usual combination) AFAIK that hasn't happened yet.)
