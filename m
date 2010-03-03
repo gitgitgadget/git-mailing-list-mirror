@@ -1,84 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-svn died of signal 11 (was "3 failures on test t9100
- (svn)")
-Date: Wed, 3 Mar 2010 12:31:31 -0500
-Message-ID: <20100303173131.GB10168@coredump.intra.peff.net>
-References: <20100302194518.GA12942@vidovic>
- <20100302212806.GA21413@coredump.intra.peff.net>
- <20100303005804.GA17120@vidovic>
- <20100303092213.GA12909@vidovic.wsb>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: split up a repository
+Date: Wed, 3 Mar 2010 14:19:12 -0500
+Message-ID: <32541b131003031119i5f7baefelc2784ccca90eca41@mail.gmail.com>
+References: <20100302011226.76fda85d@gmail.com> <fabb9a1e1003020240h81f3e99wea1185c080a03b0@mail.gmail.com> 
+	<20100303002132.5df20326@gmail.com> <32541b131003021740n32535fbbh802af418ea0898aa@mail.gmail.com> 
+	<19342.27760.544227.835077@blake.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Wed Mar 03 18:31:41 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Levente Kovacs <leventelist@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Mar 03 20:19:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NmsQ6-0003mF-7w
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 18:31:38 +0100
+	id 1Nmu6e-0007kj-La
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 20:19:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754679Ab0CCRbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Mar 2010 12:31:33 -0500
-Received: from peff.net ([208.65.91.99]:37909 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754664Ab0CCRbc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Mar 2010 12:31:32 -0500
-Received: (qmail 13218 invoked by uid 107); 3 Mar 2010 17:31:52 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 03 Mar 2010 12:31:52 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Mar 2010 12:31:31 -0500
-Content-Disposition: inline
-In-Reply-To: <20100303092213.GA12909@vidovic.wsb>
+	id S1756117Ab0CCTTe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Mar 2010 14:19:34 -0500
+Received: from mail-yx0-f204.google.com ([209.85.210.204]:47768 "EHLO
+	mail-yx0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753330Ab0CCTTd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Mar 2010 14:19:33 -0500
+Received: by yxe42 with SMTP id 42so806421yxe.4
+        for <git@vger.kernel.org>; Wed, 03 Mar 2010 11:19:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=HUpeJzo0k2zTlCxUGiXC7C8HvM438s8yxKr5epxHFlc=;
+        b=U+g/pcVLtijSH0N06CIREiO0XewSZGWedGQFHRqIdTsm5GMn2+0xpxIQZfoPqdbJsu
+         RTnYzlf7uVU0Lj1oY8Ud9n/QZiTDwOS1EYsCvygMvTK1OW0VGvVOvovY8WEd/7ZXmmhY
+         7KsHSibpiQZnPLrdEXi7cgzB73WZQ4hz8ii+k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=dk+xteiAUl/quFeRO0K5gGkQ2Q2NG0DzeSS7PSFhfCY3qPO2vI1KeCKZkvdUDI11Ke
+         ErTAnP+PKw+pbFnj7Z6W/hLqX50L8dgwczojU09hzk05lfzEM0OINf37Idv1bEK7fYlT
+         HGZB+/2WO8qAF43NCGnAcTq31J1gElxCjO1Mk=
+Received: by 10.151.88.11 with SMTP id q11mr1348170ybl.20.1267643972211; Wed, 
+	03 Mar 2010 11:19:32 -0800 (PST)
+In-Reply-To: <19342.27760.544227.835077@blake.zopyra.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141461>
 
-On Wed, Mar 03, 2010 at 10:22:13AM +0100, Nicolas Sebrecht wrote:
+On Wed, Mar 3, 2010 at 9:04 AM, Bill Lear <rael@zopyra.com> wrote:
+> Does git-subtree support branching of the "main" repository and
+> sub-trees in coordinated (one step) fashion?
 
->   $ cd okawix
->   $ cat .git/config
->   <...>
->   [svn-remote "svn"]
->     url = https://okawix.svn.sourceforge.net/svnroot/okawix
->     fetch = :refs/remotes/git-svn
-> 
->   $ git svn fetch
-> [...]
->   error: git-svn died of signal 11
+Yes.
 
-I was able to clone this repository just fine with "git svn clone"
-(which should internally just be doing that same fetch). But since it is
-a segfault, and since you are having problems with some repositories and
-not others, it may be a problem with uninitialized data or similar.
-
-And the fact that you are getting a perl program to segfault means it is
-probably not the perl program's fault, but a problem with perl itself or
-an XS module loaded by perl (like, say, the SVN module).
-
-Do you have valgrind installed? Have you tried running
-
-  valgrind perl /usr/libexec/git-core/git-svn fetch
-
-(you may need to tweak the libexeec path depending on your git install).
-That should at least correctly identify the source of the segfault (you
-can try it with gdb, too, but often segfaults are caused by memory
-problems that happened much earlier, so valgrind will give you a more
-accurate answer).
-
-> > I'll do more investigations at work tomorrow. I've already tried to add
-> > the "-d" flag in git-svn and it didn't help neither: git looked like in
-> > an infinite loop. Odd, odd, odd.
-> 
-> Adding the -d option to the shebang of git-svn doesn't help. I've
-> stopped the process after 24 minutes running.  I have no more
-> information with the -w option set.
-
-What's it doing for 24 minutes? Is it actually chewing on cpu, or is it
-blocking on I/O? Have you tried running it under strace?
-
--Peff
+Avery
