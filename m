@@ -1,95 +1,125 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: Remote operations synchronization, and hooks
-Date: Wed, 3 Mar 2010 01:43:21 +0200
-Message-ID: <20100302234320.GA13446@Knoppix>
-References: <m3r5o3ux5x.fsf@winooski.ccs.neu.edu>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: Re: 3 failures on test t9100 (svn)
+Date: Wed, 3 Mar 2010 01:58:04 +0100
+Message-ID: <20100303005804.GA17120@vidovic>
+References: <20100302194518.GA12942@vidovic> <20100302212806.GA21413@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Eli Barzilay <eli@barzilay.org>
-X-From: git-owner@vger.kernel.org Wed Mar 03 00:43:37 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 03 01:58:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NmbkW-0004Rg-7Z
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 00:43:36 +0100
+	id 1Nmcut-0001DF-Gs
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 01:58:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757998Ab0CBXn1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Mar 2010 18:43:27 -0500
-Received: from emh03.mail.saunalahti.fi ([62.142.5.109]:33028 "EHLO
-	emh03.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757988Ab0CBXnZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Mar 2010 18:43:25 -0500
-Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh03-2.mail.saunalahti.fi (Postfix) with SMTP id 11CDFEBCE4;
-	Wed,  3 Mar 2010 01:43:24 +0200 (EET)
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
-	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A02FB405127; Wed, 03 Mar 2010 01:43:24 +0200
-Received: from LK-Perkele-V (a88-113-39-59.elisa-laajakaista.fi [88.113.39.59])
-	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id 828DC27D83;
-	Wed,  3 Mar 2010 01:43:21 +0200 (EET)
+	id S1755140Ab0CCA6Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Mar 2010 19:58:16 -0500
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:54399 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755070Ab0CCA6P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Mar 2010 19:58:15 -0500
+Received: by bwz1 with SMTP id 1so314924bwz.21
+        for <git@vger.kernel.org>; Tue, 02 Mar 2010 16:58:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=EAJRDY8h2Aytn+kgZispHjzUOq7yl2v3li0H4/NFWTA=;
+        b=hSOQNPnu+u7hFuS4zgZVLZmOuWt70n6NvkgoxWzP6SDXcnOZ9M3eO623p7IrZzF5nQ
+         lBHVzGPptIFixCyQPnP5L8pF34E7ckQ9/Z5s1kAiEqJRxxiqo9qlTK/hdezxoMn+Oe57
+         C6Nc0b51IygvfyVRHH5gNMiUO+yjbm3KdNr+g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=VbRchJPzXYHIf6sTdSwaQcIroslV3p7RrolI0fpZSKF4M+XG9ZtBc0V6E+swHWYIbC
+         kNNjoNmIZDCOcEvJZ92nuiH+cQrl63RPzmolVfMXMJjCd77agNGgGp8oVDt+4bCqbiYZ
+         reF1EbBEon9OlJf0BITLG3NHs+CUSj3Poz1WY=
+Received: by 10.204.130.72 with SMTP id r8mr5435534bks.25.1267577892948;
+        Tue, 02 Mar 2010 16:58:12 -0800 (PST)
+Received: from @ (91-164-132-214.rev.libertysurf.net [91.164.132.214])
+        by mx.google.com with ESMTPS id a15sm6306588bke.7.2010.03.02.16.58.06
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 02 Mar 2010 16:58:08 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <m3r5o3ux5x.fsf@winooski.ccs.neu.edu>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Antivirus: VAMS
+In-Reply-To: <20100302212806.GA21413@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141425>
 
-On Tue, Mar 02, 2010 at 12:09:46AM -0500, Eli Barzilay wrote:
-> Is there any kind of synchronization with remote operations?  That is,
-> can there be any race conditions if multiple clients connect?  I'm
-> assuming that such operations are safe, but I couldn't find a place
-> with a concrete description.
+The 02/03/10, Jeff King wrote:
+> On Tue, Mar 02, 2010 at 08:45:18PM +0100, Nicolas Sebrecht wrote:
+>=20
+> > Some tests in t9100 don't pass here with current next (full log
+> > attached). Any idea?
+> > [...]
+> >   test_cmp:1: command not found: diff -u
+>=20
+> Probably related to this line. Assuming you have "diff" in your PATH,
 
-With respect to Git itself, each ref update is atomic and happens as
-client intended or does not happen at all. Ref updates within push
-are independent. 
+  $ which diff
+  /usr/bin/diff
+  $ diff --version
+  diff (GNU diffutils) 2.8.7
 
-Thus, Git remote ops themselves are safe from races (with exception of
-forced push, where race condition can lead to other client's changes
-being lost).
+> based on that message I would guess that your shell is trying to exec=
+ute
+> "diff -u" as a single file, which obviously won't work. The relevant
+> code in test-lib.sh is something like:
+>=20
+>   GIT_TEST_CMP=3D'diff -u'
+>   test_cmp() {
+>     $GIT_TEST_CMP "$@"
+>   }
+>=20
+> which _should_ split the "diff -u" on whitespace.
 
-> More specifically, I'm wondering about writing hooks (specifically, a
-> `post-receive' hook), and it would make things convenient if I knew
-> that it was called synchronously.
+I've tried with these exact lines without more success.
 
-AFAIK, there can be multiple post-receives running simulataneously.
+>                                                   What platform are y=
+ou
+> on? Which shell is /bin/sh on your system?
 
-> And a related question: is there somewhere a summary of how the hooks
-> are called for each operation?  The githooks man page specifies some
-> of the relationships but a list with how each operation perform its
-> work would be much more convenient to read through.  For example, if a
-> remote update had a list of operations with "grab lock" in the
-> beginning and a "release lock" after running the `post-receive' hook,
-> then I wouldn't have the above question.
+I'm running Gentoo. I had
 
-There are no such locks. I think the operation sequence goes as follows
-(reading the source code):
+  $ ls -ld $(which sh)
+  lrwxrwxrwx 1 root root 4 f=E9vr. 13  2009 /bin/sh -> bash
+  $ bash --version
+  GNU bash, version 3.2.39(1)-release (x86_64-pc-linux-gnu)
 
-1) List of modifications to do is received.
-2) If additional objects are needed, pack is received and installed/unpacked.
-3) pre-receive is run. If it fails, whole push is aborted.
-4) For each ref pushed, do:
-4a) update hook for that ref is run. If it fails, skip the ref.
-4b) Do atomic compare-and-swap on ref.
-5) Run post-receive hook.
-6) Run post-update hook.
+I've changed the symbolic link to point to /bin/zsh (my every day shell=
+)
+but this didn't help.
 
-No locking there.
+  $ zsh --version
+  zsh 4.3.9 (x86_64-pc-linux-gnu)
 
->  Also, it's unclear how
-> `post-update' is related to `post-receive' -- there's one comment in
-> the man entry for the former that makes it sound like it is supersedes
-> by the latter, but there's nothing explicit about it.
+I think your diagnosis is right or very near from the problem. But I
+would have expected that changing to another shell did the trick. Odd.
 
-They both execute after push has completed. Interfaces are different but
-that's about it. post-receive gets old and new values, post-update only
-ref names.
 
--Ilari
+That said, I did the svn tests because sometimes I have reproductible
+errors with 'git svn fetch' or 'git svn clone'. I'm not sure how both
+problems could be related... git-svn is a Perl script. The given messag=
+e
+for this one is "error: died with signal 11" from what I remember (but
+I'm sure about the "signal 11" part).
+
+I'll do more investigations at work tomorrow. I've already tried to add
+the "-d" flag in git-svn and it didn't help neither: git looked like in
+an infinite loop. Odd, odd, odd.
+
+--=20
+Nicolas Sebrecht
