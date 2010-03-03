@@ -1,82 +1,64 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: [PATCH 3/3] Revert "git-svn: always initialize with core.autocrlf=false"
-Date: Wed,  3 Mar 2010 21:10:23 +0100
-Message-ID: <1267647023-2604-3-git-send-email-kusmabite@gmail.com>
-References: <1267647023-2604-1-git-send-email-kusmabite@gmail.com>
-Cc: normalperson@yhbt.net, dpotapov@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 03 21:11:43 2010
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Git diff does not detect newly added files to working tree
+Date: Wed, 03 Mar 2010 21:12:22 +0100
+Message-ID: <vpqlje9kvvd.fsf@bauges.imag.fr>
+References: <27772711.post@talk.nabble.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: jateeq <jawad_atiq@hotmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 03 21:12:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nmuuz-0004X4-DA
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 21:11:41 +0100
+	id 1Nmuvn-00056R-LN
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 21:12:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756535Ab0CCULa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Mar 2010 15:11:30 -0500
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:59172 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756513Ab0CCUL2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Mar 2010 15:11:28 -0500
-Received: by mail-ew0-f220.google.com with SMTP id 20so1265376ewy.21
-        for <git@vger.kernel.org>; Wed, 03 Mar 2010 12:11:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=+MXGc2Tq+wuPE2K4hgYhftyicckBKuRiqYGj3RFMGus=;
-        b=frO2l+OdUm/iSfWxAomeS1B3J4XjvASUo3bk7c5p15JAjMKo+Lt5nkzoPzezfz/Jca
-         G/cwOr8UZZW00K1meAPJzWXcWFBvyuCtvj+iqTV7BPn7NXWWS4hHYWVMH06J4RNB9TPG
-         keRf/MstIhWRGoYNhSjqQw9n0CM0eQCkBuyss=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=M0IesBIsSWtzsOumDO7yA1VILUD1FBOorhGzJipFDluw7w6+dBCoJwhl8wP5nz3q3b
-         dz2JySOEDTz7L/7oq77kzbWHjcchsgu9L0Su3XOT4/rxo/ydoXZv8WD6fVnGgDxq1V3/
-         MchD6BIpwi0lhAS1AbjyQNHXMR8kkyxj5ucSQ=
-Received: by 10.213.109.212 with SMTP id k20mr671895ebp.32.1267647086157;
-        Wed, 03 Mar 2010 12:11:26 -0800 (PST)
-Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
-        by mx.google.com with ESMTPS id 15sm3977040ewy.4.2010.03.03.12.11.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Mar 2010 12:11:25 -0800 (PST)
-X-Mailer: git-send-email 1.7.0.1.141.gc5984a
-In-Reply-To: <1267647023-2604-1-git-send-email-kusmabite@gmail.com>
+	id S1756544Ab0CCUM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Mar 2010 15:12:28 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:40738 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756513Ab0CCUM1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Mar 2010 15:12:27 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o23K9XeL025470
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 3 Mar 2010 21:09:34 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Nmuve-0000rD-GX; Wed, 03 Mar 2010 21:12:22 +0100
+In-Reply-To: <27772711.post@talk.nabble.com> (jateeq's message of "Wed\, 3 Mar 2010 12\:03\:48 -0800 \(PST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 03 Mar 2010 21:09:34 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141471>
 
-git-svn rebase used to have issues with CRLF conversion. Since these issues
-have been fixed, we can safely revert the work-around that disables CRLF
-conversion.
+jateeq <jawad_atiq@hotmail.com> writes:
 
-This reverts commit d3c9634eacdcaa71cbd69a160e6f4e80ddb7ab63.
+> Hello,
+>
+> If I add a new file to a working tree, and run the following command without
+> having staged or committed the file, according to the manual I should be
+> able to get the name of the file
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
+Which part of the manual makes you think you should see untracked
+files? (that's a real question ;-) ).
 
-git-svn dcommit uses diff-tree (which does not apply CRLF conversion) to
-generate SVN commits, so there never were any CRLF conversion issues when
-commiting in the first place.
+> - but it just doesn't show up. Anyone knows what I'm doing wrong?
 
- git-svn.perl |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
+git diff doesn't mention untracked files, but shows the diff between
+the working tree and the staged content for files known to git.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index b7c03b6..b8a3fc2 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -369,7 +369,6 @@ sub do_git_init_db {
- 		command_noisy(@init_db);
- 		$_repository = Git->repository(Repository => ".git");
- 	}
--	command_noisy('config', 'core.autocrlf', 'false');
- 	my $set;
- 	my $pfx = "svn-remote.$Git::SVN::default_repo_id";
- 	foreach my $i (keys %icv) {
+To see the files in "git diff", you have to let Git know about these
+files, with "git add --intent-to-add the-file-you-want-to-see" (alias
+"git add -N"), or you should use "git status".
+
 -- 
-1.7.0.1.141.gc5984a
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
