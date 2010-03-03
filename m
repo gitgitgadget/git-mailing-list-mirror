@@ -1,73 +1,98 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: split up a repository
-Date: Tue, 2 Mar 2010 20:40:57 -0500
-Message-ID: <32541b131003021740n32535fbbh802af418ea0898aa@mail.gmail.com>
-References: <20100302011226.76fda85d@gmail.com> <fabb9a1e1003020240h81f3e99wea1185c080a03b0@mail.gmail.com> 
-	<20100303002132.5df20326@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Which VCS besides git?
+Date: Wed, 3 Mar 2010 02:41:16 +0100
+Message-ID: <201003030241.16959.jnareb@gmail.com>
+References: <201003021455.52483.karlis.repsons@gmail.com> <m3y6ialn3z.fsf@localhost.localdomain> <201003021622.22196.karlis.repsons@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-To: Levente Kovacs <leventelist@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 03 02:41:25 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: =?utf-8?q?K=C4=81rlis_Repsons?= <karlis.repsons@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 03 02:41:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NmdaV-0002zv-Jv
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 02:41:23 +0100
+	id 1Nmdae-00034L-Qk
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 02:41:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754942Ab0CCBlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Mar 2010 20:41:18 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:51714 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752558Ab0CCBlR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Mar 2010 20:41:17 -0500
-Received: by gwb15 with SMTP id 15so480167gwb.19
-        for <git@vger.kernel.org>; Tue, 02 Mar 2010 17:41:17 -0800 (PST)
+	id S1755229Ab0CCBl0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Mar 2010 20:41:26 -0500
+Received: from mail-fx0-f219.google.com ([209.85.220.219]:43657 "EHLO
+	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755033Ab0CCBlZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Mar 2010 20:41:25 -0500
+Received: by fxm19 with SMTP id 19so1037767fxm.21
+        for <git@vger.kernel.org>; Tue, 02 Mar 2010 17:41:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=rXtuwrQC7oYyhs16+QRsDL++SLfoPwR/9SWmXxywd5g=;
-        b=IzsPpFN/Jn3aM2thKnUcWQDxPcdCEfF/ljoFdW46Vsz9/ZSDnNOvbKZZDO/z6n9+Xv
-         ApvHBVlTtITqBVsxZKQgKpV/78+Ky8PHE0I9H19SpGaYOmCOb6Vw3IQnNF1XKBBlKOrM
-         rDuidmU7cJiWVx8T9G6YvbPJwz2F1YB4yTGVw=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=2r5Gk9m91vxQBebnadLsvGsOSxZuUWj2X9viitd61zc=;
+        b=gtBSuzDH39kSlRLyreyFU7QQNmgZmKOJOVrNXcnQVHF0+LrZ1L9xNHul+T1paambVr
+         uXFhbcWiEKOQLvX1rYRS1UhTVyBGNihqRLknA2MQJmcGvhYHXGso6hhsRsg0TFj9tsPy
+         gk+QbZnmND3V0m2M/uFU12pK0P6rp+ni/XCWk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=OUNi6cmJEt6Vd0dSy5Fb60AV2l1qNVrcbNrIHapzBhbCw1Vn7i2SV7OvXAn3VLnVGD
-         GcA9Ba8OtE/mo79z7duEj7BmX9qnwmsXqZ3oCtXep+/RPu/PoQPIYSkzSVonDMYoNg2H
-         A0ZiJoWBWVbl2BEYKwKtyfmTct1anbDamVd8g=
-Received: by 10.150.214.12 with SMTP id m12mr306297ybg.342.1267580477112; Tue, 
-	02 Mar 2010 17:41:17 -0800 (PST)
-In-Reply-To: <20100303002132.5df20326@gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=rtG/DwchZpq6aY6kZ84k199y9suFvD1MjmGh336izZAASmdudknlsPQO4QttKHA1nq
+         yO3i+H9Stn309H9wA63x5UDMX9mZYQFtyJSza9uo4xb0RQ6hURcj7G7J2Qv1cUs7SxqV
+         5rTNbuk4MJzYiShVn14E62wW678kvZg7lFv50=
+Received: by 10.102.214.19 with SMTP id m19mr5454811mug.96.1267580483777;
+        Tue, 02 Mar 2010 17:41:23 -0800 (PST)
+Received: from ?192.168.1.13? (abvb141.neoplus.adsl.tpnet.pl [83.8.199.141])
+        by mx.google.com with ESMTPS id j10sm894917mue.56.2010.03.02.17.41.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 02 Mar 2010 17:41:21 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201003021622.22196.karlis.repsons@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141431>
 
-On Tue, Mar 2, 2010 at 6:21 PM, Levente Kovacs <leventelist@gmail.com> wrote:
-> On Tue, 2 Mar 2010 11:40:41 +0100
-> Ok. Really newbie question here. Just before I start to mess up my
-> repositories. I've cloned the git-subtree, and the install script would put
-> the script into /usr/lib/git-core. Is there any way to install the script
-> somewhere under /usr/local ?
+K=C4=81rlis Repsons wrote:
+> On Tuesday 02 March 2010 16:12:22 Jakub Narebski wrote:
+> > K=C4=81rlis Repsons <karlis.repsons@gmail.com> writes:
 
-The actual function of git-subtree is one single file.  You can just
-copy it to wherever you like.  Personally, I add the git-subtree
-source directory to my PATH from .bashrc... but I guess I'm special
-because I also change my version of git-subtree a lot :)
+> > > which VCS besides git provide chaining of commits with help of so=
+me
+> > > cryptographic hash function, warning about or not allowing commit=
+s to be
+> > > deleted on an equivalent of pull action, so that all added pieces=
+ of data
+> > > can be retained securely on client side?
+> >=20
+> > Could you rephrase your request in more clear way?
+>
+> On top of what you wrote already, I'd like to know which VCS have imm=
+utable=20
+> history, which can all be stored (say, gradually accumulated) on clie=
+ntside? I=20
+> hope, that explained the idea...
 
-Make sure to run 'make test' first so you know it's working on your computer.
+As I wrote, all VCS which use cryptographic hash function (digest) for
+commit identifier have immutable history.
 
-And I'll second Sverre's suggestion to *always* back up your
-repository before doing weird stuff (although git-subtree is designed
-to refuse to overwrite existing branches, and nobody has ever reported
-it damaging anything).
+All distributed VCS (DVCS) store whole[*] history with checkout.  There
+isn't (beside _social_ reasons) any distinction between different repos=
+:
+there is no client - server model (so no "clientside"), but rather peer
+2 peer model.  See http://en.wikipedia.org/wiki/List_of_revision_contro=
+l_software#Distributed_model
+(from OSS ones I'd say Git, Mercurial, Bazaar, Darcs, Monotone count).
 
-Have fun,
 
-Avery
+[*] well, with possibly some exceptions, like shallow clone, or selecti=
+ng
+    branches to clone.
+
+--=20
+Jakub Narebski
+Poland
