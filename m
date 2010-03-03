@@ -1,64 +1,67 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Git diff does not detect newly added files to working tree
-Date: Wed, 03 Mar 2010 21:12:22 +0100
-Message-ID: <vpqlje9kvvd.fsf@bauges.imag.fr>
-References: <27772711.post@talk.nabble.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH 3/3] Revert "git-svn: always initialize with 
+	core.autocrlf=false"
+Date: Wed, 3 Mar 2010 21:16:25 +0100
+Message-ID: <40aa078e1003031216l5d164654ta8ff7ea6c8cf2162@mail.gmail.com>
+References: <1267647023-2604-1-git-send-email-kusmabite@gmail.com>
+	 <1267647023-2604-3-git-send-email-kusmabite@gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: jateeq <jawad_atiq@hotmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 03 21:12:35 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: normalperson@yhbt.net, dpotapov@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 03 21:16:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nmuvn-00056R-LN
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 21:12:32 +0100
+	id 1Nmuzj-0007Y9-L5
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 21:16:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756544Ab0CCUM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Mar 2010 15:12:28 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:40738 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756513Ab0CCUM1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Mar 2010 15:12:27 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o23K9XeL025470
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 3 Mar 2010 21:09:34 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Nmuve-0000rD-GX; Wed, 03 Mar 2010 21:12:22 +0100
-In-Reply-To: <27772711.post@talk.nabble.com> (jateeq's message of "Wed\, 3 Mar 2010 12\:03\:48 -0800 \(PST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 03 Mar 2010 21:09:34 +0100 (CET)
+	id S1756555Ab0CCUQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Mar 2010 15:16:31 -0500
+Received: from mail-ew0-f220.google.com ([209.85.219.220]:62602 "EHLO
+	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756552Ab0CCUQa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Mar 2010 15:16:30 -0500
+Received: by ewy20 with SMTP id 20so1269752ewy.21
+        for <git@vger.kernel.org>; Wed, 03 Mar 2010 12:16:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=Pa2lcU2052TTUcrqyz6qLiKvjhi23Ep447eIj9pY6tg=;
+        b=KMduLVKgvf0WrlxXvr+GrXB8oDB/ltK3YpkUEjBCze7kyDCO03Z8SnnYaAIcREUf4U
+         NiJeKdeUq5+NLZY0J8AhZ4q9/sJHm3o85j4Uricx/hReD0eDtjzc08S5Xg+NXJgD6IJz
+         7qMuljy4Iu0h++OSR3YCXZ+MfD1DSeqdWd1Ok=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        b=kLTxoAoPHRmL7IOr7735tX0RKoHLMgV+bqIavHXtAm3GaOvTJNYvdUmA6KduUAEEY7
+         jw95Jmz/KxlMeJgiSnn26dijzwudLDgyxMgPLbVzy48j1JyYhzA4yUk5Mt9LBdHFm6xn
+         D0CwN4EBkEwRUGNtsD1pDLhXdXzdDBbGrd8S0=
+Received: by 10.216.165.67 with SMTP id d45mr1040391wel.28.1267647385991; Wed, 
+	03 Mar 2010 12:16:25 -0800 (PST)
+In-Reply-To: <1267647023-2604-3-git-send-email-kusmabite@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141472>
 
-jateeq <jawad_atiq@hotmail.com> writes:
-
-> Hello,
+On Wed, Mar 3, 2010 at 9:10 PM, Erik Faye-Lund <kusmabite@googlemail.com> wrote:
+> git-svn dcommit uses diff-tree (which does not apply CRLF conversion) to
+> generate SVN commits, so there never were any CRLF conversion issues when
+> commiting in the first place.
 >
-> If I add a new file to a working tree, and run the following command without
-> having staged or committed the file, according to the manual I should be
-> able to get the name of the file
 
-Which part of the manual makes you think you should see untracked
-files? (that's a real question ;-) ).
+Uhm, this comment is slightly wrong. diff-tree is used to find out if
+there's a change in a file at all. cat_blob(), which in turn uses "git
+cat-file", is used to get the file contents.
 
-> - but it just doesn't show up. Anyone knows what I'm doing wrong?
-
-git diff doesn't mention untracked files, but shows the diff between
-the working tree and the staged content for files known to git.
-
-To see the files in "git diff", you have to let Git know about these
-files, with "git add --intent-to-add the-file-you-want-to-see" (alias
-"git add -N"), or you should use "git status".
+Sorry for the noise.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Erik "kusma" Faye-Lund
