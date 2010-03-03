@@ -1,107 +1,158 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What should "git submodule summary" give before an initial commit?
-Date: Wed, 03 Mar 2010 13:58:58 -0800
-Message-ID: <7vhboxf4nx.fsf_-_@alter.siamese.dyndns.org>
-References: <4B8E5450.3040702@gmail.com>
- <7vhboxqje8.fsf@alter.siamese.dyndns.org>
- <20100303200239.GA28904@coredump.intra.peff.net>
- <7vhboxno38.fsf@alter.siamese.dyndns.org>
- <20100303204257.GA5501@coredump.intra.peff.net>
- <7v3a0hktga.fsf@alter.siamese.dyndns.org>
- <7vzl2phz8e.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Felix_M=F6ller?= <mail@felixmoeller.de>
+Subject: Re: git svn fetch gives Index mismatch
+Date: Wed, 03 Mar 2010 23:12:48 +0100
+Message-ID: <4B8EDEE0.1020206@felixmoeller.de>
+References: <4B8ECF97.4030006@felixmoeller.de> <BAEC677B-D84E-4052-86EC-3A7194EFFD03@apple.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	git <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>, Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 03 22:59:25 2010
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Andrew Myrick <amyrick@apple.com>
+X-From: git-owner@vger.kernel.org Wed Mar 03 23:12:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NmwbC-0006Yk-2i
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 22:59:22 +0100
+	id 1Nmwna-00062h-CA
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 23:12:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756810Ab0CCV7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Mar 2010 16:59:17 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51885 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753347Ab0CCV7P (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Mar 2010 16:59:15 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A34E09ECF3;
-	Wed,  3 Mar 2010 16:59:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=W/kgwMMRwiVNvUWF31zUwXgqvgU=; b=pY76AQ
-	495Bf1TQheFbJglCOfMICakX8r3pG3+PRF8WvUKrMwBnK9fKep4EYi+KoxrQ8Cyj
-	54rMmTgAc6f3nNBEI09MxSnrh7Z98TdpI+JPE/mqluqpAezWJQ9tMw6AHkUAJ8BD
-	zg+EmJ3ccCrBOfzyaP+ZYh+x+aaiy75AT0vVc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Aobdzsie7Gh6/25Yx8uLKl1DCgKGHXqA
-	SdqY64A2jpEumTC3qKg9DnRd1XNdgchmWXj6YtnDD2SlAwhW2T2ah+h74ZmXn7SG
-	RBnV8NmF9KPVV+IzhydbRo1QgLB7FrX/KBh34Um5lM1n/8jV+7AzUkIHtcRKZmZN
-	wjp2ur5YKRk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 25C8E9ECED;
-	Wed,  3 Mar 2010 16:59:07 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F1BA69ECE8; Wed,  3 Mar
- 2010 16:58:59 -0500 (EST)
-In-Reply-To: <7vzl2phz8e.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed\, 03 Mar 2010 13\:28\:01 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FD406D38-270F-11DF-94AD-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756853Ab0CCWMF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Mar 2010 17:12:05 -0500
+Received: from smtprelay01.ispgateway.de ([80.67.31.39]:33791 "EHLO
+	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753357Ab0CCWMD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Mar 2010 17:12:03 -0500
+X-Greylist: delayed 3854 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Mar 2010 17:12:03 EST
+Received: from [93.196.25.5] (helo=[192.168.178.20])
+	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <mail@felixmoeller.de>)
+	id 1NmwnP-0004DE-1Y; Wed, 03 Mar 2010 23:11:59 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100301 Fedora/3.0.3-1.fc12 Thunderbird/3.0.3
+In-Reply-To: <BAEC677B-D84E-4052-86EC-3A7194EFFD03@apple.com>
+X-Df-Sender: mail@felixmoeller.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141485>
 
-"git status" collects the changes for both the index (since HEAD) and the
-working tree files (since the index), summarizes and shows them.  When it
-is run before the first commit is made, it uses a logic different from the
-one used in the normal case to gather the information on the index, as we
-don't have HEAD yet, i.e. instead of "diff-index HEAD", we would run
-"diff-index emtpy-tree".
+Hi Andrew,
 
-How should status.submodulesummary integrate into this framework?
+Am 03.03.2010 22:18, schrieb Andrew Myrick:
+> This may have been fixed with commit 41c01693ac13846c73a31c8f5c3a6020=
+6e1643be.  Try git-1.7.0.
+I am now running a rebuilt git-1.7.0.1-1.fc14.i686 on Fedora 12 and get=
+=20
+the following with it:
 
-Currently, it blindly runs "git submodule summary", and it gives an extra
-error message about HEAD not being a commit, and people (me included)
-misguidedly have spent time on squelching the message.
+> [fm@thinkpad adempiere.git]$ git svn fetch
+> ^[^NIndex mismatch: fac38f8fdc7d816e9dd26b469e08a98428f3f2a5 !=3D 0ae=
+a771bc7629d194ada8bb448e863ffe7868189
+> rereading e662b48c06fb9a263f717546ffbb41a39f94d597
+>         M       mvcForms/db/ddlutils/postgresql/functions/round.sql
+>         M       mvcForms/db/ddlutils/oracle/functions/documentNo.sql
+=2E..
+>         M       mvcForms/client/src/org/adempiere/apps/graph/Graph.ja=
+va
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/branches/stable/data/hu_HU
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/trunk/data/hu_HU
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/branches/adempiere341/zkwebui/WEB-INF/src
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/branches/stable/zkwebui/WEB-INF/src
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/trunk/extend/posterita/webui/WEB-INF/src
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/trunk/extension/posterita/webui/WEB-INF/src
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/trunk/zkwebui/WEB-INF/src
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/branches/adempiere341/base/src
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/trunk/base/src
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/trunk/migration/351a-352a
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/trunk/migration/352a-353a
+> W: Cannot find common ancestor between e662b48c06fb9a263f717546ffbb41=
+a39f94d597 and 7ac062d801daf46537377154daf39e5b21a8f447. Ignoring merge=
+ info.
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/branches/adempiere341/zkwebui
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/branches/stable/zkwebui
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/trunk/zkwebui
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/branches/adempiere341/zkwebui/css
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/branches/stable/zkwebui/css
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/trunk/zkwebui/css
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/branches/adempiere341/base
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/trunk/base
+> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnroo=
+t/adempiere/trunk/migration/All320-340
+> r10767 =3D e2069c625b3dc0639b31992186ab0f20da1cbf13 (refs/remotes/met=
+as)
+>         A       tools/lib/miglayout-3.7.1-swing.jar
+>         M       tools/build.xml
+so it seems to be handled gracefully now.
 
-But I think that was _all wrong_.  I do not think "git submodule summary"
-should fail even when you haven't made your first commit.
+Thanks for your tip!
 
-If you are before the first commit, we say everything you have in the
-index is a change you are adding with your next commit (which will be your
-initial one).  If you added a submodule commit to the index, shouldn't
-"git submodule summary" say "you'll be committing the addition of this
-subproject"?  IOW, shouldn't we be comparing an empty tree to find added
-submodules, like this, when we haven't made the first commit?
+regards
+=46elix M=F6ller
 
- git-submodule.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 5869c00..0397f9d 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -556,10 +556,10 @@ cmd_summary() {
- 	if rev=$(git rev-parse -q --verify --default HEAD ${1+"$1"})
- 	then
- 		head=$rev
--		shift
-+		test $# = 0 || shift
- 	elif test -z "$1" -o "$1" = "HEAD"
- 	then
--		return
-+		head=4b825dc642cb6eb9a060e54bf8d69288fbee4904
- 	else
- 		head="HEAD"
- 	fi
+> On Mar 3, 2010, at 1:07 PM, Felix M=F6ller wrote:
+>> Hi,
+>>
+>> I am new to git and tried to checkout the Subversion Repository of A=
+Dempiere. https://adempiere.svn.sourceforge.net/svnroot/adempiere
+>>
+>> I get the following doing it:
+>>> [fm@thinkpad adempiere.git]$ git svn fetch
+>>> Index mismatch: fac38f8fdc7d816e9dd26b469e08a98428f3f2a5 !=3D 0aea7=
+71bc7629d194ada8bb448e863ffe7868189
+>>> rereading e662b48c06fb9a263f717546ffbb41a39f94d597
+>>>         M       mvcForms/db/ddlutils/postgresql/functions/round.sql
+>>>         M       mvcForms/db/ddlutils/oracle/functions/documentNo.sq=
+l
+>>> ...
+>>>         M       mvcForms/client/src/org/compiere/grid/ed/VLookup.ja=
+va
+>>>         M       mvcForms/client/src/org/compiere/print/Viewer.java
+>>>         M       mvcForms/client/src/org/adempiere/apps/graph/Graph.=
+java
+>>> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnr=
+oot/adempiere/branches/stable/data/hu_HU
+>>> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnr=
+oot/adempiere/trunk/data/hu_HU
+>>> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnr=
+oot/adempiere/branches/adempiere341/zkwebui/WEB-INF/src
+>>> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnr=
+oot/adempiere/branches/stable/zkwebui/WEB-INF/src
+>>> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnr=
+oot/adempiere/trunk/extend/posterita/webui/WEB-INF/src
+>>> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnr=
+oot/adempiere/trunk/extension/posterita/webui/WEB-INF/src
+>>> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnr=
+oot/adempiere/trunk/zkwebui/WEB-INF/src
+>>> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnr=
+oot/adempiere/branches/adempiere341/base/src
+>>> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnr=
+oot/adempiere/trunk/base/src
+>>> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnr=
+oot/adempiere/trunk/migration/351a-352a
+>>> Couldn't find revmap for https://adempiere.svn.sourceforge.net/svnr=
+oot/adempiere/trunk/migration/352a-353a
+>>> merge-base e662b48c06fb9a263f717546ffbb41a39f94d597 7ac062d801daf46=
+537377154daf39e5b21a8f447: command returned error: 1
