@@ -1,58 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Latest master failing t7401 submodule tests
-Date: Wed, 3 Mar 2010 15:02:39 -0500
-Message-ID: <20100303200239.GA28904@coredump.intra.peff.net>
-References: <4B8E5450.3040702@gmail.com>
- <7vhboxqje8.fsf@alter.siamese.dyndns.org>
+From: jateeq <jawad_atiq@hotmail.com>
+Subject: Git diff does not detect newly added files to working tree
+Date: Wed, 3 Mar 2010 12:03:48 -0800 (PST)
+Message-ID: <27772711.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: A Large Angry SCM <gitzilla@gmail.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 03 21:02:46 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 03 21:04:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NmumL-0006cW-O4
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 21:02:46 +0100
+	id 1Nmunb-0007Yz-TT
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 21:04:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756383Ab0CCUCm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Mar 2010 15:02:42 -0500
-Received: from peff.net ([208.65.91.99]:59502 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754824Ab0CCUCk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Mar 2010 15:02:40 -0500
-Received: (qmail 13832 invoked by uid 107); 3 Mar 2010 20:03:00 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 03 Mar 2010 15:03:00 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Mar 2010 15:02:39 -0500
-Content-Disposition: inline
-In-Reply-To: <7vhboxqje8.fsf@alter.siamese.dyndns.org>
+	id S1756501Ab0CCUDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Mar 2010 15:03:50 -0500
+Received: from kuber.nabble.com ([216.139.236.158]:43835 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756474Ab0CCUDt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Mar 2010 15:03:49 -0500
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1NmunM-0002uW-Sb
+	for git@vger.kernel.org; Wed, 03 Mar 2010 12:03:48 -0800
+X-Nabble-From: jawad_atiq@hotmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141467>
 
-On Wed, Mar 03, 2010 at 11:45:19AM -0800, Junio C Hamano wrote:
 
-> A Large Angry SCM <gitzilla@gmail.com> writes:
-> 
-> > 13 to the 18 tests in t7401 submodule test jig are failing with the
-> > latest master this morning.
-> 
-> Do you mean v1.7.0.1-138-ga75bab5?
-> 
-> I don't see it with Debian 5.0.4 on x86_64 (my primary box), Fedora 11 nor
-> FreeBSD 8.0 (the latter two are kvm sandboxes pretending to be i686).
 
-I did see it on my debian unstable box with with dash as /bin/sh (though
-IIRC, isn't FreeBSD /bin/sh ash?). It looked like a "shift: can't shift
-that many" error, but I haven't had time to track it down further yet
-(I'm installing lighting in a 2-year-old's play kitchen. ;) ).
+Hello,
 
-Maybe the shell selection will give somebody lead. If not, I'll try to
-look at it again in a few hours.
+If I add a new file to a working tree, and run the following command without
+having staged or committed the file, according to the manual I should be
+able to get the name of the file - but it just doesn't show up. Anyone knows
+what I'm doing wrong? Note that the added file is not empty.
 
--Peff
+Command: git diff --name-only --diff-filter=[ACDM*] 
+The manual is  http://www.kernel.org/pub/software/scm/git/docs/git-diff.html
+here .
+
+Fanks, 
+Jawad
+-- 
+View this message in context: http://old.nabble.com/Git-diff-does-not-detect-newly-added-files-to-working-tree-tp27772711p27772711.html
+Sent from the git mailing list archive at Nabble.com.
