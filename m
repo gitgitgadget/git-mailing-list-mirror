@@ -1,9 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 8/9] cherry-pick: add a no-op --no-ff option to future
-	proof scripts
-Date: Wed, 03 Mar 2010 21:11:43 +0100
-Message-ID: <20100303201146.23506.11793.chriscool@tuxfamily.org>
-References: <20100303201046.23506.32653.chriscool@tuxfamily.org>
+Subject: [PATCH v3 0/9] add --ff option to cherry-pick
+Date: Wed, 03 Mar 2010 21:11:35 +0100
+Message-ID: <20100303201046.23506.32653.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -18,118 +16,53 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nn0Rp-0008HT-De
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 03:05:57 +0100
+	id 1Nn0Rm-0008HT-Nf
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 03:05:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755682Ab0CDCFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Mar 2010 21:05:41 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:40591 "EHLO smtp3-g21.free.fr"
+	id S1755651Ab0CDCF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Mar 2010 21:05:26 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:40515 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755618Ab0CDCFX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Mar 2010 21:05:23 -0500
+	id S1754833Ab0CDCFS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Mar 2010 21:05:18 -0500
 Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id F2A5B818096;
-	Thu,  4 Mar 2010 03:05:10 +0100 (CET)
-Received: from style.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id B500681807F;
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 1AEF6818083;
 	Thu,  4 Mar 2010 03:05:07 +0100 (CET)
-X-git-sha1: cc36842550973b37eb45309e9f7bb5fc490c9d8c 
+Received: from style.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 8B0AC818064;
+	Thu,  4 Mar 2010 03:05:04 +0100 (CET)
 X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20100303201046.23506.32653.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141500>
 
-A --ff option to allow "git cherry-pick" to fast forward if
-possible was added in a previous patch, and this behavior may
-become the default one in the future.
+The goal of this patch series is to make it possible for "git cherry-pick"
+to fast forward instead of creating a new commit if the cherry picked commit
+has the same parent as the one we are cherry-picking on.
 
-So to future proof scripts that may rely on the current behavior
-it is safer to add a --no-ff option to make sure that the current
-behavior will be used.
+The change since the previous series is that there is less refactoring
+of builtin/revert.c before introducing the --ff option, so less code churn.
+This also means that this series should be easier to merge.
 
-Requested-by: Paolo Bonzini <bonzini@gnu.org>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-cherry-pick.txt |    6 +++++-
- builtin/revert.c                  |    5 +++--
- t/t3506-cherry-pick-ff.sh         |    8 ++++++++
- 3 files changed, 16 insertions(+), 3 deletions(-)
+Christian Couder (9):
+  reset: refactor updating heads into a static function
+  reset: refactor reseting in its own function
+  reset: make reset function non static and declare it in "reset.h"
+  revert: refactor checking parent in a check_parent() function
+  revert: add --ff option to allow fast forward when cherry-picking
+  cherry-pick: add tests for new --ff option
+  Documentation: describe new cherry-pick --ff option
+  cherry-pick: add a no-op --no-ff option to future proof scripts
+  rebase -i: use new --ff cherry-pick option
 
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index d71607a..dfc8243 100644
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -7,7 +7,7 @@ git-cherry-pick - Apply the change introduced by an existing commit
- 
- SYNOPSIS
- --------
--'git cherry-pick' [--edit] [-n] [-m parent-number] [-s] [-x] [--ff] <commit>
-+'git cherry-pick' [--edit] [-n] [-m parent-number] [-s] [-x] [--[no-]ff] <commit>
- 
- DESCRIPTION
- -----------
-@@ -75,6 +75,10 @@ effect to your index in a row.
- 	cherry-pick'ed commit, then a fast forward to this commit will
- 	be performed.
- 
-+--no-ff::
-+	Does nothing right now, but in the future this may disallow
-+	fast forward if it becomes the default behavior.
-+
- Author
- ------
- Written by Junio C Hamano <gitster@pobox.com>
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 4799073..111853b 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -36,7 +36,7 @@ static const char * const cherry_pick_usage[] = {
- 	NULL
- };
- 
--static int edit, no_replay, no_commit, mainline, signoff, ff_ok;
-+static int edit, no_replay, no_commit, mainline, signoff, ff_ok, no_ff;
- static enum { REVERT, CHERRY_PICK } action;
- static struct commit *commit;
- static const char *commit_name;
-@@ -59,6 +59,7 @@ static void parse_args(int argc, const char **argv)
- 		OPT_BOOLEAN('r', NULL, &noop, "no-op (backward compatibility)"),
- 		OPT_BOOLEAN('s', "signoff", &signoff, "add Signed-off-by:"),
- 		OPT_BOOLEAN(0, "ff", &ff_ok, "allow fast forward"),
-+		OPT_BOOLEAN(0, "no-ff", &no_ff, "disallow fast forward"),
- 		OPT_INTEGER('m', "mainline", &mainline, "parent number"),
- 		OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
- 		OPT_END(),
-@@ -326,7 +327,7 @@ static int revert_or_cherry_pick(int argc, const char **argv, const char *prefix
- 		die("%s: cannot parse parent commit %s",
- 		    me, sha1_to_hex(parent->object.sha1));
- 
--	if (action == CHERRY_PICK && ff_ok &&
-+	if (action == CHERRY_PICK && ff_ok && !no_ff &&
- 	    parent && !hashcmp(parent->object.sha1, head) &&
- 	    !edit && !no_commit && !no_replay && !signoff) {
- 		char *hex = sha1_to_hex(commit->object.sha1);
-diff --git a/t/t3506-cherry-pick-ff.sh b/t/t3506-cherry-pick-ff.sh
-index e17ae71..2d7e532 100755
---- a/t/t3506-cherry-pick-ff.sh
-+++ b/t/t3506-cherry-pick-ff.sh
-@@ -35,6 +35,14 @@ test_expect_success 'cherry-pick not using --ff does not fast forwards' '
- 	test "$(git rev-parse --verify HEAD)" != "$(git rev-parse --verify second)"
- '
- 
-+test_expect_success 'cherry-pick using --no-ff does not fast forwards' '
-+	git checkout master &&
-+	git reset --hard first &&
-+	test_tick &&
-+	git cherry-pick --no-ff second &&
-+	test "$(git rev-parse --verify HEAD)" != "$(git rev-parse --verify second)"
-+'
-+
- #
- # We setup the following graph:
- #
--- 
-1.7.0.315.gbc198
+ Documentation/git-cherry-pick.txt |   10 ++-
+ builtin/reset.c                   |  178 ++++++++++++++++++++-----------------
+ builtin/revert.c                  |   91 ++++++++++++-------
+ git-rebase--interactive.sh        |   15 +---
+ reset.h                           |   10 ++
+ t/t3506-cherry-pick-ff.sh         |  106 ++++++++++++++++++++++
+ 6 files changed, 282 insertions(+), 128 deletions(-)
+ create mode 100644 reset.h
+ create mode 100755 t/t3506-cherry-pick-ff.sh
