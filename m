@@ -1,76 +1,53 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: Re: Which VCS besides git?
-Date: Wed, 03 Mar 2010 07:48:39 -0500
-Message-ID: <1267620460-sup-2115@pinkfloyd.chass.utoronto.ca>
-References: <201003021455.52483.karlis.repsons@gmail.com> <m3y6ialn3z.fsf@localhost.localdomain> <201003021622.22196.karlis.repsons@gmail.com> <201003030241.16959.jnareb@gmail.com> <94a0d4531003030358q276a8e9bue086a8ec06aba395@mail.gmail.com>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: split up a repository
+Date: Wed, 3 Mar 2010 08:04:32 -0600
+Message-ID: <19342.27760.544227.835077@blake.zopyra.com>
+References: <20100302011226.76fda85d@gmail.com>
+	<fabb9a1e1003020240h81f3e99wea1185c080a03b0@mail.gmail.com>
+	<20100303002132.5df20326@gmail.com>
+	<32541b131003021740n32535fbbh802af418ea0898aa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; boundary="=-1267620549-447538-6916-4488-10-="; micalg="pgp-sha1"
-Content-Transfer-Encoding: 8bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 03 13:49:25 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Levente Kovacs <leventelist@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 03 15:04:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nmo0u-0004z5-Cq
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 13:49:20 +0100
+	id 1NmpC4-0000qe-4d
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 15:04:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753813Ab0CCMtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Mar 2010 07:49:12 -0500
-Received: from www.cquest.utoronto.ca ([192.82.128.5]:58967 "EHLO
-	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753639Ab0CCMtK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Mar 2010 07:49:10 -0500
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:54641 ident=93)
-	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
-	id 1Nmo0j-0002Oo-Ff
-	for git@vger.kernel.org; Wed, 03 Mar 2010 07:49:09 -0500
-Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1Nmo0j-0007Zv-Ec
-	for git@vger.kernel.org; Wed, 03 Mar 2010 07:49:09 -0500
-In-reply-to: <94a0d4531003030358q276a8e9bue086a8ec06aba395@mail.gmail.com>
-User-Agent: Sup/git
+	id S1754328Ab0CCOEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Mar 2010 09:04:51 -0500
+Received: from 75-27-130-60.lightspeed.austtx.sbcglobal.net ([75.27.130.60]:36951
+	"HELO blake.zopyra.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1754205Ab0CCOEu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Mar 2010 09:04:50 -0500
+Received: (qmail 17286 invoked by uid 500); 3 Mar 2010 14:04:34 -0000
+In-Reply-To: <32541b131003021740n32535fbbh802af418ea0898aa@mail.gmail.com>
+X-Mailer: VM 8.1.0-beta under 23.1.1 (i386-redhat-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141453>
+
+On Tuesday, March 2, 2010 at 20:40:57 (-0500) Avery Pennarun writes:
+>On Tue, Mar 2, 2010 at 6:21 PM, Levente Kovacs <leventelist@gmail.com> wrote:
+>> On Tue, 2 Mar 2010 11:40:41 +0100
+>> Ok. Really newbie question here. Just before I start to mess up my
+>> repositories. I've cloned the git-subtree, and the install script would put
+>> the script into /usr/lib/git-core. Is there any way to install the script
+>> somewhere under /usr/local ?
+>
+>The actual function of git-subtree is one single file....
+
+Does git-subtree support branching of the "main" repository and
+sub-trees in coordinated (one step) fashion?
 
 
---=-1267620549-447538-6916-4488-10-=
-Content-Type: text/plain; charset=UTF-8
-
-Excerpts from Felipe Contreras's message of Wed Mar 03 06:58:41 -0500 2010:
-
-> change. Instead, they ensure security by signing every piece of data
-> about a commit (commit date, author, commit message). So it's possible
-> to have multiple commit dates, authors, messages, etc. each signed by
-> a different person.
-
-As a side point...
-
-This is also a lot of extra overhead for people to get up and going.
-The git approach of guaranteeing integrity by signing tags only is
-much better, both because it accomplishes the same thing and because
-people can actually use it without having to share keys everywhere.
-
-[I can't get (most) people to use keys for ssh, good luck trying to
-get them to do it for version control...]
-
--Ben
-
---=-1267620549-447538-6916-4488-10-=
-Content-Disposition: attachment; filename="signature.asc"
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQFLjlrF8vuMHY6J9tIRAlx2AKC4UUhkLR+XkcNId4JiqHdcRdMQLQCgw1Gf
-Rib8cX72BJRXPANMuk3zzhE=
-=RU2z
------END PGP SIGNATURE-----
-
---=-1267620549-447538-6916-4488-10-=--
+Bill
