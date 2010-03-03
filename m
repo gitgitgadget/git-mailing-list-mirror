@@ -1,120 +1,160 @@
-From: lznuaa@gmail.com
-Subject: [PATCH v4 1/3] git-svn: Support retrieving passwords with GIT_ASKPASS
-Date: Wed,  3 Mar 2010 19:35:41 +0800
-Message-ID: <4b8e4999.9413f30a.0502.ffff8c81@mx.google.com>
-Cc: davvid@gmail.com, Frank Li <lznuaa@gmail.com>
+From: Frank Li <lznuaa@gmail.com>
+Subject: [PATCH v4 2/3] git-core: Support retrieving passwords with GIT_ASKPASS
+Date: Wed,  3 Mar 2010 19:36:48 +0800
+Message-ID: <1267616208-3844-1-git-send-email-lznuaa@gmail.com>
+Cc: gitster@pobox.com, Frank Li <lznuaa@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 03 12:36:05 2010
+X-From: git-owner@vger.kernel.org Wed Mar 03 12:37:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nmms0-0006tr-SF
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 12:36:05 +0100
+	id 1Nmmt4-0007Ub-TR
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Mar 2010 12:37:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752253Ab0CCLf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Mar 2010 06:35:56 -0500
-Received: from mail-pz0-f201.google.com ([209.85.222.201]:34106 "EHLO
-	mail-pz0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751713Ab0CCLfz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Mar 2010 06:35:55 -0500
-Received: by pzk39 with SMTP id 39so643993pzk.15
-        for <git@vger.kernel.org>; Wed, 03 Mar 2010 03:35:54 -0800 (PST)
+	id S1751671Ab0CCLhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Mar 2010 06:37:05 -0500
+Received: from mail-px0-f188.google.com ([209.85.216.188]:47628 "EHLO
+	mail-px0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751438Ab0CCLhE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Mar 2010 06:37:04 -0500
+Received: by pxi26 with SMTP id 26so450235pxi.1
+        for <git@vger.kernel.org>; Wed, 03 Mar 2010 03:37:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer;
-        bh=oKJ300MIIMZQf0fgrBzMfP+wBuQ8mEQjneCiCpcMcLo=;
-        b=joGujcYjy4DeNcUhRYSP/zFGjdj7eB007cGQgICjn+uOS6VK52fDzA7TuDp2swmESh
-         PL70BSJ2yMzQ/xPDCvhtUaZhK2n3rmrGXac3quvWq5BflbWMbRAgI+aTe4TmjJ+IOQsi
-         hwgBDJ3v8kva2q+OhrMQRa7exsRYom4lBpQ4s=
+        bh=i6A0TceUgwFBHdWctKXgpzzajjokjYXljjIVWMUyPoI=;
+        b=ccD5aeZ8cTor6vec/zTSh9ZlWifQD73YUfyN/NhiOPvyGSvBS/CPxeCrz5r4DSpea8
+         HJisq6dbTVZvWaWzSDPU+hcEQ1gDfBDurWmtPM+RQn76X7FYJ4TO312zQn77kIgKMw5Y
+         8P3pCGbu70IBr5cT8ug/0ifVnrb4SzQbFqujE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        b=xGlZy04Zp120L48jf/IIj/x8k3DxxdCMJVc40I+eAX7xJAVF00p1a3RPtquKB1f/B5
-         O+01cRwcUTEIfrarHVrkleM82fRzKxt7DueOtlFZpLR4p1bow0WU0IhHwdBt1fWIC4u4
-         dOxp+eFmecoztTrkvhMD3Nf7V+hwsSrhaqTsI=
-Received: by 10.115.39.40 with SMTP id r40mr4243387waj.148.1267616154578;
-        Wed, 03 Mar 2010 03:35:54 -0800 (PST)
+        b=ffkvMpFXuooRcIh/oubNK6X/L7RGnjCM5u8K7dcsJCN5cQyMalCnDlMavqjuG2MZDI
+         +O5h12UngYgY4jGlQ3ytnxsUEb/rDrdRpvzNKEr+ova/qQtE5VWvz5Wgr6lNtE0x0nEb
+         u/HvdOA6gXCGpO0vT0Z0uND/WS2Hf19umNkj4=
+Received: by 10.140.55.17 with SMTP id d17mr4149482rva.10.1267616222159;
+        Wed, 03 Mar 2010 03:37:02 -0800 (PST)
 Received: from localhost ([114.93.102.82])
-        by mx.google.com with ESMTPS id 20sm5723349pzk.15.2010.03.03.03.35.52
+        by mx.google.com with ESMTPS id 20sm5724085pzk.11.2010.03.03.03.37.00
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Mar 2010 03:35:53 -0800 (PST)
+        Wed, 03 Mar 2010 03:37:01 -0800 (PST)
 X-Mailer: git-send-email 1.6.5.1.1367.gcd48
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141444>
 
-From: Frank Li <lznuaa@gmail.com>
-
-git-svn reads passwords from an interactive terminal.
-This behavior cause GUIs to hang waiting for git-svn to
-complete
+imap-send and authority http connect reads passwords from an interactive
+terminal. This behavious cause GUIs to hang waiting for git complete.
 
 Fix this problem by allowing a password-retrieving command
-to be specified in GIT_ASKPASS. SSH_ASKPASS is supported
-as a fallback when GIT_ASKPASS is not provided.
+to be specified in GIT_ASKPASS
 
 Signed-off-by: Frank Li <lznuaa@gmail.com>
 ---
- git-svn.perl |   33 +++++++++++++++++++++++----------
- 1 files changed, 23 insertions(+), 10 deletions(-)
+ cache.h     |    1 +
+ connect.c   |   39 +++++++++++++++++++++++++++++++++++++++
+ http.c      |    4 ++--
+ imap-send.c |    2 +-
+ 4 files changed, 43 insertions(+), 3 deletions(-)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 265852f..308d0df 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -31,6 +31,12 @@ if (! exists $ENV{SVN_SSH}) {
- 	}
- }
+diff --git a/cache.h b/cache.h
+index d478eff..a25d269 100644
+--- a/cache.h
++++ b/cache.h
+@@ -877,6 +877,7 @@ struct ref {
+ extern struct ref *find_ref_by_name(const struct ref *list, const char *name);
  
-+if (! exists $ENV{GIT_ASKPASS}) {
-+	if (exists $ENV{SSH_ASKPASS}) {
-+		$ENV{GIT_ASKPASS} = $ENV{SSH_ASKPASS};
-+	}
+ #define CONNECT_VERBOSE       (1u << 0)
++extern char *git_getpass(const char *prompt);
+ extern struct child_process *git_connect(int fd[2], const char *url, const char *prog, int flags);
+ extern int finish_connect(struct child_process *conn);
+ extern int path_match(const char *path, int nr, char **match);
+diff --git a/connect.c b/connect.c
+index a37cf6a..8d45ab9 100644
+--- a/connect.c
++++ b/connect.c
+@@ -647,3 +647,42 @@ int finish_connect(struct child_process *conn)
+ 	free(conn);
+ 	return code;
+ }
++
++char *git_getpass(const char *prompt)
++{
++	char *askpass;
++	struct child_process pass;
++	const char *args[3];
++	struct strbuf buffer = STRBUF_INIT;
++	int i = 0;
++
++	askpass = getenv("GIT_ASKPASS");
++
++	if (!askpass || !(*askpass))
++		return getpass(prompt);
++
++	args[0] = askpass;
++	args[1]	= prompt;
++	args[2] = NULL;
++
++	memset(&pass, 0, sizeof(pass));
++	pass.argv = args;
++	pass.out = -1;
++
++	if (start_command(&pass))
++		exit(1);
++
++	if (strbuf_read(&buffer, pass.out, 20) < 0)
++		exit(1);
++
++	close(pass.out);
++
++	if (finish_command(&pass))
++		exit(1);
++
++	strbuf_setlen(&buffer, strcspn(buffer.buf, "\r\n"));
++
++	/*it maybe memory leak because getpass return a static buffer*/
++	return strbuf_detach(&buffer, NULL);
 +}
 +
- $Git::SVN::Log::TZ = $ENV{TZ};
- $ENV{TZ} = 'UTC';
- $| = 1; # unbuffer STDOUT
-@@ -3966,18 +3972,25 @@ sub username {
- 
- sub _read_password {
- 	my ($prompt, $realm) = @_;
--	print STDERR $prompt;
--	STDERR->flush;
--	require Term::ReadKey;
--	Term::ReadKey::ReadMode('noecho');
- 	my $password = '';
--	while (defined(my $key = Term::ReadKey::ReadKey(0))) {
--		last if $key =~ /[\012\015]/; # \n\r
--		$password .= $key;
-+	if (exists $ENV{GIT_ASKPASS}) {
-+		open(PH, "-|", $ENV{GIT_ASKPASS}, $prompt);
-+		$password = <PH>;
-+		$password =~ s/[\012\015]//; # \n\r
-+		close(PH);
-+	} else {
-+		print STDERR $prompt;
-+		STDERR->flush;
-+		require Term::ReadKey;
-+		Term::ReadKey::ReadMode('noecho');
-+		while (defined(my $key = Term::ReadKey::ReadKey(0))) {
-+			last if $key =~ /[\012\015]/; # \n\r
-+			$password .= $key;
-+		}
-+		Term::ReadKey::ReadMode('restore');
-+		print STDERR "\n";
-+		STDERR->flush;
- 	}
--	Term::ReadKey::ReadMode('restore');
--	print STDERR "\n";
--	STDERR->flush;
- 	$password;
- }
- 
+diff --git a/http.c b/http.c
+index deab595..4814217 100644
+--- a/http.c
++++ b/http.c
+@@ -204,7 +204,7 @@ static void init_curl_http_auth(CURL *result)
+ 	if (user_name) {
+ 		struct strbuf up = STRBUF_INIT;
+ 		if (!user_pass)
+-			user_pass = xstrdup(getpass("Password: "));
++			user_pass = xstrdup(git_getpass("Password: "));
+ 		strbuf_addf(&up, "%s:%s", user_name, user_pass);
+ 		curl_easy_setopt(result, CURLOPT_USERPWD,
+ 				 strbuf_detach(&up, NULL));
+@@ -219,7 +219,7 @@ static int has_cert_password(void)
+ 		return 0;
+ 	/* Only prompt the user once. */
+ 	ssl_cert_password_required = -1;
+-	ssl_cert_password = getpass("Certificate Password: ");
++	ssl_cert_password = git_getpass("Certificate Password: ");
+ 	if (ssl_cert_password != NULL) {
+ 		ssl_cert_password = xstrdup(ssl_cert_password);
+ 		return 1;
+diff --git a/imap-send.c b/imap-send.c
+index 5631930..5254b2a 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1107,7 +1107,7 @@ static struct store *imap_open_store(struct imap_server_conf *srvc)
+ 		if (!srvc->pass) {
+ 			char prompt[80];
+ 			sprintf(prompt, "Password (%s@%s): ", srvc->user, srvc->host);
+-			arg = getpass(prompt);
++			arg = git_getpass(prompt);
+ 			if (!arg) {
+ 				perror("getpass");
+ 				exit(1);
 -- 
 1.7.0.86.g013a4.dirty
