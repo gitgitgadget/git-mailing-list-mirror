@@ -1,256 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/12] add --ff option to cherry-pick
-Date: Wed, 03 Mar 2010 19:31:25 -0800
-Message-ID: <7vhbowoj8y.fsf@alter.siamese.dyndns.org>
-References: <20100228222038.2260.25016.chriscool@tuxfamily.org>
- <201003010800.13996.chriscool@tuxfamily.org>
- <7v635g4ec2.fsf@alter.siamese.dyndns.org>
- <201003040306.16580.chriscool@tuxfamily.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: What should "git submodule summary" give before an initial 
+	commit?
+Date: Thu, 4 Mar 2010 07:01:52 +0100
+Message-ID: <fabb9a1e1003032201l38b052ebk4c0061e9d40f68b6@mail.gmail.com>
+References: <4B8E5450.3040702@gmail.com> <7vhboxqje8.fsf@alter.siamese.dyndns.org> 
+	<20100303200239.GA28904@coredump.intra.peff.net> <7vhboxno38.fsf@alter.siamese.dyndns.org> 
+	<20100303204257.GA5501@coredump.intra.peff.net> <7v3a0hktga.fsf@alter.siamese.dyndns.org> 
+	<7vzl2phz8e.fsf@alter.siamese.dyndns.org> <7vhboxf4nx.fsf_-_@alter.siamese.dyndns.org> 
+	<4B8F00AA.5050007@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Paolo Bonzini <bonzini@gnu.org>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu Mar 04 04:31:55 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Ping Yin <pkufranky@gmail.com>,
+	Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
+	A Large Angry SCM <gitzilla@gmail.com>,
+	git <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Mar 04 07:02:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nn1n0-0001uv-CO
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 04:31:54 +0100
+	id 1Nn48Z-0001Bg-Li
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 07:02:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754463Ab0CDDbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Mar 2010 22:31:49 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49122 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753953Ab0CDDbr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Mar 2010 22:31:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 40C1E9E096;
-	Wed,  3 Mar 2010 22:31:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7pg9IFu42iSL6mK8SifNnYFNIKs=; b=Pvb2i5
-	7lVRUmriCSA0AHSnf9xjlDSwWN7wRQNqw8tjZHx222nq0ztnIbjWmL/1t/5nDG7I
-	TYPWNFfdnULAvxj0nTAjOZteCi57cv1fdzf8SMdT+GnYhI9M9/5moxO5qSsZWGVh
-	SlfhJdg9KUGMNFsVkJOOyCWzT6/Ysd8n93lN0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lTbFReI05TfudyV+v1A6o6eCBu8GSBTG
-	q7TTMnF6lwUv1E5SjQPn4nIb/HCH/KbQUnu31JZwfLkOYqlQyQnRRU51TQFSh39z
-	1/K5WLixv7hAzbY95N6XZG+aaBW4f7VpdU5BVzxVg4kWVxRdYcU4zfxcbE124IGP
-	MmhyyXuXWuU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A3C7A9E085;
-	Wed,  3 Mar 2010 22:31:37 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 60F7B9E084; Wed,  3 Mar
- 2010 22:31:27 -0500 (EST)
-In-Reply-To: <201003040306.16580.chriscool@tuxfamily.org> (Christian Couder's
- message of "Thu\, 4 Mar 2010 03\:06\:16 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 709F3A4C-273E-11DF-BD21-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752417Ab0CDGCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Mar 2010 01:02:14 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:36420 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751909Ab0CDGCN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Mar 2010 01:02:13 -0500
+Received: by pwj8 with SMTP id 8so1438193pwj.19
+        for <git@vger.kernel.org>; Wed, 03 Mar 2010 22:02:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=gHEtKPQ+IN/1FgunXVmQjy7oVT1t5q1vwGoa/EoHPh8=;
+        b=Oeyxb4/S4wH77wm40kPkdjak7Dovn2Y1IGda5MGo+fjAcULcQb3d9zIOecOPVDKS5I
+         NcKVwak/GfJzFLiyu3QfmWzVvMLxqUUUohGpD6AcWY24u+KhFjliB4q5WrV9zUCjmIv1
+         8BW1NiHhsTldxfAnNz3/+UYOpgtghWg29r9bM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=Jyf/WGZBzOdCN/TRNW1Xyjq3sUFUNycXBaqcMYF4dWvJbpTBj5J1npqFMgLm/jgFLy
+         ai+J01J2ci1D8IF7Y3Js3LoLq0ylbceTWJ9M5k71FKaWoq0SIOxIFDKzBkFOBm21YFpO
+         cBCYkiT4P/YgddUyWUcGYUbZ89xac7qvuK2PM=
+Received: by 10.143.26.23 with SMTP id d23mr222069wfj.84.1267682532125; Wed, 
+	03 Mar 2010 22:02:12 -0800 (PST)
+In-Reply-To: <4B8F00AA.5050007@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141509>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Heya,
 
-> I tried to use the checkout_fast_forward() function from builtin/merge.c but 
-> unfortunately it doesn't work. It gives an error like that in the tests :
->
-> error: Your local changes to 'file1' would be overwritten by merge.  Aborting.
-> Please, commit your changes or stash them before you can merge.
->
-> and I don't really understand why. (Though I didn't spend a lot of time on 
-> this.)
+On Thu, Mar 4, 2010 at 01:36, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> But to make "git status" with status.submodulesummary work as expected,
+> i need something like the following patch on top of current pu (because
+> "git submodule summary --cached HEAD" returns no changes in a freshly
+> created repo):
 
-Shouldn't it be something like this?  The patch is still unnecessarily
-large because I wanted to share options between revert and cherry-pick
-while giving --ff only to cherry-pick, but I don't understand why it needs
-a nine patch series worth of code churn.
+I think the problem is deeper than that: git doesn't work that great
+if there's no HEAD yet. Some of our features don't work (as expected)
+if there's no HEAD. For example, 'git reset' doesn't work, of course,
+I can use 'git rm --cached .' to achieve the same effect (since all
+staged changes are guaranteed to be adds), but its' not quite the
+same. Perhaps it's an idea to look at how we handle not having a head
+across the board and deal with it at a higher level? Something like
+pretending we do have a HEAD that's pointing at the empty tree when on
+an unborn branch might fix 'git reset' (although I'm sure there's all
+kinds of objections to actually doing that, I'm not suggesting that's
+what we should do, but that's the kind of solution I think we should
+look at).
 
+-- 
+Cheers,
 
-
- builtin-merge.c  |    2 +-
- builtin-revert.c |   44 +++++++++++++++++++++++++++++++++++++++++---
- cache.h          |    3 +++
- parse-options.c  |   15 +++++++++++++++
- parse-options.h  |    1 +
- 5 files changed, 61 insertions(+), 4 deletions(-)
-
-diff --git a/builtin-merge.c b/builtin-merge.c
-index 3aaec7b..c043066 100644
---- a/builtin-merge.c
-+++ b/builtin-merge.c
-@@ -667,7 +667,7 @@ static int count_unmerged_entries(void)
- 	return ret;
- }
- 
--static int checkout_fast_forward(unsigned char *head, unsigned char *remote)
-+int checkout_fast_forward(const unsigned char *head, const unsigned char *remote)
- {
- 	struct tree *trees[MAX_UNPACK_TREES];
- 	struct unpack_trees_options opts;
-diff --git a/builtin-revert.c b/builtin-revert.c
-index eff5268..bfe75c8 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -13,6 +13,7 @@
- #include "revision.h"
- #include "rerere.h"
- #include "merge-recursive.h"
-+#include "refs.h"
- 
- /*
-  * This implements the builtins revert and cherry-pick.
-@@ -35,7 +36,7 @@ static const char * const cherry_pick_usage[] = {
- 	NULL
- };
- 
--static int edit, no_replay, no_commit, mainline, signoff;
-+static int edit, no_replay, no_commit, mainline, signoff, allow_ff;
- static enum { REVERT, CHERRY_PICK } action;
- static struct commit *commit;
- static const char *commit_name;
-@@ -60,8 +61,19 @@ static void parse_args(int argc, const char **argv)
- 		OPT_INTEGER('m', "mainline", &mainline, "parent number"),
- 		OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
- 		OPT_END(),
-+		OPT_END(),
-+		OPT_END(),
- 	};
- 
-+	if (action == CHERRY_PICK) {
-+		struct option cp_extra[] = {
-+			OPT_BOOLEAN(0, "ff", &allow_ff, "allow fast-forward"),
-+			OPT_END(),
-+		};
-+		if (parse_options_concat(options, ARRAY_SIZE(options), cp_extra))
-+			die("program error");
-+	}
-+
- 	if (parse_options(argc, argv, NULL, options, usage_str, 0) != 1)
- 		usage_with_options(usage_str, options);
- 
-@@ -244,6 +256,17 @@ static NORETURN void die_dirty_index(const char *me)
- 	}
- }
- 
-+static int fast_forward_to(const unsigned char *to, const unsigned char *from)
-+{
-+	struct ref_lock *ref_lock;
-+
-+	read_cache();
-+	if (checkout_fast_forward(from, to))
-+		exit(1); /* the callee should have complained already */
-+	ref_lock = lock_any_ref_for_update("HEAD", from, 0);
-+	return write_ref_sha1(ref_lock, to, "cherry-pick");
-+}
-+
- static int revert_or_cherry_pick(int argc, const char **argv)
- {
- 	unsigned char head[20];
-@@ -265,6 +288,17 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 	if (action == REVERT && !no_replay)
- 		die("revert is incompatible with replay");
- 
-+	if (action == CHERRY_PICK && allow_ff) {
-+		if (signoff)
-+			die("cherry-pick --ff cannot be used with --signoff");
-+		if (no_commit)
-+			die("cherry-pick --ff cannot be used with --no-commit");
-+		if (no_replay)
-+			die("cherry-pick --ff cannot be used with -x");
-+		if (edit)
-+			die("cherry-pick --ff cannot be used with --edit");
-+	}
-+
- 	if (read_cache() < 0)
- 		die("git %s: failed to read the index", me);
- 	if (no_commit) {
-@@ -284,8 +318,6 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 	}
- 	discard_cache();
- 
--	index_fd = hold_locked_index(&index_lock, 1);
--
- 	if (!commit->parents) {
- 		if (action == REVERT)
- 			die ("Cannot revert a root commit");
-@@ -314,6 +346,10 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 	else
- 		parent = commit->parents->item;
- 
-+	if (action == CHERRY_PICK && allow_ff
-+	    && !hashcmp(parent->object.sha1, head))
-+		return fast_forward_to(commit->object.sha1, head);
-+
- 	if (!(message = commit->buffer))
- 		die ("Cannot get commit message for %s",
- 				sha1_to_hex(commit->object.sha1));
-@@ -343,6 +379,8 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 
- 	oneline = get_oneline(message);
- 
-+	index_fd = hold_locked_index(&index_lock, 1);
-+
- 	if (action == REVERT) {
- 		char *oneline_body = strchr(oneline, ' ');
- 
-diff --git a/cache.h b/cache.h
-index d454b7e..7272160 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1040,4 +1040,7 @@ void overlay_tree_on_cache(const char *tree_name, const char *prefix);
- char *alias_lookup(const char *alias);
- int split_cmdline(char *cmdline, const char ***argv);
- 
-+/* builtin-merge.c */
-+int checkout_fast_forward(const unsigned char *from, const unsigned char *to);
-+
- #endif /* CACHE_H */
-diff --git a/parse-options.c b/parse-options.c
-index c83035d..8546d85 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -659,3 +659,18 @@ int parse_opt_tertiary(const struct option *opt, const char *arg, int unset)
- 	*target = unset ? 2 : 1;
- 	return 0;
- }
-+
-+int parse_options_concat(struct option *dst, size_t dst_size, struct option *src)
-+{
-+	int i, j;
-+
-+	for (i = 0; i < dst_size; i++)
-+		if (dst[i].type == OPTION_END)
-+			break;
-+	for (j = 0; i < dst_size; i++, j++) {
-+		dst[i] = src[j];
-+		if (src[j].type == OPTION_END)
-+			return 0;
-+	}
-+	return -1;
-+}
-diff --git a/parse-options.h b/parse-options.h
-index 9429f7e..7581e93 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -187,6 +187,7 @@ extern int parse_options_step(struct parse_opt_ctx_t *ctx,
- 
- extern int parse_options_end(struct parse_opt_ctx_t *ctx);
- 
-+extern int parse_options_concat(struct option *dst, size_t, struct option *src);
- 
- /*----- some often used options -----*/
- extern int parse_opt_abbrev_cb(const struct option *, const char *, int);
+Sverre Rabbelier
