@@ -1,66 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2010, #01; Wed, 03)
-Date: Thu, 04 Mar 2010 10:26:51 -0800
-Message-ID: <7vy6i854es.fsf@alter.siamese.dyndns.org>
-References: <7v7hptt0mr.fsf@alter.siamese.dyndns.org>
- <be6fef0d1003040409o5a1e3396l8249951e8d65b1ee@mail.gmail.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH v2 0/7] http: minor improvements
+Date: Thu, 4 Mar 2010 21:38:11 +0100
+Message-ID: <20100304203811.GB5626@darc.dnsalias.org>
+References: <1267526971-5552-1-git-send-email-rctay89@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Mike Hommey <mh@glandium.org>
 To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 04 19:27:12 2010
+X-From: git-owner@vger.kernel.org Thu Mar 04 21:55:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnFlM-0007px-FA
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 19:27:08 +0100
+	id 1NnH1v-0003rf-IE
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 20:48:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754895Ab0CDS1B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Mar 2010 13:27:01 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58206 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753443Ab0CDS1A (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Mar 2010 13:27:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C428B9F903;
-	Thu,  4 Mar 2010 13:26:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=P7KEvaXYTGZs7lMPvluQG2KnkNE=; b=szKvoWo3ibzDOdnm1qr4TiP
-	Heszb6FTnPGFByqS99Gfs2+FOGdvcHju7jPI8m5aTnDsdlsvKkDXyABwP3dSLmo/
-	p3jVOtucHbRyJ7JZSQmoX9Pf/kT5hJqlKomVvWhkbkFur/XzOuPtrOcXfMZL8Bao
-	bAiAtQNl/Rll+IejsXLU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=IinV9F2Q5ur+WYGUTjp1lLcoDBfUE3OCVTtHRoFPr87Z36fgx
-	tFHtWNfLlyM0eOtMVeigwrWAdLoy0L0GdewUNKeDXOM64mtOl+3btlxWIS9krJwa
-	S5thcEl14mvRvmUVa/wUhBwkGrLT3hqgoufiqe2H4Pz8vPEknRqllGYnx0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F25D9F8FE;
-	Thu,  4 Mar 2010 13:26:56 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D66AD9F8FA; Thu,  4 Mar
- 2010 13:26:52 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 83A7660A-27BB-11DF-80E7-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932243Ab0CDTmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Mar 2010 14:42:19 -0500
+Received: from bsmtp5.bon.at ([195.3.86.187]:55081 "EHLO lbmfmo03.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S932232Ab0CDTmR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Mar 2010 14:42:17 -0500
+Received: from bsmtp.bon.at (unknown [172.18.12.54])
+	by lbmfmo03.bon.at (Postfix) with ESMTP id AF166CECA6
+	for <git@vger.kernel.org>; Thu,  4 Mar 2010 20:42:15 +0100 (CET)
+Received: from proxy.surfnet.iacbox (sadler01.aparthotel-adler.at [80.122.230.142])
+	by bsmtp.bon.at (Postfix) with ESMTP id BD8CAA7EBB;
+	Thu,  4 Mar 2010 20:41:25 +0100 (CET)
+Received: from darc.lan (localhost [127.0.0.1])
+	by proxy.surfnet.iacbox (Postfix) with ESMTP id C040D125A61;
+	Thu,  4 Mar 2010 20:41:21 +0100 (CET)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@darc.dnsalias.org>)
+	id 1NnHoB-0001Xt-6C; Thu, 04 Mar 2010 21:38:11 +0100
+Content-Disposition: inline
+In-Reply-To: <1267526971-5552-1-git-send-email-rctay89@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141541>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
+On Tue, Mar 02, 2010 at 06:49:24PM +0800, Tay Ray Chuan wrote:
 
-> On Thu, Mar 4, 2010 at 8:02 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> * tc/transport-verbosity (2010-02-24) 10 commits
-> ...
-> the last discussion on this topic centred around the git-pull
-> documentation, which this latest iteration has addressed. Jeff also
-> gave his OK for the previous iteration.
->
-> I also noticed a merge conflict - I think the resolution looked ok.
+> Changes from v1 (based on comments from Clemens):
+>   - patch 3: don't say "remove condition", since we're actually enabling
+>     it.
+>   - patch 5: in keeping with separating http and http-walker, removed
+>     http_cleanup() from http-walker->cleanup().
+>   - patch 5: move http_cleanup() call after http-walker->cleanup(). This
+>     isn't really needed, but do this just in case http-walker->cleanup()
+>     does any http operations.
 
 Thanks.
+
+> [PATCH v2 1/7] t5541-http-push: check that ref is unchanged for non-ff test
+> [PATCH v2 2/7] t554[01]-http-push: refactor, add non-ff tests
+> [PATCH v2 3/7] http-push: remove "|| 1" to enable verbose check
+> [PATCH v2 4/7] http-walker: cleanup more thoroughly
+> [PATCH v2 5/7] http: init and cleanup separately from http-walker
+> [PATCH v2 6/7] remote-curl: use http_fetch_ref() instead of walker wrapper
+> [PATCH v2 7/7] remote-curl: init walker only when needed
+
+Acked-by: Clemens Buchacher <drizzd@aon.at>
