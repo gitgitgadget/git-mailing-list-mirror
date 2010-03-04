@@ -1,83 +1,62 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2010, #01; Wed, 03)
-Date: Thu, 4 Mar 2010 20:32:08 -0500
-Message-ID: <ca433831003041732k69c7cadcuf8f7feaabf3e372f@mail.gmail.com>
-References: <7v7hptt0mr.fsf@alter.siamese.dyndns.org> <ca433831003041730w7ccbc953kad3b600e7b112e0e@mail.gmail.com>
+From: walt <w41ter@gmail.com>
+Subject: Question about scm security holes
+Date: Thu, 04 Mar 2010 12:09:41 -0800
+Message-ID: <hmp427$d6h$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 05 02:52:52 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 05 02:53:23 2010
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnMP6-0004hA-FW
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 02:32:36 +0100
+	id 1NnMb7-0007CR-Uc
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 02:45:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752767Ab0CEBcc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Mar 2010 20:32:32 -0500
-Received: from mail-qy0-f172.google.com ([209.85.221.172]:34186 "EHLO
-	mail-qy0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751674Ab0CEBcb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Mar 2010 20:32:31 -0500
-Received: by qyk2 with SMTP id 2so442823qyk.1
-        for <git@vger.kernel.org>; Thu, 04 Mar 2010 17:32:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=6yZQOAApFlP+FZF76waB8VRf7wAnX+q8Q6nu+ENl8Ak=;
-        b=NwIJ37SWTAcQHipWxdVxh3YWlrbSLvQ+ocCt1P2vRsunAOG8HWbb821/wcyW9Yf824
-         XRc3vGx791jloYlvPYDlDLXWh78dGt+9ZZ29JVmax/XzA3PxPsPFEio2GQXqlchzhSdy
-         oVfJ+VdTbkUi/Rle5rtnN4F+UwTi0hcsJkkgw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=NjqQWqCxKJFL60WmXweKSBihswti0KcN7T2tST0hopxcxvYYXxykoG8usNxTT6DuR8
-         KaMSx9EThDXoo1Beloe/yOIaiyX9Y5DCZZ5l3GG2ujcH7KK/nP7nsER1Un8D6xkNjI5U
-         3JZxel4hlSmTQ/BZRmBp7/Iup0fqzSiRFf8jo=
-Received: by 10.224.72.228 with SMTP id n36mr2895271qaj.138.1267752750172; 
-	Thu, 04 Mar 2010 17:32:30 -0800 (PST)
-In-Reply-To: <ca433831003041730w7ccbc953kad3b600e7b112e0e@mail.gmail.com>
+	id S1752035Ab0CEBoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Mar 2010 20:44:55 -0500
+Received: from lo.gmane.org ([80.91.229.12]:39875 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751127Ab0CEBoy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Mar 2010 20:44:54 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NnMAs-0006o1-PU
+	for git@vger.kernel.org; Fri, 05 Mar 2010 02:17:55 +0100
+Received: from adsl-69-234-189-175.dsl.irvnca.pacbell.net ([69.234.189.175])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Mar 2010 02:17:54 +0100
+Received: from w41ter by adsl-69-234-189-175.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Mar 2010 02:17:54 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): Connection refused
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-189-175.dsl.irvnca.pacbell.net
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.3a3pre) Gecko/20100304 Thunderbird/3.2a1pre
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141552>
 
-On Thu, Mar 4, 2010 at 8:30 PM, Mark Lodato <lodatom@gmail.com> wrote:
-> On Wed, Mar 3, 2010 at 7:02 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->> * ml/color-grep (2010-02-26) 3 commits
->> =C2=A0- grep: Colorize selected, context, and function lines
->> =C2=A0- grep: Colorize filename, line number, and separator
->> =C2=A0- Add GIT_COLOR_BOLD_* and GIT_COLOR_BG_*
->>
->> There was a comment about not special casing filename coloring?
->
-> The disagreement is whether --name-only output should be colored or
-> not. =C2=A0In the patch, it is not, which I argue makes more sense. =C2=
-=A0When
-> --name-only is given, the only thing output is filenames. =C2=A0Havin=
-g them
-> all be the same color adds no information, and I personally find it
-> annoying to see one big block of the same color. GNU grep does color
-> the filenames with --name-only. =C2=A0Michael Witten argues that this=
- makes
-> the output consistent: whenever it's a filename, it's colored. [1] =C2=
-=A0He
-> also thinks that matching GNU grep's behavior is important. =C2=A0He =
-didn't
-> convince me and I didn't convince him, so it would be nice to have
-> more opinions on this.
+I just saw this article about the "google hackers" exploiting weaknesses in scms,
+Perforce in particular:
 
-Sorry, forgot the footnote:
+http://www.wired.com/threatlevel/2010/03/source-code-hacks/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+wired%2Findex+%28Wired%3A+Index+3+%28Top+Stories+2%29%29
 
-[1] Except that GNU grep does not color the filename is "Binary file
-<file> matches."  This patch does color it.
+I guess google didn't take Linus's advice to dump Perforce :)
+
+I can't tell from the article if Perforce is any worse than any other scm for
+security holes, in fact it seems to imply that others haven't been tested in
+the same way.
+
+Just curious if anyone here has any thoughts about how the article may or may
+not have any relevance for git (git being the scm I use most, by far, which is
+the reason I'm interested).
+
+Thanks
