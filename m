@@ -1,81 +1,69 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: How do I get the correct modification status after running git
- diff?
-Date: Thu, 04 Mar 2010 17:34:41 +0100
-Message-ID: <4B8FE121.6040807@drmicha.warpmail.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: How do I get the correct modification status after running git diff?
+Date: Thu, 04 Mar 2010 17:39:00 +0100
+Message-ID: <m2lje8avob.fsf@igel.home>
 References: <27782430.post@talk.nabble.com> <27782895.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: jateeq <jawad_atiq@hotmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 04 17:37:27 2010
+X-From: git-owner@vger.kernel.org Thu Mar 04 17:39:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnE3A-0000mp-Oh
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 17:37:25 +0100
+	id 1NnE4u-00025O-Co
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 17:39:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755506Ab0CDQhS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Mar 2010 11:37:18 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60910 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755369Ab0CDQhQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Mar 2010 11:37:16 -0500
-Received: from compute1.internal (compute1 [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 24F0CE3D24;
-	Thu,  4 Mar 2010 11:37:16 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 04 Mar 2010 11:37:16 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=t/3Id5ok0XAj9AbDH8nURjUJNy4=; b=mF9o+WFO9IPetZWW0n5iSNQn5dyLMxkGG7wBphmGW0OK8Jep1FdCBTsfa2tUFgrQAKbLDwIaK9KQFAc9fGEm0knBmzC28J/+370A8mvfRAITigdnrybbpy1ydjf5Yeb4qN09t1YsujCg2/5pKTLchUTuUJeaUOFq0ecFwfmFHtE=
-X-Sasl-enc: DvWL12IIoat6joGCzAguSA/05hKUI9nL4DeOHa/wujOw 1267720635
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 7C8134A306F;
-	Thu,  4 Mar 2010 11:37:15 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9pre) Gecko/20100301 Lightning/1.0b2pre Shredder/3.0.3pre
-In-Reply-To: <27782895.post@talk.nabble.com>
+	id S1755541Ab0CDQjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Mar 2010 11:39:07 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:41428 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755375Ab0CDQjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Mar 2010 11:39:05 -0500
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id 077071C00210;
+	Thu,  4 Mar 2010 17:39:02 +0100 (CET)
+Received: from localhost (dynscan2.mnet-online.de [192.168.6.166])
+	by mail.m-online.net (Postfix) with ESMTP id F0E1F901B1;
+	Thu,  4 Mar 2010 17:39:01 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan2.mnet-online.de [192.168.6.166]) (amavisd-new, port 10024)
+	with ESMTP id TbFxicfvtGeL; Thu,  4 Mar 2010 17:39:01 +0100 (CET)
+Received: from igel.home (DSL01.83.171.145.30.ip-pool.NEFkom.net [83.171.145.30])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Thu,  4 Mar 2010 17:39:00 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 8F8E6CA297; Thu,  4 Mar 2010 17:39:00 +0100 (CET)
+X-Yow: A dwarf is passing out somewhere in Detroit!
+In-Reply-To: <27782895.post@talk.nabble.com> (jateeq's message of "Thu, 4 Mar
+	2010 08:11:13 -0800 (PST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.93 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141533>
 
-jateeq venit, vidit, dixit 04.03.2010 17:11:
-> 
-> Ok, so I think I know what I was doing wrong... i wasn't comparing the
-> working tree with the last commit (HEAD), although I still don't know what
-> exactly I was comparing the working tree with. On reading the manual a
+jateeq <jawad_atiq@hotmail.com> writes:
 
-You were comparing the working tree with the index (staging area).
-
-> little more carefully, I realised the command should have been: 
-> 
-> git diff -M --name-status HEAD
-> 
-> This solves the problem of newly added files, but doesn't show 'R' for
-> renamed files even after I ask git to detect renamed files - just shows that
-> the renamed file was deleted (doesn't detect that the new renamed file was
-> added). So I would still appreciate some input here.
-> 
 > Renaming flie:
 > mv randomfile.xml random.xml
-> 
+>
 > Diffing:
 > git diff -M --name-status HEAD
-> 
+>
 > Output:
 > D      randomfile.xml
 
-git doesn't know about random.xml here, which you can change like so:
+random.xml is an untracked file, thus ignored.  You need to add -N it
+first.
 
-git add -N random.xml
+Andreas.
 
-Then git diff -M --name-status HEAD will show the rename.
-
-Alternatively, you could have used "git mv randomfile.xml random.xml"
-which would have staged that move in the index already. (More exactly:
-the content changes, not the move as such)
-
-Michael
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
