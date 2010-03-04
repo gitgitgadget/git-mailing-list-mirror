@@ -1,118 +1,91 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: [PATCH v5 1/3] git-svn: Support retrieving passwords with GIT_ASKPASS
-Date: Thu,  4 Mar 2010 22:31:13 +0800
-Message-ID: <1267713074-4316-1-git-send-email-lznuaa@gmail.com>
-Cc: davvid@gmail.com, Frank Li <lznuaa@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: [PATCH] Fix indentation problem in git-ls-files(1)
+Date: Thu, 04 Mar 2010 15:32:10 +0100
+Message-ID: <m2tyswb1jp.fsf@igel.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 04 15:31:53 2010
+X-From: git-owner@vger.kernel.org Thu Mar 04 15:32:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnC5f-0008Nd-6e
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 15:31:51 +0100
+	id 1NnC69-00008d-Td
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 15:32:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752841Ab0CDObh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Mar 2010 09:31:37 -0500
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:61456 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752725Ab0CDObg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Mar 2010 09:31:36 -0500
-Received: by ewy20 with SMTP id 20so1728219ewy.21
-        for <git@vger.kernel.org>; Thu, 04 Mar 2010 06:31:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=eXGmJmwwLcPMFUjy3vMkT9TID8ikJ/JVXw602JIvnHw=;
-        b=suewqgQrUSJxupZokq2HN6Cr4nRSfL3lIx5xXqsnokCYZ3fuxrBIQ3MKeLWKygsILT
-         6QYBV0+urR2c5WB5TMddHRK2MW53286g9rSVIOdxjLtEpfb61y2guOfIFYHu1GzFTTIE
-         yKs6tQzRFregMtGegv1NvOLZ0Zg7NWTHdpkv4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=O5W8RCWJlaH83f4/WsW8xsk/wlLNidbYnS0s6r64at+PNhjv9FndUlgD1p4UvqtKsC
-         6x7REBLsYGSouCm8cSw6TNoNsvybxGFl8cwuBTgCFvXwnl9UBD+930emk69MiLZONaT+
-         H/lxB2n2A114GtyeJnMp/Ipc4vPzAqDZ79obE=
-Received: by 10.213.1.143 with SMTP id 15mr924810ebf.55.1267713095248;
-        Thu, 04 Mar 2010 06:31:35 -0800 (PST)
-Received: from localhost ([114.93.102.82])
-        by mx.google.com with ESMTPS id 5sm1566718eyf.27.2010.03.04.06.31.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 04 Mar 2010 06:31:34 -0800 (PST)
-X-Mailer: git-send-email 1.6.5.1.1367.gcd48
+	id S1753257Ab0CDOcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Mar 2010 09:32:18 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:39659 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752488Ab0CDOcO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Mar 2010 09:32:14 -0500
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id 414B31C15A91
+	for <git@vger.kernel.org>; Thu,  4 Mar 2010 15:32:11 +0100 (CET)
+Received: from localhost (dynscan2.mnet-online.de [192.168.6.166])
+	by mail.m-online.net (Postfix) with ESMTP id AABE7901FA
+	for <git@vger.kernel.org>; Thu,  4 Mar 2010 15:32:11 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan2.mnet-online.de [192.168.6.166]) (amavisd-new, port 10024)
+	with ESMTP id M7c+rbHPEk2r for <git@vger.kernel.org>;
+	Thu,  4 Mar 2010 15:32:10 +0100 (CET)
+Received: from igel.home (DSL01.83.171.145.30.ip-pool.NEFkom.net [83.171.145.30])
+	by mail.mnet-online.de (Postfix) with ESMTP
+	for <git@vger.kernel.org>; Thu,  4 Mar 2010 15:32:10 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 39130CA297; Thu,  4 Mar 2010 15:32:10 +0100 (CET)
+X-Yow: HUMAN REPLICAS are inserted into VATS of NUTRITIONAL YEAST...
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.93 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141525>
 
-git-svn reads passwords from an interactive terminal.
-This behavior cause GUIs to hang waiting for git-svn to
-complete
+The nested list in the description of the -t option wasn't properly
+indented.  Additionally, make it a horizontal labeled list since the
+labels are all short.
 
-Fix this problem by allowing a password-retrieving command
-to be specified in GIT_ASKPASS. SSH_ASKPASS is supported
-as a fallback when GIT_ASKPASS is not provided.
-
-Signed-off-by: Frank Li <lznuaa@gmail.com>
+Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
 ---
- git-svn.perl |   33 +++++++++++++++++++++++----------
- 1 files changed, 23 insertions(+), 10 deletions(-)
+ Documentation/git-ls-files.txt |   15 ++++++++-------
+ 1 files changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 265852f..308d0df 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -31,6 +31,12 @@ if (! exists $ENV{SVN_SSH}) {
- 	}
- }
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 3521637..c0dc3ec 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -108,13 +108,14 @@ OPTIONS
+ -t::
+ 	Identify the file status with the following tags (followed by
+ 	a space) at the start of each line:
+-	H::	cached
+-	S::	skip-worktree
+-	M::	unmerged
+-	R::	removed/deleted
+-	C::	modified/changed
+-	K::	to be killed
+-	?::	other
++[horizontal]
++	H:::	cached
++	S:::	skip-worktree
++	M:::	unmerged
++	R:::	removed/deleted
++	C:::	modified/changed
++	K:::	to be killed
++	?:::	other
  
-+if (! exists $ENV{GIT_ASKPASS}) {
-+	if (exists $ENV{SSH_ASKPASS}) {
-+		$ENV{GIT_ASKPASS} = $ENV{SSH_ASKPASS};
-+	}
-+}
-+
- $Git::SVN::Log::TZ = $ENV{TZ};
- $ENV{TZ} = 'UTC';
- $| = 1; # unbuffer STDOUT
-@@ -3966,18 +3972,25 @@ sub username {
- 
- sub _read_password {
- 	my ($prompt, $realm) = @_;
--	print STDERR $prompt;
--	STDERR->flush;
--	require Term::ReadKey;
--	Term::ReadKey::ReadMode('noecho');
- 	my $password = '';
--	while (defined(my $key = Term::ReadKey::ReadKey(0))) {
--		last if $key =~ /[\012\015]/; # \n\r
--		$password .= $key;
-+	if (exists $ENV{GIT_ASKPASS}) {
-+		open(PH, "-|", $ENV{GIT_ASKPASS}, $prompt);
-+		$password = <PH>;
-+		$password =~ s/[\012\015]//; # \n\r
-+		close(PH);
-+	} else {
-+		print STDERR $prompt;
-+		STDERR->flush;
-+		require Term::ReadKey;
-+		Term::ReadKey::ReadMode('noecho');
-+		while (defined(my $key = Term::ReadKey::ReadKey(0))) {
-+			last if $key =~ /[\012\015]/; # \n\r
-+			$password .= $key;
-+		}
-+		Term::ReadKey::ReadMode('restore');
-+		print STDERR "\n";
-+		STDERR->flush;
- 	}
--	Term::ReadKey::ReadMode('restore');
--	print STDERR "\n";
--	STDERR->flush;
- 	$password;
- }
- 
+ -v::
+ 	Similar to `-t`, but use lowercase letters for files
 -- 
-1.7.0.86.g84fa0
+1.7.0.1
+
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
