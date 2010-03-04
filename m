@@ -1,69 +1,54 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH v2 0/7] http: minor improvements
-Date: Thu, 4 Mar 2010 21:38:11 +0100
-Message-ID: <20100304203811.GB5626@darc.dnsalias.org>
-References: <1267526971-5552-1-git-send-email-rctay89@gmail.com>
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: Re: Better cooperation between checkouts and stashing
+Date: Thu, 04 Mar 2010 20:55:18 +0100
+Message-ID: <4B901026.4090002@web.de>
+References: <4B67227A.7030908@web.de> <4B8B9BF1.10408@web.de> 	<7v1vg4ufas.fsf@alter.siamese.dyndns.org> <4b8c0420.5544f10a.2eb2.ffffb4c4@mx.google.com> 	<7vk4tvsu6x.fsf@alter.siamese.dyndns.org> <4B8C2F90.8080104@web.de> 	<b4087cc51003011741w29023914wec78f9acd6efb516@mail.gmail.com> 	<4B8CDBCA.4030101@web.de> <7vvdde62ai.fsf@alter.siamese.dyndns.org> 	<4B8E8677.8060003@web.de> <b4087cc51003032346o4e8f338ub703c460e33c3f1e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Mike Hommey <mh@glandium.org>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 04 21:55:42 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 04 22:00:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnH1v-0003rf-IE
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 20:48:20 +0100
+	id 1NnH8t-0007mN-Dj
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 20:55:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932243Ab0CDTmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Mar 2010 14:42:19 -0500
-Received: from bsmtp5.bon.at ([195.3.86.187]:55081 "EHLO lbmfmo03.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S932232Ab0CDTmR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Mar 2010 14:42:17 -0500
-Received: from bsmtp.bon.at (unknown [172.18.12.54])
-	by lbmfmo03.bon.at (Postfix) with ESMTP id AF166CECA6
-	for <git@vger.kernel.org>; Thu,  4 Mar 2010 20:42:15 +0100 (CET)
-Received: from proxy.surfnet.iacbox (sadler01.aparthotel-adler.at [80.122.230.142])
-	by bsmtp.bon.at (Postfix) with ESMTP id BD8CAA7EBB;
-	Thu,  4 Mar 2010 20:41:25 +0100 (CET)
-Received: from darc.lan (localhost [127.0.0.1])
-	by proxy.surfnet.iacbox (Postfix) with ESMTP id C040D125A61;
-	Thu,  4 Mar 2010 20:41:21 +0100 (CET)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@darc.dnsalias.org>)
-	id 1NnHoB-0001Xt-6C; Thu, 04 Mar 2010 21:38:11 +0100
-Content-Disposition: inline
-In-Reply-To: <1267526971-5552-1-git-send-email-rctay89@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756251Ab0CDTz0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Mar 2010 14:55:26 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:48641 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756245Ab0CDTzZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Mar 2010 14:55:25 -0500
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 391EA151ED9AF;
+	Thu,  4 Mar 2010 20:55:24 +0100 (CET)
+Received: from [78.49.172.30] (helo=[192.168.1.202])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1NnH8m-0005pj-00; Thu, 04 Mar 2010 20:55:24 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.5) Gecko/20091130 SUSE/3.0.0-1.1.1 Thunderbird/3.0
+In-Reply-To: <b4087cc51003032346o4e8f338ub703c460e33c3f1e@mail.gmail.com>
+X-Sender: Markus.Elfring@web.de
+X-Provags-ID: V01U2FsdGVkX1+D1d8Xs5tSb3EAriZ4C+kZTdA+fHtWo/GvZpUo
+	VpLb/9BNbI8Iotmj3DBYtjeKXRmhz2LsMIidh6R+musR7WW5lA
+	WQxh3ZcsO4AKV4IHqkKw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141542>
 
-On Tue, Mar 02, 2010 at 06:49:24PM +0800, Tay Ray Chuan wrote:
+> I'm not sure how often WIP commits become accidentally published or
+> left in the history, but perhaps it would be advantageous to provide
+> a means of specifying officially that a particular commit is in fact
+> a WIP commit such that no other commits can be made on top of this WIP
+> commit and it can't be merged with other branches or pushed or whatever.
 
-> Changes from v1 (based on comments from Clemens):
->   - patch 3: don't say "remove condition", since we're actually enabling
->     it.
->   - patch 5: in keeping with separating http and http-walker, removed
->     http_cleanup() from http-walker->cleanup().
->   - patch 5: move http_cleanup() call after http-walker->cleanup(). This
->     isn't really needed, but do this just in case http-walker->cleanup()
->     does any http operations.
+When will such blocking commits be useful?
+Would you really like to support a stopper or barrier for branches?
 
-Thanks.
-
-> [PATCH v2 1/7] t5541-http-push: check that ref is unchanged for non-ff test
-> [PATCH v2 2/7] t554[01]-http-push: refactor, add non-ff tests
-> [PATCH v2 3/7] http-push: remove "|| 1" to enable verbose check
-> [PATCH v2 4/7] http-walker: cleanup more thoroughly
-> [PATCH v2 5/7] http: init and cleanup separately from http-walker
-> [PATCH v2 6/7] remote-curl: use http_fetch_ref() instead of walker wrapper
-> [PATCH v2 7/7] remote-curl: init walker only when needed
-
-Acked-by: Clemens Buchacher <drizzd@aon.at>
+Regards,
+Markus
