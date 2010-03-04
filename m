@@ -1,115 +1,180 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/12] add --ff option to cherry-pick
-Date: Thu, 04 Mar 2010 12:48:24 -0800
-Message-ID: <7vocj33jaf.fsf@alter.siamese.dyndns.org>
-References: <20100228222038.2260.25016.chriscool@tuxfamily.org>
- <201003040306.16580.chriscool@tuxfamily.org>
- <7vhbowoj8y.fsf@alter.siamese.dyndns.org>
- <201003040755.23485.chriscool@tuxfamily.org>
+Subject: Re: What's cooking in git.git (Mar 2010, #01; Wed, 03)
+Date: Thu, 04 Mar 2010 13:42:19 -0800
+Message-ID: <7vmxynydac.fsf@alter.siamese.dyndns.org>
+References: <7v7hptt0mr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Paolo Bonzini <bonzini@gnu.org>,
-	Stephen Boyd <bebarino@gmail.com>
+Cc: git@vger.kernel.org
 To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Mar 05 00:17:03 2010
+X-From: git-owner@vger.kernel.org Fri Mar 05 00:19:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnI67-0003LZ-NR
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 21:56:49 +0100
+	id 1NnJ7P-0003X7-F2
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 23:02:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757087Ab0CDUsr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Mar 2010 15:48:47 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54998 "EHLO
+	id S1755097Ab0CDVm3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Mar 2010 16:42:29 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42527 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756459Ab0CDUsp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Mar 2010 15:48:45 -0500
+	with ESMTP id S1754929Ab0CDVm2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Mar 2010 16:42:28 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F97C9F450;
-	Thu,  4 Mar 2010 15:48:44 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CDEC9FCC2;
+	Thu,  4 Mar 2010 16:42:26 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7KjLKaFvQp7ABLd7wlE53GXOytg=; b=dt/6pn
-	ROPuzxalJN63LntbaNzAwVoSWqXgQBl1UctjG7g3nbeNydmoDDdG3qXMz6wgowC3
-	FTBKyHGLWmGqGh+EFnBn2ZUTWa+zUlhM0x2AkKkxtt1HCNu8uDX7cYtwYXc7E5LY
-	6/TPZEMjKSxPtITeTs8xBTBsVtq3tNg4PmAQ4=
+	:content-type; s=sasl; bh=WqKtfPcjznpvcYwSH4IALXOCwk8=; b=DkMk1v
+	3Dj+aVGqOTfD75ZFUUH5xtvWToyqp2FjnpouG3RAGyC3uprIuJMosGeKIiFWx5o6
+	0It+1KJiYTSEYo9VnH9cAnSciA6eCwEOSt0F5zrQQ3q8oSq8zYro7wROQ32qe6KB
+	LkQg9g/PmhzIpcVfZuxEuMjTXQGwE5oaNc21U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UeROfAVMifZVXJKuoaofVN+VIn9GxoaZ
-	SiK/1XFCO20F6o0Jq2TB+Vx2uIjGj6JDr0R7fie+QrpebjWHMCsa/N3fk8ELQUmM
-	yuBItge+LZBHfCtgj27fvEsIMlECz33n56By3rtJ1Qo2WNUuUZh+MuLoa956xIs7
-	E/8UKIpZ6Es=
+	:content-type; q=dns; s=sasl; b=G3Bij0czjASPEhtK7q52W73kh6izkoJo
+	U3e4R9gFvwNQXphaog9cr3vEpg4+hF27wEM9JO/KABysJLh6bJp8wyfsAJVTeOhg
+	Yrngt1xgzqJKj4t0kxTBtKGliJxvTJkvIrp9VqvzCES7upj4vrCVfKZlN9MpDBEf
+	Joj2jNw0NiQ=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A1ECA9F44A;
-	Thu,  4 Mar 2010 15:48:35 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D6B59FCC1;
+	Thu,  4 Mar 2010 16:42:24 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B3359F43D; Thu,  4 Mar
- 2010 15:48:26 -0500 (EST)
-In-Reply-To: <201003040755.23485.chriscool@tuxfamily.org> (Christian Couder's
- message of "Thu\, 4 Mar 2010 07\:55\:23 +0100")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 425839FCBD; Thu,  4 Mar
+ 2010 16:42:21 -0500 (EST)
+In-Reply-To: <7v7hptt0mr.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed\, 03 Mar 2010 16\:02\:20 -0800")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4D7F9458-27CF-11DF-B37B-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D1EB6EFE-27D6-11DF-B317-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141545>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> +static int fast_forward_to(const unsigned char *to, const unsigned char
->>  *from) +{
->> +	struct ref_lock *ref_lock;
->> +
->> +	read_cache();
->> +	if (checkout_fast_forward(from, to))
->> +		exit(1); /* the callee should have complained already */
->> +	ref_lock = lock_any_ref_for_update("HEAD", from, 0);
->> +	return write_ref_sha1(ref_lock, to, "cherry-pick");
->> +}
+> * cc/reset-keep (2010-01-19) 5 commits
+>  - reset: disallow using --keep when there are unmerged entries
+>  - reset: disallow "reset --keep" outside a work tree
+>  - Documentation: reset: describe new "--keep" option
+>  - reset: add test cases for "--keep" option
+>  - reset: add option "--keep" to "git reset"
 >
-> Ok, so your patch adds new code to do the job,...
+> I am not sure if this series is useful, and even less sure if the
+> usefulness of it outweighs the confusion factor.
 
-Come on.
+Regarding this, I've been thinking about how I would explain this new
+feature to end users (both new ones and old timers) as a good addition.  I
+still haven't reached a satisfactory explanation, but here is my "WIP" try
+to describe a scenario.
 
-The above calls an _existing_ code to go from one rev to another, and
-another _existing_ code to update the HEAD pointer with a reflog record.
-I could have inlined this at its sole callsite just so that I won't give
-you an excuse to quibble like you just did, but I thought that would make
-the code less readable.
+I understand that in essense, "reset --keep" does exactly a "checkout
+<commit>" does but without detaching the HEAD.  I often deliberately stay
+on detached HEAD because I find it highly useful that I can jump around
+freely with "checkout <commit>" once the head is detached (I would stay in
+a detached HEAD state and keep local changes around).  I think there must
+be a similar usefulness I can gain by "reset --keep".
 
-Also I thought that you knew better than that, and I wouldn't need such a
-"quibble blocker".  Please don't disappoint me.
+But I am not really succeeding to explain that to potential users.
 
-In other words, it was a demonstration that no refactoring was necessary
-to do what you seem to have wanted to do.  We already had API functions
-that exactly match what we wanted.  No need to add "pick.c" file, no need
-to touch reset.c, no need to move the code around to add a check_parent()
-that is called from only one place.
+    I have built commits A, B and C on my 'topic' branch, and the contents
+    in the working tree is a checkout of C (which is at the tip of the
+    branch).  I can make a small improvement, and start hacking.  And then
+    I realize that the change I just did, which I haven't committed nor
+    even added, is an improvement to commit A.
 
-It is a separate issue if there are some other functions that are totally
-irrelevant to the immediate goal of implementing your "cherry-pick --ff"
-(which is the title of the series) that do something similar to what
-checkout_fast_forward() does.  Maybe they need to be rewritten in terms of
-checkout_fast_forward(); maybe all of them and checkout_fast_forward() can
-be split into smaller pieces and get their logically freestanding parts
-consolidated into a common helper function.  But by conflating that into
-your series, you made a lot more work to review and judge the merit of it;
-I don't think it was necessarily.
+    I could do:
 
-You saw a handful of "*-refactor" patches queued recently.  They were all
-"function X, Y and Z do exactly the same thing; add one common code and
-call it from these places".  That kind of patch does not _fix_ nor improve
-anything observable from the outside, but at the same time it is easy to
-review.  The only thing that is necessary is to verify the claim "X, Y and
-Z do the same thing" and validate the refactored code do the same thing
-for X, Y and Z, and the review can _end there_.  I think you've been here
-long enough to realize the difference.
+        $ git checkout topic~2              ;# to detach at A
+        $ git commit --amend -a             ;# to improve on A
+        $ git rebase --onto HEAD @{1} topic ;# rebase the rest and come back
+
+    to fix up A and rebuild B and C on top of it.  With "reset --keep",
+    I could do this instead:
+
+        $ last=$(git rev-parse HEAD)
+        $ git reset --keep topic~2
+        $ git commit --amend -a
+        $ git rebase --onto HEAD @{1} @{2}  ;# rebase the reset
+        $ git branch -f topic               ;# and come
+        $ git checkout topic                ;# back
+
+The above however is clearly not an improvement.
+
+So far, the _only_ use case I can think of that "reset --keep" may be
+superiour than anything existing is this:
+
+    I have built commits A, B and C on my 'topic' branch, and the contents
+    in the working tree is a checkout of C (which is at the tip of the
+    branch).  I can make a small improvement, and start hacking.  And then
+    I realize that the change I just did, which I haven't committed nor
+    even added, is an improvement to commit A.  Also I realize that B and
+    C are completely bogus, and I want to get rid of them.
+
+    I could do:
+
+        $ git checkout topic~2		;# to detach at A
+        $ git commit --amend -a         ;# fix it
+        $ git branch -f topic           ;# the rest I do not need
+        $ git checkout topic	        ;# and now on the branch
+
+    but it would be far easier if I can do this:
+
+        $ git reset --keep topic~2
+        $ git commit --amend -a
+
+You have some addition in Documentation/git-reset.txt in this topic, and
+the last example (starting at around line 350) may be describing this
+situation, but it was not very clear to me.
+
+    Keep changes in working tree while discarding some previous commits::
+
+    Suppose you are working on something and you commit it, and then you
+    continue working a bit more, but now you think that what you have in
+    your working tree should be in another branch that has nothing to do
+    with what you commited previously. You can start a new branch and
+    reset it while keeping the changes in your work tree.
+
+    ------------
+    $ git tag start
+    $ git branch branch1
+
+I take it that this is supposed to be "checkout -b branch1".
+
+    $ edit
+    $ git commit ...                            <1>
+    $ edit
+    $ git branch branch2                        <2>
+
+I take it that this is supposed to be "checkout -b branch2".
+
+    $ git reset --keep start                    <3>
+    ------------
+
+    <1> This commits your first edits in branch1.
+    <2> This creates branch2, but unfortunately it contains the previous
+    commit that you don't want in this branch.
+    <3> This removes the unwanted previous commit, but this keeps the
+    changes in your working tree.
+
+The above sequence is not very convincing.  After you edited the second
+time, you create branch2 and that is presumably because you realized that
+the change in the work tree belongs to a separate topic.  It would be a
+lot more natural to do this:
+
+    $ git tag start ;# we do not have to tag, but just to make the
+                       remainder of the illustration easier to read...
+    $ git checkout -b branch1
+    $ edit	    ;# do the work for the first topic
+    $ git commit    ;# and commit
+    $ edit          ;# start working more and then realize that the
+    		       change belongs to a separate topic, and the previous
+                       commit is unrelated to that new topic
+    $ git checkout -b branch2 start 
+    $ edit          ;# continue working
+    $ git commit    ;# and conclude it
+
+so the example makes the use of "reset --keep" look artificial.
