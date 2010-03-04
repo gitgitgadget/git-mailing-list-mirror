@@ -1,69 +1,79 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: How do I get the correct modification status after running git diff?
-Date: Thu, 04 Mar 2010 17:39:00 +0100
-Message-ID: <m2lje8avob.fsf@igel.home>
-References: <27782430.post@talk.nabble.com> <27782895.post@talk.nabble.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] Documentation: fix a few typos in git-notes.txt
+Date: Thu, 4 Mar 2010 18:08:45 +0100
+Message-ID: <201003041808.45482.johan@herland.net>
+References: <4a44449489fa80dd3e7d04b7de6c69797f91f422.1267712760.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: jateeq <jawad_atiq@hotmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 04 17:39:12 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Mar 04 18:19:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnE4u-00025O-Co
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 17:39:12 +0100
+	id 1NnEiF-00065D-6W
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Mar 2010 18:19:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755541Ab0CDQjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Mar 2010 11:39:07 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:41428 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755375Ab0CDQjF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Mar 2010 11:39:05 -0500
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id 077071C00210;
-	Thu,  4 Mar 2010 17:39:02 +0100 (CET)
-Received: from localhost (dynscan2.mnet-online.de [192.168.6.166])
-	by mail.m-online.net (Postfix) with ESMTP id F0E1F901B1;
-	Thu,  4 Mar 2010 17:39:01 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.3.149])
-	by localhost (dynscan2.mnet-online.de [192.168.6.166]) (amavisd-new, port 10024)
-	with ESMTP id TbFxicfvtGeL; Thu,  4 Mar 2010 17:39:01 +0100 (CET)
-Received: from igel.home (DSL01.83.171.145.30.ip-pool.NEFkom.net [83.171.145.30])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Thu,  4 Mar 2010 17:39:00 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 8F8E6CA297; Thu,  4 Mar 2010 17:39:00 +0100 (CET)
-X-Yow: A dwarf is passing out somewhere in Detroit!
-In-Reply-To: <27782895.post@talk.nabble.com> (jateeq's message of "Thu, 4 Mar
-	2010 08:11:13 -0800 (PST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.93 (gnu/linux)
+	id S932120Ab0CDRTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Mar 2010 12:19:46 -0500
+Received: from smtp.opera.com ([213.236.208.81]:51308 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932078Ab0CDRTp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Mar 2010 12:19:45 -0500
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o24H8jgZ017277
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 4 Mar 2010 17:08:51 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <4a44449489fa80dd3e7d04b7de6c69797f91f422.1267712760.git.git@drmicha.warpmail.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141534>
 
-jateeq <jawad_atiq@hotmail.com> writes:
+On Thursday 04 March 2010, Michael J Gruber wrote:
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 
-> Renaming flie:
-> mv randomfile.xml random.xml
+Acked-by: Johan Herland <johan@herland.net>
+
+
+...Johan
+
+> ---
+> This is based on next and is orthogonal to tr/notes-display in pu.
 >
-> Diffing:
-> git diff -M --name-status HEAD
+>  Documentation/git-notes.txt |    4 ++--
+>  1 files changed, 2 insertions(+), 2 deletions(-)
 >
-> Output:
-> D      randomfile.xml
+> diff --git a/Documentation/git-notes.txt
+> b/Documentation/git-notes.txt index 14f73b9..bef2f39 100644
+> --- a/Documentation/git-notes.txt
+> +++ b/Documentation/git-notes.txt
+> @@ -46,13 +46,13 @@ list::
+>
+>  add::
+>  	Add notes for a given object (defaults to HEAD). Abort if the
+> -	object already has notes, abort. (use `-f` to overwrite an
+> +	object already has notes (use `-f` to overwrite an
+>  	existing note).
+>
+>  copy::
+>  	Copy the notes for the first object onto the second object.
+>  	Abort if the second object already has notes, or if the first
+> -	objects has none. (use -f to overwrite existing notes to the
+> +	object has none (use -f to overwrite existing notes to the
+>  	second object). This subcommand is equivalent to:
+>  	`git notes add [-f] -C $(git notes list <from-object>) <to-object>`
 
-random.xml is an untracked file, thus ignored.  You need to add -N it
-first.
 
-Andreas.
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Johan Herland, <johan@herland.net>
+www.herland.net
