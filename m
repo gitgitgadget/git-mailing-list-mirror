@@ -1,56 +1,50 @@
-From: Andreas Krey <a.krey@gmx.de>
-Subject: Re: Question about scm security holes
-Date: Fri, 5 Mar 2010 08:36:42 +0100
-Message-ID: <20100305073642.GA16131@inner.home.ulmdo.de>
-References: <hmp427$d6h$1@dough.gmane.org> <32541b131003041803q9abf6baq4cf9ffcca990b51c@mail.gmail.com>
+From: Sexy Cat <tlnoworaw@gmail.com>
+Subject: First clip from me
+Date: Fri, 5 Mar 2010 00:11:11 -0800 (PST)
+Message-ID: <fde3d817-f669-4889-a010-aa19e147e64b@d27g2000yqf.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: walt <w41ter@gmail.com>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 05 09:34:38 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 05 09:45:31 2010
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnSAy-0005JB-Mt
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 08:42:25 +0100
+	id 1NnSoi-0007WA-Hm
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 09:23:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752224Ab0CEHgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Mar 2010 02:36:48 -0500
-Received: from continuum.iocl.org ([213.146.114.200]:62741 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751626Ab0CEHgr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Mar 2010 02:36:47 -0500
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id o257ahA18477;
-	Fri, 5 Mar 2010 08:36:43 +0100
-Content-Disposition: inline
-In-Reply-To: <32541b131003041803q9abf6baq4cf9ffcca990b51c@mail.gmail.com>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+	id S1753605Ab0CEIXU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Mar 2010 03:23:20 -0500
+Received: from mail-gw0-f56.google.com ([74.125.83.56]:50592 "EHLO
+	mail-gw0-f56.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751987Ab0CEIXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Mar 2010 03:23:20 -0500
+Received: by gwj19 with SMTP id 19so6513136gwj.1
+        for <git@vger.kernel.org>; Fri, 05 Mar 2010 00:23:19 -0800 (PST)
+Received: by 10.150.238.8 with SMTP id l8mr34954ybh.13.1267776671992; Fri, 05 
+	Mar 2010 00:11:11 -0800 (PST)
+X-IP: 94.210.160.218
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 
+	5.0),gzip(gfe),gzip(gfe)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141561>
+X-Spam-Report: 6.1 points;
+ *  3.2 X_IP Message has X-IP header
+ * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
+ *      [score: 0.0000]
+ *  1.5 RAZOR2_CF_RANGE_E8_51_100 Razor2 gives engine 8 confidence level
+ *      above 50%
+ *      [cf: 100]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+ *  3.0 RAZOR2_CF_RANGE_51_100 Razor2 gives confidence level above 50%
+ *      [cf: 100]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141562>
 
-On Thu, 04 Mar 2010 21:03:08 +0000, Avery Pennarun wrote:
-...
-> where every single developer workstation has a complete copy of the
-> entire project history anyway.
-
-It's the point of a dev workstation to have access to the code,
-so McAfees whining about SCMs letting that happen is moot.
-
-What would be helping here is a separation between internet-facing
-and local work into separate machines.
-
-> least.  Traceable, not so much, because you can create a commit with
-> whatever committer/author names you want and then push them in.
-
-You can still log who pushed what into your blessed repo,
-and hold that person accountable.
-
-Andreas
+Hello  git-version-control. I am Agnes and  have made new video with
+me . Is it  good?
+http://urlshort.me/1k3
