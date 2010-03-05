@@ -1,105 +1,78 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Avery Pennarun <apenwarr@gmail.com>
 Subject: Re: Question about scm security holes
-Date: Fri, 5 Mar 2010 12:47:33 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.1003051103490.14365@iabervon.org>
-References: <hmp427$d6h$1@dough.gmane.org>
+Date: Fri, 5 Mar 2010 13:22:19 -0500
+Message-ID: <32541b131003051022oe64428bsa387e64e30bbeaab@mail.gmail.com>
+References: <hmp427$d6h$1@dough.gmane.org> <32541b131003041803q9abf6baq4cf9ffcca990b51c@mail.gmail.com> 
+	<alpine.DEB.1.00.1003050953580.20986@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: walt <w41ter@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 05 18:48:43 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: walt <w41ter@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 05 19:23:11 2010
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nnbdj-0007gL-3z
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 18:48:43 +0100
+	id 1NncAl-0003kn-0V
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 19:22:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755331Ab0CERrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Mar 2010 12:47:36 -0500
-Received: from iabervon.org ([66.92.72.58]:55106 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755323Ab0CERrf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Mar 2010 12:47:35 -0500
-Received: (qmail 6072 invoked by uid 1000); 5 Mar 2010 17:47:33 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 5 Mar 2010 17:47:33 -0000
-In-Reply-To: <hmp427$d6h$1@dough.gmane.org>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1755257Ab0CESWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Mar 2010 13:22:45 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:54546 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754147Ab0CESWo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Mar 2010 13:22:44 -0500
+Received: by gyg10 with SMTP id 10so20178gyg.19
+        for <git@vger.kernel.org>; Fri, 05 Mar 2010 10:22:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=4c10wxUkIE+0Zi6vehSC8WA3qRxYW6SXEvvVGtW0mM8=;
+        b=oEtd56+akfFqqd4/RZBYLgWIL6+WneotEVNITMhiox+1KmxWp8Ec2oEjGvD30Fi17N
+         04vVvRMUHRK0Y7gINbpqz5XvDosxzZu6dAhyBCG7k9nVSKhubBFOsu8lcJFyxzvrIW3Z
+         ohQr/Qdn93Cxtbq6fUVczicfdRY7q7cf3AAAw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=c8U14tsdkaGLLtin2+HXl+4D2ghE0QbCh+cwZOvKuApOyXDnNEHAYfiLEzZDMkB/GX
+         IggYiPnUNVMDUYFEl7TM1srQbBDFlihga9QDxEXhJxP3v7iHxibd8Sni8QxNLx4UzMCU
+         +HjEjeC/S3L49qhieZWYOFmBPmye0XbyavU7M=
+Received: by 10.150.127.24 with SMTP id z24mr1428253ybc.92.1267813359117; Fri, 
+	05 Mar 2010 10:22:39 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.1003050953580.20986@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141593>
 
-On Thu, 4 Mar 2010, walt wrote:
+On Fri, Mar 5, 2010 at 4:25 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> The trick now is to craft the commit in such a manner that it will not be
+> noticed retro-actively. This is a simple case of social engineering: you
+> have to imitate the style of the committer/author you are impersonating.
+> The commit message must look like the usual ones (typos, preferred words,
+> grammar, length of paragraphs, comprehensibility, etc)
+>
+> Likewise, the code has to be analyzed for style, and obviously for most
+> likely targets of a backdoor (both in terms of "it is a perfect spot for
+> a backdoor" and "it is not uncommon for the author to touch that
+> part of the code").
 
-> I just saw this article about the "google hackers" exploiting weaknesses in
-> scms,
-> Perforce in particular:
-> 
-> http://www.wired.com/threatlevel/2010/03/source-code-hacks/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+wired%2Findex+%28Wired%3A+Index+3+%28Top+Stories+2%29%29
-> 
-> I guess google didn't take Linus's advice to dump Perforce :)
-> 
-> I can't tell from the article if Perforce is any worse than any other scm for
-> security holes, in fact it seems to imply that others haven't been tested in
-> the same way.
-> 
-> Just curious if anyone here has any thoughts about how the article may or may
-> not have any relevance for git (git being the scm I use most, by far, which is
-> the reason I'm interested).
+There is still one major advantage to preventing modification of past
+commits: once you find out there's been a breach, you can just go back
+through the commits *since* the breach and double-check them.  Without
+that guarantee, you have to recheck *every* commit, which is much more
+work.
 
-I took a look at the white paper the article links to. I had to ignore a 
-lot of the introductory sections (yes, the most secure system would be to
-prevent people from doing any work that might be stolen or released after 
-it was corrupted), but I assume that the "findings" are the actually 
-relevant part. Comparing git and Perforce here:
+Not to say that a sneaky commit would be easy to detect, though.  I
+often add bugs to my own code without even trying to hide them, and
+they're still pretty hard to find afterward.
 
- - The Perforce server software for Windows installs to run as root. I'm 
-   not sure what the norm is for git central repositories on Windows, but 
-   it's probably better. I don't know if people actually run Perforce 
-   servers on Windows in practice, either.
+Have fun,
 
- - Perforce has built-in authorization and authentication. By default, it 
-   allows unauthenticated people to create users without any specific 
-   authorization. It transmits passwords in cleartext in some cases. It 
-   discloses a lot of information about the authorization and 
-   authentication in force to arbitrary people, including users of the 
-   internal web site who do not have protocol access at all. It issues 
-   login tickets that last a long time. The authorization controls are not 
-   applied reliably to operations that modify the authorization and 
-   authentication information in some of the server software. The initial 
-   configuration with respect to access control is completely 
-   unrestrictive. Git does not have built-in authorization or 
-   authentication, so avoiding or making these mistakes is outside git's 
-   scope.
-
- - Perforce sends all of content over the network in cleartext. This is 
-   essentially true of git as well, but in order to get any sort of access 
-   control with git, you need to use some wrapping method, which will 
-   generally provide encryption as well.
-
- - Perforce stores, on the server, the location of the working directory 
-   on the client, and this is used by the client to place files. Git does 
-   not store this information at all.
-
-In general, they seem to have found numerous flaws due to the fact that 
-Perforce includes security-related code while not being designed by 
-security specialists. Git is designed not to include security-related 
-code, and to have properly developed security code control access to it. 
-It is possible to run Perforce in a configuration where access control is 
-external to Perforce, but it's not easy or standard.
-
-On the other hand, I don't see any indication that the attack they were 
-investigating used any of the problems they found, or any problems of a 
-similar class. The actual attack seemed to involve a successful attack on 
-the workstation of someone with legitimate priviledges, which the 
-attackers then used. It's hard to say if any security measures on the part 
-of the SCM could have any effect other than limiting the choice of the 
-user to target.
-
-	-Daniel
-*This .sig left intentionally blank*
+Avery
