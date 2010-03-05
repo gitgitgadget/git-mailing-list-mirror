@@ -1,116 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2010, #01; Wed, 03)
-Date: Thu, 04 Mar 2010 19:23:14 -0800
-Message-ID: <7v7hprh2ot.fsf@alter.siamese.dyndns.org>
-References: <7v7hptt0mr.fsf@alter.siamese.dyndns.org>
- <ca433831003041730w7ccbc953kad3b600e7b112e0e@mail.gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Question about scm security holes
+Date: Thu, 4 Mar 2010 22:28:38 -0500
+Message-ID: <32541b131003041928m50aee3d0jcde58f3f4ff63a8b@mail.gmail.com>
+References: <hmp427$d6h$1@dough.gmane.org> <32541b131003041803q9abf6baq4cf9ffcca990b51c@mail.gmail.com> 
+	<4B907884.5080501@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 05 04:25:20 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: walt <w41ter@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 05 04:29:19 2010
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnO8T-000441-51
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 04:23:38 +0100
+	id 1NnOE0-0006em-RB
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 04:29:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755146Ab0CEDX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Mar 2010 22:23:27 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43632 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755121Ab0CEDX0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Mar 2010 22:23:26 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FF1D9FC13;
-	Thu,  4 Mar 2010 22:23:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yrsXiU0a+/IG+yEfDj3nlqflBZ4=; b=OunYkn
-	VkwaLqX2cEaoI3emCuTWU1Z2HoBpegG0JD1uW0U8/FAnhFRLIbDODfNqfrLxAX5u
-	ojVtgGCXm4jUx3PNEHxeeBaCiRpT8aWlsoLUNJc7HRTb8U1zKgrnouHnNt+nQRfQ
-	DrENeuixi6hm0sJg0XjGiF2YVMLJ39Lv3mvVM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OeFCfFNVhlZ9tjvkrEwa6yePR21RuU7y
-	brg/xjMzkC5zjt9CkJWdebOfh7vrPiapGqryrMr7Nj0RVO/T1ddSjlVfjTxVW/KD
-	S83/hPmhAU4lOTvudH8B1odYKIla7RgmCHO4jwJa0LW7/+ZMfAShn4SkVqJx40b5
-	+OlLizXqqbw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B1ED9FC0B;
-	Thu,  4 Mar 2010 22:23:20 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3D48E9FC07; Thu,  4 Mar
- 2010 22:23:16 -0500 (EST)
-In-Reply-To: <ca433831003041730w7ccbc953kad3b600e7b112e0e@mail.gmail.com>
- (Mark Lodato's message of "Thu\, 4 Mar 2010 20\:30\:50 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 728C246E-2806-11DF-8A6C-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752953Ab0CED3A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Mar 2010 22:29:00 -0500
+Received: from mail-yx0-f185.google.com ([209.85.210.185]:50649 "EHLO
+	mail-yx0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751146Ab0CED27 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Mar 2010 22:28:59 -0500
+Received: by yxe15 with SMTP id 15so1834147yxe.25
+        for <git@vger.kernel.org>; Thu, 04 Mar 2010 19:28:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NRANphGvdPZFu5E2pd0sabNbwOm9zpr+QNtklG6IMgs=;
+        b=dRVipoDPcYNBhvqmXZWmUQ37pXx4Ev/4RZ0sHUbmGET5k5iRaFMNZ3TQfwcyjZiLtS
+         xAqbFOc0OHIs91ixrvH2z2ShDy0lBylbNhGHh318dzNDLV9wGIobEyFo5PsFn8VqK8PM
+         pB7uZbimDnCfT5iYQF9fUVGS9x32rSAGJ1FZo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=OFo8b1nrVbCoirb4Pu/UZHAWmQ7/8BRN0NWPDicbFxVuZ3D5Ge33XqSVUOCSsDE/Pz
+         guyGvhiaKQSfXYQU7U4C5iqyvfDUTyKopWz5odJ7+I7cdx80HabkLjWpww8doWq45JVt
+         8Fd24MIXvFS/K3mIq7A/8Pqb+P3CoWAMLtTDI=
+Received: by 10.150.46.30 with SMTP id t30mr505722ybt.286.1267759738199; Thu, 
+	04 Mar 2010 19:28:58 -0800 (PST)
+In-Reply-To: <4B907884.5080501@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141559>
 
-Mark Lodato <lodatom@gmail.com> writes:
+On Thu, Mar 4, 2010 at 10:20 PM, walt <w41ter@gmail.com> wrote:
+> On 03/04/2010 06:03 PM, Avery Pennarun wrote:
+>> ...you can create a commit with
+>> whatever committer/author names you want and then push them in.
+>> Commits aren't GPG-signed, only tags are, so there are lots of ways =
+to
+>> forge a commit from someone else and mess up the audit log...
+>
+> Thanks, that's the kind of reply I was hoping for. =A0Do you think th=
+ere
+> should be a way to sign the commits themselves, at least as an option=
+?
+>
+> I certainly wouldn't bother, but OTOH nobody wants to steal my code :=
+-/
 
-> The disagreement is whether --name-only output should be colored or
-> not.  In the patch, it is not, which I argue makes more sense.  When
-> --name-only is given, the only thing output is filenames.  Having them
-> all be the same color adds no information, and I personally find it
-> annoying to see one big block of the same color. GNU grep does color
-> the filenames with --name-only.  Michael Witten argues that this makes
-> the output consistent: whenever it's a filename, it's colored. [1]  He
-> also thinks that matching GNU grep's behavior is important.  He didn't
-> convince me and I didn't convince him, so it would be nice to have
-> more opinions on this.
+The whole thing is a bit overblown.  One of my friends once took me on
+a tour of Microsoft on a weekend.  The place was mostly deserted, but
+tons of developers left their workstations unlocked overnight, and
+everyone had a private office.  And with tens of thousands of
+developers on the campus, nobody would know if you're supposed to be
+there or not.
 
-I don't have a very strong preference, but I would say painting filenames
-in --name-only output the same way would make more sense than not doing
-so, as it is obviously consistent if we paint the name of the file exactly
-the same way whenever we write it at the leftmost column as the hit label,
-no matter what options are in effect, e.g. -c, -l, or nothing.
+It would have been easy to walk off with the source code to Windows
+from one of those workstations.  The fact is, nobody really *wants*
+the source code to Windows, except probably to look at it and be
+horrified.
 
-As to the coloring of <foo> in "Binary file <foo> matches", I don't think
-it matters very much which way you choose.  That string is an oddball to
-begin with---it isn't even prefixed with the filename like normal "hit"
-is:
+What would you do if you stole the source code to Adobe's flash
+player?  It's illegal (in the U.S. anyway) to reverse engineer it and
+it's illegal to steal it, so you're on the wrong side of the law no
+matter how you pretend you managed to figure out a way around their
+DRM or whatever.
 
-    $ git grep Q t/test4*.png t/Makefile
-    Binary file t/test4012.png matches
-    t/Makefile:SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
-    t/Makefile:     @echo "*** $@ ***"; GIT_CONFIG=.git/config ...
-    t/Makefile:     '$(SHELL_PATH_SQ)' ./aggregate-results.sh test-results/t*-*    
+People describe source code as a company's "crown jewels," but that's
+a bit of a joke.  I can barely get our interns to figure out how to
+compile and understand our code.  Expecting a thief to do it, with
+nothing but a raw repo and hundreds of gigabytes of crap, is pure
+paranoia.
 
-and I think it is deliberately made an oddball, i.e. it shouldn't be like
-this:
+Sneaking in patches?  Yeah, watch out for that.  But you should be
+reviewing patch changelogs anyway.  At least git prevents people from
+*retroactively* changing stuff; they can only add patches on top, so
+it's easy to review after a break-in.
 
-    $ git grep Q t/test4*.png t/Makefile
-    t/test4012.png: Binary file t/test4012.png matches
-    t/Makefile:SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
-    t/Makefile:     @echo "*** $@ ***"; GIT_CONFIG=.git/config ...
-    t/Makefile:     '$(SHELL_PATH_SQ)' ./aggregate-results.sh test-results/t*-*    
+Have fun,
 
-because if you did so, you cannot tell if t/test4012.png is a binary file,
-or it has that matched string anymore (well you can---the string doesn't
-have Q, but I think you know what I mean).
-
-That makes me think that it is not even violating consistency if we treat
-the <foo> in "Binary file <foo> matches" differently from the usual
-filename label at the leftmost column.  We do not have to be consistent
-there, as the whole point of the line being an oddball is because it
-fundamentally wants to be shown differently.
-
-On the other hand, painting <foo> in the same "filename" color may make it
-easier to spot for color-loving people.
-
-IOW, you can argue both ways, and both argument equally makes sense.  That
-is why I don't think it matters very much.
-
-And in such a case, it is typically safer to follow existing practices if
-there are any.  If GNU paints it, we should.  If GNU doesn't, we probably
-shouldn't.
+Avery
