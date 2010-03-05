@@ -1,65 +1,143 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH] Fix indentation problem in git-ls-files(1)
-Date: Fri, 05 Mar 2010 11:08:50 +0100
-Message-ID: <m3r5nzw05p.fsf@hase.home>
-References: <m2tyswb1jp.fsf@igel.home>
-	<7v3a0fr740.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/1] gitignore: do not ignore include/linux/
+Date: Fri, 05 Mar 2010 02:43:29 -0800 (PST)
+Message-ID: <m3pr3jkq26.fsf@localhost.localdomain>
+References: <4B90CBE5.9090102@viscovery.net>
+	<1267780845-10547-1-git-send-email-jslaby@suse.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 05 11:09:09 2010
+Cc: Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org, jirislaby@gmail.com,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Jiri Slaby <jslaby@suse.cz>
+X-From: git-owner@vger.kernel.org Fri Mar 05 11:44:03 2010
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnUSu-0006wH-0v
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 11:09:04 +0100
+	id 1NnV0h-0006fZ-6J
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 11:43:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754702Ab0CEKI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Mar 2010 05:08:57 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:55002 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751664Ab0CEKI4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Mar 2010 05:08:56 -0500
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id A62191C0019E;
-	Fri,  5 Mar 2010 11:08:53 +0100 (CET)
-Received: from localhost (dynscan2.mnet-online.de [192.168.6.166])
-	by mail.m-online.net (Postfix) with ESMTP id B492F902D1;
-	Fri,  5 Mar 2010 11:08:52 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.3.149])
-	by localhost (dynscan2.mnet-online.de [192.168.6.166]) (amavisd-new, port 10024)
-	with ESMTP id jUuW5FZMusJc; Fri,  5 Mar 2010 11:08:51 +0100 (CET)
-Received: from hase.home (DSL01.83.171.174.68.ip-pool.NEFkom.net [83.171.174.68])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Fri,  5 Mar 2010 11:08:51 +0100 (CET)
-X-Yow: Did you GAIN WEIGHT in th' past 5 MINUTES or am I just DREAMING of two
- BROCCOLI FLORETS lying in an empty GAS TANK?
-In-Reply-To: <7v3a0fr740.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 04 Mar 2010 15:37:35 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+	id S1755166Ab0CEKne (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Mar 2010 05:43:34 -0500
+Received: from mail-fx0-f219.google.com ([209.85.220.219]:40135 "EHLO
+	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755028Ab0CEKnd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Mar 2010 05:43:33 -0500
+Received: by fxm19 with SMTP id 19so3936685fxm.21
+        for <multiple recipients>; Fri, 05 Mar 2010 02:43:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=yLwwg1y8APJ4IvjGwAo8Xzj1BsWQKOwZW6HWLOHl7OE=;
+        b=eGoc9luXJhOS9itaRfMl2yhZbln2p7CCdhImMSgwsQdYiSJC1L5o2MctNu3D90C3gt
+         ja+BgZPpq/lB4SnYAnyJpVgK5PdW81wExiR6jtW+gZTSq1PCGwnKeHvS0XLx5NCuE6jK
+         1D4Bdsf3xW7zykB5NU4JevrqRySQ6faTBW4lc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=U3dFkgj+woje3CuV8lTRBabF8GwH9UXVuQyiVFONCJzU9vyMzx+WgP+wiQQS2g1yCK
+         FQafg3AYMsN3WAq5R4/QW912L9l+oYfO+P/N7TBsTODxyAb6NIuimigFzDrY+OuPqJwA
+         eeJBNqr/54kQAS49sw2jmzvWiGTzxSaSmK1Ys=
+Received: by 10.223.77.136 with SMTP id g8mr870816fak.10.1267785810633;
+        Fri, 05 Mar 2010 02:43:30 -0800 (PST)
+Received: from localhost.localdomain (abws10.neoplus.adsl.tpnet.pl [83.8.242.10])
+        by mx.google.com with ESMTPS id 13sm1063123fxm.6.2010.03.05.02.43.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 05 Mar 2010 02:43:29 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o25AgoWu029865;
+	Fri, 5 Mar 2010 11:42:56 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o25AgPv7029849;
+	Fri, 5 Mar 2010 11:42:25 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1267780845-10547-1-git-send-email-jslaby@suse.cz>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141573>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jiri Slaby <jslaby@suse.cz> writes:
 
-> Both [horizontal] and three colons are something we never have used in the
-> existing documentation set.  How confident are you that various versions
-> of deployed AsciiDoc people would use all support this?
+> linux entry in .gitignore means that everything in include/linux/
+> gets ignored with git 1.7.
+> 
+> Prepend a slash to entries which are toplevel to avoid that
+> 
+> Signed-off-by: Jiri Slaby <jslaby@suse.cz>
+> Cc: Johannes Sixt <j.sixt@viscovery.net>
+> ---
+>  .gitignore |   20 ++++++++++----------
+>  1 files changed, 10 insertions(+), 10 deletions(-)
+> 
+> diff --git a/.gitignore b/.gitignore
+> index efab0eb..fe6ebb9 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -34,16 +34,16 @@ modules.builtin
+>  #
+>  # Top-level generic files
+>  #
+> -tags
+> -TAGS
+> -linux
+> -vmlinux
+> -vmlinuz
+> -System.map
+> -Module.markers
+> -Module.symvers
+> -!.gitignore
+> -!.mailmap
+> +/tags
+> +/TAGS
+> +/linux
+> +/vmlinux
+> +/vmlinuz
+> +/System.map
+> +/Module.markers
+> +/Module.symvers
+> +!/.gitignore
+> +!/.mailmap
+>  
+>  #
+>  # Generated include files
 
-I'm sorry, but I have no idea.  I just looked at the user guide on the
-asciidoc home page, which contais no version information.
+Actually you want to *not ignore* .gitignore and .mailmap (and
+.gitattributes which is missing here) anywhere, not only as top-level
+file.  So .gitignore and .mailmap should not be prepended with slash.
 
-Andreas.
+   #
+   # Top-level generic files
+   #
+  -tags
+  -TAGS
+  -linux
+  -vmlinux
+  -vmlinuz
+  -System.map
+  -Module.markers
+  -Module.symvers
+  +/tags
+  +/TAGS
+  +/linux
+  +/vmlinux
+  +/vmlinuz
+  +/System.map
+  +/Module.markers
+  +/Module.symvers
+   !.gitignore
+   !.mailmap
+
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Jakub Narebski
+Poland
+ShadeHawk on #git
