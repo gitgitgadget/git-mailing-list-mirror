@@ -1,74 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2] stash: suggest the correct command line for unknown options.
-Date: Fri,  5 Mar 2010 19:43:23 +0100
-Message-ID: <1267814603-26158-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <20100305170841.GA9325@coredump.intra.peff.net>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com,
-	Thomas Singer <thomas.singer@syntevo.com>,
-	Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 05 19:44:13 2010
+From: Jiri Slaby <jirislaby@gmail.com>
+Subject: Re: gitignore broken in git 1.7.0.1: slash checks leading dirs
+Date: Fri, 05 Mar 2010 20:30:55 +0100
+Message-ID: <4B915BEF.1030201@gmail.com>
+References: <4B90C701.3070308@gmail.com> <4B90C974.2050405@viscovery.net> <4B90C9BE.1030407@gmail.com> <4B90CBE5.9090102@viscovery.net> <4B90CEDD.6020106@gmail.com> <20100305172549.GA28562@progeny.tock>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 05 20:31:09 2010
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NncVP-0005w1-GJ
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 19:44:11 +0100
+	id 1NndEn-0001lW-Fi
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 20:31:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754738Ab0CESoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Mar 2010 13:44:06 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:39159 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754151Ab0CESoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Mar 2010 13:44:04 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o25IeX6g019735
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 5 Mar 2010 19:40:34 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NncUh-0005Fk-Ax; Fri, 05 Mar 2010 19:43:27 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NncUh-0006oS-9v; Fri, 05 Mar 2010 19:43:27 +0100
-X-Mailer: git-send-email 1.7.0.231.g9fa6.dirty
-In-Reply-To: <20100305170841.GA9325@coredump.intra.peff.net>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 05 Mar 2010 19:40:35 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o25IeX6g019735
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1268419238.26317@jSIpZlixqltpiPv7QydwZA
+	id S1755517Ab0CETbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Mar 2010 14:31:00 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:40337 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752635Ab0CETa7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Mar 2010 14:30:59 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so1571398fgg.1
+        for <git@vger.kernel.org>; Fri, 05 Mar 2010 11:30:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=DCsvOuD8Tf0mt6fQbkWSOmGtT7FvZU0pmhQnOCjbsZk=;
+        b=FFB6VPjqkeRU/RQHJHza9JDEWzx8QhsVGUgEIyiUK0YymLT3UqnLiqdDQWCIrJfvF0
+         xNsoYrYxo1cEJs94PTfL0bGyP1jSVRFUdm5iLQ2WQE02xRVB2sgjxirQbWDykQwDkfo7
+         0h2eleSHyZ5h723hlCEyIqkc65dgcmTL9H/1g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=WAM0mV5qyjVBO63rtBxPVVtP6A/3r6G+eh3eQe1PwmshsdbX2baMlWaLEt2aUKHDco
+         vNLPsfkzaUB5sou4xqgMGcgdxxEzwAemqDeg7mB/fJEh90iG/JDutGtVzUYhBrlZKN/8
+         sMCXeMd9qv0oJVl0WuhP5uAy7CCWPn8zWj430=
+Received: by 10.87.58.19 with SMTP id l19mr2760494fgk.43.1267817457803;
+        Fri, 05 Mar 2010 11:30:57 -0800 (PST)
+Received: from [192.168.2.149] ([217.66.174.142])
+        by mx.google.com with ESMTPS id e11sm3043548fga.6.2010.03.05.11.30.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 05 Mar 2010 11:30:56 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; cs-CZ; rv:1.9.1.7) Gecko/20100111 SUSE/3.0.1-11.2 Thunderbird/3.0.1
+In-Reply-To: <20100305172549.GA28562@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141595>
 
+On 03/05/2010 06:25 PM, Jonathan Nieder wrote:
+> Jiri Slaby wrote:
+> 
+>> Thinking about it, there is no way to specify a *filename* no matter
+>> where it lies? I.e. patterns such as *.o matches also a/b/test.o/test.c?
+>> Am I missing something?
+> 
+> Is
+> 
+>  *.o
+>  !*.o/
+> 
+> what you are looking for?  The first line matches *.o anywhere, and
+> the second matches *.o anywhere as long as it is a directory.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Oups, as noticed by peff, my proposed command was wrong ...
-
- git-stash.sh |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index 2d69196..aa47e54 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -151,6 +151,7 @@ save_stash () {
- 			;;
- 		-*)
- 			echo "error: unknown option for 'stash save': $1"
-+			echo "       To provide a message, use git stash save -- '$1'"
- 			usage
- 			;;
- 		*)
--- 
-1.7.0.231.g9fa6.dirty
+As I wrote above, *.o also matches against a/b/test.o/test.c, correct?
