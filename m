@@ -1,103 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix indentation problem in git-ls-files(1)
-Date: Thu, 04 Mar 2010 15:37:35 -0800
-Message-ID: <7v3a0fr740.fsf@alter.siamese.dyndns.org>
-References: <m2tyswb1jp.fsf@igel.home>
+From: Mark Lodato <lodatom@gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2010, #01; Wed, 03)
+Date: Thu, 4 Mar 2010 20:30:50 -0500
+Message-ID: <ca433831003041730w7ccbc953kad3b600e7b112e0e@mail.gmail.com>
+References: <7v7hptt0mr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Fri Mar 05 02:35:40 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 05 02:51:23 2010
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnLUU-00059M-Ng
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 01:34:07 +0100
+	id 1NnMNr-0003lk-Nb
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 02:31:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756844Ab0CDXhp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Mar 2010 18:37:45 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53347 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756794Ab0CDXho (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Mar 2010 18:37:44 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C8969FF78;
-	Thu,  4 Mar 2010 18:37:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3ZMAvFbbOB/zyxhBUnkjDi3+H+0=; b=Fm2hTL
-	aERn3s0vyyBwL+v/WjuZc1NVOQm6bNxomIxc86AXmz9o0KsHqKTPKJRnjd/PAdoa
-	40I7G7tkI+HUxwzCl0fOsK1BQvc73WzvCmYB89b0k7c41X6oRSpWBWU/N9UaarkC
-	g4+4JqWWTncNZDKqqrjnxFipsvM4ds6Cutup4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MWVh9d/w5rM2F2KoQFhfmvxCTt/rbdzN
-	16xqtPbSiW5nZoamS7wIb43bLTvnpGcObqeHV+PgKMigMW6Qa/XaYU/rkw8/LU/z
-	KSuY2EsNUn/MylsLumvl3Cph1F0+WovBJA06hW7I325EsvVbVeQ5Vi4LO7mXrXsj
-	s+q+rSl22Lw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 393F49FF77;
-	Thu,  4 Mar 2010 18:37:40 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 838CA9FF76; Thu,  4 Mar
- 2010 18:37:37 -0500 (EST)
-In-Reply-To: <m2tyswb1jp.fsf@igel.home> (Andreas Schwab's message of "Thu\,
- 04 Mar 2010 15\:32\:10 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EC216F02-27E6-11DF-89AE-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752588Ab0CEBbM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Mar 2010 20:31:12 -0500
+Received: from qw-out-2122.google.com ([74.125.92.25]:51820 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751593Ab0CEBbM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Mar 2010 20:31:12 -0500
+Received: by qw-out-2122.google.com with SMTP id 5so346987qwd.37
+        for <git@vger.kernel.org>; Thu, 04 Mar 2010 17:31:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=hBr6sJVbr8kTn+xXb6+obkvGAMUxcl8azd5O8OZsHfw=;
+        b=M+wi0wlQWGEjLWoG7tr2XvXhMYHAA1LXwe0pC1Or2EuC/dRpw4+kLCnL0jwN4ijF61
+         PhysYfcYtNF0bcDEGFYFq/289g7q1HLri193ewLTUXg9lVIgVp4rKmLo8ebCDj75GqwY
+         Ix+G53bd328bNfW1T4LC0QGrc4S4AvO+7wABo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=M6D/X38Z5DInBD/lZJVzlh8PZAn/BGhBdZqr6q4AeUWmDRqlgDXRBxppTLH3Ay22T8
+         nuUP2isoqzgScAlzMcssttgNofcgZjasso0IDv/t1CnOzeY56+kggRhpKar6Z3Na0Y/Z
+         kIcEYbf0DUVf8xNTNfRdr+ehtcofEyOh3Fp3M=
+Received: by 10.224.43.157 with SMTP id w29mr1808606qae.313.1267752670153; 
+	Thu, 04 Mar 2010 17:31:10 -0800 (PST)
+In-Reply-To: <7v7hptt0mr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141550>
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
-
-> The nested list in the description of the -t option wasn't properly
-> indented.  Additionally, make it a horizontal labeled list since the
-> labels are all short.
+On Wed, Mar 3, 2010 at 7:02 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> * ml/color-grep (2010-02-26) 3 commits
+> =C2=A0- grep: Colorize selected, context, and function lines
+> =C2=A0- grep: Colorize filename, line number, and separator
+> =C2=A0- Add GIT_COLOR_BOLD_* and GIT_COLOR_BG_*
 >
-> Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
-> ---
+> There was a comment about not special casing filename coloring?
 
-Thanks.
-
->  Documentation/git-ls-files.txt |   15 ++++++++-------
->  1 files changed, 8 insertions(+), 7 deletions(-)
->
-> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-> index 3521637..c0dc3ec 100644
-> --- a/Documentation/git-ls-files.txt
-> +++ b/Documentation/git-ls-files.txt
-> @@ -108,13 +108,14 @@ OPTIONS
->  -t::
->  	Identify the file status with the following tags (followed by
->  	a space) at the start of each line:
-> -	H::	cached
-> -	S::	skip-worktree
-> -	M::	unmerged
-> -	R::	removed/deleted
-> -	C::	modified/changed
-> -	K::	to be killed
-> -	?::	other
-> +[horizontal]
-> +	H:::	cached
-> +	S:::	skip-worktree
-> +	M:::	unmerged
-> +	R:::	removed/deleted
-> +	C:::	modified/changed
-> +	K:::	to be killed
-> +	?:::	other
-
-Both [horizontal] and three colons are something we never have used in the
-existing documentation set.  How confident are you that various versions
-of deployed AsciiDoc people would use all support this?
-
-I am not _complaining_; I am just being cautious to see if I have to look
-into the issue myself (if your answer is "not at all") or not (otherwise).
-
-Cf. http://thread.gmane.org/gmane.comp.version-control.git/139014/focus=139339
+The disagreement is whether --name-only output should be colored or
+not.  In the patch, it is not, which I argue makes more sense.  When
+--name-only is given, the only thing output is filenames.  Having them
+all be the same color adds no information, and I personally find it
+annoying to see one big block of the same color. GNU grep does color
+the filenames with --name-only.  Michael Witten argues that this makes
+the output consistent: whenever it's a filename, it's colored. [1]  He
+also thinks that matching GNU grep's behavior is important.  He didn't
+convince me and I didn't convince him, so it would be nice to have
+more opinions on this.
