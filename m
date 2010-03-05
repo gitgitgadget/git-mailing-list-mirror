@@ -1,74 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Question about scm security holes
-Date: Fri, 5 Mar 2010 23:33:12 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1003052331140.20986@pacific.mpi-cbg.de>
-References: <hmp427$d6h$1@dough.gmane.org> <32541b131003041803q9abf6baq4cf9ffcca990b51c@mail.gmail.com>  <alpine.DEB.1.00.1003050953580.20986@pacific.mpi-cbg.de> <32541b131003051022oe64428bsa387e64e30bbeaab@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-core: conflictstyle=diff3 doesn't actually use diff3
+ compatible format
+Date: Fri, 05 Mar 2010 14:31:02 -0800
+Message-ID: <7vpr3itn89.fsf@alter.siamese.dyndns.org>
+References: <20100305215253.364.63583.reportbug@localhost>
+ <20100305221950.GB5083@progeny.tock>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: walt <w41ter@gmail.com>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 05 23:26:14 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Stefan Monnier <monnier@iro.umontreal.ca>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 05 23:31:25 2010
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnfyI-00071K-EV
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 23:26:14 +0100
+	id 1Nng3E-0000WO-E5
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 23:31:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756173Ab0CEW0F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Mar 2010 17:26:05 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34548 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755337Ab0CEW0C (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Mar 2010 17:26:02 -0500
-Received: (qmail invoked by alias); 05 Mar 2010 22:26:00 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp072) with SMTP; 05 Mar 2010 23:26:00 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+l45U0N0ul37rq5bMCvCrFukWYvEdBRL11pz15T5
-	x1l5MRjSJ2WOkV
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <32541b131003051022oe64428bsa387e64e30bbeaab@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64000000000000001
+	id S1755577Ab0CEWbP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Mar 2010 17:31:15 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38326 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755288Ab0CEWbO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Mar 2010 17:31:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 78CAD9FF2B;
+	Fri,  5 Mar 2010 17:31:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=fiImR5sAlZVd
+	4MqpWO25SYyrWhg=; b=TWtU3hKcq9iC8SBY4hpsvDV0MmPb80yrf7lAT8byuxqe
+	SpNnMfL+C4um5CbTMLAiiXoct9c6lhDzLcB5QGN51+gD+dpWVLlFzJOhQvN+BFh2
+	2+UJiawzpGYoVMCG45V9+W1Yv2kfk0vCQvVEVANHYHrjGX2MYHB8hkC/S+O5Og8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=MC21hW
+	K4a5fp0Dyr7xvbJ0Et603Ie+84IEnIetxOdMmIixs+Fdi9dBCNEONPBoRJuVimsx
+	gQ0oq2D94Mnb24725Wy+Mj56ztwDrqIigtXqQQWpp6coqFxcU3nh00NsB8f2bVhw
+	mj7MMgdzS1LAdXM/JG1ff51C/6h+U8NxgL2bA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 43FDF9FF2A;
+	Fri,  5 Mar 2010 17:31:07 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 922449FF28; Fri,  5 Mar
+ 2010 17:31:03 -0500 (EST)
+In-Reply-To: <20100305221950.GB5083@progeny.tock> (Jonathan Nieder's message
+ of "Fri\, 5 Mar 2010 16\:19\:50 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CA8F88D6-28A6-11DF-8D9D-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141600>
 
-Hi,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-On Fri, 5 Mar 2010, Avery Pennarun wrote:
+>> I can't live without conflictstyle=3Ddiff3m and I'm very happy it ex=
+ists.
+>> But it has a little problem: it uses "|||||||\n" as a separator for =
+the
+>> ancestor version of the text, whereas diff3 uses "||||||| <ancestorn=
+ame>\n".
+>> The difference is harmless for a human (tho the <ancestorname> can s=
+ometimes
+>> be useful, assuming it's meaningful), but it makes some tools fail t=
+o
+>> recognize the conflict markers properly.
+>> So please add a " BASE" or " ANCESTOR" after the "|||||||".
+>
+> No opinion on this myself.  I=E2=80=99d be interested to hear from xd=
+iff people
+> whether it should be easy to add the ancestor name to the output.
 
-> On Fri, Mar 5, 2010 at 4:25 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > The trick now is to craft the commit in such a manner that it will not be
-> > noticed retro-actively. This is a simple case of social engineering: you
-> > have to imitate the style of the committer/author you are impersonating.
-> > The commit message must look like the usual ones (typos, preferred words,
-> > grammar, length of paragraphs, comprehensibility, etc)
-> >
-> > Likewise, the code has to be analyzed for style, and obviously for most
-> > likely targets of a backdoor (both in terms of "it is a perfect spot for
-> > a backdoor" and "it is not uncommon for the author to touch that
-> > part of the code").
-> 
-> There is still one major advantage to preventing modification of past
-> commits: once you find out there's been a breach, you can just go back
-> through the commits *since* the breach and double-check them.
+I don't think there was any xdiff people involved in this area.
 
-If you find out which commit it was in the past, you can always revert it. 
-It does not take Git to do it.
-
-I am all in favor of Git, yes, but let's be honest: Git does not prevent 
-an intelligent break-in.
-
-To repeat, as I seem to not have made the point before: a break-in is a 
-social problem, so it requires a social solution.
-
-Ciao,
-Dscho
+I suspect that our tools actually rely on the common ancestor markers n=
+ot
+having any extra cruft after them, so it would be introducing a bug if =
+you
+change this output without changing the places that read them (I know
+about "rerere", but there may be others).
