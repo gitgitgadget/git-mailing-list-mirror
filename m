@@ -1,108 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Question about scm security holes
-Date: Fri, 5 Mar 2010 10:25:35 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1003050953580.20986@pacific.mpi-cbg.de>
-References: <hmp427$d6h$1@dough.gmane.org> <32541b131003041803q9abf6baq4cf9ffcca990b51c@mail.gmail.com>
+From: Jiri Slaby <jirislaby@gmail.com>
+Subject: Re: gitignore broken in git 1.7.0.1: slash checks leading dirs
+Date: Fri, 05 Mar 2010 10:29:01 +0100
+Message-ID: <4B90CEDD.6020106@gmail.com>
+References: <4B90C701.3070308@gmail.com> <4B90C974.2050405@viscovery.net> <4B90C9BE.1030407@gmail.com> <4B90CBE5.9090102@viscovery.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: walt <w41ter@gmail.com>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 05 10:18:36 2010
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: linux-kernel-owner@vger.kernel.org Fri Mar 05 10:29:19 2010
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnTg1-0005sg-Ur
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 10:18:34 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1NnTqQ-0002Se-56
+	for glk-linux-kernel-3@lo.gmane.org; Fri, 05 Mar 2010 10:29:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751469Ab0CEJS3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Mar 2010 04:18:29 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34893 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751029Ab0CEJS0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Mar 2010 04:18:26 -0500
-Received: (qmail invoked by alias); 05 Mar 2010 09:18:24 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp029) with SMTP; 05 Mar 2010 10:18:24 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19bxcdSvydbNSGO2IKpA0bJ8sBkNzUkWYi4iE2Gnr
-	n5RwbM6Qpiqoz8
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <32541b131003041803q9abf6baq4cf9ffcca990b51c@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64000000000000001
-Sender: git-owner@vger.kernel.org
+	id S1753655Ab0CEJ3I (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 5 Mar 2010 04:29:08 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:28890 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751924Ab0CEJ3E (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 5 Mar 2010 04:29:04 -0500
+Received: by fg-out-1718.google.com with SMTP id l26so159054fgb.1
+        for <multiple recipients>; Fri, 05 Mar 2010 01:29:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=djVw6sWEyU8G55gxyHH4wXaVa+zMiGZjJrkVH3LkIxo=;
+        b=FbIeWkUC4MgZT5Hk/+1/G30Hk2F/+EkHipwxwdX1xHsP3JcjTh51/JhHNhncxCd5NY
+         ia9Rl4HO2VCRgLDyANaklgUVMRdZHrwbDkHRmNzjdarydE8dY9IRezqzlm4W5JzphYiC
+         6C+cHiVQO36d/ySqHRT23D3vbno4h8xBBaiTA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=FYrFFvib/gbcYZqgq2LaZV0JDDVRF3KdZI5cVCvPgV2BBNzChjr2xj7EEco+SGyVv1
+         1NJg7aVvY4t8ygtJ60U9aQyFgMWZePT59HerniHDORR+29W7nGJtDSfTUhhM0azlqanE
+         v6oILUWh7VvokmfUjOOlADkdj4232FbDW7nHA=
+Received: by 10.87.45.14 with SMTP id x14mr838755fgj.54.1267781343049;
+        Fri, 05 Mar 2010 01:29:03 -0800 (PST)
+Received: from [192.168.2.129] ([217.66.174.142])
+        by mx.google.com with ESMTPS id d8sm2352709fga.24.2010.03.05.01.29.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 05 Mar 2010 01:29:02 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; cs-CZ; rv:1.9.1.7) Gecko/20100111 SUSE/3.0.1-11.2 Thunderbird/3.0.1
+In-Reply-To: <4B90CBE5.9090102@viscovery.net>
+X-Enigmail-Version: 1.0.1
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141569>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141570>
 
-Hi,
+On 03/05/2010 10:16 AM, Johannes Sixt wrote:
+> The cited sentence says that the particular check considers only the last
+> path component of the pathname.
 
-On Thu, 4 Mar 2010, Avery Pennarun wrote:
+Thinking about it, there is no way to specify a *filename* no matter
+where it lies? I.e. patterns such as *.o matches also a/b/test.o/test.c?
+Am I missing something?
 
-> An attack in which someone untraceably modified the repo to contain 
-> modified code would be a little more interesting.
-
-I disagree that stealing the code in this particular case is 
-uninteresting. You know that there are billions in the business how to 
-manipulate Google's search results. If you can see how Google rates 
-websites, you can prepare your xxx sites for it, and nobody would be able 
-to know, let alone prove, that you "reverse-engineered" the system.
-
-> git makes this sort of thing pretty much impossible to do without it 
-> being *noticeable* at least.
-
-That is not true in all cases.
-
-If you're talking about a workflow as git.git has it, you're right, there 
-is a maintainer, and a refused push would ring all kinds of alarm bells 
-there.
-
-Except, of course, when the maintainer happens to work on different 
-machines, and is likely to pull from her main repository quite often. 
-Think "get something compiling on an obscure platform while developing 
-something different on your main computer, then do a criss-cross merge at 
-the end".
-
-It gets even much, much worse in the common setup of companies: a central 
-repository. (The two main reasons why a central repository is used are: 
-tradition (we did it with Subversion, too), and bottleneck problems: a 
-single maintainer reviewing all changes is often deemed too expensive 
-and slow.)
-
-So in the regular case, it is _very_ easy to sneak in a code-change 
-unnoticedly.
-
-The trick now is to craft the commit in such a manner that it will not be 
-noticed retro-actively. This is a simple case of social engineering: you 
-have to imitate the style of the committer/author you are impersonating. 
-The commit message must look like the usual ones (typos, preferred words, 
-grammar, length of paragraphs, comprehensibility, etc)
-
-Likewise, the code has to be analyzed for style, and obviously for most 
-likely targets of a backdoor (both in terms of "it is a perfect spot for 
-a backdoor" and "it is not uncommon for the author to touch that 
-part of the code").
-
-Crafting the commit message and the backdoor needs some time, and it needs 
-to be done _after_ succeeding with the break-in, as you can only then 
-start analyzing style (and most likely workflow -- whether there is a 
-single maintainer or whether everybody pushes to a single repository).
-
-The most likely route, therefore is to have _two_ break-ins. One for 
-reconaissance, the second for the actual change.
-
-Conclusion: there are no technical reasons why Git should be better than 
-Perforce when it comes to a break-in.
-
-Short version: it's a social problem, so it needs a social solution.
-
-Ciao,
-Dscho
-
-P.S.: Sorry for the overly long mail. I did not have time to make it 
-short.
+-- 
+js
