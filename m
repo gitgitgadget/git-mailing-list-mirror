@@ -1,66 +1,77 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: Question about scm security holes
-Date: Fri, 5 Mar 2010 03:00:10 +0000
-Message-ID: <43d8ce651003041900x66000be4s9a15ab0cde3a0fe7@mail.gmail.com>
-References: <hmp427$d6h$1@dough.gmane.org>
-	 <32541b131003041803q9abf6baq4cf9ffcca990b51c@mail.gmail.com>
+From: Frank Li <lznuaa@gmail.com>
+Subject: Re: [PATCH v5-j6t 2/3] git-core: Support retrieving passwords with 
+	GIT_ASKPASS
+Date: Fri, 5 Mar 2010 10:31:18 +0800
+Message-ID: <1976ea661003041831n2573bda2xd0f528e03a1444de@mail.gmail.com>
+References: <1267713364-2976-1-git-send-email-lznuaa@gmail.com>
+	 <7vd3zk6j01.fsf@alter.siamese.dyndns.org>
+	 <201003042059.51516.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 05 04:20:02 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri Mar 05 04:21:51 2010
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnO2n-0000Ey-Ci
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 04:17:41 +0100
+	id 1NnNtx-0000Ey-VP
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 04:08:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755013Ab0CEDAN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Mar 2010 22:00:13 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:53445 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754872Ab0CEDAM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Mar 2010 22:00:12 -0500
-Received: by pwj8 with SMTP id 8so2106671pwj.19
-        for <git@vger.kernel.org>; Thu, 04 Mar 2010 19:00:10 -0800 (PST)
+	id S1754418Ab0CECbU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Mar 2010 21:31:20 -0500
+Received: from mail-yx0-f185.google.com ([209.85.210.185]:39305 "EHLO
+	mail-yx0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754177Ab0CECbT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Mar 2010 21:31:19 -0500
+Received: by yxe15 with SMTP id 15so1806622yxe.25
+        for <git@vger.kernel.org>; Thu, 04 Mar 2010 18:31:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=Jxgt7/1HsAKctHS88IYdWdzH5zv/qN7C4Yyc74cp07I=;
-        b=cRW1zUgN+mMNzZhY3JkmemJ6U6iGeRtXSYGjPzJsY/kgMWk6zeeF/atXhEzRkJhZyF
-         ckX4btlTD4n3ttIAJRlyv/LGJCX335FNQEBfMhU078Q96XTK+kM4G7ZuYzCQiimtXL9O
-         y0oGFINAj5D3dZGxbTp7HlvXEWzJ3RNAY+J+U=
+        bh=/UO0LyZgV8ae8126/DW0F7hIQwcwWs01lEpaJjoeIe4=;
+        b=J8IiGalwkWSgKpkG8SOy9CbjB29jZ0kyPKE9Z4A1cPyrKY5d9R0L9DvnWaSKxjCEgc
+         UV0J1P1u+kj3+AyOvpYjtfhia80J2q5M2Ne3OGYw0bNzgc9G7rmei8r9pA/kvBkhxeeW
+         ydicom8MTKHP3jrRDTT4lrFVyelXnjXLIaqcM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=l56Npcb+4lGZwZF734Ea8dV4ZoQ+LwKeRaaimHgwaPIpQhwsAUai5fKcfmj0wdmL0I
-         Y/6JCNCy4lnKKceafO9BS0SNSm/61HyllK/BC+hruU8AdSvJjhvneN3LkTxXrSlWGJoa
-         H7f+aCWyvV0MBYPO9p+5AhZs7sd0gFn8pOnSE=
-Received: by 10.114.252.34 with SMTP id z34mr267061wah.224.1267758010774; Thu, 
-	04 Mar 2010 19:00:10 -0800 (PST)
-In-Reply-To: <32541b131003041803q9abf6baq4cf9ffcca990b51c@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        b=NkOyXraSNxozBC9qpA2TxngL1RWaiQpV5UEcN3KM9zH02Kb5sXbbejYM6z5vY7m2tj
+         Oyl8lyWqJsjhAMIJtiO8YWUI4rARWdhtSggVwIUmj5tCyS8Sf3ivoySLbFKV9/jDsyIN
+         62olYdv5PHRRGiHJ8D77cJt8O9OC29kJi8Yys=
+Received: by 10.150.252.5 with SMTP id z5mr500677ybh.25.1267756278377; Thu, 04 
+	Mar 2010 18:31:18 -0800 (PST)
+In-Reply-To: <201003042059.51516.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141555>
 
-On 5 March 2010 02:03, Avery Pennarun <apenwarr@gmail.com> wrote:
-> modified code would be a little more interesting. =C2=A0git makes thi=
-s sort
-> of thing pretty much impossible to do without it being *noticeable* a=
-t
-> least. =C2=A0Traceable, not so much, because you can create a commit =
-with
-> whatever committer/author names you want and then push them in.
+>
+> =A0I changed the code to make struct strbuf buffer itself static and =
+fixed
+> =A0the error message. I removed the comment about the memory leak aga=
+in
+> =A0because now the buffer is conceptually static even though behind t=
+he
+> =A0scenes it points to allocated memory.
+>
+> =A0Frank, I did not test it beyond the test suite. Please test and sa=
+y
+> =A0no or go.
+>
 
-Which is why you simply record the username of whoever pushed them in.
- This is what gitorious.org does etc.
+        Thanks.
+        I test it. It work rightly with prompted password
+appliction(ssh-askpass).
 
-John
+
+best regards
+=46rank Li
