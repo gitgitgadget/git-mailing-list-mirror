@@ -1,141 +1,98 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/1] gitignore: do not ignore include/linux/
-Date: Fri, 05 Mar 2010 02:43:29 -0800 (PST)
-Message-ID: <m3pr3jkq26.fsf@localhost.localdomain>
-References: <4B90CBE5.9090102@viscovery.net>
-	<1267780845-10547-1-git-send-email-jslaby@suse.cz>
+Subject: Re: Question about scm security holes
+Date: Fri, 05 Mar 2010 02:49:46 -0800 (PST)
+Message-ID: <m3lje7kpr9.fsf@localhost.localdomain>
+References: <hmp427$d6h$1@dough.gmane.org>
+	<32541b131003041803q9abf6baq4cf9ffcca990b51c@mail.gmail.com>
+	<alpine.DEB.1.00.1003050953580.20986@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org, jirislaby@gmail.com,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Jiri Slaby <jslaby@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Mar 05 11:44:03 2010
+Cc: Avery Pennarun <apenwarr@gmail.com>, walt <w41ter@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 05 11:49:55 2010
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnV0h-0006fZ-6J
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 11:43:59 +0100
+	id 1NnV6Q-0000yg-4N
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 11:49:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755166Ab0CEKne (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Mar 2010 05:43:34 -0500
-Received: from mail-fx0-f219.google.com ([209.85.220.219]:40135 "EHLO
-	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755028Ab0CEKnd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Mar 2010 05:43:33 -0500
-Received: by fxm19 with SMTP id 19so3936685fxm.21
-        for <multiple recipients>; Fri, 05 Mar 2010 02:43:31 -0800 (PST)
+	id S1755200Ab0CEKtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Mar 2010 05:49:49 -0500
+Received: from fg-out-1718.google.com ([72.14.220.158]:12073 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755028Ab0CEKts (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Mar 2010 05:49:48 -0500
+Received: by fg-out-1718.google.com with SMTP id l26so187339fgb.1
+        for <git@vger.kernel.org>; Fri, 05 Mar 2010 02:49:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:received
          :x-authentication-warning:to:cc:subject:references:from:date
          :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=yLwwg1y8APJ4IvjGwAo8Xzj1BsWQKOwZW6HWLOHl7OE=;
-        b=eGoc9luXJhOS9itaRfMl2yhZbln2p7CCdhImMSgwsQdYiSJC1L5o2MctNu3D90C3gt
-         ja+BgZPpq/lB4SnYAnyJpVgK5PdW81wExiR6jtW+gZTSq1PCGwnKeHvS0XLx5NCuE6jK
-         1D4Bdsf3xW7zykB5NU4JevrqRySQ6faTBW4lc=
+        bh=rDxAHYhWsyD5DXiDPoYXwLe/ZZhiAsGq86D0l9qhKb8=;
+        b=bZ2togRzPvPOc53rr0YxrDJTzXYnW0k4pci0vZQTZuXNPOJOU/wEWuLKsHGTUnD2fw
+         FdxSwm8/xgVV4Cganx+/CnrX0CgdCDZqWGrETaqkLiNyYxMQx9mRyaG72imLQSySw8l1
+         +P6biM+/b8BSs6CfEAqCH+llI4lCcs/cArYug=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=x-authentication-warning:to:cc:subject:references:from:date
          :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=U3dFkgj+woje3CuV8lTRBabF8GwH9UXVuQyiVFONCJzU9vyMzx+WgP+wiQQS2g1yCK
-         FQafg3AYMsN3WAq5R4/QW912L9l+oYfO+P/N7TBsTODxyAb6NIuimigFzDrY+OuPqJwA
-         eeJBNqr/54kQAS49sw2jmzvWiGTzxSaSmK1Ys=
-Received: by 10.223.77.136 with SMTP id g8mr870816fak.10.1267785810633;
-        Fri, 05 Mar 2010 02:43:30 -0800 (PST)
+        b=lOBWllNhBWAv0Hu894sVGI0x/+9jmIPP1p30t74hzvZxz0ThnqiVgrxSiAvSRNEjjy
+         nUD0dDs1LS9iqQaPAb3EhLYkuYa6gb0j8XtPAkYWF8V4yKnj4B6cGwfPENu5ATTnSBQh
+         fAHzzvz0DQCNoWJ/aGLfxMx/pr3plH+7AuKZE=
+Received: by 10.103.67.22 with SMTP id u22mr313768muk.12.1267786186797;
+        Fri, 05 Mar 2010 02:49:46 -0800 (PST)
 Received: from localhost.localdomain (abws10.neoplus.adsl.tpnet.pl [83.8.242.10])
-        by mx.google.com with ESMTPS id 13sm1063123fxm.6.2010.03.05.02.43.28
+        by mx.google.com with ESMTPS id 12sm7530291muq.1.2010.03.05.02.49.45
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 05 Mar 2010 02:43:29 -0800 (PST)
+        Fri, 05 Mar 2010 02:49:46 -0800 (PST)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o25AgoWu029865;
-	Fri, 5 Mar 2010 11:42:56 +0100
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o25AnEZP029940;
+	Fri, 5 Mar 2010 11:49:19 +0100
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o25AgPv7029849;
-	Fri, 5 Mar 2010 11:42:25 +0100
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o25AmwNN029933;
+	Fri, 5 Mar 2010 11:48:58 +0100
 X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1267780845-10547-1-git-send-email-jslaby@suse.cz>
+In-Reply-To: <alpine.DEB.1.00.1003050953580.20986@pacific.mpi-cbg.de>
 User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141574>
 
-Jiri Slaby <jslaby@suse.cz> writes:
-
-> linux entry in .gitignore means that everything in include/linux/
-> gets ignored with git 1.7.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Thu, 4 Mar 2010, Avery Pennarun wrote:
 > 
-> Prepend a slash to entries which are toplevel to avoid that
+> > An attack in which someone untraceably modified the repo to contain 
+> > modified code would be a little more interesting.
+
+> > git makes this sort of thing pretty much impossible to do without it 
+> > being *noticeable* at least.
 > 
-> Signed-off-by: Jiri Slaby <jslaby@suse.cz>
-> Cc: Johannes Sixt <j.sixt@viscovery.net>
-> ---
->  .gitignore |   20 ++++++++++----------
->  1 files changed, 10 insertions(+), 10 deletions(-)
+> That is not true in all cases.
 > 
-> diff --git a/.gitignore b/.gitignore
-> index efab0eb..fe6ebb9 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -34,16 +34,16 @@ modules.builtin
->  #
->  # Top-level generic files
->  #
-> -tags
-> -TAGS
-> -linux
-> -vmlinux
-> -vmlinuz
-> -System.map
-> -Module.markers
-> -Module.symvers
-> -!.gitignore
-> -!.mailmap
-> +/tags
-> +/TAGS
-> +/linux
-> +/vmlinux
-> +/vmlinuz
-> +/System.map
-> +/Module.markers
-> +/Module.symvers
-> +!/.gitignore
-> +!/.mailmap
->  
->  #
->  # Generated include files
+> If you're talking about a workflow as git.git has it, you're right, there 
+> is a maintainer, and a refused push would ring all kinds of alarm bells 
+> there.
 
-Actually you want to *not ignore* .gitignore and .mailmap (and
-.gitattributes which is missing here) anywhere, not only as top-level
-file.  So .gitignore and .mailmap should not be prepended with slash.
+[...]
+> It gets even much, much worse in the common setup of companies: a central 
+> repository. (The two main reasons why a central repository is used are: 
+> tradition (we did it with Subversion, too), and bottleneck problems: a 
+> single maintainer reviewing all changes is often deemed too expensive 
+> and slow.)
 
-   #
-   # Top-level generic files
-   #
-  -tags
-  -TAGS
-  -linux
-  -vmlinux
-  -vmlinuz
-  -System.map
-  -Module.markers
-  -Module.symvers
-  +/tags
-  +/TAGS
-  +/linux
-  +/vmlinux
-  +/vmlinuz
-  +/System.map
-  +/Module.markers
-  +/Module.symvers
-   !.gitignore
-   !.mailmap
-
+About "bottleneck problem".  Frederick Brooks wrote in his seminal
+book "The Mythical Man-Month" that recommended way of organizing teams
+is *with a maintainer*.  But this is less known that his most famous
+statement: "Adding manpower to a late software project makes it
+later." (The Brooks's Law)... and I guess companies do not know about
+this one either :-)
 
 -- 
 Jakub Narebski
