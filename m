@@ -1,99 +1,105 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: What's cooking in git.git (Mar 2010, #01; Wed, 03)
-Date: Fri, 5 Mar 2010 18:32:15 +0100
-Message-ID: <201003051832.16001.chriscool@tuxfamily.org>
-References: <7v7hptt0mr.fsf@alter.siamese.dyndns.org> <7vmxynydac.fsf@alter.siamese.dyndns.org> <7vk4trlhim.fsf@alter.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Question about scm security holes
+Date: Fri, 5 Mar 2010 12:47:33 -0500 (EST)
+Message-ID: <alpine.LNX.2.00.1003051103490.14365@iabervon.org>
+References: <hmp427$d6h$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 05 18:33:21 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: walt <w41ter@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 05 18:48:43 2010
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnbOp-0008Tr-9F
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 18:33:19 +0100
+	id 1Nnbdj-0007gL-3z
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 18:48:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754861Ab0CERdO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Mar 2010 12:33:14 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:48466 "EHLO smtp3-g21.free.fr"
+	id S1755331Ab0CERrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Mar 2010 12:47:36 -0500
+Received: from iabervon.org ([66.92.72.58]:55106 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754648Ab0CERdN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Mar 2010 12:33:13 -0500
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id E7BCD818156;
-	Fri,  5 Mar 2010 18:33:06 +0100 (CET)
-Received: from style.localnet (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 0A03F818218;
-	Fri,  5 Mar 2010 18:33:04 +0100 (CET)
-User-Agent: KMail/1.12.2 (Linux/2.6.31-19-generic; KDE/4.3.2; x86_64; ; )
-In-Reply-To: <7vk4trlhim.fsf@alter.siamese.dyndns.org>
+	id S1755323Ab0CERrf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Mar 2010 12:47:35 -0500
+Received: (qmail 6072 invoked by uid 1000); 5 Mar 2010 17:47:33 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 5 Mar 2010 17:47:33 -0000
+In-Reply-To: <hmp427$d6h$1@dough.gmane.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141592>
 
-On Friday 05 March 2010 01:49:21 Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> >     $ git branch branch2                        <2>
-> >
-> > I take it that this is supposed to be "checkout -b branch2".
-> >
-> >     $ git reset --keep start                    <3>
-> >     ------------
-> >
-> >     <1> This commits your first edits in branch1.
-> >     <2> This creates branch2, but unfortunately it contains the previous
-> >     commit that you don't want in this branch.
-> >     <3> This removes the unwanted previous commit, but this keeps the
-> >     changes in your working tree.
-> >
-> > The above sequence is not very convincing.  After you edited the second
-> > time, you create branch2 and that is presumably because you realized that
-> > the change in the work tree belongs to a separate topic.  It would be a
-> > lot more natural to do this:
-> >
-> >     $ git tag start ;# we do not have to tag, but just to make the
-> >                        remainder of the illustration easier to read...
-> >     $ git checkout -b branch1
-> >     $ edit	    ;# do the work for the first topic
-> >     $ git commit    ;# and commit
-> >     $ edit          ;# start working more and then realize that the
-> >     		       change belongs to a separate topic, and the previous
-> >                        commit is unrelated to that new topic
-> >     $ git checkout -b branch2 start
-> >     $ edit          ;# continue working
-> >     $ git commit    ;# and conclude it
-> >
-> > so the example makes the use of "reset --keep" look artificial.
-> 
-> Nah, what was I thinking.  If I rephrase your side note <2> and <3> a
-> little bit, everything makes sense.  Perhaps like so:
-> 
->     <2> In the ideal world, you could have realized that the earlier
->     commit did not belong to the new topic when you created and switched
->     to branch2 (i.e. "git checkout -b branch2 start"), but nobody is
->     perfect.
-> 
->     <3> But you can use "reset --keep" to remove the unwanted commit after
->     you switched to "branch2".
-> 
-> And it becomes very clear that "reset --keep" is a sensible way to recover
-> from this mistake.  No need to do "read-tree -m -u" followed by "reset"
-> anymore.
-> 
-> Do you think I finally understood what "reset --keep" is about?
+On Thu, 4 Mar 2010, walt wrote:
 
-Yes I think so. Thanks for that.
+> I just saw this article about the "google hackers" exploiting weaknesses in
+> scms,
+> Perforce in particular:
+> 
+> http://www.wired.com/threatlevel/2010/03/source-code-hacks/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+wired%2Findex+%28Wired%3A+Index+3+%28Top+Stories+2%29%29
+> 
+> I guess google didn't take Linus's advice to dump Perforce :)
+> 
+> I can't tell from the article if Perforce is any worse than any other scm for
+> security holes, in fact it seems to imply that others haven't been tested in
+> the same way.
+> 
+> Just curious if anyone here has any thoughts about how the article may or may
+> not have any relevance for git (git being the scm I use most, by far, which is
+> the reason I'm interested).
 
-I will rework the documentation patch according to your remarks and perhaps 
-Jonathan Nieder's remarks too.
+I took a look at the white paper the article links to. I had to ignore a 
+lot of the introductory sections (yes, the most secure system would be to
+prevent people from doing any work that might be stolen or released after 
+it was corrupted), but I assume that the "findings" are the actually 
+relevant part. Comparing git and Perforce here:
 
-Thanks both,
-Christian.
+ - The Perforce server software for Windows installs to run as root. I'm 
+   not sure what the norm is for git central repositories on Windows, but 
+   it's probably better. I don't know if people actually run Perforce 
+   servers on Windows in practice, either.
+
+ - Perforce has built-in authorization and authentication. By default, it 
+   allows unauthenticated people to create users without any specific 
+   authorization. It transmits passwords in cleartext in some cases. It 
+   discloses a lot of information about the authorization and 
+   authentication in force to arbitrary people, including users of the 
+   internal web site who do not have protocol access at all. It issues 
+   login tickets that last a long time. The authorization controls are not 
+   applied reliably to operations that modify the authorization and 
+   authentication information in some of the server software. The initial 
+   configuration with respect to access control is completely 
+   unrestrictive. Git does not have built-in authorization or 
+   authentication, so avoiding or making these mistakes is outside git's 
+   scope.
+
+ - Perforce sends all of content over the network in cleartext. This is 
+   essentially true of git as well, but in order to get any sort of access 
+   control with git, you need to use some wrapping method, which will 
+   generally provide encryption as well.
+
+ - Perforce stores, on the server, the location of the working directory 
+   on the client, and this is used by the client to place files. Git does 
+   not store this information at all.
+
+In general, they seem to have found numerous flaws due to the fact that 
+Perforce includes security-related code while not being designed by 
+security specialists. Git is designed not to include security-related 
+code, and to have properly developed security code control access to it. 
+It is possible to run Perforce in a configuration where access control is 
+external to Perforce, but it's not easy or standard.
+
+On the other hand, I don't see any indication that the attack they were 
+investigating used any of the problems they found, or any problems of a 
+similar class. The actual attack seemed to involve a successful attack on 
+the workstation of someone with legitimate priviledges, which the 
+attackers then used. It's hard to say if any security measures on the part 
+of the SCM could have any effect other than limiting the choice of the 
+user to target.
+
+	-Daniel
+*This .sig left intentionally blank*
