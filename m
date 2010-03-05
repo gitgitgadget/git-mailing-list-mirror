@@ -1,78 +1,74 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Question about scm security holes
-Date: Fri, 5 Mar 2010 13:22:19 -0500
-Message-ID: <32541b131003051022oe64428bsa387e64e30bbeaab@mail.gmail.com>
-References: <hmp427$d6h$1@dough.gmane.org> <32541b131003041803q9abf6baq4cf9ffcca990b51c@mail.gmail.com> 
-	<alpine.DEB.1.00.1003050953580.20986@pacific.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: walt <w41ter@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 05 19:23:11 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v2] stash: suggest the correct command line for unknown options.
+Date: Fri,  5 Mar 2010 19:43:23 +0100
+Message-ID: <1267814603-26158-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <20100305170841.GA9325@coredump.intra.peff.net>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com,
+	Thomas Singer <thomas.singer@syntevo.com>,
+	Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 05 19:44:13 2010
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NncAl-0003kn-0V
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 19:22:51 +0100
+	id 1NncVP-0005w1-GJ
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 19:44:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755257Ab0CESWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Mar 2010 13:22:45 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:54546 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754147Ab0CESWo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Mar 2010 13:22:44 -0500
-Received: by gyg10 with SMTP id 10so20178gyg.19
-        for <git@vger.kernel.org>; Fri, 05 Mar 2010 10:22:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=4c10wxUkIE+0Zi6vehSC8WA3qRxYW6SXEvvVGtW0mM8=;
-        b=oEtd56+akfFqqd4/RZBYLgWIL6+WneotEVNITMhiox+1KmxWp8Ec2oEjGvD30Fi17N
-         04vVvRMUHRK0Y7gINbpqz5XvDosxzZu6dAhyBCG7k9nVSKhubBFOsu8lcJFyxzvrIW3Z
-         ohQr/Qdn93Cxtbq6fUVczicfdRY7q7cf3AAAw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=c8U14tsdkaGLLtin2+HXl+4D2ghE0QbCh+cwZOvKuApOyXDnNEHAYfiLEzZDMkB/GX
-         IggYiPnUNVMDUYFEl7TM1srQbBDFlihga9QDxEXhJxP3v7iHxibd8Sni8QxNLx4UzMCU
-         +HjEjeC/S3L49qhieZWYOFmBPmye0XbyavU7M=
-Received: by 10.150.127.24 with SMTP id z24mr1428253ybc.92.1267813359117; Fri, 
-	05 Mar 2010 10:22:39 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.1003050953580.20986@pacific.mpi-cbg.de>
+	id S1754738Ab0CESoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Mar 2010 13:44:06 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:39159 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754151Ab0CESoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Mar 2010 13:44:04 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o25IeX6g019735
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 5 Mar 2010 19:40:34 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1NncUh-0005Fk-Ax; Fri, 05 Mar 2010 19:43:27 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1NncUh-0006oS-9v; Fri, 05 Mar 2010 19:43:27 +0100
+X-Mailer: git-send-email 1.7.0.231.g9fa6.dirty
+In-Reply-To: <20100305170841.GA9325@coredump.intra.peff.net>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 05 Mar 2010 19:40:35 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o25IeX6g019735
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1268419238.26317@jSIpZlixqltpiPv7QydwZA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141594>
 
-On Fri, Mar 5, 2010 at 4:25 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> The trick now is to craft the commit in such a manner that it will not be
-> noticed retro-actively. This is a simple case of social engineering: you
-> have to imitate the style of the committer/author you are impersonating.
-> The commit message must look like the usual ones (typos, preferred words,
-> grammar, length of paragraphs, comprehensibility, etc)
->
-> Likewise, the code has to be analyzed for style, and obviously for most
-> likely targets of a backdoor (both in terms of "it is a perfect spot for
-> a backdoor" and "it is not uncommon for the author to touch that
-> part of the code").
 
-There is still one major advantage to preventing modification of past
-commits: once you find out there's been a breach, you can just go back
-through the commits *since* the breach and double-check them.  Without
-that guarantee, you have to recheck *every* commit, which is much more
-work.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Oups, as noticed by peff, my proposed command was wrong ...
 
-Not to say that a sneaky commit would be easy to detect, though.  I
-often add bugs to my own code without even trying to hide them, and
-they're still pretty hard to find afterward.
+ git-stash.sh |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Have fun,
-
-Avery
+diff --git a/git-stash.sh b/git-stash.sh
+index 2d69196..aa47e54 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -151,6 +151,7 @@ save_stash () {
+ 			;;
+ 		-*)
+ 			echo "error: unknown option for 'stash save': $1"
++			echo "       To provide a message, use git stash save -- '$1'"
+ 			usage
+ 			;;
+ 		*)
+-- 
+1.7.0.231.g9fa6.dirty
