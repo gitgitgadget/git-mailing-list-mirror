@@ -1,142 +1,81 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH] t7406: Fix submodule init config tests
-Date: Fri,  5 Mar 2010 00:20:38 -0800
-Message-ID: <1267777238-2646-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>,
-	Peter Hutterer <peter.hutterer@who-t.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Jiri Slaby <jirislaby@gmail.com>
+Subject: gitignore broken in git 1.7.0.1: slash checks leading dirs
+Date: Fri, 05 Mar 2010 09:55:29 +0100
+Message-ID: <4B90C701.3070308@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: 7bit
+Cc: LKML <linux-kernel@vger.kernel.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 05 09:46:42 2010
+X-From: git-owner@vger.kernel.org Fri Mar 05 09:55:50 2010
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NnSuF-0003ye-VL
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 09:29:12 +0100
+	id 1NnTJz-0001ig-Tq
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 09:55:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754347Ab0CEI24 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Mar 2010 03:28:56 -0500
-Received: from mail-yx0-f185.google.com ([209.85.210.185]:56823 "EHLO
-	mail-yx0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754214Ab0CEI2z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Mar 2010 03:28:55 -0500
-Received: by yxe15 with SMTP id 15so1971304yxe.25
-        for <git@vger.kernel.org>; Fri, 05 Mar 2010 00:28:54 -0800 (PST)
+	id S1754735Ab0CEIzd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Mar 2010 03:55:33 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:27670 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754434Ab0CEIzc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Mar 2010 03:55:32 -0500
+Received: by fg-out-1718.google.com with SMTP id l26so147780fgb.1
+        for <multiple recipients>; Fri, 05 Mar 2010 00:55:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=P08gQVDP35NA+p3gxdaj20MndFAPWtwQlKemYEJWUMo=;
-        b=lbQ42pb845seXEJ0UwxEvvwZ7Onel9YtVA5dWFjGyicl4sZhVbJl0VPmhgblGplt9u
-         wkVaOd2eVxVf11JQw0Fp3wPCKSUgdimC+BVW0VjB5DPg7qUqkGMHxNybtyN/s4yqUxQw
-         iOYTcQEwxG/OAYVk0DU1khS5ym1EEHtB2y1WA=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:x-enigmail-version
+         :content-type:content-transfer-encoding;
+        bh=bkwPcRClV0JGXxdSmVwBXZUlbhOBDuduTdimcD4ZlsU=;
+        b=uglHY49UzZ6nShXuAN7nJEKWu1hcc2ejoQQxD3jumfCFb+filFUO9MorRFUwviAiJj
+         c9H/bz/Y/iKekxMrbUm5wnJgTVcZqEp/58hNlLWRk9t5OcyMfu7ti7waTXQ1f3IwVEpO
+         zcwcN2dGkH1+DOFaffPXZcoR/h9QDJtlO/DAE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=fakYEdVzjgchsGUJ+8tL6Nx+6z9643NEKJoq/ET9MpeqA5BXn5aTcckOdRgwL8ON8y
-         gk9XJcsJDYGhbm7LJbCZZmtg9lyKCzYqEuCIpmRJGDNrEC0a3iyQDysME7215MJHbQpk
-         M4w24JiaUBoAHJaaBTSTAUZQ5xJXIjbcXYuhA=
-Received: by 10.150.25.22 with SMTP id 22mr824952yby.106.1267777241185;
-        Fri, 05 Mar 2010 00:20:41 -0800 (PST)
-Received: from localhost (user-0c9haca.cable.mindspring.com [24.152.169.138])
-        by mx.google.com with ESMTPS id 34sm480394yxf.29.2010.03.05.00.20.39
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        b=FFVCzk5fLPqMxAHX+sHxmYO27g0PXroA9EJBOxzcuPBz4oEYLCPWR75HZ7Gr5YXTBU
+         n/mbskBHiVMhiATuf7xSjA2TUPxzRaUUhCBNT7rAB2eBupRuB4r65Y8kKaRTXJJSO9FF
+         dS6xXWOzxqdYY/+uWm73jBFMY0VDg2NjOenrY=
+Received: by 10.87.66.29 with SMTP id t29mr644645fgk.49.1267779330596;
+        Fri, 05 Mar 2010 00:55:30 -0800 (PST)
+Received: from [192.168.2.129] ([217.66.174.142])
+        by mx.google.com with ESMTPS id d4sm447856fga.8.2010.03.05.00.55.30
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 05 Mar 2010 00:20:40 -0800 (PST)
-X-Mailer: git-send-email 1.7.0.1.138.ga75b
+        Fri, 05 Mar 2010 00:55:30 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; cs-CZ; rv:1.9.1.7) Gecko/20100111 SUSE/3.0.1-11.2 Thunderbird/3.0.1
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141564>
 
-These tests have been broken since they were introduced in commits
-ca2cedb (git-submodule: add support for --rebase., 2009-04-24) and
-42b4917 (git-submodule: add support for --merge., 2009-06-03).
-'git submodule init' expects the submodules to exist in the index.
-In this case, the submodules don't exist and therefore looking for
-the submodules will always fail. To make matters worse, git submodule
-fails visibly to the user by saying:
+Hi,
 
-error: pathspec 'rebasing' did not match any file(s) known to git.
-Did you forget to 'git add'?
+having 'linux' line in .gitignore makes 'include/linux/vga_switcheroo.h'
+to be ignored though the documentation says:
+***
+If the pattern does not contain a slash /, git treats it as a shell
+glob pattern and checks for a match against the pathname without
+leading directories.
+***
 
-but doesn't return an error code. This allows the test to fail silently.
-Fix it by adding the submodules first.
+$ touch test
+$ touch include/linux/vga_asdads.h
+$ git ls-files -o --exclude-from=test
+include/linux/vga_asdads.h
+test
+$ echo linux >test
+$ git ls-files -o --exclude-from=test
+test
 
-Cc: Johan Herland <johan@herland.net>
-Cc: Peter Hutterer <peter.hutterer@who-t.net>
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
+This does not happen with git 1.6.
 
-The documentation for submodule init is a bit misleading too. It sounds
-like submodule init will just read the .gitmodules file and copy settings
-to the .git/config, but it actually needs the submodules in the index to
-copy anything.
-
-Should the behavior of submodule init should change to match the docs?
-
- t/t7406-submodule-update.sh |   24 ++++++++++++++++--------
- 1 files changed, 16 insertions(+), 8 deletions(-)
-
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 8e2449d..1382a8e 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -28,6 +28,8 @@ test_expect_success 'setup a submodule tree' '
- 	git commit -m upstream
- 	git clone . super &&
- 	git clone super submodule &&
-+	git clone super rebasing &&
-+	git clone super merging &&
- 	(cd super &&
- 	 git submodule add ../submodule submodule &&
- 	 test_tick &&
-@@ -45,6 +47,16 @@ test_expect_success 'setup a submodule tree' '
- 	 ) &&
- 	 git add submodule &&
- 	 git commit -m "submodule update"
-+	) &&
-+	(cd super &&
-+	 git submodule add ../rebasing rebasing &&
-+	 test_tick &&
-+	 git commit -m "rebasing"
-+	) &&
-+	(cd super &&
-+	 git submodule add ../merging merging &&
-+	 test_tick &&
-+	 git commit -m "rebasing"
- 	)
- '
- 
-@@ -177,21 +189,17 @@ test_expect_success 'submodule update - checkout in .git/config' '
- 
- test_expect_success 'submodule init picks up rebase' '
- 	(cd super &&
--	 git config submodule.rebasing.url git://non-existing/git &&
--	 git config submodule.rebasing.path does-not-matter &&
--	 git config submodule.rebasing.update rebase &&
-+	 git config -f .gitmodules submodule.rebasing.update rebase &&
- 	 git submodule init rebasing &&
--	 test "rebase" = $(git config submodule.rebasing.update)
-+	 test "rebase" = "$(git config submodule.rebasing.update)"
- 	)
- '
- 
- test_expect_success 'submodule init picks up merge' '
- 	(cd super &&
--	 git config submodule.merging.url git://non-existing/git &&
--	 git config submodule.merging.path does-not-matter &&
--	 git config submodule.merging.update merge &&
-+	 git config -f .gitmodules submodule.merging.update merge &&
- 	 git submodule init merging &&
--	 test "merge" = $(git config submodule.merging.update)
-+	 test "merge" = "$(git config submodule.merging.update)"
- 	)
- '
- 
+thanks,
 -- 
-1.7.0.1.138.ga75b
+js
