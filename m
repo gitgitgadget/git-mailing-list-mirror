@@ -1,99 +1,74 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git-core: conflictstyle=diff3 doesn't actually use diff3
- compatible format
-Date: Fri, 5 Mar 2010 16:19:50 -0600
-Message-ID: <20100305221950.GB5083@progeny.tock>
-References: <20100305215253.364.63583.reportbug@localhost>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Question about scm security holes
+Date: Fri, 5 Mar 2010 23:33:12 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1003052331140.20986@pacific.mpi-cbg.de>
+References: <hmp427$d6h$1@dough.gmane.org> <32541b131003041803q9abf6baq4cf9ffcca990b51c@mail.gmail.com>  <alpine.DEB.1.00.1003050953580.20986@pacific.mpi-cbg.de> <32541b131003051022oe64428bsa387e64e30bbeaab@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stefan Monnier <monnier@iro.umontreal.ca>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 05 23:20:28 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: walt <w41ter@gmail.com>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 05 23:26:14 2010
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nnfsd-0004YA-5b
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 23:20:23 +0100
+	id 1NnfyI-00071K-EV
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Mar 2010 23:26:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755821Ab0CEWUE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Mar 2010 17:20:04 -0500
-Received: from mail-ew0-f212.google.com ([209.85.219.212]:56613 "EHLO
-	mail-ew0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755818Ab0CEWT7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Mar 2010 17:19:59 -0500
-Received: by ewy4 with SMTP id 4so2743076ewy.28
-        for <git@vger.kernel.org>; Fri, 05 Mar 2010 14:19:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=WIkVRRgvhTaSl2nArqVwcPAzqIcx7XfT7JNTr3nU2XA=;
-        b=Wn+oAUocIaCUvetXXkcfOE41Gq21Dig0JTLiOvDKmIC6Gx8eryfAzmNDeP682tQThy
-         enLTk5SaT7iQUZFjjIXGVwuIdvW3dlrJk6wGEFJFXnS9xZwChGLY3Wzzi+8ozV7ZuNau
-         LzMomgQGxcGCw1hk2torQtOyzTvz3LxgSqJ/0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=IDEMiplwhdQDyJhr7F5XwNGTjTZVamX0BMgWSS04pdZe32talJwVM0783qXXJ1Eby9
-         7M/I9QYV3zJv0NItP3TzLwnznkBbpIuNW+iJ9rwVTRzmetzXpWtqi0o1lUyUf78x0ZMJ
-         JIMBuFP2JVEQYLZboazHuMbvXLXsg8x/mh3qU=
-Received: by 10.213.96.212 with SMTP id i20mr847339ebn.35.1267827597535;
-        Fri, 05 Mar 2010 14:19:57 -0800 (PST)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 7sm5442110eyb.17.2010.03.05.14.19.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 05 Mar 2010 14:19:56 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20100305215253.364.63583.reportbug@localhost>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756173Ab0CEW0F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Mar 2010 17:26:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34548 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755337Ab0CEW0C (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Mar 2010 17:26:02 -0500
+Received: (qmail invoked by alias); 05 Mar 2010 22:26:00 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp072) with SMTP; 05 Mar 2010 23:26:00 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+l45U0N0ul37rq5bMCvCrFukWYvEdBRL11pz15T5
+	x1l5MRjSJ2WOkV
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <32541b131003051022oe64428bsa387e64e30bbeaab@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64000000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141599>
 
-Hi gitsters,
+Hi,
 
-Stefan Monnier wrote [1]:
+On Fri, 5 Mar 2010, Avery Pennarun wrote:
 
-> I can't live without conflictstyle=3Ddiff3m and I'm very happy it exi=
-sts.
-> But it has a little problem: it uses "|||||||\n" as a separator for t=
-he
-> ancestor version of the text, whereas diff3 uses "||||||| <ancestorna=
-me>\n".
-> The difference is harmless for a human (tho the <ancestorname> can so=
-metimes
-> be useful, assuming it's meaningful), but it makes some tools fail to
-> recognize the conflict markers properly.
-> So please add a " BASE" or " ANCESTOR" after the "|||||||".
+> On Fri, Mar 5, 2010 at 4:25 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > The trick now is to craft the commit in such a manner that it will not be
+> > noticed retro-actively. This is a simple case of social engineering: you
+> > have to imitate the style of the committer/author you are impersonating.
+> > The commit message must look like the usual ones (typos, preferred words,
+> > grammar, length of paragraphs, comprehensibility, etc)
+> >
+> > Likewise, the code has to be analyzed for style, and obviously for most
+> > likely targets of a backdoor (both in terms of "it is a perfect spot for
+> > a backdoor" and "it is not uncommon for the author to touch that
+> > part of the code").
+> 
+> There is still one major advantage to preventing modification of past
+> commits: once you find out there's been a breach, you can just go back
+> through the commits *since* the breach and double-check them.
 
-No opinion on this myself.  I=E2=80=99d be interested to hear from xdif=
-f people
-whether it should be easy to add the ancestor name to the output.
+If you find out which commit it was in the past, you can always revert it. 
+It does not take Git to do it.
 
->
-> 	Stefan
->
-> PS: I intended to report this bug directly to the Git bug-tracker, bu=
-t I was
-> simply unable to find it.  I know I'm sometimes dense, but I did make=
- an
-> honest effort to look for it.
+I am all in favor of Git, yes, but let's be honest: Git does not prevent 
+an intelligent break-in.
 
-See http://thread.gmane.org/gmane.comp.version-control.git/136500
+To repeat, as I seem to not have made the point before: a break-in is a 
+social problem, so it requires a social solution.
 
-Short answer: the usual method is to report bugs to the list, preferabl=
-y
-with a patch for t/ or even better, a fix. ;-)
-
-Jonathan
-
-[1] http://bugs.debian.org/572720
+Ciao,
+Dscho
