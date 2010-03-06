@@ -1,128 +1,285 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] bash-completion: Support running with set -u in bash 4.0
-Date: Sat, 6 Mar 2010 12:16:55 -0600
-Message-ID: <20100306181655.GA2261@progeny.tock>
+Subject: Re: [PATCH] bash-completion: Support running with set -u in bash
+ 4.0
+Date: Sat, 6 Mar 2010 14:17:53 -0600
+Message-ID: <20100306201753.GA4704@progeny.tock>
+References: <20100306181655.GA2261@progeny.tock>
+ <7vtystfdu5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ted Pavlic <ted@tedpavlic.com>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Ted Pavlic <ted@tedpavlic.com>,
 	Thomas Nilsson <thomas.nilsson@unixangst.com>,
 	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Mar 06 22:28:37 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 06 22:29:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1No16d-0004YU-M2
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 22:00:16 +0100
+	id 1No17I-0004YU-Qj
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 22:00:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754019Ab0CFSQx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Mar 2010 13:16:53 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:52443 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753952Ab0CFSQw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Mar 2010 13:16:52 -0500
-Received: by gyh3 with SMTP id 3so186768gyh.19
-        for <git@vger.kernel.org>; Sat, 06 Mar 2010 10:16:51 -0800 (PST)
+	id S1752629Ab0CFURt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Mar 2010 15:17:49 -0500
+Received: from mail-iw0-f202.google.com ([209.85.223.202]:42314 "EHLO
+	mail-iw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751744Ab0CFURs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Mar 2010 15:17:48 -0500
+Received: by iwn40 with SMTP id 40so1218736iwn.1
+        for <git@vger.kernel.org>; Sat, 06 Mar 2010 12:17:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=fALtLeXWC9MIjUcn71h7SYrUVL5yrNUNDZJpUtoZZ/Y=;
-        b=aNujaXkFr0NLF2KGoeZ05JVvniyPU72SEEjj4CycR7fCivVUfSaAOAtVhjg/9QaWRN
-         JL6MJxD0A7aAAzAh/6Rpf2H+t2ollxcD+Pu3iqkKv6N7trhPITdYopeJx3oHypaJtAwj
-         8G2mgG/hSSCJoEziSKMWK2zD6X65sZttes7j8=
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=ed0ZvQXjGUckSXtT2aosyFQoq23wCgF+IS+bH5OTw8Q=;
+        b=PESGcWXVgmqsKTkb2WckMqhQHjU/iytrfyfjQKhAzIkZARX6Ft2/2sIfHQAOB5nOQR
+         LBSscs38CNiw8k3aU4KHs4mP/PRd12WEdftb+Bg51hob1lRYXpd3xX7QLVfPOmtDA7Zj
+         Wckhd0sCVs/y3Sln1bGFRNVWOaW/3aqaQT0aY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=kuOL7T+D4jU/bUBJ/XCpVqdCFQBWIDDZ/66b+Bv7+4Cg/xLcOwdmqff0KDPvjBsR1n
-         2RiRB+dg6KVuAeCAn8rTBD80432AhnPPiX5M7mkSlG92ZoM486Jad8q3j3EipRzszLuP
-         o730yjm8IzXugutDsazc1txpwDOxz8MDfcVZU=
-Received: by 10.91.145.11 with SMTP id x11mr3075570agn.86.1267899411207;
-        Sat, 06 Mar 2010 10:16:51 -0800 (PST)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=CPyRRJrRYBXeQo9JHjQas90K27vf7K/JAC4N1ttqpV2n9FSY3d5O1D902ubyFxMOav
+         ft3b+c0iC3zXAsb/gZwdpD+Q5kQjxaC8YbtVxPE+BHbPs9QcfD2ruXRprAPk7to8e/zE
+         Va3zoCYbodjn/rsoibLrWMKIwcyUfkOrvLxp0=
+Received: by 10.231.151.207 with SMTP id d15mr954693ibw.44.1267906667600;
+        Sat, 06 Mar 2010 12:17:47 -0800 (PST)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm2648381iwn.14.2010.03.06.10.16.50
+        by mx.google.com with ESMTPS id 21sm2752095iwn.3.2010.03.06.12.17.46
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 06 Mar 2010 10:16:50 -0800 (PST)
+        Sat, 06 Mar 2010 12:17:47 -0800 (PST)
 Content-Disposition: inline
+In-Reply-To: <7vtystfdu5.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Thomas Nilsson <thomas.nilsson@unixangst.com>
-Date: Tue, 23 Feb 2010 12:13:00 +0100
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Starting with bash 4.0-beta, under "set -u" semantics, accessing
-undefined local variables is now an error.  Some user environments
-enable this setting in the interactive shell, with unpleasant results:
+>> @@ -2181,7 +2181,7 @@ _git ()
+>>  		c=3D$((++c))
+>>  	done
+>> =20
+>> -	if [ -z "$command" ]; then
+>> +	if [ -z "${command-}" ]; then
+>>  		case "${COMP_WORDS[COMP_CWORD]}" in
+>>  		--*)   __gitcomp "
+>>  			--paginate
+>
+> Why not this patch, instead of the above hunk?
 
- knirch@traktor:~/source/external/git (master)$ set -o unset
- bash: w: unbound variable
- knirch@traktor:~/source/external/git$ git ^Ibash: command: unbound variable
- bash: w: unbound variable
- knirch@traktor:~/source/external/git$
- bash: w: unbound variable
- knirch@traktor:~/source/external/git$
+My mistake.  The original patch was as you suggest, then I changed it
+to the above to make it follow the style of surrounding code.
 
-Most of these variables should be bound to "".  In contexts where the
-completion functions should access an undefined variable, accessing a
-default empty string (as in "${1-}" instead of "$1") is a reasonable
-way to cope, as it silences the undefined variable error while still
-supplying an empty string.
+If one makes it a goal to lose the ${foo-} lines:
+
+ - In __gitdir, [ -z "${1-}" ] should be [ $# -eq 0 ]
+ - In __gitdir callers, "${1-}" should be replaced by "$@"
+ - In _git, __git_dir should be initialized to ""
+ - In _gitk and __git_ps1, __git_dir should be made local and
+   initialized (independent bugfix)
+ - In __git_ps1, the code examining $GIT_PS1_DESCRIBE_STYLE
+   should be protected by an if [ -n "${GIT_PS1_DESCRIBE_STYLE:+set}" ]
+ - The checks for GIT_PS1_SHOWDIRTYSTATE and GIT_PS1_SHOWUNTRACKEDFILES
+   would also be adjusted
+ - __gitcomp should get some local variables set to "" and then
+   conditionally set to its arguments
+ - "${1-}" in __git_heads and __git_tags should be "$dir"
+
+These look like good things to do anyway.  Assuming your change
+has already been made, the follow-up patch would look something
+like this.
+
+-- %< --
+Subject: bash-completion: Avoid using uninitialized values
+
+The "${var-}" idiom is obscure and makes it easy to hide uses of
+values not initialized by the completion script that could have leaked
+from the user=E2=80=99s environment.
+
+Untested.  The only intentional change in functionality from this
+patch is that __git_dir has been made local to _gitk() and __git_ps1.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Sent by Thomas to <http://bugs.debian.org/571087> (thanks!).  One
-might use 'set -u' in an interactive shell while manually
-single-stepping through a shell script, perhaps.
+ contrib/completion/git-completion.bash |   52 +++++++++++++++++++++---=
+--------
+ 1 files changed, 34 insertions(+), 18 deletions(-)
 
- contrib/completion/git-completion.bash |   16 ++++++++--------
- 1 files changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index fe93747..d97467e 100755
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 2682f52..e291d8d 100755
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -84,8 +84,8 @@ __git_ps1 ()
+@@ -63,8 +63,8 @@ esac
+ # returns location of .git repo
+ __gitdir ()
  {
- 	local g="$(__gitdir)"
+-	if [ -z "${1-}" ]; then
+-		if [ -n "${__git_dir-}" ]; then
++	if [ $# -eq 0 ]; then
++		if [ -n "$__git_dir" ]; then
+ 			echo "$__git_dir"
+ 		elif [ -d .git ]; then
+ 			echo .git
+@@ -82,6 +82,7 @@ __gitdir ()
+ # returns text to add to bash PS1 prompt (includes branch name)
+ __git_ps1 ()
+ {
++	local __git_dir=3D""
+ 	local g=3D"$(__gitdir)"
  	if [ -n "$g" ]; then
--		local r
--		local b
-+		local r=""
-+		local b=""
- 		if [ -f "$g/rebase-merge/interactive" ]; then
- 			r="|REBASE-i"
- 			b="$(cat "$g/rebase-merge/head-name")"
-@@ -127,11 +127,11 @@ __git_ps1 ()
- 			}
- 		fi
- 
--		local w
--		local i
--		local s
--		local u
--		local c
-+		local w=""
-+		local i=""
-+		local s=""
-+		local u=""
-+		local c=""
- 
- 		if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
- 			if [ "true" = "$(git rev-parse --is-bare-repository 2>/dev/null)" ]; then
-@@ -2181,7 +2181,7 @@ _git ()
- 		c=$((++c))
- 	done
- 
--	if [ -z "$command" ]; then
-+	if [ -z "${command-}" ]; then
- 		case "${COMP_WORDS[COMP_CWORD]}" in
- 		--*)   __gitcomp "
- 			--paginate
--- 
+ 		local r=3D""
+@@ -108,18 +109,20 @@ __git_ps1 ()
+ 			fi
+=20
+ 			b=3D"$(git symbolic-ref HEAD 2>/dev/null)" || {
+-
+-				b=3D"$(
+-				case "${GIT_PS1_DESCRIBE_STYLE-}" in
++				if [ -z "${GIT_PS1_DESCRIBE_STYLE:+set}" ] ||
++					[ "$GIT_PS1_DESCRIBE_STYLE" =3D default ]; then
++					b=3D$(git describe --exact-match HEAD 2>/dev/null)
++				else b=3D$(case "$GIT_PS1_DESCRIBE_STYLE" in
+ 				(contains)
+ 					git describe --contains HEAD ;;
+ 				(branch)
+ 					git describe --contains --all HEAD ;;
+ 				(describe)
+ 					git describe HEAD ;;
+-				(* | default)
++				(*)
+ 					git describe --exact-match HEAD ;;
+-				esac 2>/dev/null)" ||
++				esac 2>/dev/null)
++				fi ||
+=20
+ 				b=3D"$(cut -c1-7 "$g/HEAD" 2>/dev/null)..." ||
+ 				b=3D"unknown"
+@@ -140,7 +143,7 @@ __git_ps1 ()
+ 				b=3D"GIT_DIR!"
+ 			fi
+ 		elif [ "true" =3D "$(git rev-parse --is-inside-work-tree 2>/dev/null=
+)" ]; then
+-			if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ]; then
++			if [ -n "${GIT_PS1_SHOWDIRTYSTATE:+set}" ]; then
+ 				if [ "$(git config --bool bash.showDirtyState)" !=3D "false" ]; th=
+en
+ 					git diff --no-ext-diff --quiet --exit-code || w=3D"*"
+ 					if git rev-parse --quiet --verify HEAD >/dev/null; then
+@@ -150,11 +153,11 @@ __git_ps1 ()
+ 					fi
+ 				fi
+ 			fi
+-			if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ]; then
++			if [ -n "${GIT_PS1_SHOWSTASHSTATE:+set}" ]; then
+ 			        git rev-parse --verify refs/stash >/dev/null 2>&1 && s=3D"$=
+"
+ 			fi
+=20
+-			if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ]; then
++			if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES:+set}" ]; then
+ 			   if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+ 			      u=3D"%"
+ 			   fi
+@@ -183,18 +186,30 @@ __gitcomp_1 ()
+ # generates completion reply with compgen
+ __gitcomp ()
+ {
++	local replies=3D""
++	local pfx=3D""
+ 	local cur=3D"${COMP_WORDS[COMP_CWORD]}"
++	local sfx=3D""
++	if [ $# -gt 3 ]; then
++		sfx=3D$4
++	fi
+ 	if [ $# -gt 2 ]; then
+ 		cur=3D"$3"
+ 	fi
++	if [ $# -gt 1 ]; then
++		pfx=3D$2
++	fi
++	if [ $# -gt 0 ]; then
++		replies=3D$1
++	fi
+ 	case "$cur" in
+ 	--*=3D)
+ 		COMPREPLY=3D()
+ 		;;
+ 	*)
+ 		local IFS=3D$'\n'
+-		COMPREPLY=3D($(compgen -P "${2-}" \
+-			-W "$(__gitcomp_1 "${1-}" "${4-}")" \
++		COMPREPLY=3D($(compgen -P "$pfx" \
++			-W "$(__gitcomp_1 "$replies" "$sfx")" \
+ 			-- "$cur"))
+ 		;;
+ 	esac
+@@ -203,13 +218,13 @@ __gitcomp ()
+ # __git_heads accepts 0 or 1 arguments (to pass to __gitdir)
+ __git_heads ()
+ {
+-	local cmd i is_hash=3Dy dir=3D"$(__gitdir "${1-}")"
++	local cmd i is_hash=3Dy dir=3D"$(__gitdir "$@")"
+ 	if [ -d "$dir" ]; then
+ 		git --git-dir=3D"$dir" for-each-ref --format=3D'%(refname:short)' \
+ 			refs/heads
+ 		return
+ 	fi
+-	for i in $(git ls-remote "${1-}" 2>/dev/null); do
++	for i in $(git ls-remote "$dir" 2>/dev/null); do
+ 		case "$is_hash,$i" in
+ 		y,*) is_hash=3Dn ;;
+ 		n,*^{}) is_hash=3Dy ;;
+@@ -222,13 +237,13 @@ __git_heads ()
+ # __git_tags accepts 0 or 1 arguments (to pass to __gitdir)
+ __git_tags ()
+ {
+-	local cmd i is_hash=3Dy dir=3D"$(__gitdir "${1-}")"
++	local cmd i is_hash=3Dy dir=3D"$(__gitdir "$@")"
+ 	if [ -d "$dir" ]; then
+ 		git --git-dir=3D"$dir" for-each-ref --format=3D'%(refname:short)' \
+ 			refs/tags
+ 		return
+ 	fi
+-	for i in $(git ls-remote "${1-}" 2>/dev/null); do
++	for i in $(git ls-remote "$dir" 2>/dev/null); do
+ 		case "$is_hash,$i" in
+ 		y,*) is_hash=3Dn ;;
+ 		n,*^{}) is_hash=3Dy ;;
+@@ -241,7 +256,7 @@ __git_tags ()
+ # __git_refs accepts 0 or 1 arguments (to pass to __gitdir)
+ __git_refs ()
+ {
+-	local i is_hash=3Dy dir=3D"$(__gitdir "${1-}")"
++	local i is_hash=3Dy dir=3D"$(__gitdir "$@")"
+ 	local cur=3D"${COMP_WORDS[COMP_CWORD]}" format refs
+ 	if [ -d "$dir" ]; then
+ 		case "$cur" in
+@@ -2167,7 +2182,7 @@ _git_tag ()
+=20
+ _git ()
+ {
+-	local i c=3D1 command=3D"" __git_dir
++	local i c=3D1 command=3D"" __git_dir=3D""
+=20
+ 	while [ $c -lt $COMP_CWORD ]; do
+ 		i=3D"${COMP_WORDS[c]}"
+@@ -2265,6 +2280,7 @@ _gitk ()
+ {
+ 	__git_has_doubledash && return
+=20
++	local __git_dir=3D""
+ 	local cur=3D"${COMP_WORDS[COMP_CWORD]}"
+ 	local g=3D"$(__gitdir)"
+ 	local merge=3D""
+--=20
 1.7.0
