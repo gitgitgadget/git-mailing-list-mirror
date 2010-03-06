@@ -1,79 +1,208 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git fast-import/fast-export
-Date: Sat, 6 Mar 2010 16:29:24 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1003061623511.7596@pacific.mpi-cbg.de>
-References: <fabb9a1e1003060702r671b57f4m9308863f566d5fbd@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Elijah Newren <newren@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	Git List <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 06 22:27:46 2010
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 5/6] Reimplement async procedures using pthreads
+Date: Sat,  6 Mar 2010 16:40:42 +0100
+Message-ID: <771cabb3efea5ced5049bdd34c392a218d1f3c4f.1267889703.git.j6t@kdbg.org>
+References: <cover.1267889703.git.j6t@kdbg.org>
+Cc: Johannes Sixt <j6t@kdbg.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 06 22:32:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1No15n-0004YU-Jw
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 21:59:24 +0100
+	id 1No15v-0004YU-Hm
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 21:59:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753629Ab0CFPWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Mar 2010 10:22:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44861 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752506Ab0CFPWN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Mar 2010 10:22:13 -0500
-Received: (qmail invoked by alias); 06 Mar 2010 15:22:11 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp020) with SMTP; 06 Mar 2010 16:22:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX180WhlInkM0Wq4LlETQTLIcn2pFnO4abKulT/EuCQ
-	P4cdDYFFkMSvnW
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <fabb9a1e1003060702r671b57f4m9308863f566d5fbd@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.56999999999999995
+	id S1752158Ab0CFPnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Mar 2010 10:43:00 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:47707 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751561Ab0CFPmp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Mar 2010 10:42:45 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 99176A7F06;
+	Sat,  6 Mar 2010 16:42:44 +0100 (CET)
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id CEAE119F703;
+	Sat,  6 Mar 2010 16:41:03 +0100 (CET)
+X-Mailer: git-send-email 1.7.0.rc2.65.g7b13a
+In-Reply-To: <cover.1267889703.git.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Windows, async procedures have always been run in threads, and the
+implementation used Windows specific APIs. Rewrite the code to use pthreads.
 
-On Sat, 6 Mar 2010, Sverre Rabbelier wrote:
+A new configuration option is introduced so that the threaded implementation
+can also be used on POSIX systems. Since this option is intended only as
+playground on POSIX, but is mandatory on Windows, the option is not
+documented.
 
-> As you can read on the wiki [0] I am hoping to mentor a GSoC student 
-> this year to work on git-remote-svn, a remote-helper for svn implemented 
-> in C. If successful git will be able to work natively with svn 
-> repositories, no offense to Eric, but git-svn is a tad sub-optimal ;). 
-> To do this I think the best way to go forward is to implement the helper 
-> by hooking up a fast-import/fast-export frontend to libsvn. Since it 
-> will be implemented in C (partially for speed, but also so that it will 
-> be usable on Windows as well), the current fast-import.c and 
-> builtin-fast-export.c could be of great use. Neither files have an 
-> explicit license, (although builtin-fast-import.c says copyright by 
-> Dscho) which puts them under the GPLv2. The libsvn bindings are apache 
-> licensed, so we need something licensed either under the apache license, 
-> or something compatible with that.
-> 
-> So my question, would it be possible to relicense fast-import.c and 
-> builtin-fast-export.c under "GPLv2 or later" instead of the current 
-> "GPLv2"? That way we can use (parts of) the code in the svn helper, 
-> which will (probably) be licensed as "GPLv2 or later" as well.
+One detail is that on POSIX it is necessary to set FD_CLOEXEC on the pipe
+handles. On Windows, this is not needed because pipe handles are not
+inherited to child processes, and the new calls to set_cloexec() are
+effectively no-ops.
 
-Sure, as far as my parts go, I am fine even with BSD.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ Makefile      |    5 +++++
+ run-command.c |   41 +++++++++++++++++++++++------------------
+ run-command.h |    8 ++++++--
+ 3 files changed, 34 insertions(+), 20 deletions(-)
 
-Unfortunately, git shortlog shows 18 different authors for fast-export, 
-and blame still shows 17 surviving. I fear you have to ask them all.
-
-The situation is worse with fast-import, with 40 and 36 authors, 
-respectively.
-
-Ciao,
+diff --git a/Makefile b/Makefile
+index afedb54..c5f0f9b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -949,6 +949,7 @@ ifeq ($(uname_S),Windows)
+ 	NO_CURL = YesPlease
+ 	NO_PYTHON = YesPlease
+ 	BLK_SHA1 = YesPlease
++	ASYNC_AS_THREAD = YesPlease
+ 
+ 	CC = compat/vcbuild/scripts/clink.pl
+ 	AR = compat/vcbuild/scripts/lib.pl
+@@ -1000,6 +1001,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_REGEX = YesPlease
+ 	NO_PYTHON = YesPlease
+ 	BLK_SHA1 = YesPlease
++	ASYNC_AS_THREAD = YesPlease
+ 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/fnmatch -Icompat/win32
+ 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+ 	COMPAT_OBJS += compat/mingw.o compat/fnmatch/fnmatch.o compat/winansi.o \
+@@ -1301,6 +1303,9 @@ ifdef NO_PTHREADS
+ else
+ 	EXTLIBS += $(PTHREAD_LIBS)
+ 	LIB_OBJS += thread-utils.o
++ifdef ASYNC_AS_THREAD
++	BASIC_CFLAGS += -DASYNC_AS_THREAD
++endif
+ endif
+ 
+ ifdef DIR_HAS_BSD_GROUP_SEMANTICS
+diff --git a/run-command.c b/run-command.c
+index 0cd7f02..77aefff 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -82,6 +82,7 @@ static NORETURN void die_child(const char *err, va_list params)
+ 	write(child_err, "\n", 1);
+ 	exit(128);
+ }
++#endif
+ 
+ static inline void set_cloexec(int fd)
+ {
+@@ -89,7 +90,6 @@ static inline void set_cloexec(int fd)
+ 	if (flags >= 0)
+ 		fcntl(fd, F_SETFD, flags | FD_CLOEXEC);
+ }
+-#endif
+ 
+ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
+ {
+@@ -447,11 +447,12 @@ int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir, const
+ 	return run_command(&cmd);
+ }
+ 
+-#ifdef WIN32
+-static unsigned __stdcall run_thread(void *data)
++#ifdef ASYNC_AS_THREAD
++static void *run_thread(void *data)
+ {
+ 	struct async *async = data;
+-	return async->proc(async->proc_in, async->proc_out, async->data);
++	intptr_t ret = async->proc(async->proc_in, async->proc_out, async->data);
++	return (void *)ret;
+ }
+ #endif
+ 
+@@ -497,7 +498,7 @@ int start_async(struct async *async)
+ 	else
+ 		proc_out = -1;
+ 
+-#ifndef WIN32
++#ifndef ASYNC_AS_THREAD
+ 	/* Flush stdio before fork() to avoid cloning buffers */
+ 	fflush(NULL);
+ 
+@@ -524,12 +525,18 @@ int start_async(struct async *async)
+ 	else if (async->out)
+ 		close(async->out);
+ #else
++	if (proc_in >= 0)
++		set_cloexec(proc_in);
++	if (proc_out >= 0)
++		set_cloexec(proc_out);
+ 	async->proc_in = proc_in;
+ 	async->proc_out = proc_out;
+-	async->tid = (HANDLE) _beginthreadex(NULL, 0, run_thread, async, 0, NULL);
+-	if (!async->tid) {
+-		error("cannot create thread: %s", strerror(errno));
+-		goto error;
++	{
++		int err = pthread_create(&async->tid, NULL, run_thread, async);
++		if (err) {
++			error("cannot create thread: %s", strerror(err));
++			goto error;
++		}
+ 	}
+ #endif
+ 	return 0;
+@@ -549,17 +556,15 @@ error:
+ 
+ int finish_async(struct async *async)
+ {
+-#ifndef WIN32
+-	int ret = wait_or_whine(async->pid, "child process", 0);
++#ifndef ASYNC_AS_THREAD
++	return wait_or_whine(async->pid, "child process", 0);
+ #else
+-	DWORD ret = 0;
+-	if (WaitForSingleObject(async->tid, INFINITE) != WAIT_OBJECT_0)
+-		ret = error("waiting for thread failed: %lu", GetLastError());
+-	else if (!GetExitCodeThread(async->tid, &ret))
+-		ret = error("cannot get thread exit code: %lu", GetLastError());
+-	CloseHandle(async->tid);
++	void *ret = (void *)(intptr_t)(-1);
++
++	if (pthread_join(async->tid, &ret))
++		error("pthread_join failed");
++	return (int)(intptr_t)ret;
+ #endif
+-	return ret;
+ }
+ 
+ int run_hook(const char *index_file, const char *name, ...)
+diff --git a/run-command.h b/run-command.h
+index 94619f5..40db39c 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -1,6 +1,10 @@
+ #ifndef RUN_COMMAND_H
+ #define RUN_COMMAND_H
+ 
++#ifdef ASYNC_AS_THREAD
++#include <pthread.h>
++#endif
++
+ struct child_process {
+ 	const char **argv;
+ 	pid_t pid;
+@@ -74,10 +78,10 @@ struct async {
+ 	void *data;
+ 	int in;		/* caller writes here and closes it */
+ 	int out;	/* caller reads from here and closes it */
+-#ifndef WIN32
++#ifndef ASYNC_AS_THREAD
+ 	pid_t pid;
+ #else
+-	HANDLE tid;
++	pthread_t tid;
+ 	int proc_in;
+ 	int proc_out;
+ #endif
+-- 
+1.7.0.rc2.65.g7b13a
