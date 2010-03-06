@@ -1,144 +1,128 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 2/6] Make report() from usage.c public as vreportf() and use it.
-Date: Sat,  6 Mar 2010 16:40:39 +0100
-Message-ID: <dd91671bd5bb1a60a314e71a265ba0068080a47e.1267889703.git.j6t@kdbg.org>
-References: <cover.1267889703.git.j6t@kdbg.org>
-Cc: Johannes Sixt <j6t@kdbg.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 06 22:27:51 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] bash-completion: Support running with set -u in bash 4.0
+Date: Sat, 6 Mar 2010 12:16:55 -0600
+Message-ID: <20100306181655.GA2261@progeny.tock>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Ted Pavlic <ted@tedpavlic.com>,
+	Thomas Nilsson <thomas.nilsson@unixangst.com>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Mar 06 22:28:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1No15s-0004YU-JI
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 21:59:28 +0100
+	id 1No16d-0004YU-M2
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 22:00:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751641Ab0CFPmq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Mar 2010 10:42:46 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:47681 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751287Ab0CFPmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Mar 2010 10:42:42 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 1D514CDF8C;
-	Sat,  6 Mar 2010 16:42:41 +0100 (CET)
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 47B5619F703;
-	Sat,  6 Mar 2010 16:41:00 +0100 (CET)
-X-Mailer: git-send-email 1.7.0.rc2.65.g7b13a
-In-Reply-To: <cover.1267889703.git.j6t@kdbg.org>
+	id S1754019Ab0CFSQx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Mar 2010 13:16:53 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:52443 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753952Ab0CFSQw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Mar 2010 13:16:52 -0500
+Received: by gyh3 with SMTP id 3so186768gyh.19
+        for <git@vger.kernel.org>; Sat, 06 Mar 2010 10:16:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=fALtLeXWC9MIjUcn71h7SYrUVL5yrNUNDZJpUtoZZ/Y=;
+        b=aNujaXkFr0NLF2KGoeZ05JVvniyPU72SEEjj4CycR7fCivVUfSaAOAtVhjg/9QaWRN
+         JL6MJxD0A7aAAzAh/6Rpf2H+t2ollxcD+Pu3iqkKv6N7trhPITdYopeJx3oHypaJtAwj
+         8G2mgG/hSSCJoEziSKMWK2zD6X65sZttes7j8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=kuOL7T+D4jU/bUBJ/XCpVqdCFQBWIDDZ/66b+Bv7+4Cg/xLcOwdmqff0KDPvjBsR1n
+         2RiRB+dg6KVuAeCAn8rTBD80432AhnPPiX5M7mkSlG92ZoM486Jad8q3j3EipRzszLuP
+         o730yjm8IzXugutDsazc1txpwDOxz8MDfcVZU=
+Received: by 10.91.145.11 with SMTP id x11mr3075570agn.86.1267899411207;
+        Sat, 06 Mar 2010 10:16:51 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 23sm2648381iwn.14.2010.03.06.10.16.50
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 06 Mar 2010 10:16:50 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There exist already a number of static functions named 'report', therefore,
-the function name was changed.
+From: Thomas Nilsson <thomas.nilsson@unixangst.com>
+Date: Tue, 23 Feb 2010 12:13:00 +0100
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+Starting with bash 4.0-beta, under "set -u" semantics, accessing
+undefined local variables is now an error.  Some user environments
+enable this setting in the interactive shell, with unpleasant results:
+
+ knirch@traktor:~/source/external/git (master)$ set -o unset
+ bash: w: unbound variable
+ knirch@traktor:~/source/external/git$ git ^Ibash: command: unbound variable
+ bash: w: unbound variable
+ knirch@traktor:~/source/external/git$
+ bash: w: unbound variable
+ knirch@traktor:~/source/external/git$
+
+Most of these variables should be bound to "".  In contexts where the
+completion functions should access an undefined variable, accessing a
+default empty string (as in "${1-}" instead of "$1") is a reasonable
+way to cope, as it silences the undefined variable error while still
+supplying an empty string.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- fast-import.c     |    8 +++-----
- git-compat-util.h |    1 +
- http-backend.c    |    5 +----
- usage.c           |   10 +++++-----
- 4 files changed, 10 insertions(+), 14 deletions(-)
+Sent by Thomas to <http://bugs.debian.org/571087> (thanks!).  One
+might use 'set -u' in an interactive shell while manually
+single-stepping through a shell script, perhaps.
 
-diff --git a/fast-import.c b/fast-import.c
-index 74f08bd..5bb3d41 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -483,14 +483,12 @@ static void dump_marks(void);
- static NORETURN void die_nicely(const char *err, va_list params)
+ contrib/completion/git-completion.bash |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index fe93747..d97467e 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -84,8 +84,8 @@ __git_ps1 ()
  {
- 	static int zombie;
--	char message[2 * PATH_MAX];
+ 	local g="$(__gitdir)"
+ 	if [ -n "$g" ]; then
+-		local r
+-		local b
++		local r=""
++		local b=""
+ 		if [ -f "$g/rebase-merge/interactive" ]; then
+ 			r="|REBASE-i"
+ 			b="$(cat "$g/rebase-merge/head-name")"
+@@ -127,11 +127,11 @@ __git_ps1 ()
+ 			}
+ 		fi
  
--	vsnprintf(message, sizeof(message), err, params);
--	fputs("fatal: ", stderr);
--	fputs(message, stderr);
--	fputc('\n', stderr);
-+	vreportf("fatal: ", err, params);
+-		local w
+-		local i
+-		local s
+-		local u
+-		local c
++		local w=""
++		local i=""
++		local s=""
++		local u=""
++		local c=""
  
- 	if (!zombie) {
-+		char message[2 * PATH_MAX];
-+
- 		zombie = 1;
- 		write_crash_report(message);
- 		end_packfile();
-diff --git a/git-compat-util.h b/git-compat-util.h
-index a3c4537..3cabcdd 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -192,6 +192,7 @@ extern char *gitbasename(char *);
- #include "compat/bswap.h"
+ 		if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
+ 			if [ "true" = "$(git rev-parse --is-bare-repository 2>/dev/null)" ]; then
+@@ -2181,7 +2181,7 @@ _git ()
+ 		c=$((++c))
+ 	done
  
- /* General helper functions */
-+extern void vreportf(const char *prefix, const char *err, va_list params);
- extern NORETURN void usage(const char *err);
- extern NORETURN void usagef(const char *err, ...) __attribute__((format (printf, 1, 2)));
- extern NORETURN void die(const char *err, ...) __attribute__((format (printf, 1, 2)));
-diff --git a/http-backend.c b/http-backend.c
-index 345c12b..8c7b7d0 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -538,14 +538,11 @@ static void service_rpc(char *service_name)
- 
- static NORETURN void die_webcgi(const char *err, va_list params)
- {
--	char buffer[1000];
--
- 	http_status(500, "Internal Server Error");
- 	hdr_nocache();
- 	end_headers();
- 
--	vsnprintf(buffer, sizeof(buffer), err, params);
--	fprintf(stderr, "fatal: %s\n", buffer);
-+	vreportf("fatal: ", err, params);
- 	exit(0);
- }
- 
-diff --git a/usage.c b/usage.c
-index 79856a2..ec4cf53 100644
---- a/usage.c
-+++ b/usage.c
-@@ -5,7 +5,7 @@
-  */
- #include "git-compat-util.h"
- 
--static void report(const char *prefix, const char *err, va_list params)
-+void vreportf(const char *prefix, const char *err, va_list params)
- {
- 	char msg[4096];
- 	vsnprintf(msg, sizeof(msg), err, params);
-@@ -14,24 +14,24 @@ static void report(const char *prefix, const char *err, va_list params)
- 
- static NORETURN void usage_builtin(const char *err, va_list params)
- {
--	report("usage: ", err, params);
-+	vreportf("usage: ", err, params);
- 	exit(129);
- }
- 
- static NORETURN void die_builtin(const char *err, va_list params)
- {
--	report("fatal: ", err, params);
-+	vreportf("fatal: ", err, params);
- 	exit(128);
- }
- 
- static void error_builtin(const char *err, va_list params)
- {
--	report("error: ", err, params);
-+	vreportf("error: ", err, params);
- }
- 
- static void warn_builtin(const char *warn, va_list params)
- {
--	report("warning: ", warn, params);
-+	vreportf("warning: ", warn, params);
- }
- 
- /* If we are in a dlopen()ed .so write to a global variable would segfault
+-	if [ -z "$command" ]; then
++	if [ -z "${command-}" ]; then
+ 		case "${COMP_WORDS[COMP_CWORD]}" in
+ 		--*)   __gitcomp "
+ 			--paginate
 -- 
-1.7.0.rc2.65.g7b13a
+1.7.0
