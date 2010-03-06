@@ -1,124 +1,105 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 6/6] Dying in an async procedure should only exit the thread, not the process.
-Date: Sat,  6 Mar 2010 16:40:43 +0100
-Message-ID: <66dbacb267415a0e2d71c82467093245c06e84e5.1267889703.git.j6t@kdbg.org>
-References: <cover.1267889703.git.j6t@kdbg.org>
-Cc: Johannes Sixt <j6t@kdbg.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 06 22:27:54 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/6] Pass t5530 on Windows
+Date: Sat, 06 Mar 2010 12:12:58 -0800
+Message-ID: <7vk4tpdx9x.fsf@alter.siamese.dyndns.org>
+References: <cover.1267889072.git.j6t@kdbg.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Mar 06 22:29:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1No15u-0004YU-VP
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 21:59:31 +0100
+	id 1No17I-0004YU-80
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 22:00:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751987Ab0CFPmy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Mar 2010 10:42:54 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:47729 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751647Ab0CFPms (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Mar 2010 10:42:48 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 0BB2610002;
-	Sat,  6 Mar 2010 16:42:47 +0100 (CET)
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 3744E19F703;
-	Sat,  6 Mar 2010 16:41:06 +0100 (CET)
-X-Mailer: git-send-email 1.7.0.rc2.65.g7b13a
-In-Reply-To: <cover.1267889703.git.j6t@kdbg.org>
+	id S1752194Ab0CFUNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Mar 2010 15:13:09 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53543 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750827Ab0CFUNI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Mar 2010 15:13:08 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F7C99F957;
+	Sat,  6 Mar 2010 15:13:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NRzJoRwD72oeZAX5LzcggId5QYo=; b=bTzB+f
+	873eDxr2FQIy0rP54cDFjXYAxYoKHjP4FgIFhH3qxxdzZdMrLvrrru98jriVTKlP
+	KNNzBK5z9lGQgPIiCk4cp9EdPlGmTb3wE+7oxUsY5B+bVjdU6kYsY0oNoWuCp9qC
+	N02BGxx0XmuihomjPxu/D+KvInjqRzvp8VaA4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZHOIE59IqD8jHhiR4PnRKox8f+ZmC4GJ
+	QZotoxK6lxOLhv31C6Q4xnONdNDSEJ9H+yzNQQUeDI2Hi4m6BrGibnLj4Lj2l4pe
+	rOhlIYjXcSlDw5wgT1sJvMZrOOnkuZ6UpaxXGkJHBwUFVoSZQNuBxaACni0KmgKC
+	/bizORSfPiM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D13B9F953;
+	Sat,  6 Mar 2010 15:13:03 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 805299F951; Sat,  6 Mar
+ 2010 15:13:00 -0500 (EST)
+In-Reply-To: <cover.1267889072.git.j6t@kdbg.org> (Johannes Sixt's message of
+ "Sat\,  6 Mar 2010 16\:40\:37 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: AB4EBE5E-295C-11DF-A8FA-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Async procedures are intended as helpers that perform a very restricted
-task, and the caller usually has to manage them in a larger context.
-Conceptually, the async procedure is not concerned with the "bigger
-picture" in whose context it is run. When it dies, it is not supposed
-to destroy this "bigger picture", but rather only its own limit view
-of the world. On POSIX, the async procedure is run in its own process,
-and exiting this process naturally had only these limited effects.
+Johannes Sixt <j6t@kdbg.org> writes:
 
-On Windows (or when ASYNC_AS_THREAD is set), calling die() exited the
-whole process, destroying the caller (the "big picture") as well.
-This fixes it to exit only the thread.
+> Quite frankly, I don't quite know what to do with this series. On the
+> one hand, it is a clean-up, but in practice it is not relevant whether
+> die() kills only the async thread or the whole process because all
+> callers of async die() themselves anyway when the async procedure died.
+> On the other hand, it does enable threaded async procedures on POSIX...
 
-Without ASYNC_AS_THREAD, one particular effect of exiting the async
-procedure process is that it automatically closes file descriptors, most
-notably the writable end of the pipe that the async procedure writes to.
+You wrote in [PATCH 5/6]:
 
-The async API already requires that the async procedure closes the pipe
-ends when it exits normally. But for calls to die() no requirements are
-imposed. In the non-threaded case the pipe ends are closed implicitly
-by the exiting process, but in the threaded case, the die routine must
-take care of closing them.
+    A new configuration option is introduced so that the threaded
+    implementation can also be used on POSIX systems. Since this option is
+    intended only as playground on POSIX, but is mandatory on Windows, the
+    option is not documented.
 
-Now t5530-upload-pack-error.sh passes on Windows.
+but I am wondering how much of the real world is threads-challenged these
+days.  Here is what you have at the end of technical/api-run-command.txt:
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- run-command.c |   34 ++++++++++++++++++++++++++++++++++
- 1 files changed, 34 insertions(+), 0 deletions(-)
+   There are serious restrictions on what the asynchronous function can do
+   because this facility is implemented by a pipe to a forked process on
+   UNIX, but by a thread in the same address space on Windows:
 
-diff --git a/run-command.c b/run-command.c
-index 77aefff..66cc4bf 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -448,12 +448,35 @@ int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir, const
- }
- 
- #ifdef ASYNC_AS_THREAD
-+static pthread_t main_thread;
-+static int main_thread_set;
-+static pthread_key_t async_key;
-+
- static void *run_thread(void *data)
- {
- 	struct async *async = data;
-+
-+	pthread_setspecific(async_key, async);
-+
- 	intptr_t ret = async->proc(async->proc_in, async->proc_out, async->data);
- 	return (void *)ret;
- }
-+
-+static NORETURN void die_async(const char *err, va_list params)
-+{
-+	vreportf("fatal: ", err, params);
-+
-+	if (!pthread_equal(main_thread, pthread_self())) {
-+		struct async *async = pthread_getspecific(async_key);
-+		if (async->proc_in >= 0)
-+			close(async->proc_in);
-+		if (async->proc_out >= 0)
-+			close(async->proc_out);
-+		pthread_exit((void *)128);
-+	}
-+
-+	exit(128);
-+}
- #endif
- 
- int start_async(struct async *async)
-@@ -525,6 +548,17 @@ int start_async(struct async *async)
- 	else if (async->out)
- 		close(async->out);
- #else
-+	if (!main_thread_set) {
-+		/*
-+		 * We assume that the first time that start_async is called
-+		 * it is from the main thread.
-+		 */
-+		main_thread_set = 1;
-+		main_thread = pthread_self();
-+		pthread_key_create(&async_key, NULL);
-+		set_die_routine(die_async);
-+	}
-+
- 	if (proc_in >= 0)
- 		set_cloexec(proc_in);
- 	if (proc_out >= 0)
--- 
-1.7.0.rc2.65.g7b13a
+   . It cannot change the program's state (global variables, environment,
+     etc.) in a way that the caller notices; in other words, .in and .out
+     are the only communication channels to the caller.
+
+   . It must not change the program's state that the caller of the
+     facility also uses.
+
+And calling die() from async is obviously "change the program's state that
+the caller of the facility also uses".  We didn't uncover this as a bug
+because the above "serious restrictions" go both ways.
+
+If we make threaded-async the default on any platform that is thread
+capable, we would increase the likelihood of catching bugs that violate
+the latter condition.  I am sure there may be downsides for going that
+route, but it might be better than the current situation where two major
+platforms use quite different underlying semantics for the same call, and
+rely on the program (both caller and callee) to honor the above
+conditions, without much tool support [*1*].
+
+[Footnote]
+
+*1* I sometimes wonder if people who are interseted in static analysis can
+help with issues like this: "In a function started by start_async() and
+its callees, you are not supposed to touch these globals, nor call those
+functions".  That would be more useful than reports we occasionally get
+"in this codepath this variable can be used before assigned" with many
+false positives, that presumably come from from the canned set of rules
+these static checkers may have.
