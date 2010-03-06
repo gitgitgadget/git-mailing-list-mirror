@@ -1,59 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-http-backend: hook output not delivered to client
-Date: Sat, 6 Mar 2010 14:30:31 -0800
-Message-ID: <20100306223031.GG2529@spearce.org>
-References: <3C07BFC0-BC5E-4901-A846-A337B5F1B8F4@bjhargrave.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH gitk 0/2] stop clobbering "Remember This View" setting
+Date: Sat, 6 Mar 2010 16:46:05 -0600
+Message-ID: <20100306224605.GA7064@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: BJ Hargrave <bj@bjhargrave.com>
-X-From: git-owner@vger.kernel.org Sat Mar 06 23:36:34 2010
+Cc: Steve Cotton <steve0001@s.cotton.clara.co.uk>,
+	Alexander Gavrilov <angavrilov@gmail.com>, git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sat Mar 06 23:46:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1No2WF-0005DY-96
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 23:30:47 +0100
+	id 1No2l7-0000dD-0M
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 23:46:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752630Ab0CFWaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Mar 2010 17:30:35 -0500
-Received: from mail-iw0-f202.google.com ([209.85.223.202]:56341 "EHLO
-	mail-iw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751632Ab0CFWae (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Mar 2010 17:30:34 -0500
-Received: by iwn40 with SMTP id 40so1282873iwn.1
-        for <git@vger.kernel.org>; Sat, 06 Mar 2010 14:30:34 -0800 (PST)
-Received: by 10.231.161.143 with SMTP id r15mr162384ibx.62.1267914633951;
-        Sat, 06 Mar 2010 14:30:33 -0800 (PST)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 21sm2821695iwn.11.2010.03.06.14.30.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 06 Mar 2010 14:30:32 -0800 (PST)
+	id S1752929Ab0CFWqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Mar 2010 17:46:00 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:50954 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751632Ab0CFWp7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Mar 2010 17:45:59 -0500
+Received: by gyh3 with SMTP id 3so256927gyh.19
+        for <git@vger.kernel.org>; Sat, 06 Mar 2010 14:45:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=nOcKoVozJXrwAkBNAd4vyPvYdwxFhhF4OoVLxeftkH8=;
+        b=ItnScVhPVRhg9wQau/uN9vP4jwUGAtyuslTM0OVROgNUP8Yf5Iz1ReIftuC98OjPhK
+         7FA/C3/vNWaFom24llxkROMyXUzNCmhiDJaU2UaNG7upggyzVVUKwYGU11G6G3EZuZZo
+         Km4wdoXJk5GMD+Pcfz/O2j77bKjkjbwGhJauk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=gcCtvmjCSQtPaoUkJpjSHnTka/yWMiij1VFRto1BRCrk+spjhAjRSkXv4/2iWOYFpv
+         X9KBQtpEqC2Bz3/m9YMY1a+81P2DUl56rjQOZPUrfV2+nDY8RR4UgTdz3mfcOqUqxQp7
+         0R+d13fALQLnvQ9C1BcGHW5FvthgSxiLW0528=
+Received: by 10.101.28.7 with SMTP id f7mr5654050anj.243.1267915558848;
+        Sat, 06 Mar 2010 14:45:58 -0800 (PST)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 21sm2870403iwn.3.2010.03.06.14.45.57
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 06 Mar 2010 14:45:58 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <3C07BFC0-BC5E-4901-A846-A337B5F1B8F4@bjhargrave.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141624>
 
-BJ Hargrave <bj@bjhargrave.com> wrote:
-> I have compiled and installed git 1.7.0.1 on a RHEL4 box
-... 
-> So the push properly fails in both cases because the hook exits
-> with a non-zero return code, but it seems there is a problem with
-> git-http-backend not ferrying the hook output messages back to
-> the client.
+Hi Paul,
 
-Yes, we know about this problem.
+As Steve Cotton reported [1], the Edit View... dialog in gitk
+always defaults to not remembering the view, which makes it
+easy to lose settings if one is not careful.
 
-You need commit 466dbc42f5 ("receive-pack: Send internal errors over
-side-band #2") on both the client and the server for hook messages
-to work over HTTP.
+These patches fix it.  The first one adds two one-line comments
+from my investigation into the issue.  The second one fixes the
+obvious bug.
 
-This hasnt been released yet.  It is slated for 1.7.0.2.
+I am cc-ing others in case I have missed anything obvious or
+people have comments on style.
 
--- 
-Shawn.
+I hope you enjoy the patches.
+
+Kind regards,
+Jonathan Nieder (2):
+  gitk: Add comments to explain encode_view_opts and decode_view_opts
+  gitk: Edit View unsets Remember this view
+
+ gitk |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+[1] http://bugs.debian.org/522520
