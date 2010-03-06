@@ -1,112 +1,65 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=unavailable autolearn_force=no version=3.4.0
-Received: (qmail 28485 invoked by uid 107); 28 Feb 2010 14:01:29 -0000
+X-Spam-Status: No, score=1.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+Received: (qmail 19006 invoked by uid 107); 6 Mar 2010 12:17:23 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Sun, 28 Feb 2010 09:01:28 -0500
+    by peff.net (qpsmtpd/0.40) with ESMTP; Sat, 06 Mar 2010 07:17:21 -0500
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964898Ab0B1OBF (ORCPT <rfc822;peff@peff.net>);
-	Sun, 28 Feb 2010 09:01:05 -0500
-Received: from smtprelay01.ispgateway.de ([80.67.31.24]:52787 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935913Ab0B1OBE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2010 09:01:04 -0500
-Received: from [79.210.50.103] (helo=stokes.schwinge.homeip.net)
-	by smtprelay01.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <thomas@dirichlet.schwinge.homeip.net>)
-	id 1Nljhe-00046L-J2
-	for git@vger.kernel.org; Sun, 28 Feb 2010 15:01:02 +0100
-Received: (qmail 1340 invoked from network); 28 Feb 2010 14:00:40 -0000
-Received: from dslb-084-057-207-194.pools.arcor-ip.net (84.57.207.194)
-  by stokes.schwinge.homeip.net with QMQP; 28 Feb 2010 14:00:40 -0000
-Received: (nullmailer pid 30411 invoked by uid 1000);
-	Sun, 28 Feb 2010 14:00:39 -0000
-From:	Thomas Schwinge <thomas@schwinge.name>
-To:	u.kleine-koenig@pengutronix.de
-Cc:	Thomas Schwinge <thomas@schwinge.name>, git@vger.kernel.org
-Subject: [PATCH] tg-delete: Handle the case where the branch has been removed already, but the base is still left.
-Date:	Sun, 28 Feb 2010 15:00:39 +0100
-Message-Id: <1267365639-30387-1-git-send-email-thomas@schwinge.name>
-X-Mailer: git-send-email 1.6.0.4
-In-Reply-To: <1267357174-21417-1-git-send-email-thomas@schwinge.name>
-References: <1267357174-21417-1-git-send-email-thomas@schwinge.name>
-To:	u.kleine-koenig@pengutronix.de
-X-Df-Sender: thomas@schwinge.name
+	id S1751352Ab0CFMQs (ORCPT <rfc822;peff@peff.net>);
+	Sat, 6 Mar 2010 07:16:48 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:43802 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750813Ab0CFMQr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Mar 2010 07:16:47 -0500
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate03.web.de (Postfix) with ESMTP id EF13414270D00;
+	Sat,  6 Mar 2010 13:16:45 +0100 (CET)
+Received: from [91.19.17.196] (helo=pluto.localnet)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #314)
+	id 1Nnsvz-00029P-00; Sat, 06 Mar 2010 13:16:43 +0100
+From:	Markus Heidelberg <markus.heidelberg@web.de>
+To:	Tait <git.git@t41t.com>
+Subject: Re: using gvim as editor on Windows
+Date:	Sat, 6 Mar 2010 13:17:38 +0100
+User-Agent: KMail/1.12.3 (Linux/2.6.30-gentoo-r8; KDE/4.3.3; i686; ; )
+Cc:	Jacob Helwig <jacob.helwig@gmail.com>, git@vger.kernel.org
+References: <20100306070628.GM2480@ece.pdx.edu> <8c9a061003052322v446acddbm5792038af450d0b9@mail.gmail.com> <20100306073729.GN2480@ece.pdx.edu>
+In-Reply-To: <20100306073729.GN2480@ece.pdx.edu>
+Jabber-ID: markus.heidelberg@web.de
+MIME-Version: 1.0
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Message-Id: <201003061317.38422.markus.heidelberg@web.de>
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18xz69KTo7jT2l76iPbjbyFUcLKkHZFfG9wtd+C
+	MzWX64Xg0XvxyyV5TsDJOz3QK0oB2ApSrJnFhSqRtYj+74GuTq
+	UFGrxR8BimAmIkpHiHKQ==
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-A user might have used 'git branch -D B' to remove the branch B, and then
-certain TopGit commands complain, because the base of branch B is still there.
+Tait, 2010-03-06 08:37:
+> > > I'd prefer to use gvim as an editor on Windows XP instead of vim...
+> > >     start "dummy" /b /wait "C:\Program Files\Vim\vim72\gvim.exe" %*
+> >
+> > Use the -f (stay in the foreground) flag.  I haven't tried this in
+> > Windows, but that's how I've used it in Linux.
+> >
+> > [core]
+> >     editor = gvim -f
+> 
+> On Windows, gvim -f is basically a shortcut for the start invocation I
+> pasted above.
 
-Signed-off-by: Thomas Schwinge <thomas@schwinge.name>
+Not necessarily. You can avoid using the .bat wrappers from C:\Windows,
+which cause the problem, but use gvim.exe directly by setting your PATH
+appropriately. It will also work for git-difftool.
 
----
- README       |    4 ++++
- tg-delete.sh |   15 ++++++++-------
- 2 files changed, 12 insertions(+), 7 deletions(-)
-
-diff --git a/README b/README
-index 495c70b..fc74ff8 100644
---- a/README
-+++ b/README
-@@ -244,6 +244,10 @@ tg delete
- 	only empty branch (base == head); use '-f' to remove
- 	non-empty branch.
- 
-+	The '-f' option is also useful to force removal of a branch's base, if
-+	you used 'git branch -D B' to remove the branch B, and then certain
-+	TopGit commands complain, because the base of branch B is still there.
-+
- 	Currently, this command will _NOT_ remove the branch from
- 	the dependency list in other branches. You need to take
- 	care of this _manually_. This is even more complicated
-diff --git a/tg-delete.sh b/tg-delete.sh
-index ab121c2..e1eea17 100644
---- a/tg-delete.sh
-+++ b/tg-delete.sh
-@@ -3,7 +3,7 @@
- # (c) Petr Baudis <pasky@suse.cz>  2008
- # GPLv2
- 
--force= # Whether to delete non-empty branch
-+force= # Whether to delete non-empty branch, or branch where only the base is left.
- name=
- 
- 
-@@ -28,21 +28,22 @@ done
- 
- [ -n "$name" ] || die "no branch name specified"
- branchrev="$(git rev-parse --verify "$name" 2>/dev/null)" ||
--	die "invalid branch name: $name"
-+	if [ -n "$force" ]; then
-+		info "invalid branch name: $name; assuming it has been deleted already"
-+	else
-+		die "invalid branch name: $name"
-+	fi
- baserev="$(git rev-parse --verify "refs/top-bases/$name" 2>/dev/null)" ||
- 	die "not a TopGit topic branch: $name"
- ! git symbolic-ref HEAD >/dev/null || [ "$(git symbolic-ref HEAD)" != "refs/heads/$name" ] ||
- 	die "cannot delete your current branch"
- 
--nonempty=
--branch_empty "$name" || nonempty=1
--
--[ -z "$nonempty" ] || [ -n "$force" ] || die "branch is non-empty: $name"
-+[ -z "$force" ] && { branch_empty "$name" || die "branch is non-empty: $name"; }
- 
- 
- ## Wipe out
- 
- git update-ref -d "refs/top-bases/$name" "$baserev"
--git update-ref -d "refs/heads/$name" "$branchrev"
-+[ -z "$branchrev" ] || git update-ref -d "refs/heads/$name" "$branchrev"
- 
- # vim:noet
--- 
-tg: (341a371..) t/tg_delete_already_deleted (depends on: master)
+Markus
