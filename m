@@ -1,119 +1,77 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 4/6] Windows: more pthreads functions
-Date: Sat,  6 Mar 2010 16:40:41 +0100
-Message-ID: <630b17c350a0014d8099576faeaf113d2804bde6.1267889703.git.j6t@kdbg.org>
-References: <cover.1267889703.git.j6t@kdbg.org>
-Cc: Johannes Sixt <j6t@kdbg.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 06 22:27:53 2010
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: git fast-import/fast-export
+Date: Sat, 6 Mar 2010 16:02:18 +0100
+Message-ID: <fabb9a1e1003060702r671b57f4m9308863f566d5fbd@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Eric Wong <normalperson@yhbt.net>, Git List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Elijah Newren <newren@gmail.com>,
+	Johannes Schindelin <Johannes.Sc
+X-From: git-owner@vger.kernel.org Sat Mar 06 22:28:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1No15u-0004YU-CT
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 21:59:30 +0100
+	id 1No15j-0004YU-B2
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 21:59:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751908Ab0CFPmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Mar 2010 10:42:49 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:47694 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751557Ab0CFPmo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Mar 2010 10:42:44 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 7C1B32C4013;
-	Sat,  6 Mar 2010 16:42:43 +0100 (CET)
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id A86BA19F703;
-	Sat,  6 Mar 2010 16:41:02 +0100 (CET)
-X-Mailer: git-send-email 1.7.0.rc2.65.g7b13a
-In-Reply-To: <cover.1267889703.git.j6t@kdbg.org>
+	id S1753612Ab0CFPCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Mar 2010 10:02:39 -0500
+Received: from mail-px0-f171.google.com ([209.85.216.171]:45669 "EHLO
+	mail-px0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753593Ab0CFPCi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Mar 2010 10:02:38 -0500
+Received: by pxi1 with SMTP id 1so1514020pxi.16
+        for <git@vger.kernel.org>; Sat, 06 Mar 2010 07:02:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=OKYuTPWCuTMdNQLgHTNcEiXKt3WERCJdwHpcZQNa09U=;
+        b=jHXv7knv+A4dC0Zg/2LLelTbRAnNiEQpPZv9ax0SnNu795suTSbmoUmglbUTntvwXs
+         9pDfjOXrdB7CPMzGJZ1bg5BXO4Zg+JVOOyKyOcXZdetz76FxXjeLuzJxT7t+fXIhcul5
+         EfWa5XL8YmEnn98Hvcb6/c7fSteKM6Skce9Lk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=tCOto1sQsYnwEMBRh+lZwdB8pGVj5+zxdhPK2v37FU9oi2raie37JrZbwehJVXIQlF
+         SHMEkIuGHXh3uP3nxamJP3CKPzr3vLhq5yKdZtwHPXNHYOKWwvU16dsXyUGsv/CQe4ec
+         i/y/xdo7UzN03PjRUaS4YecmavMAGRlN6pgHw=
+Received: by 10.143.24.18 with SMTP id b18mr1652115wfj.16.1267887758073; Sat, 
+	06 Mar 2010 07:02:38 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This adds:
+Heya,
 
-   pthread_self
-   pthread_equal
-   pthread_exit
-   pthread_key_create
-   pthread_setspecific
-   pthread_getspecific
+As you can read on the wiki [0] I am hoping to mentor a GSoC student
+this year to work on git-remote-svn, a remote-helper for svn
+implemented in C. If successful git will be able to work natively with
+svn repositories, no offense to Eric, but git-svn is a tad sub-optimal
+;). To do this I think the best way to go forward is to implement the
+helper by hooking up a fast-import/fast-export frontend to libsvn.
+Since it will be implemented in C (partially for speed, but also so
+that it will be usable on Windows as well), the current fast-import.c
+and builtin-fast-export.c could be of great use. Neither files have an
+explicit license, (although builtin-fast-import.c says copyright by
+Dscho) which puts them under the GPLv2. The libsvn bindings are apache
+licensed, so we need something licensed either under the apache
+license, or something compatible with that.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- compat/win32/pthread.c |    8 ++++++++
- compat/win32/pthread.h |   25 +++++++++++++++++++++++++
- 2 files changed, 33 insertions(+), 0 deletions(-)
+So my question, would it be possible to relicense fast-import.c and
+builtin-fast-export.c under "GPLv2 or later" instead of the current
+"GPLv2"? That way we can use (parts of) the code in the svn helper,
+which will (probably) be licensed as "GPLv2 or later" as well.
 
-diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
-index 0f949fc..010e875 100644
---- a/compat/win32/pthread.c
-+++ b/compat/win32/pthread.c
-@@ -16,6 +16,7 @@
- static unsigned __stdcall win32_start_routine(void *arg)
- {
- 	pthread_t *thread = arg;
-+	thread->tid = GetCurrentThreadId();
- 	thread->arg = thread->start_routine(thread->arg);
- 	return 0;
- }
-@@ -49,6 +50,13 @@ int win32_pthread_join(pthread_t *thread, void **value_ptr)
- 	}
- }
- 
-+pthread_t pthread_self(void)
-+{
-+	pthread_t t = { 0 };
-+	t.tid = GetCurrentThreadId();
-+	return t;
-+}
-+
- int pthread_cond_init(pthread_cond_t *cond, const void *unused)
- {
- 	cond->waiters = 0;
-diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
-index c72f100..c7b8241 100644
---- a/compat/win32/pthread.h
-+++ b/compat/win32/pthread.h
-@@ -52,6 +52,7 @@ typedef struct {
- 	HANDLE handle;
- 	void *(*start_routine)(void*);
- 	void *arg;
-+	DWORD tid;
- } pthread_t;
- 
- extern int pthread_create(pthread_t *thread, const void *unused,
-@@ -65,4 +66,28 @@ extern int pthread_create(pthread_t *thread, const void *unused,
- 
- extern int win32_pthread_join(pthread_t *thread, void **value_ptr);
- 
-+#define pthread_equal(t1, t2) ((t1).tid == (t2).tid)
-+extern pthread_t pthread_self(void);
-+
-+static inline int pthread_exit(void *ret)
-+{
-+	ExitThread((DWORD)ret);
-+}
-+
-+typedef DWORD pthread_key_t;
-+static inline int pthread_key_create(pthread_key_t *keyp, void (*destructor)(void *value))
-+{
-+	return (*keyp = TlsAlloc()) == TLS_OUT_OF_INDEXES ? EAGAIN : 0;
-+}
-+
-+static inline int pthread_setspecific(pthread_key_t key, const void *value)
-+{
-+	return TlsSetValue(key, (void *)value) ? 0 : EINVAL;
-+}
-+
-+static inline void *pthread_getspecific(pthread_key_t key)
-+{
-+	return TlsGetValue(key);
-+}
-+
- #endif /* PTHREAD_H */
+[0] http://git.wiki.kernel.org/index.php/SoC2010Ideas#A_remote_helper_for_svn
+
 -- 
-1.7.0.rc2.65.g7b13a
+Cheers,
+
+Sverre Rabbelier
