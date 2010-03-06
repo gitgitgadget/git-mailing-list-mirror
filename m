@@ -1,98 +1,79 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: status of libgit.a
-Date: Sun, 7 Mar 2010 13:18:10 +0100
-Message-ID: <20100307121809.GS27414@genesis.frugalware.org>
-References: <499B3F65.8010109@synapse.com>
- <20090218091617.7805.qmail@2684cdd72f0ee9.315fe32.mid.smarden.org>
- <499C40EA.6050108@synapse.com>
- <20090219092446.23272.qmail@3b5a9fa637f270.315fe32.mid.smarden.org>
- <1267957655.3759.29.camel@mattotaupa>
+From: Adam Mercer <ramercer@gmail.com>
+Subject: Re: Determining if a tree is clean
+Date: Sat, 6 Mar 2010 14:33:22 -0600
+Message-ID: <799406d61003061233w60633e26t4c2434042b7f216d@mail.gmail.com>
+References: <799406d61003060712t120d7f11me6e2ab212c55271@mail.gmail.com> 
+	<7vy6i5fe5h.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="cjNiBkmi8s9yAE0W"
-Cc: git@vger.kernel.org, Marc Oscar Singer <elf@synapse.com>,
-	407722@bugs.debian.org
-To: Paul Menzel <pm.debian@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 07 13:18:29 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 06 22:29:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NoFR5-0000Ts-28
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 13:18:20 +0100
+	id 1No17K-0004YU-1G
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 22:00:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752929Ab0CGMSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Mar 2010 07:18:13 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:43912 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751677Ab0CGMSM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Mar 2010 07:18:12 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 333A958070;
-	Sun,  7 Mar 2010 13:18:11 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id BBE7342F09;
-	Sun,  7 Mar 2010 13:18:10 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id A2B891240003; Sun,  7 Mar 2010 13:18:10 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <1267957655.3759.29.camel@mattotaupa>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752294Ab0CFUdo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Mar 2010 15:33:44 -0500
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:43603 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750827Ab0CFUdn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Mar 2010 15:33:43 -0500
+Received: by bwz22 with SMTP id 22so1767507bwz.28
+        for <git@vger.kernel.org>; Sat, 06 Mar 2010 12:33:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=YXyVTQ4nH4IbmryYTUFVn1gbso+xBeLoJmYTswr4u74=;
+        b=hNP+R7xiwzJh6dRrazon+0Tkxf0ce7uDrV9URYwNyNLhRzQ244mk/4bKnjcR2Zzlf9
+         wwWYTnYAQ7e+xYH07GItlvkno1JIM2pJ6+E7s1hN3Mt210bz7bXn6JIwBschKr8g8bXn
+         uEylDm3fLBNsG86W56Yiln93LfBtEuJ0aIPro=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=CrrGkXK2Z2+z1m+fuXiKm1GlZvNkp96EcaU7GBP9J/RfgLeB4ZzmDciOIeh0qV5a/K
+         csIEa35HZ+jIlbILRLfPOhyQITGbe3vt5IH4TTwvMhSSMU6Mf2xYpgxN2xxDAlY3ENKM
+         GzhR4qWeIy2IwOkJs9Ty/7px81jNWmLUv8h8s=
+Received: by 10.204.9.151 with SMTP id l23mr191227bkl.76.1267907622088; Sat, 
+	06 Mar 2010 12:33:42 -0800 (PST)
+In-Reply-To: <7vy6i5fe5h.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141689>
 
+On Sat, Mar 6, 2010 at 13:23, Junio C Hamano <gitster@pobox.com> wrote:
 
---cjNiBkmi8s9yAE0W
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> It is expected that a Porcelain script that implements a custom featu=
+re
+> may call diff-files, diff-index and other plumbing commands many time=
+s
+> during its lifetime, and that it knows what it is doing (namely, when
+> it touches the working tree itself and why).
 
-On Sun, Mar 07, 2010 at 11:27:35AM +0100, Paul Menzel <pm.debian@googlemail=
-=2Ecom> wrote:
-> > You really need to talk to upstream if you want this libgit.a.
->=20
-> could you please give an update on the status of libgit.a. For example
-> cgit still could not be packaged yet for Debian [1] because of this bug
-> [2].
->=20
-> cgit is used by a lot of projects out there, so I am wondering if the
-> current libgit.a can be released in its current state.
+Makes sense.
 
-libgit.a is not a public library, so it will never have a stable
-API/ABI. There is a libgit2 project which tries to do this, but it's far
-=66rom complete:
+> Your Porcelain script should look something like:
+>
+> =A0 =A0git update-index --refresh
+> =A0 =A0git diff-files -q || { echo "modified working tree"; exit 1 }
+> =A0 =A0git diff-index --cached -q HEAD || { echo "modified index"; ex=
+it 2 }
+>
+> See contrib/examples/*.sh for examples
 
-http://repo.or.cz/w/libgit2.git
+Thanks, Junio. That does the trick, I'd recently found the
+update-index command and had run into the problem (but not the
+solution) that the call to diff-files addresses.
 
-> By the way, is there a web site/page for libgit.a?
+Cheers
 
-No, there isn't.
-
-I think the only sane solution is what Fedora does as well:
-
-http://cvs.fedoraproject.org/viewvc/devel/cgit/
-
-When cgit-1.2.3 is released, have a look at its Makefile, check what Git
-version does it want and add the relevant Git source to the cgit source
-package.
-
-[ I remember Debian did not support having multiple upstream sources /
-one source package, I hope this is no longer the situation. ;-) ]
-
---cjNiBkmi8s9yAE0W
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkuTmYEACgkQe81tAgORUJZULgCeLrM+UtTnn63o4On7VsD/wQ5S
-AJAAoJHs/xVzgmWpYKXIxy/gZ6U/6Cww
-=xk1N
------END PGP SIGNATURE-----
-
---cjNiBkmi8s9yAE0W--
+Adam
