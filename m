@@ -1,71 +1,83 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Documentation: reset: describe new "--keep" option
-Date: Sat, 6 Mar 2010 20:26:11 +0100
-Message-ID: <201003062026.11489.chriscool@tuxfamily.org>
-References: <20100305202537.25469.73470.chriscool@tuxfamily.org> <20100306081034.GA4827@m62s10.vlinux.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git fast-import/fast-export
+Date: Sat, 06 Mar 2010 11:02:56 -0800
+Message-ID: <7v3a0di87z.fsf@alter.siamese.dyndns.org>
+References: <fabb9a1e1003060702r671b57f4m9308863f566d5fbd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Elijah Newren <newren@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Mar 06 22:29:00 2010
+	Nicolas Pitre <nico@fluxnic.net>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>,
+	Git List <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 06 22:28:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1No176-0004YU-OT
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 22:00:45 +0100
+	id 1No16y-0004YU-7I
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 22:00:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751575Ab0CFTgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Mar 2010 14:36:12 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:48086 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751381Ab0CFTgL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Mar 2010 14:36:11 -0500
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 80F7F81818A;
-	Sat,  6 Mar 2010 20:36:01 +0100 (CET)
-Received: from style.localnet (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 548018181B4;
-	Sat,  6 Mar 2010 20:35:59 +0100 (CET)
-User-Agent: KMail/1.12.2 (Linux/2.6.31-19-generic; KDE/4.3.2; x86_64; ; )
-In-Reply-To: <20100306081034.GA4827@m62s10.vlinux.de>
+	id S1754288Ab0CFTDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Mar 2010 14:03:21 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47828 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754279Ab0CFTDU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Mar 2010 14:03:20 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 752CB9F1D5;
+	Sat,  6 Mar 2010 14:03:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=su7SdHTap1xdK/w0jzqvyD8bHG0=; b=WGtQtA
+	TzRryy2ViYdkjLoF9qjlUy0vsDbjuGTrS8fet3A0d6TgCjuJQ5r98KO7lSn8QK5r
+	wt4YThKbjo7a9/gAsM1TiZ5rGcBL4MeJxsn/IpkEcUn2jFC4cCeD33H0c+Qjczc5
+	UnMsLRzMKf0e2AuYPO0u2mIfI1AadLvNWPBxE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=O9ByHJDv4MbqI6FEPmGXuZ6TUYUN28hv
+	MaV+q97wz/8M2/vZhXTd6vy+yg/Z+x/EDoIAuSlxYzbk8VwIsFkpEwvJ+LKZmgZb
+	S4S+RODJj029739XBtSfK+hMwuD8vhF8iGRjxs7Q4bK5Z81TIsT8paV2S39ww3Px
+	Oz8KL2nm+EA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D25B19F1D2;
+	Sat,  6 Mar 2010 14:03:07 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB8D69F1C7; Sat,  6 Mar
+ 2010 14:02:57 -0500 (EST)
+In-Reply-To: <fabb9a1e1003060702r671b57f4m9308863f566d5fbd@mail.gmail.com>
+ (Sverre Rabbelier's message of "Sat\, 6 Mar 2010 16\:02\:18 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E6A94FBE-2952-11DF-B492-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Saturday 06 March 2010 09:10:34 Peter Baumann wrote:
-> On Fri, Mar 05, 2010 at 09:25:36PM +0100, Christian Couder wrote:
-> > and give an example to show how it can be used.
-> >
-> > +--keep::
-> > +	Resets the index to match the tree recorded by the named commit,
-> > +	but keep changes in the working tree. Aborts if the reset would
-> > +	change files that are already modified in the working tree.
-> > +
-> 
-> Huh? Keep changes (by not touching the worktree)
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-Keep uncommited changes in the working tree does not mean not touching the 
-working tree.
+> ;). To do this I think the best way to go forward is to implement the
+> helper by hooking up a fast-import/fast-export frontend to libsvn.
 
-> and then aborting if we
-> touch the worktree.
+Isn't fast-import designed to be used as a downstream side of a pipe that
+is fed by an independent program you write (and may link with libsvn)?  It
+wouldn't care what license that data producer program is distributed under.
 
-We abort if the commit we reset touch some files that have uncommited changes.
+On the fast-export side the issue should ideally be the same.  Your new
+program that may link with libsvn reads from the datastream that comes
+from the git repository via pipe as an independent process to propagate
+the changes to the subversion side.
 
-> Seems like a contradiction to me.
-
-There is no contradiction. We repeat "working tree" too much perhaps, but what 
-is important is to focus on "changes" and "files".
-
-Regards,
-Christian.
+You may need to have/keep additional info on commits for roundtrip, but
+that is between the part of your program that feeds fast-import and the
+other part of your program that consumes the output from fast-export.
+fast-import may need to be told to export mark, and you pick them up to
+see what commits resulted on the git side from what you fed it, and later
+use that information when reading from fast-export to propagate new things
+back to subversion side.  No?
