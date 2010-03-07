@@ -1,78 +1,86 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: error: failed to push some refs
-Date: Sun, 7 Mar 2010 12:43:20 +0300
-Message-ID: <20100307094320.GD31105@dpotapov.dyndns.org>
-References: <15b345f1003061815y52a4e842u9373731cecd8ec60@mail.gmail.com>
- <20100307021848.GI2529@spearce.org>
- <15b345f1003062104p67edcde9pba7cf6000d4d7a2c@mail.gmail.com>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] Add tests for git format-patch --to and format.to config
+ option
+Date: Sun, 07 Mar 2010 01:43:53 -0800
+Message-ID: <4B937559.6000302@gmail.com>
+References: <7v7hptt0mr.fsf@alter.siamese.dyndns.org> <20100306003946.GD27414@genesis.frugalware.org> <7vr5nykx55.fsf@alter.siamese.dyndns.org> <4B92EDFA.1000602@gmail.com> <7vaaukdch2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Thomas Anderson <zelnaga@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 07 10:43:31 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Steven Drake <sdrake@xnet.co.nz>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 07 10:44:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NoD1G-0007eL-Hg
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 10:43:30 +0100
+	id 1NoD1v-00038G-5v
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 10:44:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753385Ab0CGJnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Mar 2010 04:43:25 -0500
-Received: from mail-fx0-f219.google.com ([209.85.220.219]:61255 "EHLO
-	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753094Ab0CGJnY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Mar 2010 04:43:24 -0500
-Received: by fxm19 with SMTP id 19so5455670fxm.21
-        for <git@vger.kernel.org>; Sun, 07 Mar 2010 01:43:22 -0800 (PST)
+	id S1753425Ab0CGJoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Mar 2010 04:44:06 -0500
+Received: from mail-iw0-f202.google.com ([209.85.223.202]:57332 "EHLO
+	mail-iw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753094Ab0CGJoC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Mar 2010 04:44:02 -0500
+Received: by iwn40 with SMTP id 40so26574iwn.1
+        for <git@vger.kernel.org>; Sun, 07 Mar 2010 01:44:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=Pj7D45Qns0ycGtdfVuJ/nw8MGTBmCRp0NiJwYq8vuDI=;
-        b=TbmI5rgN4FNhJNbx8fumnmIADfptZJxPK8n3H3KI46aii0GyU4z3UiWNKjjbVIqqPJ
-         /T1Bm1k8bG9kl/T7qhfbIpzu3ciKPKvPdom93mp0LmwHuRY/iAdQzrUIdYLlRKcREOvO
-         wm/zQQhXeGRakOCY1rTaf7sG6IIyyWJAKpPtc=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=Yz7ZPHrQtAlzazr38rTmfLy4PzN7JihHX+LDV2AbYis=;
+        b=LBmtxc+5T7yNUfRwiju7vYGNfQVzAemOPzUO/8m3t46mkOdkTfihQ0sFkV/IyLoQpw
+         vjII55YKHKrN6UODr0quMnGIVg5fxHC56qyZbTHzoh8Uuq3SDlE1vqZZNTJqNOZkVdiD
+         jPWLOZcQo8a3zA6kukpFkOZcvgInrJcBLwuhI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=tMPn8NUc8hxrNpz/dkLS2YyapsYt1Utnt7dVxC4FWqzEn+TtbOZZreejjpp37ODusf
-         8Qda9GQkIh29A068W1wzbmjfn8zDttcYfGfPi9Gew6Babt+bV49tayGVDUFgYNSX8JrH
-         /6RXNHwxGMIRFQhbjOElvVEDAf+eTjsN70mww=
-Received: by 10.87.70.29 with SMTP id x29mr4237569fgk.61.1267955002781;
-        Sun, 07 Mar 2010 01:43:22 -0800 (PST)
-Received: from localhost (ppp91-77-225-63.pppoe.mtu-net.ru [91.77.225.63])
-        by mx.google.com with ESMTPS id 12sm1193855fgg.14.2010.03.07.01.43.21
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 07 Mar 2010 01:43:22 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <15b345f1003062104p67edcde9pba7cf6000d4d7a2c@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=dsiaov00G9xjPDl4U9UMEQV+4AU+BXNcJIp2n0i2nrh+n6heTQJkP1F/yc0v98wrZY
+         s7NbyVRos8PKyGdGCpinT0cOxA2MD0eWChuxseJ++QFyZuNJEzbq8GUZjpUrLOo1UXQj
+         F6RtqGS4dZ4YB5Lo742A4tUsdOM29rB6kaJVc=
+Received: by 10.231.158.205 with SMTP id g13mr840572ibx.30.1267955041190;
+        Sun, 07 Mar 2010 01:44:01 -0800 (PST)
+Received: from [192.168.1.5] (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id 23sm3415729iwn.2.2010.03.07.01.43.59
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 07 Mar 2010 01:44:00 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7pre) Gecko/20091214 Shredder/3.0.1pre
+In-Reply-To: <7vaaukdch2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141620>
 
-On Sat, Mar 06, 2010 at 11:04:03PM -0600, Thomas Anderson wrote:
-> 
-> How do I do "git pull" with Git Gui?
+On 03/06/2010 07:42 PM, Junio C Hamano wrote:
+> Stephen Boyd <bebarino@gmail.com> writes:
+>
+>   
+>> The same applies to the fomat.headers and format.cc config options. How
+>> is this different?
+>>     
+> Not different.  Perhaps we should fix them now you noticed they share the
+> same problem?
+>
+>
+> An obvious alternative is to keep format.to not get overriden by --to as
+> the original patch did; that would at least make the handling between
+> config and option consistent inside the command, but at the same time, it
+> means format-patch behaves differently from everything else in git.
+>   
 
-I don't know much about Git Gui, but "git pull" is an equivalent of
-"git fetch" and "git merge", and it seems Git Gui got both Fetch
-and Merge in its menu...
+Actually, I think the same applies to send-email too? There's
+sendemail.to and sendemail.cc which can't be overridden. At least the
+email associated commands are all quirky ;-)
 
-> And in any event, if there's a
-> conflict, I wouldn't want to overwrite my code with the code on the
-> server - I'd want to view a diff so that I might resolve the conflict
-> by hand.
-
-"git pull" (or "git merge") will produce this conflict in your working
-tree, which you should resolve then and commit. (Git automatically
-creates a merge commit if there was no conflicts.)
-
-
-Dmitry
+Honestly though, I think you're right about fixing them. We have the
+option of making them consistent with the rest of git with a little bit
+of work. If you say --no-cc or --no-add-headers or --no-to the
+respective config should be overriden. If you say --to or --cc or
+--add-headers it should be appended. I doubt anyone would find that
+surprising since --no-* doesn't do anything right now.
