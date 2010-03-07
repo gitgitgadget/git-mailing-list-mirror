@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 01/18] builtin: introduce startup_info struct
-Date: Sun,  7 Mar 2010 11:55:50 +0700
-Message-ID: <1267937767-12504-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 03/18] config: use RUN_SETUP_GENTLY
+Date: Sun,  7 Mar 2010 11:55:52 +0700
+Message-ID: <1267937767-12504-4-git-send-email-pclouds@gmail.com>
 References: <1267937767-12504-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,169 +10,112 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 07 05:59:39 2010
+X-From: git-owner@vger.kernel.org Sun Mar 07 06:00:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1No8aX-0007F4-Sm
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 05:59:38 +0100
+	id 1No8av-0000K9-AG
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 06:00:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754068Ab0CGE73 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Mar 2010 23:59:29 -0500
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:39125 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751615Ab0CGE72 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Mar 2010 23:59:28 -0500
-Received: by pvb32 with SMTP id 32so1119814pvb.19
-        for <git@vger.kernel.org>; Sat, 06 Mar 2010 20:59:28 -0800 (PST)
+	id S1754139Ab0CGE7i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Mar 2010 23:59:38 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:49858 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751615Ab0CGE7h (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Mar 2010 23:59:37 -0500
+Received: by pwj8 with SMTP id 8so3156711pwj.19
+        for <git@vger.kernel.org>; Sat, 06 Mar 2010 20:59:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=w5LzvCfjROWZr0GOjDDdAm27QwYhCbjqOJ2SSwxBito=;
-        b=MlIJO/trByw+up987A5loQBecnOkQ1lfXB5s8YZp9sPQ9kWx3KlcdToekWa/NXBgX7
-         YssJntjXH5v9ROBiuhkiDXjXSTFrSNCi85LgvcSR3HtKUYSOYhT4vxW7EfrNbla5zvky
-         FThQ7bbLJ2qogsvrWgvXsb6C21iSM4GiEVdi8=
+        bh=f22puJ3wGocPFPNtqiM8jvvMCH/F0LvH1s2HJY2iXWU=;
+        b=Pc/nUohTAA30vh6WbcqmybmPAo46Wa7aus0X7ov7xHqegKFf8jdRL+AInk1Kx2tuiC
+         10Y7cyE9TazmRhFSqvEiPCTInWqpJZTWL/HL3gMNDVbwQg/pZyKTpkRMPzl0cbdKWRBC
+         PQWdGv60/7AjtlwgCYYvR38rx/Ihxel5uunrc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=TKdK3bthnQFFk41qTvkxlH7L3BSQgMXiyXbOzsYZczUMiGf/2084qZXjUe9W2FSDdJ
-         2ITl7azPhnPrLpzfFJaqaTJYycS2Ni0T4Gxga/Ua2JSK60jh5QPqCgYQ2elLkxiAHrGp
-         m3tYdtITzSyXtIan+h34eVhGwTgAB4inPILtA=
-Received: by 10.142.121.1 with SMTP id t1mr2101473wfc.37.1267937968250;
-        Sat, 06 Mar 2010 20:59:28 -0800 (PST)
+        b=voKyc4r5cxod45ZktHDPEOFKR3CMwxV9gNmwNfwPvaiZ/ITD0Wsy+BU+ytEMJvp8eN
+         AgiUFlKwdBF/Fnuws3d+rDPVYptZg4VCCH6MC+/JrLDM+8QOYVr7Pj4nItc8b2Ifgfft
+         YTaNhILkQSM9z66S/aMiReciZQOtpkr6tu9CU=
+Received: by 10.143.154.14 with SMTP id g14mr2084059wfo.153.1267937976665;
+        Sat, 06 Mar 2010 20:59:36 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.223.3])
-        by mx.google.com with ESMTPS id 22sm3265080pzk.13.2010.03.06.20.59.26
+        by mx.google.com with ESMTPS id 21sm3251134pzk.4.2010.03.06.20.59.35
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 06 Mar 2010 20:59:27 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun,  7 Mar 2010 11:56:12 +0700
+        Sat, 06 Mar 2010 20:59:36 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun,  7 Mar 2010 11:56:21 +0700
 X-Mailer: git-send-email 1.7.0.195.g637a2
 In-Reply-To: <1267937767-12504-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141648>
 
-The purpose of this struct is to make it easier to extend parameters
-passed to builtin commands from run_builtin(), and let libgit aware of
-some global states in future.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- cache.h       |    6 ++++++
- environment.c |    1 +
- git.c         |    9 +++++----
- setup.c       |   12 +++++++++++-
- 4 files changed, 23 insertions(+), 5 deletions(-)
+ builtin/config.c |    6 ++----
+ git.c            |    4 ++--
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 89f6a40..30fddf1 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1054,4 +1054,10 @@ void overlay_tree_on_cache(const char *tree_name=
-, const char *prefix);
- char *alias_lookup(const char *alias);
- int split_cmdline(char *cmdline, const char ***argv);
-=20
-+/* git.c */
-+struct startup_info {
-+	const char *prefix;
-+};
-+extern struct startup_info *startup_info;
-+
- #endif /* CACHE_H */
-diff --git a/environment.c b/environment.c
-index 876c5e5..c36c902 100644
---- a/environment.c
-+++ b/environment.c
-@@ -52,6 +52,7 @@ enum object_creation_mode object_creation_mode =3D OB=
-JECT_CREATION_MODE;
- char *notes_ref_name;
- int grafts_replace_parents =3D 1;
- int core_apply_sparse_checkout;
-+struct startup_info *startup_info;
-=20
- /* Parallel index stat data preload? */
- int core_preload_index =3D 0;
-diff --git a/git.c b/git.c
-index 6bae305..4be34e4 100644
---- a/git.c
-+++ b/git.c
-@@ -13,6 +13,7 @@ const char git_usage_string[] =3D
- const char git_more_info_string[] =3D
- 	"See 'git help COMMAND' for more information on a specific command.";
-=20
-+static struct startup_info git_startup_info;
- static int use_pager =3D -1;
- struct pager_config {
- 	const char *cmd;
-@@ -237,13 +238,13 @@ static int run_builtin(struct cmd_struct *p, int =
-argc, const char **argv)
- {
- 	int status, help;
- 	struct stat st;
--	const char *prefix;
-=20
--	prefix =3D NULL;
-+	memset(&git_startup_info, 0, sizeof(git_startup_info));
-+	startup_info =3D &git_startup_info;
- 	help =3D argc =3D=3D 2 && !strcmp(argv[1], "-h");
- 	if (!help) {
- 		if (p->option & RUN_SETUP)
--			prefix =3D setup_git_directory();
-+			setup_git_directory();
-=20
- 		if (use_pager =3D=3D -1 && p->option & RUN_SETUP)
- 			use_pager =3D check_pager_config(p->cmd);
-@@ -257,7 +258,7 @@ static int run_builtin(struct cmd_struct *p, int ar=
-gc, const char **argv)
-=20
- 	trace_argv_printf(argv, "trace: built-in: git");
-=20
--	status =3D p->fn(argc, argv, prefix);
-+	status =3D p->fn(argc, argv, startup_info->prefix);
- 	if (status)
- 		return status;
-=20
-diff --git a/setup.c b/setup.c
-index 5716d90..cf1b37d 100644
---- a/setup.c
-+++ b/setup.c
-@@ -315,7 +315,7 @@ const char *read_gitfile_gently(const char *path)
-  * We cannot decide in this function whether we are in the work tree o=
-r
-  * not, since the config can only be read _after_ this function was ca=
-lled.
-  */
--const char *setup_git_directory_gently(int *nongit_ok)
-+static const char *setup_git_directory_gently_1(int *nongit_ok)
- {
- 	const char *work_tree_env =3D getenv(GIT_WORK_TREE_ENVIRONMENT);
- 	const char *env_ceiling_dirs =3D getenv(CEILING_DIRECTORIES_ENVIRONME=
-NT);
-@@ -443,6 +443,16 @@ const char *setup_git_directory_gently(int *nongit=
-_ok)
- 	return cwd + offset;
+diff --git a/builtin/config.c b/builtin/config.c
+index 4bc46b1..ecc8f87 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -326,11 +326,9 @@ static int get_colorbool(int print)
+ 		return get_colorbool_found ? 0 : 1;
  }
 =20
-+const char *setup_git_directory_gently(int *nongit_ok)
-+{
-+	const char *prefix;
-+
-+	prefix =3D setup_git_directory_gently_1(nongit_ok);
-+	if (startup_info)
-+		startup_info->prefix =3D prefix;
-+	return prefix;
-+}
-+
- int git_config_perm(const char *var, const char *value)
+-int cmd_config(int argc, const char **argv, const char *unused_prefix)
++int cmd_config(int argc, const char **argv, const char *prefix)
  {
- 	int i;
+-	int nongit;
+ 	char *value;
+-	const char *prefix =3D setup_git_directory_gently(&nongit);
+=20
+ 	config_exclusive_filename =3D getenv(CONFIG_ENVIRONMENT);
+=20
+@@ -409,7 +407,7 @@ int cmd_config(int argc, const char **argv, const c=
+har *unused_prefix)
+ 	}
+ 	else if (actions =3D=3D ACTION_EDIT) {
+ 		check_argc(argc, 0, 0);
+-		if (!config_exclusive_filename && nongit)
++		if (!config_exclusive_filename && !startup_info->have_repository)
+ 			die("not in a git directory");
+ 		git_config(git_default_config, NULL);
+ 		launch_editor(config_exclusive_filename ?
+diff --git a/git.c b/git.c
+index 9e0e2d0..4c99319 100644
+--- a/git.c
++++ b/git.c
+@@ -309,7 +309,7 @@ static void handle_internal_command(int argc, const=
+ char **argv)
+ 		{ "clean", cmd_clean, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "commit", cmd_commit, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "commit-tree", cmd_commit_tree, RUN_SETUP },
+-		{ "config", cmd_config },
++		{ "config", cmd_config, RUN_SETUP_GENTLY },
+ 		{ "count-objects", cmd_count_objects, RUN_SETUP },
+ 		{ "describe", cmd_describe, RUN_SETUP },
+ 		{ "diff", cmd_diff },
+@@ -366,7 +366,7 @@ static void handle_internal_command(int argc, const=
+ char **argv)
+ 		{ "reflog", cmd_reflog, RUN_SETUP },
+ 		{ "remote", cmd_remote, RUN_SETUP },
+ 		{ "replace", cmd_replace, RUN_SETUP },
+-		{ "repo-config", cmd_config },
++		{ "repo-config", cmd_config, RUN_SETUP_GENTLY },
+ 		{ "rerere", cmd_rerere, RUN_SETUP },
+ 		{ "reset", cmd_reset, RUN_SETUP },
+ 		{ "rev-list", cmd_rev_list, RUN_SETUP },
 --=20
 1.7.0.195.g637a2
