@@ -1,179 +1,87 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH 3/4] format-patch: add --no-cc, --no-to, and --no-add-headers
-Date: Sun,  7 Mar 2010 13:33:17 -0800
-Message-ID: <1267997598-20815-4-git-send-email-bebarino@gmail.com>
-References: <7vk4torn8j.fsf@alter.siamese.dyndns.org>
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Steven Drake <sdrake@xnet.co.nz>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 07 22:33:53 2010
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: Re: How do you add an external directory to repository?
+Date: Sun, 7 Mar 2010 22:36:24 +0100
+Message-ID: <20100307213624.GA12937@vidovic>
+References: <1267992229319-4691734.post@n2.nabble.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+To: slipstream180 <ivan.barrios@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 07 22:36:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NoO6e-0004xa-4l
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 22:33:48 +0100
+	id 1NoO9W-0002HE-TL
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 22:36:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754923Ab0CGVdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Mar 2010 16:33:32 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:63874 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754802Ab0CGVda (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Mar 2010 16:33:30 -0500
-Received: by gyh3 with SMTP id 3so553155gyh.19
-        for <git@vger.kernel.org>; Sun, 07 Mar 2010 13:33:30 -0800 (PST)
+	id S1754860Ab0CGVgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Mar 2010 16:36:42 -0500
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:59425 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753096Ab0CGVgl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Mar 2010 16:36:41 -0500
+Received: by bwz1 with SMTP id 1so2336336bwz.21
+        for <git@vger.kernel.org>; Sun, 07 Mar 2010 13:36:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=Sxnny7OcsnkcjCWc5Knua44E+5G85SvQ9+Y+NBMffo8=;
-        b=oeYw4wYHAd8uVFCYzAGXLmZTczDUcGiAxj1TZLHMsMkNOA4YgFwTXqyr4TbOPqvjDm
-         XNUcCSuhntIgk8KXLDyB8ZGQi9NCZCx+2o/lr4aJrBETjA3VMY1VLIoSrwM4+J6wgoqN
-         tTqIJCdaoRkpOdD7/U6JU8EWiOSZUMtRrHw0I=
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=4+LTmqSi4KlzYx6b7QSkINsyj/tGfFeliZK9IgVpPPk=;
+        b=OqXwkFxSsK3z+7JppcO/HZMxM6IMEa67x4I2tWd+s5PlnpNrDLXr6YY6m4sBGOumyA
+         SRodxE+DiBFNYzA89JXss6SH8sx+c2BbQVHnYyWpRRksUe0aD0OWZ3/70Y/fs3QrgcDi
+         N2s4jTEPzPo/ABB+C+ochbqFseYFnVf79h1WQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ou552rmZNhy1jQqbuZDcsJakQpay+tFjz/5256zdLvs6+VK+KODvWoeD4trTMqPzDk
-         SMmpVtfG7+NPE8YYly5Y0VSdd61lhZ4lnxw8RbdMO/JmF0ieHrqYhD3bZYX3gXk6WszW
-         fHWYV284sNTQ4yYznmYHAUbcIWJYA0KbeeY74=
-Received: by 10.100.60.19 with SMTP id i19mr4119219ana.62.1267997610231;
-        Sun, 07 Mar 2010 13:33:30 -0800 (PST)
-Received: from localhost (user-0c9haca.cable.mindspring.com [24.152.169.138])
-        by mx.google.com with ESMTPS id 7sm1133128yxd.26.2010.03.07.13.33.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 07 Mar 2010 13:33:29 -0800 (PST)
-X-Mailer: git-send-email 1.7.0.1.171.geb5ee
-In-Reply-To: <7vk4torn8j.fsf@alter.siamese.dyndns.org>
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=SbuZJyVTSec9Srr7d5gf0IYetklHPJ+v1DBoki4DxHWodp0Goes2n+goZguEbXNGAy
+         3NrMbs5dk4SOGbzsK7/mIpviDiHhrjAkuWIt43K5VQwPMFUIXohqIytiH7hbOj28W8hs
+         dZtUAqCqXY0NF4iVJGjCxswGu3aOJe2kfuytI=
+Received: by 10.204.174.194 with SMTP id u2mr1053162bkz.40.1267997797948;
+        Sun, 07 Mar 2010 13:36:37 -0800 (PST)
+Received: from @ (91-164-141-129.rev.libertysurf.net [91.164.141.129])
+        by mx.google.com with ESMTPS id s17sm13528494bkd.22.2010.03.07.13.36.27
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 07 Mar 2010 13:36:35 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1267992229319-4691734.post@n2.nabble.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141736>
 
-These new options allow users to override their config settings for
-format.cc, format.to and format.headers respectively. These options
-only make git ignore the config settings and any previous command line
-options, so you'll still have to add more command line options to add
-extra headers. For example,
+The 07/03/10, slipstream180 wrote:
 
-	$ cat .git/config
-	[format]
-		to = Someone <someone@out.there>
-	$ git format-patch -1 --no-to --to="Someone Else <else@out.there>"
+> I understand that I can add a symbolic link to /home/some/directory, but I
+> believe that only track the link. How do I track all files under the
+> directory as well?
 
-would format a patch addressed to "Someone Else" and not "Someone".
+I think you're looking for the bind option of mount. This is what I use
+to track all my configuration files in one "conf" repository.
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
- builtin-log.c           |   25 ++++++++++++++++++-------
- t/t4014-format-patch.sh |   38 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 56 insertions(+), 7 deletions(-)
+Here is an extract of how my fstab looks like:
 
-diff --git a/builtin-log.c b/builtin-log.c
-index dd8369f..00cddcc 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -869,19 +869,31 @@ static int inline_callback(const struct option *opt, const char *arg, int unset)
- 
- static int header_callback(const struct option *opt, const char *arg, int unset)
- {
--	add_header(arg);
-+	if (unset) {
-+		string_list_clear(&extra_hdr, 0);
-+		string_list_clear(&extra_to, 0);
-+		string_list_clear(&extra_cc, 0);
-+	} else {
-+	    add_header(arg);
-+	}
- 	return 0;
- }
- 
- static int to_callback(const struct option *opt, const char *arg, int unset)
- {
--	string_list_append(arg, &extra_to);
-+	if (unset)
-+		string_list_clear(&extra_to, 0);
-+	else
-+		string_list_append(arg, &extra_to);
- 	return 0;
- }
- 
- static int cc_callback(const struct option *opt, const char *arg, int unset)
- {
--	string_list_append(arg, &extra_cc);
-+	if (unset)
-+		string_list_clear(&extra_cc, 0);
-+	else
-+		string_list_append(arg, &extra_cc);
- 	return 0;
- }
- 
-@@ -940,12 +952,11 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		  PARSE_OPT_NONEG | PARSE_OPT_NOARG },
- 		OPT_GROUP("Messaging"),
- 		{ OPTION_CALLBACK, 0, "add-header", NULL, "header",
--			    "add email header", PARSE_OPT_NONEG,
--			    header_callback },
-+			    "add email header", 0, header_callback },
- 		{ OPTION_CALLBACK, 0, "to", NULL, "email", "add To: header",
--			    PARSE_OPT_NONEG, to_callback },
-+			    0, to_callback },
- 		{ OPTION_CALLBACK, 0, "cc", NULL, "email", "add Cc: header",
--			    PARSE_OPT_NONEG, cc_callback },
-+			    0, cc_callback },
- 		OPT_STRING(0, "in-reply-to", &in_reply_to, "message-id",
- 			    "make first mail a reply to <message-id>"),
- 		{ OPTION_CALLBACK, 0, "attach", &rev, "boundary",
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 830ddb0..c7b6256 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -157,6 +157,44 @@ test_expect_success 'configuration To: header' '
- 	grep "^To: R. E. Cipient <rcipient@example.com>\$" patch9
- '
- 
-+test_expect_success '--no-to overrides config.to' '
-+
-+	git config --replace-all format.to \
-+		"R. E. Cipient <rcipient@example.com>" &&
-+	git format-patch --no-to --stdout master..side |
-+	sed -e "/^\$/q" >patch10 &&
-+	! grep "^To: R. E. Cipient <rcipient@example.com>\$" patch10
-+'
-+
-+test_expect_success '--no-to and --to replaces config.to' '
-+
-+	git config --replace-all format.to \
-+		"Someone <someone@out.there>" &&
-+	git format-patch --no-to --to="Someone Else <else@out.there>" \
-+		--stdout master..side |
-+	sed -e "/^\$/q" >patch11 &&
-+	! grep "^To: Someone <someone@out.there>\$" patch11 &&
-+	grep "^To: Someone Else <else@out.there>\$" patch11
-+'
-+
-+test_expect_success '--no-cc overrides config.cc' '
-+
-+	git config --replace-all format.cc \
-+		"C. E. Cipient <rcipient@example.com>" &&
-+	git format-patch --no-cc --stdout master..side |
-+	sed -e "/^\$/q" >patch12 &&
-+	! grep "^Cc: C. E. Cipient <rcipient@example.com>\$" patch12
-+'
-+
-+test_expect_success '--no-add-headers overrides config.headers' '
-+
-+	git config --replace-all format.headers \
-+		"Header1: B. E. Cipient <rcipient@example.com>" &&
-+	git format-patch --no-add-headers --stdout master..side |
-+	sed -e "/^\$/q" >patch13 &&
-+	! grep "^Header1: B. E. Cipient <rcipient@example.com>\$" patch13
-+'
-+
- test_expect_success 'multiple files' '
- 
- 	rm -rf patches/ &&
+  /home/nicolas/.zsh /home/nicolas/dev/conf/zsh				auto	bind,user	0 0 
+  /home/nicolas/.vim /home/nicolas/dev/conf/vim				auto	bind,user	0 0 
+  /home/nicolas/.mutt /home/nicolas/dev/conf/mutt				auto	bind,user	0 0 
+  /home/nicolas/.screen /home/nicolas/dev/conf/screen			auto	bind,user	0 0 
+  /home/nicolas/.offlineimapconf/ /home/nicolas/dev/conf/offlineimap	auto	bind,user	0 0 
+
+I also use a symbolic link ~/.zshrc to .zsh/zshrc to track it too. This
+is very useful because one logical change may affect configuration files
+from various programs (e.g. have a new mailbox concerns mutt,
+offlineimap, imapfilter, and some other scripts of my own).
+
+
+Also, I use this trick for web projects:
+
+  /home/nicolas/dev/wsb /var/www/localhost/htdocs/wsb			auto	bind,user	0 0
+  
+
 -- 
-1.7.0.1.171.geb5ee
+Nicolas Sebrecht
