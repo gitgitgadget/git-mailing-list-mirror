@@ -1,80 +1,93 @@
-From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
-Subject: [PATCH v4 0/5] Apply blanks at EOF
-Date: Sat, 06 Mar 2010 15:30:09 +0100
-Message-ID: <4B9266F1.5040904@gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: core.autocrlf considered half-assed
+Date: Sun, 7 Mar 2010 12:27:01 +0300
+Message-ID: <20100307092701.GC31105@dpotapov.dyndns.org>
+References: <alpine.DEB.1.00.1003060018170.20986@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 06 21:59:28 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	torvalds@linux-foundation.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Mar 07 10:27:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo with esmtp (Exim 4.69)
+	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1No1Zk-0006gS-Ho
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Mar 2010 22:30:20 +0100
+	id 1NoClX-00011l-EE
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 10:27:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753109Ab0CFOaN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Mar 2010 09:30:13 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:3142 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752163Ab0CFOaM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Mar 2010 09:30:12 -0500
-Received: by ey-out-2122.google.com with SMTP id 25so693598eya.19
-        for <git@vger.kernel.org>; Sat, 06 Mar 2010 06:30:10 -0800 (PST)
+	id S1752409Ab0CGJ1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Mar 2010 04:27:09 -0500
+Received: from mail-fx0-f219.google.com ([209.85.220.219]:51189 "EHLO
+	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751245Ab0CGJ1G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Mar 2010 04:27:06 -0500
+Received: by fxm19 with SMTP id 19so5450047fxm.21
+        for <git@vger.kernel.org>; Sun, 07 Mar 2010 01:27:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=ELEvCmT0zFEIw1umdkiWzHRohJPcyiurHBxwbkKaRo8=;
-        b=Gp2sKa6Nyt0n9SdJ9N+cWYL61m+TAjT3I9kINx8n+GTcVKgJ+UI7Pz+rkPpsCJuP6q
-         64sYc3fB/pJtkEg67bhpcX3ZyKtSIv5UubkTh5/xul7r7/QeFklTnSJyGxDLmxb6lTki
-         6mnJC4J0GJwAPbwalmSrvmcqxOATUXerzcYjc=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=dv8BuF1iuU43GsETqz3otELQXckLtIgtyDI4xq1/KG0=;
+        b=GSvMn4yaNTjX5ak/iiWq2qMmnz1xp22L1Mlh1PryW57GFQc0rkDr6ysXiROSTTDulh
+         yghqNUlOnu75k9n591RSPQDI2TzQlJqiFzma0PIG3N+3CIPS8FRp75XB/R28/zsDO5hR
+         jCmNDn9TmIfzph7lu2WtJuhTURpMIVb2gRslc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=rc3MrK5/Jp31ciTzdgz7QhRKP9t/XQ/lTbun+DjoiXl4p63VMvc6TP6uKH9bovS4LG
-         IHtBW+HSiqN81lAmP9KKKt8CUUhFmOV8U0dIvOeug1l9ijzW6qyeBNQ8mzWI8TGGgQLc
-         NBIWs/+N7ArYfBcMw9mE71fEnjiv3h/yPWlzc=
-Received: by 10.213.107.143 with SMTP id b15mr1558072ebp.72.1267885810748;
-        Sat, 06 Mar 2010 06:30:10 -0800 (PST)
-Received: from [10.0.1.10] (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
-        by mx.google.com with ESMTPS id 5sm1066559eyh.7.2010.03.06.06.30.09
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=kgUL0CjwpkVHJZo9TK5Y1qCJxAQAp6YqLDVme8SO+1rlCwtAlewt4d4o2o1BMtG1OU
+         Mc2ak8lsF3soR/LvcNG0uhj231NDW2TbsaForPHEJH5r74Zk9+qCqq9bt1si4H0L4wo+
+         Vd4MVWdUiaTDJ4vtV+gqoU+ivIE5PRY2aNGGw=
+Received: by 10.87.16.39 with SMTP id t39mr3724070fgi.46.1267954023597;
+        Sun, 07 Mar 2010 01:27:03 -0800 (PST)
+Received: from localhost (ppp91-77-225-63.pppoe.mtu-net.ru [91.77.225.63])
+        by mx.google.com with ESMTPS id 14sm2276166fxm.9.2010.03.07.01.27.02
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 06 Mar 2010 06:30:10 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
+        Sun, 07 Mar 2010 01:27:02 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.1003060018170.20986@pacific.mpi-cbg.de>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141616>
 
-Another re-roll to fix --ignore-space-change in combination with=20
---whitespace=3Dfix when the patch has CR-LF line endings.
+On Sat, Mar 06, 2010 at 12:23:33AM +0100, Johannes Schindelin wrote:
+> 
+> back then, I was not a fan of the core.autocrlf support. But I have to 
+> admit that in the meantime, I turned into an outright un-fan of the 
+> feature. Not because its intent is wrong, but because its implementation 
+> is lousy.
 
-Bj=C3=B6rn Gustavsson (5):
-  apply: Don't unnecessarily update line lengths in the preimage
-  apply: Remove the quick rejection test
-    No change.
+Well, I agree there are some issues with it. In particularly, when
+someone changes core.autocrlf in his/her repository, and then git
+behavior is outright confusing. IMHO, the nuts of the problem is that
+does not store in the index how files were checkout. Instead it uses
+core.autocrlf, which specifies how the user _wants_ files to be check-
+out. So, when the autocrlf option changes, things get very confusing.
+However:
 
-  apply: Allow blank context lines to match beyond EOF
-    The fix and an updated commit message.
+> Just try to "git reset --hard" or "git stash" when there are files with 
+> DOS line endings and when core.autocrlf is not false.
 
-  t4124: Add additional tests of --whitespace=3Dfix
-    One test case split into two and two new test cases.
+I did, and I have not noticed any problem with that.
 
-  t3417: Add test cases for "rebase --whitespace=3Dfix"
-    No change.
+git init
+git config core.autocrlf true
+echo foo^ | tr ^ '\r' > foo
+git add foo
+git commit -m 'add foo'
+echo more^ | tr ^ '\r' >> foo
+echo "Before reset:"
+tr '\r' ^ < foo
+git reset --hard
+echo "After reset:"
+git diff
+tr '\r' ^ < foo
 
- builtin-apply.c                  |  187 +++++++++++++++++++++++++++++-=
--------
- t/t3417-rebase-whitespace-fix.sh |  126 +++++++++++++++++++++++++
- t/t4104-apply-boundary.sh        |    9 ++
- t/t4124-apply-ws-rule.sh         |  170 ++++++++++++++++++++++++++++++=
-++++
- 4 files changed, 451 insertions(+), 41 deletions(-)
- create mode 100755 t/t3417-rebase-whitespace-fix.sh
+
+Dmitry
