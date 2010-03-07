@@ -1,89 +1,59 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 3/7] revert: add --ff option to allow fast forward
- when cherry-picking
-Date: Sat, 06 Mar 2010 19:55:23 -0800
-Message-ID: <7v6358dbv8.fsf@alter.siamese.dyndns.org>
-References: <20100306203250.2960.30309.chriscool@tuxfamily.org>
- <20100306203447.2960.42019.chriscool@tuxfamily.org>
+Subject: Re: [PATCH] t7406: Fix submodule init config tests
+Date: Sat, 06 Mar 2010 20:00:55 -0800
+Message-ID: <7v6358bx1k.fsf@alter.siamese.dyndns.org>
+References: <1267777238-2646-1-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Paolo Bonzini <bonzini@gnu.org>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sun Mar 07 04:56:00 2010
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Peter Hutterer <peter.hutterer@who-t.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 07 05:04:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1No7ax-0005rZ-Bt
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 04:55:59 +0100
+	id 1No7gC-0001aR-1i
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 05:01:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753986Ab0CGDzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Mar 2010 22:55:43 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37426 "EHLO
+	id S1754095Ab0CGEBK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Mar 2010 23:01:10 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39944 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753822Ab0CGDzn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Mar 2010 22:55:43 -0500
+	with ESMTP id S1753822Ab0CGEBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Mar 2010 23:01:09 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A2559FCED;
-	Sat,  6 Mar 2010 22:55:42 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E9D79FD71;
+	Sat,  6 Mar 2010 23:01:08 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Kz4pPn6KK+wh5rl4yJVg6HnxYpY=; b=iX7JGf
-	AyJANW1QYvv/RDqdwk8xBukZmhEH90rWMQXWAoJafGIigVrsVeXJn0HKvOhVkpaN
-	0uIOdn9NPMDUrxpeSetTKYClWUKK8zndOVYe/TLm/nqwIY3gbClIs25XZaAff4EL
-	ceq5DI1YYLW3LkIHyYIo6Q+XfewB8drC96YS8=
+	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=rtTLtt
+	Rc+Sqd7fYhVCMHgTi6KjPClJcM2UD9Afj2ijgHfCP3ARuxi0SuEHfWAaQuQx/70B
+	V/fOy96JTffdH0WsF8D4AmLW1e/rPbKYRwbpdOviJ0TBEWSieWoLx29JTo6SqBC7
+	mI4JJ/O4m9vZ2x/kZk3mhwmY/JUaFfa+9jtsQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pxrFUTfNEiOnvLpjyDagA7H2OClzSSwf
-	XDhDVsGIX39z8OJlZp+cclX5OcXwlh7m/Nq43tqGn24RMbzoKKBflCv6G0V15Ya5
-	7NKzx46Ws67s2NL8XFnLFdaNI+wmR7f6PBs5d8RQfOeQZml/hQYgz6aOwaZmP2fc
-	BOCnkJCtTM4=
+	:content-type; q=dns; s=sasl; b=g733eEOMkumV7/gDOLQKJS4pdzo6jsDg
+	FK6j6/EqtQuZSc52+zAXcTM/atshnG8j7grO87yGp9ARJGHCppG6RSJxYZ4SMZnE
+	4lCqXL3V5xULYaQR88Q2cBdvR9XKuUMu6aCFRt9Aoui+zUhIW8Dt9W/t1B+YCD3+
+	iBuvUA4+bKE=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F6679FCEC;
-	Sat,  6 Mar 2010 22:55:33 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 020F29FD6F;
+	Sat,  6 Mar 2010 23:01:02 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 536D29FCEB; Sat,  6 Mar
- 2010 22:55:24 -0500 (EST)
-In-Reply-To: <20100306203447.2960.42019.chriscool@tuxfamily.org> (Christian
- Couder's message of "Sat\, 06 Mar 2010 21\:34\:42 +0100")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2C1589FD6E; Sat,  6 Mar
+ 2010 23:00:57 -0500 (EST)
+In-Reply-To: <1267777238-2646-1-git-send-email-bebarino@gmail.com> (Stephen
+ Boyd's message of "Fri\,  5 Mar 2010 00\:20\:38 -0800")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 47C265C0-299D-11DF-B19B-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0C255116-299E-11DF-870D-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141645>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
-
-> From: Junio C Hamano <gitster@pobox.com>
->
-> As "git merge" fast forwards if possible, it seems sensible to
-> have such a feature for "git cherry-pick" too, especially as it
-> could be used in git-rebase--interactive.sh.
->
-> Maybe this option could be made the default in the long run,
-
-I never said that.
-
-For scripted use, like we can see in your [PATCH 7/7], "cherry-pick --ff"
-could be a good ingredient (but even then the calling Porcelain script may
-already know that what is being picked is a direct descendent (rebase -i
-certainly should, as the last commit it processed from the todo file is at
-the HEAD), but for manual use case it just feels silly to assume that the
-end user is so stupid that s/he doesn't know the commit being picked might
-be a direct descendant, which would be the only reason why making --ff the
-default might make sense.
-
-And adding --no-ff and sprinkling that to scripts, only to support that
-default change as a future possibility, feels doubly silly.
-
-What was the real motive/use case of "cherry-pick --ff"?
+Thanks.
