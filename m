@@ -1,110 +1,143 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 00/18] Search and set up repository early for builtin commands
-Date: Sun,  7 Mar 2010 11:55:49 +0700
-Message-ID: <1267937767-12504-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 02/18] builtin: Support RUN_SETUP_GENTLY to set up repository early if found
+Date: Sun,  7 Mar 2010 11:55:51 +0700
+Message-ID: <1267937767-12504-3-git-send-email-pclouds@gmail.com>
+References: <1267937767-12504-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 07 06:06:52 2010
+X-From: git-owner@vger.kernel.org Sun Mar 07 06:07:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1No8hW-0001tK-3L
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 06:06:50 +0100
+	id 1No8hg-0002DI-9j
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 06:07:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751229Ab0CGFGp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Mar 2010 00:06:45 -0500
-Received: from mail-pz0-f200.google.com ([209.85.222.200]:43825 "EHLO
-	mail-pz0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750702Ab0CGFGo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Mar 2010 00:06:44 -0500
-X-Greylist: delayed 439 seconds by postgrey-1.27 at vger.kernel.org; Sun, 07 Mar 2010 00:06:44 EST
-Received: by pzk38 with SMTP id 38so400180pzk.33
-        for <git@vger.kernel.org>; Sat, 06 Mar 2010 21:06:44 -0800 (PST)
+	id S1751245Ab0CGFGy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Mar 2010 00:06:54 -0500
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:42653 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750702Ab0CGFGx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Mar 2010 00:06:53 -0500
+Received: by pvb32 with SMTP id 32so1120758pvb.19
+        for <git@vger.kernel.org>; Sat, 06 Mar 2010 21:06:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=sdL5i07+RRg9wOYB/7BkusolFy9xCarqQWVEsXUyHzQ=;
-        b=Cgzb0Ea0f2fJcRKF29N30jADOP6w6anW6j2LrF1qvAVIgObUIVYrik/grBFH+4RTTh
-         V6Hbj8/pRIlMkNuVV7d79tXV4NHvzx0b0bPOa3ec3c+bAr3rgAfvPe3Cxgm9PA5aiGzB
-         R36TYYqGITsUuF1qU/aE7uKCIrY3J6FiL7ekI=
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=a7iUJot3mNJauz4AQp/nv7hXJ4VOMQTsvLWxHim+2sI=;
+        b=TCOJDOYjIXb0j/FBTstMokG3Q7K3CqAEyV/5G9MOg+IVef0oqjl+G0jFkhmT7pHs50
+         Q4jFmUWo8Fql4Avud73ivuhFo1hCvVtTX+eR9KnmFOxcpmVjsuTrbIJBviYgipAz2HKO
+         hjFC5FtxquBi1m//l4TNhxKwxUAwgH+ijsyT8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=uWmY4I3tjTaIXcrqhGc5eEAzNfVyzNHGxqJM2q5YZgMJsqn/NeUcvQ1Ix6BeqrM35i
-         Hj4Wli0+qZVgiywMuBjVrVAdQAj8FwV+Kn+G8oVtQ87vmEQVDm4c+eb9YFe5qwDESmYo
-         ixB6Yi/fgBAOs6ny4Lf4S/5/9Pi0wm5oFELQ0=
-Received: by 10.142.210.17 with SMTP id i17mr2089782wfg.146.1267937963963;
-        Sat, 06 Mar 2010 20:59:23 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=fg/xX1FJ0UD3lMPwG6U5gt6VfY/A7DrepdfSZ0n6ei8D+ucxXOm8HVyjTGYrA9Y4Rw
+         KhTHpVJSvGNYKyRJnS58xsBR8c1lsuX6W8gwkFUAHXMy5cOgYzQX3S39qMLmj3S2QbVL
+         dsj5aoE7FNUr1xDxRdirLTsLgi5cpXgxIbVRU=
+Received: by 10.142.65.22 with SMTP id n22mr2098224wfa.113.1267937972484;
+        Sat, 06 Mar 2010 20:59:32 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.223.3])
-        by mx.google.com with ESMTPS id 22sm3254285pzk.1.2010.03.06.20.59.22
+        by mx.google.com with ESMTPS id 22sm3257398pzk.5.2010.03.06.20.59.30
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 06 Mar 2010 20:59:23 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun,  7 Mar 2010 11:56:08 +0700
+        Sat, 06 Mar 2010 20:59:31 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun,  7 Mar 2010 11:56:17 +0700
 X-Mailer: git-send-email 1.7.0.195.g637a2
+In-Reply-To: <1267937767-12504-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141666>
 
-This is a simpler part of my Git setup cleanup WIP [1], to introduce
-RUN_SETUP_GENTLY and make most of commands use it.
+Attempts to access gitdir are everywhere, even before cmd_*() is
+called. Because repository has not been found, repository-specific
+information (i.e. $GIT_DIR/config) may not be read. This leads to
+obscure bugs.
 
-The commands that do not have RUN_SETUP* are:
- - Init/Clone commands
- - Server commands
- - Helpers that have nothing to do with repositories
- - git-rev-parse
+So the sooner we setup gitdir, the less trouble we may have to deal wit=
+h.
 
-[1] http://mid.gmane.org/1266336317-607-1-git-send-email-pclouds@gmail.=
-com
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ cache.h |    1 +
+ git.c   |   11 ++++++++---
+ setup.c |    4 +++-
+ 3 files changed, 12 insertions(+), 4 deletions(-)
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (18):
-  builtin: introduce startup_info struct
-  builtin: Support RUN_SETUP_GENTLY to set up repository early if found
-  config: use RUN_SETUP_GENTLY
-  hash-object: use RUN_SETUP_GENTLY
-  shortlog: use RUN_SETUP_GENTLY
-  grep: use RUN_SETUP_GENTLY
-  builtin: USE_PAGER should not be used without RUN_SETUP*
-  archive: use RUN_SETUP_GENTLY
-  mailinfo: use RUN_SETUP_GENTLY
-  check-ref-format: use RUN_SETUP_GENTLY
-  verify-pack: use RUN_SETUP_GENTLY
-  apply: use RUN_SETUP_GENTLY
-  bundle: use RUN_SETUP_GENTLY
-  diff: use RUN_SETUP_GENTLY
-  help: use RUN_SETUP_GENTLY
-  ls-remote: use RUN_SETUP_GENTLY
-  var: use RUN_SETUP_GENTLY
-  merge-file: use RUN_SETUP_GENTLY
-
- builtin/apply.c       |    7 ++---
- builtin/archive.c     |    2 +-
- builtin/bundle.c      |    6 +---
- builtin/config.c      |    6 +---
- builtin/diff.c        |    6 +---
- builtin/grep.c        |    9 ++-----
- builtin/hash-object.c |    9 ++++---
- builtin/help.c        |    2 -
- builtin/ls-remote.c   |    3 --
- builtin/mailinfo.c    |    3 --
- builtin/merge-file.c  |    4 +--
- builtin/shortlog.c    |    4 +--
- builtin/var.c         |    2 -
- cache.h               |    7 +++++
- environment.c         |    1 +
- git.c                 |   61 ++++++++++++++++++++++++++++-------------=
---------
- setup.c               |   14 ++++++++++-
- 17 files changed, 76 insertions(+), 70 deletions(-)
+diff --git a/cache.h b/cache.h
+index 30fddf1..68412c0 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1057,6 +1057,7 @@ int split_cmdline(char *cmdline, const char ***ar=
+gv);
+ /* git.c */
+ struct startup_info {
+ 	const char *prefix;
++	int have_repository;
+ };
+ extern struct startup_info *startup_info;
+=20
+diff --git a/git.c b/git.c
+index 4be34e4..9e0e2d0 100644
+--- a/git.c
++++ b/git.c
+@@ -220,13 +220,14 @@ static int handle_alias(int *argcp, const char **=
+*argv)
+=20
+ const char git_version_string[] =3D GIT_VERSION;
+=20
+-#define RUN_SETUP	(1<<0)
+-#define USE_PAGER	(1<<1)
++#define RUN_SETUP		(1<<0)
++#define USE_PAGER		(1<<1)
+ /*
+  * require working tree to be present -- anything uses this needs
+  * RUN_SETUP for reading from the configuration file.
+  */
+-#define NEED_WORK_TREE	(1<<2)
++#define NEED_WORK_TREE		(1<<2)
++#define RUN_SETUP_GENTLY	(1<<3)
+=20
+ struct cmd_struct {
+ 	const char *cmd;
+@@ -245,6 +246,10 @@ static int run_builtin(struct cmd_struct *p, int a=
+rgc, const char **argv)
+ 	if (!help) {
+ 		if (p->option & RUN_SETUP)
+ 			setup_git_directory();
++		if (p->option & RUN_SETUP_GENTLY) {
++			int nongit_ok;
++			setup_git_directory_gently(&nongit_ok);
++		}
+=20
+ 		if (use_pager =3D=3D -1 && p->option & RUN_SETUP)
+ 			use_pager =3D check_pager_config(p->cmd);
+diff --git a/setup.c b/setup.c
+index cf1b37d..bb3648c 100644
+--- a/setup.c
++++ b/setup.c
+@@ -448,8 +448,10 @@ const char *setup_git_directory_gently(int *nongit=
+_ok)
+ 	const char *prefix;
+=20
+ 	prefix =3D setup_git_directory_gently_1(nongit_ok);
+-	if (startup_info)
++	if (startup_info) {
+ 		startup_info->prefix =3D prefix;
++		startup_info->have_repository =3D !nongit_ok || !*nongit_ok;
++	}
+ 	return prefix;
+ }
+=20
+--=20
+1.7.0.195.g637a2
