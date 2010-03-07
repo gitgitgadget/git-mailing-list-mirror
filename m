@@ -1,68 +1,70 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] unset GREP_OPTIONS in test-lib.sh
-Date: Sun, 7 Mar 2010 11:30:58 +0100
-Message-ID: <36ca99e91003070230r1755277aq7acd916d214e3ba7@mail.gmail.com>
-References: <1258560919-28054-1-git-send-email-bert.wesarg@googlemail.com>
-	 <7v1vjvebem.fsf@alter.siamese.dyndns.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] Add tests for git format-patch --to and format.to config
+ option
+Date: Sat, 06 Mar 2010 16:06:18 -0800
+Message-ID: <4B92EDFA.1000602@gmail.com>
+References: <7v7hptt0mr.fsf@alter.siamese.dyndns.org> <20100306003946.GD27414@genesis.frugalware.org> <7vr5nykx55.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Steven Drake <sdrake@xnet.co.nz>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 07 11:31:16 2010
+X-From: git-owner@vger.kernel.org Sun Mar 07 01:06:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NoDlN-0002yT-Ma
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 11:31:10 +0100
+	id 1No411-0001AM-Ir
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 01:06:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753845Ab0CGKbE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Mar 2010 05:31:04 -0500
-Received: from mail-fx0-f219.google.com ([209.85.220.219]:54786 "EHLO
-	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751737Ab0CGKbA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Mar 2010 05:31:00 -0500
-Received: by fxm19 with SMTP id 19so5474017fxm.21
-        for <git@vger.kernel.org>; Sun, 07 Mar 2010 02:30:59 -0800 (PST)
+	id S1752767Ab0CGAGZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Mar 2010 19:06:25 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:65433 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752506Ab0CGAGY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Mar 2010 19:06:24 -0500
+Received: by gyh3 with SMTP id 3so276345gyh.19
+        for <git@vger.kernel.org>; Sat, 06 Mar 2010 16:06:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=khDSRy2w+VTC1kSQhmo0Vhe1vZG53bPuN+uuaIsUzOc=;
-        b=vO0+7xL2nQ4AvVzPDBLWM1lX2jdjN10s8I0l08G7XTwTz6dcGbzyJzXjqKSTvZW54W
-         U89S8FtVBFNkSQoX7QJylK0H8ufKnfhIL40+VTt3dlp0cvRyuCtI3UV9HiRL3ozopRNO
-         XGeunY6ChfCDnATNpe6ZrvfDC9a4dEu+0VKyU=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=fkpXRHBA50dJvSdt5IQ2fKZglBQgs+vofyTqyH/nfxs=;
+        b=J5W1mduND+oLtVQUXbWsOx3NJPsmQlJPT4Vgz9fJcsZDmnWJCRpu8YQwt+NWbfQvGu
+         BKN//nDV/j1ihBBVJxTaObVU2LJlqi7a/VdjdlAYbgr4iqYNYkEl9hPa4bhLMHoAldXh
+         oG8JwYH78IoPVo4v6xsjiFJIPUaqYcX4Z68zU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Cv2jLu6wcRIe0H0O3x3AOoyvnIdg6y/RHos9/k2Mk2OkujHcgeCipj9TAXN/L3QRoJ
-         qI6qVa7OP+qvDqZiN8jX7mKi5voR4vrfKJMp8SfhuobxGsh5aT0VVC4kQlqEZF1yWzoy
-         foAzBbS7MvOu4BSGe4n57DZ3+n53K1WLxWM9w=
-Received: by 10.223.143.18 with SMTP id s18mr3970882fau.64.1267957859310; Sun, 
-	07 Mar 2010 02:30:59 -0800 (PST)
-In-Reply-To: <7v1vjvebem.fsf@alter.siamese.dyndns.org>
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=asmyqtv8gy4+sWvj80hC1IIuTzBM3dbUPxSfa4oHTwVNlKUzkQVGzBkNLabMYTxLGv
+         Co9LXj9O9uyM+14QtWTVZgR4uTYsP3tdg70zZtLSGD6uc2yHtsb8cOk2JFxVbxLjc0mB
+         onkz8PrqSdCVBT2znCqIegkwX+RDUZGyAdnWg=
+Received: by 10.91.19.3 with SMTP id w3mr1806470agi.60.1267920381821;
+        Sat, 06 Mar 2010 16:06:21 -0800 (PST)
+Received: from [192.168.1.5] (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id 4sm1176206ywi.51.2010.03.06.16.06.20
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 06 Mar 2010 16:06:21 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7pre) Gecko/20091214 Shredder/3.0.1pre
+In-Reply-To: <7vr5nykx55.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141630>
 
-On Wed, Nov 18, 2009 at 23:05, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Bert Wesarg <bert.wesarg@googlemail.com> writes:
+On 03/05/2010 06:21 PM, Junio C Hamano wrote:
+> This reveals that --to does not follow the usual rule to override
+> corresponding configuration.  Is that really what we want?  IOW, when the
+> command line says scipient, shouldn't we stop sending to recipient that
+> comes from the configuration?  How else would a user override this?
 >
->> I used to set GREP_OPTIONS to exclude *.orig and *.rej files. But wi=
-th this
->> the test t4252-am-options.sh fails because it calls grep with a .rej=
- file:
->
-> Yuck. =C2=A0Will apply.
+> So I guess the topic wasn't ready for 'next' yet, after all.
+>   
 
-Ping.
-
-Regards,
-Bert
+The same applies to the fomat.headers and format.cc config options. How
+is this different?
