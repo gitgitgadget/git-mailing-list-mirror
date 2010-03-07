@@ -1,91 +1,128 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: status of libgit.a
-Date: Sun, 7 Mar 2010 17:36:24 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1003071733440.7596@pacific.mpi-cbg.de>
-References: <499B3F65.8010109@synapse.com>  <20090218091617.7805.qmail@2684cdd72f0ee9.315fe32.mid.smarden.org>  <499C40EA.6050108@synapse.com>  <20090219092446.23272.qmail@3b5a9fa637f270.315fe32.mid.smarden.org> <1267957655.3759.29.camel@mattotaupa>
-Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1416964788-1267979788=:7596"
-Cc: git@vger.kernel.org, Marc Oscar Singer <elf@synapse.com>,
-	407722@bugs.debian.org
-To: Paul Menzel <pm.debian@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 07 17:29:32 2010
+From: Mark Lodato <lodatom@gmail.com>
+Subject: [PATCHv2 1/3] Add GIT_COLOR_BOLD_* and GIT_COLOR_BG_*
+Date: Sun,  7 Mar 2010 11:52:45 -0500
+Message-ID: <1267980767-12617-2-git-send-email-lodatom@gmail.com>
+References: <1267980767-12617-1-git-send-email-lodatom@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Mark Lodato <lodatom@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 07 17:53:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NoJMA-000249-MH
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 17:29:31 +0100
+	id 1NoJjF-0005kc-AU
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Mar 2010 17:53:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751408Ab0CGQ3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Mar 2010 11:29:15 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39990 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750848Ab0CGQ3O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Mar 2010 11:29:14 -0500
-Received: (qmail invoked by alias); 07 Mar 2010 16:29:11 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp029) with SMTP; 07 Mar 2010 17:29:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/0IOkuYi301PhrCoOggVRXgNY8grL+Fv7AdRr2GN
-	ntPazTFCImBA3A
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1267957655.3759.29.camel@mattotaupa>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59999999999999998
+	id S1754499Ab0CGQxN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Mar 2010 11:53:13 -0500
+Received: from qw-out-2122.google.com ([74.125.92.26]:56488 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753165Ab0CGQxK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Mar 2010 11:53:10 -0500
+Received: by qw-out-2122.google.com with SMTP id 5so896445qwd.37
+        for <git@vger.kernel.org>; Sun, 07 Mar 2010 08:53:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=PYNKkg5U88aSozwcBB8FKvmmxwHz6UKVnDMUQhnmwbA=;
+        b=DkrdUa1gs4BAAnr8TC5Qafp85Pm64Svqo7nHQVScfgTq64UMAvNyQKU3MzlSoKUpvx
+         lu4mpPo5KuNzrtW4620AMebA9c3HccwwUiE5/0zfV8qBia5DRENBmQMI+dFt4LegP+qn
+         U9FCMfm3EtA0uvxKLNmUxVvOP6EfdUDPp0lJ4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Qg2k4EQGoX5nOs5X7kQAAmgMH5CBS6IdiitQbKMzO2Ff4h1P6zqH8Niwgc1lIUEKww
+         Hil/txIpZ2QPWMToPvY0CRDT5If/adhzZLaXIoqO/fcB1yF98wFifoaBlrAQ1J+RNDFr
+         xh1H60ZLu3jTV1WyEjryTupmvYHXQocMQO9Ig=
+Received: by 10.224.140.13 with SMTP id g13mr1850762qau.268.1267980789913;
+        Sun, 07 Mar 2010 08:53:09 -0800 (PST)
+Received: from localhost.localdomain (c-68-50-174-152.hsd1.dc.comcast.net [68.50.174.152])
+        by mx.google.com with ESMTPS id 20sm2767266qyk.4.2010.03.07.08.53.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 07 Mar 2010 08:53:09 -0800 (PST)
+X-Mailer: git-send-email 1.7.0
+In-Reply-To: <1267980767-12617-1-git-send-email-lodatom@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141717>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Add GIT_COLOR_BOLD_* macros to set both bold and the color in one
+sequence.  This saves two characters of output ("ESC [ m", minus ";")
+and makes the code more readable.
 
---8323328-1416964788-1267979788=:7596
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Add the remaining GIT_COLOR_BG_* macros to make the list complete.
+The white and black colors are not included since they look bad on most
+terminals.
 
-Hi,
+Signed-off-by: Mark Lodato <lodatom@gmail.com>
+---
+ builtin-grep.c |    2 +-
+ color.h        |   11 +++++++++++
+ graph.c        |   12 ++++++------
+ 3 files changed, 18 insertions(+), 7 deletions(-)
 
-On Sun, 7 Mar 2010, Paul Menzel wrote:
-
-> Am Donnerstag, den 19.02.2009, 09:24 +0000 schrieb Gerrit Pape:
-> > On Wed, Feb 18, 2009 at 09:10:02AM -0800, Marc Oscar Singer wrote:
-> > > Gerrit Pape wrote:
-> 
-> […]
-> 
-> > > >It depends on upstream.  Back then, Junio asked to not provide such 
-> > > >a library package in Debian, and I respect that.  There've been 
-> > > >some plans and effort to stabilize the lib in the past, but I'm not 
-> > > >sure about the status.
-> > > >  
-> > > Would it be a compromise to provide libgit.a as a static library for 
-> > > until it stabilizes?
-> > 
-> > That's not the compromise, that's the option, I don't know any plans 
-> > about a shared library.  The git-core-dev package that was available 
-> > for short included such a static library.
-> > 
-> > You really need to talk to upstream if you want this libgit.a.
-> 
-> could you please give an update on the status of libgit.a.
-
-There had been some people who worked towards a re-entrant libgit.a (read: 
-non-die()ing in library functions). But there were too many others, so 
-that effort stopped.
-
-The most likely route for people needing libgit.a would be libgit2:
-
-http://git.wiki.kernel.org/index.php/SoC2010Ideas#Complete_libgit2
-
-> For example cgit still could not be packaged yet for Debian [1] because 
-> of this bug [2].
-
-cgit should not depend on libgit.a, as it is linked statically anyway.
-
-Ciao,
-Dscho
---8323328-1416964788-1267979788=:7596--
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 2697957..2a876c4 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -847,7 +847,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	opt.regflags = REG_NEWLINE;
+ 	opt.max_depth = -1;
+ 
+-	strcpy(opt.color_match, GIT_COLOR_RED GIT_COLOR_BOLD);
++	strcpy(opt.color_match, GIT_COLOR_BOLD_RED);
+ 	opt.color = -1;
+ 	git_config(grep_config, &opt);
+ 	if (opt.color == -1)
+diff --git a/color.h b/color.h
+index 3cb4b7f..bfeea1f 100644
+--- a/color.h
++++ b/color.h
+@@ -18,7 +18,18 @@
+ #define GIT_COLOR_BLUE		"\033[34m"
+ #define GIT_COLOR_MAGENTA	"\033[35m"
+ #define GIT_COLOR_CYAN		"\033[36m"
++#define GIT_COLOR_BOLD_RED	"\033[1;31m"
++#define GIT_COLOR_BOLD_GREEN	"\033[1;32m"
++#define GIT_COLOR_BOLD_YELLOW	"\033[1;33m"
++#define GIT_COLOR_BOLD_BLUE	"\033[1;34m"
++#define GIT_COLOR_BOLD_MAGENTA	"\033[1;35m"
++#define GIT_COLOR_BOLD_CYAN	"\033[1;36m"
+ #define GIT_COLOR_BG_RED	"\033[41m"
++#define GIT_COLOR_BG_GREEN	"\033[42m"
++#define GIT_COLOR_BG_YELLOW	"\033[43m"
++#define GIT_COLOR_BG_BLUE	"\033[44m"
++#define GIT_COLOR_BG_MAGENTA	"\033[45m"
++#define GIT_COLOR_BG_CYAN	"\033[46m"
+ 
+ /*
+  * This variable stores the value of color.ui
+diff --git a/graph.c b/graph.c
+index 6746d42..e6bbcaa 100644
+--- a/graph.c
++++ b/graph.c
+@@ -80,12 +80,12 @@ static char column_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_BLUE,
+ 	GIT_COLOR_MAGENTA,
+ 	GIT_COLOR_CYAN,
+-	GIT_COLOR_BOLD GIT_COLOR_RED,
+-	GIT_COLOR_BOLD GIT_COLOR_GREEN,
+-	GIT_COLOR_BOLD GIT_COLOR_YELLOW,
+-	GIT_COLOR_BOLD GIT_COLOR_BLUE,
+-	GIT_COLOR_BOLD GIT_COLOR_MAGENTA,
+-	GIT_COLOR_BOLD GIT_COLOR_CYAN,
++	GIT_COLOR_BOLD_RED,
++	GIT_COLOR_BOLD_GREEN,
++	GIT_COLOR_BOLD_YELLOW,
++	GIT_COLOR_BOLD_BLUE,
++	GIT_COLOR_BOLD_MAGENTA,
++	GIT_COLOR_BOLD_CYAN,
+ };
+ 
+ #define COLUMN_COLORS_MAX (ARRAY_SIZE(column_colors))
+-- 
+1.7.0
