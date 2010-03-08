@@ -1,84 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: core.autocrlf considered half-assed
-Date: Mon, 08 Mar 2010 12:31:34 -0800
-Message-ID: <7v6356r1w9.fsf@alter.siamese.dyndns.org>
-References: <alpine.DEB.1.00.1003060018170.20986@pacific.mpi-cbg.de>
- <20100307092701.GC31105@dpotapov.dyndns.org>
- <alpine.LFD.2.00.1003071538350.30214@localhost.localdomain>
- <20100308185719.GQ2480@ece.pdx.edu>
- <alpine.DEB.1.00.1003082011440.14277@intel-tinevez-2-302>
+Subject: Re: git push --no-mirror ?
+Date: Mon, 08 Mar 2010 12:49:40 -0800
+Message-ID: <7vzl2ipmhn.fsf@alter.siamese.dyndns.org>
+References: <20100308123423.GA20486@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tait <git.git@t41t.com>, git@vger.kernel.org,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 08 21:31:57 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Mar 08 21:50:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NojcK-0005PU-I5
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Mar 2010 21:31:56 +0100
+	id 1Nojtt-0002JG-Uh
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Mar 2010 21:50:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755285Ab0CHUbu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Mar 2010 15:31:50 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59272 "EHLO
+	id S1755586Ab0CHUtu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Mar 2010 15:49:50 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46483 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753798Ab0CHUbs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Mar 2010 15:31:48 -0500
+	with ESMTP id S1755564Ab0CHUts convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Mar 2010 15:49:48 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 60075A0E6B;
-	Mon,  8 Mar 2010 15:31:47 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 579C2A01B8;
+	Mon,  8 Mar 2010 15:49:46 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yMje3EccgfLbnLSK7wS5XHsl4FQ=; b=bgRiqO
-	QpOQfhgVQva9mJusnA+dxYxlxjUjcgXIY8+XeebBywI4S1Q/hhRGE83wxX7Tacf/
-	vfRU9DyDlkpk+BoNbfP8AIzoynF4xjNT21/1u4yARMNH7dqJ4WpNpQVVUrOd5F0u
-	s/UQclW9X9jHFmqH3B0gZ/ykc0JwiRwWUtRD0=
+	:content-type:content-transfer-encoding; s=sasl; bh=EQTqxljmgX/O
+	xAlcF3CS2OndIjc=; b=lY8id33EkU3Np70Bz8kINEYLWeD7yFG2KETiWCIP9xJX
+	iCuxy/CRWKGDbFTwR+dPkzipLLt8g+FJRA2bcHkhjitSRkQfBlAcUKv8fzKbf51h
+	DVINPPuwH4lJkRn+EPFLizgZ/0xiVAhFpfxU6ekL/oPAI7R8D6XFx0OZWW4oA5M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oixRzyjBdZu4nBc3t8OVZZPdveJXSTrm
-	Bzokn3EV+bErcGEOxi8238V4DM7WurYkwNSgZJXPngj0RR/AvWM7zrAvdWhHqpat
-	3+S4uA9BrLtMrn9yVyVNNf3TY9DmYqC0rK2eT7suIorxlLtmSWzuYlY/qolq/njv
-	89YnIvuvZSM=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=r1e966
+	cJKlgctanHd2N65Z5esN41BFrHhm9NPlpOWBdkipCq6WhgSEb3/gWY+NnRiLCHOF
+	tbsuZiIERXT6PuuVEko+QYF5vW5HT1xEj3rUalFPLDI6eph+qsEJ5Dj6cWlKRCKL
+	pHAKF3w+VC8tbmO8Ra+Wkkmm82x59GHOwRquU=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E8ED4A0E61;
-	Mon,  8 Mar 2010 15:31:41 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 34BABA01B6;
+	Mon,  8 Mar 2010 15:49:44 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B6022A0E5F; Mon,  8 Mar
- 2010 15:31:35 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.1003082011440.14277@intel-tinevez-2-302>
- (Johannes Schindelin's message of "Mon\, 8 Mar 2010 20\:15\:10 +0100
- \(CET\)")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8FF23A01B2; Mon,  8 Mar
+ 2010 15:49:41 -0500 (EST)
+In-Reply-To: <20100308123423.GA20486@neumann> ("SZEDER =?utf-8?Q?G=C3=A1bo?=
+ =?utf-8?Q?r=22's?= message of "Mon\, 8 Mar 2010 13\:34\:23 +0100")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9AED5502-2AF1-11DF-A561-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 20034C90-2AF4-11DF-A50B-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141787>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
-> And I demonstrated with the "html" example that even long-time Gitsters 
-> sometimes commit DOS line endings as-are, unconverted.
+> I have a remote that I use mainly for backup with 'mirror =3D true' i=
+n
+> gitconfig, but also for sharing my "bleeding-edge" code with a
+> student.  Now I came across the situation where I would liked to push
+> only a single branch to that repo, only to discover that 'git push'
+> has no '--no-mirror' option to override the related configuration
+> setting.  Removing the 'mirror =3D true' line from the config, doing =
+the
+> push, restoring the config did the trick, of course, but I think ther=
+e
+> should be a simpler way to do that.  Is there a fundamental reason wh=
+y
+> there is no 'push --no-mirror', or just noone has noticed/bothered
+> before?
 
-FWIW, not using CRLF conversion in the auto-generated 'html' repository
-was a deliberate choice, as the contents there (the ones generated by
-AsciiDoc with '.html' suffix) were intended to be served directly from the
-web servers.  I presume AsciiDoc writes them with CRLF because html
-documents are supposed to be, and it would be wrong to apply core.autocrlf
-in the auto-generated repository.  And it is not correct to force
-core.autocrlf on the recipient side either.  I know you wanted to have a
-sample repository that people can easily access and understand what you
-see as a problem, and the autogenerated 'html' is a good sample to point
-at for that purpose, but "even long-time gitsters..." is stretching the
-truth.
+I think that is the case.  How does this look (haven't thought it throu=
+gh
+nor even compile tested yet)?
 
-Nevertheless, I agree with you that if a similar situation happened by
-mistake and your project does want to enforce core.autocrlf, it would be
-nicer if there is an easy-to-use one-time clean-up procedure.  It hasn't
-been my itch, and I suspect it wasn't Linus's itch either.
+ builtin-push.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-push.c b/builtin-push.c
+index f7bc2b2..89df1ff 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -145,7 +145,7 @@ static int do_push(const char *repo, int flags)
+ 		die("No destination configured to push to.");
+ 	}
+=20
+-	if (remote->mirror)
++	if (!refspec && remote->mirror)
+ 		flags |=3D (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
+=20
+ 	if ((flags & TRANSPORT_PUSH_ALL) && refspec) {
