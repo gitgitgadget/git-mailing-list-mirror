@@ -1,64 +1,73 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Regression in `git add' in 1.7's 48ffef966c with a wildcard in
-  .gitignore
-Date: Mon, 08 Mar 2010 21:06:02 +0100
-Message-ID: <4B9558AA.90907@drmicha.warpmail.net>
-References: <51dd1af81003080908i3bc94f27lc99e146bb57993ba@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: git-rebase -i prunes commits with empty commit-message
+Date: Mon, 8 Mar 2010 21:07:41 +0100
+Message-ID: <40aa078e1003081207u20046916yda5a62d44ce7a401@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 08 21:05:54 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 08 21:07:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NojD7-0005BG-O5
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Mar 2010 21:05:54 +0100
+	id 1NojEy-0002Bi-3J
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Mar 2010 21:07:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755575Ab0CHUFt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Mar 2010 15:05:49 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:35792 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755411Ab0CHUFr (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Mar 2010 15:05:47 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 1A2DBE32AE;
-	Mon,  8 Mar 2010 15:05:47 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Mon, 08 Mar 2010 15:05:47 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=DLzIzy8qKccGf7mxIWzTHAuinIc=; b=TjjM5pk26/s9zHqmga60f7UrxV5LqJZ56QFnjlptdjEIQc50poHFbL2hImPwmLn2p2Ara/eN/e1/EfiH9z9nb314jKFofyR/QAgL2Rcac36nGnSgW7twRSR9ZYTh7xts/QbowC4DaHLR/6LF6sbldrOXKujW+fRp3uMQNii5lYM=
-X-Sasl-enc: QPvt7AL05IsTzYMAjU+9xy5dy5Atd7t82Lyfd8SwwTWR 1268078746
-Received: from localhost.localdomain (gast-99-220.tagung.uni-jena.de [141.35.99.220])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id D0CB74CBF9D;
-	Mon,  8 Mar 2010 15:05:45 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9pre) Gecko/20100301 Lightning/1.0b2pre Shredder/3.0.3pre
-In-Reply-To: <51dd1af81003080908i3bc94f27lc99e146bb57993ba@mail.gmail.com>
+	id S1755578Ab0CHUHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Mar 2010 15:07:44 -0500
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:58628 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755253Ab0CHUHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Mar 2010 15:07:42 -0500
+Received: by wwa36 with SMTP id 36so3534496wwa.19
+        for <git@vger.kernel.org>; Mon, 08 Mar 2010 12:07:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:date:message-id
+         :subject:from:to:content-type;
+        bh=Ju1LpzG/qKPJ+qYFtztd4say5VQwrSz4V9kwPHwhcSI=;
+        b=yFco5/dm4JFIQauBEX9EIaaS6aDaIZKmzcM7bveZpJdB/FMQEZlpzOVOSlkFE4gcr4
+         S4QGq8Sxp5Q6LuGVM50TA6JW6MAwMgSjYQkoBxCVaFbC2G3Ui+KtB8SDu2wrjkrAGW8V
+         LxQdmxh7uPMq8T5Nwt38bpDb6uTPG0JQ2IBd8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:date:message-id:subject:from:to:content-type;
+        b=De2gcAT/5qEt1e0rSHS/b4zKGb04vYE2wNQLyeCUp998q5txD+sK49EwdqOgqeaNqo
+         T6ZzJ/xmzoWHoX2Q0IZKKuWivYePrTTbeEcThYFNhb8k4BPpiDoAtVCtHjmyye1dUUoi
+         oDfA0u//yLRrePdMizPPb9L5dtOBCzGCw38dI=
+Received: by 10.216.162.204 with SMTP id y54mr169057wek.224.1268078861188; 
+	Mon, 08 Mar 2010 12:07:41 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141782>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason venit, vidit, dixit 08.03.2010 1=
-8:08:
-> I've discovered a regression in git-add the 1.7 release which I can't
-> see reported anywhere. It was introduced in
-> 48ffef966c762578eb818c0c54a7e11dd054f5db by Junio C Hamano at Fri Jan
-> 8 23:05:41 2010.
->=20
-> The problem is that when you have a .gitignore file with * in it
-> git-add will only complain that you're trying to add ignored files if
-> they're in the top level of your repository, for files in
-> subdirectories it now just silently fails:
->=20
->     $ mkdir test && cd test && git init
->     $ echo "*" > .gitignore
->     $ mkdir directory && touch foo directory/foo
+I'm in the process of converting an SVN repo to Git, and in the
+process I found one quite disturbing feature of
+git-rebase--interactive.sh: It discards commits with empty commit
+messages!
 
-Could this possibly be fixed by 13bb0ce (builtin-add: fix exclude
-handling, 2010-02-28) which is on pu?
+Here's a recepie for reproducing the issue:
+--->8---
+git init
+git commit -m "dummy" --allow-empty
+git commit -m "dummy" --allow-empty
+git commit -m "dummy" --allow-empty
+git filter-branch -f --msg-filter 'sed -e "s/dummy//"'
+git rebase -i HEAD~2
+--->8---
 
-Michael
+The editor window will show "noop", and exiting the editor goes ahead
+and deletes all but the initial commit.
+
+This gets even weirder if it's a mixture of empty and non-empty
+commits; the commit-identifiers gets appended, together with an
+angle-bracket ('>'), to the previous line.
+
+I'm guessing that this is unintended behavior. This was observed on git 1.7.0.1.
+
+-- 
+Erik "kusma" Faye-Lund
