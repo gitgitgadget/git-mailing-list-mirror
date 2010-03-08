@@ -1,65 +1,84 @@
-From: Michael Lukashov <michael.lukashov@gmail.com>
-Subject: Re: [PATCH] pull --all: fix error message when current branch is not 
-	tracking remote branch
-Date: Mon, 8 Mar 2010 23:26:32 +0300
-Message-ID: <63cde7731003081226hb27c705l9038f2dccfd1c042@mail.gmail.com>
-References: <1267566741-5784-1-git-send-email-michael.lukashov@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: core.autocrlf considered half-assed
+Date: Mon, 08 Mar 2010 12:31:34 -0800
+Message-ID: <7v6356r1w9.fsf@alter.siamese.dyndns.org>
+References: <alpine.DEB.1.00.1003060018170.20986@pacific.mpi-cbg.de>
+ <20100307092701.GC31105@dpotapov.dyndns.org>
+ <alpine.LFD.2.00.1003071538350.30214@localhost.localdomain>
+ <20100308185719.GQ2480@ece.pdx.edu>
+ <alpine.DEB.1.00.1003082011440.14277@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 08 21:26:53 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Tait <git.git@t41t.com>, git@vger.kernel.org,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 08 21:31:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NojXD-0004v9-0h
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Mar 2010 21:26:39 +0100
+	id 1NojcK-0005PU-I5
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Mar 2010 21:31:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755457Ab0CHU0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Mar 2010 15:26:35 -0500
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:62158 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753798Ab0CHU0d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Mar 2010 15:26:33 -0500
-Received: by wwa36 with SMTP id 36so3548650wwa.19
-        for <git@vger.kernel.org>; Mon, 08 Mar 2010 12:26:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=xkwodgEbPFm7g+MWIR63ML6kpmpnuAfW4Q0P9RPV1Xk=;
-        b=Aa3drim21bTrBqw7GJsxRcE+gI9apLEfpRDQvVxS2OKnA5LR3hi4jZw9r4wf5XPNLj
-         yCc9IuUzSRQOO0eDoRdoRNeVNaRIwG3alyqy0+zTrRZH2WVFwrbJZWuOnCHLl7283HzC
-         uLFtSmT0gAWLGj8yOjDoNgtCmy3mrFc94bMSI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=LfPSivfRXJ3/BgyLhSjYV2bWzM+src/JiWj/DBuSags/7TduVDqtK6ZnZQDsKtIe9Q
-         syZuUfV4jv9/PNtSdLOZry9TigL6gbXm940n1yl5V/jkIBmGOpTQU11F7pNS7dhsM7Gs
-         CmVIw7ryKoKJSmQJg4/55F4omiqu+9X8lLt18=
-Received: by 10.216.88.134 with SMTP id a6mr857874wef.66.1268079992323; Mon, 
-	08 Mar 2010 12:26:32 -0800 (PST)
-In-Reply-To: <1267566741-5784-1-git-send-email-michael.lukashov@gmail.com>
+	id S1755285Ab0CHUbu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Mar 2010 15:31:50 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59272 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753798Ab0CHUbs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Mar 2010 15:31:48 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 60075A0E6B;
+	Mon,  8 Mar 2010 15:31:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yMje3EccgfLbnLSK7wS5XHsl4FQ=; b=bgRiqO
+	QpOQfhgVQva9mJusnA+dxYxlxjUjcgXIY8+XeebBywI4S1Q/hhRGE83wxX7Tacf/
+	vfRU9DyDlkpk+BoNbfP8AIzoynF4xjNT21/1u4yARMNH7dqJ4WpNpQVVUrOd5F0u
+	s/UQclW9X9jHFmqH3B0gZ/ykc0JwiRwWUtRD0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oixRzyjBdZu4nBc3t8OVZZPdveJXSTrm
+	Bzokn3EV+bErcGEOxi8238V4DM7WurYkwNSgZJXPngj0RR/AvWM7zrAvdWhHqpat
+	3+S4uA9BrLtMrn9yVyVNNf3TY9DmYqC0rK2eT7suIorxlLtmSWzuYlY/qolq/njv
+	89YnIvuvZSM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E8ED4A0E61;
+	Mon,  8 Mar 2010 15:31:41 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B6022A0E5F; Mon,  8 Mar
+ 2010 15:31:35 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.1003082011440.14277@intel-tinevez-2-302>
+ (Johannes Schindelin's message of "Mon\, 8 Mar 2010 20\:15\:10 +0100
+ \(CET\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9AED5502-2AF1-11DF-A561-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141786>
 
-No-one ever interested?
-Thought it's useful improvement.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Instead of above-mentioned confusing message, you get
-much more clearer explanation:
+> And I demonstrated with the "html" example that even long-time Gitsters 
+> sometimes commit DOS line endings as-are, unconverted.
 
-You asked me to pull without telling me which branch you
-want to merge with, and 'branch.<>.merge' in
-your configuration file does not tell me, either. Please
-specify which branch you want to use on the command line and
-try again (e.g. 'git pull <repository> <refspec>').
-See git-pull(1) for details.
+FWIW, not using CRLF conversion in the auto-generated 'html' repository
+was a deliberate choice, as the contents there (the ones generated by
+AsciiDoc with '.html' suffix) were intended to be served directly from the
+web servers.  I presume AsciiDoc writes them with CRLF because html
+documents are supposed to be, and it would be wrong to apply core.autocrlf
+in the auto-generated repository.  And it is not correct to force
+core.autocrlf on the recipient side either.  I know you wanted to have a
+sample repository that people can easily access and understand what you
+see as a problem, and the autogenerated 'html' is a good sample to point
+at for that purpose, but "even long-time gitsters..." is stretching the
+truth.
 
-...
+Nevertheless, I agree with you that if a similar situation happened by
+mistake and your project does want to enforce core.autocrlf, it would be
+nicer if there is an easy-to-use one-time clean-up procedure.  It hasn't
+been my itch, and I suspect it wasn't Linus's itch either.
