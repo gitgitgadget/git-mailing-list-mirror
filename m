@@ -1,63 +1,75 @@
-From: Mahesh Vaidya <forvaidya@gmail.com>
-Subject: sub module branches
-Date: Mon, 8 Mar 2010 16:44:55 +0530
-Message-ID: <b42431c81003080314j694114b5o433988470f13328a@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: core.autocrlf considered half-assed
+Date: Mon, 8 Mar 2010 12:29:01 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1003081225280.14277@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.1003060018170.20986@pacific.mpi-cbg.de> <20100307092701.GC31105@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 08 12:15:05 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	torvalds@linux-foundation.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 08 12:29:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NoavQ-0003cb-Fe
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Mar 2010 12:15:04 +0100
+	id 1Nob9B-0007pQ-Vj
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Mar 2010 12:29:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754111Ab0CHLO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Mar 2010 06:14:58 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:64093 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754100Ab0CHLO5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Mar 2010 06:14:57 -0500
-Received: by pwj8 with SMTP id 8so3665838pwj.19
-        for <git@vger.kernel.org>; Mon, 08 Mar 2010 03:14:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=qG8EaEHooSGu6Gh2vy0yTjLgtynN8JeAxC7Zov05oSk=;
-        b=He3m4wFQTv4fulYwyJTRYCAjI4ne/kNnx6yX2MhLicwL8aRLLtN5flinraDa74SUaS
-         VfSF995ECTE0fiosw2OLLB3hLSYIROHUur0TbdocNvw04qiAiMXTOBfTf4ewpIgIvB3M
-         mJJ41wnERkltGOQGCYz87r//hXUVhnmN38wl0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=ZZK9602BP7RpQg120NbVhfgRedpxXuFPrlXIOoBoZc3Y92XXL+XD8t7wIWWnijg6uW
-         HTH+ADltFXkalMcZznRqTiSmVdkHq7U0+Zr/3HfMTylWJdzccJPaXzcel5Yes1M5WDYo
-         ZnSLeAvnuCFZClPTF9Grt0vW9f/++D4ggC18Q=
-Received: by 10.142.67.29 with SMTP id p29mr3090402wfa.260.1268046895559; Mon, 
-	08 Mar 2010 03:14:55 -0800 (PST)
+	id S1754163Ab0CHL3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Mar 2010 06:29:12 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43430 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754140Ab0CHL3L (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Mar 2010 06:29:11 -0500
+Received: (qmail invoked by alias); 08 Mar 2010 11:29:09 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp025) with SMTP; 08 Mar 2010 12:29:09 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19cL7oF6NxcD8y6uf56RO7NikwSLIlBVYySGMLeWO
+	42sNAnzu2+pRj/
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20100307092701.GC31105@dpotapov.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.60999999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141760>
 
-Hi
+Hi,
 
-I have a situation like
+On Sun, 7 Mar 2010, Dmitry Potapov wrote:
 
-project/source.git
-           /submod_1
-           /submod_2
+> On Sat, Mar 06, 2010 at 12:23:33AM +0100, Johannes Schindelin wrote:
+> 
+> > Just try to "git reset --hard" or "git stash" when there are files 
+> > with DOS line endings and when core.autocrlf is not false.
+> 
+> I did, and I have not noticed any problem with that.
+> 
+> git init
+> git config core.autocrlf true
+> echo foo^ | tr ^ '\r' > foo
+> git add foo
+> git commit -m 'add foo'
 
-I need to modify code in all 3 repos viz. source, submod_1 & submod_2.
+Unfortunately, this is not the common case. The common case is that 
+somebody committed _without_ autocrlf (implicitly =false), and you clone 
+from there.
 
-If I create branch in source, will it propogate to remaining
-submodules ? or in other words can I have "global branch" and "global
-tag"
+Easiest example:
 
-Thx/
+$ git clone -n git://repo.or.cz/git.git html-docs
+$ cd html-docs/
+$ git config core.autocrlf true
+$ git checkout -t origin/html
+$ git status
 
-Mahesh.
+... and despair.
+
+Hth,
+Dscho
