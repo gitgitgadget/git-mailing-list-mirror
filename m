@@ -1,98 +1,60 @@
-From: Sergio <sergio.callegari@gmail.com>
-Subject: Some information that git diff saves and that git status does not
-Date: Mon, 8 Mar 2010 10:46:51 +0000 (UTC)
-Message-ID: <loom.20100308T111146-322@post.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] git-gui: fix usage of _gitworktree when creating
+ shortcut for windows
+Date: Mon, 8 Mar 2010 12:17:39 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1003081214410.7596@pacific.mpi-cbg.de>
+References: <20100223224955.GB11271@book.hvoigt.net> <cb7bb73a1002231454j4720b28ei20c10de37e929fde@mail.gmail.com> <20100223230238.GD11271@book.hvoigt.net> <cb7bb73a1002242353h739786bdlb2c57df3438f5b7f@mail.gmail.com> <20100227204108.GA33000@book.hvoigt.net>
+ <20100227204549.GB33000@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 08 11:47:13 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	msysGit Mailinglist <msysgit@googlegroups.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Mon Mar 08 12:10:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NoaUT-0004g9-BK
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Mar 2010 11:47:13 +0100
+	id 1Noar7-00033k-L6
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Mar 2010 12:10:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753985Ab0CHKrH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Mar 2010 05:47:07 -0500
-Received: from lo.gmane.org ([80.91.229.12]:57933 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753626Ab0CHKrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Mar 2010 05:47:05 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NoaUG-0003uF-Ug
-	for git@vger.kernel.org; Mon, 08 Mar 2010 11:47:01 +0100
-Received: from mars-fw.arces.unibo.it ([137.204.143.2])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 08 Mar 2010 11:47:00 +0100
-Received: from sergio.callegari by mars-fw.arces.unibo.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 08 Mar 2010 11:47:00 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 137.204.143.2 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.8) Gecko/20100214 Ubuntu/9.10 (karmic) Firefox/3.5.8)
+	id S1754070Ab0CHLKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Mar 2010 06:10:32 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37125 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753510Ab0CHLKb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Mar 2010 06:10:31 -0500
+Received: (qmail invoked by alias); 08 Mar 2010 11:10:26 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp071) with SMTP; 08 Mar 2010 12:10:26 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/KAx136Q7KZwQstfJ4H14Q7h7LZaQHeZqxkFDgFi
+	IK0PSf8jGmwR3/
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20100227204549.GB33000@book.hvoigt.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66000000000000003
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141758>
 
 Hi,
 
-I happen to work with a (possibly somehow unusual) configuration where 2 laptops
-are syncronized via unison (a widely used file syncronizer).
+On Sat, 27 Feb 2010, Heiko Voigt wrote:
 
-This means that git worktrees and repos are copied around as they are, rather
-than transferred through git protocols.  The thing may appear weird, but it
-makes sense, since the two laptops need to carry completely identical stuff all
-the time (one, say "A", is a lightweight one good for travel, the other one, say
-"B" is a desktop replacement).
+> Signed-off-by: Heiko Voigt <heiko.voigt@mahr.de>
+> ---
 
-If I work on "A" in worktree "WT", when I then sync the two machines, WT and the
-associated object store and git data remains unchanged in A and gets updated in
-B in such a way that git cannot know about it.
+I applied these three patches to 4msysgit.git (I was pretty surprised that 
+the faulty patch made it into 1.7.0.2, but then, even my comment about the 
+commit message style was met with unwillingness to change).
 
-As a matter of fact, git copes with all this amazingly well, with the following
-quirk:
+Thanks Heiko, for pre-emptively fixing msysGit issue 425!
 
-1) The tree appears dirty on B, even if it was not on A before starting the
-sync. I guess this is because the index may contain data that does not make
-complete sense on B. As a consequence, gitk shows the tree as containing local
-changes even if it does not.
-
-2) By running git status, you make git realize that in fact there are no local
-changes in the tree.  After a git status, also gitk is happy.
-
-3) When you run git status, to find out that the local tree is in fact clean,
-git status needs to do a significant amount of work.  If filters are defined,
-git status runs all the filters on all the files that need to be filtered
-(revealed by GIT_TRACE). This can take a significant amount of time.
-
-4) Once git has done that, you would expect git status not to need doing the
-filter job any longer.  However, if you run git status again and again, git
-again and again spends a significant amount of time re-running all the filters.
-
-5) If rather than running git status, you run git diff, git runs the filters as
-for git status, however some info now gets saved about this activity.  After a
-git diff, git status becomes almost istantaneous, no filters are run any longer.
-
-It would be nice if:
-
-a) git status could save the same info that git diff saves, so after the first
-git status which needs to take a long time, all the subsequent git status are
-fast. If I remember properly, this was indeed the behavior before the rewrite of
-git status; and
-
-b) before saying that you have local changes, gitk could run git status to be
-truly sure about that.
-
-Would a) and b) be easy and sensible changes? Or conversely, would they have
-nasty implications and side effects?
-
-Sergio
+Ciao,
+Dscho
