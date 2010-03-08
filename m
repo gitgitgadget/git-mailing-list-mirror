@@ -1,62 +1,72 @@
-From: Tait <git.git@t41t.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: core.autocrlf considered half-assed
-Date: Mon, 8 Mar 2010 10:57:19 -0800
-Message-ID: <20100308185719.GQ2480@ece.pdx.edu>
-References: <alpine.DEB.1.00.1003060018170.20986@pacific.mpi-cbg.de> <20100307092701.GC31105@dpotapov.dyndns.org> <alpine.LFD.2.00.1003071538350.30214@localhost.localdomain>
+Date: Mon, 8 Mar 2010 20:15:10 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1003082011440.14277@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.1003060018170.20986@pacific.mpi-cbg.de> <20100307092701.GC31105@dpotapov.dyndns.org> <alpine.LFD.2.00.1003071538350.30214@localhost.localdomain> <20100308185719.GQ2480@ece.pdx.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Dmitry Potapov <dpotapov@gmail.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 08 19:58:36 2010
+To: Tait <git.git@t41t.com>
+X-From: git-owner@vger.kernel.org Mon Mar 08 20:17:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Noi9y-0006EL-IC
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Mar 2010 19:58:34 +0100
+	id 1NoiSL-0004zV-5c
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Mar 2010 20:17:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752565Ab0CHS6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Mar 2010 13:58:30 -0500
-Received: from ehlo.cat.pdx.edu ([131.252.208.106]:45221 "EHLO
-	ehlo.cat.pdx.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751136Ab0CHS63 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Mar 2010 13:58:29 -0500
-Received: from nemo.ece.pdx.edu (root@nemo.ece.pdx.edu [131.252.209.162])
-	by ehlo.cat.pdx.edu (8.14.2/8.14.2/Debian-2build1) with ESMTP id o28IvKj5000765
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 8 Mar 2010 10:57:20 -0800
-Received: from nemo.ece.pdx.edu (tait@localhost [127.0.0.1])
-	by nemo.ece.pdx.edu (8.13.6/8.13.1) with ESMTP id o28IvKDw016730;
-	Mon, 8 Mar 2010 10:57:20 -0800 (PST)
-Received: (from tait@localhost)
-	by nemo.ece.pdx.edu (8.13.6/8.12.6/Submit) id o28IvJvk016729;
-	Mon, 8 Mar 2010 10:57:19 -0800 (PST)
-X-Authentication-Warning: nemo.ece.pdx.edu: tait set sender to git.git@t41t.com using -f
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1003071538350.30214@localhost.localdomain>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ehlo.cat.pdx.edu [131.252.208.106]); Mon, 08 Mar 2010 10:57:20 -0800 (PST)
-X-Spam-Status: No, score=0.0 required=6.0 tests=none autolearn=failed
-	version=3.2.5
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on ehlo.cat.pdx.edu
-X-Virus-Scanned: clamav-milter 0.95.2 at ehlo.cat.pdx.edu
-X-Virus-Status: Clean
+	id S1753940Ab0CHTR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Mar 2010 14:17:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45354 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753458Ab0CHTR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Mar 2010 14:17:27 -0500
+Received: (qmail invoked by alias); 08 Mar 2010 19:15:18 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp035) with SMTP; 08 Mar 2010 20:15:18 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+iTKYx3deiOBUNP7viw8mtHgKnxvaFD5TJClpc9T
+	vOzZxJI2fmeEkK
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20100308185719.GQ2480@ece.pdx.edu>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66000000000000003
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141779>
 
-> I do agree. It would probably have been a good idea to mark the CRLF
-> status in the index, but we didn't...
+Hi,
 
-We already have .gitattributes for tracking information about files. Maybe
-add an attribute to describe the in-repository line endings? The default
-would be LF, as now, and a new attribute could change the checked-in
-format to be CRLF.
+On Mon, 8 Mar 2010, Tait wrote:
 
-Tait
+> > I do agree. It would probably have been a good idea to mark the CRLF 
+> > status in the index, but we didn't...
+> 
+> We already have .gitattributes for tracking information about files. 
+> Maybe add an attribute to describe the in-repository line endings? The 
+> default would be LF, as now, and a new attribute could change the 
+> checked-in format to be CRLF.
+
+No.
+
+The problem is not the description of the line endings in the repository. 
+The information what line endings are used can be easily extracted from 
+every blob, by a simple inspection.
+
+The problem is that the core.autocrlf code blindly assumes that Unix line 
+endings are the only thing you would ever commit. And worse, the mistake 
+is repeated when updating the index. Git converts the DOS line endings 
+into Unix line endings, then compares with what it has in the repository 
+and says: "Ooops, it is different!" even if it just checked the files out.
+
+And I demonstrated with the "html" example that even long-time Gitsters 
+sometimes commit DOS line endings as-are, unconverted.
+
+Ciao,
+Dscho
