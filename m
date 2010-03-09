@@ -1,73 +1,100 @@
-From: =?UTF-8?Q?Antonio_Garc=C3=ADa_Dom=C3=ADnguez?= 
-	<nyoescape@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: git-http-backend and Authenticated Pushes
-Date: Tue, 9 Mar 2010 20:23:48 +0100
-Message-ID: <2b8265361003091123g780a9b36g5ec641d465c7df02@mail.gmail.com>
+Date: Tue, 9 Mar 2010 11:27:26 -0800
+Message-ID: <20100309192726.GA12461@spearce.org>
 References: <46a47f951003090908s62512bd7xcbb707205958e004@mail.gmail.com>
-	 <2b8265361003091101x1e3a3410hc3be2446dc7ddce@mail.gmail.com>
-	 <64E1366D-31FC-4E0D-9F7D-35E6387E2EC1@bjhargrave.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ryan Phillips <ryan@trolocsis.com>, git@vger.kernel.org
-To: BJ Hargrave <bj@bjhargrave.com>
-X-From: git-owner@vger.kernel.org Tue Mar 09 20:23:57 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ryan Phillips <ryan@trolocsis.com>
+X-From: git-owner@vger.kernel.org Tue Mar 09 20:27:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Np524-0007Rp-Nt
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 20:23:57 +0100
+	id 1Np55c-00013H-8Q
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 20:27:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755597Ab0CITXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Mar 2010 14:23:51 -0500
-Received: from mail-fx0-f213.google.com ([209.85.220.213]:51820 "EHLO
-	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751445Ab0CITXu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Mar 2010 14:23:50 -0500
-Received: by fxm5 with SMTP id 5so1715003fxm.29
-        for <git@vger.kernel.org>; Tue, 09 Mar 2010 11:23:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=wEs+DI+u4tRDp6zJqoiEJXuSNvOCGmEPklRDB1KpIZo=;
-        b=R2+0iyWFo4tpn4GYaX0U0BuXq2mQMC3R38HBeuiEFkgS6Z39hS339hW+TdHvjHB+tn
-         eg0F1CADE9MF0rfVgQLaz4cppj6YA24hGwMrL1WFEKwZU87EezIwBVjFN6Z+ckvPwdOG
-         lIjr8yROqGGYx+gDxY/yUfbFy9vSZ75gzbSRE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Dj4DkjXlUPw85oysUxRq6xkeys3+H2eJXWpua499nCi2SMtw53sWFgtRYYav2PUjOM
-         GsKDrutDVuTo6anHqOUu52gx8257X8QUkT4o5J5bfaz2wNz1MuhNO2FVnKyc0sqklW+C
-         PXeJ9m0wuutZgjifmvaMLLTwPe6ABclX0XxFk=
-Received: by 10.87.63.33 with SMTP id q33mr942657fgk.24.1268162628278; Tue, 09 
-	Mar 2010 11:23:48 -0800 (PST)
-In-Reply-To: <64E1366D-31FC-4E0D-9F7D-35E6387E2EC1@bjhargrave.com>
+	id S1755781Ab0CIT1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Mar 2010 14:27:31 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:57437 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753498Ab0CIT1a (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Mar 2010 14:27:30 -0500
+Received: by gwb15 with SMTP id 15so3730766gwb.19
+        for <git@vger.kernel.org>; Tue, 09 Mar 2010 11:27:29 -0800 (PST)
+Received: by 10.150.131.21 with SMTP id e21mr672049ybd.163.1268162848972;
+        Tue, 09 Mar 2010 11:27:28 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 22sm5836146iwn.8.2010.03.09.11.27.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 09 Mar 2010 11:27:27 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <46a47f951003090908s62512bd7xcbb707205958e004@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141843>
 
-Hi BJ,
+Ryan Phillips <ryan@trolocsis.com> wrote:
+> I'm trying to follow the git-http-backend man page on setting up
+> authenticated pushes to my apache server. Pulls work fine, and fully
+> authenticated pushes work fine. However, when I try and setup
+> anonymous pulls and authenticated pushes the push fails.
+> 
+> I believe the culprit is this 403 error:
+> 
+> 192.168.1.1 - - [09/Mar/2010:09:01:43 -0800] "GET
+> /git/test.git/info/refs?service=git-receive-pack HTTP/1.1" 403 - "-"
+> "git/1.7.0.2.dirty"
 
-> LocationMatch will not match against the query string which is where the service name is. To match against the query string, you would need to do something like:
+Ugh.  Looks like I didn't design this thing right.
 
-Oops, you're right. I'm actually matching the unparsed URL using a
-regexp in a Perl authentication module, so I missed that Apache
-detail. Your snippet looks good to me.
+The backend wants you to be authenticated before it will service
+the git-receive-pack advertisement.  Even though its the same
+data as the git-upload-pack advertisement (but slightly different
+capability strings).
 
-> But, I would think using <LimitExcept GET PROPFIND OPTIONS REPORT> to protect against "writing" to the repo without auth should be sufficient.
+Maybe we should consider doing something like this patch so that
+the advertisement under info/refs?service=git-receive-pack can be
+sent without needing authentication.  My only hesitation is this
+makes it harder for the client to setup the authentication before
+it needs to transmit the pack file, which may mean it needs to send
+the pack twice.
 
-But that doesn't work for the smart HTTP method. Limiting by method is
-OK for dumb HTTP (as we're basically just modifying files using
-WebDAV), but the git-http-backend CGI only uses GET and POST, and
-requires authentication depending not on the HTTP method, but what
-service is being used.
 
-Or so I think :-).
-
-Cheers,
-Antonio
+diff --git a/http-backend.c b/http-backend.c
+index 345c12b..462b07c 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -312,11 +312,6 @@ static struct rpc_service *select_service(const char *name)
+ 
+ 	if (!svc)
+ 		forbidden("Unsupported service: '%s'", name);
+-
+-	if (svc->enabled < 0) {
+-		const char *user = getenv("REMOTE_USER");
+-		svc->enabled = (user && *user) ? 1 : 0;
+-	}
+ 	if (!svc->enabled)
+ 		forbidden("Service not enabled: '%s'", svc->name);
+ 	return svc;
+@@ -519,6 +514,12 @@ static void service_rpc(char *service_name)
+ 	struct rpc_service *svc = select_service(service_name);
+ 	struct strbuf buf = STRBUF_INIT;
+ 
++	if (svc->enabled < 0) {
++		const char *user = getenv("REMOTE_USER");
++		if (!user || !*user)
++			forbidden("Service not enabled: '%s'", svc->name);
++	}
++
+ 	strbuf_reset(&buf);
+ 	strbuf_addf(&buf, "application/x-git-%s-request", svc->name);
+ 	check_content_type(buf.buf);
+ 
+-- 
+Shawn.
