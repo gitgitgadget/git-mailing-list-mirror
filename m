@@ -1,87 +1,61 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: git push --no-mirror ?
-Date: Tue, 9 Mar 2010 13:04:28 +0100
-Message-ID: <20100309120428.GE4748@neumann>
-References: <20100308123423.GA20486@neumann>
-	<7vzl2ipmhn.fsf@alter.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git interix support
+Date: Tue, 9 Mar 2010 12:24:20 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1003091220510.3065@intel-tinevez-2-302>
+References: <4B962456.20600@salomon.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 09 13:43:19 2010
+To: Markus Duft <markus.duft@salomon.at>
+X-From: git-owner@vger.kernel.org Tue Mar 09 13:43:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NoyYQ-0001Do-Q6
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 13:28:55 +0100
+	id 1NoyXy-0001Do-4l
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 13:28:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751685Ab0CIMEf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Mar 2010 07:04:35 -0500
-Received: from francis.fzi.de ([141.21.7.5]:56788 "EHLO exchange.fzi.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751070Ab0CIMEe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Mar 2010 07:04:34 -0500
-Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 9 Mar 2010 13:04:28 +0100
-Content-Disposition: inline
-In-Reply-To: <7vzl2ipmhn.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 09 Mar 2010 12:04:28.0571 (UTC) FILETIME=[AB64CEB0:01CABF80]
+	id S1754631Ab0CILYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Mar 2010 06:24:33 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52634 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753658Ab0CILYb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Mar 2010 06:24:31 -0500
+Received: (qmail invoked by alias); 09 Mar 2010 11:24:29 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp007) with SMTP; 09 Mar 2010 12:24:29 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18fEq19cBYfSnydtbNeufJXZwBPFmQmbkWharJBsn
+	EitxcMOEn789pA
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <4B962456.20600@salomon.at>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57999999999999996
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141822>
 
 Hi,
 
+On Tue, 9 Mar 2010, Markus Duft wrote:
 
-On Mon, Mar 08, 2010 at 12:49:40PM -0800, Junio C Hamano wrote:
-> SZEDER G=E1bor <szeder@ira.uka.de> writes:
->=20
-> > I have a remote that I use mainly for backup with 'mirror =3D true'=
- in
-> > gitconfig, but also for sharing my "bleeding-edge" code with a
-> > student.  Now I came across the situation where I would liked to pu=
-sh
-> > only a single branch to that repo, only to discover that 'git push'
-> > has no '--no-mirror' option to override the related configuration
-> > setting.  Removing the 'mirror =3D true' line from the config, doin=
-g the
-> > push, restoring the config did the trick, of course, but I think th=
-ere
-> > should be a simpler way to do that.  Is there a fundamental reason =
-why
-> > there is no 'push --no-mirror', or just noone has noticed/bothered
-> > before?
->=20
-> I think that is the case.  How does this look (haven't thought it thr=
-ough
-> nor even compile tested yet)?
->=20
->  builtin-push.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->=20
-> diff --git a/builtin-push.c b/builtin-push.c
-> index f7bc2b2..89df1ff 100644
-> --- a/builtin-push.c
-> +++ b/builtin-push.c
-> @@ -145,7 +145,7 @@ static int do_push(const char *repo, int flags)
->  		die("No destination configured to push to.");
->  	}
-> =20
-> -	if (remote->mirror)
-> +	if (!refspec && remote->mirror)
->  		flags |=3D (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
-> =20
->  	if ((flags & TRANSPORT_PUSH_ALL) && refspec) {
+> i have "ported" git to interix (haha, wasn't so much of a problem after
+> all ;)). i have a small patch (attached).
 
-thanks, this DWIMery seems to work just fine (i.e. solves my problem
-and does not break any tests in the test suite).
+Please inline the patch for easier review. Unless you want no review, that 
+is :-)
 
+>From a cursory view, it looks as if all your #ifdef INTERIX actually want 
+to be #ifdef HAVE_POLL or some such (we try to define the appropriate 
+flags regarding the available features in the Makefile, see for example 
+HAVE_ALLOCA_H).
 
-Best,
-G=E1bor
+And of course, at some stage it would be good to at least skim
+http://repo.or.cz/w/git.git?a=blob_plain;f=Documentation/SubmittingPatches
+
+Ciao,
+Dscho
