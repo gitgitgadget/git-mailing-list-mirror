@@ -1,99 +1,75 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Some information that git diff saves and that git status does
  not
-Date: Tue, 09 Mar 2010 07:58:11 +0100
-Message-ID: <4B95F183.7000708@gmail.com>
-References: <loom.20100308T111146-322@post.gmane.org> <7vpr3emr3s.fsf@alter.siamese.dyndns.org> <4B95EC43.2040705@viscovery.net>
+Date: Mon, 08 Mar 2010 22:56:35 -0800
+Message-ID: <7vmxyi0yqk.fsf@alter.siamese.dyndns.org>
+References: <loom.20100308T111146-322@post.gmane.org>
+ <7vpr3emr3s.fsf@alter.siamese.dyndns.org> <4B95EC43.2040705@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Sergio <sergio.callegari@gmail.com>, git@vger.kernel.org
 To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Mar 09 13:30:31 2010
+X-From: git-owner@vger.kernel.org Tue Mar 09 13:30:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NoyVn-0001Do-Ln
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 13:26:12 +0100
+	id 1NoyVn-0001Do-3F
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 13:26:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545Ab0CIG6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Mar 2010 01:58:20 -0500
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:58969 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751873Ab0CIG6T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Mar 2010 01:58:19 -0500
-Received: by bwz22 with SMTP id 22so269197bwz.28
-        for <git@vger.kernel.org>; Mon, 08 Mar 2010 22:58:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=kjtkAkDH4zxtQ9KwTPEDOb4XSxVpiM8EL9TThBtQm/Q=;
-        b=AgAnlOHlui1SRN2PbkBpr3ulEhWNNC2IWtve8qNVuQxTQDs5GY8qeTvvuoeQQCIsSV
-         pSi0aJl/+3gnbtoOOytDlefPMDftEvVKoCOFLPEBSrGeXFp+Ls84LexnAyt7ENNS50bH
-         7gY2+2mKlZfXhLA/hYagD+HbIYxm43LqjEx+E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=umbiUJKwFkhhqXDbPXMzuMIXFRDxgU0bBzSVILz9ecUlXgmRDaiw1N2tgnIFiPBib4
-         6KWdRGgU+swE95UyKe8qIyccNhUhenSAdswzinpsSTlJoov57u6BCoi1L33/mISVtloO
-         00iVVjWnJasRQBNh3mF0BZtgaC4wxo/GhbYnk=
-Received: by 10.204.130.72 with SMTP id r8mr983817bks.25.1268117897127;
-        Mon, 08 Mar 2010 22:58:17 -0800 (PST)
-Received: from [217.202.59.61] ([217.202.59.61])
-        by mx.google.com with ESMTPS id 14sm2159637bwz.10.2010.03.08.22.58.14
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 08 Mar 2010 22:58:16 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <4B95EC43.2040705@viscovery.net>
+	id S1752300Ab0CIG4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Mar 2010 01:56:46 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44973 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751791Ab0CIG4p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Mar 2010 01:56:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 96EF4A0A72;
+	Tue,  9 Mar 2010 01:56:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NkSSJkg7wJoJNnsXmt1bNPSc89o=; b=jU1p62
+	PLSgLOLtVfmqIqDsWJNaM/SrpYm+rOnonEVeoyca4whZe3cLCGTiOK740TAp7cZd
+	9dn547Be+ae9XD3yd4WkYMdUJ5rta7uLsSNtRSm5zKeCOm159i0OeaPvbSZMXeMO
+	XvNJAt1ARLoCKovWUv7m6wMbPuWBEIGBDt3/4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pKGeIM6ggunR4KUHjmT+BmgIsumIhvE1
+	rpCn0Q3YsvAZdIeK2hiMV+1kVgC9TfHedWHQ6WNiB+ixpxuz+znxEI+MwdX6dehy
+	ZoZRnyOiTmac6cnX7h5QVnZ//fqrKmIWnsJZAzxK2rMRCPVa+dbMIYIXZTSnKgnV
+	nWhbk/YCZmA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 34B2BA0A70;
+	Tue,  9 Mar 2010 01:56:40 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 876C1A0A6D; Tue,  9 Mar
+ 2010 01:56:36 -0500 (EST)
+In-Reply-To: <4B95EC43.2040705@viscovery.net> (Johannes Sixt's message of
+ "Tue\, 09 Mar 2010 07\:35\:47 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E9A39FCE-2B48-11DF-B59D-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141806>
 
-Johannes Sixt wrote:
+Johannes Sixt <j.sixt@viscovery.net> writes:
+
 > Junio C Hamano schrieb:
->   
 >> I didn't fully read what you wrote but after you copy a repository from
 >> one to another outside git (be it done with unison or rsync), you should
 >> run "update-index --refresh".
->>     
 >
 > And the reason for this is that git also looks at the inode numbers, and I
 > guess that unison does not go as far as to preserve them between machines...
->
-> -- Hannes
->
->   
-Thanks for all the info...  and sorry for the too verbose post at the 
-beginning.
 
-I actually did not know about the
+True; we used to (and you can still configure git to) check st_dev too but
+we stopped to doing that by default as it is unstable even in a normal use
+case (read: no "cp" involved) on some networked file systems.
 
-update-index --refresh
-
-but now I have the relevant information its name sounds obvious.  And I 
-suspected something like inode data entering the game.
-
-As a matter of fact, I was obtaining the same effect with git diff.
-
-What was appearing to me as a quirk is that:
-
-1) If you do not refresh the index, git works perfectly all the same.  
-For instance, git status shows the right info. Only it is not that fast 
-anymore, since everytime it needs to runs the filters on all the files.
-2) git status does not refresh the index, while other commands like git 
-diff do.
-
-I was wandering whether git status could refresh the index 
-automatically, at least about those files on which expensive actions, 
-such as running filters had already been performed anyway.
-
-Sergio
-
-Sergio
+I wonder how stable inum is on inode-less filesystems (say FAT).  I guess
+it is not usually a problem because carrying repositories on USB keychains
+is typically done as a sneakernet and with bare repositories.
