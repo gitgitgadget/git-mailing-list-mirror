@@ -1,34 +1,34 @@
 From: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-Subject: Portability patches vs 1.7.0.2 [5/6]
-Date: Tue, 9 Mar 2010 16:19:06 +0000
-Message-ID: <20100309161906.GF99172@thor.il.thewrittenword.com>
+Subject: Portability patches vs 1.7.0.2 [6/6]
+Date: Tue, 9 Mar 2010 16:26:35 +0000
+Message-ID: <20100309162635.GG99172@thor.il.thewrittenword.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="+jhVVhN62yS6hEJ8"
+Content-Type: multipart/mixed; boundary="+sHJum3is6Tsg7/J"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 09 17:19:17 2010
+X-From: git-owner@vger.kernel.org Tue Mar 09 17:26:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Np29L-0004AX-0f
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 17:19:15 +0100
+	id 1Np2GZ-0001QO-3v
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 17:26:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755075Ab0CIQTI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Mar 2010 11:19:08 -0500
-Received: from mail1.thewrittenword.com ([69.67.212.77]:51806 "EHLO
+	id S1754724Ab0CIQ0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Mar 2010 11:26:38 -0500
+Received: from mail1.thewrittenword.com ([69.67.212.77]:62606 "EHLO
 	mail1.thewrittenword.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752552Ab0CIQTH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Mar 2010 11:19:07 -0500
+	with ESMTP id S1752542Ab0CIQ0g (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Mar 2010 11:26:36 -0500
 Received: from mail1.il.thewrittenword.com (emma-internal-gw.il.thewrittenword.com [192.168.13.25])
-	by mail1.thewrittenword.com (Postfix) with ESMTP id 007825CC4
-	for <git@vger.kernel.org>; Tue,  9 Mar 2010 16:38:12 +0000 (UTC)
-X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com 007825CC4
+	by mail1.thewrittenword.com (Postfix) with ESMTP id E4CF45CCB
+	for <git@vger.kernel.org>; Tue,  9 Mar 2010 16:45:40 +0000 (UTC)
+X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com E4CF45CCB
 Received: from thor.il.thewrittenword.com (thor.il.thewrittenword.com [10.191.57.1])
-	by mail1.il.thewrittenword.com (Postfix) with ESMTP id 6F33FD3B
-	for <git@vger.kernel.org>; Tue,  9 Mar 2010 16:19:06 +0000 (UTC)
+	by mail1.il.thewrittenword.com (Postfix) with ESMTP id 5762AD32
+	for <git@vger.kernel.org>; Tue,  9 Mar 2010 16:26:35 +0000 (UTC)
 Received: by thor.il.thewrittenword.com (Postfix, from userid 1048)
-	id 69337BAB0; Tue,  9 Mar 2010 16:19:06 +0000 (UTC)
+	id 48370BAB0; Tue,  9 Mar 2010 16:26:35 +0000 (UTC)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.20 (2009-06-14)
 X-Virus-Scanned: clamav-milter 0.95.3 at maetel.il.thewrittenword.com
@@ -37,86 +37,791 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141830>
 
 
---+jhVVhN62yS6hEJ8
+--+sHJum3is6Tsg7/J
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-## sockaddr_t->ss_family is not portable
+## Generated configure, for completeness
 
-Many of our supported platforms do not have this declaration, for
-example solaris2.6 thru 2.8 (I can find a complete list of which of
-our supported platforms have this problem).
+The resulting automatically generated files from any changes we had to
+make to the configury to get everything to build on all our supported
+architectures.
 
-Normally, I would solve this by importing the relevant modules from
-gnulib and linking in the portable equivalent (hence the name of the
-patch: gnulib.patch).  But in this case, since git is not built using
-Automake, I decided that it would be easier to simply revert the part
-of the code that was triggering this problem back to what was used in
-git-1.6.6. So that is what this patch represents.
-
-Actually, I'd like some advice on whether this was a good idea?  Was
-the change to the code in git-1.7.0 introduced in response to a bug
-(latent or reported) that is fixed by the code I reverted in this
-patch?  If so, what is the right way to fix it (assuming you don't
-want to introduce a dependency on gnulib and Automake into git)?
+I'm including this patch so that you can see what the extra macro
+calls I added to configure.ac do, without having to dig around in the
+gnulib or autoconf extras repositories.  You probably shouldn't
+actually apply this patch (assuming you even keep the generated
+configure script under version control), but it might help illustrate
+the portability tests we needed to add to configure.ac better, to help
+you decide wither to add them to the upstream.
 
 Cheers,
 -- 
 Gary V. Vaughan (gary@thewrittenword.com)
 
---+jhVVhN62yS6hEJ8
+--+sHJum3is6Tsg7/J
 Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment; filename="gnulib.patch"
+Content-Disposition: attachment; filename="auto.patch"
 
-Index: daemon.c
+Index: configure
 ===================================================================
---- daemon.c.orig
-+++ daemon.c
-@@ -588,24 +588,6 @@ static int execute(struct sockaddr *addr
- 	return -1;
+--- configure.orig
++++ configure
+@@ -1,6 +1,6 @@
+ #! /bin/sh
+ # Guess values for system-dependent variables and create Makefiles.
+-# Generated by GNU Autoconf 2.63 for git 1.7.0.
++# Generated by GNU Autoconf 2.63 for git @@GIT_VERSION@@.
+ #
+ # Report bugs to <git@vger.kernel.org>.
+ #
+@@ -596,8 +596,8 @@ SHELL=${CONFIG_SHELL-/bin/sh}
+ # Identity of this package.
+ PACKAGE_NAME='git'
+ PACKAGE_TARNAME='git'
+-PACKAGE_VERSION='1.7.0'
+-PACKAGE_STRING='git 1.7.0'
++PACKAGE_VERSION='@@GIT_VERSION@@'
++PACKAGE_STRING='git @@GIT_VERSION@@'
+ PACKAGE_BUGREPORT='git@vger.kernel.org'
+ 
+ ac_unique_file="git.c"
+@@ -641,6 +641,9 @@ ac_subst_vars='LTLIBOBJS
+ LIBOBJS
+ NO_PTHREADS
+ PTHREAD_LIBS
++PTHREAD_CFLAGS
++NO_INET_PTON
++NO_INET_NTOP
+ NO_MKSTEMPS
+ NO_MKDTEMP
+ NO_UNSETENV
+@@ -658,6 +661,7 @@ NO_IPV6
+ NO_SOCKADDR_STORAGE
+ NO_D_TYPE_IN_DIRENT
+ NO_D_INO_IN_DIRENT
++SOCKLEN_T
+ OLD_ICONV
+ NO_SYS_SELECT_H
+ EGREP
+@@ -680,6 +684,7 @@ TAR
+ ac_ct_AR
+ AR
+ CC_LD_DYNPATH
++INLINE
+ OBJEXT
+ EXEEXT
+ ac_ct_CC
+@@ -1303,7 +1308,7 @@ if test "$ac_init_help" = "long"; then
+   # Omit some internal or obsolete options to make the list less imposing.
+   # This message is too long to be a string in the A/UX 3.1 sh.
+   cat <<_ACEOF
+-\`configure' configures git 1.7.0 to adapt to many kinds of systems.
++\`configure' configures git @@GIT_VERSION@@ to adapt to many kinds of systems.
+ 
+ Usage: $0 [OPTION]... [VAR=VALUE]...
+ 
+@@ -1364,7 +1369,7 @@ fi
+ 
+ if test -n "$ac_init_help"; then
+   case $ac_init_help in
+-     short | recursive ) echo "Configuration of git 1.7.0:";;
++     short | recursive ) echo "Configuration of git @@GIT_VERSION@@:";;
+    esac
+   cat <<\_ACEOF
+ 
+@@ -1488,7 +1493,7 @@ fi
+ test -n "$ac_init_help" && exit $ac_status
+ if $ac_init_version; then
+   cat <<\_ACEOF
+-git configure 1.7.0
++git configure @@GIT_VERSION@@
+ generated by GNU Autoconf 2.63
+ 
+ Copyright (C) 1992, 1993, 1994, 1995, 1996, 1998, 1999, 2000, 2001,
+@@ -1502,7 +1507,7 @@ cat >config.log <<_ACEOF
+ This file contains any messages produced by compilers while
+ running configure, to aid debugging if configure makes a mistake.
+ 
+-It was created by git $as_me 1.7.0, which was
++It was created by git $as_me @@GIT_VERSION@@, which was
+ generated by GNU Autoconf 2.63.  Invocation command line was
+ 
+   $ $0 $@
+@@ -2078,7 +2083,9 @@ fi
+ 
+ # Check whether --with-iconv was given.
+ if test "${with_iconv+set}" = set; then
+-  withval=$with_iconv; PACKAGE=ICONV; \
++  withval=$with_iconv; NEEDS_LIBICONV=YesPlease
++OLD_ICONV=
++PACKAGE=ICONV; \
+ if test "$withval" = "no"; then \
+ 	NO_ICONV=YesPlease; \
+ elif test "$withval" = "yes"; then \
+@@ -3065,8 +3072,86 @@ ac_compile='$CC -c $CFLAGS $CPPFLAGS con
+ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ ac_compiler_gnu=$ac_cv_c_compiler_gnu
+ 
+-# which switch to pass runtime path to dynamic libraries to the linker
+ 
++{ $as_echo "$as_me:$LINENO: checking for inline" >&5
++$as_echo_n "checking for inline... " >&6; }
++if test "${ac_cv_c_inline+set}" = set; then
++  $as_echo_n "(cached) " >&6
++else
++  ac_cv_c_inline=no
++for ac_kw in inline __inline__ __inline; do
++  cat >conftest.$ac_ext <<_ACEOF
++/* confdefs.h.  */
++_ACEOF
++cat confdefs.h >>conftest.$ac_ext
++cat >>conftest.$ac_ext <<_ACEOF
++/* end confdefs.h.  */
++#ifndef __cplusplus
++typedef int foo_t;
++static $ac_kw foo_t static_foo () {return 0; }
++$ac_kw foo_t foo () {return 0; }
++#endif
++
++_ACEOF
++rm -f conftest.$ac_objext
++if { (ac_try="$ac_compile"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
++$as_echo "$ac_try_echo") >&5
++  (eval "$ac_compile") 2>conftest.er1
++  ac_status=$?
++  grep -v '^ *+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
++  (exit $ac_status); } && {
++	 test -z "$ac_c_werror_flag" ||
++	 test ! -s conftest.err
++       } && test -s conftest.$ac_objext; then
++  ac_cv_c_inline=$ac_kw
++else
++  $as_echo "$as_me: failed program was:" >&5
++sed 's/^/| /' conftest.$ac_ext >&5
++
++
++fi
++
++rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
++  test "$ac_cv_c_inline" != no && break
++done
++
++fi
++{ $as_echo "$as_me:$LINENO: result: $ac_cv_c_inline" >&5
++$as_echo "$ac_cv_c_inline" >&6; }
++
++
++case $ac_cv_c_inline in
++  inline | yes) ;;
++  *)
++    case $ac_cv_c_inline in
++      no) ac_val=;;
++      *) ac_val=$ac_cv_c_inline;;
++    esac
++    cat >>confdefs.h <<_ACEOF
++#ifndef __cplusplus
++#define inline $ac_val
++#endif
++_ACEOF
++    ;;
++esac
++
++case $ac_cv_c_inline in
++  no)		 ;;
++  inline | yes)	INLINE=inline
++ ;;
++  *)		INLINE=$ac_cv_c_inline
++ ;;
++esac
++
++# which switch to pass runtime path to dynamic libraries to the linker
+ { $as_echo "$as_me:$LINENO: checking if linker supports -R" >&5
+ $as_echo_n "checking if linker supports -R... " >&6; }
+ if test "${git_cv_ld_dashr+set}" = set; then
+@@ -4222,7 +4307,6 @@ else
+ fi
+ 
+ 
+-test -n "$NEEDS_RESOLV" && LIBS="$LIBS -lresolv"
+ 
+ { $as_echo "$as_me:$LINENO: checking for basename in -lc" >&5
+ $as_echo_n "checking for basename in -lc... " >&6; }
+@@ -4296,7 +4380,6 @@ else
+ fi
+ 
+ 
+-test -n "$NEEDS_LIBGEN" && LIBS="$LIBS -lgen"
+ 
+ ## Checks for header files.
+ { $as_echo "$as_me:$LINENO: CHECKS for header files" >&5
+@@ -5139,6 +5222,201 @@ fi
+ { $as_echo "$as_me:$LINENO: CHECKS for typedefs, structures, and compiler characteristics" >&5
+ $as_echo "$as_me: CHECKS for typedefs, structures, and compiler characteristics" >&6;}
+ #
++
++   { $as_echo "$as_me:$LINENO: checking for socklen_t" >&5
++$as_echo_n "checking for socklen_t... " >&6; }
++if test "${ac_cv_type_socklen_t+set}" = set; then
++  $as_echo_n "(cached) " >&6
++else
++  ac_cv_type_socklen_t=no
++cat >conftest.$ac_ext <<_ACEOF
++/* confdefs.h.  */
++_ACEOF
++cat confdefs.h >>conftest.$ac_ext
++cat >>conftest.$ac_ext <<_ACEOF
++/* end confdefs.h.  */
++#include <sys/types.h>
++#include <sys/socket.h>
++
++int
++main ()
++{
++if (sizeof (socklen_t))
++       return 0;
++  ;
++  return 0;
++}
++_ACEOF
++rm -f conftest.$ac_objext
++if { (ac_try="$ac_compile"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
++$as_echo "$ac_try_echo") >&5
++  (eval "$ac_compile") 2>conftest.er1
++  ac_status=$?
++  grep -v '^ *+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
++  (exit $ac_status); } && {
++	 test -z "$ac_c_werror_flag" ||
++	 test ! -s conftest.err
++       } && test -s conftest.$ac_objext; then
++  cat >conftest.$ac_ext <<_ACEOF
++/* confdefs.h.  */
++_ACEOF
++cat confdefs.h >>conftest.$ac_ext
++cat >>conftest.$ac_ext <<_ACEOF
++/* end confdefs.h.  */
++#include <sys/types.h>
++#include <sys/socket.h>
++
++int
++main ()
++{
++if (sizeof ((socklen_t)))
++	  return 0;
++  ;
++  return 0;
++}
++_ACEOF
++rm -f conftest.$ac_objext
++if { (ac_try="$ac_compile"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
++$as_echo "$ac_try_echo") >&5
++  (eval "$ac_compile") 2>conftest.er1
++  ac_status=$?
++  grep -v '^ *+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
++  (exit $ac_status); } && {
++	 test -z "$ac_c_werror_flag" ||
++	 test ! -s conftest.err
++       } && test -s conftest.$ac_objext; then
++  :
++else
++  $as_echo "$as_me: failed program was:" >&5
++sed 's/^/| /' conftest.$ac_ext >&5
++
++	ac_cv_type_socklen_t=yes
++fi
++
++rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
++else
++  $as_echo "$as_me: failed program was:" >&5
++sed 's/^/| /' conftest.$ac_ext >&5
++
++
++fi
++
++rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
++fi
++{ $as_echo "$as_me:$LINENO: result: $ac_cv_type_socklen_t" >&5
++$as_echo "$ac_cv_type_socklen_t" >&6; }
++if test "x$ac_cv_type_socklen_t" = x""yes; then
++  :
++else
++
++      { $as_echo "$as_me:$LINENO: checking for socklen_t equivalent" >&5
++$as_echo_n "checking for socklen_t equivalent... " >&6; }
++      if test "${git_cv_socklen_t_equiv+set}" = set; then
++  $as_echo_n "(cached) " >&6
++else
++
++         # Systems have either "struct sockaddr *" or
++         # "void *" as the second argument to getpeername
++         git_cv_socklen_t_equiv=
++         for arg2 in "struct sockaddr" void; do
++            for t in int size_t unsigned long "unsigned long"; do
++               cat >conftest.$ac_ext <<_ACEOF
++/* confdefs.h.  */
++_ACEOF
++cat confdefs.h >>conftest.$ac_ext
++cat >>conftest.$ac_ext <<_ACEOF
++/* end confdefs.h.  */
++
++                  #include <sys/types.h>
++                  #include <sys/socket.h>
++
++                  int getpeername (int, $arg2 *, $t *);
++
++int
++main ()
++{
++
++                  $t len;
++                  getpeername(0,0,&len);
++
++  ;
++  return 0;
++}
++_ACEOF
++rm -f conftest.$ac_objext
++if { (ac_try="$ac_compile"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
++$as_echo "$ac_try_echo") >&5
++  (eval "$ac_compile") 2>conftest.er1
++  ac_status=$?
++  grep -v '^ *+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
++  (exit $ac_status); } && {
++	 test -z "$ac_c_werror_flag" ||
++	 test ! -s conftest.err
++       } && test -s conftest.$ac_objext; then
++
++                  git_cv_socklen_t_equiv="$t"
++                  break 2
++
++else
++  $as_echo "$as_me: failed program was:" >&5
++sed 's/^/| /' conftest.$ac_ext >&5
++
++
++fi
++
++rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
++            done
++         done
++
++         if test "x$git_cv_socklen_t_equiv" = x; then
++            { { $as_echo "$as_me:$LINENO: error: Cannot find a type to use in place of socklen_t" >&5
++$as_echo "$as_me: error: Cannot find a type to use in place of socklen_t" >&2;}
++   { (exit 1); exit 1; }; }
++         fi
++
++fi
++
++      { $as_echo "$as_me:$LINENO: result: $git_cv_socklen_t_equiv" >&5
++$as_echo "$git_cv_socklen_t_equiv" >&6; }
++
++cat >>confdefs.h <<_ACEOF
++#define socklen_t $git_cv_socklen_t_equiv
++_ACEOF
++
++fi
++
++
++case $ac_cv_type_socklen_t in
++  yes) 		SOCKLEN_T=socklen_t
++ ;;
++  *)  		SOCKLEN_T=$git_cv_socklen_t_equiv
++ ;;
++esac
++
+ # Define NO_D_INO_IN_DIRENT if you don't have d_ino in your struct dirent.
+ { $as_echo "$as_me:$LINENO: checking for struct dirent.d_ino" >&5
+ $as_echo_n "checking for struct dirent.d_ino... " >&6; }
+@@ -7750,6 +8028,195 @@ fi
+ 
+ #
+ #
++# Define NO_INET_NTOP if you don't have inet_ntop
++{ $as_echo "$as_me:$LINENO: checking for inet_ntop" >&5
++$as_echo_n "checking for inet_ntop... " >&6; }
++if test "${ac_cv_func_inet_ntop+set}" = set; then
++  $as_echo_n "(cached) " >&6
++else
++  cat >conftest.$ac_ext <<_ACEOF
++/* confdefs.h.  */
++_ACEOF
++cat confdefs.h >>conftest.$ac_ext
++cat >>conftest.$ac_ext <<_ACEOF
++/* end confdefs.h.  */
++/* Define inet_ntop to an innocuous variant, in case <limits.h> declares inet_ntop.
++   For example, HP-UX 11i <limits.h> declares gettimeofday.  */
++#define inet_ntop innocuous_inet_ntop
++
++/* System header to define __stub macros and hopefully few prototypes,
++    which can conflict with char inet_ntop (); below.
++    Prefer <limits.h> to <assert.h> if __STDC__ is defined, since
++    <limits.h> exists even on freestanding compilers.  */
++
++#ifdef __STDC__
++# include <limits.h>
++#else
++# include <assert.h>
++#endif
++
++#undef inet_ntop
++
++/* Override any GCC internal prototype to avoid an error.
++   Use char because int might match the return type of a GCC
++   builtin and then its argument prototype would still apply.  */
++#ifdef __cplusplus
++extern "C"
++#endif
++char inet_ntop ();
++/* The GNU C library defines this for functions which it implements
++    to always fail with ENOSYS.  Some functions are actually named
++    something starting with __ and the normal name is an alias.  */
++#if defined __stub_inet_ntop || defined __stub___inet_ntop
++choke me
++#endif
++
++int
++main ()
++{
++return inet_ntop ();
++  ;
++  return 0;
++}
++_ACEOF
++rm -f conftest.$ac_objext conftest$ac_exeext
++if { (ac_try="$ac_link"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
++$as_echo "$ac_try_echo") >&5
++  (eval "$ac_link") 2>conftest.er1
++  ac_status=$?
++  grep -v '^ *+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
++  (exit $ac_status); } && {
++	 test -z "$ac_c_werror_flag" ||
++	 test ! -s conftest.err
++       } && test -s conftest$ac_exeext && {
++	 test "$cross_compiling" = yes ||
++	 $as_test_x conftest$ac_exeext
++       }; then
++  ac_cv_func_inet_ntop=yes
++else
++  $as_echo "$as_me: failed program was:" >&5
++sed 's/^/| /' conftest.$ac_ext >&5
++
++	ac_cv_func_inet_ntop=no
++fi
++
++rm -rf conftest.dSYM
++rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
++      conftest$ac_exeext conftest.$ac_ext
++fi
++{ $as_echo "$as_me:$LINENO: result: $ac_cv_func_inet_ntop" >&5
++$as_echo "$ac_cv_func_inet_ntop" >&6; }
++if test "x$ac_cv_func_inet_ntop" = x""yes; then
++  NO_INET_NTOP=
++else
++  NO_INET_NTOP=YesPlease
++fi
++
++
++#
++# Define NO_INET_PTON if you don't have inet_ntop
++{ $as_echo "$as_me:$LINENO: checking for inet_pton" >&5
++$as_echo_n "checking for inet_pton... " >&6; }
++if test "${ac_cv_func_inet_pton+set}" = set; then
++  $as_echo_n "(cached) " >&6
++else
++  cat >conftest.$ac_ext <<_ACEOF
++/* confdefs.h.  */
++_ACEOF
++cat confdefs.h >>conftest.$ac_ext
++cat >>conftest.$ac_ext <<_ACEOF
++/* end confdefs.h.  */
++/* Define inet_pton to an innocuous variant, in case <limits.h> declares inet_pton.
++   For example, HP-UX 11i <limits.h> declares gettimeofday.  */
++#define inet_pton innocuous_inet_pton
++
++/* System header to define __stub macros and hopefully few prototypes,
++    which can conflict with char inet_pton (); below.
++    Prefer <limits.h> to <assert.h> if __STDC__ is defined, since
++    <limits.h> exists even on freestanding compilers.  */
++
++#ifdef __STDC__
++# include <limits.h>
++#else
++# include <assert.h>
++#endif
++
++#undef inet_pton
++
++/* Override any GCC internal prototype to avoid an error.
++   Use char because int might match the return type of a GCC
++   builtin and then its argument prototype would still apply.  */
++#ifdef __cplusplus
++extern "C"
++#endif
++char inet_pton ();
++/* The GNU C library defines this for functions which it implements
++    to always fail with ENOSYS.  Some functions are actually named
++    something starting with __ and the normal name is an alias.  */
++#if defined __stub_inet_pton || defined __stub___inet_pton
++choke me
++#endif
++
++int
++main ()
++{
++return inet_pton ();
++  ;
++  return 0;
++}
++_ACEOF
++rm -f conftest.$ac_objext conftest$ac_exeext
++if { (ac_try="$ac_link"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
++$as_echo "$ac_try_echo") >&5
++  (eval "$ac_link") 2>conftest.er1
++  ac_status=$?
++  grep -v '^ *+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
++  (exit $ac_status); } && {
++	 test -z "$ac_c_werror_flag" ||
++	 test ! -s conftest.err
++       } && test -s conftest$ac_exeext && {
++	 test "$cross_compiling" = yes ||
++	 $as_test_x conftest$ac_exeext
++       }; then
++  ac_cv_func_inet_pton=yes
++else
++  $as_echo "$as_me: failed program was:" >&5
++sed 's/^/| /' conftest.$ac_ext >&5
++
++	ac_cv_func_inet_pton=no
++fi
++
++rm -rf conftest.dSYM
++rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
++      conftest$ac_exeext conftest.$ac_ext
++fi
++{ $as_echo "$as_me:$LINENO: result: $ac_cv_func_inet_pton" >&5
++$as_echo "$ac_cv_func_inet_pton" >&6; }
++if test "x$ac_cv_func_inet_pton" = x""yes; then
++  NO_INET_PTON=
++else
++  NO_INET_PTON=YesPlease
++fi
++
++
++
++#
+ # Define NO_MMAP if you want to avoid mmap.
+ #
+ # Define NO_ICONV if your libc does not properly support iconv.
+@@ -7777,7 +8244,8 @@ $as_echo "$as_me: Skipping POSIX Threads
+ # handle these separately since PTHREAD_CFLAGS could be '-lpthreads
+ # -D_REENTRANT' or some such.
+ elif test -z "$PTHREAD_CFLAGS"; then
+-  for opt in -pthread -lpthread; do
++  threads_found=no
++  for opt in -mt -pthread -lpthread; do
+      old_CFLAGS="$CFLAGS"
+      CFLAGS="$opt $CFLAGS"
+      { $as_echo "$as_me:$LINENO: checking Checking for POSIX Threads with '$opt'" >&5
+@@ -7789,7 +8257,11 @@ $as_echo_n "checking Checking for POSIX 
+ int main(void)
+ {
+ 	pthread_mutex_t test_mutex;
+-	return (0);
++	int retcode = 0;
++	retcode |= pthread_mutex_init(&test_mutex,(void*)0);
++	retcode |= pthread_mutex_lock(&test_mutex);
++	retcode |= pthread_mutex_unlock(&test_mutex);
++	return retcode;
  }
  
--static int addrcmp(const struct sockaddr_storage *s1,
--    const struct sockaddr_storage *s2)
--{
--	if (s1->ss_family != s2->ss_family)
--		return s1->ss_family - s2->ss_family;
--	if (s1->ss_family == AF_INET)
--		return memcmp(&((struct sockaddr_in *)s1)->sin_addr,
--		    &((struct sockaddr_in *)s2)->sin_addr,
--		    sizeof(struct in_addr));
--#ifndef NO_IPV6
--	if (s1->ss_family == AF_INET6)
--		return memcmp(&((struct sockaddr_in6 *)s1)->sin6_addr,
--		    &((struct sockaddr_in6 *)s2)->sin6_addr,
--		    sizeof(struct in6_addr));
--#endif
--	return 0;
--}
+ _ACEOF
+@@ -7818,6 +8290,8 @@ $as_echo "$ac_try_echo") >&5
+ $as_echo "yes" >&6; }
+ 		NO_PTHREADS=
+ 		PTHREAD_LIBS="$opt"
++		PTHREAD_CFLAGS="$opt"
++		threads_found=yes
+ 		break
+ 
+ else
+@@ -7833,6 +8307,79 @@ rm -f core conftest.err conftest.$ac_obj
+       conftest$ac_exeext conftest.$ac_ext
+       CFLAGS="$old_CFLAGS"
+   done
++  if test $threads_found != yes; then
++    { $as_echo "$as_me:$LINENO: checking for pthread_create in -lpthread" >&5
++$as_echo_n "checking for pthread_create in -lpthread... " >&6; }
++if test "${ac_cv_lib_pthread_pthread_create+set}" = set; then
++  $as_echo_n "(cached) " >&6
++else
++  ac_check_lib_save_LIBS=$LIBS
++LIBS="-lpthread  $LIBS"
++cat >conftest.$ac_ext <<_ACEOF
++/* confdefs.h.  */
++_ACEOF
++cat confdefs.h >>conftest.$ac_ext
++cat >>conftest.$ac_ext <<_ACEOF
++/* end confdefs.h.  */
++
++/* Override any GCC internal prototype to avoid an error.
++   Use char because int might match the return type of a GCC
++   builtin and then its argument prototype would still apply.  */
++#ifdef __cplusplus
++extern "C"
++#endif
++char pthread_create ();
++int
++main ()
++{
++return pthread_create ();
++  ;
++  return 0;
++}
++_ACEOF
++rm -f conftest.$ac_objext conftest$ac_exeext
++if { (ac_try="$ac_link"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
++$as_echo "$ac_try_echo") >&5
++  (eval "$ac_link") 2>conftest.er1
++  ac_status=$?
++  grep -v '^ *+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
++  (exit $ac_status); } && {
++	 test -z "$ac_c_werror_flag" ||
++	 test ! -s conftest.err
++       } && test -s conftest$ac_exeext && {
++	 test "$cross_compiling" = yes ||
++	 $as_test_x conftest$ac_exeext
++       }; then
++  ac_cv_lib_pthread_pthread_create=yes
++else
++  $as_echo "$as_me: failed program was:" >&5
++sed 's/^/| /' conftest.$ac_ext >&5
++
++	ac_cv_lib_pthread_pthread_create=no
++fi
++
++rm -rf conftest.dSYM
++rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
++      conftest$ac_exeext conftest.$ac_ext
++LIBS=$ac_check_lib_save_LIBS
++fi
++{ $as_echo "$as_me:$LINENO: result: $ac_cv_lib_pthread_pthread_create" >&5
++$as_echo "$ac_cv_lib_pthread_pthread_create" >&6; }
++if test "x$ac_cv_lib_pthread_pthread_create" = x""yes; then
++  PTHREAD_LIBS="-lpthread"
++else
++  NO_PTHREADS=UnfortunatelyYes
++fi
++
++  fi
+ else
+   old_CFLAGS="$CFLAGS"
+   CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
+@@ -7845,7 +8392,11 @@ $as_echo_n "checking Checking for POSIX 
+ int main(void)
+ {
+ 	pthread_mutex_t test_mutex;
+-	return (0);
++	int retcode = 0;
++	retcode |= pthread_mutex_init(&test_mutex,(void*)0);
++	retcode |= pthread_mutex_lock(&test_mutex);
++	retcode |= pthread_mutex_unlock(&test_mutex);
++	return retcode;
+ }
+ 
+ _ACEOF
+@@ -7895,6 +8446,7 @@ CFLAGS="$old_CFLAGS"
+ 
+ 
+ 
++
+ ## Output files
+ ac_config_files="$ac_config_files "${config_file}":"${config_in}":"${config_append}""
+ 
+@@ -8353,7 +8905,7 @@ exec 6>&1
+ # report actual input values of CONFIG_FILES etc. instead of their
+ # values after options handling.
+ ac_log="
+-This file was extended by git $as_me 1.7.0, which was
++This file was extended by git $as_me @@GIT_VERSION@@, which was
+ generated by GNU Autoconf 2.63.  Invocation command line was
+ 
+   CONFIG_FILES    = $CONFIG_FILES
+@@ -8403,7 +8955,7 @@ Report bugs to <bug-autoconf@gnu.org>."
+ _ACEOF
+ cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1
+ ac_cs_version="\\
+-git config.status 1.7.0
++git config.status @@GIT_VERSION@@
+ configured by $0, generated by GNU Autoconf 2.63,
+   with options \\"`$as_echo "$ac_configure_args" | sed 's/^ //; s/[\\""\`\$]/\\\\&/g'`\\"
+ 
+@@ -9008,7 +9560,3 @@ if test -n "$ac_unrecognized_opts" && te
+ $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
+ fi
+ 
 -
- static int max_connections = 32;
- 
- static unsigned int live_children;
-@@ -625,7 +607,7 @@ static void add_child(pid_t pid, struct 
- 	newborn->pid = pid;
- 	memcpy(&newborn->address, addr, addrlen);
- 	for (cradle = &firstborn; *cradle; cradle = &(*cradle)->next)
--		if (!addrcmp(&(*cradle)->address, &newborn->address))
-+		if (!memcmp(&(*cradle)->address, &newborn->address, sizeof(newborn->address)))
- 			break;
- 	newborn->next = *cradle;
- 	*cradle = newborn;
-@@ -658,7 +640,7 @@ static void kill_some_child(void)
- 		return;
- 
- 	for (; (next = blanket->next); blanket = next)
--		if (!addrcmp(&blanket->address, &next->address)) {
-+		if (!memcmp(&blanket->address, &next->address, sizeof(next->address))) {
- 			kill(blanket->pid, SIGTERM);
- 			break;
- 		}
+-
+-## Cleanup
+-rm -f "${config_append}"
 
---+jhVVhN62yS6hEJ8--
+--+sHJum3is6Tsg7/J--
