@@ -1,91 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: core.autocrlf considered half-assed
-Date: Tue, 09 Mar 2010 09:11:15 -0800
-Message-ID: <7vlje1zah8.fsf@alter.siamese.dyndns.org>
-References: <alpine.DEB.1.00.1003060018170.20986@pacific.mpi-cbg.de>
- <20100307092701.GC31105@dpotapov.dyndns.org>
- <alpine.LFD.2.00.1003071538350.30214@localhost.localdomain>
- <20100308185719.GQ2480@ece.pdx.edu>
- <alpine.DEB.1.00.1003082011440.14277@intel-tinevez-2-302>
- <7v6356r1w9.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.1003091026060.7596@pacific.mpi-cbg.de>
+From: Yann Droneaud <yann@droneaud.fr>
+Subject: wishlist: git send-email improvement
+Date: Tue, 09 Mar 2010 18:21:46 +0100
+Message-ID: <1268155306.4277.14.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tait <git.git@t41t.com>, git@vger.kernel.org,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 09 18:16:16 2010
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 09 18:22:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Np2xy-000446-PO
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 18:11:35 +0100
+	id 1Np384-0004HL-HE
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 18:22:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751728Ab0CIRL3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Mar 2010 12:11:29 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49636 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751000Ab0CIRL3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Mar 2010 12:11:29 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E1F0CA0AAC;
-	Tue,  9 Mar 2010 12:11:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=zL8O/QyIovYsrK3EP5aDm8THQTw=; b=F2Kj5SbgZNzzKXqKvRTnEF5
-	hl4EnLe/EMGtCesNRB8Jis+jenpgwfIJo+ThStovO0kk0q8DxmFHrPtsXNJPrea7
-	VYpeiqrWKQvg05/04eQ9tyOne/Tz23Pq+u+7CwGBOrJEtovwhHAOiH/JZxhFSpKY
-	yju5fcuNhUKuwxoUy828=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=Yj7K/EGfmaA6VUzlfBPk4ne5MaGOTRiEi2xSP93hTxDLtsiUy
-	lsUA/MGTiVo3ZHOa/DZfAq8gzV0/uatngws92wu6WQ1apIlg7MJKX29UxHLKjiWB
-	5oiS9XwoFFIsfAtQ7tDb1hgaqzPT70erR09lweo+vSDS71FJAnKSGNnmkE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C4B1A0AAA;
-	Tue,  9 Mar 2010 12:11:22 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 95292A0A92; Tue,  9 Mar
- 2010 12:11:16 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C93D2484-2B9E-11DF-AD08-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752128Ab0CIRVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Mar 2010 12:21:54 -0500
+Received: from smtp2e.orange.fr ([80.12.242.113]:2197 "EHLO smtp2e.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751791Ab0CIRVx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Mar 2010 12:21:53 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2e24.orange.fr (SMTP Server) with ESMTP id 7E8C58000F72
+	for <git@vger.kernel.org>; Tue,  9 Mar 2010 18:21:47 +0100 (CET)
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2e24.orange.fr (SMTP Server) with ESMTP id 70776800050D
+	for <git@vger.kernel.org>; Tue,  9 Mar 2010 18:21:47 +0100 (CET)
+Received: from iago.mandriva.com (LPuteaux-156-16-100-40.w80-12.abo.wanadoo.fr [80.12.80.40])
+	by mwinf2e24.orange.fr (SMTP Server) with ESMTP id 5C3F68000F72
+	for <git@vger.kernel.org>; Tue,  9 Mar 2010 18:21:47 +0100 (CET)
+X-ME-UUID: 20100309172147377.5C3F68000F72@mwinf2e24.orange.fr
+Received: by iago.mandriva.com (Postfix, from userid 10001)
+	id 141FB517; Tue,  9 Mar 2010 18:21:46 +0100 (CET)
+X-Mailer: Evolution 2.28.2-1.1mdv2010.0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141835>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
->> Nevertheless, I agree with you that if a similar situation happened by 
->> mistake and your project does want to enforce core.autocrlf, it would be 
->> nicer if there is an easy-to-use one-time clean-up procedure.  It hasn't 
->> been my itch, and I suspect it wasn't Linus's itch either.
->
-> The problem is that the whole thing was not your itch, but your 
-> implementation. You never used it, so you never caught the obvious flaws 
-> in the design.
->
-> Sorry to be so direct, but it seems that my more subtle attempts to 
-> explain the situation failed.
+Here's a little wishlist for send-email
 
-No, being direct is good---it shows the thought behind what you say more
-clearly.
+- Use From: field extracted from patch:
+  If there's no configuration for user.email and From: field is 
+  different than default auto generated From: address, 
+  git send-email should use the one in the patch as default.
 
-Think what "your implementation" means in the open source setting.  It is
-what you were given for free, you could try to improve upon it if you so
-desire, and you should be thankful for it.  It also means that you know
-the people to ask for help as it is "their" implementation and they are
-probably more familiar with it than others.  If you happen to be in the
-position where you can see shortcomings in the implementation better than
-they do, that's good; they and you can complement what each is good at,
-and make progress collectively.
+- Use To: field extracted from patch
+  I've setup format-patch to add a default To: field with
+  format.headers="To: xxx@yyy". But git send-email did not use it and 
+  ask for a To: value.
+  If there's no --to or sendmail.to, send-email should use To: value 
+  extracted from patch and ask for user confirmation.
 
-What it does _not_ mean is that you can _demand_ anything out of them,
-though.  An attempt to shaming them into doing something amounts to the
-same thing.  Having seen the way you have behaved on the msysgit list and
-its tracker for a while, I thought you understood all that.
+I've tried to add the later to git-send-email, but failed to fix it by
+now in a reasonable time amount.
+
+Regards.
+
+-- 
+Yann Droneaud
