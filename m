@@ -1,35 +1,34 @@
 From: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-Subject: Portability patches vs 1.7.0.2 [4/6]
-Date: Tue, 9 Mar 2010 16:11:32 +0000
-Message-ID: <20100309161132.GE99172@thor.il.thewrittenword.com>
+Subject: Portability patches vs 1.7.0.2 [3/6]
+Date: Tue, 9 Mar 2010 16:05:37 +0000
+Message-ID: <20100309160537.GD99172@thor.il.thewrittenword.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="7LkOrbQMr4cezO2T"
+Content-Type: multipart/mixed; boundary="MAH+hnPXVZWQ5cD/"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 09 17:11:42 2010
+X-From: git-owner@vger.kernel.org Tue Mar 09 17:13:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Np221-0007Na-80
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 17:11:41 +0100
+	id 1Np23b-0008VK-C4
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 17:13:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752671Ab0CIQLg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Mar 2010 11:11:36 -0500
-Received: from mail1.thewrittenword.com ([69.67.212.77]:56202 "EHLO
+	id S1754870Ab0CIQNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Mar 2010 11:13:13 -0500
+Received: from mail1.thewrittenword.com ([69.67.212.77]:59376 "EHLO
 	mail1.thewrittenword.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751719Ab0CIQLe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Mar 2010 11:11:34 -0500
-X-Greylist: delayed 355 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Mar 2010 11:11:33 EST
+	with ESMTP id S1751719Ab0CIQNK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Mar 2010 11:13:10 -0500
 Received: from mail1.il.thewrittenword.com (emma-internal-gw.il.thewrittenword.com [192.168.13.25])
-	by mail1.thewrittenword.com (Postfix) with ESMTP id 25CC05CCB
-	for <git@vger.kernel.org>; Tue,  9 Mar 2010 16:30:38 +0000 (UTC)
-X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com 25CC05CCB
+	by mail1.thewrittenword.com (Postfix) with ESMTP id 69AC35CD7
+	for <git@vger.kernel.org>; Tue,  9 Mar 2010 16:24:43 +0000 (UTC)
+X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com 69AC35CD7
 Received: from thor.il.thewrittenword.com (thor.il.thewrittenword.com [10.191.57.1])
-	by mail1.il.thewrittenword.com (Postfix) with ESMTP id 747AFD32
-	for <git@vger.kernel.org>; Tue,  9 Mar 2010 16:11:32 +0000 (UTC)
+	by mail1.il.thewrittenword.com (Postfix) with ESMTP id DCCFED3D
+	for <git@vger.kernel.org>; Tue,  9 Mar 2010 16:05:37 +0000 (UTC)
 Received: by thor.il.thewrittenword.com (Postfix, from userid 1048)
-	id 6EF13BAB2; Tue,  9 Mar 2010 16:11:32 +0000 (UTC)
+	id D0EA7BAB0; Tue,  9 Mar 2010 16:05:37 +0000 (UTC)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.20 (2009-06-14)
 X-Virus-Scanned: clamav-milter 0.95.3 at maetel.il.thewrittenword.com
@@ -38,386 +37,413 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141828>
 
 
---7LkOrbQMr4cezO2T
+--MAH+hnPXVZWQ5cD/
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-## Dynamic expressions in compound declarations are not portable
+## Dangling commas in enum is not portable
 
-Unfortunately, there are still plenty of production systems with
-vendor compilers that choke unless all compound declarations can be
-determined statically at compile time, for example hpux10.20 (I can
-provide a comprehensive list of our supported platforms that exhibit
-this problem if necessary).
+Unfortunately there are a still a lot of vendor compilers that choke
+when the last entry in an enum has a dangling comma (irix is one, and
+I can get you a list of which of our particular platforms exhibit this
+problem).
 
-This patch simply breaks apart any compound declarations with dynamic
-initialisation expressions, and moves the initialisation until after
-the last declaration in the same block, in all the places necessary to
-have the offending compilers accept the code.
+This patch simply deletes all the commas that are required to be able
+to compile those enums on all of our supported architectures.
 
 Cheers,
 -- 
 Gary V. Vaughan (gary@thewrittenword.com)
 
---7LkOrbQMr4cezO2T
+--MAH+hnPXVZWQ5cD/
 Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment; filename="const-expr.patch"
+Content-Disposition: attachment; filename="enum.patch"
 
-Index: convert.c
+Index: dir.c
 ===================================================================
---- convert.c.orig
-+++ convert.c
-@@ -249,7 +249,10 @@ static int filter_buffer(int fd, void *d
- 	struct child_process child_process;
- 	struct filter_params *params = (struct filter_params *)data;
- 	int write_err, status;
--	const char *argv[] = { params->cmd, NULL };
-+	const char *argv[2];
-+
-+	argv[0] = params->cmd;
-+	argv[1] = NULL;
+--- dir.c.orig
++++ dir.c
+@@ -465,7 +465,7 @@ static struct dir_entry *dir_add_ignored
+ enum exist_status {
+ 	index_nonexistent = 0,
+ 	index_directory,
+-	index_gitdir,
++	index_gitdir
+ };
  
- 	memset(&child_process, 0, sizeof(child_process));
- 	child_process.argv = argv;
-Index: remote.c
+ /*
+@@ -533,7 +533,7 @@ static enum exist_status directory_exist
+ enum directory_treatment {
+ 	show_directory,
+ 	ignore_directory,
+-	recurse_into_directory,
++	recurse_into_directory
+ };
+ 
+ static enum directory_treatment treat_directory(struct dir_struct *dir,
+Index: cache.h
 ===================================================================
---- remote.c.orig
-+++ remote.c
-@@ -476,7 +476,7 @@ static void read_config(void)
- 	unsigned char sha1[20];
- 	const char *head_ref;
- 	int flag;
--	if (default_remote_name) // did this already
-+	if (default_remote_name) /* did this already */
- 		return;
- 	default_remote_name = xstrdup("origin");
- 	current_branch = NULL;
-@@ -657,9 +657,10 @@ static struct refspec *parse_refspec_int
+--- cache.h.orig
++++ cache.h
+@@ -361,7 +361,7 @@ enum object_type {
+ 	OBJ_OFS_DELTA = 6,
+ 	OBJ_REF_DELTA = 7,
+ 	OBJ_ANY,
+-	OBJ_MAX,
++	OBJ_MAX
+ };
  
- int valid_fetch_refspec(const char *fetch_refspec_str)
- {
--	const char *fetch_refspec[] = { fetch_refspec_str };
-+	char *fetch_refspec[1];
- 	struct refspec *refspec;
+ static inline enum object_type object_type(unsigned int mode)
+@@ -544,7 +544,7 @@ extern int core_apply_sparse_checkout;
+ enum safe_crlf {
+ 	SAFE_CRLF_FALSE = 0,
+ 	SAFE_CRLF_FAIL = 1,
+-	SAFE_CRLF_WARN = 2,
++	SAFE_CRLF_WARN = 2
+ };
  
-+	fetch_refspec[0] = fetch_refspec_str;
- 	refspec = parse_refspec_internal(1, fetch_refspec, 1, 1);
- 	free_refspecs(refspec, 1);
- 	return !!refspec;
-Index: unpack-trees.c
+ extern enum safe_crlf safe_crlf;
+@@ -555,14 +555,14 @@ enum branch_track {
+ 	BRANCH_TRACK_REMOTE,
+ 	BRANCH_TRACK_ALWAYS,
+ 	BRANCH_TRACK_EXPLICIT,
+-	BRANCH_TRACK_OVERRIDE,
++	BRANCH_TRACK_OVERRIDE
+ };
+ 
+ enum rebase_setup_type {
+ 	AUTOREBASE_NEVER = 0,
+ 	AUTOREBASE_LOCAL,
+ 	AUTOREBASE_REMOTE,
+-	AUTOREBASE_ALWAYS,
++	AUTOREBASE_ALWAYS
+ };
+ 
+ enum push_default_type {
+@@ -654,7 +654,7 @@ enum sharedrepo {
+ 	OLD_PERM_GROUP      = 1,
+ 	OLD_PERM_EVERYBODY  = 2,
+ 	PERM_GROUP          = 0660,
+-	PERM_EVERYBODY      = 0664,
++	PERM_EVERYBODY      = 0664
+ };
+ int git_config_perm(const char *var, const char *value);
+ int set_shared_perm(const char *path, int mode);
+@@ -863,7 +863,7 @@ struct ref {
+ 		REF_STATUS_REJECT_NODELETE,
+ 		REF_STATUS_UPTODATE,
+ 		REF_STATUS_REMOTE_REJECT,
+-		REF_STATUS_EXPECTING_REPORT,
++		REF_STATUS_EXPECTING_REPORT
+ 	} status;
+ 	char *remote_status;
+ 	struct ref *peer_ref; /* when renaming */
+Index: commit.h
 ===================================================================
---- unpack-trees.c.orig
-+++ unpack-trees.c
-@@ -287,9 +287,11 @@ static void add_same_unmerged(struct cac
- static int unpack_index_entry(struct cache_entry *ce,
- 			      struct unpack_trees_options *o)
- {
--	struct cache_entry *src[5] = { ce, NULL, };
-+	struct cache_entry *src[5] = { NULL, NULL };
- 	int ret;
+--- commit.h.orig
++++ commit.h
+@@ -60,7 +60,7 @@ enum cmit_fmt {
+ 	CMIT_FMT_EMAIL,
+ 	CMIT_FMT_USERFORMAT,
  
-+	src[0] = ce;
-+
- 	mark_ce_used(ce, o);
- 	if (ce_stage(ce)) {
- 		if (o->skip_unmerged) {
-Index: daemon.c
+-	CMIT_FMT_UNSPECIFIED,
++	CMIT_FMT_UNSPECIFIED
+ };
+ 
+ struct pretty_print_context
+Index: diff.h
 ===================================================================
---- daemon.c.orig
-+++ daemon.c
-@@ -141,15 +141,14 @@ static char *path_ok(char *directory)
- 	}
- 	else if (interpolated_path && saw_extended_args) {
- 		struct strbuf expanded_path = STRBUF_INIT;
--		struct strbuf_expand_dict_entry dict[] = {
--			{ "H", hostname },
--			{ "CH", canon_hostname },
--			{ "IP", ip_address },
--			{ "P", tcp_port },
--			{ "D", directory },
--			{ NULL }
--		};
-+		struct strbuf_expand_dict_entry dict[6];
- 
-+		dict[0].placeholder = "H"; dict[0].value = hostname;
-+		dict[1].placeholder = "CH"; dict[1].value = canon_hostname;
-+		dict[2].placeholder = "IP"; dict[2].value = ip_address;
-+		dict[3].placeholder = "P"; dict[3].value = tcp_port;
-+		dict[4].placeholder = "D"; dict[4].value = directory;
-+		dict[5].placeholder = NULL; dict[5].value = NULL;
- 		if (*dir != '/') {
- 			/* Allow only absolute */
- 			logerror("'%s': Non-absolute path denied (interpolated-path active)", dir);
-@@ -343,7 +342,9 @@ static int upload_pack(void)
- {
- 	/* Timeout as string */
- 	char timeout_buf[64];
--	const char *argv[] = { "upload-pack", "--strict", timeout_buf, ".", NULL };
-+	char *argv[] = { "upload-pack", "--strict", "<timeout_buf>", ".", NULL };
-+
-+	argv[2] = timeout_buf;
- 
- 	snprintf(timeout_buf, sizeof timeout_buf, "--timeout=%u", timeout);
- 	return run_service_command(argv);
-@@ -885,7 +886,7 @@ static int service_loop(int socknum, int
- 		for (i = 0; i < socknum; i++) {
- 			if (pfd[i].revents & POLLIN) {
- 				struct sockaddr_storage ss;
--				unsigned int sslen = sizeof(ss);
-+				size_t sslen = sizeof(ss);
- 				int incoming = accept(pfd[i].fd, (struct sockaddr *)&ss, &sslen);
- 				if (incoming < 0) {
- 					switch (errno) {
-Index: wt-status.c
+--- diff.h.orig
++++ diff.h
+@@ -131,7 +131,7 @@ enum color_diff {
+ 	DIFF_FILE_NEW = 5,
+ 	DIFF_COMMIT = 6,
+ 	DIFF_WHITESPACE = 7,
+-	DIFF_FUNCINFO = 8,
++	DIFF_FUNCINFO = 8
+ };
+ const char *diff_get_color(int diff_use_color, enum color_diff ix);
+ #define diff_get_color_opt(o, ix) \
+Index: grep.h
 ===================================================================
---- wt-status.c.orig
-+++ wt-status.c
-@@ -464,17 +464,18 @@ static void wt_status_print_submodule_su
- 	struct child_process sm_summary;
- 	char summary_limit[64];
- 	char index[PATH_MAX];
--	const char *env[] = { index, NULL };
--	const char *argv[] = {
--		"submodule",
--		"summary",
--		uncommitted ? "--files" : "--cached",
--		"--for-status",
--		"--summary-limit",
--		summary_limit,
--		uncommitted ? NULL : (s->amend ? "HEAD^" : "HEAD"),
--		NULL
--	};
-+	const char *env[2] = { NULL, NULL };
-+	const char *argv[8];
-+
-+	env[0] =	index;
-+	argv[0] =	"submodule";
-+	argv[1] =	"summary";
-+	argv[2] =	uncommitted ? "--files" : "--cached";
-+	argv[3] =	"--for-status";
-+	argv[4] =	"--summary-limit";
-+	argv[5] =	summary_limit;
-+	argv[6] =	uncommitted ? NULL : (s->amend ? "HEAD^" : "HEAD");
-+	argv[7] =	NULL;
+--- grep.h.orig
++++ grep.h
+@@ -10,17 +10,17 @@ enum grep_pat_token {
+ 	GREP_OPEN_PAREN,
+ 	GREP_CLOSE_PAREN,
+ 	GREP_NOT,
+-	GREP_OR,
++	GREP_OR
+ };
  
- 	sprintf(summary_limit, "%d", s->submodule_summary);
- 	snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", s->index_file);
-Index: ll-merge.c
+ enum grep_context {
+ 	GREP_CONTEXT_HEAD,
+-	GREP_CONTEXT_BODY,
++	GREP_CONTEXT_BODY
+ };
+ 
+ enum grep_header_field {
+ 	GREP_HEADER_AUTHOR = 0,
+-	GREP_HEADER_COMMITTER,
++	GREP_HEADER_COMMITTER
+ };
+ 
+ struct grep_pat {
+@@ -40,7 +40,7 @@ enum grep_expr_node {
+ 	GREP_NODE_ATOM,
+ 	GREP_NODE_NOT,
+ 	GREP_NODE_AND,
+-	GREP_NODE_OR,
++	GREP_NODE_OR
+ };
+ 
+ struct grep_expr {
+Index: remote.h
 ===================================================================
---- ll-merge.c.orig
-+++ ll-merge.c
-@@ -172,17 +172,17 @@ static int ll_ext_merge(const struct ll_
- {
- 	char temp[4][50];
- 	struct strbuf cmd = STRBUF_INIT;
--	struct strbuf_expand_dict_entry dict[] = {
--		{ "O", temp[0] },
--		{ "A", temp[1] },
--		{ "B", temp[2] },
--		{ "L", temp[3] },
--		{ NULL }
--	};
-+	struct strbuf_expand_dict_entry dict[5];
- 	const char *args[] = { NULL, NULL };
- 	int status, fd, i;
- 	struct stat st;
+--- remote.h.orig
++++ remote.h
+@@ -145,7 +145,7 @@ int branch_merge_matches(struct branch *
+ enum match_refs_flags {
+ 	MATCH_REFS_NONE		= 0,
+ 	MATCH_REFS_ALL 		= (1 << 0),
+-	MATCH_REFS_MIRROR	= (1 << 1),
++	MATCH_REFS_MIRROR	= (1 << 1)
+ };
  
-+	dict[0].placeholder = "O"; dict[0].value = temp[0];
-+	dict[1].placeholder = "A"; dict[1].value = temp[1];
-+	dict[2].placeholder = "B"; dict[2].value = temp[2];
-+	dict[3].placeholder = "L"; dict[3].value = temp[3];
-+	dict[3].placeholder = NULL; dict[3].value = NULL;
-+
- 	if (fn->cmdline == NULL)
- 		die("custom merge driver %s lacks command line.", fn->name);
+ /* Reporting of tracking info */
+Index: connect.c
+===================================================================
+--- connect.c.orig
++++ connect.c
+@@ -131,7 +131,7 @@ int path_match(const char *path, int nr,
+ enum protocol {
+ 	PROTO_LOCAL = 1,
+ 	PROTO_SSH,
+-	PROTO_GIT,
++	PROTO_GIT
+ };
  
+ static enum protocol get_protocol(const char *name)
+Index: revision.c
+===================================================================
+--- revision.c.orig
++++ revision.c
+@@ -1758,7 +1758,7 @@ int prepare_revision_walk(struct rev_inf
+ enum rewrite_result {
+ 	rewrite_one_ok,
+ 	rewrite_one_noparents,
+-	rewrite_one_error,
++	rewrite_one_error
+ };
+ 
+ static enum rewrite_result rewrite_one(struct rev_info *revs, struct commit **pp)
+Index: http-walker.c
+===================================================================
+--- http-walker.c.orig
++++ http-walker.c
+@@ -15,7 +15,7 @@ enum object_request_state {
+ 	WAITING,
+ 	ABORTED,
+ 	ACTIVE,
+-	COMPLETE,
++	COMPLETE
+ };
+ 
+ struct object_request
+Index: fast-import.c
+===================================================================
+--- fast-import.c.orig
++++ fast-import.c
+@@ -267,7 +267,7 @@ struct hash_list
+ typedef enum {
+ 	WHENSPEC_RAW = 1,
+ 	WHENSPEC_RFC2822,
+-	WHENSPEC_NOW,
++	WHENSPEC_NOW
+ } whenspec_type;
+ 
+ struct recent_command
+Index: http-push.c
+===================================================================
+--- http-push.c.orig
++++ http-push.c
+@@ -105,7 +105,7 @@ enum transfer_state {
+ 	RUN_PUT,
+ 	RUN_MOVE,
+ 	ABORTED,
+-	COMPLETE,
++	COMPLETE
+ };
+ 
+ struct transfer_request
 Index: builtin-commit.c
 ===================================================================
 --- builtin-commit.c.orig
 +++ builtin-commit.c
-@@ -715,7 +715,8 @@ static int prepare_to_commit(const char 
+@@ -57,7 +57,7 @@ static struct lock_file false_lock; /* u
+ static enum {
+ 	COMMIT_AS_IS = 1,
+ 	COMMIT_NORMAL,
+-	COMMIT_PARTIAL,
++	COMMIT_PARTIAL
+ } commit_style;
  
- 	if (use_editor) {
- 		char index[PATH_MAX];
--		const char *env[2] = { index, NULL };
-+		char *env[2];
-+		env[0] =  index; env[1] = NULL;
- 		snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", index_file);
- 		if (launch_editor(git_path(commit_editmsg), NULL, env)) {
- 			fprintf(stderr,
-Index: builtin-remote.c
+ static const char *logfile, *force_author;
+@@ -77,7 +77,7 @@ static char *untracked_files_arg, *force
+ static enum {
+ 	CLEANUP_SPACE,
+ 	CLEANUP_NONE,
+-	CLEANUP_ALL,
++	CLEANUP_ALL
+ } cleanup_mode;
+ static char *cleanup_arg;
+ 
+Index: rerere.c
 ===================================================================
---- builtin-remote.c.orig
-+++ builtin-remote.c
-@@ -705,11 +705,14 @@ static int rm(int argc, const char **arg
- 	struct known_remotes known_remotes = { NULL, NULL };
- 	struct string_list branches = { NULL, 0, 0, 1 };
- 	struct string_list skipped = { NULL, 0, 0, 1 };
--	struct branches_for_remote cb_data = {
--		NULL, &branches, &skipped, &known_remotes
--	};
-+	struct branches_for_remote cb_data;
- 	int i, result;
- 
-+	memset(&cb_data,0,sizeof(cb_data));
-+	cb_data.branches = &branches;
-+	cb_data.skipped = &skipped;
-+	cb_data.keep = &known_remotes;
-+
- 	if (argc != 2)
- 		usage_with_options(builtin_remote_rm_usage, options);
- 
-Index: builtin-blame.c
+--- rerere.c.orig
++++ rerere.c
+@@ -153,7 +153,7 @@ static int handle_path(unsigned char *sh
+ 	git_SHA_CTX ctx;
+ 	int hunk_no = 0;
+ 	enum {
+-		RR_CONTEXT = 0, RR_SIDE_1, RR_SIDE_2, RR_ORIGINAL,
++		RR_CONTEXT = 0, RR_SIDE_1, RR_SIDE_2, RR_ORIGINAL
+ 	} hunk = RR_CONTEXT;
+ 	struct strbuf one = STRBUF_INIT, two = STRBUF_INIT;
+ 	struct strbuf buf = STRBUF_INIT;
+Index: wt-status.h
 ===================================================================
---- builtin-blame.c.orig
-+++ builtin-blame.c
-@@ -733,10 +733,11 @@ static int pass_blame_to_parent(struct s
- {
- 	int last_in_target;
- 	mmfile_t file_p, file_o;
--	struct blame_chunk_cb_data d = { sb, target, parent, 0, 0 };
-+	struct blame_chunk_cb_data d;
- 	xpparam_t xpp;
- 	xdemitconf_t xecfg;
--
-+	memset(&d,0,sizeof(d));
-+	d.sb = sb; d.target = target; d.parent=parent;
- 	last_in_target = find_last_in_target(sb, target);
- 	if (last_in_target < 0)
- 		return 1; /* nothing remains for this target */
-@@ -875,10 +876,11 @@ static void find_copy_in_blob(struct sco
- 	const char *cp;
- 	int cnt;
- 	mmfile_t file_o;
--	struct handle_split_cb_data d = { sb, ent, parent, split, 0, 0 };
-+	struct handle_split_cb_data d;
- 	xpparam_t xpp;
- 	xdemitconf_t xecfg;
--
-+	memset(&d,0,sizeof(d));
-+	d.sb = sb; d.ent = ent; d.parent = parent; d.split = split;
- 	/*
- 	 * Prepare mmfile that contains only the lines in ent.
- 	 */
-Index: builtin-cat-file.c
+--- wt-status.h.orig
++++ wt-status.h
+@@ -11,7 +11,7 @@ enum color_wt_status {
+ 	WT_STATUS_CHANGED,
+ 	WT_STATUS_UNTRACKED,
+ 	WT_STATUS_NOBRANCH,
+-	WT_STATUS_UNMERGED,
++	WT_STATUS_UNMERGED
+ };
+ 
+ enum untracked_status_type {
+Index: builtin-apply.c
 ===================================================================
---- builtin-cat-file.c.orig
-+++ builtin-cat-file.c
-@@ -118,7 +118,10 @@ static int cat_one_file(int opt, const c
- 
- 		/* custom pretty-print here */
- 		if (type == OBJ_TREE) {
--			const char *ls_args[3] = {"ls-tree", obj_name, NULL};
-+			char *ls_args[3];
-+			ls_args[0] =  "ls-tree";
-+			ls_args[1] =  obj_name;
-+			ls_args[2] = NULL;
- 			return cmd_ls_tree(2, ls_args, NULL);
- 		}
- 
-Index: refs.c
+--- builtin-apply.c.orig
++++ builtin-apply.c
+@@ -56,7 +56,7 @@ static enum ws_error_action {
+ 	nowarn_ws_error,
+ 	warn_on_ws_error,
+ 	die_on_ws_error,
+-	correct_ws_error,
++	correct_ws_error
+ } ws_error_action = warn_on_ws_error;
+ static int whitespace_error;
+ static int squelch_whitespace_errors = 5;
+Index: builtin-branch.c
 ===================================================================
---- refs.c.orig
-+++ refs.c
-@@ -311,7 +311,11 @@ static int warn_if_dangling_symref(const
+--- builtin-branch.c.orig
++++ builtin-branch.c
+@@ -36,20 +36,20 @@ static char branch_colors[][COLOR_MAXLEN
+ 	GIT_COLOR_NORMAL,	/* PLAIN */
+ 	GIT_COLOR_RED,		/* REMOTE */
+ 	GIT_COLOR_NORMAL,	/* LOCAL */
+-	GIT_COLOR_GREEN,	/* CURRENT */
++	GIT_COLOR_GREEN		/* CURRENT */
+ };
+ enum color_branch {
+ 	BRANCH_COLOR_RESET = 0,
+ 	BRANCH_COLOR_PLAIN = 1,
+ 	BRANCH_COLOR_REMOTE = 2,
+ 	BRANCH_COLOR_LOCAL = 3,
+-	BRANCH_COLOR_CURRENT = 4,
++	BRANCH_COLOR_CURRENT = 4
+ };
  
- void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
- {
--	struct warn_if_dangling_data data = { fp, refname, msg_fmt };
-+	struct warn_if_dangling_data data;
-+
-+	data.fp = fp;
-+	data.refname = refname;
-+	data.msg_fmt = msg_fmt;
- 	for_each_rawref(warn_if_dangling_symref, &data);
- }
+ static enum merge_filter {
+ 	NO_FILTER = 0,
+ 	SHOW_NOT_MERGED,
+-	SHOW_MERGED,
++	SHOW_MERGED
+ } merge_filter;
+ static unsigned char merge_filter_ref[20];
  
-Index: builtin-pack-objects.c
+Index: builtin-help.c
 ===================================================================
---- builtin-pack-objects.c.orig
-+++ builtin-pack-objects.c
-@@ -1651,6 +1651,8 @@ static void ll_find_deltas(struct object
- 				delta_search_threads);
- 	p = xcalloc(delta_search_threads, sizeof(*p));
+--- builtin-help.c.orig
++++ builtin-help.c
+@@ -26,7 +26,7 @@ enum help_format {
+ 	HELP_FORMAT_NONE,
+ 	HELP_FORMAT_MAN,
+ 	HELP_FORMAT_INFO,
+-	HELP_FORMAT_WEB,
++	HELP_FORMAT_WEB
+ };
  
-+	p = xmalloc(delta_search_threads * sizeof(struct thread_params));
-+
- 	/* Partition the work amongst work threads. */
- 	for (i = 0; i < delta_search_threads; i++) {
- 		unsigned sub_size = list_size / (delta_search_threads - i);
-@@ -2085,6 +2087,8 @@ static void loosen_unused_packed_objects
- 					die("unable to force loose object");
- 		}
- 	}
-+
-+	free(p);
- }
- 
- static void get_object_list(int ac, const char **av)
-Index: builtin-add.c
+ static int show_all = 0;
+Index: builtin-mailinfo.c
 ===================================================================
---- builtin-add.c.orig
-+++ builtin-add.c
-@@ -254,13 +254,15 @@ int interactive_add(int argc, const char
- static int edit_patch(int argc, const char **argv, const char *prefix)
- {
- 	char *file = xstrdup(git_path("ADD_EDIT.patch"));
--	const char *apply_argv[] = { "apply", "--recount", "--cached",
--		file, NULL };
-+	char *apply_argv[] = { "apply", "--recount", "--cached",
-+		"<file>", NULL };
- 	struct child_process child;
- 	struct rev_info rev;
- 	int out;
- 	struct stat st;
+--- builtin-mailinfo.c.orig
++++ builtin-mailinfo.c
+@@ -17,10 +17,10 @@ static struct strbuf name = STRBUF_INIT;
+ static struct strbuf email = STRBUF_INIT;
  
-+	apply_argv[3] = file;
-+
- 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+ static enum  {
+-	TE_DONTCARE, TE_QP, TE_BASE64,
++	TE_DONTCARE, TE_QP, TE_BASE64
+ } transfer_encoding;
+ static enum  {
+-	TYPE_TEXT, TYPE_OTHER,
++	TYPE_TEXT, TYPE_OTHER
+ } message_type;
  
- 	if (read_cache() < 0)
-Index: builtin-checkout.c
+ static struct strbuf charset = STRBUF_INIT;
+Index: builtin-receive-pack.c
 ===================================================================
---- builtin-checkout.c.orig
-+++ builtin-checkout.c
-@@ -612,7 +612,8 @@ static int check_tracking_name(const cha
+--- builtin-receive-pack.c.orig
++++ builtin-receive-pack.c
+@@ -16,7 +16,7 @@ enum deny_action {
+ 	DENY_UNCONFIGURED,
+ 	DENY_IGNORE,
+ 	DENY_WARN,
+-	DENY_REFUSE,
++	DENY_REFUSE
+ };
  
- static const char *unique_tracking_name(const char *name)
- {
--	struct tracking_name_data cb_data = { name, NULL, 1 };
-+	struct tracking_name_data cb_data = { NULL, NULL, 1 };
-+        cb_data.name = name;
- 	for_each_ref(check_tracking_name, &cb_data);
- 	if (cb_data.unique)
- 		return cb_data.remote;
-Index: builtin-fetch.c
+ static int deny_deletes;
+Index: imap-send.c
 ===================================================================
---- builtin-fetch.c.orig
-+++ builtin-fetch.c
-@@ -573,9 +573,10 @@ static void find_non_local_tags(struct t
- {
- 	struct string_list existing_refs = { NULL, 0, 0, 0 };
- 	struct string_list remote_refs = { NULL, 0, 0, 0 };
--	struct tag_data data = {head, tail};
-+	struct tag_data data;
- 	const struct ref *ref;
- 	struct string_list_item *item = NULL;
-+	data.head = head; data.tail = tail;
+--- imap-send.c.orig
++++ imap-send.c
+@@ -212,7 +212,7 @@ enum CAPABILITY {
+ 	UIDPLUS,
+ 	LITERALPLUS,
+ 	NAMESPACE,
+-	STARTTLS,
++	STARTTLS
+ };
  
- 	for_each_ref(add_existing, &existing_refs);
- 	for (ref = transport_get_remote_refs(transport); ref; ref = ref->next) {
-@@ -768,7 +769,8 @@ static int get_remote_group(const char *
- static int add_remote_or_group(const char *name, struct string_list *list)
- {
- 	int prev_nr = list->nr;
--	struct remote_group_data g = { name, list };
-+	struct remote_group_data g;
-+	g.name = name; g.list = list;
+ static const char *cap_list[] = {
+Index: ctype.c
+===================================================================
+--- ctype.c.orig
++++ ctype.c
+@@ -10,7 +10,7 @@ enum {
+ 	A = GIT_ALPHA,
+ 	D = GIT_DIGIT,
+ 	G = GIT_GLOB_SPECIAL,	/* *, ?, [, \\ */
+-	R = GIT_REGEX_SPECIAL,	/* $, (, ), +, ., ^, {, | */
++	R = GIT_REGEX_SPECIAL	/* $, (, ), +, ., ^, {, | */
+ };
  
- 	git_config(get_remote_group, &g);
- 	if (list->nr == prev_nr) {
+ unsigned char sane_ctype[256] = {
+@@ -21,6 +21,6 @@ unsigned char sane_ctype[256] = {
+ 	0, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A,		/*  64.. 79 */
+ 	A, A, A, A, A, A, A, A, A, A, A, G, G, 0, R, 0,		/*  80.. 95 */
+ 	0, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A,		/*  96..111 */
+-	A, A, A, A, A, A, A, A, A, A, A, R, R, 0, 0, 0,		/* 112..127 */
++	A, A, A, A, A, A, A, A, A, A, A, R, R, 0, 0, 0		/* 112..127 */
+ 	/* Nothing in the 128.. range */
+ };
 
---7LkOrbQMr4cezO2T--
+--MAH+hnPXVZWQ5cD/--
