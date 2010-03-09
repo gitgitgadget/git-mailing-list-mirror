@@ -1,113 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: using gvim as editor on Windows
-Date: Tue, 09 Mar 2010 12:07:13 -0800
-Message-ID: <7vzl2hw972.fsf@alter.siamese.dyndns.org>
-References: <20100306070628.GM2480@ece.pdx.edu>
- <201003061317.38422.markus.heidelberg@web.de>
- <20100308185439.GO2480@ece.pdx.edu>
- <201003090032.10037.markus.heidelberg@web.de>
- <20100309024523.GU2480@ece.pdx.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Markus Heidelberg <markus.heidelberg@web.de>, git@vger.kernel.org
-To: Tait <git.git@t41t.com>
-X-From: git-owner@vger.kernel.org Tue Mar 09 21:08:06 2010
+From: Benedikt Andreas Koeppel <bkoeppel@ee.ethz.ch>
+Subject: Modified files directly after clone
+Date: Tue, 9 Mar 2010 21:26:03 +0100
+Message-ID: <7416BCB6-306F-4BC1-913C-1208746DA93E@ee.ethz.ch>
+Mime-Version: 1.0 (Apple Message framework v1077)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 09 21:36:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Np5iJ-0000A0-CX
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 21:07:35 +0100
+	id 1Np6A2-0002U9-3x
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 21:36:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755074Ab0CIUH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Mar 2010 15:07:28 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45784 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754194Ab0CIUH0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Mar 2010 15:07:26 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C5F9A0D51;
-	Tue,  9 Mar 2010 15:07:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=GBo3E+Dr/YIJHpQAfp4Goxfuy8U=; b=MqVCD/HaG20k5u6JZQj6rzu
-	/ogcB25rQWJzOJvix0GU58PNzrXikLnK2qd4K8DLWVXHauu6zWG1Wvuv0ARJbdN9
-	kwLpYotSfZVqj1SR1tvQ6fLl1zolQEAtbCsjPAG040d3dHS7iAmpIBoKjcYMWudD
-	cG8QbwheHI6SgIIUuu8Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=GZ+PbC0Ew0EnV+radXddgfSe3BcWX7so3eGp5dfkMRrCudHkk
-	d8gDfu4gUYiALYiw3Yy9RWwVUQtLrMSYdjJlgaenGqfxlZ2t4S8y6zt3rfD2pzpt
-	ksUoaHp9QwQi7vTuMqdQQdKAh9+eCm2RerJlmna2y56tSDXHE5L2p0f7wc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 27F7EA0D50;
-	Tue,  9 Mar 2010 15:07:18 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6649DA0D4D; Tue,  9 Mar
- 2010 15:07:14 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5CDB97EE-2BB7-11DF-B0C3-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755361Ab0CIUgJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Mar 2010 15:36:09 -0500
+Received: from smtp.ee.ethz.ch ([129.132.2.219]:51096 "EHLO smtp.ee.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755244Ab0CIUgH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Mar 2010 15:36:07 -0500
+X-Greylist: delayed 601 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Mar 2010 15:36:07 EST
+Received: from localhost (localhost [127.0.0.1])
+	by smtp.ee.ethz.ch (Postfix) with ESMTP id 16631D9394
+	for <git@vger.kernel.org>; Tue,  9 Mar 2010 21:26:05 +0100 (MET)
+X-Virus-Scanned: by amavisd-new on smtp.ee.ethz.ch
+Received: from smtp.ee.ethz.ch ([127.0.0.1])
+	by localhost (.ee.ethz.ch [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id FqMumlQX9m-p for <git@vger.kernel.org>;
+	Tue,  9 Mar 2010 21:26:04 +0100 (MET)
+Received: from [192.168.2.105] (84-75-183-84.dclient.hispeed.ch [84.75.183.84])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: bkoeppel)
+	by smtp.ee.ethz.ch (Postfix) with ESMTPSA id AAF17D938F
+	for <git@vger.kernel.org>; Tue,  9 Mar 2010 21:26:04 +0100 (MET)
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141847>
 
-Tait <git.git@t41t.com> writes:
+Dear Sir/Madam,
 
-> It comes from line 33 of editor.c, in launch_editor().
-> if (strcmp(editor, ":")) {
+I'm experiencing a strange problem with one of my GIT repositories. The=
+ repo is hosted on my Debian 5 server with gitosis. I clone the repo to=
+ my Mac OS X 10.6 notebook. Directly after cloning the repository, ther=
+e are already some modified files which are "Changed but not updated".
 
-This says "if 'editor' is not exactly the string ':'", then come into this
-block.  If you set editor to ":abc", or "c:\path to\my editor.exe", they
-are not "exactly the string ':'" and the codepath inside will be executed.
+This is how I do it:=20
 
-> ... I'm not familiar with the EDITOR=:
-> convention. What is that supposed to indicate?
+=3D=3D=3D=3D bash start =3D=3D=3D=3D
+beninb:Desktop beni$ mkdir tmp
+beninb:Desktop beni$ cd tmp
+beninb:tmp beni$ git clone git@gmuasch:ife-maemo.git git
+Initialized empty Git repository in /Users/beni/Desktop/tmp/git/.git/
+remote: Counting objects: 43316, done.
+remote: Compressing objects: 100% (33045/33045), done.
+remote: Total 43316 (delta 10942), reused 42064 (delta 9790)
+Receiving objects: 100% (43316/43316), 518.25 MiB | 640 KiB/s, done.
+Resolving deltas: 100% (10942/10942), done.
+Checking out files: 100% (68385/68385), done.
+beninb:tmp beni$ cd git/
+beninb:git beni$ git status
+# On branch master
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working dire=
+ctory)
+#
+#	modified:   source/crn/toolbox/doc/html/classVector.html
+#	modified:   source/maemo-beagle/www/files/maemo5-alpha/kernel-2.6.28/=
+Documentation/IO-mapping.txt
+# some more lines
+#	modified:   source/maemo-beagle/www/files/maemo5-alpha/kernel-2.6.28/=
+net/netfilter/xt_TCPMSS.c
+#	modified:   source/maemo-kernel/kernel-2.6.28/Documentation/IO-mappin=
+g.txt
+# some more lines
+#	modified:   source/maemo-kernel/kernel-2.6.28/net/netfilter/xt_TCPMSS=
+=2Ec
+#
+no changes added to commit (use "git add" and/or "git commit -a")
 
-Literally, it means "run ':' command as the editor".  ':' command takes
-and ignores arbitrary arguments and returns success without doing
-anything.  As such, the codepath pretends that it ran ':' command without
-actually running it, and returns as if it ran ':' command that left the
-input file given as its argument unmodified.
+=3D=3D=3D=3D bash end =3D=3D=3D=3D
 
-> Can we narrow the
-> detection to that specific case, or does a : anywhere in EDITOR need
-> to be handled this way?
+"gmuasch" is an SSH-alias for my Debian server
+git diff gives the following: http://pastie.org/861916
 
-No, and the if statement is already narrow enough.  I think the problem is
-that you have a broken shell ("sh").
+On my server, I'm running git version 1.6.2.4. Locally on my Mac, I hav=
+e git version 1.6.2. But there were some commits done from Ubuntu 9.10 =
+with git 1.7.0.1.
 
-    /* ... */
-    if (strcspn(editor, "$ \t'") != len) {
-        /* there are specials */
-        strbuf_addf(&arg0, "%s \"$@\"", editor);
-        args[i++] = "sh";
-        args[i++] = "-c";
-        args[i++] = arg0.buf;
-    }
-    args[i++] = editor;
-    args[i++] = path;
-    args[i] = NULL;
-    /* ... */
+Those folders are SVN checkouts:
+source/crn
+source/maemo-beagle
+But source/maemo-kernel is not a SVN checkout.
+
+I tried the same procedure on a different machine (running Debian 5, gi=
+t version 1.6.2.4), and did not have any modified files after cloning t=
+he repo.=20
 
 
-If you have editor='"c:\some path\editor" -f', strcspn() notices that you have a
-funny character in the path, and creates this string in arg0:
 
-    "c:\some path\editor" -f "$@"
+How can this happen? Does my Mac somehow interfere with the newly clone=
+d repository?
 
-and feeds '-c', the above arg0, editor, and finally the name of the file,
-to your shell; it is the same as running this from the command line:
 
-    sh -c '"c:\some path\editor" -f "$@"' '"c:\some path\editor" -f' path-to-file
 
-Now shell is supposed to expand "$@" into positional parameters, i.e. $1
-(in this case, path-to-file) and run the named editor with it, IOW, your
-editor program should see "-f" as its first parameter, and path-to-file as
-its second parameter (and argv[] is terminated with NULL after that).
-
-If you end up with a file whose name literally is '$@', that probably
-means your "sh" did not expand it correctly.
+Best Regards,
+Benedikt K=F6ppel
