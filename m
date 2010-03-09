@@ -1,94 +1,91 @@
-From: Ryan Phillips <ryan@trolocsis.com>
-Subject: git-http-backend and Authenticated Pushes
-Date: Tue, 9 Mar 2010 11:08:48 -0600
-Message-ID: <46a47f951003090908s62512bd7xcbb707205958e004@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: core.autocrlf considered half-assed
+Date: Tue, 09 Mar 2010 09:11:15 -0800
+Message-ID: <7vlje1zah8.fsf@alter.siamese.dyndns.org>
+References: <alpine.DEB.1.00.1003060018170.20986@pacific.mpi-cbg.de>
+ <20100307092701.GC31105@dpotapov.dyndns.org>
+ <alpine.LFD.2.00.1003071538350.30214@localhost.localdomain>
+ <20100308185719.GQ2480@ece.pdx.edu>
+ <alpine.DEB.1.00.1003082011440.14277@intel-tinevez-2-302>
+ <7v6356r1w9.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.1003091026060.7596@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 09 18:15:29 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Tait <git.git@t41t.com>, git@vger.kernel.org,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 09 18:16:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Np2vv-00036g-DE
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 18:09:27 +0100
+	id 1Np2xy-000446-PO
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 18:11:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755322Ab0CIRJV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Mar 2010 12:09:21 -0500
-Received: from mail-gx0-f217.google.com ([209.85.217.217]:45206 "EHLO
-	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755103Ab0CIRJR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Mar 2010 12:09:17 -0500
-Received: by gxk9 with SMTP id 9so4131432gxk.8
-        for <git@vger.kernel.org>; Tue, 09 Mar 2010 09:09:16 -0800 (PST)
-Received: by 10.90.217.14 with SMTP id p14mr221811agg.35.1268154531646; Tue, 
-	09 Mar 2010 09:08:51 -0800 (PST)
+	id S1751728Ab0CIRL3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Mar 2010 12:11:29 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49636 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751000Ab0CIRL3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Mar 2010 12:11:29 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E1F0CA0AAC;
+	Tue,  9 Mar 2010 12:11:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=zL8O/QyIovYsrK3EP5aDm8THQTw=; b=F2Kj5SbgZNzzKXqKvRTnEF5
+	hl4EnLe/EMGtCesNRB8Jis+jenpgwfIJo+ThStovO0kk0q8DxmFHrPtsXNJPrea7
+	VYpeiqrWKQvg05/04eQ9tyOne/Tz23Pq+u+7CwGBOrJEtovwhHAOiH/JZxhFSpKY
+	yju5fcuNhUKuwxoUy828=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=Yj7K/EGfmaA6VUzlfBPk4ne5MaGOTRiEi2xSP93hTxDLtsiUy
+	lsUA/MGTiVo3ZHOa/DZfAq8gzV0/uatngws92wu6WQ1apIlg7MJKX29UxHLKjiWB
+	5oiS9XwoFFIsfAtQ7tDb1hgaqzPT70erR09lweo+vSDS71FJAnKSGNnmkE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C4B1A0AAA;
+	Tue,  9 Mar 2010 12:11:22 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 95292A0A92; Tue,  9 Mar
+ 2010 12:11:16 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C93D2484-2B9E-11DF-AD08-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141834>
 
-Hi All,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I'm trying to follow the git-http-backend man page on setting up
-authenticated pushes to my apache server. Pulls work fine, and fully
-authenticated pushes work fine. However, when I try and setup
-anonymous pulls and authenticated pushes the push fails.
+>> Nevertheless, I agree with you that if a similar situation happened by 
+>> mistake and your project does want to enforce core.autocrlf, it would be 
+>> nicer if there is an easy-to-use one-time clean-up procedure.  It hasn't 
+>> been my itch, and I suspect it wasn't Linus's itch either.
+>
+> The problem is that the whole thing was not your itch, but your 
+> implementation. You never used it, so you never caught the obvious flaws 
+> in the design.
+>
+> Sorry to be so direct, but it seems that my more subtle attempts to 
+> explain the situation failed.
 
-I believe the culprit is this 403 error:
+No, being direct is good---it shows the thought behind what you say more
+clearly.
 
-192.168.1.1 - - [09/Mar/2010:09:01:43 -0800] "GET
-/git/test.git/info/refs?service=git-receive-pack HTTP/1.1" 403 - "-"
-"git/1.7.0.2.dirty"
+Think what "your implementation" means in the open source setting.  It is
+what you were given for free, you could try to improve upon it if you so
+desire, and you should be thankful for it.  It also means that you know
+the people to ask for help as it is "their" implementation and they are
+probably more familiar with it than others.  If you happen to be in the
+position where you can see shortcomings in the implementation better than
+they do, that's good; they and you can complement what each is good at,
+and make progress collectively.
 
-Anybody know what I missed?
-
-Regards,
-Ryan
-
-My vhost replaced with example.com:
-
-<VirtualHost *:80>
-        SetEnv GIT_PROJECT_ROOT /home/httpd/domains/example.com/repo
-        SetEnv GIT_HTTP_EXPORT_ALL
-        SetEnv GITWEB_CONFIG /home/httpd/domains/example.com/gitweb.conf
-
-        RewriteEngine on
-        RewriteRule ^/$     /git/ [PT]
-
-        <Directory /usr/local/git>
-           Options Indexes FollowSymLinks MultiViews Includes ExecCGI
-           AllowOverride None
-           Order allow,deny
-           Allow from all
-        </Directory>
-
-        <LocationMatch "^/git/.*/git-receive-pack$">
-            AuthType Basic
-            AuthName "Git Access"
-            AuthUserFile /home/httpd/domains/example.com/.htpasswd
-            Require valid-user
-        </LocationMatch>
-        ScriptAliasMatch \
-                "(?x)^/git/(.*/(HEAD | \
-                                info/refs | \
-                                objects/(info/[^/]+ | \
-                                         [0-9a-f]{2}/[0-9a-f]{38} | \
-                                         pack/pack-[0-9a-f]{40}\.(pack|idx)) | \
-                                git-(upload|receive)-pack))$" \
-                /usr/local/git/current/libexec/git-core/git-http-backend/$1
-
-        ScriptAlias /git/ /usr/local/git/current/gitweb/gitweb.cgi/
-
-        Alias       /gitweb.css       /usr/local/git/current/gitweb/gitweb.css
-        Alias       /git-logo.png     /usr/local/git/current/gitweb/git-logo.png
-        Alias       /git-favicon.png
-/usr/local/git/current/gitweb/git-favicon.png
-
-        ServerName example.com
-        ServerAlias *.example.com
-        ErrorLog /home/httpd/domains/example.com/logs/error_log
-        CustomLog /home/httpd/domains/example.com/logs/access_log combined
-</VirtualHost>
+What it does _not_ mean is that you can _demand_ anything out of them,
+though.  An attempt to shaming them into doing something amounts to the
+same thing.  Having seen the way you have behaved on the msysgit list and
+its tracker for a while, I thought you understood all that.
