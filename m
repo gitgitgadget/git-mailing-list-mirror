@@ -1,96 +1,116 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] builtin-add: fix exclude handling
-Date: Tue, 9 Mar 2010 17:48:15 -0500
-Message-ID: <20100309224815.GB25265@sigill.intra.peff.net>
-References: <7vzl2s4fcy.fsf@alter.siamese.dyndns.org>
+Subject: Re: 'git add' regression in git-1.7?
+Date: Tue, 9 Mar 2010 18:09:31 -0500
+Message-ID: <20100309230931.GC25265@sigill.intra.peff.net>
+References: <hll45t$50o$1@ger.gmane.org>
+ <32541b131002182042p610fce4ex96efbffea9afe2ed@mail.gmail.com>
+ <hll65c$87a$1@ger.gmane.org>
+ <32541b131002182115t5501d0d1u19367a4d8e7627e4@mail.gmail.com>
+ <20100219053431.GB22645@coredump.intra.peff.net>
+ <20100219060249.GD22645@coredump.intra.peff.net>
+ <20100219082445.GB13691@coredump.intra.peff.net>
+ <7vhbp0ls26.fsf@alter.siamese.dyndns.org>
+ <20100309223729.GA25265@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	SungHyun Nam <goweol@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 09 23:48:24 2010
+X-From: git-owner@vger.kernel.org Wed Mar 10 00:09:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Np8Dv-00082Y-PF
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Mar 2010 23:48:24 +0100
+	id 1Np8Yd-0000ix-2K
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 00:09:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753401Ab0CIWsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Mar 2010 17:48:19 -0500
-Received: from peff.net ([208.65.91.99]:36048 "EHLO peff.net"
+	id S1755526Ab0CIXJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Mar 2010 18:09:37 -0500
+Received: from peff.net ([208.65.91.99]:34020 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751446Ab0CIWsR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Mar 2010 17:48:17 -0500
-Received: (qmail 3499 invoked by uid 107); 9 Mar 2010 22:48:40 -0000
+	id S1755180Ab0CIXJg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Mar 2010 18:09:36 -0500
+Received: (qmail 3561 invoked by uid 107); 9 Mar 2010 23:09:56 -0000
 Received: from c-71-206-173-191.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.191)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 09 Mar 2010 17:48:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Mar 2010 17:48:15 -0500
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 09 Mar 2010 18:09:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Mar 2010 18:09:31 -0500
 Content-Disposition: inline
-In-Reply-To: <7vzl2s4fcy.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20100309223729.GA25265@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141853>
 
-On Mon, Mar 01, 2010 at 12:26:37AM -0800, Junio C Hamano wrote:
+On Tue, Mar 09, 2010 at 05:37:30PM -0500, Jeff King wrote:
 
->  - "git add ignored-pattern.o", i.e. the pathspec exactly matches but is
->    ignored by the traversal.
+> No, we would still be correct if we recurse into the ignored directory
+> _only_ to collect the ignored bits (so we don't even bother if
+> COLLECT_IGNORED isn't set). But what I don't like is that you take a
+> performance hit, because in most cases you won't ever care what's inside
+> those directories. You need to recurse only when:
 > 
-> For the former, the function immediately errored out.  The latter were
-> queued in the dir structure and later used to give an error message with
-> "use -f if you really mean it" advice.
+>   - you actually care about all files. git-add does. git-status does not
+>     (unless you explicitly told it to show directories). So that would
+>     probably need a flag passed to fill_directory.
 > 
-> e96980e (builtin-add: simplify (and increase accuracy of) exclude
-> handling, 2007-06-12) somehow lost the latter.  This adds the logic back,
-> but with a bit of twist, as the code after e96980e uses collect_ignored
-> option that does half the necessary work during the traversal.
+>   - you have a pathspec that means the contents of the directory might
+>     be interesting. Right now we check in_pathspec in treat_one_path.
+>     But I think we would need to recognize that "subdir/file" is
+>     means "subdir" is in our pathspec (and that "sub*" means the same
+>     thing).
 
-I'm not sure that logic is accurate. The "increase accuracy" part of
-e96980e was about the fact that COLLECT_IGNORED _knows_ something is
-ignored, but builtin-add's prune_directory has to just _guess_ about it.
+Actually, if we accept that the message simply mentions the excluded
+path, i.e.:
 
-And I think your new code may have similar problems.  Look at the
-failing test in t0050 (the one you tweaked in patch 1/3).  Before this
-patch, it silently fails to add. Which is a bug, of course, but not this
-one. But after this patch, we say "Oh, CamelCase was excluded, use -f,
-etc". But that's not true. We are just making a guess after the fact
-about why it wasn't included.
+  $ git add subdir/file
+  The following paths are ignored by one of your .gitignore files:
+  subdir
+  Use -f if you really want to add them.
 
-Now I am slightly hesitant to use that as an example, because it clearly
-was also broken _before_ your patch. So it may be that the behavior it
-exhibits (a pathspec not showing up as used, but the file exists and was
-_not_ ignored) shouldn't ever happen for other cases.  I'm not sure,
-which makes me a little nervous about the change. But I would be willing
-to accept "it seems to work, so let's go with it for now and see if
-anybody complains" if you want to try that.
+then we don't really need to recurse. We just need to fix in_pathspec to
+flag files that are _relevant_ to a pathspec.
 
-But also:
+And something like this seems to fix the OP's problem:
 
-> +		/* Existing file?  We must have ignored it */
-> +		if (file_exists(match)) {
-> +			int len = strlen(match);
-> +			int i;
-> +			for (i = 0; i < dir->ignored_nr; i++)
-> +				if (dir->ignored[i]->len == len &&
-> +				    !memcmp(dir->ignored[i]->name, match, len))
-> +					break;
-> +			if (dir->ignored_nr <= i)
-> +				dir_add_ignored(dir, match, strlen(match));
-> +			continue;
-> +		}
-> +		die("pathspec '%s' did not match any files", match);
+diff --git a/dir.c b/dir.c
+index 00d698d..5091bfd 100644
+--- a/dir.c
++++ b/dir.c
+@@ -554,13 +554,17 @@ static int simplify_away(const char *path, int pathlen, const struct path_simpli
+ 	return 0;
+ }
+ 
+-static int in_pathspec(const char *path, int len, const struct path_simplify *simplify)
++static int relevant_pathspec(const char *path, int len, const struct path_simplify *simplify)
+ {
+ 	if (simplify) {
+ 		for (; simplify->path; simplify++) {
+ 			if (len == simplify->len
+ 			    && !memcmp(path, simplify->path, len))
+ 				return 1;
++			if (len < simplify->len
++			    && simplify->path[len] == '/'
++			    && !memcmp(path, simplify->path, len))
++				return 1;
+ 		}
+ 	}
+ 	return 0;
+@@ -638,7 +642,7 @@ static enum path_treatment treat_one_path(struct dir_struct *dir,
+ {
+ 	int exclude = excluded(dir, path, &dtype);
+ 	if (exclude && (dir->flags & DIR_COLLECT_IGNORED)
+-	    && in_pathspec(path, *len, simplify))
++	    && relevant_pathspec(path, *len, simplify))
+ 		dir_add_ignored(dir, path, *len);
+ 
+ 	/*
 
-Is that memcmp right? If I have something like:
-
-  echo subdir >.gitignore
-  git add 'sub*'
-
-shouldn't it also say "Sorry, subdir [or sub*] was ignored"? But it
-doesn't actually get added to the exclude list, and we get "pathspec did
-not match any files", which is not quite true.
+Which is similar to your fix, but hoisted into the ignore-collection
+phase. Like the original code and your patch, it suffers from using a
+straight memcmp. I think it should actually be checking the pathspec
+expansion to catch things like 'sub*/file' being relevant to 'subdir'.
 
 -Peff
