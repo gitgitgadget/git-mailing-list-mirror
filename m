@@ -1,57 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Portability patches vs 1.7.0.2 [5/6]
-Date: Tue, 9 Mar 2010 18:26:24 -0500
-Message-ID: <20100309232624.GE25265@sigill.intra.peff.net>
-References: <20100309161906.GF99172@thor.il.thewrittenword.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 7/6] Enable threaded async procedures whenever pthreads
+	is available
+Date: Tue, 9 Mar 2010 15:43:17 -0800
+Message-ID: <20100309234317.GA12958@spearce.org>
+References: <cover.1267889072.git.j6t@kdbg.org> <7vk4tpdx9x.fsf@alter.siamese.dyndns.org> <20100306215051.GE2529@spearce.org> <201003092100.36616.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-X-From: git-owner@vger.kernel.org Wed Mar 10 00:26:42 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Mar 10 00:43:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Np8oz-0007BK-86
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 00:26:41 +0100
+	id 1Np95F-0007dl-Rg
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 00:43:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755213Ab0CIX02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Mar 2010 18:26:28 -0500
-Received: from peff.net ([208.65.91.99]:34365 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755069Ab0CIX01 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Mar 2010 18:26:27 -0500
-Received: (qmail 4778 invoked by uid 107); 9 Mar 2010 23:26:49 -0000
-Received: from c-71-206-173-191.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.191)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 09 Mar 2010 18:26:49 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Mar 2010 18:26:24 -0500
+	id S1755066Ab0CIXnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Mar 2010 18:43:25 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:56752 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752323Ab0CIXnY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Mar 2010 18:43:24 -0500
+Received: by gyd8 with SMTP id 8so252730gyd.19
+        for <git@vger.kernel.org>; Tue, 09 Mar 2010 15:43:21 -0800 (PST)
+Received: by 10.101.193.30 with SMTP id v30mr158051anp.199.1268178199809;
+        Tue, 09 Mar 2010 15:43:19 -0800 (PST)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 21sm6043966iwn.3.2010.03.09.15.43.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 09 Mar 2010 15:43:18 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20100309161906.GF99172@thor.il.thewrittenword.com>
+In-Reply-To: <201003092100.36616.j6t@kdbg.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141856>
 
-On Tue, Mar 09, 2010 at 04:19:06PM +0000, Gary V. Vaughan wrote:
+Johannes Sixt <j6t@kdbg.org> wrote:
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+> On Samstag, 6. M?rz 2010, Shawn O. Pearce wrote:
+> > I'm in favor of that.  If we have threaded delta search enabled,
+> > we probably can also run these async procedures in a POSIX thread
+> > rather than forking off a child.
+> 
+> OK. The patch could look like this.
 
-> ## sockaddr_t->ss_family is not portable
+Looks fine to me.  But given my earlier statement about xmalloc()
+damage... I wonder if we shouldn't try to ensure that isn't a
+problem first.
 
-I assume you mean sockaddr_storage here?
-
-> Many of our supported platforms do not have this declaration, for
-> example solaris2.6 thru 2.8 (I can find a complete list of which of
-> our supported platforms have this problem).
-
-Did you mean that list to be inclusive? My Solaris 2.8 definitely has
-sockaddr_storage, as it is necessary for IPv6 handling. I don't remember
-when IPv6 support was added, though...if it was in a minor release, then
-presumably earlier versions of 2.8 did not.
-
-At any rate, we should only need it for IPv6 support, so I think the
-right solution would be to include all uses inside an "#ifndef NO_IPV6",
-and for the NO_IPV6 case assume it's a sockaddr_in.
-
--Peff
+-- 
+Shawn.
