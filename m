@@ -1,69 +1,56 @@
-From: hudarsono <hudarsono@yahoo.com>
-Subject: [Pls Help] Connection refused on port 22 when tried to push go git
- server
-Date: Tue, 9 Mar 2010 20:42:31 -0800 (PST)
-Message-ID: <1268196151780-4707012.post@n2.nabble.com>
-Mime-Version: 1.0
+From: Benedikt Andreas Koeppel <bkoeppel@ee.ethz.ch>
+Subject: Re: Modified files directly after clone
+Date: Wed, 10 Mar 2010 07:47:24 +0100
+Message-ID: <18121BB2-A8BE-411F-9CF0-EDDD12B31CB3@ee.ethz.ch>
+References: <7416BCB6-306F-4BC1-913C-1208746DA93E@ee.ethz.ch> <905315641003091359q4f7cd533o698ec507b9805e36@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1077)
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 10 05:42:38 2010
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Tarmigan <tarmigan+git@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 10 07:47:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpDkj-0005Xg-8p
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 05:42:37 +0100
+	id 1NpFhf-0005DR-RA
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 07:47:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756286Ab0CJEmd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Mar 2010 23:42:33 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:33425 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756271Ab0CJEmc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Mar 2010 23:42:32 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <hudarsono@yahoo.com>)
-	id 1NpDkd-0007WN-PN
-	for git@vger.kernel.org; Tue, 09 Mar 2010 20:42:31 -0800
+	id S932069Ab0CJGr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Mar 2010 01:47:27 -0500
+Received: from smtp.ee.ethz.ch ([129.132.2.219]:41713 "EHLO smtp.ee.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753862Ab0CJGr0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Mar 2010 01:47:26 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by smtp.ee.ethz.ch (Postfix) with ESMTP id 7018CD93AB;
+	Wed, 10 Mar 2010 07:47:25 +0100 (MET)
+X-Virus-Scanned: by amavisd-new on smtp.ee.ethz.ch
+Received: from smtp.ee.ethz.ch ([127.0.0.1])
+	by localhost (.ee.ethz.ch [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 3zEArCdZhURa; Wed, 10 Mar 2010 07:47:25 +0100 (MET)
+Received: from [192.168.2.105] (84-75-183-84.dclient.hispeed.ch [84.75.183.84])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: bkoeppel)
+	by smtp.ee.ethz.ch (Postfix) with ESMTPSA id 256B7D937B;
+	Wed, 10 Mar 2010 07:47:25 +0100 (MET)
+In-Reply-To: <905315641003091359q4f7cd533o698ec507b9805e36@mail.gmail.com>
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello,
 
-Hi, I am new to git, and trying to install n use on my own server, but
-couldn't make it to works till now.
+Am 09.03.2010 um 22:59 schrieb Tarmigan:
+> By default HFS+ filesystems on OSX are case insensitive so you see
+> problems like you described with the linux kernel source which has
+> different files named xt_TCPMSS.c and xt_tcpmss.c.
 
-I have installed git and gitosis successfully on server and can clone
-the gitosis-admin.git. Then I tried to change the gitosis.conf to be
-something like :
+thank you very much for the explanation. Unfortunately, some software (namely Adobe CS2) does not work properly with HFS+ with case sensitivity. I'll need to get a Linux PC for coding :-).
 
-[group gitosis-admin]
-writable = gitosis-admin mobapp
-members = hudars...@Hudarsono-MacBook.local
-hudars...@mail.funplanet.com.au
-
-[group personal]
-writable = mobapp
-members = hudars...@Hudarsono-Macbook.local
-
-and create new repo on server with name mobapp.git.
-
-But when I want to push my local copy to server after run the git
-remote add ssh://...@my-domain.com:mobapp.git
-
-I got permision denied:
-
-Hudarsono-MacBook:mobapp hudarsono$ git push
-ssh: connect to host  port 22: Connection refused
-fatal: The remote end hung up unexpectedly
-
-I don't understand, because I use the same machine as when I clone the
-gitosis-admin.
-
-Any help will be very appreciated. 
--- 
-View this message in context: http://n2.nabble.com/Pls-Help-Connection-refused-on-port-22-when-tried-to-push-go-git-server-tp4707012p4707012.html
-Sent from the git mailing list archive at Nabble.com.
+OK, Problem solved. Thanks.
+Benedikt
