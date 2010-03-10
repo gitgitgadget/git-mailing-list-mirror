@@ -1,75 +1,58 @@
-From: Benedikt Andreas Koeppel <bkoeppel@ee.ethz.ch>
-Subject: Unknown index entry format 40000000
-Date: Wed, 10 Mar 2010 11:45:04 +0100
-Message-ID: <9EE6DBC4-B025-48A1-B475-433DE5918F39@ee.ethz.ch>
-Mime-Version: 1.0 (Apple Message framework v1077)
-Content-Type: text/plain; charset=iso-8859-1
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 00/12] Support columinized output in tag/branch/ls-files/grep
+Date: Wed, 10 Mar 2010 08:26:16 +0100
+Message-ID: <4B974998.5030708@viscovery.net>
+References: <1267963785-473-1-git-send-email-pclouds@gmail.com>	 <4B9504C9.5000703@lsrfire.ath.cx>	 <fcaeb9bf1003080632o622c8c79x85b816edcf893bc3@mail.gmail.com>	 <4B967C36.90309@lsrfire.ath.cx> <fcaeb9bf1003091627p65ad6e60u4bbae2eb4e859f13@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 10 11:45:30 2010
+Cc: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 10 08:26:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpJPt-0000e5-Mp
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 11:45:30 +0100
+	id 1NpGJH-0006ip-O1
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 08:26:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753719Ab0CJKpL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Mar 2010 05:45:11 -0500
-Received: from smtp.ee.ethz.ch ([129.132.2.219]:36147 "EHLO smtp.ee.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753298Ab0CJKpJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Mar 2010 05:45:09 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by smtp.ee.ethz.ch (Postfix) with ESMTP id 69599D93B7
-	for <git@vger.kernel.org>; Wed, 10 Mar 2010 11:45:08 +0100 (MET)
-X-Virus-Scanned: by amavisd-new on smtp.ee.ethz.ch
-Received: from smtp.ee.ethz.ch ([127.0.0.1])
-	by localhost (.ee.ethz.ch [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id QsViu8f+4gXl for <git@vger.kernel.org>;
-	Wed, 10 Mar 2010 11:45:07 +0100 (MET)
-Received: from vpn-global-dhcp2-134.ethz.ch (vpn-global-dhcp2-134.ethz.ch [129.132.209.134])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: bkoeppel)
-	by smtp.ee.ethz.ch (Postfix) with ESMTPSA id 5C5F5D9395
-	for <git@vger.kernel.org>; Wed, 10 Mar 2010 11:45:07 +0100 (MET)
-X-Mailer: Apple Mail (2.1077)
+	id S1754567Ab0CJH0W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Mar 2010 02:26:22 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:9783 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753189Ab0CJH0U convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Mar 2010 02:26:20 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NpGJ7-0006Po-1x; Wed, 10 Mar 2010 08:26:17 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id C0EE01660F;
+	Wed, 10 Mar 2010 08:26:16 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <fcaeb9bf1003091627p65ad6e60u4bbae2eb4e859f13@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Nguyen Thai Ngoc Duy schrieb:
+> On 3/9/10, Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
+>> OK, forking out is easy, but replacing printf() calls with calls to =
+feed
+>>  the columnizer shouldn't be _that_ intrusive, either.
+>=20
+> Well, also fwrite() and write(). If disliked "if (blah) feed_it();
+> else printf(as normal);" construct. But we can wrap it to
+> feed_or_printf().
 
-I've set core.sparseCheckout true and added a .git/info/sparse-checkout=
- file:
-*
-!source/crn/
-!source/maemo-beagle/
-!source/maemo-kernel/
-!source/u-boot/
+How about merging this into color_fprintf and friends?
 
-After that, I did
-git co -- .
-git reset --hard HEAD
+-- Hannes
 
-Now, I want to do
-git pull
-but I get an error:
-
-beninb:git beni$ git pull -v
-=46rom gmuasch:ife-maemo
- =3D [up to date]      master     -> origin/master
-fatal: Unknown index entry format 40000000
-
-I have git version 1.7.0.2, Mac OS X 10.6.2 on HFS+ case-*in*sensitive.
-
-I found that this error comes from read-cache.c, line 1235. What does t=
-his error message mean? How can I make my repo working again?
-
-
-
-Thanks and Best Regards,
-Benedikt K=F6ppel
+--=20
+"Atomic objects are neither active nor radioactive." --
+Doc.No N3035 (Working Draft, Standard for Programming Language C++)
