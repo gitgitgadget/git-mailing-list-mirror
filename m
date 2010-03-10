@@ -1,91 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'git add' regression in git-1.7?
-Date: Tue, 09 Mar 2010 23:06:15 -0800
-Message-ID: <7veijsmza0.fsf@alter.siamese.dyndns.org>
-References: <hll45t$50o$1@ger.gmane.org>
- <32541b131002182042p610fce4ex96efbffea9afe2ed@mail.gmail.com>
- <hll65c$87a$1@ger.gmane.org>
- <32541b131002182115t5501d0d1u19367a4d8e7627e4@mail.gmail.com>
- <20100219053431.GB22645@coredump.intra.peff.net>
- <20100219060249.GD22645@coredump.intra.peff.net>
- <20100219082445.GB13691@coredump.intra.peff.net>
- <7vhbp0ls26.fsf@alter.siamese.dyndns.org>
- <20100309223729.GA25265@sigill.intra.peff.net>
- <20100309230931.GC25265@sigill.intra.peff.net>
+From: Ryan Phillips <ryan@trolocsis.com>
+Subject: Re: git-http-backend and Authenticated Pushes
+Date: Tue, 9 Mar 2010 20:13:46 -0600
+Message-ID: <46a47f951003091813p768fdb58v454f2553a8b6ed8@mail.gmail.com>
+References: <46a47f951003090908s62512bd7xcbb707205958e004@mail.gmail.com>
+	 <20100309192726.GA12461@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	SungHyun Nam <goweol@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 10 08:06:36 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 10 03:13:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpG02-0005jh-4w
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 08:06:34 +0100
+	id 1NpBQo-0002zU-IU
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 03:13:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754639Ab0CJHGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Mar 2010 02:06:30 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43317 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753862Ab0CJHG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Mar 2010 02:06:28 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 86610A03B3;
-	Wed, 10 Mar 2010 02:06:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MEYMvq1AzAr8VvkBUGC+OxuxVzI=; b=HerGXw
-	nwvgvSUz9mxvdbQbDOY/MScuHhApHFhHwW5JGfZduC4wkwvK7AMEAKwQ9TtFMqZ1
-	kM6rJpnLh5WlCPqT0bFvx1yUXiP4EFZ6DJ+iHJVnLKr6RMWKbLjSdWDsYHuj48W6
-	HR8dYAHTA+8igiCU6JMdIkDGr9uhtzRVwog9c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dpbXT7hZiwHjNpR6pBEyy6ZRHOZbM83E
-	Ru1OnVnzk2MDbAaj7UuR9QpgBpLp0OQu69ayYNkGSDuemX4jt97yvibIQEhVxKeS
-	HsOh1LnCesMg6x+9ipBZEV0UA+slHfneSMym6eAnNkKEjjz5E3Hrut7pIp84FwXi
-	r0j2mxeMEMI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3EF13A03B2;
-	Wed, 10 Mar 2010 02:06:23 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4E376A03AE; Wed, 10 Mar
- 2010 02:06:17 -0500 (EST)
-In-Reply-To: <20100309230931.GC25265@sigill.intra.peff.net> (Jeff King's
- message of "Tue\, 9 Mar 2010 18\:09\:31 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6F92B01E-2C13-11DF-8CD9-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755563Ab0CJCNu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Mar 2010 21:13:50 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:36640 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755522Ab0CJCNs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Mar 2010 21:13:48 -0500
+Received: by gyd8 with SMTP id 8so313194gyd.19
+        for <git@vger.kernel.org>; Tue, 09 Mar 2010 18:13:47 -0800 (PST)
+Received: by 10.91.164.17 with SMTP id r17mr1016382ago.0.1268187227111; Tue, 
+	09 Mar 2010 18:13:47 -0800 (PST)
+In-Reply-To: <20100309192726.GA12461@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> Actually, if we accept that the message simply mentions the excluded
-> path, i.e.:
+On Tue, Mar 9, 2010 at 1:27 PM, Shawn O. Pearce <spearce@spearce.org> w=
+rote:
+> Ryan Phillips <ryan@trolocsis.com> wrote:
+>> I'm trying to follow the git-http-backend man page on setting up
+>> authenticated pushes to my apache server. Pulls work fine, and fully
+>> authenticated pushes work fine. However, when I try and setup
+>> anonymous pulls and authenticated pushes the push fails.
+>>
+>> I believe the culprit is this 403 error:
+>>
+>> 192.168.1.1 - - [09/Mar/2010:09:01:43 -0800] "GET
+>> /git/test.git/info/refs?service=3Dgit-receive-pack HTTP/1.1" 403 - "=
+-"
+>> "git/1.7.0.2.dirty"
 >
->   $ git add subdir/file
->   The following paths are ignored by one of your .gitignore files:
->   subdir
->   Use -f if you really want to add them.
+> Ugh. =A0Looks like I didn't design this thing right.
 >
-> then we don't really need to recurse. We just need to fix in_pathspec to
-> flag files that are _relevant_ to a pathspec.
+> The backend wants you to be authenticated before it will service
+> the git-receive-pack advertisement. =A0Even though its the same
+> data as the git-upload-pack advertisement (but slightly different
+> capability strings).
+>
+> Maybe we should consider doing something like this patch so that
+> the advertisement under info/refs?service=3Dgit-receive-pack can be
+> sent without needing authentication. =A0My only hesitation is this
+> makes it harder for the client to setup the authentication before
+> it needs to transmit the pack file, which may mean it needs to send
+> the pack twice.
+>
 
-Clever and to the point.
+Thank you everyone for your response.
 
-> And something like this seems to fix the OP's problem:
-> ...
-> Which is similar to your fix, but hoisted into the ignore-collection
-> phase. Like the original code and your patch, it suffers from using a
-> straight memcmp. I think it should actually be checking the pathspec
-> expansion to catch things like 'sub*/file' being relevant to 'subdir'.
+Shawn: That patch does fix the issue for now.
 
-Yeah.  Care to roll a patch to replace 13bb0ce (builtin-add: fix exclude
-handling, 2010-02-28)?  We probably should build the glob matching on top
-of your version instead.
+Regards,
+Ryan
