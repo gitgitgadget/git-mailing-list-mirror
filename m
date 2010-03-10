@@ -1,82 +1,56 @@
-From: =?UTF-8?Q?Am=C3=A9rico_Wang?= <xiyou.wangcong@gmail.com>
-Subject: Re: [PATCH 1/1] gitignore: do not ignore include/linux/
-Date: Wed, 10 Mar 2010 18:11:38 +0800
-Message-ID: <2375c9f91003100211vbe66a49g1bec37b2dcf609c2@mail.gmail.com>
-References: <4B90CBE5.9090102@viscovery.net>
-	 <1267780845-10547-1-git-send-email-jslaby@suse.cz>
-	 <m3pr3jkq26.fsf@localhost.localdomain> <4B9120F2.2020000@gmail.com>
-	 <alpine.DEB.2.00.1003100205170.17698@chino.kir.corp.google.com>
+From: Steven Drake <sdrake@xnet.co.nz>
+Subject: Re: [PATCH] Add tests for git format-patch --to and format.to config
+ option
+Date: Wed, 10 Mar 2010 16:53:57 +1300 (NZDT)
+Message-ID: <alpine.LNX.2.00.1003101643390.21063@vqena.qenxr.bet.am>
+References: <7v7hptt0mr.fsf@alter.siamese.dyndns.org> <20100306003946.GD27414@genesis.frugalware.org> <7vr5nykx55.fsf@alter.siamese.dyndns.org> <4B92EDFA.1000602@gmail.com> <7vaaukdch2.fsf@alter.siamese.dyndns.org> <4B937559.6000302@gmail.com>
+ <7vk4torn8j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jiri Slaby <jirislaby@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, Jiri Slaby <jslaby@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
-To: David Rientjes <rientjes@google.com>
-X-From: git-owner@vger.kernel.org Wed Mar 10 11:11:56 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Stephen Boyd <bebarino@gmail.com>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 10 05:02:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpItO-0005JY-Iv
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 11:11:54 +0100
+	id 1NpD7l-0000hN-C6
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 05:02:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751643Ab0CJKLl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Mar 2010 05:11:41 -0500
-Received: from qw-out-2122.google.com ([74.125.92.26]:23192 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751323Ab0CJKLj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Mar 2010 05:11:39 -0500
-Received: by qw-out-2122.google.com with SMTP id 9so4391qwb.37
-        for <multiple recipients>; Wed, 10 Mar 2010 02:11:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NjMV9Nt3EOlJxQUkX/BOuMT3l1KhEgznf1OF7Ge7DH0=;
-        b=IvxgClTgXsr0oYMqOxBg/StUXVKluLspldOtq+fH/0OpSN7i6a/XQLIaggMNTElLfL
-         RP5f6v+Hp/MFfnCZVJbyS2LYk62LNZazC3ZZGmkFxwdW8XGbrxyMVCrZT6PyQlau993A
-         QuL86KcmbUTVFCxkajWcVg/5ETZo20DB4EZIw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=VKcSLXaqp6X9CkQ15k1hY5QAJFBlwZIp2FmSAtmwqWS4pXm2wno/9+Pv1YZcsnqysU
-         qKXZIn2XFnr4Lkicj39M8+4P5drmfG8JQVMsmp3Rbi3HCVfjDBirIthU5EN6MlzuNBEK
-         zhZscM3/df7ze5Dqj6g3gtPzj7TvRBxMI/Pqo=
-Received: by 10.229.241.203 with SMTP id lf11mr33279qcb.85.1268215899056; Wed, 
-	10 Mar 2010 02:11:39 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.00.1003100205170.17698@chino.kir.corp.google.com>
+	id S1756180Ab0CJECR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Mar 2010 23:02:17 -0500
+Received: from ananke.wxnz.net ([58.28.4.122]:47681 "EHLO ananke.wxnz.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756151Ab0CJECQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Mar 2010 23:02:16 -0500
+Received: from idran.drake.org.nz (ip-118-90-113-200.xdsl.xnet.co.nz [118.90.113.200])
+	by ananke.wxnz.net (Postfix) with ESMTP id A809F170BDA;
+	Wed, 10 Mar 2010 17:02:12 +1300 (NZDT)
+In-Reply-To: <7vk4torn8j.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 10, 2010 at 6:07 PM, David Rientjes <rientjes@google.com> w=
-rote:
-> On Fri, 5 Mar 2010, Jiri Slaby wrote:
->
->> On 03/05/2010 11:43 AM, Jakub Narebski wrote:
->> >> +!/.gitignore
->> >> +!/.mailmap
->> >
->> > Actually you want to *not ignore* .gitignore and .mailmap (and
->> > .gitattributes which is missing here) anywhere, not only as top-le=
-vel
->> > file. =C2=A0So .gitignore and .mailmap should not be prepended wit=
-h slash.
->>
->> <and moved out of the 'Top-level generic files' section then>
->>
->
-> Please either revert 3b2a8c8f3c65 or merge the fixed up patch for
-> 2.6.34-rc2, otherwise include/linux will continue to be ignored by gi=
-t
-> just like it is for 2.6.34-rc1.
+On Sun, 7 Mar 2010, Junio C Hamano wrote:
+> Stephen Boyd <bebarino@gmail.com> writes:
+> 
+> > ... We have the
+> > option of making them consistent with the rest of git with a little bit
+> > of work. If you say --no-cc or --no-add-headers or --no-to the
+> > respective config should be overriden. If you say --to or --cc or
+> > --add-headers it should be appended. I doubt anyone would find that
+> > surprising since --no-* doesn't do anything right now.
+> 
+> That sounds like a sensible and practical way out, as it won't break
+> existing setup that expects the additive behaviour these two command
+> somehow ended up with, while allowing --no-* to override the config when
+> necessary.
 
-Why not apply the patch from Jiri? Since this problem is introduced
-by new version of git, not that commit.
+I agree with that.
+
+-- 
+Steven
