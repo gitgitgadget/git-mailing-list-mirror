@@ -1,78 +1,92 @@
-From: David Rientjes <rientjes@google.com>
-Subject: Re: [PATCH 1/1] gitignore: do not ignore include/linux/
-Date: Wed, 10 Mar 2010 02:07:08 -0800 (PST)
-Message-ID: <alpine.DEB.2.00.1003100205170.17698@chino.kir.corp.google.com>
-References: <4B90CBE5.9090102@viscovery.net> <1267780845-10547-1-git-send-email-jslaby@suse.cz> <m3pr3jkq26.fsf@localhost.localdomain> <4B9120F2.2020000@gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: ANN: Git for Windows 1.7.0.2 preview 20100309
+Date: Wed, 10 Mar 2010 08:38:13 +0800
+Message-ID: <be6fef0d1003091638w63881d08lde80a6180908e84d@mail.gmail.com>
+References: <alpine.DEB.1.00.1003091921140.18499@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, Jiri Slaby <jslaby@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
-To: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jiri Slaby <jirislaby@gmail.com>
-X-From: linux-kernel-owner@vger.kernel.org Wed Mar 10 11:07:36 2010
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysgit@googlegroups.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: 3tPSWSwcJB4s6r8pDNOv1px0.r3117D7vx8v33v0tv63947.r31@groups.bounces.google.com Wed Mar 10 02:24:27 2010
+Return-path: <3tPSWSwcJB4s6r8pDNOv1px0.r3117D7vx8v33v0tv63947.r31@groups.bounces.google.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-gx0-f188.google.com ([209.85.217.188])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1NpIpD-0003Ut-PO
-	for glk-linux-kernel-3@lo.gmane.org; Wed, 10 Mar 2010 11:07:36 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751535Ab0CJKHU (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 10 Mar 2010 05:07:20 -0500
-Received: from smtp-out.google.com ([216.239.33.17]:58239 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751036Ab0CJKHS (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 10 Mar 2010 05:07:18 -0500
-Received: from kpbe17.cbf.corp.google.com (kpbe17.cbf.corp.google.com [172.25.105.81])
-	by smtp-out.google.com with ESMTP id o2AA7E8f021442;
-	Wed, 10 Mar 2010 10:07:15 GMT
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
-	t=1268215635; bh=g0xN7ccCJX3Rb+gY99KQfINZeJ4=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type;
-	b=DUcj12ZXk48r+kCEASsaduP5GEXtYzOUxAft7J9YuEOKQc21pkKlBElJZipaYIkYA
-	 Zep7NsiFq0KW3e+BizZkg==
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:
-	references:user-agent:mime-version:content-type:x-system-of-record;
-	b=srSYvXLMUF3jlvB+j5vBW+zjjd+uazQUxZA65K9Sveb1WS7k9qaWJbweJCfWREcVZ
-	Zc2D9JaoooA1JMl8ai1WA==
-Received: from pxi31 (pxi31.prod.google.com [10.243.27.31])
-	by kpbe17.cbf.corp.google.com with ESMTP id o2AA7CJ7026923;
-	Wed, 10 Mar 2010 02:07:13 -0800
-Received: by pxi31 with SMTP id 31so1190795pxi.3
-        for <multiple recipients>; Wed, 10 Mar 2010 02:07:12 -0800 (PST)
-Received: by 10.114.8.2 with SMTP id 2mr746686wah.91.1268215632265;
-        Wed, 10 Mar 2010 02:07:12 -0800 (PST)
-Received: from chino.kir.corp.google.com (chino.kir.corp.google.com [172.31.6.135])
-        by mx.google.com with ESMTPS id 20sm1063880pzk.11.2010.03.10.02.07.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 10 Mar 2010 02:07:11 -0800 (PST)
-X-X-Sender: rientjes@chino.kir.corp.google.com
-In-Reply-To: <4B9120F2.2020000@gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-System-Of-Record: true
-Sender: linux-kernel-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
+	(envelope-from <3tPSWSwcJB4s6r8pDNOv1px0.r3117D7vx8v33v0tv63947.r31@groups.bounces.google.com>)
+	id 1NpAev-0004Ke-D3
+	for gcvm-msysgit@m.gmane.org; Wed, 10 Mar 2010 02:24:25 +0100
+Received: by gxk4 with SMTP id 4sf12913872gxk.6
+        for <gcvm-msysgit@m.gmane.org>; Tue, 09 Mar 2010 17:24:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:x-beenthere:received:received:received
+         :received:received:received-spf:received:mime-version:received
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :x-original-authentication-results:x-original-sender:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:x-thread-url
+         :x-message-url:sender:list-subscribe:list-unsubscribe:content-type;
+        bh=LJusjKwVP5Qn2yub/vHkfJ7YP/5Zs1W1dmgC47GyWR8=;
+        b=tTEVYogl1yZNeqtYxTXz6EZTKrKxmc5J56LhsTMdHz/lWNmTLowltwkUBcdaZIV7RP
+         1PWw+KotNAvldOTwA+MUEL7sgGQwOnyJYOTOYxgYOyTda9SOMKblxa9s8C/6VdNLtDyF
+         +FDtrHeXLjFxxnSuzpoVsv0fk6lhPOTi38v+w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:x-original-authentication-results
+         :x-original-sender:precedence:mailing-list:list-id:list-post
+         :list-help:list-archive:x-thread-url:x-message-url:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        b=J4ib6eReMwWl4PYuP1LYIyyYGpdQTat37znMgAgOFuQFgrMtpcWoDuvnhPdHfTGM/v
+         mvUBPq9LMSiia0nWSN5ikvpze6mwgxNgCXKBWhRpifjfamfHHXPRlA+i8ccyXA7BvavO
+         uNJKxA4XMdQDEtV+E78oiXio+psW8+n8IOUSE=
+Received: by 10.150.173.42 with SMTP id v42mr45555ybe.44.1268184244531;
+        Tue, 09 Mar 2010 17:24:04 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.151.88.32 with SMTP id q32ls260546ybl.6.p; Tue, 09 Mar 2010 
+	17:24:03 -0800 (PST)
+Received: by 10.150.47.41 with SMTP id u41mr34273ybu.18.1268184243719;
+        Tue, 09 Mar 2010 17:24:03 -0800 (PST)
+Received: by 10.231.172.83 with SMTP id k19mr50534ibz.29.1268181496325;
+        Tue, 09 Mar 2010 16:38:16 -0800 (PST)
+Received: by 10.231.172.83 with SMTP id k19mr50533ibz.29.1268181496294;
+        Tue, 09 Mar 2010 16:38:16 -0800 (PST)
+Received: from mail-iw0-f185.google.com (mail-iw0-f185.google.com [209.85.223.185])
+        by gmr-mx.google.com with ESMTP id 19si695995iwn.14.2010.03.09.16.38.15;
+        Tue, 09 Mar 2010 16:38:15 -0800 (PST)
+Received-SPF: pass (google.com: domain of rctay89@gmail.com designates 209.85.223.185 as permitted sender) client-ip=209.85.223.185;
+Received: by iwn15 with SMTP id 15so6935909iwn.7
+        for <msysgit@googlegroups.com>; Tue, 09 Mar 2010 16:38:15 -0800 (PST)
+Received: by 10.231.151.207 with SMTP id d15mr274287ibw.44.1268181493113; Tue, 
+	09 Mar 2010 16:38:13 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.1003091921140.18499@intel-tinevez-2-302>
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: 
+	domain of rctay89@gmail.com designates 209.85.223.185 as permitted sender) 
+	smtp.mail=rctay89@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+X-Original-Sender: rctay89@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, 
+	<mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
+X-Thread-Url: http://groups.google.com/group/msysgit/t/1a323b5ee3684208
+X-Message-Url: http://groups.google.com/group/msysgit/msg/dbcd8a988b53b8d
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
+	<mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
+	<mailto:msysgit+unsubscribe@googlegroups.com>
 
-On Fri, 5 Mar 2010, Jiri Slaby wrote:
+Hi,
 
-> On 03/05/2010 11:43 AM, Jakub Narebski wrote:
-> >> +!/.gitignore
-> >> +!/.mailmap
-> > 
-> > Actually you want to *not ignore* .gitignore and .mailmap (and
-> > .gitattributes which is missing here) anywhere, not only as top-level
-> > file.  So .gitignore and .mailmap should not be prepended with slash.
-> 
-> <and moved out of the 'Top-level generic files' section then>
-> 
+On Wed, Mar 10, 2010 at 2:24 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Git Release Notes (Git-1.7.0.2-preview20100309)
+> Last update: 9 March 2010
 
-Please either revert 3b2a8c8f3c65 or merge the fixed up patch for 
-2.6.34-rc2, otherwise include/linux will continue to be ignored by git 
-just like it is for 2.6.34-rc1.
+I really appreciate you and msysgit's community's work, thanks.
+
+-- 
+Cheers,
+Ray Chuan
