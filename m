@@ -1,67 +1,67 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: git-rebase -i prunes commits with empty commit-message
-Date: Wed, 10 Mar 2010 14:13:19 +0100
-Message-ID: <4B979AEF.5010201@alum.mit.edu>
-References: <40aa078e1003081207u20046916yda5a62d44ce7a401@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: ANN: Git for Windows 1.7.0.2 preview 20100309
+Date: Wed, 10 Mar 2010 14:14:06 +0100
+Message-ID: <vpqtyso5nfl.fsf@bauges.imag.fr>
+References: <alpine.DEB.1.00.1003091921140.18499@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Wed Mar 10 14:13:34 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: msysgit@googlegroups.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 10 14:14:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpLjB-0001Ht-Li
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 14:13:34 +0100
+	id 1NpLkB-0001sq-Bq
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 14:14:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756026Ab0CJNNZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Mar 2010 08:13:25 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:56641 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755626Ab0CJNNX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Mar 2010 08:13:23 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o2ADDK8d000626
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 10 Mar 2010 14:13:20 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.23) Gecko/20090817 Thunderbird/2.0.0.23 Mnenhy/0.7.6.666
-In-Reply-To: <40aa078e1003081207u20046916yda5a62d44ce7a401@mail.gmail.com>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1755831Ab0CJNOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Mar 2010 08:14:20 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:47477 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755518Ab0CJNOR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Mar 2010 08:14:17 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o2ADAx2G005980
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 10 Mar 2010 14:10:59 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NpLji-0001H4-Ub; Wed, 10 Mar 2010 14:14:07 +0100
+In-Reply-To: <alpine.DEB.1.00.1003091921140.18499@intel-tinevez-2-302> (Johannes Schindelin's message of "Tue\, 9 Mar 2010 19\:24\:40 +0100 \(CET\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 10 Mar 2010 14:10:59 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o2ADAx2G005980
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1268831460.0817@9dILho60EW01GmJy5QC40w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141885>
 
-Erik Faye-Lund wrote:
-> I'm in the process of converting an SVN repo to Git, and in the
-> process I found one quite disturbing feature of
-> git-rebase--interactive.sh: It discards commits with empty commit
-> messages!
-> 
-> Here's a recepie for reproducing the issue:
-> --->8---
-> git init
-> git commit -m "dummy" --allow-empty
-> git commit -m "dummy" --allow-empty
-> git commit -m "dummy" --allow-empty
-> git filter-branch -f --msg-filter 'sed -e "s/dummy//"'
-> git rebase -i HEAD~2
-> --->8---
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Does git really claim to handle commits with empty commit messages?
-That you have to use git-filter-branch to create the test case suggests
-that the answer is "no", but I don't know.  (git-commit, for example,
-refuses to create a commit with an empty message.)
+> Git Release Notes (Git-1.7.0.2-preview20100309)
+> Last update: 9 March 2010
 
-If indeed git requires commit messages to be non-empty, then the fault
-here seemingly lies with git-filter-branch for allowing commit messages
-to be completely deleted.
+I'm adding my thanks to the others already given here. I'm not a
+windows user, so not using it myself, but it's great to know that Git
+can run properly on Windows! Keep the great work!
 
-Michael
+Can you give an update on how much recomandable msysgit is? I mean, at
+some point in time, users seemed to be happy, but I remember you
+discouraging people from using it in production because of remaining
+serious bugs. Do you think it is now stable enough to be recommanded?
+More reliable than the cygwin version?
+
+Thanks,
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
