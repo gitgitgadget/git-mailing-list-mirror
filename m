@@ -1,101 +1,118 @@
-From: Christian MICHON <christian.michon@gmail.com>
-Subject: Re: [msysGit] ANN: Git for Windows 1.7.0.2 preview 20100309
-Date: Wed, 10 Mar 2010 14:19:49 +0100
-Message-ID: <46d6db661003100519v7fe84ffg4ffb1cf3aae15778@mail.gmail.com>
-References: <alpine.DEB.1.00.1003091921140.18499@intel-tinevez-2-302>
-	 <46d6db661003092258t22f2ee5ga720f18a859db957@mail.gmail.com>
-	 <alpine.DEB.1.00.1003101329550.3006@intel-tinevez-2-302>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: git-rebase -i prunes commits with empty commit-message
+Date: Wed, 10 Mar 2010 14:34:39 +0100
+Message-ID: <40aa078e1003100534j189eef5kd60855f80e9dd626@mail.gmail.com>
+References: <40aa078e1003081207u20046916yda5a62d44ce7a401@mail.gmail.com>
+	 <4B979AEF.5010201@alum.mit.edu>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 10 14:20:09 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Mar 10 14:34:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpLpY-0005FU-Hz
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 14:20:08 +0100
+	id 1NpM3i-0000oA-Fm
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 14:34:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756468Ab0CJNTy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Mar 2010 08:19:54 -0500
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:38575 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756447Ab0CJNTv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Mar 2010 08:19:51 -0500
-Received: by bwz1 with SMTP id 1so4910657bwz.21
-        for <git@vger.kernel.org>; Wed, 10 Mar 2010 05:19:50 -0800 (PST)
+	id S1756479Ab0CJNel convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Mar 2010 08:34:41 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:55989 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756357Ab0CJNek convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Mar 2010 08:34:40 -0500
+Received: by wyb38 with SMTP id 38so97337wyb.19
+        for <git@vger.kernel.org>; Wed, 10 Mar 2010 05:34:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=XZ1qClzyVQryUDonrBICAmiUgBsh7qC2bwcvlZVw49c=;
-        b=q7Cponb3NIWJ/TJFrPFYU1aGRA7/NI7gsxJQjAKFC8Ro1dtj8VI5Hf4jv3l1wyKtoB
-         K7pnhDN72/AXt3p7ffZVspaVgYtuKCdNsLMKx2ucyu6Hp2XePRBqu/AMElvx1fJqZB6i
-         QXT3Iy4oRTgF5C2Q05pZfOWfVHCx33YX7zZFo=
+        bh=sa8ulKRg4ysjtGmBiYgEml1YL89Fc0UrZT1JR1D2Enw=;
+        b=kkLPutOhuIytNb4RvxqDLysTR82Q2kv0I+h1K4rTPpHt6Fe6G1pliZY+cw6S2nSHvI
+         O0vG4B8Pu04Lt8AU/C20w1pDqgOpZrqqfMcJKEZc3GAMsiksAyBvCZr/cmh83tHM2zNe
+         7XMJC1l1RuLYSS6Ht9RkjECZkHCLcGZEFoGnU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=LSrvscEmPOOSCPcNgsBLcJkr/DgAUpH2SPqF4rkA6MUDLAmpDWOD+VnSz2mebWhvLk
-         sitFIHQm/6mvSWcR8JrGatuCsKD4ejSHhP4fOPmwM4EaZZdWAX2vIleKPgwFOEFzJwG7
-         fZvy01Uku4TNh3FYx6LDDDdJfKhid5ybqMSIg=
-Received: by 10.204.9.152 with SMTP id l24mr1597042bkl.193.1268227189806; Wed, 
-	10 Mar 2010 05:19:49 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.1003101329550.3006@intel-tinevez-2-302>
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=N30qpqwkxOpxWMra5JXPqAfMLp43tU/sfQFL5ETf+0ODpcrg6td8AcAUvSIfkplGeF
+         rD04y8ykstTp5sDqB7cOs7A7fh8m95cSPNVuW5XSVIvm/C2U4cw4+EABceEGBxe8tMbE
+         IP7Cem7ZPAg/UgeEGzkh7W73siAhXcwe87bFc=
+Received: by 10.216.90.208 with SMTP id e58mr943905wef.57.1268228079138; Wed, 
+	10 Mar 2010 05:34:39 -0800 (PST)
+In-Reply-To: <4B979AEF.5010201@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141887>
 
-On Wed, Mar 10, 2010 at 1:30 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Wed, 10 Mar 2010, Christian MICHON wrote:
->
->> On Tue, Mar 9, 2010 at 7:24 PM, Johannes Schindelin
->> <Johannes.Schindelin@gmx.de> wrote:
+On Wed, Mar 10, 2010 at 2:13 PM, Michael Haggerty <mhagger@alum.mit.edu=
+> wrote:
+> Erik Faye-Lund wrote:
+>> I'm in the process of converting an SVN repo to Git, and in the
+>> process I found one quite disturbing feature of
+>> git-rebase--interactive.sh: It discards commits with empty commit
+>> messages!
 >>
->> > - .git* files can be associated with the default text editor (issu=
-e
->> > =A0 397).
->>
->> I was first mislead by this feature. I thought I could also edit
->> .git/* like config and all...
->>
->> This one feels weird here on Vista: .gitignore or .gitattributes end
->> up having no name visible at all on Explorer file view. I can only s=
-ee
->> their real names once I fire the editor, on the title bar of the
->> editor. Is this expected ?
+>> Here's a recepie for reproducing the issue:
+>> --->8---
+>> git init
+>> git commit -m "dummy" --allow-empty
+>> git commit -m "dummy" --allow-empty
+>> git commit -m "dummy" --allow-empty
+>> git filter-branch -f --msg-filter 'sed -e "s/dummy//"'
+>> git rebase -i HEAD~2
+>> --->8---
 >
-> What do you mean? Remember: I do not have Vista, you'll have to help =
-me a
-> little to understand the problem. Maybe in this case, a screenshot wo=
-uld
-> help. Or if you have an idea how to solve the issue, a patch :-)
->
+> Does git really claim to handle commits with empty commit messages?
+> That you have to use git-filter-branch to create the test case sugges=
+ts
+> that the answer is "no", but I don't know. =A0(git-commit, for exampl=
+e,
+> refuses to create a commit with an empty message.)
 
-What I meant is that in any folder view (icon,list,etc...) I see the
-icon corresponding to default editor files (in this case notepad), but
-the name is blanked. I cannot see the name of the file until I double
-click on it: by then, the name appears in the title bar of notepad. I
-hope this time the explaination is clearer.
+If git didn't, I'd expect it to be impossible to create them. This was
+just a minimal example on how to reproduce it, and it's a silly
+use-case. I think my original way of getting into the state was a tad
+more legitimate:
+1) I had an SVN-repo with empty commit-messages
+2) I imported that SVN-repo into git through git-svn, and git-svn
+appended it's meta-data to the otherwise empty commit-message.
+3) I used git-filter-branch to remove the git-svn metadata (as the
+git-filter-branch man-page suggest)
 
-I'll send a screenshot tonight, not at home right now :-(
+I don't know what happens when git-svn encounter empty commit-messages
+with the --no-metadata option enabled. In my case, the decision to
+fully migrate the repo to Git (instead of just using git-svn as a
+nicer svn-frontend) came long after 1) and 2) were done.
 
-I actually installed it on XP here turning this feature off (I want to
-find easily my .gitignore and .gitattributes).
+> If indeed git requires commit messages to be non-empty, then the faul=
+t
+> here seemingly lies with git-filter-branch for allowing commit messag=
+es
+> to be completely deleted.
 
-No idea on how to solve this yet. I'll look.
+If there is some decided-upon restriction that commit-messages cannot
+be empty, then I agree with you.
+
+=46rom experiments, it seems that git-commit does not seem to allow
+empty commit-messages. But I can't find this documented. I'm not sure
+what git-commit-tree allows, but I think it should deny creating
+commits with empty messages (possibly unless some option is given) if
+there should be a restriction, because most scripts use this to
+generate commits AFAIK.
+
+But to be honest, it seems to me like in this precise instance it's
+probably better to just fix git-rebase--interactive.sh. There's no
+good reason for it to barf on the commits -- especially since
+noon-interactive rebase handles them just fine. Unless someone screams
+out loud, I might take a stab at it when I get time.
 
 --=20
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git=
- inside !
+Erik "kusma" Faye-Lund
