@@ -1,142 +1,54 @@
-From: Alexander Gladysh <agladysh@gmail.com>
-Subject: Re: Cherry-pick with symlinks fails horribly
-Date: Wed, 10 Mar 2010 21:54:05 +0300
-Message-ID: <c6c947f61003101054j514d8d19g5810deb124ac2106@mail.gmail.com>
-References: <c6c947f61003081728u48292de4x6f2c26e1ea9c1756@mail.gmail.com>
+From: MALAISE Pascal <malaise@magic.fr>
+Subject: wishlist: git gui not listing untracked files in unstaged list
+Date: Wed, 10 Mar 2010 19:43:18 +0000 (UTC)
+Message-ID: <loom.20100310T203316-38@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 10 20:01:36 2010
+X-From: git-owner@vger.kernel.org Wed Mar 10 20:45:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpR9x-0003tm-E7
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 20:01:33 +0100
+	id 1NpRqD-0002us-TW
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 20:45:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932751Ab0CJTBY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Mar 2010 14:01:24 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:58590 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932417Ab0CJTBX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Mar 2010 14:01:23 -0500
-Received: by pwj5 with SMTP id 5so440603pwj.19
-        for <git@vger.kernel.org>; Wed, 10 Mar 2010 11:01:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=uILGFFItHJX9ceRKTj+wHqsz01IJ9eURkKxISfBFR2c=;
-        b=hTd1GwGEW+RY7y+kZsQTIkqesFwyj3jlMWOZBH/5jl5vPR53udCywmix0oevVLNI61
-         vrT1hv/gZDFZsaFFKkd2EobnfGePYXixdJySK4RgZpTLkxZhrdGWgZD4qgXxEm31jkzZ
-         Wnn8fF1adexNV1tqzMjjkExQy65UnFbfWDnBU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=N4ShCT+0ryqjIISBlMpohfDi5FU+rduN1pGO6bAIlNHQdqZG4kUGif//BXS6aJzawa
-         GFlq385VAczpzYyc8zA7bCwCwP/mc2UJQheFD964+rl95aWavNcutC//qWLNxQMLcm9e
-         CkNwESVKEjVFY9EOxcYPaFULHDPxnb/IaTcm8=
-Received: by 10.141.14.21 with SMTP id r21mr1067904rvi.70.1268247245508; Wed, 
-	10 Mar 2010 10:54:05 -0800 (PST)
-In-Reply-To: <c6c947f61003081728u48292de4x6f2c26e1ea9c1756@mail.gmail.com>
+	id S1753368Ab0CJTpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Mar 2010 14:45:08 -0500
+Received: from lo.gmane.org ([80.91.229.12]:49306 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753462Ab0CJTpG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Mar 2010 14:45:06 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NpRq2-0002qA-O1
+	for git@vger.kernel.org; Wed, 10 Mar 2010 20:45:02 +0100
+Received: from fon31-1-78-224-49-155.fbx.proxad.net ([78.224.49.155])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 10 Mar 2010 20:45:02 +0100
+Received: from malaise by fon31-1-78-224-49-155.fbx.proxad.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 10 Mar 2010 20:45:02 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 78.224.49.155 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.18) Gecko/2010021501 Ubuntu/8.04 (hardy) Firefox/3.0.18)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141913>
 
-Sorry to nag, but... any help?
+Many projects are organized so that the result of compilation is mixed with
+sources.
+It would be very useful to configure git gui so that untracked files are not
+listed in the un-staged list.
+I have patched git gui, function rescan_stage2, line 1414 to do so:
+  # set fd_lo [eval git_read ls-files --others -z $ls_others]
+  set fd_lo [eval git_read ls-files -z $ls_others]
 
-Alexander.
-
-On Tue, Mar 9, 2010 at 04:28, Alexander Gladysh <agladysh@gmail.com> wr=
-ote:
-> Hi, list!
->
-> OS X 10.6.2
-> Git 1.7.0.2
->
-> I'm complaining about Git symlink handling again. This time it is che=
-rry-pick.
->
-> In my repo I have a symlink pointing to a directory.
->
-> I swap symlink with the directory in a single commit.
->
-> Now, if I try to cherry-pick any later commit from the branch that ha=
-s
-> that swap commit to a branch that have not, cherry-pick fails
-> horribly.
->
-> See script to reproduce the bug below (run it in a clean directory).
->
-> Output example:
->
-> $ git cherry-pick <SHA>
->
-> Automatic cherry-pick failed. =A0After resolving the conflicts,
-> mark the corrected paths with 'git add <paths>' or 'git rm <paths>'
-> and commit the result with:
->
-> =A0 =A0 =A0 =A0git commit -c 6a398597ce7a00fe05f43ff88808303eb151dfb5
->
-> $ git status # Note the "Untracked files" section
->
-> # On branch master
-> # Changes to be committed:
-> # =A0 (use "git reset HEAD <file>..." to unstage)
-> #
-> # =A0 =A0 =A0 renamed: =A0 =A0a/f -> f1
-> #
-> # Unmerged paths:
-> # =A0 (use "git reset HEAD <file>..." to unstage)
-> # =A0 (use "git add/rm <file>..." as appropriate to mark resolution)
-> #
-> # =A0 =A0 =A0 added by us: =A0 =A0 =A0 =A0b/a
-> #
-> # Untracked files:
-> # =A0 (use "git add <file>..." to include in what will be committed)
-> #
-> # =A0 =A0 =A0 b/a~HEAD
->
-> (Also I've seen git reset --hard to fail afterwards, complaining it
-> can't delete a directory, but I can't reproduce it now.)
->
-> I see a similar behaviour if I try to do interactive rebase accross
-> symlink swap commit.
->
-> Alexander.
->
-> #! /bin/bash
->
-> git init
->
-> mkdir a
-> touch a/f
-> git add a
-> git commit -m "a"
->
-> mkdir b
-> ln -s ../a b/a
-> git add b
-> git commit -m "b"
->
-> git checkout -b branch
-> rm b/a
-> mv a b/
-> ln -s b/a a
-> git add .
-> git commit -m "swap"
->
-> touch f1
-> git add f1
-> git commit -m "f1"
->
-> git checkout master
->
-> git cherry-pick `git rev-parse branch` # This one breaks horribly
->
+but it would be nice to make this behavior tunable via the "Options..." menu.
