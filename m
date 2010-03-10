@@ -1,114 +1,78 @@
-From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-Subject: Re: ANN: Git for Windows 1.7.0.2 preview 20100309
-Date: Wed, 10 Mar 2010 08:48:01 +0100
-Organization: ATLAS Elektronik GmbH
-Message-ID: <4B974EB1.4010001@atlas-elektronik.com>
-References: <alpine.DEB.1.00.1003091921140.18499@intel-tinevez-2-302>
+From: David Rientjes <rientjes@google.com>
+Subject: Re: [PATCH 1/1] gitignore: do not ignore include/linux/
+Date: Wed, 10 Mar 2010 02:07:08 -0800 (PST)
+Message-ID: <alpine.DEB.2.00.1003100205170.17698@chino.kir.corp.google.com>
+References: <4B90CBE5.9090102@viscovery.net> <1267780845-10547-1-git-send-email-jslaby@suse.cz> <m3pr3jkq26.fsf@localhost.localdomain> <4B9120F2.2020000@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "msysgit@googlegroups.com" <msysgit@googlegroups.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: 3eFWXSwAAB7AcioiWYjWeeWbUWhekfi.Sec@groups.bounces.google.com Wed Mar 10 09:17:17 2010
-Return-path: <3eFWXSwAAB7AcioiWYjWeeWbUWhekfi.Sec@groups.bounces.google.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-gx0-f188.google.com ([209.85.217.188])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, Jiri Slaby <jslaby@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jiri Slaby <jirislaby@gmail.com>
+X-From: linux-kernel-owner@vger.kernel.org Wed Mar 10 11:07:36 2010
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <3eFWXSwAAB7AcioiWYjWeeWbUWhekfi.Sec@groups.bounces.google.com>)
-	id 1NpH6T-0007Xd-Cr
-	for gcvm-msysgit@m.gmane.org; Wed, 10 Mar 2010 09:17:17 +0100
-Received: by gxk4 with SMTP id 4sf13508879gxk.6
-        for <gcvm-msysgit@m.gmane.org>; Wed, 10 Mar 2010 00:17:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:x-beenthere:received:received:received
-         :received:received:received-spf:received:x-auditid:received:received
-         :x-spam-checker-version:x-spam-level:x-spam-status:received
-         :message-id:date:from:organization:user-agent:mime-version:to:cc
-         :subject:references:in-reply-to:x-enigmail-version
-         :x-brightmail-tracker:x-original-authentication-results
-         :x-original-sender:precedence:mailing-list:list-id:list-post
-         :list-help:list-archive:x-thread-url:x-message-url:sender
-         :list-subscribe:list-unsubscribe:content-type
-         :content-transfer-encoding;
-        bh=HX0tKGsBbrDySWgcjKegahVEYPewPqJbtkmFf+f4U/I=;
-        b=NKY7H5BEqT+YooLLPc9msO03nJHjLuSP0HQouXRvx6Nr+k3ej9IzXtt2vrgRKZK3iJ
-         yZM07DSx7ytqRm 
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:x-auditid:x-spam-checker-version
-         :x-spam-level:x-spam-status:message-id:date:from:organization
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:x-brightmail-tracker
-         :x-original-authentication-results:x-original-sender:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:x-thread-url
-         :x-message-url:sender:list-subscribe:list-unsubscribe:content-type
-         :content-transfer-encoding;
-        b=KiMzV+R0j8ukaxRXsN2VnCSuYp52wW8W+D+V3bKtsxp0CPYiD0dAZ+nS3qK5i0Mnpd
-         dkDjFl4wu7HCbbYxOKPmn7jID0JYyazAuuaksz1/1YiY7B/EtXwpRCOo3A+moyCOIwol
-         EoVyH5mIVrxivNUXayrqlI4UoUKD9rcoU0fZM=
-Received: by 10.90.107.19 with SMTP id f19mr96825agc.58.1268209017028;
-        Wed, 10 Mar 2010 00:16:57 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.86.126.20 with SMTP id y20ls237321fgc.3.p; Wed, 10 Mar 2010 
-	00:16:55 -0800 (PST)
-Received: by 10.87.40.5 with SMTP id s5mr65408fgj.6.1268209014993;
-        Wed, 10 Mar 2010 00:16:54 -0800 (PST)
-Received: by 10.223.61.6 with SMTP id r6mr54534fah.9.1268207317655;
-        Tue, 09 Mar 2010 23:48:37 -0800 (PST)
-Received: by 10.223.61.6 with SMTP id r6mr54533fah.9.1268207317632;
-        Tue, 09 Mar 2010 23:48:37 -0800 (PST)
-Received: from mail96.atlas.de (lxsrv96.atlas.de [194.156.172.86])
-        by gmr-mx.google.com with ESMTP id 11si84760fxm.10.2010.03.09.23.48.37;
-        Tue, 09 Mar 2010 23:48:37 -0800 (PST)
-Received-SPF: neutral (google.com: 194.156.172.86 is neither permitted nor denied by best guess record for domain of stefan.naewe@atlas-elektronik.com) client-ip=194.156.172.86;
-Received: from VSSRV01.atlas.de (vssrv01.atlas.de [10.200.101.18])
-	by mail96.atlas.de (Postfix) with ESMTP id ACF6C1389F
-	for <msysgit@googlegroups.com>; Wed, 10 Mar 2010 08:48:36 +0100 (CET)
-X-AuditID: 0ac86512-00000094000005bc-c2-4b974ed41697
-Received: from mgsrv01.atlas.de ([10.200.101.16]) by VSSRV01.atlas.de with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 10 Mar 2010 08:48:36 +0100
-Received: from mgsrv01.atlas.de (localhost [127.0.0.1])
-	by mail01-int.atlas.de (Postfix) with ESMTP id 257A92716A;
-	Wed, 10 Mar 2010 08:48:36 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mgsrv01.atlas.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=5.0 tests=ALL_TRUSTED,BAYES_50
-	autolearn=disabled version=3.2.5
-Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
-	by mail01.atlas.de (Postfix) with ESMTP id 11C4627169;
-	Wed, 10 Mar 2010 08:48:36 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
-In-Reply-To: <alpine.DEB.1.00.1003091921140.18499@intel-tinevez-2-302>
-X-Enigmail-Version: 1.0.1
-X-Brightmail-Tracker: AAAAAA==
-X-Original-Authentication-Results: gmr-mx.google.com; spf=neutral (google.com: 
-	194.156.172.86 is neither permitted nor denied by best guess record for 
-	domain of stefan.naewe@atlas-elektronik.com) smtp.mail=stefan.naewe@atlas-elektronik.com
-X-Original-Sender: stefan.naewe@atlas-elektronik.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, 
-	<mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-X-Thread-Url: http://groups.google.com/group/msysgit/t/1a323b5ee3684208
-X-Message-Url: http://groups.google.com/group/msysgit/msg/713732d170a45ec8
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
-	<mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
-	<mailto:msysgit+unsubscribe@googlegroups.com>
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1NpIpD-0003Ut-PO
+	for glk-linux-kernel-3@lo.gmane.org; Wed, 10 Mar 2010 11:07:36 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751535Ab0CJKHU (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 10 Mar 2010 05:07:20 -0500
+Received: from smtp-out.google.com ([216.239.33.17]:58239 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751036Ab0CJKHS (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 10 Mar 2010 05:07:18 -0500
+Received: from kpbe17.cbf.corp.google.com (kpbe17.cbf.corp.google.com [172.25.105.81])
+	by smtp-out.google.com with ESMTP id o2AA7E8f021442;
+	Wed, 10 Mar 2010 10:07:15 GMT
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
+	t=1268215635; bh=g0xN7ccCJX3Rb+gY99KQfINZeJ4=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type;
+	b=DUcj12ZXk48r+kCEASsaduP5GEXtYzOUxAft7J9YuEOKQc21pkKlBElJZipaYIkYA
+	 Zep7NsiFq0KW3e+BizZkg==
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:
+	references:user-agent:mime-version:content-type:x-system-of-record;
+	b=srSYvXLMUF3jlvB+j5vBW+zjjd+uazQUxZA65K9Sveb1WS7k9qaWJbweJCfWREcVZ
+	Zc2D9JaoooA1JMl8ai1WA==
+Received: from pxi31 (pxi31.prod.google.com [10.243.27.31])
+	by kpbe17.cbf.corp.google.com with ESMTP id o2AA7CJ7026923;
+	Wed, 10 Mar 2010 02:07:13 -0800
+Received: by pxi31 with SMTP id 31so1190795pxi.3
+        for <multiple recipients>; Wed, 10 Mar 2010 02:07:12 -0800 (PST)
+Received: by 10.114.8.2 with SMTP id 2mr746686wah.91.1268215632265;
+        Wed, 10 Mar 2010 02:07:12 -0800 (PST)
+Received: from chino.kir.corp.google.com (chino.kir.corp.google.com [172.31.6.135])
+        by mx.google.com with ESMTPS id 20sm1063880pzk.11.2010.03.10.02.07.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 10 Mar 2010 02:07:11 -0800 (PST)
+X-X-Sender: rientjes@chino.kir.corp.google.com
+In-Reply-To: <4B9120F2.2020000@gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-System-Of-Record: true
+Sender: linux-kernel-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
 
-On 3/9/2010 7:24 PM, Johannes Schindelin wrote:
-> Git Release Notes (Git-1.7.0.2-preview20100309)
-> Last update: 9 March 2010
+On Fri, 5 Mar 2010, Jiri Slaby wrote:
 
-Thanks to all for the good work!
+> On 03/05/2010 11:43 AM, Jakub Narebski wrote:
+> >> +!/.gitignore
+> >> +!/.mailmap
+> > 
+> > Actually you want to *not ignore* .gitignore and .mailmap (and
+> > .gitattributes which is missing here) anywhere, not only as top-level
+> > file.  So .gitignore and .mailmap should not be prepended with slash.
+> 
+> <and moved out of the 'Top-level generic files' section then>
+> 
 
-Stefan
--- 
-----------------------------------------------------------------
-/dev/random says: Fife. n. Small shrill instrument that rhymes with wife.
+Please either revert 3b2a8c8f3c65 or merge the fixed up patch for 
+2.6.34-rc2, otherwise include/linux will continue to be ignored by git 
+just like it is for 2.6.34-rc1.
