@@ -1,50 +1,103 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] format-patch: learn to fill comment section of email from notes
-Date: Wed, 10 Mar 2010 15:08:02 +0100
-Message-ID: <201003101508.02625.trast@student.ethz.ch>
-References: <7vd3zurmoa.fsf@alter.siamese.dyndns.org> <6cf9010742df96e0c68ef8adc1ab392c08525bc2.1266946262.git.trast@student.ethz.ch>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: ANN: Git for Windows 1.7.0.2 preview 20100309
+Date: Wed, 10 Mar 2010 15:22:23 +0100
+Message-ID: <4B97AB1F.8060406@viscovery.net>
+References: <alpine.DEB.1.00.1003091921140.18499@intel-tinevez-2-302>	 <46d6db661003092258t22f2ee5ga720f18a859db957@mail.gmail.com>	 <alpine.DEB.1.00.1003101329550.3006@intel-tinevez-2-302> <46d6db661003100519v7fe84ffg4ffb1cf3aae15778@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-15"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j6t@kdbg.org>, Johan Herland <johan@herland.net>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 10 15:08:32 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+ msysgit@googlegroups.com, git@vger.kernel.org
+To: Christian MICHON <christian.michon@gmail.com>
+X-From: 3I6uXSwYNB7Ea.jZokmZjTfmVip.eVkdjpjXZkXffXcVXiflgj.Tfd@groups.bounces.google.com Wed Mar 10 15:23:14 2010
+Return-path: <3I6uXSwYNB7Ea.jZokmZjTfmVip.eVkdjpjXZkXffXcVXiflgj.Tfd@groups.bounces.google.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-gx0-f188.google.com ([209.85.217.188])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpMaN-0005h7-Lk
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 15:08:32 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932373Ab0CJOI0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Mar 2010 09:08:26 -0500
-Received: from gwse.ethz.ch ([129.132.178.238]:9624 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932198Ab0CJOIZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Mar 2010 09:08:25 -0500
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Wed, 10 Mar
- 2010 15:08:23 +0100
-Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Wed, 10 Mar
- 2010 15:08:02 +0100
-User-Agent: KMail/1.13.1 (Linux/2.6.31.12-0.1-desktop; KDE/4.4.1; x86_64; ; )
-In-Reply-To: <6cf9010742df96e0c68ef8adc1ab392c08525bc2.1266946262.git.trast@student.ethz.ch>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141903>
+	(envelope-from <3I6uXSwYNB7Ea.jZokmZjTfmVip.eVkdjpjXZkXffXcVXiflgj.Tfd@groups.bounces.google.com>)
+	id 1NpMoB-0006EN-ML
+	for gcvm-msysgit@m.gmane.org; Wed, 10 Mar 2010 15:22:47 +0100
+Received: by gxk4 with SMTP id 4sf14060415gxk.6
+        for <gcvm-msysgit@m.gmane.org>; Wed, 10 Mar 2010 06:22:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:x-beenthere:received:received:received
+         :received:received-spf:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-spam-score:x-original-authentication-results:x-original-sender
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :x-thread-url:x-message-url:sender:list-subscribe:list-unsubscribe
+         :content-type:content-transfer-encoding;
+        bh=F3yMEHI5vDc+VEjkpEKhJNDE1VGvDJKDGn7VeQnRGOk=;
+        b=RdfUKh30iMwavKUwvJ/mzQ6SnbnWQudkxHC2w++YVmCckK9NiznZmorW4Qbejpll94
+         lXvpMK4b9rsU6EQbgZxQ08bxAjjOZhKprLWayADWU9OTbcFxaduDtcyH7tgJRvrz0wOD
+         sqTOQWpWrioEvcJ4YKXLxlfHNhvJ3ud88HnW4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:message-id:date:from:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:x-spam-score
+         :x-original-authentication-results:x-original-sender:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:x-thread-url
+         :x-message-url:sender:list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding;
+        b=hrYM5U8fgNegP+NZzJOOoM9oKG4aFjvzjex9Y1N7lD7x5oLLOKdOPByg0Z/XJ5Boka
+         jvo9bXweKVmpUhFX0O9X3CbFg3PtoylY38tFDGe5CuWggcSOiMxAu4FZQ+E2x+un+fd6
+         anij5oBi6/AVBlVN7rZjhC+d4jwE+Cxo5nRqs=
+Received: by 10.91.93.19 with SMTP id v19mr24181agl.18.1268230947799;
+        Wed, 10 Mar 2010 06:22:27 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.204.156.19 with SMTP id u19ls759643bkw.2.p; Wed, 10 Mar 2010 
+	06:22:25 -0800 (PST)
+Received: by 10.204.144.15 with SMTP id x15mr91023bku.39.1268230945738;
+        Wed, 10 Mar 2010 06:22:25 -0800 (PST)
+Received: by 10.204.144.15 with SMTP id x15mr91022bku.39.1268230945717;
+        Wed, 10 Mar 2010 06:22:25 -0800 (PST)
+Received: from lilzmailso02.liwest.at (lilzmailso02.liwest.at [212.33.55.13])
+        by gmr-mx.google.com with ESMTP id 18si490761bwz.8.2010.03.10.06.22.25;
+        Wed, 10 Mar 2010 06:22:25 -0800 (PST)
+Received-SPF: neutral (google.com: 212.33.55.13 is neither permitted nor denied by best guess record for domain of j.sixt@viscovery.net) client-ip=212.33.55.13;
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NpMno-0004Bp-K6; Wed, 10 Mar 2010 15:22:24 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 4D47B1660F;
+	Wed, 10 Mar 2010 15:22:24 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <46d6db661003100519v7fe84ffg4ffb1cf3aae15778@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
+X-Original-Authentication-Results: gmr-mx.google.com; spf=neutral (google.com: 
+	212.33.55.13 is neither permitted nor denied by best guess record for domain 
+	of j.sixt@viscovery.net) smtp.mail=j.sixt@viscovery.net
+X-Original-Sender: j6t@kdbg.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, 
+	<mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
+X-Thread-Url: http://groups.google.com/group/msysgit/t/1a323b5ee3684208
+X-Message-Url: http://groups.google.com/group/msysgit/msg/10fabfdf9bb5054e
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
+	<mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141904>
 
-I accidentally sent out this and the "BROKEN" patch, they're the exact
-ones I posted on Feb 23 and should be disregarded.
+Christian MICHON schrieb:
+> On Wed, Mar 10, 2010 at 1:30 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>> On Wed, 10 Mar 2010, Christian MICHON wrote:
+>>> This one feels weird here on Vista: .gitignore or .gitattributes end
+>>> up having no name visible at all on Explorer file view. I can only see
+>>> their real names once I fire the editor, on the title bar of the
+>>> editor. Is this expected ?
 
-Sorry for the noise...
+Yes, when you have your Explorer in luser-mode. Go to the Options and
+*turn off* "Hide extensions of known files types". This unhides the "file
+extensions" .gitattributes, .gitignore, but also .txt, .doc, etc. that
+Windows knows about. :-P
 
-[And this time I can't even claim it was because I was hacking past
-midnight :-(]
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+-- Hannes
