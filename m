@@ -1,107 +1,74 @@
-From: Christian MICHON <christian.michon@gmail.com>
-Subject: Re: ANN: Git for Windows 1.7.0.2 preview 20100309
-Date: Wed, 10 Mar 2010 23:27:59 +0100
-Message-ID: <46d6db661003101427h78cd29b2g2e7147a58130dda0@mail.gmail.com>
-References: <alpine.DEB.1.00.1003091921140.18499@intel-tinevez-2-302>
-	 <vpqtyso5nfl.fsf@bauges.imag.fr>
-	 <alpine.DEB.1.00.1003101741350.3006@intel-tinevez-2-302>
-	 <4B9809C7.6060304@obry.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/6] Enable threaded async procedures whenever pthreads
+ is available
+Date: Wed, 10 Mar 2010 14:28:07 -0800
+Message-ID: <7v7hpjq0aw.fsf@alter.siamese.dyndns.org>
+References: <cover.1267889072.git.j6t@kdbg.org>
+ <7vk4tpdx9x.fsf@alter.siamese.dyndns.org> <20100306215051.GE2529@spearce.org>
+ <201003092100.36616.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	msysgit@googlegroups.com, git@vger.kernel.org
-To: pascal@obry.net
-X-From: git-owner@vger.kernel.org Wed Mar 10 23:28:18 2010
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Mar 10 23:28:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpUO1-000649-Pa
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 23:28:18 +0100
+	id 1NpUOE-0006Aj-6F
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 23:28:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757365Ab0CJW2F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Mar 2010 17:28:05 -0500
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:59491 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757362Ab0CJW2B convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Mar 2010 17:28:01 -0500
-Received: by bwz1 with SMTP id 1so5459912bwz.21
-        for <git@vger.kernel.org>; Wed, 10 Mar 2010 14:28:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MtERxN/iAm4D1cpYGVEG9741yL92dwFdVqkWUqhV99c=;
-        b=Cj4ldvw4zvVEiKjJTwzvz49/3/IgxDhNcwAfXueAjqjOtFRE/Dm0BkL34n7a5O2IuN
-         4Vy3BdCCnDODzXUe6ayMLNxSfXHDl2OgrP21r+8xIa/RJ+/LT6UzB1UNU3wo46nivJIS
-         OzWz6BfJoWdiNWUYoJBFHxTV+mGvHgZxu3xIo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fFu0CRU4f/HqRPj3Cp7VrCYcfaS7a9oAWds5bDLXoXACyQvr0hzVrtyAP5sWORCrdO
-         Vwz4nEbgB7+8g8auGpk4R2jToQwOqFkBSXKDXRW8fbZSY2HqdwcTG0cEz7XA/TcRoBg+
-         O2swBK+mbUIeRnU/rBxQDCXP0Xedu+xKqvidw=
-Received: by 10.204.20.77 with SMTP id e13mr2584005bkb.163.1268260079100; Wed, 
-	10 Mar 2010 14:27:59 -0800 (PST)
-In-Reply-To: <4B9809C7.6060304@obry.net>
+	id S1757366Ab0CJW2U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Mar 2010 17:28:20 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46488 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757352Ab0CJW2T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Mar 2010 17:28:19 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3915FA0AFF;
+	Wed, 10 Mar 2010 17:28:16 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=jxPdNY7vPhad
+	FZTLO4IVSuI5MkY=; b=Pz4KtNwMpjJic9eP1RKzcSth74dpadGYevxAlOzJXxy9
+	sRLV8F7GX2Hu6btkTN6FgcwQQNQtRJtgdbSSJlXPLTDN7m0qlGGiZAX0P0u1cchO
+	fOh+jGlGPrXdV+FZKl8C+g05E2nkSh25llJvDV+DcCaHqsmF68Rsxqq8ERRR24k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=iBb4JF
+	LppFL9eHuT0nG/bFaWWCWD51wYog1oIsKwzSEBPosEbdy5bsRuZ5UDEfqDuFN7Db
+	rPtc50TSh68N4J5OLZPYjtKGA7QHq1qtx+umlAGQN3Ql/AwT41Zg1nZhzNVyVS6d
+	7WsaMj7CRBc3ZWO3rIu6DuxBFTawNRVWA+Aog=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 03744A0AFC;
+	Wed, 10 Mar 2010 17:28:12 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 569CBA0AFB; Wed, 10 Mar
+ 2010 17:28:09 -0500 (EST)
+In-Reply-To: <201003092100.36616.j6t@kdbg.org> (Johannes Sixt's message of
+ "Tue\, 9 Mar 2010 21\:00\:36 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 36C163EE-2C94-11DF-B8C9-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141927>
 
-On Wed, Mar 10, 2010 at 10:06 PM, Pascal Obry <pascal@obry.net> wrote:
-> Le 10/03/2010 17:44, Johannes Schindelin a =E9crit :
->> I cannot say anything about the Cygwin version, as I haven't used it=
- in
->> ages.
->
-> I'm using Cygwin version since years now. I'm building Git daily from
-> master on Cygwin. No problem on my side with Git.
->
-> I have some issues with git-svn from time to time because some DLL ar=
-e
-> not properly relocated. I need to call Cygwin "rebaseall". This is of=
-ten
-> the case after installing a new version of SVN (under Cygwin) and/or
-> Perl. But apart from that git-svn run like a charm on Cygwin too. I
-> would expect Git on Cygwin a bit slower than a native version, but Gi=
-t
-> is so fast (and much faster than SVN) than it is just ok as-is.
->
-> Pascal.
->
-> --
->
-> --|------------------------------------------------------
-> --| Pascal Obry =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 T=
-eam-Ada Member
-> --| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
-> --|------------------------------------------------------
-> --| =A0 =A0http://www.obry.net =A0- =A0http://v2p.fr.eu.org
-> --| "The best way to travel is by means of imagination"
-> --|
-> --| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+Johannes Sixt <j6t@kdbg.org> writes:
 
-I did set up git from cygwin on windows 2003 server with gitolite, and
-I'm using msysgit on the clients side.
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+> On Samstag, 6. M=C3=A4rz 2010, Shawn O. Pearce wrote:
+>> I'm in favor of that.  If we have threaded delta search enabled,
+>> we probably can also run these async procedures in a POSIX thread
+>> rather than forking off a child.
+>
+> OK. The patch could look like this.
 
-Clearly I'll try sooner or later to remove cygwin from the equation to
-gain speed...
-
---=20
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git=
- inside !
+Will queue in 'pu', but as Shawn said, we should probably give another
+closer look at the callees that are started with this interface before
+moving forward.
