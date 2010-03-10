@@ -1,77 +1,91 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 00/12] Support columinized output in tag/branch/ls-files/grep
-Date: Wed, 10 Mar 2010 19:12:23 +0700
-Message-ID: <fcaeb9bf1003100412x7c08a312o4df114f91ebd7e8c@mail.gmail.com>
-References: <1267963785-473-1-git-send-email-pclouds@gmail.com>
-	 <4B9504C9.5000703@lsrfire.ath.cx>
-	 <fcaeb9bf1003080632o622c8c79x85b816edcf893bc3@mail.gmail.com>
-	 <4B967C36.90309@lsrfire.ath.cx>
-	 <fcaeb9bf1003091627p65ad6e60u4bbae2eb4e859f13@mail.gmail.com>
-	 <4B974998.5030708@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: 'git add' regression in git-1.7?
+Date: Tue, 09 Mar 2010 23:06:15 -0800
+Message-ID: <7veijsmza0.fsf@alter.siamese.dyndns.org>
+References: <hll45t$50o$1@ger.gmane.org>
+ <32541b131002182042p610fce4ex96efbffea9afe2ed@mail.gmail.com>
+ <hll65c$87a$1@ger.gmane.org>
+ <32541b131002182115t5501d0d1u19367a4d8e7627e4@mail.gmail.com>
+ <20100219053431.GB22645@coredump.intra.peff.net>
+ <20100219060249.GD22645@coredump.intra.peff.net>
+ <20100219082445.GB13691@coredump.intra.peff.net>
+ <7vhbp0ls26.fsf@alter.siamese.dyndns.org>
+ <20100309223729.GA25265@sigill.intra.peff.net>
+ <20100309230931.GC25265@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Mar 10 13:12:38 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	SungHyun Nam <goweol@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 10 08:06:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpKm8-0003PI-CM
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 13:12:32 +0100
+	id 1NpG02-0005jh-4w
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 08:06:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751354Ab0CJMM1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Mar 2010 07:12:27 -0500
-Received: from mail-yx0-f200.google.com ([209.85.210.200]:51078 "EHLO
-	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751090Ab0CJMMZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Mar 2010 07:12:25 -0500
-Received: by yxe38 with SMTP id 38so1538021yxe.22
-        for <git@vger.kernel.org>; Wed, 10 Mar 2010 04:12:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Z9iO+3CnyUR8y8DNmG7EwKVekvjMIHeEqt+1bkpAfnQ=;
-        b=vfreqakC3eLmREBRdMJWAqMLowYVr73QdiXp9sVG3In2KHOfXYsdWyQU+XJljMrF7W
-         aqCVcVcTMnV9jWkVIPxDQOE9zGIk1xKgJ30Tsyo3VvEhEf4YH87lHT9mcnPIAHSUYEQd
-         xPZyDcqp3lTK8e5124m6QIC7rwS9A7/vB/HP8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ip8i8s+Q7viw0huDMO4JX12np94AYQ0W61JHcuE2UK8XEHZwbkKmg54uED2Yg40oUW
-         1gLsB513t1lNZ1DN4WXpv04c0Yc9yaGdqtgFvCip523LJwJLHLcFikwxJ7oUhJjR8EhO
-         WTY2F609s9i98eWnhfCIlKXwyyBkKJqhke/6Q=
-Received: by 10.100.70.17 with SMTP id s17mr2124606ana.135.1268223143932; Wed, 
-	10 Mar 2010 04:12:23 -0800 (PST)
-In-Reply-To: <4B974998.5030708@viscovery.net>
+	id S1754639Ab0CJHGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Mar 2010 02:06:30 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43317 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753862Ab0CJHG2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Mar 2010 02:06:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 86610A03B3;
+	Wed, 10 Mar 2010 02:06:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MEYMvq1AzAr8VvkBUGC+OxuxVzI=; b=HerGXw
+	nwvgvSUz9mxvdbQbDOY/MScuHhApHFhHwW5JGfZduC4wkwvK7AMEAKwQ9TtFMqZ1
+	kM6rJpnLh5WlCPqT0bFvx1yUXiP4EFZ6DJ+iHJVnLKr6RMWKbLjSdWDsYHuj48W6
+	HR8dYAHTA+8igiCU6JMdIkDGr9uhtzRVwog9c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dpbXT7hZiwHjNpR6pBEyy6ZRHOZbM83E
+	Ru1OnVnzk2MDbAaj7UuR9QpgBpLp0OQu69ayYNkGSDuemX4jt97yvibIQEhVxKeS
+	HsOh1LnCesMg6x+9ipBZEV0UA+slHfneSMym6eAnNkKEjjz5E3Hrut7pIp84FwXi
+	r0j2mxeMEMI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3EF13A03B2;
+	Wed, 10 Mar 2010 02:06:23 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4E376A03AE; Wed, 10 Mar
+ 2010 02:06:17 -0500 (EST)
+In-Reply-To: <20100309230931.GC25265@sigill.intra.peff.net> (Jeff King's
+ message of "Tue\, 9 Mar 2010 18\:09\:31 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 6F92B01E-2C13-11DF-8CD9-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141874>
 
-On 3/10/10, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Nguyen Thai Ngoc Duy schrieb:
->
-> > On 3/9/10, Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
->
-> >> OK, forking out is easy, but replacing printf() calls with calls t=
-o feed
->  >>  the columnizer shouldn't be _that_ intrusive, either.
->  >
->  > Well, also fwrite() and write(). If disliked "if (blah) feed_it();
->  > else printf(as normal);" construct. But we can wrap it to
->  > feed_or_printf().
->
->
-> How about merging this into color_fprintf and friends?
+Jeff King <peff@peff.net> writes:
 
-Good idea.
---=20
-Duy
+> Actually, if we accept that the message simply mentions the excluded
+> path, i.e.:
+>
+>   $ git add subdir/file
+>   The following paths are ignored by one of your .gitignore files:
+>   subdir
+>   Use -f if you really want to add them.
+>
+> then we don't really need to recurse. We just need to fix in_pathspec to
+> flag files that are _relevant_ to a pathspec.
+
+Clever and to the point.
+
+> And something like this seems to fix the OP's problem:
+> ...
+> Which is similar to your fix, but hoisted into the ignore-collection
+> phase. Like the original code and your patch, it suffers from using a
+> straight memcmp. I think it should actually be checking the pathspec
+> expansion to catch things like 'sub*/file' being relevant to 'subdir'.
+
+Yeah.  Care to roll a patch to replace 13bb0ce (builtin-add: fix exclude
+handling, 2010-02-28)?  We probably should build the glob matching on top
+of your version instead.
