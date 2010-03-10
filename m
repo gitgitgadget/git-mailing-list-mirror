@@ -1,82 +1,82 @@
-From: Geert Bosch <bosch@adacore.com>
-Subject: Re: [PATCH] darwin: Use CommonCrypto to compute SHA1
-Date: Tue, 9 Mar 2010 23:00:33 -0500
-Message-ID: <392914AB-CF6D-4094-969D-6057608F86F8@adacore.com>
-References: <9AE94716-A53B-40A6-A7D9-CCD39B820390@apple.com>
-Mime-Version: 1.0 (Apple Message framework v1077)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeremy Huddleston <jeremyhu@apple.com>
-X-From: git-owner@vger.kernel.org Wed Mar 10 05:06:33 2010
+From: =?UTF-8?Q?Am=C3=A9rico_Wang?= <xiyou.wangcong@gmail.com>
+Subject: Re: [PATCH 1/1] gitignore: do not ignore include/linux/
+Date: Wed, 10 Mar 2010 18:11:38 +0800
+Message-ID: <2375c9f91003100211vbe66a49g1bec37b2dcf609c2@mail.gmail.com>
+References: <4B90CBE5.9090102@viscovery.net>
+	 <1267780845-10547-1-git-send-email-jslaby@suse.cz>
+	 <m3pr3jkq26.fsf@localhost.localdomain> <4B9120F2.2020000@gmail.com>
+	 <alpine.DEB.2.00.1003100205170.17698@chino.kir.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jiri Slaby <jirislaby@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>, Jiri Slaby <jslaby@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
+To: David Rientjes <rientjes@google.com>
+X-From: git-owner@vger.kernel.org Wed Mar 10 11:11:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpDBo-0001ri-U8
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 05:06:33 +0100
+	id 1NpItO-0005JY-Iv
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 11:11:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756177Ab0CJEG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Mar 2010 23:06:29 -0500
-Received: from rock.gnat.com ([205.232.38.15]:53506 "EHLO rock.gnat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756148Ab0CJEG1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Mar 2010 23:06:27 -0500
-X-Greylist: delayed 351 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Mar 2010 23:06:27 EST
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by filtered-rock.gnat.com (Postfix) with ESMTP id 026F82BAB8A;
-	Tue,  9 Mar 2010 23:00:35 -0500 (EST)
-X-Virus-Scanned: Debian amavisd-new at gnat.com
-Received: from rock.gnat.com ([127.0.0.1])
-	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id mAG-b6h09T7N; Tue,  9 Mar 2010 23:00:34 -0500 (EST)
-Received: from [172.16.1.4] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rock.gnat.com (Postfix) with ESMTPSA id AB2942BAB7C;
-	Tue,  9 Mar 2010 23:00:34 -0500 (EST)
-In-Reply-To: <9AE94716-A53B-40A6-A7D9-CCD39B820390@apple.com>
-X-Mailer: Apple Mail (2.1077)
+	id S1751643Ab0CJKLl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Mar 2010 05:11:41 -0500
+Received: from qw-out-2122.google.com ([74.125.92.26]:23192 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751323Ab0CJKLj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Mar 2010 05:11:39 -0500
+Received: by qw-out-2122.google.com with SMTP id 9so4391qwb.37
+        for <multiple recipients>; Wed, 10 Mar 2010 02:11:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NjMV9Nt3EOlJxQUkX/BOuMT3l1KhEgznf1OF7Ge7DH0=;
+        b=IvxgClTgXsr0oYMqOxBg/StUXVKluLspldOtq+fH/0OpSN7i6a/XQLIaggMNTElLfL
+         RP5f6v+Hp/MFfnCZVJbyS2LYk62LNZazC3ZZGmkFxwdW8XGbrxyMVCrZT6PyQlau993A
+         QuL86KcmbUTVFCxkajWcVg/5ETZo20DB4EZIw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VKcSLXaqp6X9CkQ15k1hY5QAJFBlwZIp2FmSAtmwqWS4pXm2wno/9+Pv1YZcsnqysU
+         qKXZIn2XFnr4Lkicj39M8+4P5drmfG8JQVMsmp3Rbi3HCVfjDBirIthU5EN6MlzuNBEK
+         zhZscM3/df7ze5Dqj6g3gtPzj7TvRBxMI/Pqo=
+Received: by 10.229.241.203 with SMTP id lf11mr33279qcb.85.1268215899056; Wed, 
+	10 Mar 2010 02:11:39 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.00.1003100205170.17698@chino.kir.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Mar 10, 2010 at 6:07 PM, David Rientjes <rientjes@google.com> w=
+rote:
+> On Fri, 5 Mar 2010, Jiri Slaby wrote:
+>
+>> On 03/05/2010 11:43 AM, Jakub Narebski wrote:
+>> >> +!/.gitignore
+>> >> +!/.mailmap
+>> >
+>> > Actually you want to *not ignore* .gitignore and .mailmap (and
+>> > .gitattributes which is missing here) anywhere, not only as top-le=
+vel
+>> > file. =C2=A0So .gitignore and .mailmap should not be prepended wit=
+h slash.
+>>
+>> <and moved out of the 'Top-level generic files' section then>
+>>
+>
+> Please either revert 3b2a8c8f3c65 or merge the fixed up patch for
+> 2.6.34-rc2, otherwise include/linux will continue to be ignored by gi=
+t
+> just like it is for 2.6.34-rc1.
 
-On Mar 9, 2010, at 19:01, Jeremy Huddleston wrote:
-> From: Jeremy Huddleston <jeremyhu@apple.com>
-> Date: Mon, 8 Mar 2010 15:10:54 -0800
-> Subject: [PATCH] darwin: Use CommonCrypto to compute SHA1
-> 
-> Signed-off-by: Jeremy Huddleston <jeremyhu@apple.com>
-> Reviewed-by: Kevin Van Vechten <kvv@apple.com>
-> ---
-> Makefile |   14 ++++++++++++++
-> cache.h  |    7 +++++++
-> 2 files changed, 21 insertions(+), 0 deletions(-)
-> 
-> diff --git a/Makefile b/Makefile
-> index f64610a..bb4a1f0 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -91,6 +91,10 @@ all::
-> # Define PPC_SHA1 environment variable when running make to make use of
-> # a bundled SHA1 routine optimized for PowerPC.
-> #
-> +# Define COMMONCRYPTO_SHA1 environment variable when running make to make
-> +# use of the Darwin/Mac OS X Common Cryptography library for SHA1
-> +# computation (instead of libcrypto).
-> +#
-
-You're missing an argument of why this would be an improvement over
-the status quo. If the argument is performance, you'd better show
-some convincing numbers, both of SHA-1 heavy tasks and situations
-where program initialization is an important factor.
-
-By default, increasing the number of different ways we use to
-compute the SHA1 is a negative development. There has to be a
-strong reason to do so, such as: for my workload X this saves 
-me Y seconds each time I do Z.
-
-  -Geert
+Why not apply the patch from Jiri? Since this problem is introduced
+by new version of git, not that commit.
