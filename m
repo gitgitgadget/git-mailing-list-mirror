@@ -1,76 +1,88 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: git interix support
-Date: Wed, 10 Mar 2010 13:32:29 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.1003101319350.14365@iabervon.org>
-References: <4B962456.20600@salomon.at>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Markus Duft <markus.duft@salomon.at>
-X-From: git-owner@vger.kernel.org Wed Mar 10 19:32:44 2010
+From: Sylvain Rabot <sylvain@abstraction.fr>
+Subject: [PATCH] gitweb readme fixed regarding per user project root repository
+Date: Wed, 10 Mar 2010 19:55:29 +0100
+Message-ID: <1268247329-8174-1-git-send-email-sylvain@abstraction.fr>
+References: <1267488297-10415-1-git-send-email-sylvain@abstraction.fr>
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sylvain Rabot <sylvain@abstraction.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 10 19:55:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpQi2-0005mQ-Pn
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 19:32:43 +0100
+	id 1NpR4M-00017a-W4
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 19:55:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932655Ab0CJScb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Mar 2010 13:32:31 -0500
-Received: from iabervon.org ([66.92.72.58]:38650 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932690Ab0CJSca (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Mar 2010 13:32:30 -0500
-Received: (qmail 26700 invoked by uid 1000); 10 Mar 2010 18:32:29 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 10 Mar 2010 18:32:29 -0000
-In-Reply-To: <4B962456.20600@salomon.at>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S932675Ab0CJSzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Mar 2010 13:55:42 -0500
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:53869 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932417Ab0CJSzl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Mar 2010 13:55:41 -0500
+Received: by bwz1 with SMTP id 1so5258405bwz.21
+        for <git@vger.kernel.org>; Wed, 10 Mar 2010 10:55:39 -0800 (PST)
+Received: by 10.204.146.148 with SMTP id h20mr227564bkv.185.1268247338846;
+        Wed, 10 Mar 2010 10:55:38 -0800 (PST)
+Received: from localhost.localdomain (smj33-1-82-233-66-33.fbx.proxad.net [82.233.66.33])
+        by mx.google.com with ESMTPS id g18sm28760057bkw.7.2010.03.10.10.55.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 10 Mar 2010 10:55:38 -0800 (PST)
+X-Mailer: git-send-email 1.7.0
+In-Reply-To: <1267488297-10415-1-git-send-email-sylvain@abstraction.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141911>
 
-On Tue, 9 Mar 2010, Markus Duft wrote:
+the RewriteRule involving the '+' character is not working as it is
+replaced by a space in urls when you click on links.
 
-> Hey.
-> 
-> i have "ported" git to interix (haha, wasn't so much of a problem after
-> all ;)). i have a small patch (attached). i know that it sure doesn't
-> have production quality yet, but i try gathering ideas/input here.
-> 
-> additionally to the patch i'm setting:
-> 
-> 147     if [[ ${CHOST} == *-interix* ]] ; then
-> 148         myopts="${myopts} NO_IPV6=YesPlease"
-> 149         myopts="${myopts} NO_MEMMEM=YesPlease"
-> 150         myopts="${myopts} NO_MKDTEMP=YesPlease"
-> 151         myopts="${myopts} NO_STRTOUMAX=YesPlease"
-> 152         myopts="${myopts} NO_STRTOULL=YesPlease"
-> 153         myopts="${myopts} NO_INET_NTOP=YesPlease"
-> 154         myopts="${myopts} NO_INET_PTON=YesPlease"
-> 155         myopts="${myopts} NO_NSEC=YesPlease"
-> 156         myopts="${myopts} NO_MKSTEMPS=YesPlease"
-> 157     fi
-> 
-> interix lacks propper poll() support (poll is there but broken), so some
-> of the things in git have to be disabled for now, or replaced by a
-> select() code (but that'd take precious time of mine to implement (argh)).
-> 
-> any comments on the patch? any chance to get stuff upstream?
+Signed-off-by: Sylvain Rabot <sylvain@abstraction.fr>
+---
+ gitweb/README |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
-If you've got programs that don't work at all without some library 
-function that you don't have, it's better to not build them at all (by not 
-having them in the make targets) than build binaries that refuse to run. 
-Doing it that way means you don't need to get the rest of the file to 
-compile, and makes it more clear before runtime what functionality will be 
-missing.
-
-Also, if you make a NO_POLL and use that, someone else might make a 
-compat_poll(). Or maybe not, but a workaround certainly won't get done if 
-you just use __INTERIX.
-
-	-Daniel
-*This .sig left intentionally blank*
+diff --git a/gitweb/README b/gitweb/README
+index ad6a04c..2acf595 100644
+--- a/gitweb/README
++++ b/gitweb/README
+@@ -347,18 +347,18 @@ something like the following in your gitweb.conf (or gitweb_config.perl) file:
+   $home_link = "/";
+ 
+ 
+-Webserver configuration with multiple projects' root
++Webserver configuration with multiple projects roots
+ ----------------------------------------------------
+ 
+-If you want to use gitweb with several project roots you can edit your apache
+-virtual host and gitweb.conf configuration files like this :
++If you want to use gitweb with several projects roots then you can edit your
++apache virtual host and gitweb.conf configuration files like this :
+ 
+ virtual host configuration :
+ 
+ <VirtualHost *:80>
+     ServerName			git.example.org
+     DocumentRoot		/pub/git
+-    SetEnv				GITWEB_CONFIG	/etc/gitweb.conf
++    SetEnv			GITWEB_CONFIG	/etc/gitweb.conf
+ 
+     # turning on mod rewrite
+     RewriteEngine on
+@@ -370,8 +370,8 @@ virtual host configuration :
+     # http://git.example.org/~<user>/
+     RewriteRule ^/\~([^\/]+)(/|/gitweb.cgi)?$	/cgi-bin/gitweb.cgi [QSA,E=GITWEB_PROJECTROOT:/home/$1/public_git/,L,PT]
+ 
+-    # http://git.example.org/+<user>/
+-    #RewriteRule ^/\+([^\/]+)(/|/gitweb.cgi)?$	/cgi-bin/gitweb.cgi [QSA,E=GITWEB_PROJECTROOT:/home/$1/public_git/,L,PT]
++    # http://git.example.org/u/<user>/
++    #RewriteRule ^/u/([^\/]+)(/|/gitweb.cgi)?$	/cgi-bin/gitweb.cgi [QSA,E=GITWEB_PROJECTROOT:/home/$1/public_git/,L,PT]
+ 
+     # http://git.example.org/user/<user>/
+     #RewriteRule ^/user/([^\/]+)/(gitweb.cgi)?$	/cgi-bin/gitweb.cgi [QSA,E=GITWEB_PROJECTROOT:/home/$1/public_git/,L,PT]
+-- 
+1.7.0
