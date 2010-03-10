@@ -1,54 +1,87 @@
-From: MALAISE Pascal <malaise@magic.fr>
-Subject: wishlist: git gui not listing untracked files in unstaged list
-Date: Wed, 10 Mar 2010 19:43:18 +0000 (UTC)
-Message-ID: <loom.20100310T203316-38@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-rebase -i prunes commits with empty commit-message
+Date: Wed, 10 Mar 2010 11:53:22 -0800
+Message-ID: <7veijsrm19.fsf@alter.siamese.dyndns.org>
+References: <40aa078e1003081207u20046916yda5a62d44ce7a401@mail.gmail.com>
+ <4B979AEF.5010201@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 10 20:45:14 2010
+Cc: kusmabite@gmail.com, Git Mailing List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Mar 10 20:53:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpRqD-0002us-TW
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 20:45:14 +0100
+	id 1NpRyM-00066F-Rm
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Mar 2010 20:53:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753368Ab0CJTpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Mar 2010 14:45:08 -0500
-Received: from lo.gmane.org ([80.91.229.12]:49306 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753462Ab0CJTpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Mar 2010 14:45:06 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NpRq2-0002qA-O1
-	for git@vger.kernel.org; Wed, 10 Mar 2010 20:45:02 +0100
-Received: from fon31-1-78-224-49-155.fbx.proxad.net ([78.224.49.155])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 10 Mar 2010 20:45:02 +0100
-Received: from malaise by fon31-1-78-224-49-155.fbx.proxad.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 10 Mar 2010 20:45:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 78.224.49.155 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.18) Gecko/2010021501 Ubuntu/8.04 (hardy) Firefox/3.0.18)
+	id S1756955Ab0CJTxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Mar 2010 14:53:33 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58358 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756829Ab0CJTxc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Mar 2010 14:53:32 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D9C2DA0BEF;
+	Wed, 10 Mar 2010 14:53:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZMIQHPlZEQ/F8piLzBYalTkByOc=; b=KJ5YBb
+	kjblvc4e2UqUDcZe2Fhe6wm2mHfRjnxZ8eD8Zc8pq0kRFcOigry6+XksDJfxOwpU
+	99Hxh78bv5Bxd4PWdvyCNTc7SdcD2pPmOOOy1Ls3NW5F7n4cqJ4+KkFOP/FZr0dV
+	k9fyfWjp+i2wuj1WQ94xUZVBM2VSrUv1PxtAA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aD349P+HqZjvgEXEDygLEtAOdjmyQ8cU
+	IA7xTn0/QxzmXnlpx+8BimkpZD+0PIPFSHhfT0TvupCKt50h9H4ypZ9CCJRQ9gOS
+	0EfWjB7K0BpU/LSsZCJ0gVSawOZIhGVuS7lgji0euzbNv55Lq635pXiWYwKIcRpH
+	xQ8lrxOVmgc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A5D63A0BEB;
+	Wed, 10 Mar 2010 14:53:27 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EDA24A0BEA; Wed, 10 Mar
+ 2010 14:53:23 -0500 (EST)
+In-Reply-To: <4B979AEF.5010201@alum.mit.edu> (Michael Haggerty's message of
+ "Wed\, 10 Mar 2010 14\:13\:19 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9843EA1C-2C7E-11DF-8137-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141914>
 
-Many projects are organized so that the result of compilation is mixed with
-sources.
-It would be very useful to configure git gui so that untracked files are not
-listed in the un-staged list.
-I have patched git gui, function rescan_stage2, line 1414 to do so:
-  # set fd_lo [eval git_read ls-files --others -z $ls_others]
-  set fd_lo [eval git_read ls-files -z $ls_others]
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-but it would be nice to make this behavior tunable via the "Options..." menu.
+> Does git really claim to handle commits with empty commit messages?
+
+Yes, I would say it is a bug in rebase-i if it refuses to deal with
+histories with such commits.  Warning and giving the user a chance to
+add message _might_ be good, but allowing no way out would be
+inexcusable.  Even adding a fake "(original commit had no message)"
+as the message and continuing would be better than stopping or
+dropping commits.
+
+The Porcelain "git commit" by default complains if you do not give any
+message, because it usually is an end-user mistake to directly use
+"git commit" and not writing anything about the resulting commit.
+However,
+
+ (1) The plumbing allows it because such a policy to forbid commits
+     without comments does not belong there, e.g. this would succeed:
+
+     $ git commit-tree HEAD^{tree} </dev/null
+
+ (2) Even the Porcelain allows it if you ask nicely:
+
+     $ git commit --cleanup=verbatim -m ''
+
+These are primarily so that you can deal with histories created by
+other people's tools (e.g. foreign SCM, third party Porcelains, etc.).
+You do not have much control over histories created by them, and our
+commit creating commands need to be usable as an ingredient for you to
+write conversion tools (like filter-branch or rebase-i).
