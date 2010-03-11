@@ -1,113 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: re-running merge on a single file
-Date: Thu, 11 Mar 2010 15:20:40 -0800 (PST)
-Message-ID: <m3hbomla3u.fsf@localhost.localdomain>
-References: <a038bef51003111054n5bcecd2eud531dcc80509f952@mail.gmail.com>
-	<201003112129.52596.markus.heidelberg@web.de>
-	<a038bef51003111408g38698837ldcf1d0f5995f4f30@mail.gmail.com>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: [PATCH 1/5] General configuration portability (Resend)
+Date: Thu, 11 Mar 2010 17:48:02 -0600
+Message-ID: <rNXeyNyiwlXO9LSfnspDn4Vg_2gHAf4iTHy4MhrWQfGWxJqvzUQAVQ@cipher.nrlssc.navy.mil>
+References: <20100311162750.GA7877@thor.il.thewrittenword.com> <alpine.DEB.1.00.1003111750130.3748@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Markus Heidelberg <markus.heidelberg@web.de>,
-	GIT <git@vger.kernel.org>
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 12 00:20:54 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Gary V. Vaughan" <git@mlists.thewrittenword.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 12 00:48:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NprgS-00024o-0h
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Mar 2010 00:20:52 +0100
+	id 1Nps7I-0006wa-My
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Mar 2010 00:48:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754398Ab0CKXUq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Mar 2010 18:20:46 -0500
-Received: from fg-out-1718.google.com ([72.14.220.159]:35570 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751641Ab0CKXUp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Mar 2010 18:20:45 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so306534fgg.1
-        for <git@vger.kernel.org>; Thu, 11 Mar 2010 15:20:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=uk+ihQ8Mkw54OmmfqUlvtxtFDzUm/l9MB4cAA56KVCs=;
-        b=uOEAdOwd4lCGIlb2nDEdEvWQCtGNAtzrQqdl22A1zlnox68tzHcZ8dkHe32i4mvET1
-         +y+QvNrCmWpROLIpVYC1c3X1Y73+4U0hq3DLUI2oosOo88PFFZ95LUJ/vqkxo339COX8
-         zOMnkQhOAhYIHr1vZR6+8ibvvWVvJ5ZasMCcM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=EHOUIgZBWxBiV9JTaJXNdj4J94N7sIFTP9UBsjms9voxibOfD8GkNccZo+pKKuor62
-         PP4+8RPtDepXCMFPNFOL1O6lKbbNhkyVm2SgbW2WOOvSkk91IVunyZEfGrPhL49d/SZd
-         GmxVDB5Q6Mcs1djW9dDZwzWlOgPUg5b8+xJOo=
-Received: by 10.87.55.31 with SMTP id h31mr6532776fgk.32.1268349643350;
-        Thu, 11 Mar 2010 15:20:43 -0800 (PST)
-Received: from localhost.localdomain (abwe142.neoplus.adsl.tpnet.pl [83.8.228.142])
-        by mx.google.com with ESMTPS id 15sm497351fxm.4.2010.03.11.15.20.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Mar 2010 15:20:40 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o2BNK6ev007862;
-	Fri, 12 Mar 2010 00:20:16 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o2BNJnbL007807;
-	Fri, 12 Mar 2010 00:19:50 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <a038bef51003111408g38698837ldcf1d0f5995f4f30@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754170Ab0CKXsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Mar 2010 18:48:31 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:41036 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754146Ab0CKXsa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 18:48:30 -0500
+Received: by mail.nrlssc.navy.mil id o2BNm3RK016270; Thu, 11 Mar 2010 17:48:03 -0600
+In-Reply-To: <alpine.DEB.1.00.1003111750130.3748@intel-tinevez-2-302>
+X-OriginalArrivalTime: 11 Mar 2010 23:48:03.0115 (UTC) FILETIME=[4A0C87B0:01CAC175]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142007>
 
-Chris Packham <judge.packham@gmail.com> writes:
-
-> Hmm, having trouble with cat-file syntax
+On 03/11/2010 10:51 AM, Johannes Schindelin wrote:
+> Hi,
 > 
-> On Thu, Mar 11, 2010 at 12:29 PM, Markus Heidelberg
-> <markus.heidelberg@web.de> wrote:
-> > Not mergetool, but checkout:
-> > git checkout --merge -- file
+> On Thu, 11 Mar 2010, Gary V. Vaughan wrote:
 > 
-> Ok.
-> $ git checkout --merge -- cpu/mpc83xx/start.S
+>> Resending some patches that didn't make it, in the correct format
+>> and taking into account the feedback I already had on one of the
+>> later patches...
+>>
+>> This patch is in part to deal with peculiarities of our build
+>> environment (software packages are installed in their own directory
+>> tree, for example, and oftentimes we need to set additional -I options
+>> in CPPFLAGS, or -L options in LDFLAGS, among others).
+>>
+>> However this is also where we put configuration changes to add
+>> additional tests, or fix Makefile problems so that everything builds
+>> on all of our supported architectures.  Probably, much of this patch
+>> is useful upstream.
+>> ---
+>>  Makefile             |   50 +++++++++++++++++++++++++++++++++++++++---------
+>>  aclocal.m4           |   41 ++++++++++++++++++++++++++++++++++++++++
+>>  config.mak.in        |   10 ++++++++-
+>>  configure.ac         |   51 ++++++++++++++++++++++++++++++++++++++++++-------
+>>  git-compat-util.h    |    8 +++++-
+>>  perl/Makefile        |    3 +-
+>>  perl/Makefile.PL     |    2 +-
+>>  t/t7610-mergetool.sh |   25 +++++++++++++----------
+>>  8 files changed, 156 insertions(+), 34 deletions(-)
+>>  create mode 100644 aclocal.m4
 > 
-> > git cat-file blob :1:file > file.base
-> >
+> Whoa.
 > 
-> $ git cat-file blob :1:cpu/mpc83xx/start.S > cpu/mpc83xx/start.S.base
-> fatal: Not a valid object name :1:cpu/mpc83xx/start.S
+> Pretty large patch, no? And looking at things like this:
 > 
-> So I think I have figured out that I'm trying to get at stage 1, 2 and
-> 3 of the file that git checkout --merge has just setup but I'm
-> tripping over the syntax.
+>> diff --git a/Makefile b/Makefile
+>> index 8fdc421..6058805 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -243,7 +243,7 @@ endif
+>>  
+>>  CFLAGS = -g -O2 -Wall
+>>  LDFLAGS =
+>> -ALL_CFLAGS = $(CFLAGS)
+>> +ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
+> 
+> It seems to me that this wants to be a relatively large patch series of 
+> well-contained, easy-to-review, tiny patches.
+> 
+> Am I correct?
 
-First, instead of 'git cat-file blob <blob-id>' you can simply use 
-'git show <blob-id>'.
+Yes, please.
 
-Second, while in
-
-  $ git checkout --merge -- cpu/mpc83xx/start.S
-
-the path cpu/mpc83xx/start.S is relative to your current directory,
-in
-
-  $ git show :1:cpu/mpc83xx/start.S > start.S.base
-
-the path has to be "absolute path in repository", i.e. path relative
-to top directory of the repository.
-
-Try
-
-  $ git show :1:$(git rev-parse --show-prefix)cpu/mpc83xx/start.S \
-    > cpu/mpc83xx/start.S.base
-
-HTH
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+-brandon
