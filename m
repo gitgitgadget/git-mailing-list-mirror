@@ -1,56 +1,66 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: using gvim as editor on Windows
-Date: Thu, 11 Mar 2010 10:36:48 +0100
-Message-ID: <4B98B9B0.2010806@viscovery.net>
-References: <20100306070628.GM2480@ece.pdx.edu> <201003061317.38422.markus.heidelberg@web.de> <20100308185439.GO2480@ece.pdx.edu> <201003090032.10037.markus.heidelberg@web.de> <20100309024523.GU2480@ece.pdx.edu> <7vzl2hw972.fsf@alter.siamese.dyndns.org> <20100311090424.GV2480@ece.pdx.edu>
+From: Pedro Ribeiro <pedrib@gmail.com>
+Subject: generate a diff against a specific tag in a remote branch
+Date: Thu, 11 Mar 2010 09:44:47 +0000
+Message-ID: <74fd948d1003110144l382f7542qed4e80ea0fab6fde@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Tait <git.git@t41t.com>
-X-From: git-owner@vger.kernel.org Thu Mar 11 10:37:02 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 11 10:44:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpepA-0005WF-Pd
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 10:37:01 +0100
+	id 1Npewq-0000lw-Ct
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 10:44:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754567Ab0CKJgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Mar 2010 04:36:55 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:23557 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752484Ab0CKJgy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Mar 2010 04:36:54 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Npeoz-0000gB-Ac; Thu, 11 Mar 2010 10:36:49 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 0D4251660F;
-	Thu, 11 Mar 2010 10:36:48 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <20100311090424.GV2480@ece.pdx.edu>
-X-Spam-Score: -1.4 (-)
+	id S1755042Ab0CKJov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Mar 2010 04:44:51 -0500
+Received: from mail-ew0-f216.google.com ([209.85.219.216]:53587 "EHLO
+	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754995Ab0CKJou (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 04:44:50 -0500
+Received: by ewy8 with SMTP id 8so1738877ewy.28
+        for <git@vger.kernel.org>; Thu, 11 Mar 2010 01:44:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=EEE9ckMoRPbfv78EcK5M9K6ouRtnguHSUjmIT6nBU5w=;
+        b=FA29YR5/FGIgpU0QDm4W0FQzI114uOdswQ8siEneGSZPSHsW6UFvMOPHUEk/DfW/mD
+         CVdmjGZMDVM/0L1JTZyqsaBAVdBUmBmk9N2T4c0n9hSSa1E7xgwYLAc2YjJcH1rfttKt
+         B/pSmXRy12Zw7efDqPkYDS/pHpj8QQ3sAMC+M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=piCQ2w2V2rgoVApd/SvcW7HwtTNq6z128v07q/UE58xoLcfVmsLCu7WA0uRMrD3hzB
+         a6oHym8lbQSAgipSoFn54190h2n1UJz7XGmisDAips9G6ushk0YNCvUrmbzU54zi22x8
+         tBJgr6gQasTbU6ma6WrZXzpCgqpGUQmEXmYvM=
+Received: by 10.213.1.135 with SMTP id 7mr1839623ebf.91.1268300688052; Thu, 11 
+	Mar 2010 01:44:48 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141945>
 
-Tait schrieb:
->> If you end up with a file whose name literally is '$@', that probably
->> means your "sh" did not expand it correctly.
-> 
-> It does expand the $@ when I add it explicitly to core.editor though. Maybe
-> it's the ""s. I'll have to figure out how to compile git for Windows
-> to try a patch.
-> 
-> Oddly enough, if I remove the : from the file path, it does work as
-> expected. Adding the : back introduces the faulty behavior described
-> earlier.
+Hi all,
 
-Which : are you talking about?
+I currently have a copy of the kernel TuxOnIce git tree, and the
+latest tag is 2.6.33.
 
--- Hannes
+I also have added linus tree as a remote branch
+(git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git).
+
+What I want to do is to make a patch of the TuxOnIce changes to apply
+to the linus' 2.6.33. The problem is that the linus tree keeps
+advacing, obviously, and is now at 2.6.34-rc1.
+
+So what I've been trying to do is to make a diff against the 2.6.33
+tag of linus' tree. Is this possible?
+
+
+Thank you very much,
+Pedro
+
+PS: Please CC me directly, I'm not on the list.
