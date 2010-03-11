@@ -1,55 +1,113 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Do not strip empty lines / trailing spaces from a
- commit message template
-Date: Thu, 11 Mar 2010 17:46:56 -0500
-Message-ID: <20100311224656.GA25553@sigill.intra.peff.net>
-References: <4B97C157.4020806@gmail.com>
- <20100311081213.GA13575@sigill.intra.peff.net>
- <20100311083148.GA13786@sigill.intra.peff.net>
- <7vaaueziv8.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: re-running merge on a single file
+Date: Thu, 11 Mar 2010 15:20:40 -0800 (PST)
+Message-ID: <m3hbomla3u.fsf@localhost.localdomain>
+References: <a038bef51003111054n5bcecd2eud531dcc80509f952@mail.gmail.com>
+	<201003112129.52596.markus.heidelberg@web.de>
+	<a038bef51003111408g38698837ldcf1d0f5995f4f30@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 11 23:47:08 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Markus Heidelberg <markus.heidelberg@web.de>,
+	GIT <git@vger.kernel.org>
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 12 00:20:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Npr9n-00038s-EO
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 23:47:07 +0100
+	id 1NprgS-00024o-0h
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Mar 2010 00:20:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752966Ab0CKWrA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Mar 2010 17:47:00 -0500
-Received: from peff.net ([208.65.91.99]:60570 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752710Ab0CKWq7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Mar 2010 17:46:59 -0500
-Received: (qmail 4977 invoked by uid 107); 11 Mar 2010 22:47:23 -0000
-Received: from c-71-206-173-191.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.191)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 11 Mar 2010 17:47:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Mar 2010 17:46:56 -0500
-Content-Disposition: inline
-In-Reply-To: <7vaaueziv8.fsf@alter.siamese.dyndns.org>
+	id S1754398Ab0CKXUq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Mar 2010 18:20:46 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:35570 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751641Ab0CKXUp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 18:20:45 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so306534fgg.1
+        for <git@vger.kernel.org>; Thu, 11 Mar 2010 15:20:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=uk+ihQ8Mkw54OmmfqUlvtxtFDzUm/l9MB4cAA56KVCs=;
+        b=uOEAdOwd4lCGIlb2nDEdEvWQCtGNAtzrQqdl22A1zlnox68tzHcZ8dkHe32i4mvET1
+         +y+QvNrCmWpROLIpVYC1c3X1Y73+4U0hq3DLUI2oosOo88PFFZ95LUJ/vqkxo339COX8
+         zOMnkQhOAhYIHr1vZR6+8ibvvWVvJ5ZasMCcM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=EHOUIgZBWxBiV9JTaJXNdj4J94N7sIFTP9UBsjms9voxibOfD8GkNccZo+pKKuor62
+         PP4+8RPtDepXCMFPNFOL1O6lKbbNhkyVm2SgbW2WOOvSkk91IVunyZEfGrPhL49d/SZd
+         GmxVDB5Q6Mcs1djW9dDZwzWlOgPUg5b8+xJOo=
+Received: by 10.87.55.31 with SMTP id h31mr6532776fgk.32.1268349643350;
+        Thu, 11 Mar 2010 15:20:43 -0800 (PST)
+Received: from localhost.localdomain (abwe142.neoplus.adsl.tpnet.pl [83.8.228.142])
+        by mx.google.com with ESMTPS id 15sm497351fxm.4.2010.03.11.15.20.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 11 Mar 2010 15:20:40 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o2BNK6ev007862;
+	Fri, 12 Mar 2010 00:20:16 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o2BNJnbL007807;
+	Fri, 12 Mar 2010 00:19:50 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <a038bef51003111408g38698837ldcf1d0f5995f4f30@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142006>
 
-On Thu, Mar 11, 2010 at 12:46:51PM -0800, Junio C Hamano wrote:
+Chris Packham <judge.packham@gmail.com> writes:
 
-> > How about a test to check the new behavior?
+> Hmm, having trouble with cat-file syntax
 > 
-> Speaking of tests, t2203 will segfault with your patch.  I don't think the
-> following does, though.
+> On Thu, Mar 11, 2010 at 12:29 PM, Markus Heidelberg
+> <markus.heidelberg@web.de> wrote:
+> > Not mergetool, but checkout:
+> > git checkout --merge -- file
+> 
+> Ok.
+> $ git checkout --merge -- cpu/mpc83xx/start.S
+> 
+> > git cat-file blob :1:file > file.base
+> >
+> 
+> $ git cat-file blob :1:cpu/mpc83xx/start.S > cpu/mpc83xx/start.S.base
+> fatal: Not a valid object name :1:cpu/mpc83xx/start.S
+> 
+> So I think I have figured out that I'm trying to get at stage 1, 2 and
+> 3 of the file that git checkout --merge has just setup but I'm
+> tripping over the syntax.
 
-I thought I ran the tests, but obviously not. I see the segfault here.
-It is not just t2203, but any "git commit" with no message will cause
-it.
+First, instead of 'git cat-file blob <blob-id>' you can simply use 
+'git show <blob-id>'.
 
-Your patch looks right, and is more readable, too, I think.
+Second, while in
 
--Peff
+  $ git checkout --merge -- cpu/mpc83xx/start.S
+
+the path cpu/mpc83xx/start.S is relative to your current directory,
+in
+
+  $ git show :1:cpu/mpc83xx/start.S > start.S.base
+
+the path has to be "absolute path in repository", i.e. path relative
+to top directory of the repository.
+
+Try
+
+  $ git show :1:$(git rev-parse --show-prefix)cpu/mpc83xx/start.S \
+    > cpu/mpc83xx/start.S.base
+
+HTH
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
