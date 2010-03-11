@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 01/16] Move enter_repo() to setup.c
-Date: Thu, 11 Mar 2010 20:22:19 +0700
-Message-ID: <1268313754-28179-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 07/16] worktree setup: restore original state when things go wrong
+Date: Thu, 11 Mar 2010 20:22:25 +0700
+Message-ID: <1268313754-28179-8-git-send-email-pclouds@gmail.com>
 References: <1268313754-28179-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,276 +10,158 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 11 14:23:49 2010
+X-From: git-owner@vger.kernel.org Thu Mar 11 14:23:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpiMd-0001K7-0x
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 14:23:47 +0100
+	id 1NpiMg-0001K7-J5
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 14:23:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932412Ab0CKNWs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Mar 2010 08:22:48 -0500
+	id S932440Ab0CKNXX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Mar 2010 08:23:23 -0500
 Received: from mail-pz0-f194.google.com ([209.85.222.194]:40589 "EHLO
 	mail-pz0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932388Ab0CKNWq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Mar 2010 08:22:46 -0500
+	with ESMTP id S932388Ab0CKNXT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 08:23:19 -0500
 Received: by mail-pz0-f194.google.com with SMTP id 32so11276pzk.4
-        for <git@vger.kernel.org>; Thu, 11 Mar 2010 05:22:46 -0800 (PST)
+        for <git@vger.kernel.org>; Thu, 11 Mar 2010 05:23:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=KvI6n97AmG/Lt1MKN66TbED3Rdbcrt7+AYc1lSLs6S0=;
-        b=QfjxX4Z+GzFGvTHjXm47cPXMtmu5LIlcE7Q1aZLlSmE3GlymhYaGrYbH8AGCIN+Tpf
-         bw5RJXvUuMICYLcKu6V3AbqMTQl3ig5VoERwshQpKGPS7VDewKFCb+N9blQL1Gc3Dvh3
-         OlFVjBzGc8Oew24tL/WFKOtbNBeojGIZH1grY=
+        bh=RYN1d6Cl0lyKPKiXEsEZBz2wFPcNTiPNWmwkRt+Wor4=;
+        b=q+IC/5QZ+wxulqHjYshIc+nYWoPK1Ey9Fv2OuJQSoZG/d9CAi+Smf2INznnWlUu7LN
+         USdOXGA4pP151EDrSauBZTLMUzssn4mzz3jgxjamH5W/DSO9ZPPC3js4jsEkFhj2ejpX
+         EJRvr2RkwtB0ngfk218WzscG+VaFoFG3bFl/s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=kL+vo67bhGCR+q+sCC7SbKaIw3YNjM1xNmkY5GZNUp4MAC5bC4ejHtFjNBKZEdEk7I
-         PMZVdJtPSLuocWeiz+Gsk58KFfstCfeG7nuQDAtcpwyv2b+pzy0T4UdDdJPPWK+h5m9F
-         qsB+K65Oge/bddqK1UlEXMK41JFcX1pYMu1PI=
-Received: by 10.142.74.20 with SMTP id w20mr1378037wfa.94.1268313766532;
-        Thu, 11 Mar 2010 05:22:46 -0800 (PST)
+        b=KgtN0MZQ5wXXqBNUJQGMZK8sUwXulP2fWZsnPJ8TbYs0lZFS8h4pl+MIEnc3RsoGRB
+         Pn2yATonQIN2yV0iyFE+VihXe9rWWdGNHnA/ZX6ZoqlzvAtwAQARBNHcbNfKx2XOGAr/
+         tGM6nOsH329TsXjQ0Xn2cxuFKhSxMVRA9RNGY=
+Received: by 10.114.19.16 with SMTP id 16mr1330732was.196.1268313798995;
+        Thu, 11 Mar 2010 05:23:18 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.196.130])
-        by mx.google.com with ESMTPS id 23sm8862530pzk.14.2010.03.11.05.22.43
+        by mx.google.com with ESMTPS id 23sm8863124pzk.14.2010.03.11.05.23.16
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Mar 2010 05:22:45 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 11 Mar 2010 20:22:40 +0700
+        Thu, 11 Mar 2010 05:23:18 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 11 Mar 2010 20:23:12 +0700
 X-Mailer: git-send-email 1.7.0.1.384.g6abcaa
 In-Reply-To: <1268313754-28179-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141969>
 
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- path.c  |   91 -------------------------------------------------------=
---------
- setup.c |   91 +++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 2 files changed, 91 insertions(+), 91 deletions(-)
+ cache.h |    1 +
+ setup.c |   39 +++++++++++++++++++++++++++++++++++----
+ 2 files changed, 36 insertions(+), 4 deletions(-)
 
-diff --git a/path.c b/path.c
-index b4c8d91..f42eb1b 100644
---- a/path.c
-+++ b/path.c
-@@ -332,97 +332,6 @@ return_null:
- 	return NULL;
- }
-=20
--/*
-- * First, one directory to try is determined by the following algorith=
-m.
-- *
-- * (0) If "strict" is given, the path is used as given and no DWIM is
-- *     done. Otherwise:
-- * (1) "~/path" to mean path under the running user's home directory;
-- * (2) "~user/path" to mean path under named user's home directory;
-- * (3) "relative/path" to mean cwd relative directory; or
-- * (4) "/absolute/path" to mean absolute directory.
-- *
-- * Unless "strict" is given, we try access() for existence of "%s.git/=
-=2Egit",
-- * "%s/.git", "%s.git", "%s" in this order.  The first one that exists=
- is
-- * what we try.
-- *
-- * Second, we try chdir() to that.  Upon failure, we return NULL.
-- *
-- * Then, we try if the current directory is a valid git repository.
-- * Upon failure, we return NULL.
-- *
-- * If all goes well, we return the directory we used to chdir() (but
-- * before ~user is expanded), avoiding getcwd() resolving symbolic
-- * links.  User relative paths are also returned as they are given,
-- * except DWIM suffixing.
-- */
--char *enter_repo(char *path, int strict)
--{
--	static char used_path[PATH_MAX];
--	static char validated_path[PATH_MAX];
--
--	if (!path)
--		return NULL;
--
--	if (!strict) {
--		static const char *suffix[] =3D {
--			".git/.git", "/.git", ".git", "", NULL,
--		};
--		int len =3D strlen(path);
--		int i;
--		while ((1 < len) && (path[len-1] =3D=3D '/')) {
--			path[len-1] =3D 0;
--			len--;
--		}
--		if (PATH_MAX <=3D len)
--			return NULL;
--		if (path[0] =3D=3D '~') {
--			char *newpath =3D expand_user_path(path);
--			if (!newpath || (PATH_MAX - 10 < strlen(newpath))) {
--				free(newpath);
--				return NULL;
--			}
--			/*
--			 * Copy back into the static buffer. A pity
--			 * since newpath was not bounded, but other
--			 * branches of the if are limited by PATH_MAX
--			 * anyway.
--			 */
--			strcpy(used_path, newpath); free(newpath);
--			strcpy(validated_path, path);
--			path =3D used_path;
--		}
--		else if (PATH_MAX - 10 < len)
--			return NULL;
--		else {
--			path =3D strcpy(used_path, path);
--			strcpy(validated_path, path);
--		}
--		len =3D strlen(path);
--		for (i =3D 0; suffix[i]; i++) {
--			strcpy(path + len, suffix[i]);
--			if (!access(path, F_OK)) {
--				strcat(validated_path, suffix[i]);
--				break;
--			}
--		}
--		if (!suffix[i] || chdir(path))
--			return NULL;
--		path =3D validated_path;
--	}
--	else if (chdir(path))
--		return NULL;
--
--	if (access("objects", X_OK) =3D=3D 0 && access("refs", X_OK) =3D=3D 0=
- &&
--	    validate_headref("HEAD") =3D=3D 0) {
--		set_git_dir(".");
--		check_repository_format();
--		return path;
--	}
--
--	return NULL;
--}
--
- int set_shared_perm(const char *path, int mode)
- {
- 	struct stat st;
+diff --git a/cache.h b/cache.h
+index 3bd219c..8e9d818 100644
+--- a/cache.h
++++ b/cache.h
+@@ -418,6 +418,7 @@ extern const char **get_pathspec(const char *prefix=
+, const char **pathspec);
+ extern void setup_work_tree(void);
+ extern const char *setup_git_directory_gently(int *);
+ extern const char *setup_git_directory(void);
++extern void unset_git_directory(const char *prefix);
+ extern const char *prefix_path(const char *prefix, int len, const char=
+ *path);
+ extern const char *prefix_filename(const char *prefix, int len, const =
+char *path);
+ extern int check_filename(const char *prefix, const char *name);
 diff --git a/setup.c b/setup.c
-index 8796c6f..3019da2 100644
+index b8f88db..2f850ab 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -452,6 +452,97 @@ const char *setup_git_directory_gently(int *nongit=
-_ok)
- 	return prefix;
+@@ -323,6 +323,26 @@ const char *read_gitfile_gently(const char *path)
+ 	return path;
  }
 =20
-+/*
-+ * First, one directory to try is determined by the following algorith=
-m.
-+ *
-+ * (0) If "strict" is given, the path is used as given and no DWIM is
-+ *     done. Otherwise:
-+ * (1) "~/path" to mean path under the running user's home directory;
-+ * (2) "~user/path" to mean path under named user's home directory;
-+ * (3) "relative/path" to mean cwd relative directory; or
-+ * (4) "/absolute/path" to mean absolute directory.
-+ *
-+ * Unless "strict" is given, we try access() for existence of "%s.git/=
-=2Egit",
-+ * "%s/.git", "%s.git", "%s" in this order.  The first one that exists=
- is
-+ * what we try.
-+ *
-+ * Second, we try chdir() to that.  Upon failure, we return NULL.
-+ *
-+ * Then, we try if the current directory is a valid git repository.
-+ * Upon failure, we return NULL.
-+ *
-+ * If all goes well, we return the directory we used to chdir() (but
-+ * before ~user is expanded), avoiding getcwd() resolving symbolic
-+ * links.  User relative paths are also returned as they are given,
-+ * except DWIM suffixing.
-+ */
-+char *enter_repo(char *path, int strict)
++void unset_git_directory(const char *prefix)
 +{
-+	static char used_path[PATH_MAX];
-+	static char validated_path[PATH_MAX];
++	if (prefix && chdir(prefix))
++		die("Cannot change to '%s'", prefix);
 +
-+	if (!path)
-+		return NULL;
-+
-+	if (!strict) {
-+		static const char *suffix[] =3D {
-+			".git/.git", "/.git", ".git", "", NULL,
-+		};
-+		int len =3D strlen(path);
-+		int i;
-+		while ((1 < len) && (path[len-1] =3D=3D '/')) {
-+			path[len-1] =3D 0;
-+			len--;
-+		}
-+		if (PATH_MAX <=3D len)
-+			return NULL;
-+		if (path[0] =3D=3D '~') {
-+			char *newpath =3D expand_user_path(path);
-+			if (!newpath || (PATH_MAX - 10 < strlen(newpath))) {
-+				free(newpath);
-+				return NULL;
-+			}
-+			/*
-+			 * Copy back into the static buffer. A pity
-+			 * since newpath was not bounded, but other
-+			 * branches of the if are limited by PATH_MAX
-+			 * anyway.
-+			 */
-+			strcpy(used_path, newpath); free(newpath);
-+			strcpy(validated_path, path);
-+			path =3D used_path;
-+		}
-+		else if (PATH_MAX - 10 < len)
-+			return NULL;
-+		else {
-+			path =3D strcpy(used_path, path);
-+			strcpy(validated_path, path);
-+		}
-+		len =3D strlen(path);
-+		for (i =3D 0; suffix[i]; i++) {
-+			strcpy(path + len, suffix[i]);
-+			if (!access(path, F_OK)) {
-+				strcat(validated_path, suffix[i]);
-+				break;
-+			}
-+		}
-+		if (!suffix[i] || chdir(path))
-+			return NULL;
-+		path =3D validated_path;
-+	}
-+	else if (chdir(path))
-+		return NULL;
-+
-+	if (access("objects", X_OK) =3D=3D 0 && access("refs", X_OK) =3D=3D 0=
- &&
-+	    validate_headref("HEAD") =3D=3D 0) {
-+		set_git_dir(".");
-+		check_repository_format();
-+		return path;
++	if (startup_info) {
++		startup_info->prefix =3D NULL;
++		startup_info->have_repository =3D 0;
 +	}
 +
-+	return NULL;
++	/* Initialized in setup_git_directory_gently_1() */
++	inside_work_tree =3D -1;
++	inside_git_dir =3D -1;
++
++	/* Initialized in check_repository_format_version() */
++	repository_format_version =3D 0xFF;
++	shared_repository =3D PERM_UMASK;
++	is_bare_repository_cfg =3D -1;
++	git_work_tree_cfg =3D NULL;
 +}
-+
- int git_config_perm(const char *var, const char *value)
- {
- 	int i;
+ /*
+  * We cannot decide in this function whether we are in the work tree o=
+r
+  * not, since the config can only be read _after_ this function was ca=
+lled.
+@@ -403,6 +423,13 @@ static const char *setup_git_directory_gently_1(in=
+t *nongit_ok)
+ 	 * - ../ (bare)
+ 	 * - ../../.git/
+ 	 *   etc.
++	 *
++	 * When a repository is found:
++	 * - inside_git_dir/inside_work_tree are set
++	 * - check_repository_format_gently() is called
++	 *   if repo version is not supported, restore cwd
++	 * - set_git_dir
++	 * - calculate and return prefix
+ 	 */
+ 	offset =3D len =3D strlen(cwd);
+ 	for (;;) {
+@@ -410,13 +437,15 @@ static const char *setup_git_directory_gently_1(i=
+nt *nongit_ok)
+ 		if (!gitfile_dir && is_git_directory(DEFAULT_GIT_DIR_ENVIRONMENT))
+ 			gitfile_dir =3D DEFAULT_GIT_DIR_ENVIRONMENT;
+ 		if (gitfile_dir) {
+-			if (set_git_dir(gitfile_dir))
+-				die("Repository setup failed");
+ 			inside_git_dir =3D 0;
+ 			if (!work_tree_env)
+ 				inside_work_tree =3D 1;
+-			if (check_repository_format_gently(gitfile_dir, nongit_ok))
++			if (check_repository_format_gently(gitfile_dir, nongit_ok)) {
++				unset_git_directory(offset !=3D len ? cwd + offset + 1: NULL);
+ 				return NULL;
++			}
++			if (set_git_dir(gitfile_dir))
++				die("Repository setup failed");
+ 			root_len =3D offset_1st_component(cwd);
+ 			git_work_tree_cfg =3D xstrndup(cwd, offset > root_len ? offset : ro=
+ot_len);
+ 			break;
+@@ -425,8 +454,10 @@ static const char *setup_git_directory_gently_1(in=
+t *nongit_ok)
+ 			inside_git_dir =3D 1;
+ 			if (!work_tree_env)
+ 				inside_work_tree =3D 0;
+-			if (check_repository_format_gently(gitfile_dir, nongit_ok))
++			if (check_repository_format_gently(gitfile_dir, nongit_ok)) {
++				unset_git_directory(offset !=3D len ? cwd + offset + 1: NULL);
+ 				return NULL;
++			}
+ 			if (offset !=3D len) {
+ 				root_len =3D offset_1st_component(cwd);
+ 				cwd[offset > root_len ? offset : root_len] =3D '\0';
 --=20
 1.7.0.1.384.g6abcaa
