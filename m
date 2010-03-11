@@ -1,57 +1,117 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: Doing a dummy or empty merge
-Date: Thu, 11 Mar 2010 09:21:20 -0800
-Message-ID: <86wrxiepv3.fsf@blue.stonehenge.com>
-References: <8440EA2C12E50645A68C4AA9887166513FC480@SERVER.webdezign.local>
+From: Sergio Callegari <sergio.callegari@gmail.com>
+Subject: On refreshing the index
+Date: Thu, 11 Mar 2010 18:19:35 +0000 (UTC)
+Message-ID: <loom.20100311T191149-453@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: "Richard Lee" <richard@webdezign.co.uk>
-X-From: git-owner@vger.kernel.org Thu Mar 11 18:21:35 2010
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 11 19:20:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Npm4j-0002cf-Ol
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 18:21:34 +0100
+	id 1Npmzw-0002WK-Ck
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 19:20:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933389Ab0CKRVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Mar 2010 12:21:25 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:11173 "EHLO
-	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933360Ab0CKRVV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Mar 2010 12:21:21 -0500
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id D13861DE35D; Thu, 11 Mar 2010 09:21:20 -0800 (PST)
-x-mayan-date: Long count = 12.19.17.3.4; tzolkin = 2 Kan; haab = 2 Cumku
-In-Reply-To: <8440EA2C12E50645A68C4AA9887166513FC480@SERVER.webdezign.local> (Richard Lee's message of "Thu, 11 Mar 2010 12:41:02 -0000")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
+	id S934077Ab0CKSUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Mar 2010 13:20:05 -0500
+Received: from lo.gmane.org ([80.91.229.12]:59268 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934005Ab0CKST6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 13:19:58 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NpmzA-00022K-Gp
+	for git@vger.kernel.org; Thu, 11 Mar 2010 19:19:52 +0100
+Received: from 137.204.16.59 ([137.204.16.59])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 11 Mar 2010 19:19:52 +0100
+Received: from sergio.callegari by 137.204.16.59 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 11 Mar 2010 19:19:52 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 137.204.16.59 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.8) Gecko/20100214 Ubuntu/9.10 (karmic) Firefox/3.5.8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141989>
 
->>>>> "Richard" == Richard Lee <richard@webdezign.co.uk> writes:
+Hi,
 
-Richard> At this point I want to merge this test branch into the live branch
-Richard> despite not having made any commits apart from deployment related
-Richard> changes on the test branch. I want this to be a dummy merge so that a
-Richard> merge is recorded into the live branch, but the contents of the live
-Richard> branch remain untouched. This is as if I made an empty commit on the
-Richard> live branch.
+I have recently received instructions on how to refresh the index...
+However, it looks like I've run into a case where the refresh is not as
+successful as expected...
 
-I think you'll get what you want with a "merge -s ours" from test
-to live.  That says that "I've looked at test, and I've looked at
-the parents of live, and this is how I want the result to look".
+Here it is
 
-Further commits on test can then be merged to live automatically using this
-new merge as the (initial) base.  Of course, later commits after that will use
-subsequent bases, but that should already work the way you want.
+If I run git status, git runs filters on a couple of opendocument files for
+which a filter is defined
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
-See http://methodsandmessages.vox.com/ for Smalltalk and Seaside discussion
+GIT_TRACE=1 git status
+trace: built-in: git 'status'
+trace: run_command: 'rezip -p ODF_UNCOMPRESS2'
+trace: exec: 'sh' '-c' 'rezip -p ODF_UNCOMPRESS2' 'rezip -p ODF_UNCOMPRESS2'
+trace: run_command: 'rezip -p ODF_UNCOMPRESS2'
+trace: exec: 'sh' '-c' 'rezip -p ODF_UNCOMPRESS2' 'rezip -p ODF_UNCOMPRESS2'
+# On branch M05
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       WIP/
+#       program.txt
+#       program.txt~
+nothing added to commit but untracked files present (use "git add" to track)
+
+ ... but there is actually nothing new...
+ so I try to update the index
+
+GIT_TRACE=1 git update-index --refresh
+trace: built-in: git 'update-index' '--refresh'
+trace: run_command: 'rezip -p ODF_UNCOMPRESS2'
+trace: exec: 'sh' '-c' 'rezip -p ODF_UNCOMPRESS2' 'rezip -p ODF_UNCOMPRESS2'
+trace: run_command: 'rezip -p ODF_UNCOMPRESS2'
+trace: exec: 'sh' '-c' 'rezip -p ODF_UNCOMPRESS2' 'rezip -p ODF_UNCOMPRESS2'
+
+Is now status any faster?
+
+GIT_TRACE=1 git status
+trace: built-in: git 'status'
+trace: run_command: 'rezip -p ODF_UNCOMPRESS2'
+trace: exec: 'sh' '-c' 'rezip -p ODF_UNCOMPRESS2' 'rezip -p ODF_UNCOMPRESS2'
+trace: run_command: 'rezip -p ODF_UNCOMPRESS2'
+trace: exec: 'sh' '-c' 'rezip -p ODF_UNCOMPRESS2' 'rezip -p ODF_UNCOMPRESS2'
+# On branch M05
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       WIP/
+#       program.txt
+#       program.txt~
+nothing added to commit but untracked files present (use "git add" to track)
+
+No, the filters are run all the same...
+What about git diff?
+
+GIT_TRACE=1 git diff
+trace: built-in: git 'diff'
+trace: run_command: 'less'
+trace: exec: 'less'
+trace: run_command: 'rezip -p ODF_UNCOMPRESS2'
+trace: exec: 'sh' '-c' 'rezip -p ODF_UNCOMPRESS2' 'rezip -p ODF_UNCOMPRESS2'
+trace: run_command: 'rezip -p ODF_UNCOMPRESS2'
+trace: exec: 'sh' '-c' 'rezip -p ODF_UNCOMPRESS2' 'rezip -p ODF_UNCOMPRESS2'
+
+... really there is no change ...
+But git keeps running the filters on these two files (note that there are other
+OO files in the repo, and with the others, the filters are not run).
+
+This happened on 1.7.0.2 after switching branches.
+
+Sergio
