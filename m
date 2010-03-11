@@ -1,65 +1,103 @@
-From: Markus Elfring <Markus.Elfring@web.de>
-Subject: Re: Clarifications for merge workflows
-Date: Thu, 11 Mar 2010 14:02:04 +0100
-Message-ID: <4B98E9CC.9000700@web.de>
-References: <4B98D015.40401@web.de> <7v63532h82.fsf@alter.siamese.dyndns.org>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: git-rebase -i prunes commits with empty commit-message
+Date: Thu, 11 Mar 2010 14:14:13 +0100
+Message-ID: <40aa078e1003110514n3bdf12ecq6b3a77e0312e742d@mail.gmail.com>
+References: <40aa078e1003081207u20046916yda5a62d44ce7a401@mail.gmail.com>
+	 <4B979AEF.5010201@alum.mit.edu>
+	 <40aa078e1003100534j189eef5kd60855f80e9dd626@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 11 14:02:23 2010
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michal Vitecek <fuf@mageo.cz>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 11 14:14:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Npi1p-0004UN-QE
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 14:02:18 +0100
+	id 1NpiDa-0004T0-7c
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 14:14:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757851Ab0CKNCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Mar 2010 08:02:12 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:56042 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757764Ab0CKNCL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Mar 2010 08:02:11 -0500
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate01.web.de (Postfix) with ESMTP id C814214C8668A;
-	Thu, 11 Mar 2010 14:02:09 +0100 (CET)
-Received: from [78.48.136.139] (helo=[192.168.1.2])
-	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #314)
-	id 1Npi1h-000499-00; Thu, 11 Mar 2010 14:02:09 +0100
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
-In-Reply-To: <7v63532h82.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.0
-X-Sender: Markus.Elfring@web.de
-X-Provags-ID: V01U2FsdGVkX19GUQn1CpITfekluM0zwrqv0RPWmNTOVGl3PkGj
-	qAycoy1G1tT3+eBj8Xo8Ojlyiu/yshvhCIn7XGSY58ZR/QFKm0
-	qfqZNVcHdYZN+l+r9VuQ==
+	id S932330Ab0CKNOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Mar 2010 08:14:17 -0500
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:46208 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932322Ab0CKNOP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 08:14:15 -0500
+Received: by wwb39 with SMTP id 39so4172wwb.19
+        for <git@vger.kernel.org>; Thu, 11 Mar 2010 05:14:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=vrW2S4B2S1oRgIb1tAEYolNY8tPRLK5q4d9It/mNTB0=;
+        b=iHoApgf5VXv4Eu1+3nVHfG984iAS7xuj+z+kNl6KA1YumcbUoZ6OmLstVOqiTja6H6
+         a7sfglLs/hXcT/yMRpxJ0W+s+Kt7K0YVrwmGurrpgvkqWaKRAP1ZanLfnxqFlz2/0EUc
+         KQWBqwUULI/x3Qx0YLGL31E+NvUkAzchgoRnY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        b=OOKE1XXocvepWGKwx/8FCCz/BuYpcKrpLcdFam6uq113MS0m2OkC3SV3Zutr+TFzJT
+         FBs6F8CP3EXVdVqx5O/fiEFrPWo9rjEYKFNDu2/uX7MVCEHsr+z5jNop9sijb2TF+osu
+         HH7Hk+F8w1UEOYoxAEPBbj0lhrvh6mybKMUuk=
+Received: by 10.216.88.207 with SMTP id a57mr230882wef.200.1268313253484; Thu, 
+	11 Mar 2010 05:14:13 -0800 (PST)
+In-Reply-To: <40aa078e1003100534j189eef5kd60855f80e9dd626@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141961>
 
-Thanks for your explanation.
+On Wed, Mar 10, 2010 at 2:34 PM, Erik Faye-Lund
+<kusmabite@googlemail.com> wrote:
+>
+> But to be honest, it seems to me like in this precise instance it's
+> probably better to just fix git-rebase--interactive.sh. There's no
+> good reason for it to barf on the commits -- especially since
+> noon-interactive rebase handles them just fine. Unless someone screams
+> out loud, I might take a stab at it when I get time.
+>
 
+I think I've found the culprit: git-rev-list doesn't append a
+newline-separator after commits with empty messages.
+git-rebase--interactive.sh basically eats git rev-list's output line
+by line, prepending "pick ".
 
-> And then the procedure to publish the result out, whether it is what I did
-> myself, or what I helped to integrate into my history from others, is the
-> same.  I push the result out from that "local" place to the "public" one.
+This seems to have been introduced in 55246aa "Don't use "<unknown>"
+for placeholders and suppress printing of empty user formats." by
+Michal Vitecek. It seems he intended to fix a rev-list with
+--pretty=format:"" or something like that, but I can't get custom
+formats to work at all with rev-list, even if the documentation says
+it should.
 
-Does any observable difference exist if the data synchronisation would be
-performed in the other direction?
+Anyway, the following patch seems to fix the problem for me, but I'm
+not very confident that it doesn't break whatever Michal was trying to
+address.
 
+--->8---
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 5679170..b13e1ba 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -134,10 +134,8 @@ static void show_commit(struct commit *commit, void *data)
+                                if (graph_show_remainder(revs->graph))
+                                        putchar('\n');
+                        }
+-               } else {
+-                       if (buf.len)
+-                               printf("%s%c", buf.buf, info->hdr_termination);
+-               }
++               } else
++                       printf("%s%c", buf.buf, info->hdr_termination);
+                strbuf_release(&buf);
+        } else {
+                if (graph_show_remainder(revs->graph))
+--->8---
 
-> Of course, if you are always working on that "server", the fact that you
-> are always working there makes it the most convenient place to do all of
-> your work for you.
-
-I guess that it matters a bit if the published repository "SHARE" is the leading
-and authoritative storage location.
-
-Regards,
-Markus
+-- 
+Erik "kusma" Faye-Lund
