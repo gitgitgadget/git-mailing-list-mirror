@@ -1,60 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Do not strip empty lines / trailing spaces from a
- commit message template
-Date: Thu, 11 Mar 2010 03:31:48 -0500
-Message-ID: <20100311083148.GA13786@sigill.intra.peff.net>
-References: <4B97C157.4020806@gmail.com>
- <20100311081213.GA13575@sigill.intra.peff.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH v6 01/13] test-lib: unset GIT_NOTES_REF to stop it from
+ influencing tests
+Date: Thu, 11 Mar 2010 09:55:05 +0100
+Message-ID: <201003110955.06170.johan@herland.net>
+References: <cover.1268229087.git.trast@student.ethz.ch>
+ <31001e0ddcf756d542e2c899f61c78e25beaf6fa.1268229087.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 11 09:31:59 2010
+Content-Type: Text/Plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7BIT
+Cc: Thomas Rast <trast@student.ethz.ch>, Johannes Sixt <j6t@kdbg.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 11 09:55:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpdoE-0000So-Qs
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 09:31:59 +0100
+	id 1NpeAp-0002GO-2G
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 09:55:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756207Ab0CKIbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Mar 2010 03:31:52 -0500
-Received: from peff.net ([208.65.91.99]:33102 "EHLO peff.net"
+	id S1753037Ab0CKIzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Mar 2010 03:55:11 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:51327 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755518Ab0CKIbv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Mar 2010 03:31:51 -0500
-Received: (qmail 28140 invoked by uid 107); 11 Mar 2010 08:32:14 -0000
-Received: from c-71-206-173-191.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.191)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 11 Mar 2010 03:32:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Mar 2010 03:31:48 -0500
-Content-Disposition: inline
-In-Reply-To: <20100311081213.GA13575@sigill.intra.peff.net>
+	id S1752702Ab0CKIzK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 03:55:10 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KZ400IUA0RWA080@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 11 Mar 2010 09:55:08 +0100 (MET)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KZ400J5A0RV0V30@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 11 Mar 2010 09:55:08 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2010.3.11.84232
+User-Agent: KMail/1.13.1 (Linux/2.6.32-ARCH; KDE/4.4.1; x86_64; ; )
+In-reply-to: <31001e0ddcf756d542e2c899f61c78e25beaf6fa.1268229087.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141942>
 
-On Thu, Mar 11, 2010 at 03:12:13AM -0500, Jeff King wrote:
-
-> >  	if (fp == NULL)
-> >  		die_errno("could not open '%s'", git_path(commit_editmsg));
-> >  
-> > -	if (cleanup_mode != CLEANUP_NONE)
-> > +	if (cleanup_mode != CLEANUP_NONE && strcmp(hook_arg1, "template"))
-> >  		stripspace(&sb, 0);
+On Wednesday 10 March 2010, Thomas Rast wrote:
+> ---
 > 
-> And the code looks OK, though admittedly I am not too familiar with this
-> chunk of code (at first I was confused that you would have to look at
-> hook_arg1, but apparently there is no other variable that contains the
-> result of that big if-else chain).
+> 
+>  t/test-lib.sh |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+> 
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index a0e396a..400bc6b 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -54,6 +54,7 @@ unset GIT_OBJECT_DIRECTORY
+>  unset GIT_CEILING_DIRECTORIES
+>  unset SHA1_FILE_DIRECTORIES
+>  unset SHA1_FILE_DIRECTORY
+> +unset GIT_NOTES_REF
+>  GIT_MERGE_VERBOSITY=5
+>  export GIT_MERGE_VERBOSITY
+>  export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
 
-BTW, a subtle point for anyone else reviewing this patch: we also call
-stripspace in message_is_empty to skip over an untouched template. But
-that code path is stil OK, because we stripspace the whole message that
-comes back from the user before calling message_is_empty(), so the
-result should be the same for an untouched template.
+Acked-by: Johan Herland <johan@herland.net>
 
--Peff
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
