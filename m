@@ -1,64 +1,72 @@
-From: Frans Pop <elendil@planet.nl>
-Subject: Re: [PATCH] Staging: arlan: fixed coding style issues in arlan-proc.c (etc...)
-Date: Thu, 11 Mar 2010 08:09:50 +0100
-Message-ID: <201003110809.52037.elendil@planet.nl>
-References: <1268276306-14324-1-git-send-email-andre.beat@gmail.com> <1268278090.1674.37.camel@Joe-Laptop.home> <20100311033248.GA3832@suse.de> <20100311033248.GA3832@suse.de> <1268282459.1674.43.camel@Joe-Laptop.home>
+From: Jeff King <peff@peff.net>
+Subject: Re: wishlist: git gui not listing untracked files in unstaged list
+Date: Thu, 11 Mar 2010 02:11:45 -0500
+Message-ID: <20100311071145.GA5919@sigill.intra.peff.net>
+References: <loom.20100310T203316-38@post.gmane.org>
+ <7vaaugrlqs.fsf@alter.siamese.dyndns.org>
+ <20100310200728.GD21994@spearce.org>
+ <loom.20100310T225229-469@post.gmane.org>
+ <20100310221228.GA4223@sigill.intra.peff.net>
+ <20100310221403.GF21994@spearce.org>
+ <20100310223210.GC4223@sigill.intra.peff.net>
+ <4B9896D4.2020106@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: gregkh@suse.de, git@vger.kernel.org, andre.beat@gmail.com,
-	linville@tuxdriver.com, devel@driverdev.osuosl.org,
-	linux-kernel@vger.kernel.org
-To: Joe Perches <joe@perches.com>
-X-From: linux-kernel-owner@vger.kernel.org Thu Mar 11 08:10:10 2010
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=utf-8
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Patrick Higgins <patrick133t@yahoo.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Mar 11 08:11:54 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1NpcX1-00039K-4E
-	for glk-linux-kernel-3@lo.gmane.org; Thu, 11 Mar 2010 08:10:07 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1NpcYj-0003lC-Sy
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 08:11:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752836Ab0CKHJz (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 11 Mar 2010 02:09:55 -0500
-Received: from cpsmtpm-eml101.kpnxchange.com ([195.121.3.5]:60931 "EHLO
-	CPSMTPM-EML101.kpnxchange.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752732Ab0CKHJx (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 11 Mar 2010 02:09:53 -0500
-Received: from aragorn.fjphome.nl ([77.166.180.99]) by CPSMTPM-EML101.kpnxchange.com with Microsoft SMTPSVC(7.0.6001.18000);
-	 Thu, 11 Mar 2010 08:09:52 +0100
-User-Agent: KMail/1.9.9
-In-reply-To: <1268282459.1674.43.camel@Joe-Laptop.home>
+	id S1752819Ab0CKHLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Mar 2010 02:11:49 -0500
+Received: from peff.net ([208.65.91.99]:45278 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752732Ab0CKHLs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 02:11:48 -0500
+Received: (qmail 26450 invoked by uid 107); 11 Mar 2010 07:12:12 -0000
+Received: from c-71-206-173-191.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.191)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 11 Mar 2010 02:12:12 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Mar 2010 02:11:45 -0500
 Content-Disposition: inline
-X-OriginalArrivalTime: 11 Mar 2010 07:09:52.0474 (UTC) FILETIME=[D871F3A0:01CAC0E9]
-Sender: linux-kernel-owner@vger.kernel.org
+In-Reply-To: <4B9896D4.2020106@viscovery.net>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141935>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141936>
 
-Joe Perches wrote:
-> On Wed, 2010-03-10 at 19:32 -0800, Greg KH wrote:
->> He did, it's a "issue" with git-send-email that if you don't have empty
->> lines, it puts it all on the Subject: line.
+On Thu, Mar 11, 2010 at 08:08:04AM +0100, Johannes Sixt wrote:
+
+> > It depends on the shell. Bash will expand it in _some_ cases (but not
+> > this one). Dash never will:
+> > 
+> >   $ echo $BASH_VERSION
+> >   4.1.0(1)-release
+> >   $ echo foo=~/foo ;# expands
+> >   foo=/home/peff/foo
 > 
-> Could you detail a bit more your problem description?
+> This is wrong, FWIW. Tilde expansion must happen only at the beginning of
+> a word or, when in an assignment, at the beginning of the assigned value
+> or after any unquoted ':'. Note that in `echo foo=~/foo`, what looks like
+> an assignment is *not* an assignment in POSIX shell lingo because it comes
+> after the command name.
 
-A normal commit description would be:
-   <subject>
+Thanks for the reference. I thought it was a bit funny when I wrote the
+above, but just assumed it was implementation defined.
 
-   <description>
+I think it doesn't change our outcome, though. Even though we cannot
+rely on the shell to do such an expansion, it is still probably not sane
+to assume ls-files will do it. Git's expansion is connected with the
+config entry, not the use in ls-files, and it is git-gui's
+responsibility to correctly expand as it reads the config.
 
-   <signed-off-by>
-
-You get the "running subject" effect if instead you do:
-   <subject>
-   <description>
-   <signed-off-by>
-
-I.e, if you omit an empty line after the subject line.
-
-Cheers,
-FJP
+-Peff
