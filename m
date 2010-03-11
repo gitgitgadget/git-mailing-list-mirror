@@ -1,72 +1,110 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: generate a diff against a specific tag in a remote branch
-Date: Thu, 11 Mar 2010 11:44:23 +0100
-Message-ID: <81b0412b1003110244s6f682293l79e0815cb6903aad@mail.gmail.com>
-References: <74fd948d1003110144l382f7542qed4e80ea0fab6fde@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH v6 08/13] notes: implement helpers needed for note copying
+ during rewrite
+Date: Thu, 11 Mar 2010 11:50:58 +0100
+Message-ID: <201003111150.58740.johan@herland.net>
+References: <cover.1268229087.git.trast@student.ethz.ch>
+ <cf0765f47b3a97061997125d4440a475cda03e22.1268229087.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Pedro Ribeiro <pedrib@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 11 11:44:34 2010
+Content-Type: Text/Plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Mar 11 11:51:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpfsW-0001iq-EP
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 11:44:33 +0100
+	id 1Npfyx-0004L7-5B
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 11:51:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756855Ab0CKKo0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Mar 2010 05:44:26 -0500
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:59295 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756670Ab0CKKoZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Mar 2010 05:44:25 -0500
-Received: by bwz1 with SMTP id 1so5837972bwz.21
-        for <git@vger.kernel.org>; Thu, 11 Mar 2010 02:44:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=QhTsduR19yT250wiENCUMMDAXkKP7Q4GmSodMlQhRqs=;
-        b=uCMP0WHTj5JYFkDO62pJtIN9GH7CPVVNgZjltUvMC7/RNDVQ8cM78FpCNu0ZZgwXgL
-         9AK+r1HEfCCV2fvD+7M8IjTaj2x5UmFczdWI9o8enP2H+4GSxrD4KFnmGN8FUP0fK7WO
-         Xdp4o8EY/I0UN9UVe3HPWH1I1awT5m1gSpMfA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=LLJigP2yekL7vTdcF44g0jFjfuj9SrZCN7IHkWaPMf25Ii8B0TOhmvAZ76ShPr/yqD
-         qqFDE7KOga29xmCxloMdK4fCfiBeau3M07edO8ZHAHhQlnfmtu7IGE8Ye1cxLFPAlQO3
-         EeHNrWi9AtKr71RxIhF/4MkRhXaVrjD38s108=
-Received: by 10.204.24.78 with SMTP id u14mr1009803bkb.122.1268304264015; Thu, 
-	11 Mar 2010 02:44:24 -0800 (PST)
-In-Reply-To: <74fd948d1003110144l382f7542qed4e80ea0fab6fde@mail.gmail.com>
+	id S1756911Ab0CKKvG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Mar 2010 05:51:06 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:32827 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756670Ab0CKKvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 05:51:04 -0500
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KZ400GH0651RU20@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 11 Mar 2010 11:51:01 +0100 (MET)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KZ400F3464ZA940@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 11 Mar 2010 11:51:01 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2010.3.11.103635
+User-Agent: KMail/1.13.1 (Linux/2.6.32-ARCH; KDE/4.4.1; x86_64; ; )
+In-reply-to: <cf0765f47b3a97061997125d4440a475cda03e22.1268229087.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141949>
 
-On Thu, Mar 11, 2010 at 10:44, Pedro Ribeiro <pedrib@gmail.com> wrote:
-> I currently have a copy of the kernel TuxOnIce git tree, and the
-> latest tag is 2.6.33.
->
-> I also have added linus tree as a remote branch
-> (git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git).
->
-> What I want to do is to make a patch of the TuxOnIce changes to apply
-> to the linus' 2.6.33. The problem is that the linus tree keeps
-> advacing, obviously, and is now at 2.6.34-rc1.
->
-> So what I've been trying to do is to make a diff against the 2.6.33
-> tag of linus' tree. Is this possible?
+On Wednesday 10 March 2010, Thomas Rast wrote:
+> Implement helper functions to load the rewriting config, and to
+> actually copy the notes.  Also document the config.
+> 
+> Secondly, also implement an undocumented --for-rewrite=<cmd> option to
+> 'git notes copy' which is used like --stdin, but also puts the
+> configuration for <cmd> into effect.  It will be needed to support the
+> copying in git-rebase.
+> 
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 
-Probably. Try rebasing your TuxOnIce branch on the tag:
+Acked-by: Johan Herland <johan@herland.net>
 
-  $ git checkout -b temporary TuxOnIce
-  $ git rebase v2.6.33
+[...]
 
-If it works out (you may have to correct some conflicts) during rebase,
-the branch "temporary" can be used to generate a set of patches to
-add TuxOnIce to a vanill 2.6.33 (by using git format-patch, for example).
+> diff --git a/builtin/notes.c b/builtin/notes.c
+> index 576a989..6c2297a 100644
+> --- a/builtin/notes.c
+> +++ b/builtin/notes.c
+
+[...]
+
+> +struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd)
+> +{
+> +	struct notes_rewrite_cfg *c = xmalloc(sizeof(struct
+> notes_rewrite_cfg)); +	const char *rewrite_mode_env =
+> getenv(GIT_NOTES_REWRITE_MODE_ENVIRONMENT); +	const char
+> *rewrite_refs_env = getenv(GIT_NOTES_REWRITE_REF_ENVIRONMENT); +	c->cmd
+> = cmd;
+> +	c->enabled = 1;
+> +	c->combine = combine_notes_concatenate;
+> +	c->refs = xcalloc(1, sizeof(struct string_list));
+> +	c->refs->strdup_strings = 1;
+> +	c->refs_from_env = 0;
+> +	c->mode_from_env = 0;
+> +	if (rewrite_mode_env) {
+> +		c->mode_from_env = 1;
+> +		c->combine = parse_combine_notes_fn(rewrite_mode_env);
+> +		if (!c->combine)
+> +			error("Bad " GIT_NOTES_REWRITE_MODE_ENVIRONMENT
+> +			      " value: '%s'", rewrite_mode_env);
+> +	}
+> +	if (rewrite_refs_env) {
+> +		c->refs_from_env = 1;
+> +		string_list_add_refs_from_colon_sep(c->refs, rewrite_refs_env);
+> +	}
+> +	git_config(notes_rewrite_config, c);
+> +	if (!c->enabled || !c->refs->nr) {
+> +		string_list_clear(c->refs, 0);
+> +		free(c->refs);
+> +		free(c);
+> +		return NULL;
+> +	}
+> +	c->trees = load_notes_trees(c->refs);
+
+Ah, this invalidates some of my comments to PATCH 02/13. Please disregard 
+those comments.
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
