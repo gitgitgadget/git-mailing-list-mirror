@@ -1,75 +1,85 @@
-From: Alexander Gladysh <agladysh@gmail.com>
-Subject: Re: Cherry-pick with symlinks fails horribly
-Date: Thu, 11 Mar 2010 15:16:09 +0300
-Message-ID: <c6c947f61003110416l40a85b6fg7ede2403a8f6961b@mail.gmail.com>
-References: <c6c947f61003081728u48292de4x6f2c26e1ea9c1756@mail.gmail.com>
-	 <201003110557.11268.chriscool@tuxfamily.org>
+From: "Richard Lee" <richard@webdezign.co.uk>
+Subject: Doing a dummy or empty merge
+Date: Thu, 11 Mar 2010 12:41:02 -0000
+Message-ID: <8440EA2C12E50645A68C4AA9887166513FC480@SERVER.webdezign.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu Mar 11 13:16:16 2010
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 11 13:41:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NphJI-0005w8-09
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 13:16:16 +0100
+	id 1NphhQ-0001ml-7q
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 13:41:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757758Ab0CKMQL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Mar 2010 07:16:11 -0500
-Received: from mail-pz0-f194.google.com ([209.85.222.194]:39200 "EHLO
-	mail-pz0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757754Ab0CKMQK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Mar 2010 07:16:10 -0500
-Received: by pzk32 with SMTP id 32so598563pzk.4
-        for <git@vger.kernel.org>; Thu, 11 Mar 2010 04:16:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Obx8wbGQnMjaIUY5PdLVG2TPdIjT+Xyy08tXZ2axcd8=;
-        b=OhV7RUsrNYs/eB0nS+ENlg2BMo2/P80SHp13HdrOGUzPm1F9DCZ3p8TB3gtWFT80Qy
-         Jeb22fPTKV9f5klITA93qZcMv6k/BTlnus+r/Rcdy498ZUZkplUzkHz97fgHOKp8cVB9
-         WxRXPSX8yizeeov5FJDAbpG7KFTBdnniJFpwE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=sKnilsor4rTszKYpSvsfmwzb73iYKB+12His03Fay1KI0ADcN/sRkusxIhili5GWIu
-         KCsqcFb06wvIoEokSBOZmN23nsN90ZXmVw+OoCaDPiYjuTOROUki4n3Fez2cBfmSJAUQ
-         kV0i/EBdpGTAcPZbjvLTMLVg/not/vfJlmtAQ=
-Received: by 10.141.14.21 with SMTP id r21mr1744352rvi.70.1268309769572; Thu, 
-	11 Mar 2010 04:16:09 -0800 (PST)
-In-Reply-To: <201003110557.11268.chriscool@tuxfamily.org>
+	id S1756943Ab0CKMlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Mar 2010 07:41:07 -0500
+Received: from mail.webdezign.co.uk ([213.123.201.79]:47743 "EHLO
+	webdezign.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756000Ab0CKMlF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Mar 2010 07:41:05 -0500
+Content-class: urn:content-classes:message
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Doing a dummy or empty merge
+Thread-Index: AcrBGBuruAVGt0WhQ42a058G1lPxcQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141958>
 
-On Thu, Mar 11, 2010 at 07:57, Christian Couder <chriscool@tuxfamily.or=
-g> wrote:
-> On Tuesday 09 March 2010 02:28:30 Alexander Gladysh wrote:
->> I'm complaining about Git symlink handling again. This time it is
->> =A0cherry-pick.
+Hi again git-list,
 
-> I can reproduce the bug here on Linux. And Git v1.6.0 has the same bu=
-g.
-> So I suspect an old bug in unpack_trees.c. I will try to have another=
- look at
-> it this evening, but I am not familiar with that code.
+This is a question regarding merging following directly on from my last
+question about workflows.
 
-I have found my old bug-report. There is even some patch in that thread=
-=2E
+I was recommended a workflow by Jon Seymour to handle multiple
+deployments of the same project. In a nutshell, the workflow was to keep
+a main branch that reflects a generic undeployed state and keep each
+deployment along with the deployment artifacts in a seperate branch.
 
-http://thread.gmane.org/gmane.comp.version-control.git/120741/
+I don't have a generic branch as such. It's not have the way software I
+was given to work on works. I do have a live/production branch.
 
-Not sure if it is the same issue or if the patch was even merged in tho=
-ugh...
+I have just created a local/test branch. So far I have made and
+committed and changes that enables the project to run on my local
+machine. 
 
-HTH,
-Alexander.
+At this point I want to merge this test branch into the live branch
+despite not having made any commits apart from deployment related
+changes on the test branch. I want this to be a dummy merge so that a
+merge is recorded into the live branch, but the contents of the live
+branch remain untouched. This is as if I made an empty commit on the
+live branch.
+
+The reason why I want to do this is that I want a point on the test
+branch that represents when all deployment-specific commits have been
+made. Any further commits from this point onwards are additional
+features or bug fixes that are unrelated to the deployment. So any
+further merges from this point onwards into the live branch will only
+bring over these additional features and fixes. The deployment settings
+on the live branch will remain untouched as I have made a 'dummy' merge
+already.
+
+I think a nice additional consequence would be that any resulting merge
+conflicts would probably indicate that I have made deployment specific
+commits rather than any features of bug fixes.
+
+So the question is how do a do a dummy or empty merge as described? So
+far I can only thing of doing a --no-commit merge, then checking out all
+changed files from the live branch. Is there a neater way of doing this?
+I assume this would be like the merge using the 'theirs' strategy, but
+the strategy would be used on all merge changes rather than just
+conflicts.
+
+Or is there a better way of implementing this workflow?
+
+Regards,
+
+Richard
