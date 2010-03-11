@@ -1,85 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] git status: Fix false positive "new commits" output for
  dirty submodules
-Date: Thu, 11 Mar 2010 12:04:13 -0800
-Message-ID: <7v3a061v7m.fsf@alter.siamese.dyndns.org>
+Date: Thu, 11 Mar 2010 12:16:42 -0800
+Message-ID: <7vpr3azk9h.fsf@alter.siamese.dyndns.org>
 References: <4B9909F6.5090104@web.de>
+ <7v3a061v7m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Mar 11 21:04:33 2010
+X-From: git-owner@vger.kernel.org Thu Mar 11 21:16:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpocQ-0002XB-U4
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 21:04:31 +0100
+	id 1NpooU-0000eG-Nk
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 21:16:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754337Ab0CKUEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Mar 2010 15:04:24 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41837 "EHLO
+	id S1758129Ab0CKUQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Mar 2010 15:16:52 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54527 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752582Ab0CKUEX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Mar 2010 15:04:23 -0500
+	with ESMTP id S1754606Ab0CKUQv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 15:16:51 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7835BA1E34;
-	Thu, 11 Mar 2010 15:04:20 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A7AABA100A;
+	Thu, 11 Mar 2010 15:16:48 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wAA2hRiQxDLCrUkWYjPmIeyh9zM=; b=qFLOEt
-	jZBi3iPmV+04xwn4i/tuWju5JsUA1uK1PELT2SoxEbsOP8+rhS3JMSlERAz8JxZx
-	y6ZpNhUVonhWA22lEIXz5M6QZy23Nw8qOTQ8LpH2mUu9rkVhWgFSx1uKvIqThBDM
-	nk5Qv9qzSv62CcQyKfG9bdokMEOt95oSAkYBs=
+	:content-type; s=sasl; bh=lE8/4R4NYl2p+J+EEAlBu3eyoOM=; b=LbHFmq
+	61V+erf1eE9EVwV88EdNBYyxe2x4smlzhjPJYSRU1rjB8/rvPGl6LmRvfBttxQaK
+	quoVFKED6bwr4iDfjIJYsluM0Rnu5CZVGs8dKhPca1AA6ufGxHE6d2GFGd04x6T/
+	qckMpMiqMB87aj3QZqBrNaARrGzea8lZZH+v0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NKz+5wbmufuSizsfJ9Y63a+T5alcAh40
-	WhWCAxoYRI36dB8OH5kPykP6W8LEM0rzH5kPCRydKGzmP2HiCXE7zPiKTJAQ96/+
-	vcAp/Svq1hKoAn4Cj4h/tKh6dhwL9Xzd4qp+ZCI9qGCR/jv3ikkytYJX01mLAC6n
-	nd+JBY5qRhA=
+	:content-type; q=dns; s=sasl; b=CTStdpEnr0xtS8kpgRHAMTgJAvVEcpOl
+	+RqSJiXJMlWFSFCUwHYVG8rpQWzCqM4YbxxcuSOrOBKD/lmir6+ZqeGJq3u4jm24
+	NppQnl0KCc0Y5Jmo9hTQwCNLGVhCK3Qu3z3TY6ZdXd80iiI7OT/vloDPPnXi9Kze
+	/+TvBl3QBlk=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B326A1E31;
-	Thu, 11 Mar 2010 15:04:18 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8445AA1007;
+	Thu, 11 Mar 2010 15:16:46 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A2E03A1E2F; Thu, 11 Mar
- 2010 15:04:15 -0500 (EST)
-In-Reply-To: <4B9909F6.5090104@web.de> (Jens Lehmann's message of "Thu\, 11
- Mar 2010 16\:19\:18 +0100")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D69DEA1FFF; Thu, 11 Mar
+ 2010 15:16:43 -0500 (EST)
+In-Reply-To: <7v3a061v7m.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu\, 11 Mar 2010 12\:04\:13 -0800")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 467B1C34-2D49-11DF-BE5A-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 047750F8-2D4B-11DF-9CE0-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141995>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Another way to fix this bug would have been to enter the correct sha1
-> into two->sha1 for submodules with new commits.
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>
+>> Another way to fix this bug would have been to enter the correct sha1
+>> into two->sha1 for submodules with new commits.
+>
+> I didn't follow all the codepaths involved, but it might be worth a try.
+> The beginning of the patch may look something like this, and then you
+> would probably have to fix potential fallouts in diff.c from this change.
 
-I didn't follow all the codepaths involved, but it might be worth a try.
-The beginning of the patch may look something like this, and then you
-would probably have to fix potential fallouts in diff.c from this change.
+Here is a fix of one of the fallouts.
 
- diff-lib.c |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+ diff.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-diff --git a/diff-lib.c b/diff-lib.c
-index d7e13cb..a147d9c 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -182,10 +182,9 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 		    && !DIFF_OPT_TST(&revs->diffopt, IGNORE_SUBMODULES)
- 		    && (!changed || (revs->diffopt.output_format & DIFF_FORMAT_PATCH))
- 		    && is_submodule_modified(ce->name)) {
--			changed = 1;
- 			dirty_submodule = 1;
+diff --git a/diff.c b/diff.c
+index dfdfa1a..eefe836 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3221,6 +3221,8 @@ static void diff_resolve_rename_copy(void)
  		}
--		if (!changed) {
-+		if (!changed && !dirty_submodule) {
- 			ce_mark_uptodate(ce);
- 			if (!DIFF_OPT_TST(&revs->diffopt, FIND_COPIES_HARDER))
- 				continue;
+ 		else if (hashcmp(p->one->sha1, p->two->sha1) ||
+ 			 p->one->mode != p->two->mode ||
++			 p->one->dirty_submodule ||
++			 p->two->dirty_submodule ||
+ 			 is_null_sha1(p->one->sha1))
+ 			p->status = DIFF_STATUS_MODIFIED;
+ 		else {
