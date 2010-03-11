@@ -1,131 +1,66 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: Cherry-pick with symlinks fails horribly
-Date: Thu, 11 Mar 2010 05:57:11 +0100
-Message-ID: <201003110557.11268.chriscool@tuxfamily.org>
-References: <c6c947f61003081728u48292de4x6f2c26e1ea9c1756@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: wishlist: git gui not listing untracked files in unstaged list
+Date: Thu, 11 Mar 2010 08:08:04 +0100
+Message-ID: <4B9896D4.2020106@viscovery.net>
+References: <loom.20100310T203316-38@post.gmane.org> <7vaaugrlqs.fsf@alter.siamese.dyndns.org> <20100310200728.GD21994@spearce.org> <loom.20100310T225229-469@post.gmane.org> <20100310221228.GA4223@sigill.intra.peff.net> <20100310221403.GF21994@spearce.org> <20100310223210.GC4223@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Alexander Gladysh <agladysh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 11 05:57:27 2010
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Patrick Higgins <patrick133t@yahoo.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 11 08:08:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpaSc-0005ae-VU
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 05:57:27 +0100
+	id 1NpcVG-0002Ur-2e
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 08:08:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756484Ab0CKE5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Mar 2010 23:57:21 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:34853 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756305Ab0CKE5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Mar 2010 23:57:20 -0500
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id B640781803B;
-	Thu, 11 Mar 2010 05:57:14 +0100 (CET)
-Received: from style.localnet (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 92016818062;
-	Thu, 11 Mar 2010 05:57:11 +0100 (CET)
-User-Agent: KMail/1.12.2 (Linux/2.6.31-19-generic; KDE/4.3.2; x86_64; ; )
-In-Reply-To: <c6c947f61003081728u48292de4x6f2c26e1ea9c1756@mail.gmail.com>
+	id S1752723Ab0CKHIL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Mar 2010 02:08:11 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:33890 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752603Ab0CKHIK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 02:08:10 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NpcV3-0003Ke-5M; Thu, 11 Mar 2010 08:08:05 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id BD2151660F;
+	Thu, 11 Mar 2010 08:08:04 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <20100310223210.GC4223@sigill.intra.peff.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141934>
 
-On Tuesday 09 March 2010 02:28:30 Alexander Gladysh wrote:
-> Hi, list!
+Jeff King schrieb:
+> On Wed, Mar 10, 2010 at 02:14:03PM -0800, Shawn O. Pearce wrote:
+>> I'd say its git-gui, yes?  Doesn't my shell automatically do
+>> --exclude-from=~/my.list for me?  Its not the command's job
+>> to do that expansion.
 > 
-> OS X 10.6.2
-> Git 1.7.0.2
+> It depends on the shell. Bash will expand it in _some_ cases (but not
+> this one). Dash never will:
 > 
-> I'm complaining about Git symlink handling again. This time it is
->  cherry-pick.
-> 
-> In my repo I have a symlink pointing to a directory.
-> 
-> I swap symlink with the directory in a single commit.
-> 
-> Now, if I try to cherry-pick any later commit from the branch that has
-> that swap commit to a branch that have not, cherry-pick fails
-> horribly.
-> 
-> See script to reproduce the bug below (run it in a clean directory).
-> 
-> Output example:
-> 
-> $ git cherry-pick <SHA>
-> 
-> Automatic cherry-pick failed.  After resolving the conflicts,
-> mark the corrected paths with 'git add <paths>' or 'git rm <paths>'
-> and commit the result with:
-> 
->         git commit -c 6a398597ce7a00fe05f43ff88808303eb151dfb5
-> 
-> $ git status # Note the "Untracked files" section
-> 
-> # On branch master
-> # Changes to be committed:
-> #   (use "git reset HEAD <file>..." to unstage)
-> #
-> #	renamed:    a/f -> f1
-> #
-> # Unmerged paths:
-> #   (use "git reset HEAD <file>..." to unstage)
-> #   (use "git add/rm <file>..." as appropriate to mark resolution)
-> #
-> #	added by us:        b/a
-> #
-> # Untracked files:
-> #   (use "git add <file>..." to include in what will be committed)
-> #
-> #	b/a~HEAD
-> 
-> (Also I've seen git reset --hard to fail afterwards, complaining it
-> can't delete a directory, but I can't reproduce it now.)
-> 
-> I see a similar behaviour if I try to do interactive rebase accross
-> symlink swap commit.
-> 
-> Alexander.
-> 
-> #! /bin/bash
-> 
-> git init
-> 
-> mkdir a
-> touch a/f
-> git add a
-> git commit -m "a"
-> 
-> mkdir b
-> ln -s ../a b/a
-> git add b
-> git commit -m "b"
-> 
-> git checkout -b branch
-> rm b/a
-> mv a b/
-> ln -s b/a a
-> git add .
-> git commit -m "swap"
-> 
-> touch f1
-> git add f1
-> git commit -m "f1"
-> 
-> git checkout master
-> 
-> git cherry-pick `git rev-parse branch` # This one breaks horribly
+>   $ echo $BASH_VERSION
+>   4.1.0(1)-release
+>   $ echo foo=~/foo ;# expands
+>   foo=/home/peff/foo
 
-I can reproduce the bug here on Linux. And Git v1.6.0 has the same bug.
-So I suspect an old bug in unpack_trees.c. I will try to have another look at 
-it this evening, but I am not familiar with that code.
+This is wrong, FWIW. Tilde expansion must happen only at the beginning of
+a word or, when in an assignment, at the beginning of the assigned value
+or after any unquoted ':'. Note that in `echo foo=~/foo`, what looks like
+an assignment is *not* an assignment in POSIX shell lingo because it comes
+after the command name.
 
-Thanks for the report,
-Christian.
+http://www.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_01
+
+-- Hannes
