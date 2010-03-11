@@ -1,85 +1,85 @@
-From: "Richard Lee" <richard@webdezign.co.uk>
-Subject: Doing a dummy or empty merge
-Date: Thu, 11 Mar 2010 12:41:02 -0000
-Message-ID: <8440EA2C12E50645A68C4AA9887166513FC480@SERVER.webdezign.local>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: wishlist: git gui not listing untracked files in unstaged list
+Date: Thu, 11 Mar 2010 13:52:59 +0100
+Message-ID: <m24oknc95g.fsf@igel.home>
+References: <loom.20100310T203316-38@post.gmane.org>
+	<7vaaugrlqs.fsf@alter.siamese.dyndns.org>
+	<20100310200728.GD21994@spearce.org>
+	<loom.20100310T225229-469@post.gmane.org>
+	<20100310221228.GA4223@sigill.intra.peff.net>
+	<20100310221403.GF21994@spearce.org>
+	<20100310223210.GC4223@sigill.intra.peff.net>
+	<4B9896D4.2020106@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 11 13:41:19 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
+	Patrick Higgins <patrick133t@yahoo.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Mar 11 13:53:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NphhQ-0001ml-7q
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 13:41:12 +0100
+	id 1Npht4-0007MP-U8
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 13:53:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756943Ab0CKMlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Mar 2010 07:41:07 -0500
-Received: from mail.webdezign.co.uk ([213.123.201.79]:47743 "EHLO
-	webdezign.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756000Ab0CKMlF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Mar 2010 07:41:05 -0500
-Content-class: urn:content-classes:message
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Doing a dummy or empty merge
-Thread-Index: AcrBGBuruAVGt0WhQ42a058G1lPxcQ==
+	id S1757811Ab0CKMxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Mar 2010 07:53:09 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:35970 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753142Ab0CKMxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 07:53:07 -0500
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id 901331C00361;
+	Thu, 11 Mar 2010 13:53:01 +0100 (CET)
+Received: from localhost (dynscan2.mnet-online.de [192.168.6.166])
+	by mail.m-online.net (Postfix) with ESMTP id 1B03D902FD;
+	Thu, 11 Mar 2010 13:53:01 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan2.mnet-online.de [192.168.6.166]) (amavisd-new, port 10024)
+	with ESMTP id wZv9CZocMxn9; Thu, 11 Mar 2010 13:53:00 +0100 (CET)
+Received: from igel.home (DSL01.83.171.161.144.ip-pool.NEFkom.net [83.171.161.144])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Thu, 11 Mar 2010 13:52:59 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id C874FCA297; Thu, 11 Mar 2010 13:52:59 +0100 (CET)
+X-Yow: He is the MELBA-BEING...  the ANGEL CAKE...
+  XEROX him...  XEROX him --
+In-Reply-To: <4B9896D4.2020106@viscovery.net> (Johannes Sixt's message of
+	"Thu, 11 Mar 2010 08:08:04 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.93 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141959>
 
-Hi again git-list,
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-This is a question regarding merging following directly on from my last
-question about workflows.
+> Jeff King schrieb:
+>> On Wed, Mar 10, 2010 at 02:14:03PM -0800, Shawn O. Pearce wrote:
+>>> I'd say its git-gui, yes?  Doesn't my shell automatically do
+>>> --exclude-from=~/my.list for me?  Its not the command's job
+>>> to do that expansion.
+>> 
+>> It depends on the shell. Bash will expand it in _some_ cases (but not
+>> this one). Dash never will:
+>> 
+>>   $ echo $BASH_VERSION
+>>   4.1.0(1)-release
+>>   $ echo foo=~/foo ;# expands
+>>   foo=/home/peff/foo
+>
+> This is wrong, FWIW.
 
-I was recommended a workflow by Jon Seymour to handle multiple
-deployments of the same project. In a nutshell, the workflow was to keep
-a main branch that reflects a generic undeployed state and keep each
-deployment along with the deployment artifacts in a seperate branch.
+It's a bash extension and disabled in POSIX mode.
 
-I don't have a generic branch as such. It's not have the way software I
-was given to work on works. I do have a live/production branch.
+Andreas.
 
-I have just created a local/test branch. So far I have made and
-committed and changes that enables the project to run on my local
-machine. 
-
-At this point I want to merge this test branch into the live branch
-despite not having made any commits apart from deployment related
-changes on the test branch. I want this to be a dummy merge so that a
-merge is recorded into the live branch, but the contents of the live
-branch remain untouched. This is as if I made an empty commit on the
-live branch.
-
-The reason why I want to do this is that I want a point on the test
-branch that represents when all deployment-specific commits have been
-made. Any further commits from this point onwards are additional
-features or bug fixes that are unrelated to the deployment. So any
-further merges from this point onwards into the live branch will only
-bring over these additional features and fixes. The deployment settings
-on the live branch will remain untouched as I have made a 'dummy' merge
-already.
-
-I think a nice additional consequence would be that any resulting merge
-conflicts would probably indicate that I have made deployment specific
-commits rather than any features of bug fixes.
-
-So the question is how do a do a dummy or empty merge as described? So
-far I can only thing of doing a --no-commit merge, then checking out all
-changed files from the live branch. Is there a neater way of doing this?
-I assume this would be like the merge using the 'theirs' strategy, but
-the strategy would be used on all merge changes rather than just
-conflicts.
-
-Or is there a better way of implementing this workflow?
-
-Regards,
-
-Richard
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
