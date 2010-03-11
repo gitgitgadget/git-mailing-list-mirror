@@ -1,72 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: wishlist: git gui not listing untracked files in unstaged list
-Date: Thu, 11 Mar 2010 02:11:45 -0500
-Message-ID: <20100311071145.GA5919@sigill.intra.peff.net>
-References: <loom.20100310T203316-38@post.gmane.org>
- <7vaaugrlqs.fsf@alter.siamese.dyndns.org>
- <20100310200728.GD21994@spearce.org>
- <loom.20100310T225229-469@post.gmane.org>
- <20100310221228.GA4223@sigill.intra.peff.net>
- <20100310221403.GF21994@spearce.org>
- <20100310223210.GC4223@sigill.intra.peff.net>
- <4B9896D4.2020106@viscovery.net>
+From: Markus Duft <markus.duft@salomon.at>
+Subject: Re: git interix support
+Date: Thu, 11 Mar 2010 08:13:57 +0100
+Organization: Salomon Automation GmbH
+Message-ID: <4B989835.2010805@salomon.at>
+References: <4B962456.20600@salomon.at> <alpine.LNX.2.00.1003101319350.14365@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Patrick Higgins <patrick133t@yahoo.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Mar 11 08:11:54 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Thu Mar 11 08:15:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpcYj-0003lC-Sy
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 08:11:54 +0100
+	id 1Npcc8-000569-0h
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 08:15:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819Ab0CKHLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Mar 2010 02:11:49 -0500
-Received: from peff.net ([208.65.91.99]:45278 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752732Ab0CKHLs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Mar 2010 02:11:48 -0500
-Received: (qmail 26450 invoked by uid 107); 11 Mar 2010 07:12:12 -0000
-Received: from c-71-206-173-191.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.206.173.191)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 11 Mar 2010 02:12:12 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Mar 2010 02:11:45 -0500
-Content-Disposition: inline
-In-Reply-To: <4B9896D4.2020106@viscovery.net>
+	id S1752880Ab0CKHPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Mar 2010 02:15:18 -0500
+Received: from smtp.salomon.at ([193.186.16.13]:54897 "EHLO sauxb.salomon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752732Ab0CKHPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 02:15:17 -0500
+Received: from servex01.wamas.com (servex01.salomon.at [172.28.2.2])
+	by sauxb.salomon.at (8.12.10/8.12.10) with ESMTP id o2B7FBaI000388;
+	Thu, 11 Mar 2010 08:15:12 +0100 (MET)
+Received: from [172.28.8.166] ([172.28.8.166]) by servex01.wamas.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 11 Mar 2010 08:15:11 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100308 Lightning/1.0b2pre Thunderbird/3.0.3
+In-Reply-To: <alpine.LNX.2.00.1003101319350.14365@iabervon.org>
+X-Enigmail-Version: 1.0.1
+X-OriginalArrivalTime: 11 Mar 2010 07:15:11.0343 (UTC) FILETIME=[96817FF0:01CAC0EA]
+X-Scanned-By: MIMEDefang 2.54 on 172.28.2.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141937>
 
-On Thu, Mar 11, 2010 at 08:08:04AM +0100, Johannes Sixt wrote:
-
-> > It depends on the shell. Bash will expand it in _some_ cases (but not
-> > this one). Dash never will:
-> > 
-> >   $ echo $BASH_VERSION
-> >   4.1.0(1)-release
-> >   $ echo foo=~/foo ;# expands
-> >   foo=/home/peff/foo
+On 03/10/10 19:32, Daniel Barkalow wrote:
+> On Tue, 9 Mar 2010, Markus Duft wrote:
 > 
-> This is wrong, FWIW. Tilde expansion must happen only at the beginning of
-> a word or, when in an assignment, at the beginning of the assigned value
-> or after any unquoted ':'. Note that in `echo foo=~/foo`, what looks like
-> an assignment is *not* an assignment in POSIX shell lingo because it comes
-> after the command name.
+[snip]
+> 
+> If you've got programs that don't work at all without some library 
+> function that you don't have, it's better to not build them at all (by not 
+> having them in the make targets) than build binaries that refuse to run. 
+> Doing it that way means you don't need to get the rest of the file to 
+> compile, and makes it more clear before runtime what functionality will be 
+> missing.
+> 
+> Also, if you make a NO_POLL and use that, someone else might make a 
+> compat_poll(). Or maybe not, but a workaround certainly won't get done if 
+> you just use __INTERIX.
 
-Thanks for the reference. I thought it was a bit funny when I wrote the
-above, but just assumed it was implementation defined.
+thanks for the input (all of you). i will spend some more time, doing a
+better patch... :)
 
-I think it doesn't change our outcome, though. Even though we cannot
-rely on the shell to do such an expansion, it is still probably not sane
-to assume ls-files will do it. Git's expansion is connected with the
-config entry, not the use in ls-files, and it is git-gui's
-responsibility to correctly expand as it reads the config.
+markus
 
--Peff
+> 
+> 	-Daniel
+> *This .sig left intentionally blank*
