@@ -1,103 +1,126 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: git-rebase -i prunes commits with empty commit-message
-Date: Thu, 11 Mar 2010 14:14:13 +0100
-Message-ID: <40aa078e1003110514n3bdf12ecq6b3a77e0312e742d@mail.gmail.com>
-References: <40aa078e1003081207u20046916yda5a62d44ce7a401@mail.gmail.com>
-	 <4B979AEF.5010201@alum.mit.edu>
-	 <40aa078e1003100534j189eef5kd60855f80e9dd626@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 00/16] nd/setup part two
+Date: Thu, 11 Mar 2010 20:22:18 +0700
+Message-ID: <1268313754-28179-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michal Vitecek <fuf@mageo.cz>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 11 14:14:27 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 11 14:22:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpiDa-0004T0-7c
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 14:14:26 +0100
+	id 1NpiLe-0000oj-2p
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 14:22:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932330Ab0CKNOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Mar 2010 08:14:17 -0500
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:46208 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932322Ab0CKNOP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Mar 2010 08:14:15 -0500
-Received: by wwb39 with SMTP id 39so4172wwb.19
-        for <git@vger.kernel.org>; Thu, 11 Mar 2010 05:14:13 -0800 (PST)
+	id S932409Ab0CKNWm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Mar 2010 08:22:42 -0500
+Received: from mail-pz0-f194.google.com ([209.85.222.194]:40589 "EHLO
+	mail-pz0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932388Ab0CKNWl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 08:22:41 -0500
+Received: by pzk32 with SMTP id 32so11276pzk.4
+        for <git@vger.kernel.org>; Thu, 11 Mar 2010 05:22:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=vrW2S4B2S1oRgIb1tAEYolNY8tPRLK5q4d9It/mNTB0=;
-        b=iHoApgf5VXv4Eu1+3nVHfG984iAS7xuj+z+kNl6KA1YumcbUoZ6OmLstVOqiTja6H6
-         a7sfglLs/hXcT/yMRpxJ0W+s+Kt7K0YVrwmGurrpgvkqWaKRAP1ZanLfnxqFlz2/0EUc
-         KQWBqwUULI/x3Qx0YLGL31E+NvUkAzchgoRnY=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=dHGyDlhN59gH+ZXBMNqE8JWMTacOTyZIZh2gAv7xAog=;
+        b=F2cPMbS4Qg08qbxFeKCIsWnQ37TC3ME/VvpO0ueG2MBmsqqtibso+sjTjeTiBvC3aG
+         8soJhCrTijQozq1zvyDsSn0I7YCa+3ZUq/CGWLwjgbs/j0mUfcbTDcFir2GnAZNri12y
+         XGv4m+6ZdDiRVYMr8WtwIhOc5Ha04hZUuTyzo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        b=OOKE1XXocvepWGKwx/8FCCz/BuYpcKrpLcdFam6uq113MS0m2OkC3SV3Zutr+TFzJT
-         FBs6F8CP3EXVdVqx5O/fiEFrPWo9rjEYKFNDu2/uX7MVCEHsr+z5jNop9sijb2TF+osu
-         HH7Hk+F8w1UEOYoxAEPBbj0lhrvh6mybKMUuk=
-Received: by 10.216.88.207 with SMTP id a57mr230882wef.200.1268313253484; Thu, 
-	11 Mar 2010 05:14:13 -0800 (PST)
-In-Reply-To: <40aa078e1003100534j189eef5kd60855f80e9dd626@mail.gmail.com>
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=au7v1rWEgpLF/dEOexw76t37UnkVmuaegJ7SUG3MSOFwU4juqfomlkyiF8CFjPMhDH
+         CBsAc4j8rbTNqfSTe3gICFR9NpXnflQ8HEmsv+wMk6Zq9Y+ACoesjWvtUSiG7p0/hVIP
+         7wweRFgVVbwqHY8e/f/tKU3BbVB/TlRHe2QTM=
+Received: by 10.114.214.37 with SMTP id m37mr1337970wag.37.1268313760201;
+        Thu, 11 Mar 2010 05:22:40 -0800 (PST)
+Received: from pclouds@gmail.com ([115.73.196.130])
+        by mx.google.com with ESMTPS id 21sm8837230pzk.4.2010.03.11.05.22.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 11 Mar 2010 05:22:38 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 11 Mar 2010 20:22:34 +0700
+X-Mailer: git-send-email 1.7.0.1.384.g6abcaa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141962>
 
-On Wed, Mar 10, 2010 at 2:34 PM, Erik Faye-Lund
-<kusmabite@googlemail.com> wrote:
->
-> But to be honest, it seems to me like in this precise instance it's
-> probably better to just fix git-rebase--interactive.sh. There's no
-> good reason for it to barf on the commits -- especially since
-> noon-interactive rebase handles them just fine. Unless someone screams
-> out loud, I might take a stab at it when I get time.
->
+While the first part is more of preventing faults. This part fixes the
+remaining faults (or introduces more faults, who knows). I think I
+have got it to a readable/testable state.
 
-I think I've found the culprit: git-rev-list doesn't append a
-newline-separator after commits with empty messages.
-git-rebase--interactive.sh basically eats git rev-list's output line
-by line, prepending "pick ".
+On top of nd/setup, obviously.
 
-This seems to have been introduced in 55246aa "Don't use "<unknown>"
-for placeholders and suppress printing of empty user formats." by
-Michal Vitecek. It seems he intended to fix a rev-list with
---pretty=format:"" or something like that, but I can't get custom
-formats to work at all with rev-list, even if the documentation says
-it should.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (16):
+  Move enter_repo() to setup.c
+  enter_repo(): initialize other variables as setup_git_directory_gentl=
+y() does
+  rev-parse --git-dir: print relative gitdir correctly
+  worktree setup: call set_git_dir explicitly
+  Add git_config_early()
 
-Anyway, the following patch seems to fix the problem for me, but I'm
-not very confident that it doesn't break whatever Michal was trying to
-address.
+    Preparation
 
---->8---
-diff --git a/builtin-rev-list.c b/builtin-rev-list.c
-index 5679170..b13e1ba 100644
---- a/builtin-rev-list.c
-+++ b/builtin-rev-list.c
-@@ -134,10 +134,8 @@ static void show_commit(struct commit *commit, void *data)
-                                if (graph_show_remainder(revs->graph))
-                                        putchar('\n');
-                        }
--               } else {
--                       if (buf.len)
--                               printf("%s%c", buf.buf, info->hdr_termination);
--               }
-+               } else
-+                       printf("%s%c", buf.buf, info->hdr_termination);
-                strbuf_release(&buf);
-        } else {
-                if (graph_show_remainder(revs->graph))
---->8---
 
--- 
-Erik "kusma" Faye-Lund
+  Use git_config_early() instead of git_config() during repo setup
+  worktree setup: restore original state when things go wrong
+  init/clone: turn on startup->have_repository properly
+
+    Improve setup stuff
+
+
+  git_config(): do not read .git/config if there is no repository
+  Do not read .git/info/exclude if there is no repository
+  Do not read .git/info/attributes if there is no repository
+  apply: do not check sha1 when repository has not been found
+  config: do not read .git/config if there is no repository
+
+    Stop improper access to repo (and incorrectly set git_dir
+    along the way)
+
+
+  Allow to undo setup_git_directory_gently() gracefully (and fix alias =
+code)
+  alias: keep repository found while collecting aliases as long as poss=
+ible
+
+    Alias fix/improvement. I think I can add some tests for this.
+
+
+  Guard unallowed access to repository when it's not set up
+
+    The original patch [1] that has grown up to a 37-patch, 2-part seri=
+es
+
+[1] http://mid.gmane.org/1265370468-6147-1-git-send-email-pclouds@gmail=
+=2Ecom
+
+ attr.c                  |    5 +-
+ builtin/apply.c         |    2 +-
+ builtin/clone.c         |    3 +-
+ builtin/config.c        |    9 ++-
+ builtin/init-db.c       |   10 ++-
+ builtin/rev-parse.c     |    8 ++
+ cache.h                 |    6 ++-
+ config.c                |   22 +++++--
+ dir.c                   |    8 ++-
+ environment.c           |   33 ++++++++-
+ git.c                   |   22 ++++---
+ path.c                  |   91 -----------------------
+ setup.c                 |  184 +++++++++++++++++++++++++++++++++++++++=
++++++---
+ t/t1300-repo-config.sh  |   14 ++++
+ t/t1302-repo-version.sh |    2 +-
+ t/t7002-grep.sh         |   24 ++++++
+ 16 files changed, 309 insertions(+), 134 deletions(-)
