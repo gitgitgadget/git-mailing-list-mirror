@@ -1,125 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Do not strip empty lines / trailing spaces from a commit
- message template
-Date: Thu, 11 Mar 2010 12:46:51 -0800
-Message-ID: <7vaaueziv8.fsf@alter.siamese.dyndns.org>
-References: <4B97C157.4020806@gmail.com>
- <20100311081213.GA13575@sigill.intra.peff.net>
- <20100311083148.GA13786@sigill.intra.peff.net>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 00/12] Support columinized output in tag/branch/ls-files/grep
+Date: Thu, 11 Mar 2010 22:13:48 +0100
+Message-ID: <4B995D0C.2090000@lsrfire.ath.cx>
+References: <1267963785-473-1-git-send-email-pclouds@gmail.com>	 <4B9504C9.5000703@lsrfire.ath.cx>	 <fcaeb9bf1003080632o622c8c79x85b816edcf893bc3@mail.gmail.com>	 <4B967C36.90309@lsrfire.ath.cx> <fcaeb9bf1003091627p65ad6e60u4bbae2eb4e859f13@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 11 21:47:12 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 11 22:14:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NppHj-0007EC-PH
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 21:47:12 +0100
+	id 1Npphh-0006u3-IX
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Mar 2010 22:14:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751670Ab0CKUrF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Mar 2010 15:47:05 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39829 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751501Ab0CKUrB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Mar 2010 15:47:01 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E922A1562;
-	Thu, 11 Mar 2010 15:47:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Nz7s9nWSG1w0rXftb3k/81IaioY=; b=wJVfso
-	9e+s/g4ZsRgTux+AcLDvfSbVOW4aOcqw/jZ+wdr3MHJeHwrSOp7rOzPjYT+tFW9/
-	gGqx/qWCzTjgshCGYPG8+yy6GY8LU2b6Elj1CTcjmHDZ1gMJ/dbPLN3ggAbI/EOU
-	MpdBETbpwV/4l4nQ2vH7t0aR1S6Wwb+jHkYa8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=olOa1YEjH3E344eGz3QtSN1l1/kRuKcI
-	qzjSt2/eHoYN370tsKUtEqPMnTwYwax/HqHXzo6cK9gh5MTJcuznvZLv8BnQItuM
-	5mboRJvehwySq93FR/XqsqTu6ej2gd5engyHSpokBAeFumPT4BEjfzTWyqibcwd7
-	X8MYf1jb5ZI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CE3FA1561;
-	Thu, 11 Mar 2010 15:46:57 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 44249A1560; Thu, 11 Mar
- 2010 15:46:53 -0500 (EST)
-In-Reply-To: <20100311083148.GA13786@sigill.intra.peff.net> (Jeff King's
- message of "Thu\, 11 Mar 2010 03\:31\:48 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3BA7647E-2D4F-11DF-AA7E-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753337Ab0CKVN4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Mar 2010 16:13:56 -0500
+Received: from india601.server4you.de ([85.25.151.105]:51239 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752772Ab0CKVN4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 16:13:56 -0500
+Received: from [10.0.1.100] (p57B7CAAE.dip.t-dialin.net [87.183.202.174])
+	by india601.server4you.de (Postfix) with ESMTPSA id 6E86F2F8045;
+	Thu, 11 Mar 2010 22:13:54 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
+In-Reply-To: <fcaeb9bf1003091627p65ad6e60u4bbae2eb4e859f13@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/141999>
 
-Jeff King <peff@peff.net> writes:
+Am 10.03.2010 01:27, schrieb Nguyen Thai Ngoc Duy:
+> On 3/9/10, Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
+>>  With "more complicated", do you perhaps mean what GNU ls does, name=
+ly
+>>  having non-uniform column widths?  I never consciously noticed that=
+ it
+>>  actually goes out of its way to cram as may columns on the screen a=
+s
+>>  possible, it just feels so natural. :)
+>=20
+> That. And aligned grep output like this
+>=20
+> pclouds@do ~/w/git/builtin $ git grep -n 38
+> count-objects.c  |  35 |                if (cp - ent->d_name !=3D 38)
+> count-objects.c  |  39 |                        memcpy(path + len + 3=
+,
+> ent->d_name, 38);
+> count-objects.c  |  59 |                memcpy(hex+2, ent->d_name, 38=
+);
+> fsck.c           | 405 |                if (strlen(de->d_name) =3D=3D=
+ 38) {
+> gc.c             | 112 |                if (strspn(ent->d_name,
+> "0123456789abcdef") !=3D 38 ||
+> gc.c             | 113 |                    ent->d_name[38] !=3D '\0'=
+)
+> prune-packed.c   |  24 |                if (strlen(de->d_name) !=3D 3=
+8)
+> prune-packed.c   |  26 |                memcpy(hex+2, de->d_name, 38)=
+;
+> prune-packed.c   |  31 |                memcpy(pathname + len, de->d_=
+name, 38);
+> prune.c          |  64 |                if (strlen(de->d_name) =3D=3D=
+ 38) {
+> receive-pack.c   | 588 |        char hdr_arg[38];
+> upload-archive.c |  86 |        char buf[16384];
 
-> On Thu, Mar 11, 2010 at 03:12:13AM -0500, Jeff King wrote:
->
->> >  	if (fp == NULL)
->> >  		die_errno("could not open '%s'", git_path(commit_editmsg));
->> >  
->> > -	if (cleanup_mode != CLEANUP_NONE)
->> > +	if (cleanup_mode != CLEANUP_NONE && strcmp(hook_arg1, "template"))
->> >  		stripspace(&sb, 0);
->> 
->> And the code looks OK, though admittedly I am not too familiar with this
->> chunk of code (at first I was confused that you would have to look at
->> hook_arg1, but apparently there is no other variable that contains the
->> result of that big if-else chain).
+Hmm, I'm not sure that this columnizing is very useful in this instance=
+=2E
+ You can more easily compare the line numbers and the indent level of
+the hits, but both pieces of information are only useful in the context
+of the file, so this easier comparison doesn't buy you much.
 
+Another possible use might be the list of untracked files shown by
+status and commit, by the way.
 
-I suspect that the attached would be much easier to read and understand.
+>> I don't see any benefit of an environment variable over config optio=
+ns.
+>=20
+> Currently we may pass --column=3D<foo> from a porcelain to "git colum=
+n
+> --mode=3D<foo>", <foo> could be column first, or row first, or either
+> with non-uniform columns (not implemented yet). We can also pass othe=
+r
+> things to "git column". Putting everything in "<foo>" is OK, although
+> looks ugly. In my private tree, I also have "git column
+> --min-rows/--max-items" that forces the columnizer to one column mode
+> if:
+>  - there will be only one or two rows after columnized, too wide
+> screen for example (--min-rows)
 
-> BTW, a subtle point for anyone else reviewing this patch: we also call
-> stripspace in message_is_empty to skip over an untouched template. But
-> that code path is stil OK, because we stripspace the whole message that
-> comes back from the user before calling message_is_empty(), so the
-> result should be the same for an untouched template.
->
-> -Peff
+Well, I can't imagine when I would want to use this option.  If I'm OK
+with n + 100 items being displayed in x columns, I'd certainly be OK
+with n items being displayed the same way, even if they only take up a
+single row.
 
-Thanks for a patch and a review.
+>  - too many lines and the layout has not been fixed, so nothing gets
+> printed (--max-items). Forcing back to one column mode to stop wait
+> time.
 
-> How about a test to check the new behavior?
+Interesting idea, but I'm not sure if I'd want to use it, too.  Best
+effort pretty-printing combines fast output and optimized display at
+first glance.  However, if there are lots of items then the user would
+benefit the most from having them columnized.
 
-Speaking of tests, t2203 will segfault with your patch.  I don't think the
-following does, though.
+If it takes too long to show the first line of output (since the
+columnizer needs to wait for all items to be generated) then the comman=
+d
+should only columnize on request.
 
- builtin-commit.c |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 8a68dd3..14488d5 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -534,6 +534,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	const char *hook_arg1 = NULL;
- 	const char *hook_arg2 = NULL;
- 	int ident_shown = 0;
-+	int clean_message_contents = (cleanup_mode != CLEANUP_NONE);
- 
- 	if (!no_verify && run_hook(index_file, "pre-commit", NULL))
- 		return 0;
-@@ -571,6 +572,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		if (strbuf_read_file(&sb, template_file, 0) < 0)
- 			die_errno("could not read '%s'", template_file);
- 		hook_arg1 = "template";
-+		clean_message_contents = 0;
- 	}
- 
- 	/*
-@@ -584,7 +586,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	if (fp == NULL)
- 		die_errno("could not open '%s'", git_path(commit_editmsg));
- 
--	if (cleanup_mode != CLEANUP_NONE && strcmp(hook_arg1, "template"))
-+	if (clean_message_contents)
- 		stripspace(&sb, 0);
- 
- 	if (signoff) {
+Ren=C3=A9
