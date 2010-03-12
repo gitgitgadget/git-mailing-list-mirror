@@ -1,89 +1,168 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: Cherry-pick with symlinks fails horribly
-Date: Fri, 12 Mar 2010 04:48:22 +0100
-Message-ID: <201003120448.22821.chriscool@tuxfamily.org>
-References: <c6c947f61003081728u48292de4x6f2c26e1ea9c1756@mail.gmail.com> <201003110557.11268.chriscool@tuxfamily.org> <c6c947f61003110416l40a85b6fg7ede2403a8f6961b@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 00/12] Support columinized output in tag/branch/ls-files/grep
+Date: Fri, 12 Mar 2010 11:22:26 +0700
+Message-ID: <fcaeb9bf1003112022md32ababv3e4ace04752f8f56@mail.gmail.com>
+References: <1267963785-473-1-git-send-email-pclouds@gmail.com> 
+	<4B9504C9.5000703@lsrfire.ath.cx> <fcaeb9bf1003080632o622c8c79x85b816edcf893bc3@mail.gmail.com> 
+	<4B967C36.90309@lsrfire.ath.cx> <fcaeb9bf1003091627p65ad6e60u4bbae2eb4e859f13@mail.gmail.com> 
+	<4B995D0C.2090000@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Alexander Gladysh <agladysh@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 12 04:51:23 2010
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Fri Mar 12 05:22:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NpvuE-0007T9-Of
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Mar 2010 04:51:23 +0100
+	id 1NpwOk-0000nm-7f
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Mar 2010 05:22:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752014Ab0CLDvG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Mar 2010 22:51:06 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:59472 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751639Ab0CLDvB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Mar 2010 22:51:01 -0500
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 32E9E818039;
-	Fri, 12 Mar 2010 04:50:55 +0100 (CET)
-Received: from style.localnet (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 1A703818028;
-	Fri, 12 Mar 2010 04:50:53 +0100 (CET)
-User-Agent: KMail/1.12.2 (Linux/2.6.31-19-generic; KDE/4.3.2; x86_64; ; )
-In-Reply-To: <c6c947f61003110416l40a85b6fg7ede2403a8f6961b@mail.gmail.com>
+	id S1753064Ab0CLEWs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Mar 2010 23:22:48 -0500
+Received: from mail-px0-f198.google.com ([209.85.216.198]:47669 "EHLO
+	mail-px0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752793Ab0CLEWr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Mar 2010 23:22:47 -0500
+Received: by pxi36 with SMTP id 36so312678pxi.21
+        for <git@vger.kernel.org>; Thu, 11 Mar 2010 20:22:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=WAfBDkRPpiVXkYvQKtjvYt8jxPQwfMa3Uuaa0WjMreY=;
+        b=YYP90tB9RByJx4gPLbcvn8ufhrBkdkEcHNbVrOM6RMOOzsVo2iCNFTXIHe4y8O9jl6
+         LyOfjDZ4NJu0J1OakmUKyEEbZ9TWL5nPwS1QrWGKPbEHzxc5GsohWMaWh2I9wdz95plI
+         noZ2rethZeVvDAQpGd9AIroERAvtjtr+XYK20=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=ZM83pM6iGbjT7mcqihPJqqIhCMD1Bqq2FEVs7SELhxQ4OfQSgIWv33WNY1bO57nb7R
+         agRDW0oJShjhbGxWvKwgPoizQkKR/jHaVjCyW1XMIcK0oigvywiMMqkAr+VFj5PASDO2
+         H550pBS5n2Ay6yZSOzAYe2Cr8LpXkLBOwVQws=
+Received: by 10.115.64.21 with SMTP id r21mr2023322wak.23.1268367766521; Thu, 
+	11 Mar 2010 20:22:46 -0800 (PST)
+In-Reply-To: <4B995D0C.2090000@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142013>
 
-On Thursday 11 March 2010 13:16:09 Alexander Gladysh wrote:
-> On Thu, Mar 11, 2010 at 07:57, Christian Couder <chriscool@tuxfamily.org> 
-wrote:
-> > On Tuesday 09 March 2010 02:28:30 Alexander Gladysh wrote:
-> >> I'm complaining about Git symlink handling again. This time it is
-> >>  cherry-pick.
-> >
-> > I can reproduce the bug here on Linux. And Git v1.6.0 has the same bug.
-> > So I suspect an old bug in unpack_trees.c. I will try to have another
-> > look at it this evening, but I am not familiar with that code.
-> 
-> I have found my old bug-report. There is even some patch in that thread.
-> 
-> http://thread.gmane.org/gmane.comp.version-control.git/120741/
-> 
-> Not sure if it is the same issue or if the patch was even merged in
->  though...
+On Fri, Mar 12, 2010 at 4:13 AM, Ren=C3=A9 Scharfe
+<rene.scharfe@lsrfire.ath.cx> wrote:
+> Am 10.03.2010 01:27, schrieb Nguyen Thai Ngoc Duy:
+>> On 3/9/10, Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
+>>> =C2=A0With "more complicated", do you perhaps mean what GNU ls does=
+, namely
+>>> =C2=A0having non-uniform column widths? =C2=A0I never consciously n=
+oticed that it
+>>> =C2=A0actually goes out of its way to cram as may columns on the sc=
+reen as
+>>> =C2=A0possible, it just feels so natural. :)
+>>
+>> That. And aligned grep output like this
+>>
+>> pclouds@do ~/w/git/builtin $ git grep -n 38
+>> count-objects.c =C2=A0| =C2=A035 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0if (cp - ent->d_name !=3D 38)
+>> count-objects.c =C2=A0| =C2=A039 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0memcpy(path + len + 3,
+>> ent->d_name, 38);
+>> count-objects.c =C2=A0| =C2=A059 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0memcpy(hex+2, ent->d_name, 38);
+>> fsck.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 405 | =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (strlen(de->d_name) =3D=3D 38) {
+>> gc.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 112 | =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (strspn(ent->d_name,
+>> "0123456789abcdef") !=3D 38 ||
+>> gc.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 113 | =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ent->d_name[38]=
+ !=3D '\0')
+>> prune-packed.c =C2=A0 | =C2=A024 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0if (strlen(de->d_name) !=3D 38)
+>> prune-packed.c =C2=A0 | =C2=A026 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0memcpy(hex+2, de->d_name, 38);
+>> prune-packed.c =C2=A0 | =C2=A031 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0memcpy(pathname + len, de->d_name, 38);
+>> prune.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A064 | =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (strlen(de->d_name) =3D=3D=
+ 38) {
+>> receive-pack.c =C2=A0 | 588 | =C2=A0 =C2=A0 =C2=A0 =C2=A0char hdr_ar=
+g[38];
+>> upload-archive.c | =C2=A086 | =C2=A0 =C2=A0 =C2=A0 =C2=A0char buf[16=
+384];
+>
+> Hmm, I'm not sure that this columnizing is very useful in this instan=
+ce.
+> =C2=A0You can more easily compare the line numbers and the indent lev=
+el of
+> the hits, but both pieces of information are only useful in the conte=
+xt
+> of the file, so this easier comparison doesn't buy you much.
 
-The patch was merged:
+It's useful when I need to look at the beginning of matched lines.
+With current output, all lines are not aligned, so it's hard too see
+where lines begin.
 
-commit 77716755cbdf970fa0814a5f77c884b1f17693de
-Author: Kjetil Barvik <barvik@broadpark.no>
-Date:   Sun Jun 14 15:08:28 2009 +0200
+> Another possible use might be the list of untracked files shown by
+> status and commit, by the way.
 
-    lstat_cache: guard against full match of length of 'name' parameter
+Thanks.
 
-so I think it is a different issue, but feel free to test.
+>>> I don't see any benefit of an environment variable over config opti=
+ons.
+>>
+>> Currently we may pass --column=3D<foo> from a porcelain to "git colu=
+mn
+>> --mode=3D<foo>", <foo> could be column first, or row first, or eithe=
+r
+>> with non-uniform columns (not implemented yet). We can also pass oth=
+er
+>> things to "git column". Putting everything in "<foo>" is OK, althoug=
+h
+>> looks ugly. In my private tree, I also have "git column
+>> --min-rows/--max-items" that forces the columnizer to one column mod=
+e
+>> if:
+>> =C2=A0- there will be only one or two rows after columnized, too wid=
+e
+>> screen for example (--min-rows)
+>
+> Well, I can't imagine when I would want to use this option. =C2=A0If =
+I'm OK
+> with n + 100 items being displayed in x columns, I'd certainly be OK
+> with n items being displayed the same way, even if they only take up =
+a
+> single row.
 
-Anyway when looking at t/t6035-merge-dir-to-symlink.sh, we can see that there 
-are still 2 broken tests:
+It's probably just me. With 279 character-wide terminal, I find it
+much easier to look vertically than 16 items on a single row.
 
-$ ./t6035-merge-dir-to-symlink.sh
-*   ok 1: create a commit where dir a/b changed to symlink
-*   ok 2: keep a/b-2/c/d across checkout
-*   ok 3: checkout should not have deleted a/b-2/c/d
-*   ok 4: setup for merge test
-*   ok 5: do not lose a/b-2/c/d in merge (resolve)
-*   still broken 6: do not lose a/b-2/c/d in merge (recursive)
-*   ok 7: setup a merge where dir a/b-2 changed to symlink
-*   ok 8: merge should not have conflicts (resolve)
-*   still broken 9: merge should not have conflicts (recursive)
-* still have 2 known breakage(s)
-* passed all remaining 7 test(s)
+>> =C2=A0- too many lines and the layout has not been fixed, so nothing=
+ gets
+>> printed (--max-items). Forcing back to one column mode to stop wait
+>> time.
+>
+> Interesting idea, but I'm not sure if I'd want to use it, too. =C2=A0=
+Best
+> effort pretty-printing combines fast output and optimized display at
+> first glance. =C2=A0However, if there are lots of items then the user=
+ would
+> benefit the most from having them columnized.
+>
+> If it takes too long to show the first line of output (since the
+> columnizer needs to wait for all items to be generated) then the comm=
+and
+> should only columnize on request.
 
-So it looks like breakages in this area are known, though perhaps not your 
-particular breakage.
-
-Best regards,
-Christian.
+Yeah. That's the idea of "core.columns =3D auto". If you specify
+--[no-]columns on command line, then it must do as you wish. However,
+if you set "core.columns =3D auto" without additional command line
+arguments, then it only shows column layout when it's good to do.
+--=20
+Duy
