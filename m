@@ -1,109 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2010, #03; Wed, 10)
-Date: Thu, 11 Mar 2010 21:52:53 -0800
-Message-ID: <7vhbomt7be.fsf@alter.siamese.dyndns.org>
-References: <7v7hpj4k7w.fsf@alter.siamese.dyndns.org>
- <fcaeb9bf1003112041m7c8b4012j187d9a0c2537acbb@mail.gmail.com>
- <7vtysmt7wo.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] Do not strip empty lines / trailing spaces from a commit
+ message template
+Date: Thu, 11 Mar 2010 21:54:56 -0800
+Message-ID: <7vd3zat77z.fsf@alter.siamese.dyndns.org>
+References: <4B97C157.4020806@gmail.com>
+ <20100311081213.GA13575@sigill.intra.peff.net>
+ <20100311083148.GA13786@sigill.intra.peff.net>
+ <7vaaueziv8.fsf@alter.siamese.dyndns.org>
+ <20100311224656.GA25553@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"Larry D'Anna" <larry@elder-gods.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 12 06:53:13 2010
+Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 12 06:55:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Npxo8-00016E-Nf
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Mar 2010 06:53:13 +0100
+	id 1Npxq6-0001jn-N4
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Mar 2010 06:55:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752232Ab0CLFxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Mar 2010 00:53:07 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39634 "EHLO
+	id S1752333Ab0CLFzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Mar 2010 00:55:08 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43713 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752061Ab0CLFxD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Mar 2010 00:53:03 -0500
+	with ESMTP id S1752265Ab0CLFzE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Mar 2010 00:55:04 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B8ACEA13A5;
-	Fri, 12 Mar 2010 00:53:02 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 56467A13BE;
+	Fri, 12 Mar 2010 00:55:04 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Rap54ocl9OJ51lYOdPjqCa2LkgM=; b=n9z8Gf
-	AAwZh5wEoD5ldWk4139yc5nBhwBKJJsVw3O4cq1GADaIx7sgMlhoha4IBlvGqIFD
-	gI6afnsjmm4NTD94khErmgujDKPbXw6jPQRgSTAT5tS2jWQ9+5LikYN6cvzJw08e
-	nIIiVRhSx4SbUVwsIRvVFvEDoOMXJgh+t0J+k=
+	:content-type; s=sasl; bh=BF9Ll5cO58olBzz1OBxg0xYXnHk=; b=UXsugO
+	7wvhixM4yQ79MNEx6sZspPpxdo3S1jLmS/K1fD75UvmtiQlEd8ycUf++uR1E4QIL
+	DPY2OI5m4mUmrR+/9xVTu7Ekiq1HV3Qj3gBP3RMBQLW61DB26RqrjVgOj/O+P0I9
+	LPo5MdhHoaQAUbo0mKd89CTwtgzjfToCxRn4A=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p6C0iuAjq39NHL17ET/icq3y5tvI4zxh
-	+dTqRK6CkqvRvoxOQwnyzWMrQ2yjvGLvvJo/60cZkBzLgeitkq9rKfe/sgxlx0eE
-	oyf22pV7slfsAXtSS8ZSZ2kBbyUOeg40+gSat/wDnoJmdLWQ+EUroojCtFbOBmtB
-	qeX/OoMwI4U=
+	:content-type; q=dns; s=sasl; b=JtWZM67zn6m5iFd8EivUMsN1M0N41Igm
+	cD9GlWEZDk0JMP+OpfksyX5eHIkAveuKK+Ab+Pw530L4gBlXL5v1xLnlQHThyZ/3
+	7CkfoH0BLU3RMFYv8Svb/boiI863qQrssjyADXyi2sQz4p7jf03uNtKspQtdmZrW
+	P9117xzfevw=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 84633A13A3;
-	Fri, 12 Mar 2010 00:52:59 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E5D3A13BC;
+	Fri, 12 Mar 2010 00:55:01 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 992BDA139D; Fri, 12 Mar
- 2010 00:52:54 -0500 (EST)
-In-Reply-To: <7vtysmt7wo.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu\, 11 Mar 2010 21\:40\:07 -0800")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4E1DEA13BA; Fri, 12 Mar
+ 2010 00:54:57 -0500 (EST)
+In-Reply-To: <20100311224656.GA25553@sigill.intra.peff.net> (Jeff King's
+ message of "Thu\, 11 Mar 2010 17\:46\:56 -0500")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8393A59E-2D9B-11DF-9454-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CC0B8512-2D9B-11DF-8F6E-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142019>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Subject: t9400: Use test_cmp when appropriate
+> On Thu, Mar 11, 2010 at 12:46:51PM -0800, Junio C Hamano wrote:
+>
+>> > How about a test to check the new behavior?
+>> 
+>> Speaking of tests, t2203 will segfault with your patch.  I don't think the
+>> following does, though.
+>
+> I thought I ran the tests, but obviously not. I see the segfault here.
+> It is not just t2203, but any "git commit" with no message will cause
+> it.
+>
+> Your patch looks right, and is more readable, too, I think.
 
-And this is an obvious follow-up.
+Ok, Sebastian can use that code in his reroll with tests, then.
 
--- >8 --
-Subject: t5516: Use test_cmp when appropriate
-
-Consistently using test_cmp would make debugging test scripts far easier,
-as output from them run under "-v" option becomes readable.
-
-Besides, some platforms' "diff" implementations lack "-q" option.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t5516-fetch-push.sh |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 11adb0b..2de98e6 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -672,7 +672,7 @@ test_expect_success 'push --porcelain' '
- 		test "z$r" = "z$the_commit" &&
- 		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
- 	) &&
--	diff -q .git/foo .git/bar
-+	test_cmp .git/foo .git/bar
- '
- 
- test_expect_success 'push --porcelain bad url' '
-@@ -692,7 +692,7 @@ test_expect_success 'push --porcelain rejected' '
- 	echo >>.git/foo "!	refs/heads/master:refs/heads/master	[remote rejected] (branch is currently checked out)" &&
- 
- 	test_must_fail git push >.git/bar --porcelain  testrepo refs/heads/master:refs/heads/master &&
--	diff -q .git/foo .git/bar
-+	test_cmp .git/foo .git/bar
- '
- 
- test_expect_success 'push --porcelain --dry-run rejected' '
-@@ -707,7 +707,7 @@ test_expect_success 'push --porcelain --dry-run rejected' '
- 	echo >>.git/foo "Done" &&
- 
- 	test_must_fail git push >.git/bar --porcelain  --dry-run testrepo refs/heads/master^:refs/heads/master &&
--	diff -q .git/foo .git/bar
-+	test_cmp .git/foo .git/bar
- '
- 
- test_done
+Thanks.
