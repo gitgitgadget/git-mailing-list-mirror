@@ -1,83 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: re-running merge on a single file
-Date: Thu, 11 Mar 2010 22:56:36 -0800
-Message-ID: <7viq92rpsr.fsf@alter.siamese.dyndns.org>
-References: <a038bef51003111054n5bcecd2eud531dcc80509f952@mail.gmail.com>
- <201003112129.52596.markus.heidelberg@web.de>
- <a038bef51003111408g38698837ldcf1d0f5995f4f30@mail.gmail.com>
- <m3hbomla3u.fsf@localhost.localdomain>
- <a038bef51003111631n38f7e50cp79d8335109f3ed0@mail.gmail.com>
- <a038bef51003111633v5d5d418bu332b63bb3874e3ef@mail.gmail.com>
- <4B99E309.2070603@viscovery.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: How do you switch branches in a bare repo?
+Date: Fri, 12 Mar 2010 07:57:33 +0100
+Message-ID: <4B99E5DD.3020005@viscovery.net>
+References: <4B99DEA2.6050104@uq.edu.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chris Packham <judge.packham@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, GIT <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Mar 12 07:56:54 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Adam Nielsen <adam.nielsen@uq.edu.au>
+X-From: git-owner@vger.kernel.org Fri Mar 12 07:57:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Npynk-00081c-UC
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Mar 2010 07:56:53 +0100
+	id 1NpyoY-0008VZ-7q
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Mar 2010 07:57:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753729Ab0CLG4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Mar 2010 01:56:48 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48299 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753578Ab0CLG4r (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Mar 2010 01:56:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 04C52A19DB;
-	Fri, 12 Mar 2010 01:56:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tgZvwY/KXXEERmha8cFRqatSd7A=; b=ldvStI
-	NDBgttumw97ksVYp847RA8m/V02jmZIlPtwgifQBlcx4XJL42U9/DvBkSoCVqWK4
-	zsnZhuULofHNXaBXKBunPMrpjsQgD/CN7dtJQv1UGsDsZOKJobgPAVkFZxoP/dzH
-	LTxh4waFAAlatzDJbD+SYG9UWxukLtQluQMRs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qdnA9BPZ9Ofca82nPvXm/qjBYFhT+zD4
-	6k6qtrOJqRaNDiDsyvxIep07ymtcYFpMH7w19MSEIXt8SO3yqA8dGv8T/FHX4AvX
-	TPCk79Uga/sE5YQfnbnuuT8f8hQJGHk3dp2S290mrQBNmyX0GrN7hqPIw2NLYJKe
-	/PbmTLUJo4c=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B81E1A19D1;
-	Fri, 12 Mar 2010 01:56:42 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F368BA19CE; Fri, 12 Mar
- 2010 01:56:37 -0500 (EST)
-In-Reply-To: <4B99E309.2070603@viscovery.net> (Johannes Sixt's message of
- "Fri\, 12 Mar 2010 07\:45\:29 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6A64079A-2DA4-11DF-B2BB-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753910Ab0CLG5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Mar 2010 01:57:38 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:10541 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753811Ab0CLG5h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Mar 2010 01:57:37 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NpyoQ-0002GC-Fn; Fri, 12 Mar 2010 07:57:34 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 3BE621660F;
+	Fri, 12 Mar 2010 07:57:34 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <4B99DEA2.6050104@uq.edu.au>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142026>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Adam Nielsen schrieb:
+> I want to remove some commits (with git reset) from a bare repo, but
+> they're not in the master branch and I can't figure out how to change
+> branches:
+> 
+> $ git checkout newbranch
+> fatal: This operation must be run in a work tree
+> 
+> I've tried running the reset locally and pushing the change (with -f)
+> but that doesn't work either, and Google isn't being much help.
+> 
+> How do you switch between branches in a bare repo?
 
-> Chris Packham schrieb:
->> $ git checkout --merge -- cpu/mpc83xx/start.S
->> $ git show :1:$(git rev-parse --show-prefix)cpu/mpc83xx/start.S
->> fatal: Path 'cpu/mpc83xx/start.S' is in the index, but not at stage 1.
->> Did you mean ':0:cpu/mpc83xx/start.S'?
->
-> Both of these work only as long as the index still records the conflicted
-> state. If you (or one of your tools) has git-added the file, or you have
-> git-checked-out some version of the file, the conflict stages are lost,
-> and you must reset --hard and redo the entire merge.
+You don't have to. This should work:
 
-If the merge textually autoresolves cleanly, you might not even have any
-conflicted state to begin with.  In such a case you would need to grab
+   git push -f . newbranch~2:newbranch
 
-	MERGE_HEAD:path-to-that-thing
-        HEAD:path-to-that-thing
+will remove the last two commits at the tip of 'newbranch'.
 
-yourself.
+Of course, you can do the push from any other repository as long as you
+are allowed to do non-fast-forward pushes into the bare repository.
+
+-- Hannes
