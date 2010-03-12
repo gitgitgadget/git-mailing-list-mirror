@@ -1,67 +1,82 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2010, #03; Wed, 10)
-Date: Fri, 12 Mar 2010 11:41:04 +0700
-Message-ID: <fcaeb9bf1003112041m7c8b4012j187d9a0c2537acbb@mail.gmail.com>
-References: <7v7hpj4k7w.fsf@alter.siamese.dyndns.org>
+From: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
+Subject: Re: [PATCH 5/5] struct sockaddr_storage->ss_family is not portable
+Date: Fri, 12 Mar 2010 04:56:54 +0000
+Message-ID: <20100312045654.GH7877@thor.il.thewrittenword.com>
+References: <20100311163715.GE7877@thor.il.thewrittenword.com>
+ <alpine.DEB.2.00.1003111838260.29993@cone.home.martin.st>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	"Larry D'Anna" <larry@elder-gods.org>
-X-From: git-owner@vger.kernel.org Fri Mar 12 05:41:31 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 12 05:57:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Npwgk-0006bU-Tf
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Mar 2010 05:41:31 +0100
+	id 1Npwvn-0004Th-07
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Mar 2010 05:57:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754186Ab0CLEl0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Mar 2010 23:41:26 -0500
-Received: from mail-pz0-f194.google.com ([209.85.222.194]:40039 "EHLO
-	mail-pz0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752880Ab0CLElZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Mar 2010 23:41:25 -0500
-Received: by pzk32 with SMTP id 32so468114pzk.4
-        for <git@vger.kernel.org>; Thu, 11 Mar 2010 20:41:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NAt0wYvio1tFwnebCeowc3FzjnqolewwIHFKVKT4RrQ=;
-        b=a5N8aLERTApw+poEokU13oqUaHGVHV7GV4yfCuqLkY/M5H2fW6Lul1IQw5Q3CGAhTz
-         S5L9C0Cub/FeJDrv+rvUh/1pIg5cy8eiuHEi5t4ybZ7WsXCc3oiHksDJRyOz0obnNVGT
-         u5b5oRRJAD+O6bl/P8L9CmAlme0HkZOdbeTI0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Bq7o6w/FQBAJQKeGRZNJ6AlJUEhbzzm4N2PlAZtRZfsqOcNCwaJDQ+dYVkk/Ai7+9g
-         3lXUu/MJDV9IB+zmK4FbtXUunQ6842z9bEf2tbW0UWUWM4D4sz3lU++nz+IcrUNq5i2R
-         EbKu9oxfP6I0ZAVC6X+7VUNH6bGnxTqvjDwjQ=
-Received: by 10.141.88.3 with SMTP id q3mr175025rvl.218.1268368884553; Thu, 11 
-	Mar 2010 20:41:24 -0800 (PST)
-In-Reply-To: <7v7hpj4k7w.fsf@alter.siamese.dyndns.org>
+	id S1756206Ab0CLE45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Mar 2010 23:56:57 -0500
+Received: from mail1.thewrittenword.com ([69.67.212.77]:58074 "EHLO
+	mail1.thewrittenword.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756096Ab0CLE44 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 23:56:56 -0500
+Received: from mail1.il.thewrittenword.com (emma-internal-gw.il.thewrittenword.com [192.168.13.25])
+	by mail1.thewrittenword.com (Postfix) with ESMTP id E43EE5C21
+	for <git@vger.kernel.org>; Fri, 12 Mar 2010 05:16:06 +0000 (UTC)
+X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com E43EE5C21
+Received: from thor.il.thewrittenword.com (thor.il.thewrittenword.com [10.191.57.1])
+	by mail1.il.thewrittenword.com (Postfix) with ESMTP id 0EEB3D26
+	for <git@vger.kernel.org>; Fri, 12 Mar 2010 04:56:55 +0000 (UTC)
+Received: by thor.il.thewrittenword.com (Postfix, from userid 1048)
+	id 00007BAB0; Fri, 12 Mar 2010 04:56:54 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.00.1003111838260.29993@cone.home.martin.st>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.95.3 at maetel.il.thewrittenword.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142015>
 
-On Thu, Mar 11, 2010 at 10:21 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> * ld/push-porcelain (2010-02-26) 4 commits
-> =C2=A0(merged to 'next' on 2010-03-02 at d15bb1e)
-> =C2=A0+ git-push: add tests for git push --porcelain
-> =C2=A0+ git-push: make git push --porcelain print "Done"
-> =C2=A0+ git-push: send "To <remoteurl>" messages to the standard outp=
-ut in --porcelain mode
-> =C2=A0+ git-push: fix an advice message so it goes to stderr
+On Thu, Mar 11, 2010 at 06:40:37PM +0200, Martin Storsj? wrote:
+> On Thu, 11 Mar 2010, Gary V. Vaughan wrote:
+> 
+> > Many of our supported platforms do not have this declaration, for
+> > example solaris2.6 thru 2.7.  Lack of ss_family implies no IPV6
+> > support, so we can wrap all the ss_family references in an ifndef
+> > NO_IPV6, and assume sockaddr_in otherwise.
+> 
+> While this probably is ok as such, you can actually do the same without 
+> accessing the sockaddr_storage->ss_family; just cast it to (const struct 
+> sockaddr*) and use ->sa_family instead, that should work just as well, as 
+> far as I know.
 
-"diff -q" in t5516, "add tests for git push --porcelain" is not
-suported on Solaris. test_cmp should be used instead.
---=20
-Duy
+At least on aix-5.2 it won't be reliable unless you juggle compiler
+switches just right (I didn't check anywhere else, but the precedent
+for the bit ordering of the struct members being different is already
+set):
+
+#if defined(COMPAT_43) && !defined(_KERNEL)
+struct sockaddr {
+        ushort_t        sa_family;      /* address family */
+        char            sa_data[14];    /* up to 14 bytes of direct
+address */
+};
+
+
+#else
+struct sockaddr {
+        uchar_t         sa_len;         /* total length */
+        sa_family_t     sa_family;      /* address family */
+        char            sa_data[14];    /* actually longer; address value */
+};
+#endif
+
+Cheers,
+   Gary
+-- 
+Gary V. Vaughan (gary@thewrittenword.com)
