@@ -1,161 +1,118 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: [PATCH] git-send-email.perl - Fix 550 EHLO argument does not match calling host
-Date: Sat, 13 Mar 2010 01:04:39 +0200
-Organization: Private
-Message-ID: <87hbolta48.fsf_-_@jondo.cante.net>
-References: <87vdd1ti9f.fsf@jondo.cante.net> <87r5nptdfh.fsf@jondo.cante.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: re-running merge on a single file
+Date: Fri, 12 Mar 2010 15:07:39 -0800
+Message-ID: <7v3a05p29w.fsf@alter.siamese.dyndns.org>
+References: <a038bef51003111054n5bcecd2eud531dcc80509f952@mail.gmail.com>
+ <201003112129.52596.markus.heidelberg@web.de>
+ <a038bef51003111408g38698837ldcf1d0f5995f4f30@mail.gmail.com>
+ <m3hbomla3u.fsf@localhost.localdomain>
+ <a038bef51003111631n38f7e50cp79d8335109f3ed0@mail.gmail.com>
+ <a038bef51003111633v5d5d418bu332b63bb3874e3ef@mail.gmail.com>
+ <4B99E309.2070603@viscovery.net> <7viq92rpsr.fsf@alter.siamese.dyndns.org>
+ <a038bef51003121216l5c0a4942qabc3d12741c9030e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 13 00:06:28 2010
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Jakub Narebski <jnareb@gmail.com>, GIT <git@vger.kernel.org>
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 13 00:08:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NqDut-0007Bj-EG
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Mar 2010 00:05:26 +0100
+	id 1NqDxY-0008HV-GQ
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Mar 2010 00:08:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932757Ab0CLXE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Mar 2010 18:04:57 -0500
-Received: from lo.gmane.org ([80.91.229.12]:57342 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932279Ab0CLXE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Mar 2010 18:04:56 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NqDuV-000735-LF
-	for git@vger.kernel.org; Sat, 13 Mar 2010 00:04:51 +0100
-Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 13 Mar 2010 00:04:51 +0100
-Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 13 Mar 2010 00:04:51 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
-Cancel-Lock: sha1:2Q/PlAZWIGbOLak71qYLf8miPgw=
+	id S933397Ab0CLXHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Mar 2010 18:07:55 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48346 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933282Ab0CLXHy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Mar 2010 18:07:54 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 01544A1BCA;
+	Fri, 12 Mar 2010 18:07:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7ae/oYLmMgc1ldF+RybhElEfCng=; b=EqQQrq
+	A2uMvn4TFCsmwuzgfbohKVNU8h5P3wKl2Eic4Xx8E7foykpCGKvIq+URb6NdPQix
+	Kw6uG+mcfK2o4nA4iPOWhCrUJtKt6+z9X+yxJNxGjjVsLwxRZ1OzAPNonprIWpXC
+	JGNJwtnrS0jU/LhoIbmHIUF2J1l1w0Izau3Nw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pJVJN3hnQmviXfdWOUQVDlDqt/fjauq/
+	SUSiyzyNm6hHp03NsK7hnR+i3DZgZLCr0vq5K39K7H37YexNuvRTUKW4sL+KwGcs
+	uANpWV2hnJtRFMzcwuiTHsG3wvzMO+8uCbaRI/oCjH4j+HhgVrqotVjBoIGK40OO
+	vi6XlijTi/w=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 31D83A1BC5;
+	Fri, 12 Mar 2010 18:07:47 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CC4BDA1BBE; Fri, 12 Mar
+ 2010 18:07:41 -0500 (EST)
+In-Reply-To: <a038bef51003121216l5c0a4942qabc3d12741c9030e@mail.gmail.com>
+ (Chris Packham's message of "Fri\, 12 Mar 2010 12\:16\:58 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 12B4E838-2E2C-11DF-A373-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142068>
 
-Add new function maildomain() which returns FQDN for use in
-send_message(). The value is passed to Net::SMTP HELO/EHLO handshake.
+Chris Packham <judge.packham@gmail.com> writes:
 
-The default value in Net::SMTP may not get through:
+> ... I'm lazy and my
+> projects rules allow broken commits so ...
 
-  Net::SMTP=GLOB(0x267ec28)>>> EHLO localhost.localdomain
-  Net::SMTP=GLOB(0x267ec28)<<< 550 EHLO argument does not match calling host
+We cannot fix, nor it is our job to fix, lazy people or undisciplined
+projects ;-)
 
-whereas using the FQDN, the result is:
+Having said that you can still retry your merge, which was _mostly_ Ok.
 
-  Net::SMTP=GLOB(0x15b8e80)>>> EHLO host.example.com
-  Net::SMTP=GLOB(0x15b8e80)<<< 250-host.example.com Hello host.example.com [192.168.1.7]
+ (1) First, check out the original commit before the merge.  You may have
+     built a few more commits on top of it, so "git log --first-parent"
+     may help to find that commit.  Suppose you found that merge commit
+     and we call that $merge; then:
 
-Signed-off-by: Jari Aalto <jari.aalto@cante.net>
----
- git-send-email.perl |   52 +++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 50 insertions(+), 2 deletions(-)
+     $ git checkout $merge^1
+   
+ (2) Then you retry that merge:
 
+     $ git merge $merge^2
 
-This patch is applied *after* the other 2 sent in this thread.
+     which would conflict the same way you saw.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 6af7bd3..2eabed6 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -834,6 +834,46 @@ sub sanitize_address
- 
- }
- 
-+# Returns the local Fully Qualified Domain Name (FQDN) if available,
-+# If this is not given to EHLO, the receiving SMTP may deny connection
-+# Here is an example of Net::SMTP without explicit Helo: it
-+# uses by default "localhost.localdomain"
-+#
-+# Net::SMTP=GLOB(0x267ec28)>>> EHLO localhost.localdomain
-+# Net::SMTP=GLOB(0x267ec28)<<< 550 EHLO argument does not match calling host
-+
-+sub maildomain ()
-+{
-+	my $maildomain;
-+	eval "use Net::Domain";
-+
-+	unless ( $@ ) {
-+		for my $host ( qw(mailhost localhost) ) {
-+			my $smtp = Net::SMTP->new($host);
-+			if (defined $smtp) {
-+				my $domain = $smtp->domain;
-+				$smtp->quit;
-+
-+				$maildomain = $domain
-+					unless $^O eq 'darwin' && $domain =~ /\.local$/;
-+
-+				last if $maildomain;
-+			}
-+		}
-+	}
-+
-+	unless ($maildomain) {
-+		eval "use Net::Domain";
-+		unless ( $@ ) {
-+		    my $domain = Net::Domain::domainname();
-+		    $maildomain = $domain
-+			    unless $^O eq 'darwin' && $domain =~ /\.local$/;
-+		}
-+	}
-+
-+	$maildomain;
-+}
-+
- # Returns 1 if the message was sent, and 0 otherwise.
- # In actuality, the whole program dies when there
- # is an error sending a message.
-@@ -917,6 +957,8 @@ X-Mailer: git-send-email $gitversion
- 		}
- 	}
- 
-+	my $maildomain;
-+
- 	if ($dry_run) {
- 		# We don't want to send the email.
- 	} elsif ($smtp_server =~ m#^/#) {
-@@ -936,13 +978,18 @@ X-Mailer: git-send-email $gitversion
- 		if ($smtp_encryption eq 'ssl') {
- 			$smtp_server_port ||= 465; # ssmtp
- 			require Net::SMTP::SSL;
--			$smtp ||= Net::SMTP::SSL->new($smtp_server, Port => $smtp_server_port);
-+			$maildomain = maildomain() || "localhost.localdomain";
-+			$smtp ||= Net::SMTP::SSL->new($smtp_server,
-+						      Hello => $maildomain,
-+						      Port => $smtp_server_port);
- 		}
- 		else {
- 			require Net::SMTP;
-+			$maildomain = maildomain() || "localhost.localdomain";
- 			$smtp ||= Net::SMTP->new((defined $smtp_server_port)
- 						 ? "$smtp_server:$smtp_server_port"
- 						 : $smtp_server,
-+						 Hello => $maildomain,
- 						 Debug => $debug_net_smtp);
- 			if ($smtp_encryption eq 'tls' && $smtp) {
- 				require Net::SMTP::SSL;
-@@ -962,9 +1009,10 @@ X-Mailer: git-send-email $gitversion
- 		}
- 
- 		if (!$smtp) {
--			die "Unable to initialize SMTP properly. Check config. ",
-+			die "Unable to initialize SMTP properly. Check config and use --smtp-debug. ",
- 			    "VALUES: server=$smtp_server ",
- 			    "encryption=$smtp_encryption ",
-+			    "maildomain=$maildomain",
- 			    defined $smtp_server_port ? "port=$smtp_server_port" : "";
- 		}
- 
--- 
-1.7.0
+ (3) If you have rerere enabled, then the conflicts would be already
+     resolved in your working tree at this point, but not in the index, so
+     you can reproduce the conflicted state with "checkout -m".
+
+ (4) If you didn't have rerere enabled, then you would have a lot of
+     conflicted files in the working tree.  Inspect them by comparing with
+     $merge:
+
+     $ git diff $merge
+
+     Since we are assuming that most of the resolution was good, and you
+     know what paths you want to fix your earlier resolution for, you
+     would want to take what is in $merge for most of the paths.  You can
+     run checkout on paths that you know were good in $merge, like so:
+
+     $ git checkout $merge -- include/ drivers/
+
+     and repeat this step to narrow it down to the paths you are
+     interested in.
+
+ (5) After you fix the resolution and make a commit,
+
+     $ git diff $merge
+
+     will show that your earlier incorrect resolution is replaced by a new
+     correct resolution.
+
+After that, you can rebase your branch on top of HEAD to conclude.
+
+Note that recent git can use "checkout -m path" to reproduce conflicts
+even after you ran "git add path".
