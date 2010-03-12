@@ -1,85 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Refactor dirty submodule detection in diff-lib.c
-Date: Thu, 11 Mar 2010 16:55:50 -0800
-Message-ID: <7vfx46we7d.fsf@alter.siamese.dyndns.org>
-References: <4B9965A1.60403@web.de>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 06/16] Use git_config_early() instead of git_config() 
+	during repo setup
+Date: Fri, 12 Mar 2010 10:35:25 +0700
+Message-ID: <fcaeb9bf1003111935k7719c2a8r3e925f8ad2c12276@mail.gmail.com>
+References: <1268313754-28179-1-git-send-email-pclouds@gmail.com> 
+	<1268313754-28179-7-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Fri Mar 12 01:56:40 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 12 04:35:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NptAq-0001RF-1J
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Mar 2010 01:56:20 +0100
+	id 1NpvfF-0002dG-CV
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Mar 2010 04:35:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753198Ab0CLA4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Mar 2010 19:56:01 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35131 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751367Ab0CLA4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Mar 2010 19:56:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 024B89FFBC;
-	Thu, 11 Mar 2010 19:55:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xqnt9YdgjYhT04CC8hWh8YaI5Wc=; b=DknfdI
-	qJx0Md7gRvunk6g8GuswZWGeyzh81qxx/Zabw874h9cY9qwZoBG1AN/agMu9Mih6
-	4otNPXBGxZqku5Aam1r23PGLIpGXAVKY8VdksDuknOR1k+sgMIVL0bCzxHNpQHjL
-	PxBxenMQIMtAT3agQPLVcwMT16Kt/V2chKDn4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wMOexOVAIbL7GjJR3ZVCEgGLdQMbLAkx
-	4w0GTHlzli3tKefP6+ZqoY+QAmNHJen4wZhxVOaatcXDllHjzGyffqy3dob2J9KG
-	jzxsfnv+cqH98zOew0cqnt5KS5duQXsDiooX93Ik61Z06+XP2ts2HA25Do+znN8I
-	l9ThEQr0k0M=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D28529FFBB;
-	Thu, 11 Mar 2010 19:55:54 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 376099FFBA; Thu, 11 Mar
- 2010 19:55:52 -0500 (EST)
-In-Reply-To: <4B9965A1.60403@web.de> (Jens Lehmann's message of "Thu\, 11 Mar
- 2010 22\:50\:25 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 033D8DE8-2D72-11DF-AF99-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1750867Ab0CLDfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Mar 2010 22:35:47 -0500
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:45362 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750721Ab0CLDfq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Mar 2010 22:35:46 -0500
+Received: by pvb32 with SMTP id 32so305710pvb.19
+        for <git@vger.kernel.org>; Thu, 11 Mar 2010 19:35:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        bh=f411X5hPV6ZdkaINAMwFsJUNNqs2yzwkttMJQsMrXio=;
+        b=E+FjsRqyA/4xQWxr9hrgdfspve+DwZymxFdK7Ai7IIRv6AQpth7X0yT6xRRydZt3x9
+         0e9sYYi0xLaRYXwVVXemJ2DD5AULy9JO6ReYw2NZO5VWu8mkMC7AbhWi7FsS0G9U32dw
+         gy5Uc1+PmsZ4YyJpz+UBDsMmz2g8kLpnI90vg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        b=kP0Dkl0XuCnaeBrz2Qc02n4wJrkOSIpC+7YbOVtXt1Ktc3JK1PhOMKM5AlNBMEKWDi
+         nP5olPoCuAFXXuAeKGBMVngPoo8S6vQSqFG1XdlQXEfEWfzcv/A7zAxT4c+oMvOAS+Et
+         AcQq6gMIypaxKkZG8x/z7+u110MIAbySX/sKI=
+Received: by 10.141.124.12 with SMTP id b12mr2426512rvn.55.1268364945813; Thu, 
+	11 Mar 2010 19:35:45 -0800 (PST)
+In-Reply-To: <1268313754-28179-7-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142011>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
-
-> Moving duplicated code into the new function match_stat_with_submodule().
-> Replacing the implicit activation of detailed checks for the dirtiness of
-> submodules when DIFF_FORMAT_PATCH was selected with explicitly setting
-> the recently added DIFF_OPT_DIRTY_SUBMODULES option in diff_setup_done().
->
-> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-> ---
->
-> All tests run fine with this patch. All other callsites where the option
-> DIFF_FORMAT_PATCH is set look like they don't deal with the work tree
-> or they call diff_setup_done() shortly after.
-> I am pretty sure about builtin/log.c, as this can't use the work tree
-> but only already commited stuff, no?
-> But then there is edit_patch() in buitin/add.c, I am not sure it makes
-> sense to set DIRTY_SUBMODULES there too. Opinions?
-
-I like this particular refactoring to remove duplicated obscure logic.
-
-I am not sure if it is the right thing to do to return "changed" if the
-change is only "submodule is dirty even though its HEAD is the same as
-what is recorded in the index of the superproject", though.  See my
-patches in response to your "[PATCH] git status: Fix false positive "new
-commits" output for".  I think it would be conceptually the right thing to
-do to feed the same object names in the sha1 field for both sides of the
-filepair, with the working tree side marked with "dirty-submodule".  I
-also suspect that you would not need to re-resolve the gitlinks in later
-stages when you generate patches in textual form if you do it that way.
+MjAxMC8zLzExIE5ndXnhu4VuIFRow6FpIE5n4buNYyBEdXkgPHBjbG91ZHNAZ21haWwuY29tPjoK
+PiBAQCAtNDExLDYgKzQyNSw4IEBAIHN0YXRpYyBjb25zdCBjaGFyICpzZXR1cF9naXRfZGlyZWN0
+b3J5X2dlbnRseV8xKGludCAqbm9uZ2l0X29rKQo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgaW5zaWRlX2dpdF9kaXIgPSAxOwo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgaWYgKCF3b3JrX3RyZWVfZW52KQo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgaW5zaWRlX3dvcmtfdHJlZSA9IDA7Cj4gKyDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoY2hlY2tfcmVwb3NpdG9yeV9mb3JtYXRfZ2VudGx5
+KGdpdGZpbGVfZGlyLCBub25naXRfb2spKQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgcmV0dXJuIE5VTEw7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqBpZiAob2Zmc2V0ICE9IGxlbikgewo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgcm9vdF9sZW4gPSBvZmZzZXRfMXN0X2NvbXBvbmVudChj
+d2QpOwo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgY3dk
+W29mZnNldCA+IHJvb3RfbGVuID8gb2Zmc2V0IDogcm9vdF9sZW5dID0gJ1wwJzsKClNvbWV0aGlu
+ZyB3ZW50IHdyb25nIGluIHJlYmFzZXMgYW5kIGNvbmZsaWN0cy4gZ2l0ZmlsZV9kaXIgaW4gdGhl
+CmFib3ZlIGNhbGwgc2hvdWxkIGJlIHJlcGxhY2VkIGJ5ICIuIgoKaWYgKGNoZWNrX3JlcG9zaXRv
+cnlfZm9ybWF0X2dlbnRseSgiLiIsIG5vbmdpdF9vaykpCi0tIApEdXkK
