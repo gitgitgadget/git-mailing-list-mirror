@@ -1,67 +1,61 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH] Do not strip empty lines / trailing spaces from a commit
- message template
-Date: Fri, 12 Mar 2010 18:07:22 +0100
-Message-ID: <4B9A74CA.4080507@gmail.com>
-References: <4B97C157.4020806@gmail.com> <20100311081213.GA13575@sigill.intra.peff.net> <20100311083148.GA13786@sigill.intra.peff.net> <7vaaueziv8.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: [PATCH 1/3] gitk: Avoid calling tk_setPalette on Windows
+Date: Fri, 12 Mar 2010 18:31:47 +0000
+Message-ID: <1268418709-4998-1-git-send-email-patthoyts@users.sourceforge.net>
+Cc: Paul Mackerras <paulus@samba.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 12 18:08:04 2010
+X-From: git-owner@vger.kernel.org Fri Mar 12 19:32:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nq8LA-0002o7-3l
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Mar 2010 18:08:00 +0100
+	id 1Nq9ef-0003vt-UD
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Mar 2010 19:32:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933120Ab0CLRHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Mar 2010 12:07:55 -0500
-Received: from lo.gmane.org ([80.91.229.12]:38792 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932245Ab0CLRHy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Mar 2010 12:07:54 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Nq8L3-0002iw-De
-	for git@vger.kernel.org; Fri, 12 Mar 2010 18:07:53 +0100
-Received: from 91-67-62-42-dynip.superkabel.de ([91.67.62.42])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 12 Mar 2010 18:07:53 +0100
-Received: from sschuberth by 91-67-62-42-dynip.superkabel.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 12 Mar 2010 18:07:53 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 91-67-62-42-dynip.superkabel.de
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-In-Reply-To: <7vaaueziv8.fsf@alter.siamese.dyndns.org>
+	id S934379Ab0CLScI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Mar 2010 13:32:08 -0500
+Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:43221 "EHLO
+	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934085Ab0CLScG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Mar 2010 13:32:06 -0500
+Received: from [172.23.170.142] (helo=anti-virus02-09)
+	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1Nq9eR-00010S-K0; Fri, 12 Mar 2010 18:31:59 +0000
+Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
+	by asmtp-out6.blueyonder.co.uk with esmtpa (Exim 4.52)
+	id 1Nq9eR-0006Sv-1h; Fri, 12 Mar 2010 18:31:59 +0000
+Received: from frog (pc014.patthoyts.tk [192.168.0.14])
+	by fox.patthoyts.tk (Postfix) with ESMTP id 9678B21945;
+	Fri, 12 Mar 2010 18:31:58 +0000 (GMT)
+Received: by frog (Postfix, from userid 1000)
+	id 770E06D6A1D; Fri, 12 Mar 2010 18:32:19 +0000 (GMT)
+X-Mailer: git-send-email 1.6.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142058>
 
-On 11.03.2010 21:46, Junio C Hamano wrote:
+This just messes up the system colors. Leave them alone.
 
-> I suspect that the attached would be much easier to read and understand.
+Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+---
+ gitk |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-It is, indeed, easier to read. Thanks.
-
->> How about a test to check the new behavior?
->
-> Speaking of tests, t2203 will segfault with your patch.  I don't think the
-> following does, though.
-
-Hmm, t2203 does neither segfault here with my nor your patch, but I'm 
-running the test on msysGit.
-
-Anyway, Junio, do you think it would be necessary to introduce a new 
-test for this, or can I resend with just your improvements applied?
-
+diff --git a/gitk b/gitk
+index 1f36a3e..dc9b8a8 100755
+--- a/gitk
++++ b/gitk
+@@ -10849,6 +10849,7 @@ proc setselbg {c} {
+ # radiobuttons look bad.  This chooses white for selectColor if the
+ # background color is light, or black if it is dark.
+ proc setui {c} {
++    if {[tk windowingsystem] eq "win32"} { return }
+     set bg [winfo rgb . $c]
+     set selc black
+     if {[lindex $bg 0] + 1.5 * [lindex $bg 1] + 0.5 * [lindex $bg 2] > 100000} {
 -- 
-Sebastian Schuberth
+1.6.6
