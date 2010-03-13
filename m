@@ -1,76 +1,59 @@
-From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
-Subject: [PATCH] bash: support --delete and --set-upstream for push
-Date: Sat, 13 Mar 2010 08:10:03 +0100
-Message-ID: <4B9B3A4B.9010509@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: FEATURE REQUEST: sendemail.aliasesfile support enavironment
+ variables and tilde
+Date: Sat, 13 Mar 2010 02:40:31 -0500
+Message-ID: <20100313074031.GA5467@sigill.intra.peff.net>
+References: <87zl2dtl5g.fsf@jondo.cante.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Mar 13 08:10:35 2010
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Sat Mar 13 08:40:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NqLUX-00044O-GC
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Mar 2010 08:10:33 +0100
+	id 1NqLxp-0006Z7-Ib
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Mar 2010 08:40:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758844Ab0CMHKI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Mar 2010 02:10:08 -0500
-Received: from mail-ew0-f216.google.com ([209.85.219.216]:52960 "EHLO
-	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754445Ab0CMHKG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Mar 2010 02:10:06 -0500
-Received: by ewy8 with SMTP id 8so570438ewy.28
-        for <git@vger.kernel.org>; Fri, 12 Mar 2010 23:10:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=AUSh+KwVqLjguNWjGFZnySDuWdfqK3heXzh1xbafgUs=;
-        b=nvaukkfJ80O6jrhKBJYNwcfoxXd7dw/0afn2o+YDbOvaFZCmj4EOs88MUkj5/iFuCn
-         k8v4vRK+Q389f6NfhYA6Wusrrm5mwL2AZKZd0PUYltzYZiulxTggq13ELQGpm+sKEq/k
-         gLvcUKinf05wnUitcRW2wNaQHsDws9eWkTt4M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=GmBVLZbKM50BRkV4OMuzRgFYxTeCsB0eT+hRJHwkQdNVC8dwKtyR1ZZS/sopz1Ic83
-         GpJFzpWl4syw8BUR9fExst0P64tG5l18HYycMUuFAsKgcgayebr6wiaWlMy7NXbNCNPd
-         aeXL4MnqKD/ASJGtDlhAa/Ok3wRqLgJofstJs=
-Received: by 10.213.98.143 with SMTP id q15mr3650615ebn.67.1268464204946;
-        Fri, 12 Mar 2010 23:10:04 -0800 (PST)
-Received: from [10.0.1.10] (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
-        by mx.google.com with ESMTPS id 16sm1428446ewy.3.2010.03.12.23.10.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 12 Mar 2010 23:10:04 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
+	id S1758887Ab0CMHkg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Mar 2010 02:40:36 -0500
+Received: from peff.net ([208.65.91.99]:35150 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758877Ab0CMHkf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Mar 2010 02:40:35 -0500
+Received: (qmail 27091 invoked by uid 107); 13 Mar 2010 07:40:58 -0000
+Received: from cpe-066-057-045-211.nc.res.rr.com (HELO sigill.intra.peff.net) (66.57.45.211)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sat, 13 Mar 2010 02:40:58 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 13 Mar 2010 02:40:31 -0500
+Content-Disposition: inline
+In-Reply-To: <87zl2dtl5g.fsf@jondo.cante.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142089>
 
-Signed-off-by: Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>
----
- contrib/completion/git-completion.bash |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Fri, Mar 12, 2010 at 09:06:19PM +0200, Jari Aalto wrote:
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index fe93747..c3b4ffc 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1359,7 +1359,7 @@ _git_push ()
- 	--*)
- 		__gitcomp "
- 			--all --mirror --tags --dry-run --force --verbose
--			--receive-pack=3D --repo=3D
-+			--receive-pack=3D --repo=3D --delete --set-upstream
- 		"
- 		return
- 		;;
---=20
-1.7.0.2.157.gb7e7f
+> It apperas that this is not possible with 1.7.0:
+> 
+>     # ~/.gitconfig
+>     [sendemail]
+>             aliasesfile = $HOME/.mailrc
+> 
+> => opening $HOME/.mailrc: No such file or directory
+> ls -la $HOME/.mailrc
+> lrwxrwxrwx 1 root root 35 2008-05-31 11:08 /home/foo/.mailrc -> vc/git/shell-account-common/.mailrc
+> 
+> Neither seems to be "~/.mailrc" accpeted. Please add support for at
+> least tilde(~).
+
+If you (or anyone) are interested in writing the patch, it is as simple
+as adding "--path" to the "git config" call for sendemail.aliasesfile.
+Which unfortunately is not that simple, due to the way that sendemail
+handles its config values, but the refactoring should not be too hard.
+
+-Peff
