@@ -1,97 +1,167 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: git top links: 2010-2
-Date: Sat, 13 Mar 2010 19:35:36 +0200
-Message-ID: <94a0d4531003130935wc557eaare5d4103233e6de65@mail.gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: "git stash list" shows HEAD reflog
+Date: Sat, 13 Mar 2010 18:37:50 +0100
+Message-ID: <4B9BCD6E.4090902@lsrfire.ath.cx>
+References: <op.u9gl97fstuzx1w@cybershadow.mshome.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 13 18:36:00 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Vladimir Panteleev <vladimir@thecybershadow.net>
+X-From: git-owner@vger.kernel.org Sat Mar 13 18:38:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NqVFm-0006Kz-F1
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Mar 2010 18:35:58 +0100
+	id 1NqVHl-0007LM-Re
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Mar 2010 18:38:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933254Ab0CMRfl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Mar 2010 12:35:41 -0500
-Received: from mail-iw0-f176.google.com ([209.85.223.176]:50533 "EHLO
-	mail-iw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932937Ab0CMRfi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Mar 2010 12:35:38 -0500
-Received: by iwn6 with SMTP id 6so671654iwn.4
-        for <git@vger.kernel.org>; Sat, 13 Mar 2010 09:35:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=ZyGTyeUWtzWN7GHFJMoVOa//7jsM1qfLMq6Mx4SFVek=;
-        b=hV0e1mwxKxZkd1KzQp6DkixSDD/wtHljMDUns1gWb3Omahca0NPbLZIlkx+RRGCFeZ
-         B8AdTkZTUB4KlvBpRY4xc4tTB+upVx9W2NBFOKe6F0UmYfusq27rxTLUni/M7bMh/NGF
-         +145I9CGXbWoSn4I2aFA1/wv2Cqf5ctt44Tbg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=YZ/DlthKy8fjbomAJmJl/5g/j9l94tiCkGiwhG3kpL2EeoSiTahSEpqPdZWIrVGXH8
-         YKPj/REZwJFBcEU8tmrKAJC7r/LqDxUw4hCzsTaDF7mbfkr0EyUAO3jOoPmbcRNt3lz3
-         KgkraeeMOewf3Hi3uR7UD8eOwZQJ2VgDO5DqQ=
-Received: by 10.231.143.12 with SMTP id s12mr80361ibu.38.1268501736974; Sat, 
-	13 Mar 2010 09:35:36 -0800 (PST)
+	id S933625Ab0CMRh4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Mar 2010 12:37:56 -0500
+Received: from india601.server4you.de ([85.25.151.105]:49972 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933453Ab0CMRhz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Mar 2010 12:37:55 -0500
+Received: from [10.0.1.100] (p57B7E76C.dip.t-dialin.net [87.183.231.108])
+	by india601.server4you.de (Postfix) with ESMTPSA id 1F4CE2F8045;
+	Sat, 13 Mar 2010 18:37:54 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
+In-Reply-To: <op.u9gl97fstuzx1w@cybershadow.mshome.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142100>
 
-Hi,
+Am 12.03.2010 15:52, schrieb Vladimir Panteleev:
+> I stumbled upon a curious problem with a repository: the command "git
+> stash list" displayed the HEAD reflog instead of the stash list.
+>=20
+> The problem was caused by a very long line in ".git/logs/refs/stash".
+> (The stash was based on a commit imported from Subversion, the commit
+> message of which didn't follow git conventions.) The entire line was
+> longer than 1023 characters, which is the buffer size passed to fgets=
+ in
+> for_each_recent_reflog_ent. The validation check (buf[len-1] !=3D '\n=
+')
+> causes the line to be skipped. The fix should be simple - if the line
+> read didn't fit in the buffer, add a newline anyway instead of skippi=
+ng
+> the line entirely.
 
-git top links is my attempt to gather all the links people have been
-tagging as "git" in delicious.com[1] (these are not chosen by me).
+Thanks, nice analysis.  Patch below; it uses strbuf instead of truncati=
+ng
+the long message, though.
 
-The fancier blog version is here:
-http://gitlog.wordpress.com/2010/03/13/git-top-links-2010-2/
+> That doesn't explain why git displayed the HEAD reflog, though. That
+> seems to happen thanks to the check (revs->def && !revs->pending.nr) =
+in
+> setup_revisions ("HEAD" is the default, as specified in the caller
+> cmd_log_init). It looks like (ideally) git shouldn't rely on whether
+> revs->pending is empty to decide whether to use the default, but rath=
+er
+> if a ref was specified by the user or not.
 
-1. A Visual Git Reference (125)
-Very nice visualizations of common git operations
-http://marklodato.github.com/visual-git-guide/
+We could add some kind of check there, but with the patch applied I can=
+'t
+trigger this second issue any more.  It would be nice to have a test sc=
+ript
+along with such a sanity check.  Any idea how to cause this error, perh=
+aps
+with another type of invalid reflog file?
 
-2. A successful Git branching model (45)
-http://nvie.com/git-model
+Ren=C3=A9
 
-3. Aha! Moments When Learning Git (43)
-Explanation of commonly ignored git concepts
-http://betterexplained.com/articles/aha-moments-when-learning-git/
 
-4. =E5=88=86=E6=95=A3=E3=83=90=E3=83=BC=E3=82=B8=E3=83=A7=E3=83=B3=E7=AE=
-=A1=E7=90=86=E5=85=A5=E9=96=80 (=E3=82=A4=E3=83=A9=E3=82=B9=E3=83=88=E5=
-=85=A5=E3=82=8A) (18)
-http://tcha.org/2010/intro-to-distributed-version-control-illustrated/
+-- >8 --
+Subject: for_each_recent_reflog_ent(): use strbuf, fix offset handling
 
-5. Smart HTTP Transport (13)
-Excellent explanation of the apparently underhyped http transport
-http://progit.org/2010/03/04/smart-http.html
+As Vladimir reported, "git log -g refs/stash" surprisingly showed the r=
+eflog
+of HEAD if the message in the reflog file was too long.  To fix this, c=
+onvert
+for_each_recent_reflog_ent() to use strbuf_getwholeline() instead of fg=
+ets(),
+for safety and to avoid any size limits for reflog entries.
 
-6. Only You Can Prevent git Merge Commits (10)
-Simple tip to avoid merge commits
-http://www.viget.com/extend/only-you-can-prevent-git-merge-commits/
+Also reverse the logic of the part of the function that only looks at f=
+ile
+tails.  It used to close the file if fgets() succeeded.  The following
+fgets() call in the while loop was likely to fail in this case, too, so
+passing an offset to for_each_recent_reflog_ent() never worked.  Change=
+ it to
+error out if strbuf_getwholeline() fails instead.
 
-7. Setting up a public (bare) repository with git (9)
-http://www.onyxbits.de/content/setting-public-repository-git
+Reported-by: Vladimir Panteleev <vladimir@thecybershadow.net>
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ refs.c |   22 ++++++++++++----------
+ 1 files changed, 12 insertions(+), 10 deletions(-)
 
-8. Git for Eclipse users (9)
-http://alblue.blogspot.com/2010/02/git-for-eclipse-users.html
-
-9. 10 Useful git commands (8)
-http://about.digg.com/blog/10-useful-git-commands
-
-10. =E7=A7=81=E3=81=8CSubversion=E3=82=92=E3=82=84=E3=82=81=E3=81=A6Git=
-=E3=81=AB=E7=A7=BB=E3=81=A3=E3=81=9F=E7=90=86=E7=94=B1 (6)
-http://journal.mycom.co.jp/news/2010/03/09/014/index.html
-
-[1] http://delicious.com/tag/git
-
+diff --git a/refs.c b/refs.c
+index f3fcbe0..63e30d7 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1574,7 +1574,7 @@ int for_each_recent_reflog_ent(const char *ref, e=
+ach_reflog_ent_fn fn, long ofs,
+ {
+ 	const char *logfile;
+ 	FILE *logfp;
+-	char buf[1024];
++	struct strbuf sb =3D STRBUF_INIT;
+ 	int ret =3D 0;
+=20
+ 	logfile =3D git_path("logs/%s", ref);
+@@ -1587,24 +1587,24 @@ int for_each_recent_reflog_ent(const char *ref,=
+ each_reflog_ent_fn fn, long ofs,
+ 		if (fstat(fileno(logfp), &statbuf) ||
+ 		    statbuf.st_size < ofs ||
+ 		    fseek(logfp, -ofs, SEEK_END) ||
+-		    fgets(buf, sizeof(buf), logfp)) {
++		    strbuf_getwholeline(&sb, logfp, '\n')) {
+ 			fclose(logfp);
++			strbuf_release(&sb);
+ 			return -1;
+ 		}
+ 	}
+=20
+-	while (fgets(buf, sizeof(buf), logfp)) {
++	while (!strbuf_getwholeline(&sb, logfp, '\n')) {
+ 		unsigned char osha1[20], nsha1[20];
+ 		char *email_end, *message;
+ 		unsigned long timestamp;
+-		int len, tz;
++		int tz;
+=20
+ 		/* old SP new SP name <email> SP time TAB msg LF */
+-		len =3D strlen(buf);
+-		if (len < 83 || buf[len-1] !=3D '\n' ||
+-		    get_sha1_hex(buf, osha1) || buf[40] !=3D ' ' ||
+-		    get_sha1_hex(buf + 41, nsha1) || buf[81] !=3D ' ' ||
+-		    !(email_end =3D strchr(buf + 82, '>')) ||
++		if (sb.len < 83 || sb.buf[sb.len - 1] !=3D '\n' ||
++		    get_sha1_hex(sb.buf, osha1) || sb.buf[40] !=3D ' ' ||
++		    get_sha1_hex(sb.buf + 41, nsha1) || sb.buf[81] !=3D ' ' ||
++		    !(email_end =3D strchr(sb.buf + 82, '>')) ||
+ 		    email_end[1] !=3D ' ' ||
+ 		    !(timestamp =3D strtoul(email_end + 2, &message, 10)) ||
+ 		    !message || message[0] !=3D ' ' ||
+@@ -1618,11 +1618,13 @@ int for_each_recent_reflog_ent(const char *ref,=
+ each_reflog_ent_fn fn, long ofs,
+ 			message +=3D 6;
+ 		else
+ 			message +=3D 7;
+-		ret =3D fn(osha1, nsha1, buf+82, timestamp, tz, message, cb_data);
++		ret =3D fn(osha1, nsha1, sb.buf + 82, timestamp, tz, message,
++			 cb_data);
+ 		if (ret)
+ 			break;
+ 	}
+ 	fclose(logfp);
++	strbuf_release(&sb);
+ 	return ret;
+ }
+=20
 --=20
-=46elipe Contreras
+1.7.0.2
