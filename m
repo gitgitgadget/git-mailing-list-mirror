@@ -1,167 +1,169 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: "git stash list" shows HEAD reflog
-Date: Sat, 13 Mar 2010 18:37:50 +0100
-Message-ID: <4B9BCD6E.4090902@lsrfire.ath.cx>
-References: <op.u9gl97fstuzx1w@cybershadow.mshome.net>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH] git-send-email.perl - Fix 550 EHLO argument does not match calling host
+Date: Sat, 13 Mar 2010 19:36:09 +0200
+Organization: Private
+Message-ID: <87bpesi0om.fsf_-_@jondo.cante.net>
+References: <4B97C157.4020806@gmail.com>
+	<20100311081213.GA13575@sigill.intra.peff.net>
+	<20100311083148.GA13786@sigill.intra.peff.net>
+	<7vaaueziv8.fsf@alter.siamese.dyndns.org> <4B9A74CA.4080507@gmail.com>
+	<7vy6hxnnfx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Vladimir Panteleev <vladimir@thecybershadow.net>
-X-From: git-owner@vger.kernel.org Sat Mar 13 18:38:03 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 13 18:40:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NqVHl-0007LM-Re
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Mar 2010 18:38:02 +0100
+	id 1NqVJs-0008HV-AZ
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Mar 2010 18:40:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933625Ab0CMRh4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Mar 2010 12:37:56 -0500
-Received: from india601.server4you.de ([85.25.151.105]:49972 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933453Ab0CMRhz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Mar 2010 12:37:55 -0500
-Received: from [10.0.1.100] (p57B7E76C.dip.t-dialin.net [87.183.231.108])
-	by india601.server4you.de (Postfix) with ESMTPSA id 1F4CE2F8045;
-	Sat, 13 Mar 2010 18:37:54 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
-In-Reply-To: <op.u9gl97fstuzx1w@cybershadow.mshome.net>
+	id S934224Ab0CMRkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Mar 2010 12:40:07 -0500
+Received: from lo.gmane.org ([80.91.229.12]:36529 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933453Ab0CMRkF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Mar 2010 12:40:05 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NqVJj-0008Cc-Te
+	for git@vger.kernel.org; Sat, 13 Mar 2010 18:40:03 +0100
+Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 13 Mar 2010 18:40:03 +0100
+Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 13 Mar 2010 18:40:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
+Cancel-Lock: sha1:ewlafXY5i0XzVaYlRi8J+CfRg4Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142101>
 
-Am 12.03.2010 15:52, schrieb Vladimir Panteleev:
-> I stumbled upon a curious problem with a repository: the command "git
-> stash list" displayed the HEAD reflog instead of the stash list.
->=20
-> The problem was caused by a very long line in ".git/logs/refs/stash".
-> (The stash was based on a commit imported from Subversion, the commit
-> message of which didn't follow git conventions.) The entire line was
-> longer than 1023 characters, which is the buffer size passed to fgets=
- in
-> for_each_recent_reflog_ent. The validation check (buf[len-1] !=3D '\n=
-')
-> causes the line to be skipped. The fix should be simple - if the line
-> read didn't fit in the buffer, add a newline anyway instead of skippi=
-ng
-> the line entirely.
+Add new function maildomain() which returns FQDN for use in
+send_message(). The value is passed to Net::SMTP HELO/EHLO handshake.
 
-Thanks, nice analysis.  Patch below; it uses strbuf instead of truncati=
-ng
-the long message, though.
+The default value in Net::SMTP may not get through:
 
-> That doesn't explain why git displayed the HEAD reflog, though. That
-> seems to happen thanks to the check (revs->def && !revs->pending.nr) =
-in
-> setup_revisions ("HEAD" is the default, as specified in the caller
-> cmd_log_init). It looks like (ideally) git shouldn't rely on whether
-> revs->pending is empty to decide whether to use the default, but rath=
-er
-> if a ref was specified by the user or not.
+  Net::SMTP=GLOB(0x267ec28)>>> EHLO localhost.localdomain
+  Net::SMTP=GLOB(0x267ec28)<<< 550 EHLO argument does not match calling host
 
-We could add some kind of check there, but with the patch applied I can=
-'t
-trigger this second issue any more.  It would be nice to have a test sc=
-ript
-along with such a sanity check.  Any idea how to cause this error, perh=
-aps
-with another type of invalid reflog file?
+whereas using the FQDN, the result is:
 
-Ren=C3=A9
+  Net::SMTP=GLOB(0x15b8e80)>>> EHLO host.example.com
+  Net::SMTP=GLOB(0x15b8e80)<<< 250-host.example.com Hello host.example.com [192.168.1.7]
 
-
--- >8 --
-Subject: for_each_recent_reflog_ent(): use strbuf, fix offset handling
-
-As Vladimir reported, "git log -g refs/stash" surprisingly showed the r=
-eflog
-of HEAD if the message in the reflog file was too long.  To fix this, c=
-onvert
-for_each_recent_reflog_ent() to use strbuf_getwholeline() instead of fg=
-ets(),
-for safety and to avoid any size limits for reflog entries.
-
-Also reverse the logic of the part of the function that only looks at f=
-ile
-tails.  It used to close the file if fgets() succeeded.  The following
-fgets() call in the while loop was likely to fail in this case, too, so
-passing an offset to for_each_recent_reflog_ent() never worked.  Change=
- it to
-error out if strbuf_getwholeline() fails instead.
-
-Reported-by: Vladimir Panteleev <vladimir@thecybershadow.net>
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
 ---
- refs.c |   22 ++++++++++++----------
- 1 files changed, 12 insertions(+), 10 deletions(-)
+ git-send-email.perl |   52 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 50 insertions(+), 2 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index f3fcbe0..63e30d7 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1574,7 +1574,7 @@ int for_each_recent_reflog_ent(const char *ref, e=
-ach_reflog_ent_fn fn, long ofs,
- {
- 	const char *logfile;
- 	FILE *logfp;
--	char buf[1024];
-+	struct strbuf sb =3D STRBUF_INIT;
- 	int ret =3D 0;
-=20
- 	logfile =3D git_path("logs/%s", ref);
-@@ -1587,24 +1587,24 @@ int for_each_recent_reflog_ent(const char *ref,=
- each_reflog_ent_fn fn, long ofs,
- 		if (fstat(fileno(logfp), &statbuf) ||
- 		    statbuf.st_size < ofs ||
- 		    fseek(logfp, -ofs, SEEK_END) ||
--		    fgets(buf, sizeof(buf), logfp)) {
-+		    strbuf_getwholeline(&sb, logfp, '\n')) {
- 			fclose(logfp);
-+			strbuf_release(&sb);
- 			return -1;
+
+        This is a reworked patch
+
+        - In maildomain() start with "use Net::SMTP". Had "use Net::Domain" twice.
+        - In maildomain() lose the "()" prototype.
+
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 6af7bd3..f743d9e 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -834,6 +834,46 @@ sub sanitize_address
+ 
+ }
+ 
++# Returns the local Fully Qualified Domain Name (FQDN) if available,
++# If this is not given to EHLO, the receiving SMTP may deny connection
++# Here is an example of Net::SMTP without explicit Helo: it
++# uses by default "localhost.localdomain"
++#
++# Net::SMTP=GLOB(0x267ec28)>>> EHLO localhost.localdomain
++# Net::SMTP=GLOB(0x267ec28)<<< 550 EHLO argument does not match calling host
++
++sub maildomain
++{
++	my $maildomain;
++	eval "use Net::SMTP";
++
++	unless ( $@ ) {
++		for my $host ( qw(mailhost localhost) ) {
++			my $smtp = Net::SMTP->new($host);
++			if (defined $smtp) {
++				my $domain = $smtp->domain;
++				$smtp->quit;
++
++				$maildomain = $domain
++					unless $^O eq 'darwin' && $domain =~ /\.local$/;
++
++				last if $maildomain;
++			}
++		}
++	}
++
++	unless ($maildomain) {
++		eval "use Net::Domain";
++		unless ( $@ ) {
++		    my $domain = Net::Domain::domainname();
++		    $maildomain = $domain
++			    unless $^O eq 'darwin' && $domain =~ /\.local$/;
++		}
++	}
++
++	$maildomain;
++}
++
+ # Returns 1 if the message was sent, and 0 otherwise.
+ # In actuality, the whole program dies when there
+ # is an error sending a message.
+@@ -917,6 +957,8 @@ X-Mailer: git-send-email $gitversion
  		}
  	}
-=20
--	while (fgets(buf, sizeof(buf), logfp)) {
-+	while (!strbuf_getwholeline(&sb, logfp, '\n')) {
- 		unsigned char osha1[20], nsha1[20];
- 		char *email_end, *message;
- 		unsigned long timestamp;
--		int len, tz;
-+		int tz;
-=20
- 		/* old SP new SP name <email> SP time TAB msg LF */
--		len =3D strlen(buf);
--		if (len < 83 || buf[len-1] !=3D '\n' ||
--		    get_sha1_hex(buf, osha1) || buf[40] !=3D ' ' ||
--		    get_sha1_hex(buf + 41, nsha1) || buf[81] !=3D ' ' ||
--		    !(email_end =3D strchr(buf + 82, '>')) ||
-+		if (sb.len < 83 || sb.buf[sb.len - 1] !=3D '\n' ||
-+		    get_sha1_hex(sb.buf, osha1) || sb.buf[40] !=3D ' ' ||
-+		    get_sha1_hex(sb.buf + 41, nsha1) || sb.buf[81] !=3D ' ' ||
-+		    !(email_end =3D strchr(sb.buf + 82, '>')) ||
- 		    email_end[1] !=3D ' ' ||
- 		    !(timestamp =3D strtoul(email_end + 2, &message, 10)) ||
- 		    !message || message[0] !=3D ' ' ||
-@@ -1618,11 +1618,13 @@ int for_each_recent_reflog_ent(const char *ref,=
- each_reflog_ent_fn fn, long ofs,
- 			message +=3D 6;
- 		else
- 			message +=3D 7;
--		ret =3D fn(osha1, nsha1, buf+82, timestamp, tz, message, cb_data);
-+		ret =3D fn(osha1, nsha1, sb.buf + 82, timestamp, tz, message,
-+			 cb_data);
- 		if (ret)
- 			break;
- 	}
- 	fclose(logfp);
-+	strbuf_release(&sb);
- 	return ret;
- }
-=20
---=20
-1.7.0.2
+ 
++	my $maildomain;
++
+ 	if ($dry_run) {
+ 		# We don't want to send the email.
+ 	} elsif ($smtp_server =~ m#^/#) {
+@@ -936,13 +978,18 @@ X-Mailer: git-send-email $gitversion
+ 		if ($smtp_encryption eq 'ssl') {
+ 			$smtp_server_port ||= 465; # ssmtp
+ 			require Net::SMTP::SSL;
+-			$smtp ||= Net::SMTP::SSL->new($smtp_server, Port => $smtp_server_port);
++			$maildomain = maildomain() || "localhost.localdomain";
++			$smtp ||= Net::SMTP::SSL->new($smtp_server,
++						      Hello => $maildomain,
++						      Port => $smtp_server_port);
+ 		}
+ 		else {
+ 			require Net::SMTP;
++			$maildomain = maildomain() || "localhost.localdomain";
+ 			$smtp ||= Net::SMTP->new((defined $smtp_server_port)
+ 						 ? "$smtp_server:$smtp_server_port"
+ 						 : $smtp_server,
++						 Hello => $maildomain,
+ 						 Debug => $debug_net_smtp);
+ 			if ($smtp_encryption eq 'tls' && $smtp) {
+ 				require Net::SMTP::SSL;
+@@ -962,9 +1009,10 @@ X-Mailer: git-send-email $gitversion
+ 		}
+ 
+ 		if (!$smtp) {
+-			die "Unable to initialize SMTP properly. Check config. ",
++			die "Unable to initialize SMTP properly. Check config and use --smtp-debug. ",
+ 			    "VALUES: server=$smtp_server ",
+ 			    "encryption=$smtp_encryption ",
++			    "maildomain=$maildomain",
+ 			    defined $smtp_server_port ? "port=$smtp_server_port" : "";
+ 		}
+ 
+-- 
+1.7.0
