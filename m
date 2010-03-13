@@ -1,94 +1,84 @@
-From: Dave Olszewski <cxreg@pobox.com>
-Subject: [PATCH] don't use default revision if a rev was specified
-Date: Sat, 13 Mar 2010 14:47:05 -0800
-Message-ID: <1268520425-31889-1-git-send-email-cxreg@pobox.com>
-References: <4B9C086D.10004@lsrfire.ath.cx>
-Cc: Vladimir Panteleev <vladimir@thecybershadow.net>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: rene.scharfe@lsrfire.ath.cx
-X-From: git-owner@vger.kernel.org Sat Mar 13 23:47:39 2010
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] git status: ignoring untracked files must apply to submodules
+ too
+Date: Sun, 14 Mar 2010 00:08:28 +0100
+Message-ID: <4B9C1AEC.2070605@web.de>
+References: <4B9C0AFB.1050306@web.de> <7vhboj6et9.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Sergio Callegari <sergio.callegari@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 14 00:08:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nqa7P-0000df-5F
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Mar 2010 23:47:39 +0100
+	id 1NqaRq-0001BF-00
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Mar 2010 00:08:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759398Ab0CMWre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Mar 2010 17:47:34 -0500
-Received: from 62.f9.1243.static.theplanet.com ([67.18.249.98]:59200 "EHLO
-	62.f9.1243.static.theplanet.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759393Ab0CMWrd (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Mar 2010 17:47:33 -0500
-X-Envelope-From: count@genericorp.net
-Received: from bokonon.genericorp.net (c-76-104-180-27.hsd1.wa.comcast.net [76.104.180.27])
-	(authenticated bits=0)
-	by 62.f9.1243.static.theplanet.com (8.13.8/8.13.8/Debian-3) with ESMTP id o2DMlGgU022399
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NOT);
-	Sat, 13 Mar 2010 16:47:22 -0600
-Received: from count by bokonon.genericorp.net with local (Exim 4.71)
-	(envelope-from <count@bokonon.genericorp.net>)
-	id 1Nqa6w-0008Ir-NU; Sat, 13 Mar 2010 14:47:10 -0800
-X-Mailer: git-send-email 1.7.0.2.202.g4e870.dirty
-In-Reply-To: <4B9C086D.10004@lsrfire.ath.cx>
+	id S1752219Ab0CMXIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Mar 2010 18:08:31 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:45768 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751261Ab0CMXIa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Mar 2010 18:08:30 -0500
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 0B0E714437C0E;
+	Sun, 14 Mar 2010 00:08:29 +0100 (CET)
+Received: from [80.128.109.251] (helo=[192.168.178.26])
+	by smtp05.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1NqaRY-0004Ub-00; Sun, 14 Mar 2010 00:08:28 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
+In-Reply-To: <7vhboj6et9.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+oc/pu6i7Ce7Bzzugd6WJddPEDLSZqjumYemM+
+	T8O9rfIZAWYPMJFngrAy3VZLg8QFqtP5TeC41SvoktiELG5JDM
+	Md/kvpyySll7zJZVBC0Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142121>
 
-If a revision is specified, it happens not to have any commits, don't
-use the default revision.  By doing so, surprising and undesired
-behavior can happen, such as showing the reflog for HEAD when a branch
-was specified.
+Am 13.03.2010 23:24, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> 
+>> Since 1.7.0 submodules are considered dirty when they contain untracked
+>> files. But when git status is called with the "-uno" option, the user
+>> asked to ignore untracked files, so they must be ignored in submodules
+>> too. To achieve this, the new flag DIFF_OPT_IGNORE_UNTRACKED_IN_SUBMODULES
+>> is introduced.
+>>
+>> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+>> ---
+>>
+>> This patch applies on top of current pu.
+>>
+>> I'm open to suggestions for a shorter name for the new diff option
+>> IGNORE_UNTRACKED_IN_SUBMODULES; I did not manage to come up with a
+>> shorter yet still descriptive enough name.
+> 
+> Why do you even need that flag?  Isn't it the matter of deciding to ignore
+> or pay attention to the DIRTY_SUBMODULE_UNTRACKED bit in the return value
+> of is_submodule_modified(), depending on whether the toplevel wt_status
+> was called with -uno?
 
-Signed-off-by: Dave Olszewski <cxreg@pobox.com>
----
->> I was testing a patch along the lines of
->> what Vladimir proposed, which was simply to not set the default rev if a
->> valid user-specified argument was found, whether or not it contains
->> commits.
->
->Sounds more like it.  How did the tests go?  Does it result in empty
->output (which is what I would expect from an empty reflog, now that I
->stopped and thought about it for a second)?
+First: When called from "git status" run_diff_files() calls
+wt_status_collect_changed_cb() for every file it considers changed, so
+when the "-uno" option is given for a submodule with only untracked files
+i thought it cleaner to let is_submodule_modified() return 0 so this
+callback is not called at all and the submodule won't show up in the
+"change" list of wt_status (Yes, this could be done by not adding such a
+submodule to that list in the wt_status_collect_changed_cb() too).
 
-It seems to work ok(tm)
+Second: One of my next patches will be about adding an option to the git
+diff family to not show submodules with only untracked files in their
+work tree as modified, which calls for such a diff option AFAICS.
 
- revision.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/revision.c b/revision.c
-index 29721ec..490b484 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1334,7 +1334,7 @@ static void append_prune_data(const char ***prune_data, const char **av)
-  */
- int setup_revisions(int argc, const char **argv, struct rev_info *revs, const char *def)
- {
--	int i, flags, left, seen_dashdash, read_from_stdin;
-+	int i, flags, left, seen_dashdash, read_from_stdin, got_rev_arg = 0;
- 	const char **prune_data = NULL;
- 
- 	/* First, search for "--" */
-@@ -1460,6 +1460,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 			append_prune_data(&prune_data, argv + i);
- 			break;
- 		}
-+		else
-+			got_rev_arg = 1;
- 	}
- 
- 	if (prune_data)
-@@ -1469,7 +1471,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 		revs->def = def;
- 	if (revs->show_merge)
- 		prepare_show_merge(revs);
--	if (revs->def && !revs->pending.nr) {
-+	if (revs->def && !revs->pending.nr && !got_rev_arg) {
- 		unsigned char sha1[20];
- 		struct object *object;
- 		unsigned mode;
--- 
-1.7.0.2.202.g4e870.dirty
+Third: We give is_submodule_modified() the possibility to stop parsing the
+output of the "git status" run in the submodule early, because as soon as
+it sees a modified file it will stop to parse the output further when
+untracked files shall be ignored.
