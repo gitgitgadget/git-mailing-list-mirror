@@ -1,109 +1,116 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: [PATCH/RFC 12/12] diff docs: remove <rev>{0,2} notation
-Date: Fri, 12 Mar 2010 23:53:04 -0500
-Message-ID: <1268455984-19061-13-git-send-email-lodatom@gmail.com>
-References: <1268455984-19061-1-git-send-email-lodatom@gmail.com>
-Cc: Mark Lodato <lodatom@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 13 05:54:28 2010
+From: Tuomas Suutari <tuomas.suutari@gmail.com>
+Subject: Re: [PATCH 1/2] git-svn: Fix merge detecting with rewrite-root
+Date: Sat, 13 Mar 2010 08:54:24 +0200
+Message-ID: <201003130854.24847.tuomas.suutari@gmail.com>
+References: <1267034942-31581-1-git-send-email-tuomas.suutari@gmail.com> <20100226094317.GA22579@dcvr.yhbt.net>
+Mime-Version: 1.0
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Sat Mar 13 07:54:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NqJMj-0007qX-1V
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Mar 2010 05:54:21 +0100
+	id 1NqLF7-00051I-VH
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Mar 2010 07:54:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933647Ab0CMExn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Mar 2010 23:53:43 -0500
-Received: from qw-out-2122.google.com ([74.125.92.24]:38432 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757498Ab0CMExX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Mar 2010 23:53:23 -0500
-Received: by qw-out-2122.google.com with SMTP id 9so447878qwb.37
-        for <git@vger.kernel.org>; Fri, 12 Mar 2010 20:53:23 -0800 (PST)
+	id S1754381Ab0CMGyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Mar 2010 01:54:32 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:60910 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752172Ab0CMGya (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Mar 2010 01:54:30 -0500
+Received: by fg-out-1718.google.com with SMTP id l26so668104fgb.1
+        for <git@vger.kernel.org>; Fri, 12 Mar 2010 22:54:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=2iTh72d+jKu+Xp33Puyh6crmiwnLOqn+uDzjIaYbo70=;
-        b=Py4hYNHB5A3VoWcik2rjUmpUE7De3gPqs+SjjWrD20HJg9+ps0zOs8pgch9SoOpEgd
-         5YWjyKuW2QkD6VcKuOebGnbmm1j6CmqnLXqLt56EMRGQLyj02GbhX4KB/HM0w3zv8rWA
-         9W82VPdTnOYKwBd8xT7kpcRwIi0Z4iI8X0i94=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:message-id;
+        bh=XIcGcCbFrupewpqvvp6dmhmatM4wKak6K4ihYWZK7KI=;
+        b=LxaMTsAUfAKPIDQaFg4G9OoMQV3hZQqJ76qJbb6h0n4TBxhGMFLk1yHbtlGbYxrm9Z
+         pAmiBnbKHi15J5q8pgsVMKP6Scy+/th0Eijmv/EfyLZLu+mRUxWYzxvznNYbLpPmKIza
+         SDNFBTIzD0kJMI3GpwBWFnE5N7f9nF1VcWPRw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=nwu63pQCpvl1z9UnTGfEINyh11reHzS2g4WTvokmGq5ZA7Br+rd6XU0H3uqhIDZCt+
-         Flt3rPiWPgBtkXRS1asFg1oV9733226MM5q6slMl+5qSCKKcjmYO2MSZe75sue1uMFux
-         DW5UfxgmSTjWpakbejgXa3wcwKGbUWAXP9t4o=
-Received: by 10.229.230.208 with SMTP id jn16mr2551189qcb.106.1268456003266;
-        Fri, 12 Mar 2010 20:53:23 -0800 (PST)
-Received: from localhost.localdomain (c-68-50-174-152.hsd1.dc.comcast.net [68.50.174.152])
-        by mx.google.com with ESMTPS id 22sm1694110qyk.10.2010.03.12.20.53.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 12 Mar 2010 20:53:22 -0800 (PST)
-X-Mailer: git-send-email 1.7.0.2
-In-Reply-To: <1268455984-19061-1-git-send-email-lodatom@gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding:message-id;
+        b=qBzENDGWEuPGrsXrCDQbCFzAG4NsO1n03MS/x3qUWBxqp5RPSRHCOG71JK5AxuZI4g
+         5yWT6gWtRpfpgqgg9halEI/VNLST1iyfBVfwAv147qRrE7kCR2qUHp9HwAxDk8oDiYs3
+         jUq+tNKXgwbNOk7Fb3p2QO9eQR3xvfnN4E+uY=
+Received: by 10.87.68.15 with SMTP id v15mr3794873fgk.64.1268463268987;
+        Fri, 12 Mar 2010 22:54:28 -0800 (PST)
+Received: from mikrohiiri.localnet (ws-26-184.laitilanpuhelin.fi [188.123.26.184])
+        by mx.google.com with ESMTPS id l12sm265591fgb.12.2010.03.12.22.54.27
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 12 Mar 2010 22:54:27 -0800 (PST)
+User-Agent: KMail/1.12.3 (Linux/2.6.31-gentoo-r6; KDE/4.3.3; i686; ; )
+In-Reply-To: <20100226094317.GA22579@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142087>
 
-This notation is not used anywhere else, so it can be confusing when
-first encountered.  Instead, prefer the slightly longer but just as
-clear "[<rev> [<rev>]]", which is consistent with other commands.
+Hi Sam,
 
-Signed-off-by: Mark Lodato <lodatom@gmail.com>
----
-When I first ran `git diff -h` and I saw the old syntax, I was rather
-confused.  It took me a minute to realize that this was the regular
-expression syntax.  I think it's best to stick with one syntax, even if
-it is a bit more verbose.
+Could you please provide your feedback on this?
 
- Documentation/git-diff.txt     |    2 +-
- Documentation/git-difftool.txt |    2 +-
- builtin/diff.c                 |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+Thanks!
 
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index 4582179..e2d868d 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -8,7 +8,7 @@ git-diff - Show changes between commits, commit and working tree, etc
- 
- SYNOPSIS
- --------
--'git diff' [<common diff options>] <commit>{0,2} [--] [<path>...]
-+'git diff' [<common diff options>] [<commit> [<commit>]] [--] [<path>...]
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index 8250bad..a02e3b5 100644
---- a/Documentation/git-difftool.txt
-+++ b/Documentation/git-difftool.txt
-@@ -7,7 +7,7 @@ git-difftool - Show changes using common diff tools
- 
- SYNOPSIS
- --------
--'git difftool' [<options>] <commit>{0,2} [--] [<path>...]
-+'git difftool' [<options>] [<commit> [<commit>]] [--] [<path>...]
- 
- DESCRIPTION
- -----------
-diff --git a/builtin/diff.c b/builtin/diff.c
-index f73da93..e2e2efc 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -21,7 +21,7 @@ struct blobinfo {
- };
- 
- static const char builtin_diff_usage[] =
--"git diff [<options>] <rev>{0,2} [--] [<path>...]";
-+"git diff [<options>] [<rev> [<rev>]] [--] [<path>...]";
- 
- static void stuff_change(struct diff_options *opt,
- 			 unsigned old_mode, unsigned new_mode,
--- 
-1.7.0.2
+On Fri 2010-02-26 11:43:17 Eric Wong wrote:
+> Tuomas Suutari <tuomas.suutari@gmail.com> wrote:
+> > Detecting of merges from svn:mergeinfo or svk merge tickets failed
+> > with rewrite-root option. This fixes it.
+> >
+> > Signed-off-by: Tuomas Suutari <tuomas.suutari@gmail.com>
+> > ---
+> > Hi again,
+> >
+> > now I found another problem while importing SVN repo with git-svn.
+> >
+> > To speed-up the import, I copied the SVN repo with rsync to localhost
+> > and used file:// URL for the import, but because I want to be able to
+> > track the history with svn+ssh:// later, I used the rewrite-root
+> > option. That seemed to break the merge detecting.
+> >
+> > With this patch the merge detecting works also with rewrite-root
+> > option, but since there are no comments why the $self->rewrite_root
+> > was used in the first place, I have no idea, if this is the right
+> > thing to do.
+> 
+> Hi Tuomas,
+> 
+> I'm not sure why rewrite_root is used here, either.  Ignoring it
+> seems correct but I'll wait for Sam to chime in.
+> 
+> >  git-svn.perl |    4 ++--
+> >  1 files changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/git-svn.perl b/git-svn.perl
+> > index 265852f..1cbddca 100755
+> > --- a/git-svn.perl
+> > +++ b/git-svn.perl
+> > @@ -2993,7 +2993,7 @@ sub find_extra_svk_parents {
+> >  	for my $ticket ( @tickets ) {
+> >  		my ($uuid, $path, $rev) = split /:/, $ticket;
+> >  		if ( $uuid eq $self->ra_uuid ) {
+> > -			my $url = $self->rewrite_root || $self->{url};
+> > +			my $url = $self->{url};
+> >  			my $repos_root = $url;
+> >  			my $branch_from = $path;
+> >  			$branch_from =~ s{^/}{};
+> > @@ -3201,7 +3201,7 @@ sub find_extra_svn_parents {
+> >  	# are now marked as merge, we can add the tip as a parent.
+> >  	my @merges = split "\n", $mergeinfo;
+> >  	my @merge_tips;
+> > -	my $url = $self->rewrite_root || $self->{url};
+> > +	my $url = $self->{url};
+> >  	my $uuid = $self->ra_uuid;
+> >  	my %ranges;
+> >  	for my $merge ( @merges ) {
+> 
