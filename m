@@ -1,173 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCH v2] git checkout -b: unparent the new branch with -o
-Date: Sat, 13 Mar 2010 01:10:33 -0800
-Message-ID: <7v4okkegdy.fsf@alter.siamese.dyndns.org>
+Date: Sat, 13 Mar 2010 01:33:19 -0800 (PST)
+Message-ID: <m38w9wlg7i.fsf@localhost.localdomain>
 References: <1268173713-5224-1-git-send-email-erick.mattos@gmail.com>
- <7vr5nqrpyg.fsf@alter.siamese.dyndns.org>
- <55bacdd31003120845kc980d16s1e6006d56d6f923a@mail.gmail.com>
- <7v8w9whd3g.fsf@alter.siamese.dyndns.org>
+	<7vr5nqrpyg.fsf@alter.siamese.dyndns.org>
+	<55bacdd31003120845kc980d16s1e6006d56d6f923a@mail.gmail.com>
+	<7v8w9whd3g.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Erick Mattos <erick.mattos@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 13 10:11:06 2010
+Cc: Erick Mattos <erick.mattos@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 13 10:33:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NqNNB-0008Kv-Tm
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Mar 2010 10:11:06 +0100
+	id 1NqNj4-0000wA-91
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Mar 2010 10:33:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933291Ab0CMJKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Mar 2010 04:10:45 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51481 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933065Ab0CMJKk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Mar 2010 04:10:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A5535A1687;
-	Sat, 13 Mar 2010 04:10:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=OTwQdPTz/j/trcR4qa3oSiq0x/E=; b=AylYrkPrGsgBGSpGRQ3DMZt
-	aWV02rrhgkvBnCWKiNLTMSPfVeVWEhsBBxRNLz6BGAOVV9icsHwYiLuBOf/JWJVY
-	8gc45zAaY6pRo4m0SFEYxsIB2Pt1MFodTp2kUDV747SigH50sX1UHHXegb6u4xjL
-	K+8wAopsWUBlveN2kdss=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=PiJ9ELq375db49mSNxxKP+AeNmkMaIy1rMl0zPLrXHa7g4CXN
-	FJT3VlO55DHs3SvCU58xLOF9i0vTBrCRVSq2vqL/gzVRBKFZvQ19PxOEDV3r+rja
-	eTw0nWvy7uzdt6qJdwPCXnMVKQtQ9Tk9LojOHeD+V/WhHr1ZmWot6LZmXw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7FB9BA1686;
-	Sat, 13 Mar 2010 04:10:37 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC753A1685; Sat, 13 Mar
- 2010 04:10:34 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 49E69BA4-2E80-11DF-A4CE-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S934102Ab0CMJdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Mar 2010 04:33:24 -0500
+Received: from mail-fx0-f219.google.com ([209.85.220.219]:38747 "EHLO
+	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933950Ab0CMJdV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Mar 2010 04:33:21 -0500
+Received: by fxm19 with SMTP id 19so1890191fxm.21
+        for <git@vger.kernel.org>; Sat, 13 Mar 2010 01:33:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=rnEog1nqAFuNsuDsRn2O8TH38Zvk7UqSblqKMVJlk9s=;
+        b=kWgDcgbPZonpM3d2pDlfyDsBgD92hBLarI5IUFDVmK5aHPHRYQjR2QcKdwuDbUFyQA
+         bZ3utSNYvW45urdnR26PB3UsF3YQ0SI9HyWz1MMVBEOZxdNJyUnRB7pX5s6UtkUPaugj
+         /fJrFzjJq43BVLwMpFGAPL+SSNxpfi/M0+VJM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=XgNaHtyCjRSxx7D/YfhUgROCzvoz9NuvSf4fDLbcF6/EEggmpdBQCP+luOyng1S8fs
+         6iQBluEm1s+7eG7FgNh9wGVm1QfbpmRUoO8tfzsiHZWyqfZfwzRzia+cIawK5xkzXXQH
+         yVoOzvqsp3QvOj48RJqyKVZoeeY8xkwtAKFOo=
+Received: by 10.223.164.165 with SMTP id e37mr2628784fay.43.1268472799943;
+        Sat, 13 Mar 2010 01:33:19 -0800 (PST)
+Received: from localhost.localdomain (abwm212.neoplus.adsl.tpnet.pl [83.8.236.212])
+        by mx.google.com with ESMTPS id 13sm1641489fxm.10.2010.03.13.01.33.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 13 Mar 2010 01:33:19 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o2D9WpDp005110;
+	Sat, 13 Mar 2010 10:32:52 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o2D9WXXg005099;
+	Sat, 13 Mar 2010 10:32:33 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7v8w9whd3g.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142094>
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> As I already said, I do not think "mostly common paths" case should be
-> encouraged to begin with.  As far as I know (and you can guess by now that
-> I know reasonably well about git), you do not gain anything by not having
-> the ancestry link between '?' and 'B', except that it would make conflict
-> resolution at '*' extremely difficult.  There is only downside without any
-> upside in "mostly common paths" disjoint merge.
+>     Side note: The other two "disjoint" merges we have are also this kind
+>     of "no common paths" merge.  Nobody who was involved in the branches
+>     that resulted in them prepared his branch with --orphan, by the way.
+>     They started out in independent repositories, because they were by
+>     definition independent projects and these were "cross project merges",
+>     as Linus put it.
 
-There is one case "mostly common paths" disjoint history can be useful.
+Note that beside "disjoint" merges ("cross project merges"), of gitk,
+git-gui, gitweb and (very early in git history) git mail tools, there
+are also three "disjoint"/"unparented" branches: 'html', 'man' and
+'todo'.
 
-Imagine you have a hitherto proprietary software project and want to go
-open source.  Perhaps your intention is to have an open source version and
-an enhanced commercial version.  The project contains some third-party
-vendor software outside your control, and you have replaced them with open
-source equivalents or disabled features that depend on them.
+While 'todo' is totally unrelated, and if instead of starting in
+separate repository it would be created using proposed feature, it
+would be created with "no common paths" case.
 
-Your history may look like this:
+BUT in the case of 'html' and 'man' branches I could see why current
+implementation of _removing index and not removing files_ might be
+advantageous.  Remove index, create HTML and manpage version of
+documentation, and add HTML (in 'html' branch) or manpages (in 'man'
+branch)... probably shifting root, so it is not all in single
+Documentation directory.
 
-      o---o---A oss-base
-     /
- ---o---o---o---o master
+Just my 2 eurocents.
 
-where master is the primary version you will continue shipping to your
-paying customers, with proprietary third-party components and features
-that depend on them.  Commits on oss-base were your work to prepare the
-tree into a releasable shape, removing these proprietary stuff along with
-some features.
-
-But you cannot publish oss-base (commit A) to the public.  "git log" will
-show all the history that leads to it, with all the third-party stuff you
-do not have license to distribute in the source form.  The older parts of
-the history may even have site password at customer installation you have
-committed by mistake and eradicated long time ago.
-
-If you run this three command sequence (in this message, I am assuming
-that you keep the index and the working tree files intact in an updated
-implementation of --orphan, which is different from the suggestion to
-support "no common paths" case I mentioned in the previous message):
-
-    $ git checkout --orphan oss oss-base
-    $ git checkout oss-base
-    $ git merge -s ours oss
-
-you will get a history of this shape:
-
-                X oss
-                 \
-      o---o---A---B oss-base
-     /
- ---o---o---o---o master
-
-with commits X, A and B all recording an identical tree.  The oss branch
-(commit X) is now safe to publish.
-
-Once you have done this, further you can:
-
-    $ git checkout master
-    $ git merge oss-base
-
-which gives you a history of this shape:
-
-                X oss
-                 \
-      o---o---A---B oss-base
-     /             \
- ---o---o---o---o---Y master
-
-This merge Y has to be done carefully.  It inherently has to be an evil
-merge because oss-base wants to replace some proprietary stuff with open
-source counterparts while you may want to keep using the proprietary ones
-you have support contract for in your paying customer release you will
-make from the master branch.  So at Y, you will most likely be reverting
-some work you did on oss-base branch since it forked from master.
-
-After setting it up, this arrangement allows you to:
-
- - accept changes from public, and/or build changes for public, to advance
-   "community version" on the oss branch on top of X;
-
- - from time to time, merge oss to oss-base;
-
- - from time to time, merge oss-base to master.
-
-and the histories will continue like this:
-
-                X---C---C---C---C oss
-                 \           \
-      o---o---A---B-----------* oss-base
-     /             \           \ 
- ---o---o---o---o---Y---P---P---*---P---P master
-
-with community commits C (either contributed from the public or you
-developed yourself and gave to the community) on oss branch, with
-proprietary commits P that record your own proprietary work on master
-branch.  Note that oss-base branch is not used to produce nor record any
-commit on its own---it is merely to ease the merging from oss and master
-by providing X-B link to serve as a convenient common ancestor to make
-later merges easier.
-
-Note also that it would be the most convenient if you kept both the index
-and the working tree intact, if "checkout --orphan" is to be used as an
-ingredient for this workflow.  It _might_ actually make sense not to make
-the "git checkout --orphan" an independent feature that can be randomly
-abused or misused, but package the three-command sequence to create the
-A-B-X open triangle above into a separate command, i.e.
-
-    $ git branch --orphan oss
-
-would create a new branch "oss" with its own root commit X that records
-the same tree as the current HEAD A, and immediately merge X back into A
-to produce B, again recording the same tree, and advance the current HEAD
-to point at B, like so:
-
-                                             X oss
-                                              \
-    ---o---A HEAD       -->         ---o---A---B HEAD
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
