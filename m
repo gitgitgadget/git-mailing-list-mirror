@@ -1,124 +1,84 @@
 From: Mark Lodato <lodatom@gmail.com>
-Subject: [PATCH/RFC 06/12] docs: clarify <object>, <commit>, <tree-ish>, etc
-Date: Fri, 12 Mar 2010 23:52:58 -0500
-Message-ID: <1268455984-19061-7-git-send-email-lodatom@gmail.com>
+Subject: [PATCH/RFC 08/12] http-fetch docs: use <commit-id> consistently
+Date: Fri, 12 Mar 2010 23:53:00 -0500
+Message-ID: <1268455984-19061-9-git-send-email-lodatom@gmail.com>
 References: <1268455984-19061-1-git-send-email-lodatom@gmail.com>
 Cc: Mark Lodato <lodatom@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 13 05:54:23 2010
+X-From: git-owner@vger.kernel.org Sat Mar 13 05:54:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NqJMh-0007qX-0z
+	id 1NqJMh-0007qX-IZ
 	for gcvg-git-2@lo.gmane.org; Sat, 13 Mar 2010 05:54:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933405Ab0CMExg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Mar 2010 23:53:36 -0500
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:41701 "EHLO
+	id S933535Ab0CMExj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Mar 2010 23:53:39 -0500
+Received: from mail-qy0-f179.google.com ([209.85.221.179]:38262 "EHLO
 	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757302Ab0CMExT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Mar 2010 23:53:19 -0500
-Received: by mail-qy0-f179.google.com with SMTP id 9so1844178qyk.5
-        for <git@vger.kernel.org>; Fri, 12 Mar 2010 20:53:19 -0800 (PST)
+	with ESMTP id S1757339Ab0CMExU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Mar 2010 23:53:20 -0500
+Received: by mail-qy0-f179.google.com with SMTP id 9so1844181qyk.5
+        for <git@vger.kernel.org>; Fri, 12 Mar 2010 20:53:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=qLI9rZHx0JUNMSv4ogWhlEPuiFRUYooAHyGEyNZY+AE=;
-        b=Emdb1doHeV63iLQG/weOYwWfUQACmMPVD6cIaLPZfIwXMGObdrMH27Xjrf5vYZLi6H
-         JchAeV9+PEpBrHqvBBzYngTTMq1at4FCoYR3K3VgE32nTZddRRtWOyVMsDfbreKkXtgb
-         rd+AbCa92UUPB5rHzGlH1kol/jUdp2OLCQcOE=
+        bh=xOjaUKyMEeRve30bxFJgKNo/k8iXpBwom8mYm2DdRwI=;
+        b=YIlwlu+66pqP/ZThwhbNPMJnj6iBcv2Hik1YZlTLOELLa3zrduf74NY/SFd0qMDFZh
+         8ECq0o8wI9e2zH9ZDNl5f4yQ+alUtgtOOqdSj6huyliBWLD9T65lERkphDNHLHnF4Kt9
+         adOOZ11dCQQ8yKNAFRKQ6dt2kz8HpurpiIuGk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=dMsOYV6s7+NbUJllAXX3sPKqtLEsyCmTJAROnr8T5kisrosggrwNJ+VWAPehubEeuu
-         m1a1IaG6pc0IVXqCJw4qix0YOGAMPNEADiNRiEdIQ3A1Bw09d0II6dZFyyTZ207sKxZ/
-         7q2tjjJ2q22SL4MYUiZGqF1iRvtkklBIjEYrE=
-Received: by 10.224.7.145 with SMTP id d17mr3207378qad.125.1268455998172;
-        Fri, 12 Mar 2010 20:53:18 -0800 (PST)
+        b=Rqi0V68mXCOkZrAg/KKoRpzVbYaJqRI078HaiVDLzOGnM9Lkbwlemi0ZBYBSHDcAVW
+         4+0rUbfpc9rvFfkjtZvNPiNIc1VTX/V2infqKgmP2fIuvHjYIEOQcZxumneMoSSAGvFX
+         +5eNwFwRzq2gFHj6DlVSoQAvfzmzTC3Q7Ix8Y=
+Received: by 10.224.79.74 with SMTP id o10mr769002qak.217.1268455999750;
+        Fri, 12 Mar 2010 20:53:19 -0800 (PST)
 Received: from localhost.localdomain (c-68-50-174-152.hsd1.dc.comcast.net [68.50.174.152])
-        by mx.google.com with ESMTPS id 22sm1694110qyk.10.2010.03.12.20.53.17
+        by mx.google.com with ESMTPS id 22sm1694110qyk.10.2010.03.12.20.53.19
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 12 Mar 2010 20:53:17 -0800 (PST)
+        Fri, 12 Mar 2010 20:53:19 -0800 (PST)
 X-Mailer: git-send-email 1.7.0.2
 In-Reply-To: <1268455984-19061-1-git-send-email-lodatom@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142080>
-
-In git(1), give more precise definitions of <object>, <commit>,
-<tree-ish>, and so on.  In particular, differentiate <object> (which may
-take generic revision specifiers) from <sha1>, which only accepts
-a 40-character hex SHA-1 ID.
-
-Also note that <rev> is another way to say <commit-ish>.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142081>
 
 Signed-off-by: Mark Lodato <lodatom@gmail.com>
 ---
- Documentation/git.txt |   38 +++++++++++++++++++++-----------------
- 1 files changed, 21 insertions(+), 17 deletions(-)
+It says that it can be "the filename under ...", but I couldn't get that 
+to work.  Can anyone explain how to use something other than a SHA-1?
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index f06e4de..55f3842 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -418,32 +418,36 @@ Identifier Terminology
- 	Abbreviated or symbolic identifiers cannot be used.
+ Documentation/git-http-fetch.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-http-fetch.txt b/Documentation/git-http-fetch.txt
+index d91cb7f..93449fd 100644
+--- a/Documentation/git-http-fetch.txt
++++ b/Documentation/git-http-fetch.txt
+@@ -8,7 +8,7 @@ git-http-fetch - Download from a remote git repository via HTTP
  
- <object>::
--	Indicates the object name for any type of object.
-+	Indicates the object name for any type of object.  Symbolic name or
-+	abbreviated SHA-1 identifiers may be used (see "SPECIFYING REVISIONS"
-+	in linkgit:git-rev-parse[1] for details).
+ SYNOPSIS
+ --------
+-'git http-fetch' [-c] [-t] [-a] [-d] [-v] [-w filename] [--recover] [--stdin] <commit> <url>
++'git http-fetch' [-c] [-t] [-a] [-d] [-v] [-w filename] [--recover] [--stdin] <commit-id> <url>
  
- <tag>::
--	Indicates a tag object name.  This is an annotated tag object, as
-+	Indicates a tag-type <object>.  This is an annotated tag object, as
- 	opposed to <tagname>, which can refer to any type of object.
+ DESCRIPTION
+ -----------
+@@ -16,7 +16,7 @@ Downloads a remote git repository via HTTP.
  
--<blob>::
--	Indicates a blob object name.
-+<commit>::
-+	Indicates a commit-type <object>.
+ OPTIONS
+ -------
+-commit-id::
++<commit-id>::
+         Either the hash or the filename under [URL]/refs/ to
+         pull.
  
- <tree>::
--	Indicates a tree object name.
--
--<commit>::
--	Indicates a commit object name.
-+	Indicates a tree-type <object>.
- 
--<tree-ish>::
--	Indicates a tree, commit or tag object name.  A
--	command that takes a <tree-ish> argument ultimately wants to
--	operate on a <tree> object but automatically dereferences
--	<commit> and <tag> objects that point at a <tree>.
-+<blob>::
-+	Indicates a blob-type <object>.
- 
-+<rev>::
- <commit-ish>::
--	Indicates a commit or tag object name.  A
--	command that takes a <commit-ish> argument ultimately wants to
--	operate on a <commit> object but automatically dereferences
--	<tag> objects that point at a <commit>.
-+	Indicates a <commit>, or a <tag> that points at a <commit-ish>.
-+	A command that takes a <commit-ish> argument ultimately wants to
-+	operate on a commit object but automatically dereferences objects
-+	until it finds a commit.
-+	A <rev> is another name for a <commit-ish>.
-+
-+<tree-ish>::
-+	Indicates a <tree>, or a <tag> or <commit> that points at a
-+	<tree-ish>.  A command that takes a <tree-ish> argument ultimately
-+	wants to operate on a tree object but automatically dereferences
-+	objects until it finds a tree.
- 
- <type>::
- 	Indicates that an object type is required.
 -- 
 1.7.0.2
