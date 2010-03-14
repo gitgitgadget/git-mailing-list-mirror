@@ -1,117 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] git-send-email.perl - Fix 550 EHLO argument does not match calling host
-Date: Sun, 14 Mar 2010 06:17:57 -0700 (PDT)
-Message-ID: <m34okjkpq0.fsf@localhost.localdomain>
-References: <4B97C157.4020806@gmail.com>
-	<20100311081213.GA13575@sigill.intra.peff.net>
-	<20100311083148.GA13786@sigill.intra.peff.net>
-	<7vaaueziv8.fsf@alter.siamese.dyndns.org> <4B9A74CA.4080507@gmail.com>
-	<7vy6hxnnfx.fsf@alter.siamese.dyndns.org>
-	<87bpesi0om.fsf_-_@jondo.cante.net>
-	<7vfx433l9x.fsf@alter.siamese.dyndns.org>
-	<87eijng4hy.fsf@jondo.cante.net>
-	<7vtysjs9hi.fsf@alter.siamese.dyndns.org>
-	<878w9vdx01.fsf@jondo.cante.net>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [RFC] Gitweb: include minified version of js and css files in
+ the repo
+Date: Sun, 14 Mar 2010 14:22:30 +0100
+Message-ID: <20100314132230.GK27414@genesis.frugalware.org>
+References: <1B527F20-CF6C-451B-9C6E-1BE74992354D@gmail.com>
+ <m3d3z8lj9x.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Sun Mar 14 14:18:23 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="uqlJfHshKOiOfK6d"
+Cc: Mark Rada <markrada26@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 14 14:22:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nqni2-0003pI-Dc
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Mar 2010 14:18:22 +0100
+	id 1NqnmC-0005u8-8A
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Mar 2010 14:22:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753963Ab0CNNSB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Mar 2010 09:18:01 -0400
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:48890 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751027Ab0CNNSA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Mar 2010 09:18:00 -0400
-Received: by fxm27 with SMTP id 27so2925988fxm.28
-        for <git@vger.kernel.org>; Sun, 14 Mar 2010 06:17:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=+cmn7FsBxNKCgdZHFFscg6MBe9XjKSAKUcJyxrGcvus=;
-        b=TG9LOLsroQ9IooW+Pkka3BQ+y82uAhT3tSJqOS6oStbYXJF8eHla1Hy2Pm/5LQrlyO
-         WKzBTxSPuoPoighveQffOQYj3LwpoeHJfjftOoGEXZ1JOx7YLOWQ0bI6dyAzkX8zd1vi
-         1tBKhqSjLUm8hKGazeasQB1jdb9tfvvnyzQPQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=oL0PBs+QxZsKmUhYILFV/N1HIKCN+V4gydwxb3DilgL7JcpXoHce9J3vXHIuvvcfce
-         VasCHXUE0Xs+Qey/Kff07HnJgn0dWK+JF5mv4TCBNZESOXlbQtRDHdsOoEOytl2wwWSj
-         rLJIgJGG4GHqIrtVHbtJn/dboAU/mJLzar6x4=
-Received: by 10.87.68.35 with SMTP id v35mr1060713fgk.25.1268572678438;
-        Sun, 14 Mar 2010 06:17:58 -0700 (PDT)
-Received: from localhost.localdomain (abwr74.neoplus.adsl.tpnet.pl [83.8.241.74])
-        by mx.google.com with ESMTPS id l19sm1397568fgb.18.2010.03.14.06.17.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 14 Mar 2010 06:17:57 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o2EDHILO024309;
-	Sun, 14 Mar 2010 14:17:28 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o2EDGulp024291;
-	Sun, 14 Mar 2010 14:16:56 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <878w9vdx01.fsf@jondo.cante.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1758176Ab0CNNWf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Mar 2010 09:22:35 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:33719 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756350Ab0CNNWe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Mar 2010 09:22:34 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id A124C58095;
+	Sun, 14 Mar 2010 14:22:30 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 6478B42F09;
+	Sun, 14 Mar 2010 14:22:30 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 9AE5A1240003; Sun, 14 Mar 2010 14:22:30 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <m3d3z8lj9x.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142137>
 
-Jari Aalto <jari.aalto@cante.net> writes:
 
-> +sub maildomain_net
-> +{
-> +	my $maildomain;
-> +	eval "use Net::Domain";
-> +
-> +	unless ($@) {
+--uqlJfHshKOiOfK6d
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-I think the Perl idiom for this is
+On Sat, Mar 13, 2010 at 12:26:51AM -0800, Jakub Narebski <jnareb@gmail.com> wrote:
+> The reason is that one should not include *generated* files in
+> version control.  We do not include ./configure script (from
+> configure.ac), we do not include gitweb.min.js (from gitweb.js).
 
-   	if (eval { require Net::Domain; 1 }) {
+Though maybe it would be handy to document what a sane default value for
+JSMIN could be? (Provided that the user don't set it to empty what the
+real default is.)
 
-Note the block form of eval (which is more efficient, and is usual way
-of trap exceptions in Perl), using return value of eval instead of
-using $@ variable, and using 'require' rather than 'use'.
+--uqlJfHshKOiOfK6d
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-> +		eval "use Net::Domain";
-> +		unless ($@) {
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Why this duplication?  You have 'eval unless eval unless', with 
-'eval unless' twice.
+iEYEARECAAYFAkuc4xYACgkQe81tAgORUJajCgCdH/hTwAopJnzfn9bHpPVOcy2T
+adMAn3fqSebnepQMdlGgOHhydF6/ccY9
+=BttJ
+-----END PGP SIGNATURE-----
 
-> +		    my $domain = Net::Domain::domainname();
-> +		    $maildomain = $domain
-> +			    unless $^O eq 'darwin' && $domain =~ /\.local$/;
-
-I'd like to have a comment about the above line: why it is necessary?
-
-> +		}
-> +	}
-> +
-> +	$maildomain;
-
-It is a matter of style, but unless function is a very simple one, the
-preferred way is to use explicit return statement, i.e.
-
-   	return $maildomain;
-
-> +}
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+--uqlJfHshKOiOfK6d--
