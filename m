@@ -1,80 +1,213 @@
-From: Fredrik Kuivinen <frekui@gmail.com>
-Subject: Re: [RFC][PATCH] grep: enable threading for context line printing
-Date: Sun, 14 Mar 2010 21:03:04 +0100
-Message-ID: <4c8ef71003141303h474429aegc0a2eb2f97e7ff69@mail.gmail.com>
-References: <4B9D2864.9090808@lsrfire.ath.cx>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH 3/3] git-send-email.perl - Fix 550 EHLO argument does not match calling host
+Date: Sun, 14 Mar 2010 22:20:25 +0200
+Organization: Private
+Message-ID: <877hpebqpi.fsf@jondo.cante.net>
+References: <4B97C157.4020806@gmail.com>
+	<20100311081213.GA13575@sigill.intra.peff.net>
+	<20100311083148.GA13786@sigill.intra.peff.net>
+	<7vaaueziv8.fsf@alter.siamese.dyndns.org> <4B9A74CA.4080507@gmail.com>
+	<7vy6hxnnfx.fsf@alter.siamese.dyndns.org>
+	<87bpesi0om.fsf_-_@jondo.cante.net>
+	<7vfx433l9x.fsf@alter.siamese.dyndns.org>
+	<87eijng4hy.fsf@jondo.cante.net>
+	<7vtysjs9hi.fsf@alter.siamese.dyndns.org>
+	<878w9vdx01.fsf@jondo.cante.net> <87sk83aq76.fsf_-_@jondo.cante.net>
+	<m3y6huk7f4.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Mar 14 21:03:15 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 14 21:20:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nqu1r-0000Yh-CD
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Mar 2010 21:03:15 +0100
+	id 1NquIm-0006w6-Dp
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Mar 2010 21:20:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752947Ab0CNUDL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Mar 2010 16:03:11 -0400
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:54356 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752732Ab0CNUDI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Mar 2010 16:03:08 -0400
-Received: by fxm27 with SMTP id 27so3185244fxm.28
-        for <git@vger.kernel.org>; Sun, 14 Mar 2010 13:03:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=bO1vJ3B1WdwGAE/gKVH9bYy7PWSxcnEBJ9+0RJIYt+Y=;
-        b=QcbJ7OSHPoTpys7WHIJy+t4yJiunGt0+GDVlDoJ7wQVnYemfNuib1RsryTK4Jw/CDz
-         JnSJ0oVHEPLO+Hctipk5k6CRQYhs2d1Pk5md3+whHA63uZN/GTUK+xK6gg7wj6bZapxw
-         y+Tqm8txOMPBrd59YTPaTI3hQ3urR0k8naxvA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=S1gQEJJsZiVOQbz1QQ49HzXYv83un67DgeY4RvSrt9zwpB+p1d/rIVJLXCOYWMPvxh
-         rjeW1QOcuQkf1/HXY+7eQRWcyGOslW+4GQ/YxVKWWYvGuC3jhpsz7NoZYe1hUF2KKwOR
-         4uQUBQsZvn8EFgsAGLdJ422gYtzfVEii62z/8=
-Received: by 10.239.129.206 with SMTP id 14mr810915hbg.9.1268596984816; Sun, 
-	14 Mar 2010 13:03:04 -0700 (PDT)
-In-Reply-To: <4B9D2864.9090808@lsrfire.ath.cx>
+	id S1753064Ab0CNUUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Mar 2010 16:20:39 -0400
+Received: from lo.gmane.org ([80.91.229.12]:39703 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751237Ab0CNUUi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Mar 2010 16:20:38 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NquIf-0006uQ-31
+	for git@vger.kernel.org; Sun, 14 Mar 2010 21:20:37 +0100
+Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 14 Mar 2010 21:20:37 +0100
+Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 14 Mar 2010 21:20:37 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
+Cancel-Lock: sha1:NvqWAXCx1bVAKOVDqreykZa4jGI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142151>
 
-On Sun, Mar 14, 2010 at 19:18, Ren=E9 Scharfe <rene.scharfe@lsrfire.ath=
-=2Ecx> wrote:
-> This patch makes work_done() in builtin/grep.c print hunk marks betwe=
-en
-> files if threading is used, while show_line() in grep.c still does th=
-e
-> same in the other case. =A0The latter is =A0controlled by the struct =
-grep_opt
-> member show_hunk_mark: 0 means show_line() prints no hunk marks betwe=
-en
-> files, 1 means it prints them before the next file with matches and 2
-> means it prints them before matches from the current file.
+Jakub Narebski <jnareb@gmail.com> writes:
+
+> Nice... although it might be better to use Test::Reporter::Mail::Util
+
+Done.
+
+>> +sub maildomain_net
+> Here should be a comment 'following what Test::Reporter does' or
+> something like that.
+
+Done.
+
+> Sidenote: alternate soultion would be to write (with one less level of
+> indent):
+
+Done all.
+
+>> +sub maildomain_mta
+>> +{
 >
-> Having two places for this is a bit ugly but it enables parallel grep
-> for the common -ABC options. =A0Locking should be fine in add_work().
+> Use the same Perl convention that used elsewhere in git-send-email.perl
+> (this is usually used Perl style).
 >
-> Comments?
+> +sub maildomain_mta {
 
-The implementation looks correct. As you say it is a bit ugly, but I
-think it is worth it anyway. (The solutions I managed to come up with
-when I wrote the original threaded grep patch were even uglier, that
-is why I simply disabled the threading in that case.)
+The code uses variety of styles. The function below, where the
+maildomain*() are related used:
 
-Symbolic constants for the magic values 0, 1, and 2 would make the
-code more readable.
+    sub send_message
+    {
 
-- Fredrik
+Do I keep the "sub....\n{" ?
+
+Jari
+
+-----------------------------------------------------------------------
+
+sub new {
+        my ($class, $reason) = @_;
+        return bless \$reason, shift;
+--
+sub readline {
+        my $self = shift;
+        die "Cannot use readline on FakeTerm: $$self";
+--
+sub usage {
+        print <<EOT;
+git send-email [options] <file | directory | rev-list options >
+--
+sub format_2822_time {
+        my ($time) = @_;
+        my @localtm = localtime($time);
+--
+sub unique_email_list(@);
+sub cleanup_compose_files();
+
+# Variables we fill in automatically, or via prompting:
+--
+sub do_edit {
+        if (defined($multiedit) && !$multiedit) {
+                map {
+--
+sub chain_reply_to {
+        if (defined $chain_reply_to &&
+            $chain_reply_to eq $not_set_by_user) {
+--
+sub signal_handler {
+
+        # Make text normal
+--
+sub read_config {
+        my ($prefix) = @_;
+
+--
+sub parse_address_line {
+        if ($have_mail_address) {
+                return map { $_->format } Mail::Address->parse($_[0]);
+--
+sub split_addrs {
+        return quotewords('\s*,\s*', 1, @_);
+}
+--
+sub check_file_rev_conflict($) {
+        return unless $repo;
+        my $f = shift;
+--
+sub get_patch_subject($) {
+        my $fn = shift;
+        open (my $fh, '<', $fn);
+--
+sub ask {
+        my ($prompt, %arg) = @_;
+        my $valid_re = $arg{valid_re};
+--
+sub expand_aliases {
+        return map { expand_one_alias($_) } @_;
+}
+--
+sub expand_one_alias {
+        my $alias = shift;
+        if ($EXPANDED_ALIASES{$alias}) {
+--
+sub extract_valid_address {
+        my $address = shift;
+        my $local_part_regexp = '[^<>"\s@]+';
+--
+sub make_message_id
+{
+        my $uniq;
+--
+sub unquote_rfc2047 {
+        local ($_) = @_;
+        my $encoding;
+--
+sub quote_rfc2047 {
+        local $_ = shift;
+        my $encoding = shift || 'UTF-8';
+--
+sub is_rfc2047_quoted {
+        my $s = shift;
+        my $token = '[^][()<>@,;:"\/?.= \000-\037\177-\377]+';
+--
+sub sanitize_address
+{
+        my ($recipient) = @_;
+--
+sub maildomain_net
+{
+        my $maildomain;
+--
+sub maildomain_mta
+{
+        my $maildomain;
+--
+sub maildomain
+{
+        return maildomain_net() || maildomain_mta() || $mail_domain_default;
+--
+sub send_message
+{
+        my @recipients = unique_email_list(@to);
+--
+sub cleanup_compose_files() {
+        unlink($compose_filename, $compose_filename . ".final") if $compose;
+}
+--
+sub unique_email_list(@) {
+        my %seen;
+        my @emails;
+--
+sub validate_patch {
+        my $fn = shift;
+        open(my $fh, '<', $fn)
+--
+sub file_has_nonascii {
+        my $fn = shift;
+        open(my $fh, '<', $fn)
