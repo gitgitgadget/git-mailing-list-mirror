@@ -1,87 +1,91 @@
-From: Erick Mattos <erick.mattos@gmail.com>
-Subject: Re: [PATCH v2] git checkout -b: unparent the new branch with -o
-Date: Sun, 14 Mar 2010 18:58:07 -0300
-Message-ID: <55bacdd31003141458y3dfa3734i664b61e69dd50436@mail.gmail.com>
-References: <1268173713-5224-1-git-send-email-erick.mattos@gmail.com> 
-	<7vr5nqrpyg.fsf@alter.siamese.dyndns.org> <55bacdd31003120845kc980d16s1e6006d56d6f923a@mail.gmail.com> 
-	<7v8w9whd3g.fsf@alter.siamese.dyndns.org> <55bacdd31003141346t408c276ak507b7c289cf17679@mail.gmail.com>
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Bri=C3=A8re?= <fbriere@fbriere.net>
+Subject: [PATCH] gitk: Skip over AUTHOR/COMMIT_DATE when searching all fields
+Date: Sun, 14 Mar 2010 18:59:09 -0400
+Message-ID: <1268607549-3440-1-git-send-email-fbriere@fbriere.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 14 22:58:34 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Paul Mackerras <paulus@samba.org>,
+	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Bri=C3=A8re?= <fbriere@fbriere.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 15 00:08:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NqvpS-00024t-FZ
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Mar 2010 22:58:34 +0100
+	id 1NqwvM-0000ol-OD
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 00:08:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934219Ab0CNV6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Mar 2010 17:58:30 -0400
-Received: from mail-gx0-f227.google.com ([209.85.217.227]:60614 "EHLO
-	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934132Ab0CNV63 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Mar 2010 17:58:29 -0400
-Received: by gxk27 with SMTP id 27so102971gxk.1
-        for <git@vger.kernel.org>; Sun, 14 Mar 2010 14:58:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=IsJCFMWm1/46qIKqDhok4rxwu6GzVbDmSuvkSpcuHuk=;
-        b=AgJbK8Xk+bYGrL3sVU62gr/WuVm2D1xdkQye3hMUnGvRXhjtpEDuYS0y8ZLmRmeK6+
-         FLr0Kr9iTRLJuCL10YMdlMY4+cQ/+GJIENxp+d1tjR8voTSdphpcHeU9kjnkTEk3mD8B
-         EJPv8qo9njc73/7dwGqre/LezFkNrE45xEq6U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=xDvpkZlnLqS+8mUDl4dbLkYKTjSAAZZERE5DV69hLg3Iinb5oPmbokttdMcbHe/4RJ
-         o2NPDNx2ApUzrMU0jcJsenglWjjIVoCQUfQsJTM6IztBa6haQW0FZQnvoL/ydfMUQLMW
-         RPpSm3TyVigseyh7/LBiycJypYKsqmMpxbe6Q=
-Received: by 10.101.155.38 with SMTP id h38mr2976058ano.131.1268603907338; 
-	Sun, 14 Mar 2010 14:58:27 -0700 (PDT)
-In-Reply-To: <55bacdd31003141346t408c276ak507b7c289cf17679@mail.gmail.com>
+	id S932840Ab0CNXIj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Mar 2010 19:08:39 -0400
+Received: from fallback-out2.mxes.net ([216.86.168.191]:63069 "EHLO
+	fallback-in2.mxes.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754790Ab0CNXIi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Mar 2010 19:08:38 -0400
+X-Greylist: delayed 547 seconds by postgrey-1.27 at vger.kernel.org; Sun, 14 Mar 2010 19:08:38 EDT
+Received: from mxout-07.mxes.net (mxout-07.mxes.net [216.86.168.182])
+	by fallback-in1.mxes.net (Postfix) with ESMTP id 371622FD7B7
+	for <git@vger.kernel.org>; Sun, 14 Mar 2010 19:00:36 -0400 (EDT)
+Received: from toroia.fbriere.dyndns.org (unknown [69.196.143.157])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.mxes.net (Postfix) with ESMTPSA id 5B6C522E1F3;
+	Sun, 14 Mar 2010 18:59:30 -0400 (EDT)
+Received: by toroia.fbriere.dyndns.org (Postfix, from userid 1000)
+	id 4D6585F994; Sun, 14 Mar 2010 18:59:29 -0400 (EDT)
+X-Mailer: git-send-email 1.7.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142160>
 
-Resending orphan branch 'cheat sheet' again.  Gmail screwed it in
-previous email.  See this using a fixed font:
+This prevents searches on "All Fields" from matching against the
+author/commit timestamps.  Not only are these timestamps not searchable
+by themselves, but the displayed format will not match the query string
+anyway.
 
-Branch_A
-|
-You realize that you need a new empty branch.
-|
-Is the work tree clean?
-|               |
-Yes             No
-|               |
-git clean -ob Branch_B -------Undo?-------Was the work tree clean before?
-|                                                 |      |
-|                                                 Yes    No
-|                                                 |      |
-|                                                 |      git add .
-|                                                 |      git commit -m temp
-|                                                 |      |
-|                                                 +------+ git
-checkout Branch_A -f
-|                                                        |
-|                                                        git merge
---squash Branch_B
-Do you want to use anything from the work tree?          |
-|               |                                        git reset
-Yes             No                                       git branch -D Branch_B
-|               |
-|               git clean -df
-|               |
-Change the work tree the way you want it to be.
-|
-git add .
-git commit
-|
-That is it!
+Signed-off-by: Fr=C3=A9d=C3=A9ric Bri=C3=A8re <fbriere@fbriere.net>
+---
+ gitk-git/gitk |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 1f36a3e..d7e3c45 100644
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -4591,8 +4591,9 @@ proc askfindhighlight {row id} {
+     }
+     set info $commitinfo($id)
+     set isbold 0
+-    set fldtypes [list [mc Headline] [mc Author] [mc Date] [mc Committ=
+er] [mc CDate] [mc Comments]]
++    set fldtypes [list [mc Headline] [mc Author] "" [mc Committer] "" =
+[mc Comments]]
+     foreach f $info ty $fldtypes {
++	if {$ty eq ""} continue
+ 	if {($findloc eq [mc "All fields"] || $findloc eq $ty) &&
+ 	    [doesmatch $f]} {
+ 	    if {$ty eq [mc "Author"]} {
+@@ -6438,7 +6439,7 @@ proc findmore {} {
+     if {![info exists find_dirn]} {
+ 	return 0
+     }
+-    set fldtypes [list [mc "Headline"] [mc "Author"] [mc "Date"] [mc "=
+Committer"] [mc "CDate"] [mc "Comments"]]
++    set fldtypes [list [mc "Headline"] [mc "Author"] "" [mc "Committer=
+"] "" [mc "Comments"]]
+     set l $findcurline
+     set moretodo 0
+     if {$find_dirn > 0} {
+@@ -6499,6 +6500,7 @@ proc findmore {} {
+ 	    }
+ 	    set info $commitinfo($id)
+ 	    foreach f $info ty $fldtypes {
++		if {$ty eq ""} continue
+ 		if {($findloc eq [mc "All fields"] || $findloc eq $ty) &&
+ 		    [doesmatch $f]} {
+ 		    set found 1
+--=20
+1.7.0
