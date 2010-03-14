@@ -1,88 +1,189 @@
-From: Michal Sojka <sojkam1@fel.cvut.cz>
-Subject: Re: [PATCH] Bug: failed octopus merge does not create MERGE_HEAD
-Date: Sun, 14 Mar 2010 20:24:24 +0100
-Message-ID: <87r5nmzoyf.fsf@steelpick.localdomain>
-References: <1268402835-12992-1-git-send-email-sojkam1@fel.cvut.cz> <7vr5no7xlo.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 3/3] git-send-email.perl - Fix 550 EHLO argument does not match calling host
+Date: Sun, 14 Mar 2010 12:53:02 -0700 (PDT)
+Message-ID: <m3y6huk7f4.fsf@localhost.localdomain>
+References: <4B97C157.4020806@gmail.com>
+	<20100311081213.GA13575@sigill.intra.peff.net>
+	<20100311083148.GA13786@sigill.intra.peff.net>
+	<7vaaueziv8.fsf@alter.siamese.dyndns.org> <4B9A74CA.4080507@gmail.com>
+	<7vy6hxnnfx.fsf@alter.siamese.dyndns.org>
+	<87bpesi0om.fsf_-_@jondo.cante.net>
+	<7vfx433l9x.fsf@alter.siamese.dyndns.org>
+	<87eijng4hy.fsf@jondo.cante.net>
+	<7vtysjs9hi.fsf@alter.siamese.dyndns.org>
+	<878w9vdx01.fsf@jondo.cante.net> <87sk83aq76.fsf_-_@jondo.cante.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 14 20:24:45 2010
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Sun Mar 14 20:53:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NqtQZ-00034b-VA
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Mar 2010 20:24:44 +0100
+	id 1NqtsM-0005Ml-Br
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Mar 2010 20:53:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752429Ab0CNTYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Mar 2010 15:24:30 -0400
-Received: from max.feld.cvut.cz ([147.32.192.36]:43516 "EHLO max.feld.cvut.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751589Ab0CNTY3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Mar 2010 15:24:29 -0400
-Received: from localhost (unknown [192.168.200.4])
-	by max.feld.cvut.cz (Postfix) with ESMTP id 94C4019F364F;
-	Sun, 14 Mar 2010 20:24:28 +0100 (CET)
-X-Virus-Scanned: IMAP AMAVIS
-Received: from max.feld.cvut.cz ([192.168.200.1])
-	by localhost (styx.feld.cvut.cz [192.168.200.4]) (amavisd-new, port 10044)
-	with ESMTP id xBq+TvzbDpyF; Sun, 14 Mar 2010 20:24:26 +0100 (CET)
-Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
-	by max.feld.cvut.cz (Postfix) with ESMTP id B718A19F33A8;
-	Sun, 14 Mar 2010 20:24:25 +0100 (CET)
-Received: from steelpick.localdomain (unknown [213.29.198.144])
-	(Authenticated sender: sojkam1)
-	by imap.feld.cvut.cz (Postfix) with ESMTPSA id 778EDFA003;
-	Sun, 14 Mar 2010 20:24:25 +0100 (CET)
-Received: from wsh by steelpick.localdomain with local (Exim 4.71)
-	(envelope-from <sojkam1@fel.cvut.cz>)
-	id 1NqtQG-0003xW-Uj; Sun, 14 Mar 2010 20:24:24 +0100
-In-Reply-To: <7vr5no7xlo.fsf@alter.siamese.dyndns.org>
+	id S1752850Ab0CNTxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Mar 2010 15:53:10 -0400
+Received: from mail-fx0-f227.google.com ([209.85.220.227]:40462 "EHLO
+	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752732Ab0CNTxI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Mar 2010 15:53:08 -0400
+Received: by fxm27 with SMTP id 27so3178222fxm.28
+        for <git@vger.kernel.org>; Sun, 14 Mar 2010 12:53:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=5a6fzT4FWg9Md6bq2yWPDb/+/QtZgNPJ8y/BPp5Ztok=;
+        b=xauH532wXmq4Ri7RMzgj4h/aRhavLRHpn2P+wY3gI8seDuKti48Heb9rtQGKX53nIR
+         4AFFD9efqDdC4HKU76mctdSg1D77P2vQCVzu1J12Y1fMdnh6xqTOxLAZt3sGqkMFZFmv
+         tUQMXfPscFTPh7t6vIHPaksP9UKG6cLocJj3s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=Hlf6O+m0NXlrvZFC5YZKm8VBIfVth904kBkjiJ/WoPaJ5+4d0WoarwcJZxABXzmXmB
+         iafz6NR5BiXsCulj7YCAA0DROhsrDzfsq8mFP4Us2N5ukV8HjDFE4wKdiZIrJkQeSNQe
+         G7tolFOVrWCmrx6c0SS7FNCM2V7kreMqWrN2c=
+Received: by 10.223.132.197 with SMTP id c5mr4145283fat.35.1268596384691;
+        Sun, 14 Mar 2010 12:53:04 -0700 (PDT)
+Received: from localhost.localdomain (abwr74.neoplus.adsl.tpnet.pl [83.8.241.74])
+        by mx.google.com with ESMTPS id 12sm6155316fks.20.2010.03.14.12.53.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 14 Mar 2010 12:53:02 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o2EJqVjW029161;
+	Sun, 14 Mar 2010 20:52:41 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o2EJqFtN029157;
+	Sun, 14 Mar 2010 20:52:15 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <87sk83aq76.fsf_-_@jondo.cante.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142149>
 
-On Sat, 13 Mar 2010, Junio C Hamano wrote:
-> Hmm.
+Jari Aalto <jari.aalto@cante.net> writes:
+
+> ---
+>  git-send-email.perl |   71 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+>  1 files changed, 70 insertions(+), 1 deletions(-)
 > 
-> When it detects conflicts, and refuses to make a merge, the octopus
-> backend says "should not be doing an octopus".  As far as I can tell,
-> MERGE_HEAD is useful only when resolving conflicts, and the octopus
-
-There is also another use - see below.
-
-> strongly discourages recording anything but the simplest conflict-free
-> merges.
-
-How can I know in advance that the merge will be conflict free? I have a
-script which merges a bunch of (simple) topic branches which usually
-merge without conflict, but from time to time some branch evolves and
-conflicts.
-
-> That makes me think that not writing the file out would be the more
-> correct thing to do.
-
 > 
-> One possibility I can think of is that we try to prevent user mistakes by
-> checking the existence of MERGE_HEAD (i.e. "can't do this, you are still
-> during a merge"), and not writing MERGE_HEAD in this case, but still
-> potentially leaving the index unmerged, may allow some operations that we
-> should prevent from being invoked to proceed.  Is that the issue you are
-> trying to address?  Or is there something else?  Why do you want to have
-> MERGE_HEAD?
+> 
+>     ================================
+>     This is REVISION SET 4, reworked
+>     ================================
+ 
+Here you should describe differences from v3 (from previous version),
+for easier review.
+ 
+> +# This maildomain*() code is based on ideas in Perl library Test::Reporter
+> +# /usr/share/perl5/Test/Reporter/Mail/Util.pm ==> sub _maildomain ()
 
-I'm using zsh and vcs_info which shows me git repo status in my prompt
-(see e.g. http://www.jukie.net/~bart/blog/pimping-out-zsh-prompt).
-vcs_info tests for existence of MERGE_HEAD to signalize that you are in
-the middle of merge. If MERGE_HEAD is not created I do not see a big red
-waning in my prompt and I expect the merge to be successful.
+Nice... although it might be better to use Test::Reporter::Mail::Util
+as canonical module name (the package can be installed somewhere else,
+depending on operating system / distribution, and if one uses
+local::lib for local / per-user installation).
 
-In my experiments I found that octopus creates MERGE_HEAD in several
-situations but not in the one when a branch modifies the file and
-another deletes it. Therefore I think it is a bug.
+> +sub maildomain_net
+> +{
+> +	my $maildomain;
+> +
+> +	if (eval { require Net::Domain; 1 }) {
+> +		eval "use Net::Domain";
+> +		unless ($@) {
+> +		    my $domain = Net::Domain::domainname();
+> +		    $maildomain = $domain
+> +			    unless $^O eq 'darwin' && $domain =~ /\.local$/;
 
--Michal
+
+Here should be a comment 'following what Test::Reporter does' or
+something like that.
+
+> +		}
+> +	}
+> +
+> +	return $maildomain;
+> +}
+
+You still have duplicated 'require' ('use' is 'require' + 'import')
+and check if it succeeded.  It should read:
+
++sub maildomain_net {
++	my $maildomain;
++
++	if (eval { require Net::Domain; 1 }) {
++		my $domain = Net::Domain::domainname();
++		$maildomain = $domain
++			unless $^O eq 'darwin' && $domain =~ /\.local$/;
++	}
++
++	return $maildomain;
++}
+
+In the subroutine below you do not duplicate check for require.
+
+Sidenote: alternate soultion would be to write (with one less level of
+indent):
+
++sub maildomain_net {
++	my $maildomain;
++
++	eval { require Net::Domain; };
++	return if $@;
++
++	$maildomain = Net::Domain::domainname();
++		unless $^O eq 'darwin' && $domain =~ /\.local$/;
++
++	return $maildomain;
++}
+
+
+> +
+> +sub maildomain_mta
+> +{
+
+Use the same Perl convention that used elsewhere in git-send-email.perl
+(this is usually used Perl style).
+
++sub maildomain_mta {
+
+> +	my $maildomain;
+> +
+> +	if (eval { require Net::SMTP; 1 }) {
+> +		for my $host (qw(mailhost localhost)) {
+> +			my $smtp = Net::SMTP->new($host);
+> +			if (defined $smtp) {
+> +				my $domain = $smtp->domain;
+> +				$smtp->quit;
+> +
+> +				$maildomain = $domain
+> +					unless $^O eq 'darwin' && $domain =~ /\.local$/;
+> +
+> +				last if $maildomain;
+> +			}
+> +		}
+> +	}
+> +
+> +	return $maildomain;
+> +}
+> +
+> +sub maildomain
+> +{
+> +	return maildomain_net() || maildomain_mta() || $mail_domain_default;
+> +}
+
+Nice.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
