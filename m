@@ -1,132 +1,88 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [RFC][PATCH] grep: enable threading for context line printing
-Date: Sun, 14 Mar 2010 19:18:12 +0100
-Message-ID: <4B9D2864.9090808@lsrfire.ath.cx>
+From: Michal Sojka <sojkam1@fel.cvut.cz>
+Subject: Re: [PATCH] Bug: failed octopus merge does not create MERGE_HEAD
+Date: Sun, 14 Mar 2010 20:24:24 +0100
+Message-ID: <87r5nmzoyf.fsf@steelpick.localdomain>
+References: <1268402835-12992-1-git-send-email-sojkam1@fel.cvut.cz> <7vr5no7xlo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Fredrik Kuivinen <frekui@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 14 19:18:27 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 14 20:24:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NqsOP-00039S-DW
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Mar 2010 19:18:25 +0100
+	id 1NqtQZ-00034b-VA
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Mar 2010 20:24:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758696Ab0CNSST convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Mar 2010 14:18:19 -0400
-Received: from india601.server4you.de ([85.25.151.105]:59516 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752698Ab0CNSSS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Mar 2010 14:18:18 -0400
-Received: from [10.0.1.100] (p57B7E290.dip.t-dialin.net [87.183.226.144])
-	by india601.server4you.de (Postfix) with ESMTPSA id D80622F804E;
-	Sun, 14 Mar 2010 19:18:16 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
+	id S1752429Ab0CNTYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Mar 2010 15:24:30 -0400
+Received: from max.feld.cvut.cz ([147.32.192.36]:43516 "EHLO max.feld.cvut.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751589Ab0CNTY3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Mar 2010 15:24:29 -0400
+Received: from localhost (unknown [192.168.200.4])
+	by max.feld.cvut.cz (Postfix) with ESMTP id 94C4019F364F;
+	Sun, 14 Mar 2010 20:24:28 +0100 (CET)
+X-Virus-Scanned: IMAP AMAVIS
+Received: from max.feld.cvut.cz ([192.168.200.1])
+	by localhost (styx.feld.cvut.cz [192.168.200.4]) (amavisd-new, port 10044)
+	with ESMTP id xBq+TvzbDpyF; Sun, 14 Mar 2010 20:24:26 +0100 (CET)
+Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
+	by max.feld.cvut.cz (Postfix) with ESMTP id B718A19F33A8;
+	Sun, 14 Mar 2010 20:24:25 +0100 (CET)
+Received: from steelpick.localdomain (unknown [213.29.198.144])
+	(Authenticated sender: sojkam1)
+	by imap.feld.cvut.cz (Postfix) with ESMTPSA id 778EDFA003;
+	Sun, 14 Mar 2010 20:24:25 +0100 (CET)
+Received: from wsh by steelpick.localdomain with local (Exim 4.71)
+	(envelope-from <sojkam1@fel.cvut.cz>)
+	id 1NqtQG-0003xW-Uj; Sun, 14 Mar 2010 20:24:24 +0100
+In-Reply-To: <7vr5no7xlo.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142148>
 
-This patch makes work_done() in builtin/grep.c print hunk marks between
-files if threading is used, while show_line() in grep.c still does the
-same in the other case.  The latter is  controlled by the struct grep_o=
-pt
-member show_hunk_mark: 0 means show_line() prints no hunk marks between
-files, 1 means it prints them before the next file with matches and 2
-means it prints them before matches from the current file.
+On Sat, 13 Mar 2010, Junio C Hamano wrote:
+> Hmm.
+> 
+> When it detects conflicts, and refuses to make a merge, the octopus
+> backend says "should not be doing an octopus".  As far as I can tell,
+> MERGE_HEAD is useful only when resolving conflicts, and the octopus
 
-Having two places for this is a bit ugly but it enables parallel grep
-for the common -ABC options.  Locking should be fine in add_work().
+There is also another use - see below.
 
-Comments?
+> strongly discourages recording anything but the simplest conflict-free
+> merges.
 
-Ren=E9
+How can I know in advance that the merge will be conflict free? I have a
+script which merges a bunch of (simple) topic branches which usually
+merge without conflict, but from time to time some branch evolves and
+conflicts.
 
----
- builtin/grep.c |   17 ++++++++++++++++-
- grep.c         |   14 +++-----------
- 2 files changed, 19 insertions(+), 12 deletions(-)
+> That makes me think that not writing the file out would be the more
+> correct thing to do.
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 40b9a93..8d58bb9 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -96,6 +96,9 @@ static pthread_cond_t cond_write;
- /* Signalled when we are finished with everything. */
- static pthread_cond_t cond_result;
-=20
-+static int print_hunk_marks_between_files;
-+static int printed_something;
-+
- static void add_work(enum work_type type, char *name, void *id)
- {
- 	grep_lock();
-@@ -159,7 +162,12 @@ static void work_done(struct work_item *w)
- 	for(; todo[todo_done].done && todo_done !=3D todo_start;
- 	    todo_done =3D (todo_done+1) % ARRAY_SIZE(todo)) {
- 		w =3D &todo[todo_done];
--		write_or_die(1, w->out.buf, w->out.len);
-+		if (w->out.len) {
-+			if (print_hunk_marks_between_files && printed_something)
-+				write_or_die(1, "--\n", 3);
-+			write_or_die(1, w->out.buf, w->out.len);
-+			printed_something =3D 1;
-+		}
- 		free(w->name);
- 		free(w->identifier);
- 	}
-@@ -932,6 +940,13 @@ int cmd_grep(int argc, const char **argv, const ch=
-ar *prefix)
- 	use_threads =3D 0;
- #endif
-=20
-+	if (opt.pre_context || opt.post_context) {
-+		if (use_threads)
-+			print_hunk_marks_between_files =3D 1;
-+		else
-+			opt.show_hunk_mark =3D 1;
-+	}
-+
- 	compile_grep_patterns(&opt);
-=20
- 	/* Check revs and then paths */
-diff --git a/grep.c b/grep.c
-index 90a063a..251c70c 100644
---- a/grep.c
-+++ b/grep.c
-@@ -549,10 +549,10 @@ static void show_line(struct grep_opt *opt, char =
-*bol, char *eol,
- 	sign_str[0] =3D sign;
- 	if (opt->pre_context || opt->post_context) {
- 		if (opt->last_shown =3D=3D 0) {
--			if (opt->show_hunk_mark)
-+			if (opt->show_hunk_mark =3D=3D 2)
- 				opt->output(opt, "--\n", 3);
--			else
--				opt->show_hunk_mark =3D 1;
-+			else if (opt->show_hunk_mark =3D=3D 1)
-+				opt->show_hunk_mark =3D 2;
- 		} else if (lno > opt->last_shown + 1)
- 			opt->output(opt, "--\n", 3);
- 	}
-@@ -750,14 +750,6 @@ int grep_threads_ok(const struct grep_opt *opt)
- 	    !opt->name_only)
- 		return 0;
-=20
--	/* If we are showing hunk marks, we should not do it for the
--	 * first match. The synchronization problem we get for this
--	 * constraint is not yet solved, so we disable threading in
--	 * this case.
--	 */
--	if (opt->pre_context || opt->post_context)
--		return 0;
--
- 	return 1;
- }
-=20
+> 
+> One possibility I can think of is that we try to prevent user mistakes by
+> checking the existence of MERGE_HEAD (i.e. "can't do this, you are still
+> during a merge"), and not writing MERGE_HEAD in this case, but still
+> potentially leaving the index unmerged, may allow some operations that we
+> should prevent from being invoked to proceed.  Is that the issue you are
+> trying to address?  Or is there something else?  Why do you want to have
+> MERGE_HEAD?
+
+I'm using zsh and vcs_info which shows me git repo status in my prompt
+(see e.g. http://www.jukie.net/~bart/blog/pimping-out-zsh-prompt).
+vcs_info tests for existence of MERGE_HEAD to signalize that you are in
+the middle of merge. If MERGE_HEAD is not created I do not see a big red
+waning in my prompt and I expect the merge to be successful.
+
+In my experiments I found that octopus creates MERGE_HEAD in several
+situations but not in the one when a branch modifies the file and
+another deletes it. Therefore I think it is a bug.
+
+-Michal
