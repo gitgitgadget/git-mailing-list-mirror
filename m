@@ -1,83 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'git add' regression in git-1.7?
-Date: Sat, 13 Mar 2010 22:34:34 -0800
-Message-ID: <7veijns96t.fsf@alter.siamese.dyndns.org>
-References: <32541b131002182042p610fce4ex96efbffea9afe2ed@mail.gmail.com>
- <hll65c$87a$1@ger.gmane.org>
- <32541b131002182115t5501d0d1u19367a4d8e7627e4@mail.gmail.com>
- <20100219053431.GB22645@coredump.intra.peff.net>
- <20100219060249.GD22645@coredump.intra.peff.net>
- <20100219082445.GB13691@coredump.intra.peff.net>
- <7vhbp0ls26.fsf@alter.siamese.dyndns.org>
- <20100309223729.GA25265@sigill.intra.peff.net>
- <20100309230931.GC25265@sigill.intra.peff.net>
- <7veijsmza0.fsf@alter.siamese.dyndns.org>
- <20100311071543.GA8750@sigill.intra.peff.net>
+Subject: Re: [Improvement?] How do you switch branches in a bare repo?
+Date: Sat, 13 Mar 2010 22:52:51 -0800
+Message-ID: <7v7hpfs8cc.fsf@alter.siamese.dyndns.org>
+References: <4B99DEA2.6050104@uq.edu.au>
+ <b4087cc51003120009o7bd99609w996de02b732fbbd9@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	SungHyun Nam <goweol@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 14 07:34:56 2010
+Cc: git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 14 07:53:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NqhPc-0005ZM-3x
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Mar 2010 07:34:56 +0100
+	id 1NqhhO-0004gy-LY
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Mar 2010 07:53:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753050Ab0CNGeq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Mar 2010 01:34:46 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57169 "EHLO
+	id S1753961Ab0CNGxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Mar 2010 01:53:05 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:65180 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752736Ab0CNGep (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Mar 2010 01:34:45 -0500
+	with ESMTP id S1753472Ab0CNGxB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Mar 2010 01:53:01 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 60D24A1468;
-	Sun, 14 Mar 2010 01:34:45 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B61ACA15EF;
+	Sun, 14 Mar 2010 01:52:57 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lX3K0oQh2CzwOX5rOAb2VRSWCjU=; b=mBGBrw
-	24+Er3dMjIj8AA7cnSAIZz1aQH/Dv8/fko+1myyB6z6D6YEHakKtd7oFSi2ZsBOu
-	UKGQehmCg2bVnJdDtj73bPZx5hkyqU/yaMaDPnsxEIEHXStSiodkCtZPLHIyJ7Q7
-	tYXP/RJjmRMl2HBnRC8A/dna55D/L6CXJNOGw=
+	:content-type; s=sasl; bh=705DyAyg5EbopsTmc1t7U//nVxc=; b=D92yN9
+	vTp7diLaNmBC+G5Q6H22l0j19uHyTpv/xYzVGrvSvy9Seyj6IYH/DbAJNBaIO0d3
+	9Oss1+gadCOkryQUMKBs0Qgwl0xKtjHVaZrke+iHYrvEdN43V4BZIzosyYS0+3ue
+	foJ0ycaTf2BWu9i38wYyrZAS8me0q5FVrJkGw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=u0Pcuj1jnnmikgGKF63UuAy1us4J/Ob1
-	4jxzawhZG1753UACBc17VWzDU+XCt9r0CtVm6gg+iWn3DvJKH/I9J5L1TILNw+6b
-	qGhxN1cyLyAXpDRUwsXvYApfU2JL/XebTnn6sEveuZihsrH7YAbWh5B3lBW22IzM
-	Rupdq2GEUTg=
+	:content-type; q=dns; s=sasl; b=YKqFKrDzcyShtD9VxVqUlj5eRVmZIPIY
+	mXTauOHCzGwxfPZ+uOEVhPY43wpkawGouSDvR0tMJrWCcY83OoytGGBd6DKWQIYl
+	loA4J2dp05XGLw4zW5/pQCMi5CgDNd1JP51s44QL0zoPTVk/gYMXTB4SLhTNft2V
+	pYwyrmeX6oA=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D8D6A1467;
-	Sun, 14 Mar 2010 01:34:41 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 94145A15EE;
+	Sun, 14 Mar 2010 01:52:55 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EDFB0A1466; Sun, 14 Mar
- 2010 01:34:35 -0500 (EST)
-In-Reply-To: <20100311071543.GA8750@sigill.intra.peff.net> (Jeff King's
- message of "Thu\, 11 Mar 2010 02\:15\:43 -0500")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0AFA4A15ED; Sun, 14 Mar
+ 2010 01:52:52 -0500 (EST)
+In-Reply-To: <b4087cc51003120009o7bd99609w996de02b732fbbd9@mail.gmail.com>
+ (Michael Witten's message of "Fri\, 12 Mar 2010 02\:09\:53 -0600")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AB721746-2F33-11DF-8C70-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 37D3EE42-2F36-11DF-A4A1-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142128>
 
-Jeff King <peff@peff.net> writes:
+Michael Witten <mfwitten@gmail.com> writes:
 
-> Another option is to declare the current behavior wrong. Letting the
-> shell glob produces different results for obvious reasons:
->
->   $ git add b* ;# will fail, because we see individual pathspecs
->
-> but perhaps that is the "feature" of letting add glob itself. Personally
-> I have never asked "git add" to glob on my behalf, so I don't know why
-> people would do it.
+> The "git checkout" command in a bare repository should serve to select
+> on which branch other commands (like "git reset") operate, etc.
 
-I know of one reason:
+I am not so sure about the "should" part.
 
-    $ git add '*.[ch]'
+The verb "checkout" is to move/copy something that is stored in somewhere
+to some other place, and in the context of git, you are copying out the
+contents that is stored in the repository (either the index or the tree of
+a commit) to the working tree.  It is true that "git checkout branch" also
+switches HEAD while doing so, but that is done primarily so that the
+result of further working on the checked out files in the working tree
+will be recorded in that branch, but I tend to see that as secondary.
+"git checkout file" and "git checkout branch file" do not even touch the
+HEAD.
 
-will add a/b.c and c/d/f.h for you.
+I am more interested in the reason why you need to switch HEAD in a bare
+repository to begin with, though.  If it is a one-shot thing, then I don't
+think it is too unreasonable to ask for people to learn symbolic-ref; if
+some valid workflow requires to flip the HEAD regularly, on the other
+hand, we might want to give the command to do so a shorter-to-type name
+than symbolic-ref, and that short name could be "checkout".
