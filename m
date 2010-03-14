@@ -1,235 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-send-email.perl - Fix 550 EHLO argument does not
- match calling host
-Date: Sat, 13 Mar 2010 22:28:09 -0800
-Message-ID: <7vtysjs9hi.fsf@alter.siamese.dyndns.org>
-References: <4B97C157.4020806@gmail.com>
- <20100311081213.GA13575@sigill.intra.peff.net>
- <20100311083148.GA13786@sigill.intra.peff.net>
- <7vaaueziv8.fsf@alter.siamese.dyndns.org> <4B9A74CA.4080507@gmail.com>
- <7vy6hxnnfx.fsf@alter.siamese.dyndns.org> <87bpesi0om.fsf_-_@jondo.cante.net>
- <7vfx433l9x.fsf@alter.siamese.dyndns.org> <87eijng4hy.fsf@jondo.cante.net>
+Subject: Re: 'git add' regression in git-1.7?
+Date: Sat, 13 Mar 2010 22:34:34 -0800
+Message-ID: <7veijns96t.fsf@alter.siamese.dyndns.org>
+References: <32541b131002182042p610fce4ex96efbffea9afe2ed@mail.gmail.com>
+ <hll65c$87a$1@ger.gmane.org>
+ <32541b131002182115t5501d0d1u19367a4d8e7627e4@mail.gmail.com>
+ <20100219053431.GB22645@coredump.intra.peff.net>
+ <20100219060249.GD22645@coredump.intra.peff.net>
+ <20100219082445.GB13691@coredump.intra.peff.net>
+ <7vhbp0ls26.fsf@alter.siamese.dyndns.org>
+ <20100309223729.GA25265@sigill.intra.peff.net>
+ <20100309230931.GC25265@sigill.intra.peff.net>
+ <7veijsmza0.fsf@alter.siamese.dyndns.org>
+ <20100311071543.GA8750@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Sun Mar 14 07:28:23 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	SungHyun Nam <goweol@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Mar 14 07:34:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NqhJH-0003M5-4P
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Mar 2010 07:28:23 +0100
+	id 1NqhPc-0005ZM-3x
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Mar 2010 07:34:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752173Ab0CNG2R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Mar 2010 01:28:17 -0500
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54499 "EHLO
+	id S1753050Ab0CNGeq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Mar 2010 01:34:46 -0500
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57169 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752104Ab0CNG2R convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Mar 2010 01:28:17 -0500
+	with ESMTP id S1752736Ab0CNGep (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Mar 2010 01:34:45 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BF2EBA1432;
-	Sun, 14 Mar 2010 01:28:15 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 60D24A1468;
+	Sun, 14 Mar 2010 01:34:45 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=x0UmGavDu6e3PYxpo59FsgIHw
-	Qg=; b=dZFK945ezEi+r1q7W/b4PcFHX5veGYCo5Fz3j6GyYYzAIvCLByRLxfe6n
-	GRBWfLTRV/hWDCjdWykN/HUCz7C4JtEcMS0MIHvYnWW9d2mR/nejQ68dE/pWzBb7
-	10d0Hfme/f87wiFq4akTN6cnLZOn9vBl45xaH6yQutSB5HcBT0=
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lX3K0oQh2CzwOX5rOAb2VRSWCjU=; b=mBGBrw
+	24+Er3dMjIj8AA7cnSAIZz1aQH/Dv8/fko+1myyB6z6D6YEHakKtd7oFSi2ZsBOu
+	UKGQehmCg2bVnJdDtj73bPZx5hkyqU/yaMaDPnsxEIEHXStSiodkCtZPLHIyJ7Q7
+	tYXP/RJjmRMl2HBnRC8A/dna55D/L6CXJNOGw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=yhtM/zEYS2J2l8Zs5Tw
-	4Ucf/EXWe5ae/bnbw23ip+zy9O/tTpkatnrkK3E7ZtF5VUGQAu090s+p1kCirKMT
-	qIYTjofJTNux/S5bAt3NVgYMmAQNZd+sgmCb4k5vS5VEgv+ohL6WDTU9tA4I5aDm
-	0vCb1Ss4ZXEFAgx8waA/lvyg=
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=u0Pcuj1jnnmikgGKF63UuAy1us4J/Ob1
+	4jxzawhZG1753UACBc17VWzDU+XCt9r0CtVm6gg+iWn3DvJKH/I9J5L1TILNw+6b
+	qGhxN1cyLyAXpDRUwsXvYApfU2JL/XebTnn6sEveuZihsrH7YAbWh5B3lBW22IzM
+	Rupdq2GEUTg=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 92AC7A142F;
-	Sun, 14 Mar 2010 01:28:13 -0500 (EST)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D8D6A1467;
+	Sun, 14 Mar 2010 01:34:41 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A0201A142D; Sun, 14 Mar
- 2010 01:28:10 -0500 (EST)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EDFB0A1466; Sun, 14 Mar
+ 2010 01:34:35 -0500 (EST)
+In-Reply-To: <20100311071543.GA8750@sigill.intra.peff.net> (Jeff King's
+ message of "Thu\, 11 Mar 2010 02\:15\:43 -0500")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C47B58A2-2F32-11DF-B48E-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: AB721746-2F33-11DF-8C70-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142127>
 
-Jari Aalto <jari.aalto@cante.net> writes:
+Jeff King <peff@peff.net> writes:
 
->>  - You are trying to improve the chance that $smtp_server likes the =
-name
->>    your side identifies as; what does it have to do with your local
->>    "mailhost" or "localhost" listening to the SMTP port?  These loca=
-l MTA
->>    may be configured for local-only delivery after all.
+> Another option is to declare the current behavior wrong. Letting the
+> shell glob produces different results for obvious reasons:
 >
-> There is now explicit option to set the name with option --mail-domai=
-n.
-> Hope this address the issue.
+>   $ git add b* ;# will fail, because we see individual pathspecs
+>
+> but perhaps that is the "feature" of letting add glob itself. Personally
+> I have never asked "git add" to glob on my behalf, so I don't know why
+> people would do it.
 
-Not quite.  Imagine if you were a maintainer of a system who received a
-patch that looks like adding a piece of code that computes random rubbi=
-sh.
+I know of one reason:
 
-    sub a_function () {
-	compute some value that looked not so useful nor reliable;
-        return it to be used;
-    }
+    $ git add '*.[ch]'
 
-When you ask the contributor why the code computes and uses it, the
-contributor sends an updated patch that lets the user override the logi=
-c
-and specify the exact value to be used.  That is:
-
-    sub a_function () {
-+	if (the user gave a value)
-+        	return that value;
-	compute some value that looked not so useful nor reliable;
-        return it to be used;
-    }
-
-Does that updated patch answer the question you asked?
-
-Configurability does not alleviate the puzzlement about the logic. A
-better explanation would be to describe how the computation produces
-reliable and correct value for the most sane installations; then the us=
-er
-configurability becomes only "just in case" way to give them the last
-resort.
-
-If you don't have a good explanation, the patch should instead be like
-this:
-
-    sub a_function () {
--	compute some value that looked not so useful nor reliable;
--       return it to be used;
-+	if (the user gave a value)
-+        	return that value;
-+	die "please configure me";
-    }
-
-So please explain why asking your local MTA (either mailhost or localho=
-st)
-how it is configured to identify to other MTA is a good way to obtain t=
-he
-HELO domain you should give $smtp_server.  Your answer could be "I expe=
-ct
-that most people use $smtp_server set to 'mailhost' or 'localhost' and
-have the MTA configured to talk with the outside world." (which by the =
-way
-I do not think is true for most people).  Or it could be "Xsmtp MTA tha=
-t
-is used by many people to send out mails through their ISP's mailserver
-uses the same trick to solve this issue".
-
-Side note.  Apparently this seems to be a common issue.  For example,
-msmtp has this configurable via command line and configuration option:
-
-   domain argument
-          Use  this  command to set the argument of the SMTP EHLO (or L=
-MTP
-          LHLO) command.  The default is localhost (stupid, but  workin=
-g).
-          Possible  choices  are  the  domain  part  of  your mail addr=
-ess
-          (provider.example for joe@provider.example) or the fully  qua=
-li=E2=80=90
-          fied domain name of your host (if available).
-
-Interestingly, one of the suggestions above is to derive it from the Fr=
-om
-address.
-
-In any case, I want to hear your justification.
-
-> +    --smtp-domain           <str>  * The domain name sent to HELO/EH=
-LO handshake
-
-I think this addition makes sense. I suspect that we would also want to
-have sendemail.smtpdomain configuration variable.  They of course need =
-to
-be documented.
-
-> @@ -131,6 +132,7 @@ my $have_email_valid =3D eval { require Email::Va=
-lid; 1 };
->  my $have_mail_address =3D eval { require Mail::Address; 1 };
->  my $smtp;
->  my $auth;
-> +my $MAIL_DOMAIN;			# See maildomain()
-
-Why uppercase?  The lifetime rule for this looks exactly the same as
-existing $smtp to me, so it would be more sensible to spell it in
-lowercase, $mail_domain.
-
-> +sub maildomain
-> +{
-> +        return $MAIL_DOMAIN if $MAIL_DOMAIN;
-> +
-> +	my $maildomain;
-
-Looks like a funny indent here...
-
-> +	eval "use Net::SMTP";
-> +
-> +	unless ( $@ ) {
-> +		for my $host ( qw(mailhost localhost) ) {
-
-Please drop extra SP immediately after '(' and before ')'; they are
-distracting.
-
-But as I already said, I tend to think the logic implemented by this pa=
-rt
-is of dubious validity.
-
-> @@ -917,6 +962,8 @@ X-Mailer: git-send-email $gitversion
->  		}
->  	}
-> =20
-> +	my $maildomain;
-> +
->  	if ($dry_run) {
->  		# We don't want to send the email.
->  	} elsif ($smtp_server =3D~ m#^/#) {
-> @@ -936,13 +983,18 @@ X-Mailer: git-send-email $gitversion
-> ...
-> +			$maildomain =3D maildomain() || "localhost.localdomain";
-> +			$smtp ||=3D Net::SMTP::SSL->new($smtp_server,
-> +						      Hello =3D> $maildomain,
-> +						      Port =3D> $smtp_server_port);
-
-Why not use the same structure as how lifetime is defined for $smtp
-variable?  IOW,
-
-			$mail_domain || =3D maildomain();
-			$smtp ||=3D ...
-
-without an extra local $maildomain variable?  If you do so, then
-
- - You can lose the $maildomain variable local to this function;
-
- - "return what the user configured" does not have to be in the maildom=
-ain
-   sub;
-
- - the maildomain sub can return "localhost.localdomain" as a fallback
-   default; and
-
- - various callsites of maildomain sub do not have to repeat the fallba=
-ck
-   default like your patch does.
-
-> @@ -962,9 +1014,10 @@ X-Mailer: git-send-email $gitversion
->  		}
-> =20
->  		if (!$smtp) {
-> -			die "Unable to initialize SMTP properly. Check config. ",
-> +			die "Unable to initialize SMTP properly. Check config and use --s=
-mtp-debug. ",
-
-This part is a good addition, but it needs to be in the earlier patch, =
-no?
+will add a/b.c and c/d/f.h for you.
