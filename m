@@ -1,91 +1,90 @@
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Bri=C3=A8re?= <fbriere@fbriere.net>
-Subject: [PATCH] gitk: Skip over AUTHOR/COMMIT_DATE when searching all fields
-Date: Sun, 14 Mar 2010 18:59:09 -0400
-Message-ID: <1268607549-3440-1-git-send-email-fbriere@fbriere.net>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Master:809780b failing t9151-svn-mergeinfo.sh
+Date: Sun, 14 Mar 2010 19:09:53 -0400
+Message-ID: <4B9D6CC1.6020307@gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Paul Mackerras <paulus@samba.org>,
-	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Bri=C3=A8re?= <fbriere@fbriere.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 15 00:08:47 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 15 00:10:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NqwvM-0000ol-OD
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 00:08:45 +0100
+	id 1Nqwwi-0001Hv-0y
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 00:10:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932840Ab0CNXIj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Mar 2010 19:08:39 -0400
-Received: from fallback-out2.mxes.net ([216.86.168.191]:63069 "EHLO
-	fallback-in2.mxes.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754790Ab0CNXIi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Mar 2010 19:08:38 -0400
-X-Greylist: delayed 547 seconds by postgrey-1.27 at vger.kernel.org; Sun, 14 Mar 2010 19:08:38 EDT
-Received: from mxout-07.mxes.net (mxout-07.mxes.net [216.86.168.182])
-	by fallback-in1.mxes.net (Postfix) with ESMTP id 371622FD7B7
-	for <git@vger.kernel.org>; Sun, 14 Mar 2010 19:00:36 -0400 (EDT)
-Received: from toroia.fbriere.dyndns.org (unknown [69.196.143.157])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.mxes.net (Postfix) with ESMTPSA id 5B6C522E1F3;
-	Sun, 14 Mar 2010 18:59:30 -0400 (EDT)
-Received: by toroia.fbriere.dyndns.org (Postfix, from userid 1000)
-	id 4D6585F994; Sun, 14 Mar 2010 18:59:29 -0400 (EDT)
-X-Mailer: git-send-email 1.7.0
+	id S1757806Ab0CNXKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Mar 2010 19:10:03 -0400
+Received: from mail-gx0-f227.google.com ([209.85.217.227]:56354 "EHLO
+	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754799Ab0CNXKA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Mar 2010 19:10:00 -0400
+Received: by gxk27 with SMTP id 27so132785gxk.1
+        for <git@vger.kernel.org>; Sun, 14 Mar 2010 16:10:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:subject:content-type:content-transfer-encoding;
+        bh=aQxc/KU0umZv8KXkkgICLNFqhdJAOQ6St5xvCaupZEo=;
+        b=eTlxl5dD51rN7Zz4i+i7l70DD54M+MmEOfOm1dArQVSSr2lN6bFX+eG2oMqsKgEbkN
+         NeN5awhfdazlWEmWWy7OCGrch4eFbAWnc5lCxZynzMUKUpFFdZQqepmEwT73TndiHkaK
+         Yws4MAQ/W4QUlrSSncAEKuv8hg7lgu2g78wyw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        b=wP/NdDYWlZqDE7f+NVRbCxKY3uY8Wmv5PZtm8HgHEgOsHTaVHBhwNN+AwuaM7FwD5A
+         X3t9PSoBAkGWWkfs1gIxZrqjqBYgMUrHXkp/kldkGkrqPvU7EIpdmYH80OzP0SZ8IQgy
+         ovxbfFI+5KJs9GPcRqzfW6uJq3yu/c2DsVujg=
+Received: by 10.100.18.11 with SMTP id 11mr6183169anr.154.1268608200057;
+        Sun, 14 Mar 2010 16:10:00 -0700 (PDT)
+Received: from [10.0.0.6] (c-71-199-240-201.hsd1.fl.comcast.net [71.199.240.201])
+        by mx.google.com with ESMTPS id 13sm2474338gxk.8.2010.03.14.16.09.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 14 Mar 2010 16:09:59 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142161>
 
-This prevents searches on "All Fields" from matching against the
-author/commit timestamps.  Not only are these timestamps not searchable
-by themselves, but the displayed format will not match the query string
-anyway.
+[I've been away from computers for 10 days and I'm 611 messages behind 
+so if this is old news please ignore the noise.]
 
-Signed-off-by: Fr=C3=A9d=C3=A9ric Bri=C3=A8re <fbriere@fbriere.net>
----
- gitk-git/gitk |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+Master 809780 is failing test 1 of t9151-svn-mergeinfo.sh with the 
+following information:
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 1f36a3e..d7e3c45 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -4591,8 +4591,9 @@ proc askfindhighlight {row id} {
-     }
-     set info $commitinfo($id)
-     set isbold 0
--    set fldtypes [list [mc Headline] [mc Author] [mc Date] [mc Committ=
-er] [mc CDate] [mc Comments]]
-+    set fldtypes [list [mc Headline] [mc Author] "" [mc Committer] "" =
-[mc Comments]]
-     foreach f $info ty $fldtypes {
-+	if {$ty eq ""} continue
- 	if {($findloc eq [mc "All fields"] || $findloc eq $ty) &&
- 	    [doesmatch $f]} {
- 	    if {$ty eq [mc "Author"]} {
-@@ -6438,7 +6439,7 @@ proc findmore {} {
-     if {![info exists find_dirn]} {
- 	return 0
-     }
--    set fldtypes [list [mc "Headline"] [mc "Author"] [mc "Date"] [mc "=
-Committer"] [mc "CDate"] [mc "Comments"]]
-+    set fldtypes [list [mc "Headline"] [mc "Author"] "" [mc "Committer=
-"] "" [mc "Comments"]]
-     set l $findcurline
-     set moretodo 0
-     if {$find_dirn > 0} {
-@@ -6499,6 +6500,7 @@ proc findmore {} {
- 	    }
- 	    set info $commitinfo($id)
- 	    foreach f $info ty $fldtypes {
-+		if {$ty eq ""} continue
- 		if {($findloc eq [mc "All fields"] || $findloc eq $ty) &&
- 		    [doesmatch $f]} {
- 		    set found 1
---=20
-1.7.0
+*** t9151-svn-mergeinfo.sh ***
+* FAIL 1: load svn dump
+
+                 svnadmin load -q '/home/internet/GIT/git/t/trash 
+directory.t9151-svn-mergeinfo/svnrepo'           < 
+'/home/internet/GIT/git/t/t9151/svn-mergeinfo.dump' &&
+                 git svn init --minimize-url -R svnmerge           -T 
+trunk -b branches 'file:///home/internet/GIT/git/t/trash 
+directory.t9151-svn-mergeinfo/svnrepo' &&
+                 git svn fetch --all
+
+*   ok 2: all svn merges became git merge commits
+*   ok 3: cherry picks did not become git merge commits
+*   ok 4: svn non-merge merge commits did not become git merge commits
+*   ok 5: commit made to merged branch is reachable from the merge
+*   ok 6: merging two branches in one commit is detected correctly
+*   still broken 7: everything got merged in the end
+* still have 1 known breakage(s)
+* failed 1 among remaining 6 test(s)
+make[2]: *** [t9151-svn-mergeinfo.sh] Error 1
+make[2]: Leaving directory `/home/internet/GIT/git/t'
+make[1]: *** [all] Error 2
+make[1]: Leaving directory `/home/internet/GIT/git/t'
+make: *** [test] Error 2
+
+
+This is on a 64 bit (mostly) Debian Squeeze system. The last working 
+master before I left was 6d84bcb.
