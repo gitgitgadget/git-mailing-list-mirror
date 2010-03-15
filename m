@@ -1,96 +1,85 @@
-From: =?utf-8?Q?=C5=81ukasz_Stelmach?= <lukasz.stelmach@iem.pw.edu.pl>
-Subject: Re: merging unmanaged working tree
-Date: Mon, 15 Mar 2010 16:19:24 +0100
-Message-ID: <87d3z5k3yb.fsf@dasa3.iem.pw.edu.pl>
-References: <87ljdtkedl.fsf@dasa3.iem.pw.edu.pl>
-	<46a29168.6d880e7c.4b9e296c.483a1@o2.pl>
+From: =?UTF-8?q?Henrik=20Grubbstr=C3=B6m=20=28Grubba=29?= 
+	<grubba@grubba.org>
+Subject: [PATCH 0/4] ident attribute related patches (resend w/ testsuite)
+Date: Mon, 15 Mar 2010 16:30:40 +0100
+Message-ID: <cover.1268664693.git.grubba@grubba.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Henrik=20Grubbstr=C3=B6m=20 (Grubba) ?= 
+	<grubba@grubba.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 15 16:25:15 2010
+X-From: git-owner@vger.kernel.org Mon Mar 15 16:31:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrCAK-0008VN-SV
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 16:25:13 +0100
+	id 1NrCGC-0002vH-Eh
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 16:31:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965177Ab0COPZH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Mar 2010 11:25:07 -0400
-Received: from lo.gmane.org ([80.91.229.12]:52897 "EHLO lo.gmane.org"
+	id S1755897Ab0COPbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Mar 2010 11:31:12 -0400
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: from mail.roxen.com ([212.247.29.220]:44526 "EHLO mail.roxen.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965070Ab0COPZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Mar 2010 11:25:06 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NrCAB-0008Pr-Ho
-	for git@vger.kernel.org; Mon, 15 Mar 2010 16:25:03 +0100
-Received: from dasa3.iem.pw.edu.pl ([194.29.147.110])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Mar 2010 16:25:03 +0100
-Received: from lukasz.stelmach by dasa3.iem.pw.edu.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Mar 2010 16:25:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: dasa3.iem.pw.edu.pl
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-Cancel-Lock: sha1:x9g1s+ANLDz1VPTPVobHgqCQxqg=
+	id S1753616Ab0COPbK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Mar 2010 11:31:10 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.roxen.com (Postfix) with ESMTP id 674F5628191
+	for <git@vger.kernel.org>; Mon, 15 Mar 2010 16:31:08 +0100 (CET)
+X-Virus-Scanned: amavisd-new at roxen.com
+Received: from mail.roxen.com ([212.247.29.220])
+	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id t2Q+6eyIho+1; Mon, 15 Mar 2010 16:31:07 +0100 (CET)
+Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
+	by mail.roxen.com (Postfix) with ESMTP id 9057562817D;
+	Mon, 15 Mar 2010 16:31:07 +0100 (CET)
+Received: from shipon.roxen.com (localhost [127.0.0.1])
+	by shipon.roxen.com (8.13.8+Sun/8.13.8) with ESMTP id o2FFV73q022011;
+	Mon, 15 Mar 2010 16:31:07 +0100 (CET)
+Received: (from grubba@localhost)
+	by shipon.roxen.com (8.13.8+Sun/8.13.8/Submit) id o2FFV75A022010;
+	Mon, 15 Mar 2010 16:31:07 +0100 (CET)
+X-Mailer: git-send-email 1.6.4.122.g6ffd7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142211>
 
-Daniel <mjucde@o2.pl> writes:
+These are some patches that are needed to get the support for the
+'ident' attribute to a useable state.
 
->> Is there a method to (dry?) run git-merge to detect conflicts
->> on:
->>=20
->> * current HEAD (or working tree)
->> * selected previous revision (the one used to "branch")
->> * directory tree (or a single file) "branched" with git-archive
->>=20
->> I'd like to synchronize portable working tree but don't want to keep
->> history in it.
-> Does "git-merge --squash" do what you want? You still need to have
-> the other tree managed by git (even for a while).
+Since last time, some issues that caused the the existing testsuite to
+fail have been fixed, and the testsuite has been extended to test the
+issues fixed by the patches.
 
-Not really. Well, what I want is abit odd so let me try another way
+Henrik Grubbstr=C3=B6m (Grubba) (4):
+  convert: Safer handling of $Id$ contraction.
+  convert: Keep foreign $Id$ on checkout.
+  convert: Inhibit contraction of foreign $Id$ during stats.
+  convert: Added core.refilteronadd feature.
 
-1. There is a repository (non-bare one) with all changes
-   commited. Commit A.
-
-2. I take some files put them on my pendrive. I take a note that they c=
-ome
-   from commit A. I don't clone the repository.
-
-3. I make changes here (in the repository) and commit them (commits B,
-   C, D) and there (on my pendrive).
-
-4. I want to merge things with something like this
-
-$ git diff3 file1.c(D) file1.c(A) /media/project/file1.c
-
-* file1.c(D) is the lates version in my repository and working tree
-* file1.c(A) is the point where I branched
-* /media/project/file1.c is the unmanaged version of the file with chan=
-ges
-  I made on the go.
-
-Does git allow to retrieve (to stdout) a particular revision of a singl=
-e
-file? If so I could use "<(git retrieve A file1.c)" bash trick.
-
-Or (this is my goal) is there another way not to keep the whole history
-of my repository on the pendrive? Just the changes I made since the
-brnaching point. And then clean (yeah squash, but it's not the same I a=
-m
-afraid) everything after merging.
-
---=20
-Mi=C5=82ego dnia,
-=C5=81ukasz Stelmach
+ Documentation/config.txt |    6 ++++
+ builtin/apply.c          |    2 +-
+ builtin/blame.c          |    2 +-
+ cache.h                  |    9 +++++-
+ combine-diff.c           |    2 +-
+ config.c                 |    5 +++
+ convert.c                |   53 ++++++++++++++++++++++++++++++----
+ diff.c                   |    2 +-
+ environment.c            |    1 +
+ sha1_file.c              |   60 +++++++++++++++++++++++++++++++++++++-
+ t/t0021-conversion.sh    |   72 ++++++++++++++++++++++++++++++++++++++=
+++++----
+ 11 files changed, 196 insertions(+), 18 deletions(-)
