@@ -1,63 +1,77 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: merging unmanaged working tree
-Date: Mon, 15 Mar 2010 15:01:55 -0500
-Message-ID: <32541b131003151301i69e5df1doc463406738086a89@mail.gmail.com>
-References: <87ljdtkedl.fsf@dasa3.iem.pw.edu.pl> <46a29168.6d880e7c.4b9e296c.483a1@o2.pl> 
-	<87d3z5k3yb.fsf@dasa3.iem.pw.edu.pl> <a038bef51003151258q2a4ba7dfwe84b29854c03d7eb@mail.gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH] daemon.c: avoid accessing ss_family member of struct sockaddr_storage
+Date: Mon, 15 Mar 2010 16:03:00 -0500
+Message-ID: <XI3O9HirgFwPkEqC3RdYR4j56mg_uuJQZk1YFST6ukqbKXjgxaqJdNDHwlLXg5R_FVXWmWQSGmg@cipher.nrlssc.navy.mil>
+References: <alpine.DEB.2.00.1003120922040.29993@cone.home.martin.st>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?ISO-8859-2?Q?=A3ukasz_Stelmach?= <lukasz.stelmach@iem.pw.edu.pl>,
-	git@vger.kernel.org
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 15 21:02:28 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@mlists.thewrittenword.com, peff@peff.net, kusmabite@gmail.com,
+	martin@martin.st, Brandon Casey <drafnel@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 15 22:03:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrGUZ-0007Gm-5U
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 21:02:23 +0100
+	id 1NrHRx-00078U-MW
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 22:03:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936665Ab0COUCR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Mar 2010 16:02:17 -0400
-Received: from mail-yw0-f189.google.com ([209.85.211.189]:35559 "EHLO
-	mail-yw0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936641Ab0COUCQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Mar 2010 16:02:16 -0400
-Received: by ywh27 with SMTP id 27so1738194ywh.22
-        for <git@vger.kernel.org>; Mon, 15 Mar 2010 13:02:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=Kp8y4XqYwy3ASiQ7xQomFcNoxD0teXF+fUZEXVYxz04=;
-        b=QukqPYD8SZXn2/nHrHGNPg6AlUbZ22FE7KdsYyjNOLy88kVD7YboHpwi5TF1vrNrEZ
-         +lLER6Gkld613YtcRe2jxSBNQSiCRtY0PfASTfFN54WmmK5GfSr1X40/UqJEtJrhb5Zr
-         SpEFQSgP8i5JxlQA2iguuskypSaC9BvZC48dM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=FVHIHGAOh9LFyOCOw+uFFrqt7QzdnOEsUBUt3wvbHZTa72+nS12BTk0UFaOQ70BL7O
-         nDeCK4s72XhqrC4a/NVQrZWKcAHkJq+Wt2cOoRsNeAqzsTxRTz/eITn+1sqNtseKJ64p
-         08k9AZuf4jhGtzDQbYHxTl5r3guXYfnKysJTI=
-Received: by 10.150.172.13 with SMTP id u13mr3535339ybe.224.1268683335098; 
-	Mon, 15 Mar 2010 13:02:15 -0700 (PDT)
-In-Reply-To: <a038bef51003151258q2a4ba7dfwe84b29854c03d7eb@mail.gmail.com>
+	id S936741Ab0COVDk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Mar 2010 17:03:40 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:49060 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936705Ab0COVDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Mar 2010 17:03:39 -0400
+Received: by mail.nrlssc.navy.mil id o2FL3WKo024438; Mon, 15 Mar 2010 16:03:32 -0500
+In-Reply-To: <alpine.DEB.2.00.1003120922040.29993@cone.home.martin.st>
+X-OriginalArrivalTime: 15 Mar 2010 21:03:32.0158 (UTC) FILETIME=[F82705E0:01CAC482]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142249>
 
-2010/3/15 Chris Packham <judge.packham@gmail.com>:
-> The downside with this is that it is very likely that your files will
-> pick up an executable bit from the file system on your pen drive which
-> will need to be fixed up before you commit them.
+=46rom: Brandon Casey <drafnel@gmail.com>
 
-If you have this problem, you might want to look at the core.fileMode
-option.  (See 'man git-config').
+When NO_SOCKADDR_STORAGE is set for a platform, either sockaddr_in or
+sockaddr_in6 is used intead.  Neither of which has an ss_family member.
+They have an sin_family and sin6_family member respectively.  Since the
+addrcmp() function accesses the ss_family member of a sockaddr_storage
+struct, compilation fails on platforms which define NO_SOCKADDR_STORGAG=
+E.
 
-Have fun,
+Since any sockaddr_* structure can be cast to a struct sockaddr and
+have its sa_family member read, do so here to workaround this issue.
 
-Avery
+Thanks to Martin Storsj=C3=B6 for pointing out the fix, and Gary Vaugha=
+n
+for drawing attention to the issue.
+
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
+ daemon.c |    8 +++++---
+ 1 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/daemon.c b/daemon.c
+index 3769b6f..8a52fdc 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -590,9 +590,11 @@ static int execute(struct sockaddr *addr)
+ static int addrcmp(const struct sockaddr_storage *s1,
+     const struct sockaddr_storage *s2)
+ {
+-	if (s1->ss_family !=3D s2->ss_family)
+-		return s1->ss_family - s2->ss_family;
+-	if (s1->ss_family =3D=3D AF_INET)
++	if (((const struct sockaddr*) s1)->sa_family !=3D
++	    ((const struct sockaddr*) s2)->sa_family)
++		return ((const struct sockaddr*) s1)->sa_family -
++		       ((const struct sockaddr*) s2)->sa_family;
++	if (((const struct sockaddr*) s1)->sa_family =3D=3D AF_INET)
+ 		return memcmp(&((struct sockaddr_in *)s1)->sin_addr,
+ 		    &((struct sockaddr_in *)s2)->sin_addr,
+ 		    sizeof(struct in_addr));
+--=20
+1.6.6.2
