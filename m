@@ -1,86 +1,64 @@
-From: =?iso-8859-1?Q?Henrik_Grubbstr=F6m?= <grubba@roxen.com>
-Subject: Re: [PATCH 3/4] convert: Inhibit contraction of foreign $Id$ during
- stats.
-Date: Mon, 15 Mar 2010 19:32:06 +0100 (CET)
-Organization: Roxen Internet Software AB
-Message-ID: <Pine.GSO.4.63.1003151923290.1164@shipon.roxen.com>
-References: <be7e603837d8f55461c4d654fb07bd61c97b70e6.1268664693.git.grubba@grubba.org>
-  <cover.1268664693.git.grubba@grubba.org> 
- <cff48594f97960444a3cd642dafd7fd4905e6891.1268664693.git.grubba@grubba.org>
-  <baa3d958d4885348d3d5a4c30305fce0f026d85c.1268664693.git.grubba@grubba.org>
- <36ca99e91003150842q6a39a48dl2e88254fd636556d@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-326116574-1268677926=:1164"
-Cc: git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 15 19:32:16 2010
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH 4/5 v2] t/t1304: set the ACL effective rights mask
+Date: Mon, 15 Mar 2010 13:35:03 -0500
+Message-ID: <1OHmOAV6PwNgTpkrT1e6TCcWFBFU-8KuDhDpWjm2BlkAUdaqw5vTu9fV5pO66uT2OLcDdYFhZAU@cipher.nrlssc.navy.mil>
+References: <YowxgPZqaOkg2MZzY1CxLzeL4DIwxt_o3RKS9xen-cewKbECZA7OIb7mUaY2TbsVR_rHE5GTeU0@cipher.nrlssc.navy.mil>
+Cc: Matthieu.Moy@grenoble-inp.fr, Brandon Casey <drafnel@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 15 19:35:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrF5L-00029s-KV
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 19:32:15 +0100
+	id 1NrF8Z-0003aA-IM
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 19:35:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755001Ab0COScL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Mar 2010 14:32:11 -0400
-Received: from mail.roxen.com ([212.247.29.220]:36165 "EHLO mail.roxen.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751693Ab0COScJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Mar 2010 14:32:09 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.roxen.com (Postfix) with ESMTP id 061226281B1;
-	Mon, 15 Mar 2010 19:32:07 +0100 (CET)
-X-Virus-Scanned: amavisd-new at roxen.com
-Received: from mail.roxen.com ([212.247.29.220])
-	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Hqs8QhztZQii; Mon, 15 Mar 2010 19:32:06 +0100 (CET)
-Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
-	by mail.roxen.com (Postfix) with ESMTP id 45CD462819A;
-	Mon, 15 Mar 2010 19:32:06 +0100 (CET)
-In-Reply-To: <36ca99e91003150842q6a39a48dl2e88254fd636556d@mail.gmail.com>
+	id S1757496Ab0COSfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Mar 2010 14:35:30 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:33743 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752640Ab0COSfa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Mar 2010 14:35:30 -0400
+Received: by mail.nrlssc.navy.mil id o2FIZGpj010972; Mon, 15 Mar 2010 13:35:16 -0500
+In-Reply-To: <YowxgPZqaOkg2MZzY1CxLzeL4DIwxt_o3RKS9xen-cewKbECZA7OIb7mUaY2TbsVR_rHE5GTeU0@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 15 Mar 2010 18:35:16.0106 (UTC) FILETIME=[41B136A0:01CAC46E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142242>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+From: Brandon Casey <drafnel@gmail.com>
 
----559023410-326116574-1268677926=:1164
-Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: 8BIT
+Some implementations of setfacl do not recalculate the effective rights
+mask when the ACL is modified.  So, set the effective rights mask
+explicitly to ensure that the ACL's that are set on the directories will
+have effect.
 
-On Mon, 15 Mar 2010, Bert Wesarg wrote:
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
 
-> 2010/3/15 Henrik Grubbström (Grubba) <grubba@grubba.org>:
->> diff --git a/builtin/apply.c b/builtin/apply.c
->> index 3af4ae0..25adef8 100644
->> --- a/builtin/apply.c
->> +++ b/builtin/apply.c
-[...]
->> -               convert_to_git(path, buf->buf, buf->len, buf, 0);
->> +               convert_to_git(path, buf->buf, buf->len, buf, 0, 0);
->
-> So this new 0 should be ...
->
-[...]
->> @@ -556,6 +556,11 @@ enum safe_crlf {
->>        SAFE_CRLF_WARN = 2,
->>  };
->>
->> +enum ident_mode {
->> +       IDENT_MODE_FALSE = 0,
->
-> ... this?
 
-Correct. I followed the style for the preceeding parameter (ie the other 
-zero), which maps to enum safe_crlf SAFE_CRLF_FALSE. I agree that using 
-the enum constants here instead of the plain zeros could perhaps be more 
-readable, but that should be a separate patch.
+Here's a new patch with an improved commit message (hopefully).
 
---
-Henrik Grubbström					grubba@grubba.org
-Roxen Internet Software AB				grubba@roxen.com
----559023410-326116574-1268677926=:1164--
+-brandon
+
+
+ t/t1304-default-acl.sh |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/t/t1304-default-acl.sh b/t/t1304-default-acl.sh
+index 52246d7..85351ae 100755
+--- a/t/t1304-default-acl.sh
++++ b/t/t1304-default-acl.sh
+@@ -33,6 +33,7 @@ dirs_to_set="./ .git/ .git/objects/ .git/objects/pack/"
+ 
+ test_expect_success 'Setup test repo' '
+ 	setfacl -m d:u::rwx,d:g::---,d:o:---,d:m:rwx $dirs_to_set &&
++	setfacl -m m:rwx               $dirs_to_set &&
+ 	setfacl -m u:root:rwx          $dirs_to_set &&
+ 	setfacl -m d:u:"$LOGNAME":rwx  $dirs_to_set &&
+ 	setfacl -m d:u:root:rwx        $dirs_to_set &&
+-- 
+1.6.6.2
