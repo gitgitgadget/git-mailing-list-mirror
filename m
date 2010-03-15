@@ -1,81 +1,79 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: Re: [PATCH] everyday: fsck and gc are not everyday operations
-Date: Sun, 14 Mar 2010 21:12:11 -0400 (EDT)
-Message-ID: <alpine.DEB.2.00.1003142109020.14055@dr-wily.mit.edu>
-References: <alpine.DEB.2.00.0910211559210.5105@dr-wily.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: 'git add' regression in git-1.7?
+Date: Sun, 14 Mar 2010 19:02:53 -0700
+Message-ID: <7vljdul4tu.fsf@alter.siamese.dyndns.org>
+References: <32541b131002182115t5501d0d1u19367a4d8e7627e4@mail.gmail.com>
+ <20100219053431.GB22645@coredump.intra.peff.net>
+ <20100219060249.GD22645@coredump.intra.peff.net>
+ <20100219082445.GB13691@coredump.intra.peff.net>
+ <7vhbp0ls26.fsf@alter.siamese.dyndns.org>
+ <20100309223729.GA25265@sigill.intra.peff.net>
+ <20100309230931.GC25265@sigill.intra.peff.net>
+ <7veijsmza0.fsf@alter.siamese.dyndns.org>
+ <20100311071543.GA8750@sigill.intra.peff.net>
+ <7veijns96t.fsf@alter.siamese.dyndns.org>
+ <20100314204459.GA31564@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 15 02:17:27 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	SungHyun Nam <goweol@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 15 03:03:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nqyvu-0006WW-Hj
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 02:17:26 +0100
+	id 1NqzeE-0000I0-9F
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 03:03:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935117Ab0COBRR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Mar 2010 21:17:17 -0400
-Received: from DMZ-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.36]:47261 "EHLO
-	dmz-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S935062Ab0COBRQ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Mar 2010 21:17:16 -0400
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Sun, 14 Mar 2010 21:17:15 EDT
-X-AuditID: 12074424-b7b9dae000002832-9e-4b9d896daca7
-Received: from mailhub-auth-2.mit.edu (MAILHUB-AUTH-2.MIT.EDU [18.7.62.36])
-	by dmz-mailsec-scanner-7.mit.edu (Symantec Brightmail Gateway) with SMTP id DF.C9.10290.D698D9B4; Sun, 14 Mar 2010 21:12:14 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id o2F1CDig016249;
-	Sun, 14 Mar 2010 21:12:13 -0400
-Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o2F1CBf7017438
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sun, 14 Mar 2010 21:12:12 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.00.0910211559210.5105@dr-wily.mit.edu>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-Brightmail-Tracker: AAAAAA==
+	id S1759493Ab0COCDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Mar 2010 22:03:09 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46769 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759019Ab0COCDH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Mar 2010 22:03:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F3ACA139C;
+	Sun, 14 Mar 2010 22:03:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w/AzwwBW8Germ03R1DmwLc2c6wQ=; b=vGa+k2
+	X4HLVQ8A3ONjm3nX1Oa3OHy0hB54349VekjXatn8tIG6Ah8Ja6d4P9b3dSZ/8v35
+	OXCt5y2sRNg2qo/8t3toL6b+qO6YcAs0wLG89xVdWA2rBpH/0K5Lc0EpxdLXAXso
+	LQY5U3GTIh2Pl7F6ShTYeCai1EEMy/NDofoLk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iLPncnyoEKGa/z706rsL8E6QNidEJX3P
+	OrkVBelUQ29VzztSWMDjFL6I83ZIgeQiWc5XxHZkESR/sgcOo56QZKb/rZTh8pdT
+	0JxU4bfTJ+sNVFP/mBcG739X7Vu56p2oI8xui9by7YJzSD7frPl23aT6MfGcFpcP
+	dMAMHKMcjVQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 172ECA139A;
+	Sun, 14 Mar 2010 22:03:00 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 49F8FA1399; Sun, 14 Mar
+ 2010 22:02:55 -0400 (EDT)
+In-Reply-To: <20100314204459.GA31564@coredump.intra.peff.net> (Jeff King's
+ message of "Sun\, 14 Mar 2010 16\:44\:59 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E1B4DE8A-2FD6-11DF-A0FA-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142164>
 
-On Wed, 21 Oct 2009, Anders Kaseorg wrote:
-> Back in 2005 when this document was written, it may have made sense t=
-o=20
-> introduce =E2=80=98git fsck=E2=80=99 (then =E2=80=98git fsck-objects=E2=
-=80=99) as the very first example=20
-> command for new users of Git 0.99.9.  Now that Git has been stable fo=
-r=20
-> years and does not actually tend to eat your data, it makes significa=
-ntly=20
-> less sense.  In fact, it sends an entirely wrong message.
->=20
-> =E2=80=98git gc=E2=80=99 is also unnecessary for the purposes of this=
- document, especially=20
-> with gc.auto enabled by default.
->=20
-> The only other commands in the =E2=80=9CBasic Repository=E2=80=9D sec=
-tion were =E2=80=98git init=E2=80=99=20
-> and =E2=80=98git clone=E2=80=99.  =E2=80=98clone=E2=80=99 is already =
-listed in the =E2=80=9CParticipant=E2=80=9D section,=20
-> so move =E2=80=98init=E2=80=99 to the =E2=80=9CStandalone=E2=80=9D se=
-ction and get rid of =E2=80=9CBasic=20
-> Repository=E2=80=9D entirely.
->=20
-> Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+Jeff King <peff@peff.net> writes:
 
+> In which case, I think we perhaps actively _don't_ want to complain
+> about ignored globs at all.
+> ...
+> So if that reasoning is sound, I think we want to just leave git-add's
+> behavior as it is currently (with my patch from earlier in this thread
+> applied, of course). You get different error messages for "git add *.c"
+> and "git add '*.c'", but that is only natural. You also get different
+> _behavior_, and that is intentional.
 
-This patch seems to have been forgotten.  Are there any opinions on it?=
- =20
-I think it goes a long way toward making the =E2=80=9CEveryday=E2=80=9D=
- document look less=20
-scary to Git newcomers.
-
-Anders
+Yeah, I think that makes sense.
