@@ -1,105 +1,117 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH RFC] cherry: support --abbrev option
-Date: Mon, 15 Mar 2010 18:08:52 +0100
-Message-ID: <4B9E69A4.2080304@lsrfire.ath.cx>
-References: <1268668999-4188-1-git-send-email-kusmabite@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git http-backend error message
+Date: Mon, 15 Mar 2010 10:12:37 -0700
+Message-ID: <7v3a01v796.fsf@alter.siamese.dyndns.org>
+References: <A55E5483-425E-4303-87F2-FABC46F6BFE5@pelagicore.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Erik Faye-Lund <kusmabite@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 15 18:09:08 2010
+To: Jeremiah Foster <jeremiah.foster@pelagicore.com>
+X-From: git-owner@vger.kernel.org Mon Mar 15 18:13:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrDmt-0000K2-L7
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 18:09:08 +0100
+	id 1NrDqV-00033U-RX
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 18:12:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965491Ab0CORJA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Mar 2010 13:09:00 -0400
-Received: from india601.server4you.de ([85.25.151.105]:60151 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965484Ab0CORI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Mar 2010 13:08:59 -0400
-Received: from [10.0.1.100] (p57B7CEE7.dip.t-dialin.net [87.183.206.231])
-	by india601.server4you.de (Postfix) with ESMTPSA id 3197D2F804E;
-	Mon, 15 Mar 2010 18:08:58 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
-In-Reply-To: <1268668999-4188-1-git-send-email-kusmabite@gmail.com>
+	id S965493Ab0CORMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Mar 2010 13:12:47 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50291 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965428Ab0CORMq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Mar 2010 13:12:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 09CF3A25CE;
+	Mon, 15 Mar 2010 13:12:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tbV/A5gm+sQrXwRL0/zWJMRuU98=; b=OhqnPV
+	TcO8SCltt5aWiWje/B0J9wmTjT7J3EOAr5D3ORkMziMknRrQooLN6mAd+3yuIH6w
+	Ab4MIDnyxuHG03Yl9H0+vQhIxkxehMU+njH6mitpzjVlTmc4QtirOxiX6cmfv4fl
+	hdCSURVmHRK3zb1JAZG+aKcLDF2JeP0biiUDw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vDV/Nmlh9nErTI2vQfkP5cU1VWDU/zvj
+	IKoq4ctN89KW8yHN/tNnIT2J8anhb4P/NAjprPv6iDXtxLMXHH81KQoUXsdsMZ1u
+	yZ8MpcdFHcYCoxHH+54X7Tl6Z7zP8FGBybh3akMl1MnMuXYxHkodO7d+RCOfofFV
+	3uDUELkBl0s=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DB9F9A25CC;
+	Mon, 15 Mar 2010 13:12:41 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2EF11A25CA; Mon, 15 Mar
+ 2010 13:12:39 -0400 (EDT)
+In-Reply-To: <A55E5483-425E-4303-87F2-FABC46F6BFE5@pelagicore.com> (Jeremiah
+ Foster's message of "Mon\, 15 Mar 2010 17\:13\:55 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F6FF7F3C-3055-11DF-A1C5-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142223>
 
-Am 15.03.2010 17:03, schrieb Erik Faye-Lund:
-> Switch to parse-options API while we're at it.
->=20
-> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-> ---
->=20
-> I sometimes find it useful to look at the commit-subject together wit=
-h
-> the SHA-1s. Using --abbrev increases the chance that the lines fits o=
-n
-> an 80 character wide terminal, making the output easier to read.
->=20
->  builtin/log.c |   40 ++++++++++++++++++++++------------------
->  1 files changed, 22 insertions(+), 18 deletions(-)
->=20
-> diff --git a/builtin/log.c b/builtin/log.c
-> index b70d0f7..020d618 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -1286,8 +1286,11 @@ static int add_pending_commit(const char *arg,=
- struct rev_info *revs, int flags)
->  	return -1;
->  }
-> =20
-> -static const char cherry_usage[] =3D
-> -"git cherry [-v] [<upstream> [<head> [<limit>]]]";
-> +static const char * const cherry_usage[] =3D {
-> +	"git cherry [-v] [<upstream> [<head> [<limit>]]]",
-> +	NULL
-> +};
-> +
->  int cmd_cherry(int argc, const char **argv, const char *prefix)
->  {
->  	struct rev_info revs;
-> @@ -1298,26 +1301,26 @@ int cmd_cherry(int argc, const char **argv, c=
-onst char *prefix)
->  	const char *upstream;
->  	const char *head =3D "HEAD";
->  	const char *limit =3D NULL;
-> -	int verbose =3D 0;
-> +	int verbose =3D 0, abbrev =3D 40;
-> =20
-> -	if (argc > 1 && !strcmp(argv[1], "-v")) {
-> -		verbose =3D 1;
-> -		argc--;
-> -		argv++;
-> -	}
-> +	struct option options[] =3D {
-> +		OPT__ABBREV(&abbrev),
-> +		OPT__VERBOSE(&verbose),
-> +		OPT_END()
-> +	};
+Jeremiah Foster <jeremiah.foster@pelagicore.com> writes:
 
-If I use --no-abbrev, do I get 0 or 40 hash chars?  I didn't actually
-test it, but I suspect an "if (!abbrev) abbrev =3D 40;" is needed somew=
-here.
+> error: refusing to update checked out branch: refs/heads/master
+> error: By default, updating the current branch in a non-bare repository
+> error: is denied, because it will make the index and work tree inconsistent
+> error: with what you pushed, and will require 'git reset --hard' to match
+> error: the work tree to HEAD.
+> error: 
+> error: You can set 'receive.denyCurrentBranch' configuration variable to
+> error: 'ignore' or 'warn' in the remote repository to allow pushing into
+> error: its current branch; however, this is not recommended unless you
+> error: arranged to update its work tree to match what you pushed in some
+> error: other way.
+> error: 
+> error: To squelch this message and still keep the default behaviour, set
+> error: 'receive.denyCurrentBranch' configuration variable to 'refuse'.
+>
+> 	I am unclear about my next move. Should I just set
+> 	receive.denyCurrentBranch to 'warn' and then my commits locally
+> 	will go back up to the server?
 
-> -	if (argc > 1 && !strcmp(argv[1], "-h"))
-> -		usage(cherry_usage);
-> +	argc =3D parse_options(argc, argv, prefix, options, cherry_usage,
-> +	    PARSE_OPT_KEEP_UNKNOWN);
+After it becomes clear about your next move (people will try to help you
+in this thread), please also tell us what information you found lacking in
+the above advisory text that you had to ask this question.  The message is
+trying to help you decide what your next move should be, but apparently
+did not do a good job, and we want to know what improvements we should
+make.
 
-Why do you use PARSE_OPT_KEEP_UNKNOWN here?  I think the old option
-parsing code lazily relied on invalid options being found out by
-add_pending_commit() later.  We can be lazy again by leaving invalid
-option handling to parse_options(); sure, it changes the error message,
-but for the better.
+> 	Or is it smarter to just create a bare repository, clone some
+> 	content into it, and then push?
 
-Ren=E9
+It depends on what you are trying to achieve by pushing into this
+repository that is not bare, iow what this pushed-into repository is used
+for.
+
+Pushing into a repository is done for two reasons:
+
+ - You push into repository A so that the development done in other
+   repositories B, C, D,... can all be collected, kept safe, and
+   transferred out to other repositories (iow, B, C, D uses A as a shared
+   meeting place).
+
+   This is the primary use case of "push", and because in repository A
+   there will not be any development of its own, people make A a (shared)
+   bare repository.
+
+ - You do perform your own development in repository A, and you would want
+   to interact with other repositories B, C, D,..., by doing "git pull B"
+   etc., but for network configuration reasons, you can only make
+   connection to A from B, C, D..., and not in the other direction.  In
+   this case, because "git pull B" run on A is "git fetch B" followed by
+   "git merge", you substitute the first "git fetch B" part by running
+   "git push A" on B instead, because you can make connections from B to A
+   but not A to B.
+
+   In this case, you do not want your "git push A" run on B to overwrite
+   the branch that is checked out in A, and the above error is issued if
+   you attempted to do so.  This would show a proper arrangement for such
+   a "push instead of fetch":
+
+   http://git.wiki.kernel.org/index.php/GitFaq#push-is-reverse-of-fetch
