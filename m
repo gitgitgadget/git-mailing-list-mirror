@@ -1,125 +1,79 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Dealing with an upstream cherry-picked branch
-Date: Mon, 15 Mar 2010 00:17:23 -0400
-Message-ID: <76718491003142117w4fd10449j51deef27548c4d2e@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 15 05:25:48 2010
+From: Dave Olszewski <cxreg@pobox.com>
+Subject: [PATCH] rebase--interactive: don't enforce valid branch
+Date: Sun, 14 Mar 2010 21:48:22 -0700
+Message-ID: <1268628502-29696-1-git-send-email-cxreg@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 15 05:48:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nr1sB-0002AY-6J
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 05:25:47 +0100
+	id 1Nr2EU-00073f-By
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 05:48:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752594Ab0COEZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Mar 2010 00:25:42 -0400
-Received: from mail-yx0-f191.google.com ([209.85.210.191]:56967 "EHLO
-	mail-yx0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751750Ab0COEZl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Mar 2010 00:25:41 -0400
-Received: by yxe29 with SMTP id 29so1296949yxe.4
-        for <git@vger.kernel.org>; Sun, 14 Mar 2010 21:25:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=JM3g17oiS+xyJ6O7gesWun8dSnQHp3Al5lJ2CuM+ICs=;
-        b=mWpF6AOI9hpkkNbrWNvCiLOikftzZeCcCy3NdAClpFXZ6f+JpkE+DUOB8VfW+oZUAu
-         EyBPTJRaBiyKl0SXBO+yjIG3up+cMm2NXTgGDgZ1jqUEb4fIaq3e6ZBJKHj7FDSP0ZvD
-         YQRPf+rBRAwovjoDpK9Xr6/WVH/4NKeMcTq24=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=kdg+NMmuUmgo+tZ+J42cfXn7mvYI7jxmZxq1OxPcCffdgbd5Jm8X2C3Cv4rysLyS05
-         emQe9fh5dogowmGT4bIUjhEy1LoSrZ6wQWAytahzPM+AdXVSw/KAJ8GfopImo2RZ3c50
-         51S75EIbxWO8Dq0gE0AEvrNv8JWLaLyYEeuV4=
-Received: by 10.150.119.33 with SMTP id r33mr2721326ybc.304.1268626643201; 
-	Sun, 14 Mar 2010 21:17:23 -0700 (PDT)
+	id S1758010Ab0COEsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Mar 2010 00:48:43 -0400
+Received: from 62.f9.1243.static.theplanet.com ([67.18.249.98]:39780 "EHLO
+	62.f9.1243.static.theplanet.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754838Ab0COEsk (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Mar 2010 00:48:40 -0400
+X-Envelope-From: count@genericorp.net
+Received: from bokonon.genericorp.net (c-76-104-180-27.hsd1.wa.comcast.net [76.104.180.27])
+	(authenticated bits=0)
+	by 62.f9.1243.static.theplanet.com (8.13.8/8.13.8/Debian-3) with ESMTP id o2F4mWqj031159
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Sun, 14 Mar 2010 23:48:38 -0500
+Received: from count by bokonon.genericorp.net with local (Exim 4.71)
+	(envelope-from <count@bokonon.genericorp.net>)
+	id 1Nr2E7-0007jT-9R
+	for git@vger.kernel.org; Sun, 14 Mar 2010 21:48:27 -0700
+X-Mailer: git-send-email 1.7.0.2.213.gd6898.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142168>
 
-I have the following scenario:
+git rebase allows you to specify a non-branch commit-ish as the "branch"
+argument, which leaves HEAD detached when it's finished.  This is
+occasionally useful, and this patch brings the same functionality to git
+rebase ---interactive.
 
-  o---o---Ma---o---o    local-master
- /       /
-|       | .-b'------d'  upstream-a
-|       |/  :       :
-o---o---a---b---c---d   upstream-master
+Signed-off-by: Dave Olszewski <cxreg@pobox.com>
+---
+ git-rebase--interactive.sh    |    2 --
+ t/t3404-rebase-interactive.sh |    7 +++++++
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-Local-master branched from upstream-master in distant past.
-upstream-master periodically cuts tentative release branch upstream-a.
-When they do this, that branch point (a) is merged into local-master
-(Ma).
-
-Over time, upstream applies fixes to upstream-a, but does so by
-committing the fixes to upstream-master and then cherry-picking them
-to upstream-a.
-
-The question is how to best integrate the fixes on upstream-a into
-local-master, w/o causing a headache when upstream cuts the next
-tentative release branch, at which point upstrea-master will again
-need to be merged into local-master (and that will also have other
-local development). Here are two options I've considered:
-
-1) Create a local-a integration branch, merged from upstream-a and
-local-master. Keep this branch up-to-date by periodically merging
-local-master and upstream-a:
-
-  o---o---Ma---o---o     local-master
- /       /  \       \
-|       |    `o------`o  local-a
-|       |    /       /
-|       | .-b'------d'   upstream-a
-|       |/  :       :
-o---o---a---b---c---d    upstream-master
-
-2) Periodically merge upstream-a into local-master:
-
-  o---o---Ma--o---o---o  local-master
- /       /   /       /
-|       | .-b'------d'   upstream-a
-|       |/  :       :
-o---o---a---b---c---d    upstream-master
-
-Then when it is next time to merge upstream-master into local-master either:
-
-(a) Backout the upstream-a merges to local-master by reverting the
-merge commits which introduced them to local-master, then merge
-upstream-master.
-
-(b) Just merge upstream-master and carefully deal with all the
-conflicts. I think this will necessarily be an evil merge.
-
-(c) Create a new branch at point Ma and cherry-pick only the local
-commits from local-master past point Ma. This essentially gives me the
-clean local-master I would've had if I'd been doing (1) all along.
-
-- Are there any other options I'm missing?
-
-- If I'm going to do (2a), I'm wondering if I'm missing any
-subtleties. I've read the revert-a-faulty-merge how-to and I realize
-my history won't be the cleanest, but I think it should work and leave
-a picture like:
-
-  o---o---Ma--o---o---o---o---Wd'---Wb'---Mi  local-master
- /       /   /       /                   /
-|       | .-b'------d' upstream-a       |
-|       |/  :       :                   |
-o---o---a---b---c---d---e---f---g---h---i    upstream-master
-
-Wd' is the revert of d' into local master. Wb' is the revert of b'
-into local master. This reverts both merges from upstream-a into local
-master. There may be conflicts to resolve due to the local changes
-that happened in local-master. However, local-master should now be
-"clean" to merge in upstream-master w/o having to worry about
-conflicts between b and b', d and d'. Correct?
-
-Thanks,
-
-j.
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 3e4fd14..d047dcb 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -783,8 +783,6 @@ first and then run 'git rebase --continue' again."
+ 
+ 		if test ! -z "$1"
+ 		then
+-			output git show-ref --verify --quiet "refs/heads/$1" ||
+-				die "Invalid branchname: $1"
+ 			output git checkout "$1" ||
+ 				die "Could not checkout $1"
+ 		fi
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 4e35137..32ffa15 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -553,4 +553,11 @@ test_expect_success 'reword' '
+ 	git show HEAD~2 | grep "C changed"
+ '
+ 
++test_expect_success 'rebase while detaching HEAD' '
++	grandparent=$(git rev-parse HEAD~2) &&
++	test_tick &&
++	FAKE_LINES="2 1" git rebase -i HEAD~2 HEAD^0 &&
++	test $grandparent = $(git rev-parse HEAD~2)
++'
++
+ test_done
+-- 
+1.7.0.2.213.gd6898.dirty
