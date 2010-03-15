@@ -1,73 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: FEATURE REQUEST: Cherry pick in not checked out branch
-Date: Mon, 15 Mar 2010 14:12:19 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1003151359440.7596@pacific.mpi-cbg.de>
-References: <be8f531d1003150139p7cc99700m807ab21bddf8fbb@mail.gmail.com>,<fabb9a1e1003150243o21bab937y122ac61d65777d5f@mail.gmail.com> <SNT124-W1769013489F8B7CE42C581C42E0@phx.gbl> <4B9E13A4.3090502@drmicha.warpmail.net>
+From: Stefan Monnier <monnier@iro.umontreal.ca>
+Subject: Re: [PATCH 10/10] merge-recursive: add a label for ancestor
+Date: Mon, 15 Mar 2010 09:18:32 -0400
+Message-ID: <jwvd3z5d8u0.fsf-monnier+inbox@gnu.org>
+References: <20100305215253.364.63583.reportbug@localhost>
+	<20100305221950.GB5083@progeny.tock>
+	<20100315074748.GA28827@progeny.tock>
+	<20100315080703.GJ8824@progeny.tock>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Tim Mazid <timmazid@hotmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Mar 15 14:07:56 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 15 14:28:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrA1R-0001is-UU
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 14:07:54 +0100
+	id 1NrALN-0000pC-Qs
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 14:28:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936259Ab0CONHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Mar 2010 09:07:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54061 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S934247Ab0CONHs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Mar 2010 09:07:48 -0400
-Received: (qmail invoked by alias); 15 Mar 2010 13:07:46 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp038) with SMTP; 15 Mar 2010 14:07:46 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+LQ/N56dyLR890YPJPpeof/p0QGfyQiYyWfUBqwh
-	bytA1tMkgUhB6j
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <4B9E13A4.3090502@drmicha.warpmail.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52000000000000002
+	id S964952Ab0CON2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Mar 2010 09:28:17 -0400
+Received: from ironport2-out.teksavvy.com ([206.248.154.181]:8715 "EHLO
+	ironport2-out.pppoe.ca" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S964902Ab0CON2R (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Mar 2010 09:28:17 -0400
+X-Greylist: delayed 582 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Mar 2010 09:28:16 EDT
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvsEAGbQnUtFxL9q/2dsb2JhbACacHS3BYR7BIsP
+X-IronPort-AV: E=Sophos;i="4.49,643,1262581200"; 
+   d="scan'208";a="58261826"
+Received: from 69-196-191-106.dsl.teksavvy.com (HELO pastel.home) ([69.196.191.106])
+  by ironport2-out.pppoe.ca with ESMTP; 15 Mar 2010 09:18:32 -0400
+Received: by pastel.home (Postfix, from userid 20848)
+	id 5C57D8828; Mon, 15 Mar 2010 09:18:32 -0400 (EDT)
+In-Reply-To: <20100315080703.GJ8824@progeny.tock> (Jonathan Nieder's message
+	of "Mon, 15 Mar 2010 03:07:04 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.93 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142209>
 
-Hi,
+> I would be interested to know which merge tool chokes on |||||||. ;)
 
-On Mon, 15 Mar 2010, Michael J Gruber wrote:
+In my case, it was smerge-mode.el (a minor mode included in Emacs since
+Emacs-22, which highlights such conflicts and tries to help you resolve
+them).
 
-> Tim Mazid venit, vidit, dixit 15.03.2010 10:54:
-> 
-> > Could we not make cherry-pick "stash, checkout, cherry-pick, checkout, 
-> > pop"?
-> 
-> Sure, that would be 5 command invocations requiring a work tree ;)
 
-Actually, if you want something that does not change all the timestamps, 
-and that does only trivial merges (i.e. no conflicts), you may have luck 
-with something like this:
+        Stefan
 
-	test $# = 2 || {
-		echo "Usage: $0 <commit> <branch>" >&2
-		exit 1
-	}
-	GIT_INDEX_FILE=.git/tmp.index &&
-	export GIT_INDEX_FILE &&
-	git read-tree "$2" &&
-	git diff "$1"^! | git apply --index &&
-	tree=$(git write-tree) &&
-	msg="$(git cat-file commit "$1" | sed '1,/^$/d')" &&
-	commit=$(echo "$msg" | git commit-tree $tree -p "$2") &&
-	git update-ref -m cherry-pick-2.0 "$2" $commit
 
-Totally Untested(tm),
-Dscho
+PS: As you may have guessed, I'm the primary author of this
+Emacs package.
