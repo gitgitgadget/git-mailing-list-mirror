@@ -1,59 +1,61 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH 5/5] t/t1304: make a second colon optional in the mask ACL check
-Date: Mon, 15 Mar 2010 12:14:37 -0500
-Message-ID: <YowxgPZqaOkg2MZzY1CxL2y9KYLK5N2WFlWwYu3VB6Y3RrTnbp2pATZ27RaMhDiRScZADoVUqz4@cipher.nrlssc.navy.mil>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 3/5] t/t1304: use 'test -r' to test readability rather than looking at mode bits
+Date: Mon, 15 Mar 2010 18:33:53 +0100
+Message-ID: <vpq3a017am6.fsf@bauges.imag.fr>
 References: <YowxgPZqaOkg2MZzY1CxL1fbmUZ7CMUf5DgqI3S0X83DgqLNI9AGfI83JRNT8LWYHqXBB-PGS1Q@cipher.nrlssc.navy.mil>
-Cc: Matthieu.Moy@imag.fr, Brandon Casey <drafnel@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 15 18:16:08 2010
+	<YowxgPZqaOkg2MZzY1CxL61O63C5ULimj64t69Bc-wsW3IlWf4Zc9WmA3ihonAb8UtR5thcko00@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Mon Mar 15 18:37:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrDtX-0004dk-9Y
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 18:15:59 +0100
+	id 1NrEDx-0006cJ-M2
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 18:37:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965536Ab0CORPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Mar 2010 13:15:32 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:43479 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965529Ab0CORP0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Mar 2010 13:15:26 -0400
-Received: by mail.nrlssc.navy.mil id o2FHFGpK002288; Mon, 15 Mar 2010 12:15:16 -0500
-In-Reply-To: <YowxgPZqaOkg2MZzY1CxL1fbmUZ7CMUf5DgqI3S0X83DgqLNI9AGfI83JRNT8LWYHqXBB-PGS1Q@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 15 Mar 2010 17:15:15.0795 (UTC) FILETIME=[147BE230:01CAC463]
+	id S935320Ab0CORgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Mar 2010 13:36:55 -0400
+Received: from imag.imag.fr ([129.88.30.1]:48243 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934859Ab0CORgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Mar 2010 13:36:54 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o2FHXs5j028297
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 15 Mar 2010 18:33:54 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NrEAs-0008RR-3l; Mon, 15 Mar 2010 18:33:54 +0100
+In-Reply-To: <YowxgPZqaOkg2MZzY1CxL61O63C5ULimj64t69Bc-wsW3IlWf4Zc9WmA3ihonAb8UtR5thcko00@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Mon\, 15 Mar 2010 12\:14\:35 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 15 Mar 2010 18:33:56 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142234>
 
-From: Brandon Casey <drafnel@gmail.com>
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-Solaris only uses one colon in the listing of the ACL mask, Linux uses two,
-so substitute egrep for grep and make the second colon optional.
+> -	-r--r-----*)
+> -		: happy
+> -		;;
 
-The -q option for Solaris 7's /usr/xpg4/bin/egrep does not appear to be
-implemented, so redirect output to /dev/null.
+> +	test -r "$1" &&
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
- t/t1304-default-acl.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Maybe it makes sense to ask for -r--?-----* instead, to make sure we
+don't give the read bit to anyone. But that's not really important
+since we're protected by the directory's permission anyway.
 
-diff --git a/t/t1304-default-acl.sh b/t/t1304-default-acl.sh
-index 85351ae..055ad00 100755
---- a/t/t1304-default-acl.sh
-+++ b/t/t1304-default-acl.sh
-@@ -25,7 +25,7 @@ check_perms_and_acl () {
- 	getfacl "$1" > actual &&
- 	grep -q "user:root:rwx" actual &&
- 	grep -q "user:${LOGNAME}:rwx" actual &&
--	grep -q "mask::r--" actual &&
-+	egrep "mask::?r--" actual > /dev/null 2>&1 &&
- 	grep -q "group::---" actual || false
- }
- 
 -- 
-1.6.6.2
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
