@@ -1,85 +1,141 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Add core.trustlowlevelstat for diffs in dev,ino,uid and 
-	gid
-Date: Mon, 15 Mar 2010 08:41:04 +0100
-Message-ID: <81b0412b1003150041n5938556bqc127939622bfdb57@mail.gmail.com>
-References: <1240743317-10117-1-git-send-email-robin.rosenberg@dewire.com>
-	 <alpine.LFD.2.00.0904270757410.22156@localhost.localdomain>
-	 <86skjudr6u.fsf@broadpark.no>
-	 <201003142151.29969.robin.rosenberg@dewire.com>
-	 <7v1vfm9iyp.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC 0/10] Add label for common ancestor to
+ conflictstyle=diff3
+Date: Mon, 15 Mar 2010 02:47:48 -0500
+Message-ID: <20100315074748.GA28827@progeny.tock>
+References: <20100305215253.364.63583.reportbug@localhost>
+ <20100305221950.GB5083@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Kjetil Barvik <barvik@broadpark.no>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Git Mailing List <git@vger.kernel.org>, spearce@spearce.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 15 08:41:17 2010
+Cc: Stefan Monnier <monnier@iro.umontreal.ca>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 15 08:48:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nr4vL-0002Vd-4U
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 08:41:15 +0100
+	id 1Nr51m-0005Jw-6i
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 08:47:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755781Ab0COHlL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Mar 2010 03:41:11 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:65113 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754944Ab0COHlG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Mar 2010 03:41:06 -0400
-Received: by bwz1 with SMTP id 1so2632197bwz.21
-        for <git@vger.kernel.org>; Mon, 15 Mar 2010 00:41:04 -0700 (PDT)
+	id S934551Ab0COHrt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Mar 2010 03:47:49 -0400
+Received: from mail-yx0-f191.google.com ([209.85.210.191]:62913 "EHLO
+	mail-yx0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933904Ab0COHrs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Mar 2010 03:47:48 -0400
+Received: by yxe29 with SMTP id 29so1373804yxe.4
+        for <git@vger.kernel.org>; Mon, 15 Mar 2010 00:47:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=bpWryt7JwHU6ZYAvt6pANc5hypaNfmX72tU+gYM04fU=;
-        b=C2c17bP3/NSFd18KSrANsNFv09DJUXrZ0TCLZfvh44oFinwksqswq2hkyNLwIchGtA
-         hrM8jHdu93buivII9OWf6zmWrML5ZLqC5NNIX/YEorjd2KrDsdeg1mZu0NMlesAxlotk
-         dmAZtgmu/SM8PrJXI893PXy0ziz3q0bgB7dJU=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=tzh6x3Ep+O7rd249hj7LpttxrdHzHke7wwMhpOqDBzA=;
+        b=B5KCVv1/kP6baUBKAUN/omg9mPHdh9q1eNhV1XTIK/302m1ChhOKSKEqt7er0IoQKg
+         ZtH5A6wgd5naNEab3Q165R+tNvCmzxEU+O5kWQJfhOBo4IunetfWiAkA5KqRuaBTlX4x
+         sW4Qr5JFwEOgYd+FdUWi5dcR8JY+hicO3T2Ns=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=i8T7xcEmxti2VOoS2wgoBUcjITtt1tZKYv4bJSBNb1TZXqoGYp7rwL84fRiW6cN1C2
-         9N5CMqv897EBf9OfezmBcD6g+t9JYcOh5n/YQZ37U1BwMRnQQ4kOg59d0t65UC+l7LGh
-         pTq7BqNsyrKMHD/9G5VSeNAJMZmizYdprfnVU=
-Received: by 10.204.8.212 with SMTP id i20mr7298821bki.166.1268638864508; Mon, 
-	15 Mar 2010 00:41:04 -0700 (PDT)
-In-Reply-To: <7v1vfm9iyp.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=gVVQk4vTsZ/9X+rwLWuDB5jPGrzPiSt/jl90ctzDZeVDZbq0dgr9aIgOO6Ld6VqJmA
+         hEXnDEfi1acFbNj7YZYjpwG3SpiPEAOMPZrnRYKBh59uaa5siDv9P39mNr+Pc2Vys0w9
+         hi/r77+VQHRavHFrJ1x8lWAcRXb02C7aDNee4=
+Received: by 10.100.20.22 with SMTP id 22mr2182240ant.204.1268639268124;
+        Mon, 15 Mar 2010 00:47:48 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 23sm4014607iwn.14.2010.03.15.00.47.47
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 15 Mar 2010 00:47:47 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100305221950.GB5083@progeny.tock>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142176>
 
-On Mon, Mar 15, 2010 at 07:50, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Robin Rosenberg <robin.rosenberg@dewire.com> writes:
->
->> Did something pop up that I don't know of that prevented inclusion o=
-f this
->> patch, other than the NSEC option, or will it do if just refresh the=
- patch?
->
-> I think all of us liked the general direction, and also all of us agr=
-eed
-> that we would want to keep NSEC support that was removed by Linus's p=
-atch.
->
-> Nobody had time or inclination to update the patch to implement the
-> consensus (I still had the thread in my inbox, by the way). =C2=A0So =
-"just
-> refresh the patch" would be the necessary first step.
+Jonathan Nieder wrote:
+> Stefan Monnier wrote [1]:
 
-There is an awful lot of "trust-something" variables. Maybe they can be
-consolidated into a bitmask/bitfields? And a config option taking a lis=
-t of
-filesystem features which can be trusted for a good measure (preserving
-old "trust_something" options, of course).
+>> I can't live without conflictstyle=3Ddiff3m and I'm very happy it ex=
+ists.
+>> But it has a little problem: it uses "|||||||\n" as a separator for =
+the
+>> ancestor version of the text, whereas diff3 uses "||||||| <ancestorn=
+ame>\n".
+>> The difference is harmless for a human (tho the <ancestorname> can s=
+ometimes
+>> be useful, assuming it's meaningful), but it makes some tools fail t=
+o
+>> recognize the conflict markers properly.
+>> So please add a " BASE" or " ANCESTOR" after the "|||||||".
+>
+> No opinion on this myself.
+
+I changed my mind; it looked like a useful and fun thing to do, so
+here it is.
+
+The bad news is that sometimes the labels for the ancestor are kind of
+pointless, as in =E2=80=9Cmerged common ancestors=E2=80=9D for merge-re=
+cursive.  I am
+not planning to improve this soon.  I=E2=80=99d be thrilled if someone =
+changes
+it to something like =E2=80=9Cmerge of ac76d, 8d7ca9, and 81873=E2=80=9D=
+=2E
+
+This patch series adds a label for the common ancestor to various
+places git outputs conflict hunks:
+
+ <<<<<<< ours
+ Text from the current branch
+ ||||||| original
+ Text from the merge base
+ =3D=3D=3D=3D=3D=3D=3D
+ Text from the remote branch
+ >>>>>>> theirs
+
+I am hoping this output will be more self explanatory, especially in
+cases where it is not completely obvious to a na=C3=AFve user what the
+common ancestor would be, such as cherry-pick.
+
+This passes all tests here and I tried to find any untested in-tree
+consumers of conflict hunks that would be affected to make sure it
+would be safe.  I would like to see it get some testing on other
+machines, especially by people using merge tools and other programs
+that parse conflicts.
+
+Thoughts?
+Jonathan Nieder (10):
+  xdl_merge(): add optional ancestor label to diff3-style output
+  merge-file --diff3: add a label for ancestor
+  ll_merge(): add ancestor label parameter for diff3-style output
+  checkout --conflict=3Ddiff3: add a label for ancestor
+  merge_file(): add comment explaining behavior wrt conflict style
+  merge_trees(): add ancestor label parameter for diff3-style output
+  tests: document format of conflicts from checkout -m
+  checkout -m --conflict=3Ddiff3: add a label for ancestor
+  cherry-pick: add a label for ancestor
+  merge-recursive: add a label for ancestor
+
+ builtin/checkout.c    |    3 +-
+ builtin/merge-file.c  |    1 +
+ builtin/revert.c      |    1 +
+ ll-merge.c            |   20 ++++++++------
+ ll-merge.h            |    2 +-
+ merge-file.c          |    8 +++++-
+ merge-recursive.c     |   12 ++++++--
+ merge-recursive.h     |    1 +
+ rerere.c              |    4 +-
+ t/t6023-merge-file.sh |    2 +-
+ t/t7201-co.sh         |   69 +++++++++++++++++++++++++++++++++++++++++=
++++----
+ xdiff/xdiff.h         |    1 +
+ xdiff/xmerge.c        |   16 ++++++++++-
+ 13 files changed, 114 insertions(+), 26 deletions(-)
+
+[1] http://bugs.debian.org/572720
