@@ -1,62 +1,125 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: FEATURE REQUEST: Cherry pick in not checked out branch
-Date: Mon, 15 Mar 2010 12:01:56 +0100
-Message-ID: <4B9E13A4.3090502@drmicha.warpmail.net>
-References: <be8f531d1003150139p7cc99700m807ab21bddf8fbb@mail.gmail.com>,<fabb9a1e1003150243o21bab937y122ac61d65777d5f@mail.gmail.com> <SNT124-W1769013489F8B7CE42C581C42E0@phx.gbl>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH] git-filter-branch.txt: mention absolute path for scripts in --tree-filter
+Date: Mon, 15 Mar 2010 13:32:05 +0200
+Organization: Private
+Message-ID: <87k4td95xm.fsf@jondo.cante.net>
+References: <87vdcy7zyu.fsf@jondo.cante.net> <4B9DFE36.3010707@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Tim Mazid <timmazid@hotmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 15 12:04:44 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 15 12:32:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nr86F-0005Di-PZ
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 12:04:44 +0100
+	id 1Nr8X4-0006l7-9b
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 12:32:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964838Ab0COLEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Mar 2010 07:04:38 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:60609 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S936113Ab0COLEh (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Mar 2010 07:04:37 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 88FD1E4F99;
-	Mon, 15 Mar 2010 07:04:37 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Mon, 15 Mar 2010 07:04:37 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=/gABp39/RiUYYefA30l+g+uKWdM=; b=E/2BN4xg3ZkV1zGDb6o10bhrerfBeQWVy6gcjF9993qvvQJSXBhBPzkzQ4puatRzoeosePV8JlcfqyBXvqP6zST+okx7E9yqbRIkOPro+EhqoRvSuLowGeGUfaWNlGovHZzk0RV4WtrmTBKDn0Lt/RrF9rY4qlsPRVvbjKD82XM=
-X-Sasl-enc: BujUf9lQgFdjarFpjQ1JxjFDjUZ6o+wFaGRGFdZnKxcO 1268651077
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B824C49D4F9;
-	Mon, 15 Mar 2010 07:04:36 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9pre) Gecko/20100301 Lightning/1.0b2pre Shredder/3.0.3pre
-In-Reply-To: <SNT124-W1769013489F8B7CE42C581C42E0@phx.gbl>
+	id S1756177Ab0COLcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Mar 2010 07:32:21 -0400
+Received: from lo.gmane.org ([80.91.229.12]:48404 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753142Ab0COLcU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Mar 2010 07:32:20 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Nr8Wv-0006i7-3g
+	for git@vger.kernel.org; Mon, 15 Mar 2010 12:32:17 +0100
+Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Mar 2010 12:32:17 +0100
+Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Mar 2010 12:32:17 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
+Cancel-Lock: sha1:0e3ONW82K8qoU3nL/0QQ4uRFzrw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142204>
 
-Tim Mazid venit, vidit, dixit 15.03.2010 10:54:
-> 
-> Hi,
->  
-> Could we not make cherry-pick "stash, checkout, cherry-pick, checkout, pop"?
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-Sure, that would be 5 command invocations requiring a work tree ;)
+> Jari Aalto schrieb:
+>
+>> Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+>> ---
+>>  Documentation/git-filter-branch.txt |    3 +++
+>>  1 files changed, 3 insertions(+), 0 deletions(-)
+>> 
+>> diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+>> index 020028c..01bd0ad 100644
+>> --- a/Documentation/git-filter-branch.txt
+>> +++ b/Documentation/git-filter-branch.txt
+>> @@ -91,6 +91,9 @@ OPTIONS
+>>  	is then used as-is (new files are auto-added, disappeared files
+>>  	are auto-removed - neither .gitignore files nor any other ignore
+>>  	rules *HAVE ANY EFFECT*!).
+>> ++
+>> +In case the <command> is a shell script, provide an absolute path.
+>> +An example: --tree-filter 'sh /path/to/filter.sh'
+>
+> Your choice of words is ambiguous: The --tree-filter is not the name of a
+> shell script, but rather the shell script itself; the example you gave is
+> just a shell script that happens to run only a shell on a file whose name
+> must be specified as an absolute path.
 
-Seriously, you can make this into an alias or custom commend, of course,
-but it would possibly need to stop in a state of conflict, the very same
-way that rebase -i may. There are structural improvements on the way
-which will make rebase -i, cherry-pick and so on use the same underlying
-code base, and that will help implementing requests such as this one.
+Full context was:
 
-Michael
+    --tree-filter <command>::
+            This is the filter for rewriting the tree and its contents.
+            The argument is evaluated in shell with the working
+            directory set to the root of the checked out tree.  The new tree
+            is then used as-is (new files are auto-added, disappeared files
+            are auto-removed - neither .gitignore files nor any other ignore
+            rules *HAVE ANY EFFECT*!).
+    +
+    In case the <command> is a shell script, provide an absolute path.
+    An example: --tree-filter 'sh /path/to/filter.sh'
 
-P.S.: Please don't top-post (I cut it).
-P.P.S.: Please don't cull cc (I re-added SR).
+
+>
+> But doesn't the recommendation to use absolute paths apply not only to
+> --tree-filters, but
+>
+> - to all filters;
+>
+> - to all references to external files that the filters make.
+
+I don't know.
+
+> I'm saying "recommendation" because git-filter-branch does not switch
+> directory ad lib., so theoretically, it would be possible to use relative
+> paths, even though the base of the relative paths would be non-obvious
+> because it is from inside a temporary directory named ".git-rewrite/t"
+> that is allocated next to .git.
+
+The problem was that I was trying to use a sell script for athe
+manipulation:
+
+    cd <gir repo>
+    git filter-branch  --tree-filter "sh ../filter.sh" HEAD
+
+Which didn't. It needed absolute path:
+
+    cd <gir repo>
+    git filter-branch  --tree-filter "sh $(pwd)/filter.sh" HEAD
+
+And that didn't work quit either. Script was run, but paths weren't no
+longer relative to the "working dir" I was cd'd to:
+
+    rm  file \
+        dir/file \
+        dir/file \
+        ..
+
+So, someone please explain how the paths should be expressed in shell
+script and we'll improve the docs.
+
+Jari
