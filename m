@@ -1,126 +1,106 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 1/4] convert: Safer handling of $Id$ contraction.
-Date: Mon, 15 Mar 2010 19:16:06 +0100
-Message-ID: <4B9E7966.4060300@lsrfire.ath.cx>
-References: <cover.1268664693.git.grubba@grubba.org> <be7e603837d8f55461c4d654fb07bd61c97b70e6.1268664693.git.grubba@grubba.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 4/5] t/t1304: set the mask ACL that is checked in check_perms_and_acl
+Date: Mon, 15 Mar 2010 13:17:42 -0500
+Message-ID: <D90FzSTc_sIuYUj84CpQ_qxlaiYTWQsa6KDiDVYCRLQ@cipher.nrlssc.navy.mil>
+References: <YowxgPZqaOkg2MZzY1CxL1fbmUZ7CMUf5DgqI3S0X83DgqLNI9AGfI83JRNT8LWYHqXBB-PGS1Q@cipher.nrlssc.navy.mil> <YowxgPZqaOkg2MZzY1CxLzeL4DIwxt_o3RKS9xen-cewKbECZA7OIb7mUaY2TbsVR_rHE5GTeU0@cipher.nrlssc.navy.mil> <vpqy6ht5vvs.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?B?IkhlbnJpayBHcnViYnN0csO2bSAoR3J1YmJhKSI=?= 
-	<grubba@grubba.org>
-X-From: git-owner@vger.kernel.org Mon Mar 15 19:16:17 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Mar 15 19:17:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrEps-0003cq-TB
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 19:16:17 +0100
+	id 1NrErP-0004GA-Rd
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 19:17:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965611Ab0COSQM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Mar 2010 14:16:12 -0400
-Received: from india601.server4you.de ([85.25.151.105]:52283 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965596Ab0COSQK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Mar 2010 14:16:10 -0400
-Received: from [10.0.1.100] (p57B7CEE7.dip.t-dialin.net [87.183.206.231])
-	by india601.server4you.de (Postfix) with ESMTPSA id 780042F804E;
-	Mon, 15 Mar 2010 19:16:08 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
-In-Reply-To: <be7e603837d8f55461c4d654fb07bd61c97b70e6.1268664693.git.grubba@grubba.org>
+	id S965613Ab0COSRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Mar 2010 14:17:47 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:51928 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965596Ab0COSRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Mar 2010 14:17:46 -0400
+Received: by mail.nrlssc.navy.mil id o2FIHh8B009218; Mon, 15 Mar 2010 13:17:43 -0500
+In-Reply-To: <vpqy6ht5vvs.fsf@bauges.imag.fr>
+X-OriginalArrivalTime: 15 Mar 2010 18:17:42.0780 (UTC) FILETIME=[CDDC6BC0:01CAC46B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142238>
 
-Am 15.03.2010 16:30, schrieb Henrik Grubbstr=C3=B6m (Grubba):
-> The code to contract $Id:xxxxx$ strings could eat an arbitrary amount
-> of source text if the terminating $ was lost. It now refuses to
-> contract $Id:xxxxx$ strings spanning multiple lines.
->=20
-> Signed-off-by: Henrik Grubbstr=C3=B6m <grubba@grubba.org>
-> ---
-> The behaviour implemented by the patch is in line with what other
-> VCSes that implement $Id$ do.
->=20
->  convert.c             |   17 +++++++++++++++--
->  t/t0021-conversion.sh |   16 ++++++++++------
->  2 files changed, 25 insertions(+), 8 deletions(-)
->=20
-> diff --git a/convert.c b/convert.c
-> index 4f8fcb7..91207ab 100644
-> --- a/convert.c
-> +++ b/convert.c
-> @@ -425,6 +425,7 @@ static int count_ident(const char *cp, unsigned l=
-ong size)
->  				cnt++;
->  				break;
->  			}
-> +			if (ch =3D=3D '\n') break;
+On 03/15/2010 12:37 PM, Matthieu Moy wrote:
+> Brandon Casey <casey@nrlssc.navy.mil> writes:
+> 
+>>  test_expect_success 'Setup test repo' '
+>>  	setfacl -m d:u::rwx,d:g::---,d:o:---,d:m:rwx $dirs_to_set &&
+>> +	setfacl -m m:rwx               $dirs_to_set &&
+> 
+> The patch sounds right, but I don't understand the commit message. You
+> set m:rwx, and check_perms_and_acl expects mask::r--, so it's not
+> exactly what check_perms_and_acl checks.
 
-Style:
+Ah, yeah, it does sound like I'm saying that check_perms_and_acl is
+checking for the particular mask that I'm setting.  I really meant
+it to read more like: since check_perms_and_acl is checking the
+'mask ACL', it should be set appropriately.
 
-			if (ch =3D=3D '\n')
-				break;
+> My understanding is that you set the mask here to enforce the validity
+> of the ACL, but then you may want to just squash this into [PATCH 2/5].
 
->  		}
->  	}
->  	return cnt;
-> @@ -433,7 +434,7 @@ static int count_ident(const char *cp, unsigned l=
-ong size)
->  static int ident_to_git(const char *path, const char *src, size_t le=
-n,
->                          struct strbuf *buf, int ident)
->  {
-> -	char *dst, *dollar;
-> +	char *dst, *dollar, *nl;
-> =20
->  	if (!ident || !count_ident(src, len))
->  		return 0;
-> @@ -455,6 +456,12 @@ static int ident_to_git(const char *path, const =
-char *src, size_t len,
->  			dollar =3D memchr(src + 3, '$', len - 3);
->  			if (!dollar)
->  				break;
-> +			nl =3D memchr(src + 3, '\n', len - 3);
-> +			if (nl && nl < dollar) {
-> +				/* Line break before the next dollar. */
-> +				continue;
-> +			}
-> +
+I think the ACL is valid according to the rules stated in the Linux man
+page, but depending on the previously existing mask ACL on the directories,
+the other ACL's that were set may or may not have any effect.  I think on
+Linux, the setfacl command updates the effective rights mask when other
+ACL entries are modified.  I don't think this happens on Solaris.
 
-You only need to search up to the previously found dollar sign here:
+If I do this:
 
-			if (memchr(src + 3, '\n', dollar - src - 3))
-				continue;
+  $ cd /var/tmp &&
+    mkdir test &&
+    setfacl -m d:u::rwx,d:g::---,d:o:---,d:m:rwx test &&
+    setfacl -m d:u:guest:rwx test &&
+    setfacl -m u:guest:rwx test &&
+    getfacl test
 
->  			memcpy(dst, "Id$", 3);
->  			dst +=3D 3;
->  			len -=3D dollar + 1 - src;
-> @@ -470,7 +477,7 @@ static int ident_to_worktree(const char *path, co=
-nst char *src, size_t len,
->                               struct strbuf *buf, int ident)
->  {
->  	unsigned char sha1[20];
-> -	char *to_free =3D NULL, *dollar;
-> +	char *to_free =3D NULL, *dollar, *nl;
->  	int cnt;
-> =20
->  	if (!ident)
-> @@ -514,6 +521,12 @@ static int ident_to_worktree(const char *path, c=
-onst char *src, size_t len,
->  				break;
->  			}
-> =20
-> +			nl =3D memchr(src + 3, '\n', len - 3);
-> +			if (nl && nl < dollar) {
-> +				/* Line break before the next dollar. */
-> +				continue;
-> +			}
-> +
+On Solaris I get:
 
-Ditto.
+  # file: test
+  # owner: XXX
+  # group: XXX
+  user::rwx
+  user:guest:rwx                #effective:---
+  group::---              #effective:---
+  mask:---
+  other:---
+  default:user::rwx
+  default:user:guest:rwx
+  default:group::---
+  default:mask:rwx
+  default:other:---
 
-Ren=C3=A9
+and on Linux I get:
+
+# file: test
+# owner: XXX
+# group: XXX
+user::rwx
+user:guest:rwx
+group::---
+mask::rwx
+other::---
+default:user::rwx
+default:user:guest:rwx
+default:group::---
+default:mask::rwx
+default:other::---
+
+
+Notice how the mask entry is different.  On Solaris you get --- and user
+'guest' effectively has no permissions, while on Linux it has full rwx.
+So for the test we should set the mask explicitly.
+
+-brandon
