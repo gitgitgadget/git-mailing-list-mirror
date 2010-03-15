@@ -1,66 +1,64 @@
-From: Tim Mazid <timmazid@hotmail.com>
-Subject: RE: FEATURE REQUEST: Cherry pick in not checked out branch
-Date: Mon, 15 Mar 2010 19:55:17 +1100
-Message-ID: <SNT124-W7E62082A3E852696A9036C42E0@phx.gbl>
-References: <be8f531d1003150139p7cc99700m807ab21bddf8fbb@mail.gmail.com>
+From: "tima fourie" <timafourie@gmail.com>
+Subject: Howto install git-cheetah manually
+Date: Mon, 15 Mar 2010 11:06:02 +0200
+Message-ID: <90D77DC1A40945F0B57A3932304061FC@c1>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 15 09:55:46 2010
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 15 10:15:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nr65Q-0005RR-U8
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 09:55:45 +0100
+	id 1Nr6OK-0006Be-P9
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 10:15:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935885Ab0COIze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Mar 2010 04:55:34 -0400
-Received: from snt0-omc3-s4.snt0.hotmail.com ([65.55.90.143]:24406 "EHLO
-	snt0-omc3-s4.snt0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S935629Ab0COIzR convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Mar 2010 04:55:17 -0400
-Received: from SNT124-W7 ([65.55.90.135]) by snt0-omc3-s4.snt0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 15 Mar 2010 01:55:16 -0700
-X-Originating-IP: [60.241.190.75]
-Importance: Normal
-In-Reply-To: <be8f531d1003150139p7cc99700m807ab21bddf8fbb@mail.gmail.com>
-X-OriginalArrivalTime: 15 Mar 2010 08:55:16.0965 (UTC) FILETIME=[3BC9B150:01CAC41D]
+	id S935985Ab0COJPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Mar 2010 05:15:08 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:51845 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935941Ab0COJPG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Mar 2010 05:15:06 -0400
+Received: by gyg8 with SMTP id 8so1385120gyg.19
+        for <git@vger.kernel.org>; Mon, 15 Mar 2010 02:15:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to:subject
+         :date:mime-version:content-type:content-transfer-encoding:x-priority
+         :x-msmail-priority:x-mailer:disposition-notification-to:x-mimeole;
+        bh=mw9xvP/s05ZTlqSOn3arf/1rHuUml4/eg7ML0oZm3ow=;
+        b=XtsxmNTsslmXQRapUYggiZAPCpg1Jfert7mB/QSLz/knrIX0/9DAHPOa6Ima6iGveK
+         az6wvRrXnLPbu+ppiKOdPI44T2/1anvuHgk+032VX0jLoT0gE6mi1m/eThvvBjceZMKk
+         ACZtl3V/KyX7UEcQk8JgoUNJr1a+V2VuD/tEM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:to:subject:date:mime-version:content-type
+         :content-transfer-encoding:x-priority:x-msmail-priority:x-mailer
+         :disposition-notification-to:x-mimeole;
+        b=oPstq+O7a+/C0CLywwxNz20a1p6LJtRqFzfh3VPQBQqoZCD56FZcg1m60h0Ep7ISL8
+         uvN1h+UkNow2WlWkRmYRlxaCJcjZeNvqDpO16xNQnIqDvETRQ/f361t43qZ8w+j/2DrQ
+         ZzGdoQUz5lAxIljyU9gKCXDv7ANQMW7oZenYg=
+Received: by 10.100.24.39 with SMTP id 39mr1682013anx.20.1268644168669;
+        Mon, 15 Mar 2010 02:09:28 -0700 (PDT)
+Received: from c1 (41.180.4.42.dsl.xdsl.co.za [41.180.4.42])
+        by mx.google.com with ESMTPS id e14sm516552ibl.12.2010.03.15.02.09.23
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 15 Mar 2010 02:09:27 -0700 (PDT)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5512
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5512
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142197>
 
+How can I manually install Git-cheetah that comes with the windows portable download?
 
-That's actually a very good point. I could have used such a feature on a number of occasions. 
-I second this feature request.
+Or perhaps there is a script or something available?
 
-> Date: Mon, 15 Mar 2010 14:39:38 +0600
-> Subject: FEATURE REQUEST: Cherry pick in not checked out branch
-> From: zerthurd@gmail.com
-> To: git@vger.kernel.org
-> 
-> Hello
-> 
-> git cherry-pick applies the change introduced by specified commit only
-> to currently checked out branch. Why this requirement exists? Is it
-> possible to apply changes to not checked out branch, like:
-> 
-> $ git cherry-pick <branch> <commit>
-> 
-> Thank you
-> 
-> -- 
-> Maxim Treskin
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
- 		 	   		  
-_________________________________________________________________
-Link all your email accounts and social updates with Hotmail. Find out now.
-http://windowslive.ninemsn.com.au/oneinbox?ocid=T162MSN05A0710G
+(Git version 1.7.0.2)
