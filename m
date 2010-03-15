@@ -1,73 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix indentation problem in git-ls-files(1)
-Date: Mon, 15 Mar 2010 16:12:24 -0700
-Message-ID: <7vwrxdb2nb.fsf@alter.siamese.dyndns.org>
-References: <m2tyswb1jp.fsf@igel.home>
- <7v3a0fr740.fsf@alter.siamese.dyndns.org> <m3r5nzw05p.fsf@hase.home>
- <ca433831003070927h4c3e24e1m75c7be88355f9663@mail.gmail.com>
- <m23a01yzcc.fsf@igel.home>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] Add support for GIT_ONE_FILESYSTEM
+Date: Tue, 16 Mar 2010 00:16:19 +0100
+Message-ID: <fabb9a1e1003151616m4c0e9100g77170433f6a67912@mail.gmail.com>
+References: <20100315214003.GB11157@pixar.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Tue Mar 16 00:12:45 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Lars Damerow <lars@pixar.com>
+X-From: git-owner@vger.kernel.org Tue Mar 16 00:16:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrJSm-0000iI-SV
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 00:12:45 +0100
+	id 1NrJWs-0002Ax-Sc
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 00:16:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937114Ab0COXMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Mar 2010 19:12:36 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43320 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932410Ab0COXMf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Mar 2010 19:12:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DA2EA217E;
-	Mon, 15 Mar 2010 19:12:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TYgOTLRO3A50RHn3slEZU1oPf7Y=; b=Y7JxCP
-	t1mUpf6jH2bgsbUlOX82fwXCvqioFqKjfKQPtxugQSqRX42tFpnETYoNxzLEXRvn
-	gccLDO3aACsVFxhYRKUdhx61kPka8bWJIGlk81S5QInxtX+7x4RyBMzm7NIV/Buj
-	JRUqP2Rz7PkvbuUpeSA2X2DvDKpkhJXIYqvl4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LFjBiMh5/XaxbzZ43KIneAqeDKTMZVtZ
-	EVcIjBh1uOsthgZpDOhTRnt8qodF1aqOhoKkQfr2lw5XI1xq7ewtGcHKLo4JyVeA
-	+rYqGwlMsZaS73fdjadd5ffkwAuwaXg/Tm09AfQW3N2WrJDxNFdxQGLF7EZ/3NE+
-	SdOHkrUDh/I=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A726A217D;
-	Mon, 15 Mar 2010 19:12:30 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 65AE4A217B; Mon, 15 Mar
- 2010 19:12:26 -0400 (EDT)
-In-Reply-To: <m23a01yzcc.fsf@igel.home> (Andreas Schwab's message of "Mon\,
- 15 Mar 2010 23\:49\:55 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3A912C0A-3088-11DF-97CE-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S937117Ab0COXQm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Mar 2010 19:16:42 -0400
+Received: from mail-px0-f198.google.com ([209.85.216.198]:52295 "EHLO
+	mail-px0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S937142Ab0COXQk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Mar 2010 19:16:40 -0400
+Received: by pxi36 with SMTP id 36so2370930pxi.21
+        for <git@vger.kernel.org>; Mon, 15 Mar 2010 16:16:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=HN0fBrco+nDLPGr9Ump6t3vTPaqPwDgHN2UKoi/s56k=;
+        b=TxnA/i2rex/hatZuqluZgjvrgj9ylIzt9/g+bfrD8fz1OG2vtAHHbZxi9EngA45beb
+         77nAx6b9BOHtLOzLT/7Gs/TILmAMDTPdSsL3de1qyHvgs3AHXzB6wJLquDBxFCHJsQfV
+         jtYM6tU1EchQmYBEtiLSL8YbnoEQWowZ3rt60=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=tCtYzqQBl62cmHV8Xl8Fxs3qvu7xfTIv1F57YJVbiHyCrknrFR1mswssS9yTk4p+th
+         QIFx8XPWveU3uZwWOUU3iSKPlHPXpajrPJAj7oq/dOkAW1hZqlrDj7fNZtvFQdxq2Pwj
+         eiNr+++5bWH5gSySUImlksWy/LP4o89Gwx6Js=
+Received: by 10.143.21.5 with SMTP id y5mr3621784wfi.324.1268694999243; Mon, 
+	15 Mar 2010 16:16:39 -0700 (PDT)
+In-Reply-To: <20100315214003.GB11157@pixar.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142271>
 
-Hmm, http://www.methods.co.nz/asciidoc/newlists.html seems to say that
-[horizontal] is new at 8.3.0, and earlier I think I said we use 8.2.5 in
-order to prepare http://www.methods.co.nz/asciidoc/newlists.html, so the
-patch looks a bit scary to me.
+Heya,
 
-Sadly even with 8.2.7, "git help ls-files" shows something like this:
+On Mon, Mar 15, 2010 at 22:40, Lars Damerow <lars@pixar.com> wrote:
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (buf.st_dev !=3D cur=
+rent_device)
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("re=
+fusing to cross filesystem boundary '%s/..'", cwd);
 
-       -t
-           Identify the file status with the following tags (followed by a
-           space) at the start of each line: [horizontal]
+Great, that's going to tell the unfortunate user who runs into this a
+whole lot of nothing. Shouldn't you at least tell them what git was
+trying to do, how they can fix it if this is not the desired behavior,
+etc. etc.?
 
-           H   cached
-           S   skip-worktree
-           M   unmerged
+--=20
+Cheers,
+
+Sverre Rabbelier
