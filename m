@@ -1,99 +1,100 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH v2] daemon.c: avoid accessing ss_family member of struct sockaddr_storage
-Date: Mon, 15 Mar 2010 17:10:06 -0500
-Message-ID: <Ulrh6ePYHqfB90btctT3EMJiuUz4wjLndvupvp0xJR1sBAao-hZxS0PI6-IxWscYhjaEno7FzgY@cipher.nrlssc.navy.mil>
-References: <alpine.DEB.2.00.1003152336520.29993@cone.home.martin.st>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] stash: dont save during a conflicted merge
+Date: Mon, 15 Mar 2010 15:14:25 -0700
+Message-ID: <7vhbohdygu.fsf@alter.siamese.dyndns.org>
+References: <1268451633-30046-1-git-send-email-cxreg@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, git@mlists.thewrittenword.com, peff@peff.net,
-	kusmabite@gmail.com, drafnel@gmail.com
-To: martin@martin.st
-X-From: git-owner@vger.kernel.org Mon Mar 15 23:10:47 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dave Olszewski <cxreg@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 15 23:14:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrIUo-0003jD-AO
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 23:10:46 +0100
+	id 1NrIYa-0005IP-Kp
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 23:14:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936951Ab0COWKh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Mar 2010 18:10:37 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:51051 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936948Ab0COWKZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Mar 2010 18:10:25 -0400
-Received: by mail.nrlssc.navy.mil id o2FMAJjg028546; Mon, 15 Mar 2010 17:10:19 -0500
-In-Reply-To: <alpine.DEB.2.00.1003152336520.29993@cone.home.martin.st>
-X-OriginalArrivalTime: 15 Mar 2010 22:10:19.0374 (UTC) FILETIME=[4CA3A8E0:01CAC48C]
+	id S936960Ab0COWOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Mar 2010 18:14:35 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59742 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936904Ab0COWOe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Mar 2010 18:14:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A258BA28EC;
+	Mon, 15 Mar 2010 18:14:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hUszPdjz9KPY10DbWaNk3soILNY=; b=qUFU+8
+	gyO/o/oybz8yXror7sLInqCpPTaCUbWrg8UksrQ0dD7Qb4MFY5tT/a2eyZa43e26
+	OFNDACQqKWecliUTW/gyIz1zY5Gd5aim1YbdVl6VuwYGkA9ttFDqAxS2hSONiHoD
+	CD5yXNtex3ZqKLLX8ztz1SKTzknzcLOMgyYOo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xJ+iDUvDK/uBPjPMIrQ4sUDvZjmYcQWA
+	suJ5uT47PssIG5tg4RIg48iSoKRwfycYCMMAqRnOMNywvMSy7RmCidQ0BAeK4tdR
+	rRXoxasNLUA38p4joKBLwtZTit7bOom9SvJEc6ZOEPu/0GcYkZCPX44P38QqFaf8
+	ESfMQbtFaKs=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A69EA28E9;
+	Mon, 15 Mar 2010 18:14:29 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D1C6DA28E6; Mon, 15 Mar
+ 2010 18:14:26 -0400 (EDT)
+In-Reply-To: <1268451633-30046-1-git-send-email-cxreg@pobox.com> (Dave
+ Olszewski's message of "Fri\, 12 Mar 2010 19\:40\:33 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1FF7E512-3080-11DF-96EA-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142264>
 
-=46rom: Brandon Casey <drafnel@gmail.com>
+Dave Olszewski <cxreg@pobox.com> writes:
 
-When NO_SOCKADDR_STORAGE is set for a platform, either sockaddr_in or
-sockaddr_in6 is used intead.  Neither of which has an ss_family member.
-They have an sin_family and sin6_family member respectively.  Since the
-addrcmp() function accesses the ss_family member of a sockaddr_storage
-struct, compilation fails on platforms which define NO_SOCKADDR_STORAGE=
-=2E
+> Similar to commit c8c562a, if a user is resolving conflicts, they may
+> think it wise to stash their current work tree and git pull to see if
+> there are additional changes on the remote.
+>
+> The stash will fail to save if the index contains unmerged entries, but
+> if the conflicts are resolved, the stash will succeed, and both
+> MERGE_HEAD and MERGE_MSG will be removed.  This is probably a mistake,
+> and we should warn the user and refuse to stash.
 
-Since any sockaddr_* structure can be cast to a struct sockaddr and
-have its sa_family member read, do so here to workaround this issue.
+Warning is probably Ok, but refusing with die() might be too much.
 
-Thanks to Martin Storsj=C3=B6 for pointing out the fix, and Gary Vaugha=
-n
-for drawing attention to the issue.
+When trying a topic with more than one integration branches (think
+"master", "next, "pu"), and the merge is a bit too hairy that I am not
+very confident with the resolution, I've deliberately used stash to record
+a tentative conflict resolution to avoid contaminating my rerere database:
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
+    $ git merge topic
+    ... heavy conflicts, manually "resolved" to a dubious result ...
+    $ git rerere clear
+    $ git stash save "tentative merge of topic"
+    $ git stash apply
+    ... test test test ...
+    $ git reset --hard
+    $ git checkout another-integration-branch
+    $ git stash apply
+    ... test test test ...
+    ... repeat the above for other integration branches ...
 
+This is using the stash as a glorified form of
 
-On 03/15/2010 04:37 PM, Martin Storsj=C3=B6 wrote:
-> Coming to think about it, would it simplify the code even more if the=
-=20
-> function were to take a const struct sockaddr* as a parameter instead=
-?=20
-> That would, on the other hand, require more casts where it's called,=20
-> though...
+    $ git diff HEAD >./+save-tentative-merge
 
-How about this.
+and then applying it to other integration branches to test out
 
--brandon
+    $ git reset --hard
+    $ git checkout another-integration-branch
+    $ git apply ./+save-tentative-merge
 
+but it actually is better than diff/apply because stash application uses a
+real three-way merge.
 
- daemon.c |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/daemon.c b/daemon.c
-index 3769b6f..2e6766f 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -590,14 +590,17 @@ static int execute(struct sockaddr *addr)
- static int addrcmp(const struct sockaddr_storage *s1,
-     const struct sockaddr_storage *s2)
- {
--	if (s1->ss_family !=3D s2->ss_family)
--		return s1->ss_family - s2->ss_family;
--	if (s1->ss_family =3D=3D AF_INET)
-+	const struct sockaddr *sa1 =3D (const struct sockaddr*) s1;
-+	const struct sockaddr *sa2 =3D (const struct sockaddr*) s2;
-+
-+	if (sa1->sa_family !=3D sa2->sa_family)
-+		return sa1->sa_family - sa2->sa_family;
-+	if (sa1->sa_family =3D=3D AF_INET)
- 		return memcmp(&((struct sockaddr_in *)s1)->sin_addr,
- 		    &((struct sockaddr_in *)s2)->sin_addr,
- 		    sizeof(struct in_addr));
- #ifndef NO_IPV6
--	if (s1->ss_family =3D=3D AF_INET6)
-+	if (sa1->sa_family =3D=3D AF_INET6)
- 		return memcmp(&((struct sockaddr_in6 *)s1)->sin6_addr,
- 		    &((struct sockaddr_in6 *)s2)->sin6_addr,
- 		    sizeof(struct in6_addr));
---=20
-1.6.6.2
+So I am not entirely happy with this feature-removal.
