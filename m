@@ -1,7 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 04/10] checkout --conflict=diff3: add a label for ancestor
-Date: Mon, 15 Mar 2010 02:55:09 -0500
-Message-ID: <20100315075509.GD8824@progeny.tock>
+Subject: [PATCH 06/10] merge_trees(): add ancestor label parameter for
+ diff3-style output
+Date: Mon, 15 Mar 2010 03:00:32 -0500
+Message-ID: <20100315080032.GF8824@progeny.tock>
 References: <20100305215253.364.63583.reportbug@localhost>
  <20100305221950.GB5083@progeny.tock>
  <20100315074748.GA28827@progeny.tock>
@@ -10,46 +11,46 @@ Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Stefan Monnier <monnier@iro.umontreal.ca>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 15 08:55:17 2010
+X-From: git-owner@vger.kernel.org Mon Mar 15 09:00:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nr58v-0008Kh-3Y
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 08:55:17 +0100
+	id 1Nr5E4-0001Xw-Mm
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 09:00:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935731Ab0COHzM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Mar 2010 03:55:12 -0400
-Received: from mail-yx0-f191.google.com ([209.85.210.191]:52932 "EHLO
+	id S1759736Ab0COIAc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Mar 2010 04:00:32 -0400
+Received: from mail-yx0-f191.google.com ([209.85.210.191]:42880 "EHLO
 	mail-yx0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935715Ab0COHzK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Mar 2010 03:55:10 -0400
-Received: by yxe29 with SMTP id 29so1376037yxe.4
-        for <git@vger.kernel.org>; Mon, 15 Mar 2010 00:55:09 -0700 (PDT)
+	with ESMTP id S1759722Ab0COIAb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Mar 2010 04:00:31 -0400
+Received: by yxe29 with SMTP id 29so1377664yxe.4
+        for <git@vger.kernel.org>; Mon, 15 Mar 2010 01:00:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=OjzH23T7OpKNIprS5m1Q2WoockToWVaTkun9OhZE59Y=;
-        b=Yqy9dcco+dG09bcL9tHMyyQBrCcqwWrUO+aZK45EAJNoSCgM39m6HnfzQJAzEjjydF
-         aLiNKjA0hbhJ2p85iBxxm+2yO15dyRwWTeol5G9ozAiX+jmkU9KOYWnY+6wrBPAwyZ/J
-         WiTqA6FG7mpfBERJ5ukgd7epVyGC1fhHJZu4Y=
+        bh=u+JJbkmHXz6o+F74o4TJhd1EiWbAy0EDY9bTWAdpD/I=;
+        b=mmU3An9QMrpy7KzYwFK4CPFNlCSovkKCQvJXoBv294s8HTexDzeTkxtUzvncXRPG5M
+         8eruSLWSwdkNIi1JOXZNJAxTPKf8KqglmEyEUAs+VajK20TZG5+AAmeOSkiD1ezrWUEw
+         +RwsZh/VTlJ+vD0RoSd+4fOrrnwTFObYkEFwU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=vI02GIEFyrATYX+HcaFaA1mEUCCmWl13VIcnamW28JFpOM9CMFtRUOwuVXaLtTY97S
-         vMqB3pN7O1vsII55yTTmqSXRDyiug7yqSu3bC6y3u8mudSakAvX9s3HEpAt7EyZzIGaI
-         yDy1gGXGTarb538xGar3xwZ//CAdX9coAOOFs=
-Received: by 10.101.178.8 with SMTP id f8mr1431507anp.213.1268639707054;
-        Mon, 15 Mar 2010 00:55:07 -0700 (PDT)
+        b=KOHSJ337a53Fa0pt+LggIO8p/Q7FXir0fYq9bNpUheJxqqU3DkqViQqMfHJMaAIguB
+         RhD3G4IS2OHsieQOAjjPG7GRcZScjfojEQ5GBj6rsWleSJULWBGUFeGjf4bASYMGsvTd
+         doOrnUVYEsZmGrCrqyzBaHxxuvrm6rZTEoWU8=
+Received: by 10.150.120.15 with SMTP id s15mr2938733ybc.143.1268640030545;
+        Mon, 15 Mar 2010 01:00:30 -0700 (PDT)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm4007062iwn.4.2010.03.15.00.55.06
+        by mx.google.com with ESMTPS id 21sm3982379iwn.11.2010.03.15.01.00.29
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 15 Mar 2010 00:55:06 -0700 (PDT)
+        Mon, 15 Mar 2010 01:00:30 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20100315074748.GA28827@progeny.tock>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -57,83 +58,89 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142181>
 
-git checkout --conflict=3Ddiff3 can be used to present conflicts hunks
-including text from the common ancestor:
+Commands using the merge_trees() machinery will present conflict hunks
+in output something like what =E2=80=98diff3 -m=E2=80=99 produces if th=
+e
+merge.conflictstyle configuration option is set to diff3.
 
-	<<<<<<< ours
-	ourside
-	|||||||
-	original
-	=3D=3D=3D=3D=3D=3D=3D
-	theirside
-	>>>>>>> theirs
+Unfortunately, the format is not fully compatible yet.  =E2=80=98diff3=E2=
+=80=99
+includes the name of the merge base on the ||||||| line of the output,
+and tools can misparse the conflict hunks without it.  Add a new
+o->ancestor parameter to merge_trees() for use as a label for the
+ancestor in conflict hunks to give callers the power to rectify this
+situation.
 
-The added information can be very helpful for resolving a merge by
-hand, and merge tools can usually understand it without trouble
-because it looks like output from =E2=80=98diff3 -m=E2=80=99.
+If o->ancestor is NULL, the output format is as before.  All callers
+pass NULL, so this patch does not affect the outward behavior of git.
 
-Unfortunately, not all can: =E2=80=98diff3=E2=80=99 includes a label fo=
-r the merge
-base on the ||||||| line and it seems some tools cannot parse conflict
-hunks without such a label.  Humans could use help in interpreting the
-output, too.  So mark the start of the text from the common ancestor
-with the label =E2=80=9C||||||| original=E2=80=9D.
-
-git rerere will not have trouble parsing this output, since instead of
-looking for a newline, it looks for whitespace after the |||||||
-marker.  No other code in git tries to parse conflict hunks.
+If o->ancestor is non-NULL and both branches renamed the base file
+to the same name, that name is included in the conflict hunk labels.
+Even if o->ancestor is NULL I think this would be a good change, but
+this patch only does it in the non-NULL case to ensure the output
+format does not change where it might matter.
 
 Reported-by: Stefan Monnier <monnier@iro.umontreal.ca>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Since =E2=80=9Coriginal=E2=80=9D a good name for the common ancestor?  =
-I also
-considered =E2=80=9Cbase=E2=80=9D and =E2=80=9Cancestor=E2=80=9D; the l=
-atter is too jargon-y for my
-taste, but =E2=80=9Cbase=E2=80=9D seems all right.
+Another no-op.
 
- builtin/checkout.c |    2 +-
- t/t7201-co.sh      |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ merge-recursive.c |   11 ++++++++---
+ merge-recursive.h |    1 +
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index d67f809..c60c3e0 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -149,7 +149,7 @@ static int checkout_merged(int pos, struct checkout=
- *state)
- 	read_mmblob(&ours, active_cache[pos+1]->sha1);
- 	read_mmblob(&theirs, active_cache[pos+2]->sha1);
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 3b2cc9d..017cafd 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -608,7 +608,7 @@ static int merge_3way(struct merge_options *o,
+ 		      const char *branch2)
+ {
+ 	mmfile_t orig, src1, src2;
+-	char *name1, *name2;
++	char *base_name, *name1, *name2;
+ 	int merge_status;
+ 	int favor;
 =20
--	status =3D ll_merge(&result_buf, path, &ancestor, NULL,
-+	status =3D ll_merge(&result_buf, path, &ancestor, "original",
- 			  &ours, "ours", &theirs, "theirs", 0);
- 	free(ancestor.ptr);
- 	free(ours.ptr);
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index d20ed61..ebfa5ca 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -481,7 +481,7 @@ test_expect_success 'checkout with --merge, in diff=
-3 -m style' '
- 	(
- 		echo "<<<<<<< ours"
- 		echo ourside
--		echo "|||||||"
-+		echo "||||||| original"
- 		echo original
- 		echo "=3D=3D=3D=3D=3D=3D=3D"
- 		echo theirside
-@@ -525,7 +525,7 @@ test_expect_success 'checkout --conflict=3Ddiff3' '
- 	(
- 		echo "<<<<<<< ours"
- 		echo ourside
--		echo "|||||||"
-+		echo "||||||| original"
- 		echo original
- 		echo "=3D=3D=3D=3D=3D=3D=3D"
- 		echo theirside
+@@ -628,10 +628,15 @@ static int merge_3way(struct merge_options *o,
+ 		}
+ 	}
+=20
+-	if (strcmp(a->path, b->path)) {
++	if (strcmp(a->path, b->path) ||
++	    (o->ancestor !=3D NULL && strcmp(a->path, one->path) !=3D 0)) {
++		base_name =3D o->ancestor =3D=3D NULL ? NULL :
++			xstrdup(mkpath("%s:%s", o->ancestor, one->path));
+ 		name1 =3D xstrdup(mkpath("%s:%s", branch1, a->path));
+ 		name2 =3D xstrdup(mkpath("%s:%s", branch2, b->path));
+ 	} else {
++		base_name =3D o->ancestor =3D=3D NULL ? NULL :
++			xstrdup(mkpath("%s", o->ancestor));
+ 		name1 =3D xstrdup(mkpath("%s", branch1));
+ 		name2 =3D xstrdup(mkpath("%s", branch2));
+ 	}
+@@ -640,7 +645,7 @@ static int merge_3way(struct merge_options *o,
+ 	read_mmblob(&src1, a->sha1);
+ 	read_mmblob(&src2, b->sha1);
+=20
+-	merge_status =3D ll_merge(result_buf, a->path, &orig, NULL,
++	merge_status =3D ll_merge(result_buf, a->path, &orig, base_name,
+ 				&src1, name1, &src2, name2,
+ 				(!!o->call_depth) | (favor << 1));
+=20
+diff --git a/merge-recursive.h b/merge-recursive.h
+index be8410a..d1192f5 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -4,6 +4,7 @@
+ #include "string-list.h"
+=20
+ struct merge_options {
++	const char *ancestor;
+ 	const char *branch1;
+ 	const char *branch2;
+ 	enum {
 --=20
 1.7.0
