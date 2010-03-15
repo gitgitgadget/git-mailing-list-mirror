@@ -1,110 +1,99 @@
-From: Lars Damerow <lars@pixar.com>
-Subject: [PATCH] Add support for GIT_ONE_FILESYSTEM
-Date: Mon, 15 Mar 2010 14:40:03 -0700
-Message-ID: <20100315214003.GB11157@pixar.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH v2] daemon.c: avoid accessing ss_family member of struct sockaddr_storage
+Date: Mon, 15 Mar 2010 17:10:06 -0500
+Message-ID: <Ulrh6ePYHqfB90btctT3EMJiuUz4wjLndvupvp0xJR1sBAao-hZxS0PI6-IxWscYhjaEno7FzgY@cipher.nrlssc.navy.mil>
+References: <alpine.DEB.2.00.1003152336520.29993@cone.home.martin.st>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 15 22:50:05 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, git@mlists.thewrittenword.com, peff@peff.net,
+	kusmabite@gmail.com, drafnel@gmail.com
+To: martin@martin.st
+X-From: git-owner@vger.kernel.org Mon Mar 15 23:10:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrIAn-0003eJ-0r
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 22:50:05 +0100
+	id 1NrIUo-0003jD-AO
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 23:10:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936877Ab0COVt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Mar 2010 17:49:59 -0400
-Received: from cmx.pixar.com ([199.108.77.24]:1064 "EHLO cmx.pixar.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932222Ab0COVt6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Mar 2010 17:49:58 -0400
-X-Greylist: delayed 592 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Mar 2010 17:49:58 EDT
-X-PixarMID: 1905224
-X-PixarRecvListener: OutboundMail
-X-PixarRemoteIP: 138.72.131.152
-X-IronPort-AV: E=Sophos;i="4.49,645,1262592000"; 
-   d="scan'208";a="1905224"
-Received: from helper.dynamic.pixar.com ([138.72.131.152])
-  by cirrus.pixar.com with ESMTP; 15 Mar 2010 14:40:04 -0700
-Received: from helper.dynamic.pixar.com (localhost [127.0.0.1])
-	by helper.dynamic.pixar.com (8.14.3/8.14.3) with ESMTP id o2FLe3cr031801
-	for <git@vger.kernel.org>; Mon, 15 Mar 2010 14:40:03 -0700
-Received: (from lars@localhost)
-	by helper.dynamic.pixar.com (8.14.3/8.14.3/Submit) id o2FLe33A031800
-	for git@vger.kernel.org; Mon, 15 Mar 2010 14:40:03 -0700
-Content-Disposition: inline
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S936951Ab0COWKh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Mar 2010 18:10:37 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:51051 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936948Ab0COWKZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Mar 2010 18:10:25 -0400
+Received: by mail.nrlssc.navy.mil id o2FMAJjg028546; Mon, 15 Mar 2010 17:10:19 -0500
+In-Reply-To: <alpine.DEB.2.00.1003152336520.29993@cone.home.martin.st>
+X-OriginalArrivalTime: 15 Mar 2010 22:10:19.0374 (UTC) FILETIME=[4CA3A8E0:01CAC48C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142263>
 
-This patch makes git pay attention to the GIT_ONE_FILESYSTEM environment
-variable. When that variable is set, git will stop searching for a
-GIT_DIR when it attempts to cross a filesystem boundary.
+=46rom: Brandon Casey <drafnel@gmail.com>
 
-When working in an environment with too many automount points to make
-maintaining a GIT_CEILING_DIRECTORIES list enjoyable, GIT_ONE_FILESYSTEM
-gives the option of turning all such attempts off with one setting.
+When NO_SOCKADDR_STORAGE is set for a platform, either sockaddr_in or
+sockaddr_in6 is used intead.  Neither of which has an ss_family member.
+They have an sin_family and sin6_family member respectively.  Since the
+addrcmp() function accesses the ss_family member of a sockaddr_storage
+struct, compilation fails on platforms which define NO_SOCKADDR_STORAGE=
+=2E
 
-Signed-off-by: Lars R. Damerow <lars@pixar.com>
+Since any sockaddr_* structure can be cast to a struct sockaddr and
+have its sa_family member read, do so here to workaround this issue.
+
+Thanks to Martin Storsj=C3=B6 for pointing out the fix, and Gary Vaugha=
+n
+for drawing attention to the issue.
+
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
 ---
- Documentation/git.txt |    3 +++
- setup.c               |   11 +++++++++++
- 2 files changed, 14 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 35c0c79..dbb590f 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -529,6 +529,9 @@ git so take care if using Cogito etc.
- 	a GIT_DIR set on the command line or in the environment.
- 	(Useful for excluding slow-loading network directories.)
- 
-+'GIT_ONE_FILESYSTEM'::
-+	Stop at filesystem boundaries when looking for .git or objects.
+
+On 03/15/2010 04:37 PM, Martin Storsj=C3=B6 wrote:
+> Coming to think about it, would it simplify the code even more if the=
+=20
+> function were to take a const struct sockaddr* as a parameter instead=
+?=20
+> That would, on the other hand, require more casts where it's called,=20
+> though...
+
+How about this.
+
+-brandon
+
+
+ daemon.c |   11 +++++++----
+ 1 files changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/daemon.c b/daemon.c
+index 3769b6f..2e6766f 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -590,14 +590,17 @@ static int execute(struct sockaddr *addr)
+ static int addrcmp(const struct sockaddr_storage *s1,
+     const struct sockaddr_storage *s2)
+ {
+-	if (s1->ss_family !=3D s2->ss_family)
+-		return s1->ss_family - s2->ss_family;
+-	if (s1->ss_family =3D=3D AF_INET)
++	const struct sockaddr *sa1 =3D (const struct sockaddr*) s1;
++	const struct sockaddr *sa2 =3D (const struct sockaddr*) s2;
 +
- git Commits
- ~~~~~~~~~~~
- 'GIT_AUTHOR_NAME'::
-diff --git a/setup.c b/setup.c
-index 5716d90..63dc52e 100644
---- a/setup.c
-+++ b/setup.c
-@@ -323,6 +323,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	const char *gitdirenv;
- 	const char *gitfile_dir;
- 	int len, offset, ceil_offset, root_len;
-+	int current_device = 0;
-+	struct stat buf;
- 
- 	/*
- 	 * Let's assume that we are in a git repository.
-@@ -390,6 +392,9 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	 *   etc.
- 	 */
- 	offset = len = strlen(cwd);
-+	if (stat(".", &buf))
-+		die_errno("failed to stat '.'");
-+	current_device = buf.st_dev;
- 	for (;;) {
- 		gitfile_dir = read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
- 		if (gitfile_dir) {
-@@ -422,6 +427,12 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 			}
- 			die("Not a git repository (or any of the parent directories): %s", DEFAULT_GIT_DIR_ENVIRONMENT);
- 		}
-+		if (getenv("GIT_ONE_FILESYSTEM") != NULL) {
-+			if (stat("..", &buf))
-+				die_errno("failed to stat '..'");
-+			if (buf.st_dev != current_device)
-+				die("refusing to cross filesystem boundary '%s/..'", cwd);
-+		}
- 		if (chdir(".."))
- 			die_errno("Cannot change to '%s/..'", cwd);
- 	}
--- 
-1.6.5.2
++	if (sa1->sa_family !=3D sa2->sa_family)
++		return sa1->sa_family - sa2->sa_family;
++	if (sa1->sa_family =3D=3D AF_INET)
+ 		return memcmp(&((struct sockaddr_in *)s1)->sin_addr,
+ 		    &((struct sockaddr_in *)s2)->sin_addr,
+ 		    sizeof(struct in_addr));
+ #ifndef NO_IPV6
+-	if (s1->ss_family =3D=3D AF_INET6)
++	if (sa1->sa_family =3D=3D AF_INET6)
+ 		return memcmp(&((struct sockaddr_in6 *)s1)->sin6_addr,
+ 		    &((struct sockaddr_in6 *)s2)->sin6_addr,
+ 		    sizeof(struct in6_addr));
+--=20
+1.6.6.2
