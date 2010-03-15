@@ -1,100 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] stash: dont save during a conflicted merge
-Date: Mon, 15 Mar 2010 15:14:25 -0700
-Message-ID: <7vhbohdygu.fsf@alter.siamese.dyndns.org>
-References: <1268451633-30046-1-git-send-email-cxreg@pobox.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH RFC] cherry: support --abbrev option
+Date: Mon, 15 Mar 2010 23:30:45 +0100
+Message-ID: <40aa078e1003151530y19f10bf1l852a0e5230b11cb6@mail.gmail.com>
+References: <1268668999-4188-1-git-send-email-kusmabite@gmail.com>
+	 <4B9E69A4.2080304@lsrfire.ath.cx>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Dave Olszewski <cxreg@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 15 23:14:53 2010
+To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Mar 15 23:30:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrIYa-0005IP-Kp
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 23:14:40 +0100
+	id 1NrIoH-0005Xq-7D
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 23:30:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936960Ab0COWOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Mar 2010 18:14:35 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59742 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936904Ab0COWOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Mar 2010 18:14:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A258BA28EC;
-	Mon, 15 Mar 2010 18:14:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hUszPdjz9KPY10DbWaNk3soILNY=; b=qUFU+8
-	gyO/o/oybz8yXror7sLInqCpPTaCUbWrg8UksrQ0dD7Qb4MFY5tT/a2eyZa43e26
-	OFNDACQqKWecliUTW/gyIz1zY5Gd5aim1YbdVl6VuwYGkA9ttFDqAxS2hSONiHoD
-	CD5yXNtex3ZqKLLX8ztz1SKTzknzcLOMgyYOo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xJ+iDUvDK/uBPjPMIrQ4sUDvZjmYcQWA
-	suJ5uT47PssIG5tg4RIg48iSoKRwfycYCMMAqRnOMNywvMSy7RmCidQ0BAeK4tdR
-	rRXoxasNLUA38p4joKBLwtZTit7bOom9SvJEc6ZOEPu/0GcYkZCPX44P38QqFaf8
-	ESfMQbtFaKs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A69EA28E9;
-	Mon, 15 Mar 2010 18:14:29 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D1C6DA28E6; Mon, 15 Mar
- 2010 18:14:26 -0400 (EDT)
-In-Reply-To: <1268451633-30046-1-git-send-email-cxreg@pobox.com> (Dave
- Olszewski's message of "Fri\, 12 Mar 2010 19\:40\:33 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1FF7E512-3080-11DF-96EA-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S936972Ab0COWas convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Mar 2010 18:30:48 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:51386 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936949Ab0COWaq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Mar 2010 18:30:46 -0400
+Received: by wwe15 with SMTP id 15so230890wwe.19
+        for <git@vger.kernel.org>; Mon, 15 Mar 2010 15:30:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=DHlKZpkuqDTKXTFemd1WYwkyH4xWSz6/kd6LQ0cvcr8=;
+        b=R4klfAUlZAicleXQ8/nHfYOm9YWyVmDyrhSubwhvKjk4GGKP9lgkTOjWA999WbktOJ
+         zR8Gpa950hIT/kSmOEfcZDDhbTE5mrCRS0BhCboBZ4hXdy9TeCM4ufMFQGSSAvsXbXbZ
+         PuKWu4y5yhyJjTDkFU+DvxTn0mDGHyK+gG6+g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=qXnhVE5n/6FQGbuLIaV8v2JyRu2JXdUamoD+lt6G4SrIOrxJnS8sg6vg5J1A/DBv7w
+         TXXpdktINz2Togtoorl+denkVrn+54/ZoWymEo2pr7KTLbk+eJunBXHhNASywOUxwIM8
+         0TJia69KLQe75inPA//Ik+DOlNxD0Xhu3XzFE=
+Received: by 10.216.87.83 with SMTP id x61mr2356262wee.7.1268692245366; Mon, 
+	15 Mar 2010 15:30:45 -0700 (PDT)
+In-Reply-To: <4B9E69A4.2080304@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142265>
 
-Dave Olszewski <cxreg@pobox.com> writes:
-
-> Similar to commit c8c562a, if a user is resolving conflicts, they may
-> think it wise to stash their current work tree and git pull to see if
-> there are additional changes on the remote.
+On Mon, Mar 15, 2010 at 6:08 PM, Ren=E9 Scharfe
+<rene.scharfe@lsrfire.ath.cx> wrote:
+> Am 15.03.2010 17:03, schrieb Erik Faye-Lund:
+>> Switch to parse-options API while we're at it.
+>>
+>> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+>> ---
+>>
+>> I sometimes find it useful to look at the commit-subject together wi=
+th
+>> the SHA-1s. Using --abbrev increases the chance that the lines fits =
+on
+>> an 80 character wide terminal, making the output easier to read.
+>>
+>> =A0builtin/log.c | =A0 40 ++++++++++++++++++++++------------------
+>> =A01 files changed, 22 insertions(+), 18 deletions(-)
+>>
+>> diff --git a/builtin/log.c b/builtin/log.c
+>> index b70d0f7..020d618 100644
+>> --- a/builtin/log.c
+>> +++ b/builtin/log.c
+>> @@ -1286,8 +1286,11 @@ static int add_pending_commit(const char *arg=
+, struct rev_info *revs, int flags)
+>> =A0 =A0 =A0 return -1;
+>> =A0}
+>>
+>> -static const char cherry_usage[] =3D
+>> -"git cherry [-v] [<upstream> [<head> [<limit>]]]";
+>> +static const char * const cherry_usage[] =3D {
+>> + =A0 =A0 "git cherry [-v] [<upstream> [<head> [<limit>]]]",
+>> + =A0 =A0 NULL
+>> +};
+>> +
+>> =A0int cmd_cherry(int argc, const char **argv, const char *prefix)
+>> =A0{
+>> =A0 =A0 =A0 struct rev_info revs;
+>> @@ -1298,26 +1301,26 @@ int cmd_cherry(int argc, const char **argv, =
+const char *prefix)
+>> =A0 =A0 =A0 const char *upstream;
+>> =A0 =A0 =A0 const char *head =3D "HEAD";
+>> =A0 =A0 =A0 const char *limit =3D NULL;
+>> - =A0 =A0 int verbose =3D 0;
+>> + =A0 =A0 int verbose =3D 0, abbrev =3D 40;
+>>
+>> - =A0 =A0 if (argc > 1 && !strcmp(argv[1], "-v")) {
+>> - =A0 =A0 =A0 =A0 =A0 =A0 verbose =3D 1;
+>> - =A0 =A0 =A0 =A0 =A0 =A0 argc--;
+>> - =A0 =A0 =A0 =A0 =A0 =A0 argv++;
+>> - =A0 =A0 }
+>> + =A0 =A0 struct option options[] =3D {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 OPT__ABBREV(&abbrev),
+>> + =A0 =A0 =A0 =A0 =A0 =A0 OPT__VERBOSE(&verbose),
+>> + =A0 =A0 =A0 =A0 =A0 =A0 OPT_END()
+>> + =A0 =A0 };
 >
-> The stash will fail to save if the index contains unmerged entries, but
-> if the conflicts are resolved, the stash will succeed, and both
-> MERGE_HEAD and MERGE_MSG will be removed.  This is probably a mistake,
-> and we should warn the user and refuse to stash.
+> If I use --no-abbrev, do I get 0 or 40 hash chars? =A0I didn't actual=
+ly
+> test it, but I suspect an "if (!abbrev) abbrev =3D 40;" is needed som=
+ewhere.
+>
 
-Warning is probably Ok, but refusing with die() might be too much.
+"abbrev" is initialized to 40 when declared, so you get the same
+behavior as before by default.
 
-When trying a topic with more than one integration branches (think
-"master", "next, "pu"), and the merge is a bit too hairy that I am not
-very confident with the resolution, I've deliberately used stash to record
-a tentative conflict resolution to avoid contaminating my rerere database:
+>> - =A0 =A0 if (argc > 1 && !strcmp(argv[1], "-h"))
+>> - =A0 =A0 =A0 =A0 =A0 =A0 usage(cherry_usage);
+>> + =A0 =A0 argc =3D parse_options(argc, argv, prefix, options, cherry=
+_usage,
+>> + =A0 =A0 =A0 =A0 PARSE_OPT_KEEP_UNKNOWN);
+>
+> Why do you use PARSE_OPT_KEEP_UNKNOWN here? I think the old option
+> parsing code lazily relied on invalid options being found out by
+> add_pending_commit() later. We can be lazy again by leaving invalid
+> option handling to parse_options(); sure, it changes the error messag=
+e,
+> but for the better.
 
-    $ git merge topic
-    ... heavy conflicts, manually "resolved" to a dubious result ...
-    $ git rerere clear
-    $ git stash save "tentative merge of topic"
-    $ git stash apply
-    ... test test test ...
-    $ git reset --hard
-    $ git checkout another-integration-branch
-    $ git stash apply
-    ... test test test ...
-    ... repeat the above for other integration branches ...
+Actually, It's a mistake, thanks for pointing it out :)
 
-This is using the stash as a glorified form of
+Yeah, I think your suggestion is better. Corrected.
 
-    $ git diff HEAD >./+save-tentative-merge
-
-and then applying it to other integration branches to test out
-
-    $ git reset --hard
-    $ git checkout another-integration-branch
-    $ git apply ./+save-tentative-merge
-
-but it actually is better than diff/apply because stash application uses a
-real three-way merge.
-
-So I am not entirely happy with this feature-removal.
+--=20
+Erik "kusma" Faye-Lund
