@@ -1,64 +1,73 @@
-From: =?UTF-8?Q?Daniel?= <mjucde@o2.pl>
-Subject: =?UTF-8?Q?Re:_merging_unmanaged_working_tree?=
-Date: Mon, 15 Mar 2010 13:34:52 +0100
-Message-ID: <46a29168.6d880e7c.4b9e296c.483a1@o2.pl>
-References: <87ljdtkedl.fsf@dasa3.iem.pw.edu.pl>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: FEATURE REQUEST: Cherry pick in not checked out branch
+Date: Mon, 15 Mar 2010 14:12:19 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1003151359440.7596@pacific.mpi-cbg.de>
+References: <be8f531d1003150139p7cc99700m807ab21bddf8fbb@mail.gmail.com>,<fabb9a1e1003150243o21bab937y122ac61d65777d5f@mail.gmail.com> <SNT124-W1769013489F8B7CE42C581C42E0@phx.gbl> <4B9E13A4.3090502@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org,
-	=?UTF-8?Q?=C5=81ukasz_Stelmach?= <lukasz.stelmach@iem.pw.edu.pl>
-X-From: git-owner@vger.kernel.org Mon Mar 15 13:35:43 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Tim Mazid <timmazid@hotmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Mar 15 14:07:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nr9WJ-0003gG-BE
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 13:35:43 +0100
+	id 1NrA1R-0001is-UU
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Mar 2010 14:07:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756729Ab0COMfi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Mar 2010 08:35:38 -0400
-Received: from tur.go2.pl ([193.17.41.50]:58174 "EHLO tur.go2.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753459Ab0COMfi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Mar 2010 08:35:38 -0400
-Received: from mailout1.go2.pl (mailout1.go2.pl [193.17.41.11])
-	by tur.go2.pl (o2.pl Mailer 2.0.1) with ESMTP id 70CE7230A77
-	for <git@vger.kernel.org>; Mon, 15 Mar 2010 13:35:36 +0100 (CET)
-Received: from mailout1.go2.pl (unknown [10.0.0.104])
-	by mailout1.go2.pl (Postfix) with ESMTP id 6BAFF3003B;
-	Mon, 15 Mar 2010 13:34:53 +0100 (CET)
-Received: from o2.pl (unknown [10.0.0.76])
-	by mailout1.go2.pl (Postfix) with SMTP;
-	Mon, 15 Mar 2010 13:34:53 +0100 (CET)
-In-Reply-To: <87ljdtkedl.fsf@dasa3.iem.pw.edu.pl>
-X-Originator: 153.19.128.10
+	id S936259Ab0CONHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Mar 2010 09:07:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54061 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S934247Ab0CONHs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Mar 2010 09:07:48 -0400
+Received: (qmail invoked by alias); 15 Mar 2010 13:07:46 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp038) with SMTP; 15 Mar 2010 14:07:46 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+LQ/N56dyLR890YPJPpeof/p0QGfyQiYyWfUBqwh
+	bytA1tMkgUhB6j
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <4B9E13A4.3090502@drmicha.warpmail.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.52000000000000002
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142208>
 
-> Hello.
->=20
-> Is there a method to (dry?) run git-merge to detect conflicts
-> on:
->=20
-> * current HEAD (or working tree)
-> * selected previous revision (the one used to "branch")
-> * directory tree (or a single file) "branched" with git-archive
->=20
-> I'd like to synchronize portable working tree but don't want to keep
-> history in it.
->=20
-> --=20
-> Mi=C5=82ego dnia,
-> =C5=81ukasz Stelmach
-> --
+Hi,
 
-Does "git-merge --squash" do what you want? You still need to have
-the other tree managed by git (even for a while).
+On Mon, 15 Mar 2010, Michael J Gruber wrote:
 
---=20
-Daniel
+> Tim Mazid venit, vidit, dixit 15.03.2010 10:54:
+> 
+> > Could we not make cherry-pick "stash, checkout, cherry-pick, checkout, 
+> > pop"?
+> 
+> Sure, that would be 5 command invocations requiring a work tree ;)
+
+Actually, if you want something that does not change all the timestamps, 
+and that does only trivial merges (i.e. no conflicts), you may have luck 
+with something like this:
+
+	test $# = 2 || {
+		echo "Usage: $0 <commit> <branch>" >&2
+		exit 1
+	}
+	GIT_INDEX_FILE=.git/tmp.index &&
+	export GIT_INDEX_FILE &&
+	git read-tree "$2" &&
+	git diff "$1"^! | git apply --index &&
+	tree=$(git write-tree) &&
+	msg="$(git cat-file commit "$1" | sed '1,/^$/d')" &&
+	commit=$(echo "$msg" | git commit-tree $tree -p "$2") &&
+	git update-ref -m cherry-pick-2.0 "$2" $commit
+
+Totally Untested(tm),
+Dscho
