@@ -1,97 +1,97 @@
 From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: [patch 07/15] host-IRIX.patch
-Date: Tue, 16 Mar 2010 10:27:07 -0500
-Message-ID: <VUV1ChwKH_zLPsIikaNeBZfWtyUI9YmyOzkiMdEjHJ0PuUAnPbDsEw@cipher.nrlssc.navy.mil>
-References: <20100316054220.075676000@mlists.thewrittenword.com> <20100316054331.991677000@mlists.thewrittenword.com>
+Subject: Re: [patch 00/15] Portability Patches v3
+Date: Tue, 16 Mar 2010 11:03:13 -0500
+Message-ID: <2PY18tW3y3KTt2QABeUBfvQDHHcMVjCimIrW5lt7EM3Y9NG6ntwZeA@cipher.nrlssc.navy.mil>
+References: <20100316054220.075676000@mlists.thewrittenword.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-X-From: git-owner@vger.kernel.org Tue Mar 16 16:27:18 2010
+X-From: git-owner@vger.kernel.org Tue Mar 16 17:03:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrYfu-0006fb-96
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 16:27:18 +0100
+	id 1NrZEr-0000JV-Vo
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 17:03:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966442Ab0CPP1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Mar 2010 11:27:12 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:53963 "EHLO
+	id S1759026Ab0CPQDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Mar 2010 12:03:17 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:34684 "EHLO
 	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966335Ab0CPP1L (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Mar 2010 11:27:11 -0400
-Received: by mail.nrlssc.navy.mil id o2GFR7N0018083; Tue, 16 Mar 2010 10:27:07 -0500
-In-Reply-To: <20100316054331.991677000@mlists.thewrittenword.com>
-X-OriginalArrivalTime: 16 Mar 2010 15:27:07.0349 (UTC) FILETIME=[237B5850:01CAC51D]
+	with ESMTP id S1758944Ab0CPQDQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Mar 2010 12:03:16 -0400
+Received: by mail.nrlssc.navy.mil id o2GG3EQT021820; Tue, 16 Mar 2010 11:03:14 -0500
+In-Reply-To: <20100316054220.075676000@mlists.thewrittenword.com>
+X-OriginalArrivalTime: 16 Mar 2010 16:03:13.0852 (UTC) FILETIME=[2ED177C0:01CAC522]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142339>
 
 On 03/16/2010 12:42 AM, Gary V. Vaughan wrote:
+> Here are the portability patches we needed at TWW to enable
+> git-1.7.0.2 to compile and run on all of the wide range of Unix
+> machines we support.  These patches apply to the git-1.7.0.2 release,
+> and address all of the feedback from the previous two times I posted
+> them to this list, most particularly splitting everything into many
+> small self-contained chunks.
 > 
-> Irix 6.5 does not define 'sgi', but does define '__sgi'.
-> 
-> Also, Irix 6.5 requires _BSD_TYPES to be defined in order for the BSD
-> u_short types et. al. to be declared properly.
+> Note that I have not invested the time to figure out why the testsuite
+> is mostly useless on everything but Linux and Solaris 8+, because I'm
+> reasonably satisfied that the build itself is working properly.  Most
+> likely, it is merely GNUisms in the way the test cases call external
+> tools.  But maybe I'm missing something, but even the 3 new patches to
+> address test errors when diff does not support the -u option don't
+> improve the testsuite situation on HPUX, AIX, OSF1 and Solaris 7 and
+> older.
 
-Which IRIX release (uname -R) and compiler version are you using?
+Which shell are you using?  If you're trying to use Korn or /usr/xpg4/bin/sh
+on Solaris, you'll have problems, but it is possible.  I can send you a
+patch.
 
-I have IRIX 6.5.29m and MIPSpro Compiler 7.4.4m.
+I have 3 patches that I apply on top of master which allows me to compile and
+test on Solaris 7.  I remove all but the first when installing, since it is
+necessary to compile and the others are only necessary for the test suite.
 
-Both 'sgi' and '__sgi' appear to be predefined by the preprocessor
-on my system.  I wasn't aware of '__sgi' when I added 'sgi', otherwise
-I would have used it.
+  1) Remove const declaration from arrays with non-constant initializers
+  2) t5100/*.mbox: use '646' rather than 'us-ascii' for Solaris
+  3) t/test-lib.sh: support Korn shell by converting GIT_EXIT_OK to GIT_EXIT_CODE
 
-On my system, defining _SGI_SOURCE causes _SGIAPI to be enabled which
-causes all of the BSD types to be enabled.  In my header files in
-/usr/include/ everywhere I see a test for _BSD_TYPES, I also see a
-test for _SGIAPI (or something equivalent) like this:
 
-   #if _SGIAPI || defined(_BSD_TYPES)
-
-So defining _BSD_TYPES will probably not affect compiling on IRIX for
-me (though I haven't tested your patches yet), but do your header
-files not do the same thing with _SGI_SOURCE, _SGIAPI, and _BSD_TYPES?
-
-Which shell are you using? Bash? or the native Korn shell?  If you're
-trying to use the Korn shell, then you'll need a patch to t/test-lib.sh
-in order for the test suite to work properly.  I can send it to you if
-you'd like.
-
-I compile and test with the following config.mak settings:
+Here's the config.mak file I use:
 
 GIT_SKIP_TESTS := \
-   t3900.1[129] t3900.2[0234] \
-   t5100.5 t5100.1[09] \
-   t8005.[234]
-export GIT_SKIP_TESTS
+   t1304.3 \
+   t3900.2[23] \
+   t5000.1[5-79] t5000.2[013-6] t5000.41 \
+   t6030.1[23] \
+   t8005.[23]
 
-# perl 5.8.0
-# python 2.1
-# GNU tar 1.2
-PERL_PATH = /apps/bin/perl
-PYTHON_PATH = /apps/bin/python
-TAR = /sw/local/bin/gtar
+GIT_TEST_CMP = cmp -s
 
-CC = c99
-CFLAGS = -n32 -O2
+export GIT_SKIP_TESTS GIT_TEST_CMP
 
-NO_C99_FORMAT = 1
+SHELL_PATH = /usr/xpg4/bin/sh
+
+# This is an old GNU tar that's why some of the
+# tests in t5000? still fail
+TAR = /apps/bin/gtar
+
+CC = /opt/SUNWspro/bin/cc
+
+# zlib is installed in /apps
+CFLAGS = -fast -native -I/apps/include
+LDFLAGS = -L/apps/lib
+
 NO_CURL = 1
 NO_TCLTK = 1
-NO_MMAP =
 NO_OPENSSL = 1
 BLK_SHA1 = 1
+NO_PYTHON = 1
 DEFAULT_PAGER = more
-
-# For IRIX <= 6.5.20 compatibility (uname -R)
-# i.e. the next two are not necessary for IRIX > 6.5.20
-NO_STRLCPY = 1
-NO_DEFLATE_BOUND = 1
 
 -brandon
