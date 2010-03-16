@@ -1,77 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: FEATURE REQUEST: Comment assignment on branches
-Date: Mon, 15 Mar 2010 23:03:31 -0700
-Message-ID: <7vljdsu7kc.fsf@alter.siamese.dyndns.org>
-References: <be8f531d1003150133n3ea64109u7d573dbd533ffa48@mail.gmail.com>
- <20100315213221.GA12941@vidovic> <7vhbohi80n.fsf@alter.siamese.dyndns.org>
- <buovdcw6fjj.fsf@dhlpc061.dev.necel.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [patch 00/15] Portability Patches v3
+Date: Tue, 16 Mar 2010 07:18:48 +0100
+Message-ID: <fabb9a1e1003152318m204f178cpbe9eb82cb2742586@mail.gmail.com>
+References: <20100316054220.075676000@mlists.thewrittenword.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Maxim Treskin <zerthurd@gmail.com>, git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Mar 16 07:03:52 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
+X-From: git-owner@vger.kernel.org Tue Mar 16 07:19:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrPsd-0005BW-80
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 07:03:51 +0100
+	id 1NrQ7f-0001Nc-Cl
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 07:19:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935533Ab0CPGDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Mar 2010 02:03:46 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45685 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935167Ab0CPGDp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Mar 2010 02:03:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 370BDA29DB;
-	Tue, 16 Mar 2010 02:03:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6dPqibrWpdCj6lQzk0PzKUyBS+k=; b=o/joQf
-	5+wPJ18v+cTcoo3/IjAPt/2i3C0U9jj5oO7+rhsAYin3Z9RyDqdg906k4S5wyz3q
-	4C1rVUOD4kpq9VwnP1h4V4RMKMVB6hRXl5ZI/4fxznTOjl/3MIlk4G8d9Hl+YRnI
-	pSTQskXv1Z568CLwN/RuPXaTSOXpnjgFf1+xw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mIzeM6rRj5fqUqeG2VCc0j/UPxipUFjy
-	/19JU4+vUmBK4dy39m1ckFHszqhflTiw3VqvCK2kUTwFUVXxnMMGW9Cs4BhRFAPx
-	oc2havDMp5yUCRm5eQy0ExaPGSv1GzdYVxccZcnqJXunp8t6Hbah/nFegOewK5v8
-	z9CIbfaspdY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EB1D4A29D9;
-	Tue, 16 Mar 2010 02:03:37 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2699AA29D8; Tue, 16 Mar
- 2010 02:03:33 -0400 (EDT)
-In-Reply-To: <buovdcw6fjj.fsf@dhlpc061.dev.necel.com> (Miles Bader's message
- of "Tue\, 16 Mar 2010 13\:45\:04 +0900")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A9C2D00E-30C1-11DF-A440-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S965933Ab0CPGTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Mar 2010 02:19:12 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:32838 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965916Ab0CPGTJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Mar 2010 02:19:09 -0400
+Received: by pwi1 with SMTP id 1so2459274pwi.19
+        for <git@vger.kernel.org>; Mon, 15 Mar 2010 23:19:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=ORSTUbF7P/kcj1xqFSn7pq9RZFQcF10Fza4bPIeSoBM=;
+        b=B13z1YFvhPqZvDZ7QmwsO/7sFSN7skSMpCbvlSvlBoccwPsvcdSIGk7a3CHx/x2ltM
+         HWLRUqANaBP3dtfsUqAj1YCrrlhlDJjCT87Ur0sE+9Yd9hKPCaDzU+A/Iiq3YrW1QJGQ
+         E3GgQFSgzKmrjObOwsxctakEnA7K5F+tx9u0w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=sRdYvCdMJ9DHxtnx9XmvZfUDxldlmd5LF0hlFnXyykbHNukaMtjVY7seVPopoUvMLa
+         E5kJUU4TM99ySWZmDYOpq/e9/Z+DCVyu9Vx8zn/dNnutfLRSbCdnJLMihQ6LJCHtGm5A
+         PQiM8yLP4dyGrJkUUvyKhqDboC11RHirobsTY=
+Received: by 10.143.129.2 with SMTP id g2mr2479848wfn.273.1268720348661; Mon, 
+	15 Mar 2010 23:19:08 -0700 (PDT)
+In-Reply-To: <20100316054220.075676000@mlists.thewrittenword.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142320>
 
-Miles Bader <miles@gnu.org> writes:
+Heya,
 
-> Junio C Hamano <gitster@pobox.com> writes:
->> My understanding is that it is more like:
->>
->>     [branch "frotz"]
->>     	comment = "This is to add frotz command to the system"
->>
->> I do not have a fundamental objection to such a feature, but the
->> presentation needs to be well thought out.
->
-> This would seem especially useful for publicly visible branches...
+On Tue, Mar 16, 2010 at 06:42, Gary V. Vaughan
+<git@mlists.thewrittenword.com> wrote:
+> Here are the portability patches we needed at TWW to enable
+> git-1.7.0.2 to compile and run on all of the wide range of Unix
+> machines we support.
 
-If you mean by "publicly visible" branches in public repositories, I
-suspect not.  At places like repo.or.cz, github, or installations managed
-by gitosis, you typically do not have direct access to $GIT_DIR/config
-files (they belong to site administrators) in your repositories, and that
-is not likely to change for security reasons.
+Oh wow, thanks! Glad to see you followed up on this, awesome!
+
+> Note that I have not invested the time to figure out why the testsuite
+> is mostly useless on everything but Linux and Solaris 8+, because I'm
+> reasonably satisfied that the build itself is working properly.
+
+I'm curious now, what kind of errors are you getting? Would you mind
+perhaps posting a few to the list in a new thread?
+
+-- 
+Cheers,
+
+Sverre Rabbelier
