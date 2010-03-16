@@ -2,84 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
-Received: (qmail 19082 invoked by uid 107); 6 Mar 2010 12:58:05 -0000
+X-Spam-Status: No, score=1.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+Received: (qmail 15807 invoked by uid 107); 16 Mar 2010 17:54:24 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Sat, 06 Mar 2010 07:58:02 -0500
+    by peff.net (qpsmtpd/0.40) with ESMTP; Tue, 16 Mar 2010 13:54:22 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751213Ab0CFM5g (ORCPT <rfc822;peff@peff.net>);
-	Sat, 6 Mar 2010 07:57:36 -0500
-Received: from mail-fx0-f219.google.com ([209.85.220.219]:58572 "EHLO
-	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750813Ab0CFM5e convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Mar 2010 07:57:34 -0500
-Received: by fxm19 with SMTP id 19so4997740fxm.21
-        for <git@vger.kernel.org>; Sat, 06 Mar 2010 04:57:33 -0800 (PST)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=OTnxYBy7zgweoillVrYi+/d7MDQ9VAnFCjsb2nAtxZE=;
-        b=aVKn//JRfUw2sCwAOOxVI/C0wJUcVEtul6AUCAXqipVcyC/YFrwgfeifu7Pn9CxjXz
-         k0E0SamEie6fjEnmWrXNF1736q5aXKHsV8NaRLmltUf46020vUMVqiL/0WWcsZg6LgEf
-         CUCfP+gfWhuj5bT++fXGUe7af+ak8/dxHk7Ao=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=GJ8rjUM3pYMXaBi1g8HdILfjGLBKK32OCjQqZq26qr5I2BKkUYcuXa6cT5NnILNpMG
-         Ayb2QNStp7dWLINLSfYLzp0h6+AzjvFGEtEiSXHhQIQ/1meW9XXv0bDz6bewNptiP4UZ
-         0V++G5DRS5QuDTSELB15NceqPDFLdhsQeXFM8=
-MIME-Version: 1.0
-Received: by 10.223.143.82 with SMTP id t18mr2620492fau.52.1267880252950; Sat, 
-	06 Mar 2010 04:57:32 -0800 (PST)
-In-Reply-To: <7vpr3itn89.fsf@alter.siamese.dyndns.org>
-References: <20100305215253.364.63583.reportbug@localhost>
-	 <20100305221950.GB5083@progeny.tock>
-	 <7vpr3itn89.fsf@alter.siamese.dyndns.org>
-Date:	Sat, 6 Mar 2010 13:57:32 +0100
-Message-ID: <36ca99e91003060457s6417f800uc7a3e126ee6b7d6f@mail.gmail.com>
-Subject: Re: git-core: conflictstyle=diff3 doesn't actually use diff3 
-	compatible format
-From:	Bert Wesarg <bert.wesarg@googlemail.com>
+	id S938186Ab0CPRxt (ORCPT <rfc822;peff@peff.net>);
+	Tue, 16 Mar 2010 13:53:49 -0400
+Received: from mailgw1.uni-kl.de ([131.246.120.220]:42500 "EHLO
+	mailgw1.uni-kl.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S937249Ab0CPRxr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Mar 2010 13:53:47 -0400
+Received: from dfki.uni-kl.de (dfki-1002.dfki.uni-kl.de [131.246.195.2])
+	by mailgw1.uni-kl.de (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o2GHr4il004680;
+	Tue, 16 Mar 2010 18:53:04 +0100
+Received: from serv-2100.kl.dfki.de (serv-2100.kl.dfki.de [192.168.21.180])
+	by dfki.uni-kl.de (8.13.8+Sun/8.11.4) with ESMTP id o2GHr3qG002292;
+	Tue, 16 Mar 2010 18:53:03 +0100 (CET)
+Received: from pc-2163.kl.dfki.de (pc-2163.kl.dfki.de [192.168.21.153])
+	by serv-2100.kl.dfki.de (8.13.8+Sun/8.13.8) with ESMTP id o2GHr269018875;
+	Tue, 16 Mar 2010 18:53:03 +0100 (CET)
+Received: (from hendeby@localhost)
+	by pc-2163.kl.dfki.de (8.14.3/8.14.3/Submit) id o2GHqwS2009803;
+	Tue, 16 Mar 2010 18:52:58 +0100
+From:	Gustaf Hendeby <hendeby@isy.liu.se>
 To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Stefan Monnier <monnier@iro.umontreal.ca>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Cc:	git@vger.kernel.org, Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: [PATCH v2] Improve error messages from 'git stash show'
+Date:	Tue, 16 Mar 2010 18:52:37 +0100
+Message-Id: <1268761957-9769-1-git-send-email-hendeby@isy.liu.se>
+X-Mailer: git-send-email 1.7.0.2.274.gba5d.dirty
+In-Reply-To: <7v4okgfbrt.fsf@alter.siamese.dyndns.org>
+References: <7v4okgfbrt.fsf@alter.siamese.dyndns.org>
+To:	Junio C Hamano <gitster@pobox.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Mar 5, 2010 at 23:31, Junio C Hamano <gitster@pobox.com> wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->>> I can't live without conflictstyle=diff3m and I'm very happy it exists.
->>> But it has a little problem: it uses "|||||||\n" as a separator for the
->>> ancestor version of the text, whereas diff3 uses "||||||| <ancestorname>\n".
->>> The difference is harmless for a human (tho the <ancestorname> can sometimes
->>> be useful, assuming it's meaningful), but it makes some tools fail to
->>> recognize the conflict markers properly.
->>> So please add a " BASE" or " ANCESTOR" after the "|||||||".
->>
->> No opinion on this myself.  I’d be interested to hear from xdiff people
->> whether it should be easy to add the ancestor name to the output.
->
-> I don't think there was any xdiff people involved in this area.
->
-> I suspect that our tools actually rely on the common ancestor markers not
-> having any extra cruft after them, so it would be introducing a bug if you
-> change this output without changing the places that read them (I know
-> about "rerere", but there may be others).
+The previous error message "fatal: Needed a single revision" is not
+very informative.
 
-rerere needs an isspace() after the specified marker length. So I
-assume it could live with extra cruft after the | marker and a space.
+Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
+---
 
-BTW: Am I right, that rerere would need to handle my new conflict style too?
+On 03/16/2010 05:53 PM, Junio C Hamano wrote:
+>>>> +	b_commit=$(git rev-parse --quiet --verify "$w_commit^") ||
+>>>> >>>  +		die 'Stash not found'
+>>>> >>>  +
+>>> >>  
+>>> >>  Because you checked have_stash upfront, an error detected here cannot be
+>>> >>  "stash not found".  It is something else, isn't it?
+>> >
+>> >  This case occurs when you do something like git stash foo, where foo is
+>> >  no appropriate stash to show.  Would something like this be more
+>> >  informative in the case of git stash foo:
+>> >
+>> >  Stash entry 'foo' could not be found
+> That is more like "'foo' is not a stash", isn't it?
 
-Bert
+I find your suggestion much clearer.  Thank you!
+
+/Gustaf
+
+ git-stash.sh |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/git-stash.sh b/git-stash.sh
+index aa47e54..59db3dc 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -210,14 +210,18 @@ list_stash () {
+ }
+ 
+ show_stash () {
++	have_stash || die 'No stash found'
++
+ 	flags=$(git rev-parse --no-revs --flags "$@")
+ 	if test -z "$flags"
+ 	then
+ 		flags=--stat
+ 	fi
+ 
+-	w_commit=$(git rev-parse --verify --default $ref_stash "$@") &&
+-	b_commit=$(git rev-parse --verify "$w_commit^") &&
++	w_commit=$(git rev-parse --quiet --verify --default $ref_stash "$@") &&
++	b_commit=$(git rev-parse --quiet --verify "$w_commit^") ||
++		die "'$*' is not a stash"
++
+ 	git diff $flags $b_commit $w_commit
+ }
+ 
+-- 
+1.7.0.2.274.gba5d.dirty
+
