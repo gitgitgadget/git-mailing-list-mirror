@@ -1,73 +1,77 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH] Fix indentation problem in git-ls-files(1)
-Date: Tue, 16 Mar 2010 20:47:57 +0100
-Message-ID: <m2pr34kpzm.fsf@igel.home>
-References: <m2tyswb1jp.fsf@igel.home>
-	<7v3a0fr740.fsf@alter.siamese.dyndns.org> <m3r5nzw05p.fsf@hase.home>
-	<ca433831003070927h4c3e24e1m75c7be88355f9663@mail.gmail.com>
-	<m23a01yzcc.fsf@igel.home> <4B9F2DB0.30400@viscovery.net>
+From: Harry Putnam <reader@newsguy.com>
+Subject: Retrieve a specific file from some revision.
+Date: Tue, 16 Mar 2010 13:55:38 -0500
+Organization: Still searching...
+Message-ID: <87vdcwxfit.fsf@newsguy.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Mar 16 20:48:09 2010
+Cc: bazaar@lists.canonical.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 16 22:46:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrckK-0007UO-P2
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 20:48:09 +0100
+	id 1NreZz-0002FK-AP
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 22:45:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755846Ab0CPTsE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Mar 2010 15:48:04 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:40134 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753584Ab0CPTsB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Mar 2010 15:48:01 -0400
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id 7345D1C002CA;
-	Tue, 16 Mar 2010 20:47:58 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id 69DF9902C1;
-	Tue, 16 Mar 2010 20:47:58 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.3.149])
-	by localhost (dynscan1.mnet-online.de [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id L-7Krf2cwF4Y; Tue, 16 Mar 2010 20:47:57 +0100 (CET)
-Received: from igel.home (DSL01.83.171.163.37.ip-pool.NEFkom.net [83.171.163.37])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Tue, 16 Mar 2010 20:47:57 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 37673CA297; Tue, 16 Mar 2010 20:47:57 +0100 (CET)
-X-Yow: I demand IMPUNITY!
-In-Reply-To: <4B9F2DB0.30400@viscovery.net> (Johannes Sixt's message of "Tue,
-	16 Mar 2010 08:05:20 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.94 (gnu/linux)
+	id S1750886Ab0CPVpa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Mar 2010 17:45:30 -0400
+Received: from lo.gmane.org ([80.91.229.12]:39162 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750794Ab0CPVp3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Mar 2010 17:45:29 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NreZT-0001hd-VZ
+	for git@vger.kernel.org; Tue, 16 Mar 2010 22:45:03 +0100
+Received: from c-98-215-178-110.hsd1.in.comcast.net ([98.215.178.110])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Mar 2010 22:45:03 +0100
+Received: from reader by c-98-215-178-110.hsd1.in.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Mar 2010 22:45:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: c-98-215-178-110.hsd1.in.comcast.net
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/24.0.50 (gnu/linux)
+Cancel-Lock: sha1:Q8EHUGTuuq7kSvqOFhjkJ/HAOeE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142351>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+First, let me just make sure this group is the general
+question/discussion group for the versioning tool `bazaar' on the web
+at:  http://bazaar.canonical.com/en/
 
-> Andreas Schwab schrieb:
->> The nested list in the description of the -t option wasn't properly
->> indented.  Additionally, make it a horizontal labeled list since the
->> labels are all short.
->
-> IMHO, converting a vertical list to a horizontal list is a step in the
-> wrong direction, even if the labels are short. It is far easier to scan a
-> vertical list for a match than a horizontal list.
+I asked this question on a mercurial group too.  Probably should have
+just crossposted so as not to have two different messgae-ids involved.
+I have done that with this post on bazarre-ng and git groups.
 
-The linebreak after the label is useless when all labels are much
-shorter than the indentation.
+I'm not just jerking around but want to know how this would be done.
+Just reading docu doesn't usually really help me until wade into
+something but this time I want to choose a versioning tool that I can
+readily do things I've learned to rely on.
 
-Andreas.
+Reprint:
+-------        ---------       ---=---       ---------      -------- 
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+I've never used any versioning tool but cvs.  Something I do often
+with cvs is retrieve a previous state of a single file..
+
+Say I wanted to use the hosts file as it was at revision 1.23.
+Not just a diff, but the actual file.
+(I would)
+  cd cvsrepo
+    cvs update -p -r1.23 <HOST>/etc/hosts > ~/hosts_HOST_r1.23
+
+  Would create the file as it was at rev. 1.23 for host HOST.
+
+How would I do that in bazaar/git? (which ever newsgroup this is on)
+
+
+ 
