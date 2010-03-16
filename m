@@ -1,146 +1,221 @@
 From: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-Subject: [patch 12/15] no-inet_ntop.patch
-Date: Tue, 16 Mar 2010 05:42:32 +0000
-Message-ID: <20100316054357.859059000@mlists.thewrittenword.com>
+Subject: [patch 14/15] no-ss_family.patch
+Date: Tue, 16 Mar 2010 05:42:34 +0000
+Message-ID: <20100316054408.187068000@mlists.thewrittenword.com>
 References: <20100316054220.075676000@mlists.thewrittenword.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 16 06:53:24 2010
+X-From: git-owner@vger.kernel.org Tue Mar 16 06:53:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrPiU-0002vN-H2
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 06:53:22 +0100
+	id 1NrPiV-0002vN-3B
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 06:53:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933907Ab0CPFw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Mar 2010 01:52:59 -0400
-Received: from mail1.thewrittenword.com ([69.67.212.77]:54133 "EHLO
+	id S935279Ab0CPFxE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Mar 2010 01:53:04 -0400
+Received: from mail1.thewrittenword.com ([69.67.212.77]:50833 "EHLO
 	mail1.thewrittenword.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757295Ab0CPFwz (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1757361Ab0CPFwz (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 16 Mar 2010 01:52:55 -0400
-X-Greylist: delayed 599 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Mar 2010 01:52:55 EDT
 Received: from mail1.il.thewrittenword.com (emma-internal-gw.il.thewrittenword.com [192.168.13.25])
-	by mail1.thewrittenword.com (Postfix) with ESMTP id 152A15CDF
-	for <git@vger.kernel.org>; Tue, 16 Mar 2010 06:03:20 +0000 (UTC)
-X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com 152A15CDF
+	by mail1.thewrittenword.com (Postfix) with ESMTP id 586E25CE3
+	for <git@vger.kernel.org>; Tue, 16 Mar 2010 06:03:30 +0000 (UTC)
+X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com 586E25CE3
 Received: from akari.il.thewrittenword.com (akari.il.thewrittenword.com [10.191.57.57])
-	by mail1.il.thewrittenword.com (Postfix) with ESMTP id 17429DE9;
-	Tue, 16 Mar 2010 05:43:58 +0000 (UTC)
+	by mail1.il.thewrittenword.com (Postfix) with ESMTP id 6284EDE8;
+	Tue, 16 Mar 2010 05:44:08 +0000 (UTC)
 Received: by akari.il.thewrittenword.com (Postfix, from userid 1048)
-	id F20F111D4D5; Tue, 16 Mar 2010 05:43:57 +0000 (UTC)
+	id 59D8611D4D5; Tue, 16 Mar 2010 05:44:08 +0000 (UTC)
 User-Agent: quilt/0.46-1
-Content-Disposition: inline; filename=no-inet_ntop.patch
+Content-Disposition: inline; filename=no-ss_family.patch
 X-Virus-Scanned: clamav-milter 0.95.3 at maetel.il.thewrittenword.com
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142305>
 
-Being careful not to overwrite the results of testing for hstrerror in
-libresolv, also test whether inet_ntop/inet_pton are available from
-that library.
+Systems that do not provide ss_family in sockaddr_storage do not compile.
+
+This patch adds a configure test, and a new Makefile define along with
+default settings for HPUX-11.00, Solaris-2.6 and others.
+
+I've also added a configure test to set NO_SOCKADDR_STORAGE
+appropriately, rather than relying on the default settings in
+Makefile.
 ---
- Makefile      |    6 ++++++
- config.mak.in |    2 ++
- configure.ac  |   38 ++++++++++++++++++++++++++++++--------
- 3 files changed, 38 insertions(+), 8 deletions(-)
+ Makefile      |   15 +++++++++++++++
+ config.mak.in |    1 +
+ configure.ac  |   17 +++++++++++++++++
+ daemon.c      |   31 ++++++++++++++++++++-----------
+ 4 files changed, 53 insertions(+), 11 deletions(-)
 
+Index: b/daemon.c
+===================================================================
+--- a/daemon.c
++++ b/daemon.c
+@@ -591,19 +591,28 @@ static int execute(struct sockaddr *addr
+ static int addrcmp(const struct sockaddr_storage *s1,
+     const struct sockaddr_storage *s2)
+ {
+-	if (s1->ss_family != s2->ss_family)
+-		return s1->ss_family - s2->ss_family;
+-	if (s1->ss_family == AF_INET)
+-		return memcmp(&((struct sockaddr_in *)s1)->sin_addr,
+-		    &((struct sockaddr_in *)s2)->sin_addr,
+-		    sizeof(struct in_addr));
++#ifndef NO_SS_FAMILY_IN_SOCKADDR_X
++	sa_family_t family = s1->ss_family;
++	sa_family_t family2 = s2->ss_family;
++#else
++	sa_family_t family = ((struct sockaddr *)s1)->sa_family;
++	sa_family_t family2 = ((struct sockaddr *)s2)->sa_family;
++#endif
++
++        if (family != family2)
++                return family - family2;
++        if (family == AF_INET)
++                return memcmp(&((struct sockaddr_in *)s1)->sin_addr,
++                    &((struct sockaddr_in *)s2)->sin_addr,
++                    sizeof(struct in_addr));
+ #ifndef NO_IPV6
+-	if (s1->ss_family == AF_INET6)
+-		return memcmp(&((struct sockaddr_in6 *)s1)->sin6_addr,
+-		    &((struct sockaddr_in6 *)s2)->sin6_addr,
+-		    sizeof(struct in6_addr));
++        if (family == AF_INET6)
++                return memcmp(&((struct sockaddr_in6 *)s1)->sin6_addr,
++                    &((struct sockaddr_in6 *)s2)->sin6_addr,
++                    sizeof(struct in6_addr));
+ #endif
+-	return 0;
++
++        return 0;
+ }
+ 
+ static int max_connections = 32;
 Index: b/Makefile
 ===================================================================
 --- a/Makefile
 +++ b/Makefile
-@@ -939,6 +939,12 @@ ifeq ($(uname_S),HP-UX)
- 	SNPRINTF_RETURNS_BOGUS = YesPlease
- 	ifeq ($(uname_R),B.10.20)
- 		NO_PREAD = YesPlease
-+		NO_INET_NTOP = YesPlease
-+		NO_INET_PTON = YesPlease
+@@ -122,6 +122,9 @@ all::
+ # Define NO_SOCKADDR_STORAGE if your platform does not have struct
+ # sockaddr_storage.
+ #
++# Define NO_SS_FAMILY_IN_SOCKADDR_X if your platform lacks ss_family
++# in sockaddr_storage, sockaddr_in and sockaddr_in6.
++#
+ # Define NO_ICONV if your libc does not properly support iconv.
+ #
+ # Define OLD_ICONV if your library has an old iconv(), where the second
+@@ -700,6 +703,7 @@ ifeq ($(uname_S),OSF1)
+ 	BASIC_CFLAGS += -D_OSF_SOURCE
+ 	NO_STRTOULL = YesPlease
+ 	NO_NSEC = YesPlease
++	NO_SS_FAMILY_IN_SOCKADDR_X = YesPlease
+ endif
+ ifeq ($(uname_S),Linux)
+ 	NO_STRLCPY = YesPlease
+@@ -777,6 +781,7 @@ ifeq ($(uname_S),SunOS)
+ 		NO_HSTRERROR = YesPlease
+ 		NO_IPV6 = YesPlease
+ 		NO_SOCKADDR_STORAGE = YesPlease
++		NO_SS_FAMILY_IN_SOCKADDR_X = YesPlease
+ 		NO_UNSETENV = YesPlease
+ 		NO_SETENV = YesPlease
+ 		NO_STRLCPY = YesPlease
+@@ -788,6 +793,7 @@ ifeq ($(uname_S),SunOS)
+ 		NEEDS_RESOLV = YesPlease
+ 		NO_IPV6 = YesPlease
+ 		NO_SOCKADDR_STORAGE = YesPlease
++		NO_SS_FAMILY_IN_SOCKADDR_X = YesPlease
+ 		NO_UNSETENV = YesPlease
+ 		NO_SETENV = YesPlease
+ 		NO_STRLCPY = YesPlease
+@@ -847,6 +853,9 @@ ifeq ($(uname_S),FreeBSD)
+ 		NO_UINTMAX_T = YesPlease
+ 		NO_STRTOUMAX = YesPlease
+ 	endif
++	ifeq ($(shell expr "$(uname_V).$(uname_R)" : '5\.[012]'),3)
++		NO_SS_FAMILY_IN_SOCKADDR_X = YesPlease
 +	endif
-+	ifeq ($(uname_R),B.11.00)
-+		NO_INET_NTOP = YesPlease
-+		NO_INET_PTON = YesPlease
+ endif
+ ifeq ($(uname_S),OpenBSD)
+ 	NO_STRCASESTR = YesPlease
+@@ -895,6 +904,7 @@ ifeq ($(uname_S),IRIX)
+ 	NO_MEMMEM = YesPlease
+ 	NO_MKSTEMPS = YesPlease
+ 	NO_MKDTEMP = YesPlease
++	NO_SS_FAMILY_IN_SOCKADDR_X = YesPlease
+ 	# When compiled with the MIPSpro 7.4.4m compiler, and without pthreads
+ 	# (i.e. NO_PTHREADS is set), and _with_ MMAP (i.e. NO_MMAP is not set),
+ 	# git dies with a segmentation fault when trying to access the first
+@@ -941,10 +951,12 @@ ifeq ($(uname_S),HP-UX)
+ 		NO_PREAD = YesPlease
+ 		NO_INET_NTOP = YesPlease
+ 		NO_INET_PTON = YesPlease
++		NO_SS_FAMILY_IN_SOCKADDR_X = YesPlease
+ 	endif
+ 	ifeq ($(uname_R),B.11.00)
+ 		NO_INET_NTOP = YesPlease
+ 		NO_INET_PTON = YesPlease
++		NO_SS_FAMILY_IN_SOCKADDR_X = YesPlease
  	endif
  	GIT_TEST_CMP = cmp
  endif
-Index: b/configure.ac
-===================================================================
---- a/configure.ac
-+++ b/configure.ac
-@@ -525,11 +525,33 @@ AC_SUBST(NEEDS_SOCKET)
- test -n "$NEEDS_SOCKET" && LIBS="$LIBS -lsocket"
- 
- #
--# Define NEEDS_RESOLV if linking with -lnsl and/or -lsocket is not enough.
--# Notably on Solaris 7 inet_ntop and inet_pton additionally reside there.
--AC_CHECK_LIB([c], [inet_ntop],
--[NEEDS_RESOLV=],
--[NEEDS_RESOLV=YesPlease])
-+# The next few tests will define NEEDS_RESOLV if linking with
-+# libresolv provides some of the functions we would normally get
-+# from libc.
-+NEEDS_RESOLV=
-+AC_SUBST(NEEDS_RESOLV)
-+#
-+# Define NO_INET_NTOP if linking with -lresolv is not enough.
-+# Solaris 2.7 in particular hos inet_ntop in -lresolv.
-+NO_INET_NTOP=
-+AC_SUBST(NO_INET_NTOP)
-+AC_CHECK_FUNC([inet_ntop],
-+	[],
-+    [AC_CHECK_LIB([resolv], [inet_ntop],
-+	    [NEEDS_RESOLV=YesPlease],
-+	[NO_INET_NTOP=YesPlease])
-+])
-+#
-+# Define NO_INET_PTON if linking with -lresolv is not enough.
-+# Solaris 2.7 in particular hos inet_pton in -lresolv.
-+NO_INET_PTON=
-+AC_SUBST(NO_INET_PTON)
-+AC_CHECK_FUNC([inet_pton],
-+	[],
-+    [AC_CHECK_LIB([resolv], [inet_pton],
-+	    [NEEDS_RESOLV=YesPlease],
-+	[NO_INET_PTON=YesPlease])
-+])
- #
- # Define NO_HSTRERROR if linking with -lresolv is not enough.
- # Solaris 2.6 in particular has no hstrerror, even in -lresolv.
-@@ -541,8 +563,9 @@ AC_CHECK_FUNC([hstrerror],
- 	[NO_HSTRERROR=YesPlease])
- ])
- AC_SUBST(NO_HSTRERROR)
--
--AC_SUBST(NEEDS_RESOLV)
-+#
-+# If any of the above tests determined that -lresolv is needed at
-+# build-time, also set it here for remaining configure-time checks.
- test -n "$NEEDS_RESOLV" && LIBS="$LIBS -lresolv"
- 
- AC_CHECK_LIB([c], [basename],
-@@ -772,7 +795,6 @@ GIT_CHECK_FUNC(mkstemps,
- [NO_MKSTEMPS=YesPlease])
- AC_SUBST(NO_MKSTEMPS)
- #
--#
- # Define NO_MMAP if you want to avoid mmap.
- #
- # Define NO_ICONV if your libc does not properly support iconv.
+@@ -1284,6 +1296,9 @@ else
+ 	BASIC_CFLAGS += -Dsockaddr_storage=sockaddr_in6
+ endif
+ endif
++ifdef NO_SS_FAMILY_IN_SOCKADDR_X
++	BASIC_CFLAGS += -DNO_SS_FAMILY_IN_SOCKADDR_X
++endif
+ ifdef NO_INET_NTOP
+ 	LIB_OBJS += compat/inet_ntop.o
+ endif
 Index: b/config.mak.in
 ===================================================================
 --- a/config.mak.in
 +++ b/config.mak.in
-@@ -53,6 +53,8 @@ NO_SETENV=@NO_SETENV@
- NO_UNSETENV=@NO_UNSETENV@
- NO_MKDTEMP=@NO_MKDTEMP@
- NO_MKSTEMPS=@NO_MKSTEMPS@
-+NO_INET_NTOP=@NO_INET_NTOP@
-+NO_INET_PTON=@NO_INET_PTON@
- NO_ICONV=@NO_ICONV@
- OLD_ICONV=@OLD_ICONV@
- NO_DEFLATE_BOUND=@NO_DEFLATE_BOUND@
+@@ -42,6 +42,7 @@ NO_D_INO_IN_DIRENT=@NO_D_INO_IN_DIRENT@
+ NO_D_TYPE_IN_DIRENT=@NO_D_TYPE_IN_DIRENT@
+ NO_SOCKADDR_STORAGE=@NO_SOCKADDR_STORAGE@
+ NO_IPV6=@NO_IPV6@
++NO_SS_FAMILY_IN_SOCKADDR_X=@NO_SS_FAMILY_IN_SOCKADDR_X@
+ NO_C99_FORMAT=@NO_C99_FORMAT@
+ NO_HSTRERROR=@NO_HSTRERROR@
+ NO_STRCASESTR=@NO_STRCASESTR@
+Index: b/configure.ac
+===================================================================
+--- a/configure.ac
++++ b/configure.ac
+@@ -656,6 +656,23 @@ AC_CHECK_TYPE([struct addrinfo],[
+ ])
+ AC_SUBST(NO_IPV6)
+ #
++# Define NO_SS_FAMILY_IN_SOCKADDR_X if your platform lacks ss_family
++# in struct sockaddr_storage, sockaddr_in6 and sockaddr_in.
++save_CPPFLAGS="$CPPFLAGS"
++case $NO_SOCKADDR_STORAGE:$NO_IPV6 in
++YesPlease:YesPlease)
++  CPPFLAGS="-Dsockaddr_storage=sockaddr_in${CPPFLAGS+ $CPPFLAGS}" ;;
++YesPlease:)
++  CPPFLAGS="-Dsockaddr_storage=sockaddr_in6${CPPFLAGS+ $CPPFLAGS}" ;;
++esac
++AC_CHECK_MEMBER(struct sockaddr_storage.ss_family,
++[NO_SS_FAMILY_IN_SOCKADDR_X=],
++[NO_SS_FAMILY_IN_SOCKADDR_X=YesPlease],[
++#include <sys/types.h>
++#include <sys/socket.h>
++])
++AC_SUBST(NO_SS_FAMILY_IN_SOCKADDR_X)
++#
+ # Define NO_C99_FORMAT if your formatted IO functions (printf/scanf et.al.)
+ # do not support the 'size specifiers' introduced by C99, namely ll, hh,
+ # j, z, t. (representing long long int, char, intmax_t, size_t, ptrdiff_t).
 
 -- 
 Gary V. Vaughan (gary@thewrittenword.com)
