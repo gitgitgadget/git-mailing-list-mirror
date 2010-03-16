@@ -1,71 +1,80 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [patch 00/15] Portability Patches v3
-Date: Tue, 16 Mar 2010 07:18:48 +0100
-Message-ID: <fabb9a1e1003152318m204f178cpbe9eb82cb2742586@mail.gmail.com>
-References: <20100316054220.075676000@mlists.thewrittenword.com>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: FEATURE REQUEST: Comment assignment on branches
+Date: Tue, 16 Mar 2010 15:20:54 +0900
+Message-ID: <fc339e4a1003152320i12a7d4b2p711f6b5d0eda9bcd@mail.gmail.com>
+References: <be8f531d1003150133n3ea64109u7d573dbd533ffa48@mail.gmail.com> 
+	<20100315213221.GA12941@vidovic> <7vhbohi80n.fsf@alter.siamese.dyndns.org> 
+	<buovdcw6fjj.fsf@dhlpc061.dev.necel.com> <7vljdsu7kc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-X-From: git-owner@vger.kernel.org Tue Mar 16 07:19:24 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Maxim Treskin <zerthurd@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 16 07:21:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrQ7f-0001Nc-Cl
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 07:19:23 +0100
+	id 1NrQ9Z-0002CF-JO
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 07:21:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965933Ab0CPGTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Mar 2010 02:19:12 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:32838 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965916Ab0CPGTJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Mar 2010 02:19:09 -0400
-Received: by pwi1 with SMTP id 1so2459274pwi.19
-        for <git@vger.kernel.org>; Mon, 15 Mar 2010 23:19:08 -0700 (PDT)
+	id S965994Ab0CPGVQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Mar 2010 02:21:16 -0400
+Received: from mail-iw0-f176.google.com ([209.85.223.176]:41908 "EHLO
+	mail-iw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965551Ab0CPGVO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Mar 2010 02:21:14 -0400
+Received: by iwn6 with SMTP id 6so676774iwn.4
+        for <git@vger.kernel.org>; Mon, 15 Mar 2010 23:21:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=ORSTUbF7P/kcj1xqFSn7pq9RZFQcF10Fza4bPIeSoBM=;
-        b=B13z1YFvhPqZvDZ7QmwsO/7sFSN7skSMpCbvlSvlBoccwPsvcdSIGk7a3CHx/x2ltM
-         HWLRUqANaBP3dtfsUqAj1YCrrlhlDJjCT87Ur0sE+9Yd9hKPCaDzU+A/Iiq3YrW1QJGQ
-         E3GgQFSgzKmrjObOwsxctakEnA7K5F+tx9u0w=
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=wZZdw8fEeNjuwkF5yRQIAR6h5S824x7ct92n/UR9tXw=;
+        b=yCTmbFHXLtnbR7MwV5FN3UB9wDOxb41e3aVtXtfaGAXlc/ouByk1okjuZ0x5v44wcV
+         LKYzxWIzly7X/PY+Mmizm5YrFLZVgjFSID27Wt25TrkEMivEDBuqJGPPzVIdRR0M4kMJ
+         nPVkQUNZ5NJUFnTFEjI4SmVlwXylgKI0pnszE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=sRdYvCdMJ9DHxtnx9XmvZfUDxldlmd5LF0hlFnXyykbHNukaMtjVY7seVPopoUvMLa
-         E5kJUU4TM99ySWZmDYOpq/e9/Z+DCVyu9Vx8zn/dNnutfLRSbCdnJLMihQ6LJCHtGm5A
-         PQiM8yLP4dyGrJkUUvyKhqDboC11RHirobsTY=
-Received: by 10.143.129.2 with SMTP id g2mr2479848wfn.273.1268720348661; Mon, 
-	15 Mar 2010 23:19:08 -0700 (PDT)
-In-Reply-To: <20100316054220.075676000@mlists.thewrittenword.com>
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=XaZOhVpZqEG/ZL7yTnYuIhSuFhk0AH1jHOQYHh01EH3ZluxqNzuZ9fec+YhB0RbZxW
+         qmN1hdtd6LPbneJUhVXzrIMGxhouR87sqSz4OeO6Oo8B+L5dyTVjoK0Bl3iEPWrK14HA
+         Q2eMUx9Icbmvd4LEqYFxh8DtBO8zlXjOn/RbU=
+Received: by 10.231.167.135 with SMTP id q7mr289259iby.84.1268720474184; Mon, 
+	15 Mar 2010 23:21:14 -0700 (PDT)
+In-Reply-To: <7vljdsu7kc.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: ad1554a9208fbc40
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142321>
 
-Heya,
+On Tue, Mar 16, 2010 at 3:03 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>> This would seem especially useful for publicly visible branches...
+>
+> If you mean by "publicly visible" branches in public repositories, I
+> suspect not. =A0At places like repo.or.cz, github, or installations m=
+anaged
+> by gitosis, you typically do not have direct access to $GIT_DIR/confi=
+g
+> files (they belong to site administrators) in your repositories, and =
+that
+> is not likely to change for security reasons.
 
-On Tue, Mar 16, 2010 at 06:42, Gary V. Vaughan
-<git@mlists.thewrittenword.com> wrote:
-> Here are the portability patches we needed at TWW to enable
-> git-1.7.0.2 to compile and run on all of the wide range of Unix
-> machines we support.
+Hm, ok you're right... which is a shame... :(
 
-Oh wow, thanks! Glad to see you followed up on this, awesome!
+'cause a "pushable branch description" would be ace!
 
-> Note that I have not invested the time to figure out why the testsuite
-> is mostly useless on everything but Linux and Solaris 8+, because I'm
-> reasonably satisfied that the build itself is working properly.
+[I take it git has no "limited remote metadata change" function...?]
 
-I'm curious now, what kind of errors are you getting? Would you mind
-perhaps posting a few to the list in a new thread?
+-Miles
 
--- 
-Cheers,
-
-Sverre Rabbelier
+--=20
+Do not taunt Happy Fun Ball.
