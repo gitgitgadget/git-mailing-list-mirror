@@ -1,60 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add support for GIT_ONE_FILESYSTEM
-Date: Mon, 15 Mar 2010 22:33:06 -0400
-Message-ID: <20100316023306.GA14253@coredump.intra.peff.net>
-References: <20100315214003.GB11157@pixar.com>
+From: Dave Olszewski <cxreg@pobox.com>
+Subject: Re: Re: [PATCH] stash: dont save during a conflicted merge
+Date: Mon, 15 Mar 2010 20:05:03 -0700 (PDT)
+Message-ID: <alpine.DEB.2.00.1003151954050.4362@narbuckle.genericorp.net>
+References: <1268451633-30046-1-git-send-email-cxreg@pobox.com> <7vhbohdygu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: git@vger.kernel.org
-To: Lars Damerow <lars@pixar.com>
-X-From: git-owner@vger.kernel.org Tue Mar 16 03:33:29 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 16 04:06:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrMb1-0005zP-LJ
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 03:33:28 +0100
+	id 1NrN64-0007RB-5j
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 04:06:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937410Ab0CPCdW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Mar 2010 22:33:22 -0400
-Received: from peff.net ([208.65.91.99]:39690 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S937358Ab0CPCdV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Mar 2010 22:33:21 -0400
-Received: (qmail 2561 invoked by uid 107); 16 Mar 2010 02:33:46 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 15 Mar 2010 22:33:46 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Mar 2010 22:33:06 -0400
-Content-Disposition: inline
-In-Reply-To: <20100315214003.GB11157@pixar.com>
+	id S937304Ab0CPDF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Mar 2010 23:05:26 -0400
+Received: from 62.f9.1243.static.theplanet.com ([67.18.249.98]:41323 "EHLO
+	62.f9.1243.static.theplanet.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S937042Ab0CPDFZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Mar 2010 23:05:25 -0400
+X-Envelope-From: cxreg@pobox.com
+Received: from localhost (count@narbuckle [127.0.0.1])
+	(authenticated bits=0)
+	by 62.f9.1243.static.theplanet.com (8.13.8/8.13.8/Debian-3) with ESMTP id o2G3530v016576
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 15 Mar 2010 22:05:05 -0500
+X-X-Sender: count@narbuckle.genericorp.net
+In-Reply-To: <7vhbohdygu.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142293>
 
-On Mon, Mar 15, 2010 at 02:40:03PM -0700, Lars Damerow wrote:
+On Mon, 15 Mar 2010, Junio C Hamano wrote:
 
-> +		if (getenv("GIT_ONE_FILESYSTEM") != NULL) {
+> Dave Olszewski <cxreg@pobox.com> writes:
+>
+>> Similar to commit c8c562a, if a user is resolving conflicts, they may
+>> think it wise to stash their current work tree and git pull to see if
+>> there are additional changes on the remote.
+>>
+>> The stash will fail to save if the index contains unmerged entries, but
+>> if the conflicts are resolved, the stash will succeed, and both
+>> MERGE_HEAD and MERGE_MSG will be removed.  This is probably a mistake,
+>> and we should warn the user and refuse to stash.
+>
+> Warning is probably Ok, but refusing with die() might be too much.
+>
+> When trying a topic with more than one integration branches (think
+> "master", "next, "pu"), and the merge is a bit too hairy that I am not
+> very confident with the resolution, I've deliberately used stash to record
+> a tentative conflict resolution to avoid contaminating my rerere database:
+>
+>    $ git merge topic
+>    ... heavy conflicts, manually "resolved" to a dubious result ...
+>    $ git rerere clear
+>    $ git stash save "tentative merge of topic"
+>    $ git stash apply
+>    ... test test test ...
+>    $ git reset --hard
+>    $ git checkout another-integration-branch
+>    $ git stash apply
+>    ... test test test ...
+>    ... repeat the above for other integration branches ...
+>
+> This is using the stash as a glorified form of
+>
+>    $ git diff HEAD >./+save-tentative-merge
+>
+> and then applying it to other integration branches to test out
+>
+>    $ git reset --hard
+>    $ git checkout another-integration-branch
+>    $ git apply ./+save-tentative-merge
+>
+> but it actually is better than diff/apply because stash application uses a
+> real three-way merge.
+>
+> So I am not entirely happy with this feature-removal.
 
-Should this really trigger for GIT_ONE_FILESYSTEM=0? We already have
-git_env_bool, which will handle 0/1, true/false, etc. Probably you
-should use it here.
-
-I am not a big fan of the environment variable name, either, but I don't
-have another good suggestion. It is closely related to
-GIT_CEILING_DIRECTORIES (in fact, you could probably solve the same
-problem with GIT_CEILING_DIRECTORIES, but I think your solution is much
-nicer in that it lets the user get away with being less verbose).
-
-> +			if (stat("..", &buf))
-> +				die_errno("failed to stat '..'");
-> +			if (buf.st_dev != current_device)
-> +				die("refusing to cross filesystem boundary '%s/..'", cwd);
-> +		}
-
-I agree with Sverre that this message isn't descriptive enough, but I
-like the suggestion you posted elsewhere in the thread.
-
--Peff
+This is an interesting use-case.  If you determine that your resolution
+is satisfactory, how then do you complete your merge?  You can't apply a
+stash on a dirty index, and the MERGE_* files are gone.  It seems like
+using this workflow to "pause" and resume a merge is difficult, although
+it's exactly the thing that led to this patch in the first place.  Maybe
+git-stash could hold onto those files somehow if they exist when saving?
