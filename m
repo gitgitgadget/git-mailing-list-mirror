@@ -1,66 +1,63 @@
-From: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-Subject: [patch 10/15] host-OSF1.patch
-Date: Tue, 16 Mar 2010 05:42:30 +0000
-Message-ID: <20100316054347.542270000@mlists.thewrittenword.com>
-References: <20100316054220.075676000@mlists.thewrittenword.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 16 06:54:17 2010
+From: Lars Damerow <lars@pixar.com>
+Subject: Re: [PATCH] Add support for GIT_ONE_FILESYSTEM
+Date: Mon, 15 Mar 2010 22:56:25 -0700
+Message-ID: <20100316055625.GA10907@pixar.com>
+References: <20100315214003.GB11157@pixar.com> <20100316023306.GA14253@coredump.intra.peff.net> <7vbpeovqyi.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 16 06:56:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrPjN-00038F-4A
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 06:54:17 +0100
+	id 1NrPla-0003ir-F1
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 06:56:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965054Ab0CPFxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Mar 2010 01:53:33 -0400
-Received: from mail1.thewrittenword.com ([69.67.212.77]:56954 "EHLO
-	mail1.thewrittenword.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757619Ab0CPFw5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Mar 2010 01:52:57 -0400
-Received: from mail1.il.thewrittenword.com (emma-internal-gw.il.thewrittenword.com [192.168.13.25])
-	by mail1.thewrittenword.com (Postfix) with ESMTP id A0EA75CDC
-	for <git@vger.kernel.org>; Tue, 16 Mar 2010 06:03:09 +0000 (UTC)
-X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com A0EA75CDC
-Received: from akari.il.thewrittenword.com (akari.il.thewrittenword.com [10.191.57.57])
-	by mail1.il.thewrittenword.com (Postfix) with ESMTP id ACBA2DE5;
-	Tue, 16 Mar 2010 05:43:47 +0000 (UTC)
-Received: by akari.il.thewrittenword.com (Postfix, from userid 1048)
-	id A6DA711D4D5; Tue, 16 Mar 2010 05:43:47 +0000 (UTC)
-User-Agent: quilt/0.46-1
-Content-Disposition: inline; filename=host-OSF1.patch
-X-Virus-Scanned: clamav-milter 0.95.3 at maetel.il.thewrittenword.com
-X-Virus-Status: Clean
+	id S1754395Ab0CPF43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Mar 2010 01:56:29 -0400
+Received: from cmx.pixar.com ([199.108.77.24]:33579 "EHLO cmx.pixar.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753361Ab0CPF43 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Mar 2010 01:56:29 -0400
+X-PixarMID: 1913488
+X-PixarRecvListener: OutboundMail
+X-PixarRemoteIP: 138.72.131.152
+X-IronPort-AV: E=Sophos;i="4.49,648,1262592000"; 
+   d="scan'208,223";a="1913488"
+Received: from helper.dynamic.pixar.com ([138.72.131.152])
+  by cirrus.pixar.com with ESMTP; 15 Mar 2010 22:56:26 -0700
+Received: from helper.dynamic.pixar.com (localhost [127.0.0.1])
+	by helper.dynamic.pixar.com (8.14.3/8.14.3) with ESMTP id o2G5uQov010929;
+	Mon, 15 Mar 2010 22:56:26 -0700
+Received: (from lars@localhost)
+	by helper.dynamic.pixar.com (8.14.3/8.14.3/Submit) id o2G5uPE7010927;
+	Mon, 15 Mar 2010 22:56:25 -0700
+Content-Disposition: inline
+In-Reply-To: <7vbpeovqyi.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142318>
 
-Add defaults for Tru64 Unix.  Without this patch I cannot compile
-git on Tru64 5.1.
----
- Makefile |    6 ++++++
- 1 file changed, 6 insertions(+)
+>From Junio C Hamano <gitster@pobox.com>, Mon, Mar 15, 2010 at 09:19:17PM -0700:
+> 
+> How inefficient is it to repeatedly call getenv() in a loop, by the way?
+> I think the patch would become easier to read if env_bool() is called once
+> at the beginning to set a local variable, and not even do the initial stat()
+> for "." if this feature is not asked for.
 
-Index: b/Makefile
-===================================================================
---- a/Makefile
-+++ b/Makefile
-@@ -695,6 +695,12 @@ EXTLIBS =
- # because maintaining the nesting to match is a pain.  If
- # we had "elif" things would have been much nicer...
- 
-+ifeq ($(uname_S),OSF1)
-+	# Need this for u_short definitions et al
-+	BASIC_CFLAGS += -D_OSF_SOURCE
-+	NO_STRTOULL = YesPlease
-+	NO_NSEC = YesPlease
-+endif
- ifeq ($(uname_S),Linux)
- 	NO_STRLCPY = YesPlease
- 	NO_MKSTEMPS = YesPlease
+Agreed, I didn't do this too efficiently. Thanks for the feedback! I'll
+make a new patch and resubmit.
 
--- 
-Gary V. Vaughan (gary@thewrittenword.com)
+cheers,
+-lars
+
+--
+lars r. damerow :: button pusher :: pixar animation studios
+
+When in doubt, use brute force.
