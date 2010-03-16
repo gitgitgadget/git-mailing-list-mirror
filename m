@@ -1,68 +1,94 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: Problem Pushing to Remote Repository
-Date: Tue, 16 Mar 2010 12:57:01 +0800
-Message-ID: <be6fef0d1003152157m241d3a59sca06a4ab13252ec7@mail.gmail.com>
-References: <3f81a4241003151445v6b45d63bm63aeb0dfdd36fb6f@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: t5505-remote.29 not working correctly
+Date: Mon, 15 Mar 2010 22:16:06 -0700
+Message-ID: <7v7hpcvobt.fsf@alter.siamese.dyndns.org>
+References: <OGVB8d37MB-s4H3VOECmd2htUvpq3B4NginojN-XskLyvHmnbfGA4Q@cipher.nrlssc.navy.mil> <7vwrxdueug.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Bryan Richardson <btricha@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 16 05:57:26 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Tue Mar 16 06:16:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrOqK-0006PO-7B
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 05:57:24 +0100
+	id 1NrP8j-0002BW-4w
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 06:16:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752520Ab0CPE5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Mar 2010 00:57:07 -0400
-Received: from mail-iw0-f176.google.com ([209.85.223.176]:57338 "EHLO
-	mail-iw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750870Ab0CPE5E (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Mar 2010 00:57:04 -0400
-Received: by iwn6 with SMTP id 6so635084iwn.4
-        for <git@vger.kernel.org>; Mon, 15 Mar 2010 21:57:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=MlCzk4hJ4Gr7H4wMt25IsosfmzS22k5nr8i+/9wOxJQ=;
-        b=KgRYDjuhY9ORZbYJ6SMTq+fk3UkQtFAZBDKEUTNPDr+qmDp1iexTM3Zev54YBWOBCD
-         pZsKle9pv4JmLMxrmWNzw47UfVshvZdZ/TK67Ff3Vr8qswQannYCWAd9riqg+rIiOyXU
-         TdkIHxOp303H8tGFxwY3m+AsETApwfVyT3uOo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=qGK8WkBTCHZWVm9zBJ1yKTYhFTfVVgMCtNH96YMeYk/70ntR5yoFvvPUqCN4VtRzdd
-         ClxWx/VEZElV1fB2jx74Mqs1aOmOT8foMqwzSv35q4KLhF3zmtVgUQyO7tDpa1QQFdru
-         RXmLUODMYap9QaMTv7lt6trhHsVV2148OKxTo=
-Received: by 10.231.190.204 with SMTP id dj12mr28144ibb.9.1268715421785; Mon, 
-	15 Mar 2010 21:57:01 -0700 (PDT)
-In-Reply-To: <3f81a4241003151445v6b45d63bm63aeb0dfdd36fb6f@mail.gmail.com>
+	id S1754153Ab0CPFQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Mar 2010 01:16:17 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47764 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753231Ab0CPFQO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Mar 2010 01:16:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 87FF0A252D;
+	Tue, 16 Mar 2010 01:16:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7dRUhrPivdPw7XWTrfVOkJ7IsFw=; b=tkCkKV
+	fmEWIW3tDsKX4NwqIjdEHT92WrJelfvUqtjyjUQsWaJd6uQ9PumIzkZmxVBxupry
+	+GE4i4z2D8iAMXhrSTmnFdiU0Ne9rCJxuP883G/9Ql+tpUl7Drzp4gJRl9TlDg/o
+	WzjE2UuJaTQQ9/QiM2OEeEEIaTHIug554Xb2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qCsAYV5sfs/SQAfQCPx5QbanK5EkYBni
+	4T8xkg7MJz6wnOZ/yBU+r+V1fuDJrsqyaeQdjUeUQsVNLo5SMazhEGNRhq6CwHeb
+	7ZIUhPAV6WWSghvF0LvykAN1lzzR61babEsS6iVFOMAR+3ZFZnhBRLDc9Y2oonCG
+	LWiJuXim5fU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 65D85A252B;
+	Tue, 16 Mar 2010 01:16:10 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C2C25A252A; Tue, 16 Mar
+ 2010 01:16:07 -0400 (EDT)
+In-Reply-To: <7vwrxdueug.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon\, 15 Mar 2010 20\:26\:15 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 087D6C64-30BB-11DF-8628-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142300>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Tue, Mar 16, 2010 at 5:45 AM, Bryan Richardson <btricha@gmail.com> wrote:
-> Hello All,
+> Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil> writes:
 >
-> I'm trying to push a Rails application to Heroku using git, and the
-> push consistently stalls when writing objects (and always at 84%). Can
-> anyone tell me what might be the cause of this? Is it on my end or the
-> remote end? Could it be due to a slow network connection (which I'm
-> unfortunately on right now)?
+>> The test titled 'remote prune to cause a dangling symref' is
+>> not linked together with &&'s.  When the &&'s are added, it
+>> does not complete successfully.
+>
+> Hmm, it looks like f8948e2 (remote prune: warn dangling symrefs,
+> 2009-02-08) is internally inconsistent.  This is a fix directly on top of
+> that commit.
 
-if this persists, you could look at git bundles. I believe heroku
-provides ssh, so you should have scp/sftp. Bundle up the git objects,
-scp the bundle to your heroku account, then unbundle it.
+Actually this is a bit deeper than that.  We don't get _any_ output to
+either standard output nor standard error with the recent code.
 
--- 
-Cheers,
-Ray Chuan
+If we change the test to:
+
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index a82c5ff..ca88e29 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -507,8 +507,8 @@ test_expect_success 'remote prune to cause a dangling symref' '
+ 	(
+ 		cd seven &&
+ 		git remote prune origin
+-	) 2>err &&
+-	grep "has become dangling" err &&
++	) >err 2>&1 &&
++	grep "has become dangling" err || exit
+ 
+ 	: And the dangling symref will not cause other annoying errors
+ 	(
+
+so it does not matter whether the output is set to standard output or
+standard error, we can bisect this, which points at eafb452 (do_one_ref():
+null_sha1 check is not about broken ref, 2009-07-22).
+
+v1.6.3 and onwards seem to be broken.
