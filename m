@@ -1,102 +1,127 @@
-From: Ben Finney <ben+bazaar@benfinney.id.au>
-Subject: Re: Retrieve a specific file from some revision.
-Date: Wed, 17 Mar 2010 09:48:14 +1100
-Message-ID: <87eijjx4r5.fsf@benfinney.id.au>
-References: <87vdcwxfit.fsf@newsguy.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] git checkout -b: unparent the new branch with -o
+Date: Tue, 16 Mar 2010 15:56:36 -0700
+Message-ID: <7v634v27vf.fsf@alter.siamese.dyndns.org>
+References: <1268763584-14164-1-git-send-email-erick.mattos@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: bazaar@lists.canonical.com
-X-From: bazaar-bounces@lists.canonical.com Tue Mar 16 23:48:41 2010
-Return-path: <bazaar-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from chlorine.canonical.com ([91.189.94.204])
+To: Erick Mattos <erick.mattos@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 16 23:56:55 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <bazaar-bounces@lists.canonical.com>)
-	id 1NrfZ2-000664-UO
-	for gcvbg-bazaar-ng@m.gmane.org; Tue, 16 Mar 2010 23:48:41 +0100
-Received: from localhost ([127.0.0.1] helo=chlorine.canonical.com)
-	by chlorine.canonical.com with esmtp (Exim 4.69)
-	(envelope-from <bazaar-bounces@lists.canonical.com>)
-	id 1NrfZ0-0001eM-Fd; Tue, 16 Mar 2010 22:48:38 +0000
-Received: from lo.gmane.org ([80.91.229.12])
-	by chlorine.canonical.com with esmtp (Exim 4.69)
-	(envelope-from <gcvbg-bazaar-ng@m.gmane.org>) id 1NrfYy-0001eG-AP
-	for bazaar@lists.canonical.com; Tue, 16 Mar 2010 22:48:37 +0000
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvbg-bazaar-ng@m.gmane.org>) id 1NrfYw-00062s-4d
-	for bazaar@lists.canonical.com; Tue, 16 Mar 2010 23:48:34 +0100
-Received: from eth595.vic.adsl.internode.on.net ([150.101.214.82])
-	by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-	id 1AlnuQ-0007hv-00
-	for <bazaar@lists.canonical.com>; Tue, 16 Mar 2010 23:48:34 +0100
-Received: from ben+bazaar by eth595.vic.adsl.internode.on.net with local
-	(Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00
-	for <bazaar@lists.canonical.com>; Tue, 16 Mar 2010 23:48:34 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: eth595.vic.adsl.internode.on.net
-X-Public-Key-ID: 0xBD41714B
-X-Public-Key-Fingerprint: 9CFE 12B0 791A 4267 887F  520C B7AC 2E51 BD41 714B
-X-Public-Key-URL: http://www.benfinney.id.au/contact/bfinney-gpg.asc
-X-Post-From: Ben Finney <bignose+hates-spam@benfinney.id.au>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-Cancel-Lock: sha1:gR3BU6uZAoNKPWsqX493wT3Dzm0=
-X-Topics: everythingelse
-X-BeenThere: bazaar@lists.canonical.com
-X-Mailman-Version: 2.1.9
-Precedence: list
-List-Id: bazaar discussion <bazaar.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
-	<mailto:bazaar-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar>
-List-Post: <mailto:bazaar@lists.canonical.com>
-List-Help: <mailto:bazaar-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
-	<mailto:bazaar-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-bounces@lists.canonical.com
-Errors-To: bazaar-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142357>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Nrfgy-0000qT-C8
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 23:56:52 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752929Ab0CPW4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Mar 2010 18:56:47 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44438 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752870Ab0CPW4q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Mar 2010 18:56:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 127D7A2858;
+	Tue, 16 Mar 2010 18:56:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=x62iYUQPOp3SchCFJ0LQQAxsUb8=; b=DuZHPGrlSmxRjSNv7Y96XNS
+	HP3KjTSrhJ0d9M7dGG4JCyHs2HkK9COuA68b0iW5IYgoGlGQWmNXjA0ifnyLIixf
+	ObSdKvngyZ4x8RJgEOJnPta4s9Y3R9rfrR1SbsNb157WpNpR6L5BrSAa6A+xou3K
+	xDlVLDPnIfBC/byfRRes=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=JkdleMN2cvUH+0MZhdVSwUgVpZDhYATT/e6MCC7SVX6kkN+Gn
+	MpnQNO2wcapcn/0/tcnFxOMZsMT0SRU5YXZduW+gMznSPGy1zO9LVJUkQ6F/w5lj
+	owJLqC3uxc1YUSmYBJaNhqu/V+PbyCwWvp4RiWwALPtEi1RbLE50G2h1L0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DFA17A2853;
+	Tue, 16 Mar 2010 18:56:40 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1EDC3A2852; Tue, 16 Mar
+ 2010 18:56:37 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 2F385AE6-314F-11DF-A3B3-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142358>
 
-Harry Putnam <reader@newsguy.com> writes:
+Erick Mattos <erick.mattos@gmail.com> writes:
 
-> I've never used any versioning tool but cvs.  Something I do often
-> with cvs is retrieve a previous state of a single file..
+> Sometimes it is interesting to start a new unparented branch in an
+> existing repository.
 >
-> Say I wanted to use the hosts file as it was at revision 1.23.
-
-I'll assume, from the Bazaar perspective, that this means “revno 123 of
-the branch”. Bazaar tracks snapshot revisions of the working tree as a
-whole, unlike CVS's per-file tracking.
-
-> Not just a diff, but the actual file.
-> (I would)
->   cd cvsrepo
->     cvs update -p -r1.23 <HOST>/etc/hosts > ~/hosts_HOST_r1.23
+> The new -o/--orphan is intended to solve this situation allowing the
+> creation of a new branch unparented to any other.
 >
->   Would create the file as it was at rev. 1.23 for host HOST.
->
-> How would I do that in bazaar/git? (which ever newsgroup this is on)
+> After the 'checkout -o -b' the new branch is not saved until committed.
+> Before committing you should 'git rm -rf' anything which is not going to
+> take part in the new branch and change the work tree and index the way
+> you want it to be since they remain untouched as before checkout
+> command.
 
-To get the file at revno 123 in the working tree for the branch (the
-most normal place for it to appear):
+This paragraph makes the patch incoherent.  It talks as if "no common
+paths" is the majority case, and everybody inconveniently has to perform
+an extra step that shouldn't be needed if the implementation were done
+right.  If "no common paths" is indeed the assumed primary target, why
+doesn't the implementation empty both index and files in the working tree
+so that users don't have to do so themselves?
 
-    $ cd bzrbranch/
-    $ bzr revert --revision 123 HOST/etc/hosts
+My _only_ complaint was that your version that _only_ emptied the index
+without touching the working tree made things difficult for everybody,
+both "no common paths" people and "mostly common paths" people.
 
-You could then copy the file to wherever you actually want to use it.
+You need to at least qualify the above paragraph with something like "if
+you want to create an unrelated branch whose contents do not resemble the
+original branch at all, then you should ...".
 
-Alternatively, if you really do want something that emits the file
-contents to stdout rather than recreating the file:
+Better yet, try to advertise what you are giving your users in a positive
+way, instead of in a way that only scares users, perhaps like this:
 
-    $ cd bzrbranch/
-    $ bzr cat --revision 123 HOST/etc/hosts > ~/hosts_HOST_r123
+    After 'checkout --orphan', your HEAD will point at an unborn branch,
+    and the next commit will start a new history without any prior commit.
+    To help create such a new history that has contents mostly the same as
+    that of the original branch, the command does not touch the index nor
+    the working tree, and "checkout --orphan" immediately followed by
+    "commit -a" would record a tree very similar to what you had in the
+    original branch.  This is useful when you want to ... [insert a
+    summary of "going open source" example from my previous message if you
+    want here].
 
-The ‘--revision 123’ option is the verbose spelling of ‘-r 123’.
+    If on the other hand you want to start a new branch whose contents do
+    not resemble the original branch at all, you may want to start from an
+    empty index and the working tree, with "git rm -rf ." immediately
+    after running this command.
 
--- 
- \              “Whatever you do will be insignificant, but it is very |
-  `\                    important that you do it.” —Mohandas K. Gandhi |
-_o__)                                                                  |
-Ben Finney
+The same comment applies to the documentation part.
+
+By the way, I wouldn't mind if you believe "no common paths" is the
+majority case; if that is the case, then the code and behaviour would be
+different, and the presentation would say something like this:
+
+    After 'checkout --orphan', your HEAD will point at an unborn branch,
+    and the next commit will start a new history without any prior commit.
+    To help create such a new history that has contents totally different
+    from the original branch, the command empties the index and removes
+    all tracked files from the working tree.  The command refuses to work
+    if you have uncommitted changes, so that you won't lose them.
+    Conclude the work in progress on your current branch first by first
+    recording the changes in commits (or "git stash save") before
+    re-running the command.
+
+    After "checkout --orphan" you can immediately start preparing the
+    files to be tracked in this new branch, without files unrelated to
+    this branch getting in the way.  This is useful when you want to
+    ... [I don't think any "no commmon paths" workflow makes sense to be
+    done in the same repository, but you seem to do do so, so give readers
+    such an example here].
+
+    If on the other hand you want to start a new branch whose contents
+    mostly match the original branch, you may need to start from an
+    index and the working tree files from the original branch, by running
+    "git checkout <original-branch-name> ."  after running this command.
