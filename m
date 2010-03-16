@@ -1,197 +1,76 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv2] Teach --no-ff option to 'rebase -i'.
-Date: Tue, 16 Mar 2010 16:47:17 -0500
-Message-ID: <20100316214717.GA24880@progeny.tock>
-References: <1268755735-20588-1-git-send-email-marcnarc@xiplink.com>
- <1268768556-32176-1-git-send-email-marcnarc@xiplink.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Retrieve a specific file from some revision.
+Date: Tue, 16 Mar 2010 17:59:36 -0400
+Message-ID: <46a038f91003161459t58c8df59q2b7fa18c1fccba88@mail.gmail.com>
+References: <87vdcwxfit.fsf@newsguy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Tue Mar 16 22:54:23 2010
+To: Harry Putnam <reader@newsguy.com>
+X-From: git-owner@vger.kernel.org Tue Mar 16 23:00:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NreiU-0007jV-8R
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 22:54:22 +0100
+	id 1Nreo6-0001zU-Ej
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Mar 2010 23:00:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751455Ab0CPVyR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Mar 2010 17:54:17 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:62815 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751332Ab0CPVyP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Mar 2010 17:54:15 -0400
-Received: by gyg8 with SMTP id 8so145495gyg.19
-        for <git@vger.kernel.org>; Tue, 16 Mar 2010 14:54:15 -0700 (PDT)
+	id S1752020Ab0CPWAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Mar 2010 18:00:01 -0400
+Received: from mail-gx0-f217.google.com ([209.85.217.217]:52606 "EHLO
+	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751548Ab0CPV77 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Mar 2010 17:59:59 -0400
+Received: by gxk9 with SMTP id 9so184510gxk.8
+        for <git@vger.kernel.org>; Tue, 16 Mar 2010 14:59:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=oSkQlV6X0dR12f14jsualSH2nRnu8zkWJ3aIzahorRo=;
-        b=s3Ei5vC3ID7FQWozmvpGUuFTbmAxlMLQPOizBDhbyEz7LjOFiEZt3Zscnz3u/qdOk6
-         6QLLDp0jCjcP2rHF2aNwQAbSbukX5yJSafM1ZJ1lIV4spbmWLmfASr7OIOEJb3S+2yyr
-         QADubHW/MpYaLRMlYZOkOMoh6p3sMHtqKLyio=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=mSM3zBXFOX+evWPXLqfdQAzsPzW+E8alQrRQ5rpUtp0=;
+        b=dPa6t/ZmZAoYDuovvHgJwbzQM9PQgUl+PUcKqQ1Tm9KuO3enQU2pq7VcnhVph5OO07
+         5fAt13uXDXTieEdhHno4zyMj577cqfzUFMnnNaJYLEc/ozPeEjYiSBqWUMGE8nERThn4
+         6xuXcPdx+6Te8z1nD6G245vJeOh9FvvjySrV8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=kC65MERbyX+VpRaz/8ptgr2UwW/ED170OG+zoZAY/oV6KEJcsw8EM/ICWo8TYqsCqf
-         TBw63PlpJBkA3SVK9jA1Wmq8SbboxHhJe/nDRnlL0da+jP2cL4bqM7ETKt2fL0mPXJTQ
-         bP/+2w+Bm/1sbRR8pLCGUYE1oz0XckVmW2GJM=
-Received: by 10.101.56.17 with SMTP id i17mr74558ank.375.1268776021664;
-        Tue, 16 Mar 2010 14:47:01 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm5675450iwn.6.2010.03.16.14.46.59
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 16 Mar 2010 14:47:00 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1268768556-32176-1-git-send-email-marcnarc@xiplink.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=b/THoR3B94V1IW49O7KPMvKB9RgKoc+Zs8PteP2yOvkIY/2umBOA1jnuQyiLzyUnvI
+         k05vGF38v0AWu6B06FAB80GfU0CBVZBAPMh6qwx/4CcFq82jifstodE68PWht2rkoAwG
+         BQsAzjXGTh1172Di+DONz8GFFMnEFbUaqdRA4=
+Received: by 10.101.42.3 with SMTP id u3mr90240anj.323.1268776796177; Tue, 16 
+	Mar 2010 14:59:56 -0700 (PDT)
+In-Reply-To: <87vdcwxfit.fsf@newsguy.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142353>
 
-Hi Marc,
+On Tue, Mar 16, 2010 at 2:55 PM, Harry Putnam <reader@newsguy.com> wrote:
+> How would I do that in bazaar/git?
 
-Marc Branchaud wrote:
+The easiests, most convenient is:
 
-> This option tells rebase--interactive to cherry-pick all the commits =
-in the
-> rebased branch, instead of fast-forwarding over any unchanged commits=
-=2E
->=20
-> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
-[...]
-> This offers an alterntive way to deal with reverted merges (the
-> revert-a-faulty-merge.txt howto recommends reverting the initial reve=
-rsion
-> before re-merging a modified topic branch).
->=20
-> With this change, you can instead use the --no-ff option to recreate =
-the
-> branch with entirely new commits (they're new because at the very lea=
-st the
-> committer time is different).  This obviates the need to revert the
-> reversion, as you can re-merge the new topic branch directly.
+   git show <revision>:path/to/file.c
 
-I think this rationale should go in the commit message, for the sake of
-future readers studying the code you=E2=80=99ve changed.
+git show can do various other things -- like show you a commit.
 
-But let me make sure I understand it.
+You should really follow a tutorial for git (and/or bazaar) to get
+"the basics". Any good tutorial will cover git show (but may not touch
+this specific point) and a few others.
 
-If I am understanding properly, your idea is that this would be used on
-a branch after =E2=80=9Cunmerging=E2=80=9D it from master:
+It is safe to say that bazaar, git and hg have a good command for
+something clear and basic like this. Asking these questions probably
+won't help you decide what you want to decide ;-) --
 
-    B --- C --- D [topic]
-  /              \
- A ---  ...   --- M ... --- U [master]
 
-Here M is a merge commit and U a commit reverting the change from M^
-to M.
 
-As howto/revert-a-faulty-merge explains, this is an accident waiting to
-happen: if you merge master into topic, then it will pull in the revert
-along with the rest of the changes.  Similarly, if you merge topic into
-master, it will be a no-op (=E2=80=9Calready up to date=E2=80=9D).
-
-Your solution, to rewrite the branch, should address both of these
-problems.  The new history looks like this:
-
-    B' --- C' --- D' [topic]
-  /
- |  B --- C --- D
- |/              \
- A ---   ...  --- M ... --- U [master]
-
-What happens now if you merge topic into master (or master into topic)?
-
-Git will try to reconcile the changes from the two branches since when
-they diverged.  master gained the changes from the old topic branch and
-then reverted them since it diverged from topic; since merge algorithm
-is a simple three-way merge, all that history is ignored and Git will
-just combine any new changes from master with the changes from topic.
-Success.
-
-Side note:
-
-After this maneuver, I would want to merge =E2=80=98master=E2=80=99 int=
-o =E2=80=98topic=E2=80=99 as
-soon as possible.  Why?  Because there is still a failure mode possible
-after this: if you merge any commits from the old topic into the new
-one before then, you=E2=80=99re back in trouble.  This could happen if =
-some
-topic2 that topic ends up needing is based on a point in master after M
-and before U.
-
-After merging master into topic, the _meaning_ of the history is much
-clearer: by making U an ancestor, we are saying that as far as this
-branch is concerned, the state at the tip of the topic branch is to be
-preferred over the reverted state.
-
-This suggests an alternative method to achieve your goal:
-
- git checkout master
- git revert -m 1 M;	# (1)
- git checkout topic
- git merge master^;	# (2)
- git merge -s ours master;	# (3)
-
-1. Add a commit U removing the changes introduced by topic from master.
-
-2. Merge all changes from master before the revert into topic.
-
-3. Declare the changes from topic to supersede the master branch.
-   This way, if topic is ever merged back to master, the changes will b=
-e
-   reintroduced again.
-
-Resulting history:
-
-    B --- C --- D --- ... --- T^ --- T [topic]
-  /              \            /     /
- A ---   ...  --- M ... --- U^ --- U [master]
-
-You can avoid the perhaps pointless commit T^ by using --no-commit in
-the command (2).  If not all changes from M..master are suitable for
-merging into topic, you can use the same trick on a temporary side
-branch:
-
- git checkout -b revert-topic M
- git revert -m 1 M
- git checkout topic
- git merge --no-commit revert-topic^
- git merge -s ours revert-topic
- git checkout master
- git merge revert-topic
-
-If not all changes from topic..M are suitable for merging into topic,
-then things are harder.  I=E2=80=99d suggest making a special unrevert-=
-topic
-branch as above to keep in the wings until its time.
-
-> (Honestly, I wouldn't say that this approach is vastly superior to
-> reverting the reversion.  I just find it a little less messy and a li=
-ttle
-> more intuitive.  It's also a bit easier to explain to people to "use =
---no-ff
-> after reverting a merge" instead of making sure they get the double-
-> reversion right.)
-
-Hope this helps clarify things.
-
-Your patch itself might still be a good idea.  I think plain
-=E2=80=98git rebase=E2=80=99 already has something like it, in the form=
- of the
---force-rebase option.  I have used it before, though I don=E2=80=99t r=
-emember
-why.
-
-Thanks for the food for thought,
-Jonathan
+m
+-- 
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
