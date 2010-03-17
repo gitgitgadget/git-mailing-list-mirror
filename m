@@ -1,66 +1,113 @@
-From: jateeq <jawad_atiq@hotmail.com>
-Subject: Re: Getting a branch's time of creation
-Date: Wed, 17 Mar 2010 09:24:06 -0800 (PST)
-Message-ID: <1268846646146-4751743.post@n2.nabble.com>
-References: <27933166.post@talk.nabble.com> <86wrxakiyj.fsf@blue.stonehenge.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv2] Teach --no-ff option to 'rebase -i'.
+Date: Wed, 17 Mar 2010 12:53:20 -0500
+Message-ID: <20100317175320.GA26124@progeny.tock>
+References: <1268755735-20588-1-git-send-email-marcnarc@xiplink.com>
+ <1268768556-32176-1-git-send-email-marcnarc@xiplink.com>
+ <20100316214717.GA24880@progeny.tock>
+ <4BA0FBC7.3080305@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 17 18:24:20 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Wed Mar 17 18:53:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nrwyf-0005g0-2Y
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Mar 2010 18:24:17 +0100
+	id 1NrxQX-0005ew-9I
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Mar 2010 18:53:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755235Ab0CQRYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Mar 2010 13:24:10 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:49912 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755165Ab0CQRYI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Mar 2010 13:24:08 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <jawad_atiq@hotmail.com>)
-	id 1NrwyU-0005j5-4v
-	for git@vger.kernel.org; Wed, 17 Mar 2010 10:24:06 -0700
-In-Reply-To: <86wrxakiyj.fsf@blue.stonehenge.com>
+	id S1754831Ab0CQRw6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Mar 2010 13:52:58 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:43097 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754300Ab0CQRw5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Mar 2010 13:52:57 -0400
+Received: by pva4 with SMTP id 4so681036pva.19
+        for <git@vger.kernel.org>; Wed, 17 Mar 2010 10:52:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=DaSJkLo7pHzeflAxfD5vZv9uQlDqwCWAri3vWMavY1w=;
+        b=SeDsUbwgDhl+e/PBBzb9YkmOLEStZ4OSebURdZ+LneTs6meaQ7L3b4H9MgxvoLPb80
+         RXv3qQGGih+hK5UyBFnXtjanQWjsmniz5nk0g4rkPkcbZqGagl+sQJe6BHy72guAYBYA
+         0yVjZwJlbxthzDfOA+Jc/OlDM2mu0DVHBkxqo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=XqncGYCnwdDqs6mo+ELUkoAbSEJxbj8sfBAdw+aBYYzjxUANq4YCZ36O8tn2iPsxLf
+         SigRgUFntVr6U6lPAYEkDUWiBJzXIRSIy6ij/4DO+s5wnATy3gdW8G67bK4f05jpXdOz
+         TTJ1+l8Rdy+1aBtnHkj6mLrJw0slZgIaWlZE4=
+Received: by 10.140.247.21 with SMTP id u21mr1257264rvh.250.1268848375755;
+        Wed, 17 Mar 2010 10:52:55 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 21sm6586034iwn.7.2010.03.17.10.52.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 17 Mar 2010 10:52:54 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4BA0FBC7.3080305@xiplink.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142420>
 
+Marc Branchaud wrote:
 
-Great, that works -  it gives me the commit that Branch 1 was at at the time
-of cloning.
+> If the re-cast topic1 doesn't rewrite those commits, then the merge w=
+ill
+> simply succeed because the code is already identical in both branches=
+=2E
+>=20
+> But if topic1 does rewrite those commits then there'll be a conflict.=
+  IMO
+> that's correct, because with the merging of topic2 the code in master=
+ really
+> did diverge in a relevant way from what's in topic1, so that conflict=
+ should
+> get resolved in the normal way.
 
-One concern however. If I clone the repository, create Branch 2 to track
-Branch 1, and in the mean while push changes to the master branch of the
-repository, the commit that this command gives me changes (to the last
-commit that was pushed). The repository I am cloning from is bare, so in
-order to make changes to the master, I clone it again, make changes to the
-master branch of the clone and push those back (of course, this clone also
-has Branch 1 as a remote branch, but I am not making changes to it). What is
-git doing? Why does it change the commit history of Branch 1 when I did not
-push changes to it? 
+Sorry, I did not think it through all the way.  Here is an example of
+what I meant by trouble.  Suppose you have re-cast topic using
+rebase --no-ff:
 
-Before pushing to master:
-$git log --oneline $(git merge-base origin/jateeq.2010-03-16.15-32
-origin/master)..origin/master
-610cfae added file.xml
+   B' --- C' --- D' [topic]
+  /
+ | B --- C --- D         F [topic2]
+ |/             \       /
+ A ---  ...  --- M --- E ... --- U [master]
 
-After pushing to master:
-$git log --oneline $(git merge-base origin/jateeq.2010-03-16.15-32
-origin/master)..origin/master
-9070a4d removed fcc.xml
+topic represents a new feature that was merged prematurely and then
+reverted, and topic2 represents some helpful new plumbing.
+(introduction of a few functions, maybe).
 
+To take advantage of the changes from F, someone merges topic2 into
+topic and builds on it:
 
-Thanks, 
-Jawad
--- 
-View this message in context: http://n2.nabble.com/Getting-a-branch-s-time-of-creation-tp4750687p4751743.html
-Sent from the git mailing list archive at Nabble.com.
+                    .. X --- Y [topic]
+                   /  /
+   B' --- C' --- D'  F [topic2]
+  /                 /
+ A -- ... -- M --- E ... --- U [master]
+
+Now someone decides it is time to merge topic into master.  The
+merge-base for Y and U is E, and the result is a that the changes from
+topic are reverted.
+
+What I had missed: it would be just as dangerous to simply merge topic2
+directly.  Merging =E2=80=98master=E2=80=99 into =E2=80=98topic=E2=80=99=
+ does nothing to prevent that.
+
+The new advice: when using rebase --no-ff this way, be sure to rewrite
+_every_ branch that includes those commits but doesn=E2=80=99t include =
+U.
+
+Jonathan
