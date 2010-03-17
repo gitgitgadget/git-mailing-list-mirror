@@ -1,90 +1,74 @@
-From: Markus Elfring <Markus.Elfring@web.de>
-Subject: Re: [PATCH] Clarification for the command "git checkout <branch>"
-Date: Wed, 17 Mar 2010 17:35:19 +0100
-Message-ID: <4BA104C7.5020207@web.de>
-References: <4B67227A.7030908@web.de> <7vhbq0wuy6.fsf@alter.siamese.dyndns.org> <4B898F97.90706@web.de> <7vr5o6s5xf.fsf@alter.siamese.dyndns.org> <4B8B9BF1.10408@web.de> <4b8bf32f.0706c00a.26cb.691d@mx.google.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] branch: only print upstream relationship with -v -v
+Date: Wed, 17 Mar 2010 17:21:18 +0100
+Message-ID: <4BA1017E.1010404@drmicha.warpmail.net>
+References: <1268838344-8581-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 17 17:36:29 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 17 17:36:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrwDx-00088Y-KX
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Mar 2010 17:36:02 +0100
+	id 1NrwEj-0000VJ-8h
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Mar 2010 17:36:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753760Ab0CQQf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Mar 2010 12:35:26 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:45278 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753679Ab0CQQfX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Mar 2010 12:35:23 -0400
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 267C014E418EE;
-	Wed, 17 Mar 2010 17:35:21 +0100 (CET)
-Received: from [78.48.200.74] (helo=[192.168.1.202])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #4)
-	id 1NrwDI-0004Wg-00; Wed, 17 Mar 2010 17:35:20 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.8) Gecko/20100228 SUSE/3.0.3-1.1.1 Thunderbird/3.0.3
-In-Reply-To: <4b8bf32f.0706c00a.26cb.691d@mx.google.com>
-X-Sender: Markus.Elfring@web.de
-X-Provags-ID: V01U2FsdGVkX193ZR5sjO34/N9wkxhpl+gQS7Q8KV/t6VxOhXii
-	JuXAY3KuGtq/h9hVOlZdDWBgpQEi9CfaDSnQ6ckZZgJb/8Kt8L
-	XdWyr8EusDpQafcsFIFg==
+	id S1753737Ab0CQQgJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Mar 2010 12:36:09 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:44138 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753620Ab0CQQgD (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Mar 2010 12:36:03 -0400
+X-Greylist: delayed 721 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Mar 2010 12:36:03 EDT
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 59574E6259;
+	Wed, 17 Mar 2010 12:24:00 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Wed, 17 Mar 2010 12:24:00 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=6a2ex+FVAG2ze88uED3581+Iwes=; b=VNydea8eK4wN5eN9RLBrLODrUV8bhCAQF5ZW/wKa/IwlnMTRGd8aKS8YzcUwaT5G7fMF+0F5+/+F261kul3bjJ90/aorCslXB+XjT1dwzsyVgSnWunGSCKBJTiWEY578WufnSJwMyjhTN7J8BOVS6iUDhUIuUh4FemOPH/pMxb4=
+X-Sasl-enc: +cPTg+v7q1EIM+u6GN3EYNWcUx2BoGCa4msu0SLGHJzr 1268843040
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id C5E09F6AE;
+	Wed, 17 Mar 2010 12:23:59 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10pre) Gecko/20100316 Lightning/1.0b2pre Shredder/3.0.4pre
+In-Reply-To: <1268838344-8581-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142412>
 
->From 828d97e2f50b49c87138f382d579605dc134d8ca Mon Sep 17 00:00:00 2001
-From: Markus Elfring <Markus.Elfring@web.de>
-Date: Wed, 17 Mar 2010 17:05:08 +0100
-Subject: [PATCH] Documentation: clarification for the command "git checkout <branch>"
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy venit, vidit, dixit 17.03.201=
+0 16:05:
+> "git branch -v" is unusable for me because it's too slow. After this
+> patch:
+>=20
+> pclouds@do ~/w/git $ time ./git branch -v > /dev/null
+> real    0m0.016s
+> user    0m0.011s
+> sys     0m0.004s
+>=20
+> pclouds@do ~/w/git $ time ./git branch -v -v > /dev/null
+> real    0m8.960s
+> user    0m8.854s
+> sys     0m0.029s
+>=20
 
-The software implementation worked differently in comparison
-to the description in the first paragraph. The updated explanation
-should reflect the current behaviour.
+Well, but also, after your patch the old output format of "git branch
+-v" is not available any more at all! I mean, what is wrong with
 
-Signed-off-by: Markus Elfring <Markus.Elfring@web.de>
----
+git log --oneline --no-walk --branches --decorate
 
-> I think it would be a great contribution if you could clean up
-> Junio's explanation and submit a patch that includes it in the
-> documentation for "git checkout".
+or
 
-Will the following wording be acceptable?
+git rev-list --oneline --no-walk --branches
 
-Regards,
-Markus
+depending on what it is that you're really after? (Not to mention
+for-each-ref.)
 
-
- Documentation/git-checkout.txt |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 37c1810..5fcea56 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -15,10 +15,11 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--
--When <paths> are not given, this command switches branches by
--updating the index, working tree, and HEAD to reflect the specified
--branch.
-+When <paths> are not given, this command marks the specified branch
-+as the next commit target. (The reference "HEAD" points to its tip.)
-+Checking out another branch (branch switching) is designed to carry
-+your local modifications across with you. The working tree is not
-+restored to the state of its last commit.
- 
- If `-b` is given, a new branch is created and checked out, as if
- linkgit:git-branch[1] were called; in this case you can
--- 
-1.7.0.1
+Michael
