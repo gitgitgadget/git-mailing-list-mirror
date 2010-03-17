@@ -1,51 +1,82 @@
-From: Markus Elfring <Markus.Elfring@web.de>
-Subject: Re: [PATCH] Clarification for the command "git checkout <branch>"
-Date: Wed, 17 Mar 2010 18:00:31 +0100
-Message-ID: <4BA10AAF.9050907@web.de>
-References: <4B67227A.7030908@web.de> <7vhbq0wuy6.fsf@alter.siamese.dyndns.org> 	<4B898F97.90706@web.de> <7vr5o6s5xf.fsf@alter.siamese.dyndns.org> 	<4B8B9BF1.10408@web.de> <4b8bf32f.0706c00a.26cb.691d@mx.google.com> 	<4BA104C7.5020207@web.de> <32541b131003170944w7a0215frcace205f32d313bf@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: cc/cherry-pick-ff (Re: What's cooking in git.git (Mar 2010, #04;
+ Tue, 16))
+Date: Wed, 17 Mar 2010 10:01:53 -0700
+Message-ID: <7vwrxaubjy.fsf@alter.siamese.dyndns.org>
+References: <7vhbof4fof.fsf@alter.siamese.dyndns.org>
+ <20100317095218.GA6961@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 17 18:02:02 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Paolo Bonzini <bonzini@gnu.org>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 17 18:02:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nrwd7-0000vf-8x
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Mar 2010 18:02:01 +0100
+	id 1NrwdM-000138-Ac
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Mar 2010 18:02:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752654Ab0CQRB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Mar 2010 13:01:56 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:35275 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752458Ab0CQRBz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Mar 2010 13:01:55 -0400
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 0A03A14E3D803;
-	Wed, 17 Mar 2010 18:00:33 +0100 (CET)
-Received: from [78.48.200.74] (helo=[192.168.1.202])
-	by smtp05.web.de with asmtp (WEB.DE 4.110 #4)
-	id 1Nrwbg-00032L-00; Wed, 17 Mar 2010 18:00:32 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.8) Gecko/20100228 SUSE/3.0.3-1.1.1 Thunderbird/3.0.3
-In-Reply-To: <32541b131003170944w7a0215frcace205f32d313bf@mail.gmail.com>
-X-Sender: Markus.Elfring@web.de
-X-Provags-ID: V01U2FsdGVkX18R8YqwIOocP8c3WNURrZZKxulAzkuALlE/JFUx
-	w/7XAfwPsPDxaHpGApPdJuly3ZrByZyupgZ3saDHs+49w5av54
-	elN2r3/DWWCT0dP4ViyA==
+	id S1752838Ab0CQRCK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Mar 2010 13:02:10 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45177 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752458Ab0CQRCG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Mar 2010 13:02:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AB744A25F4;
+	Wed, 17 Mar 2010 13:02:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=G6vpB05r7qexN3NlxE9tgOJvM
+	s8=; b=mo6zUIgV0FePTUqP8yNPFBxGmIF8ONJIEqeCYWcmTruWY1LepvvfMqeQ6
+	CxWk73X6lMbxnx8S/QQWKY3kAOgxrW5RFgVEFljFpQ/pe4pHgPbcxO749gztQCOh
+	Eq9nkPY1EOhDnoGi3Ana85NUxNRbGZwjw/40j4igqUp3S9Ywt4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=FOBIerZcob/WWe3bC/J
+	9m03h4Pi1hUEg20YucXb4vDSx4UnFGzaiBIUQt3fKYshCadgyi1aJeuqyeXVtWGP
+	1w0pPpfX+8vQIAzhrPPE37wGQIY8oZOW4oFAfnT0uEXgohZiMLLdNh8E/HvmIkK1
+	2P0pH50bSA50f6n5CHgNmZQY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 59384A25ED;
+	Wed, 17 Mar 2010 13:02:00 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8298AA25E5; Wed, 17 Mar
+ 2010 13:01:54 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CD70B93C-31E6-11DF-81D1-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142417>
 
-> This is done by updating HEAD to point at the given branch,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Is it supposed that Git users should know from other information sources 
-already what the key word "HEAD" means?
+> For what it=E2=80=99s worth, I am not convinced about the --no-ff opt=
+ion.  I do
+> not think --ff ever will be the default: for an operation that amount=
+s
+> to applying a patch and making a new commit, it just feels wrong.
 
-Regards,
-Markus
+Same here ;-) and because of that, --no-ff as an undocumented feature
+feels doubly wrong to me.  If some scripts use it, people would wonder
+what that no-op option is doing there.  Perhaps we should discard the b=
+its
+about --no-ff to make it more clear that --ff is an oddball case that i=
+s
+meant only for supporting what "rebase-i" (and other tools that reinven=
+t
+and enhance it) does.
+
+=46or the same reasoning, you may have liked the "do not fast-forward t=
+he
+early part of 'rebase -i' even if the commits are picked literally" pat=
+ch,
+by Marc.
