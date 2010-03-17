@@ -1,89 +1,72 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: [PATCH] Clarification for the command "git checkout <branch>"
-Date: Wed, 17 Mar 2010 12:44:52 -0400
-Message-ID: <32541b131003170944w7a0215frcace205f32d313bf@mail.gmail.com>
-References: <4B67227A.7030908@web.de> <7vhbq0wuy6.fsf@alter.siamese.dyndns.org> 
-	<4B898F97.90706@web.de> <7vr5o6s5xf.fsf@alter.siamese.dyndns.org> 
-	<4B8B9BF1.10408@web.de> <4b8bf32f.0706c00a.26cb.691d@mx.google.com> 
-	<4BA104C7.5020207@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] branch: only print upstream relationship with -v -v
+Date: Wed, 17 Mar 2010 09:53:27 -0700
+Message-ID: <7vwrxavqig.fsf@alter.siamese.dyndns.org>
+References: <1268838344-8581-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Markus Elfring <Markus.Elfring@web.de>
-X-From: git-owner@vger.kernel.org Wed Mar 17 17:45:23 2010
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 17 17:53:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrwN0-0007EZ-Cv
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Mar 2010 17:45:22 +0100
+	id 1NrwV8-0004Uz-N9
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Mar 2010 17:53:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754546Ab0CQQpP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Mar 2010 12:45:15 -0400
-Received: from mail-yw0-f201.google.com ([209.85.211.201]:48308 "EHLO
-	mail-yw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753738Ab0CQQpN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Mar 2010 12:45:13 -0400
-Received: by ywh39 with SMTP id 39so502917ywh.21
-        for <git@vger.kernel.org>; Wed, 17 Mar 2010 09:45:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Z+beqmWBfh7DC4qcFOdWzhiR+PxvlxwRMmROjurKbvs=;
-        b=gNZJf5OXDAeRJvGQyG+UyxLi9Y+tv3dsNbkhh+KMvWvSnrcZdo9eq4v8o6RJcUejfV
-         aK7Jwo9R/tPCDvCl8Ih/nF2yO0mZec+PwNX2NlVA10DbBKzjz4seFyr+HQ7qsnddiXyn
-         dqeKdOkxEk5IhPvHbK5OL30SZvTGDSB5LBqSg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=MjdCpTidEPUMu2U2whHqk6LGqfL9glBo1LoZOFtyHQx+2JaijNQVl80XhkEauxzAfw
-         8pIF9UVmWIGE8qCjtQL5ojrrU5PQ3oPqvqchkfjPsqeqWhSFbzclt7q4B+rGeNXDyZzb
-         Qw4lK2ertuA56MfcyuC5yqdsin2rt/qcx2Bmg=
-Received: by 10.150.93.19 with SMTP id q19mr784539ybb.229.1268844312093; Wed, 
-	17 Mar 2010 09:45:12 -0700 (PDT)
-In-Reply-To: <4BA104C7.5020207@web.de>
+	id S1751908Ab0CQQxg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Mar 2010 12:53:36 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39596 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751682Ab0CQQxf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Mar 2010 12:53:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D1A3A2482;
+	Wed, 17 Mar 2010 12:53:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=TkGFB15V0gKF
+	yTnlqGJX+44J1vg=; b=vsC6O6U2+N3YZvTGv0liDrY/yfl1UXhVqkb4JYzmh3v6
+	Nm1ocrKd9sStyEolSLdHXEj0NXiftv5iPHT2tV04COjs9V2I2LxDymt3jlQq0hla
+	tWhA1BGfJHm7U0s0TI+Cw/GiWjKeFuTRGl8eVMdyknpWeUyEqpICXnRCpC/p6HY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=aiPOwE
+	K+KKTi2DcO90nBCaDDbQLshS/1NkPyEVsqlYsPA8buu8k9XbD66DnG83SUuYP33v
+	7mk1F88LGNPfdXj2SL3/7sPoin9xeZwatUXlENtc3XMDMsB3nueOg/QWn6BmkLre
+	LkIjo+ZcOn2vrxtSIY7xaiQNXUlnqNI8rjnfI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B6C3A247E;
+	Wed, 17 Mar 2010 12:53:32 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 752E6A247C; Wed, 17 Mar
+ 2010 12:53:29 -0400 (EDT)
+In-Reply-To: <1268838344-8581-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Wed\, 17 Mar
+ 2010 22\:05\:44 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9E757074-31E5-11DF-B3DE-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142414>
 
-On Wed, Mar 17, 2010 at 12:35 PM, Markus Elfring <Markus.Elfring@web.de=
-> wrote:
-> -When <paths> are not given, this command switches branches by
-> -updating the index, working tree, and HEAD to reflect the specified
-> -branch.
-> +When <paths> are not given, this command marks the specified branch
-> +as the next commit target. (The reference "HEAD" points to its tip.)
-> +Checking out another branch (branch switching) is designed to carry
-> +your local modifications across with you. The working tree is not
-> +restored to the state of its last commit.
->
-> =A0If `-b` is given, a new branch is created and checked out, as if
-> =A0linkgit:git-branch[1] were called; in this case you can
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-The new version spends all the time talking about weird exceptions and
-none of the time actually saying what the basic functionality is
-supposed to be.  How about this:
+> "git branch -v" is unusable for me because it's too slow.
+> ...
+> This is on a repository with ~30 branches, some are hundreds of
+> patches behind upstream.
 
---
-When <paths> are not given, this command switches from your current
-branch to the given branch.  This is done by updating HEAD to point at
-the given branch, reading the new branch's content into the index, and
-checking out the content into your working tree.  Where possible, any
-files you have modified in your current working tree or index remain
-modified in the newly-checked-out branch.  This cannot be done,
-however, when those modified files differ between the old and new
-branches, in which case the checkout will abort in order to avoid
-losing your changes.  You might want to use 'git stash' in this case.
---
+Perhaps you have an overeager branch.autosetupmerge configuration?
 
-Have fun,
-
-Avery
+I dunno.  I seem to have a lot more branches than you do (currently
+56), but most of them are topics that, once they forked from a
+particular commit, never merge other random commits, only because they
+have new commits that are unrelated to the objective of the topic, so
+most of my branches do not have "upstream" in that sense.
