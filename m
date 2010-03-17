@@ -1,72 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] branch: only print upstream relationship with -v -v
-Date: Wed, 17 Mar 2010 09:53:27 -0700
-Message-ID: <7vwrxavqig.fsf@alter.siamese.dyndns.org>
-References: <1268838344-8581-1-git-send-email-pclouds@gmail.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH 2/2] Report errors when failing to launch the 
+	html browser in mingw.
+Date: Wed, 17 Mar 2010 18:01:07 +0100
+Message-ID: <40aa078e1003171001s2c6a8765ve3bee38dddc2211c@mail.gmail.com>
+References: <87aau7dkon.fsf@fox.patthoyts.tk>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 17 17:53:47 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: 31wqhSwkOB844EC6uv2Dy08805y6u25.w866CIC02D08805y0B8E9C.w86@groups.bounces.google.com Wed Mar 17 18:01:31 2010
+Return-path: <31wqhSwkOB844EC6uv2Dy08805y6u25.w866CIC02D08805y0B8E9C.w86@groups.bounces.google.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-gw0-f58.google.com ([74.125.83.58])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrwV8-0004Uz-N9
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Mar 2010 17:53:47 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751908Ab0CQQxg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Mar 2010 12:53:36 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39596 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751682Ab0CQQxf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Mar 2010 12:53:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D1A3A2482;
-	Wed, 17 Mar 2010 12:53:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=TkGFB15V0gKF
-	yTnlqGJX+44J1vg=; b=vsC6O6U2+N3YZvTGv0liDrY/yfl1UXhVqkb4JYzmh3v6
-	Nm1ocrKd9sStyEolSLdHXEj0NXiftv5iPHT2tV04COjs9V2I2LxDymt3jlQq0hla
-	tWhA1BGfJHm7U0s0TI+Cw/GiWjKeFuTRGl8eVMdyknpWeUyEqpICXnRCpC/p6HY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=aiPOwE
-	K+KKTi2DcO90nBCaDDbQLshS/1NkPyEVsqlYsPA8buu8k9XbD66DnG83SUuYP33v
-	7mk1F88LGNPfdXj2SL3/7sPoin9xeZwatUXlENtc3XMDMsB3nueOg/QWn6BmkLre
-	LkIjo+ZcOn2vrxtSIY7xaiQNXUlnqNI8rjnfI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B6C3A247E;
-	Wed, 17 Mar 2010 12:53:32 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 752E6A247C; Wed, 17 Mar
- 2010 12:53:29 -0400 (EDT)
-In-Reply-To: <1268838344-8581-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Wed\, 17 Mar
- 2010 22\:05\:44 +0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9E757074-31E5-11DF-B3DE-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142414>
+	(envelope-from <31wqhSwkOB844EC6uv2Dy08805y6u25.w866CIC02D08805y0B8E9C.w86@groups.bounces.google.com>)
+	id 1Nrwcc-0000U8-Uz
+	for gcvm-msysgit@m.gmane.org; Wed, 17 Mar 2010 18:01:31 +0100
+Received: by mail-gw0-f58.google.com with SMTP id a18sf8720gwa.3
+        for <gcvm-msysgit@m.gmane.org>; Wed, 17 Mar 2010 10:01:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:x-beenthere:received:received:received
+         :received:received-spf:received:mime-version:received:reply-to
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :x-original-authentication-results:x-original-sender:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:x-thread-url
+         :x-message-url:sender:list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding;
+        bh=SWfam9AGjFSv9nFg1XuLrIJDGCr4bjEfUocCwxtyqXg=;
+        b=5G0DudcgMNf3Xefc0nSnwQNc9tqpPnjuSeLXDoQrwIqeoKRsWDuZvrIe4wOmH8O18l
+         ZUXqHsPrPHcMxLEFwBwENlk3n6fU8iptTWan2UABmXYr3TCOrCa7jQqATje6ph3DOM0d
+         3gQ91xrdHvQ5gPaYJ4NmN3SZpVvGJXlDDY+hE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc
+         :x-original-authentication-results:x-original-sender:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:x-thread-url
+         :x-message-url:sender:list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding;
+        b=sL1mV5SG7DGI07C+KX/RIUqY44CTOY4TncoTAYWrPPXfp7cub9PGhDXp9R8KSPTWqq
+         pmzoEw8Fi28s+SnBUHtSgP5ZU+J4EmDm1PDpKk+zJnscdCXiefWpLcrAzaA/7+Wp8j7h
+         GllA5SIAmsscO4MNh4idyzggdiqW13cNSGNBM=
+Received: by 10.91.1.12 with SMTP id d12mr90249agi.19.1268845271180;
+        Wed, 17 Mar 2010 10:01:11 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.213.50.10 with SMTP id x10ls1043311ebf.3.p; Wed, 17 Mar 2010 
+	10:01:08 -0700 (PDT)
+Received: by 10.213.37.145 with SMTP id x17mr137026ebd.10.1268845268500;
+        Wed, 17 Mar 2010 10:01:08 -0700 (PDT)
+Received: by 10.213.37.145 with SMTP id x17mr137025ebd.10.1268845268478;
+        Wed, 17 Mar 2010 10:01:08 -0700 (PDT)
+Received: from ey-out-1920.google.com (ey-out-1920.google.com [74.125.78.147])
+        by gmr-mx.google.com with ESMTP id 11si163814ewy.1.2010.03.17.10.01.07;
+        Wed, 17 Mar 2010 10:01:07 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 74.125.78.147 as permitted sender) client-ip=74.125.78.147;
+Received: by ey-out-1920.google.com with SMTP id 26so57822eyw.42
+        for <msysgit@googlegroups.com>; Wed, 17 Mar 2010 10:01:07 -0700 (PDT)
+Received: by 10.216.86.211 with SMTP id w61mr592846wee.50.1268845267192; Wed, 
+	17 Mar 2010 10:01:07 -0700 (PDT)
+In-Reply-To: <87aau7dkon.fsf@fox.patthoyts.tk>
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: 
+	domain of kusmabite@googlemail.com designates 74.125.78.147 as permitted 
+	sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) 
+	header.i=@googlemail.com
+X-Original-Sender: kusmabite@googlemail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, 
+	<mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
+X-Thread-Url: http://groups.google.com/group/msysgit/t/debbf89669e0bc12
+X-Message-Url: http://groups.google.com/group/msysgit/msg/15952c330a03d36e
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
+	<mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142415>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Wed, Mar 17, 2010 at 4:20 PM, Pat Thoyts
+<patthoyts@users.sourceforge.net> wrote:
+> The mingw function to launch the system html browser is silent if the
+> target file does not exist leaving the user confused. Make it display
+> something.
+>
+> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+> ---
+> =A0compat/mingw.c | =A0 =A07 +++++--
+> =A01 files changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 9c10a4c..d6539ef 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -1548,6 +1548,7 @@ void mingw_open_html(const char *unixpath)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0const char *, const char *=
+, const char *, INT);
+> =A0 =A0 =A0 =A0T ShellExecute;
+> =A0 =A0 =A0 =A0HMODULE shell32;
+> + =A0 =A0 =A0 int r;
+>
+> =A0 =A0 =A0 =A0shell32 =3D LoadLibrary("shell32.dll");
+> =A0 =A0 =A0 =A0if (!shell32)
+> @@ -1557,9 +1558,11 @@ void mingw_open_html(const char *unixpath)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0die("cannot run browser");
+>
+> =A0 =A0 =A0 =A0printf("Launching default browser to display HTML ...\n");
+> - =A0 =A0 =A0 ShellExecute(NULL, "open", htmlpath, NULL, "\\", 0);
+> -
+> + =A0 =A0 =A0 r =3D (int)ShellExecute(NULL, "open", htmlpath, NULL, "\\",=
+ SW_SHOWNORMAL);
+> =A0 =A0 =A0 =A0FreeLibrary(shell32);
+> + =A0 =A0 =A0 if (r < 33) {
 
-> "git branch -v" is unusable for me because it's too slow.
-> ...
-> This is on a repository with ~30 branches, some are hundreds of
-> patches behind upstream.
+While entirely correct, this looks a little weird to me. How about "if
+(r <=3D 32)" (since 32 is the number MSDN mentions) and a comment?
 
-Perhaps you have an overeager branch.autosetupmerge configuration?
-
-I dunno.  I seem to have a lot more branches than you do (currently
-56), but most of them are topics that, once they forked from a
-particular commit, never merge other random commits, only because they
-have new commits that are unrelated to the objective of the topic, so
-most of my branches do not have "upstream" in that sense.
+--=20
+Erik "kusma" Faye-Lund
