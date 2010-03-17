@@ -1,80 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Clarification for the command "git checkout <branch>"
-Date: Wed, 17 Mar 2010 11:37:12 -0700
-Message-ID: <7v8w9qkd5z.fsf@alter.siamese.dyndns.org>
-References: <4B67227A.7030908@web.de>
- <7vhbq0wuy6.fsf@alter.siamese.dyndns.org> <4B898F97.90706@web.de>
- <7vr5o6s5xf.fsf@alter.siamese.dyndns.org> <4B8B9BF1.10408@web.de>
- <4b8bf32f.0706c00a.26cb.691d@mx.google.com> <4BA104C7.5020207@web.de>
- <32541b131003170944w7a0215frcace205f32d313bf@mail.gmail.com>
- <7vaau6q18q.fsf@alter.siamese.dyndns.org> <4BA11D8C.5020007@web.de>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: [PATCHv2] Teach --no-ff option to 'rebase -i'.
+Date: Wed, 17 Mar 2010 19:42:10 +0100
+Message-ID: <20100317184210.GB2557@m62s10.vlinux.de>
+References: <1268755735-20588-1-git-send-email-marcnarc@xiplink.com> <1268768556-32176-1-git-send-email-marcnarc@xiplink.com> <20100316214717.GA24880@progeny.tock> <4BA07DC7.9070502@viscovery.net> <20100317155842.GA2557@m62s10.vlinux.de> <4BA0FE59.7020303@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
-To: Markus Elfring <Markus.Elfring@web.de>
-X-From: git-owner@vger.kernel.org Wed Mar 17 19:37:33 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Mar 17 19:42:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nry7X-00056S-K5
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Mar 2010 19:37:31 +0100
+	id 1NryCG-0007np-Eo
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Mar 2010 19:42:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754321Ab0CQShZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Mar 2010 14:37:25 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61469 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753206Ab0CQShY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Mar 2010 14:37:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 957BFA27A4;
-	Wed, 17 Mar 2010 14:37:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=67ItUspEMBaBQIL6Oda3cYnoDbE=; b=xr6pmm
-	pzZTAnNnbu+hkhTG2z0GAEQGWIu4tiBwbP60bBMHkOmyNRnGIKQi6bzGYQ42X15J
-	No8uHyK8nPBQj1H9RTQM78hFcJZHSH87oDvrUv5zS1OIkxRL/+VUPVUoWCbbMUcy
-	Dg7RrH+mvV1qpQsQhyqQkSO5S2pmwVGl9fAbo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gz3U37dIoTspmKsW5XxA+cc4mx0K+qAu
-	0VDQxhmg8VwwPZEM2BnRVNTN2CgymJVRC08OgX3pKEwZ9pCbxZW3vzbMUGnS5QbS
-	R18bb3P2pWipnl2t7eo/+SBSRt/g2dAu/5nXYC0HTtC4ks29FIZq0SAazLV0Ka/M
-	58mFbvw4KAs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5464FA279A;
-	Wed, 17 Mar 2010 14:37:18 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 82ABCA278F; Wed, 17 Mar
- 2010 14:37:13 -0400 (EDT)
-In-Reply-To: <4BA11D8C.5020007@web.de> (Markus Elfring's message of "Wed\, 17
- Mar 2010 19\:21\:00 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1D9F3886-31F4-11DF-9345-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755072Ab0CQSmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Mar 2010 14:42:19 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55585 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754325Ab0CQSmS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Mar 2010 14:42:18 -0400
+Received: (qmail invoked by alias); 17 Mar 2010 18:42:14 -0000
+Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
+  by mail.gmx.net (mp052) with SMTP; 17 Mar 2010 19:42:14 +0100
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX1+5DEJcnfi5ULN2JWTT+vwtm7cTguTUf76/Rc5Cpw
+	zvYnBwBsfHP+Sg
+Received: by m62s10.vlinux.de (Postfix, from userid 1000)
+	id 31A23D4006; Wed, 17 Mar 2010 19:42:10 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <4BA0FE59.7020303@viscovery.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64000000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142426>
 
-Markus Elfring <Markus.Elfring@web.de> writes:
+On Wed, Mar 17, 2010 at 05:07:53PM +0100, Johannes Sixt wrote:
+> Peter Baumann schrieb:
+> > On Wed, Mar 17, 2010 at 07:59:19AM +0100, Johannes Sixt wrote:
+> >> If I were to re-merge topic into master a second time after this
+> >> situation, I would install a temporary graft that removes the second
+> >> parent of M and repeat the merge. After the graft is removed, the history
+> >> would look like this:
+> >>
+> >>      B --- C --- D --------------.   [topic]
+> >>    /              \               \
+> >>   A ---  ...   --- M ... --- U ... N [master]
+> >>
+> >> Are there any downsides? I don't know - I haven't thought it through.
+> >>
+> > 
+> > Might be. If there is any branch starting anywhere in between M and U
+> > which also needs to merge [topic] will also cause you headaches :-)
+> > 
+> >        B --- C --- D --------------.   [topic]
+> >      /              \               \
+> >     A ---  ...   --- M ... --- U ... N [master]
+> >                          \
+> >                           x --- y [side_branch wich needs to merge topic] 
+> 
+> ?? I don't follow you. The side branch already contains the topic. What do
+> you want to merge?
+> 
 
->>      If you made changes to paths that are different from the current
->> branch and the new branch, the command will stop you in order to prevent
->> you from losing your uncommited changes in potential conflicts between
->> them and the changes between two branches.
->
-> I find it hard to realise what will be inside or outside of a path structure
-> under the mentioned conditions.
+Won't it loose the revert 'U' after merging side_branch back to master?
 
-Sorry, but I didn't say anything about path structure, and I am unsure
-what you were talking about.  Here is what I meant:
+Ah. Looking at the picture more closely, I could answer myself and say it would
+only cause a huge mergeconflict, won't it?.
 
-Imagine you are on branch A and trying to switch to branch B.  There are
-changed paths between these two branches (i.e. the paths that appear in
-the output from "git diff --name-only A B") and there are unchanged paths.
-If you have local changes to the former, such local changes may conflict
-with the change made between A and B, and stops the command.
+--
+Peter
