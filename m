@@ -1,188 +1,149 @@
-From: Erick Mattos <erick.mattos@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH v3] git checkout -b: unparent the new branch with -o
-Date: Tue, 16 Mar 2010 22:10:14 -0300
-Message-ID: <55bacdd31003161810w1c824570lee1b7d5759568bc1@mail.gmail.com>
-References: <1268763584-14164-1-git-send-email-erick.mattos@gmail.com> 
-	<7v634v27vf.fsf@alter.siamese.dyndns.org>
+Date: Tue, 16 Mar 2010 23:13:08 -0500
+Message-ID: <20100317041307.GA26641@progeny.tock>
+References: <1268763584-14164-1-git-send-email-erick.mattos@gmail.com>
+ <7v634v27vf.fsf@alter.siamese.dyndns.org>
+ <55bacdd31003161810w1c824570lee1b7d5759568bc1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 17 02:15:48 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Erick Mattos <erick.mattos@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 17 05:13:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrhrN-0002os-2A
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Mar 2010 02:15:45 +0100
+	id 1Nrkcu-0002AP-FQ
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Mar 2010 05:13:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751163Ab0CQBPj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Mar 2010 21:15:39 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:49661 "EHLO
+	id S1752262Ab0CQEMv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Mar 2010 00:12:51 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:43682 "EHLO
 	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750993Ab0CQBPi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Mar 2010 21:15:38 -0400
-Received: by gwaa12 with SMTP id a12so100611gwa.19
-        for <git@vger.kernel.org>; Tue, 16 Mar 2010 18:15:35 -0700 (PDT)
+	with ESMTP id S1752046Ab0CQEMu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Mar 2010 00:12:50 -0400
+Received: by gwaa12 with SMTP id a12so163126gwa.19
+        for <git@vger.kernel.org>; Tue, 16 Mar 2010 21:12:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NEDJeDPfLwzff+FCvWQT6+ljVgD3NFAv2eFgXNZ6P0Y=;
-        b=OqSoKdmC93uXBaIkjApgxvS+2NQ8IqyZymXEBGywqJYS1h/RoJfsTru58u54iWSMXc
-         oDTtchirWBbUTZgaAOVQWnxhDDy4UREZvXtqO5WKmylpvl1/9vS8wFKK2ARD6LZ8kjRg
-         pK+i8aCu1Tq60cpEefyCk/jxx005aTglRmCZc=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=c5hkKbfczM877IVXdBdEIJxb+eVmDwE4gzh0VFqM+VM=;
+        b=PuNVt9WFyXYs+l+n67r3k4uw1FELX0JWAflBcJP2UArl+7FGdLsHZPFVnYS/iVKRUj
+         hykAzvEmVXqUuHFPaC1JWTzfzhbjLQDT5jXZS7R8sT9DZOqzfXkSlM4bklfZHwVPSHN5
+         JaQgcDecdmD7WNsI6Mnbbeoh85JhrkzrHm4dw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ocKsobTH9jjxYAQwStkICc88dutE4h1nytViF+Q6A1gIUfGruDN7FG74rqVwBcxGqF
-         uKBKaLeTXAEJ/WBuJb3LKiuKbdnn+LWdGJbBYR2jA2LnuRGkhsp5TN54a/GwLSDRt9Yu
-         ID0/Dza9W8lVmzFdVArBE5jnco+RqGxDI3x2o=
-Received: by 10.150.63.4 with SMTP id l4mr136875yba.611.1268788234085; Tue, 16 
-	Mar 2010 18:10:34 -0700 (PDT)
-In-Reply-To: <7v634v27vf.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=mQ6DV7wI/gf8G6VT4iRg88c/1TQXLzAImPeSBgzs52tvw+xr7v/YpMtUY8FgRwg9DK
+         Tmgo4yBuwwxRTKpPGfZDkZDKyYMV/PepPJ1DF68BSdQw3rZgpEU/usU8u9X3TJqQ0ipP
+         gl7DLn2ItmetF00K/XLBXfrmjNEZDEp1FKot0=
+Received: by 10.90.246.19 with SMTP id t19mr156917agh.119.1268799169070;
+        Tue, 16 Mar 2010 21:12:49 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 20sm5997777iwn.1.2010.03.16.21.12.47
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 16 Mar 2010 21:12:48 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <55bacdd31003161810w1c824570lee1b7d5759568bc1@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142363>
 
 Hi,
 
-Junio, you are the leader.  And I really don't want to bother you with
-my opinions.
+Erick Mattos wrote:
 
-I am just trying to make you satisfied so gitsters, I mean git users,
-will have this feature as soon as possible.
+> I am just trying to make you satisfied so gitsters, I mean git users,
+> will have this feature as soon as possible.
 
-2010/3/16 Junio C Hamano <gitster@pobox.com>:
->> After the 'checkout -o -b' the new branch is not saved until committ=
-ed.
->> Before committing you should 'git rm -rf' anything which is not goin=
-g to
->> take part in the new branch and change the work tree and index the w=
-ay
->> you want it to be since they remain untouched as before checkout
->> command.
->
-> This paragraph makes the patch incoherent. =C2=A0It talks as if "no c=
-ommon
-> paths" is the majority case, and everybody inconveniently has to perf=
-orm
-> an extra step that shouldn't be needed if the implementation were don=
-e
-> right. =C2=A0If "no common paths" is indeed the assumed primary targe=
-t, why
-> doesn't the implementation empty both index and files in the working =
-tree
-> so that users don't have to do so themselves?
+Well, hopefully everyone wants it to make sense, too. :)
 
-I was NOT trying to scare with my message.  That paragraph was meant
-to let people who would need to do something ("no common paths") know
-what they will need to do.  I think it is good enough because "mostly
-common paths" people will be happy too by knowing that everything is
-unchanged as they want it to be.  So I haven't thought about scaring
-at all.  I thought it was good indeed!  :-)
+> I do prefer my first design mainly because it mimics the state of an
+> initial commit.  I think that is subjectively better.
+>=20
+> You have been asking me to make one of the two possible work flow use=
+s
+> you pictured as favored so things will be already set to them.  No
+> further commands to them.
+>=20
+> I did it!  As a matter of fact the "mostly common paths" people were
+> favored as you have noticed your inclination to it before.
 
-> My _only_ complaint was that your version that _only_ emptied the ind=
-ex
-> without touching the working tree made things difficult for everybody=
-,
-> both "no common paths" people and "mostly common paths" people.
+I guess I am confused because I am not sure what you are trying to do:
 
-Just to clarify my point-of-view about the design:
+ A. on one hand, you might want a command to use as a building block.
+    In practice, people would use scripts or refer to known recipes to
+    make use of this building block in one of a few known combinations
+    with other commands.
 
-I do prefer my first design mainly because it mimics the state of an
-initial commit.  I think that is subjectively better.
+ B. on the other hand, you might be trying to make it easier to get
+    some particular task done.
 
-You have been asking me to make one of the two possible work flow uses
-you pictured as favored so things will be already set to them.  No
-further commands to them.
+Junio was discussing the case B.  Whoever has the itch is in a good
+position to say what interface would be convenient.  Usually one comman=
+d
+invocation can be enough to accomplish most of what is needed on its
+own.  There were two examples of such commands he gave:
 
-I did it!  As a matter of fact the "mostly common paths" people were
-favored as you have noticed your inclination to it before.
+ 1.                                                    * [public]
+                                                        \
+     * --- * --- * [private]   =3D=3D=3D>    * --- * --- * --- * [priva=
+te]
 
-As I told you, I just want to make you happy so people that needs the
-feature I am working on could have it as fast as possible.
+   for the =E2=80=9Cwe cannot publish the whole history=E2=80=9D use,
 
-And if one of the possible work flows have to be favored then I do
-agree with you about "mostly common paths" as the best choice.
+and
 
-But the point is that the other group will need to do further commands
-anyway so I would keep my previous design because of the resemblance
-to an initial commit: work tree full and nothing added to the index.
+ 2.                                                 * [doc]
 
-But I mean it!  I really want to satisfy you.  So this was the last
-time I talk about my preference.
+    * --- * --- * [master]  =3D=3D=3D>  * --- * --- * --- * [master]
 
-Therefore let's find out what you want me to do so we can finish this
-production cycle.  I don't want to bother you anymore.
+   for the =E2=80=9Cstarting unrelated development but restrictive disk=
+ quotas
+   mean I have to use the same working directory=E2=80=9D use.
 
-> You need to at least qualify the above paragraph with something like =
-"if
-> you want to create an unrelated branch whose contents do not resemble=
- the
-> original branch at all, then you should ...".
->
-> Better yet, try to advertise what you are giving your users in a posi=
-tive
-> way, instead of in a way that only scares users, perhaps like this:
->
-> =C2=A0 =C2=A0After 'checkout --orphan', your HEAD will point at an un=
-born branch,
-> =C2=A0 =C2=A0and the next commit will start a new history without any=
- prior commit.
-> =C2=A0 =C2=A0To help create such a new history that has contents most=
-ly the same as
-> =C2=A0 =C2=A0that of the original branch, the command does not touch =
-the index nor
-> =C2=A0 =C2=A0the working tree, and "checkout --orphan" immediately fo=
-llowed by
-> =C2=A0 =C2=A0"commit -a" would record a tree very similar to what you=
- had in the
-> =C2=A0 =C2=A0original branch. =C2=A0This is useful when you want to .=
-=2E. [insert a
-> =C2=A0 =C2=A0summary of "going open source" example from my previous =
-message if you
-> =C2=A0 =C2=A0want here].
->
-> =C2=A0 =C2=A0If on the other hand you want to start a new branch whos=
-e contents do
-> =C2=A0 =C2=A0not resemble the original branch at all, you may want to=
- start from an
-> =C2=A0 =C2=A0empty index and the working tree, with "git rm -rf ." im=
-mediately
-> =C2=A0 =C2=A0after running this command.
->
-> The same comment applies to the documentation part.
+In these examples (which are just examples for illustration of what a
+well supported use case looks like), the content in the index and work
+tree after the command is run is tailored to what is expected to be
+needed.
 
-I was trying to be concise on my message.  I realize you want it more e=
-xplained.
+I suspect you are aiming for case A instead.  For scripts and special
+case recipes, it might be a good idea to have a command to use as an
+ingredient in tasks like (1) and (2) above.  The recipe people
+currently use is usually something like the following:
 
-What about that:
+  git symbolic-ref HEAD refs/heads/newbranch
+  rm .git/index
 
-After the 'checkout -o -b' you are in an new unborn branch ready to be
-committed.  The next commit will start a new history without any
-ancestry.  If this new branch was made to start from scratch, not
-resembling the previous one, then you should use 'git rm -rf' to get
-an empty work tree and index.  Otherwise with a 'git commit -a' you
-will have a tree exactly as in the previous branch.  So just set
-things as you want it to be and commit the new unparented branch.
+but that indeed is not perfect: it does not check for a dirty index
+in case 1, it does not keep track of what files were not registered
+in the index so as not to delete them in case 2, and so on.
 
-> By the way, I wouldn't mind if you believe "no common paths" is the
-> majority case; if that is the case, then the code and behaviour would=
- be
-> different, and the presentation would say something like this:
+Also one might object to the knowledge of repository layout required;
+gitrepository-layout(5) is probably not the first place a person would
+look in trying to figure out how to carry out this task.  That misses
+the point, though, in my opinion, since
 
-I agree with you in choosing "mostly common paths" as the target since
-you have decided to target one.
+ git symbolic-ref HEAD refs/heads/newbranch
+ git rm --cached '*'
 
-Before I send another patch version could you please tell me your
-position about my new explaining text up there.  I will wait for your
-reply before sending a new patch version.
+accomplishes the same thing.  Anyway, if your goal is to create
+plumbing, I would suggest modifying a plumbing command instead of
+=E2=80=98git checkout=E2=80=99. =20
 
-Best regards
+Thank you for your efforts.  As hinted above, I would not mind seeing
+improvement in this area at all.  Anyway, I hope this has provided some
+food for thought (if not, don=E2=80=99t mind me; please carry on).
+
+Kind regards,
+Jonathan
