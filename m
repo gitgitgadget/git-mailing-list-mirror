@@ -1,59 +1,64 @@
-From: "Lars R. Damerow" <lars@pixar.com>
-Subject: [PATCH v3 0/3] Add support for GIT_ONE_FILESYSTEM
-Date: Wed, 17 Mar 2010 12:55:50 -0700
-Message-ID: <1268855753-25840-1-git-send-email-lars@pixar.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 17 21:06:34 2010
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH 11/16] revert_or_cherry_pick(): get oneline_body from 
+	get_oneline()
+Date: Wed, 17 Mar 2010 13:09:55 -0700
+Message-ID: <780e0a6b1003171309k75b33d3cpb4b1c6370d67942f@mail.gmail.com>
+References: <20100317113655.GA25470@progeny.tock> <20100317121546.GK25641@progeny.tock>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Stefan Monnier <monnier@iro.umontreal.ca>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 17 21:10:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NrzVU-0006Kx-I5
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Mar 2010 21:06:20 +0100
+	id 1NrzZK-0008Ob-VJ
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Mar 2010 21:10:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756050Ab0CQUGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Mar 2010 16:06:14 -0400
-Received: from nmx.pixar.com ([199.108.77.23]:54753 "EHLO nmx.pixar.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756016Ab0CQUGM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Mar 2010 16:06:12 -0400
-X-PixarMID: 1939847
-X-PixarRecvListener: OutboundMail
-X-PixarRemoteIP: 138.72.131.152
-X-IronPort-AV: E=Sophos;i="4.51,261,1267430400"; 
-   d="scan'208";a="1939847"
-Received: from helper.dynamic.pixar.com ([138.72.131.152])
-  by nimbus.pixar.com with ESMTP; 17 Mar 2010 12:56:03 -0700
-Received: from helper.dynamic.pixar.com (localhost [127.0.0.1])
-	by helper.dynamic.pixar.com (8.14.3/8.14.3) with ESMTP id o2HJu3fD025887
-	for <git@vger.kernel.org>; Wed, 17 Mar 2010 12:56:03 -0700
-Received: (from lars@localhost)
-	by helper.dynamic.pixar.com (8.14.3/8.14.3/Submit) id o2HJu36R025885
-	for git@vger.kernel.org; Wed, 17 Mar 2010 12:56:03 -0700
-X-Mailer: git-send-email 1.6.5.2
+	id S1755807Ab0CQUKM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Mar 2010 16:10:12 -0400
+Received: from mail-pz0-f200.google.com ([209.85.222.200]:34738 "EHLO
+	mail-pz0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751157Ab0CQUKL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Mar 2010 16:10:11 -0400
+Received: by pzk38 with SMTP id 38so1200146pzk.33
+        for <git@vger.kernel.org>; Wed, 17 Mar 2010 13:10:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Lvkig28/gBGdh6vrHgRVxKX1kWhK6dgvr7RV2MLNmAs=;
+        b=ulkShf6ZBcp3d7VOLnKvideQLcxBKEaABZ9l1kEHtDXD/ky6rGR6QjwVgWzzNWCA6k
+         rzeTx1bh8xaqncFd3z6D7xHCGLc5nQUhE1GXXfZxPXlwSLllUZWlRTAB4mT1+HrdaLis
+         c42s1ZGeP1ulEoSZnaZnUAzUn6uCRpxJXxkls=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=sfqSetEKrvgyxknuF2yBMvAXsENNavN7xFOXszIG9NCR28JA2TRBIsjiybiCV+DyKr
+         /fEkWr+cMXVvnzNq1WAVLdgp4coZfRhD77CRTmaULYJn8COYrTJA+lieCD4XED6a+lCi
+         zv8hjrWFhtJN6N7P3j9KPJqOMgrDSvyKgI4/I=
+Received: by 10.142.2.20 with SMTP id 20mr785756wfb.233.1268856610140; Wed, 17 
+	Mar 2010 13:10:10 -0700 (PDT)
+In-Reply-To: <20100317121546.GK25641@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142437>
 
+On Wed, Mar 17, 2010 at 5:15 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+>
+> Maybe the next few patches should be squashed. =C2=A0They are separat=
+ed one
+> commit per idea, but they affect the same code.
+>
 
-Here's another try for GIT_ONE_FILESYSTEM.
-
-I took Duy's recommendation not to die() in gentle mode as well as to just use
-cwd in my error messages (after truncating them). I also fixed the problem
-with the existing error message's use of an untruncated cwd.
-
-Thanks for all of the suggestions!
-
-Lars R. Damerow (3):
-      config.c: remove static keyword from git_env_bool()
-      truncate cwd string before printing error message
-      Add support for GIT_ONE_FILESYSTEM
-
- Documentation/git.txt |    3 +++
- cache.h               |    1 +
- config.c              |    2 +-
- setup.c               |   28 +++++++++++++++++++++++++++-
- 4 files changed, 32 insertions(+), 2 deletions(-)
+Could all this code just use the custom format printing routines in
+pretty.c? It might not be super efficient but at least it wouldn't
+duplicate a bunch of code.
