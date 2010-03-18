@@ -1,76 +1,82 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Michael Witten <mfwitten@gmail.com>
 Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
-Date: Thu, 18 Mar 2010 13:59:14 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.1003181348250.18017@i5.linux-foundation.org>
-References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>  <alpine.LFD.2.00.1003181022040.18017@i5.linux-foundation.org>  <9e4733911003181202h23b3d702xce8fc0670a994d52@mail.gmail.com>  <alpine.LFD.2.00.1003181203370.18017@i5.linux-foundation.org> 
- <9e4733911003181216m59a09ad6y6c7c890714d0d20b@mail.gmail.com>  <alpine.LFD.2.00.1003181218400.18017@i5.linux-foundation.org>  <9e4733911003181237i56a00a78k31fac2c1afe5a674@mail.gmail.com>  <alpine.LFD.2.00.1003181241080.18017@i5.linux-foundation.org> 
- <alpine.LFD.2.00.1003181248040.18017@i5.linux-foundation.org> <3f4fd2641003181331t4e70bed0yf1d03e20d1127705@mail.gmail.com>
+Date: Thu, 18 Mar 2010 16:12:48 -0500
+Message-ID: <b4087cc51003181412s78d153c8t48984eb87eb75e0e@mail.gmail.com>
+References: <alpine.LFD.2.00.1003181022040.18017@i5.linux-foundation.org> 
+	<4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com> <4ba27424.9804cc0a.4b1f.11b1@mx.google.com> 
+	<20100318204416.GM8256@thunk.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
-To: Reece Dunn <msclrhd@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 18 22:02:49 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
+To: tytso@mit.edu
+X-From: git-owner@vger.kernel.org Thu Mar 18 22:13:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsMrf-0001an-QM
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 22:02:48 +0100
+	id 1NsN24-0007TH-EU
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 22:13:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752674Ab0CRVCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Mar 2010 17:02:41 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:45248 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752671Ab0CRVCi (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Mar 2010 17:02:38 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o2IL28Xn023602
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 18 Mar 2010 14:02:09 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o2IL27C0015456;
-	Thu, 18 Mar 2010 14:02:08 -0700
-In-Reply-To: <3f4fd2641003181331t4e70bed0yf1d03e20d1127705@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.448 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752676Ab0CRVNL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Mar 2010 17:13:11 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:54936 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752656Ab0CRVNK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Mar 2010 17:13:10 -0400
+Received: by fg-out-1718.google.com with SMTP id l26so2834108fgb.1
+        for <git@vger.kernel.org>; Thu, 18 Mar 2010 14:13:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3Vlci4++JHRcYg3tC9qBDZ3x4aQWoMcSi6ovZKHjJzY=;
+        b=B6GsiBJoM2W1JoB7CpHML38UrqWccRL6UW65TI04pnexuqW+k2CIUqRWNAbwcRIcxk
+         2ueTfRe+GJmW8sHo2XE/fXZlEt15F5KkayLPj1sKrd7DqoUlHsdoNfApCDQt5i7q+ppc
+         UIIQQ9ZoubhhlsrYPw9Blp1EgxwKi37X2VUPY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=PNhMhBll5cynUIVWtsZbPieQLB95PS8FtAJ0xosUGR6nRR2rVbHRmlrHTrVbwkqP7s
+         V9ijRnLdfGZGnb/fUMSWyOUq3b4WNXyDvDoxFTN6j0FpkLB3qM6M+l/Um3o2FYHXoVm1
+         kdRoaWC5VMMOWPZrALnQy8JLj9U/Z1tml8qzM=
+Received: by 10.239.170.139 with SMTP id s11mr1498040hbe.99.1268946788137; 
+	Thu, 18 Mar 2010 14:13:08 -0700 (PDT)
+In-Reply-To: <20100318204416.GM8256@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142520>
 
+On Thu, Mar 18, 2010 at 15:44,  <tytso@mit.edu> wrote:
+> =C2=A0 Hi, I'm <dd1b51a1-ce2a-41fd-ae89-f68b7f0ace85> and here are th=
+e things
+> =C2=A0 that you need to fix with your patch....
 
+Look, there is a huge misunderstanding.
 
-On Thu, 18 Mar 2010, Reece Dunn wrote:
-> 
-> What would be better is having a concept of identity aliases. That is,
-> a user can say that (for this git project), (user1,email1) is the same
-> person as (user2,email2). This would allow someone who has
-> mis-configured their git instance to say what the (user,email) pair
-> should have been. It also allows people to say that they used to be
-> called someone and they are now called somebody.
+This is all that I'm saying: Keep git exactly the way it is, but add
+one extra piece of identifying information for each person.
 
-Yeah. And that's what '.mailmap' is, really.
+That's it.
 
-Does mailmap get annoying? Yes. Is it going to be incomplete? Yes. Do we 
-ever even _bother_ to try to make it perfect? No.
+Nothing is being taken away.
 
-In the kernel, for example, we tend to use it _only_ to fix up the real 
-name. It's much more capable than that (ie you can use it to fix up email 
-addresses too), but we literally haven't cared enough to bother. So you 
-still see the "localhost" emails or the "(none)" domains - even if you use 
-one of the formats that ask for a "fixed" name and email.
+You can still see/grep/access the full names and email addresses just
+as before, only now there will be another piece of information on
+which to filter (or ignore it if you want).
 
-And git itself only fixes up names for certain commands (git blame, git 
-shortlog) and with specific format specifiers (%aN and %aE).
+In the most general form of my proposal, the idea is to let the user
+choose some piece of information that he himself deems to be uniquely
+identifying over a long period of time. However, I think it would be
+smart to reduce that information to a SHA-1 (at least when it's
+recorded in, say, a commit).
 
-The _default_ pretty log format printouts don't do it, for example. Should 
-they? Maybe. Or maybe we should have a flag and/or config option to do so 
-by default.
-
-				Linus
+Essentially, the goal is to distribute the task of maintaining aliases.
