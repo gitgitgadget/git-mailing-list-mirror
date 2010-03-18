@@ -1,66 +1,54 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 0/9] Multiple remotes without conflicts
-Date: Thu, 18 Mar 2010 12:07:12 -0700
-Message-ID: <20100318190712.GD10981@spearce.org>
-References: <cover.1268913163.git.agruen@suse.de>
+Subject: Re: [PATCH 6/9] fetch: Check if all objects exist after fetching
+Date: Thu, 18 Mar 2010 12:08:16 -0700
+Message-ID: <20100318190816.GE10981@spearce.org>
+References: <cover.1268913163.git.agruen@suse.de> <f2bf11648d2cfb58e348d2c8caffa841012fd994.1268913163.git.agruen@suse.de> <f747d7538f2a2bbdb48c9902298fa87691097eba.1268913163.git.agruen@suse.de> <b7762c1e05412618584e38b868bcc870676f6e62.1268913163.git.agruen@suse.de> <672662f82e19ab268bd83f2b48980f43f126c089.1268913163.git.agruen@suse.de> <dbb0f92deca35a16c898af697dc41affc377ae0b.1268913163.git.agruen@suse.de> <d3c00e2a27003dca196d5480007544610cc1e5b8.1268913163.git.agruen@suse.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Andreas Gruenbacher <agruen@suse.de>
-X-From: git-owner@vger.kernel.org Thu Mar 18 20:08:45 2010
+X-From: git-owner@vger.kernel.org Thu Mar 18 20:08:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsL3y-00049K-Qa
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 20:07:23 +0100
+	id 1NsL4y-0005Hg-Uh
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 20:08:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751220Ab0CRTHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Mar 2010 15:07:17 -0400
-Received: from mail-px0-f198.google.com ([209.85.216.198]:51548 "EHLO
-	mail-px0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751143Ab0CRTHP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Mar 2010 15:07:15 -0400
-Received: by pxi36 with SMTP id 36so1733751pxi.21
-        for <git@vger.kernel.org>; Thu, 18 Mar 2010 12:07:15 -0700 (PDT)
-Received: by 10.141.106.21 with SMTP id i21mr1735422rvm.287.1268939235293;
-        Thu, 18 Mar 2010 12:07:15 -0700 (PDT)
+	id S1751335Ab0CRTIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Mar 2010 15:08:20 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:44106 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751085Ab0CRTIT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Mar 2010 15:08:19 -0400
+Received: by pwi5 with SMTP id 5so814323pwi.19
+        for <git@vger.kernel.org>; Thu, 18 Mar 2010 12:08:19 -0700 (PDT)
+Received: by 10.115.38.6 with SMTP id q6mr77255waj.207.1268939299148;
+        Thu, 18 Mar 2010 12:08:19 -0700 (PDT)
 Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 22sm187352iwn.8.2010.03.18.12.07.13
+        by mx.google.com with ESMTPS id 21sm182496iwn.15.2010.03.18.12.08.17
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 18 Mar 2010 12:07:13 -0700 (PDT)
+        Thu, 18 Mar 2010 12:08:17 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <cover.1268913163.git.agruen@suse.de>
+In-Reply-To: <d3c00e2a27003dca196d5480007544610cc1e5b8.1268913163.git.agruen@suse.de>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142495>
 
 Andreas Gruenbacher <agruen@suse.de> wrote:
-> I'm still trying to find a simple and painless way of sharing the object
-> store among multiple repositories: the idea is to have a "parent"
-> repository which contains the actual object store, and a number of
-> "child" repositories which link to that object store.  The obvious
-> problem is garbage collection: we can only garbage collect the parent
-> once it has all refs of all its children.
-> 
-> One way of ensuring that is to make each child a "remote" of the parent,
-> and to fetch all remotes first.  This works for branches, but not for
-> tags or for the reflog.
+> Check if all objects reachable from the fetched refs exist after
+> fetching instead of before: this allows us to distinguish between a
+> repository which is not up to date and a corrupted repository, and to
+> ensure that the repository is up to date and complete after the fetch.
 
-This just feels like the wrong solution.
-
-Why can't we have a "$GIT_DIR/children" subdirectory with a symlink
-or file-containing-path to each child repository.  Modify the fsck
-and gc paths to include these additional reference and reflog spaces,
-and that's that.
-
-Child registration is then just a matter of installing the symlink
-in the parent, or removing it, and gc/fsck never needs to worry
-about a fetch up front in order for it to be accurate.
+I'm against this particular change because it looks like it breaks
+the idea of "quickfetch", which we introduced to support faster
+fetches from the parent repository into a shared clone on the
+same disk.
  
 -- 
 Shawn.
