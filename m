@@ -1,82 +1,85 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: help with git filter-branch
-Date: Thu, 18 Mar 2010 16:19:11 +0100
-Message-ID: <4BA2446F.1080002@viscovery.net>
-References: <551f769b1003180743n2b2dde99laf00aa9bfe0141bf@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: Not possible to see combined diff before committing a merge?
+Date: Thu, 18 Mar 2010 11:21:13 -0400
+Message-ID: <76718491003180821x777df87j245d134e32ec90dc@mail.gmail.com>
+References: <76718491003172321j2a184643o47ec3a712a3b0c12@mail.gmail.com>
+	 <4BA1F880.2090100@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 Cc: git <git@vger.kernel.org>
-To: Yann Simon <yann.simon.fr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 18 16:19:31 2010
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Mar 18 16:21:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsHVR-00051e-Tq
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 16:19:30 +0100
+	id 1NsHXE-000627-1G
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 16:21:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752583Ab0CRPTQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Mar 2010 11:19:16 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:39285 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752402Ab0CRPTP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Mar 2010 11:19:15 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NsHVA-00063s-Rh; Thu, 18 Mar 2010 16:19:13 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id AEF021660F;
-	Thu, 18 Mar 2010 16:19:11 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <551f769b1003180743n2b2dde99laf00aa9bfe0141bf@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1752402Ab0CRPVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Mar 2010 11:21:15 -0400
+Received: from mail-pz0-f200.google.com ([209.85.222.200]:52226 "EHLO
+	mail-pz0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751248Ab0CRPVO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Mar 2010 11:21:14 -0400
+Received: by pzk38 with SMTP id 38so1767939pzk.33
+        for <git@vger.kernel.org>; Thu, 18 Mar 2010 08:21:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=HyNaOsCDWNc/PnltvI/GpPYJALN1/gahjy/WJInhPAc=;
+        b=jUSpr940kugUxfAxZwQxk+wZCYuN5j2GoAsj3aMGb7UyQ7TTZRlJj6TDILZMCWMmGs
+         Rftrq2kpdzAN+zzxFCxH664hbWvq9Gp2vsbnAr3qpL0vJHd/+5gBxaeOaiVYm2GOrBFQ
+         CYA14U0Lq/ecr+liW74yQpTy7hrK1zjZGhWjI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=meCGxb6yh6eb3nGN8ZeXRMZSL2Q/ESwdApgu5fWTcY/qaWosW7RECNqDB+qx2LnDor
+         YEWfs6maFIM4elWeSWFgty5jo75BQat1xnxDvuERi/Ju9zucJr26WDk0SbhLEo4IQYJk
+         PiIfttm+AMFgsEIY/fB/E+vg188bSlEtrR06k=
+Received: by 10.142.202.16 with SMTP id z16mr1352191wff.55.1268925674049; Thu, 
+	18 Mar 2010 08:21:14 -0700 (PDT)
+In-Reply-To: <4BA1F880.2090100@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142478>
 
-Yann Simon schrieb:
-> The idea is to add a missing parent to a certain commit.
-> I wrote the following bash script:
-> 
-> #!/bin/sh
-> die () {
->     echo >&2 "$@"
->     exit 1
-> }
-> [ "$#" -eq 3 ] || die "usage: add_parent <commit_to_update>
-> <present_parent> <parent_to_add>"
-> git filter-branch --parent-filter \
->     'test $GIT_COMMIT = $1 && \
->     echo "-p $2 -p $3" \
->     || cat' \
->     --tag-name-filter 'cat' \
->     $2..master
-> 
-> When I try to use it an a test repository, I get the following error:
-> 
-> ./add_parent.sh ad12d20974cad91ddedd055f5335b7471e48dd1d
-> 1541f3ae456556edc7e15cead1ae76f470961be0
-> 88b5d6f190f9d7135148c67c4d949c0c06e179ff
-> Rewrite ad12d20974cad91ddedd055f5335b7471e48dd1d (1/1)test: 3: =:
-> argument expected
+On Thu, Mar 18, 2010 at 5:55 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> If there are no conflicted files left you could do a throw-away commit
+> with a temp index, but that looks ugly. Do we have a way of specifying a
+> 3-way diff for some git diff --cc incarnation, i.e. pretending two
+> commits to be the parents and a third (or index) to be the merge result?
 
-The $1, $2, $3 are expanded too late in your script, namely when the
---parent-filter is evaluated, not when it is passed as argument to
-filter-branch. Make it
+It would seem that diff-index should take two <tree-ish>'s (it only
+takes one) to support this.
 
-git filter-branch --parent-filter "
-	test \$GIT_COMMIT = $1 &&
-	echo -p $2 -p $3 ||
-	cat" \
-	--tag-name-filter cat \
-	$2..master
+> Junio would probably say that by adding the merge resolution you declare
+> that you're not interested in that part of the merge any more ;)
 
-Of course, you can achieve this particular task slightly easier using a
-graft as the manual of filter-branch shows.
+The use case is that I use mergetool when I have merges with very
+large conflicted regions that are too difficult to visualize using the
+merge and/or diff3 conflict style. But because these conflict
+resolutions are so difficult, I often want to look at the merge
+resolution in combined-diff style before committing.
 
--- Hannes
+The way I would have to do this today is:
+
+- git mergetool <path>
+- save the result in my visual merge tool and quit
+- in a separate shell, use git diff to see the 3-way diff
+- in the first shell, answer mergetool's prompt that it's okay to use the result
+
+Hmm, maybe there should be an option for whether mergetool
+automatically add's the result for you.
+
+Anyway, what I've noticed is that I've become gun shy about using "git
+add" myself during conflict resolution because as soon as I do, I lose
+some functionality compared to the unmerged state.
+
+j.
