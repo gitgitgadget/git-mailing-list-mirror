@@ -1,117 +1,86 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [PATCH] Clarification for the command "git checkout <branch>"
-Date: Thu, 18 Mar 2010 12:19:13 -0500
-Message-ID: <b4087cc51003181019r4408953bxcd5049c9521b8173@mail.gmail.com>
-References: <4B67227A.7030908@web.de> <4B898F97.90706@web.de> 
-	<7vr5o6s5xf.fsf@alter.siamese.dyndns.org> <4B8B9BF1.10408@web.de> 
-	<4b8bf32f.0706c00a.26cb.691d@mx.google.com> <4BA104C7.5020207@web.de> 
-	<32541b131003170944w7a0215frcace205f32d313bf@mail.gmail.com> 
-	<7vaau6q18q.fsf@alter.siamese.dyndns.org> <4BA1FC39.10300@web.de> 
-	<32541b131003180936x746dad06k386788d3cb6fcdeb@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
+Date: Thu, 18 Mar 2010 10:27:50 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.1003181022040.18017@i5.linux-foundation.org>
+References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Markus Elfring <Markus.Elfring@web.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 18 18:19:43 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 18 18:31:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsJNk-0003E4-Cm
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 18:19:40 +0100
+	id 1NsJYr-0000Ns-Fw
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 18:31:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751284Ab0CRRTf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Mar 2010 13:19:35 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:53576 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750999Ab0CRRTe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Mar 2010 13:19:34 -0400
-Received: by fg-out-1718.google.com with SMTP id l26so2736587fgb.1
-        for <git@vger.kernel.org>; Thu, 18 Mar 2010 10:19:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=V/1eZ650BKJkMCOsi4+sNM82g2MLdLsNEEd9L0WnfKw=;
-        b=U1oPsgR1k/M6gRGT8swa+MxLxM6UABTGM5/2dZ4fC8I+jSrpsGexNoFCxycXaMrXHn
-         aocYMU8uW+aU4bmf98k5eqLrL21CFxVQ3cIdcZBOwNxMLgDdm/FS09VBILe4NjuQoDcD
-         n6wQywiPg/rEEMfeiMrhItrTrh/YOPZLXZW3c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=R9zcp01q9yUT6DcQvychgtIOPnZPKUeT01x8/NF+L76y0luLzRxR/G0HaNYp2fy0pR
-         eSrRXNwPZz2bB1n/uMpTsr3VEwWeimJL9kfk/DZaJU0dfKORXll5Seu5dOhPKv4uNNJV
-         G+O8Lm3AY4TVL04k+5rg9Ys4jC+QJ8R2MgYqA=
-Received: by 10.239.188.210 with SMTP id q18mr1371079hbh.143.1268932773103; 
-	Thu, 18 Mar 2010 10:19:33 -0700 (PDT)
-In-Reply-To: <32541b131003180936x746dad06k386788d3cb6fcdeb@mail.gmail.com>
+	id S1753005Ab0CRRbD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Mar 2010 13:31:03 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:54799 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752448Ab0CRRbB (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Mar 2010 13:31:01 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o2IHUgvN005890
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 18 Mar 2010 10:30:43 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o2IHUfQF005728;
+	Thu, 18 Mar 2010 10:30:42 -0700
+In-Reply-To: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.449 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142483>
 
-On Thu, Mar 18, 2010 at 11:36, Avery Pennarun <apenwarr@gmail.com> wrot=
-e
-> On Thu, Mar 18, 2010 at 6:11 AM, Markus Elfring <Markus.Elfring@web.d=
-e> wrote:
->>> You may want retry the command after recording the local changes
->>> (1) in a temporary commit on the current branch,
->>
->> Can commits be consistently marked for intermediate use?
->> Can such "special" commits be easily found later on?
+
+
+On Thu, 18 Mar 2010, Michael Witten wrote:
 >
-> You just make the commit with a 'FIXME' type commit message, then 'gi=
-t
-> commit --amend' to fix it when you come back later.
+> Short Version:
+> -------------
+> 
+> Rather than use a (name,email) pair to identify people, let's use
+> a (uuid,name,email) triplet.
 
-Something more explicit might be useful in my opinion, as suggested in
-this previous post:
+Even shorter version: NO.
 
-    http://marc.info/?l=3Dgit&m=3D126768880311121&w=3D2
+> Long Version:
+> ------------
 
-    > I'm not sure how often WIP commits become
-    > accidentally published or left in the history,
-    > but perhaps it would be advantageous to
-    > provide a means of specifying officially that
-    > a particular commit is in fact a WIP commit
-    > such that no other commits can be made on top
-    > of this WIP commit and it can't be merged with
-    > other branches or pushed or whatever.
+UUID's are some total crazy shit. It's like XML. If you think you need 
+them, you're almost certainly wrong. If it's about identifying a unique 
+piece of hardware, ok. If it's about identifying people, no.
 
->>> or (2) by using "git stash".
->>
->> Is this storage operation supported per branch?
->> Does a checkout look if any files were stashed away for the specifie=
-d branch before?
+How about you walk around with a bar-code tattooed to your forehead? Don't 
+like the idea? Then think about having to care about a uuid in your 
+projects. Same deal.
 
-Markus, this was discussed ad nauseum in the other thread:
+Nobody is going to associate themselves with a uuid. It's not how humans 
+work. It's degrading, and it's work-for-no-gain to anybody who doesn't 
+have OCD.
 
-    http://marc.info/?l=3Dgit&m=3D126746296820948&w=3D2
+So in practice, the only thing that would happen is that people make up 
+random uuid's and they'd be different for every single machine they have, 
+because absolutely NOBODY would ever bother to try to save and move their 
+uuids around.
 
-    http://marc.info/?l=3Dgit&m=3D126749413508313&w=3D2
+So when you point out that emails aren't unique, or that people change 
+their emails over time, please realize that the emails are _more_ stable 
+than a uuid would ever be. Because an email actually has some emotional 
+attachment to the person in question. Yes, they change. So do real names 
+too (which change more seldom, exactly because people are way _more_ 
+emotionally attached to their real names).
 
-    http://marc.info/?l=3Dgit&m=3D126746730431007&w=3D2
+uuid's? I can pretty much guarantee that for me, it would be different for 
+every single machine I have. Because I could just not be bothered to care.
 
-Are you not reading? Are you not comprehending? Are you trolling?
-
-> stashing isn't really something you'd want to do on a per-branch
-> basis. =C2=A0Most of the point is that you stash away your changes, t=
-hen
-> switch to another branch, then restore your stash to your *current*
-> working state sometime later.
-
-As you may know, "git checkout" carries local modifications to the new
-working tree if there are no conflicts, so no explicit stash usage is
-necessary in many cases.
-
-Anyway, I think it would be useful to be able to manage multiple
-stashes rather than having to rely on just one global stash. However,
-I imagine than explicit Work In Progress (WIP) commits as sketched
-above would go a long way in keeping histories and workflows clean and
-organized.
+			Linus
