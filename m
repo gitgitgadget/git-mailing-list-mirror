@@ -1,87 +1,79 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: [PATCHv2] Teach --no-ff option to 'rebase -i'.
-Date: Thu, 18 Mar 2010 09:03:31 +0100
-Message-ID: <20100318080331.GC2557@m62s10.vlinux.de>
-References: <1268755735-20588-1-git-send-email-marcnarc@xiplink.com> <1268768556-32176-1-git-send-email-marcnarc@xiplink.com> <20100316214717.GA24880@progeny.tock> <4BA07DC7.9070502@viscovery.net> <20100317155842.GA2557@m62s10.vlinux.de> <4BA0FE59.7020303@viscovery.net> <20100317184210.GB2557@m62s10.vlinux.de> <4BA1D183.3050907@viscovery.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Not possible to see combined diff before committing a merge?
+Date: Thu, 18 Mar 2010 10:55:12 +0100
+Message-ID: <4BA1F880.2090100@drmicha.warpmail.net>
+References: <76718491003172321j2a184643o47ec3a712a3b0c12@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Mar 18 09:03:59 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 18 10:58:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsAhx-00067t-0f
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 09:03:57 +0100
+	id 1NsCUK-0004R1-W6
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 10:58:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752025Ab0CRIDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Mar 2010 04:03:43 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46921 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751802Ab0CRIDh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Mar 2010 04:03:37 -0400
-Received: (qmail invoked by alias); 18 Mar 2010 08:03:34 -0000
-Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
-  by mail.gmx.net (mp014) with SMTP; 18 Mar 2010 09:03:34 +0100
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX1+7s+0irYK7jzLQu+1MaOL4wiKNUT8Px45NCKuzTt
-	wdbo+8eknMcWIS
-Received: by m62s10.vlinux.de (Postfix, from userid 1000)
-	id 6EBE9D4006; Thu, 18 Mar 2010 09:03:31 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <4BA1D183.3050907@viscovery.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59999999999999998
+	id S1751612Ab0CRJ54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Mar 2010 05:57:56 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:44208 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751143Ab0CRJ5z (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Mar 2010 05:57:55 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id B1329E593A;
+	Thu, 18 Mar 2010 05:57:54 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 18 Mar 2010 05:57:54 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=M5e73IDd3/nnkUHYHs4JfjufiCg=; b=ajSMDyV0BHCADADmCknU9kyxRjP1Rfgj5eeH93e0MBJmkLimKVkWJPGWD9ctNU8KOH44ft1pXA9KZZjSE6EXDCucIr1lYNZ6HOJFXgFSsgmkf+1ZGDFK0V1Rl5NuogOuuAV7ppQzqENH9pqyY9H/yIzf9q1LoFJ2CQl4M4PSHrU=
+X-Sasl-enc: aqz2JwHgPFaS/ZtZTOATTDtBIMIKmghs+wBdn5q/1LW2 1268906274
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 21447EDD8;
+	Thu, 18 Mar 2010 05:57:54 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10pre) Gecko/20100316 Lightning/1.0b2pre Shredder/3.0.4pre
+In-Reply-To: <76718491003172321j2a184643o47ec3a712a3b0c12@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142454>
 
-On Thu, Mar 18, 2010 at 08:08:51AM +0100, Johannes Sixt wrote:
-> Peter Baumann schrieb:
-> > On Wed, Mar 17, 2010 at 05:07:53PM +0100, Johannes Sixt wrote:
-> >> Peter Baumann schrieb:
-> >>> On Wed, Mar 17, 2010 at 07:59:19AM +0100, Johannes Sixt wrote:
-> >>>> If I were to re-merge topic into master a second time after this
-> >>>> situation, I would install a temporary graft that removes the second
-> >>>> parent of M and repeat the merge. After the graft is removed, the history
-> >>>> would look like this:
-> >>>>
-> >>>>      B --- C --- D --------------.   [topic]
-> >>>>    /              \               \
-> >>>>   A ---  ...   --- M ... --- U ... N [master]
-> >>>>
-> >>>> Are there any downsides? I don't know - I haven't thought it through.
-> >>>>
-> >>> Might be. If there is any branch starting anywhere in between M and U
-> >>> which also needs to merge [topic] will also cause you headaches :-)
-> >>>
-> >>>        B --- C --- D --------------.   [topic]
-> >>>      /              \               \
-> >>>     A ---  ...   --- M ... --- U ... N [master]
-> >>>                          \
-> >>>                           x --- y [side_branch wich needs to merge topic] 
-> >> ?? I don't follow you. The side branch already contains the topic. What do
-> >> you want to merge?
-> >>
-> > 
-> > Won't it loose the revert 'U' after merging side_branch back to master?
-> > 
-> > Ah. Looking at the picture more closely, I could answer myself and say it would
-> > only cause a huge mergeconflict, won't it?.
+Jay Soffian venit, vidit, dixit 18.03.2010 07:21:
+> Am I missing something, or is there no way to see combined diff output
+> after completing merge resolution on a conflicted merge but before
+> committing the merge?
 > 
-> No. N and the merge-base of N and y are identical (wrt changes introduced
-> by B,C,D). At least this part will not cause any conflicts.
+> $ git diff --cc [-- path]
 > 
+> works fine _until_ you've added the file to the index, at which point
+> you're hosed.
+> 
+> I think I want the combined diff between:
+> 
+> - What's in the index
+> - The first parent (ORIG_HEAD)
+> - The second parent (MERGE_HEAD)
+> 
+> And I don't think that's possible, sadly.
 
-You are right. How could I missed that.
+The obvious attempt "git diff --cc --cached" does not work,
+unfortunately, because the add cleared out the other stages from the index.
 
-Thanks for the clarification.
+The funny thing is that after committing, git show will give you the
+combined diff (again).
 
---
-Peter
+I guess that proves, again, that there can't be a symbolic ref like
+INDEX because it just doesn't behave like one.
+
+If there are no conflicted files left you could do a throw-away commit
+with a temp index, but that looks ugly. Do we have a way of specifying a
+3-way diff for some git diff --cc incarnation, i.e. pretending two
+commits to be the parents and a third (or index) to be the merge result?
+
+Junio would probably say that by adding the merge resolution you declare
+that you're not interested in that part of the merge any more ;)
+
+Michael
