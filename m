@@ -1,73 +1,97 @@
-From: Andreas Gruenbacher <agruen@suse.de>
-Subject: Re: [PATCH 6/9] fetch: Check if all objects exist after fetching
-Date: Thu, 18 Mar 2010 20:36:46 +0100
-Organization: SUSE Labs
-Message-ID: <201003182036.46874.agruen@suse.de>
-References: <cover.1268913163.git.agruen@suse.de> <d3c00e2a27003dca196d5480007544610cc1e5b8.1268913163.git.agruen@suse.de> <20100318190816.GE10981@spearce.org>
+From: Jon Smirl <jonsmirl@gmail.com>
+Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
+Date: Thu, 18 Mar 2010 15:37:58 -0400
+Message-ID: <9e4733911003181237i56a00a78k31fac2c1afe5a674@mail.gmail.com>
+References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
+	 <alpine.LFD.2.00.1003181022040.18017@i5.linux-foundation.org>
+	 <9e4733911003181202h23b3d702xce8fc0670a994d52@mail.gmail.com>
+	 <alpine.LFD.2.00.1003181203370.18017@i5.linux-foundation.org>
+	 <9e4733911003181216m59a09ad6y6c7c890714d0d20b@mail.gmail.com>
+	 <alpine.LFD.2.00.1003181218400.18017@i5.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Mar 18 20:37:00 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Mar 18 20:38:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsLWZ-00045M-6w
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 20:36:55 +0100
+	id 1NsLY6-0004mW-LQ
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 20:38:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751386Ab0CRTgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Mar 2010 15:36:50 -0400
-Received: from cantor.suse.de ([195.135.220.2]:41822 "EHLO mx1.suse.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751313Ab0CRTgt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Mar 2010 15:36:49 -0400
-Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.221.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx1.suse.de (Postfix) with ESMTP id 56E2593A00;
-	Thu, 18 Mar 2010 20:36:48 +0100 (CET)
-User-Agent: KMail/1.12.2 (Linux/2.6.31.12-0.1-desktop; KDE/4.3.1; x86_64; ; )
-In-Reply-To: <20100318190816.GE10981@spearce.org>
+	id S1752465Ab0CRTiF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Mar 2010 15:38:05 -0400
+Received: from qw-out-2122.google.com ([74.125.92.27]:60204 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752449Ab0CRTiB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Mar 2010 15:38:01 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so455860qwh.37
+        for <git@vger.kernel.org>; Thu, 18 Mar 2010 12:37:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ulKuZ7g7tuS3Xq/kGDYmY1QS7hW3mD0fv5ncM6qarvs=;
+        b=WBfkFPXuubBHJRa9S3/+/0lTeLUkSuH9SRcxrHK91K7MErgtQi1/juI5WlXkGZ2G11
+         P2TLdXIFJ6PQQqMYsykI4iQDsBB4bNRxs3oN7anRWm9am6VfHjWRhUqN4sZJ3uSB/wBy
+         28OugZw/V2ES66EtCZP7yYdcnmXGbH7jQVEWQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=IfQteHhcYUFhUsKl/sqpwyUyKfRqMocVXXucFNStHQohryxN/H8pJilW037yVfGyUh
+         QONzoPrTDY68FqcfJj9a2j9TS03GswggnwhY/O0C1XWWllFY++2c5NWTGzVuCGet2z+f
+         v/tJLePcnZaN9Uu+IatvDGkX2pYn79rqdfYpQ=
+Received: by 10.229.235.1 with SMTP id ke1mr837074qcb.3.1268941078515; Thu, 18 
+	Mar 2010 12:37:58 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1003181218400.18017@i5.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142503>
 
-On Thursday 18 March 2010 20:08:16 Shawn O. Pearce wrote:
-> Andreas Gruenbacher <agruen@suse.de> wrote:
-> > Check if all objects reachable from the fetched refs exist after
-> > fetching instead of before: this allows us to distinguish between a
-> > repository which is not up to date and a corrupted repository, and to
-> > ensure that the repository is up to date and complete after the fetch.
-> 
-> I'm against this particular change because it looks like it breaks
-> the idea of "quickfetch", which we introduced to support faster
-> fetches from the parent repository into a shared clone on the
-> same disk.
+On Thu, Mar 18, 2010 at 3:20 PM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>
+>
+> On Thu, 18 Mar 2010, Jon Smirl wrote:
+>>
+>> I happen to think that the concept of privacy and working on an open
+>> source project are fairly incompatible. But apparently their are
+>> people who think otherwise. =A0The use would be to reconstruct that
+>> mailmap I made, but with the email addresses replaced with SHA1 hash=
+es
+>> of the email. No human would use the SHA1s, they're just there to
+>> obscure the emails.
+>
+> I really see that as a bad thing, not a good thing. It's like enablin=
+g
+> some crazy shit and making it official.
+>
+> If you don't want to reveal your real name, use a fake address. Just =
+don't
+> expect anybody to want to work with you.
 
-I think you misunderstand the patch.  Before the patch, we were doing a rev-
-list to determine if all objects needed are present.  If rev-list fails, this 
-can have two reasons: (a) some of the branches or tags needed do not exist, 
-(b) all the branches and tags needed do exist, but other objects further up 
-the tree are missing (i.e., a corrupted repository).
+Go ahead and commit that .mailmap I made. It really cleans up the
+statistics by fixing 500 errors is people's names. Just don't point
+the ensuing flame war at me, your hide is tougher.
 
-The patch changes that to first check which needed objects are missing (with 
-has_sha1_file()), which is very efficient, by then fetching the objects which 
-surely need to be fetched, and by then checking the repository consistency 
-with rev-list.  If rev-list then fails, which should only happen in the rarest 
-cases, we know that we need to fetch all branches and tags so that we are sure 
-to catch missing objects further up the tree.
+> The LAST thing we want is built-in git support for doing f*cking stup=
+id
+> things. =A0You can do stupid things with it on your own without us he=
+lping
+> and encouraging you.
+>
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0Linus
+>
 
-So we never fetch more than we did before, and in some cases, we fetch less. 
-We are also guaranteed to end up with a consistent repository in the end. (The 
-old logic does not always guarantee that AFAICT: there seems to be one corner 
-case where a fetch succeeds without retrieving missing objects further up the 
-tree.)
 
-Thanks,
-Andreas
+
+--=20
+Jon Smirl
+jonsmirl@gmail.com
