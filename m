@@ -1,82 +1,73 @@
 From: Martin Langhoff <martin.langhoff@gmail.com>
 Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
-Date: Thu, 18 Mar 2010 17:55:08 -0400
-Message-ID: <46a038f91003181455u7136e011u5352c996384f086d@mail.gmail.com>
-References: <alpine.LFD.2.00.1003181022040.18017@i5.linux-foundation.org> 
-	<4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com> <4ba27424.9804cc0a.4b1f.11b1@mx.google.com> 
-	<20100318204416.GM8256@thunk.org> <b4087cc51003181412s78d153c8t48984eb87eb75e0e@mail.gmail.com> 
-	<46a038f91003181419n5d076bdbv18e32e292d7937a8@mail.gmail.com> 
-	<b4087cc51003181429v2998b95ei3f08360e6d2a5aa7@mail.gmail.com> 
-	<46a038f91003181439lc343dafl6b9321a0b620de84@mail.gmail.com> 
-	<b4087cc51003181446r6bd89371q9f2e7a14bfa4d557@mail.gmail.com>
+Date: Thu, 18 Mar 2010 18:36:40 -0400
+Message-ID: <46a038f91003181536ib3b74f8o40603a4cee13d62b@mail.gmail.com>
+References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com> <alpine.LFD.2.00.1003181022040.18017@i5.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: tytso@mit.edu, Linus Torvalds <torvalds@linux-foundation.org>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 18 23:18:43 2010
+Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Mar 18 23:37:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsO39-0000X8-6V
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 23:18:43 +0100
+	id 1NsOL7-00015l-9N
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 23:37:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752450Ab0CRWSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Mar 2010 18:18:34 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:39875 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751692Ab0CRWSd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Mar 2010 18:18:33 -0400
-Received: by gyg8 with SMTP id 8so1245649gyg.19
-        for <git@vger.kernel.org>; Thu, 18 Mar 2010 15:18:32 -0700 (PDT)
+	id S1751538Ab0CRWhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Mar 2010 18:37:04 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:38236 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751204Ab0CRWhC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Mar 2010 18:37:02 -0400
+Received: by gwaa12 with SMTP id a12so1098795gwa.19
+        for <git@vger.kernel.org>; Thu, 18 Mar 2010 15:37:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :from:date:message-id:subject:to:cc:content-type;
-        bh=R7vpZbKJw2hB2HtAfDpyx/ZzpUCSYaIIic/sre4CPg4=;
-        b=xXWvZvMWB0NP/9pqGGqUYypdivIZeGm8kKVnWalAOJQDgcuqTbp7BBcJuzYYb7MKqh
-         5RS1NWVBVaUCkYEi4tdMgS6TucAlMdb7ikxTYgR7O4rU8Uwu+GFL+rP6GuieOdOpiDPU
-         v03nBqlkri/dA+2vjs5M6tNwNP1MIra/Md4H4=
+        bh=eq8BKrpgs+g+pkVq42GImyRUFJLFe+GnC7R+OJx8YFg=;
+        b=tj84BWQcaF8PLuWBmHbAW3rWIWrqCAXYbgLVEg06So6weAfsVYfJyco1Ul+gyrNulM
+         I3GqLXOM/+vz1oesOHYV/oFp6jlkum/GzKLklYcpEYJyeQpZVwHqIeNQ5LB86xqekO+x
+         8Q/UOig5kMfiJFSPmXAeMFfsiSKkrZEWXOG7E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        b=lPkuMjN4rLKwYFHZJ129hmFNK+IK7kbTd8R+jcByioZLCzhe1vjsh9Q1Y1UgpqGp7Y
-         2s6mMXfSiY/YVvw8VzGG29lcVgYXLMz44ZpZEP74j+AXet87BYEw1QJGelDWCVUbU8Lg
-         V89XOxWZWbR2k3/eXSMObjQwNccaz7uh+a7NQ=
-Received: by 10.101.8.37 with SMTP id l37mr5184953ani.233.1268949328082; Thu, 
-	18 Mar 2010 14:55:28 -0700 (PDT)
-In-Reply-To: <b4087cc51003181446r6bd89371q9f2e7a14bfa4d557@mail.gmail.com>
+        b=YwLb0WnCmRUzin5ChzkYcYGJqyEQdApuXPEIbZ8YrUXiwGXtqoeLzByERnh4lfVNuq
+         q5nxsfsik6l6zT2/CbJqdQjeLa3k1XLkvaJ3HxJB+kHuics1qvax3aggrBXfpn3wZPj8
+         6n951Q3OqaNQJSbcnEs1vKzUGuZr9TvOfSQ/g=
+Received: by 10.101.108.6 with SMTP id k6mr5278957anm.162.1268951820282; Thu, 
+	18 Mar 2010 15:37:00 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1003181022040.18017@i5.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142532>
 
-On Thu, Mar 18, 2010 at 5:46 PM, Michael Witten <mfwitten@gmail.com> wrote:
->> What should we do in that case? Use mailmap to map the stray uuid to
->> the "real" one?... Have we done a lot of work to get back to square 0?
->
-> Again:
->
->>> At worst, things will be just like they have always been.
+On Thu, Mar 18, 2010 at 1:27 PM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+> Even shorter version: NO.
 
-Of course we all read that line. You are proposing a change that will
-mean a flag day -- that is, old versions of git won't be able to read
-"new" repositories (and "new" git will have to be backwards compat for
-X releases...). This is major breakage.
+One thing we all forgot to mention here is that even if it was a good
+idea (which it is not), implementing it means a flag day: changing in
+the pack format, wire protocol and APIs, messing up with compatibility
+with users of pre-flag-day git, and rippling out to all the GUIs,
+frontends and integration scripts out there.
 
-Inflict a painful change on our userbase for... what exactly? Ah, "At
-worst, things will be just like they have always been."
+A veritable mess that would reberberate for years.
 
-I don't think you understand what you've been proposing.
+Any proposal that touches the core git datamodel... better implement
+something that is outrageously wondrously good and impossible to do
+any other way.
 
-Is it clearer now why you get a clear "no" from all quarters? Huge
-cost, no upside?
+My guess is that people that parachute into this list and propose
+datamodel changes haven't thought this aspect through.
 
+cheers,
 
 
 m
