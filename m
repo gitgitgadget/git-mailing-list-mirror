@@ -1,105 +1,87 @@
-From: bruno le hyaric <bruno.lehyaric@gmail.com>
-Subject: How to start well for a special git construction
-Date: Thu, 18 Mar 2010 20:26:53 +0100
-Message-ID: <e8be804e1003181226y20328151s75641f4341ca12d8@mail.gmail.com>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
+Date: Thu, 18 Mar 2010 14:32:38 -0500
+Message-ID: <b4087cc51003181232q6b8ec056lad79c62926b65a10@mail.gmail.com>
+References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com> <alpine.LFD.2.00.1003181022040.18017@i5.linux-foundation.org> 
+	<9e4733911003181202h23b3d702xce8fc0670a994d52@mail.gmail.com> 
+	<alpine.LFD.2.00.1003181203370.18017@i5.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 18 20:27:15 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Jon Smirl <jonsmirl@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Mar 18 20:33:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsLNC-0007bf-2F
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 20:27:14 +0100
+	id 1NsLSu-0002N9-IB
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 20:33:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752350Ab0CRT04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Mar 2010 15:26:56 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:59674 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752230Ab0CRT0z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Mar 2010 15:26:55 -0400
-Received: by bwz1 with SMTP id 1so2374144bwz.21
-        for <git@vger.kernel.org>; Thu, 18 Mar 2010 12:26:53 -0700 (PDT)
+	id S1751995Ab0CRTdD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Mar 2010 15:33:03 -0400
+Received: from mail-fx0-f219.google.com ([209.85.220.219]:65325 "EHLO
+	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751351Ab0CRTdB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Mar 2010 15:33:01 -0400
+Received: by fxm19 with SMTP id 19so2466463fxm.21
+        for <git@vger.kernel.org>; Thu, 18 Mar 2010 12:32:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=mXH+FN+y4jyarf5T2W59LQ+hNL77GI1yJNQ2sQLatss=;
-        b=kRWHP1gBBzRI7tAnKDwp4AtsV/tUmrAZF0ohCVosE7BrT502kG5RQfXO9q/tWU5dfh
-         nqE3kCVpEjfLn+fSiG+rMkasmCJ5q6V/p02P2d7WAQMfqnxnA5nqzEu2z3omNbyUP4ZJ
-         jmFQKVeTxDqUpZ8S+/+OWeOyGq1syVNNS2Wj8=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=fRobwhZWDHKFPwEEl42fhM3/KvgUUb0bkz4Wa7H9+HQ=;
+        b=x5RHXgXeBOtsTCwT1LPaBMNFVh3Wk6zI56DvbxuWIBUUYFWcNC0djKgZx9fnUtx+Yk
+         JUVZDq6WqC3300ThkF97zx5oIqjfrNmtXpCJORvEe0jxqFVr6D3XwNEzerytgYXB1rw2
+         7ElBUnIPfOQ1Zjp2YtY/ypn7pvaOdrEhKEaUY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=FZRZWsR1KM0LjT2xtDbCIlw0MxLqwV4e8Rt5KUHExtAB6vxQCTwgPeaFzQzmOmpNCe
-         R9rZ/Cmrd2NMI6sBBuvvcxEmjzmiq+dKhwtk8Q+OjuhKNXvB3MuphsU2ePMoAJ1501AU
-         tC7WuutFy9jVFrmONjcDmI69Vt8T/wKrBSypE=
-Received: by 10.204.156.22 with SMTP id u22mr3151974bkw.24.1268940413599; Thu, 
-	18 Mar 2010 12:26:53 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=ny1T3xWSKNFuJPyW3CJcRWz23RxHSogUhbrWr52mB0EoF5F7QZE9bk70o5PILINFrm
+         jAJ4N/s0A27yRMf3vazfb1iokf3pqsOGwKDY6NX6fVrkwYA2FWj2GOf6GYBYTPMyG6AV
+         EuqIo8wxveluF0nd1zWtsUuaIlvfRsLjg3dyQ=
+Received: by 10.239.188.146 with SMTP id p18mr1497094hbh.208.1268940778312; 
+	Thu, 18 Mar 2010 12:32:58 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1003181203370.18017@i5.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142501>
 
-Hi,
+On Thu, Mar 18, 2010 at 14:07, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 
-I'm working on an e-commerce development project based on Ruby on Rails.
+> And if it doesn't have meaning, then it's just
+> annoying and will never ever be attached to
+> anything relevant long-term.
 
+You've actually just described the current name/email system.
 
+What a uuid provides is that very property of long-term attachment; a
+git user can change the name/email pair but keep the same uuid.
 
-On the left hand, I use one framework : Spree ;
-on the other hand , I use Flex generation with another framework : RestfulX;
-on my third hand ^^, I want to merge both in a third directory.
+You see, the problem is that the name/email pair isn't really an
+identifier; it's actually just info about the user's current email
+account, which is very useful for everyday workflow, but pretty naive
+for historical identification over long periods of time.
 
-Basically, my root folder contains one directory for each : ./spree,
-./restfulx, ./merge
+As previously discussed in my original email, the 'email' portion of
+the name/email pair is the most volatile portion, and that's because
+it's only tangentially related to identity (and it certainly has
+nothing to do with long-term identity).
 
+>There is absolutely _no_ way that teh uuid would
+> ever actually encode any real meaningful
+> information that isn't better represented by the
+> name/email.
 
+It IS a name/email pair (if you want or if that is enforced); it's
+just one that isn't as volatile.
 
-The merge is a bit special, because Spree is a framework wich provide
-extension feature, and Spree extensions are located in
-./spree/vendor/extensions/extension_name. I want to merge resttfulx
-folder as a spree extension (I heard about git-module, is this the
-good way to solve my problem?)
-
-
-
-Moreover, in both folder ./spree and ./restfulx I wan't to manage all
-files with git (except databases and logs), but in ./restfulx there
-are only few files I need to merge in ./merge. Those files are the
-result of code generation from RestfulX. So I think I have to use
-branch, one with all files, one which only contains files to 'deliver'
-in ./merge.
-
-In my current vision of git, I think branches are used for parallel
-developments and are merged together after. In other words, in my
-company I'm used to use ClearCase, and to have a development stream,
-an integration stream and a release one, in the release stream, we
-only deliver executable files, not all source code... I don't know if
-Git branches can be seen as Clearcase streams...
-
-
-
-Actually, I'm not in the company and I try to build the same
-development process automated with git with framework installation
-(Spree), code generation (RestfulX) and integration (./merge).
-
-Any advice on how to start will be very helpful.
-Do I need several repositories?
-Can I use Git-plugins to integrate ./restfulx at a special location in ./merge?
-Can I merge only specific files from a repository?
-
-
-Best regards,
-
-Bruno.
-
----------------------------------------------------------------------------
-----------------------------------------------------------
-Spree mailing list, this topic :
-http://groups.google.com/group/spree-user/browse_thread/thread/4797e4...
-RestfulX mailing list, this topic :
-http://groups.google.com/group/restfulx-framework/browse_thread/threa...
+This notion of a uuid is an attempt to adopt a BETTER MODEL for
+identity: The user get's to choose a piece of information that he
+himself deems a longterm identifier; it's not about what address you
+currently use for email, it's solely about who you are over a long
+period of time.
