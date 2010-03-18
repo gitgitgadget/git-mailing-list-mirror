@@ -1,78 +1,78 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: cc/cherry-pick-ff (Re: What's cooking in git.git (Mar 2010, #04; Tue, 16))
-Date: Thu, 18 Mar 2010 01:38:56 +0100
-Message-ID: <201003180138.56529.chriscool@tuxfamily.org>
-References: <7vhbof4fof.fsf@alter.siamese.dyndns.org> <20100317095218.GA6961@progeny.tock> <7vwrxaubjy.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: meaning of "-g" in git-describe output
+Date: Wed, 17 Mar 2010 18:19:28 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.1003171811420.18017@i5.linux-foundation.org>
+References: <201003172320.45058.markus.heidelberg@web.de> <76718491003171614r2e8ce0e5r3e4799503194831c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Paolo Bonzini <bonzini@gnu.org>,
-	Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 18 01:50:54 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Markus Heidelberg <markus.heidelberg@web.de>, git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 18 02:22:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ns3wr-0005aI-GB
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 01:50:53 +0100
+	id 1Ns4RI-0007Q2-9H
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 02:22:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754074Ab0CRAus convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Mar 2010 20:50:48 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:46580 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753361Ab0CRAur convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Mar 2010 20:50:47 -0400
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 05222818075;
-	Thu, 18 Mar 2010 01:50:39 +0100 (CET)
-Received: from style.localnet (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id AA07A818078;
-	Thu, 18 Mar 2010 01:50:36 +0100 (CET)
-User-Agent: KMail/1.12.2 (Linux/2.6.31-19-generic; KDE/4.3.2; x86_64; ; )
-In-Reply-To: <7vwrxaubjy.fsf@alter.siamese.dyndns.org>
+	id S1754822Ab0CRBWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Mar 2010 21:22:15 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:34622 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754800Ab0CRBWO (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Mar 2010 21:22:14 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o2I1MArw023791
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 17 Mar 2010 18:22:11 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o2I1M9F2027801;
+	Wed, 17 Mar 2010 18:22:09 -0700
+In-Reply-To: <76718491003171614r2e8ce0e5r3e4799503194831c@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.449 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142445>
 
-On Wednesday 17 March 2010 18:01:53 Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> > For what it=E2=80=99s worth, I am not convinced about the --no-ff o=
-ption.  I do
-> > not think --ff ever will be the default: for an operation that amou=
-nts
-> > to applying a patch and making a new commit, it just feels wrong.
->=20
-> Same here ;-) and because of that, --no-ff as an undocumented feature
-> feels doubly wrong to me.  If some scripts use it, people would wonde=
-r
-> what that no-op option is doing there.  Perhaps we should discard the=
- bits
-> about --no-ff to make it more clear that --ff is an oddball case that=
- is
-> meant only for supporting what "rebase-i" (and other tools that reinv=
-ent
-> and enhance it) does.
 
-My opinion is that if we implement "git cherry-pick A..B", and if many =
-people=20
-start to use it, then perhaps it will make sense for --ff to become the=
-=20
-default. Because people may not want to have to remember using --ff to =
-avoid=20
-many spurious commits to be created.
 
-And having --ff and --no-ff makes "git cherry-pick" consistent with "gi=
-t merge"=20
-which has both. And --ff is the default for "git merge", so consistency=
- will be=20
-an argument to make it the default for "git cherry-pick" if "git cherry=
--pick=20
-A..B" is used a lot.
+On Wed, 17 Mar 2010, Jay Soffian wrote:
+> 
+> My guess, from 908e531 (Add a "git-describe" command, 2005-12-24), is
+> that it's short for "git":
 
-Best regards,
-Christian.
+Indeed. I actually wanted to make it possible to use other SCM's, even if 
+it's stupid. And git is not the only one that uses hashes for versioning, 
+so the "g" prefix is there to allow others that use -hg or monotone or 
+similar to work.
+
+For the kernel, if you use mercurial, the kernel version prefix will be 
+"hg", for example. For SVN, it will be "svn" (but the numbers won't be a 
+hex number, they'll be the SVN revno). See 'scripts/setlocalversion' in 
+the kernel tree for an example.
+
+So 'git describe' tries to match this kind of "multi-SCM model", where you 
+can describe versions of your software in an environment where people may 
+well use different SCMs.
+
+Of course, if you use "git describe", you'll always get the "g" thing, and 
+it is entirely redundant within the settign of just git. But in a bigger 
+setting, the point is that I can do this:
+
+	[torvalds@i5 linux]$ git describe; uname -r
+	v2.6.34-rc1-997-ga3d3203
+	2.6.34-rc1-00959-gbca14dd
+
+and they have basically the same format (not 100% identical, but the 
+"-g<sha1>" part is similar - the SHA1's obviously don't match in this 
+case, because the kernel I'm running is ~40 commits away from my current 
+tip of tree, but you can see the pattern).
+
+			Linus
