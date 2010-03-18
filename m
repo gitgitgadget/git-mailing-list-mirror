@@ -1,155 +1,196 @@
-From: Henry Gebhardt <hsggebhardt@googlemail.com>
-Subject: Correction in post-update.sample hook
-Date: Thu, 18 Mar 2010 14:16:08 +0100
-Message-ID: <20100318141608.2a94c71e@googlemail.com>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: What's in a name? Let's use a (uuid,name,email) triplet
+Date: Thu, 18 Mar 2010 06:23:11 -0700 (PDT)
+Message-ID: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="MP_/Q57.3_k4_24c=OuCrl3jPNi"
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 18 14:16:26 2010
+X-From: git-owner@vger.kernel.org Thu Mar 18 14:29:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsFaK-0005L8-EK
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 14:16:25 +0100
+	id 1NsFnD-0003Nz-Ma
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 14:29:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753337Ab0CRNQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Mar 2010 09:16:19 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:59613 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753334Ab0CRNQS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Mar 2010 09:16:18 -0400
-Received: by bwz1 with SMTP id 1so2026386bwz.21
-        for <git@vger.kernel.org>; Thu, 18 Mar 2010 06:16:16 -0700 (PDT)
+	id S1753324Ab0CRN3i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Mar 2010 09:29:38 -0400
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: from qw-out-2122.google.com ([74.125.92.27]:40186 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752951Ab0CRN3h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Mar 2010 09:29:37 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so351336qwh.37
+        for <git@vger.kernel.org>; Thu, 18 Mar 2010 06:29:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:x-mailer:mime-version:content-type;
-        bh=YxemlMBThryAFKfCPHQJ8vnVOWO/NhK2KGXUDWN8jQM=;
-        b=SMrnvzFd2BalFsYzrBxavtc8J6uaG2GqcjHVDDOAiykBepjz09GUV5gmbrSEbeqRWm
-         4PQdajTBsL+YkFp+NJGE3rJOcyLsCKufQuxwTFdnqCV9vEQ5zTa+t/3mhScMxOSB28lH
-         c+hkBHIRFKD04UQ7faPqd/hoxviimaBKPT7dw=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject;
+        bh=cveeV227G2jWJTOEGQGtD65iVu1xzjdX+7VTgPCXUCQ=;
+        b=MFar5eUS/xm/tlfCToVAYAm4MK6LGTQfp625qR7knOIjR9ATDqcFm1f+Zn5IIwQ3EI
+         OB7ZtYIr3jYoCA3mSh8H+HPobMbTodhgv2vG6HShdk7t0IMFFgOb1pyfN9uMskKqTBli
+         hNhBJE4YNY2oLj1eG/O9faMWqA3rmYg88/OnU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:subject:message-id:x-mailer:mime-version:content-type;
-        b=hCXPJxqjMUX1i3UeaP/W1Vnh1+KhrHiw+U8J8Xsf7jpHQzPPWXBjltWVOY/qSNQVI3
-         y58gbvCpGcw5xOZ8hlR9SG7mBKyo48UfQ3RibYRyKRc+CKVUCv6Tl305/0ItdhTAgIDQ
-         w7Ed8WExgW7D0p3ccKivgn1jmbU8nOBaZUMaE=
-Received: by 10.204.151.216 with SMTP id d24mr2709990bkw.1.1268918176585;
-        Thu, 18 Mar 2010 06:16:16 -0700 (PDT)
-Received: from localhost (p5DC6A937.dip.t-dialin.net [93.198.169.55])
-        by mx.google.com with ESMTPS id 14sm5358589bwz.2.2010.03.18.06.16.15
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 18 Mar 2010 06:16:16 -0700 (PDT)
-X-Mailer: Claws Mail 3.7.5 (GTK+ 2.18.7; x86_64-pc-linux-gnu)
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject;
+        b=TnOg9yFC9hs/n3PBAZXYbwdgAJ9PGM5esCOhW8vuRSPKur2J7+gxnOTFVTq0aC1eFa
+         YxXWZkt4UfswLtpcW/+FluqJl15yN2V5ZLvtAiJEjvzVQ9A5/SN2Xekx8njZZ1FcxNlx
+         opjCcNwDiBNWoNeD5ssXbG2YA9RPW1wcU80t0=
+Received: by 10.229.242.85 with SMTP id lh21mr1043652qcb.67.1268918592163;
+        Thu, 18 Mar 2010 06:23:12 -0700 (PDT)
+Received: from gmail.com (tor.clanspum.net [74.208.184.107])
+        by mx.google.com with ESMTPS id 5sm4975890qwh.15.2010.03.18.06.22.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 18 Mar 2010 06:23:11 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142467>
 
---MP_/Q57.3_k4_24c=OuCrl3jPNi
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-Hi,
-
-I believe the post-update.sample hook has a little spelling
-mistake, "git-update-server-info" is now "git update-server-info"
-without the dash. The attached patch fixes it throughout the
-tree.
-
-Thanks,
-Henry
---MP_/Q57.3_k4_24c=OuCrl3jPNi
-Content-Type: text/x-patch
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename=0001-git-update-server-info-git-update-server-info-trivia.patch
-
->From e0b074ac5b8227bf9d0eaef94a631a610c9d9e44 Mon Sep 17 00:00:00 2001
-From: Henry Gebhardt <hsggebhardt@googlemail.com>
-Date: Thu, 18 Mar 2010 13:42:49 +0100
-Subject: [PATCH] git-update-server-info -> git update-server-info trivial fixes
-
-The command git-update-server-info no longer exists as such. I noticed
-this when using the post-update.sample hook for publishing via http.
-
-Signed-off-by: Henry Gebhardt <hsggebhardt@googlemail.com>
----
- Documentation/config.txt                         |    2 +-
- Documentation/howto/rebuild-from-update-hook.txt |    2 +-
- contrib/examples/git-clone.sh                    |    2 +-
- git-repack.sh                                    |    2 +-
- templates/hooks--post-update.sample              |    2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 805e051..9b97242 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1462,7 +1462,7 @@ receive.denyNonFastForwards::
- 	set when initializing a shared repository.
- 
- receive.updateserverinfo::
--	If set to true, git-receive-pack will run git-update-server-info
-+	If set to true, git-receive-pack will run git update-server-info
- 	after receiving data from git-push and updating refs.
- 
- remote.<name>.url::
-diff --git a/Documentation/howto/rebuild-from-update-hook.txt b/Documentation/howto/rebuild-from-update-hook.txt
-index 48c6756..9821526 100644
---- a/Documentation/howto/rebuild-from-update-hook.txt
-+++ b/Documentation/howto/rebuild-from-update-hook.txt
-@@ -59,7 +59,7 @@ like this:
-             echo $HOME/doc-git/dododoc.sh | at now
-             ;;
-     esac
--    exec git-update-server-info
-+    exec git update-server-info
-     EOF
-     $ chmod +x /pub/scm/git/git.git/hooks/post-update
- 
-diff --git a/contrib/examples/git-clone.sh b/contrib/examples/git-clone.sh
-index 547228e..0dd704a 100755
---- a/contrib/examples/git-clone.sh
-+++ b/contrib/examples/git-clone.sh
-@@ -75,7 +75,7 @@ clone_dumb_http () {
- 	fi
- 	http_fetch "$1/info/refs" "$clone_tmp/refs" ||
- 		die "Cannot get remote repository information.
--Perhaps git-update-server-info needs to be run there?"
-+Perhaps git update-server-info needs to be run there?"
- 	test "z$quiet" = z && v=-v || v=
- 	while read sha1 refname
- 	do
-diff --git a/git-repack.sh b/git-repack.sh
-index 1eb3bca..532ecfe 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -11,7 +11,7 @@ a               pack everything in a single pack
- A               same as -a, and turn unreachable objects loose
- d               remove redundant packs, and run git-prune-packed
- f               pass --no-reuse-object to git-pack-objects
--n               do not run git-update-server-info
-+n               do not run git update-server-info
- q,quiet         be quiet
- l               pass --local to git-pack-objects
-  Packing constraints
-diff --git a/templates/hooks--post-update.sample b/templates/hooks--post-update.sample
-index 5323b56..ec17ec1 100755
---- a/templates/hooks--post-update.sample
-+++ b/templates/hooks--post-update.sample
-@@ -5,4 +5,4 @@
- #
- # To enable this hook, rename this file to "post-update".
- 
--exec git-update-server-info
-+exec git update-server-info
--- 
-1.7.0.2
+Short Version:
+-------------
 
 
---MP_/Q57.3_k4_24c=OuCrl3jPNi--
+Rather than use a (name,email) pair to identify people, let's use
+a (uuid,name,email) triplet.
+
+The uuid can be any piece of information that a user of git determines
+to be reasonably unique across space and time and that is intended to
+be used by that user virtually forever (at least within a project's
+history).
+
+=46or instance, the uuid could be an OSF DCE 1.1 UUID or the SHA-1 of
+some easily remembered, already reasonably unique information.
+
+This could really help keep identifications clean, and it is rather
+straightforward and possibly quite efficient.
+
+
+Long Version:
+------------
+
+
+There are 2 reasons why people contribute (pro bono) to projects:
+
+  (0) To improve the project.
+  (1) To garner recognition.
+
+and in my experience, (0) is not as sweet without (1).
+
+One of the great boons of distributed systems like git is that they
+separate author (contributor) identities from committer identities,
+thereby maintaining (some semblance of) proper attribution in an
+official, structured format that is amenable to parsing by tools.
+
+While git's use of (name,email) pairs to identify each person is
+extremely practical, it turns out that it's rather `unstable';
+consider the following information gleaned from a clone of the
+official git repository:
+
+    $ git shortlog -se origin/master | grep Linus
+         3  Linus Torvalds <torvalds@evo.osdl.org>
+       122  Linus Torvalds <torvalds@g5.osdl.org>
+       235  Linus Torvalds <torvalds@linux-foundation.org>
+       276  Linus Torvalds <torvalds@osdl.org>
+         9  Linus Torvalds <torvalds@ppc970.osdl.org.(none)>
+       439  Linus Torvalds <torvalds@ppc970.osdl.org>
+         9  Linus Torvalds <torvalds@woody.linux-foundation.org>
+
+    $ git shortlog -se origin/master | grep Junio
+      3658  Junio C Hamano <gitster@pobox.com>
+         2  Junio C Hamano <junio@hera.kernel.org>
+         3  Junio C Hamano <junio@kernel.org>
+         3  Junio C Hamano <junio@pobox.com>
+         8  Junio C Hamano <junio@twinsun.com>
+      4167  Junio C Hamano <junkio@cox.net>
+         2  Junio C Hamano <junkio@twinsun.com>
+         2  Junio Hamano <gitster@pobox.com>
+
+or using a clone of Linus's Linux repo:
+
+    $ git shortlog -se origin/master | grep Linus
+         2  Linus Luessing <linus.luessing@web.de>
+         2  Linus L=C3=BCssing <linus.luessing@web.de>
+         2  Linus Nilsson <lajnold@acc.umu.se>
+         2  Linus Nilsson <lajnold@gmail.com>
+        32  Linus Torvalds <torvalds@evo.osdl.org>
+      1522  Linus Torvalds <torvalds@g5.osdl.org>
+      4174  Linus Torvalds <torvalds@linux-foundation.org>
+         7  Linus Torvalds <torvalds@macmini.osdl.org>
+         2  Linus Torvalds <torvalds@merom.osdl.org>
+         8  Linus Torvalds <torvalds@osdl.org>
+         4  Linus Torvalds <torvalds@ppc970.osdl.org.(none)>
+       166  Linus Torvalds <torvalds@ppc970.osdl.org>
+         1  Linus Torvalds <torvalds@quad.osdl.org>
+      1606  Linus Torvalds <torvalds@woody.linux-foundation.org>
+       174  Linus Torvalds <torvalds@woody.osdl.org>
+         1  Linus Walleij (LD/EAB <linus.walleij@ericsson.com>
+         3  Linus Walleij <linus.ml.walleij@gmail.com>
+         1  Linus Walleij <linus.walleij@ericsson.com>
+        81  Linus Walleij <linus.walleij@stericsson.com>
+         9  Linus Walleij <triad@df.lth.se>
+
+    $ git shortlog -se origin/master | grep Morton
+       581  Andrew Morton <akpm@linux-foundation.org>
+       836  Andrew Morton <akpm@osdl.org>
+         1  Andrew Morton <len.brown@intel.com>
+
+=46rom these few examples it seems pretty clear that the most volatile
+portion of the (name,email) pair is the email, which is unfortunate
+because the email is the most uniquely identifying information. Are
+we really reasonably certain that these two are the same person?
+
+    Linus Walleij <linus.ml.walleij@gmail.com>
+    Linus Walleij <linus.walleij@ericsson.com>
+
+Thus, I propose a more stable form of identification; rather than
+using just a (name,email) pair, let's use a (uuid,name,email) triplet,
+where the uuid can be any piece of information that a user of git
+determines to be reasonably unique across space and time and that is
+intended to be used by that user virtually forever (at least within a
+project's history).
+
+=46or instance, Linus is always stuck in his basement with the same
+ancient computers, so he chooses to set up his few ~/.gitconfig
+files with an OSF DCE 1.1 conforming UUID (generated by, say, uuidgen):
+
+Linus Torvalds <torvalds@linux-foundation.org>
+
+    [user]
+        uuid  =3D 6b202ed1-e8ec-4048-84c2-ae0dd3b2df47
+        name  =3D Linus Torvalds
+        email =3D torvalds@linux-foundation.org
+
+On the other hand, Junio is infatuated with the latest palmtop
+computing gadgets and finds himself setting up a ~/.gitconfig file
+several times each month; he doesn't want to bother remembering
+some long human-hostile string, so he adopts as his uuid the
+SHA-1 of some easily remembered piece of information like the
+very first (name,email) pair that he used for git
+(Junio C Hamano <junkio@cox.net>):
+
+    [user]
+        uuid  =3D 6e99d26860f0b87ef4843fa838df2a918b85d1f7
+        name  =3D Junio C Hamano
+        email =3D gitster@pobox.com
+
+I'm sure that some optimizations could made for certain choices like
+UUID and SHA-1 strings.
+
+Anyway, I think this could really help keep identifications clean,
+and it is rather straightforward and possibly quite efficient.
+
+Sincerely,
+Michael Witten
