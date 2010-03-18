@@ -1,70 +1,59 @@
-From: Gabriel Filion <lelutin@gmail.com>
-Subject: Re: [PATCH] pull: replace unnecessary sed invocation
-Date: Thu, 18 Mar 2010 09:30:22 -0400
-Message-ID: <4BA22AEE.8000606@gmail.com>
-References: <1268889045-21751-1-git-send-email-bebarino@gmail.com>
+From: Jon Smirl <jonsmirl@gmail.com>
+Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
+Date: Thu, 18 Mar 2010 09:48:57 -0400
+Message-ID: <9e4733911003180648w74f48194w1d75b0d58a309f1e@mail.gmail.com>
+References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 18 14:36:01 2010
+Cc: git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 18 14:49:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsFtF-00062z-J2
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 14:35:58 +0100
+	id 1NsG6L-0004Cl-8G
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 14:49:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753443Ab0CRNfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Mar 2010 09:35:52 -0400
-Received: from qw-out-2122.google.com ([74.125.92.24]:48351 "EHLO
+	id S1753708Ab0CRNtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Mar 2010 09:49:17 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:47350 "EHLO
 	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752966Ab0CRNfw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Mar 2010 09:35:52 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so352449qwh.37
-        for <git@vger.kernel.org>; Thu, 18 Mar 2010 06:35:51 -0700 (PDT)
+	with ESMTP id S1753660Ab0CRNs7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Mar 2010 09:48:59 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so355844qwh.37
+        for <git@vger.kernel.org>; Thu, 18 Mar 2010 06:48:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=F9w5zERfGsF4xqpQtYhHbPVNgknyROAfdMMBFBitm+4=;
-        b=uN+qqnovDi0WqjCYFXnHP+yYjWbtKN//ZF2+GqiTxcELxNpFslmKVa6rPnTfdt7sbe
-         AzIRuSbw2I3mCEsGAjN0X6qsFDJopL24EY5wxceNPGCjq1TCqX035jzq0uT+wroNm3v2
-         bW6JusLPcbrFLD6j5+2TMsLtZCsL87bV9ZKxU=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=YXsxIuKO1PAPj71HINOHO6QLO/u9wvt/Vrv3vrAmfz0=;
+        b=QsOt5pYcHg+B8pexQD0vJlp4s7SgFWej8yG0g32NSg0IbFgWj+SinwxvjkppYFfEIR
+         VipdFT4HAYw8YDz5sOaQYQnB1Vt94rt3ZvZH7++7Z5dsGDmw/cDGjSiKP4fJ4Xj4J2/C
+         5P/0nyyB1Ud0o27+ZbhCUgU4B/ghF8Zou4wCE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=B+GjKUH++HtctVx/U/LyG7NGVuFnAnTIUvzPGkII1s4Cyo49CUaWc1hde3T5AsEHH8
-         t3bJ4IAaHYAVJXlF/g4LoMdsjOaV74Hp1ITqkJ/oHq+VleYTLu0XFjSy8z7GV0p0GxCJ
-         eMU71Otgdv7kfTZg21gJpZK/X3BYFIFKbz4ds=
-Received: by 10.224.53.105 with SMTP id l41mr742607qag.365.1268919027749;
-        Thu, 18 Mar 2010 06:30:27 -0700 (PDT)
-Received: from [192.168.10.101] (modemcable074.180-22-96.mc.videotron.ca [96.22.180.74])
-        by mx.google.com with ESMTPS id 2sm2164949qwi.1.2010.03.18.06.30.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 18 Mar 2010 06:30:26 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20100108 Lightning/1.0b1 Icedove/3.0
-In-Reply-To: <1268889045-21751-1-git-send-email-bebarino@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=wlpXUNAcJ8DqSJXnoRumK0OrrTsS8YkTMoitWaZ28oRtUGblmHa8adD5BzE5BjxnRy
+         bbqmjWx3GzMfpVRSpq2apfoKOyaaSQOSQrWxovQwB2bqpc4I6A48p+11itkh+GA6/sHk
+         pDvGTFAAeQdQJj4aNhfFe1xMF7a8WNu+oHPlU=
+Received: by 10.229.223.140 with SMTP id ik12mr2180008qcb.98.1268920137569; 
+	Thu, 18 Mar 2010 06:48:57 -0700 (PDT)
+In-Reply-To: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142469>
 
-On 2010-03-18 01:10, Stephen Boyd wrote:
-> Getting the shortened branch name is as easy as using the shell's
-> parameter expansion.
-> 
->  curr_branch=$(git symbolic-ref -q HEAD)
-> -curr_branch_short=$(echo "$curr_branch" | sed "s|refs/heads/||")
-> +curr_branch_short="${curr_branch#refs/heads/}"
-
-This modification is a bashism. This syntax is not compatible with other
-shells.
+You can't go back and edit the history in git so a map of the aliases
+is needed.  The easy fix is a .mailmap file. However, the .mailmap
+entries need a mechanism to track which entries are correct and which
+have been fixed. Read this long and painful thread...
+http://lkml.org/lkml/2008/7/28/134
 
 -- 
-Gabriel Filion
+Jon Smirl
+jonsmirl@gmail.com
