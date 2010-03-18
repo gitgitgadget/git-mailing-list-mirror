@@ -1,79 +1,58 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Not possible to see combined diff before committing a merge?
-Date: Thu, 18 Mar 2010 10:55:12 +0100
-Message-ID: <4BA1F880.2090100@drmicha.warpmail.net>
-References: <76718491003172321j2a184643o47ec3a712a3b0c12@mail.gmail.com>
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: Re: [PATCH] Clarification for the command "git checkout <branch>"
+Date: Thu, 18 Mar 2010 11:11:05 +0100
+Message-ID: <4BA1FC39.10300@web.de>
+References: <4B67227A.7030908@web.de> <7vhbq0wuy6.fsf@alter.siamese.dyndns.org> <4B898F97.90706@web.de> <7vr5o6s5xf.fsf@alter.siamese.dyndns.org> <4B8B9BF1.10408@web.de> <4b8bf32f.0706c00a.26cb.691d@mx.google.com> <4BA104C7.5020207@web.de> <32541b131003170944w7a0215frcace205f32d313bf@mail.gmail.com> <7vaau6q18q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 18 10:58:02 2010
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 18 11:11:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsCUK-0004R1-W6
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 10:58:01 +0100
+	id 1NsChH-0001fa-Cf
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Mar 2010 11:11:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751612Ab0CRJ54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Mar 2010 05:57:56 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:44208 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751143Ab0CRJ5z (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Mar 2010 05:57:55 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id B1329E593A;
-	Thu, 18 Mar 2010 05:57:54 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 18 Mar 2010 05:57:54 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=M5e73IDd3/nnkUHYHs4JfjufiCg=; b=ajSMDyV0BHCADADmCknU9kyxRjP1Rfgj5eeH93e0MBJmkLimKVkWJPGWD9ctNU8KOH44ft1pXA9KZZjSE6EXDCucIr1lYNZ6HOJFXgFSsgmkf+1ZGDFK0V1Rl5NuogOuuAV7ppQzqENH9pqyY9H/yIzf9q1LoFJ2CQl4M4PSHrU=
-X-Sasl-enc: aqz2JwHgPFaS/ZtZTOATTDtBIMIKmghs+wBdn5q/1LW2 1268906274
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 21447EDD8;
-	Thu, 18 Mar 2010 05:57:54 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10pre) Gecko/20100316 Lightning/1.0b2pre Shredder/3.0.4pre
-In-Reply-To: <76718491003172321j2a184643o47ec3a712a3b0c12@mail.gmail.com>
+	id S1751251Ab0CRKLO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Mar 2010 06:11:14 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:59697 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751182Ab0CRKLM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Mar 2010 06:11:12 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 0C717145744CE;
+	Thu, 18 Mar 2010 11:11:11 +0100 (CET)
+Received: from [85.179.97.38] (helo=[192.168.1.202])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #4)
+	id 1NsCh4-0005hT-00; Thu, 18 Mar 2010 11:11:10 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.8) Gecko/20100228 SUSE/3.0.3-1.1.1 Thunderbird/3.0.3
+In-Reply-To: <7vaau6q18q.fsf@alter.siamese.dyndns.org>
+X-Sender: Markus.Elfring@web.de
+X-Provags-ID: V01U2FsdGVkX193keOri96/lE4nv4/YeR4dcAAbi5TjL7E/utQW
+	qlbbzlpZGZ/SL8tmDrcB2ZXTKy94RzOfbkMIWj1mO8ToqiU+ZE
+	NLau6UQIHjatXegUHT8g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142455>
 
-Jay Soffian venit, vidit, dixit 18.03.2010 07:21:
-> Am I missing something, or is there no way to see combined diff output
-> after completing merge resolution on a conflicted merge but before
-> committing the merge?
-> 
-> $ git diff --cc [-- path]
-> 
-> works fine _until_ you've added the file to the index, at which point
-> you're hosed.
-> 
-> I think I want the combined diff between:
-> 
-> - What's in the index
-> - The first parent (ORIG_HEAD)
-> - The second parent (MERGE_HEAD)
-> 
-> And I don't think that's possible, sadly.
+> You may want retry the command after recording the local changes
+> (1) in a temporary commit on the current branch,
 
-The obvious attempt "git diff --cc --cached" does not work,
-unfortunately, because the add cleared out the other stages from the index.
+Can commits be consistently marked for intermediate use?
+Can such "special" commits be easily found later on?
 
-The funny thing is that after committing, git show will give you the
-combined diff (again).
 
-I guess that proves, again, that there can't be a symbolic ref like
-INDEX because it just doesn't behave like one.
+> or (2) by using "git stash".
 
-If there are no conflicted files left you could do a throw-away commit
-with a temp index, but that looks ugly. Do we have a way of specifying a
-3-way diff for some git diff --cc incarnation, i.e. pretending two
-commits to be the parents and a third (or index) to be the merge result?
+Is this storage operation supported per branch?
+Does a checkout look if any files were stashed away for the specified branch before?
 
-Junio would probably say that by adding the merge resolution you declare
-that you're not interested in that part of the merge any more ;)
-
-Michael
+Regards,
+Markus
