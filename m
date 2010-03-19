@@ -1,70 +1,112 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Prompt for a username when an HTTP request 401s
-Date: Fri, 19 Mar 2010 12:09:23 -0700
-Message-ID: <20100319190923.GA16758@spearce.org>
-References: <d411cc4a1003182041p67a93bf6i1528a8eaaab5c805@mail.gmail.com> <20100319143205.GB16211@spearce.org> <d411cc4a1003191208m38b7baf2mbb8f1ea288f90819@mail.gmail.com>
+From: Mark Rada <marada@uwaterloo.ca>
+Subject: [PATCHv2] instaweb: use minified gitweb.js if available
+Date: Fri, 19 Mar 2010 15:16:04 -0400
+Message-ID: <4BA3CD74.4050603@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 19 20:09:34 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 19 20:16:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NshZb-0005WO-MI
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 20:09:32 +0100
+	id 1NshgW-0000Z6-LF
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 20:16:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751329Ab0CSTJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Mar 2010 15:09:27 -0400
-Received: from mail-px0-f181.google.com ([209.85.216.181]:36958 "EHLO
-	mail-px0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751263Ab0CSTJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Mar 2010 15:09:26 -0400
-Received: by pxi11 with SMTP id 11so929786pxi.16
-        for <git@vger.kernel.org>; Fri, 19 Mar 2010 12:09:26 -0700 (PDT)
-Received: by 10.142.5.25 with SMTP id 25mr988013wfe.78.1269025766429;
-        Fri, 19 Mar 2010 12:09:26 -0700 (PDT)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 23sm1209158iwn.6.2010.03.19.12.09.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 19 Mar 2010 12:09:25 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <d411cc4a1003191208m38b7baf2mbb8f1ea288f90819@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751065Ab0CSTQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Mar 2010 15:16:35 -0400
+Received: from mailservices.uwaterloo.ca ([129.97.128.141]:60561 "EHLO
+	mailchk-m05.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750966Ab0CSTQe (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Mar 2010 15:16:34 -0400
+Received: from karakura.local (static-66-225-153-161.ptr.terago.net [66.225.153.161])
+	(authenticated bits=0)
+	by mailchk-m05.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id o2JJG5Cs025371
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 19 Mar 2010 15:16:06 -0400
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
+X-UUID: d4ab888a-c849-4369-80f6-8838f39f9c7c
+X-Miltered: at mailchk-m05 with ID 4BA3CD75.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: clamav-milter 0.95.2 at mailchk-m05
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m05.uwaterloo.ca [129.97.128.141]); Fri, 19 Mar 2010 15:16:08 -0400 (EDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142636>
 
-Scott Chacon <schacon@gmail.com> wrote:
-> On Fri, Mar 19, 2010 at 7:32 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > Scott Chacon <schacon@gmail.com> wrote:
-> >> @@ -815,7 +815,18 @@ static int http_request(const char *url, void
-> >> *result, int target, int options)
-> >> ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ret = HTTP_OK;
-> >> ?? ?? ?? ?? ?? ?? ?? else if (missing_target(&results))
-> >> ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ret = HTTP_MISSING_TARGET;
-> >> - ?? ?? ?? ?? ?? ?? else
-> >> + ?? ?? ?? ?? ?? ?? else if (results.http_code == 401) {
-> >> + ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? if (user_name) {
-> >> + ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ret = HTTP_NOAUTH;
-> >> + ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? } else {
-> >> + ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? // it is neccesary to use getpass here because
-> >> + ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? // there appears to be no other clean way to
-> >> + ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? // read/write stdout/stdin
-> >> + ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? user_name = xstrdup(getpass("Username: "));
-> >
-> > No, getpass is needed here because its very likely stdin/stdout are
-> > pipes to our parent process. ??So we instead need to use /dev/tty,
-> > but that is non-portable. ??Using getpass() can at least be stubbed
-> > on other platforms with a different implementation if/when necessary.
-> 
-> Should I roll a new patch for this?
+Makes git-instaweb use gitweb.min.js if it was generated.
 
-Yea, you probably should since I think the comment could be improved.
+Signed-off-by: Mark Rada <marada@uwaterloo.ca>
 
+---
+
+Changes since v1:
+	- Updates name of javascript file instaweb creates
+	  instead of changing the the copy of gitweb.cgi
+	  that embeds.
+
+
+ Makefile        |   11 ++++++-----
+ git-instaweb.sh |    3 ++-
+ 2 files changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 7c616f8..f80b25e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1551,12 +1551,12 @@ gitweb:
+ 	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) all
+ 
+ ifdef JSMIN
+-OTHER_PROGRAMS += gitweb/gitweb.cgi   gitweb/gitweb.min.js
+-gitweb/gitweb.cgi: gitweb/gitweb.perl gitweb/gitweb.min.js
++GITWEB_JS=gitweb/gitweb.min.js
+ else
+-OTHER_PROGRAMS += gitweb/gitweb.cgi
+-gitweb/gitweb.cgi: gitweb/gitweb.perl
++GITWEB_JS=gitweb/gitweb.js
+ endif
++OTHER_PROGRAMS += gitweb/gitweb.cgi $(GITWEB_JS)
++gitweb/gitweb.cgi: gitweb/gitweb.perl $(GITWEB_PROGRAMS)
+ 	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
+ 
+ ifdef JSMIN
+@@ -1574,8 +1574,9 @@ git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css gitweb/gitweb.
+ 	    -e '/@@GITWEB_CGI@@/d' \
+ 	    -e '/@@GITWEB_CSS@@/r gitweb/gitweb.css' \
+ 	    -e '/@@GITWEB_CSS@@/d' \
+-	    -e '/@@GITWEB_JS@@/r gitweb/gitweb.js' \
++	    -e '/@@GITWEB_JS@@/r $(GITWEB_JS)' \
+ 	    -e '/@@GITWEB_JS@@/d' \
++	    -e 's|@@GITWEB_JS_NAME@@|$(GITWEB_JS)|' \
+ 	    -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
+ 	    $@.sh > $@+ && \
+ 	chmod +x $@+ && \
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index 6a65f25..b2fb7f0 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -397,12 +397,13 @@ EOFGITWEB
+ gitweb_js () {
+ 	cat > "$1" <<\EOFGITWEB
+ @@GITWEB_JS@@
++
+ EOFGITWEB
+ }
+ 
+ gitweb_cgi "$GIT_DIR/gitweb/gitweb.cgi"
+ gitweb_css "$GIT_DIR/gitweb/gitweb.css"
+-gitweb_js  "$GIT_DIR/gitweb/gitweb.js"
++gitweb_js  "$GIT_DIR/@@GITWEB_JS_NAME@@"
+ 
+ case "$httpd" in
+ *lighttpd*)
 -- 
-Shawn.
+1.7.0.2.279.gf1ba1c
