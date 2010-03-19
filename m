@@ -1,85 +1,100 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: native-git-svn: A Summer of Code 2010 proposal
-Date: Fri, 19 Mar 2010 22:00:34 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1003192159300.7596@pacific.mpi-cbg.de>
-References: <f3271551003191018j67aa133es2fee4e3dda519ce0@mail.gmail.com> <32541b131003191132y119037f8rae598d0037786703@mail.gmail.com> <20100319205301.GA15053@progeny.tock>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add ignore and clean rules for gitweb.min.js
+Date: Fri, 19 Mar 2010 14:06:20 -0700
+Message-ID: <7vbpekf2cz.fsf@alter.siamese.dyndns.org>
+References: <4BA3D9E2.5070401@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1899968212-1269032435=:7596"
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 19 21:59:43 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mark Rada <marada@uwaterloo.ca>
+X-From: git-owner@vger.kernel.org Fri Mar 19 22:06:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsjHt-0000BK-1L
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 21:59:21 +0100
+	id 1NsjOr-0005Gd-CW
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 22:06:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752647Ab0CSU7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Mar 2010 16:59:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54379 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751604Ab0CSU7E (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Mar 2010 16:59:04 -0400
-Received: (qmail invoked by alias); 19 Mar 2010 20:59:00 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp002) with SMTP; 19 Mar 2010 21:59:00 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/CY0cTgynCl8td6MMfh1dZul7xtBE7yOREBYMsog
-	SIviuJAaFkA2/f
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20100319205301.GA15053@progeny.tock>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64000000000000001
+	id S1752351Ab0CSVG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Mar 2010 17:06:29 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61537 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752056Ab0CSVG2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Mar 2010 17:06:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E9563A3078;
+	Fri, 19 Mar 2010 17:06:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=f0oYnIbsyeIEkY1M9wAP+TNpCkI=; b=D3Mgmu
+	tQZg53U2NkS9Q09mf84nnAJkYnul+lvxXjrzzWg5Owy93CCLnV206GepY/zeXFVM
+	DXTgdiaBRGQ/5gdOSAjPSt8Ssm5bz+Ut//tPXLHqM3CEJ2pHyQQv49/D6hkJ4huq
+	hhvHQ9BhQNJjuFzw4axt4jETWPSCGg2ccxXEw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TZ17S+NM3mwgFg3oyzE/a23Mv+xPeHMv
+	8XxaObZBEqBtyxBqmVVCpuLbXa/fh/V83gIBB2xIsvNsYhS7nWSgpRoiiHItJE+n
+	nMJnPPofQloyj2lLb1JcqzHRyDEqSP/w4dw/R3/Fd07kY0yerJYkVUhrPNFdbQ1n
+	drik8KdhJ/o=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A0243A3075;
+	Fri, 19 Mar 2010 17:06:24 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0085CA306E; Fri, 19 Mar
+ 2010 17:06:21 -0400 (EDT)
+In-Reply-To: <4BA3D9E2.5070401@mailservices.uwaterloo.ca> (Mark Rada's
+ message of "Fri\, 19 Mar 2010 16\:09\:06 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 46DD8F9C-339B-11DF-80A0-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142648>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Mark Rada <marada@uwaterloo.ca> writes:
 
---8323328-1899968212-1269032435=:7596
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+> Signed-off-by: Mark Rada <marada@uwaterloo.ca>
 
-Hi,
+Thanks; one question and a comment.
 
-On Fri, 19 Mar 2010, Jonathan Nieder wrote:
+> ---
+>  .gitignore |    1 +
+>  Makefile   |    3 +++
+>  2 files changed, 4 insertions(+), 0 deletions(-)
+>
+> diff --git a/.gitignore b/.gitignore
+> index 7b3acb7..3558dd2 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -156,6 +156,7 @@
+>  /git-core-*/?*
+>  /gitk-git/gitk-wish
+>  /gitweb/gitweb.cgi
+> +/gitweb/gitweb.min.js
+>  /test-chmtime
+>  /test-ctype
+>  /test-date
 
-> Avery Pennarun wrote:
-> > On Fri, Mar 19, 2010 at 1:18 PM, Ramkumar Ramachandra
-> 
-> >> The following resources are relevant to the project:
-> >> 1. git_remote_helpers/git/git.py is a minimalistic remote helper
-> >> written by Sverre. I plan to extend this as much as possible before
-> >> rewriting it in C.
-> >
-> > Are you sure you really want to rewrite git-svn in C?  svn is so slow
-> > that interpreted vs. native performance is unlikely to be an issue.
-> > git-svn is probably not going to be needed on embedded systems where
-> > installing python or perl is a problem.  And managing the data
-> > structures in a high-level language should be a lot easier.
-> 
-> Hmm.  Sverre discussed why this is more about a redesign of svn
-> interop support than a C reimplementation of git-svn.  I wouldn’t mind
-> if at the end of the summer, all we have is some working Python code.
-> Still, it would have to be rewritten in C or Perl before msysgit could
-> use it unless some hero packages a Python interpreter for them.
+Question: should this be part of your earlier "instaweb" patch, or are
+they independent?
 
-It's not about packaging the interpreter. It is about _compiling_ it, so 
-that we can also compile native extensions for performance.
+> diff --git a/Makefile b/Makefile
+> index f80b25e..cdf16c2 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2078,6 +2078,9 @@ clean:
+>  	$(MAKE) -C Documentation/ clean
+>  ifndef NO_PERL
+>  	$(RM) gitweb/gitweb.cgi
+> +ifdef JSMIN
+> +	$(RM) gitweb/gitweb.min.js
+> +endif #JSMIN
+>  	$(MAKE) -C perl clean
+>  endif
 
-Last time I tried to compile Python with MSys, I gave up. After a full 
-week of trying.
-
-Ciao,
-Dscho
-
---8323328-1899968212-1269032435=:7596--
+Running "make clean" in perl/ should stay in "ifndef NO_PERL", but I think
+removal of both gitweb/{gitweb.cgi,gitweb.min.js} should be unconditional;
+it does not hurt as $(RM) is "rm -f" (i.e. don't complain to ENOENT).
