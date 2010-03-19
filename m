@@ -1,79 +1,59 @@
-From: Knox Lotto Inc <winning@aol.com>
-Subject: Urgent Notice from the UK
-Date: Fri, 19 Mar 2010 15:29:16 +1300
-Message-ID: <20100319152916.o6skk0kgkgg04koo@webmail.slingshot.co.nz>
-Reply-To: contact@knoxlotto.co.uk
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
+Date: Fri, 19 Mar 2010 08:17:23 +0530
+Message-ID: <2e24e5b91003181947t48d7cb31jd6512d9b53bf0b32@mail.gmail.com>
+References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: undisclosed-recipients:;
-X-From: git-owner@vger.kernel.org Fri Mar 19 03:40:45 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 19 03:47:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsS8i-0008Lc-HF
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 03:40:45 +0100
+	id 1NsSFF-0001k4-Vi
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 03:47:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752000Ab0CSCk1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Mar 2010 22:40:27 -0400
-Received: from mxi2.callplus.net.nz ([202.180.66.204]:52285 "EHLO
-	mxi2.callplus.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751171Ab0CSCk0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Mar 2010 22:40:26 -0400
-X-Greylist: delayed 584 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Mar 2010 22:40:26 EDT
-Received: from wmsrv3.tranzpeer.net (HELO localhost) ([202.180.66.4])
-  by ismtp02.callplus.net.nz with ESMTP; 19 Mar 2010 15:30:38 +1300
-Received: from dial-pool6.ph.starcomms.net (dial-pool6.ph.starcomms.net
-	[41.205.163.7]) by webmail.slingshot.co.nz (Horde) with HTTP for
-	<knoxlotto17@slingshot.co.nz>; Fri, 19 Mar 2010 15:29:16 +1300
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) 4.0-cvs
-X-Originating-IP: 41.205.163.7
+	id S1752117Ab0CSCrZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Mar 2010 22:47:25 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:61921 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751153Ab0CSCrY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Mar 2010 22:47:24 -0400
+Received: by pwi5 with SMTP id 5so1019760pwi.19
+        for <git@vger.kernel.org>; Thu, 18 Mar 2010 19:47:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type;
+        bh=vXrqiJS42mK2R01hPWQV3bB41v/IPolVESe6w94jyss=;
+        b=d4OdLGRFZKhM7xvOHfwFNoaRCGz7a8O7h6ga+hqYXvOaIBHJXeN1C3DFFdZcqYEjHm
+         49Qn5ZUA3/I1pIIVOR78NjqrxrozmWQCH2mPUYmdjC0kDJD6daT2/ZHNUgPB9k7iLPAP
+         cH7tKznxsr66Yxp6V21/tfpPk2SqbL5SE8dQk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        b=FaRSFQNMQdBYEXqiD/DEX5zq9+rdd5NGHrltql036EtU4MUapHH0hut05IjfcUKfvg
+         uxtxCJNIy3/5vUSoBLnWN1JVfWoYRe9ehVHKg2yBrB2n+1dbV5b0C8PtqEVvPRuzUdk8
+         n7YmmxEP3vjUCx0TWKPK5oJUUw2z9MXh/XnKg=
+Received: by 10.142.247.18 with SMTP id u18mr1022456wfh.36.1268966843581; Thu, 
+	18 Mar 2010 19:47:23 -0700 (PDT)
+In-Reply-To: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 11.9 points;
- *  2.8 TVD_PH_SUBJ_URGENT TVD_PH_SUBJ_URGENT
- *  1.6 URG_BIZ BODY: Contains urgent matter
- *  3.1 UNCLAIMED_MONEY BODY: People just leave money laying around
- *  3.2 DEAR_WINNER BODY: DEAR_WINNER
- * -0.7 BAYES_20 BODY: Bayesian spam probability is 5 to 20%
- *      [score: 0.1920]
- *  1.0 KAM_LOTTO2 Highly Likely to be a e-Lotto Scam Email
- *  1.0 KAM_LOTTO1 Likely to be a e-Lotto Scam Email
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142557>
 
-Knox Lotto Inc
-Batch Number: 783023042009
-Winners Number: 9983728930283
-Reference: KN/LO/INC/0783
+On Thu, Mar 18, 2010 at 6:53 PM, Michael Witten <mfwitten@gmail.com> wrote:
+> Short Version:
+> -------------
 
-Dear Winner,
+[all snipped]
 
-We wish to congratulate you on your email success in our computer vote.=
- This
-promotional program is aimed at encouraging internet users, it is spons=
-ored by
-the Horse Race Betting Company.
+Great Gods above... 50+ emails, including many from Linus himself,
+trying to respond to a non-solution to a non-problem...
 
-Your email address was attached to ticket/batch number 82333216788, whi=
-ch drew
-the lucky numbers as follows: 9983728930283, winning the lottery of =C2=
-=A3
-500,000.00. (British Pounds)
-
-Contact our trustee representative in London immediately, to claim winn=
-ings.
-E-mail: contact@knoxlotto.co.uk
-
-Note: All winnings MUST be claimed in 2 weeks otherwise all winnings wi=
-ll be
-returned to us as unclaimed funds.
-
-
-Best regards
-Dorothy Pierce
-(Lottery Coordinator)
+slow day?
