@@ -1,179 +1,102 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [BUG] merge-recursive call in git-am -3 chokes, autocrlf issue?
-Date: Fri, 19 Mar 2010 01:49:02 +0100
-Message-ID: <201003190149.03025.trast@student.ethz.ch>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
+Date: Thu, 18 Mar 2010 17:50:58 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.1003181739310.18017@i5.linux-foundation.org>
+References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>  <alpine.LFD.2.00.1003181022040.18017@i5.linux-foundation.org>  <46a038f91003181536ib3b74f8o40603a4cee13d62b@mail.gmail.com>  <alpine.LFD.2.00.1003181909180.31128@xanadu.home> 
+ <9e4733911003181626t7d143903mbc5737ff2fa5100f@mail.gmail.com>  <alpine.LFD.2.00.1003181930230.31128@xanadu.home>  <9e4733911003181641n400704c9r1a0addd6fce6fce0@mail.gmail.com>  <alpine.LFD.2.00.1003181953010.31128@xanadu.home> 
+ <9e4733911003181716q7f141d5eqd18218c749ca4624@mail.gmail.com>  <alpine.LFD.2.00.1003181715490.18017@i5.linux-foundation.org> <9e4733911003181739m2f605dd7g9406aaecc296749f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <scottg.wp-hackers@mhg2.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 19 01:49:36 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 19 01:54:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsQP8-00079h-PR
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 01:49:35 +0100
+	id 1NsQTU-0008WO-2O
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 01:54:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751868Ab0CSAt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Mar 2010 20:49:28 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:30001 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751251Ab0CSAt2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Mar 2010 20:49:28 -0400
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Fri, 19 Mar
- 2010 01:49:24 +0100
-Received: from thomas.localnet (84.74.100.59) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Fri, 19 Mar
- 2010 01:49:05 +0100
-User-Agent: KMail/1.13.1 (Linux/2.6.31.12-0.1-desktop; KDE/4.4.1; x86_64; ; )
+	id S1752620Ab0CSAx7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Mar 2010 20:53:59 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:36641 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752492Ab0CSAx6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Mar 2010 20:53:58 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o2J0rs2p007843
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 18 Mar 2010 17:53:55 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o2J0rrW6025576;
+	Thu, 18 Mar 2010 17:53:54 -0700
+In-Reply-To: <9e4733911003181739m2f605dd7g9406aaecc296749f@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.448 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142548>
-
-Hi everyone,
-
-I helped Scott R. "WebDragon" Godin on IRC[1] with a bug internal to
-git-rebase.  It manifests like this:
-
-  $ git rebase --stat develop
-  First, rewinding head to replay your work on top of it...
-   .gitmeta                                           |    2 +-
-   Products/index.php                                 |    1 +
-   index.php                                          |   11 -----
-   res/includes/featured/featured-TEMPLATE.php        |    6 +-
-   res/includes/featured/featured-aerotube.php        |    2 +-
-   res/includes/featured/featured-beltfeederclock.php |    2 +-
-   res/includes/featured/featured-fiberglasstanks.php |    2 +-
-   res/includes/featured/featured-handypolaris2.php   |    2 +-
-   res/includes/featured/featured-hydrotech.php       |    2 +-
-   .../featured/featured-uv_sterilization.php         |    2 +-
-   res/includes/inc_meta.php                          |    1 +
-   res/includes/inc_nav.php                           |   42 ++++++++++++++++---
-   res/java/featurebox.js                             |    2 +-
-   13 files changed, 48 insertions(+), 29 deletions(-)
-  Applying: Begin restyling/content work on new footer
-  Using index info to reconstruct a base tree...
-  Falling back to patching base and 3-way merge...
-  error: Your local changes to 'res/css/stylehome.css' would be overwritten by merge.  Aborting.
-  Please, commit your changes or stash them before you can merge.
-  Failed to merge in the changes.
-  [...]
-
-I don't know much about the merging machinery, but I figured I could
-help him poke around, so here's what we gathered:
-
-* He uses 1.7.0.1 on Fedora [2]
-
-* The repo is fairly ordinary except for[3]: setgitperms.perl contrib
-  hooks, core.autocrlf = true
-
-* Editing git-am to use git-merge-resolve instead fixes the issue.
-
-* With GIT_MERGE_VERBOSITY=5 it says [I don't think there's anything
-  useful in there, but who knows]:
-
-    $ git rebase develop
-    First, rewinding head to replay your work on top of it...
-    Applying: Begin restyling/content work on new footer
-    Using index info to reconstruct a base tree...
-    Falling back to patching base and 3-way merge...
-    Merging HEAD with Begin restyling/content work on new footer
-    Merging:
-    9e2793f remove innerbox sizing js, as no longer necessary: matching bg color obviates need for equal sized boxes
-    virtual Begin restyling/content work on new footer
-    found 1 common ancestor(s):
-    virtual cef31479147bd3ba2922c3506ec1c70ee5b22729
-    error: Your local changes to 'res/css/stylehome.css' would be overwritten by merge.  Aborting.
-    Please, commit your changes or stash them before you can merge.
-    fatal: merging of trees fe2928d5311cfcf5e668b13cd85608589928f848 and b2ad8208510f713acf1be1c9e62856c51175c6d0 failed
-    Failed to merge in the changes.
-
-* Immediately before the git-merge-{recursive,resolve} call, the
-  following outputs may be relevant:
-
--- 8< -- git diff-files --patch-with-raw
-:100644 100644 c1ff94058b86004de4dc1693b6dcd2fccfb28d52 0000000000000000000000000000000000000000 M     res/css/stylehome.css
-:100644 100644 b653183cc466262996c319ce21fbc29d1164b942 0000000000000000000000000000000000000000 M res/includes/inc_footerhome.php
-:100644 100644 29182f14b8e54525649685cdfe718a9a4204ab0e 0000000000000000000000000000000000000000 M       res/includes/inc_meta.php
-:100644 100644 5910568e733b631d3e3cc73b74ee89a71e4140a2 0000000000000000000000000000000000000000 M     res/includes/inc_validate.php
- 
-diff --git a/res/css/stylehome.css b/res/css/stylehome.css
-diff --git a/res/includes/inc_footerhome.php b/res/includes/inc_footerhome.php
-diff --git a/res/includes/inc_meta.php b/res/includes/inc_meta.php
-diff --git a/res/includes/inc_validate.php b/res/includes/inc_validate.php
--- >8 --
-
--- 8< -- git diff-index --patch-with-raw HEAD
-:100644 100644 c1ff94058b86004de4dc1693b6dcd2fccfb28d52 0000000000000000000000000000000000000000 M    res/css/stylehome.css
-:100644 100644 b653183cc466262996c319ce21fbc29d1164b942 0000000000000000000000000000000000000000 M res/includes/inc_footerhome.php
-:100644 100644 29182f14b8e54525649685cdfe718a9a4204ab0e 0000000000000000000000000000000000000000 M       res/includes/inc_meta.php
-:100644 100644 5910568e733b631d3e3cc73b74ee89a71e4140a2 0000000000000000000000000000000000000000 M     res/includes/inc_validate.php
- 
-diff --git a/res/css/stylehome.css b/res/css/stylehome.css
-diff --git a/res/includes/inc_footerhome.php b/res/includes/inc_footerhome.php
-diff --git a/res/includes/inc_meta.php b/res/includes/inc_meta.php
-diff --git a/res/includes/inc_validate.php b/res/includes/inc_validate.php
--- >8 --
-
-Not sure if it's relevant, but the differences shown here and in the
-diffstat for the rebased patch above both list
-'res/includes/inc_meta.php'.
-
-[I only just noticed that we probably should have used diff-index
---cached for the second snippet; I hope that this doesn't make the
-data worthless...]
-
-We tried the differences between $base_tree and {$his_tree,HEAD} too,
-but they were too large to be practical.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142549>
 
 
-Since there is some difference between files and index, but neither
-the modes nor the contents actually show any, my best guess is that
-it's autocrlf's fault.  Then again, who knows.
 
-I did try a theory, but it worked well[4] so that's not it:
+On Thu, 18 Mar 2010, Jon Smirl wrote:
+> 
+> I had all of the names in the list so that I could regenerate the list
+> and diff it against the old version to know which new names needed to
+> be checked. Looking back I could have eliminated the names without
+> errors and then added a comment to the file as to the last date all of
+> the names were checked.  But that is less reliable than recording
+> which were checked. The problem is that if you lose track of what has
+> been checked, you are forced to recheck everything and it takes a long
+> time to recheck everything.
 
-  * base has a file foo
-  * side..master recodes foo to crlf and changes bar
-  * master..side changes bar differently to trigger the 3-way logic
-  Then rebase side on master.
+The part you keep missing is that NOBODY CARES!
 
-In code:
+For example, I exist in the current git kernel tree with 11 different 
+names for just the authorship information:
 
-  git init foo
-  cd foo
-  seq 1 20 > foo
-  git add foo
-  git commit -m initial
-  seq 100 120 > bar
-  git add bar
-  git commit -m bar
-  seq 1 20 | sed 's/$/\r/' > foo
-  git add foo
-  git commit -m crlf
-  sed -i 's/101/a/;s/102/b/;s/103/c/' bar
-  git add bar
-  git commit -m 'change bar'
-  git checkout -b side HEAD~2
-  sed -i 's/105/d/;s/106/e/;s/107/f/' bar
-  git add bar
-  git commit -m 'change bar differently'
-  git config core.autocrlf true
-  git rebase master
+     32 Linus Torvalds torvalds@evo.osdl.org
+   1522 Linus Torvalds torvalds@g5.osdl.org
+   4194 Linus Torvalds torvalds@linux-foundation.org
+      7 Linus Torvalds torvalds@macmini.osdl.org
+      2 Linus Torvalds torvalds@merom.osdl.org
+      8 Linus Torvalds torvalds@osdl.org
+    166 Linus Torvalds torvalds@ppc970.osdl.org
+      4 Linus Torvalds torvalds@ppc970.osdl.org.(none)
+      1 Linus Torvalds torvalds@quad.osdl.org
+   1606 Linus Torvalds torvalds@woody.linux-foundation.org
+    174 Linus Torvalds torvalds@woody.osdl.org
 
+(that's counts, in case you care). And then if you check signed-off lines, 
+you'll find some _additional_ oddities where things just got misspelled, 
+like
 
-[1] http://colabti.org/irclogger/irclogger_log/git?date=2010-03-18#l3682
-[2] http://colabti.org/irclogger/irclogger_log/git?date=2010-03-18#l3818
-[3] http://colabti.org/irclogger/irclogger_log/git?date=2010-03-18#l3898
-[4] modulo the slight problem that I can't get rid of the false dirty
-    state of foo after that, but if I understood autocrlf right that's
-    expected?
+	Linus Torvalds <tovalds@linux-foundation.org>
+	Linus Torvalds <torvalds@akpm@linux-foundation.org>
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+where in one case there's a missing 'r', and in the other it's some odd 
+perverse incestuous relationship between me and Andrew (in reality, it's 
+me doing a stupid "search-and-replace" on the emails, adding my own 
+sign-off to Andrew's and that got a bit too much copy-paste issues)
+
+There's a few other mistakes like that in the sign-offs.
+
+Does anybody care? Certainly not I. There is absolutely zero reason to 
+worry about it. I used to find it convenient to see what machines I had 
+worked on, so I actually included that. And one of them was clearly 
+mis-configured, or git did something wrong when the hostname was already 
+in FQDN format. Whatever.
+
+There is no real _value_ in making a .mailcap for each such buggy entry is 
+what I'm trying to tell you. Those things are maybe used for statistics. 
+On the whole, they are correct. 
+
+			Linus
