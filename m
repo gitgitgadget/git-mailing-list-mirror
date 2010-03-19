@@ -1,69 +1,73 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: Re: submodule problem
-Date: Fri, 19 Mar 2010 18:29:29 +0100
-Message-ID: <8c5c35581003191029x7069ea10tecdaa49e176080c2@mail.gmail.com>
-References: <89030B4A18ECCD45978A3A6B639D1F2403299C8395@FL01EXMB01.trad.tradestation.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: John Dlugosz <JDlugosz@tradestation.com>
-X-From: git-owner@vger.kernel.org Fri Mar 19 18:29:41 2010
+From: Ian Ward Comfort <icomfort@stanford.edu>
+Subject: [PATCH/RFC] Ship bash completion package in RPMs
+Date: Fri, 19 Mar 2010 11:26:53 -0700
+Message-ID: <1269023213-18432-1-git-send-email-icomfort@stanford.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 19 19:27:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nsg0v-0001TC-UO
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 18:29:38 +0100
+	id 1Nsguj-0001RD-L7
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 19:27:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751990Ab0CSR3b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Mar 2010 13:29:31 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:38032 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751622Ab0CSR3b convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Mar 2010 13:29:31 -0400
-Received: by wyb38 with SMTP id 38so1627674wyb.19
-        for <git@vger.kernel.org>; Fri, 19 Mar 2010 10:29:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Pyj/xo7AtYwMK/5ifyXnhkVxtavGR4krw5t1nB1yhwY=;
-        b=nzWsQg/kOXMh4oyX9osL4x/4XXQyoGuGLCtnOhy9z3nchjNjzxQeejzgih5gVsyMwL
-         eG2xCJXmA15WCUD2sOZCeZH0mq9HcdhyexvgboxYBqaoZwz9t7FYvZY5dtJJlaLHrVEQ
-         7ODF3LrBmiF0pL9FEaDheV4iVRCY2A72/EKqE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lqCW7KsMsB5lBH939aLdjcBY6wPQBI4q0owBR5ax4CxXF4uXPweAIiQm4uGCJ36RY7
-         EOjlR1t/e+aFj8QiuLMYFBXMbvAEJrgKUWq2Zoq1WnP2yifosfnlxqWmPA8VUmuTY22w
-         9akLGW5szwJUaeCVMVYmk02tlpZjwfhQa3/IQ=
-Received: by 10.216.90.202 with SMTP id e52mr974201wef.150.1269019769597; Fri, 
-	19 Mar 2010 10:29:29 -0700 (PDT)
-In-Reply-To: <89030B4A18ECCD45978A3A6B639D1F2403299C8395@FL01EXMB01.trad.tradestation.com>
+	id S1752100Ab0CSS04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Mar 2010 14:26:56 -0400
+Received: from smtp1.Stanford.EDU ([171.67.219.81]:47175 "EHLO
+	smtp.stanford.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751942Ab0CSS04 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Mar 2010 14:26:56 -0400
+Received: from smtp.stanford.edu (localhost.localdomain [127.0.0.1])
+	by localhost (Postfix) with SMTP id 97B1B1789BB
+	for <git@vger.kernel.org>; Fri, 19 Mar 2010 11:26:55 -0700 (PDT)
+Received: from ashbury.stanford.edu (ashbury.Stanford.EDU [171.67.43.200])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.stanford.edu (Postfix) with ESMTPS id 025AD178991
+	for <git@vger.kernel.org>; Fri, 19 Mar 2010 11:26:54 -0700 (PDT)
+Received: by ashbury.stanford.edu (Postfix, from userid 26037)
+	id D2B081D0054; Fri, 19 Mar 2010 11:26:53 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142627>
 
-On Fri, Mar 19, 2010 at 17:54, John Dlugosz <JDlugosz@tradestation.com>=
- wrote:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git submodule update
->
-> gives no output.
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git submodule status
->
-> shows "-8441e..." which is the SHA1 of the version I expect I need.
+RPM-based distributions tend to have bash. Let's add the bash completion
+routines to our core RPM in the standard location.
 
-The '-' prefix indicates that the submodule isn't registered in your
-=2Egit/config. You should have a 'submodule.$name.url' entry in the
-config (where $name is the name of the submodule as found in
-=2Egitmodule').
+---
 
---
-larsh
+... Unless this is undesirable because the completion support is in contrib/?
+Anyway, having this upstream would save me some patching, so I thought I'd
+give it a shot.
+
+ git.spec.in |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/git.spec.in b/git.spec.in
+index ee74a5e..d2527c3 100644
+--- a/git.spec.in
++++ b/git.spec.in
+@@ -127,6 +127,9 @@ find $RPM_BUILD_ROOT -type f -name perllocal.pod -exec rm -f {} ';'
+ rm -rf $RPM_BUILD_ROOT%{_mandir}
+ %endif
+ 
++mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d
++install -m 644 -T contrib/completion/git-completion.bash $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/git
++
+ %clean
+ rm -rf $RPM_BUILD_ROOT
+ 
+@@ -136,6 +139,7 @@ rm -rf $RPM_BUILD_ROOT
+ %doc README COPYING Documentation/*.txt
+ %{!?_without_docs: %doc Documentation/*.html Documentation/howto}
+ %{!?_without_docs: %doc Documentation/technical}
++%{_sysconfdir}/bash_completion.d
+ 
+ %files svn
+ %defattr(-,root,root)
+-- 
+1.7.0.2
