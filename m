@@ -1,112 +1,137 @@
-From: Mark Rada <marada@uwaterloo.ca>
-Subject: [PATCHv2] instaweb: use minified gitweb.js if available
-Date: Fri, 19 Mar 2010 15:16:04 -0400
-Message-ID: <4BA3CD74.4050603@mailservices.uwaterloo.ca>
+From: Scott Chacon <schacon@gmail.com>
+Subject: [PATCH] Prompt for a username when an HTTP request 401s
+Date: Fri, 19 Mar 2010 12:17:58 -0700
+Message-ID: <d411cc4a1003191217k406e7f0fyd144d8a77e73a60c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 19 20:16:42 2010
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Daniel Stenberg <daniel@haxx.se>,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 19 20:18:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NshgW-0000Z6-LF
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 20:16:41 +0100
+	id 1Nshhv-0001GX-1g
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 20:18:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751065Ab0CSTQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Mar 2010 15:16:35 -0400
-Received: from mailservices.uwaterloo.ca ([129.97.128.141]:60561 "EHLO
-	mailchk-m05.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750966Ab0CSTQe (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Mar 2010 15:16:34 -0400
-Received: from karakura.local (static-66-225-153-161.ptr.terago.net [66.225.153.161])
-	(authenticated bits=0)
-	by mailchk-m05.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id o2JJG5Cs025371
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 19 Mar 2010 15:16:06 -0400
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
-X-UUID: d4ab888a-c849-4369-80f6-8838f39f9c7c
-X-Miltered: at mailchk-m05 with ID 4BA3CD75.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
-X-Virus-Scanned: clamav-milter 0.95.2 at mailchk-m05
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m05.uwaterloo.ca [129.97.128.141]); Fri, 19 Mar 2010 15:16:08 -0400 (EDT)
+	id S1751198Ab0CSTSA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Mar 2010 15:18:00 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:49651 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750775Ab0CSTSA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Mar 2010 15:18:00 -0400
+Received: by wwe15 with SMTP id 15so2041389wwe.19
+        for <git@vger.kernel.org>; Fri, 19 Mar 2010 12:17:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=2whOdXQbLw7w59VInxfvHN50VQ17peqx3S/Z/3HPeb4=;
+        b=M/EDgBsHCgOoovXoKLO7VzMtsNyyyQ/S3/3KeV9pfM0bu4J8vAZqM5tP3QP0KT5GKV
+         2mKGXRh3d5f/AtJR7x6cndxboaVzb5hOjR6ypjFb/ULqdYeg0mmONFRSZSHuO99ZjjgY
+         iSFZNKMCC0e+TCkbE7Rzl/jexxERjMi7aZa4I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=EQuo/VPf1d4IZ9q1LZ0Xowh4TX1C7onKTykF/xhxoT4gRNtGVt3opJyE891iXVy7Ij
+         voqH3+QL48rDoGDZlh6233VTZEycwx3CoNOrQuy9mKsAMQ7w+ht2WD8nwetdiIRW6dt9
+         yJcuSkw4s6ubYE71fw0OD2gcZsd1Zj62Id0SI=
+Received: by 10.216.90.7 with SMTP id d7mr16018wef.81.1269026278761; Fri, 19 
+	Mar 2010 12:17:58 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142637>
 
-Makes git-instaweb use gitweb.min.js if it was generated.
+When an HTTP request returns a 401, Git will currently fail with a
+confusing message saying that it got a 401.  This changes
+http_request to prompt for the username and password, then return
+HTTP_REAUTH so http_get_strbuf can try again.  If it gets a 401 even
+when a user/pass is supplied, http_request will now return HTTP_NOAUTH
+which remote_curl can then use to display a more intelligent error
+message that is less confusing.
 
-Signed-off-by: Mark Rada <marada@uwaterloo.ca>
-
+Signed-off-by: Scott Chacon <schacon@gmail.com>
 ---
 
-Changes since v1:
-	- Updates name of javascript file instaweb creates
-	  instead of changing the the copy of gitweb.cgi
-	  that embeds.
+Third version of this with Shawn's comments on why getpass() is needed.
 
+ http.c        |   20 ++++++++++++++++++--
+ http.h        |    2 ++
+ remote-curl.c |    2 ++
+ 3 files changed, 22 insertions(+), 2 deletions(-)
 
- Makefile        |   11 ++++++-----
- git-instaweb.sh |    3 ++-
- 2 files changed, 8 insertions(+), 6 deletions(-)
+diff --git a/http.c b/http.c
+index deab595..62db1f0 100644
+--- a/http.c
++++ b/http.c
+@@ -815,7 +815,19 @@ static int http_request(const char *url, void
+*result, int target, int options)
+ 			ret = HTTP_OK;
+ 		else if (missing_target(&results))
+ 			ret = HTTP_MISSING_TARGET;
+-		else
++		else if (results.http_code == 401) {
++			if (user_name) {
++				ret = HTTP_NOAUTH;
++			} else {
++				// getpass is needed here because its very likely stdin/stdout are
++				// pipes to our parent process.  So we instead need to use /dev/tty,
++				// but that is non-portable.  Using getpass() can at least be stubbed
++				// on other platforms with a different implementation if/when necessary.
++				user_name = xstrdup(getpass("Username: "));
++				init_curl_http_auth(slot->curl);
++				ret = HTTP_REAUTH;
++			}
++		} else
+ 			ret = HTTP_ERROR;
+ 	} else {
+ 		error("Unable to start HTTP request for %s", url);
+@@ -831,7 +843,11 @@ static int http_request(const char *url, void
+*result, int target, int options)
 
-diff --git a/Makefile b/Makefile
-index 7c616f8..f80b25e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1551,12 +1551,12 @@ gitweb:
- 	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) all
- 
- ifdef JSMIN
--OTHER_PROGRAMS += gitweb/gitweb.cgi   gitweb/gitweb.min.js
--gitweb/gitweb.cgi: gitweb/gitweb.perl gitweb/gitweb.min.js
-+GITWEB_JS=gitweb/gitweb.min.js
- else
--OTHER_PROGRAMS += gitweb/gitweb.cgi
--gitweb/gitweb.cgi: gitweb/gitweb.perl
-+GITWEB_JS=gitweb/gitweb.js
- endif
-+OTHER_PROGRAMS += gitweb/gitweb.cgi $(GITWEB_JS)
-+gitweb/gitweb.cgi: gitweb/gitweb.perl $(GITWEB_PROGRAMS)
- 	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
- 
- ifdef JSMIN
-@@ -1574,8 +1574,9 @@ git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css gitweb/gitweb.
- 	    -e '/@@GITWEB_CGI@@/d' \
- 	    -e '/@@GITWEB_CSS@@/r gitweb/gitweb.css' \
- 	    -e '/@@GITWEB_CSS@@/d' \
--	    -e '/@@GITWEB_JS@@/r gitweb/gitweb.js' \
-+	    -e '/@@GITWEB_JS@@/r $(GITWEB_JS)' \
- 	    -e '/@@GITWEB_JS@@/d' \
-+	    -e 's|@@GITWEB_JS_NAME@@|$(GITWEB_JS)|' \
- 	    -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
- 	    $@.sh > $@+ && \
- 	chmod +x $@+ && \
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 6a65f25..b2fb7f0 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -397,12 +397,13 @@ EOFGITWEB
- gitweb_js () {
- 	cat > "$1" <<\EOFGITWEB
- @@GITWEB_JS@@
-+
- EOFGITWEB
+ int http_get_strbuf(const char *url, struct strbuf *result, int options)
+ {
+-	return http_request(url, result, HTTP_REQUEST_STRBUF, options);
++	int http_ret = http_request(url, result, HTTP_REQUEST_STRBUF, options);
++	if (http_ret == HTTP_REAUTH) {
++		http_ret = http_request(url, result, HTTP_REQUEST_STRBUF, options);
++	}
++	return http_ret;
  }
- 
- gitweb_cgi "$GIT_DIR/gitweb/gitweb.cgi"
- gitweb_css "$GIT_DIR/gitweb/gitweb.css"
--gitweb_js  "$GIT_DIR/gitweb/gitweb.js"
-+gitweb_js  "$GIT_DIR/@@GITWEB_JS_NAME@@"
- 
- case "$httpd" in
- *lighttpd*)
+
+ /*
+diff --git a/http.h b/http.h
+index 5c9441c..2dd03e8 100644
+--- a/http.h
++++ b/http.h
+@@ -126,6 +126,8 @@ extern char *get_remote_object_url(const char
+*url, const char *hex,
+ #define HTTP_MISSING_TARGET	1
+ #define HTTP_ERROR		2
+ #define HTTP_START_FAILED	3
++#define HTTP_REAUTH	4
++#define HTTP_NOAUTH	5
+
+ /*
+  * Requests an url and stores the result in a strbuf.
+diff --git a/remote-curl.c b/remote-curl.c
+index b76bfcb..0782756 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -132,6 +132,8 @@ static struct discovery* discover_refs(const char *service)
+ 	case HTTP_MISSING_TARGET:
+ 		die("%s not found: did you run git update-server-info on the"
+ 		    " server?", refs_url);
++	case HTTP_NOAUTH:
++		die("Authentication failed");
+ 	default:
+ 		http_error(refs_url, http_ret);
+ 		die("HTTP request failed");
 -- 
-1.7.0.2.279.gf1ba1c
+1.7.0.1
