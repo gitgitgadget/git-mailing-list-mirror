@@ -1,95 +1,107 @@
-From: Martin Geisler <mg@lazybytes.net>
-Subject: Re: About single user setup for lightweights
-Date: Fri, 19 Mar 2010 10:53:55 +0100
-Message-ID: <87k4t81vt8.fsf@hbox.dyndns.org>
-References: <87r5nht6uf.fsf@newsguy.com>
-	<32541b131003181913v7319d6a1ydd72c0177729dbf4@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] =?UTF-8?q?.mailmap:=20Entries=20for=20Alex=20Benn=C3=A9e,=20Deskin=20Miller,=20Vitaly=20"=5FVi"=20Shukela?=
+Date: Fri, 19 Mar 2010 12:02:04 +0100
+Message-ID: <cd13e44f33c1f6bc9ec11903c3041199c9c464ee.1268996321.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: bazaar@lists.canonical.com, Harry Putnam <reader@newsguy.com>,
-	mercurial@selenic.com, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: bazaar-bounces@lists.canonical.com Fri Mar 19 10:54:10 2010
-Return-path: <bazaar-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from chlorine.canonical.com ([91.189.94.204])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 19 12:04:58 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <bazaar-bounces@lists.canonical.com>)
-	id 1NsYu9-0005Cx-27
-	for gcvbg-bazaar-ng@m.gmane.org; Fri, 19 Mar 2010 10:54:09 +0100
-Received: from localhost ([127.0.0.1] helo=chlorine.canonical.com)
-	by chlorine.canonical.com with esmtp (Exim 4.69)
-	(envelope-from <bazaar-bounces@lists.canonical.com>)
-	id 1NsYu1-00052L-PT; Fri, 19 Mar 2010 09:54:01 +0000
-Received: from mail-ew0-f217.google.com ([209.85.219.217])
-	by chlorine.canonical.com with esmtp (Exim 4.69)
-	(envelope-from <mg@mgsys.dk>) id 1NsYtz-00051K-2r
-	for bazaar@lists.canonical.com; Fri, 19 Mar 2010 09:53:59 +0000
-Received: by ewy9 with SMTP id 9so624763ewy.31
-	for <bazaar@lists.canonical.com>; Fri, 19 Mar 2010 02:53:58 -0700 (PDT)
-Received: by 10.213.1.145 with SMTP id 17mr278840ebf.46.1268992438577;
-	Fri, 19 Mar 2010 02:53:58 -0700 (PDT)
-Received: from hbox.dyndns.org (x1-6-00-1c-c5-d8-bd-21.k78.webspeed.dk
-	[80.197.249.218])
-	by mx.google.com with ESMTPS id 16sm84648ewy.15.2010.03.19.02.53.56
-	(version=TLSv1/SSLv3 cipher=RC4-MD5);
-	Fri, 19 Mar 2010 02:53:57 -0700 (PDT)
-In-Reply-To: <32541b131003181913v7319d6a1ydd72c0177729dbf4@mail.gmail.com>
-	(Avery Pennarun's message of "Thu, 18 Mar 2010 22:13:53 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Topics: everythingelse
-X-BeenThere: bazaar@lists.canonical.com
-X-Mailman-Version: 2.1.9
-Precedence: list
-List-Id: bazaar discussion <bazaar.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
-	<mailto:bazaar-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar>
-List-Post: <mailto:bazaar@lists.canonical.com>
-List-Help: <mailto:bazaar-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
-	<mailto:bazaar-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-bounces@lists.canonical.com
-Errors-To: bazaar-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142573>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Nsa0g-0003hk-F7
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 12:04:58 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751228Ab0CSLEw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Mar 2010 07:04:52 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:52990 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751068Ab0CSLEv (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Mar 2010 07:04:51 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 96DA9E9A64;
+	Fri, 19 Mar 2010 07:04:50 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Fri, 19 Mar 2010 07:04:50 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:mime-version:content-type:content-transfer-encoding; s=smtpout; bh=u9W3ycLSwBWWJp0uT5+GIJTJaNs=; b=VotqCWgDmGM2rElQZqPZDrWPWfG2d1vqajcfVy+5HQUKfCGrgpBfviZ7XOaDVDRMV8gMKWTt9jCPvPfNLTgGIKBSgEnswnTEfBPyUs7XgKtq9YP/2U5EoFyb3GO6w9Bu6HdOxKhMq3zeY56va+DYUV6/ZY75T+s3xvmL7PCAaPE=
+X-Sasl-enc: EJxjSXvWOmDPjddSViGmAluXws/WHz+b1a1t5mSVoRvL 1268996689
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id EB2834936;
+	Fri, 19 Mar 2010 07:04:49 -0400 (EDT)
+X-Mailer: git-send-email 1.7.0.2.358.g30511
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142574>
 
---=-=-=
-Content-Transfer-Encoding: quoted-printable
+With the current .mailmap, git shortlog shows the following for these:
 
-Avery Pennarun <apenwarr@gmail.com> writes:
+    11	Deskin Miller
+     3	Vitaly \"_Vi\" Shukela
+     1	Alex Bennee
+     1	Alex Benn=C3=A9e
+     1	Deskin Miler
+     1	Vitaly _Vi Shukela
 
-> git sucks at handling large binary files (>50 megs or so) unless you
-> have boatloads of RAM. If your binary files are moderately sized (a
-> few megs) then it'll probably be reasonably efficient. I don't know
-> about hg and bzr for memory usage.
+Add (e-mail based qualified) entries to .mailmap to get:
 
-Mercurial also uses lots of RAM, way more than I had hoped. I did some
-tests with this recently:
+    12	Deskin Miller
+     4	Vitaly "_Vi" Shukela
+     2	Alex Benn=C3=A9e
 
-  http://markmail.org/message/uxqtmmnkyimxse5b
+The Shukela spelling is based on the version used consistently in the s=
+-o-b
+lines of all his patches.
 
-They show a factor 3-6 blowup when working with a 256 MB file.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+Sparked by the recent discussion on uuid etc. I did a few (manual) chec=
+ks.
+There seem to be 4 remaining "problematic" cases (Elrond, jidanni,
+Kirill, Twiinz) but 3 are unique, and I don't think we strictly require
+full names. Kirill may be one of several other Kirills.
 
-We don't really recommend storing such large files in Mercurial. Instead
-we recommend storing the files outside of the tree, e.g., on a server
-with a huge disk. The bfiles extension can do this:
+http://repo.or.cz/w/git/mjg.git/commit/cd13e44f33c1f6bc9ec11903c3041199=
+c9c464ee
 
-  http://mercurial.selenic.com/wiki/BfilesExtension
+(branch typo-fixes) in case of encoding problems
 
-=2D-=20
-Martin Geisler
+ .mailmap |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-Fast and powerful revision control: http://mercurial.selenic.com/
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAkujSbMACgkQ/GWFsD4LxSMa3gCcDtMvN0LEnfpEAAlcPdW6zs1T
-tigAnj9YG46E63l9uJReMZjlqCLxjrSZ
-=W6iI
------END PGP SIGNATURE-----
---=-=-=--
+diff --git a/.mailmap b/.mailmap
+index 975e675..c507309 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -5,6 +5,7 @@
+ # same person appearing not to be so.
+ #
+=20
++Alex Benn=C3=A9e <kernel-hacker@bennee.com>
+ Alexander Gavrilov <angavrilov@gmail.com>
+ Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+ Brian M. Carlson <sandals@crustytoothpaste.ath.cx>
+@@ -15,6 +16,7 @@ Daniel Barkalow <barkalow@iabervon.org>
+ David D. Kilzer <ddkilzer@kilzer.net>
+ David K=C3=A5gedal <davidk@lysator.liu.se>
+ David S. Miller <davem@davemloft.net>
++Deskin Miller <deskinm@umich.edu>
+ Dirk S=C3=BCsserott <newsletter@dirk.my1.cc>
+ Fredrik Kuivinen <freku045@student.liu.se>
+ H. Peter Anvin <hpa@bonde.sc.orionmulti.com>
+@@ -59,6 +61,7 @@ Uwe Kleine-K=C3=B6nig <ukleinek@informatik.uni-freibu=
+rg.de>
+ Uwe Kleine-K=C3=B6nig <uzeisberger@io.fsforth.de>
+ Uwe Kleine-K=C3=B6nig <zeisberg@informatik.uni-freiburg.de>
+ Ville Skytt=C3=A4 <scop@xemacs.org>
++Vitaly "_Vi" Shukela <public_vi@tut.by>
+ William Pursell <bill.pursell@gmail.com>
+ YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
+ anonymous <linux@horizon.com>
+--=20
+1.7.0.2.358.g30511
