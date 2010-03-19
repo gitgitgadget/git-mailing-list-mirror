@@ -1,92 +1,104 @@
-From: Jon Smirl <jonsmirl@gmail.com>
-Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
-Date: Thu, 18 Mar 2010 22:05:52 -0400
-Message-ID: <9e4733911003181905i25e908f9u472d0467f68d3b00@mail.gmail.com>
-References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
-	 <alpine.LFD.2.00.1003181930230.31128@xanadu.home>
-	 <9e4733911003181641n400704c9r1a0addd6fce6fce0@mail.gmail.com>
-	 <alpine.LFD.2.00.1003181953010.31128@xanadu.home>
-	 <9e4733911003181716q7f141d5eqd18218c749ca4624@mail.gmail.com>
-	 <alpine.LFD.2.00.1003181715490.18017@i5.linux-foundation.org>
-	 <9e4733911003181739m2f605dd7g9406aaecc296749f@mail.gmail.com>
-	 <alpine.LFD.2.00.1003181739310.18017@i5.linux-foundation.org>
-	 <9e4733911003181812k1cf08833ke683226377527b56@mail.gmail.com>
-	 <alpine.LFD.2.00.1003182141050.31128@xanadu.home>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: About single user setup for lightweights
+Date: Thu, 18 Mar 2010 22:13:53 -0400
+Message-ID: <32541b131003181913v7319d6a1ydd72c0177729dbf4@mail.gmail.com>
+References: <87r5nht6uf.fsf@newsguy.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Fri Mar 19 03:06:14 2010
+Cc: git@vger.kernel.org, bazaar@lists.canonical.com,
+	mercurial@selenic.com
+To: Harry Putnam <reader@newsguy.com>
+X-From: git-owner@vger.kernel.org Fri Mar 19 03:14:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsRbB-0007KM-Jl
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 03:06:09 +0100
+	id 1NsRjC-0001HR-AM
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 03:14:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752963Ab0CSCFy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Mar 2010 22:05:54 -0400
-Received: from qw-out-2122.google.com ([74.125.92.27]:24373 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752056Ab0CSCFy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Mar 2010 22:05:54 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so469218qwh.37
-        for <git@vger.kernel.org>; Thu, 18 Mar 2010 19:05:52 -0700 (PDT)
+	id S1751203Ab0CSCOQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Mar 2010 22:14:16 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:47085 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751145Ab0CSCOP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Mar 2010 22:14:15 -0400
+Received: by gyg8 with SMTP id 8so1351942gyg.19
+        for <git@vger.kernel.org>; Thu, 18 Mar 2010 19:14:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+         :from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=SV6kLvfGvPCIDe4udgYt5WXy2F8ASbeBatEhsZvS+oI=;
-        b=DtzOpdfQqQyGyTRNIdhWBBvyYLyFCvH/I0wXwWH9JBCgaMRpxM9A5YzCXmtCIvo7Jl
-         5Ve703lADVjK89MHeP+dHrAZxcojJ2tEUpCDZAKw62/yYbWqB6OU/4QAVMNGO6QXy+m6
-         rb6bdu+E71g0GvOxRNxcICllYHidkGF+ySMIU=
+        bh=lf7wVohCgEfryHYgPv2XZ+2u2UbP+q/EZROGwGR84xQ=;
+        b=m9FqKWmVoQhsHguTzB5N6d108RDruns4H08iNx61lSaiBz7/RbKogUUaFxpYMcx0f3
+         IJ8tD+iZBn/ZUv8zmKVl/zh9zW/N63v9pgNmJeflnqF3iLP8OXl7sdL3R9RGwsWoevWk
+         QTy5huJ4CKPgpx+DWWkXxt9gJ52JxHIdp7BSI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=qEG2m/kutWUGOWgPEgQzPgyuUr+3NsUwYlFNSzOLwbLz7PD4b27CwRT5qGDW/VJgQM
-         HzQGOIICxLTSuR2z3HPedHhOCgR+jVb2dArFaaHHFlRrV24k6GexVkCei43GtCHlJJzC
-         PtHGvOoMLIRXZwlM7qDyIMWG4Lq09KB3NZWvY=
-Received: by 10.224.69.197 with SMTP id a5mr1026079qaj.185.1268964352308; Thu, 
-	18 Mar 2010 19:05:52 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.1003182141050.31128@xanadu.home>
+        b=Xhn2Ut+nSduXRuOrXTO7KdZAFSuzRdeZE+YFwjtCu4vdTC/NVUewHzGvYZtMPYojop
+         rkdBRK7jDjZvUVbpniRoeJ4NflvOldPF1PPeUsEvUZ/vpQEapICUnMnaty2VRLVhRdu8
+         ieNfUtDEm+i4RY9ScCHxxgKH7WPpbaz8wrupQ=
+Received: by 10.150.252.2 with SMTP id z2mr2686166ybh.41.1268964853128; Thu, 
+	18 Mar 2010 19:14:13 -0700 (PDT)
+In-Reply-To: <87r5nht6uf.fsf@newsguy.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142555>
 
-On Thu, Mar 18, 2010 at 9:45 PM, Nicolas Pitre <nico@fluxnic.net> wrote=
-:
-> On Thu, 18 Mar 2010, Jon Smirl wrote:
+On Thu, Mar 18, 2010 at 9:53 PM, Harry Putnam <reader@newsguy.com> wrot=
+e:
+> I keep a central cvs repo and on each host I do a check out of the
+> entire thing from the base up. =A0Mostly to have copies of various st=
+yle
+> of rc files the =A0OSs need but also to keep the scripts I've written
+> over the years and learned to rely on, available and in sync.
 >
->> On Thu, Mar 18, 2010 at 8:50 PM, Linus Torvalds
->> > There is no real _value_ in making a .mailcap for each such buggy =
-entry is
->> > what I'm trying to tell you. Those things are maybe used for stati=
-stics.
->> > On the whole, they are correct.
->>
->> I was trying to track how many real people were working on the kerne=
-l.
->> =A0If we don't collapse the 13 different versions of you down to one
->> person the number numbers are way off.
+> To me, keeping up with cvs is always a PITA. =A0I've never hit on a
+> handy and efficient way to do it. Even for a just my light usage.
+[...]
+> How would a workflow actually go:
+> I'd create and populate a repo, then what?. =A0Create clones on each
+> machine I guess and if I found a need to change or add files, I'd the=
+n
+> push back to the original repo? =A0Its sounding a whole lot like cvs =
+so far.
+
+Yes.  Or you could skip the central repo and pull directly from one
+machine's working tree to another.  If that has any value to you, then
+it's the only likely reason a DVCS would do you any good for this
+trivial case.
+
+The real question is: what makes your current setup a PITA?  If you
+can't answer that concisely, then you don't know what to look for in a
+supposedly better solution.
+
+> Anther thing I'm really curious about concerns binary rcs. =A0I'm thi=
+nking
+> of photo editing and things like flash where I might be changing a
+> project over time and want access to past versions.
 >
-> If you have a cleaned up .mailmap file which doesn't include unneeded
-> entries then just submit it for inclusion. =A0If someone else eventua=
-lly
-> cares to check and update it then another patch should come forth at
-> that point. =A0That doesn't have to be any more complicated than that=
-=2E
+> I'm told cvs is not good for that... consequently I've never tried
+> it. =A0Am I likely to find that one of git, mercurial or bazaar is fa=
+r
+> better for that?
 
-I sent you a copy, feel free to do whatever you want with it.  The
-academics doing statistics on Linux will love you for submitting it.
+git sucks at handling large binary files (>50 megs or so) unless you
+have boatloads of RAM.  If your binary files are moderately sized (a
+few megs) then it'll probably be reasonably efficient.  I don't know
+about hg and bzr for memory usage.
 
---=20
-Jon Smirl
-jonsmirl@gmail.com
+It's better to store uncompressed binary files (eg *.tar) instead of
+compressed ones (*.tar.gz) in order to allow useful delta compression.
+ That means raw images instead of png/gif/jpg.  And probably completed
+flash files are compressed.  The best thing to do is actually try it
+and see if your repository size and memory usage is reasonable.
+
+Have fun,
+
+Avery
