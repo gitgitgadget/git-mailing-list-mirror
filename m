@@ -1,87 +1,128 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
-Date: Fri, 19 Mar 2010 15:08:26 +0100
-Message-ID: <4BA3855A.1070005@alum.mit.edu>
-References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com> <4BA338C1.7030803@alum.mit.edu> <b4087cc51003190439x3c9ff269g35d11432bd2a3d60@mail.gmail.com>
+Date: Fri, 19 Mar 2010 07:08:55 -0700 (PDT)
+Message-ID: <m3tyscjt7h.fsf@localhost.localdomain>
+References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 19 15:08:34 2010
+X-From: git-owner@vger.kernel.org Fri Mar 19 15:09:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NscsM-0007Or-7n
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 15:08:34 +0100
+	id 1Nscsq-0007ht-Ax
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 15:09:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752485Ab0CSOI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Mar 2010 10:08:29 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:41990 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752362Ab0CSOI3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Mar 2010 10:08:29 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o2JE8QoB020411
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 19 Mar 2010 15:08:26 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.24) Gecko/20100317 Thunderbird/2.0.0.24 Mnenhy/0.7.6.666
-In-Reply-To: <b4087cc51003190439x3c9ff269g35d11432bd2a3d60@mail.gmail.com>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752589Ab0CSOI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Mar 2010 10:08:58 -0400
+Received: from mail-fx0-f219.google.com ([209.85.220.219]:36593 "EHLO
+	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752362Ab0CSOI5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Mar 2010 10:08:57 -0400
+Received: by fxm19 with SMTP id 19so624687fxm.21
+        for <git@vger.kernel.org>; Fri, 19 Mar 2010 07:08:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=S5rBf4pyLrh/f7leTNa6O6J2Cxxw+eZeRmKi6JQOHuc=;
+        b=SVaduK/clzsUHAdSSpSvgM5EtF6dpYcBDCvKrSpvEZaXdIf0CFeI8GZQ1zOzpO3wEj
+         lNktCy0XEJ43y14VQ0pt00MNfzq4iVuMvB0MGYC0HIfTn7W81tLRXBIDsn3J6xxlsWln
+         eRzOc5L9GRK3NlGXr0KEOsxjEXEjmwUjNeCFU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=qvbSaKbwq0J+rTgoNj2mxiVIwKAvBF7lUcfqtdyD6jeGjYLlUQMVr2TNPNCE0zYYv0
+         8AUA3ik4mbI2SdhYZF5ddycXSnGFoEIkKpHdGe/f2ZJj8rrpQOsUlhTqoAyBVD968MF8
+         Jjv6GZXJLnNPuzlRNQiM1Rb4ygbHI7E/H/lhc=
+Received: by 10.103.126.31 with SMTP id d31mr4502320mun.49.1269007736206;
+        Fri, 19 Mar 2010 07:08:56 -0700 (PDT)
+Received: from localhost.localdomain (abve2.neoplus.adsl.tpnet.pl [83.8.202.2])
+        by mx.google.com with ESMTPS id j2sm6129428mue.23.2010.03.19.07.08.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 19 Mar 2010 07:08:55 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o2JED1Sd011990;
+	Fri, 19 Mar 2010 15:13:11 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o2JEComd011986;
+	Fri, 19 Mar 2010 15:12:50 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142598>
 
-Michael Witten wrote:
-> On Fri, Mar 19, 2010 at 02:41, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> Michael Witten wrote:
->>> Rather than use a (name,email) pair to identify people, let's use
->>> a (uuid,name,email) triplet.
->>> [...]
->> A UUID doesn't need to be a big hex number.  All it has to be is a
->> "Universally Unique Identifier".  Like, oh, for example, your
->>
->>                   *** EMAIL ADDRESS ***
->>
->> [1].  There is even already a way to fix up mistakes or unavoidable
->> email address changes, namely the .mailmap file.
+Michael Witten <mfwitten@gmail.com> writes:
+
+> Short Version:
+> -------------
 > 
-> *facepalm*
 > 
-> You've just repeated everything that I've said; go look at the rest of
-> the thread, where I spend plenty of time correcting the same hangups
-> about my choice of the word UUID and my use of hex digits.
+> Rather than use a (name,email) pair to identify people, let's use
+> a (uuid,name,email) triplet.
+> 
+> The uuid can be any piece of information that a user of git determines
+> to be reasonably unique across space and time and that is intended to
+> be used by that user virtually forever (at least within a project's
+> history).
+> 
+> For instance, the uuid could be an OSF DCE 1.1 UUID or the SHA-1 of
+> some easily remembered, already reasonably unique information.
 
-No, my point is to use the *existing* email address as the UUID
-*without* adding another field.  Nothing needs to be changed!
+... or 'canonical-name canonical-email' pair.
 
-> [...] You could use
-> "Michael Haggerty <mhagger@alum.mit.edu>" as your uuid, and you could
-> still use it after you change the `email' config variable to something
-> else.
+> 
+> This could really help keep identifications clean, and it is rather
+> straightforward and possibly quite efficient.
+> 
+> 
+> Long Version:
+> ------------
+[...]
 
-Give me a break.  It's not so damn hard to keep an email address over
-time.  And if it changes, I can update the .mailcap file to map my old
-email address to the new one and *presto* I have a new, equally valid
-UUID that I can continue to commit under.
+> While git's use of (name,email) pairs to identify each person is
+> extremely practical, it turns out that it's rather `unstable';
 
-> I cover all of this numerous times in numerous rebuttals; don't
-> contribute to a thread with more than 60 emails without having read at
-> least some of them.
+This is non-solution to non-problem.
 
-Wrong.  I've read the whole idiotic thread.  To prove it I'll summarize
-it for you: you argue the same point over and over again while ignoring
-the legitimate objections of just about every other participant.
+First, the user.name and user.email does not need to be name and email
+from some email account.  It might be some "canonical name" and 
+"canonical email".
 
-Adding a new UUID field is obviously a non-starter, so I suggested a way
-to get the same (very marginal) benefit from the fields that are already
-present in every git repository.
+Second, there are (I think) two main sources of 'unstability' in
+(name,email) pairs, namely A) misconfigured git (when fetching/pushing
+using git itself), B) wrong name in email etc. (when sending patches
+via email, 80% of patches in Linux kernel case).
 
-Michael
+In the case of misconfigured git (case A) using UUID wouldn't help,
+and only make it worse (you would have to configure the same UUID on
+each machine).  What would help here is for git to be more strict and
+perhaps forbid (some of) autogenerated names and emails.
+
+In the case of sending patches via email, you can use in-body 'From:'
+to provide (name,email) part that is different than account used to
+send email.  In the case of UUID you would need the same: some way to
+provide UUID in patch (in email).  UUID has the disadvantage of being
+required also when (name,email) in From: email header is good user ID.
+So UUID wouldn't help there either.
+
+
+What could help in both cases is .mailmap being used (perhaps on
+demand) in more git commands.  See Documentation/mailmap.txt
+or e.g. git-shortlog(1) manpage.  It is quite advanced tool for
+correcting mistakes (it can correct *both* user name, which is
+most common usage, but also email address).
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
