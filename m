@@ -1,69 +1,87 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: About single user setup for lightweights
-Date: Fri, 19 Mar 2010 19:38:11 +0530
-Message-ID: <2e24e5b91003190708y162f0ecfkeb00346aaa14d1e3@mail.gmail.com>
-References: <87r5nht6uf.fsf@newsguy.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
+Date: Fri, 19 Mar 2010 15:08:26 +0100
+Message-ID: <4BA3855A.1070005@alum.mit.edu>
+References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com> <4BA338C1.7030803@alum.mit.edu> <b4087cc51003190439x3c9ff269g35d11432bd2a3d60@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, bazaar@lists.canonical.com,
-	mercurial@selenic.com
-To: Harry Putnam <reader@newsguy.com>
-X-From: git-owner@vger.kernel.org Fri Mar 19 15:08:19 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 19 15:08:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nscs6-0007E3-1c
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 15:08:18 +0100
+	id 1NscsM-0007Or-7n
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 15:08:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752359Ab0CSOIN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Mar 2010 10:08:13 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:38543 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751552Ab0CSOIM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Mar 2010 10:08:12 -0400
-Received: by vws11 with SMTP id 11so414497vws.19
-        for <git@vger.kernel.org>; Fri, 19 Mar 2010 07:08:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=uWQxYq95VERbSgWH340LdTYW93qSPz76AYdmtTdwZDk=;
-        b=P5xzYSGjjeyabSk35k43LxG7myELWpCqgrJ5mrFdaFtKv4h9SezhLlR3pHvXb0P5hO
-         YT+S5K0eWHY/jkVAplrl5oCDTfUttadArQwHL43a/lB5swAfsTb+5SaUckanV+abW4pn
-         nR6bSP9+KWV5r+WI76Gj/f1Tp60+ULKcnARG4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=gl7UNY+ppB7DydX1aBow4aWi85i/+beTHB1aGB64Z6kQSrqdg9Fvbc5IUbqMtvJ6cI
-         JQBkH+Ro6C7hekMSqzKbGuAHVJHP1k6GrF3/+ksB+R6VHuGbz+g7Fw2KeMb1xgxy4Sz5
-         M/JylconC95XdSM4+jHO8HsBdJbJBmqHCf7Rk=
-Received: by 10.220.107.22 with SMTP id z22mr1608787vco.63.1269007691415; Fri, 
-	19 Mar 2010 07:08:11 -0700 (PDT)
-In-Reply-To: <87r5nht6uf.fsf@newsguy.com>
+	id S1752485Ab0CSOI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Mar 2010 10:08:29 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:41990 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752362Ab0CSOI3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Mar 2010 10:08:29 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o2JE8QoB020411
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 19 Mar 2010 15:08:26 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.24) Gecko/20100317 Thunderbird/2.0.0.24 Mnenhy/0.7.6.666
+In-Reply-To: <b4087cc51003190439x3c9ff269g35d11432bd2a3d60@mail.gmail.com>
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142597>
 
-On Fri, Mar 19, 2010 at 7:23 AM, Harry Putnam <reader@newsguy.com> wrot=
-e:
+Michael Witten wrote:
+> On Fri, Mar 19, 2010 at 02:41, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> Michael Witten wrote:
+>>> Rather than use a (name,email) pair to identify people, let's use
+>>> a (uuid,name,email) triplet.
+>>> [...]
+>> A UUID doesn't need to be a big hex number.  All it has to be is a
+>> "Universally Unique Identifier".  Like, oh, for example, your
+>>
+>>                   *** EMAIL ADDRESS ***
+>>
+>> [1].  There is even already a way to fix up mistakes or unavoidable
+>> email address changes, namely the .mailmap file.
+> 
+> *facepalm*
+> 
+> You've just repeated everything that I've said; go look at the rest of
+> the thread, where I spend plenty of time correcting the same hangups
+> about my choice of the word UUID and my use of hex digits.
 
-> I keep a central cvs repo and on each host I do a check out of the
-> entire thing from the base up. =C2=A0Mostly to have copies of various=
- style
-> of rc files the =C2=A0OSs need but also to keep the scripts I've writ=
-ten
-> over the years and learned to rely on, available and in sync.
+No, my point is to use the *existing* email address as the UUID
+*without* adding another field.  Nothing needs to be changed!
 
-about the most important thing, you ought to notice is that you don't
-need to stay connected to your "server" to commit.  I do this too, and
-having a DVCS (in my case, git) helps a lot.
+> [...] You could use
+> "Michael Haggerty <mhagger@alum.mit.edu>" as your uuid, and you could
+> still use it after you change the `email' config variable to something
+> else.
 
-I didn't, on a quick read, see that mentioned in any of the replies so =
-far.
+Give me a break.  It's not so damn hard to keep an email address over
+time.  And if it changes, I can update the .mailcap file to map my old
+email address to the new one and *presto* I have a new, equally valid
+UUID that I can continue to commit under.
+
+> I cover all of this numerous times in numerous rebuttals; don't
+> contribute to a thread with more than 60 emails without having read at
+> least some of them.
+
+Wrong.  I've read the whole idiotic thread.  To prove it I'll summarize
+it for you: you argue the same point over and over again while ignoring
+the legitimate objections of just about every other participant.
+
+Adding a new UUID field is obviously a non-starter, so I suggested a way
+to get the same (very marginal) benefit from the fields that are already
+present in every git repository.
+
+Michael
