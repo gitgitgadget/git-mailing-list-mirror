@@ -1,102 +1,72 @@
-From: Paolo Bonzini <bonzini@gnu.org>
+From: Michael Witten <mfwitten@gmail.com>
 Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
-Date: Fri, 19 Mar 2010 14:08:59 +0100
-Message-ID: <4BA3776B.5040706@gnu.org>
-References: <alpine.LFD.2.00.1003181022040.18017@i5.linux-foundation.org> 	<20100318204416.GM8256@thunk.org> <b4087cc51003181412s78d153c8t48984eb87eb75e0e@mail.gmail.com> 	<46a038f91003181419n5d076bdbv18e32e292d7937a8@mail.gmail.com> 	<b4087cc51003181429v2998b95ei3f08360e6d2a5aa7@mail.gmail.com> 	<46a038f91003181439lc343dafl6b9321a0b620de84@mail.gmail.com> 	<b4087cc51003181457s76560b02y84aafbe77f45af87@mail.gmail.com> 	<4BA36F5F.9080706@gnu.org> <b4087cc51003190543mafc403q6260a3774653e2d5@mail.gmail.com> 	<4BA373C0.2070506@gnu.org> <b4087cc51003190603v259b833embb40b7360a07cf1f@mail.gmail.com>
+Date: Fri, 19 Mar 2010 07:13:25 -0600
+Message-ID: <b4087cc51003190613y2fe32c26jd27cb009e64f197c@mail.gmail.com>
+References: <alpine.LFD.2.00.1003181022040.18017@i5.linux-foundation.org> 
+	<46a038f91003181419n5d076bdbv18e32e292d7937a8@mail.gmail.com> 
+	<b4087cc51003181429v2998b95ei3f08360e6d2a5aa7@mail.gmail.com> 
+	<46a038f91003181439lc343dafl6b9321a0b620de84@mail.gmail.com> 
+	<b4087cc51003181457s76560b02y84aafbe77f45af87@mail.gmail.com> 
+	<4BA36F5F.9080706@gnu.org> <b4087cc51003190543mafc403q6260a3774653e2d5@mail.gmail.com> 
+	<4BA373C0.2070506@gnu.org> <b4087cc51003190603v259b833embb40b7360a07cf1f@mail.gmail.com> 
+	<4BA3776B.5040706@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 19 14:10:02 2010
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Mar 19 14:14:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nsbx9-0007Ek-0v
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 14:09:27 +0100
+	id 1Nsc1Q-00043L-5f
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 14:13:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752087Ab0CSNJJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Mar 2010 09:09:09 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:49359 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751979Ab0CSNJF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Mar 2010 09:09:05 -0400
-Received: by pwi5 with SMTP id 5so1207102pwi.19
-        for <git@vger.kernel.org>; Fri, 19 Mar 2010 06:09:05 -0700 (PDT)
+	id S1752336Ab0CSNNr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Mar 2010 09:13:47 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:23045 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752216Ab0CSNNq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Mar 2010 09:13:46 -0400
+Received: by fg-out-1718.google.com with SMTP id l26so188129fgb.1
+        for <git@vger.kernel.org>; Fri, 19 Mar 2010 06:13:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=HzFd53x+VaQbuLHVWXiEjCF6522+Pnu1no1slIInYmI=;
-        b=UgK6GLYYKwDrEHMn4UlNA7yYVezQo+bi59GE6cujA80VW/Mh0GlfJrWVPA109dUqhf
-         oHqlqmy//hieXVlC+0T5gW+SLFv3mPF6nFjaq/hwtQoCIJ2b71jhZ0q/gTN+5BId++VO
-         dYLF5Q0blEP9/hC+aKjq/T4Vh72lEaNeAEN50=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=m6ebHX57JRE20TFIF4cuLSaFmYwCxviUzzupj0OqYvU=;
+        b=JXvq80Uh5lqGQhyd+IX2ggkJB2W0hBYmUQVFH5nKTbbzsQvj3OF+7PHhUDbTB/a/ts
+         KBNWaZhKN+pUssdlFT4xPp1EQODDOyIrIgAvJMMYNYlN20qyhqeha4RSGOxSfCtSwHvk
+         mv7XGYerT/+xSbq2cgRfKa1umWmKh5hXRzZJk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=QChCzc2D7N+Z/6Jy9uZSZVSSHivFoBhibOkUEO7Ca/anNk45+mNM7QnaN+mrsslLMl
-         L6Ooe1aIKfGWpM1gil+0FwfjOpFoAGWgHVrQ0jCr/6aWKtWbEBw5/+atgOBTlmY0tFBl
-         csd2J9OgTOkbWVbiQZPU3jgHH/oZPvkKEvLf0=
-Received: by 10.142.209.13 with SMTP id h13mr2066857wfg.166.1269004145130;
-        Fri, 19 Mar 2010 06:09:05 -0700 (PDT)
-Received: from yakj.usersys.redhat.com (nat-pool-brq-t.redhat.com [209.132.186.34])
-        by mx.google.com with ESMTPS id 21sm931311pzk.0.2010.03.19.06.09.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 19 Mar 2010 06:09:03 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.8) Gecko/20100301 Fedora/3.0.3-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.3
-In-Reply-To: <b4087cc51003190603v259b833embb40b7360a07cf1f@mail.gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=gvzYKRSObGiz6BLwKDA7IdfOADqInEfWRUyE/SgQ6WWBxos5cJo0am8s6oxNfHIbA5
+         DpI9qH7SFLjESg3tJGmIwVmPHurJivgL+bRyU4BxB/aWFHG3vrEz+gDLMmfaKAYyYWyR
+         NHHU/eBABpifgfO4SnIIygL/k+AhBkSKRMhaE=
+Received: by 10.239.187.206 with SMTP id m14mr1555973hbh.49.1269004425280; 
+	Fri, 19 Mar 2010 06:13:45 -0700 (PDT)
+In-Reply-To: <4BA3776B.5040706@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142590>
 
-On 03/19/2010 02:03 PM, Michael Witten wrote:
+On Fri, Mar 19, 2010 at 07:08, Paolo Bonzini <bonzini@gnu.org> wrote:
+> Maybe you have to define entropy. =C2=A0For human consumers, "Paolo B=
+onzini
+> <pbonzini@redhat.com>" has considerably less "entropy" than
+> 8aacc35ffca0d34fccf8a750e84e3a81bdcb940b, as does even "Paolo Bonzini
+> <bonzini@gnu.org, pbonzini@redhat.com>". =C2=A0For non-human consumer=
+s, a good
+> mailmap will do.
 
->>> Secondly, you're being ridiculous; even if that ridiculous scenario
->>> played out not-infrequently
->>
->> It's not a matter of frequency.  If you want a "UU" identification,
->> collisions must not even happen *once*.
->
-> I've got news for you. The UUIDs generated by uuidgen CAN collide:
->
->      The new UUID can reasonably be considered unique
->      among all UUIDs created on the local system, and
->      among UUIDs created on other systems in the past
->      and in the future.
+As I've stated before many times, the SHA-1 is not necessary to the pro=
+posal.
 
-Please read the UUID generation algorithm.
-
-> You're creating a straw man argument; conceptually, what I propose is
-> better than what the current system provides because it would decrease
-> the rate at which identity entropy increases.
-
-Maybe you have to define entropy.  For human consumers, "Paolo Bonzini 
-<pbonzini@redhat.com>" has considerably less "entropy" than 
-8aacc35ffca0d34fccf8a750e84e3a81bdcb940b, as does even "Paolo Bonzini 
-<bonzini@gnu.org, pbonzini@redhat.com>".  For non-human consumers, a 
-good mailmap will do.
-
->>>> I have an idea.  Start your own website uuidemail.com.  One
->>>> registers and gets an alias for their email, something like
->>>> 8aacc35ffca0d34fccf8a750e84e3a81bdcb940b@uuidemail.com.  Then
->>>> people can start using
->>>>
->>>> 8aacc35ffca0d34fccf8a750e84e3a81bdcb940b+pbonzini--redhat.com@uuidemail.com
->>>> as their git user.email.  I bet nobody will.
->>>
->>> This is nonsense that betrays your misunderstanding.
->>
->> Why?  What does (name, email, uuid) provide over (name, concat(uuid,
->> email))?  Nothing.
->
-> Go read the thread until you understand.
-
-I am not alone.
-
-Paolo
+Please go read.
