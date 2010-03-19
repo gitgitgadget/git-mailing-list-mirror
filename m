@@ -1,128 +1,128 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
-Date: Fri, 19 Mar 2010 07:08:55 -0700 (PDT)
-Message-ID: <m3tyscjt7h.fsf@localhost.localdomain>
-References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
+From: Mark Rada <marada@uwaterloo.ca>
+Subject: Re: [PATCH] instaweb: use minified gitweb.js if available
+Date: Fri, 19 Mar 2010 10:07:53 -0400
+Message-ID: <4BA38539.8060503@mailservices.uwaterloo.ca>
+References: <4BA3138F.1010201@mailservices.uwaterloo.ca> <4BA32961.6080901@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 19 15:09:05 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Mar 19 15:12:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nscsq-0007ht-Ax
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 15:09:04 +0100
+	id 1Nscvj-00015I-Gz
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 15:12:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752589Ab0CSOI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Mar 2010 10:08:58 -0400
-Received: from mail-fx0-f219.google.com ([209.85.220.219]:36593 "EHLO
-	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752362Ab0CSOI5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Mar 2010 10:08:57 -0400
-Received: by fxm19 with SMTP id 19so624687fxm.21
-        for <git@vger.kernel.org>; Fri, 19 Mar 2010 07:08:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=S5rBf4pyLrh/f7leTNa6O6J2Cxxw+eZeRmKi6JQOHuc=;
-        b=SVaduK/clzsUHAdSSpSvgM5EtF6dpYcBDCvKrSpvEZaXdIf0CFeI8GZQ1zOzpO3wEj
-         lNktCy0XEJ43y14VQ0pt00MNfzq4iVuMvB0MGYC0HIfTn7W81tLRXBIDsn3J6xxlsWln
-         eRzOc5L9GRK3NlGXr0KEOsxjEXEjmwUjNeCFU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=qvbSaKbwq0J+rTgoNj2mxiVIwKAvBF7lUcfqtdyD6jeGjYLlUQMVr2TNPNCE0zYYv0
-         8AUA3ik4mbI2SdhYZF5ddycXSnGFoEIkKpHdGe/f2ZJj8rrpQOsUlhTqoAyBVD968MF8
-         Jjv6GZXJLnNPuzlRNQiM1Rb4ygbHI7E/H/lhc=
-Received: by 10.103.126.31 with SMTP id d31mr4502320mun.49.1269007736206;
-        Fri, 19 Mar 2010 07:08:56 -0700 (PDT)
-Received: from localhost.localdomain (abve2.neoplus.adsl.tpnet.pl [83.8.202.2])
-        by mx.google.com with ESMTPS id j2sm6129428mue.23.2010.03.19.07.08.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 19 Mar 2010 07:08:55 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o2JED1Sd011990;
-	Fri, 19 Mar 2010 15:13:11 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o2JEComd011986;
-	Fri, 19 Mar 2010 15:12:50 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752460Ab0CSOLu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Mar 2010 10:11:50 -0400
+Received: from mailservices.uwaterloo.ca ([129.97.128.141]:47646 "EHLO
+	mailchk-m02.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752265Ab0CSOLt (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Mar 2010 10:11:49 -0400
+Received: from bas1-toronto01-1177657629.dsl.bell.ca (bas1-toronto01-1177657629.dsl.bell.ca [70.49.161.29])
+	(authenticated bits=0)
+	by mailchk-m02.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id o2JE7rub000710
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 19 Mar 2010 10:08:25 -0400
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
+In-Reply-To: <4BA32961.6080901@viscovery.net>
+X-UUID: cd14c16d-3b69-41a8-8f2a-ff35544598ac
+X-Miltered: at mailchk-m02 with ID 4BA38539.003 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: clamav-milter 0.95.3 at mailchk-m02
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m02.uwaterloo.ca [129.97.128.141]); Fri, 19 Mar 2010 10:08:27 -0400 (EDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142599>
 
-Michael Witten <mfwitten@gmail.com> writes:
-
-> Short Version:
-> -------------
+On 10-03-19 3:36 AM, Johannes Sixt wrote:
+> Mark Rada schrieb:
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -1551,12 +1551,12 @@ gitweb:
+>>  	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) all
+>>   ifdef JSMIN
+>> -OTHER_PROGRAMS += gitweb/gitweb.cgi   gitweb/gitweb.min.js
+>> -gitweb/gitweb.cgi: gitweb/gitweb.perl gitweb/gitweb.min.js
+>> +GITWEB_JS=gitweb/gitweb.min.js
+>>  else
+>> -OTHER_PROGRAMS += gitweb/gitweb.cgi
+>> -gitweb/gitweb.cgi: gitweb/gitweb.perl
+>> +GITWEB_JS=gitweb/gitweb.js
+>>  endif
+>> +OTHER_PROGRAMS += gitweb/gitweb.cgi $(GITWEB_JS)
+>> +gitweb/gitweb.cgi: gitweb/gitweb.perl $(GITWEB_PROGRAMS)
+>>  	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
+>>   ifdef JSMIN
+>> @@ -1574,12 +1574,13 @@ git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css gitweb/gitweb.
+>>  	    -e '/@@GITWEB_CGI@@/d' \
+>>  	    -e '/@@GITWEB_CSS@@/r gitweb/gitweb.css' \
+>>  	    -e '/@@GITWEB_CSS@@/d' \
+>> -	    -e '/@@GITWEB_JS@@/r gitweb/gitweb.js' \
+>> +	    -e '/@@GITWEB_JS@@/r $(GITWEB_JS)' \
+>>  	    -e '/@@GITWEB_JS@@/d' \
+>>  	    -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
+>>  	    $@.sh > $@+ && \
+>>  	chmod +x $@+ && \
+>> -	mv $@+ $@
+>> +	mv $@+ $@ && \
+>> +	sed -i '' -e 's/min\.js/js/' $@
 > 
+> sed -i is not portable. But do you need it at all? Can't you add this
+> change to the -e list above?
+
+Hmm, the reason I made the change in a separate command was that
+the only place that min.js needed to be modified was in gitweb.cgi
+and only after it has been copied into git-instaweb.
+
+We want to leave the actual gitweb.cgi as using gitweb.min.js, but
+the way instaweb creates the gitweb directory makes it create a
+gitweb.js no matter what (this is a bug if you create a minified
+gitweb.js because gitweb.cgi will look for a non-existant
+gitweb.min.js).
+
+I figured that the smallest solution was to just edit the copied
+gitweb.cgi to use gitweb.js again, but since it is not portable I
+will have to either have messier code to do the same thing or
+make git-instaweb change the name of gitweb.js only in the case
+that we are using a minified gitweb.js.
+
+Since I see no advantage or disadvantage to either, I'll flip a
+coin to decide this later on when I have some time.
+
+
+>> --- a/git-instaweb.sh
+>> +++ b/git-instaweb.sh
+>> @@ -397,6 +397,7 @@ EOFGITWEB
+>>  gitweb_js () {
+>>  	cat > "$1" <<\EOFGITWEB
+>>  @@GITWEB_JS@@
+>> +
+>>  EOFGITWEB
+>>  }
+>>  -- 1.7.0.1.300.gd855a
 > 
-> Rather than use a (name,email) pair to identify people, let's use
-> a (uuid,name,email) triplet.
+> This new blank line is an accident, isn't it?
+
+Nope, this new line is here because the minifier I used cut the
+extra new line from the end of gitweb.js and then the EOFGITWEB
+token ended up on the same line as gitweb.js.
+
+> -- Hannes
 > 
-> The uuid can be any piece of information that a user of git determines
-> to be reasonably unique across space and time and that is intended to
-> be used by that user virtually forever (at least within a project's
-> history).
-> 
-> For instance, the uuid could be an OSF DCE 1.1 UUID or the SHA-1 of
-> some easily remembered, already reasonably unique information.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-... or 'canonical-name canonical-email' pair.
-
-> 
-> This could really help keep identifications clean, and it is rather
-> straightforward and possibly quite efficient.
-> 
-> 
-> Long Version:
-> ------------
-[...]
-
-> While git's use of (name,email) pairs to identify each person is
-> extremely practical, it turns out that it's rather `unstable';
-
-This is non-solution to non-problem.
-
-First, the user.name and user.email does not need to be name and email
-from some email account.  It might be some "canonical name" and 
-"canonical email".
-
-Second, there are (I think) two main sources of 'unstability' in
-(name,email) pairs, namely A) misconfigured git (when fetching/pushing
-using git itself), B) wrong name in email etc. (when sending patches
-via email, 80% of patches in Linux kernel case).
-
-In the case of misconfigured git (case A) using UUID wouldn't help,
-and only make it worse (you would have to configure the same UUID on
-each machine).  What would help here is for git to be more strict and
-perhaps forbid (some of) autogenerated names and emails.
-
-In the case of sending patches via email, you can use in-body 'From:'
-to provide (name,email) part that is different than account used to
-send email.  In the case of UUID you would need the same: some way to
-provide UUID in patch (in email).  UUID has the disadvantage of being
-required also when (name,email) in From: email header is good user ID.
-So UUID wouldn't help there either.
-
-
-What could help in both cases is .mailmap being used (perhaps on
-demand) in more git commands.  See Documentation/mailmap.txt
-or e.g. git-shortlog(1) manpage.  It is quite advanced tool for
-correcting mistakes (it can correct *both* user name, which is
-most common usage, but also email address).
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Mark Rada (ferrous26)
+marada@uwaterloo.ca
