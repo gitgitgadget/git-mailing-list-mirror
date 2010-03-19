@@ -1,58 +1,56 @@
-From: Jon Smirl <jonsmirl@gmail.com>
+From: Michael Witten <mfwitten@gmail.com>
 Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
-Date: Fri, 19 Mar 2010 10:33:27 -0400
-Message-ID: <9e4733911003190733h62e2aea0i7573bba641f4d931@mail.gmail.com>
-References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
-	 <m3tyscjt7h.fsf@localhost.localdomain>
+Date: Fri, 19 Mar 2010 08:40:31 -0600
+Message-ID: <b4087cc51003190740h680b5dech4edd7a5000f180ee@mail.gmail.com>
+References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com> <m3tyscjt7h.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 19 15:33:35 2010
+X-From: git-owner@vger.kernel.org Fri Mar 19 15:41:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsdGY-0005W4-6A
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 15:33:34 +0100
+	id 1NsdNj-00017r-K3
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 15:41:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751677Ab0CSOd3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Mar 2010 10:33:29 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:14757 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750984Ab0CSOd2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Mar 2010 10:33:28 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so588134qwh.37
-        for <git@vger.kernel.org>; Fri, 19 Mar 2010 07:33:27 -0700 (PDT)
+	id S1752224Ab0CSOky convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Mar 2010 10:40:54 -0400
+Received: from mail-fx0-f219.google.com ([209.85.220.219]:65034 "EHLO
+	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751032Ab0CSOkx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Mar 2010 10:40:53 -0400
+Received: by fxm19 with SMTP id 19so658551fxm.21
+        for <git@vger.kernel.org>; Fri, 19 Mar 2010 07:40:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+         :from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=feFe4HVlh0W1A7oDXnN9GOTGKkdBN95fd03/padyX3w=;
-        b=jz+oG4dW/fO933HIOCaqbeD1qHtfh+/I+xl8837rKVh9ZWeZPWqhg88iBWKYeY7gAF
-         Reioh2mGauBoHxZcAfSbD/7uPkCL7ZFqS2CUHpNFNIdNXPdBFou62Z60DEB3AKqhksRS
-         z73UwjEUG3C1G2yLKr8CDSAVBGcEp5QCZBpJc=
+        bh=tnOafzmyaKzq6qux9/D/fuEE6b4LpQ2b0SN+FsVR1Q8=;
+        b=WH77AtdWVyWr7rEKTmfSgQg09Iv/n0NyOr1/12JI0v+2qB3iZsiTcfqKFNTqoAOLxK
+         PE4FvuC9uI8WLML9mN+j9F4oa//zPuSyhgygmECbqKqKedy5qZ2ropHfr9scrS2qMdZ6
+         5NDcUIcSSKGtW4TnxTIiSQYmP3pg3+WzRvVP0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=JcAhx/kvyc8z122EhQqd5SeuwMqWdbMCdhBCPlEJLQlF8lgI1OomRYyJConZsV+n0r
-         tecejYWJ2+FDQqOLYozY3Ka/7ttB3ImFZfh4c7XZ98WqncV6QAbdE6euqG847BJDNuFQ
-         eS4m4HXajiikAsRCH4Mdfk4ZlCRLJC6QHbhnw=
-Received: by 10.229.221.14 with SMTP id ia14mr4365541qcb.8.1269009207308; Fri, 
-	19 Mar 2010 07:33:27 -0700 (PDT)
+        b=nM0bG+B/iuw6GvrTPc/tjSWGTJk9aXHUUAsBUKpp3MpQDNPKBZSsyT1VJaztq3MOiR
+         ZOq4/xyu5Hs+Ct5c/GWT+8v6aYRd5YBq/6J/tXkyNRDMoniRH0T3xAfTzlrFsNcIF5HR
+         qyg/43J22h1Ay+eb8kIwrauWmUluxyJK5unWE=
+Received: by 10.239.180.201 with SMTP id j9mr1537411hbg.5.1269009651692; Fri, 
+	19 Mar 2010 07:40:51 -0700 (PDT)
 In-Reply-To: <m3tyscjt7h.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142605>
 
-On Fri, Mar 19, 2010 at 10:08 AM, Jakub Narebski <jnareb@gmail.com> wro=
-te:
+On Fri, Mar 19, 2010 at 08:08, Jakub Narebski <jnareb@gmail.com> wrote:
 > Michael Witten <mfwitten@gmail.com> writes:
 >
 >> Short Version:
@@ -90,61 +88,94 @@ o
 >
 > First, the user.name and user.email does not need to be name and emai=
 l
-> from some email account. =A0It might be some "canonical name" and
+> from some email account. =C2=A0It might be some "canonical name" and
 > "canonical email".
->
+
+The vast majority of patches come in through email; the git tools
+expect the user.name and user.email to reflect physical email account
+information.
+
+You would be correct if it were not for the fact that git currently
+conflates identity and current email system.
+
 > Second, there are (I think) two main sources of 'unstability' in
 > (name,email) pairs, namely A) misconfigured git (when fetching/pushin=
 g
 > using git itself), B) wrong name in email etc. (when sending patches
 > via email, 80% of patches in Linux kernel case).
-
-Another top source is mangling of non-ASCII charsets when they go
-though the email system. Are the git work flow tools safe for
-alternative charsets? Do the email tools look at the charset header of
-the email message? Check people's names in the kernel commits and
-you'll find lots of examples of this type of mangling.
-
-Or people not using UTF-8. There are files in the kernel where
-people's names are in conflicting codepages. Should git try to look
-for diffs that aren't UTF-8?
-
 >
 > In the case of misconfigured git (case A) using UUID wouldn't help,
 > and only make it worse (you would have to configure the same UUID on
-> each machine). =A0What would help here is for git to be more strict a=
-nd
+> each machine). =C2=A0What would help here is for git to be more stric=
+t and
 > perhaps forbid (some of) autogenerated names and emails.
->
+
+The uuid string would be typed pretty much only during configuration;
+from there, it's basically just handled by the git tools. Hence, the
+uuid can indeed suffer from typos, but the name/email pair can suffer
+from not only typos but also real life name changing and email account
+switching.
+
+There would still be the same problem of variations in uuid for one
+person, but the problem would very likely be greatly reduced; if a
+person doesn't use the uuid properly or at all, then we're in the
+exact same situation we were before. Those who do use it, though, will
+be much better off.
+
+Strictness about names and emails is difficult, and keeping something
+like the current .mailmap file up-to-date is a centralized process.
+The uuid field would distribute the responsibility of maintaining
+identity and make that responsibility easy because the user-chosen
+string is easy for that user to remember and is typed only very
+occasionally and under very specific circumstances.
+
 > In the case of sending patches via email, you can use in-body 'From:'
 > to provide (name,email) part that is different than account used to
-> send email. =A0In the case of UUID you would need the same: some way =
-to
-> provide UUID in patch (in email). =A0UUID has the disadvantage of bei=
-ng
+> send email.
+
+That's a good solution that I've considered, except for 2 reasons:
+
+    * It involves much more opportunities for typos and/or the
+      configuration of a non-git tool for a git-specific purpose.
+
+    * Many if not most email services will refuse to send messages
+      with forged/spoofed email addresses.
+
+> In the case of UUID you would need the same: some way to
+> provide UUID in patch (in email).
+
+Yes, but that's automated by tools like git's format-patch. Not using
+something like format-patch or some other git interface is an
+'out-of-band' communication and that author has essentially chosen not
+to care about his identity.
+
+The use of the uuid field and allowing git tools to handle it is just
+a way to give a person who does care about his identity to keep it
+consistent.
+
+> UUID has the disadvantage of being
 > required also when (name,email) in From: email header is good user ID=
 =2E
 > So UUID wouldn't help there either.
->
->
+
+It's not a good user id because it depends on factors other than identi=
+ty.
+
 > What could help in both cases is .mailmap being used (perhaps on
-> demand) in more git commands. =A0See Documentation/mailmap.txt
-> or e.g. git-shortlog(1) manpage. =A0It is quite advanced tool for
+> demand) in more git commands. =C2=A0See Documentation/mailmap.txt
+> or e.g. git-shortlog(1) manpage. =C2=A0It is quite advanced tool for
 > correcting mistakes (it can correct *both* user name, which is
 > most common usage, but also email address).
->
-> --
-> Jakub Narebski
-> Poland
-> ShadeHawk on #git
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
 
+The disadvantage here is that it centralizes identity management and
+it is more demanding because the name/email pair is quite unstable.
 
+On the other hand, something like a uuid field would distribute that
+management to the user himself and frees that user from the influences
+of legal name changing and email address switching.
 
---=20
-Jon Smirl
-jonsmirl@gmail.com
+Of course, as already stated, some people may bungle their uuid
+setting. Then something like .mailmap can be used, but the format
+would be simpler, the file would not grow nearly as quickly, and with
+some clever encoding some statistics gathering programs could
+(possibly) run more efficiently.
