@@ -1,64 +1,150 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Prompt for a username when an HTTP request 401s
-Date: Fri, 19 Mar 2010 07:32:05 -0700
-Message-ID: <20100319143205.GB16211@spearce.org>
-References: <d411cc4a1003182041p67a93bf6i1528a8eaaab5c805@mail.gmail.com>
+From: Jon Smirl <jonsmirl@gmail.com>
+Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
+Date: Fri, 19 Mar 2010 10:33:27 -0400
+Message-ID: <9e4733911003190733h62e2aea0i7573bba641f4d931@mail.gmail.com>
+References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
+	 <m3tyscjt7h.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 19 15:32:18 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 19 15:33:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsdFH-0004kG-V5
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 15:32:16 +0100
+	id 1NsdGY-0005W4-6A
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 15:33:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752130Ab0CSOcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Mar 2010 10:32:10 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:15483 "EHLO
+	id S1751677Ab0CSOd3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Mar 2010 10:33:29 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:14757 "EHLO
 	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751032Ab0CSOcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Mar 2010 10:32:08 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so587775qwh.37
-        for <git@vger.kernel.org>; Fri, 19 Mar 2010 07:32:08 -0700 (PDT)
-Received: by 10.224.115.145 with SMTP id i17mr1237788qaq.103.1269009128121;
-        Fri, 19 Mar 2010 07:32:08 -0700 (PDT)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 20sm268893qyk.8.2010.03.19.07.32.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 19 Mar 2010 07:32:07 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <d411cc4a1003182041p67a93bf6i1528a8eaaab5c805@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	with ESMTP id S1750984Ab0CSOd2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Mar 2010 10:33:28 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so588134qwh.37
+        for <git@vger.kernel.org>; Fri, 19 Mar 2010 07:33:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=feFe4HVlh0W1A7oDXnN9GOTGKkdBN95fd03/padyX3w=;
+        b=jz+oG4dW/fO933HIOCaqbeD1qHtfh+/I+xl8837rKVh9ZWeZPWqhg88iBWKYeY7gAF
+         Reioh2mGauBoHxZcAfSbD/7uPkCL7ZFqS2CUHpNFNIdNXPdBFou62Z60DEB3AKqhksRS
+         z73UwjEUG3C1G2yLKr8CDSAVBGcEp5QCZBpJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=JcAhx/kvyc8z122EhQqd5SeuwMqWdbMCdhBCPlEJLQlF8lgI1OomRYyJConZsV+n0r
+         tecejYWJ2+FDQqOLYozY3Ka/7ttB3ImFZfh4c7XZ98WqncV6QAbdE6euqG847BJDNuFQ
+         eS4m4HXajiikAsRCH4Mdfk4ZlCRLJC6QHbhnw=
+Received: by 10.229.221.14 with SMTP id ia14mr4365541qcb.8.1269009207308; Fri, 
+	19 Mar 2010 07:33:27 -0700 (PDT)
+In-Reply-To: <m3tyscjt7h.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142604>
 
-Scott Chacon <schacon@gmail.com> wrote:
-> @@ -815,7 +815,18 @@ static int http_request(const char *url, void
-> *result, int target, int options)
->  			ret = HTTP_OK;
->  		else if (missing_target(&results))
->  			ret = HTTP_MISSING_TARGET;
-> -		else
-> +		else if (results.http_code == 401) {
-> +			if (user_name) {
-> +				ret = HTTP_NOAUTH;
-> +			} else {
-> +				// it is neccesary to use getpass here because
-> +				// there appears to be no other clean way to
-> +				// read/write stdout/stdin
-> +				user_name = xstrdup(getpass("Username: "));
+On Fri, Mar 19, 2010 at 10:08 AM, Jakub Narebski <jnareb@gmail.com> wro=
+te:
+> Michael Witten <mfwitten@gmail.com> writes:
+>
+>> Short Version:
+>> -------------
+>>
+>>
+>> Rather than use a (name,email) pair to identify people, let's use
+>> a (uuid,name,email) triplet.
+>>
+>> The uuid can be any piece of information that a user of git determin=
+es
+>> to be reasonably unique across space and time and that is intended t=
+o
+>> be used by that user virtually forever (at least within a project's
+>> history).
+>>
+>> For instance, the uuid could be an OSF DCE 1.1 UUID or the SHA-1 of
+>> some easily remembered, already reasonably unique information.
+>
+> ... or 'canonical-name canonical-email' pair.
+>
+>>
+>> This could really help keep identifications clean, and it is rather
+>> straightforward and possibly quite efficient.
+>>
+>>
+>> Long Version:
+>> ------------
+> [...]
+>
+>> While git's use of (name,email) pairs to identify each person is
+>> extremely practical, it turns out that it's rather `unstable';
+>
+> This is non-solution to non-problem.
+>
+> First, the user.name and user.email does not need to be name and emai=
+l
+> from some email account. =A0It might be some "canonical name" and
+> "canonical email".
+>
+> Second, there are (I think) two main sources of 'unstability' in
+> (name,email) pairs, namely A) misconfigured git (when fetching/pushin=
+g
+> using git itself), B) wrong name in email etc. (when sending patches
+> via email, 80% of patches in Linux kernel case).
 
-No, getpass is needed here because its very likely stdin/stdout are
-pipes to our parent process.  So we instead need to use /dev/tty,
-but that is non-portable.  Using getpass() can at least be stubbed
-on other platforms with a different implementation if/when necessary.
+Another top source is mangling of non-ASCII charsets when they go
+though the email system. Are the git work flow tools safe for
+alternative charsets? Do the email tools look at the charset header of
+the email message? Check people's names in the kernel commits and
+you'll find lots of examples of this type of mangling.
 
--- 
-Shawn.
+Or people not using UTF-8. There are files in the kernel where
+people's names are in conflicting codepages. Should git try to look
+for diffs that aren't UTF-8?
+
+>
+> In the case of misconfigured git (case A) using UUID wouldn't help,
+> and only make it worse (you would have to configure the same UUID on
+> each machine). =A0What would help here is for git to be more strict a=
+nd
+> perhaps forbid (some of) autogenerated names and emails.
+>
+> In the case of sending patches via email, you can use in-body 'From:'
+> to provide (name,email) part that is different than account used to
+> send email. =A0In the case of UUID you would need the same: some way =
+to
+> provide UUID in patch (in email). =A0UUID has the disadvantage of bei=
+ng
+> required also when (name,email) in From: email header is good user ID=
+=2E
+> So UUID wouldn't help there either.
+>
+>
+> What could help in both cases is .mailmap being used (perhaps on
+> demand) in more git commands. =A0See Documentation/mailmap.txt
+> or e.g. git-shortlog(1) manpage. =A0It is quite advanced tool for
+> correcting mistakes (it can correct *both* user name, which is
+> most common usage, but also email address).
+>
+> --
+> Jakub Narebski
+> Poland
+> ShadeHawk on #git
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
+
+
+
+--=20
+Jon Smirl
+jonsmirl@gmail.com
