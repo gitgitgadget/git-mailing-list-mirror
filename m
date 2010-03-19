@@ -1,130 +1,129 @@
-From: Ben Finney <ben+bazaar@benfinney.id.au>
-Subject: Re: About single user setup for lightweights
-Date: Fri, 19 Mar 2010 15:01:08 +1100
-Message-ID: <87y6hpufi3.fsf@benfinney.id.au>
-References: <87r5nht6uf.fsf@newsguy.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: bazaar@lists.canonical.com, mercurial@selenic.com
+From: Benjamin C Meyer <bmeyer@rim.com>
+Subject: [PATCH 2/2] Improve git-p4 to be able to submit patches back to perforce when the git repository is made up of multiple perforce directories. (v2)
+Date: Fri, 19 Mar 2010 00:39:11 -0400
+Message-ID: <1268973551-28118-2-git-send-email-bmeyer@rim.com>
+References: <1268973551-28118-1-git-send-email-bmeyer@rim.com>
+Cc: simon.hausmann@nokia.com, Benjamin C Meyer <bmeyer@rim.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 19 05:01:34 2010
+X-From: git-owner@vger.kernel.org Fri Mar 19 05:39:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsTOw-000307-3J
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 05:01:34 +0100
+	id 1NsU03-0006CN-TZ
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 05:39:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750716Ab0CSEB2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Mar 2010 00:01:28 -0400
-Received: from lo.gmane.org ([80.91.229.12]:36670 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750695Ab0CSEB1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Mar 2010 00:01:27 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NsTOn-0002yf-MD
-	for git@vger.kernel.org; Fri, 19 Mar 2010 05:01:25 +0100
-Received: from eth595.vic.adsl.internode.on.net ([150.101.214.82])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 19 Mar 2010 05:01:25 +0100
-Received: from ben+bazaar by eth595.vic.adsl.internode.on.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 19 Mar 2010 05:01:25 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: eth595.vic.adsl.internode.on.net
-X-Public-Key-ID: 0xBD41714B
-X-Public-Key-Fingerprint: 9CFE 12B0 791A 4267 887F  520C B7AC 2E51 BD41 714B
-X-Public-Key-URL: http://www.benfinney.id.au/contact/bfinney-gpg.asc
-X-Post-From: Ben Finney <bignose+hates-spam@benfinney.id.au>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-Cancel-Lock: sha1:y0fK6EAlLEMu/0xHPls7Nimp3g0=
+	id S1750984Ab0CSEju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Mar 2010 00:39:50 -0400
+Received: from qmta03.westchester.pa.mail.comcast.net ([76.96.62.32]:53190
+	"EHLO qmta03.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750837Ab0CSEju (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Mar 2010 00:39:50 -0400
+Received: from omta18.westchester.pa.mail.comcast.net ([76.96.62.90])
+	by qmta03.westchester.pa.mail.comcast.net with comcast
+	id usdZ1d0011wpRvQ53se8jE; Fri, 19 Mar 2010 04:38:08 +0000
+Received: from localhost.localdomain ([71.192.50.29])
+	by omta18.westchester.pa.mail.comcast.net with comcast
+	id usiN1d0010dnthT3esiSWr; Fri, 19 Mar 2010 04:42:26 +0000
+X-Mailer: git-send-email 1.7.0.2
+In-Reply-To: <1268973551-28118-1-git-send-email-bmeyer@rim.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142560>
 
-Harry Putnam <reader@newsguy.com> writes:
+git-p4 lets you sync several perforce directories into the one git repository,
+but when you would do a git perforce submit it was hardcoded to apply
+the patches to whatever was the first directory in the list that
+the repository was synced from which would usually fail.  When
+multiple perforce directories are now present git-p4 will apply them
+to the common root directory where the patches can successfully be applied.
 
-> Hold your fire on this one if possible. I'm not just a lazy slug who
-> can't think and study for himself.
+For example if you synced these two directories from perforce in git
 
-Hopefully you're in for a smooth ride; I'd be disappointed if any of
-these communities are hostile to an honest and specific enquiry like
-yours.
+//depot/foo/bar,//depot/test
 
-Welcome, and thanks for learning about modern VCS options!
+git-p4 will now lookup that the client paths are:
 
-> I'm a little confused about the different way of using rcs that git,
-> mercurial bazaar and probably several others offer.
+~/p4/foo/bar,~/p4/test
 
-I got a bit confised by that sentence. You would do well to use =E2=80=9C=
-VCS=E2=80=9D
-(Version Control System) to refer to the class of program. =E2=80=9CRCS=
-=E2=80=9D refers
-to a particular VCS, one that is still in current use for some purposes=
-=2E
+and then set self.clientPath to the root of all of the client paths
+(~/p4) permitting the patches from git to be cleanly applied for all
+of the directories.
 
-> I've not used anything but cvs.  I use it at least every couple of
-> days but really only a limited set of commands, and no deep knowledge
-> even of that style.
+v2: Code path should only be followed when there are more then 1 depo
+path, not 0
 
-Good news; you'll have little un-learning to do :-)
+Signed-off-by: Benjamin C Meyer <bmeyer@rim.com>
+---
+ contrib/fast-import/git-p4 |   40 +++++++++++++++++++++++++++++-----------
+ 1 files changed, 29 insertions(+), 11 deletions(-)
 
-> My usage is basically to keep up with rc files for the several OSs' I
-> tinker with
-[=E2=80=A6]
-> To me, keeping up with cvs is always a PITA.  I've never hit on a
-> handy and efficient way to do it. Even for a just my light usage.
-
-I don't know what =E2=80=9Ckeep up with CVS=E2=80=9D means. Can you exp=
-lain what part of
-your workflow is a PITA?
-
-> How would a workflow actually go:
-> I'd create and populate a repo, then what?.
-
-You could choose which files should be common between different
-machines, add those to the repository and choose not to track the rest
-in the VCS. Other ways of doing it are also feasible.
-
-> Create clones on each machine I guess and if I found a need to change
-> or add files, I'd then push back to the original repo? Its sounding a
-> whole lot like cvs so far.
-
-> So, am I likely to see some improvement in the chore of keeping up an
-> [VCS] system with git, mercurial or bazaar?
-
-Pending an explanation of what =E2=80=9Ckeeping up=E2=80=9D means, I th=
-ink one of the
-big benefits you'll get is that the modern VCS designs:
-
-* treat the whole working tree as the thing to be represented in each
-  revision; and
-
-* have significantly better merging capability compared with CVS.
-
-> Anther thing I'm really curious about concerns binary rcs. I'm
-> thinking of photo editing and things like flash where I might be
-> changing a project over time and want access to past versions.
-
-You can do this with any VCS, but binary files don't have a good generi=
-c
-way to represent differences efficiently, whereas text files do. So
-tracking binary files will work, but will be rather inefficient in term=
-s
-of memory usage and repository data.
-
---=20
- \         =E2=80=9CIf you can do no good, at least do no harm.=E2=80=9D=
- =E2=80=94_Slapstick_, |
-  `\                                                     Kurt Vonnegut =
-|
-_o__)                                                                  =
-|
-Ben Finney
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index c1ea643..58aaea9 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -766,6 +766,21 @@ class P4Submit(Command):
+                    + "Please review/edit and then use p4 submit -i < %s to submit directly!"
+                    % (fileName, fileName))
+ 
++    def findCommonPath(self, settings):
++        dirs = []
++        for path in settings:
++            localDir = p4Where(path)
++            if len(localDir) > 0:
++                dirs.append(localDir)
++        localDir = dirs[0];
++        maxMatch = len(localDir) - 1
++        for dir in dirs:
++            if maxMatch > len(dir) - 1:
++                maxMatch = len(dir) - 1
++            while dir[maxMatch] != localDir[maxMatch]:
++                maxMatch = maxMatch - 1;
++        return localDir[0:maxMatch]
++
+     def run(self, args):
+         if len(args) == 0:
+             self.master = currentGitBranch()
+@@ -781,23 +796,26 @@ class P4Submit(Command):
+             die("%s is not in git-p4.allowSubmit" % self.master)
+ 
+         [upstream, settings] = findUpstreamBranchPoint()
+-        self.depotPath = settings['depot-paths'][0]
++        if (len(settings['depot-paths']) > 1):
++            self.depotPath = ""
++            self.clientPath = self.findCommonPath(settings['depot-paths'])
++        else:
++            self.depotPath = settings['depot-paths'][0]
++            if len(self.depotPath) == 0:
++                print "Internal error: cannot locate perforce depot path from existing branches"
++                sys.exit(128)
++            self.clientPath = p4Where(self.depotPath)
++
++        if len(self.clientPath) == 0:
++            print "Error: Cannot locate perforce checkout of %s in client view" % self.depotPath
++            sys.exit(128)
++
+         if len(self.origin) == 0:
+             self.origin = upstream
+ 
+         if self.verbose:
+             print "Origin branch is " + self.origin
+ 
+-        if len(self.depotPath) == 0:
+-            print "Internal error: cannot locate perforce depot path from existing branches"
+-            sys.exit(128)
+-
+-        self.clientPath = p4Where(self.depotPath)
+-
+-        if len(self.clientPath) == 0:
+-            print "Error: Cannot locate perforce checkout of %s in client view" % self.depotPath
+-            sys.exit(128)
+-
+         print "Perforce checkout for depot path %s located at %s" % (self.depotPath, self.clientPath)
+         self.oldWorkingDirectory = os.getcwd()
+ 
+-- 
+1.7.0.2
