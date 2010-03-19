@@ -1,92 +1,166 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
-Date: Fri, 19 Mar 2010 11:16:15 -0600
-Message-ID: <b4087cc51003191016u3d4af923n613f3feca0e6e222@mail.gmail.com>
-References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com> <4BA338C1.7030803@alum.mit.edu> 
-	<b4087cc51003190439x3c9ff269g35d11432bd2a3d60@mail.gmail.com> 
-	<alpine.DEB.2.00.1003190441530.3821@asgard.lang.hm> <20100319115445.GA12986@glandium.org> 
-	<3f4fd2641003190509j6e4908e4kab87b601d2ce9c00@mail.gmail.com> 
-	<b4087cc51003190516h42202e34k598a163c246cb9f2@mail.gmail.com> 
-	<3f4fd2641003190757y39050691y3dc0ca08bd5196fb@mail.gmail.com> 
-	<4BA397B0.2000908@drmicha.warpmail.net> <alpine.DEB.2.00.1003190903540.3821@asgard.lang.hm>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: native-git-svn: A Summer of Code 2010 proposal
+Date: Fri, 19 Mar 2010 22:48:27 +0530
+Message-ID: <f3271551003191018j67aa133es2fee4e3dda519ce0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Fri Mar 19 18:16:44 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Sverre Rabbelier <srabbelier@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 19 18:25:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsfoQ-0002ue-Gr
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 18:16:42 +0100
+	id 1NsfxL-0007qS-ED
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 18:25:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753755Ab0CSRQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Mar 2010 13:16:38 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:52308 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753749Ab0CSRQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Mar 2010 13:16:37 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so76862fgg.1
-        for <git@vger.kernel.org>; Fri, 19 Mar 2010 10:16:35 -0700 (PDT)
+	id S1751269Ab0CSRZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Mar 2010 13:25:45 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:54263 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750716Ab0CSRZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Mar 2010 13:25:44 -0400
+Received: by gwaa12 with SMTP id a12so1450422gwa.19
+        for <git@vger.kernel.org>; Fri, 19 Mar 2010 10:25:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=CgiWZV16BG0ZlsWTdVkFqhJ6fkLueG6ZzY7nuKJBfdw=;
-        b=Vq9zioJ2XfSMJ/lTtt7ktqvh7nlZs9+jJ3CWQRTdAB/ZNkLTM/t1V+r367gByxaovl
-         6SOjV5MtFK2R4Eom2z+d54K3SWEQONfBkGaxKK82B1b4GNFwhvKSFTAS9UtQauoIJO7L
-         wqcgbzYF/ySCxt2lrnbYyr9WjgCkGDKRHsakY=
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=Db1BZNeKXDTZJDuobI7F0hfY5B/HqBW1oVBYXBWpVOM=;
+        b=l90jWK1kP2eNbNTffi9v2sd0QALuVvbhonXzByHRJXRHiK3BfmAaycfwA50A9fyCjs
+         Q4ao4xDUJw3OHvj2sTHW6zVkVzYieHYGzrQ9h+YoL2fIEbVCwa2wK0pdjDpXcZbmzgN8
+         tXu1sFBNCx6Yq8izmTiT9BG9yqOA/mBqQcqvc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=Z8wkLIfXxqj5Il0obP8OqxfHzxn/9w62ehHQAn1JfW1PdbS6ijFQIygE9qRZbYVHxb
-         U3i1DwxJjAHap0G/UKBbA8+8faNx6XF6nqdITKiX4ogbowu54qaortvD4SHD8H1Slwmf
-         M43xwWbZsZNkRFN0tGaZsWgchfxqAQqG26Tx0=
-Received: by 10.239.149.196 with SMTP id k4mr265553hbb.138.1269018995208; Fri, 
-	19 Mar 2010 10:16:35 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.00.1003190903540.3821@asgard.lang.hm>
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=XJzmcfu64b6zOLPpqwRzErY+1s17cMtDAU+SdKsf3EarZpnfOpAp0JA1zvSaGNtZgg
+         FPKdjY6lf6OmYg9y9LxEM3LjMKHPBFsE9jXq//Mts845ps2TBuvPjOn0oU6Y/MUXGmcr
+         r8rFiMywU+2eMSBVY3mYooPUECPs02FsxR+MI=
+Received: by 10.90.108.6 with SMTP id g6mr769458agc.100.1269019127968; Fri, 19 
+	Mar 2010 10:18:47 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142623>
 
-On Fri, Mar 19, 2010 at 10:05,  <david@lang.hm> wrote:
->
-> if you can force people to have a consistant UUID, you can force them to
-> have a consistant e-mail address (and submit mapping updates if it changes)
->
-> if you can't force people to maintain a consistant e-mail, why do you think
-> they would maintain a consistant UUID?
+Hi,
 
-Firstly, please note that a UUID is defined in this context as any
-string that the user deems for himself to be uniquely identifying of
-himself; a UUID allows a user to determine his canonical
-representation from the very start.
+I picked up a project I liked from the Wiki
+[https://git.wiki.kernel.org/index.php/SoC2010Ideas#A_remote_helper_for_svn]
+and discussed it with Sverre. I now have a preliminary draft of my
+proposal ready, and I'd really appreciate feedback.
 
-There's no forcing; there can't be. This is meant to help users manage
-their own identities.
+=====================================
+Project Proposal: native-git-svn | Native SVN support in Git
 
-A UUID is basically only subject to change due to:
+== The Outline ==
+Currently, git-svn.perl is used to interface with SVN repositories.
+However, it has serious shortcomings:
+1. It is essentially an arcane 5000-line Perl script that doesn't use
+git-fast-import/ git-fast-export. It converts an SVN repository to a
+Git repository by hand. This makes it virtually unmaintainable.
+2. Its UI is unnecessarily complex. git-svn-* has some commands
+corresponding to git-* commands, and it can be quite difficult for the
+user to understand which one to use in different situations. These can
+be merged easily.
+3. It handles the standard trunk/branches/tags layout well, but it
+doesn't know how to handle non-standard/ changing SVN layout.
+4. There's an array of other annoyances which makes it quite
+imperfect. For example, it ignores all SVN properties except
+svn:executable.
 
-    * typos when configuring
+While many of these problems can be tackled in git-svn.perl itself,
+problem 1 is the most prominent. git-svn.perl is very difficult to
+modify or even maintain. A more permanent solution is required.
 
-A name/email pair (as in the user.name and user.email variables) is
-subject to change due to:
+My proposal is to start from scratch and build an application that
+makes dealing SVN repositories very easy. The plan is to build
+component-wise, in a modular manner. The project can be considered
+fully successful only after the functionality described in all the
+components have been written, and the project is merged into upstream.
+It will involve minimal changes to the current Git codebase, if any at
+all. I additionally hope that this project will serve as a roadmap for
+other projects that involve natively supporting other versioning
+systems in Git.
 
-    * typos when configuring
-    * legal name changes
-    * email account switching
+== The Technicalities ==
+The distinct components I plan to write are:
+1. An SVN client that uses libsvn to fetch/ push revisions to a remote
+SVN repository.
+2. An exporter for SVN repositories, which will extract all the
+relevant revision history and metadata to import into Git.
+3. A remote helper for Git that takes the data from this SVN exporter,
+and uses git-fast-import to create corresponding commits in Git.
+4. Another remote helper to export commit data and metadata from Git
+to import into SVN.
+5. An importer for SVN, which will create revisions in SVN
+corresponding to commits in Git.
+6. A UI that glues all the components together into one large
+consistent interface.
 
-Naturally, older commits and wrong UUIDs would need mappings, but
-that's no different than the current situation except for the fact
-that UUIDs would not change as frequently.
+Due to a licensing conflict, the details of which can be found here
+[1], native-git-svn will link to libsvn, but will NOT link to Git. It
+will simply use a thin wrapper to call compiled Git executables
+(referred to as remote helper in article). The six components will be
+developed and tested independently.
 
-That aside, an alternative solution that is not as powerful but that
-is less invasive would be to allow users to transmit authorship
-information as part of the patch payload separate from the usual email
-headers (or something like this). Erik Faye-Lund suggests this is
-already easily done, but I'm not so sure.
+The following resources are relevant to the project:
+1. git_remote_helpers/git/git.py is a minimalistic remote helper
+written by Sverre. I plan to extend this as much as possible before
+rewriting it in C.
+2. libsvn contains excellent documentation and clear examples to
+create the SVN client.
+3. git-svn.perl has a lot functionality that I plan to re-implement in
+native-git-svn:
+   3.1 parse_svn_date: Given a date (in UTC) from Subversion, return a
+string in the format "<TZ Offset> <local date/time>" that Git will use
+   3.2 load_authors: <svn username> = real-name <email address>
+mapping based on git-svnimport
+   3.3 do_git_init_db: Create and maintain svn-remotes
+   3.4 get_commit_entry: Parse commit messages, and encode them; SVN
+requires messages to be UTF-8 when entering the repo
+   3.5 cmd_branch: Handle branching/ tagging
+   3.6 cmd_create_ignore: Reads svn:ignore and puts the information
+into .gitignore
+4. There are several existing third-party SVN exporters worth looking into [2].
+
+I've additionally discussed the project with Sverre Rabbelier at
+length over email.
+
+== Who am I? ==
+I'm Ramkumar, a student at the Indian Institute of Technology,
+Kharagpur. I haven't contributed more than a few small patches to Git
+[3], and I look at this project as a fantastic opportunity to get more
+involved with the community. In the summer and winter of 2008, I
+worked with a Django-based startup. The team comprised of three
+experienced Python developers, one designer to steer the project, and
+an undergraduate student- me. We versioned everything on Git, deployed
+on Apache/ PostgreSQL, using Amazon S3 for static content. While
+working with the startup, I also contributed to South, a migration
+framework for Django. A lot more about this is mentioned on my resume
+[4].
+
+C, C++ [5], and Python are my strongest languages. I've additionally
+learnt Common Lisp through an Emacs Lisp application I wrote in summer
+2009 [6]. I'm known to be very communicative, both in person, and over
+email/ chat. The style and clarity of my communication is seen in the
+slides I used at FOSS.IN/2009 in winter 2009 [7].
+
+== Notes ==
+[1] http://thread.gmane.org/gmane.comp.version-control.git/139545
+[2] svn-all-fast-export | git://repo.or.cz/svn-all-fast-export.git and
+fast-export | git://repo.or.cz/fast-export.git
+[3] 52eb5173ac and 88d50e78c3
+[4] TODO
+[5] On a related note, I've also contributed a little to Chromium
+[6] http://github.com/artagnon/ublog.el
+[7] http://artagnon.com/wp-content/uploads/haskell-internals.pdf and
+http://artagnon.com/wp-content/uploads/unladen-swallow.pdf
+=====================================
+
+Thanks!
+
+Regards,
+Ramkumar
