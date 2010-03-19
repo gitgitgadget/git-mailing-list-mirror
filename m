@@ -1,92 +1,85 @@
-From: John Dlugosz <JDlugosz@TradeStation.com>
-Subject: RE: submodule problem
-Date: Fri, 19 Mar 2010 15:22:06 -0400
-Message-ID: <89030B4A18ECCD45978A3A6B639D1F2403299C84D8@FL01EXMB01.trad.tradestation.com>
-References: <89030B4A18ECCD45978A3A6B639D1F2403299C8395@FL01EXMB01.trad.tradestation.com>
- <8c5c35581003191029x7069ea10tecdaa49e176080c2@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Prompt for a username when an HTTP request 401s
+Date: Fri, 19 Mar 2010 12:27:14 -0700
+Message-ID: <7vr5ngkt7x.fsf@alter.siamese.dyndns.org>
+References: <d411cc4a1003182041p67a93bf6i1528a8eaaab5c805@mail.gmail.com>
+ <20100319143205.GB16211@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 19 20:24:54 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Scott Chacon <schacon@gmail.com>, git list <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Mar 19 20:27:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NshoT-0004qb-QA
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 20:24:54 +0100
+	id 1Nshr3-000665-3Y
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 20:27:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751207Ab0CSTYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Mar 2010 15:24:38 -0400
-Received: from mail2.tradestation.com ([63.99.207.80]:56097 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750855Ab0CSTYi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Mar 2010 15:24:38 -0400
-X-ASG-Debug-ID: 1269026574-4c4cc234000f-QuoKaX
-Received: from FL01EXCAHT01.trad.tradestation.com (fl01excaht01.trad.tradestation.com [10.4.0.166]) by mail2.tradestation.com with ESMTP id MCBrPpKDGAAUjsUT (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Fri, 19 Mar 2010 15:23:25 -0400 (EDT)
-X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
-X-ASG-Whitelist: Client
-Received: from FL01EXMB01.trad.tradestation.com ([::1]) by
- FL01EXCAHT01.trad.tradestation.com ([::1]) with mapi; Fri, 19 Mar 2010
- 15:22:07 -0400
-X-ASG-Orig-Subj: RE: submodule problem
-Thread-Topic: submodule problem
-Thread-Index: AcrHibwHijvCA1TjTDWbr2rsARQMiwADwS+A
-In-Reply-To: <8c5c35581003191029x7069ea10tecdaa49e176080c2@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-Barracuda-Connect: fl01excaht01.trad.tradestation.com[10.4.0.166]
-X-Barracuda-Start-Time: 1269026603
-X-Barracuda-Encrypted: AES128-SHA
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at tradestation.com
+	id S1751330Ab0CST11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Mar 2010 15:27:27 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35022 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750913Ab0CST10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Mar 2010 15:27:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 25164A3FDD;
+	Fri, 19 Mar 2010 15:27:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=utBLQ4NjNoIuoxHmOUrv9JFy8Pc=; b=GUSiXc
+	O1xc3PHKU2mszNGNOSiwRZFiNO1p+BcOwDTDg6QYKeo3IQtBxIzpbVMm9/nGeGAq
+	g5i927sMvUI3TDWAJEHEXopBQkq7csSIK/3boldyBWZXU19XbPrr4/i2sEGM0sVX
+	7NhN+KsWBmldC2I0uX7WPX/opPva1hXfRdPGA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bONVJH/EW/yr4k7+3oedFTNGHsXYOtXT
+	4BKQ+q3sgJKILIy+9TITyUpUq2zlM63oa44GU42K418pvM0sK9R1j/UKyaQjXief
+	l4g6KYSVv08pWUBQKvN+CfLaD3X9HoXAmx8wF6zy0ChLpGQ2raRBIcp3VW00KSFO
+	R3JGBOuElAk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E67FEA3FDB;
+	Fri, 19 Mar 2010 15:27:19 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F740A3FD5; Fri, 19 Mar
+ 2010 15:27:16 -0400 (EDT)
+In-Reply-To: <20100319143205.GB16211@spearce.org> (Shawn O. Pearce's message
+ of "Fri\, 19 Mar 2010 07\:32\:05 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 6F8A776A-338D-11DF-B80E-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142639>
 
-PiBUaGUgJy0nIHByZWZpeCBpbmRpY2F0ZXMgdGhhdCB0aGUgc3VibW9kdWxl
-IGlzbid0IHJlZ2lzdGVyZWQgaW4geW91cg0KPiAuZ2l0L2NvbmZpZy4gWW91
-IHNob3VsZCBoYXZlIGEgJ3N1Ym1vZHVsZS4kbmFtZS51cmwnIGVudHJ5IGlu
-IHRoZQ0KPiBjb25maWcgKHdoZXJlICRuYW1lIGlzIHRoZSBuYW1lIG9mIHRo
-ZSBzdWJtb2R1bGUgYXMgZm91bmQgaW4NCj4gLmdpdG1vZHVsZScpLg0KPiAN
-Cg0KVGhhbmtzLiAgVGhlIHNsYXNoZXMgd2VyZSBnb2luZyB0aGUgd3Jvbmcg
-d2F5LCBlLmcuDQoNCglbc3VibW9kdWxlICJTb3VyY2VcXFNoYXJlZFxcQWFy
-ZHZhcmsiXQ0KCQl1cmwgPSAvL3R4MDFmczAxL1NZUy9kZXYvZ2l0L3JlcG9z
-aXRvcmllcy9BYXJkdmFyay5naXQNCg0KSXQgZGlkIG5vdCB3b3JrIGF0IGFs
-bCB3aGVuIEkgZmlyc3QgY3JlYXRlZCBpdCB3aXRoICJzdWJtb2R1bGUgYWRk
-IiwgYW5kIG1hbnVhbGx5IGZpeGVkIHRoZSAubW9kdWxlcyBmaWxlLiAgSSBu
-ZWVkIHRvIGRvIHRoZSBzYW1lIHdpdGggdGhlIGVudHJ5IGluIC5naXQvY29u
-ZmlnLg0KDQpJIGRpZCBnaXZlIHRoZSBVbml4LXN0eWxlIHNsYXNoZXMgd2hl
-biBJIGNhbGxlZCBzdWJtb2R1bGUgYWRkLiAgSXQgbXVzdCBoYXZlIGNvZGUg
-c29tZXdoZXJlIHRoYXQgZ2V0cyBhIGxpc3Rpbmcgb3Igc29tZXRoaW5nIGZy
-b20gYW4gT1MgcHJpbWl0aXZlIGFuZCBkaWRuJ3QgcmV2ZXJzZSBpdC4gIEEg
-YnVnIGluIG1zeXMsIG9yIHNvbWUgY29kZSB0aGF0IGJ5cGFzc2VzIHRoZSBh
-YnN0cmFjdGlvbiBsYXllciwgb3Igc29tZXRoaW5nIGluIGEgUGVybCBwcm9n
-cmFtLCBwZXJoYXBzLg0KDQotLUpvaG4NCg0KClRyYWRlU3RhdGlvbiBHcm91
-cCwgSW5jLiBpcyBhIHB1YmxpY2x5LXRyYWRlZCBob2xkaW5nIGNvbXBhbnkg
-KE5BU0RBUSBHUzogVFJBRCkgb2YgdGhyZWUgb3BlcmF0aW5nIHN1YnNpZGlh
-cmllcywgVHJhZGVTdGF0aW9uIFNlY3VyaXRpZXMsIEluYy4gKE1lbWJlciBO
-WVNFLCBGSU5SQSwgU0lQQyBhbmQgTkZBKSwgVHJhZGVTdGF0aW9uIFRlY2hu
-b2xvZ2llcywgSW5jLiwgYSB0cmFkaW5nIHNvZnR3YXJlIGFuZCBzdWJzY3Jp
-cHRpb24gY29tcGFueSwgYW5kIFRyYWRlU3RhdGlvbiBFdXJvcGUgTGltaXRl
-ZCwgYSBVbml0ZWQgS2luZ2RvbSwgRlNBLWF1dGhvcml6ZWQgaW50cm9kdWNp
-bmcgYnJva2VyYWdlIGZpcm0uIE5vbmUgb2YgdGhlc2UgY29tcGFuaWVzIHBy
-b3ZpZGVzIHRyYWRpbmcgb3IgaW52ZXN0bWVudCBhZHZpY2UsIHJlY29tbWVu
-ZGF0aW9ucyBvciBlbmRvcnNlbWVudHMgb2YgYW55IGtpbmQuIFRoZSBpbmZv
-cm1hdGlvbiB0cmFuc21pdHRlZCBpcyBpbnRlbmRlZCBvbmx5IGZvciB0aGUg
-cGVyc29uIG9yIGVudGl0eSB0byB3aGljaCBpdCBpcyBhZGRyZXNzZWQgYW5k
-IG1heSBjb250YWluIGNvbmZpZGVudGlhbCBhbmQvb3IgcHJpdmlsZWdlZCBt
-YXRlcmlhbC4gQW55IHJldmlldywgcmV0cmFuc21pc3Npb24sIGRpc3NlbWlu
-YXRpb24gb3Igb3RoZXIgdXNlIG9mLCBvciB0YWtpbmcgb2YgYW55IGFjdGlv
-biBpbiByZWxpYW5jZSB1cG9uLCB0aGlzIGluZm9ybWF0aW9uIGJ5IHBlcnNv
-bnMgb3IgZW50aXRpZXMgb3RoZXIgdGhhbiB0aGUgaW50ZW5kZWQgcmVjaXBp
-ZW50IGlzIHByb2hpYml0ZWQuIElmIHlvdSByZWNlaXZlZCB0aGlzIGluIGVy
-cm9yLCBwbGVhc2UgY29udGFjdCB0aGUgc2VuZGVyIGFuZCBkZWxldGUgdGhl
-IG1hdGVyaWFsIGZyb20gYW55IGNvbXB1dGVyLgo=
+"Shawn O. Pearce" <spearce@spearce.org> writes:
+
+> Scott Chacon <schacon@gmail.com> wrote:
+>> @@ -815,7 +815,18 @@ static int http_request(const char *url, void
+>> *result, int target, int options)
+>>  			ret = HTTP_OK;
+>>  		else if (missing_target(&results))
+>>  			ret = HTTP_MISSING_TARGET;
+>> -		else
+>> +		else if (results.http_code == 401) {
+>> +			if (user_name) {
+>> +				ret = HTTP_NOAUTH;
+>> +			} else {
+>> +				// it is neccesary to use getpass here because
+>> +				// there appears to be no other clean way to
+>> +				// read/write stdout/stdin
+>> +				user_name = xstrdup(getpass("Username: "));
+>
+> No, getpass is needed here because its very likely stdin/stdout are
+> pipes to our parent process.  So we instead need to use /dev/tty,
+> but that is non-portable.  Using getpass() can at least be stubbed
+> on other platforms with a different implementation if/when necessary.
+
+In addition to the obligatory "no C++/C99 double-slash comments, please ",
+I think by the time this gets into an applicable shape, Frank's f206063
+(git-core: Support retrieving passwords with GIT_ASKPASS, 2010-03-04) will
+have graduated to the 'master'.  It would be a good idea to build this
+change on top of that one.
