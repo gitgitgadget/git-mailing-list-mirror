@@ -1,55 +1,70 @@
-From: Markus Elfring <Markus.Elfring@web.de>
-Subject: Re: [PATCH] Clarification for the command "git checkout <branch>"
-Date: Fri, 19 Mar 2010 09:28:38 +0100
-Message-ID: <4BA335B6.4000103@web.de>
-References: <4B67227A.7030908@web.de> <7vr5o6s5xf.fsf@alter.siamese.dyndns.org> 	<4B8B9BF1.10408@web.de> <4b8bf32f.0706c00a.26cb.691d@mx.google.com> 	<4BA104C7.5020207@web.de> <32541b131003170944w7a0215frcace205f32d313bf@mail.gmail.com> 	<7vaau6q18q.fsf@alter.siamese.dyndns.org> <4BA1FC39.10300@web.de> 	<32541b131003180936x746dad06k386788d3cb6fcdeb@mail.gmail.com> 	<b4087cc51003181019r4408953bxcd5049c9521b8173@mail.gmail.com> <32541b131003181033p7916d92frc1269b95c292e3db@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
+Date: Fri, 19 Mar 2010 09:41:37 +0100
+Message-ID: <4BA338C1.7030803@alum.mit.edu>
+References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Michael Witten <mfwitten@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 19 09:28:55 2010
+Cc: git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 19 09:42:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsXZc-0007Mg-QP
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 09:28:53 +0100
+	id 1NsXmE-0000rW-Jn
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 09:41:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752816Ab0CSI2l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Mar 2010 04:28:41 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:42031 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752628Ab0CSI2k (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Mar 2010 04:28:40 -0400
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 2ED2D14ED6B70;
-	Fri, 19 Mar 2010 09:28:39 +0100 (CET)
-Received: from [78.49.72.233] (helo=[192.168.1.2])
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #4)
-	id 1NsXZP-00074L-00; Fri, 19 Mar 2010 09:28:39 +0100
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
-In-Reply-To: <32541b131003181033p7916d92frc1269b95c292e3db@mail.gmail.com>
-X-Enigmail-Version: 1.0
-X-Sender: Markus.Elfring@web.de
-X-Provags-ID: V01U2FsdGVkX1/HM8HYRt+kVWBSvkbSrSRGn+4YUs5OSrmsL2aM
-	sspUyBXkJ9A2lqZKfW8qcuxk+AKsqENEcXg+a84ryHREgdBfmp
-	2xpNFVgQj63mVfHWmIwg==
+	id S1753095Ab0CSIlk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Mar 2010 04:41:40 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:39644 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753073Ab0CSIlj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Mar 2010 04:41:39 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o2J8fbul029782
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 19 Mar 2010 09:41:37 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.23) Gecko/20090817 Thunderbird/2.0.0.23 Mnenhy/0.7.6.666
+In-Reply-To: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142568>
 
-> The stash can contain multiple entries.  They're stored in a stack,
-> but you can pull prior entries out of the stack if you want.
+Michael Witten wrote:
+> Rather than use a (name,email) pair to identify people, let's use
+> a (uuid,name,email) triplet.
+> [...]
 
-I am missing a semantic relationship of the stashed files to the work that they
-belong to in various branches. I would appreciate to see a clear connection
-between them.
+A UUID doesn't need to be a big hex number.  All it has to be is a
+"Universally Unique Identifier".  Like, oh, for example, your
 
-Regards,
-Markus
+                   *** EMAIL ADDRESS ***
+
+[1].  There is even already a way to fix up mistakes or unavoidable
+email address changes, namely the .mailmap file.
+
+So if you are exercised about having a persistent identity, simply find
+an email provider that is unlikely to ever give your email address to
+somebody else, and use that address consistently.  Encourage other
+people to do the same and to keep their .mailmap entries up to date.
+
+(Not that it's likely to happen, but having people maintain opaque UUIDs
+is even *less* likely.)
+
+Michael
+
+[1] The only non-UUID property of legitimate email addresses is that the
+username part or even the domain name part of an email address can be
+recycled.  But with a reputable email provider this shouldn't be a
+problem.  For the purpose of the UUID it is not even a problem if the
+email address becomes defunct, as long as it is not taken over by
+somebody else.
