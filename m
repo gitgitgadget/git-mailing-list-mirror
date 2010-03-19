@@ -1,118 +1,77 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH] Fix indentation problem in git-ls-files(1)
-Date: Fri, 19 Mar 2010 19:55:34 +0100
-Message-ID: <m2k4t8qgyh.fsf@igel.home>
-References: <m2tyswb1jp.fsf@igel.home>
-	<7v3a0fr740.fsf@alter.siamese.dyndns.org> <m3r5nzw05p.fsf@hase.home>
-	<ca433831003070927h4c3e24e1m75c7be88355f9663@mail.gmail.com>
-	<m23a01yzcc.fsf@igel.home> <4B9F2DB0.30400@viscovery.net>
-	<m2pr34kpzm.fsf@igel.home> <4BA07AEE.2080100@viscovery.net>
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: [PATCH] Prompt for a username when an HTTP request 401s
+Date: Fri, 19 Mar 2010 12:08:18 -0700
+Message-ID: <d411cc4a1003191208m38b7baf2mbb8f1ea288f90819@mail.gmail.com>
+References: <d411cc4a1003182041p67a93bf6i1528a8eaaab5c805@mail.gmail.com>
+	 <20100319143205.GB16211@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Mar 19 19:55:45 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Mar 19 20:08:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NshMF-0007rb-V6
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 19:55:44 +0100
+	id 1NshYY-00054s-BC
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Mar 2010 20:08:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752144Ab0CSSzj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Mar 2010 14:55:39 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:37370 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751600Ab0CSSzi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Mar 2010 14:55:38 -0400
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id A579B1C15793;
-	Fri, 19 Mar 2010 19:55:36 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id 9B492902D0;
-	Fri, 19 Mar 2010 19:55:36 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.3.149])
-	by localhost (dynscan1.mnet-online.de [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id XQR4Jgm1-SUt; Fri, 19 Mar 2010 19:55:35 +0100 (CET)
-Received: from igel.home (ppp-88-217-104-40.dynamic.mnet-online.de [88.217.104.40])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Fri, 19 Mar 2010 19:55:35 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 3590CCA29C; Fri, 19 Mar 2010 19:55:35 +0100 (CET)
-X-Yow: Now that I have my ``APPLE,'' I comprehend COST ACCOUNTING!!
-In-Reply-To: <4BA07AEE.2080100@viscovery.net> (Johannes Sixt's message of
-	"Wed, 17 Mar 2010 07:47:10 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.94 (gnu/linux)
+	id S1752021Ab0CSTIV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Mar 2010 15:08:21 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:56813 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751329Ab0CSTIU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Mar 2010 15:08:20 -0400
+Received: by wwe15 with SMTP id 15so2035216wwe.19
+        for <git@vger.kernel.org>; Fri, 19 Mar 2010 12:08:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xsL/SYvm97Laku0WSkt73I+mbpqkjjdzDvv1YW/GRPg=;
+        b=vX65PXbOuN+v0kKNqz8iKYyzEkVexVWeV2I2rMKKRPM8y7Qq3DSjOprzUt5qkJrbCu
+         X6fxD1/enqTjZL123DyND3cFcRftj66KXFjxM6MN5p0vRJpBS5GRFGokmrdJxbg8pnwa
+         geedtVixgB/QpbdnQf12P3GkcI2H08ZgTWcY4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=DEnabVDj4oxx/SBdwyK4MLLyiHUur5+1Eh0EXTRXn+LU89l0xkQXWibIV83P0asec6
+         pPKWa/Gtq5gUj5p0wW2AccQX/if1boUTkCjUwY7scAriPmhz0+5B53sGuN3EsIgq5r67
+         0QtSStXi7M21MH84DcQf7wefV0+EdhbUC+Z8U=
+Received: by 10.216.89.84 with SMTP id b62mr64578wef.226.1269025698985; Fri, 
+	19 Mar 2010 12:08:18 -0700 (PDT)
+In-Reply-To: <20100319143205.GB16211@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142634>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
-
-> Andreas Schwab schrieb:
->> Johannes Sixt <j.sixt@viscovery.net> writes:
->> 
->>> Andreas Schwab schrieb:
->>>> The nested list in the description of the -t option wasn't properly
->>>> indented.  Additionally, make it a horizontal labeled list since the
->>>> labels are all short.
->>> IMHO, converting a vertical list to a horizontal list is a step in the
->>> wrong direction, even if the labels are short. It is far easier to scan a
->>> vertical list for a match than a horizontal list.
->> 
->> The linebreak after the label is useless when all labels are much
->> shorter than the indentation.
->
-> I use Junio's man pages, and they look like so:
->
->        -t
->            Identify the file status with the following tags
->            (followed by a space) at the start of each line:
->
->            H   cached
->            S   skip-worktree
->            M   unmerged
->            R   removed/deleted
->            C   modified/changed
->            K   to be killed
->            ?   other
-
-That's not what I see.
-
-       -t
-           Identify the file status with the following tags (followed by a
-           space) at the start of each line:
-
-           H
-               cached
-
-           S
-               skip-worktree
-
-           M
-               unmerged
-
-           R
-               removed/deleted
-
-           C
-               modified/changed
-
-           K
-               to be killed
-
-           ?
-               other
-
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+SGV5LAoKT24gRnJpLCBNYXIgMTksIDIwMTAgYXQgNzozMiBBTSwgU2hhd24gTy4gUGVhcmNlIDxz
+cGVhcmNlQHNwZWFyY2Uub3JnPiB3cm90ZToKPiBTY290dCBDaGFjb24gPHNjaGFjb25AZ21haWwu
+Y29tPiB3cm90ZToKPj4gQEAgLTgxNSw3ICs4MTUsMTggQEAgc3RhdGljIGludCBodHRwX3JlcXVl
+c3QoY29uc3QgY2hhciAqdXJsLCB2b2lkCj4+ICpyZXN1bHQsIGludCB0YXJnZXQsIGludCBvcHRp
+b25zKQo+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCByZXQgPSBIVFRQX09LOwo+
+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCBlbHNlIGlmIChtaXNzaW5nX3RhcmdldCgmcmVzdWx0cykp
+Cj4+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHJldCA9IEhUVFBfTUlTU0lOR19U
+QVJHRVQ7Cj4+IC0gwqAgwqAgwqAgwqAgwqAgwqAgZWxzZQo+PiArIMKgIMKgIMKgIMKgIMKgIMKg
+IGVsc2UgaWYgKHJlc3VsdHMuaHR0cF9jb2RlID09IDQwMSkgewo+PiArIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIGlmICh1c2VyX25hbWUpIHsKPj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCByZXQgPSBIVFRQX05PQVVUSDsKPj4gKyDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCB9IGVsc2Ugewo+PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIC8vIGl0IGlzIG5lY2Nlc2FyeSB0byB1c2UgZ2V0cGFzcyBoZXJl
+IGJlY2F1c2UKPj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCAv
+LyB0aGVyZSBhcHBlYXJzIHRvIGJlIG5vIG90aGVyIGNsZWFuIHdheSB0bwo+PiArIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIC8vIHJlYWQvd3JpdGUgc3Rkb3V0L3N0
+ZGluCj4+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgdXNlcl9u
+YW1lID0geHN0cmR1cChnZXRwYXNzKCJVc2VybmFtZTogIikpOwo+Cj4gTm8sIGdldHBhc3MgaXMg
+bmVlZGVkIGhlcmUgYmVjYXVzZSBpdHMgdmVyeSBsaWtlbHkgc3RkaW4vc3Rkb3V0IGFyZQo+IHBp
+cGVzIHRvIG91ciBwYXJlbnQgcHJvY2Vzcy4gwqBTbyB3ZSBpbnN0ZWFkIG5lZWQgdG8gdXNlIC9k
+ZXYvdHR5LAo+IGJ1dCB0aGF0IGlzIG5vbi1wb3J0YWJsZS4gwqBVc2luZyBnZXRwYXNzKCkgY2Fu
+IGF0IGxlYXN0IGJlIHN0dWJiZWQKPiBvbiBvdGhlciBwbGF0Zm9ybXMgd2l0aCBhIGRpZmZlcmVu
+dCBpbXBsZW1lbnRhdGlvbiBpZi93aGVuIG5lY2Vzc2FyeS4KClNob3VsZCBJIHJvbGwgYSBuZXcg
+cGF0Y2ggZm9yIHRoaXM/CgpTY290dAo=
