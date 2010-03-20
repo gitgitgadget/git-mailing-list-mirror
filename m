@@ -1,81 +1,58 @@
-From: tsuna <tsunanet@gmail.com>
-Subject: [PATCH] Auto-correct git pull -ff to git pull --ff.
-Date: Fri, 19 Mar 2010 18:59:25 -0700
-Message-ID: <4d9f5be51003191859p38c7cfa9o11eafd5016b6ced@mail.gmail.com>
+From: Andre Ferreira <greiskul@gmail.com>
+Subject: SoC line-level history browser question
+Date: Fri, 19 Mar 2010 23:13:54 -0300
+Message-ID: <1129eaaf1003191913t4b4c3474r87687d6fceaf88ac@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=001636b144ab678d9d048231d189
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 20 02:59:52 2010
+X-From: git-owner@vger.kernel.org Sat Mar 20 03:14:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nsnyh-0004NR-Hk
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 02:59:51 +0100
+	id 1NsoCu-0000hq-An
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 03:14:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752132Ab0CTB7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Mar 2010 21:59:46 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:63672 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752061Ab0CTB7p (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Mar 2010 21:59:45 -0400
-Received: by pva4 with SMTP id 4so1858691pva.19
-        for <git@vger.kernel.org>; Fri, 19 Mar 2010 18:59:45 -0700 (PDT)
+	id S1751458Ab0CTCOQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Mar 2010 22:14:16 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:30428 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751269Ab0CTCOQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Mar 2010 22:14:16 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so211962fgg.1
+        for <git@vger.kernel.org>; Fri, 19 Mar 2010 19:14:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:content-type;
-        bh=YJ82ONd40+z0Ufv6BHmyuR5RqfBlEN3QlissmYTZVzA=;
-        b=hOPueUNbCVmYsUzlqRZHVYdkqbra5ifxBreTRjXeQW0Kh5RmQjfnOGzCC94vXknEQS
-         2QLHOxHVvjTJKWjrGJL80FLoWzxukEPdRuTDqNWeWsazn/1gfclOUT6p5KcsNp0fpoUx
-         E2uQFQdJou99vUo6xHfUuuaKbE/KXOLmJ9PYg=
+         :subject:to:content-type:content-transfer-encoding;
+        bh=usN2z0uKdAAhsxupta9gtHRjb1y6CGzlADzc22dy7vs=;
+        b=l5dKduPqXUMNejyd6EVQX3YHezFa8paJrRSgSX37vvcDhjsQU0IDwIl14I/KGzRQNJ
+         uPZJN0uiq+Far1vqagNuzhyDE8rEe6ggIj39yK2zdqm5nw2YWt6a5rvUv1Tjuwbheuca
+         6zoVk44NXK5/ZmoEzd+jfeOeurNkwDOYL0E0o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=p/mf5Ffpk2tVzJJ8+/3ypjrtm+5XWTJoTA2+Tf9/FxfmsczOFwto0ESBsSKJT9g+kO
-         JUreqEMCHcS3BGoQfy+72g/qBPKtmCEkn48lDg/G7mrSj1pZ6xzuROPJ8uUz6hC/tePX
-         RyJwo1Uo3wZMhX8JGF9tXWCkpmR05RFdWvOdU=
-Received: by 10.114.70.18 with SMTP id s18mr4261177waa.18.1269050385075; Fri, 
-	19 Mar 2010 18:59:45 -0700 (PDT)
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=CLg6Op/8wTgCe4KKi9MHM01RjeC5zVkIbn2JK9f2NBilb4X3099EeL5bM2euF/14r/
+         puJIDRmj5l8U3UDUbBhjn/13kNBjruF8e7W+xvcOSF8C7j3Pmn1Zt6R2juhWKy9/7DlB
+         TI7O3ZsgfOZVSvHXLFD//MflD9t9KK7qwZAuU=
+Received: by 10.239.164.134 with SMTP id t6mr181089hbd.2.1269051254157; Fri, 
+	19 Mar 2010 19:14:14 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142670>
 
---001636b144ab678d9d048231d189
-Content-Type: text/plain; charset=ISO-8859-1
+I would like to know how the interface (the command line arguments
+passed to the program) and output should look like (a rough example
+would be fine).
+I'm very interested in participating in Google Summer of Code, but
+living in the Southern Hemisphere means that I would have to do it in
+parallel with my university classes, therefore limiting the scope of
+projects that I can handle. The line-level history browser appears to
+be well within my reach.
 
-Hi there,
-I attached a trivial patch that auto-corrects a frequent typo does not
-trigger any error with git pull.
-I find it useful so I hope others will too.
-
--- 
-Benoit "tsuna" Sigoure
-
---001636b144ab678d9d048231d189
-Content-Type: application/octet-stream; 
-	name="0001-Auto-correct-git-pull-ff-to-git-pull-ff.patch"
-Content-Disposition: attachment; 
-	filename="0001-Auto-correct-git-pull-ff-to-git-pull-ff.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_g6zrr1yj0
-
-RnJvbSBlNGQ0MzY0MGQ4MGZjYTkzZmRhNDVkMTNlMDJmM2ZlZGYwOWY2MzlhIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBCZW5vaXQgU2lnb3VyZSA8dHN1bmFuZXRAZ21haWwuY29tPgpE
-YXRlOiBXZWQsIDE3IE1hciAyMDEwIDE3OjExOjQ0IC0wNzAwClN1YmplY3Q6IFtQQVRDSF0gQXV0
-by1jb3JyZWN0IGdpdCBwdWxsIC1mZiB0byBnaXQgcHVsbCAtLWZmLgoKVGhpcyBmcmVxdWVudCB0
-eXBvIGRvZXMgbm90IHRyaWdnZXIgYW55IGVycm9yIGJlY2F1c2UgZ2l0IHB1bGwgZG9lc24ndApy
-ZWNvZ25pemUgLWZmIGFuZCBwYXNzZXMgaXQgdGhyb3VnaCB0byBnaXQgZmV0Y2gsIHdoaWNoIHBh
-cnNlcyBpdCBhcyBhCnNob3J0IG9wdGlvbiwgYXMgaWYgdGhlIG9wdGlvbiAtZiB3YXMgc2ltcGx5
-IHNwZWNpZmllZCB0d2ljZS4KLS0tCiBnaXQtcHVsbC5zaCB8ICAgIDIgKy0KIDEgZmlsZXMgY2hh
-bmdlZCwgMSBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2dpdC1w
-dWxsLnNoIGIvZ2l0LXB1bGwuc2gKaW5kZXggZDQ1YjUwYy4uYmU4NTAzMiAxMDA3NTUKLS0tIGEv
-Z2l0LXB1bGwuc2gKKysrIGIvZ2l0LXB1bGwuc2gKQEAgLTY2LDcgKzY2LDcgQEAgZG8KIAkJc3F1
-YXNoPS0tc3F1YXNoIDs7CiAJLS1uby1zcXwtLW5vLXNxdXwtLW5vLXNxdWF8LS1uby1zcXVhc3wt
-LW5vLXNxdWFzaCkKIAkJc3F1YXNoPS0tbm8tc3F1YXNoIDs7Ci0JLS1mZikKKwktZmZ8LS1mZikK
-IAkJbm9fZmY9LS1mZiA7OwogCS0tbm8tZmYpCiAJCW5vX2ZmPS0tbm8tZmYgOzsKLS0gCjEuNy4w
-LjIuMjc5LmdmMWJhMWMKCg==
---001636b144ab678d9d048231d189--
+Andr=E9 Ferreira
