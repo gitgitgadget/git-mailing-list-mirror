@@ -1,76 +1,108 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: [PATCH v2 3/3] find_unique_abbrev: early out without a memcpy
-Date: Sat, 20 Mar 2010 19:55:29 +0100
-Message-ID: <1269111329-5896-4-git-send-email-kusmabite@gmail.com>
-References: <1269111329-5896-1-git-send-email-kusmabite@gmail.com>
-Cc: rene.scharfe@lsrfire.ath.cx, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 20 19:57:13 2010
+From: Benjamin Meyer <ben@meyerhome.net>
+Subject: Re: [PATCH 2/4] pull: use --quiet rather than 2>/dev/null
+Date: Sat, 20 Mar 2010 14:59:25 -0400
+Message-ID: <818FE4EC-5AE9-4F05-B9AD-E1753F7ED9E6@meyerhome.net>
+References: <1269051518-25099-1-git-send-email-bmeyer@rim.com> <1269051518-25099-2-git-send-email-bmeyer@rim.com> <20100320123520.GA29041@progeny.tock>
+Mime-Version: 1.0 (Apple Message framework v1077)
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sat Mar 20 20:06:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nt3rC-0007TB-RF
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 19:57:11 +0100
+	id 1Nt3zK-00032D-Ob
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 20:05:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751410Ab0CTS4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Mar 2010 14:56:47 -0400
-Received: from mail-ew0-f216.google.com ([209.85.219.216]:45107 "EHLO
-	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751386Ab0CTS4p (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Mar 2010 14:56:45 -0400
-Received: by mail-ew0-f216.google.com with SMTP id 8so297132ewy.28
-        for <git@vger.kernel.org>; Sat, 20 Mar 2010 11:56:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=TZl2yt6mVzsuPfIF4iWLDvxB+zDLOd/0hCNxJzEh7ME=;
-        b=LQBn4nku4J8MlHbVylNcCNOlWQixeQoNgsZ3nGgiZ1G/7u0AJLVYMZ3RkR1638rL8U
-         1gtHO5/lDt43M1Q9EwvsPRtVX5mtOR7wdZ39CjbtE956OQT4wWEhOpomTQLtt+K8/9WO
-         Hon9zQBo1SNggdwWq7YABMXgqLeIpWmLilwa4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=KFpDEvV7I9zbk6cPPtM7ddzmgEOs68EcHONYeh4bpPPNRa9OF/dlLjZQQraTJcF0H7
-         9okqwS0uxuZNJdBf4hAxVMjVhVN9OJAy1pUcYoTuDJB8RNRhhacsgpQx3eBDLZqgC7Ae
-         rcRyUS37/MF5FXC+G2P9+vrvWvpeyifooDXaM=
-Received: by 10.213.54.147 with SMTP id q19mr1571558ebg.12.1269111404200;
-        Sat, 20 Mar 2010 11:56:44 -0700 (PDT)
-Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
-        by mx.google.com with ESMTPS id 13sm1241688ewy.13.2010.03.20.11.56.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 20 Mar 2010 11:56:43 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.2.456.g64f24
-In-Reply-To: <1269111329-5896-1-git-send-email-kusmabite@gmail.com>
+	id S1751273Ab0CTTFN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Mar 2010 15:05:13 -0400
+Received: from qmta13.westchester.pa.mail.comcast.net ([76.96.59.243]:33436
+	"EHLO qmta13.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751154Ab0CTTFM convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Mar 2010 15:05:12 -0400
+X-Greylist: delayed 345 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Mar 2010 15:05:11 EDT
+Received: from omta20.westchester.pa.mail.comcast.net ([76.96.62.71])
+	by qmta13.westchester.pa.mail.comcast.net with comcast
+	id vWy81d0071YDfWL5DWzTY2; Sat, 20 Mar 2010 18:59:27 +0000
+Received: from [192.168.3.101] ([71.192.50.29])
+	by omta20.westchester.pa.mail.comcast.net with comcast
+	id vX1k1d00C0dnthT3gX1ltM; Sat, 20 Mar 2010 19:01:45 +0000
+In-Reply-To: <20100320123520.GA29041@progeny.tock>
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142740>
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
- sha1_name.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+On Mar 20, 2010, at 8:35 AM, Jonathan Nieder wrote:
 
-diff --git a/sha1_name.c b/sha1_name.c
-index bf92417..2b1be58 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -196,10 +196,10 @@ const char *find_unique_abbrev(const unsigned char *sha1, int len)
- 	int status, exists;
- 	static char hex[41];
- 
-+	if (len == 40 || !len)
-+		return sha1_to_hex(sha1);
- 	exists = has_sha1_file(sha1);
- 	memcpy(hex, sha1_to_hex(sha1), 40);
--	if (len == 40 || !len)
--		return hex;
- 	while (len < 40) {
- 		unsigned char sha1_ret[20];
- 		status = get_short_sha1(hex, len, sha1_ret, 1);
--- 
-1.7.0.2.456.g64f24
+> Benjamin C Meyer wrote:
+>=20
+>> -	for reflog in $(git rev-list -g $remoteref 2>/dev/null)
+>> +	for reflog in $(git rev-list --quiet -g $remoteref)
+>=20
+> Are you sure?  My local copy of git-rev-list.1 says
+>=20
+>   --quiet
+>        Don=92t print anything to standard output. This form is primar=
+ily meant
+>        to allow the caller to test the exit status to see if a range =
+of
+>        objects is fully connected (or not). It is faster than redirec=
+ting
+>        stdout to /dev/null as the output does not have to be formatte=
+d.
+>=20
+> A similar question applies to the other patches in this series: are
+> you sure they suppress the right output?  (I haven=92t checked, just
+> asking.)
+
+Thanks for reviewing the change
+
+Yah looks like I made a mistake there, rev-list --quiet suppresses ever=
+ything and not just stderr.  When going through this janitor task I not=
+iced that the --quiet is very inconsistent among git commands.  Some su=
+ppress error messages, some suppress all messages.  This might be somet=
+hing to improve in the future as even though I kept referring to the do=
+cumentation this error slipped in.
+
+re-checking the other patches I think they are correct in their usage. =
+ I ran the matching tests, the rebase ones passed, 3903-stash.sh is alr=
+eady failing before my patch and t3904-stash-patch.sh continues passing=
+ with the patch.  Other then running the tests in t/ is there anything =
+I should do to verify patches?
+
+> Aside: that for loop looks like it could be improved.  Maybe it is wo=
+rth
+> factoring this into a separate function, something like:
+>=20
+> old_upstream() {
+> 	remoteref=3D$1 &&
+> 	curr_branch=3D$2 &&
+>=20
+> 	oldremoteref=3D"$(git rev-parse -q --verify "$remoteref")" &&
+> 	{ git rev-list -g "$remoteref" 2>/dev/null || return $?; } |
+> 	while read reflog
+> 	do
+> 		if test -z "$(git rev-list "$curr_branch".."$reflog" | head -n 1)"
+> 		then
+> 			printf "%s\n" "$reflog"
+> 			return 0
+> 		fi
+> 	done &&
+> 	printf "%s\n" "$oldremoteref"
+> }
+>=20
+> In other words, we can avoid walking the whole reflog before starting
+> to look for an ancestor for the current branch.
+
+That looks like it would speed up that bit of code, but I am still figu=
+ring out the internals of git so I can't really comment on if this is t=
+he best solution etc.
+
+-Benjamin Meyer
