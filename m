@@ -1,95 +1,127 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 01/16] xdl_merge(): add optional ancestor label to
- diff3-style output
-Date: Sat, 20 Mar 2010 17:47:36 -0500
-Message-ID: <20100320224736.GC31098@progeny.tock>
-References: <20100317113655.GA25470@progeny.tock>
- <20100317114653.GA25641@progeny.tock>
- <36ca99e91003170722m6642ca5q93b2669feaf3dea2@mail.gmail.com>
+From: "R. Tyler Ballance" <tyler@monkeypox.org>
+Subject: [PATCH] Correct references to /usr/bin/python which may ont exist
+ on certain systems
+Date: Sat, 20 Mar 2010 16:02:37 -0700
+Message-ID: <20100320230230.GA29738@kiwi.sharlinx.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Stefan Monnier <monnier@iro.umontreal.ca>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 20 23:46:47 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="opJtzjQTFsWo+cga"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 21 00:09:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nt7RO-0008MF-CA
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 23:46:46 +0100
+	id 1Nt7nR-0002cL-Ss
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 00:09:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752494Ab0CTWql convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Mar 2010 18:46:41 -0400
-Received: from mail-yx0-f182.google.com ([209.85.210.182]:41699 "EHLO
-	mail-yx0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752393Ab0CTWqk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Mar 2010 18:46:40 -0400
-Received: by yxe12 with SMTP id 12so1171485yxe.33
-        for <git@vger.kernel.org>; Sat, 20 Mar 2010 15:46:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=5+EQhCCbhZQAnQXxUInRB0OZ20zSBQMXTev7VLE6ZJ0=;
-        b=DV7qh2dg4XqShx5EMy2rJUpKo3udLwl4nOjIw3gT+LQF/nw4dr8W2GKDCZJ/9kfq32
-         Zdqjyxw9+ZBDwoxr0LUYOHj9N23KNtQEJ7aFjfSTv3u1Icq+Sk1LCIfTq9jyFHmWaqZt
-         NgDxgbdPBj+a7BAIhh9YZaeoUYdVm+TK4mp9o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=LaWnIi2A9xVPZyheCNfvnc2JbB1eo4gsft/0JAIt2PilnEHRybBxW7v/OulrXEp2hE
-         +7c6ms6B1XS5/VCGot4S80pVysrhKrd1+NuOJ/LW88bf1Rt6vUkYeU8BULdeobEGu0b5
-         ilhQMMqYi3TCeAqq0Ca4T5043KvxyshpmMQac=
-Received: by 10.100.23.19 with SMTP id 19mr3655150anw.15.1269125200143;
-        Sat, 20 Mar 2010 15:46:40 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 21sm1773598iwn.11.2010.03.20.15.46.38
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 20 Mar 2010 15:46:39 -0700 (PDT)
+	id S1752665Ab0CTXJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Mar 2010 19:09:29 -0400
+Received: from mail.geekisp.com ([216.168.135.169]:1929 "EHLO
+	starfish.geekisp.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752515Ab0CTXJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Mar 2010 19:09:28 -0400
+X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Mar 2010 19:09:28 EDT
+Received: (qmail 794 invoked by uid 1003); 20 Mar 2010 23:02:45 -0000
+Received: from localhost (HELO kiwi.sharlinx.com) (tyler@monkeypox.org@127.0.0.1)
+  by mail.geekisp.com with SMTP; 20 Mar 2010 23:02:44 -0000
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <36ca99e91003170722m6642ca5q93b2669feaf3dea2@mail.gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142765>
 
-Bert Wesarg wrote:
-> On Wed, Mar 17, 2010 at 12:46, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
 
->> --- a/xdiff/xmerge.c
->> +++ b/xdiff/xmerge.c
->> @@ -397,6 +406,7 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_=
-t *xscr1, const char *name1,
->>=C2=A0 	int flags, xmparam_t const *xmp, mmbuffer_t *result) {
->>  	xdmerge_t *changes, *c;
->>  	xpparam_t const *xpp =3D &xmp->xpp;
->> +	const char * const ancestor_name =3D xmp->ancestor;
->
-> Style. * should be aligned to the variable name.
+--opJtzjQTFsWo+cga
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Not so clear to me:
+FreeBSD for example does not ship with a /usr/bin/python such that Python
+installed from ports will be located by default in /usr/local/bin
+---
+ Makefile                           |    2 +-
+ contrib/fast-import/import-zips.py |    2 +-
+ contrib/hg-to-git/hg-to-git.py     |    2 +-
+ contrib/p4import/git-p4import.py   |    2 +-
+ git_remote_helpers/Makefile        |    2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
- $ git grep -e '\* const' origin/master | wc -l
- 90
- $ git grep -e '\*const' origin/master | wc -l
- 23
+diff --git a/Makefile b/Makefile
+index 3a6c6ea..2b248b4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -444,7 +444,7 @@ ifndef PERL_PATH
+ 	PERL_PATH =3D /usr/bin/perl
+ endif
+ ifndef PYTHON_PATH
+-	PYTHON_PATH =3D /usr/bin/python
++	PYTHON_PATH =3D /usr/bin/env python
+ endif
+=20
+ export PERL_PATH
+diff --git a/contrib/fast-import/import-zips.py b/contrib/fast-import/impor=
+t-zips.py
+index 7051a83..82f5ed3 100755
+--- a/contrib/fast-import/import-zips.py
++++ b/contrib/fast-import/import-zips.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/env python
+=20
+ ## zip archive frontend for git-fast-import
+ ##
+diff --git a/contrib/hg-to-git/hg-to-git.py b/contrib/hg-to-git/hg-to-git.py
+index 854cd94..046cb2b 100755
+--- a/contrib/hg-to-git/hg-to-git.py
++++ b/contrib/hg-to-git/hg-to-git.py
+@@ -1,4 +1,4 @@
+-#! /usr/bin/python
++#!/usr/bin/env python
+=20
+ """ hg-to-git.py - A Mercurial to GIT converter
+=20
+diff --git a/contrib/p4import/git-p4import.py b/contrib/p4import/git-p4impo=
+rt.py
+index 0f3d97b..b6e534b 100644
+--- a/contrib/p4import/git-p4import.py
++++ b/contrib/p4import/git-p4import.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/env python
+ #
+ # This tool is copyright (c) 2006, Sean Estabrooks.
+ # It is released under the Gnu Public License, version 2.
+diff --git a/git_remote_helpers/Makefile b/git_remote_helpers/Makefile
+index c62dfd0..af3cc28 100644
+--- a/git_remote_helpers/Makefile
++++ b/git_remote_helpers/Makefile
+@@ -7,7 +7,7 @@ pysetupfile:=3Dsetup.py
+ DESTDIR_SQ =3D $(subst ','\'',$(DESTDIR))
+=20
+ ifndef PYTHON_PATH
+-	PYTHON_PATH =3D /usr/bin/python
++	PYTHON_PATH =3D /usr/bin/env python
+ endif
+ ifndef prefix
+ 	prefix =3D $(HOME)
+--=20
+1.6.4.3
 
-I do prefer the style you suggest, so I=E2=80=99ve fixed it.
+--opJtzjQTFsWo+cga
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-> FWIW:
->=20
->     Acked-by: Bert Wesarg <Bert.Wesarg@googlemail.com>
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.12 (GNU/Linux)
 
-Thanks for looking it over.  I=E2=80=99ll be sending a rebased version =
-in a
-moment including your ack; I hope that=E2=80=99s okay.
+iEYEARECAAYFAkulVAYACgkQFCbH3D9R4W9/uwCeKwdpoZF7SFi/XAXSyPQaKAf7
+yOsAoLOt4e+AxbreS49vWw0Swj/Zs/wo
+=pjRa
+-----END PGP SIGNATURE-----
 
-Jonathan
+--opJtzjQTFsWo+cga--
