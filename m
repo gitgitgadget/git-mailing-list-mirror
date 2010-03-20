@@ -1,61 +1,72 @@
-From: Erick Mattos <erick.mattos@gmail.com>
-Subject: Re: [PATCH] git checkout: create unparented branch by --orphan
-Date: Sat, 20 Mar 2010 18:37:52 -0300
-Message-ID: <55bacdd31003201437x2b3fcd58j4c631468be63b1e4@mail.gmail.com>
-References: <1268928579-11660-1-git-send-email-erick.mattos@gmail.com> 
-	<7vvdcrowlc.fsf@alter.siamese.dyndns.org> <55bacdd31003201206w6215c6a4qec09797fbe060725@mail.gmail.com> 
-	<7v4okad9by.fsf@alter.siamese.dyndns.org> <55bacdd31003201336u685f4b91u5206ca719609d153@mail.gmail.com> 
-	<7vfx3ubto9.fsf@alter.siamese.dyndns.org>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: GSoC draft proposal: Line-level history browser
+Date: Sat, 20 Mar 2010 17:58:20 -0400
+Message-ID: <4BA544FC.7050007@gmail.com>
+References: <41f08ee11003200218u59c45b6dl82a8eb56cc289256@mail.gmail.com> <81b0412b1003201335g7b37c51mfa3e2280210ebb7e@mail.gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 20 22:38:27 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Bo Yang <struggleyb.nku@gmail.com>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 20 22:58:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nt6NH-0003R0-5W
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 22:38:27 +0100
+	id 1Nt6gj-0005Oj-Qe
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 22:58:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752107Ab0CTViP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Mar 2010 17:38:15 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:58669 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751597Ab0CTViN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Mar 2010 17:38:13 -0400
-Received: by gyg8 with SMTP id 8so2071649gyg.19
-        for <git@vger.kernel.org>; Sat, 20 Mar 2010 14:38:12 -0700 (PDT)
+	id S1751527Ab0CTV63 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Mar 2010 17:58:29 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:44509 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750808Ab0CTV62 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Mar 2010 17:58:28 -0400
+Received: by gwaa18 with SMTP id a18so361825gwa.19
+        for <git@vger.kernel.org>; Sat, 20 Mar 2010 14:58:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=rRv963/I45vu1arjR5WjKV17/9q2C2yjRPRYLDpicCA=;
-        b=u1WR04MM31pdPzDlzAyUxXHaEmU84w7fK1XpD/JakEmssFDH/eyfQALfHdj7oys68D
-         XMVkriV2mbcudbnvYIFRDUu1l8WKvw36+WX5c609IIGo47GOxZwK2tJXzUUjx2PcIn43
-         DpkHuB5gYIv3pVxY93ZFHRwjADGUoMjwFy8s8=
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=P6qCtZttS9f35Hzw6BZJ20lmlUyWiFbKwSqFwg+h0OY=;
+        b=lQu3YZsy9dwkOzp/XFmfiiw40SQFSNRIR44gEZGPVeA/2bY4ix38BJusq6f7Ragh3Y
+         PH/TL3Zb020hKWyzFlXrLRITGB7hStv19hruw8cT/mHF3oDf64OkTKVjCrRhxL3Pv28e
+         RndaBHY5R0Ok4aYID2tkZTtOBkPR2KuSN3lsg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=HquPry9YB+Q7s4sYBv1s/5ri30fgv0U6jegj8tRfCgJXeGPIMrEcdIosIOTBJ6/UUT
-         oifdLs2cbmB4mHvAWCVpzwgPToM42fD8h15s+PZtC/fR3kcQbui0oBHnBmVt4roq8UV/
-         cXU5sJEqXuVF6Vgof0upZPV8erdYEYQLz/1Xg=
-Received: by 10.150.119.33 with SMTP id r33mr75905ybc.304.1269121092099; Sat, 
-	20 Mar 2010 14:38:12 -0700 (PDT)
-In-Reply-To: <7vfx3ubto9.fsf@alter.siamese.dyndns.org>
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        b=U71XG26/GVlGytyhDNGvSq6w8ian817eCbwmmFrzvSvKGQMgdaFsKHTpy0zF3fNuU0
+         LtSkfjncNYinCocMSNy7jYsPdzcy8cawR4sNI36WkccB17OllzWnI6rCggHpr8+V43nf
+         ok4yFMUDz83zpZC86hsizgc336Cu514dJm4ww=
+Received: by 10.101.191.4 with SMTP id t4mr11722246anp.232.1269122307618;
+        Sat, 20 Mar 2010 14:58:27 -0700 (PDT)
+Received: from [10.0.0.6] (c-71-199-240-201.hsd1.fl.comcast.net [71.199.240.201])
+        by mx.google.com with ESMTPS id 5sm1086370ywd.59.2010.03.20.14.58.26
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 20 Mar 2010 14:58:26 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+In-Reply-To: <81b0412b1003201335g7b37c51mfa3e2280210ebb7e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142759>
 
-2010/3/20 Junio C Hamano <gitster@pobox.com>:
-> I hope I am not giving you undue burden, but here is what I would add.
-> One thing that I am not sure about is what to do with "-l --orhpan".
+Alex Riesen wrote:
+> On Sat, Mar 20, 2010 at 10:18, Bo Yang <struggleyb.nku@gmail.com> wrote:
+>> <line range>
+>> Its format should be <start pos>..<end pos> or just a <line number>.
+> 
+> You might want to reconsider the line range syntax. Exactly the same syntax
+> is already used to specify a commit range, so reusing it may lead to confusion.
 
-No problem.  I also like to do things right.  And you have made it
-light with your attached tests.
-
-About -l well... you tell.
+I, actually, think the proposed line range syntax works because it uses 
+the same _range_ notation. The issue is how to differentiate the _line_ 
+range(s) from the _commit_ range(s); and, yes, I would like multiple 
+ranges of each type as well as multiple files.
