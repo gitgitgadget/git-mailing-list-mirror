@@ -1,121 +1,122 @@
-From: Erick Mattos <erick.mattos@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] git checkout: create unparented branch by --orphan
-Date: Sat, 20 Mar 2010 17:36:06 -0300
-Message-ID: <55bacdd31003201336u685f4b91u5206ca719609d153@mail.gmail.com>
-References: <1268928579-11660-1-git-send-email-erick.mattos@gmail.com> 
-	<7vvdcrowlc.fsf@alter.siamese.dyndns.org> <55bacdd31003201206w6215c6a4qec09797fbe060725@mail.gmail.com> 
-	<7v4okad9by.fsf@alter.siamese.dyndns.org>
+Date: Sat, 20 Mar 2010 13:54:30 -0700
+Message-ID: <7vfx3ubto9.fsf@alter.siamese.dyndns.org>
+References: <1268928579-11660-1-git-send-email-erick.mattos@gmail.com>
+ <7vvdcrowlc.fsf@alter.siamese.dyndns.org>
+ <55bacdd31003201206w6215c6a4qec09797fbe060725@mail.gmail.com>
+ <7v4okad9by.fsf@alter.siamese.dyndns.org>
+ <55bacdd31003201336u685f4b91u5206ca719609d153@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 20 21:36:35 2010
+To: Erick Mattos <erick.mattos@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 20 21:54:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nt5PM-0001Ih-NS
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 21:36:33 +0100
+	id 1Nt5gy-0000Wa-By
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 21:54:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752560Ab0CTUg1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Mar 2010 16:36:27 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:55726 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752172Ab0CTUg0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 Mar 2010 16:36:26 -0400
-Received: by gyg8 with SMTP id 8so2057467gyg.19
-        for <git@vger.kernel.org>; Sat, 20 Mar 2010 13:36:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=dM/0gjmylK8j64LofXnmTpVp3TDjtdrOPV45B9zggn4=;
-        b=KHqqkkSxE3Vb99DObZWxa3npbsxvWO0CMuv5BZUR/KgTnAGTrsPY3s3orhpVYwjNQE
-         k8CS32BONvE7S5wDBfnZMxaAQF4tFehArocvjBv3ovLHfLvUMdHo8MHdWBZGOZL+ESEm
-         N0SG3Q1DYT5TjsfFrJuUxl/tDK/zrHYisnUdI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=l3OQu/nDQZzrK7e/8E3qmOiZFHw1lFnLumbjn4rNZcwqAT6WghHybiTxNTnbWzpwA5
-         IFgPOjSAh2xP5lMc7ZkQhWs/ufM2vDtl74a5sNt4e+ACkzzrqSvWn7X+VsLFoPdG5oga
-         jQChC/KdBnpHfawINrKwvMW8+I0QoqsvRKh5w=
-Received: by 10.150.13.3 with SMTP id 3mr6775994ybm.42.1269117386072; Sat, 20 
-	Mar 2010 13:36:26 -0700 (PDT)
-In-Reply-To: <7v4okad9by.fsf@alter.siamese.dyndns.org>
+	id S1751410Ab0CTUyj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Mar 2010 16:54:39 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60163 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750935Ab0CTUyi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Mar 2010 16:54:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 76E1BA3402;
+	Sat, 20 Mar 2010 16:54:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=58oH9Sj+8Hf4k6NV5NHCR3vfCmQ=; b=e5hND1
+	uVcniMw81pmqLMygMlyjFTcYGf6ghG+znVv7kd+PfTnK75H7JjcoMfB/cKaK7+UE
+	rnyt6B8UNdWgBqX2OU7pY8jFtndPw2naMSE+dXF/caRjxpbxzmK1C2YpZ7f94zjn
+	MLD2/41t66rRcn+c2BfIzUMX+Yj16XSNyUkxQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CS3WTV/iUgUS0AQbUMtcbOIOrzfSuNm+
+	2kDS/9WKty8CuCdW+Aix2ZXivCBcug/Hml8vjLoVlmh+LUY/6SCPGPQJdNPfJs6T
+	cGMh22qbPcBHN0rBBFkV/C/FkwiXoK27xh8i7Ai9ho+5PiuIdLmcrdxuLmT8VTih
+	2MI8VUklnz4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 543C3A3401;
+	Sat, 20 Mar 2010 16:54:34 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA64CA3400; Sat, 20 Mar
+ 2010 16:54:31 -0400 (EDT)
+In-Reply-To: <55bacdd31003201336u685f4b91u5206ca719609d153@mail.gmail.com>
+ (Erick Mattos's message of "Sat\, 20 Mar 2010 17\:36\:06 -0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C9E6631A-3462-11DF-9D77-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142749>
 
-2010/3/20 Junio C Hamano <gitster@pobox.com>:
-> Erick Mattos <erick.mattos@gmail.com> writes:
->
->>> With local changes in the index/working tree without "start commit"=
- (which
->>> should never fail) and with "start commit" (which should fail if HE=
-AD and
->>> start commit has differences to the same paths as you have local ch=
-anges
->>> to).
->>
->> It is behaving like that already and that is intrinsically a
->> switch_branches() logic, not a special --orphan need. =C2=A0It is no=
-t part
->> of this implementation and It is probably tested elsewhere (you
->> probably do know where).
->>
->>> Also you would want to check with -t, --no-t, branch.autosetupmrebe=
- set to
->>> always in the configuration with -t and without -t from the command=
- line,
->>
->> The actual implementation is just ignoring track and -t is not even
->> allowed. =C2=A0So it is pointless.
->
-> I think you misunderstood the point of having tests. =C2=A0It is not =
-about
-> demonstrating that you did a good job implementing the new feature, o=
-r
-> your implementation works as advertised in the submitted form. =C2=A0=
-That is
-> the job of the review process before patch acceptance.
->
-> Tests are to pretect what you perfected during the patch acceptance r=
-eview
-> from getting broken by other people in the future, while you are not
-> closely monitoring the mailing list traffic. =C2=A0Many people, me in=
-cluded,
-> tend to concentrate on their own new addition, without being careful
-> enough not to break the existing features. =C2=A0If "-t --orphan" sho=
-uld result
-> in an error, it should result in an error even after somebody restruc=
-tures
-> the code, so it is not sufficient that it is obvious in the _current_=
- code
-> structure that breakage of that feature is unlikely.
->
-> If you can promise that you will be around on this list forever, and =
-that
-> every time somebody posts patches to the related areas, you will make=
- sure
-> that the changes do not inadvertently break this feature and respond =
-to
-> the patches that do break it before they hit my tree, then theoretica=
-lly
-> we do not need to have any test to make sure this feature keeps worki=
-ng as
-> advertised. =C2=A0But we cannot ask that kind of time/attention commi=
-tment from
-> anybody.
->
+I hope I am not giving you undue burden, but here is what I would add.
+One thing that I am not sure about is what to do with "-l --orhpan".
 
-All right then.  I am going to check it too.  But in this particular
-case, the track is being ignored completely.  So to break this
-behavior people will need to add code to --orphan.
+---
 
-That's not a break, it's a linkage!  :-)
+ t/t2017-checkout-orphan.sh |   43 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 42 insertions(+), 1 deletions(-)
+
+diff --git a/t/t2017-checkout-orphan.sh b/t/t2017-checkout-orphan.sh
+index 5a9a3fa..e80e167 100755
+--- a/t/t2017-checkout-orphan.sh
++++ b/t/t2017-checkout-orphan.sh
+@@ -44,7 +44,48 @@ test_expect_success '--orphan creates a new orphan branch from <start_point>' '
+ '
+ 
+ test_expect_success '--orphan must be rejected with -b' '
+-	test_must_fail git checkout --orphan new -b newer
++	git checkout master &&
++	test_must_fail git checkout --orphan new -b newer &&
++	test refs/heads/master = "$(git symbolic-ref HEAD)"
++'
++
++test_expect_success '--orphan is rejected with an existing name' '
++	git checkout master &&
++	test_must_fail git checkout --orphan master &&
++	test refs/heads/master = "$(git symbolic-ref HEAD)"
++'
++
++test_expect_success '--orhapn refuses to switch if a merge is needed' '
++	git checkout master &&
++	git reset --hard &&
++	echo local >>"$TEST_FILE" &&
++	cat "$TEST_FILE" >"$TEST_FILE.saved" &&
++	test_must_fail git checkout --orphan gamma master^ &&
++	test refs/heads/master = "$(git symbolic-ref HEAD)" &&
++	test_cmp "$TEST_FILE" "$TEST_FILE.saved" &&
++	git diff-index --quiet --cached HEAD &&
++	git reset --hard
++'
++
++test_expect_success '--orphan does not mix well with -t' '
++	git checkout master &&
++	test_must_fail git checkout -t master --orphan gamma &&
++	test refs/heads/master = "$(git symbolic-ref HEAD)"
++'
++
++test_expect_success '--orphan ignores branch.autosetupmerge' '
++	git checkout -f master &&
++	git config branch.autosetupmerge always &&
++	git checkout --orphan delta &&
++	test -z "$(git config branch.delta.merge)" &&
++	test refs/heads/delta = "$(git symbolic-ref HEAD)" &&
++	test_must_fail git rev-parse --verify HEAD^
++'
++
++# This is iffy.
++test_expect_success '--orphan does not mix well with -l' '
++	git checkout -f master &&
++	test_must_fail git checkout -l --orphan gamma
+ '
+ 
+ test_done
