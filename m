@@ -1,85 +1,65 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 1/5] tag -v: use =?utf-8?B?4oCYZ2l0?=
-	=?utf-8?Q?_verify-tag=E2=80=99?= without dash
-Date: Sat, 20 Mar 2010 00:11:48 -0500
-Message-ID: <20100320051148.GA24791@progeny.tock>
-References: <20100320050953.GA24746@progeny.tock>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [gitk PATCH] gitk: Disable log.decorate config
+Date: Sat, 20 Mar 2010 16:10:55 +1100
+Message-ID: <20100320051055.GA3855@brick.ozlabs.ibm.com>
+References: <1269038663-11025-1-git-send-email-santi@agolina.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Carlos Rica <jasampler@gmail.com>,
-	Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 20 06:11:07 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Sat Mar 20 06:11:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nsqxm-0008Gu-PS
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 06:11:07 +0100
+	id 1Nsqxv-0008Kd-Iz
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 06:11:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751998Ab0CTFLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752015Ab0CTFLE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Mar 2010 01:11:04 -0400
+Received: from ozlabs.org ([203.10.76.45]:60295 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751956Ab0CTFLA (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 20 Mar 2010 01:11:00 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:48012 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751690Ab0CTFK7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Mar 2010 01:10:59 -0400
-Received: by gwaa18 with SMTP id a18so139413gwa.19
-        for <git@vger.kernel.org>; Fri, 19 Mar 2010 22:10:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=RHuk6ULwTekiz/97WvLAL8v0AHvLfJHAfG/Fkb8HBqg=;
-        b=haF1I3JJP2tGhIGdz5KbOfhMGFh16NiiSdQE3I+axWTbaBdqBkFxSY8wTbGble/xCc
-         l83AwN+tejhsDieEv2gZiKqqxJMn9StuY2wwrV/Pu1tdMmctTFH4WWk1xiXE0XqMUavD
-         VvoYpCiRTp9BUNRR5maLKARRBmbZ1ldCbK6Gc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=n1e6uF6Nd4Gs+30ZWlSA16Kfsc/8LmOjbLjteuqlGDrY9x4jTspV7NaDUjxWzYsQ3U
-         M6N1+N4ZxK1ZmoQPVDrP/RAQFPqiUw1cn62AJvfW6a9LrFzDKtO6pnWwWI9mBjK7ML7M
-         n4LFD1ZW1skrDmuaS4LmOAmTQqYEwecoNacm4=
-Received: by 10.100.24.40 with SMTP id 40mr9211855anx.77.1269061858369;
-        Fri, 19 Mar 2010 22:10:58 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm1111945iwn.1.2010.03.19.22.10.57
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 19 Mar 2010 22:10:58 -0700 (PDT)
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 39983B7D53; Sat, 20 Mar 2010 16:10:59 +1100 (EST)
 Content-Disposition: inline
-In-Reply-To: <20100320050953.GA24746@progeny.tock>
+In-Reply-To: <1269038663-11025-1-git-send-email-santi@agolina.net>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142683>
 
-There is not much reason to avoid dashed command names here except
-setting a good example, but setting a good example is reason enough.
+On Fri, Mar 19, 2010 at 11:44:23PM +0100, Santi B=E9jar wrote:
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- builtin/tag.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+> Since eb73445 (Add `log.decorate' configuration variable., 2010-02-17=
+)
+> the log output changes if log.decorate is set. Gitk is unable to
+> understand the new output (it returns the error: "Can't parse git log
+> output: {commit $sha1 $sha2...}), so disable it with --no-decorate.
+>=20
+> Signed-off-by: Santi B=E9jar <santi@agolina.net>
+> ---
+>  gitk |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>=20
+> diff --git a/gitk b/gitk
+> index 1f36a3e..aca44b7 100755
+> --- a/gitk
+> +++ b/gitk
+> @@ -362,7 +362,7 @@ proc start_rev_list {view} {
+> =20
+>      if {[catch {
+>  	set fd [open [concat | git log --no-color -z --pretty=3Draw --paren=
+ts \
+> -			 --boundary $args "--" $files] r]
+> +			 --boundary --no-decorate $args "--" $files] r]
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 4ef1c4f..d56c882 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -147,9 +147,9 @@ static int delete_tag(const char *name, const char *ref,
- static int verify_tag(const char *name, const char *ref,
- 				const unsigned char *sha1)
- {
--	const char *argv_verify_tag[] = {"git-verify-tag",
-+	const char *argv_verify_tag[] = {"git", "verify-tag",
- 					"-v", "SHA1_HEX", NULL};
--	argv_verify_tag[2] = sha1_to_hex(sha1);
-+	argv_verify_tag[3] = sha1_to_hex(sha1);
- 
- 	if (run_command_v_opt(argv_verify_tag, 0))
- 		return error("could not verify the tag '%s'", name);
--- 
-1.7.0.2
+We'll need to make that conditional on the git version, since we want
+gitk to continue to work on older git installations.
+
+Paul.
