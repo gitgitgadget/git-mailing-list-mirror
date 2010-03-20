@@ -1,58 +1,84 @@
-From: Andre Ferreira <greiskul@gmail.com>
-Subject: SoC line-level history browser question
-Date: Fri, 19 Mar 2010 23:13:54 -0300
-Message-ID: <1129eaaf1003191913t4b4c3474r87687d6fceaf88ac@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Benjamin C Meyer <bmeyer@rim.com>
+Subject: [PATCH 1/4] stash: use --quiet rather than using 2>/dev/null
+Date: Fri, 19 Mar 2010 22:18:35 -0400
+Message-ID: <1269051518-25099-1-git-send-email-bmeyer@rim.com>
+Cc: Benjamin C Meyer <bmeyer@rim.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 20 03:14:35 2010
+X-From: git-owner@vger.kernel.org Sat Mar 20 03:19:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsoCu-0000hq-An
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 03:14:32 +0100
+	id 1NsoHJ-00038c-Gu
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 03:19:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751458Ab0CTCOQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Mar 2010 22:14:16 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:30428 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751269Ab0CTCOQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Mar 2010 22:14:16 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so211962fgg.1
-        for <git@vger.kernel.org>; Fri, 19 Mar 2010 19:14:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        bh=usN2z0uKdAAhsxupta9gtHRjb1y6CGzlADzc22dy7vs=;
-        b=l5dKduPqXUMNejyd6EVQX3YHezFa8paJrRSgSX37vvcDhjsQU0IDwIl14I/KGzRQNJ
-         uPZJN0uiq+Far1vqagNuzhyDE8rEe6ggIj39yK2zdqm5nw2YWt6a5rvUv1Tjuwbheuca
-         6zoVk44NXK5/ZmoEzd+jfeOeurNkwDOYL0E0o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=CLg6Op/8wTgCe4KKi9MHM01RjeC5zVkIbn2JK9f2NBilb4X3099EeL5bM2euF/14r/
-         puJIDRmj5l8U3UDUbBhjn/13kNBjruF8e7W+xvcOSF8C7j3Pmn1Zt6R2juhWKy9/7DlB
-         TI7O3ZsgfOZVSvHXLFD//MflD9t9KK7qwZAuU=
-Received: by 10.239.164.134 with SMTP id t6mr181089hbd.2.1269051254157; Fri, 
-	19 Mar 2010 19:14:14 -0700 (PDT)
+	id S1751712Ab0CTCSu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Mar 2010 22:18:50 -0400
+Received: from qmta12.westchester.pa.mail.comcast.net ([76.96.59.227]:46818
+	"EHLO qmta12.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751269Ab0CTCSt (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Mar 2010 22:18:49 -0400
+Received: from omta01.westchester.pa.mail.comcast.net ([76.96.62.11])
+	by qmta12.westchester.pa.mail.comcast.net with comcast
+	id vDvC1d0040EZKEL5CEJpv3; Sat, 20 Mar 2010 02:18:49 +0000
+Received: from localhost.localdomain ([71.192.50.29])
+	by omta01.westchester.pa.mail.comcast.net with comcast
+	id vEJo1d00g0dnthT3MEJoMf; Sat, 20 Mar 2010 02:18:49 +0000
+X-Mailer: git-send-email 1.7.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142671>
 
-I would like to know how the interface (the command line arguments
-passed to the program) and output should look like (a rough example
-would be fine).
-I'm very interested in participating in Google Summer of Code, but
-living in the Southern Hemisphere means that I would have to do it in
-parallel with my university classes, therefore limiting the scope of
-projects that I can handle. The line-level history browser appears to
-be well within my reach.
+Signed-off-by: Benjamin C Meyer <bmeyer@rim.com>
+---
+ git-stash.sh |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
-Andr=E9 Ferreira
+diff --git a/git-stash.sh b/git-stash.sh
+index aa47e54..2533185 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -39,7 +39,7 @@ clear_stash () {
+ 	then
+ 		die "git stash clear with parameters is unimplemented"
+ 	fi
+-	if current=$(git rev-parse --verify $ref_stash 2>/dev/null)
++	if current=$(git rev-parse --quiet --verify $ref_stash)
+ 	then
+ 		git update-ref -d $ref_stash $current
+ 	fi
+@@ -201,7 +201,7 @@ save_stash () {
+ }
+ 
+ have_stash () {
+-	git rev-parse --verify $ref_stash >/dev/null 2>&1
++	git rev-parse --quiet --verify $ref_stash >/dev/null
+ }
+ 
+ list_stash () {
+@@ -342,16 +342,16 @@ drop_stash () {
+ 	fi
+ 	# Verify supplied argument looks like a stash entry
+ 	s=$(git rev-parse --verify "$@") &&
+-	git rev-parse --verify "$s:"   > /dev/null 2>&1 &&
+-	git rev-parse --verify "$s^1:" > /dev/null 2>&1 &&
+-	git rev-parse --verify "$s^2:" > /dev/null 2>&1 ||
++	git rev-parse --quiet --verify "$s:"   > /dev/null &&
++	git rev-parse --quiet --verify "$s^1:" > /dev/null &&
++	git rev-parse --quiet --verify "$s^2:" > /dev/null ||
+ 		die "$*: not a valid stashed state"
+ 
+ 	git reflog delete --updateref --rewrite "$@" &&
+ 		say "Dropped $* ($s)" || die "$*: Could not drop stash entry"
+ 
+ 	# clear_stash if we just dropped the last stash entry
+-	git rev-parse --verify "$ref_stash@{0}" > /dev/null 2>&1 || clear_stash
++	git rev-parse --quiet --verify "$ref_stash@{0}" > /dev/null || clear_stash
+ }
+ 
+ apply_to_branch () {
+-- 
+1.7.0.2
