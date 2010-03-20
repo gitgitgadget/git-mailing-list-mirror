@@ -1,64 +1,77 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH 3/3] t/t5505-remote.sh: escape * to prevent interpretation by shell as glob
-Date: Fri, 19 Mar 2010 18:36:36 -0500
-Message-ID: <CxNG4R6Vr07DvPgqJe5msXiOdQxDJcRUCjzNf-LPJNy2ozwVv3sxeG9yEQRNflvd8iDQ_qNtsIU@cipher.nrlssc.navy.mil>
-References: <CxNG4R6Vr07DvPgqJe5msRW43WBM-kHscjWMfuzYM-XxJsVlLbOmNz_AdlMU4gEIvpsxQfdo7fc@cipher.nrlssc.navy.mil>
-Cc: ilari.liusvaara@elisanet.fi, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Mar 20 01:24:12 2010
+From: Ian Ward Comfort <icomfort@stanford.edu>
+Subject: [PATCH/RFC v2] RPM spec: optionally include bash completion support
+Date: Fri, 19 Mar 2010 17:32:14 -0700
+Message-ID: <1269045134-28072-1-git-send-email-icomfort@stanford.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 20 01:32:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsmU8-0005Yn-3f
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 01:24:12 +0100
+	id 1Nsmc1-0000GC-Nt
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 01:32:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752590Ab0CTAYG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Mar 2010 20:24:06 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:52973 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752583Ab0CTAYF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Mar 2010 20:24:05 -0400
-Received: by mail.nrlssc.navy.mil id o2JNas4N010289; Fri, 19 Mar 2010 18:36:54 -0500
-In-Reply-To: <CxNG4R6Vr07DvPgqJe5msRW43WBM-kHscjWMfuzYM-XxJsVlLbOmNz_AdlMU4gEIvpsxQfdo7fc@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 19 Mar 2010 23:36:53.0793 (UTC) FILETIME=[0E681910:01CAC7BD]
+	id S1752624Ab0CTAcR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Mar 2010 20:32:17 -0400
+Received: from smtp2.Stanford.EDU ([171.67.219.82]:41955 "EHLO
+	smtp.stanford.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751978Ab0CTAcR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Mar 2010 20:32:17 -0400
+Received: from smtp.stanford.edu (localhost.localdomain [127.0.0.1])
+	by localhost (Postfix) with SMTP id AD569170731
+	for <git@vger.kernel.org>; Fri, 19 Mar 2010 17:32:16 -0700 (PDT)
+Received: from ashbury.stanford.edu (ashbury.Stanford.EDU [171.67.43.200])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.stanford.edu (Postfix) with ESMTPS id 8BD75170701
+	for <git@vger.kernel.org>; Fri, 19 Mar 2010 17:32:14 -0700 (PDT)
+Received: by ashbury.stanford.edu (Postfix, from userid 26037)
+	id 672C41D0054; Fri, 19 Mar 2010 17:32:14 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142667>
 
-From: Brandon Casey <drafnel@gmail.com>
-
-This test is supposed to check that git-remote correctly refuses to delete
-all non-push URLS when the all-encompassing '.*' regular expression is given.
-Since the '*' was not protected, it was interpreted by the shell as a file
-glob and expanded before being passed to git-remote.  The call to
-git-remote still exited non-zero in this case, and the overall test still
-passed, but it exited non-zero because git-remote was passed the incorrect
-number of arguments, not for the reason it was supposed to fail.
-
-Correct the test by escaping the '*'.
-
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+Include the bash completion routines from contrib/ in our core RPM, in the
+standard system-wide location, when our spec is built "--with completion". The
+completion routines are not packaged by default.
 ---
- t/t5505-remote.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index e7afe9e..acfea06 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -662,7 +662,7 @@ test_expect_success 'remote set-url --add bbb' '
- '
+ git.spec.in |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+diff --git a/git.spec.in b/git.spec.in
+index ee74a5e..65a0db8 100644
+--- a/git.spec.in
++++ b/git.spec.in
+@@ -1,4 +1,5 @@
+ # Pass --without docs to rpmbuild if you don't want the documentation
++# Pass --with completion to rpmbuild if you want shell completion support
  
- test_expect_success 'remote set-url --delete .*' '
--	test_must_fail git remote set-url --delete someremote .* &&
-+	test_must_fail git remote set-url --delete someremote .\* &&
- 	echo "YYY" >expect &&
- 	echo baz >>expect &&
- 	echo bbb >>expect &&
+ Name: 		git
+ Version: 	@@VERSION@@
+@@ -127,6 +128,11 @@ find $RPM_BUILD_ROOT -type f -name perllocal.pod -exec rm -f {} ';'
+ rm -rf $RPM_BUILD_ROOT%{_mandir}
+ %endif
+ 
++%if %{?_with_completion:1}0
++mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d
++install -m 644 -T contrib/completion/git-completion.bash $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/git
++%endif
++
+ %clean
+ rm -rf $RPM_BUILD_ROOT
+ 
+@@ -136,6 +142,7 @@ rm -rf $RPM_BUILD_ROOT
+ %doc README COPYING Documentation/*.txt
+ %{!?_without_docs: %doc Documentation/*.html Documentation/howto}
+ %{!?_without_docs: %doc Documentation/technical}
++%{?_with_completion: %{_sysconfdir}/bash_completion.d}
+ 
+ %files svn
+ %defattr(-,root,root)
 -- 
-1.6.6.2
+1.7.0.2
