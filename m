@@ -1,188 +1,250 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 04/16] worktree setup: call set_git_dir explicitly
-Date: Sat, 20 Mar 2010 15:10:46 +0700
-Message-ID: <fcaeb9bf1003200110w721903e7v7a5823cb312cbc71@mail.gmail.com>
-References: <1268313754-28179-1-git-send-email-pclouds@gmail.com>
-	 <1268313754-28179-5-git-send-email-pclouds@gmail.com>
-	 <7vljdyy2kh.fsf@alter.siamese.dyndns.org>
-	 <fcaeb9bf1003111645p54f42aaetbb622f8bde0ec8ad@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 20 09:11:00 2010
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: [PATCH] Use test_expect_success for test setups
+Date: Sat, 20 Mar 2010 04:29:11 -0400
+Message-ID: <1269073751-64588-1-git-send-email-brian@gernhardtsoftware.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 20 09:37:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nstlq-0003Se-3Y
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 09:10:58 +0100
+	id 1NsuBL-0003R5-QA
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 09:37:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752705Ab0CTIKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Mar 2010 04:10:51 -0400
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:54312 "EHLO
-	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752359Ab0CTIKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Mar 2010 04:10:48 -0400
-Received: by qyk9 with SMTP id 9so2317683qyk.1
-        for <git@vger.kernel.org>; Sat, 20 Mar 2010 01:10:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type;
-        bh=ip7jS1L3tzbk7EBzZdFRnxhxFI2MBCkwYXdQRo798wY=;
-        b=h2esC3SudiLoKBo3PkwJK63S8yxtOpZYYgq1yj3WBP+Uzw3/KVY2/X94aX8jpMglr+
-         FODVQRVAt5qBB2/1Kb9hX6cG5Rk2FHTan1CWeo0yGs3odsUIgjyHa1OIMVJyiu15+V0h
-         9nNSv2u2dSTUni11fUF9jgkdcWk/B8/xXRqC8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=Tn0qEpEUn767AgreL6PSr5G3yE++/2c4nGN2ebPRQJeWoLQK5TFzkcUegLqBYUZh0E
-         oHwN1Erq5tixb/e7qtQWEIHJ5pHhkr7PsOOaCpmLqWKX0ehw/rcl8Raf1lpTCVFbyoO7
-         gwZxI8MRzy0Yc10rXyZJFhBxID3rFK4xUzhGc=
-Received: by 10.229.211.75 with SMTP id gn11mr628364qcb.34.1269072646572; Sat, 
-	20 Mar 2010 01:10:46 -0700 (PDT)
-In-Reply-To: <fcaeb9bf1003111645p54f42aaetbb622f8bde0ec8ad@mail.gmail.com>
+	id S1752832Ab0CTIhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Mar 2010 04:37:11 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:56226 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752827Ab0CTIhJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Mar 2010 04:37:09 -0400
+X-Greylist: delayed 472 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Mar 2010 04:37:09 EDT
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 6A8F91FFC2ED; Sat, 20 Mar 2010 08:29:03 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.7 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from localhost.localdomain (cpe-67-240-172-169.rochester.res.rr.com [67.240.172.169])
+	by silverinsanity.com (Postfix) with ESMTPA id 4C1F21FFC2EA;
+	Sat, 20 Mar 2010 08:29:01 +0000 (UTC)
+X-Mailer: git-send-email 1.7.0.2.455.g91132
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142695>
 
-Hmm.. I did not notice I did not sent this to git@vger.
+Several tests did not use test_expect_success for their setup
+commands.  Putting these start commands into the testing framework
+means both that errors during setup will be caught quickly and that
+non-error text will be suppressed without -v.
 
-On 3/12/10, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> On 3/12/10, Junio C Hamano <gitster@pobox.com> wrote:
->  > Yes, you have more calls to set_git_dir() than before.  But it is not
->  >  explained why "calling set_git_dir explicitly" is a good thing anywhere in
->  >  the series.
->
->
-> OK. Let me try in mail first.
->
->  Goal: do not rely on setup_git_env() to set git_dir to ".git". That
->  means set_git_dir() explicitly.
->
->
->  >   - Definition.
->  >
->  >    The following state variables belong to the setup system:
->  >
->  >    - git_dir: holds the location of $GIT_DIR as a path relative to cwd
->  >    - is_bare_repository(): returns foo;
->  >    - is_inside_working_tree(): returns bar;
->  >    - ...
->
->
-> Best described in 7/16 and 14/16, function unset_git_directory() and
->  unset_git_env():
->
->   - git_dir and other git_*_dir in environment.c for object store path...
->   - shared_repository, is_bare_repository_cfg, git_work_tree_cfg,
->  repository_format:  initial configuration used during setup.
->   - is_inside_work_tree: whether cwd is inside a working directory
->   - is_inside_git_dir: whether cwd is inside $GIT_DIR
->   - startup_info->prefix: relative path from new cwd to original cwd
->  when main() is called
->   - startup_info->have_repository: whether a repository is found by setup system
->   - current working directory: directory base for git_dir, work_tree
->  and stuff if they are relative
->
->
->  >   - Rule for the callers of the setup system:
->
->
-> Once main() starts. startup_info should be pointed to a struct. This
->  struct will be used by various part of libgit. If startup_info is
->  NULL, everything works like before.
->
->  Since startup_info initialization until calling setup functions,
->  access to repository will not be allowed, patch 16/16. "access to
->  repository" is everything that calls git_path() and friends.
->
->  One of the setup functions is called. These functions are
->  setup_git_directory*, enter_repo() or init_db(). Only one setup call
->  can be made for the rest of program's life time. unset_git_directory()
->  can be called to undo setup and allow setup functions to be called
->  once more. But it should be avoided.
->
->  If setup system fails to find a useable repository, all involved
->  states are restored. Refer to definition part for those states.
->
->  After setup function is called:
->
->   - git_path() and friends are allowed if startup_info->have_repository is true.
->
->   - Current directory directory may be moved. Programs need to be aware
->  of "prefix" (**) to calculate original cwd.
->
->   - Changing cwd is not allowed, as some directory settings may be
->  relative to cwd.
->
->   - The current working directory may or may not be at worktree's top
->  directory (*). If a command needs worktree, it must call
->  setup_work_tree() to move cwd (and adjust prefix along the way).
->  enter_repo() will never set worktree.
->
->  (*) setup_git_directory() does the setup_work_tree()-equivalent part
->  automatically. Users of setup_git_directory_gently() must call
->  setup_work_tree().
->
->  (**) The implicit rule of prefix is, it does not contain any "../". So
->  if original cwd is outside worktree, using this prefix alone is not
->  enough to get files from command line arguments.
->
->
->  >   - Rule for the implementation of the setup system:
->  >
->  >    Upon the first call the caller makes into the setup system:
->
->
-> This is hard. Let's see. Prerequisites for entering setup system:
->
->   - No setup function has been called.
->
->  The main rule is, when a repo candidate is found, these must be done in order:
->   - setup is_inside_work_tree and is_inside_git_dir
->   - check_repo_format_gently(), if fails, call unset_git_dir and finish.
->   - set_git_dir()
->   - calculate prefix, then finish.
->
->  Setup procedure:
->
->   1. Check for GIT_DIR and GIT_WORK_TREE environment variables, if these are set:
->    1.1. if GIT_WORK_TREE is not set (only GIT_DIR is set), make cwd
->  GIT_WORK_TREE
->    1.2. adjust is_inside_work_tree and is_inside_git_dir accordingly
->    1.3. check repository config for repo format version, if
->  incompatible format is found, roll back using unset_git_directory and
->  return.
->    1.4. set_git_dir() to save GIT_DIR (this is irreversible, until patch 14/16)
->    1.5. calculate prefix, set startup_info->have_repository, finish.
->
->  2. Get current working directory, check whether $(cwd)/.git or $(cwd)
->  looks like a repository, going up until GIT_CEILING_DIRECTORIES (or /)
->  is reached, then finish.
->
->    2.1. If one dir looks like a repository:
->       2.1.1. adjust is_inside_work_tree and is_inside_git_dir accordingly
->       2.1.2. check repository config for repo format version, if
->  incompatible format is found, roll back using unset_git_directory and
->  return.
->       2.1.3. set_git_dir() to save GIT_DIR
->       2.1.4. calculate prefix, set ->have_repository, finish.
->
->    2.2. If no repository is found and GIT_CEILING_DIRECTORIES is
->  reached, moving back to original cwd, finish.
->
->  During setup procedure, normal access to repository is not allowed.
->  Though in theory, it could be allowed after set_git_dir() step.
->   --
->
-> Duy
->
+Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+---
 
+ Noticed some extra output when updating my server's copy of git from
+ source.
 
+ Tested on OS X using bash and dash.
+
+ t/t3020-ls-files-error-unmatch.sh        |    8 ++-
+ t/t3800-mktag.sh                         |   10 +++--
+ t/t4103-apply-binary.sh                  |   40 +++++++++++--------
+ t/t4200-rerere.sh                        |   64 +++++++++++++++--------------
+ t/t9501-gitweb-standalone-http-status.sh |    7 ++-
+ 5 files changed, 71 insertions(+), 58 deletions(-)
+
+diff --git a/t/t3020-ls-files-error-unmatch.sh b/t/t3020-ls-files-error-unmatch.sh
+index f4066cb..a7d8187 100755
+--- a/t/t3020-ls-files-error-unmatch.sh
++++ b/t/t3020-ls-files-error-unmatch.sh
+@@ -11,9 +11,11 @@ line.
+ '
+ . ./test-lib.sh
+ 
+-touch foo bar
+-git update-index --add foo bar
+-git commit -m "add foo bar"
++test_expect_success 'setup' '
++	touch foo bar &&
++	git update-index --add foo bar &&
++	git commit -m "add foo bar"
++'
+ 
+ test_expect_success \
+     'git ls-files --error-unmatch should fail with unmatched path.' \
+diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
+index 6fb027b..8eb4794 100755
+--- a/t/t3800-mktag.sh
++++ b/t/t3800-mktag.sh
+@@ -22,10 +22,12 @@ check_verify_failure () {
+ ###########################################################
+ # first create a commit, so we have a valid object/type
+ # for the tag.
+-echo Hello >A
+-git update-index --add A
+-git commit -m "Initial commit"
+-head=$(git rev-parse --verify HEAD)
++test_expect_success 'setup' '
++	echo Hello >A &&
++	git update-index --add A &&
++	git commit -m "Initial commit" &&
++	head=$(git rev-parse --verify HEAD)
++'
+ 
+ ############################################################
+ #  1. length check
+diff --git a/t/t4103-apply-binary.sh b/t/t4103-apply-binary.sh
+index ad4cc1a..c12a4bd 100755
+--- a/t/t4103-apply-binary.sh
++++ b/t/t4103-apply-binary.sh
+@@ -20,23 +20,29 @@ EOF
+ cat file1 >file2
+ cat file1 >file4
+ 
+-git update-index --add --remove file1 file2 file4
+-git commit -m 'Initial Version' 2>/dev/null
+-
+-git checkout -b binary
+-perl -pe 'y/x/\000/' <file1 >file3
+-cat file3 >file4
+-git add file2
+-perl -pe 'y/\000/v/' <file3 >file1
+-rm -f file2
+-git update-index --add --remove file1 file2 file3 file4
+-git commit -m 'Second Version'
+-
+-git diff-tree -p master binary >B.diff
+-git diff-tree -p -C master binary >C.diff
+-
+-git diff-tree -p --binary master binary >BF.diff
+-git diff-tree -p --binary -C master binary >CF.diff
++test_expect_success 'setup' "
++	git update-index --add --remove file1 file2 file4 &&
++	git commit -m 'Initial Version' 2>/dev/null &&
++
++	git checkout -b binary &&
++	perl -pe 'y/x/\000/' <file1 >file3 &&
++	cat file3 >file4 &&
++	git add file2 &&
++	perl -pe 'y/\000/v/' <file3 >file1 &&
++	rm -f file2 &&
++	git update-index --add --remove file1 file2 file3 file4 &&
++	git commit -m 'Second Version'
++"
++
++test_expect_success 'non-binary diffs' '
++	git diff-tree -p master binary >B.diff &&
++	git diff-tree -p -C master binary >C.diff
++'
++
++test_expect_success 'binary diffs' '
++	git diff-tree -p --binary master binary >BF.diff &&
++	git diff-tree -p --binary -C master binary >CF.diff
++'
+ 
+ test_expect_success 'stat binary diff -- should not fail.' \
+ 	'git checkout master
+diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
+index bb402c3..70856d0 100755
+--- a/t/t4200-rerere.sh
++++ b/t/t4200-rerere.sh
+@@ -8,40 +8,42 @@ test_description='git rerere
+ 
+ . ./test-lib.sh
+ 
+-cat > a1 << EOF
+-Some title
+-==========
+-Whether 'tis nobler in the mind to suffer
+-The slings and arrows of outrageous fortune,
+-Or to take arms against a sea of troubles,
+-And by opposing end them? To die: to sleep;
+-No more; and by a sleep to say we end
+-The heart-ache and the thousand natural shocks
+-That flesh is heir to, 'tis a consummation
+-Devoutly to be wish'd.
+-EOF
+-
+-git add a1
+-git commit -q -a -m initial
+-
+-git checkout -b first
+-cat >> a1 << EOF
+-Some title
+-==========
+-To die, to sleep;
+-To sleep: perchance to dream: ay, there's the rub;
+-For in that sleep of death what dreams may come
+-When we have shuffled off this mortal coil,
+-Must give us pause: there's the respect
+-That makes calamity of so long life;
+-EOF
+-git commit -q -a -m first
+-
+-git checkout -b second master
+-git show first:a1 |
+-sed -e 's/To die, t/To die! T/' -e 's/Some title/Some Title/' > a1
+-echo "* END *" >>a1
+-git commit -q -a -m second
++test_expect_success 'setup' "
++	cat > a1 <<- EOF &&
++	Some title
++	==========
++	Whether 'tis nobler in the mind to suffer
++	The slings and arrows of outrageous fortune,
++	Or to take arms against a sea of troubles,
++	And by opposing end them? To die: to sleep;
++	No more; and by a sleep to say we end
++	The heart-ache and the thousand natural shocks
++	That flesh is heir to, 'tis a consummation
++	Devoutly to be wish'd.
++	EOF
++
++	git add a1 &&
++	git commit -q -a -m initial &&
++
++	git checkout -b first &&
++	cat >> a1 <<- EOF &&
++	Some title
++	==========
++	To die, to sleep;
++	To sleep: perchance to dream: ay, there's the rub;
++	For in that sleep of death what dreams may come
++	When we have shuffled off this mortal coil,
++	Must give us pause: there's the respect
++	That makes calamity of so long life;
++	EOF
++	git commit -q -a -m first &&
++
++	git checkout -b second master &&
++	git show first:a1 |
++	sed -e 's/To die, t/To die! T/' -e 's/Some title/Some Title/' > a1 &&
++	echo '* END *' >>a1 &&
++	git commit -q -a -m second
++"
+ 
+ test_expect_success 'nothing recorded without rerere' '
+ 	(rm -rf .git/rr-cache; git config rerere.enabled false) &&
+diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-standalone-http-status.sh
+index d196cc5..2487da1 100755
+--- a/t/t9501-gitweb-standalone-http-status.sh
++++ b/t/t9501-gitweb-standalone-http-status.sh
+@@ -15,9 +15,10 @@ code and message.'
+ # ----------------------------------------------------------------------
+ # snapshot settings
+ 
+-test_commit \
+-	'SnapshotTests' \
+-	'i can has snapshot?'
++test_expect_success 'setup' "
++	test_commit 'SnapshotTests' 'i can has snapshot?'
++"
++
+ 
+ cat >>gitweb_config.perl <<\EOF
+ $feature{'snapshot'}{'override'} = 0;
 -- 
-Duy
+1.7.0.2.455.g91132
