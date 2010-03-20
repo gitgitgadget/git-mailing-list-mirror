@@ -1,102 +1,267 @@
-From: Eli Barzilay <eli@barzilay.org>
-Subject: Re: Problem with contrib/hooks/post-receive-email
-Date: Fri, 19 Mar 2010 23:21:37 -0400
-Message-ID: <m3r5nfptj2.fsf@winooski.ccs.neu.edu>
-References: <m3vdcsq0hl.fsf@winooski.ccs.neu.edu>
-	<ho09bh$hdh$1@dough.gmane.org>
+From: Mark Rada <marada@uwaterloo.ca>
+Subject: [PATCHv3] gitweb: fill in missing parts of JavaScript minify support
+Date: Sat, 20 Mar 2010 00:29:19 -0400
+Message-ID: <4BA44F1F.9030008@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 20 04:21:57 2010
+X-From: git-owner@vger.kernel.org Sat Mar 20 05:29:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NspG9-0006yg-EN
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 04:21:57 +0100
+	id 1NsqJX-0001s7-0S
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 05:29:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752766Ab0CTDVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Mar 2010 23:21:53 -0400
-Received: from lo.gmane.org ([80.91.229.12]:52749 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752600Ab0CTDVw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Mar 2010 23:21:52 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NspG1-0006wp-Vy
-	for git@vger.kernel.org; Sat, 20 Mar 2010 04:21:49 +0100
-Received: from winooski.ccs.neu.edu ([129.10.115.117])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 20 Mar 2010 04:21:49 +0100
-Received: from eli by winooski.ccs.neu.edu with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 20 Mar 2010 04:21:49 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: winooski.ccs.neu.edu
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-Cancel-Lock: sha1:KJaQ0zHMIS8htEi6GeZQT42nmbY=
+	id S1751386Ab0CTE3Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Mar 2010 00:29:24 -0400
+Received: from mailservices.uwaterloo.ca ([129.97.128.141]:41898 "EHLO
+	mailchk-m05.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751033Ab0CTE3Y (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Mar 2010 00:29:24 -0400
+Received: from bas1-toronto01-1177657629.dsl.bell.ca (bas1-toronto01-1177657629.dsl.bell.ca [70.49.161.29])
+	(authenticated bits=0)
+	by mailchk-m05.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id o2K4TJru013600
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 20 Mar 2010 00:29:21 -0400
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
+X-UUID: cd4d9513-2749-4171-8a4f-85fa79865dce
+X-Miltered: at mailchk-m05 with ID 4BA44F20.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: clamav-milter 0.95.2 at mailchk-m05
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m05.uwaterloo.ca [129.97.128.141]); Sat, 20 Mar 2010 00:29:22 -0400 (EDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142679>
-
-Andy Parkins <andyparkins@gmail.com> writes:
-
-> Eli Barzilay wrote:
->
->> The post-receive-email script goes out of its way to avoid sending
->> commits twice by filtering out commits that are included in
->> existing refs, but if more than one branch changes then some
->> commits can end up not being reported.  For example, I made two
->> commits A and B, made one branch point at A and another at B, and
->> pushed both -- neither of the resulting two emails had A.
->
-> <Andy starts crying>
->
-> I can't see any way to deal with this case easily with
-> post-receive-email as it is.  It inherently processes ref-by-ref.
-
-Well, one thing that sounded obvious to me is to expicitly say
-something about it.  The "danger" that I see in this is a central
-repository setup and people relying on knowing everything that happens
-by reading through these emails -- then get a bad surprise when
-something sneaks in past those emails.
-
-As for a proper solution, I first thought along the lines of what
-Brandon suggested -- but I considered doing that with a hash table
-instead of accumulating a sed script.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142680>
 
 
-> And similarly for ref2, ref3 and ref4.  It seems to me that it needs
-> a hash table keyed on the refname, but I have no idea how to do that
-> in bash.
-> [...]
+JavaScript minification was added to the git build system, but it was a
+hidden away feature that did not play by all the rules.
 
-(Isn't that just associative arrays?)
+This patch adds an ignore and clean rule to take care of minified
+files belonging to gitweb. It also updates the gitweb INSTALL file to
+mention the JavaScript usage and optional minification.
+
+To make minification more accessible, a configure option is added to
+enable minification without making the user edit the Makefiles directly.
+
+Signed-off-by: Mark Rada <marada@uwaterloo.ca>
+
+---
+
+This patch was named "Add ignore and clean rules for gitweb.min.js"
+previously, but now I've squashed other stuff into it.
+
+Changes since previous versions:
+	- Changed patch name and added a commit message
+	- Made ignore and clean rule use globs to be more
+	  future friendly (other minified files)
+	- Added configure script support for JSMIN
+	- Added gitweb/INSTALL updates related to gitweb.js
+	- Compacted Makefile code related to gitweb building
+	  specifically related to gitweb.min.js generation
+
+Nothing related to gitweb or git-instaweb breaks for me with
+JSMIN enabled or disabled, but I'm not sure if I broke portability
+by taking things out of the root level Makefile, there just
+seemed to be a lot of redundant information there that was
+handled by the Makefile in the gitweb directory.
 
 
-> In short: yuck.  It feels an awful lot like its pushing the
-> boundaries of what is sensible to do in shell script.
+ .gitignore      |    1 +
+ Makefile        |   11 ++---------
+ configure.ac    |   10 ++++++++++
+ gitweb/INSTALL  |   25 ++++++++++++++++---------
+ gitweb/Makefile |   21 ++++++---------------
+ 5 files changed, 35 insertions(+), 33 deletions(-)
 
-Yeah, my conclusion was similar...  But after considering it for a
-while, I think that a saner approach is to choose a main branch (eg,
-`master' or `devel') where all commits are always reported, then for
-branches show only commits that are not on this main branch.  This
-means that if you only read the emails on this branch you know
-practically everything that happens, and if you're interested in what
-happens on a branch you will see some commits again in the future when
-they're added to the main branch -- but that seems even better to me:
-even I read some commit when it happened on a branch, I'd still want
-to know when it's added to the main branch.
-
-This seems to me both more predictable in the sense of the
-notifications and the code.  But I'm in the process of converting a
-project to git so I might not be experienced enough...
-
+diff --git a/.gitignore b/.gitignore
+index 7b3acb7..4c24152 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -156,6 +156,7 @@
+ /git-core-*/?*
+ /gitk-git/gitk-wish
+ /gitweb/gitweb.cgi
++/gitweb/gitweb.min.*
+ /test-chmtime
+ /test-ctype
+ /test-date
+diff --git a/Makefile b/Makefile
+index f80b25e..58f2cc3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -279,8 +279,6 @@ lib = lib
+ # DESTDIR=
+ pathsep = :
+ 
+-# JavaScript minifier invocation that can function as filter
+-JSMIN =
+ 
+ export prefix bindir sharedir sysconfdir
+ 
+@@ -1556,14 +1554,9 @@ else
+ GITWEB_JS=gitweb/gitweb.js
+ endif
+ OTHER_PROGRAMS += gitweb/gitweb.cgi $(GITWEB_JS)
+-gitweb/gitweb.cgi: gitweb/gitweb.perl $(GITWEB_PROGRAMS)
++gitweb/gitweb.cgi:
+ 	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
+ 
+-ifdef JSMIN
+-gitweb/gitweb.min.js: gitweb/gitweb.js
+-	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
+-endif # JSMIN
+-
+ 
+ git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css gitweb/gitweb.js
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+@@ -2077,7 +2070,7 @@ clean:
+ 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
+ 	$(MAKE) -C Documentation/ clean
+ ifndef NO_PERL
+-	$(RM) gitweb/gitweb.cgi
++	$(RM) gitweb/{gitweb.cgi,gitweb.min.*}
+ 	$(MAKE) -C perl clean
+ endif
+ ifndef NO_PYTHON
+diff --git a/configure.ac b/configure.ac
+index 914ae57..59e7b9e 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -179,6 +179,16 @@ fi],
+    AC_MSG_NOTICE([Will try -pthread then -lpthread to enable POSIX Threads.])
+ ])
+ 
++# Define option to enable JavaScript minification
++AC_ARG_ENABLE([jsmin],
++ [AS_HELP_STRING([--enable-jsmin=ARG],
++   [ARG is the value to pass to make to enable JavaScript minification.])],
++ [
++   JSMIN=$enableval;
++   AC_MSG_NOTICE([Setting JSMIN to '$JSMIN' to enable JavaScript minifying])
++   GIT_CONF_APPEND_LINE(JSMIN=$enableval);
++ ])
++
+ ## Site configuration (override autodetection)
+ ## --with-PACKAGE[=ARG] and --without-PACKAGE
+ AC_MSG_NOTICE([CHECKS for site configuration])
+diff --git a/gitweb/INSTALL b/gitweb/INSTALL
+index b76a0cf..8383106 100644
+--- a/gitweb/INSTALL
++++ b/gitweb/INSTALL
+@@ -2,11 +2,11 @@ GIT web Interface (gitweb) Installation
+ =======================================
+ 
+ First you have to generate gitweb.cgi from gitweb.perl using
+-"make gitweb/gitweb.cgi", then copy appropriate files (gitweb.cgi,
+-gitweb.css, git-logo.png and git-favicon.png) to their destination.
++"make gitweb", then copy appropriate files (gitweb.cgi, gitweb.js,
++gitweb.css, git-logo.png and git-favicon.png) to to their destination.
+ For example if git was (or is) installed with /usr prefix, you can do
+ 
+-	$ make prefix=/usr gitweb/gitweb.cgi  ;# as yourself
++	$ make prefix=/usr gitweb             ;# as yourself
+ 	# cp gitweb/git* /var/www/cgi-bin/    ;# as root
+ 
+ Alternatively you can use autoconf generated ./configure script to
+@@ -15,7 +15,7 @@ instead
+ 
+ 	$ make configure                     ;# as yourself
+ 	$ ./configure --prefix=/usr          ;# as yourself
+-	$ make gitweb/gitweb.cgi             ;# as yourself
++	$ make gitweb                        ;# as yourself
+ 	# cp gitweb/git* /var/www/cgi-bin/   ;# as root
+ 
+ The above example assumes that your web server is configured to run
+@@ -61,10 +61,16 @@ file for gitweb (in gitweb/README).
+   projectroot linking to projectname/.git (but it is just
+   a suggestion).
+ 
+-- You can control where gitweb tries to find its main CSS style file,
+-  its favicon and logo with the GITWEB_CSS, GITWEB_FAVICON and GITWEB_LOGO
+-  build configuration variables. By default gitweb tries to find them
+-  in the same directory as gitweb.cgi script.
++- You can control where gitweb tries to find its main JavaScript file,
++  CSS file, favicon and logo with the GITWEB_JS, GITWEB_CSS,
++  GITWEB_FAVICON and GITWEB_LOGO build configuration variables. By default
++  gitweb tries to find them in the same directory as gitweb.cgi script.
++
++- You can generate a minified version of gitweb.js and at build
++  time by setting the JSMIN variable to the full path of a JavaScript
++  minifier or using the --enable-jsmin=/PATH/TO/MINIFIER configure script
++  flag. NOTE: substitue gitweb.min.js for all use of gitweb.js in this
++  INSTALL file if you choose to use this option.
+ 
+ Build example
+ ~~~~~~~~~~~~~
+@@ -74,13 +80,14 @@ Build example
+   we want to display are under /home/local/scm, you can do
+ 
+ 	make GITWEB_PROJECTROOT="/home/local/scm" \
++             GITWEB_JS="/gitweb/gitweb.js" \
+ 	     GITWEB_CSS="/gitweb/gitweb.css" \
+ 	     GITWEB_LOGO="/gitweb/git-logo.png" \
+ 	     GITWEB_FAVICON="/gitweb/git-favicon.png" \
+ 	     bindir=/usr/local/bin \
+ 	     gitweb/gitweb.cgi
+ 
+-	cp -fv ~/git/gitweb/gitweb.{cgi,css} \
++	cp -fv ~/git/gitweb/gitweb.{.js,cgi,css} \
+ 	       ~/git/gitweb/git-{favicon,logo}.png \
+ 	     /var/www/cgi-bin/gitweb/
+ 
+diff --git a/gitweb/Makefile b/gitweb/Makefile
+index c9eb1ee..edff9fd 100644
+--- a/gitweb/Makefile
++++ b/gitweb/Makefile
+@@ -11,9 +11,6 @@ prefix ?= $(HOME)
+ bindir ?= $(prefix)/bin
+ RM ?= rm -f
+ 
+-# JavaScript minifier invocation that can function as filter
+-JSMIN ?=
+-
+ # default configuration for gitweb
+ GITWEB_CONFIG = gitweb_config.perl
+ GITWEB_CONFIG_SYSTEM = /etc/gitweb.conf
+@@ -29,11 +26,7 @@ GITWEB_HOMETEXT = indextext.html
+ GITWEB_CSS = gitweb.css
+ GITWEB_LOGO = git-logo.png
+ GITWEB_FAVICON = git-favicon.png
+-ifdef JSMIN
+-GITWEB_JS = gitweb.min.js
+-else
+ GITWEB_JS = gitweb.js
+-endif
+ GITWEB_SITE_HEADER =
+ GITWEB_SITE_FOOTER =
+ 
+@@ -84,15 +77,13 @@ endif
+ 
+ all:: gitweb.cgi
+ 
++FILES=gitweb.cgi gitweb.min*
++
+ ifdef JSMIN
+-FILES=gitweb.cgi gitweb.min.js
+-gitweb.cgi: gitweb.perl gitweb.min.js
+-else # !JSMIN
+-FILES=gitweb.cgi
+-gitweb.cgi: gitweb.perl
+-endif # JSMIN
++GITWEB_JS = gitweb.min.js
++endif
+ 
+-gitweb.cgi:
++gitweb.cgi: gitweb.perl $(GITWEB_JS)
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+ 	sed -e '1s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+ 	    -e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
 -- 
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
-                    http://barzilay.org/                   Maze is Life!
+1.7.0.2.279.gf1ba1c
