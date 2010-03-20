@@ -1,132 +1,204 @@
 From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: [PATCH 1/2] Make templates honour SHELL_PATH and PERL_PATH
-Date: Sat, 20 Mar 2010 10:48:08 -0400
-Message-ID: <1269096489-12750-2-git-send-email-bwalton@artsci.utoronto.ca>
+Subject: [PATCH 2/2] Modernize git calling conventions in hook templates
+Date: Sat, 20 Mar 2010 10:48:09 -0400
+Message-ID: <1269096489-12750-3-git-send-email-bwalton@artsci.utoronto.ca>
 References: <1269096489-12750-1-git-send-email-bwalton@artsci.utoronto.ca>
 Cc: Ben Walton <bwalton@artsci.utoronto.ca>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 20 15:48:33 2010
+X-From: git-owner@vger.kernel.org Sat Mar 20 15:48:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NszyW-0001K1-3I
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 15:48:28 +0100
+	id 1Nszyj-0001PB-Su
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 15:48:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752963Ab0CTOsY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Mar 2010 10:48:24 -0400
-Received: from www.cquest.utoronto.ca ([192.82.128.5]:53017 "EHLO
+	id S1753008Ab0CTOs1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Mar 2010 10:48:27 -0400
+Received: from www.cquest.utoronto.ca ([192.82.128.5]:53020 "EHLO
 	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752770Ab0CTOsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Mar 2010 10:48:22 -0400
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:42662 ident=93)
+	with ESMTP id S1752947Ab0CTOsX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Mar 2010 10:48:23 -0400
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:42663 ident=93)
 	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
-	id 1NszyP-0002wx-Fl; Sat, 20 Mar 2010 10:48:21 -0400
+	id 1NszyQ-0002x4-Kf; Sat, 20 Mar 2010 10:48:22 -0400
 Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.63)
 	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1NszyP-0003KE-Ew; Sat, 20 Mar 2010 10:48:21 -0400
+	id 1NszyQ-0003KI-Jo; Sat, 20 Mar 2010 10:48:22 -0400
 X-Mailer: git-send-email 1.7.0
 In-Reply-To: <1269096489-12750-1-git-send-email-bwalton@artsci.utoronto.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142713>
 
-The hook script templates were hard coded to use /bin/sh and perl.
-This patch ensures that they use the same tools specified for the rest
-of the suite.
-
-The impetus for the change was noticing that, as shipped, some of the
-hooks used shell constructs that wouldn't work under Solaris' /bin/sh
-(eg: $(cmd...) substitutions).
+The hook templates were still using/referencing 'git-foo' instead of
+'git foo.'  This patch updates the sample hooks to use the modern
+conventions instead.
 
 Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
 ---
- Makefile                                   |    2 +-
- templates/Makefile                         |   17 +++++++++++++++--
- templates/hooks--pre-rebase.sample         |    2 +-
- templates/hooks--prepare-commit-msg.sample |    4 ++--
- 4 files changed, 19 insertions(+), 6 deletions(-)
+ templates/hooks--commit-msg.sample         |    2 +-
+ templates/hooks--post-update.sample        |    2 +-
+ templates/hooks--pre-commit.sample         |    4 ++--
+ templates/hooks--pre-rebase.sample         |   18 +++++++++---------
+ templates/hooks--prepare-commit-msg.sample |    2 +-
+ templates/hooks--update.sample             |    4 ++--
+ templates/info--exclude                    |    2 +-
+ 7 files changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 7c616f8..86638de 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1469,7 +1469,7 @@ endif
- ifndef NO_PYTHON
- 	$(QUIET_SUBDIR0)git_remote_helpers $(QUIET_SUBDIR1) PYTHON_PATH='$(PYTHON_PATH_SQ)' prefix='$(prefix_SQ)' all
- endif
--	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1)
-+	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1) SHELL_PATH='$(SHELL_PATH_SQ)' PERL_PATH='$(PERL_PATH_SQ)'
+diff --git a/templates/hooks--commit-msg.sample b/templates/hooks--commit-msg.sample
+index 6ef1d29..b58d118 100755
+--- a/templates/hooks--commit-msg.sample
++++ b/templates/hooks--commit-msg.sample
+@@ -1,7 +1,7 @@
+ #!/bin/sh
+ #
+ # An example hook script to check the commit log message.
+-# Called by git-commit with one argument, the name of the file
++# Called by "git commit" with one argument, the name of the file
+ # that has the commit message.  The hook should exit with non-zero
+ # status after issuing an appropriate message if it wants to stop the
+ # commit.  The hook is allowed to edit the commit message file.
+diff --git a/templates/hooks--post-update.sample b/templates/hooks--post-update.sample
+index 5323b56..ec17ec1 100755
+--- a/templates/hooks--post-update.sample
++++ b/templates/hooks--post-update.sample
+@@ -5,4 +5,4 @@
+ #
+ # To enable this hook, rename this file to "post-update".
  
- please_set_SHELL_PATH_to_a_more_modern_shell:
- 	@$$(:)
-diff --git a/templates/Makefile b/templates/Makefile
-index 408f013..d22a71a 100644
---- a/templates/Makefile
-+++ b/templates/Makefile
-@@ -11,6 +11,16 @@ prefix ?= $(HOME)
- template_instdir ?= $(prefix)/share/git-core/templates
- # DESTDIR=
+-exec git-update-server-info
++exec git update-server-info
+diff --git a/templates/hooks--pre-commit.sample b/templates/hooks--pre-commit.sample
+index 439eefd..b187c4b 100755
+--- a/templates/hooks--pre-commit.sample
++++ b/templates/hooks--pre-commit.sample
+@@ -1,13 +1,13 @@
+ #!/bin/sh
+ #
+ # An example hook script to verify what is about to be committed.
+-# Called by git-commit with no arguments.  The hook should
++# Called by "git commit" with no arguments.  The hook should
+ # exit with non-zero status after issuing an appropriate message if
+ # it wants to stop the commit.
+ #
+ # To enable this hook, rename this file to "pre-commit".
  
-+ifndef SHELL_PATH
-+	SHELL_PATH = /bin/sh
-+endif
-+ifndef PERL_PATH
-+	PERL_PATH = perl
-+endif
-+
-+SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
-+PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
-+
- # Shell quote (do not use $(call) to accommodate ancient setups);
- DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
- template_instdir_SQ = $(subst ','\'',$(template_instdir))
-@@ -33,8 +43,11 @@ boilerplates.made : $(bpsrc)
- 		case "$$boilerplate" in \
- 		*--) continue;; \
- 		esac && \
--		cp $$boilerplate blt/$$dst && \
--		if test -x "blt/$$dst"; then rx=rx; else rx=r; fi && \
-+		sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-+		    -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
-+		    -e 's|@PERL_PATH@|$(PERL_PATH_SQ)|g' $$boilerplate > \
-+			blt/$$dst && \
-+		if test -x "$$boilerplate"; then rx=rx; else rx=r; fi && \
- 		chmod a+$$rx "blt/$$dst" || exit; \
- 	done && \
- 	date >$@
+-if git-rev-parse --verify HEAD >/dev/null 2>&1
++if git rev-parse --verify HEAD >/dev/null 2>&1
+ then
+ 	against=HEAD
+ else
 diff --git a/templates/hooks--pre-rebase.sample b/templates/hooks--pre-rebase.sample
-index be1b06e..ab1c4c8 100755
+index ab1c4c8..053f111 100755
 --- a/templates/hooks--pre-rebase.sample
 +++ b/templates/hooks--pre-rebase.sample
-@@ -65,7 +65,7 @@ then
+@@ -2,7 +2,7 @@
+ #
+ # Copyright (c) 2006, 2008 Junio C Hamano
+ #
+-# The "pre-rebase" hook is run just before "git-rebase" starts doing
++# The "pre-rebase" hook is run just before "git rebase" starts doing
+ # its job, and can prevent the command from running by exiting with
+ # non-zero status.
+ #
+@@ -43,7 +43,7 @@ git show-ref -q "$topic" || {
+ }
+ 
+ # Is topic fully merged to master?
+-not_in_master=`git-rev-list --pretty=oneline ^master "$topic"`
++not_in_master=`git rev-list --pretty=oneline ^master "$topic"`
+ if test -z "$not_in_master"
+ then
+ 	echo >&2 "$topic is fully merged to master; better remove it."
+@@ -51,11 +51,11 @@ then
+ fi
+ 
+ # Is topic ever merged to next?  If so you should not be rebasing it.
+-only_next_1=`git-rev-list ^master "^$topic" ${publish} | sort`
+-only_next_2=`git-rev-list ^master           ${publish} | sort`
++only_next_1=`git rev-list ^master "^$topic" ${publish} | sort`
++only_next_2=`git rev-list ^master           ${publish} | sort`
+ if test "$only_next_1" = "$only_next_2"
+ then
+-	not_in_topic=`git-rev-list "^$topic" master`
++	not_in_topic=`git rev-list "^$topic" master`
+ 	if test -z "$not_in_topic"
+ 	then
+ 		echo >&2 "$topic is already up-to-date with master"
+@@ -64,7 +64,7 @@ then
+ 		exit 0
  	fi
  else
- 	not_in_next=`git-rev-list --pretty=oneline ^${publish} "$topic"`
--	perl -e '
-+	@PERL_PATH@ -e '
+-	not_in_next=`git-rev-list --pretty=oneline ^${publish} "$topic"`
++	not_in_next=`git rev-list --pretty=oneline ^${publish} "$topic"`
+ 	@PERL_PATH@ -e '
  		my $topic = $ARGV[0];
  		my $msg = "* $topic has commits already merged to public branch:\n";
- 		my (%not_in_next) = map {
+@@ -157,13 +157,13 @@ B to be deleted.
+ 
+ To compute (1):
+ 
+-	git-rev-list ^master ^topic next
+-	git-rev-list ^master        next
++	git rev-list ^master ^topic next
++	git rev-list ^master        next
+ 
+ 	if these match, topic has not merged in next at all.
+ 
+ To compute (2):
+ 
+-	git-rev-list master..topic
++	git rev-list master..topic
+ 
+ 	if this is empty, it is fully merged to "master".
 diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks--prepare-commit-msg.sample
-index 3652424..e8d1754 100755
+index e8d1754..86b8f22 100755
 --- a/templates/hooks--prepare-commit-msg.sample
 +++ b/templates/hooks--prepare-commit-msg.sample
-@@ -22,10 +22,10 @@
+@@ -1,7 +1,7 @@
+ #!/bin/sh
+ #
+ # An example hook script to prepare the commit log message.
+-# Called by git-commit with the name of the file that has the
++# Called by "git commit" with the name of the file that has the
+ # commit message, followed by the description of the commit
+ # message's source.  The hook's purpose is to edit the commit
+ # message file.  If the hook fails with a non-zero status,
+diff --git a/templates/hooks--update.sample b/templates/hooks--update.sample
+index fd63b2d..71ab04e 100755
+--- a/templates/hooks--update.sample
++++ b/templates/hooks--update.sample
+@@ -1,7 +1,7 @@
+ #!/bin/sh
+ #
+ # An example hook script to blocks unannotated tags from entering.
+-# Called by git-receive-pack with arguments: refname sha1-old sha1-new
++# Called by "git receive-pack" with arguments: refname sha1-old sha1-new
+ #
+ # To enable this hook, rename this file to "update".
+ #
+@@ -64,7 +64,7 @@ zero="0000000000000000000000000000000000000000"
+ if [ "$newrev" = "$zero" ]; then
+ 	newrev_type=delete
+ else
+-	newrev_type=$(git-cat-file -t $newrev)
++	newrev_type=$(git cat-file -t $newrev)
+ fi
  
- case "$2,$3" in
-   merge,)
--    perl -i.bak -ne 's/^/# /, s/^# #/#/ if /^Conflicts/ .. /#/; print' "$1" ;;
-+    @PERL_PATH@ -i.bak -ne 's/^/# /, s/^# #/#/ if /^Conflicts/ .. /#/; print' "$1" ;;
- 
- # ,|template,)
--#   perl -i.bak -pe '
-+#   @PERL_PATH@ -i.bak -pe '
- #      print "\n" . `git diff --cached --name-status -r`
- #	 if /^#/ && $first++ == 0' "$1" ;;
- 
+ case "$refname","$newrev_type" in
+diff --git a/templates/info--exclude b/templates/info--exclude
+index 2c87b72..a5196d1 100644
+--- a/templates/info--exclude
++++ b/templates/info--exclude
+@@ -1,4 +1,4 @@
+-# git-ls-files --others --exclude-from=.git/info/exclude
++# git ls-files --others --exclude-from=.git/info/exclude
+ # Lines that start with '#' are comments.
+ # For a project mostly in C, the following would be a good set of
+ # exclude patterns (uncomment them if you want to use them):
 -- 
 1.7.0
