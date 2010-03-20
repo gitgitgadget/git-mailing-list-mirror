@@ -1,69 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: native-git-svn: A Summer of Code 2010 proposal
-Date: Sat, 20 Mar 2010 11:48:42 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1003201148230.7596@pacific.mpi-cbg.de>
-References: <f3271551003191018j67aa133es2fee4e3dda519ce0@mail.gmail.com>  <32541b131003191132y119037f8rae598d0037786703@mail.gmail.com>  <fabb9a1e1003191139v6ea37df3uba441f2cba9bc992@mail.gmail.com>
- <32541b131003191430ld0eaa9cw1d2aac08cff15682@mail.gmail.com>
+From: Fredrik Kuivinen <frekui@gmail.com>
+Subject: Re: [RFC][PATCH] grep: enable threading for context line printing
+Date: Sat, 20 Mar 2010 12:21:05 +0100
+Message-ID: <4c8ef71003200421n5d67fb39u11c706702acec548@mail.gmail.com>
+References: <4B9D2864.9090808@lsrfire.ath.cx>
+	 <4c8ef71003141303h474429aegc0a2eb2f97e7ff69@mail.gmail.com>
+	 <4B9E5E76.9000702@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 20 11:47:52 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sat Mar 20 12:21:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NswDe-0000yh-9q
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 11:47:50 +0100
+	id 1Nswk0-0005P7-JM
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 12:21:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751273Ab0CTKre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Mar 2010 06:47:34 -0400
-Received: from mail.gmx.net ([213.165.64.20]:32908 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750980Ab0CTKrd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Mar 2010 06:47:33 -0400
-Received: (qmail invoked by alias); 20 Mar 2010 10:47:31 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp009) with SMTP; 20 Mar 2010 11:47:31 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Y27pAvvjYd1iTcFFd76PCG/gxGAzwtTEUyzLSlN
-	/O7d0bh1MHH5SK
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <32541b131003191430ld0eaa9cw1d2aac08cff15682@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1751749Ab0CTLVK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Mar 2010 07:21:10 -0400
+Received: from mail-fx0-f219.google.com ([209.85.220.219]:40394 "EHLO
+	mail-fx0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751609Ab0CTLVI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Mar 2010 07:21:08 -0400
+Received: by fxm19 with SMTP id 19so1284065fxm.21
+        for <git@vger.kernel.org>; Sat, 20 Mar 2010 04:21:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=DPJby9dad/PWIXylUF8kbm5XvJGKO5pDD1OMB9T0InE=;
+        b=jda2+j9az2usGKtTmOzXpQ4WiGWF8EJ75VmwB9qC7ec/Z55Fbr6uVQ5HNI1B9ROhFd
+         VXTE+VJGY5a3Erx5iB0o0aNqB25JMSbWEQ81uCq6qpMZC5LIohD7jcSfPwlrz7RFqdkt
+         B61Xrq+CNExE614OUKZIGNX4tdL8iws+iZi5I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=sCwf1NZTatvm4F/BkMZ9PIT8rtIHAdlCSHp5BzmUAF+jbYaxeB+2Cv9DaA314G/ZCx
+         fBq+FsYTKAp2Uh8fMTHXl1RQBnjdgzEfczt5zKjQOIDC1zi8+7qagbj2MuoGylmc/gOd
+         giQW8yFz/wTpY04zvRb/bEfLXH3pSyc4rxt5o=
+Received: by 10.239.184.7 with SMTP id w7mr220199hbg.25.1269084065818; Sat, 20 
+	Mar 2010 04:21:05 -0700 (PDT)
+In-Reply-To: <4B9E5E76.9000702@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142702>
 
-Hi,
+On Mon, Mar 15, 2010 at 17:21, Ren=E9 Scharfe <rene.scharfe@lsrfire.ath=
+=2Ecx> wrote:
+> Yes, that was a bit too complicated. =A0I shuffled the code around a =
+bit,
+> so the patch is now a bit smaller and avoids introducing value 2 for
+> show_hunk_mark. =A0Better?
 
-On Fri, 19 Mar 2010, Avery Pennarun wrote:
+In my opinion, yes.
 
-> On Fri, Mar 19, 2010 at 2:39 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> > On Fri, Mar 19, 2010 at 19:32, Avery Pennarun <apenwarr@gmail.com> wrote:
-> >> - all those "extra commands" that git-svn supports are considered
-> >> backwards compatibility, even if they're absolutely obsolete because
-> >> of newer commands, and therefore will be very hard to justify getting
-> >> rid of
-> >
-> > I don't think this is true. The proposal is to implement
-> > git-remote-svn, which would allow _native_ interaction with svn
-> > repositories, so without using 'git svn'. It would allow 'git clone
-> > svn://example.com/myrepo' and subsequent "git pull"s from that svn
-> > source. Do you agree that makes (part of) your comments moot, or am I
-> > missing something?
-> 
-> I don't know enough about the proposal to comment on this part of the 
-> design.
-
-How about reading it? It's on the Wiki.
-
-Ciao,
-Dscho
+- Fredrik
