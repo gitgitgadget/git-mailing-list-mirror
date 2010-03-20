@@ -1,119 +1,200 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2] Makefile: Fix CDPATH problem
-Date: Fri, 19 Mar 2010 19:06:15 -0500
-Message-ID: <20100320000615.GA17761@progeny.tock>
-References: <d557014b1003191436r4d141825p6c5b8e1b3bee4fc8@mail.gmail.com>
- <7veijgc6md.fsf@alter.siamese.dyndns.org>
- <d557014b1003191525m490d1bfam4e8ce40681ff2214@mail.gmail.com>
- <20100319234033.GA18035@progeny.tock>
- <7vd3yz513z.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
+Date: Sat, 20 Mar 2010 01:21:00 +0100
+Message-ID: <201003200121.02560.jnareb@gmail.com>
+References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com> <m3tyscjt7h.fsf@localhost.localdomain> <b4087cc51003190740h680b5dech4edd7a5000f180ee@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Cox <mhcox@bluezoosoftware.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 20 01:05:42 2010
+Cc: git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 20 01:21:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NsmC6-0007FH-2X
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 01:05:36 +0100
+	id 1NsmRR-0004cO-Or
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 01:21:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348Ab0CTAF3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Mar 2010 20:05:29 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:35684 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752209Ab0CTAF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Mar 2010 20:05:28 -0400
-Received: by gwaa18 with SMTP id a18so61653gwa.19
-        for <git@vger.kernel.org>; Fri, 19 Mar 2010 17:05:28 -0700 (PDT)
+	id S1752751Ab0CTAVT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Mar 2010 20:21:19 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:35838 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752583Ab0CTAVQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Mar 2010 20:21:16 -0400
+Received: by bwz1 with SMTP id 1so496070bwz.21
+        for <git@vger.kernel.org>; Fri, 19 Mar 2010 17:21:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=2ultOsOQPk2LcgT80oCJbL35tAFCS5D8RclH/Iej2xU=;
-        b=CgvBqr0aBaS2kNlmd6Ex4n4Z8N0ISxbt6YIJGK7tvz5+Rrf8eSiGpy6LTHPmH+UhJB
-         8qHfEtgJZHgbucYuPLoxLqq+y8v5zm4m0B4NMgaafLpe46iLId5XOaPJLq7s7NjJpy/8
-         FnS+lUV/JK8U8/xfQJB+7Ox/LeBMxVJPiavU0=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=vxV8jq0ydLlBssZ0pT9zwTl4eNacSNKBDs5doPXNXV0=;
+        b=l18nGcE5eB48etvGSiBzA9DWYMN2V/3rVGZfnVfdVFyA5dU+BGac4Il2P3O4K/nm5U
+         p4m6/FR+gmj8Jq5iOqKQziHMyFR6VoUdjCduZhtUEK4b4D3DB5GdyKhr0WSiP1xyMzXF
+         jiuSzm+FgtZ8SoGP/3hq4wIdBv8aoEwbkNXCI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=kvRX9wMbMwzpSyzzruFB2q+zWbR1pUMTiuq6D5sQIuAnWvehaX6ralqKZhmrEZGIu2
-         qi0yLd/9AgAVOFhshuLD/Qdh0L5t6Buh4CxByieXunaLzf0FGN7NUmEcMILhXF2DSvir
-         NNA1JfJI8FZKF97ndkBSugV13664Xe2gEVzXw=
-Received: by 10.150.32.1 with SMTP id f1mr2229385ybf.222.1269043527888;
-        Fri, 19 Mar 2010 17:05:27 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm1402196iwn.10.2010.03.19.17.05.27
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 19 Mar 2010 17:05:27 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=ZE2rfz43M0jpmRkXZrimsoum7svF6LeasXmEG2S/pVhP4HXBIKrfHG4kS0d3YglMu+
+         EYLKzJvU1dbnEjL1CAOlceMtw1juCVsTPSihcd/aIVhgBPLUznNg8/+XsqeI0QRjsgkw
+         Rd25b50d+isulSSPnic0s5/vJP/cCkrp4QRCI=
+Received: by 10.204.38.65 with SMTP id a1mr3026340bke.168.1269044474335;
+        Fri, 19 Mar 2010 17:21:14 -0700 (PDT)
+Received: from [192.168.1.13] (abve2.neoplus.adsl.tpnet.pl [83.8.202.2])
+        by mx.google.com with ESMTPS id 16sm1028682bwz.13.2010.03.19.17.21.11
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 19 Mar 2010 17:21:11 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <b4087cc51003190740h680b5dech4edd7a5000f180ee@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vd3yz513z.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142665>
 
-If CDPATH is set, "cd" prints its destination to stdout, causing
-the common (cd a && tar cf - .) | (cd b && tar xf -) idiom to fail.
-=46or example:
+On Fri, 19 Mar 2010, Michael Witten wrote:
+> On Fri, Mar 19, 2010 at 08:08, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
 
- make -C templates DESTDIR=3D'' install
- make[1]: Entering directory `/users/e477610/exptool/src/git-1.7.0.2/te=
-mplates'
- install -d -m 755 '/home/e477610/exptool/share/git-core/templates'
- (cd blt && gtar cf - .) | \
-	(cd '/home/e477610/exptool/share/git-core/templates' && umask 022 && g=
-tar xof -)
- gtar: This does not look like a tar archive
+>> This is non-solution to non-problem.
+>>
+>> First, the user.name and user.email does not need to be name and ema=
+il
+>> from some email account. =C2=A0It might be some "canonical name" and
+>> "canonical email".
+>=20
+> The vast majority of patches come in through email; the git tools
+> expect the user.name and user.email to reflect physical email account
+> information.
+>=20
+> You would be correct if it were not for the fact that git currently
+> conflates identity and current email system.
 
-Most git scripts already protect against use of CDPATH through
-git-sh-setup, but the Makefile doesn=E2=80=99t.
+It is not true.  From the git-config(1) manpage, the description (meani=
+ng)
+of user.name and user.email is:
 
-Reported-by: Michael Cox <mhcox@bluezoosoftware.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-> Eh, the rationale and the in-code comment need to be fixed.  The issu=
-e is
-> not "taking us to random places", but "reporting the name of the rand=
-om
-> place in its standard output".
+  user.email::
+        Your email address to be recorded in any newly created commits.
+        Can be overridden by the 'GIT_AUTHOR_EMAIL', 'GIT_COMMITTER_EMA=
+IL', and
+        'EMAIL' environment variables.  See linkgit:git-commit-tree[1].
 
-That makes more sense.  Thanks.
-
-> But other than that, this is something we have seen on the list a few
-> times, and I think it is about time to do this.
-
-Here=E2=80=99s an updated patch.
-
- Makefile |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 4387d42..98372eb 100644
---- a/Makefile
-+++ b/Makefile
-@@ -317,6 +317,12 @@ SCRIPT_PYTHON =3D
- SCRIPT_SH =3D
- TEST_PROGRAMS =3D
+  user.name::
+        Your full name to be recorded in any newly created commits.
+        Can be overridden by the 'GIT_AUTHOR_NAME' and 'GIT_COMMITTER_N=
+AME'
+        environment variables.  See linkgit:git-commit-tree[1].
 =20
-+# Having this variable in your environment would break pipelines becau=
-se
-+# you cause "cd" to echo its destination to stdout.  It can also take
-+# scripts to unexpected places.  If you like CDPATH, define it for you=
-r
-+# interactive shell sessions without exporting it.
-+unexport CDPATH
-+
- SCRIPT_SH +=3D git-am.sh
- SCRIPT_SH +=3D git-bisect.sh
- SCRIPT_SH +=3D git-difftool--helper.sh
+As you can see there is nothing about email, and physicsl email account=
+=2E
+
+It is true that git-send-email asks about the "From" email address to
+send email from with user.name + user.email as default value...
+unless either sendemail.from or --from option is used. =20
+[See also below].
+
+>> Second, there are (I think) two main sources of 'unstability' in
+>> (name,email) pairs, namely A) misconfigured git (when fetching/pushi=
+ng
+>> using git itself), B) wrong name in email etc. (when sending patches
+>> via email, 80% of patches in Linux kernel case).
+>>
+>> In the case of misconfigured git (case A) using UUID wouldn't help,
+>> and only make it worse (you would have to configure the same UUID on
+>> each machine). =C2=A0What would help here is for git to be more stri=
+ct and
+>> perhaps forbid (some of) autogenerated names and emails.
+>=20
+> The uuid string would be typed pretty much only during configuration;
+> from there, it's basically just handled by the git tools. Hence, the
+> uuid can indeed suffer from typos, but the name/email pair can suffer
+> from not only typos but also real life name changing and email accoun=
+t
+> switching.
+
+You do not need (in theory at least) to change user.name nor user.email
+with real life name changing (like marriage or adoption) and email=20
+account switching.
+
+[...]
+>> In the case of sending patches via email, you can use in-body 'From:=
+'
+>> to provide (name,email) part that is different than account used to
+>> send email.
+>=20
+> That's a good solution that I've considered, except for 2 reasons:
+>=20
+>     * It involves much more opportunities for typos and/or the
+>       configuration of a non-git tool for a git-specific purpose.
+>=20
+>     * Many if not most email services will refuse to send messages
+>       with forged/spoofed email addresses.
+
+Actually git-send-email would automatically add in-body "From:" header
+if it is different from the "From:" address for email, and git-am would
+automatically prefer in-body "From:" over sender (in-header "From:")
+for authorship information.
+
+Sender can be different from author of the patch, there is no problem
+with that.
+
+What git can improve here (and perhaps already does it) is handling of
+non-ASCII characters in name (e.g. when commit message does not contain
+non US-ASCII letters, but user.name does).  Perhaps it got corrected
+(improved) already.
+
+
+P.S. Backward compatibility (older git-am) would probably require
+UUID in the form of canonical name+email, and use of in-body "From:"
+header to pass this UUID when sending patches.
+
+>> In the case of UUID you would need the same: some way to
+>> provide UUID in patch (in email).
+>=20
+> Yes, but that's automated by tools like git's format-patch. Not using
+> something like format-patch or some other git interface is an
+> 'out-of-band' communication and that author has essentially chosen no=
+t
+> to care about his identity.
+>=20
+> The use of the uuid field and allowing git tools to handle it is just
+> a way to give a person who does care about his identity to keep it
+> consistent.
+
+git-send-email *already* automatically deals with sender !=3D author.
+
+[...]
+>> What could help in both cases is .mailmap being used (perhaps on
+>> demand) in more git commands. =C2=A0See Documentation/mailmap.txt
+>> or e.g. git-shortlog(1) manpage. =C2=A0It is quite advanced tool for
+>> correcting mistakes (it can correct *both* user name, which is
+>> most common usage, but also email address).
+>=20
+> The disadvantage here is that it centralizes identity management and
+> it is more demanding because the name/email pair is quite unstable.
+
+How in-tree .mailmap file (in-tree like .gitignore and .gitattributes)
+is *centralized identity management*?  It is as distributed as git
+repositories are.
+
+On the other hand user.uuid is not distributed; for security reasons
+config is not transferred.
+
+[...]
+> [...], and with
+> some clever encoding some statistics gathering programs could
+> (possibly) run more efficiently.
+
+Well, I guess it is statistics that dominates, not id part.  Such
+tools shoud simply take .mailmap into account (unless they rely on
+git for that.).
+
 --=20
-1.7.0
+Jakub Narebski
+Poland
