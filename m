@@ -1,58 +1,69 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 1/5] tag -v: use =?utf-8?q?=E2=80=98git_verify-tag=E2=80=99_without?= dash
-Date: Sat, 20 Mar 2010 17:01:16 +0100
-Message-ID: <201003201701.16820.j6t@kdbg.org>
-References: <20100320050953.GA24746@progeny.tock> <20100320051148.GA24791@progeny.tock>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Allow passing of configuration parameters in the command 
+	line
+Date: Sat, 20 Mar 2010 17:03:36 +0100
+Message-ID: <81b0412b1003200903gb6923e1ved6de423db97b28@mail.gmail.com>
+References: <81b0412b1003190742v6e5577c9wb121d5e3cbc9fccd@mail.gmail.com>
+	 <7vbpejkmo5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Carlos Rica <jasampler@gmail.com>,
-	Santi =?iso-8859-1?q?B=E9jar?= <santi@agolina.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 20 17:03:24 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 20 17:03:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nt191-00038W-8t
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 17:03:23 +0100
+	id 1Nt19P-0003Hd-60
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 17:03:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753235Ab0CTQDS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Mar 2010 12:03:18 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:24630 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753003Ab0CTQDR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Mar 2010 12:03:17 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id B07502C400D;
-	Sat, 20 Mar 2010 17:03:14 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id E639419F5C0;
-	Sat, 20 Mar 2010 17:01:16 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <20100320051148.GA24791@progeny.tock>
-Content-Disposition: inline
+	id S1753249Ab0CTQDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Mar 2010 12:03:42 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:44308 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753200Ab0CTQDl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Mar 2010 12:03:41 -0400
+Received: by bwz1 with SMTP id 1so773826bwz.21
+        for <git@vger.kernel.org>; Sat, 20 Mar 2010 09:03:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=w/f5wPqr1bFlCHEms55SLkViUgkdVtlzmwGH4KvyydY=;
+        b=Ep1CU3q5BB5WV+2LjzomNZ0tu7hKMYVCLsUxBCX5dbxWOnjquPgfLUOzsE8BPL5sDB
+         0MBaxMpKTWvgYZNcjJqwGmHpsHakPVLMMGaw+fjbHYDRT8SpWb5ZRNUJbg7HCd9Lx2OG
+         jPlHFmUAEnkxlHHxXUHNgCauxyItrfmPYSRhE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=MObE5qkW4enBG/oEBQf5ubaZkYlJ450EUIG/QW68uQymwl8OVNhW0Jw4y3Xa2fhz6g
+         aeuw086dNRlmNfCuUSGXIYdcThsKqGmXjs/Tl/DfVE/qHgETrmrEO8EV8LtAsIxrnbVs
+         SW6iGyclWcd3GZ4X5BXDbzxqpLa9qSyOmCoxw=
+Received: by 10.204.138.81 with SMTP id z17mr1950347bkt.49.1269101016807; Sat, 
+	20 Mar 2010 09:03:36 -0700 (PDT)
+In-Reply-To: <7vbpejkmo5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142723>
 
-On Samstag, 20. M=E4rz 2010, Jonathan Nieder wrote:
-> -	const char *argv_verify_tag[] =3D {"git-verify-tag",
-> +	const char *argv_verify_tag[] =3D {"git", "verify-tag",
->  					"-v", "SHA1_HEX", NULL};
-> -	argv_verify_tag[2] =3D sha1_to_hex(sha1);
-> +	argv_verify_tag[3] =3D sha1_to_hex(sha1);
+On Sat, Mar 20, 2010 at 17:00, Junio C Hamano <gitster@pobox.com> wrote:
+> Alex Riesen <raa.lkml@gmail.com> writes:
 >
->  	if (run_command_v_opt(argv_verify_tag, 0))
->  		return error("could not verify the tag '%s'", name);
+>> The values passed this way will override whatever is defined
+>> in the config files.
+>
+> You sent MIME multipart-mixed and I am getting a broken patch.
+>
+> How could this be... If I cannot expect to reliably get a non-linewrapped
+> patch, there doesn't seem to be much point in you and I taking extra time
+> to bother with MIME.
 
-This should rather be changed to run_command_v_opt(..., RUN_GIT_CMD). S=
-ee=20
-other examples in the code.
-
-Oh, you remove this in a later patch. Then why have this patch at all?
-
--- Hannes
+That's gmail, again. There must be an attachment with a normal patch,
+but I'll resend.
