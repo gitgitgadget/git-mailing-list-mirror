@@ -1,265 +1,257 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: [PATCH v2] Use test_expect_success for test setups
-Date: Sat, 20 Mar 2010 12:03:52 -0400
-Message-ID: <1269101032-68184-1-git-send-email-brian@gernhardtsoftware.com>
-References: <2DDEFE95-02A7-4DAE-B233-ABE1545EDB65@gernhardtsoftware.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 20 17:04:03 2010
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH, resend] Allow passing of configuration parameters in the
+	command line
+Date: Sat, 20 Mar 2010 17:05:43 +0100
+Message-ID: <20100320160543.GA18709@blimp.localdomain>
+References: <7vbpejkmo5.fsf@alter.siamese.dyndns.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 20 17:06:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nt19e-0003MF-8m
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 17:04:02 +0100
+	id 1Nt1BU-0003wO-HQ
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 17:06:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753252Ab0CTQD5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Mar 2010 12:03:57 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:45543 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753003Ab0CTQD4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Mar 2010 12:03:56 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 41E0C1FFC2ED; Sat, 20 Mar 2010 16:03:52 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.7 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from localhost.localdomain (cpe-67-240-172-169.rochester.res.rr.com [67.240.172.169])
-	by silverinsanity.com (Postfix) with ESMTPA id 17D7B1FFC2EA;
-	Sat, 20 Mar 2010 16:03:51 +0000 (UTC)
-X-Mailer: git-send-email 1.7.0.2.455.g91132
-In-Reply-To: <2DDEFE95-02A7-4DAE-B233-ABE1545EDB65@gernhardtsoftware.com>
+	id S1753259Ab0CTQFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Mar 2010 12:05:52 -0400
+Received: from mout1.freenet.de ([195.4.92.91]:35501 "EHLO mout1.freenet.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753003Ab0CTQFv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Mar 2010 12:05:51 -0400
+Received: from [195.4.92.17] (helo=7.mx.freenet.de)
+	by mout1.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.72 #2)
+	id 1Nt1BK-0003lV-Nr; Sat, 20 Mar 2010 17:05:46 +0100
+Received: from p57b18c71.dip0.t-ipconnect.de ([87.177.140.113]:48089 helo=tigra.home)
+	by 7.mx.freenet.de with esmtpsa (ID alexander.riesen@freenet.de) (TLSv1:AES256-SHA:256) (port 587) (Exim 4.72 #2)
+	id 1Nt1BK-0005wH-C7; Sat, 20 Mar 2010 17:05:46 +0100
+Received: from blimp.localdomain (blimp.home [192.168.0.79])
+	by tigra.home (Postfix) with ESMTP id 016D5277DF;
+	Sat, 20 Mar 2010 17:05:43 +0100 (CET)
+Received: by blimp.localdomain (Postfix, from userid 1000)
+	id 97FF236D28; Sat, 20 Mar 2010 17:05:43 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vbpejkmo5.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142725>
 
-Several tests did not use test_expect_success for their setup
-commands.  Putting these start commands into the testing framework
-means both that errors during setup will be caught quickly and that
-non-error text will be suppressed without -v.
+The values passed this way will override whatever is defined
+in the config files.
 
-Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
+ Documentation/git.txt  |    7 +++++
+ builtin/config.c       |    6 +++-
+ cache.h                |    2 +
+ config.c               |   71 ++++++++++++++++++++++++++++++++++++++++++++++++
+ git.c                  |    9 ++++++
+ t/t1300-repo-config.sh |    7 +++++
+ 6 files changed, 101 insertions(+), 1 deletions(-)
 
- Updated to only have one setup test in t4103, which also includes the
- initial set of cat commands just in case.
-
- t/t3020-ls-files-error-unmatch.sh        |    8 ++-
- t/t3800-mktag.sh                         |   10 +++--
- t/t4103-apply-binary.sh                  |   56 +++++++++++++------------
- t/t4200-rerere.sh                        |   64 +++++++++++++++--------------
- t/t9501-gitweb-standalone-http-status.sh |    7 ++-
- 5 files changed, 77 insertions(+), 68 deletions(-)
-
-diff --git a/t/t3020-ls-files-error-unmatch.sh b/t/t3020-ls-files-error-unmatch.sh
-index f4066cb..a7d8187 100755
---- a/t/t3020-ls-files-error-unmatch.sh
-+++ b/t/t3020-ls-files-error-unmatch.sh
-@@ -11,9 +11,11 @@ line.
- '
- . ./test-lib.sh
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 35c0c79..755fa4d 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -12,6 +12,7 @@ SYNOPSIS
+ 'git' [--version] [--exec-path[=GIT_EXEC_PATH]] [--html-path]
+     [-p|--paginate|--no-pager] [--no-replace-objects]
+     [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE]
++    [-c name=value]
+     [--help] COMMAND [ARGS]
  
--touch foo bar
--git update-index --add foo bar
--git commit -m "add foo bar"
-+test_expect_success 'setup' '
-+	touch foo bar &&
-+	git update-index --add foo bar &&
-+	git commit -m "add foo bar"
+ DESCRIPTION
+@@ -219,6 +220,12 @@ displayed. See linkgit:git-help[1] for more information,
+ because `git --help ...` is converted internally into `git
+ help ...`.
+ 
++-c <name>=<value>::
++	Pass a configuration parameter to the command. The value
++	given will override values from configuration files.
++	The <name> is expected in the same format as listed by
++	'git config' (subkeys separated by dots).
++
+ --exec-path::
+ 	Path to wherever your core git programs are installed.
+ 	This can also be controlled by setting the GIT_EXEC_PATH
+diff --git a/builtin/config.c b/builtin/config.c
+index 4bc46b1..f3d1660 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -197,7 +197,11 @@ static int get_value(const char *key_, const char *regex_)
+ 		git_config_from_file(show_config, system_wide, NULL);
+ 	if (do_all && global)
+ 		git_config_from_file(show_config, global, NULL);
+-	git_config_from_file(show_config, local, NULL);
++	if (do_all)
++		git_config_from_file(show_config, local, NULL);
++	git_config_from_parameters(show_config, NULL);
++	if (!do_all && !seen)
++		git_config_from_file(show_config, local, NULL);
+ 	if (!do_all && !seen && global)
+ 		git_config_from_file(show_config, global, NULL);
+ 	if (!do_all && !seen && system_wide)
+diff --git a/cache.h b/cache.h
+index 89f6a40..4a0c75d 100644
+--- a/cache.h
++++ b/cache.h
+@@ -932,6 +932,8 @@ extern int update_server_info(int);
+ typedef int (*config_fn_t)(const char *, const char *, void *);
+ extern int git_default_config(const char *, const char *, void *);
+ extern int git_config_from_file(config_fn_t fn, const char *, void *);
++extern int git_config_parse_parameter(const char *text);
++extern int git_config_from_parameters();
+ extern int git_config(config_fn_t fn, void *);
+ extern int git_parse_ulong(const char *, unsigned long *);
+ extern int git_config_int(const char *, const char *);
+diff --git a/config.c b/config.c
+index 6963fbe..2376ae9 100644
+--- a/config.c
++++ b/config.c
+@@ -18,6 +18,62 @@ static int zlib_compression_seen;
+ 
+ const char *config_exclusive_filename = NULL;
+ 
++struct config_item
++{
++	struct config_item *next;
++	char *value;
++	char name[1];
++};
++static struct config_item *config_parameters;
++static struct config_item **config_parametes_tail = &config_parameters;
++
++static void lowercase(char *p)
++{
++	for (; *p; ++p)
++		*p = tolower(*p);
++}
++static char *skip_space(const char *p)
++{
++	for (; *p; ++p)
++		if (!isspace(*p))
++			break;
++	return (char *)p;
++}
++static char *trailing_space(const char *begin, const char *p)
++{
++	while (p-- > begin)
++		if (!isspace(*p))
++			break;
++	return (char *)p + 1;
++}
++
++int git_config_parse_parameter(const char *text)
++{
++	struct config_item *ct;
++	const char *name;
++	const char *val;
++	name = skip_space(text);
++	text = val = strchr(name, '=');
++	if (!text)
++		text = name + strlen(name);
++	text = trailing_space(name, text);
++	if (text <= name)
++		return -1;
++	ct = calloc(1, sizeof(struct config_item) + (text - name));
++	memcpy(ct->name, name, text - name);
++	lowercase(ct->name);
++	if (!val)
++		ct->value = NULL;
++	else {
++		val = skip_space(++val /* skip "=" */);
++		text = trailing_space(val, val + strlen(val));
++		ct->value = strndup(val, text - val);
++	}
++	*config_parametes_tail = ct;
++	config_parametes_tail = &ct->next;
++	return 0;
++}
++
+ static int get_next_char(void)
+ {
+ 	int c;
+@@ -699,6 +755,15 @@ int git_config_global(void)
+ 	return !git_env_bool("GIT_CONFIG_NOGLOBAL", 0);
+ }
+ 
++int git_config_from_parameters(config_fn_t fn, void *data)
++{
++	const struct config_item *ct;
++	for (ct = config_parameters; ct; ct = ct->next)
++		if (fn(ct->name, ct->value, data) < 0)
++			return -1;
++	return 0;
++}
++
+ int git_config(config_fn_t fn, void *data)
+ {
+ 	int ret = 0, found = 0;
+@@ -730,6 +795,12 @@ int git_config(config_fn_t fn, void *data)
+ 		found += 1;
+ 	}
+ 	free(repo_config);
++
++	if (config_parameters) {
++		ret += git_config_from_parameters(fn, data);
++		found += 1;
++	}
++
+ 	if (found == 0)
+ 		return -1;
+ 	return ret;
+diff --git a/git.c b/git.c
+index 6bae305..99f0363 100644
+--- a/git.c
++++ b/git.c
+@@ -8,6 +8,7 @@ const char git_usage_string[] =
+ 	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [--html-path]\n"
+ 	"           [-p|--paginate|--no-pager] [--no-replace-objects]\n"
+ 	"           [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE]\n"
++	"           [-c name=value\n"
+ 	"           [--help] COMMAND [ARGS]";
+ 
+ const char git_more_info_string[] =
+@@ -130,6 +131,14 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir, sizeof(git_dir)), 0);
+ 			if (envchanged)
+ 				*envchanged = 1;
++		} else if (!strcmp(cmd, "-c")) {
++			if (*argc < 2) {
++				fprintf(stderr, "-c expects a configuration string\n" );
++				usage(git_usage_string);
++			}
++			git_config_parse_parameter((*argv)[1]);
++			(*argv)++;
++			(*argc)--;
+ 		} else {
+ 			fprintf(stderr, "Unknown option: %s\n", cmd);
+ 			usage(git_usage_string);
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index f11f98c..d7c5501 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -824,4 +824,11 @@ test_expect_success 'check split_cmdline return' "
+ 	test_must_fail git merge master
+ 	"
+ 
++test_expect_success 'git -c "key=value" support' '
++	test "z$(git -c name=value config name)" = zvalue &&
++	test "z$(git -c core.name=value config core.name)" = zvalue &&
++	test "z$(git -c flag config --bool flag)" = ztrue &&
++	test_must_fail git -c core.name=value config name
 +'
- 
- test_expect_success \
-     'git ls-files --error-unmatch should fail with unmatched path.' \
-diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
-index 6fb027b..8eb4794 100755
---- a/t/t3800-mktag.sh
-+++ b/t/t3800-mktag.sh
-@@ -22,10 +22,12 @@ check_verify_failure () {
- ###########################################################
- # first create a commit, so we have a valid object/type
- # for the tag.
--echo Hello >A
--git update-index --add A
--git commit -m "Initial commit"
--head=$(git rev-parse --verify HEAD)
-+test_expect_success 'setup' '
-+	echo Hello >A &&
-+	git update-index --add A &&
-+	git commit -m "Initial commit" &&
-+	head=$(git rev-parse --verify HEAD)
-+'
- 
- ############################################################
- #  1. length check
-diff --git a/t/t4103-apply-binary.sh b/t/t4103-apply-binary.sh
-index ad4cc1a..962d69e 100755
---- a/t/t4103-apply-binary.sh
-+++ b/t/t4103-apply-binary.sh
-@@ -10,33 +10,35 @@ test_description='git apply handling binary patches
- 
- # setup
- 
--cat >file1 <<EOF
--A quick brown fox jumps over the lazy dog.
--A tiny little penguin runs around in circles.
--There is a flag with Linux written on it.
--A slow black-and-white panda just sits there,
--munching on his bamboo.
--EOF
--cat file1 >file2
--cat file1 >file4
--
--git update-index --add --remove file1 file2 file4
--git commit -m 'Initial Version' 2>/dev/null
--
--git checkout -b binary
--perl -pe 'y/x/\000/' <file1 >file3
--cat file3 >file4
--git add file2
--perl -pe 'y/\000/v/' <file3 >file1
--rm -f file2
--git update-index --add --remove file1 file2 file3 file4
--git commit -m 'Second Version'
--
--git diff-tree -p master binary >B.diff
--git diff-tree -p -C master binary >C.diff
--
--git diff-tree -p --binary master binary >BF.diff
--git diff-tree -p --binary -C master binary >CF.diff
-+test_expect_success 'setup' "
-+	cat >file1 <<-EOF &&
-+	A quick brown fox jumps over the lazy dog.
-+	A tiny little penguin runs around in circles.
-+	There is a flag with Linux written on it.
-+	A slow black-and-white panda just sits there,
-+	munching on his bamboo.
-+	EOF
-+	cat file1 >file2 &&
-+	cat file1 >file4 &&
 +
-+	git update-index --add --remove file1 file2 file4 &&
-+	git commit -m 'Initial Version' 2>/dev/null &&
-+
-+	git checkout -b binary &&
-+	perl -pe 'y/x/\000/' <file1 >file3 &&
-+	cat file3 >file4 &&
-+	git add file2 &&
-+	perl -pe 'y/\000/v/' <file3 >file1 &&
-+	rm -f file2 &&
-+	git update-index --add --remove file1 file2 file3 file4 &&
-+	git commit -m 'Second Version' &&
-+
-+	git diff-tree -p master binary >B.diff &&
-+	git diff-tree -p -C master binary >C.diff &&
-+
-+	git diff-tree -p --binary master binary >BF.diff &&
-+	git diff-tree -p --binary -C master binary >CF.diff
-+"
- 
- test_expect_success 'stat binary diff -- should not fail.' \
- 	'git checkout master
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index bb402c3..70856d0 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -8,40 +8,42 @@ test_description='git rerere
- 
- . ./test-lib.sh
- 
--cat > a1 << EOF
--Some title
--==========
--Whether 'tis nobler in the mind to suffer
--The slings and arrows of outrageous fortune,
--Or to take arms against a sea of troubles,
--And by opposing end them? To die: to sleep;
--No more; and by a sleep to say we end
--The heart-ache and the thousand natural shocks
--That flesh is heir to, 'tis a consummation
--Devoutly to be wish'd.
--EOF
--
--git add a1
--git commit -q -a -m initial
--
--git checkout -b first
--cat >> a1 << EOF
--Some title
--==========
--To die, to sleep;
--To sleep: perchance to dream: ay, there's the rub;
--For in that sleep of death what dreams may come
--When we have shuffled off this mortal coil,
--Must give us pause: there's the respect
--That makes calamity of so long life;
--EOF
--git commit -q -a -m first
--
--git checkout -b second master
--git show first:a1 |
--sed -e 's/To die, t/To die! T/' -e 's/Some title/Some Title/' > a1
--echo "* END *" >>a1
--git commit -q -a -m second
-+test_expect_success 'setup' "
-+	cat > a1 <<- EOF &&
-+	Some title
-+	==========
-+	Whether 'tis nobler in the mind to suffer
-+	The slings and arrows of outrageous fortune,
-+	Or to take arms against a sea of troubles,
-+	And by opposing end them? To die: to sleep;
-+	No more; and by a sleep to say we end
-+	The heart-ache and the thousand natural shocks
-+	That flesh is heir to, 'tis a consummation
-+	Devoutly to be wish'd.
-+	EOF
-+
-+	git add a1 &&
-+	git commit -q -a -m initial &&
-+
-+	git checkout -b first &&
-+	cat >> a1 <<- EOF &&
-+	Some title
-+	==========
-+	To die, to sleep;
-+	To sleep: perchance to dream: ay, there's the rub;
-+	For in that sleep of death what dreams may come
-+	When we have shuffled off this mortal coil,
-+	Must give us pause: there's the respect
-+	That makes calamity of so long life;
-+	EOF
-+	git commit -q -a -m first &&
-+
-+	git checkout -b second master &&
-+	git show first:a1 |
-+	sed -e 's/To die, t/To die! T/' -e 's/Some title/Some Title/' > a1 &&
-+	echo '* END *' >>a1 &&
-+	git commit -q -a -m second
-+"
- 
- test_expect_success 'nothing recorded without rerere' '
- 	(rm -rf .git/rr-cache; git config rerere.enabled false) &&
-diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-standalone-http-status.sh
-index d196cc5..2487da1 100755
---- a/t/t9501-gitweb-standalone-http-status.sh
-+++ b/t/t9501-gitweb-standalone-http-status.sh
-@@ -15,9 +15,10 @@ code and message.'
- # ----------------------------------------------------------------------
- # snapshot settings
- 
--test_commit \
--	'SnapshotTests' \
--	'i can has snapshot?'
-+test_expect_success 'setup' "
-+	test_commit 'SnapshotTests' 'i can has snapshot?'
-+"
-+
- 
- cat >>gitweb_config.perl <<\EOF
- $feature{'snapshot'}{'override'} = 0;
+ test_done
 -- 
-1.7.0.2.455.g91132
+1.7.0.2.318.g49250
