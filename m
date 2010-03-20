@@ -1,31 +1,31 @@
 From: "R. Tyler Ballance" <tyler@monkeypox.org>
-Subject: [PATCH] Correct references to /usr/bin/python which may ont exist
+Subject: [PATCH] Correct references to /usr/bin/python which may not exist
  on certain systems
-Date: Sat, 20 Mar 2010 16:02:37 -0700
-Message-ID: <20100320230230.GA29738@kiwi.sharlinx.com>
+Date: Sat, 20 Mar 2010 16:51:11 -0700
+Message-ID: <20100320235105.GA30457@kiwi.sharlinx.com>
+Reply-To: 20100320230230.GA29738@kiwi.sharlinx.com
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="opJtzjQTFsWo+cga"
+	protocol="application/pgp-signature"; boundary="liOOAslEiF7prFVr"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 21 00:09:37 2010
+X-From: git-owner@vger.kernel.org Sun Mar 21 00:51:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nt7nR-0002cL-Ss
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 00:09:34 +0100
+	id 1Nt8S9-0001VT-UH
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 00:51:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752665Ab0CTXJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Mar 2010 19:09:29 -0400
-Received: from mail.geekisp.com ([216.168.135.169]:1929 "EHLO
+	id S1752770Ab0CTXvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Mar 2010 19:51:25 -0400
+Received: from mail.geekisp.com ([216.168.135.169]:2068 "EHLO
 	starfish.geekisp.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752515Ab0CTXJ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Mar 2010 19:09:28 -0400
-X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Mar 2010 19:09:28 EDT
-Received: (qmail 794 invoked by uid 1003); 20 Mar 2010 23:02:45 -0000
+	with ESMTP id S1752759Ab0CTXvY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Mar 2010 19:51:24 -0400
+Received: (qmail 28027 invoked by uid 1003); 20 Mar 2010 23:51:23 -0000
 Received: from localhost (HELO kiwi.sharlinx.com) (tyler@monkeypox.org@127.0.0.1)
-  by mail.geekisp.com with SMTP; 20 Mar 2010 23:02:44 -0000
+  by mail.geekisp.com with SMTP; 20 Mar 2010 23:51:22 -0000
 Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -33,10 +33,10 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142766>
 
 
---opJtzjQTFsWo+cga
+--liOOAslEiF7prFVr
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
@@ -112,16 +112,16 @@ index c62dfd0..af3cc28 100644
 --=20
 1.6.4.3
 
---opJtzjQTFsWo+cga
+--liOOAslEiF7prFVr
 Content-Type: application/pgp-signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.0.12 (GNU/Linux)
 
-iEYEARECAAYFAkulVAYACgkQFCbH3D9R4W9/uwCeKwdpoZF7SFi/XAXSyPQaKAf7
-yOsAoLOt4e+AxbreS49vWw0Swj/Zs/wo
-=pjRa
+iEYEARECAAYFAkulX2kACgkQFCbH3D9R4W+mFACghkkmDDvwYWOfS2lDOK88qVhV
+9ioAnRjhJrnBdZel4kXOcmIjrhXrchmW
+=NupY
 -----END PGP SIGNATURE-----
 
---opJtzjQTFsWo+cga--
+--liOOAslEiF7prFVr--
