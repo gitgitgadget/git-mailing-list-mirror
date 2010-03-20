@@ -1,387 +1,216 @@
-From: Mark Rada <marada@uwaterloo.ca>
-Subject: [PATCHv4] gitweb: fill in missing parts of minify support
-Date: Sat, 20 Mar 2010 14:26:06 -0400
-Message-ID: <4BA5133E.6050901@mailservices.uwaterloo.ca>
+From: Thomas Koch <thomas@koch.ro>
+Subject: Re: rethinking patch management with GIT / topgit
+Date: Sat, 20 Mar 2010 19:53:34 +0100
+Message-ID: <201003201953.34666.thomas@koch.ro>
+References: <201003201802.51129.thomas@koch.ro> <20100320174740.GC4535@machine.or.cz>
+Reply-To: thomas@koch.ro
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 20 19:26:36 2010
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, vcs-pkg-discuss@lists.alioth.debian.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sat Mar 20 19:53:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nt3Nb-0004GQ-Kf
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 19:26:36 +0100
+	id 1Nt3o4-0005qo-3k
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 19:53:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753436Ab0CTS0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Mar 2010 14:26:21 -0400
-Received: from mailservices.uwaterloo.ca ([129.97.128.141]:33598 "EHLO
-	mailchk-m05.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753395Ab0CTS0U (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 Mar 2010 14:26:20 -0400
-Received: from karakura.local ([74.198.12.14])
-	(authenticated bits=0)
-	by mailchk-m05.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id o2KIQ94e020297
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 20 Mar 2010 14:26:12 -0400
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
-X-UUID: 68f42f9f-c866-47fe-86e1-e762a3ee1e62
-X-Miltered: at mailchk-m05 with ID 4BA51341.003 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
-X-Virus-Scanned: clamav-milter 0.95.2 at mailchk-m05
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m05.uwaterloo.ca [129.97.128.141]); Sat, 20 Mar 2010 14:26:15 -0400 (EDT)
+	id S1752097Ab0CTSxs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Mar 2010 14:53:48 -0400
+Received: from koch.ro ([88.198.2.104]:43215 "EHLO koch.ro"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751527Ab0CTSxs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Mar 2010 14:53:48 -0400
+Received: from 138-229.76-83.cust.bluewin.ch ([83.76.229.138] helo=jona.localnet)
+	by koch.ro with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <thomas@koch.ro>)
+	id 1Nt3km-0005Ox-MQ; Sat, 20 Mar 2010 19:50:32 +0100
+User-Agent: KMail/1.12.4 (Linux/2.6.32-2-amd64; KDE/4.3.4; x86_64; ; )
+In-Reply-To: <20100320174740.GC4535@machine.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142735>
 
-JavaScript minification was added to the git build system, but it was a
-hidden away feature that did not play by all the rules and broke
-instaweb when minifying was enabled.
+Petr Baudis:
+> > - it pollutes the patch branches with metadata (.topmsg, .topdeps)
+>=20
+> I'd like to single this out - this is a very arbitrary decision and h=
+as
+> its distinct pros and cons compared to alternative approaches, and wa=
+s
+> not taken lightly. It wouldn't be that difficult to go in a different
+> way and it's not a fundamental limitation.
+It's also the most minor problem I see, rather a matter of taste.
 
-This patch fixes instaweb support and adds rules to the build system to
-take care of minified files; this includes an autoconfigure option so
-that users do not need to edit the makefiles directly, as well as
-documentation updates related to gitweb.js and optional minify support.
+> > - AFAIK nobody has solved the problem of managing different patchse=
+ts
+> > with tg
+>=20
+> Why not just manage them in separate repositories? If you want to pic=
+k
+> patches between patchsets, that should be easily posible through remo=
+tes.
+You mean having multiple local working directories per project? That's =
+not=20
+nice. If you also work on the project with an IDE, it'd most probably m=
+ean=20
+setting up the same project multiple times.
 
-This patch also adds support to minify gitweb.css, the effect is not as
-dramatic as minifying gitweb.js, but every saved byte of bandwidth helps.
+>   I agree that topgit really sucks in many areas. :) While it is usab=
+le
+> in practice if you know what you are doing, in some aspects it never =
+got
+> out of the proof-of-concept stage.
+Thank you for not taking it personaly! :-)
 
-Signed-off-by: Mark Rada <marada@uwaterloo.ca>
+> > 1) merge commits to save history
+> >
+> > git allows the free creation of merge commits with an arbitrary con=
+tent
+> > tree. So we can create an octupus merge combining all patch-branche=
+s
+> > while the content of this merge can contain meta data about a patch=
+set
+> > instead of the content of the merged commits.
+> > Such a merge commit thus provides a pointer to all the history of a=
+ll
+> > patches and can contain all metadata about the merged patch branche=
+s.
+> > Pushing only a branch or tag with this commit to a central reposito=
+ry
+> > thus pushes all the history of all contained patches.
+>=20
+>   But how is this different from TopGit's approach? TopGit doesn't us=
+e
+> octopus merges for various reasons (I mainly guess since I was too la=
+zy
+> to implement that), but that's more of an implementation detail than
+> anything conceptual.
+Maybe I didn't make clear that the commits on the patchset branch shoul=
+d not=20
+necessarily contain the merged content of all patches. The role of the =
+merges=20
+is solely to keep pointers to the commits making up the patch branches.
+Now that you're asking there may however be a similarity to topgit in t=
+hat you=20
+can have one topgit controlled branch that combines all topgit branches=
+=20
+belonging to the same patchset.
+However there still remain some differences:
 
----
+- in tg you need to push all tg branches while in my approach you'd nee=
+d to=20
+push only one branch per patchset
+- As far as I understand tg, all commands are repository global while f=
+or the=20
+Debian packaging use case you'd need patchset local commands:
+  - tg export <patchset>
+    export <patchset> as a quilt series
 
-Changes since v3:
-	- Patch wouldn't apply because it depended on another patch
-	  I sent in that has not yet been applied. Junio wondered if part
-	  of that patch belonged here (or vice versa?), which at the time
-	  did not seem right to me, but now that this patch has grown, it
-	  does---Ignore the patch titled "instaweb: use minified gitweb.js
-	  if available", it is squashed in here now 
-	- Changed some the INSTALL updates to be less wordy
-	- The patch became more broad, to support minification in general,
-	  which includes gitweb.css
+  - tg summary <patchset>
+    gives summary information for the branches of <patchset>
 
-	
- .gitignore      |    1 +
- Makefile        |   33 ++++++++++++++++++++++-----------
- configure.ac    |   20 ++++++++++++++++++++
- git-instaweb.sh |    6 ++++--
- gitweb/INSTALL  |   30 +++++++++++++++++++++---------
- gitweb/Makefile |   31 +++++++++++++++++--------------
- gitweb/README   |    3 ++-
- 7 files changed, 87 insertions(+), 37 deletions(-)
+  - tg delete <patchset> <branch>
+    removes <branch> from <patchset>. However old history of <branch> i=
+s still=20
+recorded in the history of the <patchset>-branch
 
-diff --git a/.gitignore b/.gitignore
-index 7b3acb7..4c24152 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -156,6 +156,7 @@
- /git-core-*/?*
- /gitk-git/gitk-wish
- /gitweb/gitweb.cgi
-+/gitweb/gitweb.min.*
- /test-chmtime
- /test-ctype
- /test-date
-diff --git a/Makefile b/Makefile
-index 7c616f8..19c7ef0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -203,6 +203,9 @@ all::
- # Define JSMIN to point to JavaScript minifier that functions as
- # a filter to have gitweb.js minified.
- #
-+# Define CSSMIN to point to a CSS minifier that performs the same
-+# function as a JavaScript minifier, but for CSS files.
-+#
- # Define DEFAULT_PAGER to a sensible pager command (defaults to "less") if
- # you want to use something different.  The value will be interpreted by the
- # shell at runtime when it is used.
-@@ -279,8 +282,6 @@ lib = lib
- # DESTDIR=
- pathsep = :
- 
--# JavaScript minifier invocation that can function as filter
--JSMIN =
- 
- export prefix bindir sharedir sysconfdir
- 
-@@ -1551,19 +1552,27 @@ gitweb:
- 	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) all
- 
- ifdef JSMIN
--OTHER_PROGRAMS += gitweb/gitweb.cgi   gitweb/gitweb.min.js
--gitweb/gitweb.cgi: gitweb/gitweb.perl gitweb/gitweb.min.js
-+GITWEB_JS=gitweb/gitweb.min.js
-+else
-+GITWEB_JS=gitweb/gitweb.js
-+endif
-+
-+ifdef CSSMIN
-+GITWEB_CSS=gitweb/gitweb.min.css
- else
--OTHER_PROGRAMS += gitweb/gitweb.cgi
--gitweb/gitweb.cgi: gitweb/gitweb.perl
-+GITWEB_CSS=gitweb/gitweb.css
- endif
-+
-+OTHER_PROGRAMS +=  gitweb/gitweb.cgi  $(GITWEB_JS) $(GITWEB_CSS)
-+
-+gitweb/gitweb.cgi: gitweb/gitweb.perl $(GITWEB_JS) $(GITWEB_CSS)
- 	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
- 
--ifdef JSMIN
- gitweb/gitweb.min.js: gitweb/gitweb.js
- 	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
--endif # JSMIN
- 
-+gitweb/gitweb.min.css: gitweb/gitweb.css
-+	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
- 
- git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css gitweb/gitweb.js
- 	$(QUIET_GEN)$(RM) $@ $@+ && \
-@@ -1572,10 +1581,12 @@ git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css gitweb/gitweb.
- 	    -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
- 	    -e '/@@GITWEB_CGI@@/r gitweb/gitweb.cgi' \
- 	    -e '/@@GITWEB_CGI@@/d' \
--	    -e '/@@GITWEB_CSS@@/r gitweb/gitweb.css' \
-+	    -e '/@@GITWEB_CSS@@/r $(GITWEB_CSS)' \
- 	    -e '/@@GITWEB_CSS@@/d' \
--	    -e '/@@GITWEB_JS@@/r gitweb/gitweb.js' \
-+	    -e '/@@GITWEB_JS@@/r $(GITWEB_JS)' \
- 	    -e '/@@GITWEB_JS@@/d' \
-+	    -e 's|@@GITWEB_JS_NAME@@|$(GITWEB_JS)|' \
-+	    -e 's|@@GITWEB_CSS_NAME@@|$(GITWEB_CSS)|' \
- 	    -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
- 	    $@.sh > $@+ && \
- 	chmod +x $@+ && \
-@@ -2076,7 +2087,7 @@ clean:
- 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
- 	$(MAKE) -C Documentation/ clean
- ifndef NO_PERL
--	$(RM) gitweb/gitweb.cgi
-+	$(RM) gitweb/{gitweb.cgi,gitweb.min.*}
- 	$(MAKE) -C perl clean
- endif
- ifndef NO_PYTHON
-diff --git a/configure.ac b/configure.ac
-index 914ae57..cc7df85 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -179,6 +179,26 @@ fi],
-    AC_MSG_NOTICE([Will try -pthread then -lpthread to enable POSIX Threads.])
- ])
- 
-+# Define option to enable JavaScript minification
-+AC_ARG_ENABLE([jsmin],
-+ [AS_HELP_STRING([--enable-jsmin=ARG],
-+   [ARG is the value to pass to make to enable JavaScript minification.])],
-+ [
-+   JSMIN=$enableval;
-+   AC_MSG_NOTICE([Setting JSMIN to '$JSMIN' to enable JavaScript minifying])
-+   GIT_CONF_APPEND_LINE(JSMIN=$enableval);
-+ ])
-+
-+ # Define option to enable CSS minification
-+AC_ARG_ENABLE([cssmin],
-+ [AS_HELP_STRING([--enable-cssmin=ARG],
-+   [ARG is the value to pass to make to enable CSS minification.])],
-+ [
-+   CSSMIN=$enableval;
-+   AC_MSG_NOTICE([Setting CSSMIN to '$CSSMIN' to enable CSS minifying])
-+   GIT_CONF_APPEND_LINE(CSSMIN=$enableval);
-+ ])
-+
- ## Site configuration (override autodetection)
- ## --with-PACKAGE[=ARG] and --without-PACKAGE
- AC_MSG_NOTICE([CHECKS for site configuration])
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 6a65f25..d4941a9 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -391,18 +391,20 @@ EOFGITWEB
- gitweb_css () {
- 	cat > "$1" <<\EOFGITWEB
- @@GITWEB_CSS@@
-+
- EOFGITWEB
- }
- 
- gitweb_js () {
- 	cat > "$1" <<\EOFGITWEB
- @@GITWEB_JS@@
-+
- EOFGITWEB
- }
- 
- gitweb_cgi "$GIT_DIR/gitweb/gitweb.cgi"
--gitweb_css "$GIT_DIR/gitweb/gitweb.css"
--gitweb_js  "$GIT_DIR/gitweb/gitweb.js"
-+gitweb_css "$GIT_DIR/@@GITWEB_CSS_NAME@@"
-+gitweb_js  "$GIT_DIR/@@GITWEB_JS_NAME@@"
- 
- case "$httpd" in
- *lighttpd*)
-diff --git a/gitweb/INSTALL b/gitweb/INSTALL
-index b76a0cf..01ee62c 100644
---- a/gitweb/INSTALL
-+++ b/gitweb/INSTALL
-@@ -2,11 +2,11 @@ GIT web Interface (gitweb) Installation
- =======================================
- 
- First you have to generate gitweb.cgi from gitweb.perl using
--"make gitweb/gitweb.cgi", then copy appropriate files (gitweb.cgi,
--gitweb.css, git-logo.png and git-favicon.png) to their destination.
-+"make gitweb", then copy appropriate files (gitweb.cgi, gitweb.js,
-+gitweb.css, git-logo.png and git-favicon.png) to to their destination.
- For example if git was (or is) installed with /usr prefix, you can do
- 
--	$ make prefix=/usr gitweb/gitweb.cgi  ;# as yourself
-+	$ make prefix=/usr gitweb             ;# as yourself
- 	# cp gitweb/git* /var/www/cgi-bin/    ;# as root
- 
- Alternatively you can use autoconf generated ./configure script to
-@@ -15,7 +15,7 @@ instead
- 
- 	$ make configure                     ;# as yourself
- 	$ ./configure --prefix=/usr          ;# as yourself
--	$ make gitweb/gitweb.cgi             ;# as yourself
-+	$ make gitweb                        ;# as yourself
- 	# cp gitweb/git* /var/www/cgi-bin/   ;# as root
- 
- The above example assumes that your web server is configured to run
-@@ -61,10 +61,21 @@ file for gitweb (in gitweb/README).
-   projectroot linking to projectname/.git (but it is just
-   a suggestion).
- 
--- You can control where gitweb tries to find its main CSS style file,
--  its favicon and logo with the GITWEB_CSS, GITWEB_FAVICON and GITWEB_LOGO
--  build configuration variables. By default gitweb tries to find them
--  in the same directory as gitweb.cgi script.
-+- You can control where gitweb tries to find its main JavaScript file,
-+  CSS file, favicon and logo with the GITWEB_JS, GITWEB_CSS,
-+  GITWEB_FAVICON and GITWEB_LOGO build configuration variables. By default
-+  gitweb tries to find them in the same directory as gitweb.cgi script.
-+
-+- You can generate a minified version of gitweb.js and at build
-+  time by setting the JSMIN variable to the full path of a JavaScript
-+  minifier or using the --enable-jsmin=/PATH/TO/MINIFIER configure script
-+  flag. NOTE: substitue gitweb.min.js for gitweb.js in the INSTALL
-+  instructions if you choose to use this option.
-+
-+- A minified version of gitweb.css can also be generated by use of the
-+  CSSMIN variable or the --enable-cssmin=/PATH/TO/MINIFIER configure
-+  script flag. NOTE: substitute gitweb.min.css for gitweb.css in the
-+  INSTALL instructions if you choose to use this option.
- 
- Build example
- ~~~~~~~~~~~~~
-@@ -74,13 +85,14 @@ Build example
-   we want to display are under /home/local/scm, you can do
- 
- 	make GITWEB_PROJECTROOT="/home/local/scm" \
-+             GITWEB_JS="/gitweb/gitweb.js" \
- 	     GITWEB_CSS="/gitweb/gitweb.css" \
- 	     GITWEB_LOGO="/gitweb/git-logo.png" \
- 	     GITWEB_FAVICON="/gitweb/git-favicon.png" \
- 	     bindir=/usr/local/bin \
- 	     gitweb/gitweb.cgi
- 
--	cp -fv ~/git/gitweb/gitweb.{cgi,css} \
-+	cp -fv ~/git/gitweb/gitweb.{.js,cgi,css} \
- 	       ~/git/gitweb/git-{favicon,logo}.png \
- 	     /var/www/cgi-bin/gitweb/
- 
-diff --git a/gitweb/Makefile b/gitweb/Makefile
-index c9eb1ee..b6f379a 100644
---- a/gitweb/Makefile
-+++ b/gitweb/Makefile
-@@ -6,14 +6,14 @@ all::
- # Define JSMIN to point to JavaScript minifier that functions as
- # a filter to have gitweb.js minified.
- #
-+# Define CSSMIN to point to a CSS minifier that performs the same
-+# function as a JavaScript minifier, but for CSS files.
-+#
- 
- prefix ?= $(HOME)
- bindir ?= $(prefix)/bin
- RM ?= rm -f
- 
--# JavaScript minifier invocation that can function as filter
--JSMIN ?=
--
- # default configuration for gitweb
- GITWEB_CONFIG = gitweb_config.perl
- GITWEB_CONFIG_SYSTEM = /etc/gitweb.conf
-@@ -29,11 +29,7 @@ GITWEB_HOMETEXT = indextext.html
- GITWEB_CSS = gitweb.css
- GITWEB_LOGO = git-logo.png
- GITWEB_FAVICON = git-favicon.png
--ifdef JSMIN
--GITWEB_JS = gitweb.min.js
--else
- GITWEB_JS = gitweb.js
--endif
- GITWEB_SITE_HEADER =
- GITWEB_SITE_FOOTER =
- 
-@@ -84,15 +80,17 @@ endif
- 
- all:: gitweb.cgi
- 
-+FILES=gitweb.cgi gitweb.min*
-+
- ifdef JSMIN
--FILES=gitweb.cgi gitweb.min.js
--gitweb.cgi: gitweb.perl gitweb.min.js
--else # !JSMIN
--FILES=gitweb.cgi
--gitweb.cgi: gitweb.perl
--endif # JSMIN
-+GITWEB_JS = gitweb.min.js
-+endif
-+
-+ifdef CSSMIN
-+GITWEB_CSS = gitweb.min.css
-+endif
- 
--gitweb.cgi:
-+gitweb.cgi: gitweb.perl $(GITWEB_JS) $(GITWEB_CSS)
- 	$(QUIET_GEN)$(RM) $@ $@+ && \
- 	sed -e '1s|#!.*perl|#!$(PERL_PATH_SQ)|' \
- 	    -e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
-@@ -123,6 +121,11 @@ gitweb.min.js: gitweb.js
- 	$(QUIET_GEN)$(JSMIN) <$< >$@
- endif # JSMIN
- 
-+ifdef CSSMIN
-+gitweb.min.css: gitweb.css
-+	$(QUIET_GEN)$(CSSMIN) <$< >$@
-+endif
-+
- clean:
- 	$(RM) $(FILES)
- 
-diff --git a/gitweb/README b/gitweb/README
-index ad6a04c..0efa770 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -80,7 +80,8 @@ You can specify the following configuration variables when building GIT:
-    Points to the location where you put gitweb.css on your web server
-    (or to be more generic, the URI of gitweb stylesheet).  Relative to the
-    base URI of gitweb.  Note that you can setup multiple stylesheets from
--   the gitweb config file.  [Default: gitweb.css]
-+   the gitweb config file.  [Default: gitweb.css (or gitweb.min.css if
-+   the CSSMIN build variable is defined / CSS minifier is used)]
-  * GITWEB_LOGO
-    Points to the location where you put git-logo.png on your web server
-    (or to be more generic URI of logo, 72x27 size, displayed in top right
--- 
-1.7.0.2.279.gf1ba1c
+  - tg add <patchset> <branch>
+    adds <branch> to <patchset>
+    (The question is open, where to record the merge resolution of all=20
+patches)
+
+  - tg recreate <patchset> <newbase> <new patchset name>
+    Creates a new patchset with root <newbase> by creating new patch br=
+anches=20
+for each patch branch in <patchset>
+    This command is useful if you need to keep the old patchset to main=
+tain an=20
+older version of your Debian package.
+   =20
+> > 2) collapse / expand branches
+> >
+> > Managing a Debian package in stable, unstable and experimental can
+> > quickly doom you to manage at least three different patchsets with
+> > possibly three different roots. The list of branches grows in the
+> > douzens. Which branches belong to which patchset? Which branches ar=
+e
+> > already pushed or pulled? It may be an advantage to see only some m=
+ain
+> > branches and the branches of one patchset I'm currently working on.
+> > The tool I propose would manage each patchset in one branch per pat=
+chset.
+> > This branch has two roles:
+> > - keep the metadata of the patchset as files in the content tree
+> > - keep pointers to the top of the patch-branches in the parent poin=
+ters
+> > of the commit
+> > With the help of such a patchset-metadata-branch I can:
+> > - delete the patch-branches of one patchset while the commits are k=
+ept
+> > save - recreate the patch-branches of one patchset
+>=20
+>   The disadvantage is that you will have to invent a lot of arbitrary
+> metadata and wide range of commands to manipulate and work with this
+> metadata, all to accomplish something that _is actually one of the ma=
+in
+> Git functions to do_!
+I don't see this. What do I miss? All metadata I'd need to manage is:
+- one file with the name of each branch, it's last commit and the names=
+ of its=20
+dependencies (the root of the patchset, if empty)
+- one message file for each patch
+- the root of the patchset
+
+The example commands given above would manipulate or read the patchset =
+branch=20
+in the background much like pristine-tar does it with its metadata bran=
+ch.
+=20
+>   Wouldn't it be better to do the collapsing/expanding instead, e.g.
+> have a convention for patchset/stage branch tying up all patchset/*
+> branches, and an alias that lists only */stage branches and another t=
+hat
+> lists only patchset/* minus patchset/stage branches.
+So you propose not to delete/recreate the patch branches but to provide=
+ extra=20
+commands to list only the desired subset of branches? This would still =
+mean=20
+that I'd see douzens of patch branches in gitweb and that I't need to p=
+ush=20
+douzens of branches to my co-packagers. - That doesn't solve it for me.
+It may also be of interest, that Guido G=FCnther, the author of git-
+buildpackage[1] wrote a command git-pq to "maintain debian/patches on a=
+ patch=20
+queue branch". - There seems to be a need to have few branches and that=
+ it=20
+seems to be practical to create and destroy patch branches in your work=
+flow.
+
+[1] https://honk.sigxcpu.org/piki/projects/git-buildpackage/
+
+> > Is my explanation understandable? Could this approach work or did I=
+ miss
+> > something? Who has time to implement it (GSOC?)?
+>=20
+>   It's especially not clear at all whether you propose to start over =
+or
+> just make two improvements to TopGit, and if the former, how would yo=
+ur
+> approach differ from TopGit in all the other aspects. It's all a bit
+> ambiguous.
+I hope I managed to make it clearer this time. I believe my proposals a=
+re=20
+incompatible to topgit and thus would require a new project from scratc=
+h.=20
+However it may well be that some code from topgit could be reused.
+
+Best regards,
+
+Thomas Koch, http://www.koch.ro
