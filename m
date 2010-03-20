@@ -1,103 +1,95 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: native-git-svn: A Summer of Code 2010 proposal
-Date: Sun, 21 Mar 2010 03:49:54 +0530
-Message-ID: <f3271551003201519r61d3b9e5y83691ebb25da3534@mail.gmail.com>
-References: <f3271551003191018j67aa133es2fee4e3dda519ce0@mail.gmail.com> 
-	<32541b131003191132y119037f8rae598d0037786703@mail.gmail.com> 
-	<fabb9a1e1003191139v6ea37df3uba441f2cba9bc992@mail.gmail.com> 
-	<32541b131003191430ld0eaa9cw1d2aac08cff15682@mail.gmail.com> 
-	<alpine.DEB.1.00.1003201148230.7596@pacific.mpi-cbg.de> <f3271551003201334o4919cd47s44d06288b0d6068b@mail.gmail.com> 
-	<alpine.LNX.2.00.1003201724270.14365@iabervon.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 01/16] xdl_merge(): add optional ancestor label to
+ diff3-style output
+Date: Sat, 20 Mar 2010 17:47:36 -0500
+Message-ID: <20100320224736.GC31098@progeny.tock>
+References: <20100317113655.GA25470@progeny.tock>
+ <20100317114653.GA25641@progeny.tock>
+ <36ca99e91003170722m6642ca5q93b2669feaf3dea2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sat Mar 20 23:20:23 2010
+Cc: git@vger.kernel.org, Stefan Monnier <monnier@iro.umontreal.ca>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 20 23:46:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nt71r-000659-3W
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 23:20:23 +0100
+	id 1Nt7RO-0008MF-CA
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Mar 2010 23:46:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752297Ab0CTWUQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Mar 2010 18:20:16 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:63586 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752206Ab0CTWUP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 Mar 2010 18:20:15 -0400
-Received: by gyg8 with SMTP id 8so2080758gyg.19
-        for <git@vger.kernel.org>; Sat, 20 Mar 2010 15:20:14 -0700 (PDT)
+	id S1752494Ab0CTWql convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Mar 2010 18:46:41 -0400
+Received: from mail-yx0-f182.google.com ([209.85.210.182]:41699 "EHLO
+	mail-yx0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752393Ab0CTWqk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Mar 2010 18:46:40 -0400
+Received: by yxe12 with SMTP id 12so1171485yxe.33
+        for <git@vger.kernel.org>; Sat, 20 Mar 2010 15:46:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Tau8pxJMkNF8eGnkzIVXng1v2JrncRIpgf7/mb+ueU0=;
-        b=bTe1N9EUWLNASgAIhNudcoXcGfeCAsipBbql7xPq/uvaI74JN3w4xvxpi0l8k6SMeC
-         67Lx0rcQwsCjYHT/OV+Yn1Es0Xvcui4fwFaOre2QZOYk2fwBsSnJ+729iHTYJtRZLzK6
-         ED7ntMErCf/tC0LRNkNSrrAfM7MBAV2B8d/NA=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=5+EQhCCbhZQAnQXxUInRB0OZ20zSBQMXTev7VLE6ZJ0=;
+        b=DV7qh2dg4XqShx5EMy2rJUpKo3udLwl4nOjIw3gT+LQF/nw4dr8W2GKDCZJ/9kfq32
+         Zdqjyxw9+ZBDwoxr0LUYOHj9N23KNtQEJ7aFjfSTv3u1Icq+Sk1LCIfTq9jyFHmWaqZt
+         NgDxgbdPBj+a7BAIhh9YZaeoUYdVm+TK4mp9o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=QMR3Vv2dAP5pskYAPU58gW/KfpPIWnIlvL2VYSW6AOsgeZCzz0Fl2D3PCkhvhNmWzX
-         2aHd0HCocYX2hhpPHJqG0z7MuOjN0XBIfFN5khwZPiiRKQp8XtNlC27mNDMpAKYMnPkw
-         LqnXgao2qaYxnOYAEatI7ZymJYczEiSxQudNk=
-Received: by 10.91.203.38 with SMTP id f38mr2435131agq.18.1269123614279; Sat, 
-	20 Mar 2010 15:20:14 -0700 (PDT)
-In-Reply-To: <alpine.LNX.2.00.1003201724270.14365@iabervon.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=LaWnIi2A9xVPZyheCNfvnc2JbB1eo4gsft/0JAIt2PilnEHRybBxW7v/OulrXEp2hE
+         +7c6ms6B1XS5/VCGot4S80pVysrhKrd1+NuOJ/LW88bf1Rt6vUkYeU8BULdeobEGu0b5
+         ilhQMMqYi3TCeAqq0Ca4T5043KvxyshpmMQac=
+Received: by 10.100.23.19 with SMTP id 19mr3655150anw.15.1269125200143;
+        Sat, 20 Mar 2010 15:46:40 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 21sm1773598iwn.11.2010.03.20.15.46.38
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 20 Mar 2010 15:46:39 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <36ca99e91003170722m6642ca5q93b2669feaf3dea2@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142764>
 
-> The one thing I worry about is that you are proposing to wait a while
-> before submitting your changes upstream. =A0I would suggest pushing
-> whatever pieces work to contrib/ early on to get more feedback from
-> reviewers and testers. =A0(I am saying this selfishly, as a potential
-> tester.)
+Bert Wesarg wrote:
+> On Wed, Mar 17, 2010 at 12:46, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
 
-Okay, I'll try to get patches integrated immediately then.
+>> --- a/xdiff/xmerge.c
+>> +++ b/xdiff/xmerge.c
+>> @@ -397,6 +406,7 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_=
+t *xscr1, const char *name1,
+>>=C2=A0 	int flags, xmparam_t const *xmp, mmbuffer_t *result) {
+>>  	xdmerge_t *changes, *c;
+>>  	xpparam_t const *xpp =3D &xmp->xpp;
+>> +	const char * const ancestor_name =3D xmp->ancestor;
+>
+> Style. * should be aligned to the variable name.
 
-> The structure for remote helpers should be that each foreign system h=
-as a
-> single helper which git can call with instructions on what to do (bot=
-h for
-> foreign-to-git and for git-to-foreign operations). So 3 and 4 have to=
- be
-> functions of the same program, and it's probably best for 2 and 5 and
-> maybe 1 to also be part of this program.
+Not so clear to me:
 
-Right. I only split it up for the purposes of illustration. 3 and 4
-will be merged into a program called `git-remote-svn` that will
-automatically be invoked when Git encounters an SVN remote. 2 and 5
-will be merged into another program `svn-export-import` which can be
-thought of as the fusion of svn-fast-export and svn-fast-import.
-`git-remote-svn` will invoke it when necessary. And yeah, I don't know
-if I want to write the SVN client into `svn-export-import` or leave it
-as a separate program.
+ $ git grep -e '\* const' origin/master | wc -l
+ 90
+ $ git grep -e '\*const' origin/master | wc -l
+ 23
 
-> So the helper wouldn't be running git-fast-export or git-fast-import,
-> unless it was a helper for using git as the foreign system.
+I do prefer the style you suggest, so I=E2=80=99ve fixed it.
 
-Ah. I just realized that :)
+> FWIW:
+>=20
+>     Acked-by: Bert Wesarg <Bert.Wesarg@googlemail.com>
 
-> If you're going to work in C, you should look at my Perforce helper. =
-It's
-> suitable for mainline inclusion, due to using a free-as-in-beer,
-> made-available-without-license-terms C++ library for the Perforce sid=
-e,
-> but may be a better model for a C remote helper than git.py is.
+Thanks for looking it over.  I=E2=80=99ll be sending a rebased version =
+in a
+moment including your ack; I hope that=E2=80=99s okay.
 
-Thanks. I'll have a look. git.py isn't very useful.
-
-Regards,
-Ramkumar
+Jonathan
