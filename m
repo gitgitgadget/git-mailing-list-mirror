@@ -1,93 +1,134 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] git-imap-send bugfix: Allow lines starting with "From " in 
-	body
-Date: Mon, 22 Mar 2010 00:17:49 +0530
-Message-ID: <f3271551003211147x538d7682wc67dcc4f914ed97c@mail.gmail.com>
+From: "R. Tyler Ballance" <tyler@monkeypox.org>
+Subject: [PATCH v2] Correct references to /usr/bin/python which does not
+ exist on FreeBSD
+Date: Sun, 21 Mar 2010 12:01:50 -0700
+Message-ID: <20100321190145.GA32578@kiwi.sharlinx.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: me@mutt.org, ossi@users.sf.net, tytso@mit.edu,
-	Junio C Hamano <gitster@pobox.com>, mike@codeweavers.com
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 21 19:48:17 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="XsQoSWH+UP9D9v3l"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 21 20:02:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtQC9-0003EW-8G
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 19:48:17 +0100
+	id 1NtQPW-0000WA-QP
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 20:02:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752306Ab0CUSsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Mar 2010 14:48:11 -0400
-Received: from mail-yx0-f182.google.com ([209.85.210.182]:48876 "EHLO
-	mail-yx0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752021Ab0CUSsK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Mar 2010 14:48:10 -0400
-Received: by yxe12 with SMTP id 12so1434875yxe.33
-        for <git@vger.kernel.org>; Sun, 21 Mar 2010 11:48:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=Wab2xyEz0dmIlXm3tTJMdm/c7UsC50P5l4eYrDJbfzM=;
-        b=gj5KPw/sHZMHSjuiSCzYAoMFNAm6eEFnL9yrGRn4zsR+SLu2HCwoANLz9FDs66NqSI
-         PVo9H/zweI6TVvQcNZvnIa/yqAIU+Bi3xjutOjSe2MYKgWYuwWfpO15+/wKVePxAdgND
-         9P/uRCXtB4j+EaZKndNaTIBC9OdN7M/ble9S8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        b=XNd2EXFzh/MI9+ogiUHtO7rqtytOFbHz/Bd6g8A+YTuardIOkexCdYkupoe8N3S32m
-         BnOqjKIfqKmQM5PXRpefYuoiiKRzChZ/uyhXoIV9hP4qnH/W+9WbFnyvAPhoMbQy3T/j
-         vxG/yFHIJvRozTdrf1gMlCA5lSV1munkXAnOE=
-Received: by 10.90.136.2 with SMTP id j2mr3241437agd.92.1269197289153; Sun, 21 
-	Mar 2010 11:48:09 -0700 (PDT)
+	id S1752324Ab0CUTCA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Mar 2010 15:02:00 -0400
+Received: from mail.geekisp.com ([216.168.135.169]:6540 "EHLO
+	starfish.geekisp.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751295Ab0CUTB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Mar 2010 15:01:59 -0400
+Received: (qmail 10222 invoked by uid 1003); 21 Mar 2010 19:01:56 -0000
+Received: from localhost (HELO kiwi.sharlinx.com) (tyler@monkeypox.org@127.0.0.1)
+  by mail.geekisp.com with SMTP; 21 Mar 2010 19:01:56 -0000
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142850>
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+
+--XsQoSWH+UP9D9v3l
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On FreeBSD, Python does not ship as part of the base system but is available
+via the ports system, which install the binary in /usr/local/bin.
 ---
- Documentation/git-imap-send.txt |    5 -----
- imap-send.c                     |    8 +++++++-
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ Makefile                           |    6 +++++-
+ contrib/fast-import/import-zips.py |    2 +-
+ contrib/hg-to-git/hg-to-git.py     |    2 +-
+ contrib/p4import/git-p4import.py   |    2 +-
+ git_remote_helpers/Makefile        |    6 +++++-
+ 5 files changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
-index 6cafbe2..ed9d3ce 100644
---- a/Documentation/git-imap-send.txt
-+++ b/Documentation/git-imap-send.txt
-@@ -123,11 +123,6 @@ users may wish to visit this web page for more information:
-   http://kb.mozillazine.org/Plain_text_e-mail_-_Thunderbird#Completely_plain_email
+diff --git a/Makefile b/Makefile
+index 3a6c6ea..4f8fbf0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -444,7 +444,11 @@ ifndef PERL_PATH
+ 	PERL_PATH =3D /usr/bin/perl
+ endif
+ ifndef PYTHON_PATH
+-	PYTHON_PATH =3D /usr/bin/python
++	ifeq ($(uname_S),FreeBSD)
++		PYTHON_PATH =3D /usr/local/bin/python
++	else
++		PYTHON_PATH =3D /usr/bin/python
++	endif
+ endif
+=20
+ export PERL_PATH
+diff --git a/contrib/fast-import/import-zips.py b/contrib/fast-import/impor=
+t-zips.py
+index 7051a83..82f5ed3 100755
+--- a/contrib/fast-import/import-zips.py
++++ b/contrib/fast-import/import-zips.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/env python
+=20
+ ## zip archive frontend for git-fast-import
+ ##
+diff --git a/contrib/hg-to-git/hg-to-git.py b/contrib/hg-to-git/hg-to-git.py
+index 854cd94..046cb2b 100755
+--- a/contrib/hg-to-git/hg-to-git.py
++++ b/contrib/hg-to-git/hg-to-git.py
+@@ -1,4 +1,4 @@
+-#! /usr/bin/python
++#!/usr/bin/env python
+=20
+ """ hg-to-git.py - A Mercurial to GIT converter
+=20
+diff --git a/contrib/p4import/git-p4import.py b/contrib/p4import/git-p4impo=
+rt.py
+index 0f3d97b..b6e534b 100644
+--- a/contrib/p4import/git-p4import.py
++++ b/contrib/p4import/git-p4import.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/env python
+ #
+ # This tool is copyright (c) 2006, Sean Estabrooks.
+ # It is released under the Gnu Public License, version 2.
+diff --git a/git_remote_helpers/Makefile b/git_remote_helpers/Makefile
+index c62dfd0..74b05dc 100644
+--- a/git_remote_helpers/Makefile
++++ b/git_remote_helpers/Makefile
+@@ -7,7 +7,11 @@ pysetupfile:=3Dsetup.py
+ DESTDIR_SQ =3D $(subst ','\'',$(DESTDIR))
+=20
+ ifndef PYTHON_PATH
+-	PYTHON_PATH =3D /usr/bin/python
++	ifeq ($(uname_S),FreeBSD)
++		PYTHON_PATH =3D /usr/local/bin/python
++	else
++		PYTHON_PATH =3D /usr/bin/python
++	endif
+ endif
+ ifndef prefix
+ 	prefix =3D $(HOME)
+--=20
+1.6.4.3
 
+--XsQoSWH+UP9D9v3l
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
--BUGS
------
--Doesn't handle lines starting with "From " in the message body.
--
--
- Author
- ------
- Derived from isync 1.0.1 by Mike McCormack.
-diff --git a/imap-send.c b/imap-send.c
-index aeb2985..3163bb9 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -1431,8 +1431,14 @@ static int count_messages(struct msg_data *msg)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.12 (GNU/Linux)
 
- 	while (1) {
- 		if (!prefixcmp(p, "From ")) {
-+			p = strstr(p+5, "\nFrom: ");
-+			if (!p) break;
-+			p = strstr(p+7, "\nDate: ");
-+			if (!p) break;
-+			p = strstr(p+7, "\nSubject: ");
-+			if (!p) break;
- 			count++;
--			p += 5;
-+			p += 10;
- 		}
- 		p = strstr(p+5, "\nFrom ");
- 		if (!p)
--- 
-1.7.0
+iEYEARECAAYFAkumbRkACgkQFCbH3D9R4W/c2ACeJ3OmB3PJ+s7WYbgsbnn/i1Xu
+7DIAoJfCu4Brg0C1Gjm1D8Mv0qVwwg93
+=/mHv
+-----END PGP SIGNATURE-----
+
+--XsQoSWH+UP9D9v3l--
