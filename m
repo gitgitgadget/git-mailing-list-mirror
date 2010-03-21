@@ -1,86 +1,94 @@
-From: Erick Mattos <erick.mattos@gmail.com>
-Subject: Re: [PATCH v3] git checkout: create unparented branch by --orphan
-Date: Sun, 21 Mar 2010 18:15:12 -0300
-Message-ID: <55bacdd31003211415k79b7a039n3f19eb95eefcad43@mail.gmail.com>
-References: <1269185678-3039-1-git-send-email-erick.mattos@gmail.com> 
-	<20100321171431.GE2557@m62s10.vlinux.de> <7vd3yxqxdj.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Correct references to /usr/bin/python which does not
+ exist on FreeBSD
+Date: Sun, 21 Mar 2010 14:15:34 -0700
+Message-ID: <7veijdl6kp.fsf@alter.siamese.dyndns.org>
+References: <20100321190145.GA32578@kiwi.sharlinx.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Baumann <waste.manager@gmx.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 21 22:15:49 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "R. Tyler Ballance" <tyler@monkeypox.org>
+X-From: git-owner@vger.kernel.org Sun Mar 21 22:15:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtSUr-0002mW-VD
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 22:15:46 +0100
+	id 1NtSV3-0002sZ-40
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 22:15:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753393Ab0CUVPe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Mar 2010 17:15:34 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:34335 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752739Ab0CUVPd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Mar 2010 17:15:33 -0400
-Received: by gwaa18 with SMTP id a18so666164gwa.19
-        for <git@vger.kernel.org>; Sun, 21 Mar 2010 14:15:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=K4RuYX43pUdjNooDcxao1l4my+3xhGE+i0io8cwg6mM=;
-        b=qO+24qsM9l85GXtOt0EjEkfuYXfgNP4N8X2dNdaMQ3b9SUB+IkVWdi9vwNr5Q0oKWu
-         QcR/WtMzoBz5kn8QiVCo+u1ykZ85mX5xZ8lqWIVX/MI+colXfv48zjuP2T7YTuCxD/+x
-         iAGqD6+MbRkAwp583YcbREcRzzzc5F0ZHQ0ko=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=swXnZfgTixLKyQpGyXJR+ju6/Lo4d1XwGJ42iCU+xQIquprD241J7Ur9Va8iqDKLfW
-         bPaa2eiZ8srQ3M4UZHOIxMEpXWcmAGhOzbZIEDfQ8ZoEDQxGD8epq/SExwzsD5VauR5H
-         LAFGXW5MEWlynKKrK1DA1g6C57pfRL+5Jhsbg=
-Received: by 10.150.250.42 with SMTP id x42mr10590849ybh.193.1269206132081; 
-	Sun, 21 Mar 2010 14:15:32 -0700 (PDT)
-In-Reply-To: <7vd3yxqxdj.fsf@alter.siamese.dyndns.org>
+	id S1753592Ab0CUVPq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Mar 2010 17:15:46 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55118 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752739Ab0CUVPp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Mar 2010 17:15:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D402A4E79;
+	Sun, 21 Mar 2010 17:15:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=sBB14a9TMgwkI+Ll6w3r0FaOCnc=; b=UtPxUJS2lsvVJIflbCGiDV9
+	xRMMdmOTxnew57tWaWkP086hfvyYpwOmnuweHWHktSd4kDjIH55TnP7UwEDG7mrH
+	ZNhUJOZF7OgesLwcGfTWDMNLZkTwms8kEgS9/sUsjy9b7hThCXEBWvL+YndO/z/K
+	OmDlNO1AKqrdCzTU9AaI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=tKoXUDcHpXuKAe9ozIzjCGeJnwMUzaCuL5r7DRRpYS5PNEYnH
+	aNvlpSrrxezYmf6zvL5cu4HLfkcvNRRlFNx74TsbUOuIaia+723d5YORqR8dczlX
+	T2i4aVE6q9TFW6C6iC5+M/yNjiP0Xj296jSIJ0dhnwkF8TK1HgOdxkfMbg=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AE90A4E78;
+	Sun, 21 Mar 2010 17:15:39 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 644A2A4E77; Sun, 21 Mar
+ 2010 17:15:36 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E621B1F2-352E-11DF-8719-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142862>
 
-Hi,
+"R. Tyler Ballance" <tyler@monkeypox.org> writes:
 
-2010/3/21 Junio C Hamano <gitster@pobox.com>:
-> I'm not native either, and "orphan" sounded strange in that we've nev=
-er
-> used that word in any of our use case or workflow description in our
-> documents.
+> On FreeBSD, Python does not ship as part of the base system but is available
+> via the ports system, which install the binary in /usr/local/bin.
+> ---
 
-I didn't know.  I thought you were American.
+Sign-off?
 
-> The main point of the feature is not the emptyness of the resulting t=
-ree
-> (it is merely one possible outcome), but is the lack of parents in th=
-e
-> resulting commit. =C2=A0So I would recommend against --empty. =C2=A0-=
--root might be
-> a good synonym, though, and we _do_ already use that word for that pu=
-rpose
-> in some commands (e.g. "log --root").
+> diff --git a/Makefile b/Makefile
+> index 3a6c6ea..4f8fbf0 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -444,7 +444,11 @@ ifndef PERL_PATH
+>  	PERL_PATH = /usr/bin/perl
+>  endif
+>  ifndef PYTHON_PATH
+> -	PYTHON_PATH = /usr/bin/python
+> +	ifeq ($(uname_S),FreeBSD)
+> +		PYTHON_PATH = /usr/local/bin/python
+> +	else
+> +		PYTHON_PATH = /usr/bin/python
+> +	endif
+>  endif
 
---root could be a synonym but the reason I haven't chosen it was the
-fact that it could mislead people to think the functionality will do
-something with/based on the first commit of the actual branch,
-subjectively thinking "THE ROOT".
+I would have expected that the patch would look more like this:
 
-IMHO --orphan (no parents) is more obvious.
+diff --git a/Makefile b/Makefile
+index 98372eb..5bb0769 100644
+--- a/Makefile
++++ b/Makefile
+@@ -831,6 +831,7 @@ ifeq ($(uname_S),FreeBSD)
+ 		NO_UINTMAX_T = YesPlease
+ 		NO_STRTOUMAX = YesPlease
+ 	endif
++	PYTHON_PATH = /usr/local/bin/python
+ endif
+ ifeq ($(uname_S),OpenBSD)
+ 	NO_STRCASESTR = YesPlease
 
-We should argue one of our native English speaker amidst this
-developer community to be sure.
-
-Anyway that is just a word to change or not in the patch... :-)
-
-Regards
+What am I missing?
