@@ -1,88 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Best example of GSoC student participation
-Date: Sun, 21 Mar 2010 18:27:26 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1003211821110.7596@pacific.mpi-cbg.de>
-References: <f3271551003191018j67aa133es2fee4e3dda519ce0@mail.gmail.com> <32541b131003191132y119037f8rae598d0037786703@mail.gmail.com> <fabb9a1e1003191139v6ea37df3uba441f2cba9bc992@mail.gmail.com> <32541b131003191430ld0eaa9cw1d2aac08cff15682@mail.gmail.com>
- <alpine.DEB.1.00.1003201148230.7596@pacific.mpi-cbg.de> <f3271551003201334o4919cd47s44d06288b0d6068b@mail.gmail.com> <20100320210406.GA29899@progeny.tock> <alpine.DEB.1.00.1003211125290.7596@pacific.mpi-cbg.de> <20100321110807.GA24016@progeny.tock>
- <alpine.DEB.1.00.1003211236050.7596@pacific.mpi-cbg.de> <m3ljdlk4nw.fsf_-_@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 21 18:27:21 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH 0/4] Various unrelated documentation fixes
+Date: Sun, 21 Mar 2010 18:30:15 +0100
+Message-ID: <cover.1269192495.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 21 18:30:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtOvo-0001oV-H5
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 18:27:20 +0100
+	id 1NtOyk-00035z-Rw
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 18:30:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752705Ab0CUR1P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Mar 2010 13:27:15 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44184 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752518Ab0CUR1O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Mar 2010 13:27:14 -0400
-Received: (qmail invoked by alias); 21 Mar 2010 17:27:11 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp050) with SMTP; 21 Mar 2010 18:27:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18qfqIC2iIqPlLOs/IOUL2xr2Ri6bzB0uMlVs3LZn
-	tXuPlmbsuc9nUk
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <m3ljdlk4nw.fsf_-_@localhost.localdomain>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.60999999999999999
+	id S1753188Ab0CURaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Mar 2010 13:30:10 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:44838 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753048Ab0CURaE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Mar 2010 13:30:04 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 903C7E9B35;
+	Sun, 21 Mar 2010 13:30:01 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Sun, 21 Mar 2010 13:30:01 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=LPlHWd93a5l7Zgj10R8m2Mk/Q0o=; b=YceTJ+QEk0g3c7xvOxVHlH20L8f75I+cllr5pOCBU3SetsrtgGRJM6dWTO8uVocPNwggiWVHrI7NaJCW1+7E6BE8+N249jndAh8SDxqFbcOeI9vAKlr76LCDnsgys80DLHmBoZ8GF29hlqBwJYqqQTfWjYfWndAsS/uVVoHu5pA=
+X-Sasl-enc: VXkiVRAnPUGIofd5fYWRII7fOPYd95IfK/nQ1vNtHPOv 1269192600
+Received: from localhost (p3EE280DF.dip0.t-ipconnect.de [62.226.128.223])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id AC3833FBDB;
+	Sun, 21 Mar 2010 13:30:00 -0400 (EDT)
+X-Mailer: git-send-email 1.7.0.2.358.g30511
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142840>
 
-Hi,
+Here come 4 fixes to the documentation for issues which I spotted
+when skimming the doc for something else. They are not interrelated
+(and therefore described there, not here ;) ).
 
-On Sun, 21 Mar 2010, Jakub Narebski wrote:
+Michael J Gruber (4):
+  Documentation/git-reflog: Fix formatting of command lists
+  Documentation/gitdiffcore: Remove misleading date in heading
+  Documentation/urls: Remove spurious example markers
+  Documentation/git-clone: Transform description list into item list
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > The mistakes in the sequencer project were more than this. Not only was 
-> > the development of the branch almost invisible, when it was done, it was 
-> > basically with a comment "here it is, take it or leave it", and good 
-> > suggestions as to improve the code went unheeded.
-> > 
-> > That's why I suggested frequent progress reports on the mailing list. 
-> > Of course, these reports should only be commented upon by people who are 
-> > fully informed about the project, they should not be invitations to 
-> > everybody and her dog to distract the student by putting in unreasonable 
-> > or uninformed wishes.
-> 
-> By the way, which of the former GSoC students (and for which project)
-> can serve as the best example of good interaction with the git
-> community and with GSoC mentors?
-
-I think the best examples we have to show are
-
-- Sverre (even if his work is not in git.git; Junio thought that the 
-  project could gain more visibility outside of Git, but that had rather 
-  the opposite effect), who interacted with the Git community and with his 
-  mentor rather well,
-
-- Marek, who did a good job with the push support in JGit/EGit (even if he 
-  did not communicate with the community frequently, he did often enough, 
-  and listened to advice), and of course
-
-- Miklos, who was already known on the Git mailing list before getting 
-  really involved through the Summer of Code.
-
-Ciao,
-Dscho
+ Documentation/git-clone.txt   |   10 +++++-----
+ Documentation/git-reflog.txt  |    2 --
+ Documentation/gitdiffcore.txt |    2 +-
+ Documentation/urls.txt        |    6 ------
+ 4 files changed, 6 insertions(+), 14 deletions(-)
