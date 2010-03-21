@@ -1,89 +1,110 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: native-git-svn: A Summer of Code 2010 proposal
-Date: Sun, 21 Mar 2010 12:58:20 -0500
-Message-ID: <20100321175820.GA26174@progeny.tock>
-References: <32541b131003191132y119037f8rae598d0037786703@mail.gmail.com>
- <fabb9a1e1003191139v6ea37df3uba441f2cba9bc992@mail.gmail.com>
- <32541b131003191430ld0eaa9cw1d2aac08cff15682@mail.gmail.com>
- <alpine.DEB.1.00.1003201148230.7596@pacific.mpi-cbg.de>
- <f3271551003201334o4919cd47s44d06288b0d6068b@mail.gmail.com>
- <20100320210406.GA29899@progeny.tock>
- <alpine.DEB.1.00.1003211125290.7596@pacific.mpi-cbg.de>
- <20100321110807.GA24016@progeny.tock>
- <alpine.DEB.1.00.1003211236050.7596@pacific.mpi-cbg.de>
- <f3271551003210525l761cf36eh69cdfddf4e645ef3@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] Improve documentation for git-remote-helpers
+Date: Sun, 21 Mar 2010 23:51:13 +0530
+Message-ID: <f3271551003211121o48f502fp954b649ff4ca8f8b@mail.gmail.com>
+References: <f3271551003211026m376b86d6ga915f85a623eddfd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Stephan Beyer <s-beyer@gmx.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 21 18:57:23 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Mar 21 19:21:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtPOr-00068e-SB
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 18:57:22 +0100
+	id 1NtPmX-0008Ih-09
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 19:21:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751636Ab0CUR5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Mar 2010 13:57:17 -0400
-Received: from mail-yx0-f182.google.com ([209.85.210.182]:36022 "EHLO
-	mail-yx0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751020Ab0CUR5Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Mar 2010 13:57:16 -0400
-Received: by yxe12 with SMTP id 12so1422364yxe.33
-        for <git@vger.kernel.org>; Sun, 21 Mar 2010 10:57:15 -0700 (PDT)
+	id S1751295Ab0CUSVf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Mar 2010 14:21:35 -0400
+Received: from mail-gx0-f217.google.com ([209.85.217.217]:56218 "EHLO
+	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750799Ab0CUSVe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Mar 2010 14:21:34 -0400
+Received: by gxk9 with SMTP id 9so59694gxk.8
+        for <git@vger.kernel.org>; Sun, 21 Mar 2010 11:21:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=46Md9g09kHUiH5XA1y2+G9SHUlNeBkKfBp6NSOHpdmI=;
-        b=ED6r6XBfBFREGFiZK7BqNFAXuJTo9oIPEESoXDSYjClIbyokMmOx+7v5O6A3Wo+O3O
-         uT4abChLToOsWI7GJUztSa6R0MB4AWRKdfEr2mhh5xLkvem2icV087muNFeEBuX+3uuu
-         cF1jfzIkTsSVOebpnJd6FHPXbz6NxdRCAjKbE=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=BRs1oE6Q+WMjV73ElNu6KOmhzIAO5VsahCYtz3kRpEc=;
+        b=brr2sWH6+tvevW/3ERUJ1ytjcNxajnDI7awApIOmYg3xkid6aNoAx5ovQnPdJ0UWTG
+         I2fX/X5DrgwYV2dfT4VM91KJ9nIGmTu6a+OtimBAWkihQpu5pro8L0n7NOEH/2rs6onu
+         0/sHidazrTieXtXJ1hPAKMNtEaPu2ZPSkJmRA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=e/pEGKudo2cHmv/cRhuqaa+EnvT6LIAWFPugcpvVWjiJGRE0b2OL2f/tNFC55gp0Of
-         zEgh9vMD6jVgTYEHKSENXLMDKnW/OVON1wBqee52J67YlCqJWyqR6SPkgYyUaYqc6TxK
-         4jfu9fORSYX7LDKXTP6jvxbgZGkThC/gv7/iE=
-Received: by 10.151.89.31 with SMTP id r31mr4709577ybl.57.1269194235610;
-        Sun, 21 Mar 2010 10:57:15 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 21sm2819947iwn.15.2010.03.21.10.57.14
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 21 Mar 2010 10:57:14 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <f3271551003210525l761cf36eh69cdfddf4e645ef3@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=XP4Rj2uauT3tpZlAcQI3bi1pzY8ckFLRZHa52U2vdE5dEr7Likty+D/s/XIFtrw6Vd
+         1aqC3EPS3lUP3t/9kO6H94xagrZRal+WON3JihmkbtmaaKcxqok2Nrf1SsMOgy2yiZB+
+         +Txc+NtPLMa3BtianjPhKG/FkguJdx74ZdQl0=
+Received: by 10.91.85.4 with SMTP id n4mr3163347agl.23.1269195693095; Sun, 21 
+	Mar 2010 11:21:33 -0700 (PDT)
+In-Reply-To: <f3271551003211026m376b86d6ga915f85a623eddfd@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142848>
 
-Ramkumar Ramachandra wrote:
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+=A0Documentation/git-remote-helpers.txt | =A0 22 ++++++++++++++++------
+=A01 files changed, 16 insertions(+), 6 deletions(-)
 
-> Thanks for the elaborate explanation. The way I see it, there are two
-> extreme situations I must avoid. The first is being opaque for the
-> risk of not being able to integrate it into git.git at the end of the
-> summer term. The other extreme is worrying so much about the
-> integration of each little bit that the project keeps getting
-> detracted, and eventually loses focus. To strike a balance, I will
-> post progress reports to the mailing list (atleast) once a week, and
-> keep a public development branch for myself. Occasionally, it might
-> help to post patches for small components of the project with
-> unittests to get a wider test audience.
+diff --git a/Documentation/git-remote-helpers.txt
+b/Documentation/git-remote-helpers.txt
+index 1b5f61a..54b36c8 100644
+--- a/Documentation/git-remote-helpers.txt
++++ b/Documentation/git-remote-helpers.txt
+@@ -3,7 +3,8 @@ git-remote-helpers(1)
 
-Sounds great to me, too.  It seems you understand the issues well.
+=A0NAME
+=A0----
+-git-remote-helpers - Helper programs for interoperation with remote gi=
+t
++git-remote-helpers - Helper programs for interacting with main git
++programs without linking to them
 
-Cheers,
-Jonathan
+=A0SYNOPSIS
+=A0--------
+@@ -13,10 +14,19 @@ DESCRIPTION
+=A0-----------
+
+=A0These programs are normally not used directly by end users, but are
+-invoked by various git programs that interact with remote repositories
+-when the repository they would operate on will be accessed using
+-transport code not linked into the main git binary. Various particular
+-helper programs will behave as documented here.
++invoked by various git programs that interact with remote
++repositories. =A0For a program to qualify as a remote helper, it must
++implement a subset of the capabilities documented here, and conform to
++the remote helper protocol. Remote helpers interact with the main git
++programs via text streams, and do not link to them.
++
++The curl helper is one such program. It is invoked via
++'git-remote-http', 'git-remote-https', 'git-remote-ftp', or
++'git-remote-ftps', and implments the capabilities 'fetch', 'option',
++and 'push'.
++
++Remote helpers are often useful when native interoperability with a
++foreign versioning system is desired.
+
+=A0COMMANDS
+=A0--------
+@@ -122,7 +132,7 @@ CAPABILITIES
+=A0 =A0 =A0 =A0This helper supports the 'fetch' command.
+
+=A0'option'::
+- =A0 =A0 =A0 This helper supports the option command.
++ =A0 =A0 =A0 This helper supports the 'option' command.
+
+=A0'push'::
+=A0 =A0 =A0 =A0This helper supports the 'push' command.
+--
+1.7.0
