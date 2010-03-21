@@ -1,95 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] find_unique_abbrev: early out without a memcpy
-Date: Sun, 21 Mar 2010 13:23:38 -0700
-Message-ID: <7v39ztmnjp.fsf@alter.siamese.dyndns.org>
-References: <1269111329-5896-1-git-send-email-kusmabite@gmail.com>
- <1269111329-5896-4-git-send-email-kusmabite@gmail.com>
+From: Petr Baudis <pasky-AlSwsSmVLrQ@public.gmane.org>
+Subject: Re: rethinking patch management with GIT / topgit
+Date: Sun, 21 Mar 2010 21:36:26 +0100
+Message-ID: <20100321203626.GE3533@machine.or.cz>
+References: <201003201802.51129.thomas@koch.ro>
+	<20100320174740.GC4535@machine.or.cz>
+	<201003201953.34666.thomas@koch.ro>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, rene.scharfe@lsrfire.ath.cx
-To: Erik Faye-Lund <kusmabite@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 21 21:23:58 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: vcs-pkg-discuss-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+To: Thomas Koch <thomas-5j3myg3OO4w@public.gmane.org>
+X-From: vcs-pkg-discuss-bounces+gcvp-vcs-pkg=m.gmane.org-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org Sun Mar 21 21:36:39 2010
+Return-path: <vcs-pkg-discuss-bounces+gcvp-vcs-pkg=m.gmane.org-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org>
+Envelope-to: gcvp-vcs-pkg@m.gmane.org
+Received: from alioth.debian.org ([217.196.43.134])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtRgj-0004ta-Tn
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 21:23:58 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753387Ab0CUUXt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Mar 2010 16:23:49 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47503 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752646Ab0CUUXs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Mar 2010 16:23:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E5F10A4913;
-	Sun, 21 Mar 2010 16:23:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zAvGz/rN8VbbjSjpS4u8C0UVn5w=; b=AhSP2Q
-	oudgDdC25c9yMnPtsdIJDtOo4yf+V71atlvStAHsmf8S8E43FyMwKJQiqOeQrIvC
-	OPMnf2UWKr2kvm9uJesuwxoJ+u4x/OYWFz3m2vy5Mku50buOHBtsLmVq2beIL6tx
-	iyZLURv/n3Q+JNTR4qv8qDQHSMtS7fFkoJiyo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gHMQT1aMONP9RsvY0PG7DnW2sVD8Bp0c
-	b6f2h1LQrg93WRk1Jk2K708fy+ZqrshFgOh68iYmJ5aZQgnGYWOvS6yjQEFGNqKg
-	DBN0GJBj5RbEdusMeHJYym3ATbgwOJ0pGnWWhIYzS30PX+d+qVf+q0rJdTdChPfb
-	UpZP8W2gtXw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B0D3EA490F;
-	Sun, 21 Mar 2010 16:23:43 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 059B3A490E; Sun, 21 Mar
- 2010 16:23:39 -0400 (EDT)
-In-Reply-To: <1269111329-5896-4-git-send-email-kusmabite@gmail.com> (Erik
- Faye-Lund's message of "Sat\, 20 Mar 2010 19\:55\:29 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A5416166-3527-11DF-A655-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142858>
+	(envelope-from <vcs-pkg-discuss-bounces+gcvp-vcs-pkg=m.gmane.org-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org>)
+	id 1NtRt1-00023o-0v
+	for gcvp-vcs-pkg@m.gmane.org; Sun, 21 Mar 2010 21:36:39 +0100
+Received: from localhost ([127.0.0.1] helo=alioth.debian.org)
+	by alioth.debian.org with esmtp (Exim 4.69)
+	(envelope-from <vcs-pkg-discuss-bounces+gcvp-vcs-pkg=m.gmane.org-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org>)
+	id 1NtRt0-0006v9-Q8
+	for gcvp-vcs-pkg@m.gmane.org; Sun, 21 Mar 2010 20:36:38 +0000
+Received: from w241.dkm.cz ([62.24.88.241] helo=machine.or.cz ident=postfix)
+	by alioth.debian.org with esmtp (Exim 4.69)
+	(envelope-from <pasky-DDGJ70k9y3lX+M3pkMnKjw@public.gmane.org>) id 1NtRsr-0006uZ-9t
+	for vcs-pkg-discuss-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org;
+	Sun, 21 Mar 2010 20:36:34 +0000
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 44C2D86208C; Sun, 21 Mar 2010 21:36:26 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <201003201953.34666.thomas-5j3myg3OO4w@public.gmane.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-policyd-weight: using cached result; rate: -7.6
+X-Spam-ASN: AS6830 62.24.80.0/20
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on alioth.debian.org
+X-Spam-Level: 
+X-Spam-Status: No, score=0.0 required=5.0 tests=none shortcircuit=no
+	autolearn=failed version=3.2.5
+X-BeenThere: vcs-pkg-discuss-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org
+X-Mailman-Version: 2.1.11
+Precedence: list
+List-Id: Discussions on using VCS for distro packaging
+	<vcs-pkg-discuss.lists.alioth.debian.org>
+List-Unsubscribe: <http://lists.alioth.debian.org/mailman/options/vcs-pkg-discuss>,
+	<mailto:vcs-pkg-discuss-request-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://lists.alioth.debian.org/pipermail/vcs-pkg-discuss>
+List-Post: <mailto:vcs-pkg-discuss-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org>
+List-Help: <mailto:vcs-pkg-discuss-request-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org?subject=help>
+List-Subscribe: <http://lists.alioth.debian.org/mailman/listinfo/vcs-pkg-discuss>,
+	<mailto:vcs-pkg-discuss-request-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org?subject=subscribe>
+Sender: vcs-pkg-discuss-bounces+gcvp-vcs-pkg=m.gmane.org-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org
+Errors-To: vcs-pkg-discuss-bounces+gcvp-vcs-pkg=m.gmane.org-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org
+X-SA-Exim-Connect-IP: 127.0.0.1
+X-SA-Exim-Mail-From: vcs-pkg-discuss-bounces+gcvp-vcs-pkg=m.gmane.org-XbBxUvOt3X2LieD7tvxI8l/i77bcL1HB@public.gmane.org
+X-SA-Exim-Scanned: No (on alioth.debian.org); SAEximRunCond expanded to false
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142859>
 
-Erik Faye-Lund <kusmabite@googlemail.com> writes:
+On Sat, Mar 20, 2010 at 07:53:34PM +0100, Thomas Koch wrote:
+> Petr Baudis:
+>   - tg recreate <patchset> <newbase> <new patchset name>
+>     Creates a new patchset with root <newbase> by creating new patch branches 
+> for each patch branch in <patchset>
+>     This command is useful if you need to keep the old patchset to maintain an 
+> older version of your Debian package.
 
-> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-> ---
->  sha1_name.c |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/sha1_name.c b/sha1_name.c
-> index bf92417..2b1be58 100644
-> --- a/sha1_name.c
-> +++ b/sha1_name.c
-> @@ -196,10 +196,10 @@ const char *find_unique_abbrev(const unsigned char *sha1, int len)
->  	int status, exists;
->  	static char hex[41];
->  
-> +	if (len == 40 || !len)
-> +		return sha1_to_hex(sha1);
->  	exists = has_sha1_file(sha1);
->  	memcpy(hex, sha1_to_hex(sha1), 40);
-> -	if (len == 40 || !len)
-> -		return hex;
+This means wiping out history again; in TopGit, you would ideally
+checkpoint all the branches within the patchset, then just tg update
+your branches. It's another matter that the former is now difficult to
+do easily.
 
-This is somewhat iffy.  hex[] being static means there can only be one
-outstanding return value from f-u-a being used, iow
+> I don't see this. What do I miss? All metadata I'd need to manage is:
+> - one file with the name of each branch, it's last commit and the names of its 
+> dependencies (the root of the patchset, if empty)
+> - one message file for each patch
+> - the root of the patchset
+> 
+> The example commands given above would manipulate or read the patchset branch 
+> in the background much like pristine-tar does it with its metadata branch.
 
-	printf("%s %s", f-u-a(a, 0), f-u-a(b, 0))
+Hmm, to a degree I misunderstood your idea. You would still need quirky
+commands to update the references when you make a new commit, to go to a
+certain patch (at which point git will start acting a bit annoyed since
+it's not on a branch), etc. Other than that, I can offer only my gut
+feeling.  ;-)
 
-is a no-no.  But at the same time, it means that you can use one more
-recycled buffer than sha1_to_hex() gives us, so this may be safe:
+> >   Wouldn't it be better to do the collapsing/expanding instead, e.g.
+> > have a convention for patchset/stage branch tying up all patchset/*
+> > branches, and an alias that lists only */stage branches and another that
+> > lists only patchset/* minus patchset/stage branches.
+> So you propose not to delete/recreate the patch branches but to provide extra 
+> commands to list only the desired subset of branches? This would still mean 
+> that I'd see douzens of patch branches in gitweb and that I't need to push 
+> douzens of branches to my co-packagers. - That doesn't solve it for me.
 
-	char *ua = f-u-a(a, 0);
-        printf("%s %s %s %s %s", ua,
-            sha1_to_hex(b), sha1_to_hex(c),  sha1_to_hex(d), sha1_to_hex(e));
+There are already some patches in the wild to make gitweb topgit-aware;
+I don't see why is the latter a problem.
 
-but with the above it probably is not anymore, no?
+> I hope I managed to make it clearer this time. I believe my proposals are 
+> incompatible to topgit and thus would require a new project from scratch. 
 
-As an optimization patch, I would buy that delaying the "exists" check
-until the "no abbreviation" check returned early would make sense, though.
+Yes, I finally understood what do you mean, sorry for being a bit dense.
+
+-- 
+				Petr "Pasky" Baudis
+http://pasky.or.cz/ | "Ars longa, vita brevis." -- Hippocrates
