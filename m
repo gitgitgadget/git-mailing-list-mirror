@@ -1,130 +1,111 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/6] revert: add --ff option to allow fast forward when
- cherry-picking
-Date: Sat, 20 Mar 2010 21:01:20 -0500
-Message-ID: <20100321020120.GA30915@progeny.tock>
-References: <20100228222038.2260.25016.chriscool@tuxfamily.org>
- <201003010800.13996.chriscool@tuxfamily.org>
- <7v635g4ec2.fsf@alter.siamese.dyndns.org>
- <201003040306.16580.chriscool@tuxfamily.org>
- <7vhbowoj8y.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] rev-list: fix --pretty=oneline with empty message
+Date: Sat, 20 Mar 2010 19:54:38 -0700
+Message-ID: <7vk4t64c5t.fsf@alter.siamese.dyndns.org>
+References: <1269109201-5768-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Paolo Bonzini <bonzini@gnu.org>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 21 03:00:31 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Erik Faye-Lund <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 21 03:54:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtASr-0004zQ-Fu
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 03:00:29 +0100
+	id 1NtBJU-00017F-3Y
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 03:54:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752821Ab0CUCAY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Mar 2010 22:00:24 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:53819 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752659Ab0CUCAX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Mar 2010 22:00:23 -0400
-Received: by gyg8 with SMTP id 8so2130110gyg.19
-        for <git@vger.kernel.org>; Sat, 20 Mar 2010 19:00:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=ky/QkaXKTH8SV6/KnfAHtZhhrLRqiPSQ34sX6osA7BQ=;
-        b=LziRMa0btMgE9LiozTQkp3aHSKd20kzkPvzAzu0usmMCdqeT8nohi3K5l5xsX+Qv+7
-         IIFAWWGjdG248O8NW13Qv7jQR5edGSTgcvNJzNUJ/rt9v4UbWBM8nhIyZW6F2T1IYI5o
-         kZV1/HUDovF+NwotqvsLN7MSldmEdMeyuD2xY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=eqfIlEQG/Pgdpmgv4PN4MIJhfYEGa7zlDGJvF8kPpgg7CQ9URbwppPVUMcLX/hpmaw
-         tjXq1GRYprNSEM3s1BKrahpKZF6rdqKhosoFiXEAgB/qSLwWPgQGzpY8o0AfyqPKl/Ui
-         NbC5Bps5sNib5XazwasjDxvNKhEKQ9af/VFZQ=
-Received: by 10.100.233.26 with SMTP id f26mr12107234anh.1.1269136822764;
-        Sat, 20 Mar 2010 19:00:22 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm1048602iwn.9.2010.03.20.19.00.20
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 20 Mar 2010 19:00:21 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vhbowoj8y.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753091Ab0CUCyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Mar 2010 22:54:46 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49842 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752932Ab0CUCyq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Mar 2010 22:54:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E86E0A3A4F;
+	Sat, 20 Mar 2010 22:54:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zvGJHhsFyq3XO/jUwse5Vbvdyf0=; b=XQzLzm
+	ZKIrbAe4PkfPQrXdKUOz/3PgXP8/GRNhxjo/Q2LOZU18QPsmXOOueGd+RScvgcU/
+	Hw1YHJfTVyacaruLjWhlkXBufEqynBD57vSpr7jeEPgHgGq9bra1xVV7AFjhsMYw
+	SWPnRTKWxz/63HrCn67yZ+Ggw76PgQrghyYDA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CuDQwqaZh0lDM/AiiVGsKcjrdRp/Fogb
+	2sK1rxX/els5XXURvqSC7HME3HBdwJ87c9MG2mUaZmnzQbLsBGuX0l1U/iaE8g4c
+	5sP6yH70OyoCDviy2FXJ59eveZaK8lNUD9wmNrLg0KGz0dv/+WT7qc98VHjNi6nz
+	e+r5SOYnzZo=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C3EBDA3A4C;
+	Sat, 20 Mar 2010 22:54:42 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 105A8A3A49; Sat, 20 Mar
+ 2010 22:54:39 -0400 (EDT)
+In-Reply-To: <1269109201-5768-1-git-send-email-kusmabite@gmail.com> (Erik
+ Faye-Lund's message of "Sat\, 20 Mar 2010 19\:20\:01 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 198AF99E-3495-11DF-8423-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142786>
 
-Junio C Hamano wrote:
+Erik Faye-Lund <kusmabite@googlemail.com> writes:
 
-> diff --git a/builtin-revert.c b/builtin-revert.c
-> index eff5268..bfe75c8 100644
-> --- a/builtin-revert.c
-> +++ b/builtin-revert.c
-> @@ -314,6 +346,10 @@ static int revert_or_cherry_pick(int argc, const=
- char **argv)
->  	else
->  		parent =3D commit->parents->item;
-> =20
-> +	if (action =3D=3D CHERRY_PICK && allow_ff
-> +	    && !hashcmp(parent->object.sha1, head))
-> +		return fast_forward_to(commit->object.sha1, head);
-> +
->  	if (!(message =3D commit->buffer))
->  		die ("Cannot get commit message for %s",
->  				sha1_to_hex(commit->object.sha1));
+> This is a fix for the issue I posted about with rebase -i:
+> http://permalink.gmane.org/gmane.comp.version-control.git/141782
 
-Here=E2=80=99s a small fix to go on top.
+Thanks.
 
--- %< --
-Subject: revert: fix tiny memory leak in cherry-pick --ff
+> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+> index 5679170..133056b 100644
+> --- a/builtin/rev-list.c
+> +++ b/builtin/rev-list.c
+> @@ -135,7 +135,8 @@ static void show_commit(struct commit *commit, void *data)
+>  					putchar('\n');
+>  			}
+>  		} else {
+> -			if (buf.len)
+> +			if (revs->commit_format != CMIT_FMT_USERFORMAT ||
+> +			    buf.len)
+>  				printf("%s%c", buf.buf, info->hdr_termination);
+>  		}
 
-We forgot to free defmsg when returning early for a fast-forward.
+When the format is not user-specified one (e.g. "-v"), then a commit with
+no message will only show the regular header, without any body.
 
-=46ixing this should reduce noise during test suite runs with valgrind.
-More importantly, once cherry-pick learns to pick multiple commits,
-the amount of memory leaked would start to add up.
+I wonder if we need something similar in the "graph" case, most of which
+is outside the context before this hunk.  With your patch, this still
+seems to misbehave:
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- builtin-revert.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+    $ git rev-list --graph --oneline --abbrev=4 HEAD
+    * 8cb0 * efea 4th commit
+    * 341e 3rd commit
+    * 2321 2nd commit
+    * 3814 1st commit
 
-diff --git a/builtin-revert.c b/builtin-revert.c
-index 476f41e..9a3c14c 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -274,7 +274,7 @@ static int revert_or_cherry_pick(int argc, const ch=
-ar **argv)
- 	int i, index_fd, clean;
- 	char *oneline, *reencoded_message =3D NULL;
- 	const char *message, *encoding;
--	char *defmsg =3D git_pathdup("MERGE_MSG");
-+	char *defmsg =3D NULL;
- 	struct merge_options o;
- 	struct tree *result, *next_tree, *base_tree, *head_tree;
- 	static struct lock_file index_lock;
-@@ -364,6 +364,7 @@ static int revert_or_cherry_pick(int argc, const ch=
-ar **argv)
- 	 * reverse of it if we are revert.
- 	 */
-=20
-+	defmsg =3D git_pathdup("MERGE_MSG");
- 	msg_fd =3D hold_lock_file_for_update(&msg_file, defmsg,
- 					   LOCK_DIE_ON_ERROR);
-=20
---=20
-1.7.0.2
+Although anything other than --oneline seems to do just fine.
+
+Perhaps this one on top, with an appropriate test, and we can lose the RFC
+from the title?
+
+ builtin-rev-list.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 133056b..1db4b4c 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -133,6 +133,8 @@ static void show_commit(struct commit *commit, void *data)
+ 				 */
+ 				if (graph_show_remainder(revs->graph))
+ 					putchar('\n');
++				if (revs->commit_format == CMIT_FMT_ONELINE)
++					putchar('\n');
+ 			}
+ 		} else {
+ 			if (revs->commit_format != CMIT_FMT_USERFORMAT ||
