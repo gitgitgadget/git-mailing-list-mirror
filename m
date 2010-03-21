@@ -1,65 +1,101 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: [PATCH v3] git checkout: create unparented branch by --orphan
-Date: Sun, 21 Mar 2010 18:14:31 +0100
-Message-ID: <20100321171431.GE2557@m62s10.vlinux.de>
-References: <1269185678-3039-1-git-send-email-erick.mattos@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] Improve documentation for git-remote-helpers
+Date: Sun, 21 Mar 2010 22:56:33 +0530
+Message-ID: <f3271551003211026m376b86d6ga915f85a623eddfd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Erick Mattos <erick.mattos@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 21 18:14:42 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Mar 21 18:27:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtOjZ-0002Vo-Ia
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 18:14:41 +0100
+	id 1NtOvX-0001fn-3a
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 18:27:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752431Ab0CUROg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Mar 2010 13:14:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55337 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752272Ab0CUROg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Mar 2010 13:14:36 -0400
-Received: (qmail invoked by alias); 21 Mar 2010 17:14:33 -0000
-Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
-  by mail.gmx.net (mp040) with SMTP; 21 Mar 2010 18:14:33 +0100
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX1/dqdxv7GLdyQ8ypZv1KhXJ4pXaDw/3e6PvjnRjDo
-	zXPTbxFG0nFF3Y
-Received: by m62s10.vlinux.de (Postfix, from userid 1000)
-	id DAA03D4006; Sun, 21 Mar 2010 18:14:31 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <1269185678-3039-1-git-send-email-erick.mattos@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68000000000000005
+	id S1752509Ab0CUR0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Mar 2010 13:26:54 -0400
+Received: from mail-yw0-f172.google.com ([209.85.211.172]:63346 "EHLO
+	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752269Ab0CUR0x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Mar 2010 13:26:53 -0400
+Received: by ywh2 with SMTP id 2so1436562ywh.33
+        for <git@vger.kernel.org>; Sun, 21 Mar 2010 10:26:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=vyDzceoYpr2/q6BK+OPkJaf7zVXHsSjNcVaLrTotc7U=;
+        b=XwCSlXuEpL4ia4YjlBnRyCRQ25S3cq5HB9OUxJ6wRowPMpZcfVS4YckOWjO7w7uPof
+         FZbXF4LjqgWW5wgBxh4FyjF/CIfpqziyHCDKpUW/2sYLLGcPOpn0ttMbL96ri3fEI0hi
+         eifpQhe1PWGvsHXCZ5H/K+/uRYDeIAtwEPsFI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=EkE+mJw3xIv2Z4GiUp6/LzFS9QblPjADdeo11RSO4Sxt3qRw8W8INRUKp2Oivkl2Ss
+         FlxIh7tN6vbPKb4xQVdVeYSB6W1tyTIp9Lw9iE1/0JXzibhCXXhcVB953TN3zHUUjNT9
+         Cnfzix46qYOYrQLJJ3YEBnkXEWq7la290Giqc=
+Received: by 10.91.160.5 with SMTP id m5mr3241837ago.120.1269192413130; Sun, 
+	21 Mar 2010 10:26:53 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142838>
 
-On Sun, Mar 21, 2010 at 12:34:38PM -0300, Erick Mattos wrote:
-> Similar to -b, --orphan creates a new branch, but it starts without any
-> commit.  After running "git checkout --orphan newbranch", you are on a
-> new branch "newbranch", and the first commit you create from this state
-> will start a new history without any ancestry.
-> 
-> "git checkout --orphan" keeps the index and the working tree files
-> intact in order to make it convenient for creating a new history whose
-> trees resemble the ones from the original branch.
-> 
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ Documentation/git-remote-helpers.txt |   22 ++++++++++++++++------
+ 1 files changed, 16 insertions(+), 6 deletions(-)
 
-Sorry to skim in so late but --orphan sounds - at least to me as a non native
-speaker - a little strange. Yes, I know it means "without parents", but
-actually it would be the *last* thing I would search for after opening the
-manpage.
+diff --git a/Documentation/git-remote-helpers.txt
+b/Documentation/git-remote-helpers.txt
+index 1b5f61a..54b36c8 100644
+--- a/Documentation/git-remote-helpers.txt
++++ b/Documentation/git-remote-helpers.txt
+@@ -3,7 +3,8 @@ git-remote-helpers(1)
 
-Wouldn't --empty-parent or --no-parent describe the situation better?
-It actually has the benefit that it would match on a search for /parent/,
-which I would have searched for if I want to create a new empty branch.
+ NAME
+ ----
+-git-remote-helpers - Helper programs for interoperation with remote git
++git-remote-helpers - Helper programs for interacting with main git
++programs without linking to them
 
---
-Peter
+ SYNOPSIS
+ --------
+@@ -13,10 +14,19 @@ DESCRIPTION
+ -----------
+
+ These programs are normally not used directly by end users, but are
+-invoked by various git programs that interact with remote repositories
+-when the repository they would operate on will be accessed using
+-transport code not linked into the main git binary. Various particular
+-helper programs will behave as documented here.
++invoked by various git programs that interact with remote
++repositories.  For a program to qualify as a remote helper, it must
++implement a subset of the capabilities documented here, and conform to
++the remote helper protocol. Remote helpers interact with the main git
++programs via text streams, and do not link to them.
++
++The curl helper is one such program. It is invoked via
++'git-remote-http', 'git-remote-https', 'git-remote-ftp', or
++'git-remote-ftps', and implments the capabilities 'fetch', 'option',
++and 'push'.
++
++Remote helpers are often useful when native interoperability with a
++foreign versioning system is desired.
+
+ COMMANDS
+ --------
+@@ -122,7 +132,7 @@ CAPABILITIES
+ 	This helper supports the 'fetch' command.
+
+ 'option'::
+-	This helper supports the option command.
++	This helper supports the 'option' command.
+
+ 'push'::
+ 	This helper supports the 'push' command.
+-- 
+1.7.0
