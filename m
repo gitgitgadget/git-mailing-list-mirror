@@ -1,262 +1,138 @@
-From: Erick Mattos <erick.mattos@gmail.com>
-Subject: [PATCH v3] git checkout: create unparented branch by --orphan
-Date: Sun, 21 Mar 2010 12:34:38 -0300
-Message-ID: <1269185678-3039-1-git-send-email-erick.mattos@gmail.com>
-Cc: git@vger.kernel.org, Erick Mattos <erick.mattos@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 21 16:34:57 2010
+From: Todd Zullinger <tmz@pobox.com>
+Subject: Re: [PATCH] Add a git-completion rpm subpackage to the spec
+Date: Sun, 21 Mar 2010 11:51:56 -0400
+Message-ID: <20100321155156.GH27676@inocybe.localdomain>
+References: <1269045134-28072-1-git-send-email-icomfort@stanford.edu>
+ <1269109086-8887-1-git-send-email-bwalton@artsci.utoronto.ca>
+ <7v8w9mda6l.fsf@alter.siamese.dyndns.org>
+ <1269119663-sup-5823@pinkfloyd.chass.utoronto.ca>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="iSeZnk6FyAS3EJ1y"
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Sun Mar 21 16:52:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtNB0-00028k-5F
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 16:34:54 +0100
+	id 1NtNRp-00075g-5I
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 16:52:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751386Ab0CUPet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Mar 2010 11:34:49 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:61686 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751299Ab0CUPes (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Mar 2010 11:34:48 -0400
-Received: by gwaa18 with SMTP id a18so580671gwa.19
-        for <git@vger.kernel.org>; Sun, 21 Mar 2010 08:34:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=Sy2X57vZbOlWaM/xwA6P6ynRWL2k4cXPRnmY/uNX2x4=;
-        b=uoqu5V7CvdAiwLI6AB2qGN35E6CZdsb+oczvfVVpiLzRXPJ2jsyepr48F8BaLtsnf0
-         1+TVDMxYBRMH/OWoQ+2JEX09XqLsMGe5ox+WmCdxeQa4GBH/7nIRfDQkybO+Cqjrq6E9
-         7oB9igozu9ni0R2z6399BR2fBtx4E4987buKI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=r3fbfAbBb3Y0Tvcsll8l3+gPNpR9H7OBn6bU4oyF2S3ZjpL9ci0H37LiytDyKFF7dc
-         q/zyjMRo2m/lRsNnnGHXr6GRdYl1lNWYxoSfZpU/yudH83et6DDnUZJTBNaFHofXoBOr
-         TyUF/UqpVvJ+lOtN8dyf1TPRqGnnfFVn7HuoI=
-Received: by 10.90.24.13 with SMTP id 13mr678794agx.84.1269185687058;
-        Sun, 21 Mar 2010 08:34:47 -0700 (PDT)
-Received: from localhost.localdomain ([187.15.37.88])
-        by mx.google.com with ESMTPS id 7sm181080yxd.44.2010.03.21.08.34.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 21 Mar 2010 08:34:46 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.2.324.g7eb48.dirty
+	id S1751572Ab0CUPwL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Mar 2010 11:52:11 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53701 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750859Ab0CUPwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Mar 2010 11:52:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B762CA4A18;
+	Sun, 21 Mar 2010 11:52:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+	:cc:subject:message-id:references:mime-version:content-type
+	:in-reply-to; s=sasl; bh=tpW4XMvEYFfwry2PHpDbvV3Y4yU=; b=Ia4RBKz
+	VDwf1swuKCEjCHrxBN0OBUehxX2KCNznNkoEhuEDs1KfX50poLL6ViiPCHbpAMNa
+	AMyYB/VM3sEFlnSmEXeiXf+WrQ8DTchqsefgtT/0aaLCMLsuNgjhFvcmvpTPEMwD
+	FzsovjdD18/EOVcr22eZQY0cT3j6byY9agYA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+	:subject:message-id:references:mime-version:content-type
+	:in-reply-to; q=dns; s=sasl; b=NQAJGuNc2Wm7/YOWIkR90LFOpZEkMp1kV
+	xyCE9ftQz7GyWJ73YnilGqWXzriknBc/ZMuds2JaL2QQXROpSnYyaF27BmtPTw6K
+	sGubW+uJntU/741HdiZ3ZCymOMNh3CFdWLNmvAeBHT3cffcygHrwfBtskFQ1doh/
+	mKB2Ous6xU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 943A6A4A17;
+	Sun, 21 Mar 2010 11:52:00 -0400 (EDT)
+Received: from inocybe.localdomain (unknown [98.117.251.177]) (using TLSv1
+ with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1AC83A4A16; Sun, 21 Mar
+ 2010 11:51:58 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1269119663-sup-5823@pinkfloyd.chass.utoronto.ca>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Pobox-Relay-ID: AFD6DC08-3501-11DF-8993-D033EE7EF46B-09356542!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142832>
 
-Similar to -b, --orphan creates a new branch, but it starts without any
-commit.  After running "git checkout --orphan newbranch", you are on a
-new branch "newbranch", and the first commit you create from this state
-will start a new history without any ancestry.
 
-"git checkout --orphan" keeps the index and the working tree files
-intact in order to make it convenient for creating a new history whose
-trees resemble the ones from the original branch.
+--iSeZnk6FyAS3EJ1y
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-When creating a branch whose trees have no resemblance to the ones from
-the original branch, it may be easier to start work on the new branch by
-untracking and removing all working tree files that came from the
-original branch, by running a 'git rm -rf .' immediately after running
-"checkout --orphan".
+Ben Walton wrote:
+> Excerpts from Junio C Hamano's message of Sat Mar 20 16:12:34 -0400
+> 2010:
+>
+>> looks sensible.  May I ask for what distribution you are "handling
+>> it"?  The last thing I want to do is to get in the way of distro
+>> packagers.
+>
+> I can't say it's _the_ global definition for RPM based distros, but
+> I suspect the redhat derived ones would use this location.  I'm
+> working against RHEL5.
+>
+> The info that Ian provides seems to corroborate this hypothesis.
 
-Signed-off-by: Erick Mattos <erick.mattos@gmail.com>
----
+FWIW, upstream bash-completion is no longer handled by Ian.  The
+current upstream is at http://bash-completion.alioth.debian.org/
 
-Final patch version (I think so... :-) ).
+The paths haven't changed currently, though I thought I read that
+eventually they'd like to move the default location for completion
+scripts to /usr/share/bash-completion/ (many are already installed
+there, but are symlinked to /etc/bash_completion.d by bash-completion
+packages (in the Fedora/EPEL packages via %triggers when the
+applications they complete are installed).
 
-Added some further script tests by Junio.
+Also worth noting for RHEL/CentOS 5 folks is that the current Fedora
+packages should rebuild cleanly on those systems.  Typically, I do
+this via mock, which sets some of the needed rpm macros, but they are
+also available in the buildsys-macros package=B9.  I'm hoping to move
+git in EPEL to a newer version at some point but I haven't made time
+to do so yet.
 
- Documentation/git-checkout.txt |   21 +++++++++-
- builtin/checkout.c             |   15 ++++++-
- t/t2017-checkout-orphan.sh     |   90 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 123 insertions(+), 3 deletions(-)
- create mode 100755 t/t2017-checkout-orphan.sh
+I also haven't made time to see what, if any, of the changes we've
+made in the Fedora packages might be worthwhile to integrate into the
+git.git rpm spec file. :/
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 37c1810..5a50997 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git checkout' [-q] [-f] [-m] [<branch>]
--'git checkout' [-q] [-f] [-m] [-b <new_branch>] [<start_point>]
-+'git checkout' [-q] [-f] [-m] [[-b|--orphan] <new_branch>] [<start_point>]
- 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...
- 'git checkout' --patch [<tree-ish>] [--] [<paths>...]
- 
-@@ -90,6 +90,25 @@ explicitly give a name with '-b' in such a case.
- 	Create the new branch's reflog; see linkgit:git-branch[1] for
- 	details.
- 
-+--orphan::
-+	Create a new branch named <new_branch>, unparented to any other
-+	branch.  The new branch you switch to does not have any commit
-+	and after the first one it will become the root of a new history
-+	completely unconnected from all the other branches.
-++
-+When you use "--orphan", a new unparented branch is created having the
-+index and the working tree intact.  This allows you to start a new
-+history that records set of paths similar to that of the start-point
-+commit, which is useful when you want to keep different branches for
-+different audiences you are working to like when you have an open source
-+and commercial versions of a software, for example.
-++
-+If you want to start a disconnected history that records set of paths
-+totally different from the original branch, you may want to first clear
-+the index and the working tree, by running "git rm -rf ." from the
-+top-level of the working tree, before preparing your files (by copying
-+from elsewhere, extracting a tarball, etc.) in the working tree.
-+
- -m::
- --merge::
- 	When switching branches,
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index acefaaf..37d8278 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -33,6 +33,7 @@ struct checkout_opts {
- 	int writeout_error;
- 
- 	const char *new_branch;
-+	const char *new_orphan_branch;
- 	int new_branch_log;
- 	enum branch_track track;
- };
-@@ -491,8 +492,9 @@ static void update_refs_for_switch(struct checkout_opts *opts,
- 	struct strbuf msg = STRBUF_INIT;
- 	const char *old_desc;
- 	if (opts->new_branch) {
--		create_branch(old->name, opts->new_branch, new->name, 0,
--			      opts->new_branch_log, opts->track);
-+		if (!opts->new_orphan_branch)
-+			create_branch(old->name, opts->new_branch, new->name, 0,
-+				      opts->new_branch_log, opts->track);
- 		new->name = opts->new_branch;
- 		setup_branch_path(new);
- 	}
-@@ -632,6 +634,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		OPT_BOOLEAN('l', NULL, &opts.new_branch_log, "log for new branch"),
- 		OPT_SET_INT('t', "track",  &opts.track, "track",
- 			BRANCH_TRACK_EXPLICIT),
-+		OPT_STRING(0, "orphan", &opts.new_orphan_branch, "new branch", "new unparented branch"),
- 		OPT_SET_INT('2', "ours", &opts.writeout_stage, "stage",
- 			    2),
- 		OPT_SET_INT('3', "theirs", &opts.writeout_stage, "stage",
-@@ -677,6 +680,14 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		opts.new_branch = argv0 + 1;
- 	}
- 
-+	if (opts.new_orphan_branch) {
-+		if (opts.new_branch)
-+			die("--orphan and -b are mutually exclusive");
-+		if (opts.track > 0 || opts.new_branch_log)
-+			die("--orphan should not be used with -t or -l");
-+		opts.new_branch = opts.new_orphan_branch;
-+	}
-+
- 	if (conflict_style) {
- 		opts.merge = 1; /* implied */
- 		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
-diff --git a/t/t2017-checkout-orphan.sh b/t/t2017-checkout-orphan.sh
-new file mode 100755
-index 0000000..a8297c6
---- /dev/null
-+++ b/t/t2017-checkout-orphan.sh
-@@ -0,0 +1,90 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2010 Erick Mattos
-+#
-+
-+test_description='git checkout --orphan
-+
-+Main Tests for --orphan functionality.'
-+
-+. ./test-lib.sh
-+
-+TEST_FILE=foo
-+
-+test_expect_success 'Setup' '
-+	echo "Initial" >"$TEST_FILE" &&
-+	git add "$TEST_FILE" &&
-+	git commit -m "First Commit"
-+	test_tick &&
-+	echo "State 1" >>"$TEST_FILE" &&
-+	git add "$TEST_FILE" &&
-+	test_tick &&
-+	git commit -m "Second Commit"
-+'
-+
-+test_expect_success '--orphan creates a new orphan branch from HEAD' '
-+	git checkout --orphan alpha &&
-+	test_must_fail git rev-parse --verify HEAD &&
-+	test "refs/heads/alpha" = "$(git symbolic-ref HEAD)" &&
-+	test_tick &&
-+	git commit -m "Third Commit" &&
-+	test_must_fail git rev-parse --verify HEAD^ &&
-+	git diff-tree --quiet master alpha
-+'
-+
-+test_expect_success '--orphan creates a new orphan branch from <start_point>' '
-+	git checkout master &&
-+	git checkout --orphan beta master^ &&
-+	test_must_fail git rev-parse --verify HEAD &&
-+	test "refs/heads/beta" = "$(git symbolic-ref HEAD)" &&
-+	test_tick &&
-+	git commit -m "Fourth Commit" &&
-+	test_must_fail git rev-parse --verify HEAD^ &&
-+	git diff-tree --quiet master^ beta
-+'
-+
-+test_expect_success '--orphan must be rejected with -b' '
-+	git checkout master &&
-+	test_must_fail git checkout --orphan new -b newer &&
-+	test refs/heads/master = "$(git symbolic-ref HEAD)"
-+'
-+
-+test_expect_success '--orphan is rejected with an existing name' '
-+	git checkout master &&
-+	test_must_fail git checkout --orphan master &&
-+	test refs/heads/master = "$(git symbolic-ref HEAD)"
-+'
-+
-+test_expect_success '--orphan refuses to switch if a merge is needed' '
-+	git checkout master &&
-+	git reset --hard &&
-+	echo local >>"$TEST_FILE" &&
-+	cat "$TEST_FILE" >"$TEST_FILE.saved" &&
-+	test_must_fail git checkout --orphan gamma master^ &&
-+	test refs/heads/master = "$(git symbolic-ref HEAD)" &&
-+	test_cmp "$TEST_FILE" "$TEST_FILE.saved" &&
-+	git diff-index --quiet --cached HEAD &&
-+	git reset --hard
-+'
-+
-+test_expect_success '--orphan does not mix well with -t' '
-+	git checkout master &&
-+	test_must_fail git checkout -t master --orphan gamma &&
-+	test refs/heads/master = "$(git symbolic-ref HEAD)"
-+'
-+
-+test_expect_success '--orphan ignores branch.autosetupmerge' '
-+	git checkout -f master &&
-+	git config branch.autosetupmerge always &&
-+	git checkout --orphan delta &&
-+	test -z "$(git config branch.delta.merge)" &&
-+	test refs/heads/delta = "$(git symbolic-ref HEAD)" &&
-+	test_must_fail git rev-parse --verify HEAD^
-+'
-+
-+test_expect_success '--orphan does not mix well with -l' '
-+	git checkout -f master &&
-+	test_must_fail git checkout -l --orphan gamma
-+'
-+
-+test_done
--- 
-1.7.0.2.324.g7eb48.dirty
+The Fedora packages install the completion scripts by default.  The
+completion is only sourced when someone has installed bash-completion,
+so the thought is that if you installed that you would want git to
+provide completion by default.  For those that only want git
+completion without the more general bash-completion package, it's
+simple to source /etc/bash_completion.d/git.  In that light, is there
+a compelling reason not to install the completion by default?
+
+=B9 http://buildsys.fedoraproject.org/buildgroups/rhel5/i386/
+  The may eventually be added to the epel-release package to make it
+  simpler to rebuild EPEL packages (and Fedora packages on EPEL).
+
+--=20
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+People are crazy and times are strange
+I'm locked in tight, I'm out of range
+I used to care, but things have changed
+
+
+--iSeZnk6FyAS3EJ1y
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iQFDBAEBCAAtBQJLpkCXJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
+bXouYXNjAAoJEEMlk4u+rwzjw7cH/1X6VSgUhU+aLcugZ/RAazha9ttodQCOUR3F
+nm0XYx8R5Ev5UmcIhteGc60YvqxkgHpKdmZIAaSGfCXkSVR+t8NzwGrb/0YcY8dR
+B0Xm6IhUk2NaDAHU3M9KlgPMRq818T4ime+iA6xKJl3jrZZpdR/1zMu9tYufFP02
+7TQJJywUcTkSuuMLR5ssv4hUt+EL+yd0izukjb/x475ugDDb27Fa8SXBX72B19DV
+ODSuHhhFYIfFL+P18zQigyoVUeiddHW9fUresSZRa7db06hI7EoYn3bcLIkOKL39
+ZnRjPBBqor4aTYkEKN8aYhu+ah94l4Jw4WqtAEhYaSVsWNRS4tg=
+=iQZU
+-----END PGP SIGNATURE-----
+
+--iSeZnk6FyAS3EJ1y--
