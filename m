@@ -1,78 +1,95 @@
-From: Benjamin Meyer <ben@meyerhome.net>
-Subject: Re: [PATCH 2/4] pull: use --quiet rather than 2>/dev/null
-Date: Sun, 21 Mar 2010 13:34:10 -0400
-Message-ID: <E2F911AD-19C6-43BF-BBBD-735D30885F21@meyerhome.net>
-References: <1269051518-25099-1-git-send-email-bmeyer@rim.com> <1269051518-25099-2-git-send-email-bmeyer@rim.com> <20100320123520.GA29041@progeny.tock> <818FE4EC-5AE9-4F05-B9AD-E1753F7ED9E6@meyerhome.net> <20100321043330.GA9803@progeny.tock>
-Mime-Version: 1.0 (Apple Message framework v1077)
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 21 18:34:18 2010
+From: Erick Mattos <erick.mattos@gmail.com>
+Subject: Re: [PATCH v3] git checkout: create unparented branch by --orphan
+Date: Sun, 21 Mar 2010 14:55:03 -0300
+Message-ID: <55bacdd31003211055r348f37b0sb4ff02c38c64722b@mail.gmail.com>
+References: <1269185678-3039-1-git-send-email-erick.mattos@gmail.com> 
+	<20100321171431.GE2557@m62s10.vlinux.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Peter Baumann <waste.manager@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Mar 21 18:55:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtP2Y-0004zE-2Y
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 18:34:18 +0100
+	id 1NtPN6-0005En-Ja
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 18:55:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752787Ab0CUReN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Mar 2010 13:34:13 -0400
-Received: from qmta14.westchester.pa.mail.comcast.net ([76.96.59.212]:34478
-	"EHLO qmta14.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752269Ab0CUReM convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Mar 2010 13:34:12 -0400
-Received: from omta01.westchester.pa.mail.comcast.net ([76.96.62.11])
-	by qmta14.westchester.pa.mail.comcast.net with comcast
-	id vtNG1d00G0EZKEL5EtaC2Q; Sun, 21 Mar 2010 17:34:12 +0000
-Received: from [192.168.3.101] ([71.192.50.29])
-	by omta01.westchester.pa.mail.comcast.net with comcast
-	id vtaB1d00D0dnthT3MtaC7w; Sun, 21 Mar 2010 17:34:12 +0000
-In-Reply-To: <20100321043330.GA9803@progeny.tock>
-X-Mailer: Apple Mail (2.1077)
+	id S1751454Ab0CURz0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Mar 2010 13:55:26 -0400
+Received: from mail-yw0-f172.google.com ([209.85.211.172]:49771 "EHLO
+	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751089Ab0CURzZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Mar 2010 13:55:25 -0400
+Received: by ywh2 with SMTP id 2so1444120ywh.33
+        for <git@vger.kernel.org>; Sun, 21 Mar 2010 10:55:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=bz7bupW0OmdW9ZPvaqpM+Ytkdgn0oLUn0LOFLyJbWcI=;
+        b=CJ8m3HJYFwRtsM/u2k9sGGRFRmDd3QPZ2XFy6PZ/4nwMFQn5k98IPKUkEoVoarDWuI
+         /xdVZ8BQX6aKg0Y7LCoiYnioSDhkAL0MAopn8KMq4SgpLb+2SVeHdDv9RNxnSBdrbd+y
+         5oSA+KGtJF4uE0pzeDq2lM6icXVIQ01KMkxOg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=J9gOU/NCmTKpCzFACEdzmn7I+n39lK+sWH3QLfSOZW0KfBuEtkPb+C5zpudHxfTGYN
+         VRkhTNKG3xrTm2I2Tp0mfvcL1FjBniH6DcYiD2uFR2IQJrWO1A1E2focMPqxJpR0jeDy
+         V8gHFu9ulOHDkayTiQeK1YJpVf6H2KH1+mme0=
+Received: by 10.150.93.20 with SMTP id q20mr2454765ybb.343.1269194123067; Sun, 
+	21 Mar 2010 10:55:23 -0700 (PDT)
+In-Reply-To: <20100321171431.GE2557@m62s10.vlinux.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142846>
 
+Hi,
 
-On Mar 21, 2010, at 12:33 AM, Jonathan Nieder wrote:
+2010/3/21 Peter Baumann <waste.manager@gmx.de>:
+> Sorry to skim in so late but --orphan sounds - at least to me as a non native
+> speaker - a little strange. Yes, I know it means "without parents", but
+> actually it would be the *last* thing I would search for after opening the
+> manpage.
 
-> Hi again,
->=20
-> Benjamin Meyer wrote:
->=20
->> re-checking the other patches I think they are correct in their
->> usage.
->=20
-> Thanks for checking.
->=20
->> I ran the matching tests, the rebase ones passed,
->> 3903-stash.sh is already failing before my patch and
->> t3904-stash-patch.sh continues passing with the patch.  Other then
->> running the tests in t/ is there anything I should do to verify
->> patches?
->=20
-> Regarding testing: the best thing to do IMHO is to explain in the com=
-mit
-> message what effect the patch will have.  Then reviewers (including y=
-ou)
-> can read it and try it out to make sure what you say is true.
->=20
-> The test suite is not very good for checking that a patch does what
-> it=92s meant to do, but that=92s okay, since it has a different purpo=
-se [1].
->=20
-> As an example of what I mean, here is your patch 1/4 again (untested,
-> though).  I didn=92t add any tests since it would be kind of hard to
-> provoke address space exhaustion at just the right moment.
+It is never late to contribute, even for skimming.  Free software are
+organic and living things people can mold it whenever they want.
 
-[snip]
+We are both non native English speakers but for me orphan is the real
+obvious for no parents.  And that is the name of the command you type:
+shorter and not similar to other ones is the best.
 
-Thanks for the example.  I will try to include a more full explanation =
-for my changes in the future so it can be more easily reviewed.
+I don't care about names as long as its bearer does what it is
+supposed to do.  But in this particular case I think it fits the job.
 
--Benjamin Meyer
+> Wouldn't --empty-parent or --no-parent describe the situation better?
+> It actually has the benefit that it would match on a search for /parent/,
+> which I would have searched for if I want to create a new empty branch.
+
+--empty-parent try to give the "plumbing" idea but it is not really
+'empty' but 'non-existant' and also it is not good to make
+"porcelainners" (inventing this term) see it as an unparented though.
+
+--no-parent is just added characters and make it feel as if it exists
+a --parent too.
+
+You WILL match on a search for /parent/ already.
+
+> --
+> Peter
+>
+
+Thanks for you contributing ideas.
+
+Although I don't agree with you on this subject, I am very happy you
+participated your ideas to me.  It is good to get some attention :-)
+
+In this particular case I see Junio as a native English speaker better
+fitted to comment.
+
+Best regards
