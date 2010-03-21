@@ -1,127 +1,113 @@
-From: "R. Tyler Ballance" <tyler@monkeypox.org>
-Subject: [PATCH] Correct references to /usr/bin/python which may not exist
- on certain systems
-Date: Sat, 20 Mar 2010 16:51:11 -0700
-Message-ID: <20100320235105.GA30457@kiwi.sharlinx.com>
-Reply-To: 20100320230230.GA29738@kiwi.sharlinx.com
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 0/14] jn/merge-diff3-label
+Date: Sat, 20 Mar 2010 19:25:36 -0500
+Message-ID: <20100321002535.GA23681@progeny.tock>
+References: <7vr5ne908y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="liOOAslEiF7prFVr"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 21 00:51:38 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 21 01:24:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nt8S9-0001VT-UH
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 00:51:38 +0100
+	id 1Nt8yD-0004hq-07
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 01:24:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752770Ab0CTXvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Mar 2010 19:51:25 -0400
-Received: from mail.geekisp.com ([216.168.135.169]:2068 "EHLO
-	starfish.geekisp.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752759Ab0CTXvY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Mar 2010 19:51:24 -0400
-Received: (qmail 28027 invoked by uid 1003); 20 Mar 2010 23:51:23 -0000
-Received: from localhost (HELO kiwi.sharlinx.com) (tyler@monkeypox.org@127.0.0.1)
-  by mail.geekisp.com with SMTP; 20 Mar 2010 23:51:22 -0000
-Mail-Followup-To: git@vger.kernel.org
+	id S1752838Ab0CUAYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Mar 2010 20:24:39 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:65044 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752806Ab0CUAYi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Mar 2010 20:24:38 -0400
+Received: by gwaa18 with SMTP id a18so395219gwa.19
+        for <git@vger.kernel.org>; Sat, 20 Mar 2010 17:24:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=MJyciCmupXOJTw8CM4q9ZWLVoi9AZXtjNgBheZdRJvc=;
+        b=W+j5uDo9jdhj/54i8Xe3uCqgCxBS5/VcLk5mbgaxzSoD4djnUPp4wfytQYM57e2928
+         wrNbC+1/PTy7cCOvNH73cZLUdaZC+c7TgD2u57UvF5h2lwuNoegPPUh4nS9uaAlzmAGl
+         Zn0XCVr1LPanD+fDyO/Z9+TGhQ0f2/uHneteE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ua7YdWPyFk6wOExJnmE9eZIBH44vadbsBvtsXcDjjAvENFGIO0yUO9E3WaMImQrJwn
+         uZsVmk+9DDKhvgbRJUC2Lo1FiV8ilCD04ghwxfHw0PrQV8Vj5EzThhtZU8ST4pjMbG68
+         SUoJXBZjfZxFGaUALJ3t4XD0pU8U6cd8LmXI8=
+Received: by 10.100.78.2 with SMTP id a2mr11972112anb.23.1269131077935;
+        Sat, 20 Mar 2010 17:24:37 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 22sm1291851iwn.8.2010.03.20.17.24.37
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 20 Mar 2010 17:24:37 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <7vr5ne908y.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142768>
 
+Junio C Hamano wrote:
 
---liOOAslEiF7prFVr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> * jn/merge-diff3-label (2010-03-17) 13 commits
+>  . cherry-pick, revert: add a label for ancestor
+>  . revert: clarify label on conflict hunks
+>  . compat: add mempcpy()
+>  . tests: document cherry-pick behavior in face of conflicts
+>  . checkout -m --conflict=diff3: add a label for ancestor
+>  . tests: document format of conflicts from checkout -m
+>  . merge_trees(): add ancestor label parameter for diff3-style output
+>  . merge_file(): add comment explaining behavior wrt conflict style
+>  . checkout --conflict=diff3: add a label for ancestor
+>  . ll_merge(): add ancestor label parameter for diff3-style output
+>  . merge-file --diff3: add a label for ancestor
+>  . xdl_merge(): move file1 and file2 labels to xmparam structure
+>  . xdl_merge(): add optional ancestor label to diff3-style output
+> 
+> This somewhat conflicts with bw/union-merge-refactor that in 'master'; I
+> could resolve the conflicts myself, but I'd rather not.  Jonathan, could
+> you rebase the series?
 
-FreeBSD for example does not ship with a /usr/bin/python such that Python
-installed from ports will be located by default in /usr/local/bin
----
- Makefile                           |    2 +-
- contrib/fast-import/import-zips.py |    2 +-
- contrib/hg-to-git/hg-to-git.py     |    2 +-
- contrib/p4import/git-p4import.py   |    2 +-
- git_remote_helpers/Makefile        |    2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+Sure thing.  Here is the latest verison.
 
-diff --git a/Makefile b/Makefile
-index 3a6c6ea..2b248b4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -444,7 +444,7 @@ ifndef PERL_PATH
- 	PERL_PATH =3D /usr/bin/perl
- endif
- ifndef PYTHON_PATH
--	PYTHON_PATH =3D /usr/bin/python
-+	PYTHON_PATH =3D /usr/bin/env python
- endif
-=20
- export PERL_PATH
-diff --git a/contrib/fast-import/import-zips.py b/contrib/fast-import/impor=
-t-zips.py
-index 7051a83..82f5ed3 100755
---- a/contrib/fast-import/import-zips.py
-+++ b/contrib/fast-import/import-zips.py
-@@ -1,4 +1,4 @@
--#!/usr/bin/python
-+#!/usr/bin/env python
-=20
- ## zip archive frontend for git-fast-import
- ##
-diff --git a/contrib/hg-to-git/hg-to-git.py b/contrib/hg-to-git/hg-to-git.py
-index 854cd94..046cb2b 100755
---- a/contrib/hg-to-git/hg-to-git.py
-+++ b/contrib/hg-to-git/hg-to-git.py
-@@ -1,4 +1,4 @@
--#! /usr/bin/python
-+#!/usr/bin/env python
-=20
- """ hg-to-git.py - A Mercurial to GIT converter
-=20
-diff --git a/contrib/p4import/git-p4import.py b/contrib/p4import/git-p4impo=
-rt.py
-index 0f3d97b..b6e534b 100644
---- a/contrib/p4import/git-p4import.py
-+++ b/contrib/p4import/git-p4import.py
-@@ -1,4 +1,4 @@
--#!/usr/bin/python
-+#!/usr/bin/env python
- #
- # This tool is copyright (c) 2006, Sean Estabrooks.
- # It is released under the Gnu Public License, version 2.
-diff --git a/git_remote_helpers/Makefile b/git_remote_helpers/Makefile
-index c62dfd0..af3cc28 100644
---- a/git_remote_helpers/Makefile
-+++ b/git_remote_helpers/Makefile
-@@ -7,7 +7,7 @@ pysetupfile:=3Dsetup.py
- DESTDIR_SQ =3D $(subst ','\'',$(DESTDIR))
-=20
- ifndef PYTHON_PATH
--	PYTHON_PATH =3D /usr/bin/python
-+	PYTHON_PATH =3D /usr/bin/env python
- endif
- ifndef prefix
- 	prefix =3D $(HOME)
---=20
-1.6.4.3
+Jonathan Nieder (14):
+  tests: document format of conflicts from checkout -m
+  tests: document cherry-pick behavior in face of conflicts
+  xdl_merge(): add optional ancestor label to diff3-style output
+  xdl_merge(): move file1 and file2 labels to xmparam structure
+  merge-file --diff3: add a label for ancestor
+  ll_merge(): add ancestor label parameter for diff3-style output
+  checkout --conflict=diff3: add a label for ancestor
+  merge_file(): add comment explaining behavior wrt conflict style
+  merge_trees(): add ancestor label parameter for diff3-style output
+  checkout -m --conflict=diff3: add a label for ancestor
+  compat: add mempcpy()
+  revert: clarify label on conflict hunks
+  cherry-pick, revert: add a label for ancestor
+  merge-recursive: add a label for ancestor
 
---liOOAslEiF7prFVr
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.12 (GNU/Linux)
-
-iEYEARECAAYFAkulX2kACgkQFCbH3D9R4W+mFACghkkmDDvwYWOfS2lDOK88qVhV
-9ioAnRjhJrnBdZel4kXOcmIjrhXrchmW
-=NupY
------END PGP SIGNATURE-----
-
---liOOAslEiF7prFVr--
+ builtin/checkout.c              |    3 +-
+ builtin/merge-file.c            |    6 +-
+ builtin/revert.c                |  103 +++++++++++++--------
+ git-compat-util.h               |    9 ++
+ ll-merge.c                      |   24 +++--
+ ll-merge.h                      |    2 +-
+ merge-file.c                    |    8 ++-
+ merge-recursive.c               |   12 ++-
+ merge-recursive.h               |    1 +
+ rerere.c                        |    4 +-
+ t/t3507-cherry-pick-conflict.sh |  198 +++++++++++++++++++++++++++++++++++++++
+ t/t6023-merge-file.sh           |    4 +-
+ t/t7201-co.sh                   |   69 ++++++++++++-
+ xdiff/xdiff.h                   |    6 +-
+ xdiff/xmerge.c                  |   35 +++++--
+ 15 files changed, 405 insertions(+), 79 deletions(-)
+ create mode 100644 t/t3507-cherry-pick-conflict.sh
