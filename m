@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 10/19] Do not read .git/info/exclude if there is no repository
-Date: Sun, 21 Mar 2010 17:30:37 +0700
-Message-ID: <1269167446-7799-11-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 11/19] Do not read .git/info/attributes if there is no repository
+Date: Sun, 21 Mar 2010 17:30:38 +0700
+Message-ID: <1269167446-7799-12-git-send-email-pclouds@gmail.com>
 References: <1269167446-7799-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,114 +10,104 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 21 11:35:34 2010
+X-From: git-owner@vger.kernel.org Sun Mar 21 11:35:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtIVJ-0003RX-Ju
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 11:35:33 +0100
+	id 1NtIVT-0003Y8-Kz
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 11:35:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753186Ab0CUKfa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Mar 2010 06:35:30 -0400
-Received: from mail-yx0-f182.google.com ([209.85.210.182]:59165 "EHLO
-	mail-yx0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753115Ab0CUKf2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Mar 2010 06:35:28 -0400
-Received: by mail-yx0-f182.google.com with SMTP id 12so1312096yxe.33
-        for <git@vger.kernel.org>; Sun, 21 Mar 2010 03:35:28 -0700 (PDT)
+	id S1753191Ab0CUKfg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Mar 2010 06:35:36 -0400
+Received: from mail-yw0-f172.google.com ([209.85.211.172]:55586 "EHLO
+	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753115Ab0CUKff (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Mar 2010 06:35:35 -0400
+Received: by mail-yw0-f172.google.com with SMTP id 2so1334601ywh.33
+        for <git@vger.kernel.org>; Sun, 21 Mar 2010 03:35:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=I8LYljrDIpy/UN3NpBfUGqkS8dSkYIIHXk+FlcWjnNY=;
-        b=AL2kzAOsSxA/CmrOJz/kHq1c/0mnzQ1jON6LftqzQgxZDSGUJWPXxhY3NP8lB0VrRG
-         36i9ZdR++nMV/Pd1l8dfYotwnY2oFYn3sZmecIQoQFzqh9gAAKIbuzRenhyTRbEhKmWT
-         LPa+affejUW6ii9HcwBUyH6xrNciZn5BHcOfQ=
+        bh=ESQ6e5oq7BLz5pecp1DZO+vYowZzkLtNsbge//XyznY=;
+        b=BYioSWRME682P9xuKJ4vHDohjimehGuDzxzBTYTu035bVIoV2LQJwIP9QzJWYnfFOh
+         r5Al3p5Oyj7hf+QJT4ZjucgM5gqmvK2oQLsIfp1pTQI+r3ZRN+Qg7cnoEm8Op00JsgFY
+         qrJ23n6ArPn+7Xe6v7h0U0hEDxDPnPogagMYY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=X+gChfsQGKvQnbRyaIkxbOtrCsfKNh5RAbeO2pyXhF8+jPKxo7xjuC01d10piafzpl
-         lpeCgthi8dl6x1Au0vXXRyVgIjDdUmwB3OOmR579MhRV7TiZzBHRpkpkHWtIMCEhjOeA
-         37PtUSvxKDPQnIxp2R/q091A6f/uAs1o2JN9g=
-Received: by 10.101.105.22 with SMTP id h22mr5987631anm.185.1269167728253;
-        Sun, 21 Mar 2010 03:35:28 -0700 (PDT)
+        b=doCBiMhqyb5gzmho3B+6gIczp7rXJVC6PrpMfn1/o2bqP8zytB/x8cyH+3GcMTaISx
+         5f0fMQAtqWLkd2nD5vDEizQBfLTZIxiVl1p8lMNUvzjAhiDmZhVB5T3kW1DK4huwvLsK
+         43fxTkS5eg7ZkMRRq9qqtt2BYz6v5ghoqo4JY=
+Received: by 10.101.2.40 with SMTP id e40mr3678656ani.120.1269167734781;
+        Sun, 21 Mar 2010 03:35:34 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.73.230.17])
-        by mx.google.com with ESMTPS id 23sm3355025iwn.14.2010.03.21.03.35.25
+        by mx.google.com with ESMTPS id 22sm1875697iwn.8.2010.03.21.03.35.32
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 21 Mar 2010 03:35:27 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 21 Mar 2010 17:31:46 +0700
+        Sun, 21 Mar 2010 03:35:34 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 21 Mar 2010 17:31:53 +0700
 X-Mailer: git-send-email 1.7.0.2.425.gb99f1
 In-Reply-To: <1269167446-7799-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142807>
 
+This one is difficult to demonstrate by tests. So I'll describe the
+call flow instead.
+
+Say we do "git grep --no-index --show-function foo -- bar" in no
+repository. The call flow would be:
+ - ...
+ - cmd_grep
+ - grep_directory
+ - grep_file
+ - grep_buffer
+ - grep_buffer_1
+ - userdiff_find_by_path
+ - git_checkattr("diff")
+ - bootstrap_attr_stack
+ - git_path("info/attributes")
+
+Because no repository is found, git_dir in environment.c would be
+NULL. When it reaches git_path("info/attributes"), it will
+automatically set git_dir to ".git". If we have $(cwd)/.git/info/attrib=
+utes
+then that file will be read, no matter $(cwd)/.git is a valid
+repository.
+
+This bug is hard to be exposed, because after git_checkattr("diff")
+finds something (wrong). It will look up for diff drivers from
+=2Egit/config. If we do thing correctly, .git/config will not be read,
+thus no diff drivers, no visible impact. If .git/config is read,
+git_dir must be set already, all this would not happen.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- dir.c           |    8 +++++---
- t/t7002-grep.sh |   24 ++++++++++++++++++++++++
- 2 files changed, 29 insertions(+), 3 deletions(-)
+ attr.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index 133c333..fee19fe 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1024,9 +1024,11 @@ void setup_standard_excludes(struct dir_struct *=
-dir)
- 	const char *path;
+diff --git a/attr.c b/attr.c
+index f5346ed..f1362de 100644
+--- a/attr.c
++++ b/attr.c
+@@ -480,7 +480,10 @@ static void bootstrap_attr_stack(void)
+ 			debug_push(elem);
+ 		}
 =20
- 	dir->exclude_per_dir =3D ".gitignore";
--	path =3D git_path("info/exclude");
--	if (!access(path, R_OK))
--		add_excludes_from_file(dir, path);
-+	if (!startup_info || startup_info->have_repository) {
-+		path =3D git_path("info/exclude");
-+		if (!access(path, R_OK))
-+			add_excludes_from_file(dir, path);
-+	}
- 	if (excludes_file && !access(excludes_file, R_OK))
- 		add_excludes_from_file(dir, excludes_file);
- }
-diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
-index e249c3e..06ec4cb 100755
---- a/t/t7002-grep.sh
-+++ b/t/t7002-grep.sh
-@@ -527,4 +527,28 @@ test_expect_success 'grep -e -- -- path' '
- 	test_cmp expected actual
- '
-=20
-+test_expect_success 'Setup fake .git' '
-+	cd t &&
-+	GIT_CEILING_DIRECTORIES=3D"`pwd`" &&
-+	export GIT_CEILING_DIRECTORIES &&
-+	cd a &&
-+	mkdir -p .git/info &&
-+	cd ../..
-+
-+'
-+
-+test_expect_success 'Ignore fake .git/info/exclude' '
-+	(
-+		cd t/a &&
-+		echo v > .git/info/exclude &&
-+		git grep --no-index vvv . &&
-+		rm .git/info/exclude
-+	)
-+'
-+
-+test_expect_success 'Unsetup fake .git' '
-+	rm -rf t/a &&
-+	unset GIT_CEILING_DIRECTORIES
-+'
-+
- test_done
+-		elem =3D read_attr_from_file(git_path(INFOATTRIBUTES_FILE), 1);
++		if (!startup_info || startup_info->have_repository)
++			elem =3D read_attr_from_file(git_path(INFOATTRIBUTES_FILE), 1);
++		else
++			elem =3D NULL;
+ 		if (!elem)
+ 			elem =3D xcalloc(1, sizeof(*elem));
+ 		elem->origin =3D NULL;
 --=20
 1.7.0.2.425.gb99f1
