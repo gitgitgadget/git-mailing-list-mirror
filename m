@@ -1,75 +1,67 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] .mailmap: Map the the first submissions of MJG by e-mail
-Date: Sun, 21 Mar 2010 14:43:47 +0100
-Message-ID: <8863d2d4e721a16ed13ce1518be6c5f272c59d06.1269178932.git.git@drmicha.warpmail.net>
-References: <4BA620CD.3060101@drmicha.warpmail.net>
+From: Mark Lodato <lodatom@gmail.com>
+Subject: Re: [PATCH] Speed up commands that use rev-list when max-count is 
+	specified.
+Date: Sun, 21 Mar 2010 10:09:20 -0400
+Message-ID: <ca433831003210709k1da46c8docfdac358253625e@mail.gmail.com>
+References: <1269142267-17127-1-git-send-email-bmeyer@rim.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 21 14:43:38 2010
+Cc: git@vger.kernel.org
+To: Benjamin C Meyer <bmeyer@rim.com>
+X-From: git-owner@vger.kernel.org Sun Mar 21 15:10:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtLRI-0007zE-1u
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 14:43:36 +0100
+	id 1NtLqo-0003Hn-Cj
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 15:09:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752822Ab0CUNn3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Mar 2010 09:43:29 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:36989 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752348Ab0CUNn2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Mar 2010 09:43:28 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id F23ADE99E6;
-	Sun, 21 Mar 2010 09:43:27 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Sun, 21 Mar 2010 09:43:28 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=4n05zR8OoqX65z3Pqyr8cOZs/4c=; b=UkkIio/SBJZP/bTXdAGPeyHwgFy7QQGhxQbgZSSZgLK5GknI7VbvHnoS30JKgfQ7cqHeNqbTz5sISlv/tSNaFaEteNGByzaWDZ3ffTbhM9WviYRa/FtY84uo7inJBZn8HtLvs2xH+MLIc0oD47H0XxuX5xuc8GOOwvUpP67/URY=
-X-Sasl-enc: 6kEMCb2Jrvz14ZC5Mow2BCiUZnRBsdkgrxY/AdXtzmDP 1269179007
-Received: from localhost (p3EE280DF.dip0.t-ipconnect.de [62.226.128.223])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 461CC11068;
-	Sun, 21 Mar 2010 09:43:27 -0400 (EDT)
-X-Mailer: git-send-email 1.7.0.2.358.g30511
-In-Reply-To: <4BA620CD.3060101@drmicha.warpmail.net>
+	id S1753079Ab0CUOJm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Mar 2010 10:09:42 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:64525 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752822Ab0CUOJm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Mar 2010 10:09:42 -0400
+Received: by gwaa18 with SMTP id a18so556991gwa.19
+        for <git@vger.kernel.org>; Sun, 21 Mar 2010 07:09:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ajC64hsoblYIG6ZgXc6q/IhMoFYV6pYVZj5GdxXm8Rg=;
+        b=YlV3lC2sNH/0XVS5BUh1EY6fqzFSnsPUSuti3/7UPTVt70VG4SdKxN3fR6qN1eVK+G
+         6TNmARtYH/famoo33mSwVS6lXPBsB9UI4r66SdiSBO6Qz2ybteLvtlARBQNEdDA1QDtu
+         sB741jeFg1dZfORBSkpEda37VsnBLHsz/rAgw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=R2fvpGd8JalNa6xej+1EKB+WCHJseamtBbyDdzvJkh20CHmP390cM5ZqPs517hqe5M
+         MXBlVCj11v/C8cPOvdBhgayn9b06xOL602yoAC2P96euUriEXrZV502PH8Ht0UvYZrBn
+         6sr2tDBGiPZEL5Xzo3Sqhdw1YtVOt8Q694QHM=
+Received: by 10.90.7.29 with SMTP id 29mr2989345agg.16.1269180580688; Sun, 21 
+	Mar 2010 07:09:40 -0700 (PDT)
+In-Reply-To: <1269142267-17127-1-git-send-email-bmeyer@rim.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142828>
 
-so that git shortlog with '-e' coalesces all my commits.
+On Sat, Mar 20, 2010 at 11:31 PM, Benjamin C Meyer <bmeyer@rim.com> wro=
+te:
+> =C2=A0struct commit *get_revision(struct rev_info *revs)
+> =C2=A0{
+> + =C2=A0 =C2=A0 =C2=A0 if (revs->max_count =3D=3D 0)
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;
+> +
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct commit *c;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct commit_list *reversed;
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- .mailmap |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/.mailmap b/.mailmap
-index c507309..a8091eb 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -38,6 +38,7 @@ Li Hong <leehong@pku.edu.cn>
- Lukas Sandstr=C3=B6m <lukass@etek.chalmers.se>
- Martin Langhoff <martin@catalyst.net.nz>
- Michael Coleman <tutufan@gmail.com>
-+Michael J Gruber <git@drmicha.warpmail.net> <michaeljgruber+gmane@fast=
-mail.fm>
- Michael W. Olson <mwolson@gnu.org>
- Michele Ballabio <barra_cuda@katamail.com>
- Nanako Shiraishi <nanako3@bluebottle.com>
---=20
-1.7.0.2.358.g30511
+Declaring variables in the middle of a function is a C99 feature (and
+a GNU extension in C89 mode).  I don't know if this is allowed in git
+code, but it would be easy enough to make this ANSI C89 compatible by
+putting your new statement after the variable declarations.
