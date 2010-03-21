@@ -1,89 +1,88 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: Re: [PATCH] Add a git-completion rpm subpackage to the spec
-Date: Sun, 21 Mar 2010 16:06:04 -0400
-Message-ID: <1269199866-sup-8342@pinkfloyd.chass.utoronto.ca>
-References: <1269045134-28072-1-git-send-email-icomfort@stanford.edu> <1269109086-8887-1-git-send-email-bwalton@artsci.utoronto.ca> <7v8w9mda6l.fsf@alter.siamese.dyndns.org> <1269119663-sup-5823@pinkfloyd.chass.utoronto.ca> <20100321155156.GH27676@inocybe.localdomain>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Todd Zullinger <tmz@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 21 21:06:20 2010
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: [PATCH 2/2] clone: pass the remote name to remote_get
+Date: Sun, 21 Mar 2010 21:19:49 +0100
+Message-ID: <1269202789-8833-2-git-send-email-srabbelier@gmail.com>
+References: <1269202789-8833-1-git-send-email-srabbelier@gmail.com>
+Cc: Sverre Rabbelier <srabbelier@gmail.com>
+To: Git List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Martin Waitz <tali@admingilde.org>,
+	"Junio C Hamano" <gitst
+X-From: git-owner@vger.kernel.org Sun Mar 21 21:20:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtRPe-0004lP-JN
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 21:06:18 +0100
+	id 1NtRd8-0003C3-J7
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 21:20:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753393Ab0CUUGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Mar 2010 16:06:12 -0400
-Received: from www.cquest.utoronto.ca ([192.82.128.5]:55797 "EHLO
-	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752613Ab0CUUGK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Mar 2010 16:06:10 -0400
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:54130 ident=93)
-	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
-	id 1NtRPQ-0008EA-D2; Sun, 21 Mar 2010 16:06:04 -0400
-Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1NtRPQ-0005pv-C1; Sun, 21 Mar 2010 16:06:04 -0400
-In-reply-to: <20100321155156.GH27676@inocybe.localdomain>
-User-Agent: Sup/git
+	id S1753223Ab0CUUUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Mar 2010 16:20:10 -0400
+Received: from mail-ew0-f216.google.com ([209.85.219.216]:50403 "EHLO
+	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753237Ab0CUUUG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Mar 2010 16:20:06 -0400
+Received: by ewy8 with SMTP id 8so493635ewy.28
+        for <git@vger.kernel.org>; Sun, 21 Mar 2010 13:20:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=CNGGkwNdfHYzjDL2P0ccGBvUnqBHbkr3mEvaCMgqRWs=;
+        b=AmzytDG5TPlC8xNXmBAdmr53fCXOFcW103rmVj+aZNyue9S39UqrZ76sJwi1FUhPV9
+         o47Ft0zXuOwjBmcq/MyEzT8i/iAniTlJTZzK1mxn7QYAfOUAlIUzRZ/mXl4ffmQ5BgYE
+         5vg+RVBAWvMPpAzlWyIYcu24qddiaK4ly9FZE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=wHVMyMSCfgf1DgXTkaWyyjSQQkKrNRZRMdN8ZGT9ujHOuhOBhFY9sAnsVWl9vsIFk4
+         8duJ6LVE/yyRspWBllAui2jr8CqxtZycL+VIyUOrQN5s4J0h1O8wWPrRy8R09zmvEQwe
+         IFbWttRYq2PJ+o/nQ2vIIJ9RQrkhe+ftH9hME=
+Received: by 10.213.41.10 with SMTP id m10mr2357106ebe.21.1269202804971;
+        Sun, 21 Mar 2010 13:20:04 -0700 (PDT)
+Received: from localhost.localdomain (ip138-114-211-87.adsl2.static.versatel.nl [87.211.114.138])
+        by mx.google.com with ESMTPS id 16sm1300202ewy.3.2010.03.21.13.20.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 21 Mar 2010 13:20:04 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.2.325.g634e5
+In-Reply-To: <1269202789-8833-1-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142856>
 
-Excerpts from Todd Zullinger's message of Sun Mar 21 11:51:56 -0400 2010:
+Currently when using a remote helper to clone a repository, the
+remote helper will be passed the url of the target repository as
+first argument (which represents the name of the remote). This name
+is extracted from transport->remote->name, which is set by
+builtin/clone.c when it calls remote_get with argv[0] as argument.
 
-Hi Todd,
+Fix this by passing the name remote will be set up as instead.
+---
 
-> The paths haven't changed currently, though I thought I read that
-> eventually they'd like to move the default location for completion
-> scripts to /usr/share/bash-completion/ (many are already installed
-> there, but are symlinked to /etc/bash_completion.d by
-> bash-completion packages (in the Fedora/EPEL packages via %triggers
-> when the applications they complete are installed).
+  I've spent quite a few hours trying to figure out why this broke
+  t5700, so I would appreciate feedback from those with more
+  knowledge about hardlinking and clone/fetch in general as to
+  whether this couild cause any problems.
 
-Should this be taken as:
+ builtin/clone.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-* Eventually, /etc/bash_completion will source files directly from
-  /usr/share/...
-OR
-* To play nice with the distros, triggers and symlinks are the way to
-  go after installing to /usr/share/...?
-
-> I also haven't made time to see what, if any, of the changes we've
-> made in the Fedora packages might be worthwhile to integrate into
-> the git.git rpm spec file. :/
-
-I just took a look at the spec from 1.7.0.1-1 in rawhide.  Some of the
-stuff it includes is Fedora/RHEL specific, but a few items that I
-wouldn't mind seeing merged into the stock .spec file are the
-splitting of the daemon package with the addition of an xinetd.d/git
-file and the emacs support subpackage.
-
-I also like the gitweb sub-package, but it doesn't meet the (site
-specific) needs I have for deployment...In general, I think support in
-the standard .spec for it is a good thing though.
-
-> simple to source /etc/bash_completion.d/git.  In that light, is
-> there a compelling reason not to install the completion by default?
-
-Well, that's a good point.  I think my personal inclination for a
-separate package comes from having it separated in OpenCSW.  Most of
-the reasons for a separate package there likely don't apply here
-though, so maybe it should be part of git-core?  As I said when I sent
-the alternate (separate rpm) version, I'm happy with either solution
-as long as the completion support is more easily available when I
-build rpms in the future.
-
-Thanks
--Ben
+diff --git a/builtin/clone.c b/builtin/clone.c
+index f878563..068d61f 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -513,7 +513,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		refs = clone_local(path, git_dir);
+ 		mapped_refs = wanted_peer_refs(refs, refspec);
+ 	} else {
+-		struct remote *remote = remote_get(argv[0]);
++		struct remote *remote = remote_get(option_origin);
+ 		transport = transport_get(remote, remote->url[0]);
+ 
+ 		if (!transport->get_refs_list || !transport->fetch)
 -- 
-Ben Walton
-Systems Programmer - CHASS
-University of Toronto
-C:416.407.5610 | W:416.978.4302
+1.7.0.2.325.g634e5
