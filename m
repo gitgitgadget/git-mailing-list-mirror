@@ -1,103 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] .mailmap: Entries for Alex =?utf-8?Q?Benn=C3=A9e=2C?=
- Deskin Miller, Vitaly "_Vi" Shukela
-Date: Sun, 21 Mar 2010 12:34:45 -0700
-Message-ID: <7vk4t5qxii.fsf@alter.siamese.dyndns.org>
-References: <cd13e44f33c1f6bc9ec11903c3041199c9c464ee.1268996321.git.git@drmicha.warpmail.net> <7vr5nfowgz.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1003201405100.31128@xanadu.home> <4BA620CD.3060101@drmicha.warpmail.net>
+Subject: Re: [PATCH v3] git checkout: create unparented branch by --orphan
+Date: Sun, 21 Mar 2010 12:37:44 -0700
+Message-ID: <7vd3yxqxdj.fsf@alter.siamese.dyndns.org>
+References: <1269185678-3039-1-git-send-email-erick.mattos@gmail.com>
+ <20100321171431.GE2557@m62s10.vlinux.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@fluxnic.net>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sun Mar 21 20:35:25 2010
+Cc: Erick Mattos <erick.mattos@gmail.com>, git@vger.kernel.org
+To: Peter Baumann <waste.manager@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Mar 21 20:38:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtQvi-0007hP-G5
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 20:35:22 +0100
+	id 1NtQyE-0000OV-JA
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Mar 2010 20:37:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751636Ab0CUTe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Mar 2010 15:34:57 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50035 "EHLO
+	id S1752475Ab0CUThy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Mar 2010 15:37:54 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52736 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751337Ab0CUTe4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Mar 2010 15:34:56 -0400
+	with ESMTP id S1751337Ab0CUThx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Mar 2010 15:37:53 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B84CA4423;
-	Sun, 21 Mar 2010 15:34:54 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E1A3AA447E;
+	Sun, 21 Mar 2010 15:37:52 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=uBNysK5DhvfnPcxVzP/Li9P3hvs=; b=aHC2QQh62MfcovJtxvL9Dqm
-	Hxx2l8W8KZWi055PVYvrxGBNSgzfM6PCOAdR4bCgRwyKhmOnN7d6/ZeW43t8N+G9
-	qI2+go4LFzV1TyKMIXOKUVEy71ewxqzMkpILdrjcvbYoa+GdFl91ulcnIbKLh7u+
-	JIVyHIcsdPx74RrkeWCs=
+	sasl; bh=7Ba2qUuqTex/cKjQd3ebyiNhwkk=; b=hBRRZEgozzWHDyGE2DaWRgn
+	4hTQ0pab9hUq7heS8QGrsH0E2k+AvbC6jOifsm8/R3gpEoFmzRFBXnS3QPUk7zCV
+	QtEOM8c6ALM04Y7sQwMz8qsR9d0o/fXwhfZftpPUiXD52vIRVzZ7DDS8SuieopVc
+	5Orq+/Y/aWnWdEW2wsDs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=f7tFYXZl35QSl0Ni3b3vR6QbIRJS7H4GQ5pa8fA3MbLy81JY2
-	Ch0YXpuYSj/N2/bR1S3bLFYboBWxlr8kJBpG/rCjuAIRWxBlHhrUAmywB/ignVdM
-	oTgpVuidM9nh353/UGHw0VXkaZqGEizR700pa+Feu5AJblLYwHaftl62Yg=
+	dns; s=sasl; b=avihNqz9i5i+/MrIhX7E2anm2LxhGWCUKDhvb8/WxF+Nb4HlC
+	r2I63KvR+Zfvk3LwChF7hJYHydrJ+3FLf9Owt5HavSmclWTN8cuKgZTlK9Kofo1a
+	CMj+w+M/6y5M3GjIjnPbHjnFMLTGLg6rcfIBMtR5eOzsqBr+lIyKXYfzlQ=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 03FC3A4422;
-	Sun, 21 Mar 2010 15:34:50 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B17B6A447B;
+	Sun, 21 Mar 2010 15:37:49 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CD3E9A4420; Sun, 21 Mar
- 2010 15:34:46 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2ACAA4477; Sun, 21 Mar
+ 2010 15:37:45 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D12CF4FE-3520-11DF-8A45-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 3BBDDCFC-3521-11DF-B5FB-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142852>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Peter Baumann <waste.manager@gmx.de> writes:
 
-> Maybe I should have cc'ed Vitaly, the others are straight typo fixes.
-> (One may even argue that Vitaly's change is, too.) Smothering on the
-> backburner for a while, is fine, though ;)
+> Sorry to skim in so late but --orphan sounds - at least to me as a non native
+> speaker - a little strange. Yes, I know it means "without parents", but
+> actually it would be the *last* thing I would search for after opening the
+> manpage.
 
-Nico is right; what I wrote sounded that the patch will be forever on hold
-until I get all three acks, but that wasn't my intention.
+I'm not native either, and "orphan" sounded strange in that we've never
+used that word in any of our use case or workflow description in our
+documents.
 
-> Also, if used without "-e", shortlog coalesces authors by full name. I
-> reckon this is the most common way it is used, and it's the mode for
-> which I provided cleanup.
->
-> If you distinguish by e-mail (-e) then there are many obvious multiple
-> entries, but it's not up to me to decide which is the main e-mail
-> address. One could take the latest one used, but some people distinguish
-> between work for hire (maybe for several employers) and private submissions.
+GitTips page of git wiki mentions this under "a new branch that has no
+ancestor", and speaks of a way to add "a new and empty branch".  Scott
+Chacon also creates "new empty branches" in the community book.
 
-True.
+But if one compares them with what we discussed in the messages in the
+threads on earlier iterations of this patch, one would realize that
+neither of these pages is backed by enough thought/discussion on the
+reason why the end user might want to do this in the first place; they
+choose the word "empty" without even realizing that it describes only one
+mode of operation (aka "no common paths" in our discussion) that a
+disconnected history might be wanted by users.
 
-We might want to allow projects to use different mode of operation if they
-so desire, though.  Linus Torvalds at OSDL and Linus Torvalds at L-F may
-be one same person, and the person who is summarizing may want to
-coallesce his commmits like this, even under "-e" option:
-
-    Linus Torvalds <torvalds@evo.osdl.org>,<torvalds@g5.osdl.org>,<torvalds@linux-foundation.org> (1093):
-      Initial revision of "git", the information manager from hell
-      Add copyright notices.
-      ... (many more commits) ...
-
-while there may be more than one John Smiths that we can differenciate only
-by email and they get their own separate group as different people (each
-of them may have more than one email addresses).
-
-If a grouping of set of name-mail pairs per individual is kept somewhere,
-that can be used to enhance shortlog to support such a use case [*1*].
-And the UUID thing could be one possible implementation (you make
-name-mail pair to first map to some third identifier, and treat name-mail
-pairs that map to the same identifier as "one person").  But I don't think
-it would work well if you forced the maintenance burden of such a mapping
-to individuals.
-
-
-[Footnote]
-
-*1* unless there is a situation where one person (say "Junio C Hamano")
-stopped using one e-mail address (say "junkio@cox.net") s/he has been
-using, and then a different person with the same name came and started
-using the same address, that is.
+The main point of the feature is not the emptyness of the resulting tree
+(it is merely one possible outcome), but is the lack of parents in the
+resulting commit.  So I would recommend against --empty.  --root might be
+a good synonym, though, and we _do_ already use that word for that purpose
+in some commands (e.g. "log --root").
