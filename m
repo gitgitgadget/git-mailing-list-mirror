@@ -1,70 +1,80 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: running "git init --shared" on an existing repo
-Date: Mon, 22 Mar 2010 12:00:01 +0530
-Message-ID: <2e24e5b91003212330r2f3fd118y18386ef61c28ee89@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: running "git init --shared" on an existing repo
+Date: Mon, 22 Mar 2010 00:06:05 -0700
+Message-ID: <7v8w9kq1ia.fsf@alter.siamese.dyndns.org>
+References: <2e24e5b91003212330r2f3fd118y18386ef61c28ee89@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 22 07:30:16 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 22 08:06:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ntb9R-0003QF-Sp
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 07:30:14 +0100
+	id 1Ntbib-0006iU-Sh
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 08:06:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754033Ab0CVGaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Mar 2010 02:30:07 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:57972 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754009Ab0CVGaF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Mar 2010 02:30:05 -0400
-Received: by vws6 with SMTP id 6so270777vws.19
-        for <git@vger.kernel.org>; Sun, 21 Mar 2010 23:30:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=QaQb1mxgrW/USUmbze0Gn5DjIyHepxkOjBnsjTxjvLw=;
-        b=B/b3kymR/0RQJ4hdfaeRaowUzeIsCzwF48FycJ17xcud69cc6H/UZyNgo2dsXBg2cj
-         gwfDSKwEZ3VDThVV5cqkFi2aVofLYuUo1UYLwFV9qWJlkdrUG+TXr8G/fQPFBopFGP51
-         KGYLls4+wvX0SP7qOkWXdquGT/fUQ25nVL1mI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=CzmBnxz5gx759Xe7XQVr41D+O45ZqxA9gyJCGMI+o/uXD6h1IFtxmXLn/leMptJ7Zv
-         DeRdAF8DoBhJ7JgD6CfwdJom55LvKZELmkxvOUH947Z5bEXY1uasQ3w7opIDgVtPRa9t
-         QV33C9hj+J6DYbxshQmaD3HoG+vsoVee0uanM=
-Received: by 10.220.107.227 with SMTP id c35mr946698vcp.42.1269239401548; Sun, 
-	21 Mar 2010 23:30:01 -0700 (PDT)
+	id S1754216Ab0CVHGS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Mar 2010 03:06:18 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64934 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754169Ab0CVHGP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Mar 2010 03:06:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 31235A4DF5;
+	Mon, 22 Mar 2010 03:06:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=hHcwScNwZmHX
+	A8pJoJP75SgtBx0=; b=bqJhI7VsdbPQ9Hd/jd9n9JFyo6o+Kf1zhtHO11w79b0+
+	ikVXuxwsgBYPM98bLPtu6NJOY/mcVh6+kgqt/D48uwx+B+IG6mVSP20FguLalhEt
+	ZV7taNmOpfQrMgW1SqG9dv6vKreMAh28RpkfqZtNe7h9DdlLuyBZ4rWLIRw1p64=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=wyJ1bH
+	WrUTH2G+lm8+/ijIX5nnLcxMDcOHGKOd0+NmP5oBY+qDZb4T0cCHQphB8sDuLK3K
+	hosTrqZTzaruFSJ7d1xXK60oN6p9Rbm958bqUoNf8iRb4YieOmWLQ75Xb8Iw2LN3
+	wbhO5RWdueb3LW29H1eyMpeIucTzvPDo9z6T0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E711A4DF4;
+	Mon, 22 Mar 2010 03:06:10 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6D092A4DF3; Mon, 22 Mar
+ 2010 03:06:07 -0400 (EDT)
+In-Reply-To: <2e24e5b91003212330r2f3fd118y18386ef61c28ee89@mail.gmail.com>
+ (Sitaram Chamarty's message of "Mon\, 22 Mar 2010 12\:00\:01 +0530")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 64A0B77E-3581-11DF-8CD9-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142902>
 
-SGkgYWxsLAoKSWYgeW91IGZvcmdldCB0byB1c2UgIi0tc2hhcmVkIiBvbiB5b3VyIChiYXJlKSBy
-ZXBvLCBhbmQgbm93IG5lZWQgdG8KYWRqaXN0IGl0IGFmdGVyIHRoZSBmYWN0IHRvIG1ha2UgcGVy
-bXMgd29yayBvaywgeW91IG91Z2h0IHRvIGJlIGFibGUKdG8ganVzdCBydW4gImdpdCBpbml0IC0t
-YmFyZSAtLXNoYXJlZCIgYW5kIHRoaW5ncyBzaG91bGQgYmUgZmluZS4KCkFuZCBpdCBzZWVtcyB0
-aGVyZSB3YXMgYSBiZWdpbm5pbmcgbWFkZS7CoCBidWlsdGluL2luaXQtZGIuYyBhdCBsaW5lIDIy
-MCBzYXlzOgoKwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvKgrCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgKiBXZSB3b3VsZCBoYXZlIGNyZWF0ZWQgdGhlIGFib3ZlIHVuZGVyIHVzZXIncyB1bWFzayAt
-LSB1bmRlcgrCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKiBzaGFyZWQtcmVwb3NpdG9yeSBzZXR0
-aW5ncywgd2Ugd291bGQgbmVlZCB0byBmaXggdGhlbSB1cC4KwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgICovCsKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaWYgKHNoYXJlZF9yZXBvc2l0b3J5KSB7CsKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGFkanVzdF9zaGFyZWRfcGVybShn
-ZXRfZ2l0X2RpcigpKTsKwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYWRq
-dXN0X3NoYXJlZF9wZXJtKGdpdF9wYXRoKCJyZWZzIikpOwrCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCBhZGp1c3Rfc2hhcmVkX3Blcm0oZ2l0X3BhdGgoInJlZnMvaGVhZHMi
-KSk7CsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGFkanVzdF9zaGFyZWRf
-cGVybShnaXRfcGF0aCgicmVmcy90YWdzIikpOwrCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIH0KCklk
-ZWFsbHksIHdlIHNob3VsZCBkbyB0aGUgc2FtZSB0bzoKCmhvb2tzCmluZm8Kb2JqZWN0cwpvYmpl
-Y3RzLz8/Cm9iamVjdHMvaW5mbwpvYmplY3RzL3BhY2sKCmFsc28uICBUaGUgb3RoZXMgYXJlIGVh
-c3ksIGJ1dCBkb2VzIGdpdCBpbnRlcm5hbHMgaGF2ZSBhIGRlZmluZWQgd2F5Cm9mIGRvaW5nIHRo
-YXQgb2JqZWN0cy8/PyBwYXJ0IG9yIHNob3VsZCBpdCBqdXN0IGJlIHRoZSBsb25nIHdheSAoaXQn
-cwpiZWVuIGFnZXMgc2luY2UgSSBkaWQgYW55IEMgYnV0IEknZCBiZSB3aWxsaW5nIHRvIHRyeS4u
-LikKCi0tClNpdGFyYW0K
+Sitaram Chamarty <sitaramc@gmail.com> writes:
+
+> And it seems there was a beginning made.=C2=A0 builtin/init-db.c at l=
+ine 220 says:
+>
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /*
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 * We would have created the above under user's umask -- under
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 * shared-repository settings, we would need to fix them up.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 */
+
+That "the above" refers to "in this process that created the repository
+directory and populated it halfway by calling copy_templates()", and ne=
+ver
+"some time ago by some other process that created the repository, in wh=
+ich
+this process is now being run", so it is not fair to say "a beginning".
+
+You would need to run "find $GIT_DIR -print0 | xargs -0 chown/mod ..." =
+or
+a moral equivalent of it, I guess.  Shouldn't be a rocket surgery ;-)
