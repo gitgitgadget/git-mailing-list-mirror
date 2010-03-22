@@ -1,98 +1,142 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: GSoC draft proposal: Line-level history browser
-Date: Mon, 22 Mar 2010 03:10:03 -0500
-Message-ID: <20100322081003.GA26535@progeny.tock>
-References: <81b0412b1003201335g7b37c51mfa3e2280210ebb7e@mail.gmail.com>
- <4BA544FC.7050007@gmail.com>
- <41f08ee11003202316w2fddc5f4jebda47f325451577@mail.gmail.com>
- <4BA61CF9.7040104@gmail.com>
- <41f08ee11003212048q1950eb3s95f1caf7ba640874@mail.gmail.com>
- <7vfx3tvv9y.fsf@alter.siamese.dyndns.org>
- <41f08ee11003212134s586aa71cs23255d02f38d53d1@mail.gmail.com>
- <7vhbo8syyf.fsf@alter.siamese.dyndns.org>
- <41f08ee11003220031p6fda651eycff2641df10864da@mail.gmail.com>
- <7v7hp4n6qn.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH v3] Improve remote-helpers documentation
+Date: Mon, 22 Mar 2010 09:42:54 +0100
+Message-ID: <4BA72D8E.5070508@drmicha.warpmail.net>
+References: <f3271551003212037u66e9680cm8677c80b25f4b3a6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bo Yang <struggleyb.nku@gmail.com>, gitzilla@gmail.com,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 22 09:09:01 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 22 09:45:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ntch2-0002RC-FC
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 09:09:00 +0100
+	id 1NtdGg-0002qD-9n
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 09:45:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754021Ab0CVIIz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Mar 2010 04:08:55 -0400
-Received: from mail-yw0-f172.google.com ([209.85.211.172]:56277 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753581Ab0CVIIx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Mar 2010 04:08:53 -0400
-Received: by ywh2 with SMTP id 2so1704612ywh.33
-        for <git@vger.kernel.org>; Mon, 22 Mar 2010 01:08:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=Dl7v46VogffhyxK4I4JUsGNVWRmoB4+QxverldsUWFc=;
-        b=GnTcbjrKsSy0zUQgba1RtM2FLk769MXNYTfh2vrxnbiNkf0dorWCUUti1g4ZAU1psE
-         mk62mO6QyFc6Fow3Y3u8Hp8P/S5214psv/RDLwdM690vJ2WpOVQ3zIcDp12D/nfxZ0iM
-         sLy7vWozcM2lRlaesNfzuZiS7iv/XnPjWMCLA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=UWmc42gIZwgy+hyoi6dW/mEtJxt5sDVurXitNnZN59pXd5ADnqaXFb5JpQ/gDriyoa
-         OgodWiT72E7xSfIbvjl08JmCEn8477UtM3gCU3o4tW1eYeQwwJvvYSJ6/Trflkoq9B0w
-         wmyow+7KjoUJYNtTxOvSHmY1hGCfbbWSgpyHc=
-Received: by 10.101.178.8 with SMTP id f8mr9942162anp.213.1269245332510;
-        Mon, 22 Mar 2010 01:08:52 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm3032567iwn.4.2010.03.22.01.08.51
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 22 Mar 2010 01:08:51 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v7hp4n6qn.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753513Ab0CVIpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Mar 2010 04:45:45 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:43226 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752862Ab0CVIpo (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Mar 2010 04:45:44 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 6E03DE6CA0;
+	Mon, 22 Mar 2010 04:45:43 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 22 Mar 2010 04:45:43 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=xU31l/9F76ucrBZXiryHSGgDEzg=; b=kk0qJLFUA82ivTvxiw8YoLZCxu6Q7+B1j0dnqRCOQWgIdHsxMqcp5W16Q9L8oxPfjAPF8bcXKSLtboLN34Ou992VZbCqVWxJgau97/PjBtXEm1xO1hKYKvziQOQnA2mgYBx5Qf5b3MidTcZdFGX4JtK8HEYBqtIVpMplqypUmPI=
+X-Sasl-enc: t8SVFN1nA3IyH+ruCODztmRThMxBB4paRLxJl4wfa/un 1269247542
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 4A8014B220B;
+	Mon, 22 Mar 2010 04:45:42 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10pre) Gecko/20100319 Lightning/1.0b2pre Shredder/3.0.5pre
+In-Reply-To: <f3271551003212037u66e9680cm8677c80b25f4b3a6@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142910>
 
-Junio C Hamano wrote:
+Ramkumar Ramachandra venit, vidit, dixit 22.03.2010 04:37:
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  Documentation/git-remote-helpers.txt |   39 +++++++++++++++++----------------
+>  1 files changed, 20 insertions(+), 19 deletions(-)
+> 
+> diff --git a/Documentation/git-remote-helpers.txt
+> b/Documentation/git-remote-helpers.txt
+> index 1b5f61a..b1f4e5d 100644
+> --- a/Documentation/git-remote-helpers.txt
+> +++ b/Documentation/git-remote-helpers.txt
+> @@ -3,7 +3,7 @@ git-remote-helpers(1)
+> 
+>  NAME
+>  ----
+> -git-remote-helpers - Helper programs for interoperation with remote git
+> +git-remote-helpers - Helper programs for interacting with main git
+> without linking
 
-> I am actually questioning the existence of "recursively and deeply to=
- find
-> more"; the reason blame stopped at a particular commit is exactly bec=
-ause
-> there is no more
+Below, you say that helpers help Git interact with remote repositories
+(which is correct). That should be matched by the short explanation
+above. "Without linking" is a technical detail, so I suggest:
 
-Hmm, I can imagine some (mutually inconsistent) heuristics:
+git-remote-helpers - Helper programs for interacting with remote
+repositories
 
- - Suppose in the blamed commit a single isolated line changed.  Then
-   it is clear where to look next.
+> 
+>  SYNOPSIS
+>  --------
+> @@ -13,10 +13,22 @@ DESCRIPTION
+>  -----------
+> 
+>  These programs are normally not used directly by end users, but are
+> -invoked by various git programs that interact with remote repositories
+> -when the repository they would operate on will be accessed using
+> -transport code not linked into the main git binary. Various particular
+> -helper programs will behave as documented here.
+> +invoked by various git programs that interact with remote
+> +repositories.  For a program to qualify as a remote helper, it must
+> +implement a subset of the capabilities documented here, and conform to
+> +the remote helper protocol. Remote helpers interact with the main git
+> +programs via text streams, and do not link to them.
 
- - If the mystery code is at the beginning of the file (resp.
-   beginning of a diff -C0 hunk), maybe it was based on the line at the
-   same position within the previous commit.
+Isn't it more the other way round? Git calls and interacts with the
+helpers, and does not link in the helpers.
 
- - Take the line with the lowest Levenshtein distance from the mystery
-   code.
+> +
+> +The curl helper is one such program. It is invoked via
+> +'git-remote-http', 'git-remote-https', 'git-remote-ftp', or
+> +'git-remote-ftps', and implments the capabilities 'fetch', 'option',
+> +and 'push'. The curl helper essentially helps in moving around native
+> +git objects.
+> +
+> +As opposed to native git objects, remote helpers can also provide a
+> +fast-import stream through the 'import' capability. This makes it
+> +especially useful when native interoperability with a foreign
+> +versioning system is desired.
+> 
+>  COMMANDS
+>  --------
+> @@ -118,17 +130,9 @@ capabilities reported by the helper.
+>  CAPABILITIES
+>  ------------
+> 
+> -'fetch'::
+> -	This helper supports the 'fetch' command.
+> -
+> -'option'::
+> -	This helper supports the option command.
+> -
+> -'push'::
+> -	This helper supports the 'push' command.
+> -
+> -'import'::
+> -	This helper supports the 'import' command.
+> +The following capabilities indicate that the remote helper supports
+> +the corresponding command with the same name: 'fetch', 'option',
+> +'push', 'connect', and 'import'.
+> 
+>  'refspec' 'spec'::
+>  	When using the import command, expect the source ref to have
+> @@ -140,9 +144,6 @@ CAPABILITIES
+>  	all, it must cover all refs reported by the list command; if
+>  	it is not used, it is effectively "*:*"
+> 
+> -'connect'::
+> -	This helper supports the 'connect' command.
+> -
+>  REF LIST ATTRIBUTES
+>  -------------------
+> 
 
- - Expect certain common patterns of change: substituted words,
-   whitespace changes, added arguments for a function, things like that=
-=2E
+Rest looks fine.
 
-That said, I still don=E2=80=99t have a clear picture of a basic strate=
-gy.
-
-Interested,
-Jonathan
+Cheers,
+Michael
