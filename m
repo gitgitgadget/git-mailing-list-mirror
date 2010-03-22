@@ -1,85 +1,78 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH] Test that the 'rebase -i' "reword" command always 	cherry-picks
- a commit.
-Date: Mon, 22 Mar 2010 18:06:45 -0400
-Message-ID: <4BA7E9F5.2000404@xiplink.com>
-References: <4BA11B23.4090801@xiplink.com> <1269285942-17496-1-git-send-email-marcnarc@xiplink.com> <32541b131003221323u1ed540bbi87d8d427cfcc421a@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Test that the 'rebase -i' "reword" command always
+ cherry-picks a commit.
+Date: Mon, 22 Mar 2010 17:09:29 -0500
+Message-ID: <20100322220929.GA1384@progeny.tock>
+References: <4BA11B23.4090801@xiplink.com>
+ <1269285942-17496-1-git-send-email-marcnarc@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 22 23:04:31 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Mon Mar 22 23:09:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtpjY-00051v-Iq
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 23:04:28 +0100
+	id 1Ntpoc-0007wV-Mu
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 23:09:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753504Ab0CVWET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Mar 2010 18:04:19 -0400
-Received: from smtp132.dfw.emailsrvr.com ([67.192.241.132]:38219 "EHLO
-	smtp132.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750918Ab0CVWET (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Mar 2010 18:04:19 -0400
-Received: from relay13.relay.dfw.mlsrvr.com (localhost [127.0.0.1])
-	by relay13.relay.dfw.mlsrvr.com (SMTP Server) with ESMTP id 79D963130C8F;
-	Mon, 22 Mar 2010 18:04:18 -0400 (EDT)
-Received: by relay13.relay.dfw.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 01B523130C4F;
-	Mon, 22 Mar 2010 18:04:17 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.24 (X11/20100317)
-In-Reply-To: <32541b131003221323u1ed540bbi87d8d427cfcc421a@mail.gmail.com>
+	id S1754992Ab0CVWJi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Mar 2010 18:09:38 -0400
+Received: from mail-yw0-f172.google.com ([209.85.211.172]:58024 "EHLO
+	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751717Ab0CVWJh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Mar 2010 18:09:37 -0400
+Received: by ywh2 with SMTP id 2so2016375ywh.33
+        for <git@vger.kernel.org>; Mon, 22 Mar 2010 15:09:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=7NOvir8CtH5YRRWyrafbpa4UJQO2Tuf0+oZFKf9076w=;
+        b=moAY6oBjuvwTfHVRjuDixzeL/6DDDGG8jtHek4kLfvje/WD7UtkHIaVx+wL0mfD0LE
+         R46u0yL1EJ0w1l+B2lhejhgwopeA0aZmV8fVptmnhL5JJ3NNih2dm5UEVqRqeStXXnUm
+         jqVRjKq6N+f/t0ZW4+qFNsdzit4Fi4y7eWEzA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=deYHmeDmN9N8RVk9QXX4YTqBf5XtH3gVCUvcloHkGqaRlkKzqPlY99Z9tLfi5+JA/e
+         SGPPBguDA1/0giKqYVpOWuFxWao6AJN5+bJCarWBzcIahewWnWjuKLlaWwS0Mb3igqry
+         3u4ciz/2QjF7wpID5EDpo/wMBjVpnJJKhKQrk=
+Received: by 10.101.132.15 with SMTP id j15mr5918115ann.96.1269295775997;
+        Mon, 22 Mar 2010 15:09:35 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id co35sm842918ibb.14.2010.03.22.15.09.34
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 22 Mar 2010 15:09:35 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1269285942-17496-1-git-send-email-marcnarc@xiplink.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142970>
 
-Avery Pennarun wrote:
-> On Mon, Mar 22, 2010 at 3:25 PM, Marc Branchaud <marcnarc@xiplink.com> wrote:
->> +Sometimes you're in a situation like this
->> +
->> + P---o---o---M---x---x---W---x
->> +  \         /
->> +   A---B---C
->> +
->> +where you:
->> +
->> + - Need to rewrite one of the commits on the A-B-C branch; and
->> +
->> + - Want the rewritten A-B-C branch to still start at commit P (perhaps P
->> +   is a branching-off point for yet another branch, and you want be able to
->> +   merge A-B-C into both branches).
->> +
->> +The natural thing to do in this case is to checkout the A-B-C branch and use
->> +"rebase -i A" to change commit B.  However, this does not rewrite commit A,
->> +and you end up with this:
->> +
->> + P---o---o---M---x---x---W---x
->> +  \         /
->> +   A---B---C   <-- old branch
->> +   \
->> +    B'---C'    <-- rewritten branch
->> +
->> +To merge A-B'-C' into the mainline branch you would still have to first revert
->> +commit W in order to pick up the changes in A, but then it's likely that the
->> +changes in B' will conflict with the original B changes re-introduced by the
->> +reversion of W.
-> 
-> I think you need to clarify in the above text that W is a revert of M.
->  I was very confused by this at first.
+Marc Branchaud wrote:
 
-Someone who reads through the whole file will see that W is the reversion of
-M.  It's probably good to repeat that in the addendum for readers who jump to
-the addendum right away.
+> Is this more acceptable than adding --no-ff to rebase--interactive?
 
-> Other than that, I'll leave it to others more opinionated than me to
-> comment on whether regenerating a commit just for the sake of
-> regenerating it is actually desirable or not :)
+No, in my opinion the latter is better, and I suspect it will go in. :)
 
-I'm all ears!
+No one has objected to the --no-ff option.  I like it: if someone is
+trying to reset the committer date on a collection of patches, I=E2=80=99=
+d
+rather they use rebase -f or rebase -i --no-ff than format-patch and am=
+=2E
+It=E2=80=99s cooking in pu for the moment, and from here the natural pr=
+ogression
+is to next, master, then maybe maint.
 
-		M.
+Hope that helps,
+Jonathan
