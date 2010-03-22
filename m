@@ -1,75 +1,129 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] Improve documentation for git-remote-helpers
-Date: Mon, 22 Mar 2010 08:34:07 +0530
-Message-ID: <f3271551003212004r4ac7db34vad5b23f5d930476d@mail.gmail.com>
-References: <f3271551003211026m376b86d6ga915f85a623eddfd@mail.gmail.com> 
-	<f3271551003211121o48f502fp954b649ff4ca8f8b@mail.gmail.com> 
-	<alpine.LNX.2.00.1003211907390.14365@iabervon.org>
+Subject: [PATCH v3] Improve remote-helpers documentation
+Date: Mon, 22 Mar 2010 09:07:05 +0530
+Message-ID: <f3271551003212037u66e9680cm8677c80b25f4b3a6@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>,
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Mar 22 04:04:36 2010
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 22 04:37:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtXwR-0002Pr-BB
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 04:04:35 +0100
+	id 1NtYSL-0005qC-Sp
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 04:37:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753815Ab0CVDEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Mar 2010 23:04:30 -0400
-Received: from mail-yx0-f182.google.com ([209.85.210.182]:34823 "EHLO
-	mail-yx0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753799Ab0CVDE3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Mar 2010 23:04:29 -0400
-Received: by yxe12 with SMTP id 12so1581419yxe.33
-        for <git@vger.kernel.org>; Sun, 21 Mar 2010 20:04:29 -0700 (PDT)
+	id S1754104Ab0CVDh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Mar 2010 23:37:27 -0400
+Received: from mail-gx0-f217.google.com ([209.85.217.217]:63214 "EHLO
+	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754101Ab0CVDh0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Mar 2010 23:37:26 -0400
+Received: by gxk9 with SMTP id 9so269753gxk.8
+        for <git@vger.kernel.org>; Sun, 21 Mar 2010 20:37:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=LkNk+GIG5HLAdGofAh0D+Hpqdm8nx3OPzQZ7XbZxULU=;
-        b=F28b7Jr1smOa/69Nn6uQGJnXVJB+bb2Mk8dEUYxpASvtJ7JUGAETerplhGDCaR7hXV
-         3KIy5KSYakBWAozw4d5keg3t7a4KHEWciz0W+JQcaQntD+20LnCI1oztEsfcLO0vb46h
-         3E/27UMzovm3Gq0j4RadfCdW6QbGLnQc4bcFk=
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=vQSSy0OxF7IfRXYqcIpPZO2O/zUfO5V1YrTz9PJmaYE=;
+        b=Yv8kxbqfdftfUd40kxv1w4I/g119QNbS4uQ7i0uYy15JHaqYtFcDdhPfQdiJ33MrmU
+         ubFBZfCwEwWIlY2BhVsi5roy7g6Ebu4Ymxkq6juJQEKJnZiE+OZKYh6BKiYdSwe5rd1X
+         J1jRK2N3okWKmq3jHWtyG5OkHyshVbBTUcBCo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=LoW7Rd9lFZDs9JoJPHMH5Gx4ptZM3eCq7oNSDPqcKcSzvnrHs73wOk/YV/m24eSoBf
-         H2E1T2+r/7rM/5xbYxQOanutomx/h0yt9t5tC1nDrSRp5bzVVMga+X8CSEkj43ArjIeK
-         bJ103+VIny3iDyOXVAYSZESl7ehOSteJ3JVlY=
-Received: by 10.91.21.31 with SMTP id y31mr3540716agi.50.1269227067500; Sun, 
-	21 Mar 2010 20:04:27 -0700 (PDT)
-In-Reply-To: <alpine.LNX.2.00.1003211907390.14365@iabervon.org>
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=GXqiG1gvX4vgs/buc4yBUrCI5/x37lo5wj2ofuMDajK4UdP9CJREF4v2BfbZpZpXb/
+         ymeXyaTE3jZYXikkFisL7RccEQ0uNwS1/iF3FUZ97OD4eOrMTd7mR5HJ4UGTEYj83/2h
+         LRXWbeZvu/4aMH9ZIeqvaPfvSJRYe5uehMosY=
+Received: by 10.90.37.31 with SMTP id k31mr3646723agk.107.1269229045269; Sun, 
+	21 Mar 2010 20:37:25 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142889>
 
-> I'd like to start by saying that it's good to see patches early, and also
-> that I think the best documentation comes from people who are new to
-> something going back and forth with people who know it too well to know
-> what needs to be said about it.
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ Documentation/git-remote-helpers.txt |   39 +++++++++++++++++----------------
+ 1 files changed, 20 insertions(+), 19 deletions(-)
 
-Thanks :) I just posted a second revision of the patch incorporating
-your suggestions.
+diff --git a/Documentation/git-remote-helpers.txt
+b/Documentation/git-remote-helpers.txt
+index 1b5f61a..b1f4e5d 100644
+--- a/Documentation/git-remote-helpers.txt
++++ b/Documentation/git-remote-helpers.txt
+@@ -3,7 +3,7 @@ git-remote-helpers(1)
 
-> Yup. Or maybe these should be documented as a list of capabilities which
-> mean that the helper supports the command with the same name, since that's
-> a common pattern, and documenting it as a pattern makes it obvious that,
-> if we have a new 'export' command, and it needs a capability, it'll fit
-> the pattern.
+ NAME
+ ----
+-git-remote-helpers - Helper programs for interoperation with remote git
++git-remote-helpers - Helper programs for interacting with main git
+without linking
 
-Every capability doesn't necessarily have a corresponding command with
-the same name, and vice-versa (see refspec spec?). Besides, I think
-it's necessary for the manpage to have a list of capabilities listed
-in one place. I'll think about a better format when we get more
-capabilities/ commands.
+ SYNOPSIS
+ --------
+@@ -13,10 +13,22 @@ DESCRIPTION
+ -----------
 
--- Ram
+ These programs are normally not used directly by end users, but are
+-invoked by various git programs that interact with remote repositories
+-when the repository they would operate on will be accessed using
+-transport code not linked into the main git binary. Various particular
+-helper programs will behave as documented here.
++invoked by various git programs that interact with remote
++repositories.  For a program to qualify as a remote helper, it must
++implement a subset of the capabilities documented here, and conform to
++the remote helper protocol. Remote helpers interact with the main git
++programs via text streams, and do not link to them.
++
++The curl helper is one such program. It is invoked via
++'git-remote-http', 'git-remote-https', 'git-remote-ftp', or
++'git-remote-ftps', and implments the capabilities 'fetch', 'option',
++and 'push'. The curl helper essentially helps in moving around native
++git objects.
++
++As opposed to native git objects, remote helpers can also provide a
++fast-import stream through the 'import' capability. This makes it
++especially useful when native interoperability with a foreign
++versioning system is desired.
+
+ COMMANDS
+ --------
+@@ -118,17 +130,9 @@ capabilities reported by the helper.
+ CAPABILITIES
+ ------------
+
+-'fetch'::
+-	This helper supports the 'fetch' command.
+-
+-'option'::
+-	This helper supports the option command.
+-
+-'push'::
+-	This helper supports the 'push' command.
+-
+-'import'::
+-	This helper supports the 'import' command.
++The following capabilities indicate that the remote helper supports
++the corresponding command with the same name: 'fetch', 'option',
++'push', 'connect', and 'import'.
+
+ 'refspec' 'spec'::
+ 	When using the import command, expect the source ref to have
+@@ -140,9 +144,6 @@ CAPABILITIES
+ 	all, it must cover all refs reported by the list command; if
+ 	it is not used, it is effectively "*:*"
+
+-'connect'::
+-	This helper supports the 'connect' command.
+-
+ REF LIST ATTRIBUTES
+ -------------------
+
+-- 
+1.7.0
