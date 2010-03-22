@@ -1,84 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: native-git-svn: A Summer of Code 2010 proposal
-Date: Mon, 22 Mar 2010 12:33:57 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1003221231540.7596@pacific.mpi-cbg.de>
-References: <f3271551003191018j67aa133es2fee4e3dda519ce0@mail.gmail.com>  <f3271551003210525l761cf36eh69cdfddf4e645ef3@mail.gmail.com>  <alpine.LNX.2.00.1003212011280.14365@iabervon.org> <201003220341.38918.chriscool@tuxfamily.org>
- <f3271551003212049r1139d6b4x279c6803cc4c7fe2@mail.gmail.com>
+From: Eli Barzilay <eli@barzilay.org>
+Subject: Re: git rev-list formatting
+Date: Mon, 22 Mar 2010 07:39:38 -0400
+Message-ID: <m3eijcpoud.fsf@winooski.ccs.neu.edu>
+References: <m3iq8opp8u.fsf@winooski.ccs.neu.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Stephan Beyer <s-beyer@gmx.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 22 12:34:09 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 22 12:40:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtftW-0001qG-Ka
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 12:34:06 +0100
+	id 1Ntfzd-0004mZ-5F
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 12:40:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754586Ab0CVLeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Mar 2010 07:34:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45206 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754370Ab0CVLd7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Mar 2010 07:33:59 -0400
-Received: (qmail invoked by alias); 22 Mar 2010 11:33:57 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp067) with SMTP; 22 Mar 2010 12:33:57 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/JtFVPiOHJWPIX9KZZp7FLYfpskHtheKpGSkkwNH
-	ugd4KR0n5bqan6
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <f3271551003212049r1139d6b4x279c6803cc4c7fe2@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64000000000000001
+	id S1754606Ab0CVLjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Mar 2010 07:39:51 -0400
+Received: from lo.gmane.org ([80.91.229.12]:36189 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752561Ab0CVLju (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Mar 2010 07:39:50 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Ntfz2-0004Wv-Q7
+	for git@vger.kernel.org; Mon, 22 Mar 2010 12:39:49 +0100
+Received: from winooski.ccs.neu.edu ([129.10.115.117])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 22 Mar 2010 12:39:48 +0100
+Received: from eli by winooski.ccs.neu.edu with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 22 Mar 2010 12:39:48 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: winooski.ccs.neu.edu
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+Cancel-Lock: sha1:MRT/p422wcnFtMFFobhmazaL7xM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142924>
 
-Hi Ram,
+Eli Barzilay <eli@barzilay.org> writes:
 
-On Mon, 22 Mar 2010, Ramkumar Ramachandra wrote:
+> [...]
+>
+> Also, is there a way to avoid the "commit <sha1>" line, print some
+> information that I specify in the format string, and show the whole
+> message as is (without wrapping or other tweaks)?
 
-> > Don't know about importer modes, but in native connection mode it is 
-> > possible to avoid calling or linking to git in any way (been there, 
-> > done that).
-> 
-> > Mostly, except that I think it should be possible to avoid having 
-> > git-remote-svn actually link to the git core, because the git core 
-> > should be taking care of everything git-specific for you. Of course, 
-> > the git core also provides a bunch of useful C library code that you 
-> > may want to use, such as a nice string buffer implementation, so you 
-> > may want to link to git even if you don't actually need it, if 
-> > licenses are suitable and it would be convenient.
-> 
-> As of this point, I'm undecided about which parts of Git Core to link 
-> to, if at all. I'll try to avoid linking, but I'll do whatever is most 
-> convenient within the bounds of the license as I write the remote 
-> helper.
+Looks like `git log' does something similar to what I want anyway,
+which leads me to a related question -- it's not clear to me what are
+the differences between `git rev-list', `git log', `git diff', and
+`git show', since it looks like they can all be tweaked to produce
+similar outputs.  Are they all the same with different outputs?  Is
+there some description of them with the differences explained?
 
-AFAICT the git-remote idea is to use a text protocol (which may lend 
-itself to be copied by Mercurial at some stage, a clear sign that we did 
-something well when that happens).
+Also related, it looks like `--abbrev-commit' has no effect on `git
+rev-list', but does on `git log', even through it's documented in the
+former's man page.  So it looks like either there are more
+(undocumented?) differences, or maybe that's also a bug?
 
-> > Because it's much better for everyone at the end of the GSoC if only 
-> > half of the project is finished but merged, rather than if all the 
-> > project is "finished" but nothing can be merged.
-> 
-> Right. I'll merge the whole thing in 3-4 phases then.
-
-I am sure that Sverre will be of tremendous help to decide when is the 
-opportune moment to show off your code.
-
-Ciao,
-Dscho
+-- 
+          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
+                    http://barzilay.org/                   Maze is Life!
