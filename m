@@ -1,74 +1,203 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: GSoC draft proposal: Line-level history browser
-Date: Mon, 22 Mar 2010 19:38:02 +0100
-Message-ID: <fabb9a1e1003221138n50e30adaxe91ac9503932c35a@mail.gmail.com>
-References: <41f08ee11003200218u59c45b6dl82a8eb56cc289256@mail.gmail.com> 
-	<81b0412b1003201335g7b37c51mfa3e2280210ebb7e@mail.gmail.com> 
-	<4BA544FC.7050007@gmail.com> <41f08ee11003202316w2fddc5f4jebda47f325451577@mail.gmail.com> 
-	<4BA61CF9.7040104@gmail.com> <41f08ee11003212052p6b0a7495j2e38f24839541ffb@mail.gmail.com> 
-	<m3hbo8jr2e.fsf@localhost.localdomain> <alpine.DEB.1.00.1003221910520.7596@pacific.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Bo Yang <struggleyb.nku@gmail.com>, gitster@pobox.com,
-	gitzilla@gmail.com, Alex Riesen <raa.lkml@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 22 19:38:38 2010
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: [PATCH] Test that the 'rebase -i' "reword" command always cherry-picks a commit.
+Date: Mon, 22 Mar 2010 15:25:42 -0400
+Message-ID: <1269285942-17496-1-git-send-email-marcnarc@xiplink.com>
+References: <4BA11B23.4090801@xiplink.com>
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 22 20:24:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtmWH-00082X-J6
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 19:38:33 +0100
+	id 1NtnEI-0005RV-4Z
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 20:24:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755774Ab0CVSiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Mar 2010 14:38:25 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:52583 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755761Ab0CVSiY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Mar 2010 14:38:24 -0400
-Received: by bwz1 with SMTP id 1so2210529bwz.21
-        for <git@vger.kernel.org>; Mon, 22 Mar 2010 11:38:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=okcrcZ7nLDSneiKlUbU8IQG/9WJCdALgVrpxgu1YN4A=;
-        b=ZeoAwPu4GvLO4yXxE3BVpDvxAYpOMedPttPQKb/5A74fK3l5qPkFSf5sa0CMea/p2k
-         zgWap+5OU6uZP5OoCZI7VZA9yWiz6cxY//ox+css6LDnWolDPlHxPXDgesay+6bGETHC
-         RaCpCGMNMlBKupfvyKIE8WQxNCw1nBK1wmhJw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=MY9CpwDm72qbd2apGQMiigYjitl3kqQks+KG7DGolgTg1/ZKCs9TQU9hrnrUZ7Kyc9
-         0/fcELsj55P0OMSu4tq0YkqIWZk6ORLwILoNTw0IckVmzz0uJJcf7mh5RVjlNEM1xegB
-         lWJeFFOjyuJLnLTEUt8U0lQ3wZQ2Mw/tbtM1U=
-Received: by 10.204.39.200 with SMTP id h8mr4909527bke.97.1269283102363; Mon, 
-	22 Mar 2010 11:38:22 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1003221910520.7596@pacific.mpi-cbg.de>
+	id S1753168Ab0CVTX4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Mar 2010 15:23:56 -0400
+Received: from 208-85-112-101.zerofail.com ([208.85.112.101]:45980 "EHLO
+	farnsworth.xiplink.com" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752597Ab0CVTXy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Mar 2010 15:23:54 -0400
+Received: from rincewind (rincewind.xiplink.com [192.168.1.136])
+	by farnsworth.xiplink.com (8.14.2/8.14.2/Debian-2build1) with ESMTP id o2MJNpvA020624;
+	Mon, 22 Mar 2010 15:23:51 -0400
+Received: by rincewind (Postfix, from userid 1000)
+	id A06DD336619; Mon, 22 Mar 2010 15:26:17 -0400 (EDT)
+X-Mailer: git-send-email 1.7.0.3
+In-Reply-To: <4BA11B23.4090801@xiplink.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142957>
 
-Heya,
+In particular, "reword" should cherry-pick a reworded commit even if the
+commit's message is unchanged.
 
-On Mon, Mar 22, 2010 at 19:21, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> As to fuzzy matching of lines that could not be attributed otherwise, I
-> think that that will require a lot of playing around with different ideas.
-> A simple Levenshtein-Damerau is highly unlikely to be enough.
+This behaviour provides a way to deal with a situation that can arise when
+a merge had to be reverted.  Added an addendum to revert-a-faulty-merge.txt
+describing the situation and how to use "reword" to handle it.
+---
 
-I'd recommend making this either the last milestone, or not a
-milestone at all. As I noticed with git-stats such metrics might not
-exist at all (or at least be too hard to find/implement), and it's
-quite a bummer to not be able to implement your primary milestone ;).
+Is this more acceptable than adding --no-ff to rebase--interactive?
 
+I wasn't sure how to integrate the new text into revert-a-faulty-merge.txt.
+I went with an addendum, but I'm open to other approaches.
+
+		M.
+
+ Documentation/howto/revert-a-faulty-merge.txt |   64 +++++++++++++++++++++++++
+ t/t3417-rebase-reword-forces-cherry-pick.sh   |   59 +++++++++++++++++++++++
+ 2 files changed, 123 insertions(+), 0 deletions(-)
+ create mode 100755 t/t3417-rebase-reword-forces-cherry-pick.sh
+
+diff --git a/Documentation/howto/revert-a-faulty-merge.txt b/Documentation/howto/revert-a-faulty-merge.txt
+index 3b4a390..892433d 100644
+--- a/Documentation/howto/revert-a-faulty-merge.txt
++++ b/Documentation/howto/revert-a-faulty-merge.txt
+@@ -142,6 +142,8 @@ different resolution strategies:
+    revert of a merge was rebuilt from scratch (i.e. rebasing and fixing,
+    as you seem to have interpreted), then re-merging the result without
+    doing anything else fancy would be the right thing to do.
++   (See the ADDENDUM below for how to rebuild a branch from scratch
++   without changing its original branching-off point.)
+ 
+ However, there are things to keep in mind when reverting a merge (and
+ reverting such a revert).
+@@ -177,3 +179,65 @@ the answer is: "oops, I really shouldn't have merged it, because it wasn't
+ ready yet, and I really need to undo _all_ of the merge"). So then you
+ really should revert the merge, but when you want to re-do the merge, you
+ now need to do it by reverting the revert.
++
++ADDENDUM
++
++Sometimes you're in a situation like this
++
++ P---o---o---M---x---x---W---x
++  \         /
++   A---B---C
++
++where you:
++
++ - Need to rewrite one of the commits on the A-B-C branch; and
++
++ - Want the rewritten A-B-C branch to still start at commit P (perhaps P
++   is a branching-off point for yet another branch, and you want be able to
++   merge A-B-C into both branches).
++
++The natural thing to do in this case is to checkout the A-B-C branch and use
++"rebase -i A" to change commit B.  However, this does not rewrite commit A,
++and you end up with this:
++
++ P---o---o---M---x---x---W---x
++  \         /
++   A---B---C   <-- old branch
++   \
++    B'---C'    <-- rewritten branch
++
++To merge A-B'-C' into the mainline branch you would still have to first revert
++commit W in order to pick up the changes in A, but then it's likely that the
++changes in B' will conflict with the original B changes re-introduced by the
++reversion of W.
++
++However, you could avoid these problems if you recreated the entire branch,
++including commit A:
++
++ P---o---o---M---x---x---W---x
++ |\         /
++ | A---B---C   <-- old branch
++ \
++  A'---B'---C' <-- entirely recreated branch
++
++Now you can merge A'-B'-C' into the mainline branch without worrying about
++first reverting W.
++
++But if you don't actually need to change commit A, then you need some way to
++recreate it as a new commit with the same changes in it.  One way to do this
++is to use the "reword" command in "rebase -i".  If you:
++
++ - Checkout the A-B-C branch
++
++ - Run "rebase -i P" to rebase the entire branch
++
++ - "reword" commit A (the first commit in the rebase script)
++
++ - Make NO changes to commit A's message
++
++then you'll end up with a new branch A'-B'-C' with all-new commits (all the
++SHA IDs will be different) but that has the same changes that were in the
++original A-B-C branch.
++
++You can then modify commit B' as you like and merge the new A'-B''-C' branch
++into the mainline branch without first reverting commit W.
+diff --git a/t/t3417-rebase-reword-forces-cherry-pick.sh b/t/t3417-rebase-reword-forces-cherry-pick.sh
+new file mode 100755
+index 0000000..3e29f0f
+--- /dev/null
++++ b/t/t3417-rebase-reword-forces-cherry-pick.sh
+@@ -0,0 +1,59 @@
++#!/bin/sh
++#
++# Copyright (c) 2010 Marc Branchaud
++#
++
++test_description='git rebase interactive "reword" always forces cherry-pick
++
++This test ensures that the "reword" command of "git rebase -i" cherry-picks
++a reworded commit even if no changes are made to the commit message.
++
++This behaviour provides a way to deal with a situation that can arise when a
++merge had to be reverted.  For details, see the ADDENDUM in
++Documentation/howto/revert-a-faulty-merge.txt.
++'
++
++. ./test-lib.sh
++
++. "$TEST_DIRECTORY"/lib-rebase.sh
++
++set_fake_editor
++
++# A simple linear history.
++test_expect_success 'setup' '
++	test_commit A file1 &&
++	test_commit B file1 &&
++	test_commit C file1 &&
++	test_commit D file1 &&
++	git branch old-master HEAD
++'
++
++# Ensure that the rebased commits get a different timestamp.
++test_tick
++
++# Reword the first commit, but don't actually change the message
++test_expect_success 'reword' '
++	FAKE_LINES="reword 1 2 3" git rebase -i A
++'
++
++# There should be no textual differences between the old and new branches.
++# However:
++#  - Commit A should be completely unchanged.
++#  - Commits B, C and D should have different SHA IDs.
++test_expect_success 'verify' '
++	touch empty &&
++	test ! $(git rev-parse ) = $(git rev-parse master) &&
++	git diff old-master master > out &&
++	test_cmp empty out &&
++	test ! $(git rev-parse C) = $(git rev-parse master^) &&
++	git diff old-master^ master^ > out &&
++	test_cmp empty out &&
++	test ! $(git rev-parse B) = $(git rev-parse master^^) &&
++	git diff old-master^^ master^^ > out &&
++	test_cmp empty out &&
++	test $(git rev-parse A) = $(git rev-parse master^^^) &&
++	git diff old-master^^^ master^^^ > out &&
++	test_cmp empty out
++'
++
++test_done
 -- 
-Cheers,
-
-Sverre Rabbelier
+1.7.0.3
