@@ -1,108 +1,95 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] gitk: Fix display of copyright symbol in non-utf-8
- locales
-Date: Mon, 22 Mar 2010 18:45:17 -0500
-Message-ID: <20100322234517.GB2168@progeny.tock>
-References: <1268418709-4998-1-git-send-email-patthoyts@users.sourceforge.net>
- <1268418709-4998-2-git-send-email-patthoyts@users.sourceforge.net>
- <1268418709-4998-3-git-send-email-patthoyts@users.sourceforge.net>
- <20100320061452.GA26224@progeny.tock>
- <87pr2wc6bo.fsf@fox.patthoyts.tk>
+From: "P Fudd" <fink@ch.pkts.ca>
+Subject: Bug - crash on large commit
+Date: Mon, 22 Mar 2010 16:36:25 -0700
+Message-ID: <310ba29b220a70e5624819e6ef80bff0.squirrel@www.pkts.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Tue Mar 23 00:45:27 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 23 01:04:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtrJH-00077R-FM
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 00:45:27 +0100
+	id 1Ntrb8-00082V-8z
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 01:03:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756134Ab0CVXpW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Mar 2010 19:45:22 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:36706 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755831Ab0CVXpV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Mar 2010 19:45:21 -0400
-Received: by gyg8 with SMTP id 8so2922979gyg.19
-        for <git@vger.kernel.org>; Mon, 22 Mar 2010 16:45:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=Tcvp84G9PX0BmNg7qyGr8T0Llj6dyv8D2IormzZfwBA=;
-        b=FL+yWzZcLjnwvQmehYTrcG6YrgKk8SBdMof6Emu4EpPy18/S1beOwbk4zgAZY/NWDK
-         vNjgvnCgTKq56Ugs+ZKfOA+mq9XA/GoE8qrR9KSlcYZPBUWHhe7Eqghd3eX/TAbIlDRd
-         HCiJJStwhX7ndUFQba50aIpgeWGH8B/UQgu3c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=T17nO64bEBhmdf7mJKNBz82EI9ZjDxqH3OTUFi7TUZdnFVhrjoYzvvX2qs/XZMzwu8
-         e+rUGjoogSNqrShg0adw5H3xre+Ls1nG1NAjgech3/EdUA2RVXRNlMtK4hshtfYK9FbV
-         5C9mUappP4xj71XDxOgmHodZmqp1Cxq5Y+AzE=
-Received: by 10.100.55.20 with SMTP id d20mr5518099ana.66.1269301520422;
-        Mon, 22 Mar 2010 16:45:20 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm5419383iwn.2.2010.03.22.16.45.19
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 22 Mar 2010 16:45:19 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <87pr2wc6bo.fsf@fox.patthoyts.tk>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753934Ab0CWADs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Mar 2010 20:03:48 -0400
+Received: from www.sbn.ubc.ca ([142.103.124.7]:56588 "EHLO foster.nce.ubc.ca"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752684Ab0CWADr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Mar 2010 20:03:47 -0400
+X-Greylist: delayed 1637 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Mar 2010 20:03:47 EDT
+Received: from foster.nce.ubc.ca (localhost [127.0.0.1])
+	by foster.nce.ubc.ca (8.14.3/8.14.3) with ESMTP id o2MNaQvC006227
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Mon, 22 Mar 2010 16:36:26 -0700
+Received: (from apache@localhost)
+	by foster.nce.ubc.ca (8.14.3/8.14.3/Submit) id o2MNaPtH006223;
+	Mon, 22 Mar 2010 16:36:25 -0700
+Received: from 137.82.128.93
+        (SquirrelMail authenticated user chowes)
+        by www.pkts.ca with HTTP;
+        Mon, 22 Mar 2010 16:36:25 -0700
+User-Agent: SquirrelMail/1.4.19-2.fc11
+X-Priority: 3 (Normal)
+Importance: Normal
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (foster.nce.ubc.ca [127.0.0.1]); Mon, 22 Mar 2010 16:36:26 -0700 (PDT)
+X-Spam-Status: No, score=-3.0 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.3.0
+X-Spam-Checker-Version: SpamAssassin 3.3.0 (2010-01-18) on foster.nce.ubc.ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142978>
 
-Pat Thoyts wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi...
 
->> --- a/gitk
->> +++ b/gitk
->> @@ -1,6 +1,6 @@
->>  #!/bin/sh
->>  # Tcl ignores the next line -*- tcl -*- \
->> -exec wish "$0" -- "$@"
->> +exec wish -encoding utf-8 "$0" -- "$@"
-[...]
-> I would much rather see any fault in the makefile fixed than use
-> source -encoding in all the various places this script might get
-> loaded from.
+I'm a new user, and thinking that git is better than sliced bread.  So,
+today I had to set up a new computer (MacOSX), and thought: "hey, I could
+put the whole system into git!"
 
-Good point: git-gui.sh does not use =E2=80=98source=E2=80=99 but runs t=
-he moral
-equivalent of
-=20
- set wish [info executable]
- eval exec $wish gitk $revs "--" "--"
+Well, ok, technically yes, you can do that.  Go into the root directory,
+type 'git init', then 'git add .', then 'git commit -a'.
 
-to avoid starting a shell.  Is it really so expensive to start a
-shell?  This means that, for example, if some insane person were to
-rewrite gitk in C, then git gui would have to be adjusted before the
-result could be used.
+Bug 1: git complained about a symbolic link to nowhere and halted...
+several hours into the 'add'.  If I want to store a broken link, let me;
+maybe warn me.
 
-> THere are two characters in this file that are not ASCII
-> and one of them is in a comment. We could even just use (c) to
-> simplify this. However, \u00a9 is the correct unicode escape sequence
-> for tcl to get a copyright character into the script in a way that is
-> independent of the encoding. The escape sequence should be passed
-> through unchanged in any translations - tcl wants to see exactly
-> \u00a9 and everyone is using a copyright glyph here.=20
+Bug 2: git died with an out-of-memory error on the commit:
+------
+# git commit -a
+[master (root-commit) 62b52e2] The initial checkin of the whole hard disk.
+ Committer: System Administrator <root@Mac-Pro.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
 
-So we should fix the Makefile.  The problem is that everything
-Tcl-related seems to assume files it sees will be in either the
-current locale=E2=80=99s encoding or ISO-8859-1 unless told otherwise, =
-as far
-as I can tell.  The entire gitk source tree, on the other hand, is in
-UTF-8.
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
 
-Ideas?
-Jonathan
+If the identity used for this commit is wrong, you can fix it with:
+
+    git commit --amend --author='Your Name <you@example.com>'
+
+git(4667) malloc: *** mmap(size=1964838912) failed (error code=12)
+*** error: can't allocate region
+*** set a breakpoint in malloc_error_break to debug
+git(4667) malloc: *** mmap(size=1964838912) failed (error code=12)
+*** error: can't allocate region
+*** set a breakpoint in malloc_error_break to debug
+fatal: Out of memory, malloc failed
+[Mac-Pro:/] shadministrator# git version
+git version 1.7.0.2
+-----
+
+Anyhoo, it's not really the right tool for the job, but Apple hasn't got a
+package management system to speak of (yes, I know about bom files --
+don't speak of it), and their filesystem loses bits now and then, so I
+wanted the crypto checksums and the ability to spot and roll back changes.
+ I suppose TimeMachine will have to do.
+
+Thanks for a great program!
