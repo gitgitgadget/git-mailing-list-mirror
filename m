@@ -1,77 +1,85 @@
-From: Dave Olszewski <cxreg@pobox.com>
-Subject: Re: Re: native-git-svn: A Summer of Code 2010 proposal
-Date: Sun, 21 Mar 2010 16:51:28 -0700 (PDT)
-Message-ID: <alpine.DEB.2.00.1003211643470.21433@narbuckle.genericorp.net>
-References: <f3271551003191018j67aa133es2fee4e3dda519ce0@mail.gmail.com>  <32541b131003191132y119037f8rae598d0037786703@mail.gmail.com>  <fabb9a1e1003191139v6ea37df3uba441f2cba9bc992@mail.gmail.com>
- <32541b131003191430ld0eaa9cw1d2aac08cff15682@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Improve documentation for git-remote-helpers
+Date: Sun, 21 Mar 2010 20:06:36 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.1003211951360.14365@iabervon.org>
+References: <f3271551003211026m376b86d6ga915f85a623eddfd@mail.gmail.com>  <f3271551003211121o48f502fp954b649ff4ca8f8b@mail.gmail.com>  <alpine.LNX.2.00.1003211907390.14365@iabervon.org> <fabb9a1e1003211635w27f0b22em73c7c6431c3998af@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 22 00:51:37 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 22 01:06:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtUvg-0002qe-RT
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 00:51:37 +0100
+	id 1NtVAK-00088V-7F
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 01:06:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753401Ab0CUXvc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Mar 2010 19:51:32 -0400
-Received: from 62.f9.1243.static.theplanet.com ([67.18.249.98]:33939 "EHLO
-	62.f9.1243.static.theplanet.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753064Ab0CUXvb (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Mar 2010 19:51:31 -0400
-X-Envelope-From: cxreg@pobox.com
-Received: from localhost (count@narbuckle [127.0.0.1])
-	(authenticated bits=0)
-	by 62.f9.1243.static.theplanet.com (8.13.8/8.13.8/Debian-3) with ESMTP id o2LNpSfZ003693
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 21 Mar 2010 18:51:28 -0500
-X-X-Sender: count@narbuckle.genericorp.net
-In-Reply-To: <32541b131003191430ld0eaa9cw1d2aac08cff15682@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1753387Ab0CVAGi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Mar 2010 20:06:38 -0400
+Received: from iabervon.org ([66.92.72.58]:43262 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752298Ab0CVAGh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Mar 2010 20:06:37 -0400
+Received: (qmail 17136 invoked by uid 1000); 22 Mar 2010 00:06:36 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 22 Mar 2010 00:06:36 -0000
+In-Reply-To: <fabb9a1e1003211635w27f0b22em73c7c6431c3998af@mail.gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142876>
 
-On Fri, 19 Mar 2010, Avery Pennarun wrote:
+On Mon, 22 Mar 2010, Sverre Rabbelier wrote:
 
-> For example, I'd be very happy to learn that your new design would
-> allow two people to independently pull from svn://, do work in their
-> respective copies of the git repositories, branch and merge all day
-> long, pull from each other, and then push back to svn without a)
-> making a mess of the svn repo and causing zillions of conflicts, or b)
-> linearizing history and losing git's complex DAG.
->
-> In the current version of git-svn this is very hard. 'git svn dcommit'
-> generates entirely new git commit objects corresponding to the ones
-> that were created in svn... but which nevertheless have your merge
-> history included, which is awesome.  But if a new person clones the
-> svn repo from scratch, he will end up with git commits corresponding
-> to those same ones from svn, but *without* the merge history, and
-> therefore with different commit ids, and which therefore prevent
-> push/pulling between other people who have cloned the repo.
+> Heya,
+> 
+> On Mon, Mar 22, 2010 at 00:29, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> > Yup. Or maybe these should be documented as a list of capabilities which
+> > mean that the helper supports the command with the same name, since that's
+> > a common pattern, and documenting it as a pattern makes it obvious that,
+> > if we have a new 'export' command, and it needs a capability, it'll fit
+> > the pattern.
+> 
+> Speaking of which, I have uploaded a preliminary version of the export
+> capability to my github repository [0] since Ramkumar wanted to have a
+> look at it. Sadly I have not been able to test it yet, I wanted to
+> work on that today but instead spent hours on getting the first
+> argument to the helper to be 'origin' (or whatever the user sets it to
+> with the --origin option), something that's been bothering me forever.
+> No documentation yet though, working on that ;).
+> 
+> [0] http://github.com/SRabbelier/git
 
-I've been working on a script that does 2-way integration with an
-upstream CVS repo, using git-cvsimport and git-cvsexportcommit to do the
-difficult parts.
+Looks generally right, but I think you need to do 
+"finish_command(&exporter);" first, and actually get some feedback from 
+the helper. I think the right thing is actually to put the output of the 
+helper into fast-import again, and have that give one of three 
+conclusions:
 
-I solved this problem you mention by rebasing in both directions onto
-detached HEADs and exporting the result, meaning that the history is
-permanently diverged from a DAG standpoint.  Of course, over time, the
-rebase would become increasingly messy and horrible, so I created a
-couple of placeholder refs which are updated after the import/export is
-finished.  These mark the last time it was done, and allow you only to
-attempt to apply the commits which are new on each side.
+ - We tried to send sha1 A to the foreign system, and it rejected us 
+   entirely.
+ - We tried to send sha1 A to the foreign system, and reimporting what it 
+   put in for us actually gives us sha1 A, so the transformation is 
+   lossless.
+ - We tried to send sha1 A to the foreign system, but reimporting what it
+   put in for us gives us sha1 B instead. This means B is as close to a 
+   replacement for A as we can get in this case, and the git core should 
+   know about the situation (although, for now, it doesn't have anything 
+   to do about it).
 
-It's still very green and I've already worked though a number of pretty
-hairy problems, so I'm not going to say it's a bulletproof solution.
-But it does work.
+At the least, in the third case, we should update any tracking branches to 
+match what the foreign system now contains, not to match what we tried to 
+put there.
 
-     Dave
+But even without considering the third case (IIRC, hg and git can 
+interoperate losslessly), you need to get feedback in some way if the 
+remote entirely rejected us.
+
+	-Daniel
+*This .sig left intentionally blank*
