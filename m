@@ -1,271 +1,201 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: GSoC draft proposal: Line-level history browser
-Date: Mon, 22 Mar 2010 20:24:54 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1003221924110.7596@pacific.mpi-cbg.de>
-References: <41f08ee11003200218u59c45b6dl82a8eb56cc289256@mail.gmail.com>  <81b0412b1003201335g7b37c51mfa3e2280210ebb7e@mail.gmail.com>  <4BA544FC.7050007@gmail.com>  <41f08ee11003202316w2fddc5f4jebda47f325451577@mail.gmail.com>  <4BA61CF9.7040104@gmail.com>
- <41f08ee11003212052p6b0a7495j2e38f24839541ffb@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5] Improve remote-helpers documentation
+Date: Mon, 22 Mar 2010 12:25:19 -0700
+Message-ID: <7v39zscg68.fsf@alter.siamese.dyndns.org>
+References: <f3271551003220954s38ed80f2vde1a287d05ef4ad5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, gitzilla@gmail.com,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 22 20:25:10 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 22 20:25:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtnFN-0006FA-QJ
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 20:25:10 +0100
+	id 1NtnFx-0006cu-2l
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 20:25:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755019Ab0CVTZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Mar 2010 15:25:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57827 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754908Ab0CVTY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Mar 2010 15:24:58 -0400
-Received: (qmail invoked by alias); 22 Mar 2010 19:24:53 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp066) with SMTP; 22 Mar 2010 20:24:53 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18GA2NQaGsGj9yO1ZW3XRP68EVplvrF19Nq45ttgE
-	hGx+BI6w0CdQaa
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <41f08ee11003212052p6b0a7495j2e38f24839541ffb@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
+	id S1755364Ab0CVTZi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Mar 2010 15:25:38 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39338 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754779Ab0CVTZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Mar 2010 15:25:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D9A1A406A;
+	Mon, 22 Mar 2010 15:25:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Xowk/lWWkJyLCfSrAfNvcHtjbmw=; b=HogkOc
+	gI3heDpexfwcqE7NHWMUH+6LLbEXbDFmjuM59Nh0QI6Zgvzf/rakks0zvbJssVug
+	7nhdJRaU8qhfT2DgC7Q9A34jce1jRC/Hg+hCynkIYJbrUKZR6AGra3oVjnpbzDtb
+	0RM1H0hqWxwZSftyH5Zgti8rHwbt3/xQCk1CM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oDO6FFXaa5rpLeHArubjfdn6RX+xMFKk
+	YJwtBeUnCpHlTGLP7z0dU6YX1dkrF7zvgvGcgzu7U6FyMZQ6VJnl3rmbwBQJhkwJ
+	wqsl6ZoyMPBTO1scdAvmeSbrneK5/KdXOBNGeCi7BsUBTB3PDO5HpzE6x4yDw++5
+	W2hu0pwMKmo=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9860DA405B;
+	Mon, 22 Mar 2010 15:25:28 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3D579A4051; Mon, 22 Mar
+ 2010 15:25:21 -0400 (EDT)
+In-Reply-To: <f3271551003220954s38ed80f2vde1a287d05ef4ad5@mail.gmail.com>
+ (Ramkumar Ramachandra's message of "Mon\, 22 Mar 2010 22\:24\:07 +0530")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: AC6C220C-35E8-11DF-8817-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142959>
 
-Hi,
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-On Mon, 22 Mar 2010, Bo Yang wrote:
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> Acked-by: Daniel Barkalow <barkalow@iabervon.org>
+> ---
+> Cosmetic change since v4: The capabilities fetch, option, push,
+> connect, and import are presented in a more elegant manner.
 
-> Draft proposal(v2): Line-level History Browser
-> 
-> =====Purpose of this project=====
-> "git blame" can tell us who is responsible for a line of code, but it
-> can't help if we want to get the detail of how the lines of code have
-> evolved as what it is now.
-> This project will add a new feature for 'git log' to display line
-> level history. It can trace the history of any line range of certain
-> file at any revision. For simplity, users can run the command like: '
-> git log -L builtin/diff.c:6,8 ', he will get the change history of
-> code between line 6 and line 8 of the diff.c file. And for each
-> history entry, it will provide the commits, the diff block which
-> contains changes of users' interested lines.
+I know Daniel already Acked this, but pretending to be a total novice to
+remote-helper, I am not entirely happy with the new text.
 
-I would not be too specific here about the exact syntax. I would rather 
-have an example where this might be useful.
-
-In git.git, for example, you could point to pretty_print_commit() which 
-was split out from commit.c into pretty.c in 93fc05e(Split off the pretty 
-print stuff into its own file), and mention that it is hard to verify 
-without much hassle that the code split was really only a code split, 
-rather than a split with an evil change.
-
-Or you could point to 691f1a2(replace direct calls to unlink(2) with 
-unlink_or_warn), where code was refactored, into a new function 
-(unfortunately in two commits, so it might be a case not covered by your 
-project) and it might be somebody's task to find out the original author 
-for that function.
-
-Basically, I would like to have a structure in the proposal like this: 
-what? why? how? when?
-
-> This utility will trace all the modification history of interested
-> lines and stop until it finds the root of the lines, which is a point
-> where all the new code is added from scratch. Also, the users can
-> specify how deeply he wants this utility to trace. And this tool will
-> treat code move just like modification too, so it will follow the code
-> move inside one commit.
+> diff --git a/Documentation/git-remote-helpers.txt
+> b/Documentation/git-remote-helpers.txt
+> index 1b5f61a..990d302 100644
+> --- a/Documentation/git-remote-helpers.txt
+> +++ b/Documentation/git-remote-helpers.txt
+> @@ -3,7 +3,7 @@ git-remote-helpers(1)
 >
-> Note that, the history may not always be a single thread of commits.
-> If there are more than one commit which produce the specified line
-> range, the thread of history will split.
+>  NAME
+>  ----
+> -git-remote-helpers - Helper programs for interoperation with remote git
+> +git-remote-helpers - Helper programs for interacting with remote repositories
 
-Do not forget the case where there are more than one source of a code 
-move. Think "refactoring".
+s/for interacting/to interact/; would be shorter.
 
-> =====Work and technical issues=====
-> ==Command options==
-> This new feature should be used for exploring the history of changes
-> for certain line range of code in one file.
-> 
-> git log [-m<num>] [-I] [-d depth] [--fuzzy]  -L file1@rev1:<start
-> pos>,<end pos>  file2@rev2:<start pos>,<end pos>
-
-I would like this not to be specified too much here. For example, we do 
-not know yet, whether the matching will be fuzzy, or whether we find 
-something cleverer than that.
-
-So, I suggest to list not the command line options, but what you intend to 
-support. I.e.:
-
-> Options:
+>  SYNOPSIS
+>  --------
+> @@ -13,10 +13,23 @@ DESCRIPTION
+>  -----------
 >
-> 1. -m<num>, option to control whether we should follow code movement.  
->    If one -m is given, we follow code movement inside file, when more 
->    than one '-m' is given, we follow the movement between files in one 
->    commit. The <num> is used to specify the lower bound for the number 
->    of lines of moved code. If it is not given, we set it as 1.
+>  These programs are normally not used directly by end users, but are
+> -invoked by various git programs that interact with remote repositories
+> -when the repository they would operate on will be accessed using
+> -transport code not linked into the main git binary. Various particular
+> -helper programs will behave as documented here.
+> +invoked by various git programs that interact with remote
+> +repositories.  For a program to qualify as a remote helper, it must
+> +implement a subset of the capabilities documented here, and conform to
+> +the remote helper protocol.
 
-Here you do not need to say that it is -m<num>, but that you want to 
-support following code movements both inside and between files, but only 
-optionally, for performance reasons (or some such).
+It would be sufficient and easier to read if we did this:
 
-In any case, this would probably just reuse the -M option.
+  s/For a program to qualify as a remote helper, it/A remote helper/
 
-> 2. -I, option to control whether we should display only the 'user 
->    interested lines' diff block [default] or display the whole diff with 
->    the interested area colorfully displayed.
+> +Remote helpers are spawned as binaries by
+> +the main git programs and interact using text streams, without
+> +linking.
 
-It would be more in line with the diff options to use -U, but you do not 
-have to state that. Just talk about a configurable amount of context.
+Here, "without linking" sticks out like a sore thumb.  Without linking to
+what?  libgit.a?
 
-> 3. -d, option to control the max depth we trace into the commit history.
+I think the most important thing you are trying to say is that one does
+not have to modify or relink git itself to add a new helper, because the
+helper runs as a separate process.  The binaryness (as opposed to "text"
+or "script") is not important here at all.  So how about saying it in a
+more direct way?  Perhaps...
 
-Again, there are better options for "git log" already, but you do not need 
-to be too explicit on the syntax side. Just say that you want to be able 
-to use as many of "git log"s options as make sense in the context of 
-line-level history.
+	When git needs to interact with a remote repository served by a
+	remote helper, git spawns the helper as an independent process and
+	interacts with it over "helper protocol" (this way, adding a new
+	helper does not require re-linking the main git program with it).
 
-> 4. --fuzzy, option to control whether fuzzy code copy mathing is used.
+I also think textness of the helper protocol is secondary; the more
+important thing you need to say is how this independent process interacts
+with the launching git process.  Phrases like "over pipe", "reads commands
+from its standard input", "writes the status and/or result to its standard
+output", are likely to be the ones you would want in your description.
 
-See above.
+> +The curl helper is one such program. It is invoked via
+> +'git-remote-http', 'git-remote-https', 'git-remote-ftp', or
+> +'git-remote-ftps', and implments the capabilities 'fetch', 'option',
+> +and 'push'.
 
-> 5. '-L' to control whether we run a simple log or we want a line level 
->    log.
+This description made me go "huh?".  A natural first question is: if _the_
+helper is _one_ such program, why does it have so many names, iow why
+isn't it 'git-remote-curl' with different underlying transport given as an
+option?
 
-See above.
+I am not suggesting to change the design and implementation here, but
+trying to see a way to reduce confusion from the documentation.  The
+current design gives many names for the same implementation but that is
+just an implementation detail---the design principle Ilari took is the
+other way around.  There are bunch of helpers (http helper, https helper,
+ftp helper,...) and they _happen_ to share the same implementation that
+uses curl.  So it would be clearer to say:
 
-> 6. Files and lines. I propose to use such a syntax to specify the files 
->    at revision and line range, <file>@<revision>:<start pos>,<end pos>. 
->    This looks a little complex, but I think it is neccessary because we 
->    will support multiple file at any version and any line range finally. 
->    The revision can be any revision format of Git and the <pos> can be a 
->    number, or a posix regex, just like what 'git blame' do.
+	git comes with a "curl" family of remote helpers (http, https,
+	ftp, and ftps helper).  They implement the capabilities 'foo',
+	'bar', and 'baz'.
 
-See above.
+> +The curl helper essentially helps in transporting native
+> +git objects.
 
-> 7. And we will support code copy detect, too. The option which control 
->    whether we trace code copy does exist in current 'git log', which is 
->    the option '-C'. Similiarly, one '-C' is used to trace code copy of 
->    new added code inside one commit. Two '-C' will trace any code copy 
->    inside commit tree.
+I am not happy with this description.  Doesn't any remote helper transport
+git objects in the end?  I think you are trying to describe one aspect of
+the difference between "curl" family and "fast-import" family, namely, the
+"curl" family of helpers do not transport the git object with the "import"
+command of the "text stream" protocol.  They do that on their own instead
+of using a fast-import stream, but that is an implementation detail that
+is not important in this early part of the DESCRIPTION section.
 
-Again, do not be too specific about details that have to be fleshed out 
-while working on the project. For example, we do not know yet whether it 
-would make more sense to look for code movements automatically when we 
-detected a deletion, and maybe fall back automatically to detecting code 
-copies when we found an inter-file move.
+I would suggest dropping this sentence; at least drop "essentially" and
+"native".  The former only invites "do they do something more than that,
+and if so what are they?" question without giving any extra information to
+the readers.  The latter is misleading (fast-import stream could be used
+to transfer native objects by a helper that uses git-fast-export using
+"import" command of the "text stream" protocol, no?).
 
-> ==Design and implementation==
-> Git store all the blobs instead of code delta, so we should traverse
-> the commit history and directly access the tree/blob objects to
-> compute the code delta and search for the diff which contains the
-> interested lines.
+In this 'DESCRIPTION' section, one thing that is missing is the overall
+"why? what for?" of a helper.  The only word we have seen is "interact
+with", and the reader wouldn't know that by "interacting with a remote
+repository", you mean that the things you want to achieve with these
+helpers are:
 
-s/ed/ing/
+ - learning what refs the other side has;
 
-> Since git use libxdiff to format its diff file, we should iterate 
-> through all xdiff's diff blocks and find what the code looks like before 
-> the commit. This will be done using the callback mechanism. Here, we 
-> will find a new line range which is the origin code before this commit. 
-> And then start another search from the current commit and the new line 
-> range.
->
-> Recursively, we can find all the modification history. We will stop when 
-> we find that the current interested line range is added from scratch and 
-> is not moved from other place of the file. Here, if the user want to 
-> trace code copy, more work will be done to find the possible code copy. 
-> We may also stop the traverse when we reach the max search depth.
->
-> Also, if the thread of change history split into two or more commits, we 
-> stop and provide the users all the related commits and corresponding 
-> line range.
+ - transferring objects from remote to local that are reachable from (some
+   of) these refs and that are missing from local repository (i.e. fetch);
 
-Good.
+ - transferring objects from local to remote that are missing from the
+   remote repository that are necessary to update refs at the remote
+   repository to point at a different value (i.e. first part of push); and
 
-> Generally,
-> 1. New callback for xdi_diff to parse the diff hunk and store line
-> level history info.
-> 2. builtin/line-log.c will be added to complete most of the new features.
-> 3. builtin/log.c will be changed to add this new utility to the front end.
-> 4. Documents will be updated to introduce this new tool.
+ - updating the refs at the remote repository (i.e. latter part of push);
 
-Good.
+To a reader who has not learned the above, "essentially helps in
+transporting native..." sounds nothing more than a gibberish.
 
-> =====Milestones and Timeline=====
-> In this summer, we will add support of line level history browser for
-> only one file. The multiple ranges support is currently not in this
-> project.
-> 
-> The milestones of the project are:
-> 1. Simple modification change history.
+> +As opposed to native git objects, remote helpers can also provide a
+> +fast-import stream through the 'import' capability. This makes them
+> +especially useful when native interoperability with a foreign
+> +versioning system is desired.
 
-IMHO this should be split into
+Likewise.  Use of fast-import stream is an implementation detail of how
+objects are transferred (or in the case of foreign interface, synthesized
+on the fly).
 
-	1a) have an initial version which does nothing else than parse
-	    git-log options and a single additional -L, requiring exactly
-	    one file to be specified
-
-	1b) implement the xdiff callback and identify the commits touching
-	    the line range (this is not completely trivial due to merges)
-
-> 2. Code movement inside one file detect.
-
-Again, this has to be split a little bit. Code can split, and it can also 
-unite. So, a single line range can easily become multiple ones.
-
-> 3. Code movement inside one commit but not a file.
-
-s/but not a file/between files/
-
-> 4. Code copy of modified file in one commit.
-
-You mean code copy from somewhere in the same file?
-
-> 5. Code copy of any place in one commit tree.
-> 6. Fuzzy matching support.
-
-For fuzzy matching support, I would add some ideas, such as trying to 
-match alpha-numeric characters, or matching longest words or some such. 
-Also mention the possibility that this might be infeasible. In any case, 
-give an example what case this is trying to help with.
-
-> And the timeline will be:
-> April 26 - May 23:   Catch up with Git code base and study the
-> implementation of blame.c and log.c thouroughly.
-
-Hmm. Maybe it would be better to be more precise. Like: 1st week: follow 
-the bird's eye view on Git's source code. 2nd week, analyze the rev-list 
-machinery (probably first looking at the code of merge-base, for easier 
-understanding), 3rd week, have a look at builtin/log.c, 4th week, 
-understand blame.c
-
-> May 24 - June 21 :   Complete a version which supports code
-> modifcation trace but without code movement and code copy support.
-> 
-> June 22 - June 29:   Complete a version which supports code movement
-> inside one file.
-> 
-> June 30 - July 7:    Complete a version which supports code movement
-> between files inside one commit.
-> 
-> July 8 - July 15:    Complete a version which supports code copy of
-> modified file in one commit.
-> 
-> July 16 - July 23:   Complete a version which supports code copy of
-> any file in one commit tree.
-> 
-> July 24 - August 7:  Complete fuzzy matching of code movement and copy detect.
-
-This should probably adjusted a bit to my suggestions above.
-
-Ciao,
-Dscho
+I would suggest that you first talk about a bit higher level "purpose"
+(the four-bullet points above might be a good start) to clear the
+"remote-helper: why and what for?" question, before starting to describe
+"git comes with a "curl" family".
