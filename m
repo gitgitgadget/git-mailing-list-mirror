@@ -1,127 +1,96 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH v4] Improve remote-helpers documentation
-Date: Mon, 22 Mar 2010 12:32:31 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.1003221143250.14365@iabervon.org>
-References: <f3271551003220604v4c9fbb5ep3b7c69300567a275@mail.gmail.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: [PATCH] send-email: lazily assign editor variable
+Date: Mon, 22 Mar 2010 17:41:52 +0100
+Message-ID: <20100322164152.GA30332@pengutronix.de>
+References: <20100322145947.GA1709@pengutronix.de> <eb0d92cf28820eb9783e789a8c4c62c3af4dd0d0.1269274203.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 22 17:32:47 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Marc Kleine-Budde <m.kleine-budde@pengutronix.de>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Mar 22 17:42:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtkYX-0004ld-0I
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 17:32:45 +0100
+	id 1NtkhU-000259-6E
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 17:42:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755246Ab0CVQch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Mar 2010 12:32:37 -0400
-Received: from iabervon.org ([66.92.72.58]:33780 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755232Ab0CVQcd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Mar 2010 12:32:33 -0400
-Received: (qmail 6780 invoked by uid 1000); 22 Mar 2010 16:32:31 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 22 Mar 2010 16:32:31 -0000
-In-Reply-To: <f3271551003220604v4c9fbb5ep3b7c69300567a275@mail.gmail.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1755263Ab0CVQl5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Mar 2010 12:41:57 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:42520 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755202Ab0CVQlz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Mar 2010 12:41:55 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1NtkhO-0007nN-Bj; Mon, 22 Mar 2010 17:41:54 +0100
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1NtkhM-00039i-Ew; Mon, 22 Mar 2010 17:41:52 +0100
+Content-Disposition: inline
+In-Reply-To: <eb0d92cf28820eb9783e789a8c4c62c3af4dd0d0.1269274203.git.git@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142944>
 
-Looks good, other than an optional suggestion below. Incidentally, it's 
-often helpful to describe the differences between earlier versions and v4 
-of the patch between the "---" and the diffstat; that part of the email 
-doesn't go into the commit, but can be seen by reviewers.
+Hello Michael,
 
-On Mon, 22 Mar 2010, Ramkumar Ramachandra wrote:
-
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+On Mon, Mar 22, 2010 at 05:12:53PM +0100, Michael J Gruber wrote:
+> b4479f0 (add -i, send-email, svn, p4, etc: use "git var GIT_EDITOR",
+> 2009-10-30) introduced the use of git var GIT_EDITOR which may lead t=
+o
+> problems when send-mail is used without a tty.
+>=20
+> Therefore, use git var GIT_EDITOR only when we actually edit somethin=
+g.
+>=20
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> Reported-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
 > ---
->  Documentation/git-remote-helpers.txt |   40 +++++++++++++++++----------------
->  1 files changed, 21 insertions(+), 19 deletions(-)
-> 
-> diff --git a/Documentation/git-remote-helpers.txt
-> b/Documentation/git-remote-helpers.txt
-> index 1b5f61a..2d5aa8c 100644
-> --- a/Documentation/git-remote-helpers.txt
-> +++ b/Documentation/git-remote-helpers.txt
-> @@ -3,7 +3,7 @@ git-remote-helpers(1)
-> 
->  NAME
->  ----
-> -git-remote-helpers - Helper programs for interoperation with remote git
-> +git-remote-helpers - Helper programs for interacting with remote repositories
-> 
->  SYNOPSIS
->  --------
-> @@ -13,10 +13,23 @@ DESCRIPTION
->  -----------
-> 
->  These programs are normally not used directly by end users, but are
-> -invoked by various git programs that interact with remote repositories
-> -when the repository they would operate on will be accessed using
-> -transport code not linked into the main git binary. Various particular
-> -helper programs will behave as documented here.
-> +invoked by various git programs that interact with remote
-> +repositories.  For a program to qualify as a remote helper, it must
-> +implement a subset of the capabilities documented here, and conform to
-> +the remote helper protocol. Remote helpers are spawned as binaries by
-> +the main git programs and interact using text streams, without
-> +linking.
-> +
-> +The curl helper is one such program. It is invoked via
-> +'git-remote-http', 'git-remote-https', 'git-remote-ftp', or
-> +'git-remote-ftps', and implments the capabilities 'fetch', 'option',
-> +and 'push'. The curl helper essentially helps in transporting native
-> +git objects.
-> +
-> +As opposed to native git objects, remote helpers can also provide a
-> +fast-import stream through the 'import' capability. This makes them
-> +especially useful when native interoperability with a foreign
-> +versioning system is desired.
-> 
->  COMMANDS
->  --------
-> @@ -118,17 +131,9 @@ capabilities reported by the helper.
->  CAPABILITIES
->  ------------
-> 
-> -'fetch'::
-> -	This helper supports the 'fetch' command.
-> -
-> -'option'::
-> -	This helper supports the option command.
-> -
-> -'push'::
-> -	This helper supports the 'push' command.
-> -
-> -'import'::
-> -	This helper supports the 'import' command.
-> +The following capabilities indicate that the remote helper supports
-> +the corresponding command with the same name: 'fetch', 'option',
-> +'push', 'connect', and 'import'.
+>  git-send-email.perl |    5 ++++-
+>  1 files changed, 4 insertions(+), 1 deletions(-)
+>=20
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index d612ae8..bb09c0d 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -162,9 +162,12 @@ my $compose_filename;
+> =20
+>  # Handle interactive edition of files.
+>  my $multiedit;
+> -my $editor =3D Git::command_oneline('var', 'GIT_EDITOR');
+> +my $editor;
+> =20
+>  sub do_edit {
+> +	if (!defined($editor)) {
+> +		$editor =3D Git::command_oneline('var', 'GIT_EDITOR');
+> +	}
+>  	if (defined($multiedit) && !$multiedit) {
+>  		map {
+>  			system('sh', '-c', $editor.' "$@"', $editor, $_);
+I havn't tested yet, but (maybe apart from a comment) this looks exactl=
+y
+like the patch I would have done if I knew perl :-)
 
-This is, indeed, what I was suggesting, although I think it might be more 
-readable like:
+So, Acked-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
 
-'fetch'::
-'option'::
-'push'::
-'connect'::
-'import'::
-	This helper supports the corresponding command with the same name.
+Best regards and thanks for the quick response,
+Uwe
 
-But I'm fine with whichever format is most helpful for someone trying to 
-read the document (that is, to you).
-
-	-Daniel
-*This .sig left intentionally blank*
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
