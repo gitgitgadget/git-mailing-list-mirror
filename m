@@ -1,77 +1,127 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] send-email: lazily assign editor variable
-Date: Mon, 22 Mar 2010 17:12:53 +0100
-Message-ID: <eb0d92cf28820eb9783e789a8c4c62c3af4dd0d0.1269274203.git.git@drmicha.warpmail.net>
-References: <20100322145947.GA1709@pengutronix.de>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH v4] Improve remote-helpers documentation
+Date: Mon, 22 Mar 2010 12:32:31 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.1003221143250.14365@iabervon.org>
+References: <f3271551003220604v4c9fbb5ep3b7c69300567a275@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 22 17:16:09 2010
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 22 17:32:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtkIS-0002F5-Vh
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 17:16:09 +0100
+	id 1NtkYX-0004ld-0I
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 17:32:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755187Ab0CVQPm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Mar 2010 12:15:42 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:39223 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752364Ab0CVQPl (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Mar 2010 12:15:41 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id D452EE480C;
-	Mon, 22 Mar 2010 12:15:40 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 22 Mar 2010 12:15:40 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=smtpout; bh=BPgq63BJm+sQFLZ44IFS0MiMdyA=; b=B/AhlH8t6vecf85S9M3jyr7ecc600Xve2LbkONcy+2WYW6e9C9trGmfgZNOUpWHvYpKnpDQzezXqR5GTtXOJP9qzTq60cilu+8JCOEL8b9IQjIxll3Ree7TCfO9whOiFMaGzEJl68yblUp92iXn+SzeTEGmH8ewMP37Wo3tbvvM=
-X-Sasl-enc: PbB4M3EzJMh6DdpPGtj9wjxrXYwve+b6nDfEueOQOPz7 1269274540
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 41652B96A;
-	Mon, 22 Mar 2010 12:15:40 -0400 (EDT)
-X-Mailer: git-send-email 1.7.0.3.435.g097f4
-In-Reply-To: <20100322145947.GA1709@pengutronix.de>
+	id S1755246Ab0CVQch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Mar 2010 12:32:37 -0400
+Received: from iabervon.org ([66.92.72.58]:33780 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755232Ab0CVQcd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Mar 2010 12:32:33 -0400
+Received: (qmail 6780 invoked by uid 1000); 22 Mar 2010 16:32:31 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 22 Mar 2010 16:32:31 -0000
+In-Reply-To: <f3271551003220604v4c9fbb5ep3b7c69300567a275@mail.gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142943>
 
-b4479f0 (add -i, send-email, svn, p4, etc: use "git var GIT_EDITOR",
-2009-10-30) introduced the use of git var GIT_EDITOR which may lead to
-problems when send-mail is used without a tty.
+Looks good, other than an optional suggestion below. Incidentally, it's 
+often helpful to describe the differences between earlier versions and v4 
+of the patch between the "---" and the diffstat; that part of the email 
+doesn't go into the commit, but can be seen by reviewers.
 
-Therefore, use git var GIT_EDITOR only when we actually edit something.
+On Mon, 22 Mar 2010, Ramkumar Ramachandra wrote:
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-Reported-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
----
- git-send-email.perl |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  Documentation/git-remote-helpers.txt |   40 +++++++++++++++++----------------
+>  1 files changed, 21 insertions(+), 19 deletions(-)
+> 
+> diff --git a/Documentation/git-remote-helpers.txt
+> b/Documentation/git-remote-helpers.txt
+> index 1b5f61a..2d5aa8c 100644
+> --- a/Documentation/git-remote-helpers.txt
+> +++ b/Documentation/git-remote-helpers.txt
+> @@ -3,7 +3,7 @@ git-remote-helpers(1)
+> 
+>  NAME
+>  ----
+> -git-remote-helpers - Helper programs for interoperation with remote git
+> +git-remote-helpers - Helper programs for interacting with remote repositories
+> 
+>  SYNOPSIS
+>  --------
+> @@ -13,10 +13,23 @@ DESCRIPTION
+>  -----------
+> 
+>  These programs are normally not used directly by end users, but are
+> -invoked by various git programs that interact with remote repositories
+> -when the repository they would operate on will be accessed using
+> -transport code not linked into the main git binary. Various particular
+> -helper programs will behave as documented here.
+> +invoked by various git programs that interact with remote
+> +repositories.  For a program to qualify as a remote helper, it must
+> +implement a subset of the capabilities documented here, and conform to
+> +the remote helper protocol. Remote helpers are spawned as binaries by
+> +the main git programs and interact using text streams, without
+> +linking.
+> +
+> +The curl helper is one such program. It is invoked via
+> +'git-remote-http', 'git-remote-https', 'git-remote-ftp', or
+> +'git-remote-ftps', and implments the capabilities 'fetch', 'option',
+> +and 'push'. The curl helper essentially helps in transporting native
+> +git objects.
+> +
+> +As opposed to native git objects, remote helpers can also provide a
+> +fast-import stream through the 'import' capability. This makes them
+> +especially useful when native interoperability with a foreign
+> +versioning system is desired.
+> 
+>  COMMANDS
+>  --------
+> @@ -118,17 +131,9 @@ capabilities reported by the helper.
+>  CAPABILITIES
+>  ------------
+> 
+> -'fetch'::
+> -	This helper supports the 'fetch' command.
+> -
+> -'option'::
+> -	This helper supports the option command.
+> -
+> -'push'::
+> -	This helper supports the 'push' command.
+> -
+> -'import'::
+> -	This helper supports the 'import' command.
+> +The following capabilities indicate that the remote helper supports
+> +the corresponding command with the same name: 'fetch', 'option',
+> +'push', 'connect', and 'import'.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index d612ae8..bb09c0d 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -162,9 +162,12 @@ my $compose_filename;
-=20
- # Handle interactive edition of files.
- my $multiedit;
--my $editor =3D Git::command_oneline('var', 'GIT_EDITOR');
-+my $editor;
-=20
- sub do_edit {
-+	if (!defined($editor)) {
-+		$editor =3D Git::command_oneline('var', 'GIT_EDITOR');
-+	}
- 	if (defined($multiedit) && !$multiedit) {
- 		map {
- 			system('sh', '-c', $editor.' "$@"', $editor, $_);
---=20
-1.7.0.3.435.g097f4
+This is, indeed, what I was suggesting, although I think it might be more 
+readable like:
+
+'fetch'::
+'option'::
+'push'::
+'connect'::
+'import'::
+	This helper supports the corresponding command with the same name.
+
+But I'm fine with whichever format is most helpful for someone trying to 
+read the document (that is, to you).
+
+	-Daniel
+*This .sig left intentionally blank*
