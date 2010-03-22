@@ -1,68 +1,58 @@
-From: Eli Barzilay <eli@barzilay.org>
-Subject: Re: git rev-list formatting
-Date: Mon, 22 Mar 2010 07:39:38 -0400
-Message-ID: <m3eijcpoud.fsf@winooski.ccs.neu.edu>
-References: <m3iq8opp8u.fsf@winooski.ccs.neu.edu>
+From: Mark Brown <broonie@sirena.org.uk>
+Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
+Date: Mon, 22 Mar 2010 12:06:49 +0000
+Message-ID: <20100322120649.GA28003@sirena.org.uk>
+References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com> <4BA338C1.7030803@alum.mit.edu> <b4087cc51003190439x3c9ff269g35d11432bd2a3d60@mail.gmail.com> <alpine.DEB.2.00.1003190441530.3821@asgard.lang.hm> <20100319115445.GA12986@glandium.org> <b4087cc51003190509y6ce7ad9dy992254cfe6ac2fb3@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 22 12:40:25 2010
+Cc: Mike Hommey <mh@glandium.org>, david@lang.hm, git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 22 13:07:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ntfzd-0004mZ-5F
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 12:40:25 +0100
+	id 1NtgPM-0003Ye-Lx
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 13:07:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754606Ab0CVLjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Mar 2010 07:39:51 -0400
-Received: from lo.gmane.org ([80.91.229.12]:36189 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752561Ab0CVLju (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Mar 2010 07:39:50 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Ntfz2-0004Wv-Q7
-	for git@vger.kernel.org; Mon, 22 Mar 2010 12:39:49 +0100
-Received: from winooski.ccs.neu.edu ([129.10.115.117])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 22 Mar 2010 12:39:48 +0100
-Received: from eli by winooski.ccs.neu.edu with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 22 Mar 2010 12:39:48 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: winooski.ccs.neu.edu
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-Cancel-Lock: sha1:MRT/p422wcnFtMFFobhmazaL7xM=
+	id S1753058Ab0CVMGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Mar 2010 08:06:55 -0400
+Received: from cassiel.sirena.org.uk ([80.68.93.111]:36417 "EHLO
+	cassiel.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751578Ab0CVMGx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Mar 2010 08:06:53 -0400
+Received: from broonie by cassiel.sirena.org.uk with local (Exim 4.69)
+	(envelope-from <broonie@sirena.org.uk>)
+	id 1NtgPC-0000zA-05; Mon, 22 Mar 2010 12:06:50 +0000
+Content-Disposition: inline
+In-Reply-To: <b4087cc51003190509y6ce7ad9dy992254cfe6ac2fb3@mail.gmail.com>
+X-Cookie: Used staples are good with SOY SAUCE!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: broonie@sirena.org.uk
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142925>
 
-Eli Barzilay <eli@barzilay.org> writes:
+On Fri, Mar 19, 2010 at 06:09:34AM -0600, Michael Witten wrote:
+> On Fri, Mar 19, 2010 at 05:54, Mike Hommey <mh@glandium.org> wrote:
 
-> [...]
->
-> Also, is there a way to avoid the "commit <sha1>" line, print some
-> information that I specify in the format string, and show the whole
-> message as is (without wrapping or other tweaks)?
+> > While I don't agree with the need for that uuid thing, I'd like to
+> > pinpoint that people who care can't necessarily make their e-mail
+> > consistant. For example, Linus used to use an @osdl.org address, and
+> > he now uses an @linux-foundation.org address. It's still the same Linus,
+> > but the (name, email) pair has legitimately changed.
 
-Looks like `git log' does something similar to what I want anyway,
-which leads me to a related question -- it's not clear to me what are
-the differences between `git rev-list', `git log', `git diff', and
-`git show', since it looks like they can all be tweaked to produce
-similar outputs.  Are they all the same with different outputs?  Is
-there some description of them with the differences explained?
+> Indeed.
 
-Also related, it looks like `--abbrev-commit' has no effect on `git
-rev-list', but does on `git log', even through it's documented in the
-former's man page.  So it looks like either there are more
-(undocumented?) differences, or maybe that's also a bug?
+> This is because the name/email pair (as in the 'name' and 'email'
+> config variables) CONFLATES the idea of identity and current email
+> account.
 
--- 
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
-                    http://barzilay.org/                   Maze is Life!
+You're assuming they aren't conflated - for example, when people do work
+both personally and for their employer they often use distinct e-mail
+addresses to identify how the work was funded.
