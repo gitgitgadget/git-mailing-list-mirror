@@ -1,56 +1,112 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: ANN: Git for Windows 1.7.0.2 preview 20100309
-Date: Mon, 22 Mar 2010 10:13:52 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1003221012290.11364@ds9.cixit.se>
-References: <alpine.DEB.1.00.1003091921140.18499@intel-tinevez-2-302>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Fwd: running "git init --shared" on an existing repo
+Date: Mon, 22 Mar 2010 15:15:11 +0530
+Message-ID: <2e24e5b91003220245p7de5cd7dqc5f21230c244a268@mail.gmail.com>
+References: <2e24e5b91003212330r2f3fd118y18386ef61c28ee89@mail.gmail.com>
+	 <7v8w9kq1ia.fsf@alter.siamese.dyndns.org>
+	 <2e24e5b91003220244v2d21bf3ay5b18d1ef40781be2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: msysgit@googlegroups.com, Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 22 10:14:03 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 22 10:45:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ntdhz-0005c4-95
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 10:14:03 +0100
+	id 1NteCH-0001bh-Lx
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 10:45:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754245Ab0CVJN6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Mar 2010 05:13:58 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:39715 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751699Ab0CVJN5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Mar 2010 05:13:57 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id o2M9Drga015144
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 22 Mar 2010 10:13:53 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o2M9DqtE015140;
-	Mon, 22 Mar 2010 10:13:52 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <alpine.DEB.1.00.1003091921140.18499@intel-tinevez-2-302>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Mon, 22 Mar 2010 10:13:53 +0100 (CET)
+	id S1754439Ab0CVJpO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Mar 2010 05:45:14 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:41057 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754424Ab0CVJpN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Mar 2010 05:45:13 -0400
+Received: by vws6 with SMTP id 6so309466vws.19
+        for <git@vger.kernel.org>; Mon, 22 Mar 2010 02:45:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=fiE63JQTVRsy4PGLFEalr92IzFR1kCqvAODJwTb3P2U=;
+        b=W9z2pUqR00poXbKDWPd/WmLdu4N4FQfoLRuHa8ZEUZXcwxSFDX/SS2V9c2u3eOC4ce
+         Fa6ydLVW+NqZUltAQ0t7/cWTa8ToANjXZ3kxns/qHhNeMoX59qi7A8Y2m47c9YJWRV04
+         9SsYdFAU0nmvY5T1zfIoi51qwBNv3o4iQbyJQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=ERGNanwG1eto0pQG1udVme8ITZTVZOSanXGwGUXESNo8+vMyLvckT3iQ4wTFaP6oI4
+         GxqBlAxzvECQbXn0oRb+3dwUzJi1f9G4VyV1r+yM+Jl9bP2EudaWfv/imnARfJNzzXnZ
+         zTZPAmLGpRKVGY4aLTYRUgPOxGumFhqokEUo0=
+Received: by 10.220.107.81 with SMTP id a17mr3155867vcp.129.1269251111951; 
+	Mon, 22 Mar 2010 02:45:11 -0700 (PDT)
+In-Reply-To: <2e24e5b91003220244v2d21bf3ay5b18d1ef40781be2@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142913>
 
-Johannes Schindelin:
+oops-- forgot to "reply all"; so it only went to Junio...
 
-> Git Release Notes (Git-1.7.0.2-preview20100309)
-> Last update: 9 March 2010
 
-The redesigned installer seems to have lost the option to choose to use 
-Putty over OpenSSH, is there any documentation on how to set it up to use 
-Putty anyway?
+---------- Forwarded message ----------
+=46rom: Sitaram Chamarty <sitaramc@gmail.com>
+Date: Mon, Mar 22, 2010 at 3:14 PM
+Subject: Re: running "git init --shared" on an existing repo
+To: Junio C Hamano <gitster@pobox.com>
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+
+On Mon, Mar 22, 2010 at 12:36 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Sitaram Chamarty <sitaramc@gmail.com> writes:
+>
+>> And it seems there was a beginning made.=C2=A0 builtin/init-db.c at =
+line 220 says:
+>>
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /=
+*
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 * We would have created the above under user's umask -- under
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 * shared-repository settings, we would need to fix them up.
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 */
+>
+> That "the above" refers to "in this process that created the reposito=
+ry
+> directory and populated it halfway by calling copy_templates()", and =
+never
+> "some time ago by some other process that created the repository, in =
+which
+> this process is now being run", so it is not fair to say "a beginning=
+".
+
+Possible, but the fact remains that when you do that "some time ago",
+and then come back and do this, it *does* fix up the perms of refs,
+refs/heads, and refs/tags.
+
+> You would need to run "find $GIT_DIR -print0 | xargs -0 chown/mod ...=
+" or
+> a moral equivalent of it, I guess. =C2=A0Shouldn't be a rocket surger=
+y ;-)
+
+true... the toruble with using perl for years is that it sorta spoils
+you; I need to actually *think* now, despite it not being rocket
+surgery :-)
+
+I will send a patch by and by... =C2=A0I wonder if cheating and calling
+system("find <whatever> -type d -exec chmod g+s") will be acceptable
+;-)
+
+--
+Sitaram
+
+
+
+--=20
+Sitaram
