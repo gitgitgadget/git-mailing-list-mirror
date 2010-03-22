@@ -1,119 +1,131 @@
-From: Chris Johnsen <chris_johnsen@pobox.com>
-Subject: Re: [PATCH v3] git checkout: create unparented branch by --orphan
-Date: Mon, 22 Mar 2010 07:46:34 -0500
-Message-ID: <953BEDE2-1A17-49EA-BEC5-D198DBB1FF23@pobox.com>
-References: <1269185678-3039-1-git-send-email-erick.mattos@gmail.com> 
- <20100321171431.GE2557@m62s10.vlinux.de>
- <7vd3yxqxdj.fsf@alter.siamese.dyndns.org>
- <55bacdd31003211415k79b7a039n3f19eb95eefcad43@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v753.1)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Peter Baumann <waste.manager@gmx.de>, git@vger.kernel.org
-To: Erick Mattos <erick.mattos@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 22 13:46:58 2010
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v4] Improve remote-helpers documentation
+Date: Mon, 22 Mar 2010 18:34:21 +0530
+Message-ID: <f3271551003220604v4c9fbb5ep3b7c69300567a275@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 22 14:04:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nth1t-0003Dc-UX
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 13:46:50 +0100
+	id 1NthJJ-0005Rw-QR
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 14:04:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754688Ab0CVMqp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Mar 2010 08:46:45 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47429 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754550Ab0CVMqo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Mar 2010 08:46:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CC01CA42BA;
-	Mon, 22 Mar 2010 08:46:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=in-reply-to
-	:references:mime-version:content-type:message-id:cc
-	:content-transfer-encoding:from:subject:date:to; s=sasl; bh=3vpL
-	MHuhYrspP3HIiCeiy1VJ4Co=; b=fmAeUM8mzO1Jm99Tba7Ie/qzWxW7cKWCP6F0
-	MTONc5wZwoKGz4cI+PblV1lKSg/b5lHuXihY8A6YptumMS7+OEbIaQsWTH6NPTyP
-	+qtCyEfPbJWQ2dgvXxgAdHrLxs3wslk3n/ilbB8txK4ZmYaLcxlV56fb7WX+GOdj
-	KtSYuo4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=in-reply-to
-	:references:mime-version:content-type:message-id:cc
-	:content-transfer-encoding:from:subject:date:to; q=dns; s=sasl; b=
-	rGXlEczm12YdSYL4X2Y5bL90JkvOny2f8Xw5JtI6Ff/0XmbUfN1cNXdnzueO2r/y
-	Kj4i6r+8i773mM/2pp2b3miWT9OArqDFW3tKw5ZTUF7bWUfCCWhDoVNI510nUvJz
-	5AHzXYCgUR2l2AfBBdxMR+qmj0Aimn2U4CgzrH8FPxE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 80AD7A42B9;
-	Mon, 22 Mar 2010 08:46:40 -0400 (EDT)
-Received: from [192.168.1.241] (unknown [75.53.42.110]) (using TLSv1 with
- cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5593CA42B6; Mon, 22 Mar
- 2010 08:46:36 -0400 (EDT)
-In-Reply-To: <55bacdd31003211415k79b7a039n3f19eb95eefcad43@mail.gmail.com>
-X-Mailer: Apple Mail (2.753.1)
-X-Pobox-Relay-ID: F6200E8C-35B0-11DF-B9C8-D033EE7EF46B-07245699!a-pb-sasl-quonix.pobox.com
+	id S1754234Ab0CVNEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Mar 2010 09:04:44 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:64958 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751188Ab0CVNEo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Mar 2010 09:04:44 -0400
+Received: by gwaa18 with SMTP id a18so960647gwa.19
+        for <git@vger.kernel.org>; Mon, 22 Mar 2010 06:04:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=/UHl42gRIEMWXXSY+Bind8PMQZhHUVpOdWQOF8MXi6A=;
+        b=BKzYqou8fNbIvKmh8sl7vdweJIjFr4/rpbRvusqb67oyVEd9UyA5/9n4eZSUoCB5JE
+         YQCZwKtcNn1nlR2pGc0Q6yj6dc33W2En8lShOJrPr6ZBGETYHokpzODGRI19oMhuG3O1
+         0qVpp4fCDz+d67JTwcZv5gBKyA2BNdwKKV+gA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=AI/OxoJaXif/W4gIuXCaJXzTfa0IxJ15U+MDlC7gq9cO5EeVJW5/itC11BbosEZf21
+         RmEilZ/5+T11RGEZ+Ydr8GGGRQwZMx4JkvMm9k0rIZvfcWhMnQw0YJvNowjQdgoO5TkX
+         0k+Znwv9Yd3NzswNhRNjVPxFujwEBmZa5MQsA=
+Received: by 10.90.16.22 with SMTP id 22mr62698agp.98.1269263083063; Mon, 22 
+	Mar 2010 06:04:43 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142928>
 
-2010/3/21 Junio C Hamano <gitster@pobox.com>:
-> The main point of the feature is not the emptyness of the resulting  
-> tree
-> (it is merely one possible outcome), but is the lack of parents in the
-> resulting commit.  So I would recommend against --empty.  --root  
-> might be
-> a good synonym, though, and we _do_ already use that word for that  
-> purpose
-> in some commands (e.g. "log --root").
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ Documentation/git-remote-helpers.txt |   40 +++++++++++++++++----------------
+ 1 files changed, 21 insertions(+), 19 deletions(-)
 
-On 2010 Mar 21, at 16:15, Erick Mattos wrote:
-> --root could be a synonym but the reason I haven't chosen it was the
-> fact that it could mislead people to think the functionality will do
-> something with/based on the first commit of the actual branch,
-> subjectively thinking "THE ROOT".
+diff --git a/Documentation/git-remote-helpers.txt
+b/Documentation/git-remote-helpers.txt
+index 1b5f61a..2d5aa8c 100644
+--- a/Documentation/git-remote-helpers.txt
++++ b/Documentation/git-remote-helpers.txt
+@@ -3,7 +3,7 @@ git-remote-helpers(1)
 
-The existing uses of --root are close to, but not identical to this  
-proposed usage. The existing uses all relate to handling the already  
-created root commit(s) of a commit/branch/repository. This proposed  
-usage relates to the yet to be created first commit on the new  
-branch. It is possible to use the "already created" interpretation in  
-this context (create a new branch based on the root commits of the  
-specified commits), but it really does not make much sense. Still,  
-qualifying "root" might help prevent some confusion:
+ NAME
+ ----
+-git-remote-helpers - Helper programs for interoperation with remote git
++git-remote-helpers - Helper programs for interacting with remote repositories
 
-     --new-root
-     --fresh-root
-     --root-branch?
+ SYNOPSIS
+ --------
+@@ -13,10 +13,23 @@ DESCRIPTION
+ -----------
 
-     --new-history
-     --fresh-history
-     --fresh-branch
+ These programs are normally not used directly by end users, but are
+-invoked by various git programs that interact with remote repositories
+-when the repository they would operate on will be accessed using
+-transport code not linked into the main git binary. Various particular
+-helper programs will behave as documented here.
++invoked by various git programs that interact with remote
++repositories.  For a program to qualify as a remote helper, it must
++implement a subset of the capabilities documented here, and conform to
++the remote helper protocol. Remote helpers are spawned as binaries by
++the main git programs and interact using text streams, without
++linking.
++
++The curl helper is one such program. It is invoked via
++'git-remote-http', 'git-remote-https', 'git-remote-ftp', or
++'git-remote-ftps', and implments the capabilities 'fetch', 'option',
++and 'push'. The curl helper essentially helps in transporting native
++git objects.
++
++As opposed to native git objects, remote helpers can also provide a
++fast-import stream through the 'import' capability. This makes them
++especially useful when native interoperability with a foreign
++versioning system is desired.
 
-Logically, both --orphan and --root are descriptions of the commit  
-that will _eventually_ be stored under the branch, but not  
-descriptions of the transient state of the branch itself. This state  
-is described in a few error/warning messages as "not yet born" or  
-"unborn" (checkout, pull, fsck). It seems to be an unofficial term  
-though (or maybe just unimportant) since it is not otherwise  
-documented (it is not in the glossary, but it does appear in the  
-release notes a few times). So with some weight of existing  
-terminology behind it:
+ COMMANDS
+ --------
+@@ -118,17 +131,9 @@ capabilities reported by the helper.
+ CAPABILITIES
+ ------------
 
-     --unborn
+-'fetch'::
+-	This helper supports the 'fetch' command.
+-
+-'option'::
+-	This helper supports the option command.
+-
+-'push'::
+-	This helper supports the 'push' command.
+-
+-'import'::
+-	This helper supports the 'import' command.
++The following capabilities indicate that the remote helper supports
++the corresponding command with the same name: 'fetch', 'option',
++'push', 'connect', and 'import'.
 
---no-parent was mentioned elsewhere in the thread, but it suffers  
-from looking like a negation of a potential --parent option. Though  
-much longer, --without- does not suffer this same problem.
+ 'refspec' 'spec'::
+ 	When using the import command, expect the source ref to have
+@@ -140,9 +145,6 @@ CAPABILITIES
+ 	all, it must cover all refs reported by the list command; if
+ 	it is not used, it is effectively "*:*"
 
-     --without-parents
-     --without-history
-     --ahistorically    (probably the non-standard prefix is too  
-"native")
-
-     --ex-nihilo        (just kidding?)
+-'connect'::
+-	This helper supports the 'connect' command.
+-
+ REF LIST ATTRIBUTES
+ -------------------
 
 -- 
-Chris
+1.7.0.2
