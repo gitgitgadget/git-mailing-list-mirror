@@ -1,75 +1,105 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] Improve documentation for git-remote-helpers
-Date: Mon, 22 Mar 2010 16:40:04 +0100
-Message-ID: <fabb9a1e1003220840q5b9b791ft83c8fd4793b83be2@mail.gmail.com>
-References: <f3271551003211026m376b86d6ga915f85a623eddfd@mail.gmail.com> 
-	<f3271551003211121o48f502fp954b649ff4ca8f8b@mail.gmail.com> 
-	<alpine.LNX.2.00.1003211907390.14365@iabervon.org> <fabb9a1e1003211635w27f0b22em73c7c6431c3998af@mail.gmail.com> 
-	<alpine.LNX.2.00.1003211951360.14365@iabervon.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: GSoC draft proposal: Line-level history browser
+Date: Mon, 22 Mar 2010 08:48:52 -0700 (PDT)
+Message-ID: <m3hbo8jr2e.fsf@localhost.localdomain>
+References: <41f08ee11003200218u59c45b6dl82a8eb56cc289256@mail.gmail.com>
+	<81b0412b1003201335g7b37c51mfa3e2280210ebb7e@mail.gmail.com>
+	<4BA544FC.7050007@gmail.com>
+	<41f08ee11003202316w2fddc5f4jebda47f325451577@mail.gmail.com>
+	<4BA61CF9.7040104@gmail.com>
+	<41f08ee11003212052p6b0a7495j2e38f24839541ffb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Mar 22 16:40:36 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes.Schindelin@gmx.de, gitster@pobox.com, gitzilla@gmail.com,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Bo Yang <struggleyb.nku@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 22 16:49:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ntjk1-0005ZI-HQ
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 16:40:33 +0100
+	id 1NtjsD-0002W7-QF
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Mar 2010 16:49:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754291Ab0CVPk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Mar 2010 11:40:26 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:47465 "EHLO
+	id S1754903Ab0CVPs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Mar 2010 11:48:57 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:64508 "EHLO
 	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752475Ab0CVPk0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Mar 2010 11:40:26 -0400
-Received: by bwz1 with SMTP id 1so2025866bwz.21
-        for <git@vger.kernel.org>; Mon, 22 Mar 2010 08:40:24 -0700 (PDT)
+	with ESMTP id S1754885Ab0CVPs4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Mar 2010 11:48:56 -0400
+Received: by bwz1 with SMTP id 1so2035163bwz.21
+        for <git@vger.kernel.org>; Mon, 22 Mar 2010 08:48:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=I+R3qn3uTInoxlyr6HLZU1A85cTDiXUqf/9pjA8UEWw=;
-        b=UrlQNQkf1OUpzHeKpuQS7qDJ26mljE+El03fn2iOGfD6xGZSqI2jtsO8DYEjtCkjJf
-         I40faXfcV693w2LKbguOdZTElo+5LIkI74jFnnCy7fbbSrREkGBPHJjMUDEZ0GrzWhkJ
-         xGftZ+1lbeygsFijvoFYUdf0nGR2/f7VxndP4=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=sE+5MJ7RtGVJFqHRjrpRijWYkRx9+dKGpywb3ujfLXM=;
+        b=C8auzSGPdQ75tScRMWaFGKdDevb05r8o/t8JwqlfDdu4HimNraztvnUQFT6NnI09+n
+         zpwXKmE1vI1G9XbjSOl1i2ajiWadd3CbA7cYZvrGs7C30WOxsYVqv4/qFWxomKrrLbYu
+         LsNMtmpySnAhDajcc3e9YfTJfQ7mYlgVozsnI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=qbIveJw3f+Z+DvVCUB3cyUJ8f4+POgujamNdmIyW5yvcy/zOIMP7xSZy9NCuTyEC8A
-         sXiQnmf2eCEYxnUQjDlDO+oBY27v6iaDikGGut+u0fpXvNet6gLqSij77njdnm9+B3Cd
-         ia9AphBryi+cq+V9/+iUHKdpKaDph44iJCoOg=
-Received: by 10.204.131.82 with SMTP id w18mr2788255bks.29.1269272424244; Mon, 
-	22 Mar 2010 08:40:24 -0700 (PDT)
-In-Reply-To: <alpine.LNX.2.00.1003211951360.14365@iabervon.org>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=Wxw18jlwAwbGRfwoDrCVtTrJBzhPntwG3SYSNRRl45vnoG7COhGAkMUIMBmuwSQ67T
+         lNlxwwPZfMXXHWgE6+YLpoFUFE60lIMWIUjWpCaAvsUvFnrG8x+7bxVERDwKlS6XtGYZ
+         C05JFR2goIhZMvMZVaLayiKrZxM/xVx1Wct3s=
+Received: by 10.204.84.220 with SMTP id k28mr1305448bkl.70.1269272934225;
+        Mon, 22 Mar 2010 08:48:54 -0700 (PDT)
+Received: from localhost.localdomain (abvg192.neoplus.adsl.tpnet.pl [83.8.204.192])
+        by mx.google.com with ESMTPS id 24sm20059483bkr.18.2010.03.22.08.48.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 22 Mar 2010 08:48:52 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o2MFmPPQ008865;
+	Mon, 22 Mar 2010 16:48:35 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o2MFm9Xt008861;
+	Mon, 22 Mar 2010 16:48:09 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <41f08ee11003212052p6b0a7495j2e38f24839541ffb@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142940>
 
-Heya,
+Bo Yang <struggleyb.nku@gmail.com> writes:
 
-On Mon, Mar 22, 2010 at 01:06, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> Looks generally right, but I think you need to do
-> "finish_command(&exporter);" first, and actually get some feedback from
-> the helper. I think the right thing is actually to put the output of the
-> helper into fast-import again, and have that give one of three
-> conclusions:
+> This project will add a new feature for 'git log' to display line
+> level history. It can trace the history of any line range of certain
+> file at any revision. For simplity, users can run the command like: '
+> git log -L builtin/diff.c:6,8 ', he will get the change history of
+> code between line 6 and line 8 of the diff.c file. 
 
-I'm not sure that makes sense (at least to me). I think you are right
-in that we need to collect output from the helper, but I don't see any
-added value in feeding that into fast-import. I think we should rather
-read from the helper after we finish exporting to figure out what
-happened. The different cases you described are I think indeed what we
-should look for.
+I think that, at least at first, line-level log should follow the
+git-blame, i.e.
+
+  git log -L <begin>,<end>  <revs>  -- <file>
+
+If we want (in the future) to follow history of some lines from one
+file, and other lines from other file together, we do not need to use
+
+  -L <file>:<begin>,<end>
+
+syntax.  If parseopt allows, we can use posotion of parameters, i.e.
+
+  <file1> -L <m>,<n>   <file2> -L <k>,<j>
+
+> And for each history entry, it will provide the commits, the diff
+> block which contains changes of users' interested lines.
+
+The most important *new* algorithm you need to implement is, after
+finding (blame-like) the commit that created given version of given
+line, what was previous version of given line and which line that was.
+
+You can probably find some heuristic in existing merge tools, like
+emerge from GNU Emacs, or graphical diff tools.
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+Jakub Narebski
+Poland
+ShadeHawk on #git
