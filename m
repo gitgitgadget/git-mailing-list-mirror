@@ -1,80 +1,72 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Question about .git/objects/info/alternates
-Date: Mon, 22 Mar 2010 21:42:23 -0500
-Message-ID: <20100323024223.GA12257@progeny.tock>
-References: <a038bef51003221026i379ee16ej6e0e6defcf0048dd@mail.gmail.com>
+Subject: Re: [PATCH 2/4] pull: use --quiet rather than 2>/dev/null
+Date: Mon, 22 Mar 2010 22:23:44 -0500
+Message-ID: <20100323032344.GA12424@progeny.tock>
+References: <1269051518-25099-1-git-send-email-bmeyer@rim.com>
+ <1269051518-25099-2-git-send-email-bmeyer@rim.com>
+ <20100320123520.GA29041@progeny.tock>
+ <818FE4EC-5AE9-4F05-B9AD-E1753F7ED9E6@meyerhome.net>
+ <20100321043330.GA9803@progeny.tock>
+ <E2F911AD-19C6-43BF-BBBD-735D30885F21@meyerhome.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: GIT <git@vger.kernel.org>
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 23 03:42:33 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Benjamin Meyer <ben@meyerhome.net>
+X-From: git-owner@vger.kernel.org Tue Mar 23 04:23:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ntu4f-0007Mx-6P
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 03:42:33 +0100
+	id 1Ntuig-0006Az-Te
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 04:23:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753012Ab0CWCm2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Mar 2010 22:42:28 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:40267 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752766Ab0CWCm1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Mar 2010 22:42:27 -0400
-Received: by gwaa18 with SMTP id a18so1281840gwa.19
-        for <git@vger.kernel.org>; Mon, 22 Mar 2010 19:42:26 -0700 (PDT)
+	id S1754120Ab0CWDXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Mar 2010 23:23:50 -0400
+Received: from mail-yw0-f172.google.com ([209.85.211.172]:39017 "EHLO
+	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754084Ab0CWDXt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Mar 2010 23:23:49 -0400
+Received: by ywh2 with SMTP id 2so2144777ywh.33
+        for <git@vger.kernel.org>; Mon, 22 Mar 2010 20:23:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=gKe2KGFvx2ytzIo5niEpzU6SGkduDDYqJ5gtZMg5qMU=;
-        b=YPvoR2UpnY6CSkfkGcWV7VtX4TlZJ6XttG47Y04ej3YTCoxjSBHLVcoSG2cZFlUeoy
-         6GdboLfgxjKLDd3UvH7iy/yByo2mud2/2cyttMlayBx6Pzpv8UaGfWIKV+LMdmFxos6D
-         MlH6qFJXqCfm/sNOI2Mrv1eBlmepQjy6qOSM4=
+         :in-reply-to:user-agent;
+        bh=Z3fgTREXedbDPNvCdo8dpqJgQsYV1vAoqNtQo7qz+S0=;
+        b=q8m35M8SNTvWujhjVwYfakkLINyhUBRfhNc2KUHyTqISvsHTuAeODl20OtPXOcrEk8
+         4YqnHYz4yWwMtU68XFVcqPm5jh7auIoWqCwDrrhQbd1+6cT/WGAPeAuRzzA43NYG7rxq
+         b5jDp3U2F9pRPp4/q6YhEDQCQnc3/vnNKnZ00=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=axoHz6K+1tGtW0DMMx/81qG8RFsXy5jSh4CXzuobnEN7eW5pxPGv3zsH+YA1mNwv7B
-         jZ8nCpKfdS3ECMGtCJUfhwX72Zb4sGhNDUl8gO+upbybdt4aWXj9jKd/0LU9EuqZ90xr
-         IywltJtoUpxAuYQbJcGERVztJ8BRZi1M/t1Gc=
-Received: by 10.100.24.15 with SMTP id 15mr7632563anx.27.1269312146536;
-        Mon, 22 Mar 2010 19:42:26 -0700 (PDT)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ej9NB2uqE6ML9dGWsI8VfvrL76aog5/t7gm6NwtJOYWmpz7KDnT1Fl5dHV7NAR86fQ
+         6yQp+JgbBDBbZi4rnBk2plxSRPxpPUONG9m9l3rHNjuNKzav7pcxw+RIPIKvLPplWZ3n
+         MGO/drRoZtQeoVoD8ElknXQGoMD47Zf97eHDY=
+Received: by 10.101.106.1 with SMTP id i1mr3174030anm.24.1269314627359;
+        Mon, 22 Mar 2010 20:23:47 -0700 (PDT)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm5482760iwn.10.2010.03.22.19.42.25
+        by mx.google.com with ESMTPS id 22sm3971703iwn.0.2010.03.22.20.23.46
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 22 Mar 2010 19:42:25 -0700 (PDT)
+        Mon, 22 Mar 2010 20:23:46 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <a038bef51003221026i379ee16ej6e0e6defcf0048dd@mail.gmail.com>
+In-Reply-To: <E2F911AD-19C6-43BF-BBBD-735D30885F21@meyerhome.net>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142986>
 
-Chris Packham wrote:
+Benjamin Meyer wrote:
 
-> I would like to have base somehow find the objects it doesn't have in
-> its object store and either download them or just copy them from the
-> object store of projecta.
-[...]
-> From reading [2] I think 'rm
-> .git/objects/info/alternates && git repack -a' might do the trick but
-> I'm not sure.
+> Thanks for the example.  I will try to include a more full
+> explanation for my changes in the future so it can be more easily
+> reviewed.
 
-Almost.  Try =E2=80=98git repack -a && rm .git/objects/info/alternates=E2=
-=80=99 instead. :)
+Thanks for your work!  I got a kick out of reading
+<http://meyerhome.net/icefox/git-achievements>, by the way.
 
-(Please back up the repository or try with something less important
-first, since I am not sure.)
-
-Hope that helps,
 Jonathan
-
-> [2] http://stackoverflow.com/questions/2248228/how-to-detach-alternat=
-es-after-git-clone-reference
