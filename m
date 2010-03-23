@@ -1,65 +1,66 @@
-From: Dario Bertini <berdario@gmail.com>
-Subject: commit --strict feature request
-Date: Tue, 23 Mar 2010 18:47:16 +0100
-Message-ID: <4BA8FEA4.60504@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: How to ignore changes on remote
+Date: Tue, 23 Mar 2010 18:47:52 +0100
+Organization: At home
+Message-ID: <hoaus7$3br$1@dough.gmane.org>
+References: <26ae428a1003230654m50c35caci4a02e2df321f289c@mail.gmail.com> <d411cc4a1003230905y12839743x400333a0aa2e7018@mail.gmail.com> <4BA8EA6A.4030607@viscovery.net> <201003231820.51618.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 23 18:47:28 2010
+X-From: git-owner@vger.kernel.org Tue Mar 23 18:48:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nu8CN-0006YH-AC
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 18:47:27 +0100
+	id 1Nu8D7-00070m-0b
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 18:48:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753747Ab0CWRrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Mar 2010 13:47:22 -0400
-Received: from mail-fx0-f223.google.com ([209.85.220.223]:42051 "EHLO
-	mail-fx0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752027Ab0CWRrV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Mar 2010 13:47:21 -0400
-Received: by fxm23 with SMTP id 23so2391014fxm.1
-        for <git@vger.kernel.org>; Tue, 23 Mar 2010 10:47:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=5C/M0kKNF8hwSxoEWr4IyGXq5cIPnJ5Xnn3EsLvzFbk=;
-        b=M9cN+k/p1YHeKQ0BceU2tL0l2qfnLMNuaDYCnZbw59sBH7Gh6ATeiPEBdjd1tQcUof
-         YUPbwvfdGuZ6ODXBT1hl2qN1ewnuY4tl7xaiMAQ3sRWUmwuztgTgbS95oxIVnebEo8t2
-         i/FKLCYnPfT/snEQWfUm46m0cmZmrsYlBnBtA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=mDpAnkQZXf2D3UyIGRuVztGeI3O+VWJ/bS4jIUJLYAXo2OmapQArN/NZ59MpGWbIYP
-         vhvhkge6sDM9gBrUO1amttrWrn+ei4Sq3TfvDbrsyyJcEg4uoSbEFGQVRju8QXyvSi7f
-         qtFm30exLsQwHXoCEeGky2U/2ZAUcQJTDDB8I=
-Received: by 10.223.15.89 with SMTP id j25mr8743709faa.97.1269366439844;
-        Tue, 23 Mar 2010 10:47:19 -0700 (PDT)
-Received: from [192.168.1.102] (host225-78-dynamic.5-87-r.retail.telecomitalia.it [87.5.78.225])
-        by mx.google.com with ESMTPS id 13sm6161015fks.30.2010.03.23.10.47.18
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 23 Mar 2010 10:47:18 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); it; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
+	id S1753764Ab0CWRsI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Mar 2010 13:48:08 -0400
+Received: from lo.gmane.org ([80.91.229.12]:47340 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753751Ab0CWRsG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Mar 2010 13:48:06 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Nu8Cy-0006uw-2i
+	for git@vger.kernel.org; Tue, 23 Mar 2010 18:48:04 +0100
+Received: from absh220.neoplus.adsl.tpnet.pl ([83.8.127.220])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Mar 2010 18:48:04 +0100
+Received: from jnareb by absh220.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Mar 2010 18:48:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: absh220.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143037>
 
-Hi, i usually use bzr, and today i was searching for a commit --strict 
-equivalent in git... i asked around and it seems there isn't one, so i'm 
-writing this.
+Johan Herland wrote:
 
-basically, by doing commit --strict it refuses to commit if there are 
-untracked (and thus not ignored) files in the tree, this helps against 
-forgetting to add new files (actually i find it so useful that i've even 
-changed commit to be an alias to commit --strict in my bzr aliases )
+> I'm rolling out Git at my $DAYJOB to a few hundred developers, and I=20
+> instruct them to
+>=20
+> =A0=A0=A0=A0=A0=A0=A0=A0git config --global push.default tracking
+>=20
+> immediately after installing Git. Which sucks, but is the only sane=20
+> thing I can do to prevent this problem from haunting us.
 
+Why not have administrator use
 
-greetings
+         git config --system push.default tracking
+
+once (and/or setup skeleton for /etc/gitconfig)?
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
