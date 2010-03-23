@@ -1,92 +1,99 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] send-email: do not check for editor until needed
-Date: Tue, 23 Mar 2010 14:25:57 -0500
-Message-ID: <20100323192557.GA1511@progeny.tock>
-References: <20100322145947.GA1709@pengutronix.de>
- <20100322232531.GA2168@progeny.tock>
- <A612847CFE53224C91B23E3A5B48BAC73EC0B01EE8@xmail3.se.axis.com>
+Subject: Re: GSoC draft proposal: Line-level history browser
+Date: Tue, 23 Mar 2010 14:57:25 -0500
+Message-ID: <20100323195724.GA1843@progeny.tock>
+References: <81b0412b1003201335g7b37c51mfa3e2280210ebb7e@mail.gmail.com>
+ <201003231222.40745.jnareb@gmail.com>
+ <41f08ee11003230523h2c5f93b1l7e94d6c85a93a706@mail.gmail.com>
+ <201003231449.42190.jnareb@gmail.com>
+ <41f08ee11003230823i1ca677b8q51b2413040c45c44@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marc Kleine-Budde <m.kleine-budde@pengutronix.de>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-X-From: git-owner@vger.kernel.org Tue Mar 23 20:26:11 2010
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, gitzilla@gmail.com,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Bo Yang <struggleyb.nku@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 23 20:57:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nu9jv-00082B-CY
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 20:26:11 +0100
+	id 1NuAEL-0002Ps-Nt
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 20:57:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752061Ab0CWT0G convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Mar 2010 15:26:06 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:54490 "EHLO
+	id S1753651Ab0CWT5c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Mar 2010 15:57:32 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:54235 "EHLO
 	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751952Ab0CWT0E (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Mar 2010 15:26:04 -0400
-Received: by pva18 with SMTP id 18so188255pva.19
-        for <git@vger.kernel.org>; Tue, 23 Mar 2010 12:26:02 -0700 (PDT)
+	with ESMTP id S1753271Ab0CWT5c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Mar 2010 15:57:32 -0400
+Received: by pva18 with SMTP id 18so203845pva.19
+        for <git@vger.kernel.org>; Tue, 23 Mar 2010 12:57:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=OOuylF9VCiuGbQfI6nZFUy2TagDkLPl66oap3tZIyus=;
-        b=vgZV5cXeGsxlQjaGQ7dFOeyvttmzW0Ja0WXefHiA7O54gwH91iMoPKnfWpsI5sny8b
-         fSeQVY7UXU4+bq6aJqklIO/TcvPlV1BC1rwrtha8GMNdQyvXMmBOW221hKE3F2ieglHT
-         AXZzc4QbYcccRrU4POm4kPwkk8yKIffhIjIlU=
+        bh=UOEfFghJXsXa/4+IysgFrpsqxcU+psMHKzCXKY9Nj3U=;
+        b=IS+4/4uH8bOpWUQjNs1NZQsh1RThJrHE8lxv8Fan39YCgw31kIvnbF1Isp3qZxrAo5
+         7NtJlPxPS8eGVXClGVsyK9Yq8Y4CCydAgi449FohW+acRG0mFd7iSgaiqFy033uvYCfh
+         acHwhCAuthEVxBPizF1va/uuuWugs/AW7kisA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=YfjMA99ge6NqbhMxm/fEBL15OBrdjEu8L39Kinz8rHnj6dHDwvp61VAQ7JWzIe3SVc
-         yFjsKhwVkddhwDWnVXCdMUGozWSakRS2nQSUkRVNvUTjh2Snq2LrbRmuWLGTxu4LzN6M
-         YMUitIVJUgocoWQ66Kb7p/Udbjg0VX2WQOvYo=
-Received: by 10.141.188.8 with SMTP id q8mr6707631rvp.0.1269372362834;
-        Tue, 23 Mar 2010 12:26:02 -0700 (PDT)
+        b=W+JWOlhkjB6vg1GVaHPGCOTgB53frSFaexCBislIbYKrMGvelwdqUnvNsExzUI5gb1
+         ccU9q7MNwlzMPhxkiNzISJoER0p4ctjbmlPugF9baJbCLzxR21AgE8BQvwXoJpd0qp+F
+         2ccWQdUIkX/vJ/anT1ngfqBS0brhXd3/WzdkU=
+Received: by 10.115.101.14 with SMTP id d14mr407871wam.176.1269374251437;
+        Tue, 23 Mar 2010 12:57:31 -0700 (PDT)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 21sm5258812iwn.15.2010.03.23.12.26.01
+        by mx.google.com with ESMTPS id 21sm5282768iwn.15.2010.03.23.12.57.29
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 23 Mar 2010 12:26:01 -0700 (PDT)
+        Tue, 23 Mar 2010 12:57:30 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <A612847CFE53224C91B23E3A5B48BAC73EC0B01EE8@xmail3.se.axis.com>
+In-Reply-To: <41f08ee11003230823i1ca677b8q51b2413040c45c44@mail.gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143045>
 
-Peter Kjellerstedt wrote:
+Bo Yang wrote:
 
-> Shouldn't that be:
->=20
-> 	if ($#_ =3D=3D -1) {
-> 		return;
-> 	}
->=20
-> or more readable:
->=20
-> 	return if (!@_);
+> It traces the preimage of the minimum related diff hunk carefully, if
+> there is any case that there are more than one commit intersect with
+> the preimage, we will stop and ask the users to select which way to g=
+o
+> on tracing.
 
-Probably. :)
+That might be necessary, but I will admit that I suspect it to be
+harder to make useful.  One of the very nice things about =E2=80=98git =
+log=E2=80=99 is
+that it is easy to browse through history in a nonlinear way in a
+pager (by using a pager=E2=80=99s search functionality).  The =E2=80=9C=
+backend=E2=80=9D =E2=80=98git
+rev-list=E2=80=99 is easy to write scripts with, also because of its si=
+mple
+input and output.
 
-> as I assume you are trying to protect do_edit() from being called=20
-> without arguments?
+If your program requires input from the user, how will it paginate its
+output?  Most pagers expect the standard input to be available for
+input from the user.
 
-I tested out Michael J Gruber=E2=80=99s simpler patch and it both makes=
- sense
-and works fine, so I=E2=80=99d suggest going with it instead.
+One approach (I will not say it is a good one) to the problem of
+ambiguous origins for a line is to blame _both_ parents.  That is,
+start following both lines of history in your revision walking.
+Perhaps higher-level tools like =E2=80=98git log --graph=E2=80=99 and g=
+itk could
+visually represent the branched history you are showing.
 
-Still, thanks for the comments.  It is good to know what I need to
-learn.
+Another approach is to just choose one parent automatically: for
+example, prefer the first parent, or assign some score representing
+the relatedness of each parent and choose the most related one.
 
-Regards,
 Jonathan
