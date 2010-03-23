@@ -1,118 +1,63 @@
-From: Thomas Kistler <tkistler@nvidia.com>
-Subject: RE: git-p4 and git clone
-Date: Tue, 23 Mar 2010 11:02:28 -0700
-Message-ID: <B978892CA0FBD142827E74F92AC4BBD429B2444D66@HQMAIL03.nvidia.com>
-References: <B978892CA0FBD142827E74F92AC4BBD429B2444D4D@HQMAIL03.nvidia.com>
-	 <4880E32B-7880-40BF-8AFD-AC00DA457CEE@meyerhome.net>
-	 <B978892CA0FBD142827E74F92AC4BBD429B2444D5C@HQMAIL03.nvidia.com>
- <1a6be5fa1003231038h695ebbf2k8a765b4a9b6e274d@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: How to ignore changes on remote
+Date: Tue, 23 Mar 2010 19:02:35 +0100
+Message-ID: <201003231902.35962.johan@herland.net>
+References: <26ae428a1003230654m50c35caci4a02e2df321f289c@mail.gmail.com> <201003231820.51618.johan@herland.net> <hoaus7$3br$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: Benjamin Meyer <ben@meyerhome.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: 'Tor Arvid Lund' <torarvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 23 19:02:40 2010
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 23 19:02:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nu8R4-0006y4-VG
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 19:02:39 +0100
+	id 1Nu8RM-0007Br-T8
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 19:02:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753989Ab0CWSCd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Mar 2010 14:02:33 -0400
-Received: from hqemgate03.nvidia.com ([216.228.112.145]:15182 "EHLO
-	hqemgate03.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753958Ab0CWSCc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Mar 2010 14:02:32 -0400
-Received: from hqnvupgp03.nvidia.com (Not Verified[172.17.102.18]) by hqemgate03.nvidia.com
-	id <B4ba902670000>; Tue, 23 Mar 2010 11:03:19 -0700
-Received: from hqemhub01.nvidia.com ([172.17.108.22])
-  by hqnvupgp03.nvidia.com (PGP Universal service);
-  Tue, 23 Mar 2010 11:02:30 -0700
-X-PGP-Universal: processed;
-	by hqnvupgp03.nvidia.com on Tue, 23 Mar 2010 11:02:30 -0700
-Received: from HQMAIL03.nvidia.com ([172.17.200.13]) by hqemhub01.nvidia.com
- ([172.17.98.26]) with mapi; Tue, 23 Mar 2010 11:02:29 -0700
-Thread-Topic: git-p4 and git clone
-Thread-Index: AcrKr6spaLY41sTKSEyKefTWfcZtdgAAfSmw
-In-Reply-To: <1a6be5fa1003231038h695ebbf2k8a765b4a9b6e274d@mail.gmail.com>
-Accept-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-Content-Language: en-US
+	id S1754079Ab0CWSCv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Mar 2010 14:02:51 -0400
+Received: from smtp.opera.com ([213.236.208.81]:58812 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754065Ab0CWSCu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Mar 2010 14:02:50 -0400
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o2NI2ah1010488
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 23 Mar 2010 18:02:42 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <hoaus7$3br$1@dough.gmane.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143039>
 
-VGhhdCBkb2Vzbid0IHdvcmsgZm9yIG1lLiBZb3UgY2FuJ3Qgc3VibWl0IGZyb20gQiBiZWNhdXNl
-IHRoZXJlIGFyZSBubyByZW1vdGVzIGluIHRoYXQgcmVwb3NpdG9yeSBhbmQgcDRCcmFuY2hlc0lu
-R2l0KCkgaXMgbG9va2luZyBmb3IgcmVtb3RlcyBvbmx5Lg0KWW91IGFsc28gY2Fubm90IHN1Ym1p
-dCBmcm9tIEMgYmVjYXVzZSB0aGUgcmVtb3RlcyBhcmUgbmFtZWQgb3JpZ2luL3A0L21hc3RlciB3
-aGVyZWFzIHA0QnJhbmNoZXNJbkdpdCgpIGlzIGxvb2tpbmcgZm9yIF5wNC8uDQoNCi1UaG9tYXMN
-Cg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IFRvciBBcnZpZCBMdW5kIFttYWls
-dG86dG9yYXJ2aWRAZ21haWwuY29tXSANClNlbnQ6IFR1ZXNkYXksIE1hcmNoIDIzLCAyMDEwIDEw
-OjM4IEFNDQpUbzogVGhvbWFzIEtpc3RsZXINCkNjOiBCZW5qYW1pbiBNZXllcjsgZ2l0QHZnZXIu
-a2VybmVsLm9yZw0KU3ViamVjdDogUmU6IGdpdC1wNCBhbmQgZ2l0IGNsb25lDQoNCk9uIFR1ZSwg
-TWFyIDIzLCAyMDEwIGF0IDQ6MzcgUE0sIFRob21hcyBLaXN0bGVyIDx0a2lzdGxlckBudmlkaWEu
-Y29tPiB3cm90ZToNCj4gVGhhdCBkb2Vzbid0IHNlZW0gdG8gd29yay4gV2l0aCAtLWltcG9ydC1s
-b2NhbCwgSSBjYW4ndCBldmVuIHN1Ym1pdCBiYWNrIGZyb20gdGhlIG9yaWdpbmFsIHJlcG9zaXRv
-cnkuDQoNCkhpLg0KDQpGb3IgbWUgaXQgd29ya3MgaW4gdGhpcyBzY2VuYXJpbzoNCklmIHlvdXIg
-cGVyZm9yY2UgZGVwb3QgaXMgQSwgeW91ICJnaXQtcDQgY2xvbmUgLS1pbXBvcnQtbG9jYWwiIHRo
-YXQNCmludG8gQiwgdGhlbiBnaXQgY2xvbmUgQiBpbnRvIEMuIEZyb20gQyB5b3Ugc2hvdWxkIGJl
-IGFibGUgdG8gZG8NCmdpdC1wNCBzdWJtaXQuDQoNClNvLCBteSBub3JtYWwgcmVjaXBlIChpZiBh
-bnlvbmVzIGludGVyZXN0ZWQpIGlzIHRvIG5vdCB1c2UgQiBmb3INCmFueXRoaW5nIG90aGVyIHRo
-YW4gaW1wb3J0aW5nIGZyb20gcDQgYW5kIGZ1bmN0aW9uaW5nIGFzIGEgY2xvbmUNCnNvdXJjZS4g
-TGlrZSBzbzoNCg0KJCBnaXQtcDQgY2xvbmUgLS1pbXBvcnQtbG9jYWwgLy9kZXBvdC9BQGFsbCBC
-DQokIG12IEIvLmdpdCBCLmdpdA0KJCBybSAtcmYgQg0KJCBjZCBCLmdpdA0KJCBnaXQgY29uZmln
-IGNvcmUuYmFyZSB0cnVlDQokIHJtIHJlZnMvaGVhZHMvbWFzdGVyDQokIGVjaG8gcmVmOiByZWZz
-L2hlYWRzL3A0L21hc3RlciA+IEhFQUQNCg0KKFRoZW4gSSBoYXZlIGEgc2NyaXB0IHRoYXQgZG9l
-cyAiZ2l0LXA0IHN5bmMgLS1pbXBvcnQtbG9jYWwiIGV2ZXJ5IHNvDQpvZnRlbiBpbiB0aGlzIHJl
-cG8pDQoNCi4uLiBBbmQgdGhlbiBvbiBteSB3b3JraW5nIGNvbXB1dGVyLCBJIGRvOg0KDQokIGdp
-dCBjbG9uZSB1c2VyQHJlbW90ZTpCLmdpdCBDDQokIGNkIEMNCiQgW3dvcmssIHdvcmssIHdvcmss
-IGdpdCBjb21taXRdDQokIGdpdC1wNCBzdWJtaXQNCg0KLi4uQW5kIGV2ZXJ5IHNvIG9mdGVuOg0K
-JCBnaXQtcDQgc3luYw0KDQooRGlzY2xhaW1lcjogcmVjaXBlIGZyb20gbWVtb3J5Li4uIG1pZ2h0
-IG5vdCBiZSAxMDAlIGNvcnJlY3QgOi0vKQ0KDQotVG9yIEFydmlkLQ0KDQo+IMKgIMKgJCBjZCB0
-bXAxDQo+IMKgIMKgJCBnaXQtcDQgY2xvbmUgLS1pbXBvcnQtbG9jYWwgLy9mb28vYmFyDQo+IMKg
-IMKgJCBjZCBiYXINCj4gwqAgwqAkIGdpdCBjaGVja291dCBwNC9tYXN0ZXINCj4gwqAgwqAkIGdp
-dC1wNCBzdWJtaXQgLS12ZXJib3NlDQo+DQo+IFJlYWRpbmcgcGlwZTogZ2l0IG5hbWUtcmV2IEhF
-QUQNCj4gUmVhZGluZyBwaXBlOiBnaXQgY29uZmlnIGdpdC1wNC5hbGxvd1N1Ym1pdA0KPiBSZWFk
-aW5nIHBpcGU6IGdpdCByZXYtcGFyc2UgLS1zeW1ib2xpYyDCoC0tcmVtb3Rlcw0KPiBSZWFkaW5n
-IHBpcGU6IGdpdCBjYXQtZmlsZSBjb21taXQgSEVBRH4wDQo+IFJlYWRpbmcgcGlwZTogZ2l0IGNh
-dC1maWxlIGNvbW1pdCBIRUFEfjENCj4gZmF0YWw6IE5vdCBhIHZhbGlkIG9iamVjdCBuYW1lIEhF
-QUR+MQ0KPg0KPg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBCZW5qYW1p
-biBNZXllciBbbWFpbHRvOmJlbkBtZXllcmhvbWUubmV0XQ0KPiBTZW50OiBNb25kYXksIE1hcmNo
-IDIyLCAyMDEwIDU6MTUgUE0NCj4gVG86IFRob21hcyBLaXN0bGVyDQo+IENjOiAnZ2l0QHZnZXIu
-a2VybmVsLm9yZycNCj4gU3ViamVjdDogUmU6IGdpdC1wNCBhbmQgZ2l0IGNsb25lDQo+DQo+DQo+
-IE9uIE1hciAyMiwgMjAxMCwgYXQgNzoxNiBQTSwgVGhvbWFzIEtpc3RsZXIgd3JvdGU6DQo+DQo+
-PiBJJ20gcHJvYmFibHkgbWlzc2luZyBzb21ldGhpbmcgZmFpcmx5IGZ1bmRhbWVudGFsIGJ1dCBJ
-J20gcnVubmluZyBpbnRvIHByb2JsZW1zIHdpdGggY2xvbmluZyBhIGdpdC1wNCByZXBvc2l0b3J5
-Og0KPj4NCj4+IEZpcnN0LCBJJ20gc2V0dGluZyB1cCBhIGdpdC1wNCBtYXN0ZXIgcmVwb3NpdG9y
-eToNCj4+DQo+PiDCoCDCoCQgY2QgdG1wMQ0KPj4gwqAgwqAkIGdpdC1wNCBjbG9uZSAvL2Zvby9i
-YXINCj4+DQo+PiBUaGVuIEknbSBjbG9uaW5nIGl0IHRocm91Z2ggZ2l0Og0KPj4NCj4+IMKgIMKg
-JCBjZCB0bXAyDQo+PiDCoCDCoCQgZ2l0IGNsb25lIHRtcDEvYmFyDQo+Pg0KPj4gRmluYWxseSwg
-SSdtIHRyeWluZyB0byBzdWJtaXQgYmFjayB0byBwNDoNCj4+DQo+PiDCoCDCoCQgZ2l0LXA0IHN1
-Ym1pdA0KPj4NCj4+IFRoaXMgbm93IGZhaWxzIGJlY2F1c2UgdGhlIHJlbW90ZXMvcDQvbWFzdGVy
-IHNlZW1zIHRvIGdldCBsb3N0IHdoZW4gZG9pbmcgdGhlICJnaXQgY2xvbmUiLiBJcyB0aGlzIHN1
-cHBvc2VkIHRvIHdvcms/DQo+Pg0KPj4gLVRob21hcw0KPg0KPiBUaGVyZSBpcyBhIC1pbXBvcnQt
-bG9jYWwgb3B0aW9uIHlvdSBjYW4gdXNlLiDCoFRoZW4gdGhlIHA0L21hc3RlciBicmFuY2ggaXMg
-bG9jYWwgYW5kIHdoZW4geW91IGRvIHRoZSBzZWNvbmQgY2xvbmUgeW91IHdpbGwgZ2V0IHRoZSBw
-NC9tYXN0ZXIgYnJhbmNoLg0KPg0KPiAtQmVuamFtaW4gTWV5ZXINCj4gLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0NCj4gVGhpcyBlbWFpbCBtZXNzYWdlIGlzIGZvciB0aGUgc29sZSB1c2Ugb2Yg
-dGhlIGludGVuZGVkIHJlY2lwaWVudChzKSBhbmQgbWF5IGNvbnRhaW4NCj4gY29uZmlkZW50aWFs
-IGluZm9ybWF0aW9uLiDCoEFueSB1bmF1dGhvcml6ZWQgcmV2aWV3LCB1c2UsIGRpc2Nsb3N1cmUg
-b3IgZGlzdHJpYnV0aW9uDQo+IGlzIHByb2hpYml0ZWQuIMKgSWYgeW91IGFyZSBub3QgdGhlIGlu
-dGVuZGVkIHJlY2lwaWVudCwgcGxlYXNlIGNvbnRhY3QgdGhlIHNlbmRlciBieQ0KPiByZXBseSBl
-bWFpbCBhbmQgZGVzdHJveSBhbGwgY29waWVzIG9mIHRoZSBvcmlnaW5hbCBtZXNzYWdlLg0KPiAt
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KPiAtLQ0KPiBUbyB1bnN1YnNjcmliZSBmcm9tIHRo
-aXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUgZ2l0IiBpbg0KPiB0aGUgYm9keSBv
-ZiBhIG1lc3NhZ2UgdG8gbWFqb3Jkb21vQHZnZXIua2VybmVsLm9yZw0KPiBNb3JlIG1ham9yZG9t
-byBpbmZvIGF0IMKgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1sDQo+
-DQo=
+On Tuesday 23 March 2010, Jakub Narebski wrote:
+> Johan Herland wrote:
+> > I'm rolling out Git at my $DAYJOB to a few hundred developers, and
+> > I instruct them to
+> >
+> > =A0=A0=A0=A0=A0=A0=A0=A0git config --global push.default tracking
+> >
+> > immediately after installing Git. Which sucks, but is the only sane
+> > thing I can do to prevent this problem from haunting us.
+>
+> Why not have administrator use
+>
+>          git config --system push.default tracking
+>
+> once (and/or setup skeleton for /etc/gitconfig)?
+
+Because developers administer their own machines.
+
+
+=2E..Johan
+
+--=20
+Johan Herland, <johan@herland.net>
+www.herland.net
