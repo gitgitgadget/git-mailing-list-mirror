@@ -1,79 +1,112 @@
-From: Alexander Iljin <ajsoft@yandex.ru>
-Subject: Re: How to ignore changes on remote
-Date: Tue, 23 Mar 2010 20:21:12 +0600
-Message-ID: <465338777.20100323202112@yandex.ru>
-References: <26ae428a1003230654m50c35caci4a02e2df321f289c@mail.gmail.com> <1269353235.14299.0.camel@kheops> <26ae428a1003230713y12f0c74dh3b22c0d97565159b@mail.gmail.com>
-Reply-To: =?utf-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCY0LvRjNC40L0=?= 
-	  <ajsoft@yandex.ru>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH] Test that the 'rebase -i' "reword" command always cherry-picks
+ a commit.
+Date: Tue, 23 Mar 2010 10:38:27 -0400
+Message-ID: <4BA8D263.8040602@xiplink.com>
+References: <4BA11B23.4090801@xiplink.com> <1269285942-17496-1-git-send-email-marcnarc@xiplink.com> <7vd3yw84pd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1251
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 23 15:32:19 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 23 15:36:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nu59V-0002MB-5F
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 15:32:17 +0100
+	id 1Nu5Do-0005eN-Mk
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 15:36:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752334Ab0CWOcM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Mar 2010 10:32:12 -0400
-Received: from forward12.mail.yandex.net ([95.108.130.94]:49864 "EHLO
-	forward12.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751666Ab0CWOcL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Mar 2010 10:32:11 -0400
-X-Greylist: delayed 641 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Mar 2010 10:32:11 EDT
-Received: from smtp13.mail.yandex.net (smtp13.mail.yandex.net [95.108.130.68])
-	by forward12.mail.yandex.net (Yandex) with ESMTP id 7584315D0951
-	for <git@vger.kernel.org>; Tue, 23 Mar 2010 17:21:26 +0300 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1269354086; bh=r+72QtrU9R0s/GPGelvbBYLwoh1l1PPgo1I0vgzu7e4=;
-	h=Date:From:Reply-To:Message-ID:To:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=VyrqxoIUmhakkuFOMPwJCnrRyXrJIH1eezXvVSz4+2oWIyyxa0dz+D/27XRtdGSBh
-	 9ZDnHHfq9UvAlY+dvOGgPh5D7Ni9mGijvEzfIiAxJnSyKNqWptmjwgpWYPlseubmX5
-	 mUIvBnhNSK60T9cDOz7GDDnMGiNV2KgExLxKcLMY=
-Received: from h88-115-126.sibinet.com (unknown [88.204.115.126])
-	by smtp13.mail.yandex.net (Yandex) with ESMTPA id 37AC932200D4
-	for <git@vger.kernel.org>; Tue, 23 Mar 2010 17:21:26 +0300 (MSK)
-X-Priority: 3 (Normal)
-In-Reply-To: <26ae428a1003230713y12f0c74dh3b22c0d97565159b@mail.gmail.com>
-X-Yandex-TimeMark: 1269354086
-X-Yandex-Spam: 1
-X-Yandex-Front: smtp13.mail.yandex.net
+	id S1754028Ab0CWOgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Mar 2010 10:36:22 -0400
+Received: from smtp112.dfw.emailsrvr.com ([67.192.241.112]:56013 "EHLO
+	smtp112.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754065Ab0CWOgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Mar 2010 10:36:07 -0400
+Received: from relay11.relay.dfw.mlsrvr.com (localhost [127.0.0.1])
+	by relay11.relay.dfw.mlsrvr.com (SMTP Server) with ESMTP id BE172180BAB;
+	Tue, 23 Mar 2010 10:35:58 -0400 (EDT)
+Received: by relay11.relay.dfw.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id E27FD1809B4;
+	Tue, 23 Mar 2010 10:35:55 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.24 (X11/20100317)
+In-Reply-To: <7vd3yw84pd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143022>
 
-Hello!
-
+Junio C Hamano wrote:
+> Marc Branchaud <marcnarc@xiplink.com> writes:
+> 
+>> In particular, "reword" should cherry-pick a reworded commit even if the
+>> commit's message is unchanged.
 >>
->> git push origin +local_branch:remote_branch
+>> This behaviour provides a way to deal with a situation that can arise when
+>> a merge had to be reverted.  Added an addendum to revert-a-faulty-merge.txt
+>> describing the situation and how to use "reword" to handle it.
+>> ---
 >>
+>> Is this more acceptable than adding --no-ff to rebase--interactive?
+>>
+>> I wasn't sure how to integrate the new text into revert-a-faulty-merge.txt.
+>> I went with an addendum, but I'm open to other approaches.
+> 
+> The addendum looked readable, but I am a bit puzzled.
 
-HM> Tell me more about that '+'. I've never heard of it before. Can't s=
-ee
-HM> anything in the docs (although I'm probably not looking in the righ=
-t
-HM> place)
+Ya think _you're_ puzzled?  :)
 
-  git help push
+> "rebase -i --no-ff"
+> already exists, and is probably a more natural way to do this than saying
+> "reword" but not rewording anything, no?
+> 
+> I would actually say "rebase -f P" would be even easier and clearer,
+> especially as...
+> 
+>> ...
+>> +However, you could avoid these problems if you recreated the entire branch,
+>> +including commit A:
+>> +
+>> + P---o---o---M---x---x---W---x
+>> + |\         /
+>> + | A---B---C   <-- old branch
+>> + \
+>> +  A'---B'---C' <-- entirely recreated branch
+>> +
+>> +Now you can merge A'-B'-C' into the mainline branch without worrying about
+>> +first reverting W.
+>> +
+>> +But if you don't actually need to change commit A, then you need some way to
+>> +recreate it as a new commit with the same changes in it.
+> 
+> ... this part seems to talk about working around the tendency of 'rebase -i'
+> to fast-forward.
 
-<refspec>=85
-  The format of a <refspec> parameter is an optional plus +, followed
-  by the source ref <src>, followed by a colon :, followed by the
-  destination ref <dst>. It is used to specify with what <src> object
-  the <dst> ref in the remote repository is to be updated.
+Yes.  Thanks for pointing this out, it's cleared up a lot for me.
 
-  ...
+I was confused about the purpose of "rebase -f".  Jonathan Nieder even
+pointed me to it when I posted my original patch for "rebase -i --no-ff", but
+the description in the man page threw me:
 
-  By having the optional leading +, you can tell git to update the
-  <dst> ref even when the update is not a fast forward. This does not
-  attempt to merge <src> into <dst>. See EXAMPLES below for details.
+	Force the rebase even if the current branch is a descendant of
+	the commit you are rebasing onto. Normally the command will
+	exit with the message "Current branch is up to date" in such a
+	situation.
 
----=3D=3D=3D=3D=3D---
- Alexander
+I didn't realize that this is exactly the situation that "rebase -i" normally
+deals with (-i basically implies -f), and that "rebase -f" would do exactly
+what I wanted "rebase -i --no-ff" to do.
+
+But I think I see an approach that might make sense:
+
+ - Teach "rebase -i" to recognize the -f parameter (instead of --no-ff).
+
+ - Update rebase's man page to better explain -f.
+
+ - Update revert-a-faulty-merge.txt to explain how to use "rebase [-i] -f".
+
+I'll submit a new patch shortly.
+
+		M.
