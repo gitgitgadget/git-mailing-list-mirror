@@ -1,99 +1,85 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: GSoC draft proposal: Line-level history browser
-Date: Tue, 23 Mar 2010 14:57:25 -0500
-Message-ID: <20100323195724.GA1843@progeny.tock>
-References: <81b0412b1003201335g7b37c51mfa3e2280210ebb7e@mail.gmail.com>
- <201003231222.40745.jnareb@gmail.com>
- <41f08ee11003230523h2c5f93b1l7e94d6c85a93a706@mail.gmail.com>
- <201003231449.42190.jnareb@gmail.com>
- <41f08ee11003230823i1ca677b8q51b2413040c45c44@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 7/6] Enable threaded async procedures whenever pthreads is  available
+Date: Tue, 23 Mar 2010 21:19:18 +0100
+Message-ID: <201003232119.19430.j6t@kdbg.org>
+References: <cover.1267889072.git.j6t@kdbg.org> <201003172228.18939.j6t@kdbg.org> <4c8ef71003230115y64d36094y178fcfe6576e9c66@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, gitzilla@gmail.com,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 23 20:57:40 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Fredrik Kuivinen <frekui@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 23 21:21:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuAEL-0002Ps-Nt
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 20:57:38 +0100
+	id 1NuAbT-000786-4w
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 21:21:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753651Ab0CWT5c convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Mar 2010 15:57:32 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:54235 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753271Ab0CWT5c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Mar 2010 15:57:32 -0400
-Received: by pva18 with SMTP id 18so203845pva.19
-        for <git@vger.kernel.org>; Tue, 23 Mar 2010 12:57:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=UOEfFghJXsXa/4+IysgFrpsqxcU+psMHKzCXKY9Nj3U=;
-        b=IS+4/4uH8bOpWUQjNs1NZQsh1RThJrHE8lxv8Fan39YCgw31kIvnbF1Isp3qZxrAo5
-         7NtJlPxPS8eGVXClGVsyK9Yq8Y4CCydAgi449FohW+acRG0mFd7iSgaiqFy033uvYCfh
-         acHwhCAuthEVxBPizF1va/uuuWugs/AW7kisA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=W+JWOlhkjB6vg1GVaHPGCOTgB53frSFaexCBislIbYKrMGvelwdqUnvNsExzUI5gb1
-         ccU9q7MNwlzMPhxkiNzISJoER0p4ctjbmlPugF9baJbCLzxR21AgE8BQvwXoJpd0qp+F
-         2ccWQdUIkX/vJ/anT1ngfqBS0brhXd3/WzdkU=
-Received: by 10.115.101.14 with SMTP id d14mr407871wam.176.1269374251437;
-        Tue, 23 Mar 2010 12:57:31 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 21sm5282768iwn.15.2010.03.23.12.57.29
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 23 Mar 2010 12:57:30 -0700 (PDT)
+	id S1751776Ab0CWUV0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Mar 2010 16:21:26 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:35025 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751492Ab0CWUVZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Mar 2010 16:21:25 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 4CAFD10017;
+	Tue, 23 Mar 2010 21:21:20 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id AE41119F6B8;
+	Tue, 23 Mar 2010 21:19:19 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <4c8ef71003230115y64d36094y178fcfe6576e9c66@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <41f08ee11003230823i1ca677b8q51b2413040c45c44@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143046>
 
-Bo Yang wrote:
+On Dienstag, 23. M=E4rz 2010, Fredrik Kuivinen wrote:
+> On Wed, Mar 17, 2010 at 22:28, Johannes Sixt <j6t@kdbg.org> wrote:
+> > ----------
+> > convert.c:filter_buffer()
+> ...
+> Maybe I'm missing something but, isn't it possible that xrealloc is
+> called simultaneously from the two threads if GIT_TRACE is set?
+>
+> Immediately after start_async the parent calls strbuf_read. We then
+> get the call chain
+> strbuf_read -> strbuf_grow -> ALLOG_GROW -> xrealloc, so xrealloc is
+> called before we read any data in the parent.
+>
+> In the child we have start_command -> trace_argv_printf -> strbuf_gro=
+w ->
+> ...
 
-> It traces the preimage of the minimum related diff hunk carefully, if
-> there is any case that there are more than one commit intersect with
-> the preimage, we will stop and ask the users to select which way to g=
-o
-> on tracing.
+Outch! You are right. It seems I missed the call of strbuf_grow before =
+the=20
+loop in strbuf_read.
 
-That might be necessary, but I will admit that I suspect it to be
-harder to make useful.  One of the very nice things about =E2=80=98git =
-log=E2=80=99 is
-that it is easy to browse through history in a nonlinear way in a
-pager (by using a pager=E2=80=99s search functionality).  The =E2=80=9C=
-backend=E2=80=9D =E2=80=98git
-rev-list=E2=80=99 is easy to write scripts with, also because of its si=
-mple
-input and output.
+OK, this means that convert.c is not safe if (and only if) GIT_TRACE is=
+=20
+set. :-(
 
-If your program requires input from the user, how will it paginate its
-output?  Most pagers expect the standard input to be available for
-input from the user.
+> That xmalloc and xrealloc aren't thread-safe feels a bit fragile.
+> Maybe we should try to fix that.
 
-One approach (I will not say it is a good one) to the problem of
-ambiguous origins for a line is to blame _both_ parents.  That is,
-start following both lines of history in your revision walking.
-Perhaps higher-level tools like =E2=80=98git log --graph=E2=80=99 and g=
-itk could
-visually represent the branched history you are showing.
+The point of this assessment was to find out whether this is necessary =
+(and=20
+whether something else that is not thread-safe is used).
 
-Another approach is to just choose one parent automatically: for
-example, prefer the first parent, or assign some score representing
-the relatedness of each parent and choose the most related one.
+> > ----------
+> > upload_pack:create_pack_file():=20
+> ...
+> sha1_to_hex is also called by the parent and the current
+> implementation of that function is not thread-safe. sha1_to_hex is
+> also called by some paths in the revision machinery, but I don't know
+> if it will ever be called in this particular case.
 
-Jonathan
+sha1_to_hex is only called by the parent when the async procedure is no=
+t used.
+
+-- Hannes
