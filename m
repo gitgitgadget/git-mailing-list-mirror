@@ -1,97 +1,99 @@
-From: Eli Barzilay <eli@barzilay.org>
-Subject: Re: git rev-list formatting
-Date: Mon, 22 Mar 2010 21:57:46 -0400
-Message-ID: <m31vfbpzol.fsf@winooski.ccs.neu.edu>
-References: <m3iq8opp8u.fsf@winooski.ccs.neu.edu>
-	<4BA7A75A.6060909@lsrfire.ath.cx>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/3] gitk: Avoid calling tk_setPalette on Windows
+Date: Mon, 22 Mar 2010 21:29:03 -0500
+Message-ID: <20100323022903.GA5213@progeny.tock>
+References: <1268418709-4998-1-git-send-email-patthoyts@users.sourceforge.net>
+ <20100320063256.GA26519@progeny.tock>
+ <87tys8c6ki.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 23 02:58:06 2010
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Mar 23 03:29:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NttNd-0006c9-S0
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 02:58:06 +0100
+	id 1Nttro-0002gL-K3
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 03:29:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756785Ab0CWB57 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Mar 2010 21:57:59 -0400
-Received: from lo.gmane.org ([80.91.229.12]:53024 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755074Ab0CWB57 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Mar 2010 21:57:59 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NttNV-0006VT-Or
-	for git@vger.kernel.org; Tue, 23 Mar 2010 02:57:57 +0100
-Received: from winooski.ccs.neu.edu ([129.10.115.117])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 Mar 2010 02:57:57 +0100
-Received: from eli by winooski.ccs.neu.edu with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 Mar 2010 02:57:57 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: winooski.ccs.neu.edu
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-Cancel-Lock: sha1:bvWorIdchebw5JWp2FuppdDuPPI=
+	id S1751493Ab0CWC3J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Mar 2010 22:29:09 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:38530 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750952Ab0CWC3I (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Mar 2010 22:29:08 -0400
+Received: by gwaa18 with SMTP id a18so1276669gwa.19
+        for <git@vger.kernel.org>; Mon, 22 Mar 2010 19:29:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=rb1G9TwC4OQRzEJwguj9el19Ycr+rrTkRISjmMmK+Ho=;
+        b=FR8nnRJUvRIEfrET414jJgwm39hZGBL/aAhncbY4P3N1AcxClFeIrkHYdKHvS9hysY
+         gZcWf826Yv/09IKZ2XwoPXp4ARnF7oYCv6nbB/4YqWNwEIpqWPaBiwKZBlytKFEv57H5
+         7pzelEIPEcg/piFg6a9Tt6oBVXCnkoPHKLxCg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=DXekUBrOuM6SEVjlDkfRVoMd7lNO5Yw1pRee26ioLjrw7yyncJM79R+2vOItkbKmoy
+         vZSPKNEn6WNg4n6Ad1fcOsGvrVcQ6GaadMBctyotKBYgq7BSvl6kfYDhUIARrN6eZegY
+         IXPnpH4uyT5NBPxlExS1uB0zca1TJtV3RTimM=
+Received: by 10.101.144.32 with SMTP id w32mr9150752ann.246.1269311346901;
+        Mon, 22 Mar 2010 19:29:06 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 21sm4493946iwn.7.2010.03.22.19.29.05
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 22 Mar 2010 19:29:06 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <87tys8c6ki.fsf@fox.patthoyts.tk>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142984>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Pat Thoyts wrote:
 
-> Am 22.03.2010 12:30, schrieb Eli Barzilay:
->> Possible bug -- IIUC, this:
->>=20
->>   git rev-list --pretty=3D"%w(40,2,2)%b" $rev
->>=20
->> should show all bodies wrapped as specified, but with 1.7.0.3 I see
->> only the first one wrapped, and the rest don't show up.  In one of m=
-y
->> attempts to sort this, I saw all bodies, but all bodies after the
->> first were not wrapped as specified.
->
-> I can't reproduce this when running this command against git's own
-> repo.  Or perhaps I just fail to see it.  Is the one you're trying
-> this on public?  Does it work as expected with some other version of
-> git?
+>>>  # For some reason, tk_setPalette chooses a nasty dark red for sele=
+ctColor
+>>>  # if we don't specify one ourselves, which makes the checkbuttons =
+and
+>>>  # radiobuttons look bad.  This chooses white for selectColor if th=
+e
+>>>  # background color is light, or black if it is dark.
+[...]
+> This has never been true for Windows which has always used the native
+> images for check and radio buttons. So the comment there is relevant
+> only to X11. I believe in Tk 8.5 the check/radio buttons now use
+> images by default (the ttk versions will look appropriate to the
+> current theme - however that may be defined).
+>=20
+> However, messing about with this on X11 would need testing that I
+> can't do on Windows. Hence the suggested fix.
 
-Sorry, I've lost track of all the different things I tried, but here's
-something that I can reproduce reliably now, which seems to be a
-similar problem (or at least nothing in the man page explain why it
-would do what it does).  If this is helpful, I'll tar up the
-repository and put it up somewhere.  This is all running in the repo
--- and it case it matters, it's a bare repo, created with 1.7.0.
+Thanks for the pointers.  Sp it seems that the =E2=80=9Cinterface color=
+=E2=80=9D setting
+does not have the desired effect when themed widgets are enabled.  You
+can see some screenshots here:
 
-  $ git rev-list --pretty=3D"%b" foo
+  http://repo.or.cz/w/git/jrn.git/commit/gitk-snapshots
 
-shows one "commit <sha1>" line, then the body, and then the rest of
-the commits (13 of them) with no body at all (just the "commit <sha1>"
-lines).
+The text fields, buttons, and drop-down boxes retain the traditional
+grey background, while the menu bar, =E2=80=9CSHA1 ID=E2=80=9D label, a=
+nd =E2=80=9CLines of
+context=E2=80=9D selector do change color.  The effect is very strange.
 
-  $ git rev-list --pretty=3D"%b" 267d60518
+When themed widgets are disabled, the tk_setPalette issue described in
+the comment still applies.
 
-Same output -- 267d60518 is the commit that `foo' points to.
+So I can understand better: are you saying in Windows themed widgets
+are always used?
 
-  $ git rev-list --pretty=3D"%b" 84482
-
-This is for a commit that is somewhere in the middle of these commits,
-the output has *only* "commit <sha1>" lines -- no body shown.
-
-  $ git rev-list --pretty 84482
-
-This one works fine, showing all of the commits and their log
-messages.
-
---=20
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay=
-:
-                    http://barzilay.org/                   Maze is Life=
-!
+Jonathan
