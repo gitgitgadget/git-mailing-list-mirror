@@ -1,78 +1,90 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: native-git-svn: A Summer of Code 2010 proposal
-Date: Tue, 23 Mar 2010 13:19:39 +0530
-Message-ID: <f3271551003230049u6cd5b2ft811acd6ebfad8471@mail.gmail.com>
-References: <f3271551003191018j67aa133es2fee4e3dda519ce0@mail.gmail.com> 
-	<f3271551003210525l761cf36eh69cdfddf4e645ef3@mail.gmail.com> 
-	<alpine.LNX.2.00.1003212011280.14365@iabervon.org> <201003220341.38918.chriscool@tuxfamily.org> 
-	<f3271551003212049r1139d6b4x279c6803cc4c7fe2@mail.gmail.com> 
-	<alpine.DEB.1.00.1003221231540.7596@pacific.mpi-cbg.de> <f3271551003220643j3a726d09o2d3a078292fd8bf6@mail.gmail.com> 
-	<alpine.DEB.1.00.1003222050470.7596@pacific.mpi-cbg.de>
+From: Thomas Koch <thomas@koch.ro>
+Subject: Re: rethinking patch management with GIT / topgit
+Date: Tue, 23 Mar 2010 09:09:16 +0100
+Message-ID: <201003230909.16414.thomas@koch.ro>
+References: <201003201802.51129.thomas@koch.ro> <201003220859.41820.thomas@koch.ro> <20100322193035.GM3533@machine.or.cz>
+Reply-To: thomas@koch.ro
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Stephan Beyer <s-beyer@gmx.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 23 08:50:08 2010
+Content-Type: Text/Plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org, vcs-pkg-discuss@lists.alioth.debian.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Tue Mar 23 09:09:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtysJ-0006QR-Kf
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 08:50:07 +0100
+	id 1NtzB4-0005B5-96
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 09:09:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752315Ab0CWHuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Mar 2010 03:50:00 -0400
-Received: from mail-yx0-f191.google.com ([209.85.210.191]:47832 "EHLO
-	mail-yx0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751721Ab0CWHuA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Mar 2010 03:50:00 -0400
-Received: by yxe29 with SMTP id 29so2590466yxe.4
-        for <git@vger.kernel.org>; Tue, 23 Mar 2010 00:49:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=jz7JuW8J7InqLW2B4evwUm3tM5UDL82od3rdLhisesI=;
-        b=sQpwvd+VUeV1O4R2DOdy8v2paaJfT4K1Pzp9HmhXRj6QyWLbeTv+G6ee/eZlMn0LZ0
-         uA8xAgw0RM8OJOVjNQRj9mKbwfKYp877ZIGX1Jl01MRFLREIxV3Fth9X9LnSYK6Lc1FZ
-         emM/I5PteTcotwx7/gjXYBtMkYrnOESxrRwCg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=Cp+T19x/9Rh7kMmmJZcioKUStJ8NpIv1to83VB4dbG4lO1NJZ6gJZrQEEKyxPI3QZ5
-         Q/2oVacnUnpn5mFjZRh1D6y+u1uPUIq77WJ3nrYh3aB9EoKXFxPcYlf5OMoEmtF/8iNh
-         MMymeHolR6amzAtWkvwk1aBttK2UmSwu4EZgE=
-Received: by 10.90.62.18 with SMTP id k18mr4105064aga.26.1269330599175; Tue, 
-	23 Mar 2010 00:49:59 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1003222050470.7596@pacific.mpi-cbg.de>
+	id S1754594Ab0CWIJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Mar 2010 04:09:23 -0400
+Received: from koch.ro ([88.198.2.104]:40223 "EHLO koch.ro"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753822Ab0CWIJV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Mar 2010 04:09:21 -0400
+Received: from 84-72-85-88.dclient.hispeed.ch ([84.72.85.88] helo=jona.localnet)
+	by koch.ro with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <thomas@koch.ro>)
+	id 1Ntz7d-0002RN-Iv; Tue, 23 Mar 2010 09:05:57 +0100
+User-Agent: KMail/1.12.4 (Linux/2.6.32-2-amd64; KDE/4.3.4; x86_64; ; )
+In-Reply-To: <20100322193035.GM3533@machine.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142995>
 
-Hi,
+Petr Baudis:
+> On Mon, Mar 22, 2010 at 08:59:40AM +0100, Thomas Koch wrote:
+> > In all three cases you're free to either keep or throw away the old
+> > patchset.
+> 
+> Yes, but to the same degree e.g. with StGIT I'm free to keep the head of
+> the old patch series. That does not mean the operation *preserves* the
+> history, only that the history is still around somewhere in the
+> repository, however it won't be around in other incarnations of the
+> repository and it will not be connected in any way to the current
+> version of the patchset.
+> 
+> Yes, if you are lucky you can figure out the name of the previous
+> version, but it's like starting development of each new kernel version
+> by a clean import of the sources.
 
-> The flow looks good (although I had to jump through hoops to look at it, I
-> am reading mails via ssh'ed text console).
+Hi Petr,
 
-In that case, I shouldn't put any crucial information in the figure
-like the timeline, in the interest of several reviewers who might be
-in a similar position.
+let me copy the list of methods from my last mail:
 
-> I have to admit that I would prefer a more detailed timeline, if only to
-> show how well you understand the individual requirements of trying to
-> interpret the fast-import protocol in an svn context.
+1) checkout new patch branches from the top of the old patch branches and 
+merge upstream into each of them
 
-Is the timeline in the text of the proposal detailed enough? I'm
-planning to submit that, and remove the one in the figure.
+2) recreate (like rebase) the full history of the patch branches on top of the 
+new upstream
 
--- Ram
+3) collapse the branch history and create one commit per patch branch on top 
+of the new upstream
+
+>From these methods, 3) loses all history, 2) loses some history but preserves 
+the individual history of one patch branch on a new base and 1) preserves all 
+history. Let me give an example for method 1). 
+You've got a patchset identified by the prefix debian/. Now you want to 
+package a new upstream but need to retain the old patchset in case of security 
+updates in Debian stable. Debian stable has version 0.1, new upstream is 0.2.
+So you
+- rename the old patchset from debian/ to debian-0.1/
+- clone/copy/recreate (pick a name) a new patchset debian/ on top of 
+upstream/0.2. This is done by merging upstream/0.2 into each debian/* branch.
+- Once you don't maintain version 0.1 anymore, you can delete the debian-0.1/* 
+branches
+
+After these steps, the debian/ branch still contains pointers to all commits 
+from the debian-0.1/* branches.
+It's an additional question, how to deal with commits that are done in 
+debian-0.1/* after the new upstream merge.
+
+Best regards,
+
+Thomas Koch, http://www.koch.ro
