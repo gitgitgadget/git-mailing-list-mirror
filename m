@@ -1,95 +1,79 @@
-From: Scott Chacon <schacon@gmail.com>
+From: Howard Miller <howard@e-learndesign.co.uk>
 Subject: Re: How to ignore changes on remote
-Date: Tue, 23 Mar 2010 09:05:41 -0700
-Message-ID: <d411cc4a1003230905y12839743x400333a0aa2e7018@mail.gmail.com>
+Date: Tue, 23 Mar 2010 16:13:03 +0000
+Message-ID: <26ae428a1003230913s447de452rfc7b8df753885365@mail.gmail.com>
 References: <26ae428a1003230654m50c35caci4a02e2df321f289c@mail.gmail.com>
 	 <1269353235.14299.0.camel@kheops>
 	 <26ae428a1003230713y12f0c74dh3b22c0d97565159b@mail.gmail.com>
 	 <1269354326.14299.7.camel@kheops>
+	 <d411cc4a1003230905y12839743x400333a0aa2e7018@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, howard@e-learndesign.co.uk
-To: sylvain@abstraction.fr
-X-From: git-owner@vger.kernel.org Tue Mar 23 17:06:21 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: sylvain@abstraction.fr, git@vger.kernel.org
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 23 17:13:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nu6c4-0004YC-VD
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 17:06:07 +0100
+	id 1Nu6jB-00015X-Lf
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 17:13:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754874Ab0CWQFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Mar 2010 12:05:46 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:51370 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752499Ab0CWQFp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Mar 2010 12:05:45 -0400
-Received: by wwe15 with SMTP id 15so4194813wwe.19
-        for <git@vger.kernel.org>; Tue, 23 Mar 2010 09:05:44 -0700 (PDT)
+	id S1754204Ab0CWQNI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Mar 2010 12:13:08 -0400
+Received: from gv-out-0910.google.com ([216.239.58.186]:18411 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754107Ab0CWQNG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Mar 2010 12:13:06 -0400
+Received: by gv-out-0910.google.com with SMTP id l14so95152gvf.37
+        for <git@vger.kernel.org>; Tue, 23 Mar 2010 09:13:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=lEZ6jw/AgHPItadhAzcIfbNiZG2T5DNq5uGY11CJyxc=;
-        b=ThKFjQ3YP0cfAv78OACVjc9JapR9Su/lA9e9iSRSHsdy5zsoxXAebueEdyZZlIe4iq
-         MdkMQmotsFCz9k1Oxpofg7zE+TIxkAkTvN8PBR/iLOUQu0hMRZaQyYq3q9CskJdzDjZv
-         ITiAmGNVHT938ahgtrgnP27oNeqdn/qJprstc=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=BppxBoNsi/z68SnU31126YORRfuJ3GFS1onSBxaTkGQ=;
+        b=E8pPjvnm9BGOVdfJfTiRA9lOjn79ySRRrBWSQXF/4f4uDx/2hUVG9Al9EcwpgHSOcU
+         GwF7INpR4w1Liu2sncESs8wWO27U9idVPebQIFXjS32Z/YTHZ/NLPbe18GHhr3xnoQOt
+         ivc4b69Pqo9fI8WUIswk0+QzZ+PDqrtg4MeYA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=w412IyzQDClcq9BPBwAb/Q8QW/hgKCzp7nfO0GMfBNdls4Yi1LIvT4OtboMsXcO3hS
-         oatTA/k8dKbs0zsuS+W7UWKES8wM69iCOQQU1p5SjRKGLrnBNwXw3RuAM/j4qj4bPm00
-         0PTvjhDgJ4sCt4UF+tEbUNQlMFu5HOpU/o7PU=
-Received: by 10.216.157.145 with SMTP id o17mr3566982wek.125.1269360341474; 
-	Tue, 23 Mar 2010 09:05:41 -0700 (PDT)
-In-Reply-To: <1269354326.14299.7.camel@kheops>
+        d=googlemail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=B3GCOa4uoLcZbXK9eyiETDeJn9jlu8JKZjB4a8vEoURWftQ+NDQWpTAXkfc/HLwiXL
+         UOzQJPKaY40MHLvgxZ0JqC1ujx8flMkRIw/lCw2i8WW2k6v/+qxDcqwd1Zc6CUGKqm9f
+         7FTKmm2GfuX8NdP2d21KHt2x6j72qHyKIzkwk=
+Received: by 10.103.7.31 with SMTP id k31mr11764475mui.132.1269360783233; Tue, 
+	23 Mar 2010 09:13:03 -0700 (PDT)
+In-Reply-To: <d411cc4a1003230905y12839743x400333a0aa2e7018@mail.gmail.com>
+X-Google-Sender-Auth: f3516e60c4cb0aa6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143027>
 
-Why would we teach someone to do that instead of just recommending the
-far less obscure 'git push -f'?  A leading '+' on the refspec is
-ridiculously confusing compared to "just tell it to force the push
-with -f".  Am I forgetting something?
+On 23 March 2010 16:05, Scott Chacon <schacon@gmail.com> wrote:
+> Why would we teach someone to do that instead of just recommending th=
+e
+> far less obscure 'git push -f'? =A0A leading '+' on the refspec is
+> ridiculously confusing compared to "just tell it to force the push
+> with -f". =A0Am I forgetting something?
+>
+> Also, Howard, what do you mean by "I forgot to merge"? =A0Do other
+> people have push access to this branch? =A0You can't just tell people
+> "use the local version" after you force a push. =A0If anyone has base=
+d
+> work off of that point, you're going to get into way more trouble
+> forcing a non-ff push than if you just did a merge and then resolved
+> all the conflicts as --ours.
 
-Also, Howard, what do you mean by "I forgot to merge"?  Do other
-people have push access to this branch?  You can't just tell people
-"use the local version" after you force a push.  If anyone has based
-work off of that point, you're going to get into way more trouble
-forcing a non-ff push than if you just did a merge and then resolved
-all the conflicts as --ours.
+I'm not really fussed. I hope not to make a habit of this. I'll
+probably forget and ask again next time :)
 
-Scott
-
-On Tue, Mar 23, 2010 at 7:25 AM, Sylvain Rabot <sylvain@abstraction.fr> wrote:
-> On Tue, 2010-03-23 at 14:13 +0000, Howard Miller wrote:
->> >
->> > git push origin +local_branch:remote_branch
->> >
->>
->> Thanks!
->>
->> Tell me more about that '+'. I've never heard of it before. Can't see
->> anything in the docs (although I'm probably not looking in the right
->> place)
->
-> http://kernel.org/pub/software/scm/git/docs/git-push.html
->
-> the '+' means that you want to bypass the security which does not allow
-> non fast-forward pushes.
->
-> Note that you shouldn't do non fast-forward pushes to a repository which
-> can be cloned by other people than you. Once published (accessible to
-> anybody) you should do a merge and then push to origin even if you only
-> take your local history in the merge to avoid user pulling from origin
-> conflicts due to the non fast forward history.
->
-> Regards.
->
-> --
-> Sylvain Rabot <sylvain@abstraction.fr>
->
+It's not a repo that particularly matters - just a convenience thing
+for some test scripts. If it had been on a proper production repo then
+I would just have dealt with the conflicts.
