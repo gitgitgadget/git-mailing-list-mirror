@@ -1,104 +1,95 @@
-From: Thomas Kistler <tkistler@nvidia.com>
-Subject: RE: git-p4 and git clone
-Date: Tue, 23 Mar 2010 08:37:48 -0700
-Message-ID: <B978892CA0FBD142827E74F92AC4BBD429B2444D5C@HQMAIL03.nvidia.com>
-References: <B978892CA0FBD142827E74F92AC4BBD429B2444D4D@HQMAIL03.nvidia.com>
- <4880E32B-7880-40BF-8AFD-AC00DA457CEE@meyerhome.net>
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: How to ignore changes on remote
+Date: Tue, 23 Mar 2010 09:05:41 -0700
+Message-ID: <d411cc4a1003230905y12839743x400333a0aa2e7018@mail.gmail.com>
+References: <26ae428a1003230654m50c35caci4a02e2df321f289c@mail.gmail.com>
+	 <1269353235.14299.0.camel@kheops>
+	 <26ae428a1003230713y12f0c74dh3b22c0d97565159b@mail.gmail.com>
+	 <1269354326.14299.7.camel@kheops>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "'git@vger.kernel.org'" <git@vger.kernel.org>
-To: 'Benjamin Meyer' <ben@meyerhome.net>
-X-From: git-owner@vger.kernel.org Tue Mar 23 16:38:03 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, howard@e-learndesign.co.uk
+To: sylvain@abstraction.fr
+X-From: git-owner@vger.kernel.org Tue Mar 23 17:06:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nu6B6-0004Sz-Ao
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 16:38:00 +0100
+	id 1Nu6c4-0004YC-VD
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 17:06:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754816Ab0CWPhw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Mar 2010 11:37:52 -0400
-Received: from hqemgate03.nvidia.com ([216.228.112.145]:7408 "EHLO
-	hqemgate03.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754735Ab0CWPhv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Mar 2010 11:37:51 -0400
-Received: from hqnvupgp03.nvidia.com (Not Verified[172.17.102.18]) by hqemgate03.nvidia.com
-	id <B4ba8e07e0002>; Tue, 23 Mar 2010 08:38:38 -0700
-Received: from hqemhub02.nvidia.com ([172.17.108.22])
-  by hqnvupgp03.nvidia.com (PGP Universal service);
-  Tue, 23 Mar 2010 08:37:50 -0700
-X-PGP-Universal: processed;
-	by hqnvupgp03.nvidia.com on Tue, 23 Mar 2010 08:37:50 -0700
-Received: from HQMAIL03.nvidia.com ([172.17.200.13]) by hqemhub02.nvidia.com
- ([172.17.98.27]) with mapi; Tue, 23 Mar 2010 08:37:49 -0700
-Thread-Topic: git-p4 and git clone
-Thread-Index: AcrKHf4IgJ5h6i83QrCAdzShEhG5YwAgIAiw
-In-Reply-To: <4880E32B-7880-40BF-8AFD-AC00DA457CEE@meyerhome.net>
-Accept-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-Content-Language: en-US
+	id S1754874Ab0CWQFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Mar 2010 12:05:46 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:51370 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752499Ab0CWQFp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Mar 2010 12:05:45 -0400
+Received: by wwe15 with SMTP id 15so4194813wwe.19
+        for <git@vger.kernel.org>; Tue, 23 Mar 2010 09:05:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=lEZ6jw/AgHPItadhAzcIfbNiZG2T5DNq5uGY11CJyxc=;
+        b=ThKFjQ3YP0cfAv78OACVjc9JapR9Su/lA9e9iSRSHsdy5zsoxXAebueEdyZZlIe4iq
+         MdkMQmotsFCz9k1Oxpofg7zE+TIxkAkTvN8PBR/iLOUQu0hMRZaQyYq3q9CskJdzDjZv
+         ITiAmGNVHT938ahgtrgnP27oNeqdn/qJprstc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=w412IyzQDClcq9BPBwAb/Q8QW/hgKCzp7nfO0GMfBNdls4Yi1LIvT4OtboMsXcO3hS
+         oatTA/k8dKbs0zsuS+W7UWKES8wM69iCOQQU1p5SjRKGLrnBNwXw3RuAM/j4qj4bPm00
+         0PTvjhDgJ4sCt4UF+tEbUNQlMFu5HOpU/o7PU=
+Received: by 10.216.157.145 with SMTP id o17mr3566982wek.125.1269360341474; 
+	Tue, 23 Mar 2010 09:05:41 -0700 (PDT)
+In-Reply-To: <1269354326.14299.7.camel@kheops>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143026>
 
-That doesn't seem to work. With --import-local, I can't even submit back from the original repository.
+Why would we teach someone to do that instead of just recommending the
+far less obscure 'git push -f'?  A leading '+' on the refspec is
+ridiculously confusing compared to "just tell it to force the push
+with -f".  Am I forgetting something?
 
-    $ cd tmp1
-    $ git-p4 clone --import-local //foo/bar
-    $ cd bar
-    $ git checkout p4/master
-    $ git-p4 submit --verbose
-    
-Reading pipe: git name-rev HEAD
-Reading pipe: git config git-p4.allowSubmit
-Reading pipe: git rev-parse --symbolic  --remotes
-Reading pipe: git cat-file commit HEAD~0
-Reading pipe: git cat-file commit HEAD~1
-fatal: Not a valid object name HEAD~1 
+Also, Howard, what do you mean by "I forgot to merge"?  Do other
+people have push access to this branch?  You can't just tell people
+"use the local version" after you force a push.  If anyone has based
+work off of that point, you're going to get into way more trouble
+forcing a non-ff push than if you just did a merge and then resolved
+all the conflicts as --ours.
 
+Scott
 
------Original Message-----
-From: Benjamin Meyer [mailto:ben@meyerhome.net] 
-Sent: Monday, March 22, 2010 5:15 PM
-To: Thomas Kistler
-Cc: 'git@vger.kernel.org'
-Subject: Re: git-p4 and git clone
-
-
-On Mar 22, 2010, at 7:16 PM, Thomas Kistler wrote:
-
-> I'm probably missing something fairly fundamental but I'm running into problems with cloning a git-p4 repository:
-> 
-> First, I'm setting up a git-p4 master repository:
-> 
->    $ cd tmp1
->    $ git-p4 clone //foo/bar
-> 
-> Then I'm cloning it through git:
-> 
->    $ cd tmp2
->    $ git clone tmp1/bar
-> 
-> Finally, I'm trying to submit back to p4:
-> 
->    $ git-p4 submit
-> 
-> This now fails because the remotes/p4/master seems to get lost when doing the "git clone". Is this supposed to work?
-> 
-> -Thomas
-
-There is a -import-local option you can use.  Then the p4/master branch is local and when you do the second clone you will get the p4/master branch.
-
--Benjamin Meyer
------------------------------------------------------------------------------------
-This email message is for the sole use of the intended recipient(s) and may contain
-confidential information.  Any unauthorized review, use, disclosure or distribution
-is prohibited.  If you are not the intended recipient, please contact the sender by
-reply email and destroy all copies of the original message.
------------------------------------------------------------------------------------
+On Tue, Mar 23, 2010 at 7:25 AM, Sylvain Rabot <sylvain@abstraction.fr> wrote:
+> On Tue, 2010-03-23 at 14:13 +0000, Howard Miller wrote:
+>> >
+>> > git push origin +local_branch:remote_branch
+>> >
+>>
+>> Thanks!
+>>
+>> Tell me more about that '+'. I've never heard of it before. Can't see
+>> anything in the docs (although I'm probably not looking in the right
+>> place)
+>
+> http://kernel.org/pub/software/scm/git/docs/git-push.html
+>
+> the '+' means that you want to bypass the security which does not allow
+> non fast-forward pushes.
+>
+> Note that you shouldn't do non fast-forward pushes to a repository which
+> can be cloned by other people than you. Once published (accessible to
+> anybody) you should do a merge and then push to origin even if you only
+> take your local history in the merge to avoid user pulling from origin
+> conflicts due to the non fast forward history.
+>
+> Regards.
+>
+> --
+> Sylvain Rabot <sylvain@abstraction.fr>
+>
