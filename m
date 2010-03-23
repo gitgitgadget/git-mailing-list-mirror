@@ -1,88 +1,102 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Bug - crash on large commit
-Date: Tue, 23 Mar 2010 09:25:27 +0100
-Message-ID: <40aa078e1003230125n5be565drb55fa7fdf731c72e@mail.gmail.com>
+Date: Tue, 23 Mar 2010 04:30:13 -0400
+Message-ID: <20100323083013.GA14703@coredump.intra.peff.net>
 References: <310ba29b220a70e5624819e6ef80bff0.squirrel@www.pkts.ca>
-Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: P Fudd <fink@ch.pkts.ca>
-X-From: git-owner@vger.kernel.org Tue Mar 23 09:25:50 2010
+X-From: git-owner@vger.kernel.org Tue Mar 23 09:30:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtzQs-0005ul-4j
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 09:25:50 +0100
+	id 1NtzVN-0008Bj-6q
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 09:30:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754728Ab0CWIZb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Mar 2010 04:25:31 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:57461 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754696Ab0CWIZ3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Mar 2010 04:25:29 -0400
-Received: by wwe15 with SMTP id 15so3898793wwe.19
-        for <git@vger.kernel.org>; Tue, 23 Mar 2010 01:25:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=SiXlofTJiPKdkrVWkQsyZLLJh2yYFrq7e6R9Y6NHFg4=;
-        b=la5C2AMIOnpWs8W8MGYjB0XyOknSIVHjiWbDCRJ8IMBQhv0JsqvgM9LLZ9CbyCW3xa
-         7MEdkVZT9EjCD/BSyFdR615D7eCBmSuScQqGl9V6FkpiGVHG671SexfOlJdtIeqJvszK
-         Ee6Jp4IDe9dXc1txafd+y4rRp4wlBDiIEEmy8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=t6Oa9L+6gZWNOFQH/1jtg2Kii/l9d+wX1Sfhaf0qTET0vx8UNhpYEsGQzNAPXiWDhi
-         +ZvpEFJgUwZgUDfU05oSk9YZsUf949m3I4xm3ttQef/GbPHWU8N/I3iJ4nCz7e9j6Ix3
-         IPyEiAJXg0q1WV7OTlhGO8k7EaArEPBZ9l5M8=
-Received: by 10.216.86.67 with SMTP id v45mr2280186wee.70.1269332727122; Tue, 
-	23 Mar 2010 01:25:27 -0700 (PDT)
+	id S1754729Ab0CWIaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Mar 2010 04:30:23 -0400
+Received: from peff.net ([208.65.91.99]:53841 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754696Ab0CWIaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Mar 2010 04:30:22 -0400
+Received: (qmail 16986 invoked by uid 107); 23 Mar 2010 08:30:50 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 23 Mar 2010 04:30:49 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Mar 2010 04:30:13 -0400
+Content-Disposition: inline
 In-Reply-To: <310ba29b220a70e5624819e6ef80bff0.squirrel@www.pkts.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142998>
 
-On Tue, Mar 23, 2010 at 12:36 AM, P Fudd <fink@ch.pkts.ca> wrote:
+On Mon, Mar 22, 2010 at 04:36:25PM -0700, P Fudd wrote:
+
+> Bug 1: git complained about a symbolic link to nowhere and halted...
+> several hours into the 'add'.  If I want to store a broken link, let me;
+> maybe warn me.
+
+Git does let you store broken links. Without seeing the actual error
+message you got, it's hard to say what actually happened. But you should
+be able to:
+
+  $ mkdir foo && cd foo && git init
+  $ ln -s bogus link
+  $ git add .
+  $ git commit -m 'add bogus link'
+  $ git show
+  [...]
+  diff --git a/link b/link
+  new file mode 120000
+  index 0000000..882b604
+  --- /dev/null
+  +++ b/link
+  @@ -0,0 +1 @@
+  +bogus
+  \ No newline at end of file
+
 > Bug 2: git died with an out-of-memory error on the commit:
 > ------
 > # git commit -a
-> [master (root-commit) 62b52e2] The initial checkin of the whole hard =
-disk.
-> =A0Committer: System Administrator <root@Mac-Pro.local>
+> [master (root-commit) 62b52e2] The initial checkin of the whole hard disk.
+>  Committer: System Administrator <root@Mac-Pro.local>
 > Your name and email address were configured automatically based
 > on your username and hostname. Please check that they are accurate.
 > You can suppress this message by setting them explicitly:
->
-> =A0 =A0git config --global user.name "Your Name"
-> =A0 =A0git config --global user.email you@example.com
->
+> 
+>     git config --global user.name "Your Name"
+>     git config --global user.email you@example.com
+> 
 > If the identity used for this commit is wrong, you can fix it with:
->
-> =A0 =A0git commit --amend --author=3D'Your Name <you@example.com>'
->
-> git(4667) malloc: *** mmap(size=3D1964838912) failed (error code=3D12=
-)
+> 
+>     git commit --amend --author='Your Name <you@example.com>'
+> 
+> git(4667) malloc: *** mmap(size=1964838912) failed (error code=12)
 > *** error: can't allocate region
 > *** set a breakpoint in malloc_error_break to debug
-> git(4667) malloc: *** mmap(size=3D1964838912) failed (error code=3D12=
-)
-> *** error: can't allocate region
-> *** set a breakpoint in malloc_error_break to debug
-> fatal: Out of memory, malloc failed
-> [Mac-Pro:/] shadministrator# git version
-> git version 1.7.0.2
 
-Is your git built as a 32-bit program? If so, it can't handle files
-larger than ~1-2 gb, which looks like it might be the case here...
+Note that it actually did make the commit, which means that the problem
+you saw happened while git was generating a diffstat summary of the
+commit.
 
---=20
-Erik "kusma" Faye-Lund
+It's hard to say exactly what it was trying to mmap without seeing a
+stack trace. But note that it is trying to malloc almost 2 gigabytes.
+In general, git assumes that it can fit any file you throw at it into
+memory during a diff. So presumably you have some gigantic file, and
+that is the problem.
+
+Which, as you noted, means git is not really suitable for just throwing
+your whole hard disk at it. The topic of better handling gigantic files
+comes up occasionally on the list, but I don't know that anyone is
+working on anything concrete right now.
+
+Avery Pennarun's "bup" tool may be closer to what you want, but I've
+never used it myself:
+
+  http://github.com/apenwarr/bup
+
+-Peff
