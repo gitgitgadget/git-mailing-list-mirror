@@ -1,87 +1,100 @@
-From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: Re: GSoC draft proposal: Line-level history browser
-Date: Tue, 23 Mar 2010 14:27:10 +0800
-Message-ID: <41f08ee11003222327u3a709249r7acf176fb31aeee3@mail.gmail.com>
-References: <41f08ee11003200218u59c45b6dl82a8eb56cc289256@mail.gmail.com>
-	 <81b0412b1003201335g7b37c51mfa3e2280210ebb7e@mail.gmail.com>
-	 <4BA544FC.7050007@gmail.com>
-	 <41f08ee11003202316w2fddc5f4jebda47f325451577@mail.gmail.com>
-	 <4BA61CF9.7040104@gmail.com>
-	 <41f08ee11003212052p6b0a7495j2e38f24839541ffb@mail.gmail.com>
-	 <alpine.DEB.1.00.1003221924110.7596@pacific.mpi-cbg.de>
+From: Jacopo Pecci <jacopo.pecci@gmail.com>
+Subject: Re: Master branch not updating
+Date: Tue, 23 Mar 2010 09:34:15 +0200
+Message-ID: <295c22191003230034m63eec998wf2f8e552fb28b07c@mail.gmail.com>
+References: <295c22191003220943o2ef330ddk58a8180411ddbb2b@mail.gmail.com> 
+	<4BA7A640.1080207@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: gitster@pobox.com, gitzilla@gmail.com,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 23 07:27:22 2010
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Mar 23 08:34:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NtxaA-0007fS-7S
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 07:27:18 +0100
+	id 1NtydQ-0000o3-2t
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 08:34:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753528Ab0CWG1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Mar 2010 02:27:13 -0400
-Received: from qw-out-2122.google.com ([74.125.92.24]:7536 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750824Ab0CWG1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Mar 2010 02:27:12 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so1448977qwh.37
-        for <git@vger.kernel.org>; Mon, 22 Mar 2010 23:27:10 -0700 (PDT)
+	id S1753822Ab0CWHei convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Mar 2010 03:34:38 -0400
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:63725 "EHLO
+	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751583Ab0CWHeh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Mar 2010 03:34:37 -0400
+Received: by fxm5 with SMTP id 5so2427042fxm.29
+        for <git@vger.kernel.org>; Tue, 23 Mar 2010 00:34:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=BpuKmYp07mzn22ycv45Uh3wxyLqPcF45pAtUUhpilLg=;
-        b=w2JBhTueq6yksjl8EJB3/O7P6+GePbgPCrwH8DXwtGJRF0e6Aj/TJWn5N2jFCYnujp
-         jT9ritrMZv6dUzu/b8DqMC0eKFKrqbiLRaDwj+5csr03Q1qIzMjItPEAgT3JDl4VnMhh
-         Zy/Me0kQb9cSqu98biWIIhYR8IMmEiyv/IK6k=
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=QdiC6Eza/qtKy8V4MfDnDfBEZdjwsi9jDvdDNRQwOcI=;
+        b=FxOwRS/osLhOD6ytpXV2FvQRTqd2L+qGpxeXbTRki12RT0e+UX8N4zy7vM5esvzBx/
+         AkyctDUo+h4FP/oQ29JYAQ4Sc2iuEhSxTyHcYFoybSWl4XcXo6H26WCkpfImbYRDc/ps
+         0NzziaPDqnCSwq07KGJf6RDNQi7odBCIBlWx8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=NydbSAJgiTD1hQvaJsN5gIClAG47UYwWb3CegW7aBVmNTno23DAJoCZp/84DAV8e1u
-         HxzCEBctREjwyes/mlFFr4dU7kxzjprxJeQOzfkcBQ8E2T3hij/3cZOODGTtCT9o1zAu
-         yRoGIiVgY5vfYUvkZsDIp2DIjLEaINgJgieAY=
-Received: by 10.229.212.9 with SMTP id gq9mr315034qcb.84.1269325630380; Mon, 
-	22 Mar 2010 23:27:10 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1003221924110.7596@pacific.mpi-cbg.de>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=pswa2ExKewQUg5+U+me9ghTdFBMXm4N+hWiJzjUwARfhdUE6PpcYA+RIPmb69Ki8MX
+         wAKflzv01/Oh6AUe8xHFB7D1lfC/Z1lIA5uz653Rjlw6rgjqzrGejTX2K6pFUlgOGQ3+
+         mp+qTraqHAbdCtgfMfbIcsWtAsMUyFXD2phxE=
+Received: by 10.223.15.89 with SMTP id j25mr7915715faa.97.1269329675418; Tue, 
+	23 Mar 2010 00:34:35 -0700 (PDT)
+In-Reply-To: <4BA7A640.1080207@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142991>
 
-Hi,
->> 4. Code copy of modified file in one commit.
+THANK YOU! THANK YOU! THANK YOU! THANK YOU! THANK YOU!
+I managed to recover all and actually the article made me understand a
+bit more Git.
+
+Jacopo
+
+
+On Mon, Mar 22, 2010 at 7:17 PM, Johannes Sixt <j.sixt@viscovery.net> w=
+rote:
+> Am 3/22/2010 17:43, schrieb Jacopo Pecci:
+>> Then I have tried =93checkout master branch=94, suddenly all the com=
+mits
+>> in between the one labelled [master] and the latest one vanished. I
+>> have not been able to get back.
+>>
+>> I am terribly afraid I have lost 4 day work. Do you have any
+>> suggestion? How is it possible that something which I have committed
+>> is not retrievable anymore.
 >
-> You mean code copy from somewhere in the same file?
-
-I am sorry not. I mean, lines copied from other files that were
-modified in the same commit. Just what 'blame' means with one '-C'
-options.
-
+> 1. Don't panic.
 >
->> 5. Code copy of any place in one commit tree.
->> 6. Fuzzy matching support.
+> 2. Make a backup copy, *including* the .git directory (very important=
+!)
 >
-> For fuzzy matching support, I would add some ideas, such as trying to
-> match alpha-numeric characters, or matching longest words or some such.
-> Also mention the possibility that this might be infeasible. In any case,
-> give an example what case this is trying to help with.
+> The .git directory contains your 4 day work, and it is very likely st=
+ill
+> retrievable.
 >
-
-I think fuzzy matching is used to track multiple lines of
-copy/movement, even with little change of the source.
-For example, one C function is moved from file1 to file2 and get
-renamed. In this case, most of the origin code of function body will
-remain unchanged except the function name. So, simply compare the new
-added lines with original code line by line and permit some percent of
-mismatch will help to find this kind of movement.
-
-
-Regards!
-Bo
+> It may be a simple matter of
+>
+> =A0 git branch the-lost-state HEAD@{1}
+>
+> If you can't work on a command line, then git extensions certainly ha=
+s
+> some nice UI that lets you create a branch at a particular revision. =
+In
+> this case, the branch name is "the-lost-state", and the revision is H=
+EAD@{1}.
+>
+> You can try more branch names at HEAD@{2}, HEAD@{3} (you get the poin=
+t).
+> It means, roughly, "the state where HEAD was 1, 2, 3, etc. git operat=
+ions
+> ago".
+>
+> -- Hannes
+>
