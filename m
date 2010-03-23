@@ -1,110 +1,144 @@
-From: Eli Barzilay <eli@barzilay.org>
-Subject: Re: git rev-list formatting
-Date: Tue, 23 Mar 2010 07:06:38 -0400
-Message-ID: <m3ocifnvpd.fsf@winooski.ccs.neu.edu>
-References: <m3iq8opp8u.fsf@winooski.ccs.neu.edu>
-	<4BA7A75A.6060909@lsrfire.ath.cx>
-	<m31vfbpzol.fsf@winooski.ccs.neu.edu>
-	<4BA89D88.7080803@drmicha.warpmail.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: GSoC draft proposal: Line-level history browser
+Date: Tue, 23 Mar 2010 12:22:38 +0100
+Message-ID: <201003231222.40745.jnareb@gmail.com>
+References: <81b0412b1003201335g7b37c51mfa3e2280210ebb7e@mail.gmail.com> <m38w9jjqqd.fsf@localhost.localdomain> <41f08ee11003230338y5cf70a13xa649e67071bc2a72@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 23 12:13:10 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, gitzilla@gmail.com,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Bo Yang <struggleyb.nku@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 23 12:22:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with smtp (Exim 4.69)
+	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nu22o-0000i5-7V
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 12:13:10 +0100
+	id 1Nu2CI-0005OC-F4
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 12:22:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752180Ab0CWLHI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Mar 2010 07:07:08 -0400
-Received: from lo.gmane.org ([80.91.229.12]:48433 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752122Ab0CWLHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Mar 2010 07:07:05 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Nu1wt-00060W-25
-	for git@vger.kernel.org; Tue, 23 Mar 2010 12:07:03 +0100
-Received: from winooski.ccs.neu.edu ([129.10.115.117])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 Mar 2010 12:07:03 +0100
-Received: from eli by winooski.ccs.neu.edu with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 Mar 2010 12:07:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: winooski.ccs.neu.edu
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-Cancel-Lock: sha1:v3o1YBMblu3FPOdYJZbqBXUxDno=
+	id S1752299Ab0CWLWx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Mar 2010 07:22:53 -0400
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:34733 "EHLO
+	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751146Ab0CWLWw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Mar 2010 07:22:52 -0400
+Received: by fxm5 with SMTP id 5so2749531fxm.29
+        for <git@vger.kernel.org>; Tue, 23 Mar 2010 04:22:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=3MNgawo/XZ/JUd70dEq1osOlJ+zuRwE28N/NjrLHTlM=;
+        b=MUzkWUlSP5xbccaPLMVvjQRR02CcHGZJGPRqIej39TWqklPZ890jeP3UxO8LO+59mb
+         RbralRt15PqP7hhP0UIBA4C7v23pTPhYtW3QUXHBYNNqBW1/f1ZgQfpHeJmSB7vgi3tb
+         Bs4VSKD9SuXyWitngYXACnZk7Ku2FH8dSqANg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=diIXx4jE0dXXYe2XYdyPt1HOJaBETC7NRtyJ0/QAzsQziWRdamfnCuobz7BWTOflgY
+         lJZc+3UejK5kLEhTeHNR6GiJC5u4TvRzuZZ5fI6F8yXOJ89ji/4fwRJs2tOpBFp3Wcug
+         wZaMy3Tj/iNY13JG04OVYZBoxsRwn+dpE5s4M=
+Received: by 10.223.58.71 with SMTP id f7mr2518019fah.45.1269343369772;
+        Tue, 23 Mar 2010 04:22:49 -0700 (PDT)
+Received: from [192.168.1.13] (absh220.neoplus.adsl.tpnet.pl [83.8.127.220])
+        by mx.google.com with ESMTPS id p17sm3058316fka.46.2010.03.23.04.22.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 23 Mar 2010 04:22:48 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <41f08ee11003230338y5cf70a13xa649e67071bc2a72@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143007>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Tue, 23 Mar 2010, Bo Yang wrote:
 
-> Eli Barzilay venit, vidit, dixit 23.03.2010 02:57:
->> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->>=20
->>> Am 22.03.2010 12:30, schrieb Eli Barzilay:
->>>> Possible bug -- IIUC, this:
->>>>
->>>>   git rev-list --pretty=3D"%w(40,2,2)%b" $rev
->>>>
->>>> should show all bodies wrapped as specified, but with 1.7.0.3 I se=
-e
->>>> only the first one wrapped, and the rest don't show up.  In one of=
- my
->>>> attempts to sort this, I saw all bodies, but all bodies after the
->>>> first were not wrapped as specified.
->>>
->>> I can't reproduce this when running this command against git's own
->>> repo.  Or perhaps I just fail to see it.  Is the one you're trying
->>> this on public?  Does it work as expected with some other version o=
-f
->>> git?
->>=20
->> Sorry, I've lost track of all the different things I tried, but here=
-'s
->> something that I can reproduce reliably now, which seems to be a
->> similar problem (or at least nothing in the man page explain why it
->> would do what it does).  If this is helpful, I'll tar up the
->> repository and put it up somewhere.  This is all running in the repo
->> -- and it case it matters, it's a bare repo, created with 1.7.0.
->
-> I'd say that certainly matters (can't reproduce this one on non-bare
-> either).
->
-> When you say "in the repo", do you mean that you're current
-> directory is within yourbarerepo.git?
+Please do not forget to include attribution line, like the one I have
+added below:
+=20
+> Jakub Narebski wrote:
 
-Yes.
+> > The problem is when you are asking about tracking a subset of lines
+> > that appear in postimage of a patch. =A0For example if we ask for
+> > history of
+> >
+> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0strbuf_addstr(&buf, extra_hdr.it=
+ems[i].string);
+> >
+> > line, should we track history of
+> >
+> > =A0 =A0 =A0 =A0 =A0for (i =3D 0; i < extra_hdr.nr; i++) {
+> >
+> > line which appears in relevant diff chunk? =A0If not, how we should
+> > detect which line in preimage (if any) corresponds to given line in
+> > postimage?
+>=20
+> If I understand correctly, that is as following.
+>=20
+> @@ -1008,29 +1000,29 @@ int cmd_format_patch(int argc, const char
+> **argv, const char *prefix)
+>                add_signoff =3D xmemdupz(committer, endpos - committer=
+ + 1);
+>        }
+>=20
+> -       for (i =3D 0; i < extra_hdr_nr; i++) {
+> -              strbuf_addstr(&buf, extra_hdr[i]);
+> +       for (i =3D 0; i < extra_hdr.nr; i++) {
+> +              strbuf_addstr(&buf, extra_hdr.items[i].string);
+>                strbuf_addch(&buf, '\n');
+>        }
+>=20
+> Here, the user only ask for tracking the strbuf_addstr line. And we
+> find the above diff hunk. I think we can then find what the line woul=
+d
+> be in the preimage using @@ -1008,29 +1000,29 @@.  The strbuf_addstr
+> is located at
+> 1000(the postimage start line number)
+> +3(the context number)
+> +1(the number of lines '+' before this line) in the postimage,
+> and we can calculate its line number in the preimage by the same way
+> 1008
+> +3
+> +1(the number of lines with '-' before this line).
+>=20
+> How do you think about this method?
+
+This would work with the simplest case, but not in more complicated
+cases, like for example preimage and postimage with different size.
+
+Take for example the following chunk (fragment):
+
+diff --git a/run-command.c b/run-command.c
+index 2feb493..3206d61 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -67,19 +67,21 @@ static int child_notifier =3D -1;
+=20
+ static void notify_parent(void)
+ {
+-	write(child_notifier, "", 1);
++	ssize_t unused;
++	unused =3D write(child_notifier, "", 1);
+ }
+=20
+ static NORETURN void die_child(const char *err, va_list params)
+
+If you follow ssize_t line, it is created.  If you follow line with
+write, which is 2nd line in postimage, its previous version is 1st
+line in preimage.
 
 
-> Do you have GIT_DIR set explicitly?
-
-No.
-
-
-> [...]
-
-I've made a copy of the repository at
-
-  http://tmp.barzilay.org/testing.git.tgz
-
-which shows what I said when I run
-
-  git rev-list --pretty=3D"%b" 267d60518
-  git rev-list --pretty=3D"%b" 84482
+Another example would be reordering of lines, or reordering with
+some change.
 
 --=20
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay=
-:
-                    http://barzilay.org/                   Maze is Life=
-!
+Jakub Narebski
+Poland
