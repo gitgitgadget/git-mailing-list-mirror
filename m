@@ -1,112 +1,74 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH] Test that the 'rebase -i' "reword" command always cherry-picks
- a commit.
-Date: Tue, 23 Mar 2010 10:38:27 -0400
-Message-ID: <4BA8D263.8040602@xiplink.com>
-References: <4BA11B23.4090801@xiplink.com> <1269285942-17496-1-git-send-email-marcnarc@xiplink.com> <7vd3yw84pd.fsf@alter.siamese.dyndns.org>
+From: Ping Yin <pkufranky@gmail.com>
+Subject: Re: [msysGit] Re: ANN: Git for Windows 1.7.0.2 preview 20100309
+Date: Tue, 23 Mar 2010 23:06:49 +0800
+Message-ID: <46dff0321003230806r53d61628k73865df0f5a08697@mail.gmail.com>
+References: <alpine.DEB.1.00.1003091921140.18499@intel-tinevez-2-302>
+	 <alpine.DEB.2.00.1003221012290.11364@ds9.cixit.se>
+	 <alpine.DEB.1.00.1003221155200.7596@pacific.mpi-cbg.de>
+	 <46dff0321003221854t2d95d18dx1a6cdf1174ea2efd@mail.gmail.com>
+	 <a5b261831003230503k73f62a88lc5a9b31da3e9d893@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 23 15:36:45 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: msysgit <msysgit@googlegroups.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Pat Thoyts <patthoyts@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 23 16:07:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nu5Do-0005eN-Mk
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 15:36:45 +0100
+	id 1Nu5h5-0001SY-9o
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 16:06:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754028Ab0CWOgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Mar 2010 10:36:22 -0400
-Received: from smtp112.dfw.emailsrvr.com ([67.192.241.112]:56013 "EHLO
-	smtp112.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754065Ab0CWOgH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Mar 2010 10:36:07 -0400
-Received: from relay11.relay.dfw.mlsrvr.com (localhost [127.0.0.1])
-	by relay11.relay.dfw.mlsrvr.com (SMTP Server) with ESMTP id BE172180BAB;
-	Tue, 23 Mar 2010 10:35:58 -0400 (EDT)
-Received: by relay11.relay.dfw.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id E27FD1809B4;
-	Tue, 23 Mar 2010 10:35:55 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.24 (X11/20100317)
-In-Reply-To: <7vd3yw84pd.fsf@alter.siamese.dyndns.org>
+	id S1754486Ab0CWPGw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Mar 2010 11:06:52 -0400
+Received: from qw-out-2122.google.com ([74.125.92.26]:9239 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754465Ab0CWPGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Mar 2010 11:06:52 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so1565604qwh.37
+        for <git@vger.kernel.org>; Tue, 23 Mar 2010 08:06:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=BO78nDDLV5FMtlOx0plFNUxn1b0EvmmVPtOMNvw5E/I=;
+        b=V7XMmAngeoJBjn5fmoWN8B3+IVcsfYpUAV31lS2NPum0gTuHgZK324EihYzobt5IF8
+         no+TfM9H/0UhmFZqz0HTkC0aC87wE127+/uonioUp8laizRXapF1CCmJfLQKjEtf1bDv
+         VX3ZCNzTXLPfawMiVLZP7qkpNwzohX18uLXs0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=ZUpA2E3T5v1ho7jcv5RL1Vsio50ZMxlUraiS4i8lLDu5rRh228unAtz+4ychrgJjPK
+         QpVi7scSm5X92kxtZxmYwftB9m9BVNXxBggLxH2ppS9Vef1mvVAih3h2ee4dYk1zTuEE
+         kGkelePktEIpPHo5guu65i/53s9HXpAiS+P3E=
+Received: by 10.229.219.143 with SMTP id hu15mr1043919qcb.12.1269356809720; 
+	Tue, 23 Mar 2010 08:06:49 -0700 (PDT)
+In-Reply-To: <a5b261831003230503k73f62a88lc5a9b31da3e9d893@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143023>
 
-Junio C Hamano wrote:
-> Marc Branchaud <marcnarc@xiplink.com> writes:
-> 
->> In particular, "reword" should cherry-pick a reworded commit even if the
->> commit's message is unchanged.
->>
->> This behaviour provides a way to deal with a situation that can arise when
->> a merge had to be reverted.  Added an addendum to revert-a-faulty-merge.txt
->> describing the situation and how to use "reword" to handle it.
->> ---
->>
->> Is this more acceptable than adding --no-ff to rebase--interactive?
->>
->> I wasn't sure how to integrate the new text into revert-a-faulty-merge.txt.
->> I went with an addendum, but I'm open to other approaches.
-> 
-> The addendum looked readable, but I am a bit puzzled.
+On Tue, Mar 23, 2010 at 8:03 PM, Pat Thoyts <patthoyts@googlemail.com> wrote:
+>
+> On 23 March 2010 01:54, Ping Yin <pkufranky@gmail.com> wrote:
+> > With putty and pageant, the key with passphrase can be used.
+> > Is there any way to use key with passphrase when using the msysgit ssh?
+>
+> Use ssh-agent.
+>
+> After you start the msys shell enter:
+>
+> eval $(ssh-agent)
+>
+> Then you can use 'ssh-add' to add a key to the agent. If it requires a
+> password then it will prompt you at that point. Now any further ssh
+> activity in the current session can acquire the pre-authenticated key
+> from the agent.
 
-Ya think _you're_ puzzled?  :)
-
-> "rebase -i --no-ff"
-> already exists, and is probably a more natural way to do this than saying
-> "reword" but not rewording anything, no?
-> 
-> I would actually say "rebase -f P" would be even easier and clearer,
-> especially as...
-> 
->> ...
->> +However, you could avoid these problems if you recreated the entire branch,
->> +including commit A:
->> +
->> + P---o---o---M---x---x---W---x
->> + |\         /
->> + | A---B---C   <-- old branch
->> + \
->> +  A'---B'---C' <-- entirely recreated branch
->> +
->> +Now you can merge A'-B'-C' into the mainline branch without worrying about
->> +first reverting W.
->> +
->> +But if you don't actually need to change commit A, then you need some way to
->> +recreate it as a new commit with the same changes in it.
-> 
-> ... this part seems to talk about working around the tendency of 'rebase -i'
-> to fast-forward.
-
-Yes.  Thanks for pointing this out, it's cleared up a lot for me.
-
-I was confused about the purpose of "rebase -f".  Jonathan Nieder even
-pointed me to it when I posted my original patch for "rebase -i --no-ff", but
-the description in the man page threw me:
-
-	Force the rebase even if the current branch is a descendant of
-	the commit you are rebasing onto. Normally the command will
-	exit with the message "Current branch is up to date" in such a
-	situation.
-
-I didn't realize that this is exactly the situation that "rebase -i" normally
-deals with (-i basically implies -f), and that "rebase -f" would do exactly
-what I wanted "rebase -i --no-ff" to do.
-
-But I think I see an approach that might make sense:
-
- - Teach "rebase -i" to recognize the -f parameter (instead of --no-ff).
-
- - Update rebase's man page to better explain -f.
-
- - Update revert-a-faulty-merge.txt to explain how to use "rebase [-i] -f".
-
-I'll submit a new patch shortly.
-
-		M.
+Thanks. I'm sorry that i didn't make it clear. I know this works for
+msys shell, but it doesn't work for git-gui.
