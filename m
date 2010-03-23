@@ -1,79 +1,60 @@
-From: Sylvain Rabot <sylvain@abstraction.fr>
+From: Howard Miller <howardsmiller@googlemail.com>
 Subject: Re: How to ignore changes on remote
-Date: Tue, 23 Mar 2010 15:07:15 +0100
-Message-ID: <1269353235.14299.0.camel@kheops>
+Date: Tue, 23 Mar 2010 14:13:29 +0000
+Message-ID: <26ae428a1003230713y12f0c74dh3b22c0d97565159b@mail.gmail.com>
 References: <26ae428a1003230654m50c35caci4a02e2df321f289c@mail.gmail.com>
-Reply-To: sylvain@abstraction.fr
+	 <1269353235.14299.0.camel@kheops>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-MEyoer80+iWxob+KME6o"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 23 15:07:35 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: sylvain@abstraction.fr
+X-From: git-owner@vger.kernel.org Tue Mar 23 15:13:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nu4la-0002B5-CD
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 15:07:35 +0100
+	id 1Nu4rR-0005bT-Fb
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 15:13:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753670Ab0CWOH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Mar 2010 10:07:29 -0400
-Received: from lo.gmane.org ([80.91.229.12]:41397 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753562Ab0CWOH3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Mar 2010 10:07:29 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Nu4lS-00026A-N0
-	for git@vger.kernel.org; Tue, 23 Mar 2010 15:07:26 +0100
-Received: from smj33-1-82-233-66-33.fbx.proxad.net ([82.233.66.33])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 Mar 2010 15:07:26 +0100
-Received: from sylvain by smj33-1-82-233-66-33.fbx.proxad.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 Mar 2010 15:07:26 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: smj33-1-82-233-66-33.fbx.proxad.net
-In-Reply-To: <26ae428a1003230654m50c35caci4a02e2df321f289c@mail.gmail.com>
-X-Mailer: Evolution 2.28.1 
+	id S1753751Ab0CWONc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Mar 2010 10:13:32 -0400
+Received: from mail-ew0-f216.google.com ([209.85.219.216]:47297 "EHLO
+	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753365Ab0CWONb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Mar 2010 10:13:31 -0400
+Received: by ewy8 with SMTP id 8so454137ewy.28
+        for <git@vger.kernel.org>; Tue, 23 Mar 2010 07:13:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=7Mg1tN9i3h1JzYxZLMi956q+9Bv3RnCR7jsnKpwRMJ0=;
+        b=uNyQtK5Q+mfaUvb1uYKbPm6PDEvIWm62A4U6SiZoqnyBk1W8BuWp4CPWcuy2EVDnXW
+         /ZXxygnVrCsz2hjuQF/5/p/mPR0/+odsYSJdHHF5N96ZgN4c4I2UFDS8KDyyRLB7FtpX
+         YzUwCbSWIdJghHCZrCntoC45FD/OvFsOpkQfo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=hGLwq/AsMMqjUpNVGV3/HmA6xOX/S1torMEIG5ZX4N95QEsX6t5R5Yw6NmXpurWK+m
+         uhxC9OJGWUwWTOmOBWMC2CpAtec+Qk84UollsUCrwxbFITIAp+DewUqu3l/8krHss5jU
+         /NjE9lged9K2O66L3gMNL/jATPPY85cs9IiZI=
+Received: by 10.239.137.12 with SMTP id j12mr138972hbj.115.1269353609606; Tue, 
+	23 Mar 2010 07:13:29 -0700 (PDT)
+In-Reply-To: <1269353235.14299.0.camel@kheops>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143017>
 
+>
+> git push origin +local_branch:remote_branch
+>
 
---=-MEyoer80+iWxob+KME6o
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Thanks!
 
-On Tue, 2010-03-23 at 13:54 +0000, Howard Miller wrote:
-> My remote branch has changes that are not fast forward (I forgot to
-> merge). I have now made incompatible changes on my local branch. I
-> simply want to use the local version and push it to the remote. I
-> don't care about the remote version. I don't want to merge as there'll
-> be loads of conflicts and the answer will always be 'use the local
-> one'. Is there an easy way to do this? I can't think of anything.
->=20
-> Cheers!
-
-git push origin +local_branch:remote_branch
-
---=20
-Sylvain Rabot <sylvain@abstraction.fr>
-
---=-MEyoer80+iWxob+KME6o
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkuoywwACgkQ+TklUoyVcyf7twCff1pFz2nytWB0iNcnEWggCUZq
-FLsAnRMsNhdD+XR9DSwRLd9CfsS62I2l
-=NqUY
------END PGP SIGNATURE-----
-
---=-MEyoer80+iWxob+KME6o--
+Tell me more about that '+'. I've never heard of it before. Can't see
+anything in the docs (although I'm probably not looking in the right
+place)
