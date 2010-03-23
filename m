@@ -1,55 +1,66 @@
-From: maximilian attems <max@stro.at>
-Subject: Re: commit --amend neglecting return value
-Date: Mon, 22 Mar 2010 19:39:56 +0100
-Message-ID: <20100322183956.GC21299@stro.at>
-References: <20100322043616.GF21406@baikonur.stro.at>
- <196847A3-42CB-4CE8-8FFC-D7C8C8AFCDF7@gernhardtsoftware.com>
- <E139EF92-B047-4928-A390-D47224CAA3DB@gernhardtsoftware.com>
-Mime-Version: 1.0
+From: Benjamin Meyer <ben@meyerhome.net>
+Subject: Re: git-p4 and git clone
+Date: Mon, 22 Mar 2010 20:15:19 -0400
+Message-ID: <4880E32B-7880-40BF-8AFD-AC00DA457CEE@meyerhome.net>
+References: <B978892CA0FBD142827E74F92AC4BBD429B2444D4D@HQMAIL03.nvidia.com>
+Mime-Version: 1.0 (Apple Message framework v1077)
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Tue Mar 23 01:13:01 2010
+Content-Transfer-Encoding: 8BIT
+Cc: "'git@vger.kernel.org'" <git@vger.kernel.org>
+To: Thomas Kistler <tkistler@nvidia.com>
+X-From: git-owner@vger.kernel.org Tue Mar 23 01:15:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ntrjw-0004Eo-6s
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 01:13:00 +0100
+	id 1NtrmP-0005DL-Ac
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 01:15:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754710Ab0CWAMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Mar 2010 20:12:55 -0400
-Received: from baikonur.stro.at ([213.239.196.228]:39893 "EHLO
-	baikonur.stro.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754376Ab0CWAMy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Mar 2010 20:12:54 -0400
-Received: from dual (pa-67-234-122-227.dhcp.embarqhsd.net [67.234.122.227])
-	by baikonur.stro.at (Postfix) with ESMTP id 325845C010;
-	Tue, 23 Mar 2010 01:05:13 +0100 (CET)
-Received: by dual (Postfix, from userid 1000)
-	id 3870D240E4; Mon, 22 Mar 2010 19:39:56 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <E139EF92-B047-4928-A390-D47224CAA3DB@gernhardtsoftware.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: by Amavis (ClamAV) at stro.at
+	id S1754826Ab0CWAP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Mar 2010 20:15:28 -0400
+Received: from qmta07.westchester.pa.mail.comcast.net ([76.96.62.64]:32774
+	"EHLO qmta07.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751532Ab0CWAP1 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Mar 2010 20:15:27 -0400
+Received: from omta15.westchester.pa.mail.comcast.net ([76.96.62.87])
+	by qmta07.westchester.pa.mail.comcast.net with comcast
+	id wH8F1d0051swQuc57QFUVR; Tue, 23 Mar 2010 00:15:28 +0000
+Received: from [192.168.3.111] ([71.192.50.29])
+	by omta15.westchester.pa.mail.comcast.net with comcast
+	id wQK91d0040dnthT3bQKGov; Tue, 23 Mar 2010 00:19:16 +0000
+In-Reply-To: <B978892CA0FBD142827E74F92AC4BBD429B2444D4D@HQMAIL03.nvidia.com>
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/142980>
 
-On Mon, 22 Mar 2010, Brian Gernhardt wrote:
 
-> 
-> On Mar 22, 2010, at 1:16 AM, Brian Gernhardt wrote:
-> 
-> > If you want to abort committing while editing the message, delete the entire message (in Vim: "0dG:wq^M") and git will reply "Aborting commit due to empty commit message."
-> 
-> Oops.  Obviously I meant "ggdG:wq^M".
-> 
-> Also, a quick search of :help and testing reveals that ":cq" causes Vim to exit with non-zero status which will cause git to abort the commit.
+On Mar 22, 2010, at 7:16 PM, Thomas Kistler wrote:
 
-thanks for the pointer this is indeed very helpful. :)
+> I'm probably missing something fairly fundamental but I'm running into problems with cloning a git-p4 repository:
+> 
+> First, I'm setting up a git-p4 master repository:
+> 
+>    $ cd tmp1
+>    $ git-p4 clone //foo/bar
+> 
+> Then I'm cloning it through git:
+> 
+>    $ cd tmp2
+>    $ git clone tmp1/bar
+> 
+> Finally, I'm trying to submit back to p4:
+> 
+>    $ git-p4 submit
+> 
+> This now fails because the remotes/p4/master seems to get lost when doing the "git clone". Is this supposed to work?
+> 
+> -Thomas
 
-kept hiting that bug in stressy situations, good to know a way out.
+There is a -import-local option you can use.  Then the p4/master branch is local and when you do the second clone you will get the p4/master branch.
+
+-Benjamin Meyer
