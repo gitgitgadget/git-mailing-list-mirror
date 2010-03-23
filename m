@@ -1,91 +1,87 @@
 From: Fredrik Kuivinen <frekui@gmail.com>
-Subject: Re: [PATCH 1/2] Make xmalloc and xrealloc thread-safe
-Date: Tue, 23 Mar 2010 22:21:40 +0100
-Message-ID: <4c8ef71003231421u789c4332h461c066add0ec7b1@mail.gmail.com>
-References: <20100323161713.3183.57927.stgit@fredrik-laptop>
-	 <20100323173114.GB4218@fredrik-laptop>
-	 <20100323184309.GA31668@spearce.org>
+Subject: Re: [PATCH 7/6] Enable threaded async procedures whenever pthreads is 
+	available
+Date: Tue, 23 Mar 2010 22:42:46 +0100
+Message-ID: <4c8ef71003231442j30618489n226dd16d4033c3fb@mail.gmail.com>
+References: <cover.1267889072.git.j6t@kdbg.org>
+	 <201003172228.18939.j6t@kdbg.org>
+	 <4c8ef71003230115y64d36094y178fcfe6576e9c66@mail.gmail.com>
+	 <201003232119.19430.j6t@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Mar 23 22:21:48 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Mar 23 22:42:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuBXn-0000eD-Nf
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 22:21:48 +0100
+	id 1NuBsE-00058D-4P
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Mar 2010 22:42:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752822Ab0CWVVm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Mar 2010 17:21:42 -0400
-Received: from mail-fx0-f223.google.com ([209.85.220.223]:38727 "EHLO
-	mail-fx0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752667Ab0CWVVl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Mar 2010 17:21:41 -0400
-Received: by fxm23 with SMTP id 23so2649002fxm.1
-        for <git@vger.kernel.org>; Tue, 23 Mar 2010 14:21:40 -0700 (PDT)
+	id S1754092Ab0CWVmt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Mar 2010 17:42:49 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:49400 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753834Ab0CWVms convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Mar 2010 17:42:48 -0400
+Received: by fg-out-1718.google.com with SMTP id l26so1226633fgb.1
+        for <git@vger.kernel.org>; Tue, 23 Mar 2010 14:42:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=WnMuqSQSA3sbKD7+igowiUryolSw04Qcvz9pPq2jCZ0=;
-        b=VLNYGSTl4CHlML4kxoXgHVBoRZmqAktPnB89tGidxlGMMsim9/vPqyGX3vL1UxmuXq
-         5zcRsWsvIz1FCLd7uEvuu77gGs5NepEcgaYCeSqvMVkSNw2OENDrWFyROXe9/iRP9Dtf
-         AEC/rldIg3nALqyVg5a9lgCAammoVfbD1uSDQ=
+        bh=sxrHr/9uJBsDfsPsfQkaOZsAm9JYfCnNijQz1ljZUOk=;
+        b=YpHb/JVUvCIVhYElFggId1ct9itFJZICk9urfPUyCs+zZQskPk5aUJgGtpwrjzY3bf
+         kRzGnVX5YoKKqWKZ/p1jzlVnsP8mk1dbG5ObRS6mcZidlCk/kkm1xNO88VfVOffT3JOJ
+         X5cibMDWfZ1L/7hkLe8ZiwaodwoDTlp+KuAk8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=pwIZ1cdahEKhj5ZapZjMm5NPAsuyv6hHgCB8XIW4DoR9uATMjtJz3NeNnYzyUUkGX4
-         ohurMSySQLQtMbQgAWXfcsdJgDbId0JPXHXykIquSW1Y/eDdhbnoIz8muemoBFaRIbje
-         /dTXXFP/et34DL8HPq00J1hOzwYKazIHDRxas=
-Received: by 10.239.184.65 with SMTP id x1mr1304338hbg.75.1269379300427; Tue, 
-	23 Mar 2010 14:21:40 -0700 (PDT)
-In-Reply-To: <20100323184309.GA31668@spearce.org>
+        b=iJ4KgaMacA7FJ2uBfN7EZ6YrYKOWait7RdCdOwD3LMGJPK7tGqn4BDDqUj/jRpDO6Q
+         Fl1mB9utRydC9vl9cWNbdAiBzlFm4LzQtC7vKJU+Q21dtWGhvA3rs3gLGRXdNTH1WCzw
+         SAzFIpMAtUFA3uX8IwKpsLPKtLUUnOpbMH8KY=
+Received: by 10.239.185.129 with SMTP id c1mr2076564hbh.167.1269380566754; 
+	Tue, 23 Mar 2010 14:42:46 -0700 (PDT)
+In-Reply-To: <201003232119.19430.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143052>
 
-On Tue, Mar 23, 2010 at 19:43, Shawn O. Pearce <spearce@spearce.org> wr=
-ote:
-> Fredrik Kuivinen <frekui@gmail.com> wrote:
->> +static int multiple_threads;
->> +#ifndef NO_PTHREADS
->> +int xpthread_create(pthread_t *thread, const pthread_attr_t *attr,
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 void *(*start_routine)(void*), voi=
-d *arg)
->> +{
->> + =A0 =A0 multiple_threads =3D 1;
->> + =A0 =A0 return pthread_create(thread, attr, start_routine, arg);
->> +}
->> +#endif
->> +
->> =A0void *xmalloc(size_t size)
->> =A0{
->> =A0 =A0 =A0 void *ret =3D malloc(size);
->> =A0 =A0 =A0 if (!ret && !size)
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 ret =3D malloc(1);
->> - =A0 =A0 if (!ret) {
->> + =A0 =A0 if (!ret && !multiple_threads) {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 release_pack_memory(size, -1);
+On Tue, Mar 23, 2010 at 21:19, Johannes Sixt <j6t@kdbg.org> wrote:
+> On Dienstag, 23. M=E4rz 2010, Fredrik Kuivinen wrote:
+>> On Wed, Mar 17, 2010 at 22:28, Johannes Sixt <j6t@kdbg.org> wrote:
+
+>> That xmalloc and xrealloc aren't thread-safe feels a bit fragile.
+>> Maybe we should try to fix that.
 >
-> So by "make thread safe" you really mean "disable release of
-> least-frequently used pack windows once any thread starts".
+> The point of this assessment was to find out whether this is necessar=
+y (and
+> whether something else that is not thread-safe is used).
 
-Yes.
+It may not be necessary now, but my point was that by having
+thread-unsafe xmalloc and xrealloc it is a bit too easy to introduce
+new bugs.
 
-> If that is what we are doing, disabling the release of pack windows
-> when malloc fails, why can't we do that all of the time?
+>> > ----------
+>> > upload_pack:create_pack_file():
+>> ...
+>> sha1_to_hex is also called by the parent and the current
+>> implementation of that function is not thread-safe. sha1_to_hex is
+>> also called by some paths in the revision machinery, but I don't kno=
+w
+>> if it will ever be called in this particular case.
+>
+> sha1_to_hex is only called by the parent when the async procedure is =
+not used.
 
-The idea was that most git programs are single threaded, so they can
-still benefit from releasing the pack windows when they are low on
-memory.
+Yes, you are right.
 
 - Fredrik
