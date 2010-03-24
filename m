@@ -1,63 +1,58 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
-Date: Wed, 24 Mar 2010 13:23:38 -0600
-Message-ID: <b4087cc51003241223l4a7feed9m3d1d0e83c38a7e94@mail.gmail.com>
-References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com> <4BA338C1.7030803@alum.mit.edu> 
-	<b4087cc51003190439x3c9ff269g35d11432bd2a3d60@mail.gmail.com> 
-	<alpine.DEB.2.00.1003190441530.3821@asgard.lang.hm> <20100319115445.GA12986@glandium.org> 
-	<b4087cc51003190509y6ce7ad9dy992254cfe6ac2fb3@mail.gmail.com> 
-	<20100322120649.GA28003@sirena.org.uk> <4ba780dc.5744f10a.5517.4c2d@mx.google.com> 
-	<40aa078e1003241218s753c1986r3dde7281c513de07@mail.gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 1/2] Make xmalloc and xrealloc thread-safe
+Date: Wed, 24 Mar 2010 12:57:38 -0700
+Message-ID: <ec874dac1003241257r3cad86c9q1af84d3732e23ca8@mail.gmail.com>
+References: <20100323161713.3183.57927.stgit@fredrik-laptop> 
+	<20100323173114.GB4218@fredrik-laptop> <20100323184309.GA31668@spearce.org> 
+	<4c8ef71003231421u789c4332h461c066add0ec7b1@mail.gmail.com> 
+	<alpine.LFD.2.00.1003231945480.31128@xanadu.home> <4c8ef71003240823o7cd733bn5f19699305c94cba@mail.gmail.com> 
+	<alpine.LFD.2.00.1003241133430.694@xanadu.home> <ec874dac1003241122s3d592f26n1b23d23144939218@mail.gmail.com> 
+	<alpine.LFD.2.00.1003241435300.694@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Mark Brown <broonie@sirena.org.uk>, Mike Hommey <mh@glandium.org>,
-	david@lang.hm, git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Wed Mar 24 20:24:11 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Wed Mar 24 20:58:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuWBT-0001IL-IH
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 20:24:07 +0100
+	id 1NuWiN-0003vu-Gu
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 20:58:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756766Ab0CXTYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Mar 2010 15:24:00 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:13454 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756758Ab0CXTYA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Mar 2010 15:24:00 -0400
-Received: by fg-out-1718.google.com with SMTP id l26so1712358fgb.1
-        for <git@vger.kernel.org>; Wed, 24 Mar 2010 12:23:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=xvl6GS4/gvq6dXt8RowJhKQeo5iV6T0maIV4UsRiOms=;
-        b=v/QuqYJwjm7FttNh4wIX6arcAOy4S0KJYRv1Y66h2HNub1+G/gfyFjT9RR3UgDjIof
-         sK+nA/m531cxWjQ5gITUObMUId1OxrUwcadtN03XfcOnfMosj+Cj0ZfPn8BItl2wqwLp
-         YGdz6aBj9HXldnnCdgrIabu1ONejQ9mT9wV50=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=N7Evdjz8O4f18TCMNmaheP8tVcwAqB1tvbdVb+2YmGOSQa90uGUF3LfyVJZT8ZfW+7
-         eebCZoztt7/PeUHFMx8A9252t7X9AO6TcriyNShj+8jDXbylEn0YBLWEx/xWQhMqD6Fp
-         fucYAvXzDhc242Q0MIzhXosrm1MuzDA/tuEFw=
-Received: by 10.239.191.194 with SMTP id c2mr312911hbi.169.1269458638302; Wed, 
-	24 Mar 2010 12:23:58 -0700 (PDT)
-In-Reply-To: <40aa078e1003241218s753c1986r3dde7281c513de07@mail.gmail.com>
+	id S1755588Ab0CXT6A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Mar 2010 15:58:00 -0400
+Received: from mail-pz0-f200.google.com ([209.85.222.200]:33039 "EHLO
+	mail-pz0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751863Ab0CXT57 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Mar 2010 15:57:59 -0400
+Received: by pzk38 with SMTP id 38so1196868pzk.33
+        for <git@vger.kernel.org>; Wed, 24 Mar 2010 12:57:59 -0700 (PDT)
+Received: by 10.142.247.7 with SMTP id u7mr2863970wfh.95.1269460678868; Wed, 
+	24 Mar 2010 12:57:58 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1003241435300.694@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143110>
 
-On Wed, Mar 24, 2010 at 13:18, Erik Faye-Lund <kusmabite@googlemail.com> wrote:
-> I don't see how this
-> changes anything
+On Wed, Mar 24, 2010 at 11:54 AM, Nicolas Pitre <nico@fluxnic.net> wrot=
+e:
+> Another solution could be for xmalloc() to use a function pointer for
+> the method to use on malloc error path, which would default to a
+> function calling release_pack_memory(size, -1). =A0Then pack-objects.=
+c
+> would override the default with its own to acquire the read_mutex aro=
+und
+> the call to release_pack_memory(). =A0That is probably the easiest
+> solution for now.
 
-I don't see how you can't see it.
+Yea, that sounds like the most reasonable solution right now.
 
-Oh well.
+--=20
+Shawn.
