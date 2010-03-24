@@ -1,73 +1,67 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Lars Damerow <lars@pixar.com>
 Subject: Re: GIT_ONE_FILESYSTEM inclusion?
-Date: Wed, 24 Mar 2010 14:43:26 +0100
-Message-ID: <vpqd3yt4yyp.fsf@bauges.imag.fr>
-References: <20100323232055.GV7038@pixar.com>
-	<81b0412b1003240229l6f7eaa18l563c3d7ba0cf6cc5@mail.gmail.com>
-	<4BA9DCDD.6060109@viscovery.net>
-	<81b0412b1003240437n799bac07sb74db749d647817d@mail.gmail.com>
+Date: Wed, 24 Mar 2010 06:40:49 -0700
+Message-ID: <20100324134048.GB10190@pixar.com>
+References: <20100323232055.GV7038@pixar.com> <81b0412b1003240229l6f7eaa18l563c3d7ba0cf6cc5@mail.gmail.com> <4BA9DCDD.6060109@viscovery.net> <81b0412b1003240437n799bac07sb74db749d647817d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Lars Damerow <lars@pixar.com>, git@vger.kernel.org
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
 To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 24 14:43:43 2010
+X-From: git-owner@vger.kernel.org Wed Mar 24 14:50:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuQs2-0002Tr-KN
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 14:43:42 +0100
+	id 1NuQyb-0006Gq-4d
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 14:50:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755400Ab0CXNnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Mar 2010 09:43:37 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:54875 "EHLO shiva.imag.fr"
+	id S1755978Ab0CXNuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Mar 2010 09:50:23 -0400
+Received: from emx.pixar.com ([199.108.77.30]:5805 "EHLO emx.pixar.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755331Ab0CXNng (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Mar 2010 09:43:36 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o2ODdaQR031240
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 24 Mar 2010 14:39:36 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NuQrm-00053v-Mj; Wed, 24 Mar 2010 14:43:26 +0100
-In-Reply-To: <81b0412b1003240437n799bac07sb74db749d647817d@mail.gmail.com> (Alex Riesen's message of "Wed\, 24 Mar 2010 12\:37\:39 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 24 Mar 2010 14:39:37 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o2ODdaQR031240
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1270042777.38217@yp5+jCTcT/cZz+n7jCScNQ
+	id S1755765Ab0CXNuX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Mar 2010 09:50:23 -0400
+X-Greylist: delayed 572 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Mar 2010 09:50:23 EDT
+X-PixarMID: 1751869
+X-PixarRecvListener: OutboundMail
+X-PixarRemoteIP: 138.72.131.152
+X-IronPort-AV: E=Sophos;i="4.51,301,1267430400"; 
+   d="scan'208,223";a="1751869"
+Received: from helper.dynamic.pixar.com ([138.72.131.152])
+  by iris.pixar.com with ESMTP; 24 Mar 2010 06:40:51 -0700
+Received: from helper.dynamic.pixar.com (localhost [127.0.0.1])
+	by helper.dynamic.pixar.com (8.14.3/8.14.3) with ESMTP id o2ODenat026998;
+	Wed, 24 Mar 2010 06:40:49 -0700
+Received: (from lars@localhost)
+	by helper.dynamic.pixar.com (8.14.3/8.14.3/Submit) id o2ODen52026997;
+	Wed, 24 Mar 2010 06:40:49 -0700
+Content-Disposition: inline
+In-Reply-To: <81b0412b1003240437n799bac07sb74db749d647817d@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143084>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
-
-> On Wed, Mar 24, 2010 at 10:35, Johannes Sixt <j.sixt@viscovery.net> wrote:
->> Am 3/24/2010 10:29, schrieb Alex Riesen:
->>> And while at it, how about making it a config option? (i.e. core.oneFilesystem?)
->>
->> It's difficult to have this as a config option when you are looking for a
->> repository... ;)
->>
->
+>From Alex Riesen <raa.lkml@gmail.com>, Wed, Mar 24, 2010 at 12:37:39PM +0100:
+> 
 > Isn't it a little pointless to look for repository when you can't
 > access its config?
 
-I guess Johannes's point is that the config option can be in
-$GIT_DIR/config, which you can't access when looking for $GIT_DIR.
-OTOH, looking at ~/.gitconfig to find a core.oneFilesystem makes sense
-(but is probably painfull to implement since the current code to parse
-config file will look for $GIT_DIR first).
+If you're doing the trendy thing of putting repository information in
+your shell prompt, then your prompt is looking for a repository every
+time you change a directory.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+As for making this a command-line option: that's certainly doable, but
+it makes it harder to enforce the option's use across an organization.
+It's far easier for me to set an environment variable centrally on a
+thousand workstations than to convince a potentially large number of
+users to set a new shell alias for git.
+
+thanks,
+-lars
+
+--
+lars r. damerow :: button pusher :: pixar animation studios
