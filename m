@@ -1,68 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4] gitweb: fill in missing parts of minify support
-Date: Wed, 24 Mar 2010 10:11:47 -0700
-Message-ID: <7vy6hhskz0.fsf@alter.siamese.dyndns.org>
-References: <4BA5133E.6050901@mailservices.uwaterloo.ca>
- <4BAA3FF7.9040100@mailservices.uwaterloo.ca>
+Subject: Re: [PATCHv4 0/2] Teach the --no-ff option to 'rebase -i'.
+Date: Wed, 24 Mar 2010 10:13:23 -0700
+Message-ID: <7vaatxskwc.fsf@alter.siamese.dyndns.org>
+References: <7vzl1yd5j4.fsf@alter.siamese.dyndns.org>
+ <1269445261-2941-1-git-send-email-marcnarc@xiplink.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Mark Rada <marada@uwaterloo.ca>
-X-From: git-owner@vger.kernel.org Wed Mar 24 18:12:08 2010
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Wed Mar 24 18:13:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuU7j-0006qj-G8
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 18:12:07 +0100
+	id 1NuU9H-0007np-Eb
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 18:13:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752568Ab0CXRMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Mar 2010 13:12:00 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49410 "EHLO
+	id S1754061Ab0CXRNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Mar 2010 13:13:35 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52810 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751861Ab0CXRL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Mar 2010 13:11:59 -0400
+	with ESMTP id S1753968Ab0CXRNf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Mar 2010 13:13:35 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 75602A4E22;
-	Wed, 24 Mar 2010 13:11:58 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C9F6A4E9A;
+	Wed, 24 Mar 2010 13:13:34 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9nS2eZF6xWnFdyInjjiI8AMKdxI=; b=pmjk6/
-	w9us23hk8tDrTwtLaSdT+hOKGnvZaxoYISORWzjpNV9TImxe+/WMwW0Bl1aXtufD
-	Rwo+Qx2lA9Qber4wUXdvy9hU05HmNMsbBhc9PnYOIReRYkl5/fZHQwpnipB5p9Ki
-	dDdCBj7jMAuFp2cpiyGDOfFL+Oc2CiLTHbelc=
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=AeVLplFF5oj1mbaPLooJfSPPcmQ=; b=IY779t2KvW1IuvYZCNHBTSA
+	2oKHYnsQeV/cYlqr4fUYg8tBoWQYK6IWXe46Qmuf7Qi1J9pck4MPJq9eafTjnsIQ
+	BJKK/naCGVGx8SdVEe1z3tWxVRObF2EJjh+QAkYNTjrhGw2c6xPOpj86OKCb43Nt
+	2L/tzWHUn8DmTLChaF4M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xLbO1kzFILp64e+e45iZG/WpbP112tUC
-	waM4sII50EMCmhAlclTndIIBWTW1Wd2VFUcYB6KCwgumrIQRzjdBRk+h5wo9c1Fj
-	Jl+NTtUWoXYBywE6TZ15InD8knLt0yWj4AU7Nva69yUBZNhdfsDI5/j0vy+NSF0N
-	d/nENGIet1g=
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=RG69BhIo5xTNDmdKDXaMrFywrwO9R5NuoTofEQyUIh2Vj3+vw
+	G8g6gBA+GWMRXGWs5fAqFk0McFE84V/9ZxsMVyG7duerBRZ4FWqZPGZvhvDHBd36
+	EAO1UOhWwMDjdeo/fEBhFpeMk8UH6B2h/DtWb3RPXAwdIo0QYA4jxYehMs=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 084EEA4E13;
-	Wed, 24 Mar 2010 13:11:53 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 50C8AA4E94;
+	Wed, 24 Mar 2010 13:13:30 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E6D9A4E0B; Wed, 24 Mar
- 2010 13:11:49 -0400 (EDT)
-In-Reply-To: <4BAA3FF7.9040100@mailservices.uwaterloo.ca> (Mark Rada's
- message of "Wed\, 24 Mar 2010 12\:38\:15 -0400")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 79177A4E90; Wed, 24 Mar
+ 2010 13:13:25 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 58127130-3768-11DF-B141-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 91956FE8-3768-11DF-A3F8-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143095>
 
-Mark Rada <marada@uwaterloo.ca> writes:
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
-> Hi,
+> Thanks to both Junio and Jonathan for your patience in working through this.
 >
-> Has this been dropped? Does it need to be modified in some way?
+> Junio, I think I see what you mean.  I like teaching --no-ff to 'rebase -i'
+> because it allows me to combine two commands into one for this situation.
+>
+> I've split this work into two patches:
+>
+> The first one simply teaches "rebase -i" to accept and ignore -f.  I feel
+> this is better than adding text to the man page explaining why interactive
+> rebase has --no-ff but not -f, while non-interactive has the opposite.
 
-Thanks for a reminder.
+I am mildly against that change; I cannot explain why "rebase -i" accepts
+and then ignores "-f" myself to the users.  "Non interactive one knows -f
+but interactive doesn't" is not necessarily an inconsistency.  "--force"
+is about forcing what would normally rejected, and if the latter doesn't
+have anything that normally rejects, it doesn't need to have a "--force".
 
-I didn't look, but I still have it in my inbox, waiting for gitweb people
-(if Jakub is busy perhaps Pasky or Giuseppe) to comment or say "all the
-issues raised in the previous round is now clear and it is ready to go".
+On the other hand, I wouldn't mind at all if you were to add "--no-ff" to
+non-interactive rebase; that has a much easier and logical explanation.
