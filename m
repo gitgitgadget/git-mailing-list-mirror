@@ -1,83 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: lazily assign editor variable
-Date: Wed, 24 Mar 2010 10:52:08 -0700
-Message-ID: <7vaatxobef.fsf@alter.siamese.dyndns.org>
-References: <20100322145947.GA1709@pengutronix.de>
- <eb0d92cf28820eb9783e789a8c4c62c3af4dd0d0.1269274203.git.git@drmicha.warpmail.net>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH 1/2] Make xmalloc and xrealloc thread-safe
+Date: Wed, 24 Mar 2010 13:53:01 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1003241133430.694@xanadu.home>
+References: <20100323161713.3183.57927.stgit@fredrik-laptop>
+ <20100323173114.GB4218@fredrik-laptop> <20100323184309.GA31668@spearce.org>
+ <4c8ef71003231421u789c4332h461c066add0ec7b1@mail.gmail.com>
+ <alpine.LFD.2.00.1003231945480.31128@xanadu.home>
+ <4c8ef71003240823o7cd733bn5f19699305c94cba@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Mar 24 18:52:29 2010
+Content-Type: multipart/mixed; boundary="Boundary_(ID_rImVXcxlLtWle5xQaR/Wbw)"
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Fredrik Kuivinen <frekui@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 24 18:53:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuUkm-0007uU-VS
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 18:52:29 +0100
+	id 1NuUli-0008SY-HW
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 18:53:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756625Ab0CXRwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Mar 2010 13:52:20 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51827 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752784Ab0CXRwU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Mar 2010 13:52:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C9D31A5566;
-	Wed, 24 Mar 2010 13:52:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OOhOiTrBLqx+QS6YlKNG1TkGvCU=; b=rU315B
-	akKmVd3mJTv8UvJ15Q1Tp8VWNtosBs5QMigR+dfNgCc3q7erUQxHqrJvcn7CuGX0
-	/s0fpvpao4sRsJgMRYQDzJA9WcReP3Em5cA7q/6nUlgjzGDQj879ZsYRm4vtoZXS
-	GpA9Fns3ZcoPA0+/XTvFj3r3M020KQDn/I554=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RZaEcpzr6Hey6O45wzo8MezVznH0G5X2
-	rwHb4ezaRQadIXhyQW2fejm+cdQWylBrIrdyjw1VkEa9XJa66mbPEHktUuIcSLLC
-	EBfrcHhC7S1Vhrewa67iUVMfZQFRFKtdZrDUVgV9WYvEEawCGqYe152CCzfXWu4U
-	sPe5+lWl6+8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 83D2BA5558;
-	Wed, 24 Mar 2010 13:52:14 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B5078A5554; Wed, 24 Mar
- 2010 13:52:09 -0400 (EDT)
-In-Reply-To: <eb0d92cf28820eb9783e789a8c4c62c3af4dd0d0.1269274203.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Mon\, 22 Mar 2010 17\:12\:53 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FAEB1E98-376D-11DF-BF07-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932476Ab0CXRxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Mar 2010 13:53:20 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:35534 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752784Ab0CXRxT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Mar 2010 13:53:19 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KZS0097VSCDYMM0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 24 Mar 2010 13:53:02 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <4c8ef71003240823o7cd733bn5f19699305c94cba@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+Content-id: <alpine.LFD.2.00.1003241352010.694@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143098>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> b4479f0 (add -i, send-email, svn, p4, etc: use "git var GIT_EDITOR",
-> 2009-10-30) introduced the use of git var GIT_EDITOR which may lead to
-> problems when send-mail is used without a tty.
+--Boundary_(ID_rImVXcxlLtWle5xQaR/Wbw)
+Content-id: <alpine.LFD.2.00.1003241352011.694@xanadu.home>
+Content-type: TEXT/PLAIN; CHARSET=ISO-8859-15
+Content-transfer-encoding: 8BIT
 
-We would want to describe what kind of problems they are better than "may
-lead to problems", though.  Something like this?
+On Wed, 24 Mar 2010, Fredrik Kuivinen wrote:
 
-    b4479f0 (add -i, send-email, svn, p4, etc: use "git var GIT_EDITOR",
-    2009-10-30) introduced the use of "git var GIT_EDITOR" to obtain the
-    preferred editor program, instead of reading environment variables
-    themselves.
+> On Wed, Mar 24, 2010 at 00:50, Nicolas Pitre <nico@fluxnic.net> wrote:
+> > On Tue, 23 Mar 2010, Fredrik Kuivinen wrote:
+> >
+> >> On Tue, Mar 23, 2010 at 19:43, Shawn O. Pearce <spearce@spearce.org> wrote:
+> >> > If that is what we are doing, disabling the release of pack windows
+> >> > when malloc fails, why can't we do that all of the time?
+> >>
+> >> The idea was that most git programs are single threaded, so they can
+> >> still benefit from releasing the pack windows when they are low on
+> >> memory.
+> >
+> > This is bobus. The Git program using the most memory is probably
+> > pack-objects and it is threaded.  Most single-threaded programs don't
+> > use close to as much memory.
+> 
+> Ok, you are right. But xmalloc/xrealloc cannot be used in multiple
+> threads simultaneously without some serialization.
+> 
+> For example, I think there are some potential race conditions in the
+> pack-objects code. In the threaded code we have the following call
+> chains leading to xcalloc, xmalloc, and xrealloc:
+> 
+> find_deltas -> xcalloc
+> find_deltas -> do_compress -> xmalloc
+> find_deltas -> try_delta -> xrealloc
+> find_deltas -> try_delta -> read_sha1_file -> ... -> xmalloc  (called
+> with read_lock held, but it can still race with the other calls)
+> 
+> As far as I can see there is no serialization between these calls.
 
-    However, "git var GIT_EDITOR" run without a tty (think "cron job") would
-    give a fatal error "Terminal is dumb, but EDITOR unset".  This is not a
-    problem for add-i, svn, p4 and callers of git_editor() defined in
-    git-sh-setup, as all of these call it just before launching the editor.
-    At that point, we know the caller wants to edit, and they cannot without a
-    tty.
+True.  We already have a problem.  This is nasty.
 
-    But send-email ran this near the beginning of the program, even if it is
-    not going to use any editor (e.g. run without --compose).  Fix this by
-    calling the command only when we edit a file.
+
+Nicolas
+
+--Boundary_(ID_rImVXcxlLtWle5xQaR/Wbw)--
