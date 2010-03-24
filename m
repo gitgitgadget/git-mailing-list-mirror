@@ -1,48 +1,137 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: GIT_ONE_FILESYSTEM inclusion?
-Date: Wed, 24 Mar 2010 10:35:25 +0100
-Message-ID: <4BA9DCDD.6060109@viscovery.net>
-References: <20100323232055.GV7038@pixar.com> <81b0412b1003240229l6f7eaa18l563c3d7ba0cf6cc5@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [BUG?] git stash pop results in conflict
+Date: Wed, 24 Mar 2010 11:34:42 +0100
+Message-ID: <4BA9EAC2.4020707@drmicha.warpmail.net>
+References: <SNT124-W41E7349234C70B82E8D6BFC4250@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Lars Damerow <lars@pixar.com>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 24 10:35:38 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tim Mazid <timmazid@hotmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 24 11:37:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuMzw-0003jo-Lr
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 10:35:37 +0100
+	id 1NuNxx-0005mP-Ot
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 11:37:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755244Ab0CXJfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Mar 2010 05:35:31 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:58119 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755181Ab0CXJfa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Mar 2010 05:35:30 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NuMzm-0000KL-9I; Wed, 24 Mar 2010 10:35:26 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 079EE1660F;
-	Wed, 24 Mar 2010 10:35:25 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
-In-Reply-To: <81b0412b1003240229l6f7eaa18l563c3d7ba0cf6cc5@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1754827Ab0CXKhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Mar 2010 06:37:31 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:47288 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754800Ab0CXKha (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Mar 2010 06:37:30 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 5CA5BE9AFB;
+	Wed, 24 Mar 2010 06:37:30 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Wed, 24 Mar 2010 06:37:30 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=Z1S0xJi1xmXK34mNZzrrtYvCb6Q=; b=BkSXe+mVK3nXIqwRkQeLtowYam16H1C7NoBUAha7fNN0yE7WzB9hUlHirNFvVAnGNn2Z20igmuBYNoU1Eo1wREpP6QYdvJ5tsw2pyGTJrbBKco+Am6ZYxru+T/Qtq57GyUIjHEcDZ0BvUR7I5nFqQOShQw5HrnWCFsBFOkmRPmI=
+X-Sasl-enc: iu/3eJ988QmaGCaXw1nrZlO4Cy3P0+U7kiH2JfO+Yue5 1269427050
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id C83AF2C1DF;
+	Wed, 24 Mar 2010 06:37:29 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10pre) Gecko/20100319 Lightning/1.0b2pre Shredder/3.0.5pre
+In-Reply-To: <SNT124-W41E7349234C70B82E8D6BFC4250@phx.gbl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143080>
 
-Am 3/24/2010 10:29, schrieb Alex Riesen:
-> And while at it, how about making it a config option? (i.e. core.oneFilesystem?)
+Tim Mazid venit, vidit, dixit 24.03.2010 03:01:
+> 
+> Hi,
+>  
+> I'm not sure if this is a bug or if it should be thus.
+>  
+> Basically, a 'git stash --keep-index' followed immediately by a 'git stash pop' (no changes made) will result in a conflict.
+>  
+> Steps to reproduce:
+>  
+>  
+> Put
+>  
+> "AAA
+> BBB
+> CCC"
+>  
+> into file 'test'
+>  
+> $ git add test
+> $ git commit -m "A"
+>  
+> Append lines
+>  
+> "DDD
+> EEE
+> FFF
+> GGG"
+>  
+> into file 'test'
+>  
+> $ git add -p
+>  
+> Press 'e' and remove the "FFF" and "GGG" files from the patch, to stage only the "DDD" and "EEE" files.
+>  
+> $ git stash --keep-index
 
-It's difficult to have this as a config option when you are looking for a
-repository... ;)
+Right here, git stash show -p shows that the recorded stash is a merge diff:
 
--- Hannes
+diff --cc test
+index 7b0e998,988cecb..83b9202
+--- a/test
++++ b/test
+@@@ -1,3 -1,5 +1,7 @@@
+  AAA
+  BBB
+  CCC
++ DDD
++ EEE
+++FFF
+++GGG
+
+The index still has the following (git diff --staged):
+
+diff --git c/test i/test
+index 7b0e998..988cecb 100644
+--- c/test
++++ i/test
+@@ -1,3 +1,5 @@
+ AAA
+ BBB
+ CCC
++DDD
++EEE
+
+> $ git stash pop
+>  
+> CONFLICT
+>  
+>  
+> I hope that's clear enough.
+
+git diff shows the conflict:
+
+diff --cc test
+index 988cecb,83b9202..0000000
+--- i/test
++++ w/test
+@@@ -3,3 -3,5 +3,8 @@@ BB
+  CCC
+  DDD
+  EEE
+++<<<<<<< Updated upstream
+++=======
++ FFF
++ GGG
+++>>>>>>> Stashed changes
+
+According to the example in the man page, I would have thought that
+committing between save and pop would help, but it produces the same
+problem. pop --index doesn't help either. Do you happen to know whether
+this used to work?
+
+Michael
