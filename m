@@ -1,81 +1,92 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: GIT_ONE_FILESYSTEM inclusion?
-Date: Wed, 24 Mar 2010 14:59:00 +0100
-Message-ID: <81b0412b1003240659u4e6de405t7750b66ca9292cdc@mail.gmail.com>
-References: <20100323232055.GV7038@pixar.com>
-	 <81b0412b1003240229l6f7eaa18l563c3d7ba0cf6cc5@mail.gmail.com>
-	 <4BA9DCDD.6060109@viscovery.net>
-	 <81b0412b1003240437n799bac07sb74db749d647817d@mail.gmail.com>
-	 <20100324134048.GB10190@pixar.com>
+From: Fredrik Kuivinen <frekui@gmail.com>
+Subject: Re: [PATCH 1/2] Make xmalloc and xrealloc thread-safe
+Date: Wed, 24 Mar 2010 16:23:29 +0100
+Message-ID: <4c8ef71003240823o7cd733bn5f19699305c94cba@mail.gmail.com>
+References: <20100323161713.3183.57927.stgit@fredrik-laptop>
+	 <20100323173114.GB4218@fredrik-laptop>
+	 <20100323184309.GA31668@spearce.org>
+	 <4c8ef71003231421u789c4332h461c066add0ec7b1@mail.gmail.com>
+	 <alpine.LFD.2.00.1003231945480.31128@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Lars Damerow <lars@pixar.com>
-X-From: git-owner@vger.kernel.org Wed Mar 24 14:59:18 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Wed Mar 24 16:23:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuR75-0003as-22
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 14:59:15 +0100
+	id 1NuSQk-0004YF-4u
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 16:23:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756105Ab0CXN7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Mar 2010 09:59:09 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:63357 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755589Ab0CXN7F (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Mar 2010 09:59:05 -0400
-Received: by bwz1 with SMTP id 1so2875749bwz.21
-        for <git@vger.kernel.org>; Wed, 24 Mar 2010 06:59:04 -0700 (PDT)
+	id S1756107Ab0CXPXc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Mar 2010 11:23:32 -0400
+Received: from mail-fx0-f223.google.com ([209.85.220.223]:33310 "EHLO
+	mail-fx0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752235Ab0CXPXb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Mar 2010 11:23:31 -0400
+Received: by fxm23 with SMTP id 23so162766fxm.21
+        for <git@vger.kernel.org>; Wed, 24 Mar 2010 08:23:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=MtiDLGlrFknZ9k7ql33MIsz1QArgSR+qwE7mEDlMFTM=;
-        b=t9DCkhnd5nB/G6t06xi8eHfL/zm0eHNINYJPuYJUVLrFxi5Q+8o+3pSSt/aKKz5O0E
-         ivDnBJspo98YSFOl9c1NcUr6olqldDSZ1Md0W8rRMtnUJ923Dpt9OO76dTBw6VZPsUH7
-         LQ6Nd8DkolXJ0Ym63RQeMWR46AlbdhX3LzQh0=
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=w9ZgF5/+fXJY3FaTueLgWRu3aStouoAuz28MJsREdRw=;
+        b=hYylrkZXBPjHuuXhjmVpPDSoHxkLrwXaUG00WNhvFdXKtR1FKGQiZPzNRMl1r0qLz/
+         YzeB8p0qRTfF3i/cRMQujf/YEePOMSSZL9QUBd6bL5ogp9JRixOJme129mvcsWWKviRW
+         94/oRCYzFi3mDqK23ROmGQC32Uph8EEJMCBVY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=OVExStFPIex9xKzcd5K/H2HezWZP/Z/x46oTSGds75Cl3vx2C8drQvBnfQRodRYgu2
-         47EPH6/gniYv49yytDRPmxRWhA2VkuAJ1/0mJguq5xADEgwhPnHNCUnBaELGWckBNX61
-         VzDoHqc4q+izPVREdwgeDdfEhdsFh7c0KkQr4=
-Received: by 10.204.161.197 with SMTP id s5mr3230406bkx.90.1269439140754; Wed, 
-	24 Mar 2010 06:59:00 -0700 (PDT)
-In-Reply-To: <20100324134048.GB10190@pixar.com>
+         :cc:content-type:content-transfer-encoding;
+        b=vUa4Qbqr2ptcs39WPzybFoFc2KjrPrWCFUuglz7suHM2rjcSppDIRkZKpUNccbJYNc
+         K+3a6Uz9EjT/BqAkeRfnFw9f9B+7Nl70YZYC6DCPyp6Ro4ks0rGsfcMVUu7ReaCed6cG
+         1eyS4XgOxxBmZj9yxtA3hxfYenUlNuxokFuDk=
+Received: by 10.239.160.75 with SMTP id b11mr2406054hbd.117.1269444209480; 
+	Wed, 24 Mar 2010 08:23:29 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1003231945480.31128@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143086>
 
-On Wed, Mar 24, 2010 at 14:40, Lars Damerow <lars@pixar.com> wrote:
-> From Alex Riesen <raa.lkml@gmail.com>, Wed, Mar 24, 2010 at 12:37:39PM +0100:
->>
->> Isn't it a little pointless to look for repository when you can't
->> access its config?
+On Wed, Mar 24, 2010 at 00:50, Nicolas Pitre <nico@fluxnic.net> wrote:
+> On Tue, 23 Mar 2010, Fredrik Kuivinen wrote:
 >
-> If you're doing the trendy thing of putting repository information in
-> your shell prompt, then your prompt is looking for a repository every
-> time you change a directory.
+>> On Tue, Mar 23, 2010 at 19:43, Shawn O. Pearce <spearce@spearce.org>=
+ wrote:
+>> > If that is what we are doing, disabling the release of pack window=
+s
+>> > when malloc fails, why can't we do that all of the time?
+>>
+>> The idea was that most git programs are single threaded, so they can
+>> still benefit from releasing the pack windows when they are low on
+>> memory.
+>
+> This is bobus. The Git program using the most memory is probably
+> pack-objects and it is threaded. =A0Most single-threaded programs don=
+'t
+> use close to as much memory.
 
-Right. OTOH, if you know that your .git is accessible (on the right
-filesystem), but want to avoid scans in the directories below the top-
-level working directory (submodules?), you may want to have it
-configurable per-repository. The environment variable will affect
-scan in all your repositories you visit in this session, which maybe
-what you want, and maybe not.
-And yes, the config option is also in addition to, not instead of
-the environment variable.
+Ok, you are right. But xmalloc/xrealloc cannot be used in multiple
+threads simultaneously without some serialization.
 
-> As for making this a command-line option: that's certainly doable, but
-> it makes it harder to enforce the option's use across an organization.
-> It's far easier for me to set an environment variable centrally on a
-> thousand workstations than to convince a potentially large number of
-> users to set a new shell alias for git.
+=46or example, I think there are some potential race conditions in the
+pack-objects code. In the threaded code we have the following call
+chains leading to xcalloc, xmalloc, and xrealloc:
 
-Oh, I wasn't clear. I didn't mean "instead of". A command-line option
-_in_addition_ to the environment variable. For one-off uses.
+find_deltas -> xcalloc
+find_deltas -> do_compress -> xmalloc
+find_deltas -> try_delta -> xrealloc
+find_deltas -> try_delta -> read_sha1_file -> ... -> xmalloc  (called
+with read_lock held, but it can still race with the other calls)
+
+As far as I can see there is no serialization between these calls.
+
+- Fredrik
