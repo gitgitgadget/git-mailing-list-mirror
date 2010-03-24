@@ -1,101 +1,79 @@
-From: "=?iso-8859-1?Q?Fran=E7ois_Beausoleil?=" 
-	<francois.beausoleil@bloomdigital.com>
-Subject: merge --no-ff on case insensitive when replacing case-changing file fails
-Date: Wed, 24 Mar 2010 16:35:45 -0400
-Message-ID: <BEA422D6-7434-447C-B0AE-A2BAC4E8E74B@bloomdigital.com>
-Mime-Version: 1.0 (Apple Message framework v1077)
-Content-Type: text/plain; charset=iso-8859-1
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: GIT_ONE_FILESYSTEM inclusion?
+Date: Wed, 24 Mar 2010 21:36:14 +0100
+Message-ID: <81b0412b1003241336n71b4f5ael7ecbb72236a245db@mail.gmail.com>
+References: <20100323232055.GV7038@pixar.com>
+	 <81b0412b1003240229l6f7eaa18l563c3d7ba0cf6cc5@mail.gmail.com>
+	 <4BA9DCDD.6060109@viscovery.net>
+	 <81b0412b1003240437n799bac07sb74db749d647817d@mail.gmail.com>
+	 <20100324134048.GB10190@pixar.com>
+	 <81b0412b1003240659u4e6de405t7750b66ca9292cdc@mail.gmail.com>
+	 <7vpr2tu1bd.fsf@alter.siamese.dyndns.org>
+	 <81b0412b1003241207s4951b32cpbe105e7b3623f61a@mail.gmail.com>
+	 <7vwrx1fpv9.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 24 21:36:09 2010
+Cc: Lars Damerow <lars@pixar.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 24 21:36:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuXJ6-0007u9-J7
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 21:36:04 +0100
+	id 1NuXJP-00086Y-Tk
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 21:36:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932623Ab0CXUfw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Mar 2010 16:35:52 -0400
-Received: from mail-ew0-f216.google.com ([209.85.219.216]:34419 "EHLO
-	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932435Ab0CXUfu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Mar 2010 16:35:50 -0400
-Received: by ewy8 with SMTP id 8so74261ewy.28
-        for <git@vger.kernel.org>; Wed, 24 Mar 2010 13:35:49 -0700 (PDT)
-Received: by 10.216.88.202 with SMTP id a52mr4863645wef.101.1269462949094;
-        Wed, 24 Mar 2010 13:35:49 -0700 (PDT)
-Received: from [192.168.142.101] (modemcable134.176-201-24.mc.videotron.ca [24.201.176.134])
-        by mx.google.com with ESMTPS id u14sm1124585gvf.17.2010.03.24.13.35.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 24 Mar 2010 13:35:48 -0700 (PDT)
-X-Mailer: Apple Mail (2.1077)
+	id S1756805Ab0CXUgR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Mar 2010 16:36:17 -0400
+Received: from mail-bw0-f211.google.com ([209.85.218.211]:58081 "EHLO
+	mail-bw0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751119Ab0CXUgQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Mar 2010 16:36:16 -0400
+Received: by bwz3 with SMTP id 3so6820215bwz.29
+        for <git@vger.kernel.org>; Wed, 24 Mar 2010 13:36:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=sl4v/l/p9Bgn+p625bU9td3wHUHOHG/HQckHr6x/wMU=;
+        b=EXpxfVtF6dtx5UwPzrGIMzZNMy3Sp+c8pZD9M4Pmv3pTulyhB4NLjfF8OOZMb9fyNh
+         EJL9DxA9uFW658qv9fv07/rxlRO5YNYSrBN+dQjXUBJVQMswl8NzJPxlYBH5T44ecw8Q
+         dQB7pnr4pXoNXcC9E/puQ3VkijN1qTlFYpjEI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=qWnNtOqSrHlkfN1uL59txo+m+SDVwFgji7onrB/JCGGdN8EwqUSt8Yk52LekwgjDmm
+         +mpIdS/1dO8EGDuImcjwK9L8KtfBa32tf1+QisXpL5eJddlPrlz1aArXATOrP9g6E4l2
+         k6fEf2/lbacA+xmjT/cdQkDpdfmyeH75PzPJs=
+Received: by 10.204.174.194 with SMTP id u2mr7509652bkz.40.1269462974427; Wed, 
+	24 Mar 2010 13:36:14 -0700 (PDT)
+In-Reply-To: <7vwrx1fpv9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143123>
 
-Hi!
+On Wed, Mar 24, 2010 at 21:04, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+>
+>>> When would you invoke this feature as "one-off"?
+>>
+>> Maybe when I want to make sure git status does not go all over an
+>> NFS mounted submodule.
+>
+> But then what would you do after finding it out that it might? =C2=A0=
+You stop
 
-I don't yet have a reproduction recipe, but I think this is something t=
-hat can be reproduced quickly. I'm on Mac OS X, using git 1.6.5.2.
+Postpone whatever you were about to do, maybe.
 
-On branch master I have a file named public/clippy/clippy.hx. I created=
- a new branch from master, named ticket-726. On this branch, I replaced=
- public/clippy with a new version, where clippy.hx was renamed to Clipp=
-y.hx (note capital C).
+> working on that project? =C2=A0Doesn't --ignore-submodules do the sam=
+e thing?
 
-Merging with --no-ff from ticket-726 onto master results in:
-
-$ git merge --no-ff ticket-726-clippy-from-page
-Removing public/clippy.swf
-Removing public/clippy/clippy.hx
-Removing public/clippy/config.md
-Removing public/clippy/library.swf
-Removing public/clippy/swfmill
-Merge made by recursive.
-fatal: unable to read files to diff
-
-After this, the tree is unclean:
-
-$ git status
-# On branch master
-# Your branch is ahead of 'origin/master' by 9 commits.
-#
-# Changed but not updated:
-#   (use "git add/rm <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working dire=
-ctory)
-#
-#       deleted:    public/clippy/Clippy.hx
-#
-
-If I merge without the --no-ff flag, the merge succeeds:
-
-$ git merge ticket-726-clippy-from-page=20
-Updating 8527f71..f9f070d
-=46ast forward
-=2E..
- public/clippy/Clippy.hx                 |   45 +++++++++++++
-=2E..
- public/clippy/clippy.hx                 |   28 --------
-=2E..
- 21 files changed, 312 insertions(+), 79 deletions(-)
-=2E..
- create mode 100644 public/clippy/Clippy.hx
-=2E..
- delete mode 100644 public/clippy/clippy.hx
-=2E..
-
-Google didn't turn up anything, except the reference in the source code=
- where this error message is defined. There was also a prior report of =
-this bug http://collab.sakaiproject.org/pipermail/sakai-ux/2010-March/0=
-01058.html but I couldn't read anything interesting from it.
-
-As noted above, I'm on Mac OS X, which has is case insensitive, but cas=
-e preserving.
-
-Thanks!
-=46ran=E7ois Beausoleil
+It does. I said it is obscure.
