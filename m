@@ -1,60 +1,57 @@
-From: Frans Pop <elendil@planet.nl>
-Subject: Re: Feature request: option to not fetch tags for 'git remote' branches
-Date: Wed, 24 Mar 2010 22:46:15 +0100
-Message-ID: <201003242246.16286.elendil@planet.nl>
-References: <201003242154.29245.elendil@planet.nl> <4BAA7F5B.2040400@feurix.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: John Feuerstein <john@feurix.com>
-X-From: git-owner@vger.kernel.org Wed Mar 24 22:46:40 2010
+From: "Neal Kreitzinger" <neal@rsss.com>
+Subject: color (red) for error messages on all git commands
+Date: Wed, 24 Mar 2010 17:44:09 -0500
+Message-ID: <hoe4j3$2vg$1@dough.gmane.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 24 23:44:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuYP9-0007fw-Ep
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 22:46:23 +0100
+	id 1NuZJA-0008Ds-0b
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 23:44:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752574Ab0CXVqS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Mar 2010 17:46:18 -0400
-Received: from Cpsmtpm-eml107.kpnxchange.com ([195.121.3.11]:58735 "EHLO
-	CPSMTPM-EML107.kpnxchange.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751258Ab0CXVqR (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Mar 2010 17:46:17 -0400
-Received: from aragorn.fjphome.nl ([77.166.180.99]) by CPSMTPM-EML107.kpnxchange.com with Microsoft SMTPSVC(7.0.6001.18000);
-	 Wed, 24 Mar 2010 22:46:16 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <4BAA7F5B.2040400@feurix.com>
-Content-Disposition: inline
-X-OriginalArrivalTime: 24 Mar 2010 21:46:16.0710 (UTC) FILETIME=[6E765A60:01CACB9B]
+	id S1751336Ab0CXWoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Mar 2010 18:44:08 -0400
+Received: from lo.gmane.org ([80.91.229.12]:56359 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750939Ab0CXWoH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Mar 2010 18:44:07 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NuZIx-00086j-CY
+	for git@vger.kernel.org; Wed, 24 Mar 2010 23:44:03 +0100
+Received: from 67.63.162.200 ([67.63.162.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 24 Mar 2010 23:44:03 +0100
+Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 24 Mar 2010 23:44:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5843
+X-RFC2646: Format=Flowed; Original
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143134>
 
-On Wednesday 24 March 2010, John Feuerstein wrote:
-> > It would be great to be able to tell 'git remote' to skip tags and
-> > only fetch the requested branch. A --no-tags option maybe?
-> >
-> > AFAIK this is currently not possible, although I'd happy to be proven
-> > wrong.
->
-> have a look at -n, --no-tags provided by git-fetch, ie.
->
-> $ git remote add ... foo ...
-> $ git fetch -n foo
+Problem Scenario:  programmer doesn't pay attention to messages as he 
+becomes more familiar with git and as a result doesn't notice error messages 
+until its too late.  Mistakes take longer to remediate because the original 
+error message was not resolved at the time it occurred.
 
-Thanks John. I'll need to test if that's persistent, or that I'll have
-to remember to specify it with each fetch. I guess the option is also 
-recognized by 'git remote update'?
+Desired Solution:  configure git to display all error messages in color, 
+e.g. red, so that the programmer does not overlook error messages.
 
-Ahh. I've just found 'remote.<name>.tagopt' in 'man git-config'.
-I still think it would be nice if that could be set with an option for
-'git remote add'. That would make life so much simpler :-)
+Does anyone know how to configure this in git?
 
-Cheers,
-FJP
+
+v/r,
+Neal 
