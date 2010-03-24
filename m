@@ -1,75 +1,91 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: color (red) for error messages on all git commands
-Date: Thu, 25 Mar 2010 00:12:28 +0100
-Message-ID: <81b0412b1003241612m41f6ae2ctaa5b89ed37b58da2@mail.gmail.com>
-References: <hoe4j3$2vg$1@dough.gmane.org>
-	 <fabb9a1e1003241558t4c4c5cf8t3a7d9b9856937c4f@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 25 00:12:38 2010
+From: hachi <hachi@kuiki.net>
+Subject: asciidoc problem, and a possible fix
+Date: Wed, 24 Mar 2010 16:34:53 -0700
+Message-ID: <4ABB29E2-6DB1-4712-A3E8-CD524983FB0B@kuiki.net>
+Mime-Version: 1.0 (Apple Message framework v1077)
+Content-Type: multipart/mixed; boundary=Apple-Mail-15--891282455
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 25 00:35:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuZkb-0003IT-AK
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 00:12:37 +0100
+	id 1Nua6J-0003Hd-Dc
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 00:35:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752575Ab0CXXMb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Mar 2010 19:12:31 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:53929 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751754Ab0CXXMa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Mar 2010 19:12:30 -0400
-Received: by bwz1 with SMTP id 1so414169bwz.21
-        for <git@vger.kernel.org>; Wed, 24 Mar 2010 16:12:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=jJLsUVlmHW9NWNLNNmyl8k2FZrgR5xOeM7emcqnX0wo=;
-        b=sycSvGpsLO2yh/fU0AablzFVzU3q16yzQkWfq9hAHi5PKeItGMYkTRKjPRrS02MvFC
-         a850sgRV06bdfapTO1Bx/jm8hIdFT52J7sXKAEyxENFn7SLKBR1r9FJZyrMKsFBg1bhG
-         nZyxAYsv3xWiUWRX5UOIUw28HPB2EnIcjNpYQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=sfYE8XG4/5fkxwIoqnqZ4RQCrREWsS4JmYmBs6PaDVpBpMHsCs/E/Et8L38n/JFric
-         0QuNyFW9QCVB8v8KqEOZNpRoWw0DXflVbtWLCA3nPLShATA6yapIf9jFROIeZesVIlrR
-         FmeNvEROD1DnVxLO6IeI5rEdZauCnAYKGcV7o=
-Received: by 10.204.174.194 with SMTP id u2mr7695468bkz.40.1269472348772; Wed, 
-	24 Mar 2010 16:12:28 -0700 (PDT)
-In-Reply-To: <fabb9a1e1003241558t4c4c5cf8t3a7d9b9856937c4f@mail.gmail.com>
+	id S1751217Ab0CXXe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Mar 2010 19:34:57 -0400
+Received: from sachiko.kuiki.net ([80.68.89.100]:59768 "EHLO sachiko.kuiki.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750888Ab0CXXe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Mar 2010 19:34:56 -0400
+Received: from lan-235-sf2-it-gw1.sixapart.net (unknown [204.9.180.30])
+	by sachiko.kuiki.net (Postfix) with ESMTP id 864E2C049
+	for <git@vger.kernel.org>; Wed, 24 Mar 2010 23:34:55 +0000 (UTC)
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143137>
 
-On Wed, Mar 24, 2010 at 23:58, Sverre Rabbelier <srabbelier@gmail.com> =
-wrote:
-> On Wed, Mar 24, 2010 at 23:44, Neal Kreitzinger <neal@rsss.com> wrote=
-:
->> Desired Solution: =C2=A0configure git to display all error messages =
-in color,
->> e.g. red, so that the programmer does not overlook error messages.
 
-It is considered a good behavior for a UNIX program only to display
-something if there is an error. Git just tries to follow this tradition=
-=2E
+--Apple-Mail-15--891282455
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-> That's actually something I run into as well, I am so used to git jus=
-t
-> doing what I want that I don't notice the error messages when they
-> occur. If this is indeed desired (probably controlled by color.warnin=
-g
-> and color.error?) it should be fairly easy to implement (see usage.c)=
-=2E
+Hello folks,
 
-That said, I also like the idea. Don't forget to check for tty in the p=
-atch.
+I had an issue building git on some centos 5 machines today, and in =
+trying to interpret the error message I formed the attached patch.
+
+The errors were:
+xmlto: input does not validate (status 1)
+=
+/home/hachi/rpm/BUILD/git-1.7.0.3/Documentation/git-filter-branch.xml:463:=
+ parser error : PCDATA invalid Char value 7
+Clone it with <literal>git clone +++0+++</literal>.  The clone
+                                    ^
+=
+/home/hachi/rpm/BUILD/git-1.7.0.3/Documentation/git-filter-branch.xml:463:=
+ parser error : PCDATA invalid Char value 7
+Clone it with <literal>git clone +++0+++</literal>.  The clone
+
+
+I will happily admit that I don't know asciidoc, or the use of asciidoc =
+in git.... but the +++ marker surrounding the url seems to not be used =
+anywhere else in the documents directory, and I seem to be getting the =
+appropriate output because of the `` surrounding the command.
+
+I'm not subscribed to the list, but I'll try to watch for replies. Would =
+anyone like to either tell me I did this wrong, or apply my fix?
+
+Thanks much,
+
+hachi
+
+
+--Apple-Mail-15--891282455
+Content-Disposition: attachment;
+	filename=asciidoc-problem.patch
+Content-Type: application/octet-stream;
+	name="asciidoc-problem.patch"
+Content-Transfer-Encoding: 7bit
+
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index 020028c..4f71c17 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -386,7 +386,7 @@ objects until you tell it to.  First make sure that:
+ Then there are two ways to get a smaller repository.  A safer way is
+ to clone, that keeps your original intact.
+ 
+-* Clone it with `git clone +++file:///path/to/repo+++`.  The clone
++* Clone it with `git clone file:///path/to/repo`.  The clone
+   will not have the removed objects.  See linkgit:git-clone[1].  (Note
+   that cloning with a plain path just hardlinks everything!)
+ 
+
+--Apple-Mail-15--891282455--
