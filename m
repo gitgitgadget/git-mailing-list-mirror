@@ -1,111 +1,112 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 1/2] Make xmalloc and xrealloc thread-safe
-Date: Wed, 24 Mar 2010 11:22:23 -0700
-Message-ID: <ec874dac1003241122s3d592f26n1b23d23144939218@mail.gmail.com>
-References: <20100323161713.3183.57927.stgit@fredrik-laptop> 
-	<20100323173114.GB4218@fredrik-laptop> <20100323184309.GA31668@spearce.org> 
-	<4c8ef71003231421u789c4332h461c066add0ec7b1@mail.gmail.com> 
-	<alpine.LFD.2.00.1003231945480.31128@xanadu.home> <4c8ef71003240823o7cd733bn5f19699305c94cba@mail.gmail.com> 
-	<alpine.LFD.2.00.1003241133430.694@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] http-backend: Don't infinite loop during die()
+Date: Wed, 24 Mar 2010 11:29:50 -0700
+Message-ID: <7vvdclk1y9.fsf@alter.siamese.dyndns.org>
+References: <51569EE6-A926-45DB-A588-B659750BA643@catherman.org>
+ <20100322142204.GB8916@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Wed Mar 24 19:22:52 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Brady Catherman <brady@catherman.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 24 19:30:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuVEB-00030q-Ls
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 19:22:52 +0100
+	id 1NuVLG-0007EU-9D
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 19:30:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756693Ab0CXSWo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Mar 2010 14:22:44 -0400
-Received: from mail-pz0-f200.google.com ([209.85.222.200]:34958 "EHLO
-	mail-pz0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756659Ab0CXSWn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Mar 2010 14:22:43 -0400
-Received: by pzk38 with SMTP id 38so1113259pzk.33
-        for <git@vger.kernel.org>; Wed, 24 Mar 2010 11:22:43 -0700 (PDT)
-Received: by 10.142.151.26 with SMTP id y26mr2169785wfd.6.1269454963265; Wed, 
-	24 Mar 2010 11:22:43 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.1003241133430.694@xanadu.home>
+	id S1756592Ab0CXSaB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Mar 2010 14:30:01 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53165 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752662Ab0CXSaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Mar 2010 14:30:00 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 33A83A5C51;
+	Wed, 24 Mar 2010 14:29:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DrZidXCQhCNrgodX6PUzeUffuPk=; b=LoGe4l
+	Ak9+ShoDbjMd6J9eIw9usCbNW6spLsZqWr/O3iOG0wW37O/eQS0B74i1S2wtuqzk
+	WwznsoJVJNRCjRb9M+CJ8hy1GhB3jIiKSKyp3HHYCFK7GqZ8s6naY3xVC7JOpggM
+	FI87Xv8xRrl4ehBw5nRmm+so741vwvXhjvVlQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WpNu1G9GBmQFEoogBMedYvpa6r3ve+Dj
+	CTOkwHI5uuzo9txCvYnDg2ewQuN9IaSRwvQ33Ia8Wa2MpaDX91csfQemf4RNvGOl
+	y72N3IXy56TwSs4jK+aSBHPCCKRXTxfVUWivvsxr2TCw+KJU78pthjDTPYl1l96d
+	se5eh1b7AAU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0223BA5C4F;
+	Wed, 24 Mar 2010 14:29:55 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 378B2A5C4D; Wed, 24 Mar
+ 2010 14:29:52 -0400 (EDT)
+In-Reply-To: <20100322142204.GB8916@spearce.org> (Shawn O. Pearce's message
+ of "Mon\, 22 Mar 2010 07\:22\:04 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3EDBA3D4-3773-11DF-9A6C-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143100>
 
-On Wed, Mar 24, 2010 at 10:53 AM, Nicolas Pitre <nico@fluxnic.net> wrot=
-e:
-> On Wed, 24 Mar 2010, Fredrik Kuivinen wrote:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
+
+> If stdout has already been closed by the CGI and die() gets called,
+> the CGI will fail to write the "Status: 500 Internal Server Error" to
+> the pipe, which results in die() being called again (via safe_write).
+> This goes on in an infinite loop until the stack overflows and the
+> process is killed by SIGSEGV.
 >
->> On Wed, Mar 24, 2010 at 00:50, Nicolas Pitre <nico@fluxnic.net> wrot=
-e:
->> > On Tue, 23 Mar 2010, Fredrik Kuivinen wrote:
->> >
->> >> On Tue, Mar 23, 2010 at 19:43, Shawn O. Pearce <spearce@spearce.o=
-rg> wrote:
->> >> > If that is what we are doing, disabling the release of pack win=
-dows
->> >> > when malloc fails, why can't we do that all of the time?
->> >>
->> >> The idea was that most git programs are single threaded, so they =
-can
->> >> still benefit from releasing the pack windows when they are low o=
-n
->> >> memory.
->> >
->> > This is bobus. The Git program using the most memory is probably
->> > pack-objects and it is threaded. =A0Most single-threaded programs =
-don't
->> > use close to as much memory.
->>
->> Ok, you are right. But xmalloc/xrealloc cannot be used in multiple
->> threads simultaneously without some serialization.
->>
->> For example, I think there are some potential race conditions in the
->> pack-objects code. In the threaded code we have the following call
->> chains leading to xcalloc, xmalloc, and xrealloc:
->>
->> find_deltas -> xcalloc
->> find_deltas -> do_compress -> xmalloc
->> find_deltas -> try_delta -> xrealloc
->> find_deltas -> try_delta -> read_sha1_file -> ... -> xmalloc =A0(cal=
-led
->> with read_lock held, but it can still race with the other calls)
->>
->> As far as I can see there is no serialization between these calls.
->
-> True. =A0We already have a problem. =A0This is nasty.
+> Instead set a flag on the first die() invocation and perform no
+> action during recursive die() calls.  This way failures to write the
+> error messages to the stdout pipe do not result in an infinite loop.
 
-The easy solution is probably to remove the use of xmalloc from
-find_deltas code path.  But then we run into hard failures when we
-can't get the memory we need, there isn't a way to recover from a
-malloc() failure deep within read_sha1_file for example.  The current
-solution is the best we can do, try to ditch pack windows and hope
-that releases sufficient virtual memory space that a second malloc()
-attempt can succeed by increasing heap.
+Hmm.  I would need something like this on top, but there must be a better
+way.  Ideas?
 
-We could use a mutex during the malloc failure code-path of xmalloc,
-to ensure only one thread goes through that pack window cleanup at a
-time.  But that will still mess with the main thread which doesn't
-really want to acquire mutexes during object access as it uses the
-existing pack windows.
+-- >8 --
+Subject: [PATCH] fixup! http-backend.c: Don't infinite loop
 
-I thought pack-objects did all object access from the main thread and
-only delta searches on the worker threads?  If that is true, maybe we
-can have the worker threads signal the main thread on malloc failure
-to release pack windows, and then wait for that signal to be
-acknowledged before they attempt to retry the malloc.  This means the
-main thread would need to periodically test that condition as its
-dispatching batches of objects to the workers.
+Now die_webcgi() actually can return during a recursive call into it,
+causing
 
-Ugly.
+    http-backend.c:554: error: 'noreturn' function does return
 
---=20
-Shawn.
+Work it around with a somewhat ugly workaround.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ http-backend.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/http-backend.c b/http-backend.c
+index f4d49b6..d3ec6f0 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -536,7 +536,7 @@ static void service_rpc(char *service_name)
+ 	strbuf_release(&buf);
+ }
+ 
+-static NORETURN void die_webcgi(const char *err, va_list params)
++static void die_webcgi(const char *err, va_list params)
+ {
+ 	static int dead;
+ 
+@@ -606,7 +606,7 @@ int main(int argc, char **argv)
+ 	int i;
+ 
+ 	git_extract_argv0_path(argv[0]);
+-	set_die_routine(die_webcgi);
++	set_die_routine((void *)die_webcgi);
+ 
+ 	if (!method)
+ 		die("No REQUEST_METHOD from server");
+-- 
+1.7.0.3.435.g097f4
