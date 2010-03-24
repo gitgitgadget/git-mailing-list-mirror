@@ -1,83 +1,200 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: What's in a name? Let's use a (uuid,name,email) triplet
-Date: Wed, 24 Mar 2010 20:18:35 +0100
-Message-ID: <40aa078e1003241218s753c1986r3dde7281c513de07@mail.gmail.com>
-References: <4ba2293f.c5c2f10a.5e9c.5c4a@mx.google.com>
-	 <4BA338C1.7030803@alum.mit.edu>
-	 <b4087cc51003190439x3c9ff269g35d11432bd2a3d60@mail.gmail.com>
-	 <alpine.DEB.2.00.1003190441530.3821@asgard.lang.hm>
-	 <20100319115445.GA12986@glandium.org>
-	 <b4087cc51003190509y6ce7ad9dy992254cfe6ac2fb3@mail.gmail.com>
-	 <20100322120649.GA28003@sirena.org.uk>
-	 <4ba780dc.5744f10a.5517.4c2d@mx.google.com>
-Reply-To: kusmabite@gmail.com
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Question about .git/objects/info/alternates
+Date: Wed, 24 Mar 2010 14:23:15 -0500
+Message-ID: <20100324192315.GA19322@progeny.tock>
+References: <a038bef51003221026i379ee16ej6e0e6defcf0048dd@mail.gmail.com>
+ <20100323024223.GA12257@progeny.tock>
+ <a038bef51003241153g33445607qb3ab750e08b0584@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mark Brown <broonie@sirena.org.uk>, Mike Hommey <mh@glandium.org>,
-	david@lang.hm, git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 24 20:18:44 2010
+Cc: GIT <git@vger.kernel.org>
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 24 20:23:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuW6G-0006BH-0M
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 20:18:44 +0100
+	id 1NuWAr-0000xc-Nv
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 20:23:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756762Ab0CXTSi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Mar 2010 15:18:38 -0400
-Received: from mail-ew0-f216.google.com ([209.85.219.216]:60249 "EHLO
-	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754788Ab0CXTSh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Mar 2010 15:18:37 -0400
-Received: by ewy8 with SMTP id 8so17691ewy.28
-        for <git@vger.kernel.org>; Wed, 24 Mar 2010 12:18:36 -0700 (PDT)
+	id S932897Ab0CXTX0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Mar 2010 15:23:26 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:44817 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932871Ab0CXTXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Mar 2010 15:23:20 -0400
+Received: by pwi5 with SMTP id 5so4240820pwi.19
+        for <git@vger.kernel.org>; Wed, 24 Mar 2010 12:23:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=XRqFMjyFzVlG0NNHwf6AJJsXEaJuMXj1jcX7xoRBRT4=;
-        b=PP0CB5tiZtef5kXemAzrxhc0f6e+PM53UGYz03ibW4HfV/cyWdM8SogZ4Jgc0sTTF5
-         w1S47IuBKRcGD0SJUMejekuK0yqkc0fHptq7OcWTwEMiWqhN++AH/LYMq6Pqz1o4swko
-         3ENnDV7FlizKLRp8P0r6vnjJYsGTN8nNQL41c=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=5SXhYioiU13juOZKdaUZJplwZgYKfLAVuFa7cjj87y8=;
+        b=dXR4tYjB/ICVzeb3KRTzNNTwj2aMnR+/Rx6RIqITHxDxJ8f4drpBT9I3l0gp7XCpzd
+         jpy60HSvuRSf05V9rGfPoa8Za6joXBg2WbPm46fkd67h0lM7k4G5gsuPh5Ri7YUxHvEu
+         UA9aRQc3WpVF0ssX2MED7jzpR0Zlv13FMRRRg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=PcW0AMyemP7nX0bJyobZSzJUI/+kikA2CTU0zB8Y3XvzooS39YSLM9Dyw7QVB7urhv
-         dW/YRLZQJcyz0Bcv7c938Mxdfgzo73zOXqfBep9AI4Ti1fnTM0EwDSa/b2aAjdUgiHKa
-         oBTGqceeJ9JuCH85IrdOaF63W4dD/D34iR0mY=
-Received: by 10.216.163.207 with SMTP id a57mr2511434wel.220.1269458316044; 
-	Wed, 24 Mar 2010 12:18:36 -0700 (PDT)
-In-Reply-To: <4ba780dc.5744f10a.5517.4c2d@mx.google.com>
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Tqfjz+o86Lo/IgOebo/eofMYbkMLfU4/A/bmOOx0DUP4w0r+ZQ9jsTsFZeP0k8Eqc1
+         b/2eodLOJPIHQ6RiMHR+UazRrE5YgejsqwQOCpiiSR9JsHh6XWvi/RKhoAF7n0PWiO36
+         2pv+7Grf/HuZARaMnHZXWPWocNxAodTx027WU=
+Received: by 10.114.250.19 with SMTP id x19mr4057140wah.4.1269458599256;
+        Wed, 24 Mar 2010 12:23:19 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 21sm269145iwn.11.2010.03.24.12.23.17
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 24 Mar 2010 12:23:18 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <a038bef51003241153g33445607qb3ab750e08b0584@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143108>
 
-On Mon, Mar 22, 2010 at 3:38 PM, Michael Witten <mfwitten@gmail.com> wr=
-ote:
-> =A0 =A0 However, it's still the case that Michael Haggerty
-> =A0 =A0 is essentially stuck with "mhagger@MIT.EDU" for
-> =A0 =A0 his identification---a problem that my proposal
-> =A0 =A0 essentially fixes, as described now:]
->
-> =A0 =A0I'm proposing ALLOWING him to say:
->
-> =A0 =A0 =A0 =A0[user]
-> =A0 =A0 =A0 =A0 =A0 =A0uuid =A0=3D Michael Haggerty <mhagger@MIT.EDU>
-> =A0 =A0 =A0 =A0 =A0 =A0name =A0=3D Michael Haggerty
-> =A0 =A0 =A0 =A0 =A0 =A0email =3D mhagger@ALUM.mit.edu
->
+Chris Packham wrote:
 
-=2E..which is the exact same situation as above, where he's "stuck"
-using "mhagger@MIT.EDU" for identification. I don't see how this
-changes anything (except allowing to distribute an updated
-contact-email... But let's face it, git-repos aren't Facebook)
+> It occurs to me that the UI around alternates is a bit lacking i.e.
+> there isn't a git command to display the alternates in use or to add
+> them to an existing repository (or at least I couldn't find one
+> skimming the docs or googling). So here's my attempt to add a 'git
+> alternates' command which can display, add or remove an alternate.
 
---=20
-Erik "kusma" Faye-Lund
+Quite welcome!
+
+Something like this explanation probably belongs in the commit
+message.  That way, years down the line, people don=E2=80=99t need to t=
+rawl
+the list archives to see what your goal was.
+
+Comments:
+
+> From a5c64de20937da132376d717f19a1d52b54701d2 Mon Sep 17 00:00:00 200=
+1
+> From: Chris Packham <judge.packham@gmail.com>
+> Date: Wed, 24 Mar 2010 11:34:11 -0700
+
+Redundant next to the email header.  It is useful to be able to include
+fields that differ from the e-mail header (often Subject:,
+sometimes Date:, sometimes From:), but aside from that, this metadata
+should be omitted when sending patches to the git mailing list.
+
+> +#
+> +# Runs through the alternates file calling the callback function $1
+> +# with the name of the alternate as the first argument to the callba=
+ck
+> +# any additional arguments are passed to the callback function.
+> +#
+> +walk_alternates()
+> +{
+> +    local alternates=3D$GIT_DIR/objects/info/alternates
+> +    local callback=3D$1
+
+I couldn=E2=80=99t find any other uses of =E2=80=9Clocal=E2=80=9D in-tr=
+ee.  I assume old shells
+don=E2=80=99t support it.
+
+Will this be a problem for recursion?  Maybe the callback should be
+called in a subshell.
+
+> +    shift
+> +
+> +    if [ -e $alternates ]; then
+> +        while read line
+> +        do
+> +            $callback $line $*
+
+Probably "$line" "$@" instead of $line $* would be more flexible.
+
+> +#
+> +# Walk function to display one alternate object store and, if the us=
+er
+> +# has specified -r, recursively call show_alternates on the git
+> +# repository that the object store belongs to.
+> +#
+> +show_alternates_walk()
+> +{
+> +    say "Object store $1"
+> +    say "    referenced via $GIT_DIR"
+> +
+> +    local new_git_dir=3D${line%%/objects}
+
+use of local.
+
+> +    if [ "$recursive" =3D=3D "true" -a "$GIT_DIR" !=3D "$new_git_dir=
+" ]
+
+Should use =3D instead of =3D=3D (portability).  Also git scripts tend =
+to
+spell out 'test' and avoid the -a and -o operators:
+
+	if test "$recursive" =3D true && test "$GIT_DIR" !=3D "$new_git-dir"
+
+though that is not a hard and fast rule.
+
+> +add_alternate()
+> +{
+[...]
+> +    touch $GIT_DIR/objects/info/alternates
+
+Necessary?
+
+> +    echo "$(readlink -f $dir)" >> $GIT_DIR/objects/info/alternates
+
+Maybe
+
+	readlink -f "$dir" >> $GIT_DIR/objects/info/alternates
+
+would be simpler.
+
+> +rewrite_alternates()
+> +{
+> +    if test "$1" !=3D "$2"; then
+> +        echo $2 >> $3
+> +    fi
+> +}
+
+What does this function do?  (Could use a comment.)
+
+> +del_alternate()
+> +{
+[...]
+> +    local alternates=3D$GIT_DIR/objects/info/alternates
+
+use of local.
+
+> +
+> +    new_alts_file=3D$(mktemp $alternates-XXXXXX)
+
+Not used elsewhere in git.  Is this needed?  Maybe a single
+$GIT_DIR/objects/info/new-alternates.tmp or similar would be good
+enough.
+
+> +    # save the git from repeatedly reading a 0 length file
+> +    if test $(stat -c "%s" $alternates) -eq 0; then
+
+Not used elsewhere in core git.  test -s can help.
+
+> +# Option parsing
+
+See OPTIONS_SPEC in git-repack.sh for an example of how to simplify
+this.
+
+> +# Now go and do it
+> +case $oper in
+> +    add) add_alternate ;;
+> +    del) del_alternate ;;
+> +    *)   show_alternates ;;
+> +esac
+
+Thank you for your excellent work!  Looks very useful.
+
+Regards,
+Jonathan
