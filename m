@@ -1,114 +1,121 @@
 From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH 1/7] fmt-merge-msg: be quiet if nothing to merge
-Date: Wed, 24 Mar 2010 00:15:58 -0700
-Message-ID: <1269414964-9518-2-git-send-email-bebarino@gmail.com>
+Subject: [PATCH 4/7] fmt-merge-msg: use pretty.c routines
+Date: Wed, 24 Mar 2010 00:16:01 -0700
+Message-ID: <1269414964-9518-5-git-send-email-bebarino@gmail.com>
 References: <1269414964-9518-1-git-send-email-bebarino@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 24 08:16:33 2010
+X-From: git-owner@vger.kernel.org Wed Mar 24 08:17:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuKpL-0006lG-GS
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 08:16:31 +0100
+	id 1NuKpw-0006wZ-SH
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 08:17:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754881Ab0CXHQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Mar 2010 03:16:19 -0400
+	id S1754908Ab0CXHQ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Mar 2010 03:16:29 -0400
 Received: from mail-gw0-f46.google.com ([74.125.83.46]:44767 "EHLO
 	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754585Ab0CXHQK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Mar 2010 03:16:10 -0400
+	with ESMTP id S1754862Ab0CXHQS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Mar 2010 03:16:18 -0400
 Received: by mail-gw0-f46.google.com with SMTP id a18so1867821gwa.19
-        for <git@vger.kernel.org>; Wed, 24 Mar 2010 00:16:09 -0700 (PDT)
+        for <git@vger.kernel.org>; Wed, 24 Mar 2010 00:16:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=ZsctVl/XT8ef4pFe2Hkp4jIC3FMH5Bg8jf6o2tHS8YI=;
-        b=qv4rBY3wLrz+m2nmyOFV7LLNGPiy5es/SgUfWJ/8YtayvGHumcFlNvIogS6dACVDZY
-         IxoV/LR/8YiFKSFqAweL5cZOepFc4MkG3zN6A29g1tnwWOpP3Ot+7QX3kbJ6GdGex0DX
-         Amx7vZttLoF/A0tFpzmnFh9MLO/M/Y7iI893M=
+        bh=CDGVRxj3Nog65DPn8Sc/YNASeS8dIsWSaArcUm9yL1c=;
+        b=soTZnR4wOMVBeUWoNIgIOfQ+pgO2cH9uifOl4GK+S/T2jvHjsWON+ZEtTsTGvPGLQD
+         f/Z+ZGXd0LMh+kVMLgCe87UxqNQ0q98TIlb7vtFWwG/MCzHW/ZYDYhcwxUY0Qc3rQEEr
+         pyw7V2/BjJVT3DLMP8RFw4UYQbuo2uLyHa7Nw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=MCOGOfdS8wJzSRCe5ez4WM6tTDNCo+Z1Cm5RHLOg1Q7bxOYXv5dmJH1JBQ+mlYRg0n
-         sOK2JVnz30j49UxmkmThlfWwkh+eoDteNydRT+yYg1z81ybaaStScOmxCKaHjGirKxU2
-         3FcE1xO16HYR5hXWpKejNcMihzG8//Y+qXCUY=
-Received: by 10.101.205.23 with SMTP id h23mr6763527anq.207.1269414969735;
-        Wed, 24 Mar 2010 00:16:09 -0700 (PDT)
+        b=P/vYRu6uSe6hjV9QveTPARuT6XtRlTj2A/qSWKdlHa4VuxIRnbOShIWslxn/327Zx6
+         bWOb42hG8rk507xk7J8ahfAjFZBoj/IIfOpEXdJ3mT5BfFh32yVYtZnOvjvMviAdMbe8
+         cXeW6ojIUWw4rs19Ak5hw5Af/FrpAh6vTlg2U=
+Received: by 10.101.134.13 with SMTP id l13mr8966829ann.160.1269414977747;
+        Wed, 24 Mar 2010 00:16:17 -0700 (PDT)
 Received: from localhost (user-0c9haca.cable.mindspring.com [24.152.169.138])
-        by mx.google.com with ESMTPS id 21sm5801535iwn.15.2010.03.24.00.16.08
+        by mx.google.com with ESMTPS id 22sm5237492iwn.0.2010.03.24.00.16.16
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 24 Mar 2010 00:16:09 -0700 (PDT)
+        Wed, 24 Mar 2010 00:16:17 -0700 (PDT)
 X-Mailer: git-send-email 1.7.0.3.254.g4503b
 In-Reply-To: <1269414964-9518-1-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143069>
 
-When FETCH_HEAD contains only 'not-for-merge' entries fmt-merge-msg
-still outputs "Merge" (and if the branch isn't master " into <branch>").
-In this case fmt-merge-msg is outputting junk and should really just
-be quiet. Fix it.
+This command duplicates functionality of the '%s' pretty format.
+Simplify the code a bit by using the pretty printing routine
+instead of open-coding it here.
 
 Signed-off-by: Stephen Boyd <bebarino@gmail.com>
 ---
- builtin/fmt-merge-msg.c  |    3 +++
- t/t6200-fmt-merge-msg.sh |   19 +++++++++++++++++++
- 2 files changed, 22 insertions(+), 0 deletions(-)
+ builtin/fmt-merge-msg.c |   29 ++++++++---------------------
+ 1 files changed, 8 insertions(+), 21 deletions(-)
 
 diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 9d52400..9bb2625 100644
+index 9bb2625..44b74f4 100644
 --- a/builtin/fmt-merge-msg.c
 +++ b/builtin/fmt-merge-msg.c
-@@ -281,6 +281,9 @@ int fmt_merge_msg(int merge_summary, struct strbuf *in, struct strbuf *out) {
- 			die ("Error in line %d: %.*s", i, len, p);
+@@ -185,6 +185,7 @@ static void shortlog(const char *name, unsigned char *sha1,
+ 	struct object *branch;
+ 	struct list subjects = { NULL, NULL, 0, 0 };
+ 	int flags = UNINTERESTING | TREESAME | SEEN | SHOWN | ADDED;
++	struct strbuf sb = STRBUF_INIT;
+ 
+ 	branch = deref_tag(parse_object(sha1), sha1_to_hex(sha1), 40);
+ 	if (!branch || branch->type != OBJ_COMMIT)
+@@ -198,7 +199,7 @@ static void shortlog(const char *name, unsigned char *sha1,
+ 	if (prepare_revision_walk(rev))
+ 		die("revision walk setup failed");
+ 	while ((commit = get_revision(rev)) != NULL) {
+-		char *oneline, *bol, *eol;
++		struct pretty_print_context ctx = {0};
+ 
+ 		/* ignore merges */
+ 		if (commit->parents && commit->parents->next)
+@@ -208,30 +209,16 @@ static void shortlog(const char *name, unsigned char *sha1,
+ 		if (subjects.nr > limit)
+ 			continue;
+ 
+-		bol = strstr(commit->buffer, "\n\n");
+-		if (bol) {
+-			unsigned char c;
+-			do {
+-				c = *++bol;
+-			} while (isspace(c));
+-			if (!c)
+-				bol = NULL;
+-		}
++		format_commit_message(commit, "%s", &sb, &ctx);
++		strbuf_ltrim(&sb);
+ 
+-		if (!bol) {
++		if (!sb.len)
+ 			append_to_list(&subjects, xstrdup(sha1_to_hex(
+ 							commit->object.sha1)),
+ 					NULL);
+-			continue;
+-		}
+-
+-		eol = strchr(bol, '\n');
+-		if (eol) {
+-			oneline = xmemdupz(bol, eol - bol);
+-		} else {
+-			oneline = xstrdup(bol);
+-		}
+-		append_to_list(&subjects, oneline, NULL);
++		else
++			append_to_list(&subjects, strbuf_detach(&sb, NULL),
++					NULL);
  	}
  
-+	if (!srcs.nr)
-+		return 0;
-+
- 	strbuf_addstr(out, "Merge ");
- 	for (i = 0; i < srcs.nr; i++) {
- 		struct src_data *src_data = srcs.payload[i];
-diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
-index 42f6fff..ade209a 100755
---- a/t/t6200-fmt-merge-msg.sh
-+++ b/t/t6200-fmt-merge-msg.sh
-@@ -21,6 +21,8 @@ test_expect_success setup '
- 	setdate &&
- 	git commit -m "Initial" &&
- 
-+	git clone . remote &&
-+
- 	echo uno >one &&
- 	echo dos >two &&
- 	git add two &&
-@@ -240,4 +242,21 @@ test_expect_success 'merge-msg -F in subdirectory' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'merge-msg with nothing to merge' '
-+
-+	git config --unset-all merge.log
-+	git config --unset-all merge.summary
-+	git config merge.summary yes &&
-+
-+	(
-+		cd remote &&
-+		git checkout -b unrelated &&
-+		setdate &&
-+		git fetch origin &&
-+		git fmt-merge-msg <.git/FETCH_HEAD >../actual
-+	) &&
-+
-+	test_cmp /dev/null actual
-+'
-+
- test_done
+ 	if (count > limit)
 -- 
 1.7.0.3.254.g4503b
