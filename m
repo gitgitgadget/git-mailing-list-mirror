@@ -1,292 +1,144 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: Question about .git/objects/info/alternates
-Date: Wed, 24 Mar 2010 11:53:08 -0700
-Message-ID: <a038bef51003241153g33445607qb3ab750e08b0584@mail.gmail.com>
-References: <a038bef51003221026i379ee16ej6e0e6defcf0048dd@mail.gmail.com>
-	 <20100323024223.GA12257@progeny.tock>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH 1/2] Make xmalloc and xrealloc thread-safe
+Date: Wed, 24 Mar 2010 14:54:48 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1003241435300.694@xanadu.home>
+References: <20100323161713.3183.57927.stgit@fredrik-laptop>
+ <20100323173114.GB4218@fredrik-laptop> <20100323184309.GA31668@spearce.org>
+ <4c8ef71003231421u789c4332h461c066add0ec7b1@mail.gmail.com>
+ <alpine.LFD.2.00.1003231945480.31128@xanadu.home>
+ <4c8ef71003240823o7cd733bn5f19699305c94cba@mail.gmail.com>
+ <alpine.LFD.2.00.1003241133430.694@xanadu.home>
+ <ec874dac1003241122s3d592f26n1b23d23144939218@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: GIT <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 24 19:53:20 2010
+Content-Type: multipart/mixed; boundary="Boundary_(ID_gFZphfhVtJRgR94I8DR1xw)"
+Cc: Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 24 19:55:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuVhf-0003sM-Vo
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 19:53:20 +0100
+	id 1NuVjC-0004pU-KZ
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 19:54:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932798Ab0CXSxL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Mar 2010 14:53:11 -0400
-Received: from qw-out-2122.google.com ([74.125.92.27]:30313 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932645Ab0CXSxJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Mar 2010 14:53:09 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so1980225qwh.37
-        for <git@vger.kernel.org>; Wed, 24 Mar 2010 11:53:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=GFEqUg1C0QcOoolMwCkSRjuWnICc4gv1Rpd8wgLbTLA=;
-        b=MZVBfJzfi5psAbZ5/4Xc1Mf8Rqw6Fv9BNOtTVMddk0Hx8dbjR2zDnlJJ6ciYEDLdBp
-         9Vq9JMXbN8B3jB+W+8OJEzyBze3ZiAFg7EAPXYp5mGzJi4KBSNJWmDWU8T02npC2UUR5
-         ZIvtoVmJpfsprovqfSaE0MYkbG8lMLXgx7mQU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ICWp/WkUo7jke9AOUnXz920tBe3OeN9VZSKc1YsnVZmNd57pd7Cmtn6t4EH+QShN9t
-         p24Q+1Rr2Hr9mYZFwuWu0GnUryPUqRiIbERf+EsVbUWUduSgTVA28DQ15ubBjFLn4TZt
-         gwCiVkt/fR+ZWcmPHTzLBFTj8wdLTl0Cm3QKk=
-Received: by 10.229.189.212 with SMTP id df20mr1402075qcb.21.1269456788449; 
-	Wed, 24 Mar 2010 11:53:08 -0700 (PDT)
-In-Reply-To: <20100323024223.GA12257@progeny.tock>
+	id S932737Ab0CXSyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Mar 2010 14:54:50 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:30407 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932268Ab0CXSyt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Mar 2010 14:54:49 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KZS009PMV7CYMT0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 24 Mar 2010 14:54:48 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <ec874dac1003241122s3d592f26n1b23d23144939218@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143104>
 
-On Mon, Mar 22, 2010 at 7:42 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Chris Packham wrote:
->
->> I would like to have base somehow find the objects it doesn't have i=
-n
->> its object store and either download them or just copy them from the
->> object store of projecta.
-> [...]
->> From reading [2] I think 'rm
->> .git/objects/info/alternates && git repack -a' might do the trick bu=
-t
->> I'm not sure.
->
-> Almost. =C2=A0Try =E2=80=98git repack -a && rm .git/objects/info/alte=
-rnates=E2=80=99 instead. :)
->
-> (Please back up the repository or try with something less important
-> first, since I am not sure.)
->
-> Hope that helps,
-> Jonathan
->
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-git repack -a did the correct thing.
+--Boundary_(ID_gFZphfhVtJRgR94I8DR1xw)
+Content-type: TEXT/PLAIN; charset=ISO-8859-1
+Content-transfer-encoding: 8BIT
 
-It occurs to me that the UI around alternates is a bit lacking i.e.
-there isn't a git command to display the alternates in use or to add
-them to an existing repository (or at least I couldn't find one
-skimming the docs or googling). So here's my attempt to add a 'git
-alternates' command which can display, add or remove an alternate. The
-adding and removing could be done with standard shell commands but
-I've found the recursive displaying quite useful and couldn't think of
-a simple command line to achieve the same thing .
+On Wed, 24 Mar 2010, Shawn Pearce wrote:
 
-------8<------
+> On Wed, Mar 24, 2010 at 10:53 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
+> > On Wed, 24 Mar 2010, Fredrik Kuivinen wrote:
+> >
+> >> On Wed, Mar 24, 2010 at 00:50, Nicolas Pitre <nico@fluxnic.net> wrote:
+> >> > On Tue, 23 Mar 2010, Fredrik Kuivinen wrote:
+> >> >
+> >> >> On Tue, Mar 23, 2010 at 19:43, Shawn O. Pearce <spearce@spearce.org> wrote:
+> >> >> > If that is what we are doing, disabling the release of pack windows
+> >> >> > when malloc fails, why can't we do that all of the time?
+> >> >>
+> >> >> The idea was that most git programs are single threaded, so they can
+> >> >> still benefit from releasing the pack windows when they are low on
+> >> >> memory.
+> >> >
+> >> > This is bobus. The Git program using the most memory is probably
+> >> > pack-objects and it is threaded.  Most single-threaded programs don't
+> >> > use close to as much memory.
+> >>
+> >> Ok, you are right. But xmalloc/xrealloc cannot be used in multiple
+> >> threads simultaneously without some serialization.
+> >>
+> >> For example, I think there are some potential race conditions in the
+> >> pack-objects code. In the threaded code we have the following call
+> >> chains leading to xcalloc, xmalloc, and xrealloc:
+> >>
+> >> find_deltas -> xcalloc
+> >> find_deltas -> do_compress -> xmalloc
+> >> find_deltas -> try_delta -> xrealloc
+> >> find_deltas -> try_delta -> read_sha1_file -> ... -> xmalloc  (called
+> >> with read_lock held, but it can still race with the other calls)
+> >>
+> >> As far as I can see there is no serialization between these calls.
+> >
+> > True.  We already have a problem.  This is nasty.
+> 
+> The easy solution is probably to remove the use of xmalloc from
+> find_deltas code path.  But then we run into hard failures when we
+> can't get the memory we need, there isn't a way to recover from a
+> malloc() failure deep within read_sha1_file for example.
 
-=46rom a5c64de20937da132376d717f19a1d52b54701d2 Mon Sep 17 00:00:00 200=
-1
-=46rom: Chris Packham <judge.packham@gmail.com>
-Date: Wed, 24 Mar 2010 11:34:11 -0700
-Subject: [PATCH] Add git alternates command
+The read_sha1_file path is not the problem -- it is always protected 
+against concurrency with a mutex.
 
-Provides a friendlier UI for displaying and configuring alternates.
+It is more about do_compress() called on line 1476 of pack-objects.c for 
+example.
 
-Signed-off-by: Chris Packham <judge.packham@gmail.com>
----
 
-This patch assumes multiple alterates are possible. If this is not corr=
-ect then
-it could be simplfied as there would be no need for walk_alternates.
+> The current solution is the best we can do, try to ditch pack windows 
+> and hope that releases sufficient virtual memory space that a second 
+> malloc() attempt can succeed by increasing heap.
+> 
+> We could use a mutex during the malloc failure code-path of xmalloc,
+> to ensure only one thread goes through that pack window cleanup at a
+> time.  But that will still mess with the main thread which doesn't
+> really want to acquire mutexes during object access as it uses the
+> existing pack windows.
 
- Makefile          |    1 +
- git-alternates.sh |  159 +++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 2 files changed, 160 insertions(+), 0 deletions(-)
- create mode 100755 git-alternates.sh
+Right.
 
-diff --git a/Makefile b/Makefile
-index 3a6c6ea..1a7b084 100644
---- a/Makefile
-+++ b/Makefile
-@@ -334,6 +334,7 @@ TEST_PROGRAMS_NEED_X =3D
- unexport CDPATH
+> I thought pack-objects did all object access from the main thread and
+> only delta searches on the worker threads?
 
- SCRIPT_SH +=3D git-am.sh
-+SCRIPT_SH +=3D git-alternates.sh
- SCRIPT_SH +=3D git-bisect.sh
- SCRIPT_SH +=3D git-difftool--helper.sh
- SCRIPT_SH +=3D git-filter-branch.sh
-diff --git a/git-alternates.sh b/git-alternates.sh
-new file mode 100755
-index 0000000..74ec707
---- /dev/null
-+++ b/git-alternates.sh
-@@ -0,0 +1,159 @@
-+#!/bin/sh
-+#
-+# This file is licensed under the GPL v2
-+#
-+
-+USAGE=3D'[-r|--recursive] [-a|--add <dir>] [-f|--force -d|--delete <di=
-r>]'
-+
-+. git-sh-setup
-+
-+#
-+# Runs through the alternates file calling the callback function $1
-+# with the name of the alternate as the first argument to the callback
-+# any additional arguments are passed to the callback function.
-+#
-+walk_alternates()
-+{
-+    local alternates=3D$GIT_DIR/objects/info/alternates
-+    local callback=3D$1
-+    shift
-+
-+    if [ -e $alternates ]; then
-+        while read line
-+        do
-+            $callback $line $*
-+        done < $alternates
-+    fi
-+}
-+
-+#
-+# Walk function to display one alternate object store and, if the user
-+# has specified -r, recursively call show_alternates on the git
-+# repository that the object store belongs to.
-+#
-+show_alternates_walk()
-+{
-+    say "Object store $1"
-+    say "    referenced via $GIT_DIR"
-+
-+    local new_git_dir=3D${line%%/objects}
-+    if [ "$recursive" =3D=3D "true" -a "$GIT_DIR" !=3D "$new_git_dir" =
-]
-+    then
-+        GIT_DIR=3D$new_git_dir show_alternates
-+    fi
-+}
-+
-+show_alternates()
-+{
-+    walk_alternates show_alternates_walk
-+}
-+
-+#
-+# Walk function to check that the specified alternate does not
-+# already exist.
-+#
-+check_current_alternate_walk()
-+{
-+    if test "$1" =3D "$2"; then
-+        die "fatal: Object store $2 is already used by $GIT_DIR"
-+    fi
-+}
-+
-+add_alternate()
-+{
-+    if test ! -d $dir; then
-+        die "fatal: $dir is not a directory"
-+    fi
-+
-+    walk_alternates check_current_alternate_walk $dir
-+
-+    # At this point we know that $dir is a directory that exists
-+    # and that its not already being used as an alternate. We could
-+    # go further and verify that $dir has valid objects.
-+
-+    # if we're still going we can safely add the alternate
-+    touch $GIT_DIR/objects/info/alternates
-+    echo "$(readlink -f $dir)" >> $GIT_DIR/objects/info/alternates
-+    say "$dir added as an alternate"
-+    say "     use 'git repack -adl' to remove duplicate objects"
-+}
-+
-+rewrite_alternates()
-+{
-+    if test "$1" !=3D "$2"; then
-+        echo $2 >> $3
-+    fi
-+}
-+
-+del_alternate()
-+{
-+    if test ! $force =3D "true"; then
-+        say "Not forced, use"
-+        say "   'git repack -a' to fetch missing objects, then "
-+        say "   '$dashless -f -d $dir' to remove the alternate"
-+        die
-+    fi
-+
-+    local alternates=3D$GIT_DIR/objects/info/alternates
-+
-+    new_alts_file=3D$(mktemp $alternates-XXXXXX)
-+    touch $new_alts_file
-+
-+    walk_alternates rewrite_alternates $dir $new_alts_file
-+    mv $new_alts_file $alternates
-+
-+    # save the git from repeatedly reading a 0 length file
-+    if test $(stat -c "%s" $alternates) -eq 0; then
-+        rm $alternates
-+    fi
-+}
-+
-+dir=3D""
-+oper=3D""
-+force=3D"false"
-+
-+# Option parsing
-+while test $# !=3D 0
-+do
-+    case "$1" in
-+        -r|--recursive)
-+            recursive=3D"true"
-+            ;;
-+        -a|--add)
-+            if test ! -z "$oper"; then
-+                usage
-+            fi
-+            oper=3D"add"
-+            case "$#,$1" in
-+                1,*) usage ;;
-+                *)   dir=3D$2; shift ;;
-+            esac
-+            ;;
-+        -d|--delete)
-+            if test ! -z "$oper"; then
-+                usage
-+            fi
-+            oper=3D"del"
-+            case "$#,$1" in
-+                1,*) usage ;;
-+                *)   dir=3D$2; shift ;;
-+            esac
-+            ;;
-+        -f|--force)
-+            force=3D"true"
-+            ;;
-+        -*)
-+            usage
-+            ;;
-+        *)
-+            ;;
-+    esac
-+    shift
-+done
-+
-+# Now go and do it
-+case $oper in
-+    add) add_alternate ;;
-+    del) del_alternate ;;
-+    *)   show_alternates ;;
-+esac
---=20
-1.7.0.3
+No.  Each thread is responsible for grabbing its own data set.
+
+> If that is true, maybe we
+> can have the worker threads signal the main thread on malloc failure
+> to release pack windows, and then wait for that signal to be
+> acknowledged before they attempt to retry the malloc.  This means the
+> main thread would need to periodically test that condition as its
+> dispatching batches of objects to the workers.
+> 
+> Ugly.
+
+Indeed.
+
+The real solution, of course, would be to have pack window manipulations 
+protected by a mutex of its own.  This, plus another mutex for the delta 
+base cache, and then read_sha1_file() could almost be reentrant.
+
+Another solution could be for xmalloc() to use a function pointer for 
+the method to use on malloc error path, which would default to a 
+function calling release_pack_memory(size, -1).  Then pack-objects.c 
+would override the default with its own to acquire the read_mutex around 
+the call to release_pack_memory().  That is probably the easiest 
+solution for now.
+
+
+Nicolas
+
+--Boundary_(ID_gFZphfhVtJRgR94I8DR1xw)--
