@@ -1,54 +1,73 @@
-From: Lars Damerow <lars@pixar.com>
-Subject: Re: GIT_ONE_FILESYSTEM inclusion?
-Date: Wed, 24 Mar 2010 13:07:34 -0700
-Message-ID: <20100324200733.GG7038@pixar.com>
-References: <20100323232055.GV7038@pixar.com> <81b0412b1003240229l6f7eaa18l563c3d7ba0cf6cc5@mail.gmail.com> <4BA9DCDD.6060109@viscovery.net> <81b0412b1003240437n799bac07sb74db749d647817d@mail.gmail.com> <20100324134048.GB10190@pixar.com> <81b0412b1003240659u4e6de405t7750b66ca9292cdc@mail.gmail.com> <7vpr2tu1bd.fsf@alter.siamese.dyndns.org> <81b0412b1003241207s4951b32cpbe105e7b3623f61a@mail.gmail.com>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: Question about .git/objects/info/alternates
+Date: Wed, 24 Mar 2010 13:16:05 -0700
+Message-ID: <780e0a6b1003241316i4bbd4489w63ba0308706e4d20@mail.gmail.com>
+References: <a038bef51003221026i379ee16ej6e0e6defcf0048dd@mail.gmail.com> 
+	<20100323024223.GA12257@progeny.tock> <a038bef51003241153g33445607qb3ab750e08b0584@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 24 21:07:43 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, GIT <git@vger.kernel.org>
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 24 21:16:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NuWre-0000QT-2w
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 21:07:42 +0100
+	id 1NuX06-00051c-K1
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Mar 2010 21:16:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756599Ab0CXUHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Mar 2010 16:07:37 -0400
-Received: from femx.pixar.com ([199.108.77.27]:59048 "EHLO femx.pixar.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756480Ab0CXUHg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Mar 2010 16:07:36 -0400
-X-PixarMID: 42230520
-X-PixarRecvListener: OutboundMail
-X-PixarRemoteIP: 138.72.131.152
-X-IronPort-AV: E=Sophos;i="4.51,302,1267430400"; 
-   d="scan'208,223";a="42230520"
-Received: from helper.dynamic.pixar.com ([138.72.131.152])
-  by post.pixar.com with ESMTP; 24 Mar 2010 13:07:36 -0700
-Received: from helper.dynamic.pixar.com (localhost [127.0.0.1])
-	by helper.dynamic.pixar.com (8.14.3/8.14.3) with ESMTP id o2OK7Ztp014214;
-	Wed, 24 Mar 2010 13:07:35 -0700
-Received: (from lars@localhost)
-	by helper.dynamic.pixar.com (8.14.3/8.14.3/Submit) id o2OK7YMk014212;
-	Wed, 24 Mar 2010 13:07:34 -0700
-Content-Disposition: inline
-In-Reply-To: <81b0412b1003241207s4951b32cpbe105e7b3623f61a@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S932200Ab0CXUQV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Mar 2010 16:16:21 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:44861 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754933Ab0CXUQU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Mar 2010 16:16:20 -0400
+Received: by pwi5 with SMTP id 5so4273299pwi.19
+        for <git@vger.kernel.org>; Wed, 24 Mar 2010 13:16:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=HI+b6aeOW7GPemT0IVH4W0S3nalX4pp7iDQ76ctkkoA=;
+        b=t1r7L6V7zU8Gp/pOzdDUCz50oHVLDolk//5bjPhfepo6gbI0xAtsovTlJRuTghuTUD
+         4lDpGH/o6IkEetmfVfOQSsAZDIg9V+WF4dZkR0/aaeOU/g9zdQHGbcuujg74hijbj6ff
+         x88uAMogBVZPF9FXo7ZGuMQl9Wn77qo/h84tc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=lBpm9cK5o7eWKAB2sO380UNrPqNXY0Yxy9gYN14LuncmYw8LoOETEUcxvKsSfYzUxN
+         /3kkVCmZiqvb4TmYcxBvr/IrSPQiKuIasjalXnKzCkV8kRqcOn7iOlRZ8j3j2hdvr9AX
+         txXXUN+/IgAtnkoQse+VpWaeQDSUgV3q0ILAU=
+Received: by 10.143.85.8 with SMTP id n8mr3774809wfl.276.1269461780093; Wed, 
+	24 Mar 2010 13:16:20 -0700 (PDT)
+In-Reply-To: <a038bef51003241153g33445607qb3ab750e08b0584@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143115>
 
->From Alex Riesen <raa.lkml@gmail.com>, Wed, Mar 24, 2010 at 08:07:03PM +0100:
-> But frankly, I think it will be the most obscure feature of Git ever,
+On Wed, Mar 24, 2010 at 11:53 AM, Chris Packham <judge.packham@gmail.co=
+m> wrote:
+>
+> +USAGE=3D'[-r|--recursive] [-a|--add <dir>] [-f|--force -d|--delete <=
+dir>]'
+[...]
+> +case $oper in
+> + =C2=A0 =C2=A0add) add_alternate ;;
+> + =C2=A0 =C2=A0del) del_alternate ;;
+> + =C2=A0 =C2=A0*) =C2=A0 show_alternates ;;
+> +esac
 
-Wow. Would I win a prize or something? :)
+=46rom a very high-level this should probably be more like git remote
+and git notes. 'add' and 'delete' would be subcommands instead of
+options. Plus you might have an explicit subcommand for show (or
+list?). Something like
 
---
-lars r. damerow :: button pusher :: pixar animation studios
+git alternates [show]  [-r|--recursive]
+git alternates add <dir>
+git alternates delete  [-f|--force] <dir>
