@@ -1,73 +1,144 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Migrating from SVN
-Date: Thu, 25 Mar 2010 07:22:14 +0100
-Message-ID: <20100325062214.GA1829@book.hvoigt.net>
-References: <aosj77-m7e.ln1@burns.bruehl.pontohonk.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCHv2 2/2] tests for git alternate command
+Date: Thu, 25 Mar 2010 08:38:09 +0100
+Message-ID: <4BAB12E1.8070602@viscovery.net>
+References: <a038bef51003241335l1623ade4i4a9b7269546739d4@mail.gmail.com> <1269497251-13103-3-git-send-email-judge.packham@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Christoph Bartoschek <bartoschek@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 25 07:22:24 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, jrnieder@gmail.com, gitster@pobox.com,
+	bebarino@gmail.com
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 25 08:38:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NugSV-0008QH-DF
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 07:22:23 +0100
+	id 1Nuhe6-0000w5-Sa
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 08:38:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752645Ab0CYGWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Mar 2010 02:22:17 -0400
-Received: from darksea.de ([83.133.111.250]:48016 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751840Ab0CYGWQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Mar 2010 02:22:16 -0400
-Received: (qmail 32532 invoked from network); 25 Mar 2010 07:22:14 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 25 Mar 2010 07:22:14 +0100
-Content-Disposition: inline
-In-Reply-To: <aosj77-m7e.ln1@burns.bruehl.pontohonk.de>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1753126Ab0CYHiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Mar 2010 03:38:16 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:24778 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753036Ab0CYHiQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Mar 2010 03:38:16 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Nuhdq-00018n-Ji; Thu, 25 Mar 2010 08:38:10 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 4A3761660F;
+	Thu, 25 Mar 2010 08:38:10 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
+In-Reply-To: <1269497251-13103-3-git-send-email-judge.packham@gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143167>
 
-On Mon, Mar 22, 2010 at 11:18:18AM +0100, Christoph Bartoschek wrote:
-> Now we are merging both products into one such that the structure should be 
-> 
-> product/project_A
->         project_B
->         project_C
->         project_D
->         project_E
-> 
-> I think this makes migration to Git easier as we can now work with only one 
-> Git repository. We also circumvent the usage of the unmature submodule 
-> support in Git.
-> 
-> How can I now import our Subversion projects into the Git repository such 
-> that for each project the history is kept and ideally the whole history is 
-> linearized by the subversion revision numbers?
+Am 3/25/2010 7:07, schrieb Chris Packham:
+> Signed-off-by: Chris Packham <judge.packham@gmail.com>
 
-Import them all seperately into git (e.g. using git svn) and then have a
-look at subtree merge
+Your patches violate whitespace rules. Use 'git show --check' to see the
+questionable lines.
 
-http://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-subtree.html
+> ---
+> I wasn't sure about the test numbering so I just grabbed the highest one. Still
+> need to add tests for the deletion use case.
 
-to merge them all together. That way you will have seperate lines of
-history for each project and one (or five) big merges on top.
+According to t/README, t1* would be a suitable category, perhaps t1430.
 
-AFAIK the revision number from svn is stored in the commit message if
-you use git svn so to add the project name you might want to use git
-filter-branch to add that name to each commit before merging the history
-lines.
+>  t/t9800-git-alternate.sh |   95 ++++++++++++++++++++++++++++++++++++++++++++++
 
-That way you will have all the history of the now seperate projects in
-one git repository. Keep in mind that after doing that its not that easy
-to make them seperate projects again.
+"git" in the name is redundant
 
-Hope that helps.
+> +test_expect_success \
+> +	'Setup for rest of the test' '
 
-cheers Heiko
+The modern style for test headers is
+
+test_expect_success 'Setup for rest of the test' '
+	test goes here
+'
+
+It may improve readability if you insert a blank line after the headline.
+
+> +	mkdir -p base &&
+> +	cd base &&
+> +	git init &&
+> +	echo test > a.txt &&
+> +	echo test > b.txt &&
+> +	echo test > c.txt &&
+> +	git add *.txt &&
+> +	git commit -a -m "Initial Commit" &&
+> +	cd .. &&
+
+Do not use 'cd dir && ... && cd ..', use (cd dir && ...) like you did in
+the rest of the tests.
+
+> +test_expect_success \
+> +	'Add alternate after clone' '
+> +	(cd B &&
+> +	git alternate -a ../base/.git/objects
+> +	)
+
+We saw tests like this written with more whitespace like:
+
+	(
+		cd B &&
+		git alternate -a ../base/.git/objects
+	)
+
+> +test_expect_success \
+> +	'add same alternate fails adding existing abs path' '
+> +	(cd B &&
+> +	test_must_fail git alternate -a $PWD/base/.git/objects
+
+This use of $PWD is OK, but for consistency it should be $(pwd) like
+below. Moreover, it needs double-quotes.
+
+> +test_expect_success \
+> +	'test git alternate display' '
+> +	testbase=$PWD
+
+You must write this as (d-quotes not needed here)
+
+	testbase=$(pwd) &&
+
+for the benefit of Windows. The difference is that $PWD returns /c/path,
+but $(pwd) returns c:/path.
+
+When the alternate was set up using the command, git has only ever seen a
+c:/path style path (regardless of whether you used $PWD or $(pwd), because
+the path is converted to c:/path by the shell before it invokes git), and
+therefore the alternates file contains this style.
+
+But when the expected result is constructed, the /c/path style is *not*
+converted to c:/path; and a mismatch would be detected.
+
+> +	(cd B &&
+> +	git alternate >actual &&
+> +	{
+> +		echo "Object store $testbase/base/.git/objects"
+> +		echo "    referenced via $testbase/B/.git"
+> +	} >expect &&
+> +	test_cmp expect actual
+> +	)
+> +'
+> +
+> +test_expect_success \
+> +	'test git alternate recursive display' '
+> +	testbase=$PWD
+
+Ditto.
+
+> +#rm -rf A B C D base
+> \ No newline at end of file
+
+test_done
+
+-- Hannes
