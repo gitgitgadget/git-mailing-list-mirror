@@ -1,59 +1,71 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Pseudonymous commits
-Date: Thu, 25 Mar 2010 10:18:51 +0100
-Message-ID: <81b0412b1003250218t3205e12cj5a5013d97e2c0e38@mail.gmail.com>
-References: <4BAADF34.3080806@gmail.com>
-	 <4BA51E6B-7325-465A-B23E-7F3C5BF87700@mit.edu>
-	 <4BAAE981.4040205@gmail.com>
-	 <e51f4f551003242154p7fb20ffch790dd1ada15eca0@mail.gmail.com>
-	 <4BAAEDF7.1080107@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH RFC/RFD] clone: quell the progress report from init
+Date: Thu, 25 Mar 2010 10:26:39 +0100
+Message-ID: <4BAB2C4F.3080305@drmicha.warpmail.net>
+References: <4BAB2234.4070202@drmicha.warpmail.net>	 <7b9006620fab4214ee0db53ebc9e0caffc397959.1269506526.git.git@drmicha.warpmail.net> <81b0412b1003250202m67dc4d2m9042d1242800cd27@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Kris Shannon <kris@shannon.id.au>, git@vger.kernel.org
-To: "Mike.lifeguard" <mike.lifeguard@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 25 10:18:59 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Neal Kreitzinger <neal@rsss.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 25 10:29:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NujDP-0001rd-6M
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 10:18:59 +0100
+	id 1NujNf-0006ln-2N
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 10:29:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752011Ab0CYJSy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Mar 2010 05:18:54 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:62411 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751215Ab0CYJSx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Mar 2010 05:18:53 -0400
-Received: by bwz1 with SMTP id 1so651268bwz.21
-        for <git@vger.kernel.org>; Thu, 25 Mar 2010 02:18:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=j2/zebGyJ5AvHeCs6ohfuz6rZEJxbuS/jFHMkpp3lBY=;
-        b=oAjGX+yjEa+LHDa2aL7P2O7fzTUGLQ/KqcqgnwBSxvN3cE3roPVna6zWSaJvHodXsn
-         L48VlvpcYcMasNVszEvJuZ2os9WnSxsp71QM03mIQ+ZwniY3g0x0EV/ZvGuN65yFlXia
-         ew7O1k6YO+d7BuXfF+8mZOTNkWAD1fwglfLBY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=KZoFIIShqCeUQpsIAou0/nqSK0jtvtn5F3TRDphLjNats/nFWo9tH5TZ2iJMBDQTAu
-         ArLIyNRjyHe+JTQ2lWAU2BujsJLa8XqdE/ku284k421oeWaqMD45wk9I+/hvevzNbUEv
-         q77huNFX5yMvz2icKO6BcVLLs0L7qk0ank3QM=
-Received: by 10.204.11.11 with SMTP id r11mr535141bkr.12.1269508731448; Thu, 
-	25 Mar 2010 02:18:51 -0700 (PDT)
-In-Reply-To: <4BAAEDF7.1080107@gmail.com>
+	id S1751546Ab0CYJ33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Mar 2010 05:29:29 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:41033 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750903Ab0CYJ32 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Mar 2010 05:29:28 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 0C469E910E;
+	Thu, 25 Mar 2010 05:29:28 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 25 Mar 2010 05:29:28 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=BMbJSMhUii9am2kYAfkjqg18wqE=; b=ZXp0U9ph9eji+AGPF5KnQbgS8onGbuRfCGHgFkxTTHJtwjA5pTnCMI2LbKW8hejLGaMh6WpLxkVDBL8MxsRkLh5vDhzrhLS0j8f55+XHubwjmEuJP0SKf+ENzdjEyTQy70C19TbJ4L4j/42fO/dFV1SqLxBb5N6PgMP8MKHQjWY=
+X-Sasl-enc: SJV2h/tnID7yfU8zcBkX82nSsXzfQOKh+Z8b28evmcoH 1269509367
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 2576C4921B;
+	Thu, 25 Mar 2010 05:29:27 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10pre) Gecko/20100319 Lightning/1.0b2pre Shredder/3.0.5pre
+In-Reply-To: <81b0412b1003250202m67dc4d2m9042d1242800cd27@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143175>
 
-On Thu, Mar 25, 2010 at 06:00, Mike.lifeguard <mike.lifeguard@gmail.com> wrote:
-> In any case, is the answer "git can't do that" or not? Because that's
-> actually the answer I'm interested in.
+Alex Riesen venit, vidit, dixit 25.03.2010 10:02:
+> On Thu, Mar 25, 2010 at 09:46, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+>> Currently, we really have two philosophies:
+>> - report only on error
+>> - be chatty on success
+>>
+>> I don't think that's a problem, but "simple" commands (e.g. branch, init,
+>> add) should be in the former camp.
+> 
+> Right. Everytime add scrolls out the current terminal buffer I wish I
+> had it sent to /dev/null.
+> 
+>>  builtin/clone.c |    2 +-
+>>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> Sometimes I think a statistics like "1 byte inserted" are more appropriate :)
 
-git commit --author "I am not Mike Lifeguard <mike.lifeguard@gmail.com>"
+Yeah, I was thinking this would be the/a minimal patch, but I screwed it
+with the commit message :)
+
+> 
+>> -       init_db(option_template, (option_verbosity < 0) ? INIT_DB_QUIET : 0);
+>> +       init_db(option_template, (option_verbosity <= 0) ? INIT_DB_QUIET : 0);
+
+Michael
