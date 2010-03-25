@@ -1,70 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/7] fmt-merge-msg: hide summary option
-Date: Wed, 24 Mar 2010 19:45:16 -0700
-Message-ID: <7v4ok5dsqr.fsf@alter.siamese.dyndns.org>
-References: <1269414964-9518-1-git-send-email-bebarino@gmail.com>
- <1269414964-9518-8-git-send-email-bebarino@gmail.com>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH 1/7] fmt-merge-msg: be quiet if nothing to merge
+Date: Wed, 24 Mar 2010 20:48:49 -0700
+Message-ID: <4BAADD21.2020900@gmail.com>
+References: <1269414964-9518-1-git-send-email-bebarino@gmail.com> <1269414964-9518-2-git-send-email-bebarino@gmail.com> <7vaatxdt0d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 25 03:45:58 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 25 04:49:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nud4g-0001NK-Mr
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 03:45:35 +0100
+	id 1Nue4H-0007rO-3G
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 04:49:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751469Ab0CYCp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Mar 2010 22:45:29 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51168 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751343Ab0CYCp2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Mar 2010 22:45:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BF63A56E2;
-	Wed, 24 Mar 2010 22:45:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0mSC7dHmWc9Mba85Zh0e6B7wy6I=; b=tc6za4
-	k/ADh2WnYIAAFPtKiF7YJcMx82BqJL0i6CAiD/ENvxmV3ER3iBaoIKEuyXSAweq1
-	GhJbvjmGu1DihXdl20xBZTBnOETvFLe4raXFdNCS1r0ROR15hSii+Ik4CwJRkBT+
-	BDCVtJC/ygBGC9oFEDDloxPnAqRnM9NUO7yJY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BVR5QZJUsD7lQJKQDM1LW6jL9gZV0B2h
-	qJy5Qj3qsEcqAhcck20mBWee/X3K23ONcoaqjzDR4u6n0Jk1lX++ATw++F29tuQ+
-	Pl8xmCqbf6yMmSeXELypHcJdgTPzzXaRBFS5zNVWmFnvu9k7Jq6ISF0h007lICs+
-	Oe/Vx6670sM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7218AA56D8;
-	Wed, 24 Mar 2010 22:45:24 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D2750A56D2; Wed, 24 Mar
- 2010 22:45:17 -0400 (EDT)
-In-Reply-To: <1269414964-9518-8-git-send-email-bebarino@gmail.com> (Stephen
- Boyd's message of "Wed\, 24 Mar 2010 00\:16\:04 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 764A977C-37B8-11DF-9BE0-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751971Ab0CYDsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Mar 2010 23:48:54 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:47119 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751430Ab0CYDsx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Mar 2010 23:48:53 -0400
+Received: by gyg8 with SMTP id 8so3980588gyg.19
+        for <git@vger.kernel.org>; Wed, 24 Mar 2010 20:48:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=uWiQ41U9sf3E6xKr2U145F0KrHkn1mRiPfMV4HyM+Yg=;
+        b=iRuuypkIB0vJL7sdSoi2pz1RL9qpewNcJoyBOG8wFEAPP0z3CdIU8QSaE6OOswHCpc
+         YUmV0zuY3NOPWZgJok0WtpXh9+2sMfHuqzI6YIAY0tEckUQ+CS/Ejjt3df+qpAh00EiV
+         g69iQatiea/eV9MlBc0XHHZNk3oK0GFNzB1zc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=dWmD6vvVmiyI07FzxJrRn9TKBVI1Pkp4F02rx1Tf1LuYyldk/aJ0hgr4jWNuh9d8lo
+         naJFISfLe7BSXYAj2yQrsBDwdpzNkb5hXRaK6WivC10ZBivgT1y/t2f1/BszEAZDAPmb
+         DwuJVbiTLi6LzbM63Aeyr/Z28+eIagb9mgry0=
+Received: by 10.101.42.12 with SMTP id u12mr7508974anj.56.1269488932420;
+        Wed, 24 Mar 2010 20:48:52 -0700 (PDT)
+Received: from [192.168.1.5] (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id 34sm222879yxf.36.2010.03.24.20.48.50
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 24 Mar 2010 20:48:51 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7pre) Gecko/20091214 Shredder/3.0.1pre
+In-Reply-To: <7vaatxdt0d.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143145>
 
-Stephen Boyd <bebarino@gmail.com> writes:
+On 03/24/2010 07:39 PM, Junio C Hamano wrote:
+>
+> Hmm, doesn't pull fail in such a case anyway?  Is there a real damage?
+>
+> I am just trying asses if this is with a maint-worthy urgency.  The patch
+> looks sane.
 
-> When is this option going to be removed? It's approaching 2 years
-> since the deprecation occured in 6cd9cfe (fmt-merge-msg: add
-> '--(no-)log' options and 'merge.log' config variable, 2008-04-06)
-
-We could do that sometime in this autumn timeframe if we start making
-noises when they are used, just like we did during the 1.7.0 transition
-against soon-to-be-deprecated "features".
-
-Are there other ancient features we have been passively advertising as
-deprecated that we should now start the removal process?
+I don't think this is ever triggered with pull so probably not
+maint-worthy. I just ordered it that way in case you figured it as such.
