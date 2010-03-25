@@ -1,61 +1,59 @@
-From: Gianluca Pacchiella <gianluca.pacchiella@ktln2.org>
-Subject: Checkout of orphan branch files into mainline worktree
-Date: Thu, 25 Mar 2010 11:39:42 +0100
-Message-ID: <hofehl$jbn$1@dough.gmane.org>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: Pseudonymous commits
+Date: Thu, 25 Mar 2010 12:05:20 +0100
+Message-ID: <adf1fd3d1003250405i621fcb18uc918c67474c37115@mail.gmail.com>
+References: <4BAADF34.3080806@gmail.com>
+	 <4BA51E6B-7325-465A-B23E-7F3C5BF87700@mit.edu>
+	 <4BAAE981.4040205@gmail.com>
+	 <e51f4f551003242154p7fb20ffch790dd1ada15eca0@mail.gmail.com>
+	 <4BAAEDF7.1080107@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 25 11:45:14 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kris Shannon <kris@shannon.id.au>, git@vger.kernel.org
+To: "Mike.lifeguard" <mike.lifeguard@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 25 12:06:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NukYr-0006OD-Fk
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 11:45:13 +0100
+	id 1Nukt6-0006gm-Fu
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 12:06:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753812Ab0CYKpG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Mar 2010 06:45:06 -0400
-Received: from lo.gmane.org ([80.91.229.12]:56836 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752570Ab0CYKpE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Mar 2010 06:45:04 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1NukYg-0006Kv-TC
-	for git@vger.kernel.org; Thu, 25 Mar 2010 11:45:02 +0100
-Received: from 151.59.101.45 ([151.59.101.45])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 25 Mar 2010 11:45:02 +0100
-Received: from gianluca.pacchiella by 151.59.101.45 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 25 Mar 2010 11:45:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 151.59.101.45
-User-Agent: Mozilla-Thunderbird 2.0.0.22 (X11/20090706)
+	id S1752888Ab0CYLFX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Mar 2010 07:05:23 -0400
+Received: from mail-fx0-f223.google.com ([209.85.220.223]:64223 "EHLO
+	mail-fx0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752746Ab0CYLFW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Mar 2010 07:05:22 -0400
+Received: by fxm23 with SMTP id 23so940208fxm.21
+        for <git@vger.kernel.org>; Thu, 25 Mar 2010 04:05:20 -0700 (PDT)
+Received: by 10.103.163.20 with SMTP id q20mr3298646muo.131.1269515120391; 
+	Thu, 25 Mar 2010 04:05:20 -0700 (PDT)
+In-Reply-To: <4BAAEDF7.1080107@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143177>
 
-Hi folks,
+On Thu, Mar 25, 2010 at 6:00 AM, Mike.lifeguard
+<mike.lifeguard@gmail.com> wrote:
+> In any case, is the answer "git can't do that" or not? Because that's
+> actually the answer I'm interested in.
 
-I have a repository where I maintain a project for a web site with a branch
-(disconnected from the mainline history) that contains some files
-(necessary only for a particular instance of a site) that don't intersect
-with others files in the main project. Since I don't want to use submodule
-and subtree I manage myself to this sequence of commands ("deploy" is the
-branch name of the mainline history and "index" of the --orphan branch) to
-checkout the index's files into the mainline files
+Git uses the author/committer info for diferent things. First, it is a
+unique identifier (name+email); second it is used when dealing with
+mails (in and out mails).
 
-git read-tree index && ( git ls-files --with-tree=index | git
-checkout-index --stdin ) && git read-tree deploy
+If you don=B4t use email (for review, or contributions) you can build
+the identifier as you want without the need to be name and email, it
+is up to the project. For my private projects I use name=3DSanti
+email=3Dsanti, so the author/committer info is "Santi <santi>" and I
+haven=B4t found problems. Note that I don=B4t send/reveive emails to
+contribute, just fetch and push. Maybe it would be better to use a
+user.email that resemble an email, with @ and such.
 
-Are there some other ways to do this? I'm crazy? are there side effects?
-
-Thanks,
-	Gianluca
+HTH,
+Santi
