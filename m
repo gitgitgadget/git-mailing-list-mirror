@@ -1,91 +1,92 @@
-From: David Michael Barr <david.barr@cordelta.com>
-Subject: Re: Subversion integration with git
-Date: Fri, 26 Mar 2010 10:50:26 +1100
-Message-ID: <4170AB98-B7C4-4351-B793-351B3DE74A4F@cordelta.com>
-References: <3311ED3F-77BC-4F66-80D5-AA9E21ACF0E2@cordelta.com>  <40aa078e1003250731y2c900605k9c681475621a1ff2@mail.gmail.com>  <E560EF9A-AF07-4316-9047-6D1A1802F743@cordelta.com> <f3271551003251052j5863af46i3066f0f42788ba3b@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1077)
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Pseudonymous commits
+Date: Thu, 25 Mar 2010 16:57:22 -0700 (PDT)
+Message-ID: <m34ok4j6qi.fsf@localhost.localdomain>
+References: <4BAADF34.3080806@gmail.com>
+	<4BA51E6B-7325-465A-B23E-7F3C5BF87700@mit.edu>
+	<4BAAE981.4040205@gmail.com>
+	<alpine.LFD.2.00.1003251459540.694@xanadu.home>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Erik Faye-Lund <kusmabite@googlemail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 26 00:55:50 2010
+Cc: "Mike.lifeguard" <mike.lifeguard@gmail.com>,
+	Theodore Tso <tytso@MIT.EDU>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Fri Mar 26 01:13:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nuwty-0002pW-1i
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 00:55:50 +0100
+	id 1NuxAz-0000YB-JV
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 01:13:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751505Ab0CYXzl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Mar 2010 19:55:41 -0400
-Received: from mail-ew0-f221.google.com ([209.85.219.221]:56740 "EHLO
-	mail-ew0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751368Ab0CYXzk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Mar 2010 19:55:40 -0400
-X-Greylist: delayed 302 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Mar 2010 19:55:39 EDT
-Received: by ewy21 with SMTP id 21so1963798ewy.25
-        for <git@vger.kernel.org>; Thu, 25 Mar 2010 16:55:38 -0700 (PDT)
+	id S1752125Ab0CZANL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Mar 2010 20:13:11 -0400
+Received: from mail-fx0-f175.google.com ([209.85.220.175]:44553 "EHLO
+	mail-fx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751787Ab0CZANJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Mar 2010 20:13:09 -0400
+X-Greylist: delayed 943 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Mar 2010 20:13:09 EDT
+Received: by fxm23 with SMTP id 23so1028737fxm.1
+        for <git@vger.kernel.org>; Thu, 25 Mar 2010 17:13:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:subject:mime-version
-         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
-         :message-id:references:to:x-mailer;
-        bh=RYy0x63r6urkhtcOG8Fqb2+IvyrlqXr126Hlm3KzfuM=;
-        b=CLn1T9fDoUrgw9u1pHznoNHFpjo20B+s5/7t8dtQ8Y5eGgdM+9kaJbJSUJ4lMAxBev
-         J+sjPQqrsPMztgeFGJOoadeBLeOaJPExOFeisjfRbAEE280IE4Gcmn7xWylJZ9JCz9J0
-         CM2n78MGpBL6GDbbp6Xcs45+QazI75eUQA/YY=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=TXxfXC79m0ERmlIhlG8GzfTaeOanc/IprTFHqG20p0Y=;
+        b=hLFPGrIiyXWJiuVakLeAfPtrd7XIxLA8watRQkZxozxX9yRSIT/NQ0nCxIdyJTg+ye
+         qTKF7MMqfQQPApRe3ljByuArYiwHtYiqO6jb6oddriSsiCnZgZzfQfzb9tK4I8pGzdrt
+         GrXXJ1RSJkkjClhtU0MQ0doSZYp/L/vAzKV9U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=x891XtdiTwy0AajS3lZBRnp8CLGZ4EK8rOJfyig66e5Rji/WZGLb2unysnH9gicfvC
-         v/Umd3+vuZyqucgalb51ShIUZRYANSnPBKidJtLGQhr7dkH95OOtCUDJVq8UCNz7G+Vm
-         j1cOeJYjm4S9jvICLWeiK3qPJOFbqVBX0oFMk=
-Received: by 10.213.97.129 with SMTP id l1mr93420ebn.76.1269561035416;
-        Thu, 25 Mar 2010 16:50:35 -0700 (PDT)
-Received: from [192.168.123.113] ([202.78.40.185])
-        by mx.google.com with ESMTPS id 16sm211896ewy.7.2010.03.25.16.50.31
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=o9j3bvmgZVQIju9j56gUWseuLMq6FxO3EnIUskyLENka1da67Y00byFOO/sdcoQLbV
+         OsGpk5ivGcWH3N4KuUPDJ1vlih5OFr9IZ2MiXhDNnGabKMtmc9+HWXVuCFhtNyDdHsWj
+         mH3BBDgIgdiDTO+6ikHyufm6LTm9+ZPo2TTZw=
+Received: by 10.223.58.20 with SMTP id e20mr51942fah.96.1269561443613;
+        Thu, 25 Mar 2010 16:57:23 -0700 (PDT)
+Received: from localhost.localdomain (abvh236.neoplus.adsl.tpnet.pl [83.8.205.236])
+        by mx.google.com with ESMTPS id d13sm592053fka.2.2010.03.25.16.57.20
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 25 Mar 2010 16:50:34 -0700 (PDT)
-In-Reply-To: <f3271551003251052j5863af46i3066f0f42788ba3b@mail.gmail.com>
-X-Mailer: Apple Mail (2.1077)
+        Thu, 25 Mar 2010 16:57:22 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o2PNuggw030732;
+	Fri, 26 Mar 2010 00:56:48 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o2PNuMbJ030569;
+	Fri, 26 Mar 2010 00:56:22 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <alpine.LFD.2.00.1003251459540.694@xanadu.home>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143202>
 
-Hi,
+Nicolas Pitre <nico@fluxnic.net> writes:
 
->> I think it falls very close to the native-git-svn Google SoC
->> project[1], and if you are able to share what you have I'm sure
->> Ramkumar (I hope you don't mind me CC'ing you, and that I spelled your
->> name right) would appreciate having a look.
+> On Thu, 25 Mar 2010, Mike.lifeguard wrote:
 > 
-> Yes. Thank you for CC'ing me, Erik.
+> > On 10-03-25 01:39 AM, Theodore Tso wrote:
+> > > How do you know whether said contributor
+> > > isn't a Chinese intelligence agent trying to insert a backdoor into
+> > > your program
+> > 
+> > Because they are only contributing translations.
 > 
->> Is it worthwhile to start a new project - or would it be better to grok the internals of existing projects and try to make them scale?
+> Just take over authorship of the patch yourself then.
 > 
-> However, if my proposal gets accepted, I
-> could work with you to get it integrated into the remote helper that
-> I'll be building. Depending on the complexity of your project, this
-> might only be possible at the end of my GSoC term.
+> Or pick a generic email address such as the translator's mailing list 
+> email address or the like.
 
->From Ramkumar's proposal[1]:
+In the case of translations one cal use generic "language team"
+mailing list, i.e. <LL@li.org> (where LL is ISO code of language,
+e.g. 'de@li.org' for translations to German, etc.).
 
-> The distinct components I plan to write are:
-
-> 2. An exporter for SVN repositories, which will extract all the
-> relevant revision history and metadata to import into Git.
-> 3. A remote helper for Git that takes the data from this SVN exporter,
-> and uses git-fast-import to create corresponding commits in Git.
-
-The scope of my project roughly corresponds to these two components.
-
-With regard to licensing issues, I opted to work only with import/export streams so that no linking is required.
-
-In the context of GSoC, I am studying my final year of a Bachelor of Science (Computer Science x 2) at Australian National University, Canberra.
-As for FOSS contributions, the last time I released something was when I helped port the iBurst wireless broadband driver (USB interface) [2] a few years ago; the demands of life vs. one's passion.
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
