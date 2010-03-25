@@ -1,82 +1,62 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: What's cooking in git.git (Mar 2010, #06; Wed, 24)
-Date: Thu, 25 Mar 2010 11:27:33 -0500
-Message-ID: <25yNvbuAivZlBuEJoRhXtfoEc7HEZorM5qOrwgQKk7FER_fdzljyMQ@cipher.nrlssc.navy.mil>
-References: <7v7hp1kzbn.fsf@alter.siamese.dyndns.org> <fcaeb9bf1003250811g777b2881l332e6f61456d699@mail.gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: Pseudonymous commits
+Date: Thu, 25 Mar 2010 16:14:08 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1003251605560.694@xanadu.home>
+References: <4BAADF34.3080806@gmail.com>
+ <4BA51E6B-7325-465A-B23E-7F3C5BF87700@mit.edu> <4BAAE981.4040205@gmail.com>
+ <alpine.LFD.2.00.1003251459540.694@xanadu.home> <4BABB8DC.7060906@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 25 20:52:47 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Theodore Tso <tytso@MIT.EDU>, git@vger.kernel.org
+To: "Mike.lifeguard" <mike.lifeguard@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 25 21:14:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nut6k-00032h-Kw
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 20:52:47 +0100
+	id 1NutRY-0005Ny-A2
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 21:14:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753554Ab0CYTwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Mar 2010 15:52:40 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:44906 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754368Ab0CYTwk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Mar 2010 15:52:40 -0400
-Received: by mail.nrlssc.navy.mil id o2PJieUZ027036; Thu, 25 Mar 2010 14:47:07 -0500
-In-Reply-To: <fcaeb9bf1003250811g777b2881l332e6f61456d699@mail.gmail.com>
-X-OriginalArrivalTime: 25 Mar 2010 16:27:33.0137 (UTC) FILETIME=[12567010:01CACC38]
+	id S1754681Ab0CYUOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Mar 2010 16:14:10 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:30381 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754394Ab0CYUOJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Mar 2010 16:14:09 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0KZU00EOJTJKJ0C0@VL-MR-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 25 Mar 2010 16:14:08 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <4BABB8DC.7060906@gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143197>
 
-On 03/25/2010 10:11 AM, Nguyen Thai Ngoc Duy wrote:
-> 2010/3/25 Junio C Hamano <gitster@pobox.com>:
->> * ar/config-from-command-line (2010-03-19) 1 commit
->>  - Allow passing of configuration parameters in the command line
->>
->> * bc/t5505-fix (2010-03-19) 3 commits
->>  - t/t5505-remote.sh: escape * to prevent interpretation by shell as glob
->>  - t5505: add missing &&
->>  - t5505: remove unnecessary subshell invocations
+On Thu, 25 Mar 2010, Mike.lifeguard wrote:
 
-methinks you were over-aggressive with your cut/paste?  I don't think bc/t5505-fix
-contains a strndup.  Hopefully, it does not break your build on Solaris.
+> In the end, I managed to convince them they wouldn't be spammed (hope
+> I'm right), and I used their real emails. Nonetheless, I appreciate the
+> help.
 
-> This breaks my build on Solaris because it uses strndup, which is not available.
+Oh, if your project is public and accessible through gitweb then 
+spammers will certainly scan it and pick up their email addresses.  
+Maybe some of them might even go as far as cloning Git repositories just 
+for that purpose.  Only local spam filtering may help in that case.
 
-A quick glance at ar/config-from.. also detected an unchecked calloc().
+> If you're still in the helping mood (and know what you're talking
+> about), I'm still looking for help with a case where an SVN repo is
+> split into separate git repositories & being unable to dcommit changes
+> back to SVN. The archived email is:
+> http://article.gmane.org/gmane.comp.version-control.git/142654
 
-Alex, any reason xcalloc wasn't used?
+I know a little about Git, but not git-svn.  Someone else will have to 
+help you with that one.
 
-btw, me also thinks the code is a little hard to read.  For example, I initially
-thought your calloc was not allocating enough space for the nul terminator.
 
-   ct = calloc(1, sizeof(struct config_item) + (text - name));
-   memcpy(ct->name, name, text - name);
-
-I traced the code, but it wasn't until I noticed that your data structure looks
-like this:
-
-   struct config_item
-   {
-          struct config_item *next;
-          char *value;
-          char name[1];
-   };
-
-that I realized that room for the nul terminator in the 'name' array was allocated
-by the structure itself, since the name declaration looks like name[1] and not
-name[FLEX_ARRAY].
-
-Would the code be simpler if strbufs were used?  Then you wouldn't need to duplicate
-the skip_space and trailing_space functionality provided in the strbuf library, and
-would just need a new function named strbuf_tolower.
-
-Also, should config_parametes_tail be spelled config_parameters_tail?
-
--brandon
+Nicolas
