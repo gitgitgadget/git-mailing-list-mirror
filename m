@@ -1,78 +1,115 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH RFC/RFD] clone: quell the progress report from init
-Date: Thu, 25 Mar 2010 10:02:49 +0100
-Message-ID: <81b0412b1003250202m67dc4d2m9042d1242800cd27@mail.gmail.com>
-References: <4BAB2234.4070202@drmicha.warpmail.net>
-	 <7b9006620fab4214ee0db53ebc9e0caffc397959.1269506526.git.git@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	Neal Kreitzinger <neal@rsss.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Mar 25 10:02:58 2010
+From: hachi <hachi@kuiki.net>
+Subject: Re: asciidoc problem, and a possible fix
+Date: Thu, 25 Mar 2010 02:15:21 -0700
+Message-ID: <167EA641-2D5F-4553-909C-DF5D050CEDFB@kuiki.net>
+References: <4ABB29E2-6DB1-4712-A3E8-CD524983FB0B@kuiki.net> <7vljdhjk9r.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1077)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 25 10:15:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nuixt-0002lN-Sv
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 10:02:58 +0100
+	id 1NujA7-0000UE-3c
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 10:15:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753524Ab0CYJCw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Mar 2010 05:02:52 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:54513 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753480Ab0CYJCv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Mar 2010 05:02:51 -0400
-Received: by bwz1 with SMTP id 1so641234bwz.21
-        for <git@vger.kernel.org>; Thu, 25 Mar 2010 02:02:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MdJjBc+2T/Q4P0BLfLsXI2De5QlD1BJBE7SdyjlTbmc=;
-        b=PBr6GHjHVLmpOQBejAdh4plcnn7WdLbKmp8Ka0LvXsq5GbyCJ+vGWJ1gIQtWVARnB1
-         Ya/zQdWnhD7GOTJcurZbfOog7+iR75zjAD2OgLXt5N9y0AU8ysRiCElF184c+/7S8zZb
-         6DTZ5GDB1I0KvBw5/1WkhIdMV91KUDpxZN2Tg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=RVaGqP4IVe2v5AyUDYabMGe1veC9qj6d7U90ItVgYmmZ1D/ejF7kV1y1jU50jsBCVA
-         MhO4inxdWCku3paG7IX/+iyX8+ivOduijWa2CjVBX+0amq3+prZ4bvroyuyBF6TinLPZ
-         udR6LPL/fXBwU+LQBwCloBA/gocfcLr2P6S6c=
-Received: by 10.204.14.84 with SMTP id f20mr483852bka.209.1269507769984; Thu, 
-	25 Mar 2010 02:02:49 -0700 (PDT)
-In-Reply-To: <7b9006620fab4214ee0db53ebc9e0caffc397959.1269506526.git.git@drmicha.warpmail.net>
+	id S1751754Ab0CYJP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Mar 2010 05:15:29 -0400
+Received: from sachiko.kuiki.net ([80.68.89.100]:42294 "EHLO sachiko.kuiki.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750866Ab0CYJP2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Mar 2010 05:15:28 -0400
+Received: from sf-mbp-hachi.harrison.succub.us (unknown [76.14.55.252])
+	by sachiko.kuiki.net (Postfix) with ESMTP id 2D9EAC027;
+	Thu, 25 Mar 2010 09:15:25 +0000 (UTC)
+In-Reply-To: <7vljdhjk9r.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143173>
 
-On Thu, Mar 25, 2010 at 09:46, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Currently, we really have two philosophies:
-> - report only on error
-> - be chatty on success
->
-> I don't think that's a problem, but "simple" commands (e.g. branch, i=
-nit,
-> add) should be in the former camp.
+Junio,
 
-Right. Everytime add scrolls out the current terminal buffer I wish I
-had it sent to /dev/null.
+The short version:
 
-> =C2=A0builtin/clone.c | =C2=A0 =C2=A02 +-
-> =C2=A01 files changed, 1 insertions(+), 1 deletions(-)
+>From asciidoc 8.4.1 to 8.5.0 nested inline passthrough (like +++ inside ``) cannot be used because the internal markers (\x07, BEL) will be emitted in the output.
 
-Sometimes I think a statistics like "1 byte inserted" are more appropri=
-ate :)
+asciidoc >= 8.4.2 will warn, and >= 8.5.0 will warn and do the right thing.
 
-> - =C2=A0 =C2=A0 =C2=A0 init_db(option_template, (option_verbosity < 0=
-) ? INIT_DB_QUIET : 0);
-> + =C2=A0 =C2=A0 =C2=A0 init_db(option_template, (option_verbosity <=3D=
- 0) ? INIT_DB_QUIET : 0);
+The +++ inside the `` that I'm getting rid of appear to be extraneous (I tested on an old 8.2.7 asciidoc).
+
+I suggest applying my patch because it seems to be the right thing overall. More gory details follow.
+
+
+The long version:
+
+Thanks for telling me what this feature was called, now the changelog makes sense about this.
+
+I'm running asciidoc 8.4.1, and in that version:
+
+* Backtick quoting for monospaced text is now implemented as an inline literal passthrough. This makes more sense since monospace text is usually intended to be rendered literally.
+
+which means that the line I'm on has a nested inline passthrough, of which a warning was added in asciidoc 8.4.2 (a quick test on a more modern distro shows):
+
+asciidoc: WARNING: git-filter-branch.txt: line 391: nested inline passthrough
+
+And then nested inline was fixed, in addition to the warning, in 8.5.0:
+
+* FIXED: Only the first occurrence of passthrough macro was substituted. Patch submitted by Peter Johnson. See http://groups.google.com/group/asciidoc/browse_frm/thread/1269dc2feb1a482c
+
+
+End conclusion:
+
+* Option 1
+
+My patch is correct because nested inline passthrough doesn't do anything other than confuse the asciidoc parser. However, this means that prior to asciidoc 8.4.1 the inside of backtick strings are not inline passthrough. I have no idea if this is a bad thing, but it seems to not actually matter in my test using asciidoc 8.2.6.
+
+I do suggest applying my patch, actually. Let me know if I need to submit it a different way.
+
+* Option 2
+
+Consider enabling the asciidoc -a no-inline-literal option. This seems like it's a way to go back to the pre 8.4.1 behavior, but I can't tell if that's even right, and this seems to be a bad thing overall.
+
+Thanks for reading, but I did tell you this was the long version down here ;)
+
+--hachi
+
+On Mar 24, 2010, at 5:51 PM, Junio C Hamano wrote:
+
+> hachi <hachi@kuiki.net> writes:
+> 
+>> I had an issue building git on some centos 5 machines today, and in trying to interpret the error message I formed the attached patch.
+>> 
+>> The errors were:
+>> xmlto: input does not validate (status 1)
+>> /home/hachi/rpm/BUILD/git-1.7.0.3/Documentation/git-filter-branch.xml:463: parser error : PCDATA invalid Char value 7
+>> Clone it with <literal>git clone +++0+++</literal>.  The clone
+>>                                    ^
+> 
+> A shot in the dark without sufficient information I could try to make is
+> that you are trying to use an ancient AsciiDoc, perhaps pre-7.1.2?
+> 
+> I am guessing that the following entry from their ChangeLog:
+> 
+>    Version 7.1.2 (2006-03-07)
+>    --------------------------
+>    .Additions and changes
+>     ...
+>    - An 'inline passthrough' mechanism has been implemented.
+> 
+> refers to this "triple-plus" passthrough, documented in:
+> 
+>    http://www.methods.co.nz/asciidoc/userguide.html#X77
+> 
+> As the use of feature is isolated to only the documentation for filter-branch,
+> I am personally Ok with replacing that passthru with a simpler formatting
+> element that is supported by an ancient version of AsciiDoc (but I didn't
+> look at your patch in the attachment).
+> 
+> 
