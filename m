@@ -1,81 +1,72 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] send-email: lazily assign editor variable
-Date: Thu, 25 Mar 2010 09:03:18 +0100
-Message-ID: <4BAB18C6.6010202@drmicha.warpmail.net>
-References: <20100322145947.GA1709@pengutronix.de> <eb0d92cf28820eb9783e789a8c4c62c3af4dd0d0.1269274203.git.git@drmicha.warpmail.net> <7vaatxobef.fsf@alter.siamese.dyndns.org>
+Subject: Re: color (red) for error messages on all git commands
+Date: Thu, 25 Mar 2010 09:43:32 +0100
+Message-ID: <4BAB2234.4070202@drmicha.warpmail.net>
+References: <hoe4j3$2vg$1@dough.gmane.org>	 <fabb9a1e1003241558t4c4c5cf8t3a7d9b9856937c4f@mail.gmail.com> <81b0412b1003241612m41f6ae2ctaa5b89ed37b58da2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?ISO-8859-1?Q?Uwe_Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 25 09:06:23 2010
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 25 09:46:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nui53-0001Rz-Vo
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 09:06:18 +0100
+	id 1Nuii8-0004SG-M8
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 09:46:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752277Ab0CYIGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Mar 2010 04:06:11 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:55490 "EHLO
+	id S1753103Ab0CYIqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Mar 2010 04:46:23 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:55993 "EHLO
 	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750906Ab0CYIGI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Mar 2010 04:06:08 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id C5EBDE78FA;
-	Thu, 25 Mar 2010 04:06:07 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Thu, 25 Mar 2010 04:06:07 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=i05kqeRW/BOzflaJjXtYGc0Hhdg=; b=EeKFaG0CC4mOhWVTpBtS9t4vmgpOol1guvPF63OwlSgewPrCTp/nQnkFj1LIZvcl9GryouQqNNrOs6WBnoohKC5bGbt7eQLpO+1g5IVRhVJFfarHHN3BWq1dzi0NgCuCKR9d1Jo0ZtIZFosEIqXuFWNaQhicuBA0ojBEImLs0y4=
-X-Sasl-enc: ZFiyfg5hX02LUBwjr0VdxWgZo4JkoB9j3d9alqyC2vLu 1269504367
+	by vger.kernel.org with ESMTP id S1751616Ab0CYIqW (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Mar 2010 04:46:22 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id A6B39E9046;
+	Thu, 25 Mar 2010 04:46:21 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 25 Mar 2010 04:46:21 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=TwHXsCMQLlJ3bcqMtO1Gi4BwWlU=; b=hfN3AeLJt85OV4sJu7HKUwoqJbs89SRvC3P5V9Lwgz6Uppd6vA7IPfxQpKIrcjkV/Cp10Rwm5hun6vaRHvaqmDfX7Jb8JhuoSPleSKPz3OJMT1RtnjyURWMPsRYlGoqVE6bmp/2+ZO/xt5gfwEcGfW1j+B+k6mTjWW0BZa05lrc=
+X-Sasl-enc: uo8j7HBTWzFNitmigXRcnjXhqDgt2Jo8D+q2Z1qPNFwv 1269506781
 Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id E65A94BC1DC;
-	Thu, 25 Mar 2010 04:06:06 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id C46343BB05;
+	Thu, 25 Mar 2010 04:46:20 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10pre) Gecko/20100319 Lightning/1.0b2pre Shredder/3.0.5pre
-In-Reply-To: <7vaatxobef.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <81b0412b1003241612m41f6ae2ctaa5b89ed37b58da2@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143169>
 
-Junio C Hamano venit, vidit, dixit 24.03.2010 18:52:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
+Alex Riesen venit, vidit, dixit 25.03.2010 00:12:
+> On Wed, Mar 24, 2010 at 23:58, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+>> On Wed, Mar 24, 2010 at 23:44, Neal Kreitzinger <neal@rsss.com> wrote:
+>>> Desired Solution:  configure git to display all error messages in color,
+>>> e.g. red, so that the programmer does not overlook error messages.
 > 
->> b4479f0 (add -i, send-email, svn, p4, etc: use "git var GIT_EDITOR",
->> 2009-10-30) introduced the use of git var GIT_EDITOR which may lead to
->> problems when send-mail is used without a tty.
-> 
-> We would want to describe what kind of problems they are better than "may
-> lead to problems", though.  Something like this?
-> 
->     b4479f0 (add -i, send-email, svn, p4, etc: use "git var GIT_EDITOR",
->     2009-10-30) introduced the use of "git var GIT_EDITOR" to obtain the
->     preferred editor program, instead of reading environment variables
->     themselves.
-> 
->     However, "git var GIT_EDITOR" run without a tty (think "cron job") would
+> It is considered a good behavior for a UNIX program only to display
+> something if there is an error. Git just tries to follow this tradition.
 
-Also think "hook" ;)
+Oh well... Then I presume I'm not the only one who is annoyed by
+"Initialized empty Git repository in ...", especially when you clone
+locally and that is the only response you get! I'm embracing for the
+response to my upcoming RFC...
 
->     give a fatal error "Terminal is dumb, but EDITOR unset".  This is not a
->     problem for add-i, svn, p4 and callers of git_editor() defined in
->     git-sh-setup, as all of these call it just before launching the editor.
->     At that point, we know the caller wants to edit, and they cannot without a
->     tty.
-> 
->     But send-email ran this near the beginning of the program, even if it is
->     not going to use any editor (e.g. run without --compose).  Fix this by
->     calling the command only when we edit a file.
-> 
-> 
+Note that we also do a lot of progress messages (fetch from remotes,
+committing, checking out, ...), and that is why distinguishing
+warnings/error messages makes a lot of sense.
 
-Yep, I'm fine with this.
+>> That's actually something I run into as well, I am so used to git just
+>> doing what I want that I don't notice the error messages when they
+>> occur. If this is indeed desired (probably controlled by color.warning
+>> and color.error?) it should be fairly easy to implement (see usage.c).
+> 
+> That said, I also like the idea. Don't forget to check for tty in the patch.
 
-Cheers,
+Me too :)
+
 Michael
