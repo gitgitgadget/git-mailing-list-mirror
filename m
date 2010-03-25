@@ -1,57 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Reuse .git directory.
-Date: Thu, 25 Mar 2010 12:24:54 -0700
-Message-ID: <7vfx3oxkzd.fsf@alter.siamese.dyndns.org>
-References: <10467746.91269539410487.JavaMail.mvaidya@mvaidya-desktop>
+From: "Mike.lifeguard" <mike.lifeguard@gmail.com>
+Subject: Re: Pseudonymous commits
+Date: Thu, 25 Mar 2010 16:26:20 -0300
+Message-ID: <4BABB8DC.7060906@gmail.com>
+References: <4BAADF34.3080806@gmail.com> <4BA51E6B-7325-465A-B23E-7F3C5BF87700@mit.edu> <4BAAE981.4040205@gmail.com> <alpine.LFD.2.00.1003251459540.694@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Mahesh Vaidya <forvaidya@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 25 20:25:37 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Theodore Tso <tytso@MIT.EDU>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Thu Mar 25 20:26:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NusgP-0006oM-6H
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 20:25:33 +0100
+	id 1NushO-0007OR-JC
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 20:26:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754258Ab0CYTZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Mar 2010 15:25:05 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62150 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754139Ab0CYTZE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Mar 2010 15:25:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D61BA5877;
-	Thu, 25 Mar 2010 15:25:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3DgXRH6jP28fkhWvmgWhn+6R4hk=; b=W4znKF
-	60V3YkMfbjfsi7WNCETBLfOiiH+NadqNfA4QyYXVILnwKT97xkplEqX0wyvQWlMe
-	zaHMFn2xhQ6/5Dt20aiyttuasLidipLoLU81lkJsySwxpn77zvRa2DVXqnU+4sQF
-	3SiSeEEWvgjLNyYnKLOACQzHUwmTcdoOSIr+o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DeH3vS+75V6xMf0nTSXL64/Ske9GB938
-	f37OpzBvEpsK9I+SJ3t5eyh6ocXU7dKXbUI6vCq85qgF6TldYemYBgcQmzghVYkw
-	FuhZqA4/mHtLxrX0+ulnfZkYfc1xRBT3X29qN4CjUI8FCaruq/l6/mSQB3C0BBLR
-	2c1upxq205o=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 66954A5876;
-	Thu, 25 Mar 2010 15:24:58 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C2DFAA5875; Thu, 25 Mar
- 2010 15:24:55 -0400 (EDT)
-In-Reply-To: <10467746.91269539410487.JavaMail.mvaidya@mvaidya-desktop>
- (Mahesh Vaidya's message of "Thu\, 25 Mar 2010 23\:20\:14 +0530 \(IST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 19A960DE-3844-11DF-B0D7-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754378Ab0CYT03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Mar 2010 15:26:29 -0400
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:34546 "EHLO
+	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754360Ab0CYT02 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Mar 2010 15:26:28 -0400
+Received: by fxm5 with SMTP id 5so1353211fxm.29
+        for <git@vger.kernel.org>; Thu, 25 Mar 2010 12:26:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=JXyBaCucpwteCstVyiRwk121GE9WwzNI7butcKZbmtA=;
+        b=FXBuLSYwf6zSNMiz6gbEoNURIDcsSJk3g4AccjeDT1CD+6TXwDeDrt2T5HhpLs/TmX
+         oDVZh5kNyfgC9oKmiIvwQhj2x+tmiFNNFT6pF/Zn65aFNBt8DHH7o8shmN5MfX27MOTL
+         ZOeh8gmjNSPnynk61kfsq4RW1tQd5z6w82u2I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=DQBC/pQcgtToA2rrDoe6qXtxQB7BXlCX3DzFboprzgqUNgC5Xgvv0J/+YAslFfVO5r
+         2Z7k52dsTU42/GnVUxD6vrEYoJuPyASC/hqiMgwYgXYaWQDa0VHLOk/PvrWoV5r2rm5I
+         uVQ5+4kUJrlYnHSwe1bbvWF48Xwkm/zABWXK8=
+Received: by 10.102.181.25 with SMTP id d25mr14706831muf.38.1269545186409;
+        Thu, 25 Mar 2010 12:26:26 -0700 (PDT)
+Received: from [129.173.97.249] (D61F9.WPA.Dal.Ca [129.173.97.249])
+        by mx.google.com with ESMTPS id i7sm175460mue.4.2010.03.25.12.26.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 25 Mar 2010 12:26:24 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.23) Gecko/20090817 Thunderbird/2.0.0.23 Mnenhy/0.7.6.0
+In-Reply-To: <alpine.LFD.2.00.1003251459540.694@xanadu.home>
+X-Enigmail-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143193>
 
-git-new-worktree, perhaps?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+In the end, I managed to convince them they wouldn't be spammed (hope
+I'm right), and I used their real emails. Nonetheless, I appreciate the
+help.
+
+If you're still in the helping mood (and know what you're talking
+about), I'm still looking for help with a case where an SVN repo is
+split into separate git repositories & being unable to dcommit changes
+back to SVN. The archived email is:
+http://article.gmane.org/gmane.comp.version-control.git/142654
+
+Thanks,
+- -Mike
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkuruNwACgkQst0AR/DaKHsN/QCg2wyWwps6FEibNlBI5hlf9Fwd
+ODcAoKkcjpxNkPrVxlT690F2znoAUzlU
+=rkB8
+-----END PGP SIGNATURE-----
