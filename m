@@ -1,88 +1,86 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] send-email: lazily assign editor variable
-Date: Thu, 25 Mar 2010 00:17:43 -0500
-Message-ID: <20100325051743.GB5784@progeny.tock>
-References: <20100322145947.GA1709@pengutronix.de>
- <eb0d92cf28820eb9783e789a8c4c62c3af4dd0d0.1269274203.git.git@drmicha.warpmail.net>
- <7vaatxobef.fsf@alter.siamese.dyndns.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH 7/7] fmt-merge-msg: hide summary option
+Date: Wed, 24 Mar 2010 22:19:32 -0700
+Message-ID: <4BAAF264.7050003@gmail.com>
+References: <1269414964-9518-1-git-send-email-bebarino@gmail.com> <1269414964-9518-8-git-send-email-bebarino@gmail.com> <7v4ok5dsqr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 25 06:19:05 2010
+X-From: git-owner@vger.kernel.org Thu Mar 25 06:20:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NufTE-00061C-0o
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 06:19:04 +0100
+	id 1NufUV-0006Lh-Oc
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 06:20:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752792Ab0CYFRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Mar 2010 01:17:50 -0400
-Received: from mail-yw0-f172.google.com ([209.85.211.172]:64264 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752677Ab0CYFRq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Mar 2010 01:17:46 -0400
-Received: by ywh2 with SMTP id 2so3219077ywh.33
-        for <git@vger.kernel.org>; Wed, 24 Mar 2010 22:17:46 -0700 (PDT)
+	id S1752799Ab0CYFTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Mar 2010 01:19:38 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:34229 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752636Ab0CYFTf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Mar 2010 01:19:35 -0400
+Received: by gyg8 with SMTP id 8so4008235gyg.19
+        for <git@vger.kernel.org>; Wed, 24 Mar 2010 22:19:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=HdMICKkfu4F2AZODYd1oIUpD1l6thBNqVullblb4l8Y=;
-        b=uG6Pd/20X7q/UqpPKH3k37s2DrxgW1oci75MJG/MwyPgc/KzNfiObMlulXCG3Rn8V0
-         wd/gDbBv54AuwzNkdjtJIY2sRRbl4Hr1v6xNILV+lTXsE9P5YrevF07Ff14yGhi/A9ef
-         EfsNDFiY/dR9acSSSln1msqPtYqTHa7rycaL8=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=Y4ZK9io2HiqNd0gS6m/n22lbhOGQJrkOJEkUM19+z4E=;
+        b=vrofrNpy6mabIspJP78z9BOxZsLm7lW4a26IG1GuwnWaBEdPCR0tUpmu62vznQWXMT
+         2MKL2zfqmaHKgO3wSfdaqo+mYKFT8hdKsEZXUUxRV+16mcDJmfK679eh5ua6r2dyynPm
+         PerMqY1/IISZtYuUxnqG9yrHl1Td9ysURfo3A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=nWPL6+6xcrJ7PURaxtXhTwV56EkDwShaRbYvuHmUXd2yuExRZOBnbyl4ZVTfGDMklh
-         johholbgA1MexWX49Xm1zIiHoG9Sd1kPmUZxc+9Q90177Gc+bA06TeIWldNs5o1CWosJ
-         9rBKMhTSOHU5DFQ8Km0z+cYq8v2DWvl05qYoM=
-Received: by 10.90.13.27 with SMTP id 27mr5066627agm.28.1269494266073;
-        Wed, 24 Mar 2010 22:17:46 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm661692iwn.12.2010.03.24.22.17.44
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=gBi4jIiZIxFkfzJZDx+e/24kY8zW3Q6lH8Qw3qri8ouHdaPnpH8Nu/n1e3vgJ8gdvy
+         DcYXtsmORuzk+rvHsNfBpgb07vjXVTGZX6rqFMxDBnZRalQbNDvWJhFlGiKTaOZpYDKu
+         qnfMB1nlXhTDLfuXWM15nUVC8Rki1lj18zwBk=
+Received: by 10.100.81.16 with SMTP id e16mr9823631anb.68.1269494375128;
+        Wed, 24 Mar 2010 22:19:35 -0700 (PDT)
+Received: from [192.168.1.5] (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id 23sm248992yxe.56.2010.03.24.22.19.33
         (version=SSLv3 cipher=RC4-MD5);
-        Wed, 24 Mar 2010 22:17:44 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vaatxobef.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Wed, 24 Mar 2010 22:19:34 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7pre) Gecko/20091214 Shredder/3.0.1pre
+In-Reply-To: <7v4ok5dsqr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143161>
 
-Junio C Hamano wrote:
+On 03/24/2010 07:45 PM, Junio C Hamano wrote:
+> We could do that sometime in this autumn timeframe if we start making
+> noises when they are used, just like we did during the 1.7.0 transition
+> against soon-to-be-deprecated "features".
 
-> We would want to describe what kind of problems they are better than "may
-> lead to problems", though.  Something like this?
-> 
->     b4479f0 (add -i, send-email, svn, p4, etc: use "git var GIT_EDITOR",
->     2009-10-30) introduced the use of "git var GIT_EDITOR" to obtain the
->     preferred editor program, instead of reading environment variables
->     themselves.
-> 
->     However, "git var GIT_EDITOR" run without a tty (think "cron job") would
->     give a fatal error "Terminal is dumb, but EDITOR unset".  This is not a
->     problem for add-i, svn, p4 and callers of git_editor() defined in
->     git-sh-setup, as all of these call it just before launching the editor.
->     At that point, we know the caller wants to edit, and they cannot without a
->     tty.
-> 
->     But send-email ran this near the beginning of the program, even if it is
->     not going to use any editor (e.g. run without --compose).  Fix this by
->     calling the command only when we edit a file.
+We already make noises when the option is used. Probably need to make
+some noises in release notes though.
 
-Yes, please.  It would be more precise to
+> Are there other ancient features we have been passively advertising as
+> deprecated that we should now start the removal process?
 
-  s/without a tty/with TERM=dumb/
+grepping for deprecated shows mostly deprecated commands:
 
-in the second paragraph but regardless this is a good description of the
-problem.
+    git lost-found
+    git tar-tree
+    git peek-remote (synonym to git ls-remote)
+    git init-db (synonym to git init)
+    git repo-config (synonym to git config)
+
+I'm pretty sure we don't want to remove them anytime soon though, right?
+
+The only option of interest is 'git reset --mixed' with paths. I don't
+really know the backstory on that but it looks like it was deprecated
+when the command was made into a builtin 0e5a7fa (Make "git reset" a
+builtin., 2007-09-11). Maybe it can become a die now?
+
+Oh and git notes has a deprecation warning but I think we'll probably
+have to revisit that one in a few years.
