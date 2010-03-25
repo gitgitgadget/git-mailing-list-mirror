@@ -1,79 +1,73 @@
-From: "R. Tyler Ballance" <tyler@monkeypox.org>
-Subject: Automating builds and testing of git.git
-Date: Wed, 24 Mar 2010 18:33:53 -0700
-Message-ID: <20100325013352.GE4062@kiwi.sharlinx.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Automating builds and testing of git.git
+Date: Wed, 24 Mar 2010 19:04:43 -0700
+Message-ID: <7vzl1xf96s.fsf@alter.siamese.dyndns.org>
+References: <20100325013352.GE4062@kiwi.sharlinx.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="idY8LE8SD6/8DnRI"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 25 02:34:08 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "R. Tyler Ballance" <tyler@monkeypox.org>
+X-From: git-owner@vger.kernel.org Thu Mar 25 03:05:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NubxX-0005q1-In
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 02:34:07 +0100
+	id 1NucRS-0006M7-8M
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 03:05:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754573Ab0CYBd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Mar 2010 21:33:59 -0400
-Received: from mail.geekisp.com ([216.168.135.169]:13279 "EHLO
-	starfish.geekisp.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754329Ab0CYBd7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Mar 2010 21:33:59 -0400
-Received: (qmail 4816 invoked by uid 1003); 25 Mar 2010 01:33:57 -0000
-Received: from localhost (HELO kiwi.sharlinx.com) (tyler@monkeypox.org@127.0.0.1)
-  by mail.geekisp.com with SMTP; 25 Mar 2010 01:33:57 -0000
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752277Ab0CYCEw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Mar 2010 22:04:52 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52436 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751203Ab0CYCEw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Mar 2010 22:04:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E2612A514F;
+	Wed, 24 Mar 2010 22:04:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=noaBtq3RMHche6F7YTk49uaa4fI=; b=mbBYr8
+	QnGowthRfW25XPRJAxBHaZnXlVUyXBW/ZqOUEkRKZvIUWXJqtpOQF2gnQfvUFY8O
+	ejxuU1yz0AzbmJG4SWLDeyLcFzzpdFVde6wUrwBhLjsJF2xmWEcoruz/ACEe5Rsa
+	uFhgM2VHkxza4xSe49MHEG6oPWivv5lSQY+Dw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=J1oyNnC/DPWxZkbTwzzcUy0gLd8sfCc6
+	ZtHJX+CkcMorPao6nvZhua4Mj1oWH0io9E1AJ1nUrhentVi/M/0yK10gnk4zxbMf
+	dYOfPOSRnY9tjB+9AhYY46ASihT9nC4ONsv4vGZ6Pk5A+dUQOuFsjCS7FTuaWgz8
+	58iL2GUGMf0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9112FA514E;
+	Wed, 24 Mar 2010 22:04:48 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1E801A514D; Wed, 24 Mar
+ 2010 22:04:44 -0400 (EDT)
+In-Reply-To: <20100325013352.GE4062@kiwi.sharlinx.com> (R. Tyler Ballance's
+ message of "Wed\, 24 Mar 2010 18\:33\:53 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CA7E684C-37B2-11DF-A422-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143141>
 
+"R. Tyler Ballance" <tyler@monkeypox.org> writes:
 
---idY8LE8SD6/8DnRI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> The build is currently being run for master and next:
+>     http://hudson.brokenco.de/job/Git/
+>     http://hudson.brokenco.de/job/Git__next
+>
+> They're both pulling from: git://git.kernel.org/pub/scm/git/git.git
+> which I don't think is seeing updates that often except for occasional pushes.
 
-Howdy guys, I've been working on getting automated testing of git.git going
-over the past couple weekends (this is why I sent that FreeBSD related patch).
+The master and next branches would be good branches to check, and maint
+would also be.  It is likely that you saw "occasional pushes" because I've
+been slower than my usual self for the last past couple of weeks.
 
-The build is currently being run for master and next:
-    http://hudson.brokenco.de/job/Git/
-    http://hudson.brokenco.de/job/Git__next
-
-They're both pulling from: git://git.kernel.org/pub/scm/git/git.git
-which I don't think is seeing updates that often except for occasional pushes.
-
-Is there a more preferrable tree that I should be tracking with Hudson for
-testing git.git itself?
-
-
-I'm looking forward to getting tests run in a more automated fashion along
-with built packages :)
-
-Cheers,
--R. Tyler Ballance
---------------------------------------
- Jabber: rtyler@jabber.org
- GitHub: http://github.com/rtyler
-Twitter: http://twitter.com/agentdero
-   Blog: http://unethicalblogger.com
-
-
---idY8LE8SD6/8DnRI
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.12 (GNU/Linux)
-
-iEYEARECAAYFAkuqvYAACgkQFCbH3D9R4W9kjwCfcgTr1m42ZbA80Rm2XV6k14Aw
-7FwAn3uuBEU3PSP5wR+cq8QiC81T9OQQ
-=iwpm
------END PGP SIGNATURE-----
-
---idY8LE8SD6/8DnRI--
+FWIW, I run tests except for t9xxx series on all branches on FreeBSD 8.0
+(and Fedora 11) running in a vm before pushing them out, but an extra set
+of eyes is always appreciated.  The ports/packages I have installed there
+might be missing stuff causing some tests to be skipped.
