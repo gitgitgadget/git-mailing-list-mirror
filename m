@@ -1,98 +1,82 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 2/2] builtins: setup repository before print unknown command error
-Date: Thu, 25 Mar 2010 20:38:15 +0700
-Message-ID: <1269524295-24569-2-git-send-email-pclouds@gmail.com>
-References: <1269524295-24569-1-git-send-email-pclouds@gmail.com>
-Cc: Duy Nguyen <pclouds@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 25 20:38:32 2010
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: What's cooking in git.git (Mar 2010, #06; Wed, 24)
+Date: Thu, 25 Mar 2010 11:27:33 -0500
+Message-ID: <25yNvbuAivZlBuEJoRhXtfoEc7HEZorM5qOrwgQKk7FER_fdzljyMQ@cipher.nrlssc.navy.mil>
+References: <7v7hp1kzbn.fsf@alter.siamese.dyndns.org> <fcaeb9bf1003250811g777b2881l332e6f61456d699@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 25 20:52:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nussw-0004QK-EQ
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 20:38:30 +0100
+	id 1Nut6k-00032h-Kw
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Mar 2010 20:52:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754560Ab0CYTi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Mar 2010 15:38:27 -0400
-Received: from mail-fx0-f213.google.com ([209.85.220.213]:42284 "EHLO
-	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754356Ab0CYTiY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Mar 2010 15:38:24 -0400
-Received: by fxm5 with SMTP id 5so1367526fxm.29
-        for <git@vger.kernel.org>; Thu, 25 Mar 2010 12:38:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=NtQWetWsD6BVC/11IgvyiwCHLlko7J172g91ULED2co=;
-        b=VQUKs5xZwopArT+fE1VCLDAnrm2J4KeYIy6RLPU9YZW+HNtWdBgCbWv/QQzjQqx/6X
-         N0lLUCmRbvIYTyL3J/H9QGBzmLvPXdIt9adYF2VnpFGsy2ulRQiJAKl6acK21AvihOlL
-         PruEu+QmH8mav6oMqqX4vbcqU+YpWLH9dezk0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=llhnUlkbAtwcrETSsePDOTA1SwoRK5fH6LzhrlA4gIWX20pWicRC5oj2q1Q2Df0pvF
-         ew4xlbrgQs+DaZO7GhyU6bW5Zjj1Zpq7TH26AGwLXSCQT0yXMFExTWZwfYj9qD98qD8D
-         noSQHuB8Uv28vCSaU0VkBbYVpSV16MhKJbHM8=
-Received: by 10.223.4.135 with SMTP id 7mr122086far.42.1269545903077;
-        Thu, 25 Mar 2010 12:38:23 -0700 (PDT)
-Received: from dektop ([212.247.124.209])
-        by mx.google.com with ESMTPS id 9sm211829fks.26.2010.03.25.12.38.21
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 25 Mar 2010 12:38:22 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Thu, 25 Mar 2010 20:38:19 +0700
-X-Mailer: git-send-email 1.7.0.rc1.541.g2da82.dirty
-In-Reply-To: <1269524295-24569-1-git-send-email-pclouds@gmail.com>
+	id S1753554Ab0CYTwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Mar 2010 15:52:40 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:44906 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754368Ab0CYTwk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Mar 2010 15:52:40 -0400
+Received: by mail.nrlssc.navy.mil id o2PJieUZ027036; Thu, 25 Mar 2010 14:47:07 -0500
+In-Reply-To: <fcaeb9bf1003250811g777b2881l332e6f61456d699@mail.gmail.com>
+X-OriginalArrivalTime: 25 Mar 2010 16:27:33.0137 (UTC) FILETIME=[12567010:01CACC38]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143196>
 
-From: Duy Nguyen <pclouds@gmail.com>
+On 03/25/2010 10:11 AM, Nguyen Thai Ngoc Duy wrote:
+> 2010/3/25 Junio C Hamano <gitster@pobox.com>:
+>> * ar/config-from-command-line (2010-03-19) 1 commit
+>>  - Allow passing of configuration parameters in the command line
+>>
+>> * bc/t5505-fix (2010-03-19) 3 commits
+>>  - t/t5505-remote.sh: escape * to prevent interpretation by shell as glob
+>>  - t5505: add missing &&
+>>  - t5505: remove unnecessary subshell invocations
 
-help_unknown_cmd() will need to look into repository's config, in
-order to collect all possible commands/aliases and give a
-suggestion. So, repository must be set up before this function is
-called.
+methinks you were over-aggressive with your cut/paste?  I don't think bc/t5505-fix
+contains a strndup.  Hopefully, it does not break your build on Solaris.
 
-As it is now, because
- - alias handling will always be done before help_unknown_cmd()
- - alias handling code will search and set up repository if found
- - alias handline code will not undo repository setup
+> This breaks my build on Solaris because it uses strndup, which is not available.
 
-These ensure that repository will always be set up (or attempted to
-set up) before help_unknown_cmd(), so there is no issue. But the setup
-dependency here is subtle. It may break some day if someone reorders
-the loop, for example.
+A quick glance at ar/config-from.. also detected an unchecked calloc().
 
-Make the repository setup explicit, to express it clearer, although
-this code will never be run (It does not mean the code is not tested,
-I removed alias handling code to reproduce the problem, and this code
-helped fix it)
+Alex, any reason xcalloc wasn't used?
 
-Signed-off-by: Duy Nguyen <pclouds@gmail.com>
----
- git.c |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+btw, me also thinks the code is a little hard to read.  For example, I initially
+thought your calloc was not allocating enough space for the nul terminator.
 
-diff --git a/git.c b/git.c
-index bd1d4bb..d84996c 100644
---- a/git.c
-+++ b/git.c
-@@ -547,6 +547,10 @@ int main(int argc, const char **argv)
- 			exit(1);
- 		}
- 		if (!done_help) {
-+			if (!startup_info->have_run_setup_gitdir) {
-+				int nongit_ok;
-+				setup_git_directory_gently(&nongit_ok);
-+			}
- 			cmd = argv[0] = help_unknown_cmd(cmd);
- 			done_help = 1;
- 		} else
--- 
-1.7.0.rc1.541.g2da82.dirty
+   ct = calloc(1, sizeof(struct config_item) + (text - name));
+   memcpy(ct->name, name, text - name);
+
+I traced the code, but it wasn't until I noticed that your data structure looks
+like this:
+
+   struct config_item
+   {
+          struct config_item *next;
+          char *value;
+          char name[1];
+   };
+
+that I realized that room for the nul terminator in the 'name' array was allocated
+by the structure itself, since the name declaration looks like name[1] and not
+name[FLEX_ARRAY].
+
+Would the code be simpler if strbufs were used?  Then you wouldn't need to duplicate
+the skip_space and trailing_space functionality provided in the strbuf library, and
+would just need a new function named strbuf_tolower.
+
+Also, should config_parametes_tail be spelled config_parameters_tail?
+
+-brandon
