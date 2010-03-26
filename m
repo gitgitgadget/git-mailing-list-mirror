@@ -1,72 +1,93 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: Add new option in the right click menu in git gui
-Date: Fri, 26 Mar 2010 14:53:49 +0100
-Message-ID: <20100326135346.GB22339@book.hvoigt.net>
-References: <7fce93be1002181511v1c671f82u7f3d7cc6e3512bab@mail.gmail.com> <20100301171222.GA35830@book.hvoigt.net> <1267478971.4400.5.camel@kheops> <36ca99e91003011345n43aad0c5m5c02eaf692d54efd@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] pull: mention "pull", not "fetch" in the error message.
+Date: Fri, 26 Mar 2010 15:18:41 +0100
+Message-ID: <4BACC241.4010608@drmicha.warpmail.net>
+References: <1269610699-13176-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: sylvain@abstraction.fr, git <git@vger.kernel.org>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 26 14:54:00 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri Mar 26 15:22:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nv9z5-0007rc-I3
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 14:53:59 +0100
+	id 1NvAQF-00014j-2P
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 15:22:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753784Ab0CZNxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 09:53:54 -0400
-Received: from darksea.de ([83.133.111.250]:34427 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753510Ab0CZNxx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 09:53:53 -0400
-Received: (qmail 4829 invoked from network); 26 Mar 2010 14:53:50 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 26 Mar 2010 14:53:50 +0100
-Content-Disposition: inline
-In-Reply-To: <36ca99e91003011345n43aad0c5m5c02eaf692d54efd@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1754130Ab0CZOVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 10:21:33 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:53166 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754122Ab0CZOVc (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Mar 2010 10:21:32 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id AF90AE9D8D;
+	Fri, 26 Mar 2010 10:21:31 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 26 Mar 2010 10:21:31 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=IUm8A7ARkLsCO4lTfS6V2wpZK2Q=; b=hT+0wVNY32v9m8BDBwm8O2PGF2iKPzcUUDrezmCEm57bpYWEwYlRiyTaBN1u2iSJoBBCsc6szu6AplEDCDOi1NKgUCc/TYeELMaBsFQ1uS4kTDJqjUXbM2D0RN1KytiHyU0bZPxGNWq9KJVjST/yyf6nyra/udnXyVH7gtFXHP8=
+X-Sasl-enc: OlcpoiumFn1fg25GLWWhI7Rz/zOa90Eqq1dHs4MAogWz 1269613291
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id F27274BCB10;
+	Fri, 26 Mar 2010 10:21:30 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10pre) Gecko/20100319 Lightning/1.0b2pre Shredder/3.0.5pre
+In-Reply-To: <1269610699-13176-1-git-send-email-Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143231>
 
-Hi,
+Matthieu Moy venit, vidit, dixit 26.03.2010 14:38:
+> For newbies who've just been taught "git push", the error message
 
-this email has been lying in my mailbox for while ...
+Even though newbies don't read git.git's commit messages, you may want
+to say "pull" here ;)
 
-On Mon, Mar 01, 2010 at 10:45:10PM +0100, Bert Wesarg wrote:
-> Actually, I would like to be able to have a right click menu for the
-> path too and have access to the guitool entries in the Tools menu
-> which require a path (ie. needsfile=true). That would reduce by mouse
-> movements drastically.
+One way or the other, nothing beats the error messages in ident.c ;)
+
+> "Where do you want to fetch from today?" is indeed confusing. Change it
+> to "Where do you want to pull from today?" in case fetch was called from
+> pull.
 > 
-> I have looked into this issue by myself, but I'm not that familiar with tcl/tk.
-
-Just try it. The "Tcl Introduction" sample chapter from this book[1]
-explains the tcl language in 17 pages quite nicely.
-
-I thought of this myself but never had the time to do it. If you are
-still interested in implementing it take a look at the 'bind' command.
-It lets you bind procedures to events that occur on widgets or the
-application. For the diff view this is done in git-gui.sh on around line
-3465 with this command:
-
-  bind_button3 $ui_diff [list popup_diff_menu $ctxm $ctxmmg $ctxmsm %x %y %X %Y]
-
-bind_button3 is just a wrapper so bind is platform independent. So you
-probably want to implement a method similar to popup_diff_menu which
-popups the right menu for the selected file.
-
-BTW, the widgets for the files are of the same type (text) as $ui_diff
-and are stored in the variables: $ui_index and $ui_workdir for the index
-and working directory respectively.
-
-Hope that helps.
-
-cheers Heiko
-
-[1] http://www.beedub.com/book/
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+>  builtin/fetch.c |    6 +++++-
+>  git-pull.sh     |    3 ++-
+>  2 files changed, 7 insertions(+), 2 deletions(-)
+> 
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 957be9f..f3246f5 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -842,8 +842,12 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
+>  	int ref_nr = 0;
+>  	int exit_code;
+>  
+> +	char *cmd = getenv("GIT_USER_COMMAND");
+> +	if (cmd == NULL || cmd[0] == '\0')
+> +		cmd = "fetch";
+> +
+>  	if (!remote)
+> -		die("Where do you want to fetch from today?");
+> +		die("Where do you want to %s from today?", cmd);
+>  
+>  	transport = transport_get(remote, NULL);
+>  	transport_set_verbosity(transport, verbosity, progress);
+> diff --git a/git-pull.sh b/git-pull.sh
+> index 1a4729f..abc233b 100755
+> --- a/git-pull.sh
+> +++ b/git-pull.sh
+> @@ -216,7 +216,8 @@ test true = "$rebase" && {
+>  	done
+>  }
+>  orig_head=$(git rev-parse -q --verify HEAD)
+> -git fetch $verbosity $progress --update-head-ok "$@" || exit 1
+> +GIT_USER_COMMAND=pull \
+> +    git fetch $verbosity $progress --update-head-ok "$@" || exit 1
+>  
+>  curr_head=$(git rev-parse -q --verify HEAD)
+>  if test -n "$orig_head" && test "$curr_head" != "$orig_head"
