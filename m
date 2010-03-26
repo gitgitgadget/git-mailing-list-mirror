@@ -1,80 +1,75 @@
-From: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
-Subject: Re: request for enhancement: gitk highlight whitespace
-Date: Fri, 26 Mar 2010 16:21:25 +0000
-Message-ID: <20100326162125.GM19793@cs-wsok.swansea.ac.uk>
-References: <201003261519.18095.sbraun@emlix.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 26 17:21:35 2010
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH] t0005: add test for trap handling from deeply nested function calls
+Date: Fri, 26 Mar 2010 11:34:05 -0500
+Message-ID: <vm2zHZjrZOha7LnIM_9fAEAvwVZrJtZlAI9f2XI_VUsdqr51ihAMW68a5BT9tvMdRDSqk6GYlSE@cipher.nrlssc.navy.mil>
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Mar 26 17:44:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvCHt-0003R2-62
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 17:21:33 +0100
+	id 1NvCdp-0001zA-Qv
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 17:44:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752259Ab0CZQV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 12:21:28 -0400
-Received: from laurel.swan.ac.uk ([137.44.1.237]:32790 "EHLO laurel.swan.ac.uk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751473Ab0CZQV1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 12:21:27 -0400
-Received: from [137.44.2.59] (helo=cs-svr1.swan.ac.uk)
-	by laurel.swan.ac.uk with esmtp (Exim 4.70)
-	(envelope-from <O.Kullmann@swansea.ac.uk>)
-	id 1NvCHm-00033Z-8w; Fri, 26 Mar 2010 16:21:26 +0000
-Received: from cs-wsok.swansea.ac.uk (cs-wsok [137.44.2.227])
-	by cs-svr1.swan.ac.uk (Postfix) with ESMTP id 3A6B55CAA6;
-	Fri, 26 Mar 2010 16:21:26 +0000 (GMT)
-Received: by cs-wsok.swansea.ac.uk (Postfix, from userid 3579)
-	id 19FE47420F; Fri, 26 Mar 2010 16:21:26 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <201003261519.18095.sbraun@emlix.com>
-User-Agent: Mutt/1.5.9i
+	id S1751664Ab0CZQoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 12:44:08 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:54945 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750925Ab0CZQoH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 12:44:07 -0400
+Received: by mail.nrlssc.navy.mil id o2QGYGVB028751; Fri, 26 Mar 2010 11:34:16 -0500
+X-OriginalArrivalTime: 26 Mar 2010 16:34:15.0967 (UTC) FILETIME=[2CDB2AF0:01CACD02]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143259>
 
-Yeah, that would be good.
-Don't know whether it has something to do
-with a change in Git (I'm using 1.7.0.1),
-but recently I got quite a few submissions
-where gitk shows lines as changed, but I couldn't
-find out what it was. 
+From: Brandon Casey <drafnel@gmail.com>
 
-A general option to show explicitly the change would
-be a good thing.
+The /usr/xpg4/bin/sh shell on Solaris only executes a trap handler set
+within a function from the first-level function call made from within the
+function that set the trap.  In other words, if func1 sets a trap, then
+calls func2 which triggers the trap, then the trap handler will be executed
+correctly.  If instead of exiting, func2 calls func3, and func3 satisfies
+the conditions for triggering the trap, the trap handler will NOT be
+executed.
 
-Oliver
+This trap sequence exists in git-bisect.sh and is exercised by tests
+t6030.12 and t6030.13 which fail when the /usr/xpg4/bin/sh shell is used.
 
-P.S. This would also be helpful for long lines (yet it's a pain with
-gitk to find out where the change is).
+Add a test that will fail sooner and more precisely than the t6030 tests.
+
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
 
 
-On Fri, Mar 26, 2010 at 03:19:17PM +0100, Simon Braunschmidt wrote:
-> Hi
-> 
-> It would be great if I could teach gitk to better highlight 
-> whitespace changes in the diff view.
-> 
-> Every once in a while (and again today) I have to review 
-> patches that "fix whitespace". Allthough the fixes are usually 
-> trivial, I have to check them, which is not trivial with the gitk 
-> display. Also I often mistakenly accept changes after 
-> review with gitk that turn out to contain a mix of 
-> tabs/whitespace etc. 
-> 
-> I searched the mailinglist (for gitk whitespace) and asked on irc, yet 
-> nobody seemed to care so far.
-> 
-> What do you think about it?
-> 
-> Regards,Gruessle
-> Simon
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
+Improvements to the commit message are welcome.
+
+-brandon
+
+
+ t/t0005-signals.sh |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
+index 09f855a..cb68d1f 100755
+--- a/t/t0005-signals.sh
++++ b/t/t0005-signals.sh
+@@ -19,4 +19,12 @@ test_expect_success 'sigchain works' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'trap triggered in deeply nested function works correctly' '
++	(atrap () { exit 0; }
++	 func3 () { exit 1; }
++	 func2 () { func3; }
++	 func1 () { trap atrap EXIT; func2; }
++	 func1)
++'
++
+ test_done
+-- 
+1.6.6.2
