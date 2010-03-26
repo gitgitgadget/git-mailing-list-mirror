@@ -1,107 +1,72 @@
-From: Brian Dilley <bdilley@estalea.com>
-Subject: Git rebase/merge questions
-Date: Fri, 26 Mar 2010 12:26:04 -0700
-Message-ID: <7a489efb1003261226h51a9576fq7c2d5de306da4b32@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: force "unmerged" for same-file auto-merges
+Date: Fri, 26 Mar 2010 12:29:16 -0700
+Message-ID: <7vtys2lw4z.fsf@alter.siamese.dyndns.org>
+References: <hobqoc$5h3$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 26 20:26:13 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Neal Kreitzinger" <neal@rsss.com>
+X-From: git-owner@vger.kernel.org Fri Mar 26 20:29:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvFAb-0007Wc-8z
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 20:26:13 +0100
+	id 1NvFDn-0000rS-Mr
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 20:29:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751624Ab0CZT0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 15:26:08 -0400
-Received: from mail-iw0-f196.google.com ([209.85.223.196]:40386 "EHLO
-	mail-iw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751028Ab0CZT0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 15:26:05 -0400
-Received: by iwn34 with SMTP id 34so8433667iwn.15
-        for <git@vger.kernel.org>; Fri, 26 Mar 2010 12:26:04 -0700 (PDT)
-Received: by 10.231.150.205 with HTTP; Fri, 26 Mar 2010 12:26:04 -0700 (PDT)
-Received: by 10.231.146.144 with SMTP id h16mr625120ibv.18.1269631564413; Fri, 
-	26 Mar 2010 12:26:04 -0700 (PDT)
+	id S1751752Ab0CZT31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 15:29:27 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45091 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751512Ab0CZT30 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 15:29:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 158D0A520F;
+	Fri, 26 Mar 2010 15:29:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sduPHn3nIDN5iQrhbXgSqw97Nd4=; b=kfo1Fo
+	deTRVvPghQxine4HnazEP8ntTu52q/hl1yQlRLuPJ8TEq1ySKGI8bxG58reeJoBs
+	qEaMDGEZWH2s5P9osdL4FEJqqjbS95YFlFEcO2mgAX9qF7tehPItYQ5kw6CH1Y3V
+	cHulsLqDVME2l+DlvVsFjKPELARIf/mCwBjus=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ufyVRciN1kHc2E1R1qLzOvBDR9LJoMup
+	5ds0cd7lYEuAdCwpYGsxcYB7gGnvVcxE1UdfXjeuqgr7/2IdHaRoBcP0fV0kaSxc
+	ZfcVQx0zYZtMkCkhAxUhKnDx9Xsr/XzgpL92dxbs6gcZAGOyAn54Tip70Sot9xnp
+	ZaAbuRBCEwU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B1F08A520C;
+	Fri, 26 Mar 2010 15:29:20 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 84117A5207; Fri, 26 Mar
+ 2010 15:29:17 -0400 (EDT)
+In-Reply-To: <hobqoc$5h3$1@dough.gmane.org> (Neal Kreitzinger's message of
+ "Tue\, 23 Mar 2010 20\:44\:05 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E0599A86-390D-11DF-9901-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143267>
 
-    Recently i converted a very large CVS repository with a large
-number of modules, branches and tags to Git as we have decided we're
-going to migrate to Git.  At the same time there is some restructuring
-that is going to be done.  We're actually splitting modules up into
-separate Git repositories all together (not each module in it's own
-repo, but grouping them a bit better).  Take these example CVS
-modules:
+"Neal Kreitzinger" <neal@rsss.com> writes:
 
-Aproject1
-Aproject2
-Aproject3
-Bproject1
-Bproject2
-Bproject3
+> Does anyone know if there are configuration and/or command-line options in 
+> git that can accomplish this in a fairly straightforward manner?
 
-They used to all be in the same repository but we're moving them into
-their own repositories:
+I know there isn't.
 
-git repo for A:
-Aproject1
-Aproject2
-Aproject3
+Essentially what you are asking for is
 
-git repo for B:
-Bproject1
-Bproject2
-Bproject3
+    read-tree -m -u --trivial O A B
 
-And furthermore we're renaming them:
-git repo for A:
-xxx-project1
-xxx-project2
-xxx-project3
+followed by no file-level automerge.  I think you can write a custom merge
+strategy, perhaps using "resolve" as a template, to do that.
 
-git repo for B:
-yyy-project1
-yyy-project2
-yyy-project3
-
-There is also some other changes we're making that is more project
-specific (upgrading from Maven 1 to Maven 2).  The plan has been:
-
-1) create Git repo - note date/time
-2) make rename/restructure changes
-3) make build system updates (maven1->mave2)
-4) copy all changes since step #1 from CVS into Git
-5) cut over to Git completely
-
-There are several active branches in place for each of these modules.
-For each branch we planned on executing those steps in that order.  So
-what I initially did was step 1.  Then step 2, 3 and 4 in "master".  I
-then planned on merging these changes from master into each of the
-branches one at a time, effectively completing step 2 and 3 at once.
-This is where my problem lies.  I've tried the following on the
-branches:
-
-git rebase master
-this results in a TONS of conflicts (why would there be conflicts?)
-
-git merge master
-same as above, TONS of conflicts
-
-i've tried branching from master from the comment before i peformed
-step #2 on it, removing everything but the ".git" directory, copying
-everything from one of the branches (from another directory) into the
-repo directory and rectifying the deltas by adding the differences and
-new files and removing the removed files and then committing this
-branch.  The theory being that it's a copy of master with all of the
-changes from the other specific branch and then doing the rebase/merge
-- still TONS of conflicts.
-
-Most of the conflicts are (delete/modify) conflicts.  I expected a few
-problems (10-20) but i'm getting hundred and thousands.  Any help
-would be greatly appreciated!
+In practice, you will get too many false "conflicts" with such a strategy
+and the quality of your "review" would degrade from fatigue, I suspect.
