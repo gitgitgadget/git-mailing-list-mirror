@@ -1,119 +1,81 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH] rebase: Squelch the "fatal: Not an error." message
-Date: Fri, 26 Mar 2010 16:31:13 -0700
-Message-ID: <F8E395F5-C248-4A95-B2EF-A36E941FFDCF@sb.org>
-References: <C07F26A5-6BAD-433D-B1FF-A08DC8E0EA74@sb.org> <7vy6helwbq.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1077)
-Content-Type: multipart/signed; boundary=Apple-Mail-1--718702470; protocol="application/pkcs7-signature"; micalg=sha1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 27 00:31:21 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Tree with leading '0' modes in 1.7.0.3
+Date: Fri, 26 Mar 2010 18:49:24 -0500
+Message-ID: <20100326234923.GA18759@progeny.tock>
+References: <20100326215600.GA10910@spearce.org>
+ <20100326222659.GA18369@progeny.tock>
+ <20100326222950.GB10910@spearce.org>
+ <4BAD3C6E.4090604@gmail.com>
+ <20100326230537.GC10910@spearce.org>
+ <4BAD41C4.7050508@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Scott Chacon <schacon@gmail.com>, git <git@vger.kernel.org>
+To: "Mike.lifeguard" <mike.lifeguard@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 27 00:49:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvIzo-00053l-Lm
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 00:31:21 +0100
+	id 1NvJHL-0004Gi-AF
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 00:49:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753339Ab0CZXbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 19:31:15 -0400
-Received: from mailbigip.dreamhost.com ([208.97.132.5]:37044 "EHLO
-	randymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752934Ab0CZXbO (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Mar 2010 19:31:14 -0400
-Received: from [10.0.1.14] (unknown [24.130.32.253])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by randymail-a1.g.dreamhost.com (Postfix) with ESMTP id 1BE4C18CEFA;
-	Fri, 26 Mar 2010 16:31:14 -0700 (PDT)
-In-Reply-To: <7vy6helwbq.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1077)
+	id S1753606Ab0CZXtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 19:49:22 -0400
+Received: from mail-yw0-f172.google.com ([209.85.211.172]:59048 "EHLO
+	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752931Ab0CZXtV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 19:49:21 -0400
+Received: by ywh2 with SMTP id 2so3842323ywh.33
+        for <git@vger.kernel.org>; Fri, 26 Mar 2010 16:49:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=7LnNg/QDNvLI3YzZwJemkUe+fEsNbhwFxGupm70vQKk=;
+        b=xvXPEmrm6sE2WVbg/YdQ4zmyS2aywWsOlNxVorDEEYUvQuZrXfpD7PfiqhTI8WvG2N
+         GqA5K3HAR4YPmMYjE65hLM5rxjdyx+rWEFVOadmMPK452kmo5p4f/5hLV09Fxlefj3+/
+         kO0TVVjnOfY2RCThKvaH1sAhUE0+ot/T97744=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=TVq4wUKGDYPaqIplMv+DKhh8s1csrpZ5q2haa10l0bqG/K2awPuIe0hfwFAPiVD3E2
+         Jdp29FCa6wmefCITElp6b2MOFo2sZwWx8B1NXJXDR0CedXNZWkLsUTTxgBQt2xkWQJ+p
+         sVeNpM6xLUF9zgUgiD03LgwCwKhdMqnmOCV1M=
+Received: by 10.151.86.8 with SMTP id o8mr2146696ybl.201.1269647361052;
+        Fri, 26 Mar 2010 16:49:21 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 23sm1234290iwn.2.2010.03.26.16.49.19
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 26 Mar 2010 16:49:20 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4BAD41C4.7050508@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143301>
 
+Mike.lifeguard wrote:
+> On 10-03-26 08:05 PM, Shawn O. Pearce wrote:
 
---Apple-Mail-1--718702470
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+>>   $ git filter-branch --index-filter '' --all
+>
+> This and a few other variations I tried does rewrite things, but the
+> problem persists:
 
-On Mar 26, 2010, at 12:25 PM, Junio C Hamano wrote:
+Yes, I think git write-tree does not rewrite subtrees.  How about
 
-> Hmm, since "git format-patch HEAD" simply exits with success, I am
-> inclined to think that we should fix "format-patch HEAD..HEAD" to do =
-the
-> same instead.  I didn't check how involved such a change might be,
-> though.
+git fast-export --all |
+(
+	cd /empty/repository &&
+	git init &&
+	git fast-import
+)
 
-Actually it doesn't. The line `git format-patch --ignore-if-in-upstream =
-HEAD` gives the same error (the flag seems to be necessary to get the =
-error in the first place). In any case, I'll see if I can't figure out =
-why it's giving that error.
-
--Kevin Ballard
-
---=20
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
-
-
-
-
---Apple-Mail-1--718702470
-Content-Disposition: attachment;
-	filename=smime.p7s
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIGMjCCAusw
-ggJUoAMCAQICEEBvNCHopKrFMn5Q80vZpuswDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCWkEx
-JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
-ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMB4XDTA5MDUwNzA1MDYyNloXDTEwMDUwNzA1MDYy
-NlowVzEQMA4GA1UEBBMHQmFsbGFyZDEOMAwGA1UEKhMFS2V2aW4xFjAUBgNVBAMTDUtldmluIEJh
-bGxhcmQxGzAZBgkqhkiG9w0BCQEWDGtldmluQHNiLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEP
-ADCCAQoCggEBAKOBiOuMZxNp5ygOJZo2JaBVm5auXMJJmdmTeaSSA8BhvZ98mXzXnaNrXOYSeZHo
-hkv4o5bM6LX3Ck38OmsgCcQMIfH4Kt39BvDokfA9ECq1J3HRNKuQ6ZSgZPaRWEy7TUeSHTx1ljxY
-tzUt8uAwSsOKiHgLIDi+vtLK0KjGXH1sJP6ajvlrkxQ3bbcmaDXTkpvUl5NEAKv+yK4+KqwTgtwV
-6ee2X4jjLjIgn/5Mm6pssaWuZtuEGRdQGkLcFVy+Wgo+5hpHf8fMXOSWsSp3/af6eSieL39M2Tit
-E1vTuYRpYjpL0Aevubmm6wens4OTOYKILOTBJDYNfF4HmkK9sMsCAwEAAaMpMCcwFwYDVR0RBBAw
-DoEMa2V2aW5Ac2Iub3JnMAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEFBQADgYEAC6/X6Dgj4qoU
-XSEZ1LmYkPgSLbRqIIRIgzTy52EnXL8ZQDVntI39lnn0VU8rnDY3sol9wr3feAG62AEa3LyTUxI0
-6bWEiNMhPWRHnRoCqiV3F0FqqD8bZJ4J8TgJkRH6IL3MDMUSdGEEzef5KwdGt7ERv/Vk0LBc1ayb
-y4FA1O4wggM/MIICqKADAgECAgENMA0GCSqGSIb3DQEBBQUAMIHRMQswCQYDVQQGEwJaQTEVMBMG
-A1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xGjAYBgNVBAoTEVRoYXd0ZSBD
-b25zdWx0aW5nMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9uMSQwIgYD
-VQQDExtUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgQ0ExKzApBgkqhkiG9w0BCQEWHHBlcnNvbmFs
-LWZyZWVtYWlsQHRoYXd0ZS5jb20wHhcNMDMwNzE3MDAwMDAwWhcNMTMwNzE2MjM1OTU5WjBiMQsw
-CQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoGA1UE
-AxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0EwgZ8wDQYJKoZIhvcNAQEBBQAD
-gY0AMIGJAoGBAMSmPFVzVftOucqZWh5owHUEcJ3f6f+jHuy9zfVb8hp2vX8MOmHyv1HOAdTlUAow
-1wJjWiyJFXCO3cnwK4Vaqj9xVsuvPAsH5/EfkTYkKhPPK9Xzgnc9A74r/rsYPge/QIACZNenpruf
-ZdHFKlSFD0gEf6e20TxhBEAeZBlyYLf7AgMBAAGjgZQwgZEwEgYDVR0TAQH/BAgwBgEB/wIBADBD
-BgNVHR8EPDA6MDigNqA0hjJodHRwOi8vY3JsLnRoYXd0ZS5jb20vVGhhd3RlUGVyc29uYWxGcmVl
-bWFpbENBLmNybDALBgNVHQ8EBAMCAQYwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVByaXZhdGVM
-YWJlbDItMTM4MA0GCSqGSIb3DQEBBQUAA4GBAEiM0VCD6gsuzA2jZqxnD3+vrL7CF6FDlpSdf0wh
-uPg2H6otnzYvwPQcUCCTcDz9reFhYsPZOhl+hLGZGwDFGguCdJ4lUJRix9sncVcljd2pnDmOjCBP
-ZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEwdjBi
-MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
-A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEEBvNCHopKrFMn5Q80vZ
-puswCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
-DxcNMTAwMzI2MjMzMTEzWjAjBgkqhkiG9w0BCQQxFgQUf/TgAjrBIrnGLncXsoxmrByqHBMwgYUG
-CSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5n
-IChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENB
-AhBAbzQh6KSqxTJ+UPNL2abrMIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkExJTAj
-BgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJz
-b25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhBAbzQh6KSqxTJ+UPNL2abrMA0GCSqGSIb3DQEBAQUA
-BIIBAB75xD6O7xSZq7gmtUvDeTHHS9Z7Bd1iymGxu+C9nolG46vOevcnB/dWAhkwn32sMHFyloY3
-AbwdmpxlUa0NcdyNsGapyuOq3cqIyFmcJNXd1QOW0Sj0fm+HvXj3aN5i4b8Y6X4xB20yAqoB+hPo
-CpJHqlhBdsU+10iFoIZpovoLrYJ0up1ycPrSvoZwr0YjkAOYeXcr9getrNSpTyLrRoppSUM13hcl
-+bvoXxRpCnYKGSTvRUINf6nSDicdysOyHL7fJ1rjmI1LQYfSRrWGvmHJ1+owST7kj4RV2I4o1B9l
-TUILfc+BQJ4313nIdT/wklb8s/YnVtXEZRXk7hWROMEAAAAAAAA=
-
---Apple-Mail-1--718702470--
+?
