@@ -1,121 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] send-email: lazily assign editor variable
-Date: Fri, 26 Mar 2010 16:45:41 -0500
-Message-ID: <20100326214540.GA17503@progeny.tock>
-References: <20100322145947.GA1709@pengutronix.de>
- <eb0d92cf28820eb9783e789a8c4c62c3af4dd0d0.1269274203.git.git@drmicha.warpmail.net>
- <7vaatxobef.fsf@alter.siamese.dyndns.org>
- <20100325051743.GB5784@progeny.tock>
- <7v39zmlvz1.fsf@alter.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Tree with leading '0' modes in 1.7.0.3
+Date: Fri, 26 Mar 2010 14:56:00 -0700
+Message-ID: <20100326215600.GA10910@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 26 22:45:42 2010
+Content-Type: text/plain; charset=us-ascii
+To: git <git@vger.kernel.org>, mike.lifeguard@gmail.com
+X-From: git-owner@vger.kernel.org Fri Mar 26 22:56:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvHLV-0005XF-MU
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 22:45:38 +0100
+	id 1NvHW8-00038t-8Y
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 22:56:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752248Ab0CZVpc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Mar 2010 17:45:32 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:40525 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751314Ab0CZVpb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 17:45:31 -0400
-Received: by pva18 with SMTP id 18so1685015pva.19
-        for <git@vger.kernel.org>; Fri, 26 Mar 2010 14:45:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=QkC1K2WeFKdhf4t9UcDa80CGqSRZxRl+VCwfepbWF3M=;
-        b=PQ3eQzDE6Gea9kidPTL5mtSIzxo6bEY4R4mQ27VWHZvoiEfA3akvjsGQDQffbTZ/rL
-         huibSgerKph0jvQmaFAbnZsQtNS49GkmGFmE7f+86uOl64Uaps/eMfPUmmG03g+qdFx+
-         JEh6X2dN+f/8ih4pXMl8CVexBKt4OZPMfQbGU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=f5hcsgn3PcCzZqw1/XK4BMakY9RCpVHJcpobfPnocnq2BJa29rNbPs4P4tJvMUj1HG
-         OiDdSRgexWJZFhdJ6IuReOeAU3kP6QqZTM4+RFD/T6K91OT1gk3Z5TF7LD+It6cgNKLE
-         4Dh9cmn86yCEfGGhTjnepqO9p+C/+Oeg9klow=
-Received: by 10.142.208.10 with SMTP id f10mr742545wfg.336.1269639930947;
-        Fri, 26 Mar 2010 14:45:30 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 11sm381862pwi.1.2010.03.26.14.45.27
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 26 Mar 2010 14:45:28 -0700 (PDT)
+	id S1754108Ab0CZV4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 17:56:07 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:32872 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752276Ab0CZV4F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 17:56:05 -0400
+Received: by gwaa18 with SMTP id a18so2906381gwa.19
+        for <git@vger.kernel.org>; Fri, 26 Mar 2010 14:56:03 -0700 (PDT)
+Received: by 10.90.2.4 with SMTP id 4mr1201871agb.14.1269640562785;
+        Fri, 26 Mar 2010 14:56:02 -0700 (PDT)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 22sm1153873iwn.0.2010.03.26.14.56.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 26 Mar 2010 14:56:01 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7v39zmlvz1.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143288>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Mike (CC'd) found a bad Git tree today, where the modes for subtrees
+where formatted using a leading '0':
 
->> Yes, please.  It would be more precise to
->>
->>   s/without a tty/with TERM=3Ddumb/
->>
->> in the second paragraph but regardless this is a good description of=
- the
->> problem.
->
-> Strictly speaking, with TERM=3Ddumb the true "vi" fell back to the ex=
- mode
-> and should have been usable.  A purist might say it is a bug that we =
-fatal
-> out in this case (I know that it is deliberately done to help newbies=
- from
-> common confusion by not running any editor with TERM=3Ddumb, but to a=
- purist
-> in me it feels somewhat wrong).
+  $ od -c tree
+  0000000   1   0   0   6   4   4       R   E   A   D   M   E  \0 244  \r
+  0000020 233 214 350 375   0 263 374 227 264 343   $ 031 027   ` 373 301
+  0000040   !   h   0   4   0   0   0   0       m   o   d   u   l   e   s
+  0000060  \0 262   z   K 240   4 377   \ 245   C   c   " 231 377  \n   t
+  0000100   ,  \n   O   R   E   0   4   0   0   0   0       s   t   e   w
+  0000120   a   r   d   b   o   t  \0 037  \b   5 262 345 234 034 303   C
+  0000140 373 335 207 300   u 341 277  \f   ] 320 207
+  0000153
 
-With DISPLAY set, running =E2=80=9CTERM=3Ddumb vi | cat=E2=80=9D with a=
-n appropriate
-symlink in $PATH:
+The '0' on the 3rd line after '! h' is wrong.  It shouldn't be here.
+Likewise the '0' on the 5th line after "O R E" is also wrong.
+At least its consistently broken.  But its still broken by fsck
+standards:
 
-vim
-	Prints =E2=80=9CVim: Warning: Output is not to a terminal=E2=80=9D to =
-stderr,
-	waits about a second, then
-	runs without clearing the screen, using ANSI escapes to move around.
+ $ git fsck --full a39aa6d
+ warning in tree a39aa6d4a6dcfd6c14d8f818bbdf1dfcb3e11771: contains zero-padded file modes
 
-elvis 1.4
-	Prints =E2=80=9CThis termcap entry lacks the :up=3D: capability=E2=80=9D=
- to stderr,
-	fails with status 1.
+Mike claims this tree was created with git-core 1.7.0.3.  This thread
+actually started over on Gerrit Code Review's mailing list [1],
+because JGit refuses to allow this malformed tree mode to pass its
+fsck implementation.
 
-elvis 2 (more precisely, the elvisnox script from Debian)
-	Prints =E2=80=9Ctermcap needs up=E2=80=9D to stderr,
-	fails with status 1.
+Any ideas?  Why is Git 1.7.0.3 jamming a leading '0' on a file mode?
 
-nvi
-	Prints =E2=80=9Cex/vi: Vi's standard input and output must be a termin=
-al=E2=80=9D to stderr,
-	fails with status 1.
 
-With TERM=3Ddumb but standard output going straight to the terminal, th=
-e
-situation is not very different for vim and elvis, while nvi gets
-utterly confused (it only writes output to the bottom line for some
-reason).
+[1] https://groups.google.com/group/repo-discuss/browse_thread/thread/6ff8d7ffba5a9775
 
-So I think it still makes sense to work around this bug in the vi clone=
-s.
-
-HTH,
-Jonathan
+-- 
+Shawn.
