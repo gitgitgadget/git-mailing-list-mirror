@@ -1,76 +1,99 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH 0/2] Teach 'git grep' about --open-files-in-pager=[<pager>]
-Date: Sat, 27 Mar 2010 06:49:06 +1100
-Message-ID: <2cfc40321003261249g32ba4472x9786a86830ec9813@mail.gmail.com>
-References: <alpine.DEB.1.00.1003261145500.7596@pacific.mpi-cbg.de>
-	 <20100326124650.GA12215@coredump.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] builtins: do not commit pager choice early
+Date: Fri, 26 Mar 2010 15:03:47 -0500
+Message-ID: <20100326200347.GA11395@progeny.tock>
+References: <1269524295-24569-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 26 20:49:16 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 26 21:03:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvFWu-0003NU-E6
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 20:49:16 +0100
+	id 1NvFkr-00032o-0Y
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 21:03:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752077Ab0CZTtK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Mar 2010 15:49:10 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:35341 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751578Ab0CZTtI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Mar 2010 15:49:08 -0400
-Received: by pva18 with SMTP id 18so1626047pva.19
-        for <git@vger.kernel.org>; Fri, 26 Mar 2010 12:49:06 -0700 (PDT)
+	id S1752902Ab0CZUDf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Mar 2010 16:03:35 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:61156 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752320Ab0CZUDe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 16:03:34 -0400
+Received: by pwi5 with SMTP id 5so5390466pwi.19
+        for <git@vger.kernel.org>; Fri, 26 Mar 2010 13:03:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=pVfQ8BCT+9wlaGKHIhr6wE1aZC0qSyi1CHq/FDFak1I=;
-        b=sVXHBlDidRBP9x+kumrM4nGiiGzOifIFJDq6PIH+rQTEK1CkBxADtReUv5oJcNroNF
-         O/S0jgLBKL9z1FRBjhYW18Pzs9pgIx5cFKweiK3EYbUypwdDoF+1H7KcSzVJVxudmvpY
-         PWRtS7q+xniAKMusizPzI8/3VX+SJOFWV+TOw=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=ZCPngHv4qqc56nF/BTYdp819P0d/zPnJfiD3UONUSw8=;
+        b=DNgyv50peQUqTINEKivIO8lMkHxuVMqdHVGC2v9aqvvchD4yv/MtdTbdBKnajvPty3
+         6QFPjzJM2RVpml3TjxnFKqh6TpA5SFqLpisqOr12lvMgGs2TOQ6tCu3k9UixrKueM1Vs
+         DkNakhWwRn31jyBKVPgAc6P06BInQndpba7NM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=LzO/ple/KZ255RkC/Ry9zd4+eP+OQ8u2G1RR/o7ldyHgSv7KYZXAd8moLsXoJPuVY3
-         4ssMJo7n1b5cAWgNFZtJRirSBysJR3SWjLImCluu+ipDx/Ja1ASenF9hJLOAUl1Ea63j
-         TwWp/6YVy6PsRuj4DqaW39rHW8SPgu1XRC1b8=
-Received: by 10.115.89.7 with HTTP; Fri, 26 Mar 2010 12:49:06 -0700 (PDT)
-In-Reply-To: <20100326124650.GA12215@coredump.intra.peff.net>
-Received: by 10.114.187.19 with SMTP id k19mr1848716waf.20.1269632946767; Fri, 
-	26 Mar 2010 12:49:06 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=loiOVI9ndnym4mdkh1oi4pNO2rShMzv6lR0chEmd6ItoJ23zA0Ihq+TScqE/W16Wi6
+         3mITk7MpjNaei4SwyW6OX9cLflYM6eHDiKHVfG3k+tzOtmLsI+OIP9LZ8R10RoSaFeLo
+         rXcxeQLGNFbGK9WnXLoDjdsjw7O7W0j9faE54=
+Received: by 10.141.13.6 with SMTP id q6mr1521618rvi.146.1269633813865;
+        Fri, 26 Mar 2010 13:03:33 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 20sm1090775iwn.13.2010.03.26.13.03.32
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 26 Mar 2010 13:03:33 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1269524295-24569-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143275>
 
-On Fri, Mar 26, 2010 at 11:46 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Mar 26, 2010 at 11:48:41AM +0100, Johannes Schindelin wrote:
->
->> This supports opening the results of a 'git grep' directly in a page=
-r
->> (where the pager can be 'vi', too).
->
-> This is not an argument against your patch, but you may be interested=
- in
-> an alternate method:
->
-> =A0git grep -n $pattern >grep.out
-> =A0vim -q grep.out
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-Or, in bash:
+> Committing pager choice may require setting up the pager, which
+> will need access to repository.
+[...]
+> Signed-off-by: Duy Nguyen <pclouds@gmail.com>
 
-    vim -q <(git grep -n $pattern)
+Tested-by: Jonathan Nieder <jrnieder@gmail.com>
 
-though, of course you don't get the exit code from git.
+Without this patch, I get
 
-jon.
+| * expecting success:=20
+|         test_terminal git --paginate rev-list HEAD &&
+|         test -e paginated.out
+|=20
+| fatal: internal error: access to .git/config without repo setup
+| * FAIL 7: git --paginate rev-list uses a pager
+
+and with it, t7006 passes again.  I assume on your system that
+test was being skipped when running tests without -v (confusing,
+yes) because that test needs a tty but IO::Pty from CPAN is not
+present.
+
+> There are several possible code path after
+> handle_options()/commit_pager_choice() is called:
+>=20
+> 1. list_common_cmds_help()
+> 2. run_argv()
+> 3. help_unknown_cmd()
+>=20
+> Case 2. will have commit_pager_choice() called inside run_builtin() i=
+f
+> a command is found. Case 1. and 3. won't need a pager, it's short
+> printout and should be fitted within a screen. So, removing
+> commit_pager_choice() call after handle_options() is safe.
+
+Makes sense.
+
+Thanks,
+Jonathan
