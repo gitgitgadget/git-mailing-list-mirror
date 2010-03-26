@@ -1,75 +1,59 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: Deleting remote branches
-Date: Fri, 26 Mar 2010 08:52:32 -0700
-Message-ID: <a038bef51003260852x204500fv8db7dd7a42516050@mail.gmail.com>
-References: <1269582415273-4802262.post@n2.nabble.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Enumerating all objects in the Git object store
+Date: Fri, 26 Mar 2010 16:53:18 +0100
+Message-ID: <4BACD86E.4020803@viscovery.net>
+References: <a1138db31003260831q34967f69u9fc8de861f7931b1@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: GIT <git@vger.kernel.org>
-To: jhapk <pradeep.kumar.jha@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 26 16:53:20 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Paul Richards <paul.richards@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 26 16:54:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvBpy-0005o9-MM
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 16:52:43 +0100
+	id 1NvBqk-0006en-4h
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 16:53:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753163Ab0CZPwe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Mar 2010 11:52:34 -0400
-Received: from mail-qy0-f188.google.com ([209.85.221.188]:37460 "EHLO
-	mail-qy0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752342Ab0CZPwd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Mar 2010 11:52:33 -0400
-Received: by qyk26 with SMTP id 26so6609153qyk.19
-        for <git@vger.kernel.org>; Fri, 26 Mar 2010 08:52:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=P+62+rkMYtlQPPRqIDiRJN26EAgeIzOdLiDxx69gzgI=;
-        b=spTsKx7lpWykJ9Tn87OimTd23lDOeYQKOnuN8xHzYQLLIBb692ZvR6pX6jp4vlmmmj
-         IetK2Fsf8lXflbpclvmxrU+ptl4LNRPrQDFOS25CpTaUwb2huAlw8zWxYxD5aYDSkGE5
-         dn/rSvqrY2a4de5E6q4O+4ObDr1/qZtbQhl9s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ahL0plOel3K+aM43iPMN/D6RNgmuvNQwb+D15fqAz32uU1/+7NoMGhx2Q4Xgz9Vwdc
-         VEcUCmxBJdkdTHCL9lk6z1ohWYWOasV5rt6lYpX4Ltb2DugC3fKwbIl+KnTcmbMmeX+O
-         6HBSKEAU/Vyq2cW4Rg3ds7hZ+sp44tkjYQd7c=
-Received: by 10.229.27.141 with HTTP; Fri, 26 Mar 2010 08:52:32 -0700 (PDT)
-In-Reply-To: <1269582415273-4802262.post@n2.nabble.com>
-Received: by 10.229.96.82 with SMTP id g18mr1418612qcn.82.1269618752653; Fri, 
-	26 Mar 2010 08:52:32 -0700 (PDT)
+	id S1753327Ab0CZPxV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 11:53:21 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:64597 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752342Ab0CZPxV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 11:53:21 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NvBqY-0005DU-LP; Fri, 26 Mar 2010 16:53:18 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 611B01660F;
+	Fri, 26 Mar 2010 16:53:18 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
+In-Reply-To: <a1138db31003260831q34967f69u9fc8de861f7931b1@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143254>
 
-On Thu, Mar 25, 2010 at 10:46 PM, jhapk <pradeep.kumar.jha@gmail.com> w=
-rote:
->
-> Hi,
->
-> =C2=A0jeff
-> =C2=A0master
-> * work
-> =C2=A0origin/HEAD
-> =C2=A0origin/RANSmodel
-> =C2=A0origin/bluffbody
-> =C2=A0origin/counterflow
-> =C2=A0origin/flamelet
-> =C2=A0origin/jeff
-> =C2=A0origin/master
-> =C2=A0origin/test
-> =C2=A0origin/work
-> I still get all these branches which I deleted in my remote 'origin'.
->
+Am 3/26/2010 16:31, schrieb Paul Richards:
+> Is there a way to enumerate all the objects in the Git
+> object store, and for each one figure out its type (commit, tree, or
+> blob) and obtain a list of the objects it references?  If not, is
+> there a way to do this for a single object at a time?  (I can then
+> simply recurse through the whole structure.)
 
-'git remote prune origin' will clean up the references you have to
-branches that no longer exist in origin
+Use 'git rev-list --objects --all' to find all objects connected to all
+refs (use something else than --all if you want to). Do *not* look at the
+path that the tree and blob objects have attached - it is not authorative
+information.
+
+Use 'git cat-file -t' to find the type.
+
+Use 'git cat-file -p' to pretty-print the content of an object. Parse it
+depending on the type that you find.
+
+-- Hannes
