@@ -1,145 +1,70 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] Teach gitk to display dirty submodules correctly
-Date: Fri, 26 Mar 2010 23:09:03 +0100
-Message-ID: <4BAD307F.1090602@web.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Tree with leading '0' modes in 1.7.0.3
+Date: Fri, 26 Mar 2010 17:26:59 -0500
+Message-ID: <20100326222659.GA18369@progeny.tock>
+References: <20100326215600.GA10910@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Fri Mar 26 23:11:02 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>, mike.lifeguard@gmail.com
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Mar 26 23:27:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvHk6-0001gf-2j
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 23:11:02 +0100
+	id 1NvHzo-00012J-CS
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 23:27:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754387Ab0CZWKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 18:10:54 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:58210 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753849Ab0CZWKy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 18:10:54 -0400
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate01.web.de (Postfix) with ESMTP id BC04E151D49A8;
-	Fri, 26 Mar 2010 23:09:07 +0100 (CET)
-Received: from [80.128.72.101] (helo=[192.168.178.26])
-	by smtp07.web.de with asmtp (WEB.DE 4.110 #4)
-	id 1NvHiF-0000MF-00; Fri, 26 Mar 2010 23:09:07 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/p/sfMcLujxtlbjRyPK9AvuG8uwsYfIFZKMIlh
-	1mVIYyFlhafVQkf1RqUdtwtIinGv2gbosY0GgKsFbvj4GzRSHb
-	e4OOoabg3hGbtWxDrKiQ==
+	id S1754747Ab0CZW1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 18:27:00 -0400
+Received: from mail-yx0-f191.google.com ([209.85.210.191]:59467 "EHLO
+	mail-yx0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754666Ab0CZW0r (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 18:26:47 -0400
+Received: by yxe29 with SMTP id 29so969708yxe.4
+        for <git@vger.kernel.org>; Fri, 26 Mar 2010 15:26:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=7kZ0j+BgEJho4I3Mk3TnBz0Iig7ql+8Vz6Bua0u8pbw=;
+        b=A1B5UBhIgeP5ayHtyRCANWeFVIBeA8fqa95s0I9hg6AOLufJg/t3mUJppiqyJIWial
+         YMaWulyP9Ua004KISOdPfqFnUqPuUC63WbehgB/Vj8WNdh98FHidk1F+qk4LT7jU3f7G
+         H3dqA6/DyywO3r95zIvDLDce6Nzga3uBZJnlE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=aAikzatgfW2wrVN12mlo9T2JLAbznVmWZQJxCEiMS2+zRRyUpPKC34uZaLNxyJcdSE
+         scHoq46JEmGb6FYYQrbiXKmW5n3OoyvtFyPAhYjk+O8rVLcbh84/MYVVgaXlSf1WXZss
+         UJAsv+JMKKNqm+7QO9ygKHeF7H3sXJ4BPHPG0=
+Received: by 10.101.184.7 with SMTP id l7mr2615199anp.125.1269642405238;
+        Fri, 26 Mar 2010 15:26:45 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 20sm1175040iwn.9.2010.03.26.15.26.44
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 26 Mar 2010 15:26:44 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100326215600.GA10910@spearce.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143290>
 
-Since recently "git diff --submodule" prints out extra lines when the
-submodule contains untracked or modified files. Show all those lines of
-one submodule under the same header.
+Shawn O. Pearce wrote:
 
-Also for newly added or removed submodules the submodule name contained
-trailing garbage because the extraction of the name was not done right.
+> Any ideas?  Why is Git 1.7.0.3 jamming a leading '0' on a file mode?
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+See http://thread.gmane.org/gmane.comp.version-control.git/141028
+and commit c88f0cc (notes: fix malformed tree entry, 2010-02-24).
 
-No need to test for the version of the underlying git here, as the
-string "Submodule" does not appear in the diff output when older git
-versions are used and the changed code is not executed at all in this
-case (except for setting the new "currdiffsubmod" variable to the
-empty string, but that doesn't have any negative side effects).
+The regression that that fixes appeared in 61a7cca0 (Notes API:
+write_notes_tree(): Store the notes tree in the database, 2010-02-13),
+which is not part of 1.7.0.3.
 
- gitk-git/gitk |   29 +++++++++++++++++++++--------
- 1 files changed, 21 insertions(+), 8 deletions(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 1f36a3e..36a9dcf 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -7501,7 +7501,7 @@ proc getblobdiffs {ids} {
-     global ignorespace
-     global limitdiffs vfilelimit curview
-     global diffencoding targetline diffnparents
--    global git_version
-+    global git_version currdiffsubmod
-
-     set textconv {}
-     if {[package vcompare $git_version "1.6.1"] >= 0} {
-@@ -7528,6 +7528,7 @@ proc getblobdiffs {ids} {
-     set diffencoding [get_path_encoding {}]
-     fconfigure $bdf -blocking 0 -encoding binary -eofchar {}
-     set blobdifffd($ids) $bdf
-+    set currdiffsubmod ""
-     filerun $bdf [list getblobdiffline $bdf $diffids]
- }
-
-@@ -7598,7 +7599,7 @@ proc getblobdiffline {bdf ids} {
-     global diffnexthead diffnextnote difffilestart
-     global ctext_file_names ctext_file_lines
-     global diffinhdr treediffs mergemax diffnparents
--    global diffencoding jump_to_here targetline diffline
-+    global diffencoding jump_to_here targetline diffline currdiffsubmod
-
-     set nr 0
-     $ctext conf -state normal
-@@ -7679,19 +7680,30 @@ proc getblobdiffline {bdf ids} {
-
- 	} elseif {![string compare -length 10 "Submodule " $line]} {
- 	    # start of a new submodule
--	    if {[string compare [$ctext get "end - 4c" end] "\n \n\n"]} {
-+	    if {[regexp -indices "\[0-9a-f\]+\\.\\." $line nameend]} {
-+		set fname [string range $line 10 [expr [lindex $nameend 0] - 2]]
-+	    } else {
-+		set fname [string range $line 10 [expr [string first "contains " $line] - 2]]
-+	    }
-+	    if {$currdiffsubmod != $fname} {
- 		$ctext insert end "\n";     # Add newline after commit message
- 	    }
- 	    set curdiffstart [$ctext index "end - 1c"]
- 	    lappend ctext_file_names ""
--	    set fname [string range $line 10 [expr [string last " " $line] - 1]]
--	    lappend ctext_file_lines $fname
--	    makediffhdr $fname $ids
--	    $ctext insert end "\n$line\n" filesep
-+	    if {$currdiffsubmod != $fname} {
-+		lappend ctext_file_lines $fname
-+		makediffhdr $fname $ids
-+		set currdiffsubmod $fname
-+		$ctext insert end "\n$line\n" filesep
-+	    } else {
-+		$ctext insert end "$line\n" filesep
-+	    }
- 	} elseif {![string compare -length 3 "  >" $line]} {
-+	    set $currdiffsubmod ""
- 	    set line [encoding convertfrom $diffencoding $line]
- 	    $ctext insert end "$line\n" dresult
- 	} elseif {![string compare -length 3 "  <" $line]} {
-+	    set $currdiffsubmod ""
- 	    set line [encoding convertfrom $diffencoding $line]
- 	    $ctext insert end "$line\n" d0
- 	} elseif {$diffinhdr} {
-@@ -8527,7 +8539,7 @@ proc do_cmp_commits {a b} {
- }
-
- proc diffcommits {a b} {
--    global diffcontext diffids blobdifffd diffinhdr
-+    global diffcontext diffids blobdifffd diffinhdr currdiffsubmod
-
-     set tmpdir [gitknewtmpdir]
-     set fna [file join $tmpdir "commit-[string range $a 0 7]"]
-@@ -8548,6 +8560,7 @@ proc diffcommits {a b} {
-     set diffids [list commits $a $b]
-     set blobdifffd($diffids) $fd
-     set diffinhdr 0
-+    set currdiffsubmod ""
-     filerun $fd [list getblobdiffline $fd $diffids]
- }
-
--- 
-1.7.0.2.448.g45e29
+Still, HTH,
+Jonathan
