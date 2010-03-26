@@ -1,70 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: lazily assign editor variable
-Date: Fri, 26 Mar 2010 12:32:50 -0700
-Message-ID: <7v39zmlvz1.fsf@alter.siamese.dyndns.org>
-References: <20100322145947.GA1709@pengutronix.de>
- <eb0d92cf28820eb9783e789a8c4c62c3af4dd0d0.1269274203.git.git@drmicha.warpmail.net> <7vaatxobef.fsf@alter.siamese.dyndns.org> <20100325051743.GB5784@progeny.tock>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH 0/2] Teach 'git grep' about --open-files-in-pager=[<pager>]
+Date: Sat, 27 Mar 2010 06:49:06 +1100
+Message-ID: <2cfc40321003261249g32ba4472x9786a86830ec9813@mail.gmail.com>
+References: <alpine.DEB.1.00.1003261145500.7596@pacific.mpi-cbg.de>
+	 <20100326124650.GA12215@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 26 20:33:16 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 26 20:49:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvFHN-0002zg-Ff
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 20:33:13 +0100
+	id 1NvFWu-0003NU-E6
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 20:49:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752558Ab0CZTdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 15:33:06 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47145 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752418Ab0CZTdD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 15:33:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E6F86A52E8;
-	Fri, 26 Mar 2010 15:33:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=n2LaBf5LOhnqgQaASIXPrObE3QU=; b=Iux3w8Kb9nU4oYy5rx8m1Id
-	YDQ86bnzdYIL/DszPlxLdGxr21k2ADywmhaqPCNXVfozjc4L2lKn85v3d8YlJGON
-	yVaGjk+nZAjmIlWPDcVZrI/czmaln7vDtnX1JlL78/MYntWXbYO+OJr1VK8aoLMi
-	SW8JuREngXVRnOs+HuhE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=N49w/Ma8Kr0zEl7NfoEuYMgtB8Ycsvd86Rej+qRXpeicdHS5N
-	9No4Y1zqwwvfFW5HYpeEL/V2FjUAfAIyXyR5Y0VLcOoWcbEo5fEt5bowmgFRNaWX
-	854gAROt5VeuG5Wx7s+6/sauE+nhYB2XDIbsb+ax2riod5yuu26hSdRxqs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B4D5A52E5;
-	Fri, 26 Mar 2010 15:32:58 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 184EBA52DA; Fri, 26 Mar
- 2010 15:32:51 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6236CF92-390E-11DF-9E22-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752077Ab0CZTtK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Mar 2010 15:49:10 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:35341 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751578Ab0CZTtI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Mar 2010 15:49:08 -0400
+Received: by pva18 with SMTP id 18so1626047pva.19
+        for <git@vger.kernel.org>; Fri, 26 Mar 2010 12:49:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=pVfQ8BCT+9wlaGKHIhr6wE1aZC0qSyi1CHq/FDFak1I=;
+        b=sVXHBlDidRBP9x+kumrM4nGiiGzOifIFJDq6PIH+rQTEK1CkBxADtReUv5oJcNroNF
+         O/S0jgLBKL9z1FRBjhYW18Pzs9pgIx5cFKweiK3EYbUypwdDoF+1H7KcSzVJVxudmvpY
+         PWRtS7q+xniAKMusizPzI8/3VX+SJOFWV+TOw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=LzO/ple/KZ255RkC/Ry9zd4+eP+OQ8u2G1RR/o7ldyHgSv7KYZXAd8moLsXoJPuVY3
+         4ssMJo7n1b5cAWgNFZtJRirSBysJR3SWjLImCluu+ipDx/Ja1ASenF9hJLOAUl1Ea63j
+         TwWp/6YVy6PsRuj4DqaW39rHW8SPgu1XRC1b8=
+Received: by 10.115.89.7 with HTTP; Fri, 26 Mar 2010 12:49:06 -0700 (PDT)
+In-Reply-To: <20100326124650.GA12215@coredump.intra.peff.net>
+Received: by 10.114.187.19 with SMTP id k19mr1848716waf.20.1269632946767; Fri, 
+	26 Mar 2010 12:49:06 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143274>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> Yes, please.  It would be more precise to
+On Fri, Mar 26, 2010 at 11:46 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Mar 26, 2010 at 11:48:41AM +0100, Johannes Schindelin wrote:
 >
->   s/without a tty/with TERM=dumb/
+>> This supports opening the results of a 'git grep' directly in a page=
+r
+>> (where the pager can be 'vi', too).
 >
-> in the second paragraph but regardless this is a good description of the
-> problem.
+> This is not an argument against your patch, but you may be interested=
+ in
+> an alternate method:
+>
+> =A0git grep -n $pattern >grep.out
+> =A0vim -q grep.out
 
-Strictly speaking, with TERM=dumb the true "vi" fell back to the ex mode
-and should have been usable.  A purist might say it is a bug that we fatal
-out in this case (I know that it is deliberately done to help newbies from
-common confusion by not running any editor with TERM=dumb, but to a purist
-in me it feels somewhat wrong).
+Or, in bash:
+
+    vim -q <(git grep -n $pattern)
+
+though, of course you don't get the exit code from git.
+
+jon.
