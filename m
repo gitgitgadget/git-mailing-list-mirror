@@ -1,99 +1,69 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] builtins: do not commit pager choice early
-Date: Fri, 26 Mar 2010 15:03:47 -0500
-Message-ID: <20100326200347.GA11395@progeny.tock>
-References: <1269524295-24569-1-git-send-email-pclouds@gmail.com>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH 0/2] Teach 'git grep' about --open-files-in-pager=[<pager>]
+Date: Fri, 26 Mar 2010 21:07:28 +0100
+Message-ID: <36ca99e91003261307m68cb7238u8a5cbbb350c71c97@mail.gmail.com>
+References: <alpine.DEB.1.00.1003261145500.7596@pacific.mpi-cbg.de>
+	 <36ca99e91003260439x3d60b851g15b8652d50f61c06@mail.gmail.com>
+	 <alpine.DEB.1.00.1003261714550.7596@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 26 21:03:41 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 26 21:07:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvFkr-00032o-0Y
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 21:03:41 +0100
+	id 1NvFoe-00056Z-Nf
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 21:07:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752902Ab0CZUDf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Mar 2010 16:03:35 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:61156 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752320Ab0CZUDe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 16:03:34 -0400
-Received: by pwi5 with SMTP id 5so5390466pwi.19
-        for <git@vger.kernel.org>; Fri, 26 Mar 2010 13:03:33 -0700 (PDT)
+	id S1752990Ab0CZUHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 16:07:31 -0400
+Received: from mail-fx0-f223.google.com ([209.85.220.223]:49077 "EHLO
+	mail-fx0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752385Ab0CZUHa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 16:07:30 -0400
+Received: by fxm23 with SMTP id 23so2448883fxm.21
+        for <git@vger.kernel.org>; Fri, 26 Mar 2010 13:07:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=ZCPngHv4qqc56nF/BTYdp819P0d/zPnJfiD3UONUSw8=;
-        b=DNgyv50peQUqTINEKivIO8lMkHxuVMqdHVGC2v9aqvvchD4yv/MtdTbdBKnajvPty3
-         6QFPjzJM2RVpml3TjxnFKqh6TpA5SFqLpisqOr12lvMgGs2TOQ6tCu3k9UixrKueM1Vs
-         DkNakhWwRn31jyBKVPgAc6P06BInQndpba7NM=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type;
+        bh=7r284kLMutNhM2dsv+z2iZa7XMzv7HudFTq8iWGtlX0=;
+        b=Gvo7v44eLczi4Sl72cflTCpgD5j2b5I8d415QsvBCCgYwFTR2fjT5a+yJdEMnhDEjk
+         hvTy4/lwvTcgbQqyd4801bEGk/114TQKR+cAvo2vJTPl/6Quass/67Sx3p2Vq7FfXnSX
+         WYN4VP6RLe6JjsCFxXwCTm81ZUL67Lblo90kc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=loiOVI9ndnym4mdkh1oi4pNO2rShMzv6lR0chEmd6ItoJ23zA0Ihq+TScqE/W16Wi6
-         3mITk7MpjNaei4SwyW6OX9cLflYM6eHDiKHVfG3k+tzOtmLsI+OIP9LZ8R10RoSaFeLo
-         rXcxeQLGNFbGK9WnXLoDjdsjw7O7W0j9faE54=
-Received: by 10.141.13.6 with SMTP id q6mr1521618rvi.146.1269633813865;
-        Fri, 26 Mar 2010 13:03:33 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm1090775iwn.13.2010.03.26.13.03.32
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 26 Mar 2010 13:03:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1269524295-24569-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=f0oOjLPGk790WgnMTNKMRk3vxDTFh2UjVKDWU42ccAbAFNmWkH8FA4g4krI3o4p+XN
+         F2gNKTvijnRvM2D3QfH6LZRXVjs+6K2UpKuk4G0gUhCLQDxPU0E53Jg400kYmWVjQaRW
+         JzTvF+BsEwxk2FsBpyHQqXE0t5GEWDwm6zsw0=
+Received: by 10.223.105.137 with HTTP; Fri, 26 Mar 2010 13:07:28 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.1003261714550.7596@pacific.mpi-cbg.de>
+Received: by 10.223.29.199 with SMTP id r7mr1394360fac.73.1269634048986; Fri, 
+	26 Mar 2010 13:07:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143276>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Hi,
 
-> Committing pager choice may require setting up the pager, which
-> will need access to repository.
-[...]
-> Signed-off-by: Duy Nguyen <pclouds@gmail.com>
+On Fri, Mar 26, 2010 at 17:18, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>> I have also the feeling that -O potion does not like pager with
+>> arguments, be it from GIT_PAGER, PAGER, or from the command line.
+>
+> You are correct. That's why I said "-O[<pager>]" and not
+> "-O[<pager-with-arguments-that-cause-whitespace-problems-especially-with-spaces-in-directory-names-so-you-need-to-make-a-script-wrapper-anyway>]"
 
-Tested-by: Jonathan Nieder <jrnieder@gmail.com>
+I don't know how common it is to have arguments for the pager in
+GIT_PAGER or PAGER or whether git actually support this, but your
+first patch definitely does not work with this, regardless of your
+-O[<pager>] addition of the second patch.
 
-Without this patch, I get
-
-| * expecting success:=20
-|         test_terminal git --paginate rev-list HEAD &&
-|         test -e paginated.out
-|=20
-| fatal: internal error: access to .git/config without repo setup
-| * FAIL 7: git --paginate rev-list uses a pager
-
-and with it, t7006 passes again.  I assume on your system that
-test was being skipped when running tests without -v (confusing,
-yes) because that test needs a tty but IO::Pty from CPAN is not
-present.
-
-> There are several possible code path after
-> handle_options()/commit_pager_choice() is called:
->=20
-> 1. list_common_cmds_help()
-> 2. run_argv()
-> 3. help_unknown_cmd()
->=20
-> Case 2. will have commit_pager_choice() called inside run_builtin() i=
-f
-> a command is found. Case 1. and 3. won't need a pager, it's short
-> printout and should be fitted within a screen. So, removing
-> commit_pager_choice() call after handle_options() is safe.
-
-Makes sense.
-
-Thanks,
-Jonathan
+Bert
