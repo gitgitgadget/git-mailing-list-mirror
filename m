@@ -1,93 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Tree with leading '0' modes in 1.7.0.3
-Date: Fri, 26 Mar 2010 16:09:02 -0700
-Message-ID: <7vbpeaadf5.fsf@alter.siamese.dyndns.org>
-References: <20100326215600.GA10910@spearce.org>
- <20100326222659.GA18369@progeny.tock> <20100326222950.GB10910@spearce.org>
- <20100326224038.GA18454@progeny.tock>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH v2] pull: mention "pull", not "fetch" in the error
+	message.
+Date: Sat, 27 Mar 2010 00:12:10 +0100
+Message-ID: <20100326231209.GB6797@blimp.localdomain>
+References: <4BACC241.4010608@drmicha.warpmail.net> <1269615836-13995-1-git-send-email-Matthieu.Moy@imag.fr>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>,
-	mike.lifeguard@gmail.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 27 00:09:23 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sat Mar 27 00:12:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvIeY-0003z5-98
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 00:09:22 +0100
+	id 1NvIhZ-0005Pl-9Z
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 00:12:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754807Ab0CZXJR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Mar 2010 19:09:17 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37729 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754463Ab0CZXJQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Mar 2010 19:09:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 03A70A5558;
-	Fri, 26 Mar 2010 19:09:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=3tb/WbnZFbdl
-	BoegKnqB7ffOz0s=; b=RGm+W05XL8peuxgrOItd+FGrOxFmy1Cn1W+4nogVKzWW
-	SSK0SwGW6UuDZCiCeFfxH6bj8n3NKFHAUvzs3K6HrAwhuh15I1wq4gr4uKRSNWYk
-	OpntYV3b4txLq120pPmilD/qzHafD171/gF1gTgXguOj3cDU17gEEFuhA1VUoog=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=DXMiuj
-	h5xkR+b9IfOSyDMeDRBAtPOv1Wmdzzy3EBlY3hNhN4Aj2cPCpMs4cjruhHim8lff
-	2Rn2qztAxm/cnS1BiIcHAlvQe8wTDgbM6DEpSDprp0kt8xexUQW+a8J8RrBQNhSG
-	RWOyvPu2sJ9HSUOKaT/VzTRfh4C5nqQLBGWkM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C2A2A5555;
-	Fri, 26 Mar 2010 19:09:09 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9292AA5552; Fri, 26 Mar
- 2010 19:09:04 -0400 (EDT)
-In-Reply-To: <20100326224038.GA18454@progeny.tock> (Jonathan Nieder's message
- of "Fri\, 26 Mar 2010 17\:40\:39 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9597542E-392C-11DF-ABE9-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754726Ab0CZXMY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 19:12:24 -0400
+Received: from mout0.freenet.de ([195.4.92.90]:33173 "EHLO mout0.freenet.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754463Ab0CZXMX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 19:12:23 -0400
+Received: from [195.4.92.17] (helo=7.mx.freenet.de)
+	by mout0.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.72 #2)
+	id 1NvIhQ-0006Sz-R4; Sat, 27 Mar 2010 00:12:20 +0100
+Received: from p57b1a08b.dip0.t-ipconnect.de ([87.177.160.139]:34948 helo=tigra.home)
+	by 7.mx.freenet.de with esmtpsa (ID alexander.riesen@freenet.de) (TLSv1:AES256-SHA:256) (port 587) (Exim 4.72 #2)
+	id 1NvIhP-0002Z1-Go; Sat, 27 Mar 2010 00:12:20 +0100
+Received: from blimp.localdomain (blimp.home [192.168.0.79])
+	by tigra.home (Postfix) with ESMTP id 687B3277DF;
+	Sat, 27 Mar 2010 00:12:10 +0100 (CET)
+Received: by blimp.localdomain (Postfix, from userid 1000)
+	id 266ED36D28; Sat, 27 Mar 2010 00:12:10 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <1269615836-13995-1-git-send-email-Matthieu.Moy@imag.fr>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143298>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Matthieu Moy, Fri, Mar 26, 2010 16:03:56 +0100:
+> For newbies who've just been taught "git pull", the error message
+> "Where do you want to fetch from today?" is indeed confusing. Change it
+> to "Where do you want to pull from today?" in case fetch was called from
+> pull.
+...
+> @@ -842,8 +842,12 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
+>  	int ref_nr = 0;
+>  	int exit_code;
+>  
+> +	char *cmd = getenv("GIT_USER_COMMAND");
 
-> Shawn O. Pearce wrote:
->> Jonathan Nieder <jrnieder@gmail.com> wrote:
->>> Shawn O. Pearce wrote:
->
->>>> Any ideas?  Why is Git 1.7.0.3 jamming a leading '0' on a file mod=
-e?
->>>=20
->>> See http://thread.gmane.org/gmane.comp.version-control.git/141028
->>> and commit c88f0cc (notes: fix malformed tree entry, 2010-02-24).
->>>=20
->>> The regression that that fixes appeared in 61a7cca0 (Notes API:
->>> write_notes_tree(): Store the notes tree in the database, 2010-02-1=
-3),
->>> which is not part of 1.7.0.3.
->>
->> That may be true... but I doubt the tree in question was a notes
->> tree.  The path entries were names like 'README', 'modules' and
->> 'stewardbot'.  Something I would assume was the project's source
->> tree, not its notes tree.
->
-> Yes, true.  The problem is probably elsewhere, especially because
-> 1.7.0.3 doesn=E2=80=99t even have that commit.  Still, I find this a =
-bit
-> strange because such breakage should have been noticeable if it
-> happens often.
->
-> What has changed recently that involves writing trees?
-
-Asking grep for "%06o" reveals nothing.  Perhaps somebody else's imitat=
-ion
-implementation?
+Isn't the variable name a little too generic? USER_COMMAND doesn't make it
+clear that its only purpose is to pass a string "pull" to an error message
+which is never even seen under normal circumstances.
