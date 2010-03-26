@@ -1,73 +1,71 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Help with rebase after cvsimport
-Date: Fri, 26 Mar 2010 10:17:32 +0100
-Message-ID: <4BAC7BAC.7030507@drmicha.warpmail.net>
-References: <bcd06dea1003250935q324b2412g959309070491c73c@mail.gmail.com> <bcd06dea1003251037j492bfbbcx2f99ad5046169f2@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 0/2] Teach 'git grep' about --open-files-in-pager=[<pager>]
+Date: Fri, 26 Mar 2010 11:48:41 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1003261145500.7596@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Brice Ruth <bdruth@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 26 10:20:32 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Mar 26 11:48:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nv5iP-0008Gq-FT
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 10:20:29 +0100
+	id 1Nv75t-0002Mr-NI
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 11:48:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545Ab0CZJUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 05:20:23 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:33639 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751499Ab0CZJUW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Mar 2010 05:20:22 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id DCF47EA537;
-	Fri, 26 Mar 2010 05:20:21 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Fri, 26 Mar 2010 05:20:21 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=aeMdXtDEuFspFARv0TgRVGv2uG8=; b=bXQ1T7qkn6G79+0MkR05DUq4JdXyWxqbpdRc08f7/7rNqt0ejeZF46Lg2IZj9ah9FOUpu7XtLDG1kpkaWU2kPRviX/6Ce5NS3wgZjo/27zYGmyRnoDjNA5AXn6R2UVHzvzVZGpjcSgQmkoFN9EFwAO929I+FEnNR/Uic+EM+5UQ=
-X-Sasl-enc: UNytgJf2YioC77FvguIk2iYZADFgagfIaotTElt0meMA 1269595221
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 655424CAF0D;
-	Fri, 26 Mar 2010 05:20:21 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10pre) Gecko/20100319 Lightning/1.0b2pre Shredder/3.0.5pre
-In-Reply-To: <bcd06dea1003251037j492bfbbcx2f99ad5046169f2@mail.gmail.com>
+	id S1753200Ab0CZKso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 06:48:44 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47823 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752128Ab0CZKsn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 06:48:43 -0400
+Received: (qmail invoked by alias); 26 Mar 2010 10:48:41 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp023) with SMTP; 26 Mar 2010 11:48:41 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/uUwoqPE/uM/BaWYG1EcuDV/ioLSIhem8Zux6MVL
+	1fL/2iaVCFz6kX
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143219>
 
-Brice Ruth venit, vidit, dixit 25.03.2010 18:37:
-> Posted this to #git but it seemed like everyone was asleep (or clueless)
-> 
-> [11:22] <Brice> Good morning - I have a quick question on using git
-> rebase with git cvsimport - I'm trying to eliminate the duplicate 'cvs
-> import' commit created when the cvs import is merged in - I'm just not
-> sure what 'rebase' I need to do after a git cvsimport. Help?
-> [11:22] <Brice> I'm on master when I do cvsimport
-> [11:23] <Brice> cvsimport is run with -r cvs
-> [11:23] <Brice> so, am I in the right ballpark thinking I need to git
-> rebase cvs?
 
-You have basically 2 options, see, e.g., the last paragraphs of
+This supports opening the results of a 'git grep' directly in a pager 
+(where the pager can be 'vi', too).
 
-http://grubix.blogspot.com/2009/11/git-over-cvs.html
+This series is purely about convenience, everything the option does can
+be done with a regular script or command line.
 
-It seems you want to go with 1. In that case you need to
+But I saw so many people doing their own scripts for that, and in many
+cases, they are subtly broken (e.g.
 
-git rebase cvs/master master
+	git grep -z <expr> | xargs -0r vi +/<expr>
 
-(you can leave out the second argument if you are on master). Note that
-by doing that you basically discard your version of commits which made
-the git-cvs-git roundtrip (committed in git, cvsexported to cvs,
-cvsimported to git). That's why I use approach 2 mentioned there, but it
-depends certainly on your usage scenario, whether cvs is the
-central/authoritative repo on which you work with git, or the other way
-round.
+would work as long as you do not have to check the exit status of git
+grep from another script) that I finally decided to go for it and send
+this patch pair.
 
-Cheers,
-Michael
+My most common use case for this is to do something like
+
+	git grep -Ovi SomeJustRenamedFile
+
+to edit all files I might have forgotten to change after a git mv.
+
+(Actually, to be honest, my use case involves -Pvi, but I will have to
+retrain my hands.)
+
+Johannes Schindelin (2):
+  grep: Add the option '--open-files-in-pager'
+  grep -P: allow optional argument specifying the pager (or editor)
+
+ Documentation/git-grep.txt |    8 +++++
+ builtin-grep.c             |   74 ++++++++++++++++++++++++++++++++++++++++++++
+ git.c                      |    2 +-
+ 3 files changed, 83 insertions(+), 1 deletions(-)
