@@ -1,65 +1,92 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [PATCH] RPM spec: include bash completion support
-Date: Fri, 26 Mar 2010 13:07:45 +0000
-Message-ID: <c23f5db54cc8e5a4a5ee10c6533ac9fb@212.159.54.234>
-References: <1269569690-sup-4884@pinkfloyd.chass.utoronto.ca> <1269592797-18487-1-git-send-email-icomfort@stanford.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Ben Walton <bwalton@artsci.utoronto.ca>, <git@vger.kernel.org>
-To: Ian Ward Comfort <icomfort@stanford.edu>
-X-From: git-owner@vger.kernel.org Fri Mar 26 14:08:35 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] pull: mention "pull", not "fetch" in the error message.
+Date: Fri, 26 Mar 2010 14:38:19 +0100
+Message-ID: <1269610699-13176-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Mar 26 14:39:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nv9GX-0001Ys-GD
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 14:07:57 +0100
+	id 1Nv9kw-00084E-L0
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 14:39:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753281Ab0CZNHv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 09:07:51 -0400
-Received: from positron.quantumfyre.co.uk ([213.165.84.138]:37346 "EHLO
-	positron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753089Ab0CZNHr (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Mar 2010 09:07:47 -0400
-Received: from reaper.quantumfyre.co.uk (reaper.quantumfyre.co.uk [212.159.54.234])
-	by positron.quantumfyre.co.uk (Postfix) with ESMTP id 3B2FC819A66B;
-	Fri, 26 Mar 2010 13:07:44 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 373442072E1;
-	Fri, 26 Mar 2010 13:07:46 +0000 (GMT)
-X-Virus-Scanned: amavisd-new at reaper
-Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
-	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 56UnMqDsrQ+K; Fri, 26 Mar 2010 13:07:45 +0000 (GMT)
-Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 918AD20724F;
-	Fri, 26 Mar 2010 13:07:45 +0000 (GMT)
-In-Reply-To: <1269592797-18487-1-git-send-email-icomfort@stanford.edu>
-X-Sender: julian@quantumfyre.co.uk
-User-Agent: RoundCube Webmail/0.1-rc1
+	id S1753689Ab0CZNjM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 09:39:12 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:51457 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753559Ab0CZNjJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 09:39:09 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o2QDYQLj025345
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 26 Mar 2010 14:34:26 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1Nv9jz-0004I6-2c; Fri, 26 Mar 2010 14:38:23 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1Nv9jy-0003R4-WF; Fri, 26 Mar 2010 14:38:23 +0100
+X-Mailer: git-send-email 1.7.0.2.204.g8940d.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 26 Mar 2010 14:34:27 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o2QDYQLj025345
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1270215269.68747@z6bz1ncKuK/+x92rA4tp5Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143229>
 
-On Fri, 26 Mar 2010 01:39:57 -0700, Ian Ward Comfort
-<icomfort@stanford.edu> wrote:
-> Unfortunately, nothing in the above clarifies how other packages are
-> expected to ship their own completion support.  Currently, however,
-> the Git packages (and what other packages I've found with completions)
-> in all these distros -- with the possible exception of Gentoo, which
-> I haven't been able to verify -- install completions directly into
-> /etc/bash_completion.d.  This seems natural, given that the symlink
-> mechanism's current function is to have completions for all and only
-> installed packages in /etc/bash_completion.d.
+For newbies who've just been taught "git push", the error message
+"Where do you want to fetch from today?" is indeed confusing. Change it
+to "Where do you want to pull from today?" in case fetch was called from
+pull.
 
-FWIW, Gentoo installs the completion script as
-/usr/share/bash-completion/git - since installing a package isn't supposed
-to enable completion but only to make it available.  Since Gentoo doesn't
-use RPMs this isn't actually relevant though ;).
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ builtin/fetch.c |    6 +++++-
+ git-pull.sh     |    3 ++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 957be9f..f3246f5 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -842,8 +842,12 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
+ 	int ref_nr = 0;
+ 	int exit_code;
+ 
++	char *cmd = getenv("GIT_USER_COMMAND");
++	if (cmd == NULL || cmd[0] == '\0')
++		cmd = "fetch";
++
+ 	if (!remote)
+-		die("Where do you want to fetch from today?");
++		die("Where do you want to %s from today?", cmd);
+ 
+ 	transport = transport_get(remote, NULL);
+ 	transport_set_verbosity(transport, verbosity, progress);
+diff --git a/git-pull.sh b/git-pull.sh
+index 1a4729f..abc233b 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -216,7 +216,8 @@ test true = "$rebase" && {
+ 	done
+ }
+ orig_head=$(git rev-parse -q --verify HEAD)
+-git fetch $verbosity $progress --update-head-ok "$@" || exit 1
++GIT_USER_COMMAND=pull \
++    git fetch $verbosity $progress --update-head-ok "$@" || exit 1
+ 
+ curr_head=$(git rev-parse -q --verify HEAD)
+ if test -n "$orig_head" && test "$curr_head" != "$orig_head"
 -- 
-Julian
+1.7.0.2.204.g8940d.dirty
