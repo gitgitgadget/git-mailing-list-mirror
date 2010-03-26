@@ -1,69 +1,60 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH RFC/RFD] clone: quell the progress report from init
-Date: Fri, 26 Mar 2010 16:16:50 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1003261611130.694@xanadu.home>
-References: <4BAB2234.4070202@drmicha.warpmail.net>
- <7b9006620fab4214ee0db53ebc9e0caffc397959.1269506526.git.git@drmicha.warpmail.net>
- <7veij6lvze.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] t0005: add test for trap handling from deeply nested function calls
+Date: Fri, 26 Mar 2010 21:19:45 +0100
+Message-ID: <201003262119.45110.j6t@kdbg.org>
+References: <vm2zHZjrZOha7LnIM_9fAEAvwVZrJtZlAI9f2XI_VUsdqr51ihAMW68a5BT9tvMdRDSqk6GYlSE@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Neal Kreitzinger <neal@rsss.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 26 21:16:57 2010
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Mar 26 21:21:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvFxg-00021b-Hl
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 21:16:56 +0100
+	id 1NvG2X-0004hs-Pi
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 21:21:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752312Ab0CZUQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 16:16:52 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:18527 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752008Ab0CZUQv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 16:16:51 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0KZW00KVCOC2KL10@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 26 Mar 2010 16:16:50 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7veij6lvze.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751695Ab0CZUVx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Mar 2010 16:21:53 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:18592 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751217Ab0CZUVw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 16:21:52 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id D9E801002B;
+	Fri, 26 Mar 2010 21:21:48 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 3A1BC19F724;
+	Fri, 26 Mar 2010 21:19:45 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <vm2zHZjrZOha7LnIM_9fAEAvwVZrJtZlAI9f2XI_VUsdqr51ihAMW68a5BT9tvMdRDSqk6GYlSE@cipher.nrlssc.navy.mil>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143280>
 
-On Fri, 26 Mar 2010, Junio C Hamano wrote:
+On Freitag, 26. M=E4rz 2010, Brandon Casey wrote:
+> +test_expect_success 'trap triggered in deeply nested function works
+> correctly' ' +	(atrap () { exit 0; }
+> +	 func3 () { exit 1; }
+> +	 func2 () { func3; }
+> +	 func1 () { trap atrap EXIT; func2; }
+> +	 func1)
+> +'
 
-> An alternative might be to squelch init_db() like your patch did, and then
-> replace it with a message of our own, perhaps like this:
-> 
->  $ git clone -n /var/tmp/gomi victim-003
->  Cloning into victim-003...
->  done.
->  $ git clone -n file:///var/tmp/gomi victim-004
->  Cloning into victim-004...
->  remote: Counting objects: ...
->  Receiving objects: 100% (120/120), done.
-> 
-> Here I am assuming we would add "done." to the local codepath.
-> 
-> Personally I like the total silence your patch gives (i.e. no "Cloning
-> into" line in either case, and no "done." in local case) slightly better;
-> others may disagree and/or have better ideas.
+What do you want to achieve with this test? That /usr/xpg4/bin/sh is no=
+t used=20
+on Solaris?
 
-Personally I like your suggestion above.  A clone is not something you 
-perform repeatedly, and it is the first thing that random people told to 
-use Git to grab a piece of code will do.  Better give them some comfort 
-by telling them what is happening.
+If git-bisect triggers this bug in /usr/xpg4/bin/sh and if this is our =
+shell=20
+of choice on Solaris, wouldn't it be better to work around it in git-bi=
+sect?
 
-
-Nicolas
+-- Hannes
