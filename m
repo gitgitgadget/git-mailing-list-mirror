@@ -1,75 +1,128 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] t0005: add test for trap handling from deeply nested function calls
-Date: Fri, 26 Mar 2010 11:34:05 -0500
-Message-ID: <vm2zHZjrZOha7LnIM_9fAEAvwVZrJtZlAI9f2XI_VUsdqr51ihAMW68a5BT9tvMdRDSqk6GYlSE@cipher.nrlssc.navy.mil>
-Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Mar 26 17:44:15 2010
+From: "R. Tyler Ballance" <tyler@monkeypox.org>
+Subject: Re: Rebasing with merges and conflict resolutions
+Date: Fri, 26 Mar 2010 10:16:04 -0700
+Message-ID: <20100326171603.GA12592@kiwi.sharlinx.com>
+References: <20100326031111.GB27737@kiwi.sharlinx.com>
+ <4BAC5C14.4060903@viscovery.net>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="y0ulUmNC+osPPQO6"
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Mar 26 18:16:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvCdp-0001zA-Qv
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 17:44:14 +0100
+	id 1NvD8u-00073Q-An
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 18:16:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751664Ab0CZQoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 12:44:08 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:54945 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750925Ab0CZQoH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 12:44:07 -0400
-Received: by mail.nrlssc.navy.mil id o2QGYGVB028751; Fri, 26 Mar 2010 11:34:16 -0500
-X-OriginalArrivalTime: 26 Mar 2010 16:34:15.0967 (UTC) FILETIME=[2CDB2AF0:01CACD02]
+	id S1751971Ab0CZRQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 13:16:14 -0400
+Received: from mail.geekisp.com ([216.168.135.169]:38237 "EHLO
+	starfish.geekisp.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751531Ab0CZRQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 13:16:13 -0400
+Received: (qmail 15138 invoked by uid 1003); 26 Mar 2010 17:16:11 -0000
+Received: from localhost (HELO kiwi.sharlinx.com) (tyler@monkeypox.org@127.0.0.1)
+  by mail.geekisp.com with SMTP; 26 Mar 2010 17:16:10 -0000
+Mail-Followup-To: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <4BAC5C14.4060903@viscovery.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143259>
-
-From: Brandon Casey <drafnel@gmail.com>
-
-The /usr/xpg4/bin/sh shell on Solaris only executes a trap handler set
-within a function from the first-level function call made from within the
-function that set the trap.  In other words, if func1 sets a trap, then
-calls func2 which triggers the trap, then the trap handler will be executed
-correctly.  If instead of exiting, func2 calls func3, and func3 satisfies
-the conditions for triggering the trap, the trap handler will NOT be
-executed.
-
-This trap sequence exists in git-bisect.sh and is exercised by tests
-t6030.12 and t6030.13 which fail when the /usr/xpg4/bin/sh shell is used.
-
-Add a test that will fail sooner and more precisely than the t6030 tests.
-
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143260>
 
 
-Improvements to the commit message are welcome.
+--y0ulUmNC+osPPQO6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--brandon
+
+On Fri, 26 Mar 2010, Johannes Sixt wrote:
+
+> Please don't set Mail-Followup-To on this list.
+>=20
+> Am 3/26/2010 4:11, schrieb R. Tyler Ballance:
+> > Two contributors worked in tandem on a particular project, constantly m=
+erging
+> > back and forth between each other creating a history of 118 commits tot=
+al with
+> > 37 of them being merge commits, 7 of those merge commits having conflict
+> > resolutions involved.
+> >=20
+> > I would /like/ to rebase those into a more linear revision history, but=
+ I
+> > can't seem to find any set of commands that doesn't have me:
+> >    a) Manually re-doing every conflict resolution and merge (git rebase=
+ -p master)
+> >    b) Drastically diverging from the original topic branch and entering=
+ some
+> >       sort of mergeless hell (git rebase master)
+>=20
+> I'm afraid you can't avoid the merge conflict resolutions. But you can let
+> you help by git-rerere. Look into the script rerere-train.sh that lets you
+> prime your rerere database.
+>=20
+> http://repo.or.cz/w/alt-git.git/blob_plain/master:/contrib/rerere-train.sh
+>=20
+> > Is it even possible to straighten this out without a massive rework of =
+these
+> > commits?
+>=20
+> I would sort the commits into topics and then repeatedly rebase -i the
+> history involved onto the same commit, each time removing those commits
+> that do not belong to the topic. That is, you get a forest of topics
+> sprouting from the same commit. Finally, merge the topics back together.
+
+The problem I'm having with this is that with a `git rebase -p -i master` I
+can't even squash two related changes that are right next to each other
+together because the rebase bails out earlier on conflicts while trying to
+replay.
+
+Perhaps I'm chosing the incorrect upstream?
+
+> IOW, I wouldn't aim at a completely linear history, at least not at the
+> first try.
+>=20
+> > In the future, is there a better way for two developers to work in the =
+same
+> > back-and-forth fashion (code ping pong!) without leading to *heavily* m=
+erged
+> > histories that are unpossible to untangle?
+>=20
+> Discipline. Keep developers focused on their topic. Merge only after a
+> topic is completed. Do not give in to "oh, *your* feature is cool, *I*
+> want to have it now, so I merge it".
+
+I think that's easier said than done, with backend work I'm able to clearly
+define topics, whereas the front-end developers (as it is in this case)
+typically overlap ever so slightly in their work
+
+Cheers,
+-R. Tyler Ballance
+--------------------------------------
+ Jabber: rtyler@jabber.org
+ GitHub: http://github.com/rtyler
+Twitter: http://twitter.com/agentdero
+   Blog: http://unethicalblogger.com
 
 
- t/t0005-signals.sh |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+--y0ulUmNC+osPPQO6
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
-index 09f855a..cb68d1f 100755
---- a/t/t0005-signals.sh
-+++ b/t/t0005-signals.sh
-@@ -19,4 +19,12 @@ test_expect_success 'sigchain works' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'trap triggered in deeply nested function works correctly' '
-+	(atrap () { exit 0; }
-+	 func3 () { exit 1; }
-+	 func2 () { func3; }
-+	 func1 () { trap atrap EXIT; func2; }
-+	 func1)
-+'
-+
- test_done
--- 
-1.6.6.2
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.12 (GNU/Linux)
+
+iEYEARECAAYFAkus69MACgkQFCbH3D9R4W9E9wCfRc0+9T+08irSq4+DWmwQv5/I
+qX8AoIc7ufaP/xlSTr3UKdW0vbCP2hab
+=tDsy
+-----END PGP SIGNATURE-----
+
+--y0ulUmNC+osPPQO6--
