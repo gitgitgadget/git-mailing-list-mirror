@@ -1,88 +1,119 @@
-From: "Mike.lifeguard" <mike.lifeguard@gmail.com>
-Subject: Re: Tree with leading '0' modes in 1.7.0.3
-Date: Fri, 26 Mar 2010 20:22:44 -0300
-Message-ID: <4BAD41C4.7050508@gmail.com>
-References: <20100326215600.GA10910@spearce.org> <20100326222659.GA18369@progeny.tock> <20100326222950.GB10910@spearce.org> <4BAD3C6E.4090604@gmail.com> <20100326230537.GC10910@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Scott Chacon <schacon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Mar 27 00:23:02 2010
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: [PATCH] rebase: Squelch the "fatal: Not an error." message
+Date: Fri, 26 Mar 2010 16:31:13 -0700
+Message-ID: <F8E395F5-C248-4A95-B2EF-A36E941FFDCF@sb.org>
+References: <C07F26A5-6BAD-433D-B1FF-A08DC8E0EA74@sb.org> <7vy6helwbq.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1077)
+Content-Type: multipart/signed; boundary=Apple-Mail-1--718702470; protocol="application/pkcs7-signature"; micalg=sha1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 27 00:31:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvIri-0001SN-0y
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 00:22:58 +0100
+	id 1NvIzo-00053l-Lm
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 00:31:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752272Ab0CZXWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 19:22:51 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:45401 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751895Ab0CZXWu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 19:22:50 -0400
-Received: by vws8 with SMTP id 8so1699153vws.19
-        for <git@vger.kernel.org>; Fri, 26 Mar 2010 16:22:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=Z0Sx0U2Kg61Xic2gx2wPjzkOOTHA3Yakhfvhz648Jdc=;
-        b=x4phJSUJoGRypPDiLi/c38El9gl9je3aJIRciDW2Xp+zCXLkoCVqCsEcQgLy4Ex7dg
-         0FWpCq8jhInGdrj6ydgbD7XpZlTPD1129Rxg0Jyvjqv7ivmcSEKcGLa2v4GGqL1YiIEx
-         2xZ+Z96AT9ExsY+UIrR7kBQSzk6S9IAdYvCA4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        b=S2d+rEnNjjrHblTSQp95w/6R0QcA4xBMrHXK4nkbzCfgPk9DmlBdbbPeflTZga8HyV
-         2UwthHhHZxAzIbUAequABYuKW+/dLYTxmJCPxgR1nGQJszQCLh7yP/vOnlRWKTjd5da/
-         P86veGzZOOzNj0BCJJ6ftIifto3jvl/CI1RS8=
-Received: by 10.220.62.201 with SMTP id y9mr1006206vch.219.1269645769720;
-        Fri, 26 Mar 2010 16:22:49 -0700 (PDT)
-Received: from [192.168.0.2] (hlfxns0169w-142068217168.pppoe-dynamic.High-Speed.ns.bellaliant.net [142.68.217.168])
-        by mx.google.com with ESMTPS id 25sm31512389vws.1.2010.03.26.16.22.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 26 Mar 2010 16:22:48 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.23) Gecko/20090817 Thunderbird/2.0.0.23 Mnenhy/0.7.6.0
-In-Reply-To: <20100326230537.GC10910@spearce.org>
-X-Enigmail-Version: 1.0
+	id S1753339Ab0CZXbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 19:31:15 -0400
+Received: from mailbigip.dreamhost.com ([208.97.132.5]:37044 "EHLO
+	randymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752934Ab0CZXbO (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Mar 2010 19:31:14 -0400
+Received: from [10.0.1.14] (unknown [24.130.32.253])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by randymail-a1.g.dreamhost.com (Postfix) with ESMTP id 1BE4C18CEFA;
+	Fri, 26 Mar 2010 16:31:14 -0700 (PDT)
+In-Reply-To: <7vy6helwbq.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143300>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 10-03-26 08:05 PM, Shawn O. Pearce wrote:
->   $ git filter-branch --index-filter '' --all
+--Apple-Mail-1--718702470
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-This and a few other variations I tried does rewrite things, but the
-problem persists:
+On Mar 26, 2010, at 12:25 PM, Junio C Hamano wrote:
 
-mikelifeguard@arbour:~/Code/git/stewbot (master)$ git filter-branch
-- --subdirectory-filter '' -- --all
-Rewrite 5b5d93ca1ebcbc90c3ad688b9b9751d014b452a8 (8/8)
-WARNING: Ref 'refs/heads/master' is unchanged
-WARNING: Ref 'refs/remotes/origin/master' is unchanged
-WARNING: Ref 'refs/remotes/origin/gh-pages' is unchanged
-WARNING: Ref 'refs/remotes/origin/master' is unchanged
-mikelifeguard@arbour:~/Code/git/stewbot (master)$ git fsck
-warning in tree a39aa6d4a6dcfd6c14d8f818bbdf1dfcb3e11771: contains
-zero-padded file modes
+> Hmm, since "git format-patch HEAD" simply exits with success, I am
+> inclined to think that we should fix "format-patch HEAD..HEAD" to do =
+the
+> same instead.  I didn't check how involved such a change might be,
+> though.
 
-- -Mike
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Actually it doesn't. The line `git format-patch --ignore-if-in-upstream =
+HEAD` gives the same error (the flag seems to be necessary to get the =
+error in the first place). In any case, I'll see if I can't figure out =
+why it's giving that error.
 
-iEYEARECAAYFAkutQcQACgkQst0AR/DaKHudmACgtZ67Tv1pO769BL5OvduZacix
-BvMAoLr1UTf5UTd6zowRDHLovBVSY+0R
-=n/G1
------END PGP SIGNATURE-----
+-Kevin Ballard
+
+--=20
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
+
+
+
+
+--Apple-Mail-1--718702470
+Content-Disposition: attachment;
+	filename=smime.p7s
+Content-Type: application/pkcs7-signature;
+	name=smime.p7s
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIGMjCCAusw
+ggJUoAMCAQICEEBvNCHopKrFMn5Q80vZpuswDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCWkEx
+JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
+ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMB4XDTA5MDUwNzA1MDYyNloXDTEwMDUwNzA1MDYy
+NlowVzEQMA4GA1UEBBMHQmFsbGFyZDEOMAwGA1UEKhMFS2V2aW4xFjAUBgNVBAMTDUtldmluIEJh
+bGxhcmQxGzAZBgkqhkiG9w0BCQEWDGtldmluQHNiLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEP
+ADCCAQoCggEBAKOBiOuMZxNp5ygOJZo2JaBVm5auXMJJmdmTeaSSA8BhvZ98mXzXnaNrXOYSeZHo
+hkv4o5bM6LX3Ck38OmsgCcQMIfH4Kt39BvDokfA9ECq1J3HRNKuQ6ZSgZPaRWEy7TUeSHTx1ljxY
+tzUt8uAwSsOKiHgLIDi+vtLK0KjGXH1sJP6ajvlrkxQ3bbcmaDXTkpvUl5NEAKv+yK4+KqwTgtwV
+6ee2X4jjLjIgn/5Mm6pssaWuZtuEGRdQGkLcFVy+Wgo+5hpHf8fMXOSWsSp3/af6eSieL39M2Tit
+E1vTuYRpYjpL0Aevubmm6wens4OTOYKILOTBJDYNfF4HmkK9sMsCAwEAAaMpMCcwFwYDVR0RBBAw
+DoEMa2V2aW5Ac2Iub3JnMAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEFBQADgYEAC6/X6Dgj4qoU
+XSEZ1LmYkPgSLbRqIIRIgzTy52EnXL8ZQDVntI39lnn0VU8rnDY3sol9wr3feAG62AEa3LyTUxI0
+6bWEiNMhPWRHnRoCqiV3F0FqqD8bZJ4J8TgJkRH6IL3MDMUSdGEEzef5KwdGt7ERv/Vk0LBc1ayb
+y4FA1O4wggM/MIICqKADAgECAgENMA0GCSqGSIb3DQEBBQUAMIHRMQswCQYDVQQGEwJaQTEVMBMG
+A1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xGjAYBgNVBAoTEVRoYXd0ZSBD
+b25zdWx0aW5nMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9uMSQwIgYD
+VQQDExtUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgQ0ExKzApBgkqhkiG9w0BCQEWHHBlcnNvbmFs
+LWZyZWVtYWlsQHRoYXd0ZS5jb20wHhcNMDMwNzE3MDAwMDAwWhcNMTMwNzE2MjM1OTU5WjBiMQsw
+CQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoGA1UE
+AxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0EwgZ8wDQYJKoZIhvcNAQEBBQAD
+gY0AMIGJAoGBAMSmPFVzVftOucqZWh5owHUEcJ3f6f+jHuy9zfVb8hp2vX8MOmHyv1HOAdTlUAow
+1wJjWiyJFXCO3cnwK4Vaqj9xVsuvPAsH5/EfkTYkKhPPK9Xzgnc9A74r/rsYPge/QIACZNenpruf
+ZdHFKlSFD0gEf6e20TxhBEAeZBlyYLf7AgMBAAGjgZQwgZEwEgYDVR0TAQH/BAgwBgEB/wIBADBD
+BgNVHR8EPDA6MDigNqA0hjJodHRwOi8vY3JsLnRoYXd0ZS5jb20vVGhhd3RlUGVyc29uYWxGcmVl
+bWFpbENBLmNybDALBgNVHQ8EBAMCAQYwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVByaXZhdGVM
+YWJlbDItMTM4MA0GCSqGSIb3DQEBBQUAA4GBAEiM0VCD6gsuzA2jZqxnD3+vrL7CF6FDlpSdf0wh
+uPg2H6otnzYvwPQcUCCTcDz9reFhYsPZOhl+hLGZGwDFGguCdJ4lUJRix9sncVcljd2pnDmOjCBP
+ZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEwdjBi
+MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
+A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEEBvNCHopKrFMn5Q80vZ
+puswCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
+DxcNMTAwMzI2MjMzMTEzWjAjBgkqhkiG9w0BCQQxFgQUf/TgAjrBIrnGLncXsoxmrByqHBMwgYUG
+CSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5n
+IChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENB
+AhBAbzQh6KSqxTJ+UPNL2abrMIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkExJTAj
+BgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJz
+b25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhBAbzQh6KSqxTJ+UPNL2abrMA0GCSqGSIb3DQEBAQUA
+BIIBAB75xD6O7xSZq7gmtUvDeTHHS9Z7Bd1iymGxu+C9nolG46vOevcnB/dWAhkwn32sMHFyloY3
+AbwdmpxlUa0NcdyNsGapyuOq3cqIyFmcJNXd1QOW0Sj0fm+HvXj3aN5i4b8Y6X4xB20yAqoB+hPo
+CpJHqlhBdsU+10iFoIZpovoLrYJ0up1ycPrSvoZwr0YjkAOYeXcr9getrNSpTyLrRoppSUM13hcl
++bvoXxRpCnYKGSTvRUINf6nSDicdysOyHL7fJ1rjmI1LQYfSRrWGvmHJ1+owST7kj4RV2I4o1B9l
+TUILfc+BQJ4313nIdT/wklb8s/YnVtXEZRXk7hWROMEAAAAAAAA=
+
+--Apple-Mail-1--718702470--
