@@ -1,65 +1,75 @@
-From: Paul Richards <paul.richards@gmail.com>
-Subject: Enumerating all objects in the Git object store
-Date: Fri, 26 Mar 2010 15:31:28 +0000
-Message-ID: <a1138db31003260831q34967f69u9fc8de861f7931b1@mail.gmail.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: Deleting remote branches
+Date: Fri, 26 Mar 2010 08:52:32 -0700
+Message-ID: <a038bef51003260852x204500fv8db7dd7a42516050@mail.gmail.com>
+References: <1269582415273-4802262.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 26 16:38:29 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: GIT <git@vger.kernel.org>
+To: jhapk <pradeep.kumar.jha@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 26 16:53:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvBcC-00059V-GP
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 16:38:28 +0100
+	id 1NvBpy-0005o9-MM
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 16:52:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752155Ab0CZPiX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 11:38:23 -0400
-Received: from mail-ew0-f221.google.com ([209.85.219.221]:45956 "EHLO
-	mail-ew0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751028Ab0CZPiW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 11:38:22 -0400
-X-Greylist: delayed 413 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Mar 2010 11:38:22 EDT
-Received: by ewy21 with SMTP id 21so2184570ewy.25
-        for <git@vger.kernel.org>; Fri, 26 Mar 2010 08:38:20 -0700 (PDT)
+	id S1753163Ab0CZPwe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Mar 2010 11:52:34 -0400
+Received: from mail-qy0-f188.google.com ([209.85.221.188]:37460 "EHLO
+	mail-qy0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752342Ab0CZPwd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Mar 2010 11:52:33 -0400
+Received: by qyk26 with SMTP id 26so6609153qyk.19
+        for <git@vger.kernel.org>; Fri, 26 Mar 2010 08:52:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:received:message-id
-         :subject:from:to:content-type;
-        bh=7s8MgoJhiw/P4DUJIVMTxjG8A2AWTVx2g8G40vPBD2s=;
-        b=nyin4mLjIuYbm95aCG8my+8fXHRpvbGozbRuCRya0jN+7e+K0j7ptS44k2kjo5CSzM
-         7KcR1BvRzswHhDIyNhfxjvLH9f9PG1SXz7AUrxJwwl+BIINEhVdFFu5SlDMlg0tj2TgH
-         IzFDNrBKKuQ6KZNVFufmTG1oDxaX3EB1lSYm4=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=P+62+rkMYtlQPPRqIDiRJN26EAgeIzOdLiDxx69gzgI=;
+        b=spTsKx7lpWykJ9Tn87OimTd23lDOeYQKOnuN8xHzYQLLIBb692ZvR6pX6jp4vlmmmj
+         IetK2Fsf8lXflbpclvmxrU+ptl4LNRPrQDFOS25CpTaUwb2huAlw8zWxYxD5aYDSkGE5
+         dn/rSvqrY2a4de5E6q4O+4ObDr1/qZtbQhl9s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=Zgn2VsmBXTQS7i0EmYojP8UES9Sx1atBr56qjMHbCYSH4L8JEO7Imyj08LlA+ZxsCQ
-         YvZ2LVZY4tBhsuwH2A9ICKCLIxa//eJZDZIzIp3uGxoktgB3uoaRCMSnGgzV5dq084U6
-         njIiaPCWczcPKoMgP7qxjj3G561XKitYFNmmM=
-Received: by 10.213.17.68 with HTTP; Fri, 26 Mar 2010 08:31:28 -0700 (PDT)
-Received: by 10.213.49.200 with SMTP id w8mr310788ebf.80.1269617488237; Fri, 
-	26 Mar 2010 08:31:28 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ahL0plOel3K+aM43iPMN/D6RNgmuvNQwb+D15fqAz32uU1/+7NoMGhx2Q4Xgz9Vwdc
+         VEcUCmxBJdkdTHCL9lk6z1ohWYWOasV5rt6lYpX4Ltb2DugC3fKwbIl+KnTcmbMmeX+O
+         6HBSKEAU/Vyq2cW4Rg3ds7hZ+sp44tkjYQd7c=
+Received: by 10.229.27.141 with HTTP; Fri, 26 Mar 2010 08:52:32 -0700 (PDT)
+In-Reply-To: <1269582415273-4802262.post@n2.nabble.com>
+Received: by 10.229.96.82 with SMTP id g18mr1418612qcn.82.1269618752653; Fri, 
+	26 Mar 2010 08:52:32 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143253>
 
-Hi,
-I'd like to visualize the objects in a Git repository using Graphviz
-and "dot".  I'd like to see commits as circles, trees as triangles,
-blobs as rectangles, and have arrows linking these objects showing how
-they reference each other in the Git DAG.  For small repositories this
-may be a useful way to visualize how Git objects work.
+On Thu, Mar 25, 2010 at 10:46 PM, jhapk <pradeep.kumar.jha@gmail.com> w=
+rote:
+>
+> Hi,
+>
+> =C2=A0jeff
+> =C2=A0master
+> * work
+> =C2=A0origin/HEAD
+> =C2=A0origin/RANSmodel
+> =C2=A0origin/bluffbody
+> =C2=A0origin/counterflow
+> =C2=A0origin/flamelet
+> =C2=A0origin/jeff
+> =C2=A0origin/master
+> =C2=A0origin/test
+> =C2=A0origin/work
+> I still get all these branches which I deleted in my remote 'origin'.
+>
 
-I could not find a pre-existing script to do this so I am considering
-writing one.  Is there a way to enumerate all the objects in the Git
-object store, and for each one figure out its type (commit, tree, or
-blob) and obtain a list of the objects it references?  If not, is
-there a way to do this for a single object at a time?  (I can then
-simply recurse through the whole structure.)
-
-
--- 
-Paul Richards
+'git remote prune origin' will clean up the references you have to
+branches that no longer exist in origin
