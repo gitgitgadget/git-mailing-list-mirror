@@ -1,67 +1,59 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: Enumerating all objects in the Git object store
-Date: Fri, 26 Mar 2010 16:24:09 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1003261621560.694@xanadu.home>
-References: <a1138db31003260831q34967f69u9fc8de861f7931b1@mail.gmail.com>
- <4BACD86E.4020803@viscovery.net>
- <alpine.LFD.2.00.1003261324350.694@xanadu.home>
- <201003262111.48298.j.sixt@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/2] Teach 'git grep' about
+ --open-files-in-pager=[<pager>]
+Date: Fri, 26 Mar 2010 16:33:03 -0400
+Message-ID: <20100326203303.GB22900@coredump.intra.peff.net>
+References: <alpine.DEB.1.00.1003261145500.7596@pacific.mpi-cbg.de>
+ <20100326124650.GA12215@coredump.intra.peff.net>
+ <alpine.DEB.1.00.1003261712100.7596@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_bgpqf+If1TxhwMW/lgQ0tQ)"
-Cc: Paul Richards <paul.richards@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Mar 26 21:24:35 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 26 21:33:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvG54-0005ul-4u
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 21:24:34 +0100
+	id 1NvGDU-0001s7-Dx
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 21:33:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752492Ab0CZUY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 16:24:29 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:27111 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752446Ab0CZUY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 16:24:28 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KZW005ADOO9WBJ0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 26 Mar 2010 16:24:09 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <201003262111.48298.j.sixt@viscovery.net>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1752640Ab0CZUdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 16:33:11 -0400
+Received: from peff.net ([208.65.91.99]:49480 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752070Ab0CZUdK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 16:33:10 -0400
+Received: (qmail 5337 invoked by uid 107); 26 Mar 2010 20:33:42 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 26 Mar 2010 16:33:42 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Mar 2010 16:33:03 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.1003261712100.7596@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143283>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, Mar 26, 2010 at 05:14:46PM +0100, Johannes Schindelin wrote:
 
---Boundary_(ID_bgpqf+If1TxhwMW/lgQ0tQ)
-Content-type: TEXT/PLAIN; charset=iso-8859-1
-Content-transfer-encoding: 8BIT
+> In addition to the disadvantages you are listing, it does not jump 
+> directly to the word I am looking for. As you know, I am working 
+> with LaTeX files heavily, where convention dictates that a paragraph is 
+> represented by a single line in the source code.
 
-On Fri, 26 Mar 2010, Johannes Sixt wrote:
+Sure, that is a reasonable feature to want that my solution did not have
+(though I have never seen LaTeX code with that requirement; I wrap my
+lines at a reasonable width and separate paragraphs with a blank line).
 
-> On Freitag, 26. März 2010, Nicolas Pitre wrote:
-> > On Fri, 26 Mar 2010, Johannes Sixt wrote:
-> > > Use 'git rev-list --objects --all' to find all objects connected to all
-> > > refs (use something else than --all if you want to). Do *not* look at the
-> > > path that the tree and blob objects have attached - it is not authorative
-> > > information.
-> >
-> > Really??
-> 
-> Yes, really. Consider the same content at two differen paths. Now what? 
-> rev-list will only ever list the object once.
+> So yes, I really need -O, and if a colleague would not have asked me why 
+> this useful feature is not in upstream Git, I would not even have 
+> submitted the patch pair.
 
-Sure. It is still a valid path though.
+Yep. That is why I started my mail with "this is not an argument against
+your patch". I was just trying to be helpful and offer a possible
+alternative.
 
-
-Nicolas
-
---Boundary_(ID_bgpqf+If1TxhwMW/lgQ0tQ)--
+-Peff
