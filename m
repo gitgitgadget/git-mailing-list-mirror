@@ -1,60 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/2] Teach 'git grep' about
- --open-files-in-pager=[<pager>]
-Date: Fri, 26 Mar 2010 08:46:50 -0400
-Message-ID: <20100326124650.GA12215@coredump.intra.peff.net>
-References: <alpine.DEB.1.00.1003261145500.7596@pacific.mpi-cbg.de>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [PATCH] RPM spec: include bash completion support
+Date: Fri, 26 Mar 2010 13:07:45 +0000
+Message-ID: <c23f5db54cc8e5a4a5ee10c6533ac9fb@212.159.54.234>
+References: <1269569690-sup-4884@pinkfloyd.chass.utoronto.ca> <1269592797-18487-1-git-send-email-icomfort@stanford.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 26 13:47:18 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>, <git@vger.kernel.org>
+To: Ian Ward Comfort <icomfort@stanford.edu>
+X-From: git-owner@vger.kernel.org Fri Mar 26 14:08:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nv8wQ-00063h-2O
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 13:47:10 +0100
+	id 1Nv9GX-0001Ys-GD
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 14:07:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752815Ab0CZMrB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 08:47:01 -0400
-Received: from peff.net ([208.65.91.99]:37377 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751710Ab0CZMrA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 08:47:00 -0400
-Received: (qmail 31560 invoked by uid 107); 26 Mar 2010 12:47:31 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 26 Mar 2010 08:47:31 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Mar 2010 08:46:50 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.1003261145500.7596@pacific.mpi-cbg.de>
+	id S1753281Ab0CZNHv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 09:07:51 -0400
+Received: from positron.quantumfyre.co.uk ([213.165.84.138]:37346 "EHLO
+	positron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753089Ab0CZNHr (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Mar 2010 09:07:47 -0400
+Received: from reaper.quantumfyre.co.uk (reaper.quantumfyre.co.uk [212.159.54.234])
+	by positron.quantumfyre.co.uk (Postfix) with ESMTP id 3B2FC819A66B;
+	Fri, 26 Mar 2010 13:07:44 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 373442072E1;
+	Fri, 26 Mar 2010 13:07:46 +0000 (GMT)
+X-Virus-Scanned: amavisd-new at reaper
+Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
+	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 56UnMqDsrQ+K; Fri, 26 Mar 2010 13:07:45 +0000 (GMT)
+Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 918AD20724F;
+	Fri, 26 Mar 2010 13:07:45 +0000 (GMT)
+In-Reply-To: <1269592797-18487-1-git-send-email-icomfort@stanford.edu>
+X-Sender: julian@quantumfyre.co.uk
+User-Agent: RoundCube Webmail/0.1-rc1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143228>
 
-On Fri, Mar 26, 2010 at 11:48:41AM +0100, Johannes Schindelin wrote:
+On Fri, 26 Mar 2010 01:39:57 -0700, Ian Ward Comfort
+<icomfort@stanford.edu> wrote:
+> Unfortunately, nothing in the above clarifies how other packages are
+> expected to ship their own completion support.  Currently, however,
+> the Git packages (and what other packages I've found with completions)
+> in all these distros -- with the possible exception of Gentoo, which
+> I haven't been able to verify -- install completions directly into
+> /etc/bash_completion.d.  This seems natural, given that the symlink
+> mechanism's current function is to have completions for all and only
+> installed packages in /etc/bash_completion.d.
 
-> This supports opening the results of a 'git grep' directly in a pager 
-> (where the pager can be 'vi', too).
+FWIW, Gentoo installs the completion script as
+/usr/share/bash-completion/git - since installing a package isn't supposed
+to enable completion but only to make it available.  Since Gentoo doesn't
+use RPMs this isn't actually relevant though ;).
 
-This is not an argument against your patch, but you may be interested in
-an alternate method:
-
-  git grep -n $pattern >grep.out
-  vim -q grep.out
-
-The advantage is that the editor understands the output as a "quickfix"
-list and lets you cycle through the hits (just like you might with
-compiler errors). The disadvantage is that quickfix is a vim extension,
-so "less" and stock "vi" can't do this (I imagine emacs has a similar
-feature). It's also obviously a little more typing, but you can hide it
-inside an alias quite easily.
-
-I use the same trick to look for "^<<<<<<<", and have vim cycle through
-merge conflicts (you can also make it quicker by restricitng the grep
-only to unmerged files).
-
--Peff
+-- 
+Julian
