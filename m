@@ -1,92 +1,72 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] pull: mention "pull", not "fetch" in the error message.
-Date: Fri, 26 Mar 2010 14:38:19 +0100
-Message-ID: <1269610699-13176-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Mar 26 14:39:31 2010
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: Add new option in the right click menu in git gui
+Date: Fri, 26 Mar 2010 14:53:49 +0100
+Message-ID: <20100326135346.GB22339@book.hvoigt.net>
+References: <7fce93be1002181511v1c671f82u7f3d7cc6e3512bab@mail.gmail.com> <20100301171222.GA35830@book.hvoigt.net> <1267478971.4400.5.camel@kheops> <36ca99e91003011345n43aad0c5m5c02eaf692d54efd@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: sylvain@abstraction.fr, git <git@vger.kernel.org>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 26 14:54:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nv9kw-00084E-L0
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 14:39:23 +0100
+	id 1Nv9z5-0007rc-I3
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 14:53:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753689Ab0CZNjM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 09:39:12 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:51457 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753559Ab0CZNjJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 09:39:09 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o2QDYQLj025345
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 26 Mar 2010 14:34:26 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1Nv9jz-0004I6-2c; Fri, 26 Mar 2010 14:38:23 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1Nv9jy-0003R4-WF; Fri, 26 Mar 2010 14:38:23 +0100
-X-Mailer: git-send-email 1.7.0.2.204.g8940d.dirty
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 26 Mar 2010 14:34:27 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o2QDYQLj025345
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1270215269.68747@z6bz1ncKuK/+x92rA4tp5Q
+	id S1753784Ab0CZNxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 09:53:54 -0400
+Received: from darksea.de ([83.133.111.250]:34427 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753510Ab0CZNxx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 09:53:53 -0400
+Received: (qmail 4829 invoked from network); 26 Mar 2010 14:53:50 +0100
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 26 Mar 2010 14:53:50 +0100
+Content-Disposition: inline
+In-Reply-To: <36ca99e91003011345n43aad0c5m5c02eaf692d54efd@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143230>
 
-For newbies who've just been taught "git push", the error message
-"Where do you want to fetch from today?" is indeed confusing. Change it
-to "Where do you want to pull from today?" in case fetch was called from
-pull.
+Hi,
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- builtin/fetch.c |    6 +++++-
- git-pull.sh     |    3 ++-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+this email has been lying in my mailbox for while ...
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 957be9f..f3246f5 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -842,8 +842,12 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
- 	int ref_nr = 0;
- 	int exit_code;
- 
-+	char *cmd = getenv("GIT_USER_COMMAND");
-+	if (cmd == NULL || cmd[0] == '\0')
-+		cmd = "fetch";
-+
- 	if (!remote)
--		die("Where do you want to fetch from today?");
-+		die("Where do you want to %s from today?", cmd);
- 
- 	transport = transport_get(remote, NULL);
- 	transport_set_verbosity(transport, verbosity, progress);
-diff --git a/git-pull.sh b/git-pull.sh
-index 1a4729f..abc233b 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -216,7 +216,8 @@ test true = "$rebase" && {
- 	done
- }
- orig_head=$(git rev-parse -q --verify HEAD)
--git fetch $verbosity $progress --update-head-ok "$@" || exit 1
-+GIT_USER_COMMAND=pull \
-+    git fetch $verbosity $progress --update-head-ok "$@" || exit 1
- 
- curr_head=$(git rev-parse -q --verify HEAD)
- if test -n "$orig_head" && test "$curr_head" != "$orig_head"
--- 
-1.7.0.2.204.g8940d.dirty
+On Mon, Mar 01, 2010 at 10:45:10PM +0100, Bert Wesarg wrote:
+> Actually, I would like to be able to have a right click menu for the
+> path too and have access to the guitool entries in the Tools menu
+> which require a path (ie. needsfile=true). That would reduce by mouse
+> movements drastically.
+> 
+> I have looked into this issue by myself, but I'm not that familiar with tcl/tk.
+
+Just try it. The "Tcl Introduction" sample chapter from this book[1]
+explains the tcl language in 17 pages quite nicely.
+
+I thought of this myself but never had the time to do it. If you are
+still interested in implementing it take a look at the 'bind' command.
+It lets you bind procedures to events that occur on widgets or the
+application. For the diff view this is done in git-gui.sh on around line
+3465 with this command:
+
+  bind_button3 $ui_diff [list popup_diff_menu $ctxm $ctxmmg $ctxmsm %x %y %X %Y]
+
+bind_button3 is just a wrapper so bind is platform independent. So you
+probably want to implement a method similar to popup_diff_menu which
+popups the right menu for the selected file.
+
+BTW, the widgets for the files are of the same type (text) as $ui_diff
+and are stored in the variables: $ui_index and $ui_workdir for the index
+and working directory respectively.
+
+Hope that helps.
+
+cheers Heiko
+
+[1] http://www.beedub.com/book/
