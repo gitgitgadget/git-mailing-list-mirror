@@ -1,96 +1,61 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2] pull: mention "pull", not "fetch" in the error message.
-Date: Fri, 26 Mar 2010 16:03:56 +0100
-Message-ID: <1269615836-13995-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <4BACC241.4010608@drmicha.warpmail.net>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Mar 26 16:04:43 2010
+From: Simon Braunschmidt <sb@emlix.com>
+Subject: request for enhancement: gitk highlight whitespace
+Date: Fri, 26 Mar 2010 15:19:17 +0100
+Organization: emlix gmbh, Goettingen, Germany
+Message-ID: <201003261519.18095.sbraun@emlix.com>
+Mime-Version: 1.0
+Content-Type: Text/Plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Simon Braunschmidt <sb@emlix.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 26 16:06:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvB5S-0004CH-1W
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 16:04:38 +0100
+	id 1NvB75-0004rE-3Z
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 16:06:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754022Ab0CZPEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 11:04:32 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:58415 "EHLO rominette.imag.fr"
+	id S1754107Ab0CZPGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 11:06:14 -0400
+Received: from mx1.emlix.com ([193.175.82.87]:44924 "EHLO mx1.emlix.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751710Ab0CZPEc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 11:04:32 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o2QF02Fw023440
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 26 Mar 2010 16:00:02 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NvB4o-0005vX-P6; Fri, 26 Mar 2010 16:03:58 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NvB4o-0003eM-O1; Fri, 26 Mar 2010 16:03:58 +0100
-X-Mailer: git-send-email 1.7.0.2.204.g8940d.dirty
-In-Reply-To: <4BACC241.4010608@drmicha.warpmail.net>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 26 Mar 2010 16:00:03 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o2QF02Fw023440
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1270220404.82302@5x3qqOJAmQDyA5Mc+AYT6Q
+	id S1753639Ab0CZPGN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 11:06:13 -0400
+X-Greylist: delayed 2814 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Mar 2010 11:06:13 EDT
+Received: from gate.emlix.com ([193.175.27.217]:55379 helo=mailer.emlix.com)
+	by mx1.emlix.com with esmtp (Exim 4.69)
+	(envelope-from <sb@emlix.com>)
+	id 1NvANa-0003a2-AA
+	for git@vger.kernel.org; Fri, 26 Mar 2010 15:19:18 +0100
+Received: by mailer.emlix.com
+	id 1NvANZ-0002M9-Vv; Fri, 26 Mar 2010 15:19:18 +0100
+User-Agent: KMail/1.11.2 (Linux/2.6.32-020632rc6-generic; KDE/4.2.2; i686; ; )
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143236>
 
-For newbies who've just been taught "git pull", the error message
-"Where do you want to fetch from today?" is indeed confusing. Change it
-to "Where do you want to pull from today?" in case fetch was called from
-pull.
+Hi
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Just fixed a typo in commit message since v1.
+It would be great if I could teach gitk to better highlight 
+whitespace changes in the diff view.
 
- builtin/fetch.c |    6 +++++-
- git-pull.sh     |    3 ++-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+Every once in a while (and again today) I have to review 
+patches that "fix whitespace". Allthough the fixes are usually 
+trivial, I have to check them, which is not trivial with the gitk 
+display. Also I often mistakenly accept changes after 
+review with gitk that turn out to contain a mix of 
+tabs/whitespace etc. 
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 957be9f..f3246f5 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -842,8 +842,12 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
- 	int ref_nr = 0;
- 	int exit_code;
- 
-+	char *cmd = getenv("GIT_USER_COMMAND");
-+	if (cmd == NULL || cmd[0] == '\0')
-+		cmd = "fetch";
-+
- 	if (!remote)
--		die("Where do you want to fetch from today?");
-+		die("Where do you want to %s from today?", cmd);
- 
- 	transport = transport_get(remote, NULL);
- 	transport_set_verbosity(transport, verbosity, progress);
-diff --git a/git-pull.sh b/git-pull.sh
-index 1a4729f..abc233b 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -216,7 +216,8 @@ test true = "$rebase" && {
- 	done
- }
- orig_head=$(git rev-parse -q --verify HEAD)
--git fetch $verbosity $progress --update-head-ok "$@" || exit 1
-+GIT_USER_COMMAND=pull \
-+    git fetch $verbosity $progress --update-head-ok "$@" || exit 1
- 
- curr_head=$(git rev-parse -q --verify HEAD)
- if test -n "$orig_head" && test "$curr_head" != "$orig_head"
--- 
-1.7.0.2.204.g8940d.dirty
+I searched the mailinglist (for gitk whitespace) and asked on irc, yet 
+nobody seemed to care so far.
+
+What do you think about it?
+
+Regards,Gruessle
+Simon
