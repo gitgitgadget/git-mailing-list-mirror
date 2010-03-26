@@ -1,54 +1,60 @@
-From: esr@thyrsus.com (Eric Raymond)
-Subject: Three issues from a Subversion-to-git migration
-Date: Fri, 26 Mar 2010 08:09:06 -0400 (EDT)
-Message-ID: <20100326120906.F03BB20CD21@snark.thyrsus.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 26 13:17:42 2010
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/2] Teach 'git grep' about
+ --open-files-in-pager=[<pager>]
+Date: Fri, 26 Mar 2010 08:46:50 -0400
+Message-ID: <20100326124650.GA12215@coredump.intra.peff.net>
+References: <alpine.DEB.1.00.1003261145500.7596@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 26 13:47:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nv8TV-0003IL-By
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 13:17:17 +0100
+	id 1Nv8wQ-00063h-2O
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Mar 2010 13:47:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752673Ab0CZMRK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 08:17:10 -0400
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:49670
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752266Ab0CZMRJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 08:17:09 -0400
-X-Greylist: delayed 481 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Mar 2010 08:17:09 EDT
-Received: by snark.thyrsus.com (Postfix, from userid 23)
-	id F03BB20CD21; Fri, 26 Mar 2010 08:09:06 -0400 (EDT)
+	id S1752815Ab0CZMrB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 08:47:01 -0400
+Received: from peff.net ([208.65.91.99]:37377 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751710Ab0CZMrA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 08:47:00 -0400
+Received: (qmail 31560 invoked by uid 107); 26 Mar 2010 12:47:31 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 26 Mar 2010 08:47:31 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Mar 2010 08:46:50 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.1003261145500.7596@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143227>
 
-I joined the git list a few hours ago because of experiences I had
-while migrating one of my projects, GPSD, from Subversion to git.
-GPSD haa a logical but unusual use case for distributed version
-control; the best places to test GPS sensors are out-of-doors in cars
-and other places where wire-line Internet is absent and one may well
-be out of range of a WAP.
+On Fri, Mar 26, 2010 at 11:48:41AM +0100, Johannes Schindelin wrote:
 
-In the course of the migration, I encountered three issues which I
-think could be addressed with a relatively small amount of work.
+> This supports opening the results of a 'git grep' directly in a pager 
+> (where the pager can be 'vi', too).
 
-1. The git hook scripts for CIA.vc are broken (in a way that is,
-fortunately, easy to fix) and generally seem to be in an unmaintained,
-dusty state.
+This is not an argument against your patch, but you may be interested in
+an alternate method:
 
-2. The git-svn migration logic does not handle unmodified SVN tag
-trees well.
+  git grep -n $pattern >grep.out
+  vim -q grep.out
 
-3. I'm prone to typos, so I quickly noticed that the existing
-facilities for editing comments in commits (before they're pushed)
-are clumsy and dangerous.
+The advantage is that the editor understands the output as a "quickfix"
+list and lets you cycle through the hits (just like you might with
+compiler errors). The disadvantage is that quickfix is a vim extension,
+so "less" and stock "vi" can't do this (I imagine emacs has a similar
+feature). It's also obviously a little more typing, but you can hide it
+inside an alias quite easily.
 
-I will address these points in detail in separate mails.  Issues 1 and
-3 I can fix with working code.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+I use the same trick to look for "^<<<<<<<", and have vim cycle through
+merge conflicts (you can also make it quicker by restricitng the grep
+only to unmerged files).
+
+-Peff
