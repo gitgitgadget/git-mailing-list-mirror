@@ -1,96 +1,57 @@
-From: Francis Moreau <francis.moro@gmail.com>
-Subject: Re: [PATCH 0/2] Teach 'git grep' about --open-files-in-pager=[<pager>]
-Date: Sat, 27 Mar 2010 16:19:10 +0100
-Message-ID: <m2r5n5vlld.fsf@gmail.com>
-References: <alpine.DEB.1.00.1003261145500.7596@pacific.mpi-cbg.de>
-	<20100326124650.GA12215@coredump.intra.peff.net>
-	<7vwrwykhee.fsf@alter.siamese.dyndns.org> <m239zmdcz5.fsf@gmail.com>
-	<7v39zm7epf.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Help with rebase after cvsimport
+Date: Sat, 27 Mar 2010 18:22:29 +0100
+Message-ID: <4BAE3ED5.6080808@drmicha.warpmail.net>
+References: <bcd06dea1003250935q324b2412g959309070491c73c@mail.gmail.com> 	<bcd06dea1003251037j492bfbbcx2f99ad5046169f2@mail.gmail.com> 	<4BAC7BAC.7030507@drmicha.warpmail.net> <bcd06dea1003260910h6e27fdfbh9f968bf5ca4c1b6e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 27 16:19:41 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Brice Ruth <bdruth@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 27 18:22:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvXnT-0000qe-Kg
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 16:19:36 +0100
+	id 1NvZiD-0005GI-4M
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 18:22:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753493Ab0C0PTU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Mar 2010 11:19:20 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:51391 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753415Ab0C0PTT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Mar 2010 11:19:19 -0400
-Received: by bwz1 with SMTP id 1so2514845bwz.21
-        for <git@vger.kernel.org>; Sat, 27 Mar 2010 08:19:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:references
-         :date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        bh=w17rq110etZ6dsVXSB0Nf3QpW2oEvBEeBw2x4HVKHKg=;
-        b=BEeCr5SBi75KXeF7CFdFnpFoRRypocyjVhwvbUYXEmegpXRUPXfyUAgC3751kJQclS
-         /LjtJLASGS/aEePHpVCLw2Qxxn74dE5A/ByfM28200R24rdvA3G6nmRG1u83W1m/cp5r
-         Oo8oVve+I2C1ZIOLYSjNzQskx233KeROBYRS8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        b=HdR5v2S5qj6trhZ9tbvnlgFC1Y4qf7N2IdZN8iOf6xpwffvR7e5HGqxSrAPXp2b5wA
-         dToHAm2mY/9g/QgERXrZRM9b0Lb3MTL6i/3bioIckPlq22Bjbd1tqoVx+y/xcaw08fxO
-         MjNuG9WaoeL5o7kj2CX3vnxqRpHaJ4MQVFaN8=
-Received: by 10.204.144.156 with SMTP id z28mr3110164bku.188.1269703158059;
-        Sat, 27 Mar 2010 08:19:18 -0700 (PDT)
-Received: from localhost (au213-1-82-235-205-153.fbx.proxad.net [82.235.205.153])
-        by mx.google.com with ESMTPS id l1sm18517344bkl.20.2010.03.27.08.19.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 27 Mar 2010 08:19:16 -0700 (PDT)
-In-Reply-To: <7v39zm7epf.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 26 Mar 2010 18:09:32 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.50 (gnu/linux)
+	id S1753679Ab0C0RWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Mar 2010 13:22:12 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:36835 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753650Ab0C0RWK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Mar 2010 13:22:10 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 06825E9F32;
+	Sat, 27 Mar 2010 13:22:10 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Sat, 27 Mar 2010 13:22:10 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=77GRZOSaqkCbdwJgCHEje/sSbvA=; b=B3f9z6Jw/c4A0YgJGEB3NoIHYEqYLI0Q1L4Yk6+lOM0NR8NQ/EVi+0hgGub7YDBS0sGlRUGf2OTreROqGIQVwasAbJB7ouuwlWlYpRGVoFkGpr3dkY4OjhqFkkH3aQ9XzLa9fUEFog+j5zaLWZ1rndy3pK1KFBpQrRAPL6HK+nI=
+X-Sasl-enc: rTx9CETa0JZZyL9To9Ouciljpd/UEyscyK0oTOy2xk6F 1269710529
+Received: from localhost.localdomain (p3EE29960.dip0.t-ipconnect.de [62.226.153.96])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3BB0F2DEFD;
+	Sat, 27 Mar 2010 13:22:09 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10pre) Gecko/20100319 Lightning/1.0b2pre Shredder/3.0.5pre
+In-Reply-To: <bcd06dea1003260910h6e27fdfbh9f968bf5ca4c1b6e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143339>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Brice Ruth venit, vidit, dixit 26.03.2010 17:10:
+> So, when you write "Note that by doing that you basically discard your
+> version of commits which made the git-cvs-git roundtrip" - I will lose
+> the individual commits I made locally and I'll just see the *one*
+> exportcommit that I made for my local changes, is that right?
 
-> Francis Moreau <francis.moro@gmail.com> writes:
->
->>> and I often run "git grep -n" in that mode..
->>
->> I always need to pass the '--no-pager' switch: "git --no-pager grep -n"
->> since git doesn't detect that its output is sent to a 'dumb' terminal.
->
-> Sorry, but as any self-respecting Emacs user would have PAGER set to cat
+The way I use git-cvs, I have one cvs commit per git commit. Are you
+using it differently?
 
-Well I do, but only for "M-x shell", probably because I usually start
-all commands from that shell.
+The rebase will discard those commits whose patch text is already
+"present" on the branch. I assume that for a cumulative patch this means
+it's not ignored - in that case the rebase won't buy you anything.
 
-> (and EDITOR set to emacsclient), I thought nobody would need
-> --no-pager ;-)
-
-Indeed, I'll setup PAGER to cat when starting emacs.
-
-That makes me think to one common operation I do which is not really
-convenient when PAGER is set to cat: git-log. Piping the output of
-git-log to a pager such as less(1) makes git-log to suspend when the
-pipe is full. OTOH setting PAGER to cat, git-log never blocks and for
-projects with a (very) long history such as git or the linux kernel,
-git-log can show a lot of commits making the cpu really busy and the
-emacs buffer really huge.
-
-One way to workaround this is to pass -n10 for example to git-log, but
-it's rather ugly.
-
-Do you have any tricks for this case ?
-
-Thanks
--- 
-Francis
+Michael
