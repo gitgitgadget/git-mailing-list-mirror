@@ -1,51 +1,97 @@
-From: Eric Raymond <esr@thyrsus.com>
-Subject: Re: native-git-svn: A Summer of Code 2010 proposal
-Date: Sat, 27 Mar 2010 05:19:38 -0400
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20100327091938.GA4395@thyrsus.com>
-References: <3d4937ff1003262240t6159d9c5sc9253f555c3aed1@mail.gmail.com>
-Reply-To: esr@thyrsus.com
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 01/12] Generate unique ID for submodules created using
+ "git submodule add"
+Date: Sat, 27 Mar 2010 04:44:28 -0500
+Message-ID: <20100327094427.GA30216@progeny.tock>
+References: <1269617140-7827-1-git-send-email-peter@pcc.me.uk>
+ <1269617140-7827-2-git-send-email-peter@pcc.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Steven Michalske <smichalske@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 27 10:19:48 2010
+To: Peter Collingbourne <peter@pcc.me.uk>
+X-From: git-owner@vger.kernel.org Sat Mar 27 10:44:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvSBF-0000dm-1O
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 10:19:45 +0100
+	id 1NvSZB-00026n-NJ
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 10:44:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752413Ab0C0JTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Mar 2010 05:19:39 -0400
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:37155
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752355Ab0C0JTj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Mar 2010 05:19:39 -0400
-Received: by snark.thyrsus.com (Postfix, from userid 23)
-	id 2A69D475FEF; Sat, 27 Mar 2010 05:19:38 -0400 (EDT)
+	id S1752586Ab0C0JoN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Mar 2010 05:44:13 -0400
+Received: from mail-yx0-f182.google.com ([209.85.210.182]:57230 "EHLO
+	mail-yx0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752497Ab0C0JoM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Mar 2010 05:44:12 -0400
+Received: by yxe12 with SMTP id 12so4244184yxe.33
+        for <git@vger.kernel.org>; Sat, 27 Mar 2010 02:44:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=FSaUAySqw4mV+Mp2Qywcndjzme0Xpkk0jbFHBmzLOO0=;
+        b=vGhZbyH0n0nlJTBcHc4k5ZBoIDGlO3thGYhTXACTT7oz9h9BO8FaCuEmY39yJ7kcdz
+         VnbKg9Q67wTuvaGF6EpKjuy7T3oxJkEenCoT1W6j2nvcaY3bDFrB9EG9SgBic6qau0kU
+         7aukE/ViI9eXFbHnApEusZYKIe16QPQ5FZIKU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=QcVkxo7L2WNBkXXcZ/H+8BvHDbkhGlZ3A9U8Tb6BDSJDFGHP85Hh9zyZ3JdUQRsHPI
+         CFPTu2QXzke1bDQTl2Z9v6PJMKfS/uaaMArqRmaK1PsFhegxYVN4NLXh3uAsG01UFYqN
+         356qaUsU9pEEhqMTdE+SKDoE5kTwKrRfS/70k=
+Received: by 10.101.169.39 with SMTP id w39mr3672889ano.140.1269683051284;
+        Sat, 27 Mar 2010 02:44:11 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 22sm1661517iwn.4.2010.03.27.02.44.10
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 27 Mar 2010 02:44:10 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <3d4937ff1003262240t6159d9c5sc9253f555c3aed1@mail.gmail.com>
-X-Eric-Conspiracy: There is no conspiracy
+In-Reply-To: <1269617140-7827-2-git-send-email-peter@pcc.me.uk>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143324>
 
-Steven Michalske <smichalske@gmail.com>:
-> >    3.5 cmd_branch: Handle branching/ tagging
-> 
-> I'm torn on how the current system handles this,  I like all tags to
-> be tags, and
-> that if a tag had a branch like behavior (bad SVN users!), that a branch exists
-> for it, with the tag pointing to its branches head.
+Peter Collingbourne wrote:
 
-Ah.  This sounds like s discussion, pre-dating my joining the list, of
-my issue #2 about git-svn - not rendering unmodified tag directories as
-git tags.  It's good that someone wants to rackle this seriously.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+> This patch causes "git submodule add" to generate a unique ID for
+> the submodule which is used as its name.  The ID is generated by
+> computing the SHA1 hash of the pid, date and initial path.
+>=20
+> The purpose of this patch is to avoid name conflicts which may
+> arise due to the ability to rename submodules.
+
+I assume this is related to Pasky=E2=80=99s patch =E2=80=9Cgit submodul=
+e add: Fix
+naming clash handling=E2=80=9D [1]
+
+	This patch fixes git submodule add behaviour when we add submodule
+	living at a same path as logical name of existing submodule. This
+	can happen e.g. in case the user git mv's the previous submodule away
+	and then git submodule add's another under the same name.
+=09
+	A test-case is obviously included.
+=09
+	This is not completely satisfactory since .git/config cross-commit
+	conflicts can still occur. A question is whether this is worth
+	handling, maybe it would be worth adding some kind of randomization
+	of the autogenerated submodule name, e.g. appending $$ or a timestamp.
+
+The suggestion of _appending_ some nonsense to a submodule name sounds
+much more palatable to me than _replacing_ the submodule name with
+nonsense.  YMMV, of course.
+
+Regards,
+Jonathan
+
+[1] submitted twice: once as part of the series you pointed to and
+again in the re-roll at
+http://thread.gmane.org/gmane.comp.version-control.git/95763/focus=3D95=
+769
