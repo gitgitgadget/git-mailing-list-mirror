@@ -1,55 +1,79 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: git gui: merge conflict display is misleading since it hides 
-	non-conflicting remote hunks [edit]
-Date: Sat, 27 Mar 2010 14:34:11 +1100
-Message-ID: <2cfc40321003262034m7b543b16xbc281899dc7beba2@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Tree with leading '0' modes in 1.7.0.3
+Date: Fri, 26 Mar 2010 22:16:39 -0700
+Message-ID: <7vvdci2vk8.fsf@alter.siamese.dyndns.org>
+References: <20100326215600.GA10910@spearce.org>
+ <20100326222659.GA18369@progeny.tock> <20100326222950.GB10910@spearce.org>
+ <4BAD3C6E.4090604@gmail.com> <20100326230537.GC10910@spearce.org>
+ <7v7hoyabiv.fsf@alter.siamese.dyndns.org>
+ <32541b131003261656h430d77a8q753c6141297e8f86@mail.gmail.com>
+ <4BAD4A82.5070703@gmail.com> <20100327012211.GD10910@spearce.org>
+ <alpine.LFD.2.00.1003262125120.694@xanadu.home>
+ <20100327013443.GE10910@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 27 04:34:30 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+	"Mike.lifeguard" <mike.lifeguard@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Mar 27 06:17:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvMn8-0001Zy-6H
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 04:34:30 +0100
+	id 1NvOOT-0006UB-Au
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 06:17:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752636Ab0C0DeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 23:34:13 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:36660 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751240Ab0C0DeN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 23:34:13 -0400
-Received: by pwi5 with SMTP id 5so5570318pwi.19
-        for <git@vger.kernel.org>; Fri, 26 Mar 2010 20:34:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:received:message-id
-         :subject:from:to:content-type;
-        bh=q/Cc/h8HKX4Zy2+C4nsHFU1Mqw2ETYa9GEZMmTPe5Yw=;
-        b=w3Jb6/lIiB277EAgHZZYt0dmUZ/ddJAySv8MCTmejkvUVJ+Rsi2pKwd/W5ipcMdjPZ
-         h3NwDoqB1uRkb7/7uKArmpo4JMZ9SQp8RmxSe3mLXeSGMErNLhRfYiwfaekXk0yWwa1N
-         c04oql4vJ9LheEFl/qLzB0JdMeo1qFfAmTYNY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=nWCx4c+JV5quAQgzcYnh8jBFI/XJpEUaggOrCD6ecJbSa2O+pqmWpg46iOoXaghLeo
-         YmOsiw/O3/WzyUEPNKFtv9fpFdIxYflVTo5eTeRafwNi1Eha2yPmWyWU5g69665hjkf2
-         fvjmtGjm+Oo3YsGgWmr/eeaZT17nRC9LY0i64=
-Received: by 10.115.89.7 with HTTP; Fri, 26 Mar 2010 20:34:11 -0700 (PDT)
-Received: by 10.114.187.19 with SMTP id k19mr2232295waf.20.1269660851992; Fri, 
-	26 Mar 2010 20:34:11 -0700 (PDT)
+	id S1751300Ab0C0FRB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Mar 2010 01:17:01 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45168 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751123Ab0C0FRA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Mar 2010 01:17:00 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0EAE3A53ED;
+	Sat, 27 Mar 2010 01:16:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=V+GL/jkH7l76ftLGNHsACpW19jY=; b=xu/nFM
+	oRyGFOEMOrwiWQpI+ue1pKvZDCC/iBM9YHSbArHHmr47tbh0JPioqIPKTaTiKKLZ
+	FqLZga7a1gDf8+Ap3XpahRpftk9o3BFsEoM7oOGpuhrfbBeHcVN3PdmbD0Arp6j7
+	75c8ADn0YJMz9H4fqL55aPdrda73M/zBvisgo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VAKcz1IM4LiV/pOSg/h7bV9jDqfw3ikz
+	pabOD6iZLeuSpIMnkYNBADXWKZERLA7odIuDEX0J+ylP46jxtYERHXyevFbcQ8dE
+	OEdNtvGFhH57zQXh1rLpViy1F3QcOP/B+xZ3wK0c2cZjR7u8B0y36W3RCUcvhOzM
+	fxpe3Q6LSFI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A3D0A53EB;
+	Sat, 27 Mar 2010 01:16:50 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 07F94A53EA; Sat, 27 Mar
+ 2010 01:16:40 -0400 (EDT)
+In-Reply-To: <20100327013443.GE10910@spearce.org> (Shawn O. Pearce's message
+ of "Fri\, 26 Mar 2010 18\:34\:43 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F2AE6DFE-395F-11DF-83FE-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143316>
 
-| changed conflict --> __change___
+"Shawn O. Pearce" <spearce@spearce.org> writes:
+
+> But GitHub's approach here seems to be "Meh, its fine, don't worry
+> about it".
 >
-> As a result, the user thinks that the only __change__ is the import
-> statement, and elects to resolve the commit in favour of the local
-> commit. This is the wrong thing to do because the remote hunk is then
-> lost to the history.
->
+> Its *NOT* fine.  But Avery and Junio might disagree with me.  :-)
+
+Did I ever say it is _fine_?  I thought I said "complain loudly".
+
+That would at least give poor jgit users who have hit such a corrupted
+object a chance to get a controlled notice and ask for help (and get an
+insn to recover with filter-branch that appeared in this thread).
