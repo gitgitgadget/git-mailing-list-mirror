@@ -1,107 +1,62 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH/RFC] gitk: Ignore limitdiffs option when displaying commit 
-	file list.
-Date: Fri, 26 Mar 2010 21:17:51 -0400
-Message-ID: <32c343771003261817o131ae413udb9dc579c936f5db@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Tree with leading '0' modes in 1.7.0.3
+Date: Fri, 26 Mar 2010 18:22:11 -0700
+Message-ID: <20100327012211.GD10910@spearce.org>
+References: <20100326215600.GA10910@spearce.org> <20100326222659.GA18369@progeny.tock> <20100326222950.GB10910@spearce.org> <4BAD3C6E.4090604@gmail.com> <20100326230537.GC10910@spearce.org> <7v7hoyabiv.fsf@alter.siamese.dyndns.org> <32541b131003261656h430d77a8q753c6141297e8f86@mail.gmail.com> <4BAD4A82.5070703@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: markb@berlios.de
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, j.sixt@viscovery.net
-X-From: git-owner@vger.kernel.org Sat Mar 27 02:18:11 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
+To: "Mike.lifeguard" <mike.lifeguard@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 27 02:22:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvKfC-0007B7-JV
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 02:18:10 +0100
+	id 1NvKjG-0000Db-1n
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 02:22:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754014Ab0C0BRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 21:17:53 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:54242 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753262Ab0C0BRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 21:17:52 -0400
-Received: by wyb39 with SMTP id 39so159732wyb.19
-        for <git@vger.kernel.org>; Fri, 26 Mar 2010 18:17:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:received:message-id
-         :subject:from:to:cc:content-type;
-        bh=SZl+tIvcpxaeB4B9ulb9sgg9B7Yj3oCrhpJfuJB3IxQ=;
-        b=T/kwrUa3kcLyt5KxeTo62ECJ7Oj2hT+N9GVYyGbP67cxVhp8rVo4O53TeGA5Y/+P0p
-         uPJR4Abr9a1nkineaC06hQGd1+aaL0Eh1V/Lpb2clGuTa7pqO+dimvvQ+38kqfrtFQJn
-         PGDx6OtZeVJxck1UgskmA2oYxsmnL32b5bhPA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        b=bJj4Jf2JcMHlzlc70KgW7G1Tnim2mDpq0GeGppFE3f7nMKdDuOeD1YGlh3MeIHBWV8
-         6qSSaSdabIaG9pBWQavIezCPvRC6pqLOemF0C+dOzyS3AHBNWBpK+HOwSp/eX06UcY3x
-         FZkq0JxwrHjz/v/uDFBRhA5Hr3pBJ5lXGBi6E=
-Received: by 10.216.72.137 with HTTP; Fri, 26 Mar 2010 18:17:51 -0700 (PDT)
-Received: by 10.216.86.211 with SMTP id w61mr1042497wee.50.1269652671276; Fri, 
-	26 Mar 2010 18:17:51 -0700 (PDT)
+	id S1754161Ab0C0BWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 21:22:16 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:44706 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754118Ab0C0BWP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 21:22:15 -0400
+Received: by gwaa18 with SMTP id a18so2979487gwa.19
+        for <git@vger.kernel.org>; Fri, 26 Mar 2010 18:22:14 -0700 (PDT)
+Received: by 10.90.60.12 with SMTP id i12mr1278075aga.119.1269652934000;
+        Fri, 26 Mar 2010 18:22:14 -0700 (PDT)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 21sm1294966iwn.3.2010.03.26.18.22.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 26 Mar 2010 18:22:12 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4BAD4A82.5070703@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143309>
 
-When gitk is invoked with a path argument (e.g. gitk gitk-git),
-the path is used to filter the list of files displayed in the
-lower right window.  If a file does not start with the specified
-substring, it is not displayed.  This is counter-intuitive for
-a couple reasons:
-  1) The files continue to be listed in the diff window.
-  2) Merge commits (i.e. commits with more than 1 parent still
-     show the complete list of files in the lower right since
-     these commits are processed by mergediff rather than
-     startdiff function.
+"Mike.lifeguard" <mike.lifeguard@gmail.com> wrote:
+> On 10-03-26 08:56 PM, Avery Pennarun wrote:
+> > The problem is that everything in git works perfectly with these
+> > invalid file modes *except* fsck, and there's rarely a need to run
+> > fsck, so this problem can hide for a long time.
+> 
+> So, does the error matter or not? If it doesn't matter, then shouldn't
+> Jgit stop whining? If it does, then whatever-it-is needs to be fixed.
 
-With this change, the complete list of files affected by a
-commit will always be shown in the lower right window.
+Its less harmful than other types of corruption.  But its quite
+wrong from a format perspective. The hash of the tree differs even
+though there is no semantic difference in the tree content.
 
-Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
----
+Given that GitHub has blessed the world with this corruption,
+we may need to modify JGit to accept it.
 
-I noticed this issue recently when trying gitk.  After some research, I found
-this thread [1] which explained the issue.  However, the operation still does
-not seem consistent.  This patch fixes the "problem" that I encountered, but
-I can't help wondering:
-    1) I am breaking another feature?  Especially since the
-'$vfilelimit($curview) ne {}'
-        check is now ignored.
-    2) Can the limitdiffs option be completely removed?  If not, the behavior
-        of startdiff and mergediff should at least be made consistent.
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/133088
-
- gitk-git/gitk |   12 +-----------
- 1 files changed, 1 insertions(+), 11 deletions(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 1f36a3e..518061e 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -7450,17 +7450,7 @@ proc gettreediffline {gdtf ids} {
- 	return [expr {$nr >= $max? 2: 1}]
-     }
-     close $gdtf
--    if {$limitdiffs && $vfilelimit($curview) ne {}} {
--	set flist {}
--	foreach f $treediff {
--	    if {[path_filter $vfilelimit($curview) $f]} {
--		lappend flist $f
--	    }
--	}
--	set treediffs($ids) $flist
--    } else {
--	set treediffs($ids) $treediff
--    }
-+    set treediffs($ids) $treediff
-     unset treepending
-     if {$cmitmode eq "tree" && [llength $diffids] == 1} {
- 	gettree $diffids
 -- 
-1.7.0.3.291.g5e4f6.dirty
+Shawn.
