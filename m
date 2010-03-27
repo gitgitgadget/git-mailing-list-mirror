@@ -1,79 +1,57 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Tree with leading '0' modes in 1.7.0.3
-Date: Sat, 27 Mar 2010 12:20:18 -0700
-Message-ID: <20100327192018.GG10910@spearce.org>
-References: <20100326222950.GB10910@spearce.org> <4BAD3C6E.4090604@gmail.com> <20100326230537.GC10910@spearce.org> <7v7hoyabiv.fsf@alter.siamese.dyndns.org> <32541b131003261656h430d77a8q753c6141297e8f86@mail.gmail.com> <4BAD4A82.5070703@gmail.com> <20100327012211.GD10910@spearce.org> <alpine.LFD.2.00.1003262125120.694@xanadu.home> <20100327013443.GE10910@spearce.org> <7vvdci2vk8.fsf@alter.siamese.dyndns.org>
+From: Samuel Tardieu <sam@rfc1149.net>
+Subject: Re: Feature request: option to not fetch tags for 'git remote' branches
+Date: Sat, 27 Mar 2010 20:25:15 +0100
+Organization: RFC 1149 (see http://www.rfc1149.net/)
+Message-ID: <2010-03-27-20-25-15+trackit+sam@rfc1149.net>
+References: <201003242154.29245.elendil@planet.nl>
+	<4BAA7F5B.2040400@feurix.com> <201003242246.16286.elendil@planet.nl>
+	<2010-03-27-20-10-25+trackit+sam@rfc1149.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	"Mike.lifeguard" <mike.lifeguard@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 27 20:20:30 2010
+Content-Transfer-Encoding: 8bit
+Cc: John Feuerstein <john@feurix.com>, git@vger.kernel.org
+To: Frans Pop <elendil@planet.nl>
+X-From: git-owner@vger.kernel.org Sat Mar 27 20:25:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvbYZ-0001h7-9H
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 20:20:27 +0100
+	id 1NvbdW-00040Z-2a
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 20:25:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753858Ab0C0TUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Mar 2010 15:20:23 -0400
-Received: from mail-yw0-f172.google.com ([209.85.211.172]:62455 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753830Ab0C0TUW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Mar 2010 15:20:22 -0400
-Received: by ywh2 with SMTP id 2so4174961ywh.33
-        for <git@vger.kernel.org>; Sat, 27 Mar 2010 12:20:21 -0700 (PDT)
-Received: by 10.101.143.9 with SMTP id v9mr3323930ann.169.1269717621319;
-        Sat, 27 Mar 2010 12:20:21 -0700 (PDT)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 23sm2109465iwn.2.2010.03.27.12.20.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 27 Mar 2010 12:20:20 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vvdci2vk8.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753842Ab0C0TZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Mar 2010 15:25:18 -0400
+Received: from zoidberg.rfc1149.net ([91.121.19.179]:45309 "EHLO
+	zoidberg.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753830Ab0C0TZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Mar 2010 15:25:17 -0400
+Received: from localhost (unknown [IPv6:2001:6f8:37a:2:211:2fff:fe8a:af74])
+	by zoidberg.rfc1149.net (Postfix) with ESMTP id DB32415F05;
+	Sat, 27 Mar 2010 20:25:15 +0100 (CET)
+In-Reply-To: <2010-03-27-20-10-25+trackit+sam@rfc1149.net> (Samuel Tardieu's
+	message of "Sat, 27 Mar 2010 20:10:25 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-WWW: http://www.rfc1149.net/sam
+X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
+X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143346>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > But GitHub's approach here seems to be "Meh, its fine, don't worry
-> > about it".
-> >
-> > Its *NOT* fine.  But Avery and Junio might disagree with me.  :-)
-> 
-> Did I ever say it is _fine_?  I thought I said "complain loudly".
+>>>>> "Sam" == Samuel Tardieu <sam@rfc1149.net> writes:
 
-I apologize if I misrepresented you above.
- 
-> That would at least give poor jgit users who have hit such a corrupted
-> object a chance to get a controlled notice and ask for help (and get an
-> insn to recover with filter-branch that appeared in this thread).
+Sam> Add a '--no-tags' option to 'git remote add' which adds a
+Sam> 'remote.REMOTE.tagopt = --no-tags' to the configuration file.
 
-Well, there is "complain loudly but do it anyway" and "hard stop".
+Sam> 'git add -f -n REMOTE' will create a new remote and fetch from it
+Sam> without importing the tags. Subsequent 'git fetch REMOTE' will also
+Sam> not import the tags.
 
-JGit currently has the leading '0' be a "hard stop".  Because this is
-the fsck code running inside of the receive-pack service, validating
-what the user sent is isn't malformed.  Its clearly malformed.
+Sam> Signed-off-by: Samuel Tardieu <sam@rfc1149.net>
 
-This only got discovered because Mike tried to take a repository
-from GitHub and push it into Gerrit Code Review, where JGit's fsck
-routine cannot be bypassed during receive-pack.
+I didn't notice that the subject was not appropriate. One can use:
 
-Are you suggesting JGit should change its behavior to be "complain
-loudly but do it anyway"?  I'm open to making the code change there
-if that is how you think a Git implementation should behave in
-this case.  But I don't want to do it just to match CGit's behavior,
-sometimes CGit can be wrong.  :-)
-
--- 
-Shawn.
+remote add: add a --no-tags (-n) option
