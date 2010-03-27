@@ -1,89 +1,81 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2] pull: mention "pull", not "fetch" in the error message.
-Date: Sat, 27 Mar 2010 09:52:23 +0100
-Message-ID: <vpqy6hep2ns.fsf@bauges.imag.fr>
-References: <4BACC241.4010608@drmicha.warpmail.net>
-	<1269615836-13995-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20100326231209.GB6797@blimp.localdomain>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: force "unmerged" for same-file auto-merges
+Date: Sat, 27 Mar 2010 14:26:59 +0530
+Message-ID: <2e24e5b91003270156r11ae9155s6e00a2ab27e9f479@mail.gmail.com>
+References: <hobqoc$5h3$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 27 09:53:27 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <neal@rsss.com>
+X-From: git-owner@vger.kernel.org Sat Mar 27 09:57:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvRlm-0007AD-58
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 09:53:26 +0100
+	id 1NvRpN-00009q-GA
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 09:57:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752205Ab0C0IxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Mar 2010 04:53:06 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:57762 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751728Ab0C0IxE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Mar 2010 04:53:04 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o2R8mOEO010574
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 27 Mar 2010 09:48:24 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NvRkl-0007gL-Hp; Sat, 27 Mar 2010 09:52:23 +0100
-In-Reply-To: <20100326231209.GB6797@blimp.localdomain> (Alex Riesen's message of "Sat\, 27 Mar 2010 00\:12\:10 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 27 Mar 2010 09:48:27 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o2R8mOEO010574
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1270284509.47457@94b0PSxEY0SN8MDLB6YNqw
+	id S1752305Ab0C0I5D convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Mar 2010 04:57:03 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:38503 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751824Ab0C0I5A convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Mar 2010 04:57:00 -0400
+Received: by vws8 with SMTP id 8so1816389vws.19
+        for <git@vger.kernel.org>; Sat, 27 Mar 2010 01:57:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zbDnH8lnavNrRDD5hSI6G1azmg4oPSgpkGoHAZUQPFE=;
+        b=HjD0CFG0cUAtAi14yvC4s7N1lja7WVK06PGJCy2guBwE9mlmiTtsyhIMDbr2sthnQa
+         3RJ1557HOTq1zHLaJ3lodGHdlBOB1KhjaFRrWe8FYb1BSaf+2M1KSBCePsr6L8qhjIFb
+         RJUKyz6PtUGLkwcFwDj3mKFrJefla1JqGAlU8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=WV1u28qAjrGfMHDJCr2/tPRKzpOHsE+NoQNs0YOOAIX5EqQdysMY7IUEvbd7GmSkv5
+         GuA8sjYEfvi1zVG6ZginzXCDNLNd9TZ/Z7nLEzVfXrsR5CMwIY0Njfjjm0K6xP3GFRNb
+         dNIP3b8F6zkSJgkDQJMQUx1JLcHc0J1xWh6fw=
+Received: by 10.220.100.212 with HTTP; Sat, 27 Mar 2010 01:56:59 -0700 (PDT)
+In-Reply-To: <hobqoc$5h3$1@dough.gmane.org>
+Received: by 10.220.48.22 with SMTP id p22mr1249805vcf.213.1269680219900; Sat, 
+	27 Mar 2010 01:56:59 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143322>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+On Wed, Mar 24, 2010 at 7:14 AM, Neal Kreitzinger <neal@rsss.com> wrote=
+:
+> Scenario: =C2=A0"same-file auto-merge": =C2=A0when two different peop=
+le change the
+> same file in their separate repos. =C2=A0Their changes do not conflic=
+t in the
+> sense that they are changes to the same lines. =C2=A0However, their c=
+hanges do
+> conflict in the sense that the resulting merged logic is incorrect.
 
-> Matthieu Moy, Fri, Mar 26, 2010 16:03:56 +0100:
->> For newbies who've just been taught "git pull", the error message
->> "Where do you want to fetch from today?" is indeed confusing. Change it
->> to "Where do you want to pull from today?" in case fetch was called from
->> pull.
-> ...
->> @@ -842,8 +842,12 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
->>  	int ref_nr = 0;
->>  	int exit_code;
->>
->> +	char *cmd = getenv("GIT_USER_COMMAND");
->
-> Isn't the variable name a little too generic? USER_COMMAND doesn't make it
-> clear that its only purpose is to pass a string "pull"
+You're not being pessimistic enough :-)  A ".h" file that changed only
+on one side can cause the same logic issues
 
-It is generic, so that the same variable can be reused elsewhere if
-needed. When a command "git foo" calls internally "git bar", the
-instance of "git bar" thinks it's executing the command "bar", but the
-user thinks he just ran the command "foo". This variable lets git know
-that and adapt its error message accordingly.
+> Desired Solution:
+> Perform same-file auto-merge and produce auto-merge results, but mark=
+ all
+> such auto-merged files as "unmerged" so that they must be reviewed/re=
+solved
+> before a git-commit. =C2=A0The "unmerged" status allows git-mergetool=
+ to be run
+> (e.g. kdiff3) so that the merged lines can be reviewed. =C2=A0In this=
+ way, all
+> auto-merged files are reviewed.
 
-> to an error message which is never even seen under normal
-> circumstances.
-
-For some definition of "never ever" and/or "normal circumstances"
-only, then:
-
-/tmp/test$ git init
-Initialized empty Git repository in /tmp/test/.git/
-/tmp/test$ git pull
-fatal: Where do you want to pull from today?
-
-(the confused newbie scenario isn't imaginary, it just happened to a
-colleague of mine)
-
---
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+No.  What you need is a full blown diff for the merge, with both sides
+being compared with respect to the common merge-base.  That diff will
+be pretty big, although I'm not sure what diff options would actually
+produce that (but I'll bet "-m" figures somewhere).
