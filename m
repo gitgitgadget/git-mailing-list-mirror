@@ -1,129 +1,109 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: native-git-svn: A Summer of Code 2010 proposal
-Date: Sat, 27 Mar 2010 12:16:27 +0530
-Message-ID: <f3271551003262346g286e7e72u751e15cbc99a9c1@mail.gmail.com>
-References: <3d4937ff1003262240t6159d9c5sc9253f555c3aed1@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Peter Baumann <waste.manager@gmx.de>
-To: Steven Michalske <smichalske@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 27 07:47:24 2010
+From: Scott Haneda <talklists@newgeo.com>
+Subject: Re: Is this an appropriate list for general git questions
+Date: Sat, 27 Mar 2010 01:07:09 -0700
+Message-ID: <0D0DD5C5-B535-49AC-B0A9-403C4FA5E193@newgeo.com>
+References: <5C4288BC-B87E-41CB-B3CB-90122098B7E9@newgeo.com> <32541b131003211736t823ea8cye7ab4075fa8ccdd5@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1077)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 27 09:07:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvPnW-0002DO-Ea
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 07:47:06 +0100
+	id 1NvR3e-0001gF-Hl
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 09:07:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751794Ab0C0Gqs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Mar 2010 02:46:48 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:59403 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751326Ab0C0Gqs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 Mar 2010 02:46:48 -0400
-Received: by gyg13 with SMTP id 13so489898gyg.19
-        for <git@vger.kernel.org>; Fri, 26 Mar 2010 23:46:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Kx7nN7vF7tK1l24uggRL7+q3tteYqmweftTQOwj+A+I=;
-        b=Xoh1t7KfM0DQdq4XqUc8z2zYmq435ZBmDOK+dtS0cI0zJ/8WDngpm6pEoN+/LfsSZS
-         VUjFyuoPoWHDDgL7piopt2TPtJcJPS0AMnOJA3YNO46ouprkbEY1OSGfFfwCKNIEHvWA
-         +cizbLWcWgbnaLOceZ0Es+Jf+47ThihbwQ7ss=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=cnUrNUXmr2ec3Px67X2ZNUM74eWG+iy1gP5WnWJoPfVgbWwnNmkHnVb0p6cprFTj15
-         R3dje0CeijmUfnLpPf8cif5mYhhXYwt/+NaGE9DgF6m2iBAWKOAc57yA9GvNf2y78RHN
-         TfIP2K4MgPbAL1WQwujMrI5GbyYPpd8hFBYI8=
-Received: by 10.90.52.9 with HTTP; Fri, 26 Mar 2010 23:46:27 -0700 (PDT)
-In-Reply-To: <3d4937ff1003262240t6159d9c5sc9253f555c3aed1@mail.gmail.com>
-Received: by 10.91.95.14 with SMTP id x14mr1475679agl.1.1269672407108; Fri, 26 
-	Mar 2010 23:46:47 -0700 (PDT)
+	id S1751012Ab0C0IHQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Mar 2010 04:07:16 -0400
+Received: from moses.hostwizard.com ([64.84.37.6]:59656 "EHLO
+	gonepostal.hostwizard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750753Ab0C0IHL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Mar 2010 04:07:11 -0400
+Received: from [192.168.1.103] (173.164.173.161) by 
+ gonepostal.hostwizard.com with ESMTP (EIMS X
+ 3.3.9); Sat, 27 Mar 2010 01:07:10 -0700
+In-Reply-To: <32541b131003211736t823ea8cye7ab4075fa8ccdd5@mail.gmail.com>
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143319>
 
-[Please don't cull people from cc]
+On Mar 21, 2010, at 5:36 PM, Avery Pennarun wrote:
 
-> Would cython meet the needs of increasing the speed of the python cod=
-e
-> without requiring a rewrite?
+> On Sun, Mar 21, 2010 at 6:59 PM, Scott Haneda <talklists@newgeo.com> wrote:
+> 
+>> I have seen there are a lot of patches, diffs, and what appear to be
+>> development related posts on this list.  Am I in the correct place?
+>>  If not, can someone point me in the right direction?
+> 
+> There's only one official git mailing list, so that's what you get.  I
+> think the rule of thumb for mailing lists is: if you can't answer your
+> questions in ten seconds using a Google search, then you're pretty
+> safe asking on a mailing list.  It looks like you're safe.
 
-Actually, I've subsequently decided that this is unnecessary. Besides,
-I'm writing in C mainly for portability to msysgit (Windows). Could
-you please look at the updated version of my project proposal?
+Phew :)
 
-> I work at a company with a LDAP server that I can look up the svn use=
-rname to
-> get real name and email address. =A0This way I don't have to manually=
- maintain a
-> svn authors file.
+> By the way, this mailing list accepts posts from non-subscribers, and
+> it's the policy on the list to always cc: everyone who has replied to
+> a message in that thread so far, including the original poster.  The
+> idea is that you can ask a question about git without *having* to
+> subscribe to read all the other stuff.  But of course, reading some of
+> the other stuff will make you a more competent git user pretty fast,
+> so it might be worth it anyway.
 
-> I'm torn on how the current system handles this, =A0I like all tags t=
-o
-> be tags, and
-> that if a tag had a branch like behavior (bad SVN users!), that a bra=
-nch exists
-> for it, with the tag pointing to its branches head.
+Interesting, I have never once in 15+ years of mailing lists, seen a list work this way.  Pretty nice to not have to subscribe.  Amazing that there is not spam all over this list.
 
-This shouldn't be a problem to implement/ improve at the end of my
-GSoC term. However, it's important that I don't lose focus and
-concentrate on the core task at hand for GSoC, which is more about
-getting native support for SVN than anything else. I have neither the
-expertise or time (one GSoC term) to build a fantastic importer and
-get native support: I will be re-using several parts of existing
-importers for the purpose of the GSoC.
+>> I am thinking github is going to be where I put all this stuff, but I am
+>> completely lost on where to even begin with all this.  I watched a few
+>> of the videos on the kernel.org website, and will continue with the
+>> git tutorials and documentation.
+> 
+> You should probably look at getting a good book on version control.
+> You can find *these* using Google, including free online ones, now
+> that you know this is what you should do :)
 
-> Support for SVN's blank folders. =A0Some of the old build systems I h=
-ave used
-> need the blank folders, so I have to create to make the build work :-=
-(
+Ok, I will look into it.  I am really hoping there is a "4 command to using git" type of thing.  I think I even heard that Joel Spoolsky guy state something along those lines; that he has gotten by with version control on 4 commands.  I can not remember if it was git he was referring to though.
 
-Okay, this should be simple enough to implement. Thank you for pointing=
- it out.
+My needs are so simple, I was hoping to not have to dig too deep, and conquer the complicated things as they come up.  Sort of like using a new text editor for the first time, there really is no learning curve to get started, you just start typing.  When you want syntax highlightig, you solve that and move on.
 
-> One of my SVN repositories using the current system fails to import t=
-hat
-> repository is missing a revision in its SVN history. =A0In other word=
-s
-> the SVN repo
-> has corrupted history the current git-svn will fail to import the rep=
-ository.
+Can git not be treated in that way?  Is git a little steeper in the "get going" phase post installation?  I was hoping compiling it for OS X to be installed where I want it would be the hardest part :)
 
-I'll keep this in mind when designing svn-fast-import: a certain
-revision's checkout can fail, and a mechanism to bail the user out of
-such a situation can be helpful. Again, I can't promise that this'll
-be completed by the end of the GSoC term, but I will make it easy
-enough to write the functionality in later on.
+>> The second reason I came to this list is that I am a Mac user,
+>> and some of the tools I have created are resource fork dependent.
+>> If they are ftp'd they will be broken.  Rsync is the only tool I know
+>> of that can accurately transfer the files without destroying them.
+>> However, this requires a custom patched version of rsync, and
+>> must be equal on both ends.  I am not sure git hub is going to
+>> have that patch applied.  I may be getting into git hub specifics
+>> here, and going outside of the lists scope being focussed on git,
+>> if I am, plesae let me know and I can find a git hub resource.
+> 
+> github just does what git does, only with a friendly web interface.
+> git doesn't support fancy xattrs or resource forks, at least without
+> using add-on tools.  This is because source code almost never *needs*
+> these resource forks: only finished products do, and those are usually
+> built *from* the source code.  As part of the build process, you add
+> the resource forks and xattrs onto the completed files.
 
-> If you want me to test your work on a hairy repository with corrupt h=
-istory and
-> thousands of branches, I'll do that for you.
+Yes, very true, except in the case of AppleScripts and Automator actions.  Which can be "compiled" and finished apps, but also can be raw source files.  However, I believe that even those, being that they run in their own development environment, have resources and other attributes that have to be maintained.
 
-Thanks! That'll be wonderful. If my proposal gets accepted, I
-certainly will contact you (and several others) for testing, once the
-core task of the GSoC is complete.
+> Also, your repository wouldn't work on non-Mac computers if git stored
+> that kind of stuff internally.
 
-> But working at a company with lots of history in SVN makes me passion=
-ate
-> about the SVN integration in git :-)
+In my case, I have no intention of using my repo on anything but Mac.  But I can get past just not putting AppleScript and Automator actions into my repo.  Who knows, it may work. I will ftp a source automator action and see if when I pull it back down, it is broken, or if it works.
 
-Good to know. Thank you for your support :)
+> Your best bet is to have a simple Makefile or build script that does
+> everything that's necessary.  There are a couple of tools out there
+> that claim to support attrs and xattrs (for example, metastore), but
+> at least in metastore's case I don't see any evidence that it supports
+> resource forks.
 
--- Ram
+I will take a look, thank you very much.
+-- 
+Scott * If you contact me off list replace talklists@ with scott@ * 
