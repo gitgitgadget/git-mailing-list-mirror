@@ -1,75 +1,73 @@
-From: Dilip M <dilipm79@gmail.com>
-Subject: Re: force "unmerged" for same-file auto-merges
-Date: Sat, 27 Mar 2010 22:52:25 +0530
-Message-ID: <c94f8e121003271022v2b30ef52j3bd4015f12938f7a@mail.gmail.com>
-References: <hobqoc$5h3$1@dough.gmane.org> <hoh16f$koe$1@dough.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Teach 'git grep' about
+ --open-files-in-pager=[<pager>]
+Date: Sat, 27 Mar 2010 10:23:39 -0700
+Message-ID: <7vbpe9u19g.fsf@alter.siamese.dyndns.org>
+References: <alpine.DEB.1.00.1003261145500.7596@pacific.mpi-cbg.de>
+ <20100326124650.GA12215@coredump.intra.peff.net>
+ <7vwrwykhee.fsf@alter.siamese.dyndns.org> <m239zmdcz5.fsf@gmail.com>
+ <7v39zm7epf.fsf@alter.siamese.dyndns.org> <m2r5n5vlld.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Neal Kreitzinger <neal@rsss.com>
-X-From: git-owner@vger.kernel.org Sat Mar 27 18:22:37 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Francis Moreau <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 27 18:24:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvZiR-0005Sb-Gk
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 18:22:31 +0100
+	id 1NvZjo-0006G3-Lv
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 18:23:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753714Ab0C0RW0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Mar 2010 13:22:26 -0400
-Received: from mail-yw0-f172.google.com ([209.85.211.172]:60214 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753696Ab0C0RW0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 Mar 2010 13:22:26 -0400
-Received: by ywh2 with SMTP id 2so4138225ywh.33
-        for <git@vger.kernel.org>; Sat, 27 Mar 2010 10:22:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=DlHl1mC8fWNLKE5mvI8Bdg9LrzPQSbkCyIHLW21XJ/E=;
-        b=bq7ogbiT3pPMSTIMVSZc2pm8S81+nkz3mrbRJyYx1jl92+GTKhRkUxY5tkRjaaHNgE
-         vIGutG0a3ET8ftf5VAfgF+L9uuCswn4arbUD3QgThW4sjva258Ulc+tx/Kh7FkL06DSJ
-         iKkKnZqxZuyWTYbd5f6Ytkot2+5VDEFj0bE8s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=PAOOwcQIO+57LVD2ZRpVOAklkiDJfjbzgyDg2SBH4LodYakLDfHGamVMZ9o4XzroIH
-         DbjzxKQaGpf/aSLrhjbCBGugcxwpIGXNxq3QCCeegJdZbE9bn5vzzII4vuocephSPH6x
-         N1WzNQ7HwA3qEFlu7rOTpjtH3IAHt9Qw4wHYM=
-Received: by 10.150.153.6 with HTTP; Sat, 27 Mar 2010 10:22:25 -0700 (PDT)
-In-Reply-To: <hoh16f$koe$1@dough.gmane.org>
-Received: by 10.151.86.13 with SMTP id o13mr2967056ybl.181.1269710545394; Sat, 
-	27 Mar 2010 10:22:25 -0700 (PDT)
+	id S1753750Ab0C0RXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Mar 2010 13:23:52 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63437 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753735Ab0C0RXv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Mar 2010 13:23:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 611F7A5A8E;
+	Sat, 27 Mar 2010 13:23:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QreoDKokUrwfKrvFrGeceHQ8jtE=; b=eaWgyi
+	85PoKbRmGbm2K2pniu2fjNoQ8vccRyjIgSRTqKjQS4O+Tpr4kU3B9iiMUwQlDoFB
+	yZTq/eVPa6S/J+tYKHmnOBRBAe6ILR3oDmUOpb5syvZIPaeQe+mL+tGWfCLUDmpD
+	7rSJJ8wRrEqE7JdauLtvG7v5jBPUFe75fHPt0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YtTn4LO6Wi9eifM6pWPedMxHyYXysE83
+	5gYjztK1j1lV42THNkU3qFysKka0bdZxFS8Y3Kh2omZ9NXCKZYJB2+ZobL7Em2sk
+	dPA9+8sGhnFfZ4j/D+Kmy8I+OpFcM6aCzRasrzwAPNLapCeyIc4Sq78saCVCkPYw
+	NVLkUcBA3vc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 211BAA5A8C;
+	Sat, 27 Mar 2010 13:23:46 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 42D19A5A87; Sat, 27 Mar
+ 2010 13:23:40 -0400 (EDT)
+In-Reply-To: <m2r5n5vlld.fsf@gmail.com> (Francis Moreau's message of "Sat\,
+ 27 Mar 2010 16\:19\:10 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 7FDE4748-39C5-11DF-A81F-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143341>
 
-On Fri, Mar 26, 2010 at 6:34 AM, Neal Kreitzinger <neal@rsss.com> wrote=
-:
+Francis Moreau <francis.moro@gmail.com> writes:
 
-> In other words, when two people modify the same file in different pla=
-ces I
-> want the automerge results file, but I want the resulting file marked=
- as
-> unmerged so the programmer can then run git-mergetool to review the m=
-erge
-> results. =C2=A0This also prevents the programmer from running git-com=
-mit
-> immediately after the automerge without reviewing the merge results. =
-=C2=A0Can
-> "mark automerge of samefile as 'unmerged'" be done in git via config
-> settings or command options?
+> Do you have any tricks for this case ?
 
-What about merge with '--no-commit' option and than doing 'diff --cache=
-d'. You
-have option of still seeing what merged and decide to reset or commit.
+I use PAGER=cat only inside Emacs, so I don't see how "log" can be a
+problem.  Perhaps that is because I don't use "M-x shell" (I used to but
+not anymore).  Of course you have to limit the extent of "log" in "M-x
+compile" mode, but that goes without saying.
 
---=20
-Dilip
+I may have used some hooks when entering shell mode to tweak the
+environment further only under "M-x shell".
