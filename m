@@ -1,107 +1,126 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: GIT_ONE_FILESYSTEM inclusion?
-Date: Sat, 27 Mar 2010 15:27:32 -0700
-Message-ID: <20100327222730.GA10922@gmail.com>
-References: <20100323232055.GV7038@pixar.com> <81b0412b1003240229l6f7eaa18l563c3d7ba0cf6cc5@mail.gmail.com> <4BA9DCDD.6060109@viscovery.net> <81b0412b1003240437n799bac07sb74db749d647817d@mail.gmail.com> <vpqd3yt4yyp.fsf@bauges.imag.fr>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Is this an appropriate list for general git questions
+Date: Sat, 27 Mar 2010 18:29:46 -0400
+Message-ID: <32541b131003271529x6d6f8b03g18cbf9949d49a574@mail.gmail.com>
+References: <5C4288BC-B87E-41CB-B3CB-90122098B7E9@newgeo.com> 
+	<32541b131003211736t823ea8cye7ab4075fa8ccdd5@mail.gmail.com> 
+	<0D0DD5C5-B535-49AC-B0A9-403C4FA5E193@newgeo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Lars Damerow <lars@pixar.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sat Mar 27 23:27:51 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Scott Haneda <talklists@newgeo.com>
+X-From: git-owner@vger.kernel.org Sat Mar 27 23:30:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NveTu-0003nc-CJ
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 23:27:50 +0100
+	id 1NveWF-0004nc-41
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 23:30:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754085Ab0C0W1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Mar 2010 18:27:41 -0400
-Received: from mail-yx0-f191.google.com ([209.85.210.191]:65213 "EHLO
-	mail-yx0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754020Ab0C0W1k (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Mar 2010 18:27:40 -0400
-Received: by yxe29 with SMTP id 29so1366322yxe.4
-        for <git@vger.kernel.org>; Sat, 27 Mar 2010 15:27:39 -0700 (PDT)
+	id S1754098Ab0C0WaI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Mar 2010 18:30:08 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:55817 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754020Ab0C0WaH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Mar 2010 18:30:07 -0400
+Received: by gyg13 with SMTP id 13so737625gyg.19
+        for <git@vger.kernel.org>; Sat, 27 Mar 2010 15:30:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=5NZnQq/ogbrZNfbTHkYfd07rhoyPnqUyVuTH2ayX/BU=;
-        b=X23VRnZjolyb7oXCUUkmr2UAnyXdYfXwv9U6feZIuu9/ApJ0RKjekFCp8GEjqyRuci
-         koH95fLiuhjrXTnlT6haIgJMQZbSLAOGw5ZzRDDgdZCAcqkqQA289Oj4xDbge/wkQUs8
-         WZ+JFT6+mffL21w36aBh4uWkUDRFwii1pnG+Y=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=9Kj74Klx3HIM3J0+lHmSm+mD6+hfHu59tdwrgJGjZOA=;
+        b=l9f3HClruW2Gq1BeqjPJliw+mRaa/67p292kBNwcuNJxlDS1hhfAz1GACcQbiuwX0R
+         B/d2YNgn66sZkQEonFeAdjXqsW67ejfDAsEQ0IEyfzHPSTaX+zclX/r5Qkm1bPBrC7R/
+         MIVzXX6bariUvVUMLDfUzGy7IqnGW7yIfNp0k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=dLoLCmqYWpojy4SHuCnWqpQDOMhHbEWeKTeal3CeYR2om+sC0VUY5BalIesZ1RRH+X
-         OG8FMdCBkaQgEpH348iER2a6u9jomyh1+JS0jvD+PWrW9e5t2pCuFnCAMoDBUuAKGwn5
-         BdRWXUjdwJFLxv0ti2HOqPy7DROwm3lkWGEcE=
-Received: by 10.100.89.5 with SMTP id m5mr4297143anb.118.1269728858887;
-        Sat, 27 Mar 2010 15:27:38 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 4sm646621ywd.28.2010.03.27.15.27.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 27 Mar 2010 15:27:38 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <vpqd3yt4yyp.fsf@bauges.imag.fr>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=bhexpSeStH7NZS+iHsYDqOkOFhT86hBMKKgyGSgQiBqoQkBe5oQt+lzUA3VMo/2IcE
+         aCBw3uTPHkBbE7rvlCGPMDxtxJx4eEHSQxhgepXS9U7jZUyd3VOa1qerC9bScdQJIxA0
+         sUBFcyKGbRD7CjkEn45P8vqof/zATngl4AUOk=
+Received: by 10.151.51.17 with HTTP; Sat, 27 Mar 2010 15:29:46 -0700 (PDT)
+In-Reply-To: <0D0DD5C5-B535-49AC-B0A9-403C4FA5E193@newgeo.com>
+Received: by 10.150.141.2 with SMTP id o2mr1117403ybd.332.1269729006086; Sat, 
+	27 Mar 2010 15:30:06 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143362>
 
-On Wed, Mar 24, 2010 at 02:43:26PM +0100, Matthieu Moy wrote:
-> Alex Riesen <raa.lkml@gmail.com> writes:
-> 
-> > On Wed, Mar 24, 2010 at 10:35, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> >> Am 3/24/2010 10:29, schrieb Alex Riesen:
-> >>> And while at it, how about making it a config option? (i.e. core.oneFilesystem?)
-> >>
-> >> It's difficult to have this as a config option when you are looking for a
-> >> repository... ;)
-> >>
-> >
-> > Isn't it a little pointless to look for repository when you can't
-> > access its config?
-> 
-> I guess Johannes's point is that the config option can be in
-> $GIT_DIR/config, which you can't access when looking for $GIT_DIR.
-> OTOH, looking at ~/.gitconfig to find a core.oneFilesystem makes sense
-> (but is probably painfull to implement since the current code to parse
-> config file will look for $GIT_DIR first).
-> 
-> -- 
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
+On Sat, Mar 27, 2010 at 4:07 AM, Scott Haneda <talklists@newgeo.com> wr=
+ote:
+> On Mar 21, 2010, at 5:36 PM, Avery Pennarun wrote:
+>> By the way, this mailing list accepts posts from non-subscribers, an=
+d
+>> it's the policy on the list to always cc: everyone who has replied t=
+o
+>> a message in that thread so far, including the original poster. =A0T=
+he
+>> idea is that you can ask a question about git without *having* to
+>> subscribe to read all the other stuff. =A0But of course, reading som=
+e of
+>> the other stuff will make you a more competent git user pretty fast,
+>> so it might be worth it anyway.
+>
+> Interesting, I have never once in 15+ years of mailing lists, seen a =
+list work this
+> way. =A0Pretty nice to not have to subscribe. =A0Amazing that there i=
+s not spam all over this list.
 
-Right.
+I'm guessing they just use a good spam scanner.
 
-As this thread showed, we can't have a config option for this
-feature.  Were there any other objections to the patch?
-It looks good to me.
+>> You should probably look at getting a good book on version control.
+>> You can find *these* using Google, including free online ones, now
+>> that you know this is what you should do :)
+>
+> Ok, I will look into it. =A0I am really hoping there is a "4 command =
+to using
+> git" type of thing. =A0I think I even heard that Joel Spolsky guy sta=
+te
+> something along those lines; that he has gotten by with version contr=
+ol
+> on 4 commands. =A0I can not remember if it was git he was referring t=
+o though.
 
-Peff also agreed that it was an overall improvement.
-http://thread.gmane.org/gmane.comp.version-control.git/142262
+No, it was mercurial.  As I recall, he then went on to decide that
+trying to use it with only four commands wasn't the right approach and
+you should actually learn about it, and wrote a series of tutorials.
 
-Thread with the latest (v3) version of the patch:
-http://thread.gmane.org/gmane.comp.version-control.git/142436
+It's generally agreed (though perhaps not among everyone on this list
+:)) that mercurial is easier to learn at first than git.  However, in
+my experience, once you've spent the time to learn how git works, you
+also gain a lot more than with any other system.  It's ridiculously
+powerful, in the same way that Unix is powerful.
 
-We could use this feature at Disney Animation as well.
-We maintain a list of $GIT_CEILING_DIRECTORIES and could do
-without having to maintain it if we had this feature.
+Then again, if you're running on a Mac, there are some GUI-based git
+tools available.  I've heard good things about GitX, though I haven't
+tried it myself.
 
+>> source code almost never *needs*
+>> these resource forks: only finished products do, and those are usual=
+ly
+>> built *from* the source code. =A0As part of the build process, you a=
+dd
+>> the resource forks and xattrs onto the completed files.
+>
+> Yes, very true, except in the case of AppleScripts and Automator acti=
+ons.
+>=A0Which can be "compiled" and finished apps, but also can be raw sour=
+ce files.
+>=A0However, I believe that even those, being that they run in their ow=
+n development
+> environment, have resources and other attributes that have to be main=
+tained.
 
-Plus, Lars is one of the git users that doesn't even flinch when
-the Perforce servers at Pixar get a hiccup, so we should try and
-help our fellow "renegade" git users ;-)
+As I understand it, almost everything in OS X avoids requiring
+resource forks nowadays.  You'll probably be okay.
 
--- 
-		David
+Have fun,
+
+Avery
