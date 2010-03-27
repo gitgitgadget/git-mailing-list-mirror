@@ -1,122 +1,129 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Re: Tree with leading '0' modes in 1.7.0.3
-Date: Sat, 27 Mar 2010 05:44:12 -0700
-Message-ID: <d411cc4a1003270544l43f2f93dq5006efb737aa7bbc@mail.gmail.com>
-References: <20100326215600.GA10910@spearce.org> <4BAD3C6E.4090604@gmail.com>
-	 <20100326230537.GC10910@spearce.org>
-	 <7v7hoyabiv.fsf@alter.siamese.dyndns.org>
-	 <32541b131003261656h430d77a8q753c6141297e8f86@mail.gmail.com>
-	 <4BAD4A82.5070703@gmail.com> <20100327012211.GD10910@spearce.org>
-	 <alpine.LFD.2.00.1003262125120.694@xanadu.home>
-	 <20100327013443.GE10910@spearce.org>
-	 <alpine.LFD.2.00.1003262142121.694@xanadu.home>
+From: Fredrik Kuivinen <frekui@gmail.com>
+Subject: Re: [PATCH] Make xmalloc and xrealloc thread-safe
+Date: Sat, 27 Mar 2010 14:26:20 +0100
+Message-ID: <4c8ef71003270626y45685e69j28ccb8a8738b9083@mail.gmail.com>
+References: <20100323161713.3183.57927.stgit@fredrik-laptop>
+	 <20100323184309.GA31668@spearce.org>
+	 <4c8ef71003231421u789c4332h461c066add0ec7b1@mail.gmail.com>
+	 <alpine.LFD.2.00.1003231945480.31128@xanadu.home>
+	 <4c8ef71003240823o7cd733bn5f19699305c94cba@mail.gmail.com>
+	 <alpine.LFD.2.00.1003241133430.694@xanadu.home>
+	 <ec874dac1003241122s3d592f26n1b23d23144939218@mail.gmail.com>
+	 <alpine.LFD.2.00.1003241435300.694@xanadu.home>
+	 <ec874dac1003241257r3cad86c9q1af84d3732e23ca8@mail.gmail.com>
+	 <alpine.LFD.2.00.1003241613020.694@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Mike.lifeguard" <mike.lifeguard@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
 To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Sat Mar 27 13:44:26 2010
+X-From: git-owner@vger.kernel.org Sat Mar 27 14:26:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvVNJ-0002OC-VV
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 13:44:26 +0100
+	id 1NvW2A-000522-Pn
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 14:26:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753198Ab0C0MoP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Mar 2010 08:44:15 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:33470 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753058Ab0C0MoO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 Mar 2010 08:44:14 -0400
-Received: by wwe15 with SMTP id 15so7195474wwe.19
-        for <git@vger.kernel.org>; Sat, 27 Mar 2010 05:44:13 -0700 (PDT)
+	id S1753066Ab0C0N0X convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Mar 2010 09:26:23 -0400
+Received: from mail-fx0-f223.google.com ([209.85.220.223]:63339 "EHLO
+	mail-fx0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752931Ab0C0N0W convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Mar 2010 09:26:22 -0400
+Received: by fxm23 with SMTP id 23so2804715fxm.21
+        for <git@vger.kernel.org>; Sat, 27 Mar 2010 06:26:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:received:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=X3Se8TW/8sJEwtnFecE8lDPkT66ffbhiQE0NZDtsrnY=;
-        b=lEkb/BlpMju5ZvE5u3pUouFzM6eVi7iNOJLnd6itqCsFKfbwTufU7459aHV11PJciL
-         9dz+QKipaWpbKbh1ujgYF/xoGp/v6NbAKoDQpW4hOl67sv+7wvzgVfki2dho64hBcFor
-         fcEbmEXxbx1was+d1R2yS9fkRmZnJGf4Sx1RY=
+        bh=uCNS/1tsMH3gpvzxgAAIaqkCnAS6sWBdlSRx2pRTz10=;
+        b=IOg+fbpz6tQcbWPdlOfBL3oDVGI7t0PNLAKb3UvRDeV0NrkGV2mEzE0nk4ZN98ksdr
+         js8JiwvB+ceZTZ83kI0CXxAvYkDKO6aPZOqJOkM2vSGeLqyqZNqwz/FuBNdgJFR6atRQ
+         SKBV4PWIFyMdsKl8R+7tlxuaBqywaY6+YVPRs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=ZLNKXl2dvFScBuYQrRBHCdfSv3EFC+dCkUNctDYGPzv89AQlmqXe4LjGGuLDfdj47Z
-         Hz13yXq4Yxyr47muongK3+SsNXYfVjFh/cNat1Tuqbewy+NlZRarRiRlF7GAbdDCumr7
-         8L3sNVK8rMvtfqWrPIrzTxgUa6+DDAKhQsG6U=
-Received: by 10.216.52.2 with HTTP; Sat, 27 Mar 2010 05:44:12 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.1003262142121.694@xanadu.home>
-Received: by 10.216.86.206 with SMTP id w56mr1308794wee.1.1269693852926; Sat, 
-	27 Mar 2010 05:44:12 -0700 (PDT)
+        b=RV/h9w1s+tcCc1wwu9vyVZipV0WQGgAQ/Z00154QYzzl7dDbeh/JWqpmnym6WGgvN4
+         6aOMMoh8Ki292b5kAgG5jFHooRHwL6yZzPV0KRRZ3d9y/Y+0O+o9VKiteYjc7kNN8BS0
+         wB9rwYEcY5An2haxhozxLCDatePIoMZVe7OIA=
+Received: by 10.239.140.138 with HTTP; Sat, 27 Mar 2010 06:26:20 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1003241613020.694@xanadu.home>
+Received: by 10.239.187.131 with SMTP id l3mr217347hbh.104.1269696380935; Sat, 
+	27 Mar 2010 06:26:20 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143329>
 
-Hey,
+On Wed, Mar 24, 2010 at 21:22, Nicolas Pitre <nico@fluxnic.net> wrote:
+> By providing a hook for the routine responsible for trying to free so=
+me
+> memory on malloc failure, we can ensure that the =A0called routine is
+> protected by the appropriate locks when threads are in play.
+>
+> The obvious offender here was pack-objects which was calling xmalloc(=
+)
+> within threads while release_pack_memory() is not thread safe.
+>
+> Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
+> ---
+>
+> On Wed, 24 Mar 2010, Shawn Pearce wrote:
+>
+>> On Wed, Mar 24, 2010 at 11:54 AM, Nicolas Pitre <nico@fluxnic.net> w=
+rote:
+>> > Another solution could be for xmalloc() to use a function pointer =
+for
+>> > the method to use on malloc error path, which would default to a
+>> > function calling release_pack_memory(size, -1). =A0Then pack-objec=
+ts.c
+>> > would override the default with its own to acquire the read_mutex =
+around
+>> > the call to release_pack_memory(). =A0That is probably the easiest
+>> > solution for now.
+>>
+>> Yea, that sounds like the most reasonable solution right now.
+>
+> So here it is.
+>
+> Note: there was a dubious usage of fd when calling release_pack_memor=
+y()
+> in xmmap() which is now removed.
+>
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 9780258..65f797f 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -1522,6 +1522,13 @@ static void find_deltas(struct object_entry **=
+list, unsigned *list_size,
+>
+> =A0#ifndef NO_PTHREADS
+>
+> +static void try_to_free_from_threads(size_t size)
+> +{
+> + =A0 =A0 =A0 read_lock();
+> + =A0 =A0 =A0 release_pack_memory(size, -1);
+> + =A0 =A0 =A0 read_unlock();
+> +}
+> +
 
-Sorry it's taken me a bit - I'm traveling right now.
+Will this really work in all cases? In the find_deltas -> try_delta ->
+read_sha1_file -> ... -> xmalloc call path, the mutex is already
+locked when we get to xmalloc. As the mutex is of the default type
+(NULL is passed as the mutex attribute argument to
+pthread_mutex_init), it is undefined behaviour to lock the mutex again
+(see http://www.opengroup.org/onlinepubs/007908799/xsh/pthread_mutexatt=
+r_gettype.html
+)
 
-On Fri, Mar 26, 2010 at 6:56 PM, Nicolas Pitre <nico@fluxnic.net> wrote=
-:
->> > > Given that GitHub has blessed the world with this corruption,
->> > > we may need to modify JGit to accept it.
+I just realised that builtin/grep.c also needs a fix for its use of xma=
+lloc.
 
-Well, shouldn't it accept it just because CGit accepts it?  Isn't that
-an incompatibility in implementation?
-
->> But GitHub's approach here seems to be "Meh, its fine, don't worry
->> about it".
-
-That isn't really my approach, I actually thought I had fixed this a
-while ago.  It seems to be a pretty understandable mistake, since
-ls-tree and cat-file -p both output zero padded modes and it is only
-an issue on trees with subtrees, obviously, so we don't see it all the
-time at GitHub.  I have fixed this and it's in the queue for
-deployment which should be in the next few days (I gotta get home
-first).
-
-> It's up to GitHub to fork Git then, and while at it stop calling it G=
-it
-> compatible. =C2=A0Really. =C2=A0If we start to get slack about the pa=
-ck format
-> like this then every Git reimplementation du jour will make similar
-> deviations except in different directions and we'll end up with a mes=
-s
-> to support.
-
-Really?  It's not the pack format - we use stock Git servers and
-almost always have.  It's the tree writing when someone edits a file
-inline - I was writing out zero-padded trees. And, it _is_ Git
-compatible - CGit only issues a warning, and that only if the
-circumstances align such that we write a tree with a subtree, which
-again is pretty rare.  There are only a handful of projects like this
-and in all CGit circumstances makes no practical difference.
-
-> My stance has always been that the C Git is authoritative with regard=
-s to
-> formats and protocols. =C2=A0It's up to Github to fix their screw-up.
-
-It is fixed and will be deployed soon, but really, there is no reason
-to be snippy.  It is a simple and minor mistake effecting very few
-repositories (maybe 100 out of 730k), and the only reason it's an
-issue at all is that JGit is not following the authoritative CGit
-implementation of basically ignoring it.
-
-Also, if we're all concerned about "Git reimplementation du jour"
-deviations, then we need to focus on libifying Git so there isn't a
-need for such re-implementations.  I'm hoping to help with a possible
-GSoC project on libgit2, but the lack of a linkable library will
-ensure that re-implementations in nearly every useful language will
-continue.
-
-Scott
+- Fredrik
