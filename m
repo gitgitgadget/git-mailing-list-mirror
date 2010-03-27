@@ -1,71 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Teach 'git grep' about
- --open-files-in-pager=[<pager>]
-Date: Fri, 26 Mar 2010 18:09:32 -0700
-Message-ID: <7v39zm7epf.fsf@alter.siamese.dyndns.org>
-References: <alpine.DEB.1.00.1003261145500.7596@pacific.mpi-cbg.de>
- <20100326124650.GA12215@coredump.intra.peff.net>
- <7vwrwykhee.fsf@alter.siamese.dyndns.org> <m239zmdcz5.fsf@gmail.com>
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: [PATCH/RFC] gitk: Ignore limitdiffs option when displaying commit 
+	file list.
+Date: Fri, 26 Mar 2010 21:17:51 -0400
+Message-ID: <32c343771003261817o131ae413udb9dc579c936f5db@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 27 02:09:58 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: markb@berlios.de
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, j.sixt@viscovery.net
+X-From: git-owner@vger.kernel.org Sat Mar 27 02:18:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvKXF-000467-Pe
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 02:09:58 +0100
+	id 1NvKfC-0007B7-JV
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 02:18:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753981Ab0C0BJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Mar 2010 21:09:50 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40134 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753262Ab0C0BJo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Mar 2010 21:09:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DB23A5599;
-	Fri, 26 Mar 2010 21:09:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MtDs0a2XMk6Q1TeR/arr1lQnD84=; b=Uw9z0V
-	umf3B9/A6pq+Feii9uj/Knk7KyFP9uo3/huxCmElrGzzL6KBFbB3zs2e26m/bid/
-	2WugFWx+DHYaG2F240xMXiI2GQa6ylW+0LbbczjaipWn6l2JFxlKoI0fE2ymKZC+
-	lP0w+iwkLDA0s+jliGvkFyQmtPyBhbmz2maDU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=r3/5LHWkwBRNlt70d6Uppk0tzGBFVwKx
-	DVfnJFIY4syCqh5UpXnEKUUiRzrNwIGzoo4tAsIUoGH1efj9qoLacNtEPGeKaUgK
-	lZW2rvyu3jBrc3hdYFBaLrV23Y+HCGl82JNrwEwPvryoQnH+iLxjgo03EQ4n+17J
-	3UIGLpk5brk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 17F9DA5594;
-	Fri, 26 Mar 2010 21:09:39 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DEF45A558F; Fri, 26 Mar
- 2010 21:09:33 -0400 (EDT)
-In-Reply-To: <m239zmdcz5.fsf@gmail.com> (Francis Moreau's message of "Fri\,
- 26 Mar 2010 21\:50\:22 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6AB8BF7A-393D-11DF-8500-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754014Ab0C0BRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Mar 2010 21:17:53 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:54242 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753262Ab0C0BRw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Mar 2010 21:17:52 -0400
+Received: by wyb39 with SMTP id 39so159732wyb.19
+        for <git@vger.kernel.org>; Fri, 26 Mar 2010 18:17:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:received:message-id
+         :subject:from:to:cc:content-type;
+        bh=SZl+tIvcpxaeB4B9ulb9sgg9B7Yj3oCrhpJfuJB3IxQ=;
+        b=T/kwrUa3kcLyt5KxeTo62ECJ7Oj2hT+N9GVYyGbP67cxVhp8rVo4O53TeGA5Y/+P0p
+         uPJR4Abr9a1nkineaC06hQGd1+aaL0Eh1V/Lpb2clGuTa7pqO+dimvvQ+38kqfrtFQJn
+         PGDx6OtZeVJxck1UgskmA2oYxsmnL32b5bhPA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=bJj4Jf2JcMHlzlc70KgW7G1Tnim2mDpq0GeGppFE3f7nMKdDuOeD1YGlh3MeIHBWV8
+         6qSSaSdabIaG9pBWQavIezCPvRC6pqLOemF0C+dOzyS3AHBNWBpK+HOwSp/eX06UcY3x
+         FZkq0JxwrHjz/v/uDFBRhA5Hr3pBJ5lXGBi6E=
+Received: by 10.216.72.137 with HTTP; Fri, 26 Mar 2010 18:17:51 -0700 (PDT)
+Received: by 10.216.86.211 with SMTP id w61mr1042497wee.50.1269652671276; Fri, 
+	26 Mar 2010 18:17:51 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143308>
 
-Francis Moreau <francis.moro@gmail.com> writes:
+When gitk is invoked with a path argument (e.g. gitk gitk-git),
+the path is used to filter the list of files displayed in the
+lower right window.  If a file does not start with the specified
+substring, it is not displayed.  This is counter-intuitive for
+a couple reasons:
+  1) The files continue to be listed in the diff window.
+  2) Merge commits (i.e. commits with more than 1 parent still
+     show the complete list of files in the lower right since
+     these commits are processed by mergediff rather than
+     startdiff function.
 
->> and I often run "git grep -n" in that mode..
->
-> I always need to pass the '--no-pager' switch: "git --no-pager grep -n"
-> since git doesn't detect that its output is sent to a 'dumb' terminal.
+With this change, the complete list of files affected by a
+commit will always be shown in the lower right window.
 
-Sorry, but as any self-respecting Emacs user would have PAGER set to cat
-(and EDITOR set to emacsclient), I thought nobody would need --no-pager
-;-)
+Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
+---
+
+I noticed this issue recently when trying gitk.  After some research, I found
+this thread [1] which explained the issue.  However, the operation still does
+not seem consistent.  This patch fixes the "problem" that I encountered, but
+I can't help wondering:
+    1) I am breaking another feature?  Especially since the
+'$vfilelimit($curview) ne {}'
+        check is now ignored.
+    2) Can the limitdiffs option be completely removed?  If not, the behavior
+        of startdiff and mergediff should at least be made consistent.
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/133088
+
+ gitk-git/gitk |   12 +-----------
+ 1 files changed, 1 insertions(+), 11 deletions(-)
+
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 1f36a3e..518061e 100644
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -7450,17 +7450,7 @@ proc gettreediffline {gdtf ids} {
+ 	return [expr {$nr >= $max? 2: 1}]
+     }
+     close $gdtf
+-    if {$limitdiffs && $vfilelimit($curview) ne {}} {
+-	set flist {}
+-	foreach f $treediff {
+-	    if {[path_filter $vfilelimit($curview) $f]} {
+-		lappend flist $f
+-	    }
+-	}
+-	set treediffs($ids) $flist
+-    } else {
+-	set treediffs($ids) $treediff
+-    }
++    set treediffs($ids) $treediff
+     unset treepending
+     if {$cmitmode eq "tree" && [llength $diffids] == 1} {
+ 	gettree $diffids
+-- 
+1.7.0.3.291.g5e4f6.dirty
