@@ -1,112 +1,95 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] difftool: Fix '--gui' when diff.guitool is unconfigured
-Date: Sat, 27 Mar 2010 14:58:09 -0700
-Message-ID: <1269727089-9506-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 27 22:58:34 2010
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Tree with leading '0' modes in 1.7.0.3
+Date: Sat, 27 Mar 2010 18:16:03 -0400
+Message-ID: <32541b131003271516l3a41ad6dnb75eacb0ad7a8850@mail.gmail.com>
+References: <20100326230537.GC10910@spearce.org> <32541b131003261656h430d77a8q753c6141297e8f86@mail.gmail.com> 
+	<4BAD4A82.5070703@gmail.com> <20100327012211.GD10910@spearce.org> 
+	<alpine.LFD.2.00.1003262125120.694@xanadu.home> <20100327013443.GE10910@spearce.org> 
+	<alpine.LFD.2.00.1003262142121.694@xanadu.home> <d411cc4a1003270544l43f2f93dq5006efb737aa7bbc@mail.gmail.com> 
+	<alpine.LFD.2.00.1003270959110.694@xanadu.home> <20100327191405.GF10910@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Pitre <nico@fluxnic.net>, Scott Chacon <schacon@gmail.com>,
+	"Mike.lifeguard" <mike.lifeguard@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Mar 27 23:16:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nve1Z-00055k-Im
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 22:58:33 +0100
+	id 1NveIv-0007AI-Sp
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 23:16:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754033Ab0C0V6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Mar 2010 17:58:17 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:62754 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754020Ab0C0V6Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Mar 2010 17:58:16 -0400
-Received: by gwaa18 with SMTP id a18so3313343gwa.19
-        for <git@vger.kernel.org>; Sat, 27 Mar 2010 14:58:15 -0700 (PDT)
+	id S1754061Ab0C0WQY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Mar 2010 18:16:24 -0400
+Received: from mail-yx0-f199.google.com ([209.85.210.199]:64491 "EHLO
+	mail-yx0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754020Ab0C0WQY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Mar 2010 18:16:24 -0400
+Received: by yxe37 with SMTP id 37so3992460yxe.21
+        for <git@vger.kernel.org>; Sat, 27 Mar 2010 15:16:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=h9v8JW31xyGSwYsvN/TxdEAksYnGMxphFVvr0AI3otA=;
-        b=C6AoAbay+Fl+8ECtLPbPtmyVoihAQPdZaC8nW74GPKIvRXj6++e/BAU1pOGzcGPcJk
-         1wXXlL/gOhyM3mlui5EX4irAUBD1oWa2HYC2pbMlm/3ylyp0hl8TwISCuitX2ebVNlDf
-         +2DKOGSgzB3zsMrRHVoL6bIac5Qv0wThbCxtU=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=9x6ocvm9nKeC9swKW6j+ziVLOtSio5Ay+XrEAiboTmk=;
+        b=jPwiaWxYv/P5+Mp5lLP5j6unzhwKySfuEy90J1nazx0soX4ZvARZQrjEQWP2mkjuB9
+         vzfXdxumZEy/kDbB5UhzlqGyBYshtZcaXdIX74Z3WD/cTRCe+oitK9vPEL+2uGWfryBS
+         dIUZXUfdB43iFcd5+Ce4yT6LJ/FrpRSJ6VovA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=STr5+6yp7JHtaAvicF2htIjlIFXME4hUNIT+qlCVCSBPjj5JvHhALEAL1opO7/7LfG
-         5AtksanorwBo2b5QRzIGcemRfz1bO3qODGSMmmDBie3e19++v/Ec9X0QheqpWnewEpng
-         8BsJdfOw9+THhkrjmU7eSPoPnR+rcMz69LNRU=
-Received: by 10.100.233.9 with SMTP id f9mr4531040anh.182.1269727095558;
-        Sat, 27 Mar 2010 14:58:15 -0700 (PDT)
-Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 7sm639157ywc.4.2010.03.27.14.58.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 27 Mar 2010 14:58:14 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.3.291.g5e4f6
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=rx7U1/MSd6dChYFRG0IxuA+r/RVnhfHyf9SR69i3T9CF754La3non6e7IOEZ05J4FW
+         HgqBReEh0Hh+LW6dfgYsY7k/ycOK47jRS6PhgnxlAe8Trc7RVZJt8cSa4sf9EsuaIWIl
+         H3mepe5QXfAK4d3R2cEN9bdxlhhoafAW47qM8=
+Received: by 10.151.51.17 with HTTP; Sat, 27 Mar 2010 15:16:03 -0700 (PDT)
+In-Reply-To: <20100327191405.GF10910@spearce.org>
+Received: by 10.150.120.15 with SMTP id s15mr3016310ybc.143.1269728183172; 
+	Sat, 27 Mar 2010 15:16:23 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143360>
 
-When diff.guitool is unconfigured and "--gui" is specified
-git-difftool dies with the following error message:
+On Sat, Mar 27, 2010 at 3:14 PM, Shawn O. Pearce <spearce@spearce.org> =
+wrote:
+> Nicolas Pitre <nico@fluxnic.net> wrote:
+>> On Sat, 27 Mar 2010, Scott Chacon wrote:
+>> > , and the only reason it's an
+>> > issue at all is that JGit is not following the authoritative CGit
+>> > implementation of basically ignoring it.
+>>
+>> But again CGit's fsck is not ignoring this discrepancy. =A0And if th=
+e CGit
+>> core is otherwise silently accepting it then it is a mistake.
+>
+> Right. =A0I tend to agree. =A0CGit was too lax here, fsck shouldn't
+> be issuing a warning, it should be a fatal error. =A0Both CGit and
+> JGit are too lax by not failing when reading that tree during
+> normal processing.
 
-	config diff.guitool: command returned error: 1
+Gah, no!  Why would you want to make CGit work *less*?  Print a
+warning, sure, but since the tree is perfectly readable, there's no
+reason to refuse to read it.  That's just rude.
 
-Catch the error so that the "--gui" flag is a no-op when
-diff.guitool is unconfigured.
+Similarly, there should be no reason for fsck to treat *any*
+recoverable error as fatal.  If it drops dead, it then misses the
+chance to diagnose later problems.  When I run fsck, I want to see all
+the problems, not just the first one, especially if the first one can
+be fixed by filter-branch.  Bonus points if (like e2fsck) it offers to
+fix it for me, though that's probably not worth implementing here.
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
+CGit works fine already.  The only problem it has is that it works so
+well that Scott didn't notice his bug.  This can be fixed by adding a
+simple warning.
 
-This is probably 'maint' material.
+Have fun,
 
- git-difftool.perl   |   12 +++++++-----
- t/t7800-difftool.sh |    9 +++++++++
- 2 files changed, 16 insertions(+), 5 deletions(-)
-
-diff --git a/git-difftool.perl b/git-difftool.perl
-index d975d07..adc42de 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -78,11 +78,13 @@ sub generate_command
- 			next;
- 		}
- 		if ($arg eq '-g' || $arg eq '--gui') {
--			my $tool = Git::command_oneline('config',
--			                                'diff.guitool');
--			if (length($tool)) {
--				$ENV{GIT_DIFF_TOOL} = $tool;
--			}
-+			eval {
-+				my $tool = Git::command_oneline('config',
-+				                                'diff.guitool');
-+				if (length($tool)) {
-+					$ENV{GIT_DIFF_TOOL} = $tool;
-+				}
-+			};
- 			next;
- 		}
- 		if ($arg eq '-y' || $arg eq '--no-prompt') {
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 19c72f5..1de83ef 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -92,6 +92,15 @@ test_expect_success 'difftool honors --gui' '
- 	restore_test_defaults
- '
- 
-+test_expect_success 'difftool --gui works without configured diff.guitool' '
-+	git config diff.tool test-tool &&
-+
-+	diff=$(git difftool --no-prompt --gui branch) &&
-+	test "$diff" = "branch" &&
-+
-+	restore_test_defaults
-+'
-+
- # Specify the diff tool using $GIT_DIFF_TOOL
- test_expect_success 'GIT_DIFF_TOOL variable' '
- 	git config --unset diff.tool
--- 
-1.7.0.3.291.g5e4f6
+Avery
