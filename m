@@ -1,129 +1,70 @@
-From: Fredrik Kuivinen <frekui@gmail.com>
-Subject: Re: [PATCH] Make xmalloc and xrealloc thread-safe
-Date: Sat, 27 Mar 2010 14:26:20 +0100
-Message-ID: <4c8ef71003270626y45685e69j28ccb8a8738b9083@mail.gmail.com>
-References: <20100323161713.3183.57927.stgit@fredrik-laptop>
-	 <20100323184309.GA31668@spearce.org>
-	 <4c8ef71003231421u789c4332h461c066add0ec7b1@mail.gmail.com>
-	 <alpine.LFD.2.00.1003231945480.31128@xanadu.home>
-	 <4c8ef71003240823o7cd733bn5f19699305c94cba@mail.gmail.com>
-	 <alpine.LFD.2.00.1003241133430.694@xanadu.home>
-	 <ec874dac1003241122s3d592f26n1b23d23144939218@mail.gmail.com>
-	 <alpine.LFD.2.00.1003241435300.694@xanadu.home>
-	 <ec874dac1003241257r3cad86c9q1af84d3732e23ca8@mail.gmail.com>
-	 <alpine.LFD.2.00.1003241613020.694@xanadu.home>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] rev-list: heed --abbrev-commit option
+Date: Sat, 27 Mar 2010 14:30:28 +0100
+Message-ID: <4BAE0874.6090603@drmicha.warpmail.net>
+References: <4BA76BDF.6060106@drmicha.warpmail.net> <b1b0f22cf3dc6d67f6094e761a1b7402b1471e97.1269264868.git.git@drmicha.warpmail.net> <7vk4sylvzj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Sat Mar 27 14:26:39 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 27 14:30:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvW2A-000522-Pn
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 14:26:39 +0100
+	id 1NvW5i-0006iE-2o
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Mar 2010 14:30:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753066Ab0C0N0X convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Mar 2010 09:26:23 -0400
-Received: from mail-fx0-f223.google.com ([209.85.220.223]:63339 "EHLO
-	mail-fx0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752931Ab0C0N0W convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 Mar 2010 09:26:22 -0400
-Received: by fxm23 with SMTP id 23so2804715fxm.21
-        for <git@vger.kernel.org>; Sat, 27 Mar 2010 06:26:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=uCNS/1tsMH3gpvzxgAAIaqkCnAS6sWBdlSRx2pRTz10=;
-        b=IOg+fbpz6tQcbWPdlOfBL3oDVGI7t0PNLAKb3UvRDeV0NrkGV2mEzE0nk4ZN98ksdr
-         js8JiwvB+ceZTZ83kI0CXxAvYkDKO6aPZOqJOkM2vSGeLqyqZNqwz/FuBNdgJFR6atRQ
-         SKBV4PWIFyMdsKl8R+7tlxuaBqywaY6+YVPRs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=RV/h9w1s+tcCc1wwu9vyVZipV0WQGgAQ/Z00154QYzzl7dDbeh/JWqpmnym6WGgvN4
-         6aOMMoh8Ki292b5kAgG5jFHooRHwL6yZzPV0KRRZ3d9y/Y+0O+o9VKiteYjc7kNN8BS0
-         wB9rwYEcY5An2haxhozxLCDatePIoMZVe7OIA=
-Received: by 10.239.140.138 with HTTP; Sat, 27 Mar 2010 06:26:20 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.1003241613020.694@xanadu.home>
-Received: by 10.239.187.131 with SMTP id l3mr217347hbh.104.1269696380935; Sat, 
-	27 Mar 2010 06:26:20 -0700 (PDT)
+	id S1753240Ab0C0NaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Mar 2010 09:30:11 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:43445 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753087Ab0C0NaK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Mar 2010 09:30:10 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 16CDEE91A0;
+	Sat, 27 Mar 2010 09:30:09 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Sat, 27 Mar 2010 09:30:09 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=NbiqNxCvOfxQ976By/WDevNiZoI=; b=Y7P08Jn+Cx6MGa+c53Za4fMZ3lakoY/jYYPucg1D9669OTapRdlZVyOFnn1hFA5UkH9freUUyums0hkKXLjhks1r1QJCTECdJgrd6eXsmFYa2/HRzl9R4MkPpgXkzi4BfH7LFn80FPW/Dw+Op68uDsCF/BnnXLhY7eZzhY2I87A=
+X-Sasl-enc: rscmKMEVgfiR1SsugvbTSMXbvjIAtkTLw0v6G8Uy9arl 1269696608
+Received: from localhost.localdomain (p3EE29A92.dip0.t-ipconnect.de [62.226.154.146])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 2DBF8AD5D;
+	Sat, 27 Mar 2010 09:30:08 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10pre) Gecko/20100319 Lightning/1.0b2pre Shredder/3.0.5pre
+In-Reply-To: <7vk4sylvzj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143330>
 
-On Wed, Mar 24, 2010 at 21:22, Nicolas Pitre <nico@fluxnic.net> wrote:
-> By providing a hook for the routine responsible for trying to free so=
-me
-> memory on malloc failure, we can ensure that the =A0called routine is
-> protected by the appropriate locks when threads are in play.
->
-> The obvious offender here was pack-objects which was calling xmalloc(=
-)
-> within threads while release_pack_memory() is not thread safe.
->
-> Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
-> ---
->
-> On Wed, 24 Mar 2010, Shawn Pearce wrote:
->
->> On Wed, Mar 24, 2010 at 11:54 AM, Nicolas Pitre <nico@fluxnic.net> w=
-rote:
->> > Another solution could be for xmalloc() to use a function pointer =
-for
->> > the method to use on malloc error path, which would default to a
->> > function calling release_pack_memory(size, -1). =A0Then pack-objec=
-ts.c
->> > would override the default with its own to acquire the read_mutex =
-around
->> > the call to release_pack_memory(). =A0That is probably the easiest
->> > solution for now.
->>
->> Yea, that sounds like the most reasonable solution right now.
->
-> So here it is.
->
-> Note: there was a dubious usage of fd when calling release_pack_memor=
-y()
-> in xmmap() which is now removed.
->
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 9780258..65f797f 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -1522,6 +1522,13 @@ static void find_deltas(struct object_entry **=
-list, unsigned *list_size,
->
-> =A0#ifndef NO_PTHREADS
->
-> +static void try_to_free_from_threads(size_t size)
-> +{
-> + =A0 =A0 =A0 read_lock();
-> + =A0 =A0 =A0 release_pack_memory(size, -1);
-> + =A0 =A0 =A0 read_unlock();
-> +}
-> +
+Junio C Hamano venit, vidit, dixit 26.03.2010 20:32:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> Currently, rev-list has a default of "0" for abbrev which means that
+>> switching on abbreviations with --abbrev-commit has no visible effect,
+>> even though the option is documented.
+> 
+> Hmm, I actually think this was deliberate.  rev-list is designed to be a
+> low level machinery for getting full object names, and in that context,
+> setting the default abbreviation length to "don't abbreviate" gave us some
+> safety, with additional safety of requiring a separate --abbrev-commit
+> option to affect the main "show the commit object names" codepath (the
+> latter of which would not likely to change).  The caller sets explicitly
+> how long an output it wants (see git-rebase--interactive for an example).
 
-Will this really work in all cases? In the find_deltas -> try_delta ->
-read_sha1_file -> ... -> xmalloc call path, the mutex is already
-locked when we get to xmalloc. As the mutex is of the default type
-(NULL is passed as the mutex attribute argument to
-pthread_mutex_init), it is undefined behaviour to lock the mutex again
-(see http://www.opengroup.org/onlinepubs/007908799/xsh/pthread_mutexatt=
-r_gettype.html
-)
+My thinking was that unless --abbrev-commit is specified, nothing is
+abbreviated, so that one has reproducible (plumbing) behaviour.
 
-I just realised that builtin/grep.c also needs a fix for its use of xma=
-lloc.
+I learned that --abbrev= implies --abbrev-commit, but again, this means
+explicitly requiring non-plumbing behavior.
 
-- Fredrik
+> 
+> Having said that, I don't think this would break existing scripts, so
+> let's queue it and see what happens.
+
+OK!
+Michael
