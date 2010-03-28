@@ -1,56 +1,56 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2] gitk: Use git-difftool for external diffs
-Date: Sat, 27 Mar 2010 17:01:50 -0700
-Message-ID: <1269734510-11503-1-git-send-email-davvid@gmail.com>
+Subject: [PATCH v3] gitk: Use git-difftool for external diffs
+Date: Sat, 27 Mar 2010 17:20:00 -0700
+Message-ID: <1269735600-12769-1-git-send-email-davvid@gmail.com>
 References: <1269726316-30443-1-git-send-email-davvid@gmail.com>
 Cc: Markus Heidelberg <markus.heidelberg@web.de>,
 	Junio C Hamano <gitster@pobox.com>,
 	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
 To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sun Mar 28 01:02:06 2010
+X-From: git-owner@vger.kernel.org Sun Mar 28 01:20:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nvfx3-0001Fj-W4
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Mar 2010 01:02:02 +0100
+	id 1NvgEg-0007r1-Ud
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Mar 2010 01:20:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754259Ab0C1AB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Mar 2010 20:01:57 -0400
-Received: from mail-yw0-f172.google.com ([209.85.211.172]:44767 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754027Ab0C1AB4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Mar 2010 20:01:56 -0400
-Received: by ywh2 with SMTP id 2so4247195ywh.33
-        for <git@vger.kernel.org>; Sat, 27 Mar 2010 17:01:56 -0700 (PDT)
+	id S1754354Ab0C1AUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Mar 2010 20:20:08 -0400
+Received: from mail-yx0-f191.google.com ([209.85.210.191]:47785 "EHLO
+	mail-yx0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754328Ab0C1AUG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Mar 2010 20:20:06 -0400
+Received: by yxe29 with SMTP id 29so1394446yxe.4
+        for <git@vger.kernel.org>; Sat, 27 Mar 2010 17:20:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=37A6cZXjKuO1uahp2EdFl/MI6R8Gr7YtTuIR0psfW5I=;
-        b=FG+EuGsautxH0EWZLxeyjG3tlfCyTK5LABo9Iw7IqnzShm1wfNNhWGigfHCa3tFueN
-         HBegGt/2WQK4oBgW3Mp/i4Tzn0NokRNf95jDtxSfXiQFyK4Xu72RS56sAKRIYMrjgt4P
-         szLkvwgp5pKo370oMYoLn/Ra9kCqVtTTc7PJ8=
+        bh=fHXtrR72lX9NzfJ4fFDBmhuG6gx6mFB7ARNz95ZE8eg=;
+        b=OjODZErkr7dQal4GpQxs+tatdHQVqp1tqJDHfAhQ0Gk0Z9Pkzy8th0zNmnHVcp5AXP
+         4cw992PI2pYvJQK9xK8t2834Ntql8hb4wK5Z0hQxutKQNABc6H6+M2Os1ghP2Z3eoyFe
+         2MEVipkk9t8xSunqEfs37Qw1NHwedkhLru6q8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ZETHAqZAc2+qQZq/cu0hmVTMYr0NQAd7Jl8kJ2wzy973VdVW2DldWY92Fs0FrqgLN/
-         TFyEFfNp/YUVq2JmZnGItq8pmiYlhkQdfxCqB0MQqjClH/URxUphVG9eWAV4H6NYZtB8
-         RqNb13gKC39KNYe3/irruFtbStt5R8GEqzI3E=
-Received: by 10.101.111.12 with SMTP id o12mr986anm.8.1269734516011;
-        Sat, 27 Mar 2010 17:01:56 -0700 (PDT)
+        b=CzfMmuQMJFop+xo6exWpCTYZRDYkZf/PiOaZH9yGL+ilIfzx6eZayqo+GWH9WuDGcA
+         Ho4F8Uf6bg4ppBSgVPY+gitb3w8Jd1WDi/Z0rw+2mHkjf0VS0Mglrc+daHLhu4Vf1kcn
+         kN4lQj8f6t1Ra5L9xztbQEKSkRJaj6/PwhzaU=
+Received: by 10.151.117.16 with SMTP id u16mr3134322ybm.294.1269735605604;
+        Sat, 27 Mar 2010 17:20:05 -0700 (PDT)
 Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 9sm662273ywe.22.2010.03.27.17.01.54
+        by mx.google.com with ESMTPS id 8sm677709ywg.27.2010.03.27.17.20.03
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 27 Mar 2010 17:01:55 -0700 (PDT)
+        Sat, 27 Mar 2010 17:20:04 -0700 (PDT)
 X-Mailer: git-send-email 1.7.0.3.292.gbeff
 In-Reply-To: <1269726316-30443-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143367>
 
 This teaches gitk about git-difftool.  A benefit of this change
 is that gitk's external diff feature now works with read-only
@@ -59,17 +59,16 @@ repositories.
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
 
-Differences since the first patch:
-This one doesn't pass "--gui" to difftool.
+Differences since v1 and v2:
 
-"--gui" was mistakenly included in the first patch and
-consequently uncovered a bug in difftool.
+v1: Do not pass "--gui" to difftool
+v2: Do not needlessly check if $flist_menu_file is non-empty
 
- gitk |   58 +++++++++-------------------------------------------------
- 1 files changed, 9 insertions(+), 49 deletions(-)
+ gitk |   58 ++++++++--------------------------------------------------
+ 1 files changed, 8 insertions(+), 50 deletions(-)
 
 diff --git a/gitk b/gitk
-index 1f36a3e..46c103e 100755
+index 1f36a3e..637f8f9 100755
 --- a/gitk
 +++ b/gitk
 @@ -3317,39 +3317,6 @@ proc gitknewtmpdir {} {
@@ -112,7 +111,7 @@ index 1f36a3e..46c103e 100755
  proc external_diff {} {
      global nullid nullid2
      global flist_menu_file
-@@ -3375,23 +3342,16 @@ proc external_diff {} {
+@@ -3375,24 +3342,15 @@ proc external_diff {} {
          set diffidto [lindex $diffids 1]
      }
  
@@ -132,18 +131,18 @@ index 1f36a3e..46c103e 100755
 -        } else {
 -            fconfigure $fl -blocking 0
 -            filerun $fl [list delete_at_eof $fl $diffdir]
-+    if {$flist_menu_file ne {}} {
-+        set cmd [list "git" "difftool" "--no-prompt" "--extcmd" $extdifftool]
-+        if {$diffidfrom ne $nullid && $diffidfrom ne $nullid2} {
-+            lappend cmd $diffidfrom
-+        }
-+        if {$diffidto ne $nullid && $diffidto ne $nullid2} {
-+            lappend cmd $diffidto
-         }
-+        lappend cmd "--" $flist_menu_file
-+        eval exec $cmd &
+-        }
++    set cmd [list "git" "difftool" "--no-prompt" "--extcmd" $extdifftool]
++    if {$diffidfrom ne $nullid && $diffidfrom ne $nullid2} {
++        lappend cmd $diffidfrom
++    }
++    if {$diffidto ne $nullid && $diffidto ne $nullid2} {
++        lappend cmd $diffidto
      }
++    lappend cmd "--" $flist_menu_file
++    eval exec $cmd &
  }
  
+ proc find_hunk_blamespec {base line} {
 -- 
 1.7.0.3.292.gbeff
