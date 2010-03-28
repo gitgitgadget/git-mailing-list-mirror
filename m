@@ -1,83 +1,120 @@
-From: Thomas Anderson <zelnaga@gmail.com>
-Subject: Re: updating github.com forks, developing in remote branches and 
-	svn:eol-style equiv?
-Date: Sun, 28 Mar 2010 12:07:14 -0500
-Message-ID: <15b345f1003281007r3e8b3e86p787f9ef554054adf@mail.gmail.com>
-References: <15b345f1003272332u2f4d38ear5c8aeef9b35f5037@mail.gmail.com>
-	 <158811269761123@webmail102.yandex.ru>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] pull: mention "pull", not "fetch" in the error
+ message.
+Date: Sun, 28 Mar 2010 10:14:35 -0700
+Message-ID: <7vmxxs4bd0.fsf@alter.siamese.dyndns.org>
+References: <4BACC241.4010608@drmicha.warpmail.net>
+ <1269615836-13995-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Alexander Iljin <ajsoft@yandex.ru>
-X-From: git-owner@vger.kernel.org Sun Mar 28 19:07:33 2010
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sun Mar 28 19:14:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvvxR-0006aO-AO
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Mar 2010 19:07:29 +0200
+	id 1Nvw4Y-0001j3-AS
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Mar 2010 19:14:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754681Ab0C1RHU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Mar 2010 13:07:20 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:53097 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753091Ab0C1RHP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 Mar 2010 13:07:15 -0400
-Received: by pwi5 with SMTP id 5so6093294pwi.19
-        for <git@vger.kernel.org>; Sun, 28 Mar 2010 10:07:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=nGMwLc5frxnCw28QpRGVRZ2NoUcsJWDpM2XgEdLTz2c=;
-        b=rRFW39r4UFRhvnRPquL5NRrlPBYN/C8ubpjYAIcHCrrt4XFwCVrPUl19ywz3Rv/Tgu
-         egnG44OR+iswHmRXmZGk6TEOIWN9Nzhu1ZQEvJdC1rmQuOim6AgMBN+bd9+xq/xlh92m
-         WWqBjS0dhTAaar0coJiyvNO7VN0ZtGvEyNT/Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ef+RDMnIBvjmeET62OClrFmhF9hrs2Ubt040fHzXku5nw07/YOikErTJUutXlZEFRq
-         UXY/K2/3qkIV/C/1ZsTPTYJOK1LLrAdtf+GakmNRqZKcN92tD6RiJKR1QWiR6mQrHQcF
-         0dm847Cv6jNtJrAf4zLsG397NfbpHudqfYwl8=
-Received: by 10.143.167.17 with HTTP; Sun, 28 Mar 2010 10:07:14 -0700 (PDT)
-In-Reply-To: <158811269761123@webmail102.yandex.ru>
-Received: by 10.142.202.4 with SMTP id z4mr1562500wff.294.1269796034428; Sun, 
-	28 Mar 2010 10:07:14 -0700 (PDT)
+	id S1754817Ab0C1ROo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Mar 2010 13:14:44 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64012 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753837Ab0C1ROn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Mar 2010 13:14:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EDAF1A6C93;
+	Sun, 28 Mar 2010 13:14:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Kbmrjsm9o32A07JCZSVGN4nlxoM=; b=n/BNX5
+	PLyyDbeuKGxOGdA8rECVd7aQkbdSQ1c1ExARgK0dEylw7UEwCyEVMlCq5bMnRhfM
+	TmlUn66sG/U5BZNCQwjmHpLniFbZYjFCOdsuRwnM/8UNT1Rtz/ZU56fyHY9YY8TS
+	zFbt4Eij2ZGaA0zwlg6PTsr1v+J5UJguu8qR0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=T9jWBt3U63AhEQ3jLNcaja4EAorn0PIM
+	qTGA7GmfAegAbd3oLXzGmadj3IPQ6OVZBNM/UKf59Gaq+jRY09jVvJ8rn36f3/tS
+	Zu2MBwc1EDvjDlCvohFPG+AlJJ9QZAYM/FEWuqm1ncqmhyLcSmNJHV1sGqn0QY3i
+	PvGY89sCmK4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C9F5DA6C91;
+	Sun, 28 Mar 2010 13:14:39 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 33379A6C90; Sun, 28 Mar
+ 2010 13:14:37 -0400 (EDT)
+In-Reply-To: <1269615836-13995-1-git-send-email-Matthieu.Moy@imag.fr>
+ (Matthieu Moy's message of "Fri\, 26 Mar 2010 16\:03\:56 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 64A8AE96-3A8D-11DF-BB78-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143404>
 
-On Sun, Mar 28, 2010 at 2:25 AM, Alexander Iljin <ajsoft@yandex.ru> wro=
-te:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> =A0You should do it the way you described - via local repository, bec=
-ause you
-> =A0might need to resolve conflicts along the way.
-> =A0There is the "Fork Queue" feature on GitHub, you may give it a try=
-=2E
+> For newbies who've just been taught "git pull", the error message
+> "Where do you want to fetch from today?" is indeed confusing. Change it
+> to "Where do you want to pull from today?" in case fetch was called from
+> pull.
+>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+> Just fixed a typo in commit message since v1.
+>
+>  builtin/fetch.c |    6 +++++-
+>  git-pull.sh     |    3 ++-
+>  2 files changed, 7 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 957be9f..f3246f5 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -842,8 +842,12 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
+>  	int ref_nr = 0;
+>  	int exit_code;
+>  
+> +	char *cmd = getenv("GIT_USER_COMMAND");
+> +	if (cmd == NULL || cmd[0] == '\0')
+> +		cmd = "fetch";
+> +
+>  	if (!remote)
+> -		die("Where do you want to fetch from today?");
+> +		die("Where do you want to %s from today?", cmd);
 
-In playing around with their Fork Queue feature...  I have a week old
-fork to which I've made no changes.  I do "Select All" for al the
-changes in teh original fork and then select "Apply" in the drop down
-"Actions" menu.  It then just sits there doing nothing.  It says
-"Status: Processing 1 of 8 Commits" and that's it.  Shouldn't it
-actually be doing something?
+>  	transport = transport_get(remote, NULL);
+>  	transport_set_verbosity(transport, verbosity, progress);
+> diff --git a/git-pull.sh b/git-pull.sh
+> index 1a4729f..abc233b 100755
+> --- a/git-pull.sh
+> +++ b/git-pull.sh
+> @@ -216,7 +216,8 @@ test true = "$rebase" && {
+>  	done
+>  }
+>  orig_head=$(git rev-parse -q --verify HEAD)
+> -git fetch $verbosity $progress --update-head-ok "$@" || exit 1
+> +GIT_USER_COMMAND=pull \
+> +    git fetch $verbosity $progress --update-head-ok "$@" || exit 1
 
->  To have a local branch you should create it:
->  git checkout -b branchName remotes/origin/branchName
->  Remote branches are there only to track the state of the remote repo=
-,
->  you should only commit to local branches and then push your work to
->  remotes.
+I personally don't think this is a good change.  When somebody writes a
+wrapper around "git pull" to "make it easier", the name of the command
+that is given in the message will still be "pull", and you will have 
+exactly the same issue again.
 
-I think I figured out some of my confusion - there's a "Create New
-Branch" checkbox in the "Checkout\Switch" dialog that needs to be
-checked that isn't by default.  I guess the idea is that, by default,
-TortoiseGit assumes you want to make the branch you checkout the
-default branch?
+It was never the intent of the use of word "fetch" in the original message
+to give the name of one among many commands (i.e. the message was not
+about "fetch vs pull").  The word was to convey more abstract concept of
+getting new changes that are available on the other end.
+
+An alternative that does not introduce layering violation of making the
+lower level porcelain aware of what the caller is doing might be to make
+it even more bland, "Where do you want to get changes from today?", or
+something.
+
+Or we could even make it even more explicit by saying "Where do you want
+to go today?", which was what the original meant to mock ;-).
