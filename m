@@ -1,61 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] Add support for GIT_ONE_FILESYSTEM
-Date: Sun, 28 Mar 2010 08:05:32 -0400
-Message-ID: <20100328120532.GA6131@coredump.intra.peff.net>
-References: <1268855753-25840-1-git-send-email-lars@pixar.com>
- <1268855753-25840-4-git-send-email-lars@pixar.com>
- <20100328092253.GA17563@coredump.intra.peff.net>
+From: Eric Raymond <esr@thyrsus.com>
+Subject: Re: native-git-svn: A Summer of Code 2010 proposal
+Date: Sun, 28 Mar 2010 08:10:34 -0400
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20100328121034.GC25402@thyrsus.com>
+References: <3d4937ff1003262240t6159d9c5sc9253f555c3aed1@mail.gmail.com>
+ <20100327091938.GA4395@thyrsus.com>
+ <f3271551003280225v17af30d4s6d3d24b4d548ff7d@mail.gmail.com>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "Lars R. Damerow" <lars@pixar.com>
-X-From: git-owner@vger.kernel.org Sun Mar 28 14:05:49 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Peter Baumann <waste.manager@gmx.de>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Dave Olszewski <cxreg@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Steven Michalske <smichalske@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 28 14:10:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvrFU-0007aS-Gb
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Mar 2010 14:05:48 +0200
+	id 1NvrKD-00016s-Ax
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Mar 2010 14:10:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754283Ab0C1MFn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Mar 2010 08:05:43 -0400
-Received: from peff.net ([208.65.91.99]:55213 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754206Ab0C1MFm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Mar 2010 08:05:42 -0400
-Received: (qmail 22673 invoked by uid 107); 28 Mar 2010 12:06:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 28 Mar 2010 08:06:14 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 28 Mar 2010 08:05:32 -0400
+	id S1754191Ab0C1MKg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Mar 2010 08:10:36 -0400
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:33606
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752319Ab0C1MKf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Mar 2010 08:10:35 -0400
+Received: by snark.thyrsus.com (Postfix, from userid 23)
+	id 3E16820CB1C; Sun, 28 Mar 2010 08:10:34 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20100328092253.GA17563@coredump.intra.peff.net>
+In-Reply-To: <f3271551003280225v17af30d4s6d3d24b4d548ff7d@mail.gmail.com>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143387>
 
-On Sun, Mar 28, 2010 at 05:22:54AM -0400, Jeff King wrote:
+Ramkumar Ramachandra <artagnon@gmail.com>:
+> Project Proposal: git-remote-svn | Native SVN support in Git
+> Student: Ramkumar Ramachandra
+> Mentor: Sverre Rabbelier
 
-> > --- a/setup.c
-> > +++ b/setup.c
-> > @@ -390,6 +392,11 @@ const char *setup_git_directory_gently(int *nongit_ok)
-> >  	 *   etc.
-> >  	 */
-> >  	offset = len = strlen(cwd);
-> > +	if ((one_filesystem = git_env_bool("GIT_ONE_FILESYSTEM", 0))) {
-> > +		if (stat(".", &buf))
-> > +			die_errno("failed to stat '.'");
-> > +		current_device = buf.st_dev;
-> > +	}
-> 
-> Style nit. I know you did the proper () to silence the compiler warning,
-> but we usually avoid assignment-inside-conditional altogether.
-> Personally I don't really care either way.
++1
 
-Actually I take this back. It is in our CodingStyle guide, but we
-violate it all over the place (my grep counted 522). Perhaps it should
-be removed from CodingStyle.
+I've just been through a Subversion-to-git migration, and have been
+directly affected by an inadequacy in git-svn - failure to recognizer
+SVN tags as tags rather than branches. See my blog post at
+<http://esr.ibiblio.org/?p=1806>, "Subversion to GIT Migration: A Tale
+of Two Gotchas" for discussion.
 
--Peff
+Accordingly, I support Ramkumar's proposal to rethink and rewrite the 
+Subversion interface.  A concerted effort to do seamless interoperability 
+would be well justified given the ubiquity of Subversion.  I think Rankumar
+has chosen a goal that is useful, well defined, and realistically scoped.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
