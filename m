@@ -1,72 +1,106 @@
-From: Thomas Anderson <zelnaga@gmail.com>
-Subject: updating github.com forks, developing in remote branches and 
-	svn:eol-style equiv?
-Date: Sun, 28 Mar 2010 01:32:51 -0500
-Message-ID: <15b345f1003272332u2f4d38ear5c8aeef9b35f5037@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] builtins: reset startup_info->have_run_setup_gitdir when 
+	unsetting up repository
+Date: Sun, 28 Mar 2010 09:11:21 +0200
+Message-ID: <fcaeb9bf1003280011r4c25a076t22d8759de31c3e3f@mail.gmail.com>
+References: <1269681184-1992-1-git-send-email-pclouds@gmail.com> 
+	<1269681184-1992-2-git-send-email-pclouds@gmail.com> <20100327223813.GA5809@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 28 08:33:02 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 28 09:12:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nvm3P-0000xA-KO
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Mar 2010 08:32:59 +0200
+	id 1Nvmf9-0007uu-Q2
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Mar 2010 09:12:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753649Ab0C1Gcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Mar 2010 02:32:53 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:64003 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753628Ab0C1Gcw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Mar 2010 02:32:52 -0400
-Received: by pva18 with SMTP id 18so2030671pva.19
-        for <git@vger.kernel.org>; Sat, 27 Mar 2010 23:32:51 -0700 (PDT)
+	id S1753687Ab0C1HLm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Mar 2010 03:11:42 -0400
+Received: from qw-out-2122.google.com ([74.125.92.26]:45945 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753657Ab0C1HLl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Mar 2010 03:11:41 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so2953762qwh.37
+        for <git@vger.kernel.org>; Sun, 28 Mar 2010 00:11:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:received:message-id
-         :subject:from:to:content-type;
-        bh=CHBhCcRjp/SAtor/hEs8xcc2WPZv/mkKsdgP1em/kr0=;
-        b=BOXRXsPxDYIF/4/2pkDqDTcQlUvxzR5+Jv0fiLjPrIavnAougejDraEqK36YCUN811
-         XKPpPG+oCw/UixzmQrFYKN2PpjCAz3XBskC5V/SFaZHvpCW3vJghxVy4rzNrpCQ4DlXJ
-         Gsa3oIljHSjADIqbxyU7cC6XhYGwNe30lKhc0=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Jir5tRGku7MjYOrY4KomDQ38Gz5nJs4zsC03RYxPRzA=;
+        b=vRyPMFhtXJBlwqyc18E7qO2pRJLameIqpiqfN6hymh4Vh1hnR0qG2tEkIV1RTXkwz2
+         FjR96+R23zyyZNwf1nJoC8v69gBV3+kRwtetD7Yj2j12K3+KTrxsRT7e3qBFxn+Kx0Hp
+         pPgxZdWJnb+KUAu4KxHfL6CCU0kXbdnFKq1Mc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=WEyetxvt5Bbo9N1W6/6dioIg6RokwTKUaMlIq77y/Sre0RrSuaFQFa5yCiI5xJSE+5
-         pycz1nhINpKQT+aAiTkIJGQz2t7bUkmGTlBHNbzcPha+I5j2WvwbO89w+wA/2/iiIaiv
-         W0Gay4nPNI8WtDLTz11ycPCkQhyXcDi1ZbVXk=
-Received: by 10.143.167.17 with HTTP; Sat, 27 Mar 2010 23:32:51 -0700 (PDT)
-Received: by 10.142.74.3 with SMTP id w3mr1314314wfa.243.1269757971738; Sat, 
-	27 Mar 2010 23:32:51 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=GC8SmCOcOyHR54OuJn+qNaQo21pZnUVjDong+Wl1a3qM+6FTFUmf+8SCTExH/pg+de
+         Y65axwJpmwqAt2EMGd4MgKXP1fFnxzibknJmOwE3cZixpegZikWvUnYa44UNxQXBxrHb
+         zZUi3rTRvyYeh7WK3m6uX+oQLIWqOIvvwKYyg=
+Received: by 10.229.221.195 with HTTP; Sun, 28 Mar 2010 00:11:21 -0700 (PDT)
+In-Reply-To: <20100327223813.GA5809@progeny.tock>
+Received: by 10.229.98.129 with SMTP id q1mr2729757qcn.100.1269760301120; Sun, 
+	28 Mar 2010 00:11:41 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143380>
 
-Say on github.com I fork a repository.  Two weeks later, updates have
-been made to the original repository and now I want to update my fork.
- How do I do this?
+2010/3/27 Jonathan Nieder <jrnieder@gmail.com>:
+> Hi again,
+>
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>
+>> While at it, also reset repository_format_version to zero. When
+>> omitted, the format should be understood as the last supported
+>> version, i.e. zero. This is probably only used by "git init" or "git
+>> clone".
+> [...]
+>> =C2=A0 =C2=A0 =C2=A0 /* Initialized in check_repository_format_versi=
+on() */
+>> - =C2=A0 =C2=A0 repository_format_version =3D 0xFF;
+>> + =C2=A0 =C2=A0 repository_format_version =3D 0;
+>
+> Good change, but wrong justification in my opinion.
+>
+> v0.99.9l^2~54 (init-db: check template and repository format.,
+> 2005-11-25) taught =E2=80=98git init-db=E2=80=99 to make sure that
+>
+> =C2=A0repository_format_version <=3D GIT_REPO_VERSION
+>
+> before initializing a new repository. =C2=A0repository_format_version=
+ was
+> being explicitly initialized globally to 0 at the time, presumably to
+> ensure tests like this always succeed when no repository format versi=
+on
+> is declared (or in other words, the repository format for repositorie=
+s
+> initialized before git v0.99.9l^2~56 is zero by convention). =C2=A0As=
+ a happy
+> side effect, that default takes care of the =E2=80=9Cno pre-existing =
+repository=E2=80=9D
+> case here.
+>
+> The explicit initialization was removed in commit v1.4.3-rc1~230 (rem=
+ove
+> unnecessary initializations, 2006-08-15), since according to ANSI C i=
+t
+> is redundant.
+>
+> So I think the convention is not =E2=80=9Cif in doubt, the repository=
+ has
+> version GIT_REPO_VERSION=E2=80=9D but =E2=80=9Cif the repository lack=
+s a
+> core.repositoryversion setting, it must be really old=E2=80=9D.
 
-One possibility that occurs to me: I can create a new remote
-repository - let's say "upstream" - with the URL of the original
-repository and I can pull from that instead of the forked "origin"
-repository.  I can then push the updates to the forked repository.
-
-Is that the best way to do it, though?  It seems to me that I ought to
-be able to have my github.com fork pull updates itself without my
-having to pull and push with my own local repo.
-
-Also, I'm unclear how to develop in remote branches.  If I go to the
-"Switch/Checkout..." dialog I can switch to, say,
-"remotes/origin/random-branch".  I do that, make some changes to one
-of the new files and I then try to push those changes back.  In the
-local drop down menu I only see two local branches, however - "(no
-branch)" and the default branch.  Why is that?  If I just switched the
-branch to, say, "remotes/origin/random-branch", shouldn't I now be
-seeing that branch locally?
-
-Finally, is there any Git equivalent to SVN's svn:eol-style and if so
-how do I take advantage of it?
+Makes sense. Thanks. Will leave a note at the initialization to reduce
+history digging time for other people.
+--=20
+Duy
