@@ -1,60 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [Bug?] rebase-i marking the last entry for edit gives a barf?
-Date: Sun, 28 Mar 2010 10:39:07 -0700
-Message-ID: <7vd3yo2vno.fsf@alter.siamese.dyndns.org>
+From: Lars Damerow <lars@pixar.com>
+Subject: Re: [PATCH 3/3] Add support for GIT_ONE_FILESYSTEM
+Date: Sun, 28 Mar 2010 10:32:25 -0700
+Message-ID: <20100328173225.GA2397@pixar.com>
+References: <1268855753-25840-1-git-send-email-lars@pixar.com> <1268855753-25840-4-git-send-email-lars@pixar.com> <20100328092253.GA17563@coredump.intra.peff.net> <7vr5n44crq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Mar 28 19:39:20 2010
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 28 19:42:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvwSF-00057G-MG
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Mar 2010 19:39:20 +0200
+	id 1NvwUy-0006UY-Pb
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Mar 2010 19:42:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754837Ab0C1RjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Mar 2010 13:39:15 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44513 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753837Ab0C1RjO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Mar 2010 13:39:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6FCFCA6EEF;
-	Sun, 28 Mar 2010 13:39:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=Xi+W
-	t+IisS2sfktw9faDeSFBDKc=; b=lnMEiMrFwwaPX9tMkjqyGccr3nKIaMMwqVlS
-	ZDPayvbxbOEB7rrFutH60ZBRT8Gz3qUxR1KbDP6ODZ5LPJ0ircPlaGzvNNmyabu1
-	xdAwqTFK/3BaeQSZ3PBXl/1A1amD/VgGLwQ384kWwWgDr5fPbxDWvL7OLnSfiHnf
-	F8NQO6w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:from:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
-	cwL0DS6QMu5O/ga1DvMhlp6eEZ5PhNOVIxXq13G77FOJ/c0INgKBMjxmURsjF5dp
-	uoeQx3bZPI31/rcDXmM6TRkSqHK11YNvMZI3It1QUh4tRd7ovHiDBsIoV44xpXqT
-	ldhTdvdX16pWu+qlnNg/E9TWZtAf/RqXA0fYy5s5JMg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E653A6EEE;
-	Sun, 28 Mar 2010 13:39:11 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C2422A6EED; Sun, 28 Mar
- 2010 13:39:08 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D1BCC32A-3A90-11DF-8554-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754841Ab0C1RmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Mar 2010 13:42:01 -0400
+Received: from nmx.pixar.com ([199.108.77.23]:9585 "EHLO nmx.pixar.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754817Ab0C1RmA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Mar 2010 13:42:00 -0400
+X-Greylist: delayed 571 seconds by postgrey-1.27 at vger.kernel.org; Sun, 28 Mar 2010 13:42:00 EDT
+X-PixarMID: 2153974
+X-PixarRecvListener: OutboundMail
+X-PixarRemoteIP: 138.72.131.152
+X-IronPort-AV: E=Sophos;i="4.51,323,1267430400"; 
+   d="scan'208,223";a="2153974"
+Received: from helper.dynamic.pixar.com ([138.72.131.152])
+  by nimbus.pixar.com with ESMTP; 28 Mar 2010 10:32:29 -0700
+Received: from helper.dynamic.pixar.com (localhost [127.0.0.1])
+	by helper.dynamic.pixar.com (8.14.3/8.14.3) with ESMTP id o2SHWPEk002417;
+	Sun, 28 Mar 2010 10:32:28 -0700
+Received: (from lars@localhost)
+	by helper.dynamic.pixar.com (8.14.3/8.14.3/Submit) id o2SHWPJK002414;
+	Sun, 28 Mar 2010 10:32:25 -0700
+Content-Disposition: inline
+In-Reply-To: <7vr5n44crq.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143408>
 
-I am getting this:
+>From Junio C Hamano <gitster@pobox.com>, Sun, Mar 28, 2010 at 09:44:09AM -0700:
+> Jeff King <peff@peff.net> writes:
+> 
+> > With those fixes, I think it should be ready for 'next'.
+> 
+> Yeah, looks nice; thanks both.
 
-/home/junio/g/Debian-5.0.4-x86_64/git-next/libexec/git-core/git-rebase--interactive: line 565: /git/.git/rebase-merge/rewritten-list: No such file or directory
-Successfully rebased and updated refs/heads/nd/setup.
+Thanks all for the suggestions! Jeff, shall I just squash in the doc
+patch you sent and resubmit the patches to the list?
 
-This was after marking both commits in a two-patch series for "edit" in
-rebase -i, running "commit --amend; rebase --continue; commit --amend";
-saying "rebase --continue" at this point gave this error.
+-lars
+
+--
+lars r. damerow :: button pusher :: pixar animation studios
