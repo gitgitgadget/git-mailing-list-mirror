@@ -1,58 +1,56 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: GIT_ONE_FILESYSTEM inclusion?
-Date: Sun, 28 Mar 2010 05:24:07 -0400
-Message-ID: <20100328092407.GA17406@coredump.intra.peff.net>
-References: <20100323232055.GV7038@pixar.com>
- <81b0412b1003240229l6f7eaa18l563c3d7ba0cf6cc5@mail.gmail.com>
- <4BA9DCDD.6060109@viscovery.net>
- <81b0412b1003240437n799bac07sb74db749d647817d@mail.gmail.com>
- <vpqd3yt4yyp.fsf@bauges.imag.fr>
- <20100327222730.GA10922@gmail.com>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH v3] gitk: Use git-difftool for external diffs
+Date: Sun, 28 Mar 2010 11:59:06 +0100
+Message-ID: <201003281259.06947.markus.heidelberg@web.de>
+References: <1269726316-30443-1-git-send-email-davvid@gmail.com> <1269735600-12769-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Lars Damerow <lars@pixar.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: Text/Plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: Paul Mackerras <paulus@samba.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
 To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 28 11:24:23 2010
+X-From: git-owner@vger.kernel.org Sun Mar 28 12:57:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvojF-0001Z5-Um
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Mar 2010 11:24:22 +0200
+	id 1NvqBb-00043X-HJ
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Mar 2010 12:57:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752486Ab0C1JYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Mar 2010 05:24:17 -0400
-Received: from peff.net ([208.65.91.99]:42785 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752394Ab0C1JYQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Mar 2010 05:24:16 -0400
-Received: (qmail 20790 invoked by uid 107); 28 Mar 2010 09:24:49 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 28 Mar 2010 05:24:49 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 28 Mar 2010 05:24:07 -0400
-Content-Disposition: inline
-In-Reply-To: <20100327222730.GA10922@gmail.com>
+	id S1753438Ab0C1K5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Mar 2010 06:57:25 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:48820 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753198Ab0C1K5Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Mar 2010 06:57:24 -0400
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 6DF7A14916E59;
+	Sun, 28 Mar 2010 12:57:23 +0200 (CEST)
+Received: from [91.19.2.33] (helo=pluto.localnet)
+	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #4)
+	id 1NvqBH-00040R-00; Sun, 28 Mar 2010 12:57:23 +0200
+User-Agent: KMail/1.12.4 (Linux/2.6.30-gentoo-r8; KDE/4.3.5; i686; ; )
+In-Reply-To: <1269735600-12769-1-git-send-email-davvid@gmail.com>
+Jabber-ID: markus.heidelberg@web.de
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18clKbRd2bpl5drI8uo8fBo27Q6I3U+9OJS0jhd
+	iLNmz40FLmFtFxLBe8dNvjNqk9n+LAZQgGDfceRfWWf+LaoW0C
+	AQLXcpHcu5X0ALdFFOug==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143384>
 
-On Sat, Mar 27, 2010 at 03:27:32PM -0700, David Aguilar wrote:
+David Aguilar, 2010-03-28 01:20:
+> +    set cmd [list "git" "difftool" "--no-prompt" "--extcmd" $extdifftool]
 
-> Peff also agreed that it was an overall improvement.
-> http://thread.gmane.org/gmane.comp.version-control.git/142262
-> 
-> Thread with the latest (v3) version of the patch:
-> http://thread.gmane.org/gmane.comp.version-control.git/142436
+According to "man gitcli" this should be "--extcmd=$extdifftool".
 
-Yep.  I had been meaning to review v3, and I just did. With the
-exception of a few minor nits (which I posted in that thread), I think
-it looks good.
+Besides this, works for me.
 
--Peff
+Markus
