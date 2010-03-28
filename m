@@ -1,94 +1,118 @@
-From: Alexander Iljin <ajsoft@yandex.ru>
-Subject: Re: updating github.com forks, developing in remote branches and svn:eol-style equiv?
-Date: Sun, 28 Mar 2010 10:25:23 +0300
-Message-ID: <158811269761123@webmail102.yandex.ru>
-References: <15b345f1003272332u2f4d38ear5c8aeef9b35f5037@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] Add support for GIT_ONE_FILESYSTEM
+Date: Sun, 28 Mar 2010 05:22:54 -0400
+Message-ID: <20100328092253.GA17563@coredump.intra.peff.net>
+References: <1268855753-25840-1-git-send-email-lars@pixar.com>
+ <1268855753-25840-4-git-send-email-lars@pixar.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Anderson <zelnaga@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 28 09:25:32 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "Lars R. Damerow" <lars@pixar.com>
+X-From: git-owner@vger.kernel.org Sun Mar 28 11:23:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NvmsF-0004Ju-Po
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Mar 2010 09:25:32 +0200
+	id 1NvoiP-0001HM-8C
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Mar 2010 11:23:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753733Ab0C1HZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Mar 2010 03:25:26 -0400
-Received: from forward14.mail.yandex.net ([95.108.130.92]:47182 "EHLO
-	forward14.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753721Ab0C1HZZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Mar 2010 03:25:25 -0400
-Received: from webmail102.yandex.ru (webmail102.yandex.ru [95.108.130.6])
-	by forward14.mail.yandex.net (Yandex) with ESMTP id 1205F26800AA;
-	Sun, 28 Mar 2010 11:25:24 +0400 (MSD)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1269761124; bh=/rZYQdOdgbEedv2XpWf+BC/1wF4HFZHikFwWFx7ptBQ=;
-	h=From:To:Cc:In-Reply-To:References:Subject:MIME-Version:Message-Id:
-	 Date:Content-Transfer-Encoding:Content-Type;
-	b=kutSdI99vFaHueyGErrbQ5j2W4yACdqwCSlIFRZy2bSdEBpVLA0mLIlsS7PhgLeg3
-	 c5VEGff+NDWPg2pehCi/6PWl2zaaFr2PYQ7NMR5ErpRxhEVrgcYBSGjX77OmkRDwvU
-	 qnrq6drh1k9u1pP7I4OUHdC7QC2/rFv9ecdjRcX0=
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by webmail102.yandex.ru (Yandex) with ESMTP id E035DA1401B;
-	Sun, 28 Mar 2010 11:25:23 +0400 (MSD)
-X-Yandex-Spam: 1
-X-Yandex-Front: webmail102 
-X-Yandex-TimeMark: 1269761123 
-Received: from host-94-251-110-62.bbcustomer.zsttk.net (host-94-251-110-62.bbcustomer.zsttk.net [94.251.110.62]) by mail.yandex.ru with HTTP;
-	Sun, 28 Mar 2010 10:25:23 +0300
-In-Reply-To: <15b345f1003272332u2f4d38ear5c8aeef9b35f5037@mail.gmail.com>
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
+	id S1751920Ab0C1JXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Mar 2010 05:23:11 -0400
+Received: from peff.net ([208.65.91.99]:42782 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750871Ab0C1JXK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Mar 2010 05:23:10 -0400
+Received: (qmail 20766 invoked by uid 107); 28 Mar 2010 09:23:39 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 28 Mar 2010 05:23:39 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 28 Mar 2010 05:22:54 -0400
+Content-Disposition: inline
+In-Reply-To: <1268855753-25840-4-git-send-email-lars@pixar.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143382>
 
-Hello!
+On Wed, Mar 17, 2010 at 12:55:53PM -0700, Lars R. Damerow wrote:
 
-> Say on github.com I fork a repository.  Two weeks later, updates have
->  been made to the original repository and now I want to update my fork.
->   How do I do this?
+> This patch makes git pay attention to the GIT_ONE_FILESYSTEM environment
+> variable. When that variable is set, git will stop searching for a
+> GIT_DIR when it attempts to cross a filesystem boundary.
+> 
+> When working in an environment with too many automount points to make
+> maintaining a GIT_CEILING_DIRECTORIES list enjoyable, GIT_ONE_FILESYSTEM
+> gives the option of turning all such attempts off with one setting.
+
+Thanks, this version (and the whole series) looks good to me, with two
+minor nits below.
+
+As far as a command-line option or a config option, I don't see the
+point. It seems to me something you would want enabled all the time, not
+a one-shot option, so a command-line option doesn't make much sense
+(after all, you could just use --git-dir at that point, which would be
+even faster). A config option might be useful, but I think it might be
+tricky to implement due to the startup sequence.  If anybody disagrees,
+they can always build on top of your series very easily.
+
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 35c0c79..dbb590f 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -529,6 +529,9 @@ git so take care if using Cogito etc.
+>  	a GIT_DIR set on the command line or in the environment.
+>  	(Useful for excluding slow-loading network directories.)
 >  
->  One possibility that occurs to me: I can create a new remote
->  repository - let's say "upstream" - with the URL of the original
->  repository and I can pull from that instead of the forked "origin"
->  repository.  I can then push the updates to the forked repository.
->  
->  Is that the best way to do it, though?  It seems to me that I ought to
->  be able to have my github.com fork pull updates itself without my
->  having to pull and push with my own local repo.
+> +'GIT_ONE_FILESYSTEM'::
+> +	Stop at filesystem boundaries when looking for .git or objects.
+> +
 
-  You should do it the way you described - via local repository, because you
-  might need to resolve conflicts along the way.
-  There is the "Fork Queue" feature on GitHub, you may give it a try.
+We should give the user a little more information than that.
+Specifically:
 
->  Also, I'm unclear how to develop in remote branches.  If I go to the
->  "Switch/Checkout..." dialog I can switch to, say,
->  "remotes/origin/random-branch".  I do that, make some changes to one
->  of the new files and I then try to push those changes back.  In the
->  local drop down menu I only see two local branches, however - "(no
->  branch)" and the default branch.  Why is that?  If I just switched the
->  branch to, say, "remotes/origin/random-branch", shouldn't I now be
->  seeing that branch locally?
+  - what form should the value take?
 
-  To have a local branch you should create it:
-  git checkout -b branchName remotes/origin/branchName
-  Remote branches are there only to track the state of the remote repo,
-  you should only commit to local branches and then push your work to
-  remotes.
+  - how does it interact with GIT_DIR?
 
->  Finally, is there any Git equivalent to SVN's svn:eol-style and if so
->  how do I take advantage of it?
+Also, we use the phrase "repository directory" in
+GIT_CEILING_DIRECTORIES, so we should probably do the same here.
 
-  git help config
-  Look for "autocrlf", "safecrlf", etc.
-  You can set these options globally or per repository.
+So how about this squashed into your patch?
 
----=====---
- Alexander
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index e7ebaaa..bf1b45e 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -531,7 +531,10 @@ git so take care if using Cogito etc.
+ 	(Useful for excluding slow-loading network directories.)
+ 
+ 'GIT_ONE_FILESYSTEM'::
+-	Stop at filesystem boundaries when looking for .git or objects.
++	If set to a true value ("true" or a non-zero integer), stop at
++	filesystem boundaries when looking for a repository directory.
++	Like 'GIT_CEILING_DIRECTORIES', it will not affect an explicit
++	respository directory set via 'GIT_DIR' or on the command line.
+ 
+ git Commits
+ ~~~~~~~~~~~
+
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -390,6 +392,11 @@ const char *setup_git_directory_gently(int *nongit_ok)
+>  	 *   etc.
+>  	 */
+>  	offset = len = strlen(cwd);
+> +	if ((one_filesystem = git_env_bool("GIT_ONE_FILESYSTEM", 0))) {
+> +		if (stat(".", &buf))
+> +			die_errno("failed to stat '.'");
+> +		current_device = buf.st_dev;
+> +	}
+
+Style nit. I know you did the proper () to silence the compiler warning,
+but we usually avoid assignment-inside-conditional altogether.
+Personally I don't really care either way.
+
+With those fixes, I think it should be ready for 'next'.
+
+-Peff
