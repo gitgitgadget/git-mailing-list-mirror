@@ -1,92 +1,80 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: [GSoC Proposal/RFC] Rolling commit message writing
-Date: Mon, 29 Mar 2010 16:31:00 -0400
-Message-ID: <32541b131003291331y3ae5ca23la33466d588c1b9e1@mail.gmail.com>
-References: <alpine.DEB.1.00.1003281834520.13534@pip.srcf.ucam.org>
+From: Disc Magnet <discmagnet@gmail.com>
+Subject: Can't assign user.name to "E F" in git config
+Date: Tue, 30 Mar 2010 02:02:55 +0530
+Message-ID: <308d4701003291332s500cbbci68e10a784ac1aa81@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Daniel Thomas <drt24@srcf.ucam.org>
-X-From: git-owner@vger.kernel.org Mon Mar 29 22:32:07 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 29 22:41:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwLd0-00009g-EU
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 22:32:06 +0200
+	id 1NwLlw-0004iN-Ri
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 22:41:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753727Ab0C2UbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Mar 2010 16:31:23 -0400
-Received: from mail-yw0-f172.google.com ([209.85.211.172]:35723 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753673Ab0C2UbU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Mar 2010 16:31:20 -0400
-Received: by ywh2 with SMTP id 2so5248580ywh.33
-        for <git@vger.kernel.org>; Mon, 29 Mar 2010 13:31:20 -0700 (PDT)
+	id S1753657Ab0C2UlO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Mar 2010 16:41:14 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:53876 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753032Ab0C2UlE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Mar 2010 16:41:04 -0400
+Received: by vws20 with SMTP id 20so262022vws.19
+        for <git@vger.kernel.org>; Mon, 29 Mar 2010 13:41:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type;
-        bh=g+5gsTVY/9Ou8XXHo6S/YBkVXnGNuky3cIKuMjaZsTk=;
-        b=kvqHx4hKLO+w+8PthKABuvlZlriSXEN8VQ8MnxbUNyjF5aFrjlaqWpbyszXazamiXV
-         Pc7B1YRu/6Fq3wuv4Uv+7W2nfUCRJFqIvdDGn6ZQrCloAaiqYlm55us9qpel0QPmINy6
-         loyFkrimL+UJkfyNpd6sL7BsCTRgi+mg0HwDQ=
+        h=domainkey-signature:mime-version:received:date:received:message-id
+         :subject:from:to:content-type;
+        bh=nUW4xz9mONPijnJ0VG+avr16pK8clliNkLcOaAdm7P0=;
+        b=pKXuKN9O4hATbJs6DpkProwpYJPe+GykHC79EMw9LYG+sr9DPXlmqh7C8WegY1diJC
+         LyxCMQLbt40fWbKKe3V6PnY3abB9MJmCCHyRtsknt7UAJIDI8ykhoQcCfXN8NWqJCx8U
+         83n7hrtvg1QBgLgjeBAod+kPHWKoah2oael9o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=Jfn6wtx6KjciayH7X2WI5aYikrxHgFmVzfonh7wPrkqEBIiAxKbR2WCFMDx5kv9PY2
-         +5l2+VGeKkEdTcM6PGr5QkBDAbGbYb27sATn2J96J+7qSt8KP1wIJsSQeJ1Waa0n8SG2
-         vfBWBYmQpcUsgu7UfxdV6GYUmQPL6LeDtAhXs=
-Received: by 10.150.203.4 with HTTP; Mon, 29 Mar 2010 13:31:00 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1003281834520.13534@pip.srcf.ucam.org>
-Received: by 10.150.120.41 with SMTP id s41mr5100567ybc.83.1269894680277; Mon, 
-	29 Mar 2010 13:31:20 -0700 (PDT)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=iHuFhZHr5DDyR4WCZtMhH81HTzisXD9MnHuGPoeZOr11MHPQESy05p5dqP6zAtsRNp
+         VTT2/drt4nH/sJt0cD/wKqXNPkXLhbMzFUsT9YDFP0XypwwK8OIIyldbOdtNHGRAVo5n
+         csiaeEB7YwX8bNWkfxzAp7kQLkYkS33sa8iQI=
+Received: by 10.229.250.15 with HTTP; Mon, 29 Mar 2010 13:32:55 -0700 (PDT)
+Received: by 10.229.229.70 with SMTP id jh6mr3936776qcb.107.1269894775935; 
+	Mon, 29 Mar 2010 13:32:55 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143515>
 
-On Sun, Mar 28, 2010 at 3:32 PM, Daniel Thomas <drt24@srcf.ucam.org> wrote:
-> Currently it is fairly easy to write good commit messages but the effort
-> that this requires of developers can be reduced still further.
->
-> This would be achieved by adding a built in system for working on a commit
-> message during the stage of adding changes.
->
-> Currently this can be done manually using "-F <file>, --file=<file>" in git
-> commit but we can do better than that. Specifically changes to git add
-> [--interactive | -i] to add an 'am' or similar command to allow adding a
-> file and then prompting for a message about the changes to that file. Also
-> changes to git add [--patch | -p] to add 'm' and 'c' options to git add
-> --patch to allow the addition of a message for the current hunk ('m') and to
-> do a commit (prompting for review) before returning to the hunk currently in
-> focus ('c').
+I've never done a git init and I don't have any .git directory in the
+current directory. I get warnings in the following example. Moreover,
+I can't assign user.name to "E F".
 
-The extra prompting seems to me like it would slow down the process of
-'git add -p' by making it take too many steps.  Normally when I create
-a commit, I like to think of "which lines will I commit?" and "what is
-the description of the whole commit?" as separate questions, whereas
-this workflow would interweave the two and confuse me.
+humpty@wall:~/work$ rm ~/.gitconfig
+humpty@wall:~/work$ git config --global user.name A B
+humpty@wall:~/work$ git config --global user.name C D
+humpty@wall:~/work$ git config --global user.name "E F"
+warning: user.name has multiple values
+humpty@wall:~/work$ git config -l
+user.name=A
+user.name=C
+humpty@wall:~/work$ cat ~/.gitconfig
+[user]
+        name = A
+        name = C
 
-Do other people prefer it that way?
+However, everything works fine here.
 
-Secondly, I'm concerned that if you can't remember the description of
-your entire commit by the time you commit it, then your commit is too
-big.  The usual solution is to create multiple, smaller commits that
-are easy to describe.  If at the end you find yourself with too many
-commits, you can always join them together with git rebase.
+humpty@wall:~/work$ rm ~/.gitconfig
+humpty@wall:~/work$ git config --global user.name A
+humpty@wall:~/work$ git config --global user.name C
+humpty@wall:~/work$ git config --global user.name "E F"
+humpty@wall:~/work$ git config -l
+user.name=E F
+humpty@wall:~/work$ cat ~/.gitconfig
+[user]
+        name = E F
 
-You might also like 'git commit -v', which shows the actual diff to be
-committed as part of your default commit message.  Then you can write
-your message while looking at it, making it easy to describe exactly
-what you changed.
+The same behavior can be reproduced after doing git init and by
+removing the --global option.
 
-Given these existing capabilities, is it still worth adding the
-feature you propose?
-
-Have fun,
-
-Avery
+Is this an expected behavior or is it a bug?
