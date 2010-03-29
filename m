@@ -1,153 +1,53 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: [PATCH] remote add: add a --no-tags (-n) option
-Date: Mon, 29 Mar 2010 14:07:48 +0200
-Message-ID: <20100329120748.4458.66495.stgit@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+From: Chris Shenton <chris@koansys.com>
+Subject: git svn "error": RA layer request failed: MERGE of [path]: 200 OK
+Date: Mon, 29 Mar 2010 08:29:42 -0400
+Message-ID: <D73B7319-8005-4AFD-AEB4-7EF9A446D869@koansys.com>
+Mime-Version: 1.0 (Apple Message framework v1077)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 29 14:07:58 2010
+X-From: git-owner@vger.kernel.org Mon Mar 29 14:36:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwDl8-0007SG-2K
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 14:07:58 +0200
+	id 1NwECc-00083C-R6
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 14:36:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752087Ab0C2MHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Mar 2010 08:07:52 -0400
-Received: from zoidberg.rfc1149.net ([91.121.19.179]:40814 "EHLO
-	zoidberg.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751971Ab0C2MHv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Mar 2010 08:07:51 -0400
-Received: from localhost.localdomain (unknown [192.168.9.2])
-	by zoidberg.rfc1149.net (Postfix) with ESMTP id A29BE661D
-	for <git@vger.kernel.org>; Mon, 29 Mar 2010 14:07:48 +0200 (CEST)
-User-Agent: StGit/0.15
+	id S1751357Ab0C2MgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Mar 2010 08:36:17 -0400
+Received: from koansys.com ([71.246.241.106]:64789 "EHLO shenton.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751287Ab0C2MgQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Mar 2010 08:36:16 -0400
+X-Greylist: delayed 391 seconds by postgrey-1.27 at vger.kernel.org; Mon, 29 Mar 2010 08:36:16 EDT
+Received: from mackeral.shenton.org (Mackeral.shenton.org [192.168.255.202])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: chris)
+	by Boqueria.shenton.org (Postfix) with ESMTPSA id 5E5086A
+	for <git@vger.kernel.org>; Mon, 29 Mar 2010 08:29:42 -0400 (EDT)
+X-Mailer: Apple Mail (2.1077)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143463>
 
-Add a '--no-tags' option to 'git remote add' which adds a
-'remote.REMOTE.tagopt = --no-tags' to the configuration file.
+I'm using git svn to talk to an SVN repo accessed by https.  When I try to dcommit a change I get something which appears to be an error, but if I understand the reponse code it's talking about, it seems OK:
 
-'git add -f -n REMOTE' will create a new remote and fetch from it
-without importing the tags. Subsequent 'git fetch REMOTE' will also
-not import the tags.
+> $ git svn dcommit
+> Committing to https://koansys.com/svn/dha/buildout/branches/buildout_xdv ...
+> 	M	buildout.cfg
+> RA layer request failed: MERGE of '/Svn/dha/buildout/branches/buildout_xdv': 200 OK (https://koansys.com) at /usr/local/Cellar/git/1.6.6.1/libexec/git-core/git-svn line 564
 
-Signed-off-by: Samuel Tardieu <sam@rfc1149.net>
----
- Documentation/git-remote.txt |    5 ++++-
- builtin/remote.c             |   11 ++++++++++-
- t/t5505-remote.sh            |   36 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 50 insertions(+), 2 deletions(-)
+I thought this one had failed, and tried again, but it indicated doing so was a merge conflict:
+> 
+> $ git svn dcommit
+> Committing to https://koansys.com/svn/dha/buildout/branches/buildout_xdv ...
+> Merge conflict during commit: File or directory 'buildout.cfg' is out of date; try updating: resource out of date; try updating at /usr/local/Cellar/git/1.6.6.1/libexec/git-core/git-svn line 564
 
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index 3fc599c..9db3c35 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git remote' [-v | --verbose]
--'git remote add' [-t <branch>] [-m <master>] [-f] [--mirror] <name> <url>
-+'git remote add' [-t <branch>] [-m <master>] [-f] [-n] [--mirror] <name> <url>
- 'git remote rename' <old> <new>
- 'git remote rm' <name>
- 'git remote set-head' <name> (-a | -d | <branch>)
-@@ -51,6 +51,9 @@ update remote-tracking branches <name>/<branch>.
- With `-f` option, `git fetch <name>` is run immediately after
- the remote information is set up.
- +
-+With `-n` option, `git fetch <name>` does not import tags from
-+the remote repository.
-++
- With `-t <branch>` option, instead of the default glob
- refspec for the remote to track all branches under
- `$GIT_DIR/remotes/<name>/`, a refspec to track only `<branch>`
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 277765b..bb5606b 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -106,7 +106,7 @@ static int fetch_remote(const char *name)
- 
- static int add(int argc, const char **argv)
- {
--	int fetch = 0, mirror = 0;
-+	int fetch = 0, mirror = 0, notags = 0;
- 	struct string_list track = { NULL, 0, 0 };
- 	const char *master = NULL;
- 	struct remote *remote;
-@@ -116,6 +116,8 @@ static int add(int argc, const char **argv)
- 
- 	struct option options[] = {
- 		OPT_BOOLEAN('f', "fetch", &fetch, "fetch the remote branches"),
-+		OPT_BOOLEAN('n', "no-tags", &notags,
-+			"do not import remote tags when fetching"),
- 		OPT_CALLBACK('t', "track", &track, "branch",
- 			"branch(es) to track", opt_parse_track),
- 		OPT_STRING('m', "master", &master, "branch", "master branch"),
-@@ -172,6 +174,13 @@ static int add(int argc, const char **argv)
- 			return 1;
- 	}
- 
-+	if (notags) {
-+		strbuf_reset(&buf);
-+		strbuf_addf(&buf, "remote.%s.tagopt", name);
-+		if (git_config_set(buf.buf, "--no-tags"))
-+			return 1;
-+	}
-+
- 	if (fetch && fetch_remote(name))
- 		return 1;
- 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 230c0cd..d4ed7ea 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -320,6 +320,42 @@ test_expect_success 'add alt && prune' '
- 	 git rev-parse --verify refs/remotes/origin/side2)
- '
- 
-+cat > test/expect << EOF
-+some-tag
-+EOF
-+
-+test_expect_success 'add with tags (default)' '
-+	(cd one &&
-+	 git tag -a -m "Some tag" some-tag) &&
-+	(mkdir add-tags &&
-+	 cd add-tags &&
-+	 git init &&
-+	 git remote add -f origin ../one &&
-+	 git tag -l some-tag > ../test/output &&
-+	 test_must_fail git config remote.origin.tagopt) &&
-+	(cd one &&
-+	 git tag -d some-tag) &&
-+	test_cmp test/expect test/output
-+'
-+
-+cat > test/expect << EOF
-+--no-tags
-+EOF
-+
-+test_expect_success 'add --no-tags' '
-+	(cd one &&
-+	 git tag -a -m "Some tag" some-tag) &&
-+	(mkdir add-no-tags &&
-+	 cd add-no-tags &&
-+	 git init &&
-+	 git remote add -f -n origin ../one &&
-+	 git tag -l some-tag > ../test/output &&
-+	 git config remote.origin.tagopt >> ../test/output) &&
-+	(cd one &&
-+	 git tag -d some-tag) &&
-+	test_cmp test/expect test/output
-+'
-+
- cat > one/expect << EOF
-   apis/master
-   apis/side
+Can anyone explain the first message? Is it a git problem, an svn problem, or something else?
+
+Thanks.
