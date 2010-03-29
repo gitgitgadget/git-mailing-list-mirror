@@ -1,73 +1,71 @@
-From: David Madore <david+news@madore.org>
-Subject: how to display a simplified graph of commits ?
-Date: Mon, 29 Mar 2010 15:24:39 +0200
-Message-ID: <20100329132439.GA734@aldebaran.xn--kwg.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: RFC - "git editlog" feature for fixing up local commit messages
+Date: Mon, 29 Mar 2010 07:41:13 -0600
+Message-ID: <fabb9a1e1003290641s27306373k3a2669318a7b67a8@mail.gmail.com>
+References: <20100329133132.GA12201@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 29 15:34:00 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Mon Mar 29 15:41:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwF6L-0004bG-2a
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 15:33:57 +0200
+	id 1NwFE6-0000Ui-Gn
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 15:41:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751357Ab0C2Ndw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Mar 2010 09:33:52 -0400
-Received: from aldebaran.gro-tsen.net ([88.191.60.176]:46463 "EHLO
-	aldebaran.xn--kwg.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750910Ab0C2Ndw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Mar 2010 09:33:52 -0400
-X-Greylist: delayed 550 seconds by postgrey-1.27 at vger.kernel.org; Mon, 29 Mar 2010 09:33:51 EDT
-Received: by aldebaran.xn--kwg.net (Postfix, from userid 500)
-	id BF096232CC; Mon, 29 Mar 2010 15:24:39 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752259Ab0C2Nlg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Mar 2010 09:41:36 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:35189 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751477Ab0C2Nle convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Mar 2010 09:41:34 -0400
+Received: by bwz1 with SMTP id 1so3563297bwz.21
+        for <git@vger.kernel.org>; Mon, 29 Mar 2010 06:41:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GuqiuX14kmaFfSnQbUukM2PYKKBS3GVJIUe0MrtbA50=;
+        b=vs2FufVGaHlJ1q9qIjVLEM3y6+y2KqCQk5UEe5LwfD//BR5LdRxYmqBtOaiE9aAiNP
+         mmeC60TMhHW7BLm7I9K3obAvZXoPsFlhfz5z51iO4cQ5iakhWPsdUD4precA8hAvSboy
+         /1MEDnxmlE/Xfl/hTwma/2pz8zYLQ92dBM+cc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=WWYZp0nDBMMX3D5gU9LKeHd3NodUHSxmhwkxegqnfiBmFyBXXKNWjbAinGiW2BDpA6
+         USmN/VKvyAI5hlDVhNfms4g3ZnILZdpSD2EuJrRcg/K4S93/J/dRkeyNjC80cDHg9eGJ
+         vZpRpTDgqI1JPvrQOozhQSXgVjrmgNSR8Hbvw=
+Received: by 10.204.142.7 with HTTP; Mon, 29 Mar 2010 06:41:12 -0700 (PDT)
+In-Reply-To: <20100329133132.GA12201@thyrsus.com>
+Received: by 10.204.1.136 with SMTP id 8mr578197bkf.92.1269870093186; Mon, 29 
+	Mar 2010 06:41:33 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143473>
 
-Hi list,
+Heya,
 
-I'd like to know if the following is possible and, if not, I'd like to
-suggest it as a possible useful addition to the git frontend/graphical
-tools: display a simplified graph of "interesting" commits showing the
-relationship between a specified set of commits.
+On Mon, Mar 29, 2010 at 07:31, Eric Raymond <esr@thyrsus.com> wrote:
+> Now, about step 3. =A0The official git command set only directly supp=
+orts
+> amending the tip commit. =A0There is a semi-documented procedure for
+> amending previous commits using an interactive rebase, but trying to
+> understand it makes my brain hurt. =A0Don't want to go there.
 
-In other words, I have a set of revisions that I'm interested in, and
-I'd like to graphically display the relationships (merges, branches)
-between them, omitting the cruft of intervening irrelevant commits.
+Go there anyway. These days it's as simple as changing "pick" to
+"reword" on the appropriate commit. Really, give it a try.
 
-A possible mathematical definition of what I'd like would be this:
-given a finite set S of commits, consider the subgraph G (of the full
-commit graph) consisting of the union of all possible paths leading
-from a latest-common-ancestor of any subset of S to an
-earliest-common-descendant; define a commit to be "interesting" (wrt
-S) when it has more than one ancestor or more than one child _in the
-subraph G_ (i.e., it is either a branch or a merge point in the
-subgraph), or, of course, when it itself in S; I'd like to display the
-subgraph G by displaying all its interesting commits and the sequences
-of edges between them (but not all the intermediate commits).
+$ git rebase -i origin/master
 
-(The above, of course, is just one example of a rigorous definition of
-what an "interesting" commit might be.  There may be others, and
-obviously I don't care about using exactly that one.)
+--=20
+Cheers,
 
-The point is that I want to understand the code flow among branches
-containing certain revisions in a git tree, and who merged what--and
-there are too many intermediate commits to make anything useful of the
-standard display of gitk.  Restricting a view to a certain subset of
-the files helps a lot, but it is still not sufficient as it is neither
-true that every commit I'm interested in touches this or that subset
-of the files, nor the converse.
-
-Is there another way I can restrict the set of commits to display,
-with any kind of graphical tool like gitk?
-
--- 
-     David A. Madore
-   ( http://www.madore.org/~david/ )
+Sverre Rabbelier
