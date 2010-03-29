@@ -1,90 +1,91 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH 3/7] fast-import: always create marks_file directories
-Date: Mon, 29 Mar 2010 11:48:25 -0500
-Message-ID: <1269881309-19690-4-git-send-email-srabbelier@gmail.com>
+Subject: [PATCH 4/7] remote-helpers: allow requesing the path to the .git directory
+Date: Mon, 29 Mar 2010 11:48:26 -0500
+Message-ID: <1269881309-19690-5-git-send-email-srabbelier@gmail.com>
 References: <1269881309-19690-1-git-send-email-srabbelier@gmail.com>
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
+Cc: Sverre Rabbelier <srabbelier@gmail.com>
 To: "Git List" <git@vger.kernel.org>,
 	"Junio C Hamano" <gitster@pobox.com>,
 	"Daniel Barkalow" <barkalow@iabervon.org>,
 	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
 	"Jonathan Niede
-X-From: git-owner@vger.kernel.org Mon Mar 29 18:49:30 2010
+X-From: git-owner@vger.kernel.org Mon Mar 29 18:49:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwI9a-0007r6-Gh
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 18:49:30 +0200
+	id 1NwI9b-0007r6-20
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 18:49:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754910Ab0C2Qsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754931Ab0C2Qsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Mar 2010 12:48:53 -0400
+Received: from mail-iw0-f182.google.com ([209.85.223.182]:57074 "EHLO
+	mail-iw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754914Ab0C2Qsv (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 29 Mar 2010 12:48:51 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:44618 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754832Ab0C2Qst (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Mar 2010 12:48:49 -0400
-Received: by mail-gy0-f174.google.com with SMTP id 13so1551144gyg.19
-        for <git@vger.kernel.org>; Mon, 29 Mar 2010 09:48:49 -0700 (PDT)
+Received: by iwn12 with SMTP id 12so697878iwn.21
+        for <git@vger.kernel.org>; Mon, 29 Mar 2010 09:48:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=d8I/miMhKEktF/XkRN3Dk/oYRU22EZPNQYuVCKyqhEI=;
-        b=NkOBzLYMZ4cQB9F6+u9rh9qxqjFje/3eHBUHFOvc1+hpvC3mUCvUNAbAx1r5/0RxKn
-         mkYShgQEBC5WztpkaGEVTiG7Fyfyb7ejOnjBNuqo+jn0beEObp2Np9GiRPmxRCBV4LPh
-         Aaz1oMIlcbFqh+3rp/VNy5ImBM6wydrvSxA4U=
+        bh=5pj4+0D8wKHVfn8fryFzBQaPqWUsajMIE1Ggwia3UZg=;
+        b=e30WsYWERr1qk/K4Vp1F+Gy32colP22WrWcz0XeR9mMoiM/Uvj2UmwE8izn1/HjMSa
+         NGLPDCJJ66PXE5GNOICUPLdVhhg4EWZJs4V9YbVh3+ktUPeMG6BH/w3GimzH3ohdR8Gb
+         ya4tSO+UgXVQ5RYQYOcWOn0f97ysZUZikSOf0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=VYqW16WtlVTXFygQeY1K0snxLb8WMdW2a5e50kdsjAMLEKvHp8bK3DHBXVaIf9FIrw
-         RsNFGWO6+GjE7aMhEBSBouFT1LIFLY5p5DsDDtxG5Yc+Q9Qf7Y4/paWu6VdUDLlhcyDH
-         w7E/Rg/kVliDuiWNc7M0KxSQnvjbqM7qq2pmM=
-Received: by 10.142.2.2 with SMTP id 2mr1412868wfb.75.1269881328343;
-        Mon, 29 Mar 2010 09:48:48 -0700 (PDT)
+        b=XrewUBBLMdm9/hQApu+RAzat7MRq9GfhNOCMLUueNOLILL3Zi9gMjyCtN020VZYmnS
+         F4mgD2dbpc2p4zozdsz+W3yEDPT9gdNvPZzSGWdBF0H5C3yJp9aWHr9MH/pDKi+nOJ4X
+         zz1jX/0S/y+o8dzdFNk8R1iUn3feZisqjQ8vI=
+Received: by 10.114.105.3 with SMTP id d3mr5197942wac.162.1269881330561;
+        Mon, 29 Mar 2010 09:48:50 -0700 (PDT)
 Received: from localhost.localdomain (97-114-181-145.frgo.qwest.net [97.114.181.145])
-        by mx.google.com with ESMTPS id 23sm4102040iwn.10.2010.03.29.09.48.46
+        by mx.google.com with ESMTPS id 23sm4102040iwn.10.2010.03.29.09.48.48
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 29 Mar 2010 09:48:47 -0700 (PDT)
+        Mon, 29 Mar 2010 09:48:49 -0700 (PDT)
 X-Mailer: git-send-email 1.7.0.3.317.gbb04ec
 In-Reply-To: <1269881309-19690-1-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143495>
 
-CC: "Shawn O. Pearce" <spearce@spearce.org>
+The 'gitdir' capability is reported by the remote helper if it
+requires the location of the .git directory. The location of the .git
+directory can then be used by the helper to store status files even
+when the current directory is not a git repository (such as is the
+case when cloning).
+
+The location of the .git dir is specified as an absolute path.
+
+Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
 ---
 
-	Not stricly neccesary (one could argue that it is the
-	responsibility of the caller to make sure the directory exists),
-	but it might make sense to do this one (in fast-import) rather
-	than having to do it in all helpers.
+	This should probably be advertised as a required capability,
+	but I haven't looked into those yet.
 
- fast-import.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ transport-helper.c |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index 309f2c5..129a786 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -2707,6 +2707,7 @@ static void option_import_marks(const char *marks, int from_stream)
- 	}
- 
- 	import_marks_file = make_fast_import_path(marks);
-+	safe_create_leading_directories_const(import_marks_file);
- 	import_marks_file_from_stream = from_stream;
- }
- 
-@@ -2737,6 +2738,7 @@ static void option_active_branches(const char *branches)
- static void option_export_marks(const char *marks)
- {
- 	export_marks_file = make_fast_import_path(marks);
-+	safe_create_leading_directories_const(export_marks_file);
- }
- 
- static void option_export_pack_edges(const char *edges)
+diff --git a/transport-helper.c b/transport-helper.c
+index 2638781..c8705b7 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -170,6 +170,11 @@ static struct child_process *get_helper(struct transport *transport)
+ 			refspecs[refspec_nr++] = strdup(buf.buf + strlen("refspec "));
+ 		} else if (!strcmp(capname, "connect")) {
+ 			data->connect = 1;
++		} else if (!strcmp(buf.buf, "gitdir")) {
++			struct strbuf gitdir = STRBUF_INIT;
++			strbuf_addf(&gitdir, "gitdir %s\n", get_git_dir());
++			sendline(data, &gitdir);
++			strbuf_release(&gitdir);
+ 		} else if (mandatory) {
+ 			die("Unknown mandatory capability %s. This remote "
+ 			    "helper probably needs newer version of Git.\n",
 -- 
 1.7.0.3.317.gbb04ec
