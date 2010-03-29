@@ -1,80 +1,77 @@
-From: Eric Raymond <esr@thyrsus.com>
-Subject: Re: Three issues from a Subversion-to-git migration
-Date: Mon, 29 Mar 2010 14:01:58 -0400
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20100329180158.GB12922@thyrsus.com>
-References: <20100326120906.F03BB20CD21@snark.thyrsus.com>
- <201003291100.13043.trast@student.ethz.ch>
- <20100329091056.GC10538@thyrsus.com>
- <4BB0CDEC.8000708@gmail.com>
-Reply-To: esr@thyrsus.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] grep: Add the option '--open-files-in-pager'
+Date: Mon, 29 Mar 2010 11:17:12 -0700
+Message-ID: <7veij356xj.fsf@alter.siamese.dyndns.org>
+References: <alpine.DEB.1.00.1003261145500.7596@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.1003261149040.7596@pacific.mpi-cbg.de>
+ <20100328040938.GA2017@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Gabriel Filion <lelutin@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 29 20:02:09 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 29 20:17:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwJHr-00060Q-MF
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 20:02:08 +0200
+	id 1NwJWl-0005IC-Lf
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 20:17:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754205Ab0C2SB7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Mar 2010 14:01:59 -0400
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:55906
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754030Ab0C2SB7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Mar 2010 14:01:59 -0400
-Received: by snark.thyrsus.com (Postfix, from userid 23)
-	id 4B03D20CBA3; Mon, 29 Mar 2010 14:01:58 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <4BB0CDEC.8000708@gmail.com>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754916Ab0C2SRZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Mar 2010 14:17:25 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52106 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754816Ab0C2SRZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Mar 2010 14:17:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2459FA6D76;
+	Mon, 29 Mar 2010 14:17:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=/kUu86E4wdtL/Z+Mgl22PIwEo
+	kE=; b=PXMLa+np2F5fS/CPcr9tW6l2mLBAa7jBudd4IpLAhDLwWI2qW2il4PmkS
+	NkXp+Cxxkd0rvET88FEOAye49Vtk4IeSlqhBJ4zpCzxikv/VIR1wSVIHwL+9urp0
+	Qp/u50kh7wyxvRTOLxvrE4Z58xrNCq7Tl+g//FzLmRIYF7mEs8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=MdYVTbyRz6T9hxOwqtE
+	nE0+oRL3o/0FGYyP6qVtoYtKYdg/V3egisqGPrPAJebZyLwW0z5UmlSu3/sOUvzi
+	p855igB1TsyJKEZxKvrSwC8kBpLHEphK2sOe6SlbEb6rVg/GalLi9G/1NXug/3uf
+	iiLPtBpfUSa2fdbiGldipSBI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DC07A6D6F;
+	Mon, 29 Mar 2010 14:17:18 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 72F02A6D6C; Mon, 29 Mar
+ 2010 14:17:13 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4F7F7B30-3B5F-11DF-A4D7-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143505>
 
-Gabriel Filion <lelutin@gmail.com>:
-> > 1. Turn unmodified tag directories into git tags
-> > 2. Turn odified tags into branches.
-> > 3. Recognize when a formerly unmodified tag has been modified, remove
-> >    the git tag, and turn it into a branch.
-> 
-> The 3rd point seems a bit weird to me.. users don't expect tags to
-> disappear magically. Especially if it's done during a fetch while working.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-A reasonable objection.
- 
-> Here's how I would change the scenario:
-> 
-> 1. For each creation of a sub-directory in SVN's tag directory, create a
-> git tag on the revision that was referenced by the directory copy in SVN.
-> 2. If (and only if) there are later modifications in the tag directory,
-> create a branch starting from that tag.
-> 
-> This way, the tag would be there but a branch would hold modifications
-> based on code at this point, if there is any.
+> I couldn=E2=80=99t get this to apply to current master or maint, and =
+searching for
+> blob 5d83d9b to find a more suitable merge base revealed that I don=E2=
+=80=99t
+> actually have that object in my repo.  Is this patch available alread=
+y
+> applied in a public git repo somewhere?
 
-That would work for me.
- 
-> The problem with my scenario, though is that it doesn't take care of tag
-> creation + modification in the same commit (yuukkkk, but it's possible
-> that it exists somewhere). If it could be possible to verify if
-> modifications were made during the tag creation, then we could make the
-> case hit both points.
+This seems to be based on a fork with a not-very-recent forkpoint.  I
+managed to create a topic branch and merged it to 'pu'.
 
-Doesn't seem like that should be difficult.
-
-> The other big "thing" is that it expects a certain correct separation
-> into different directories (e.g. trunk/ tags/ branches/ ), which SVN
-> doesn't enforce.
-
-Are you suggesting that branch directory copies should be handled with
-the same rule? I think I could live with that.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+It probably wants to be adjusted to --no-index mode, as that is also ab=
+out
+finding strings in files in the filesystem, but I chose not to do that
+myself.  For this topic to go forward I think it needs a rebase to a mo=
+re
+recent 'master'.
