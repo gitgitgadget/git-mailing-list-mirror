@@ -1,88 +1,80 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 5/7] remote-helpers: add support for an export command
-Date: Mon, 29 Mar 2010 11:28:10 -0600
-Message-ID: <fabb9a1e1003291028x45f0c570v4c10eadf37fc6a77@mail.gmail.com>
-References: <1269881309-19690-1-git-send-email-srabbelier@gmail.com> 
-	<1269881309-19690-6-git-send-email-srabbelier@gmail.com> <alpine.LNX.2.00.1003291256020.14365@iabervon.org>
+From: Eric Raymond <esr@thyrsus.com>
+Subject: Re: Three issues from a Subversion-to-git migration
+Date: Mon, 29 Mar 2010 14:01:58 -0400
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20100329180158.GB12922@thyrsus.com>
+References: <20100326120906.F03BB20CD21@snark.thyrsus.com>
+ <201003291100.13043.trast@student.ethz.ch>
+ <20100329091056.GC10538@thyrsus.com>
+ <4BB0CDEC.8000708@gmail.com>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Mar 29 19:28:40 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Gabriel Filion <lelutin@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 29 20:02:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwIlT-0004bK-9Z
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 19:28:39 +0200
+	id 1NwJHr-00060Q-MF
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 20:02:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753381Ab0C2R2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Mar 2010 13:28:34 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:33483 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753049Ab0C2R2d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Mar 2010 13:28:33 -0400
-Received: by bwz1 with SMTP id 1so3754718bwz.21
-        for <git@vger.kernel.org>; Mon, 29 Mar 2010 10:28:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type;
-        bh=ycI9xqVwBnTEYLMswWbumCChV3+B1ao/FAiGAQsTimI=;
-        b=BrOLEAwwNGWC7BCOGvZWAmz6pW30dYrquv4bulARYFjhACplKjHDJAx+hygG162tWb
-         DgmNifxmJwGsel281djqI84QnIUsgHUXeuwL6QBTjOQw7CTEIxRbFMQvnfKMNH1mSQos
-         DSCUlaucB4VSdVkfoR8uwJPZ6Ho82ghDaOVJY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=agLXSb8IfYULn7MH7eAnc1aSPI6Fx5ny7YXM1Eo9TGSm0pdzX7dSV2Xebzrv1bczhz
-         sevu+3TnwKXDJB0CBKpC11aAcw/2oDTEC0e6l0J+AKdyMgl1CSuv1T9rhg4YTgX2RQ+s
-         BR+NmJ4IAL0ykmMAFvU+8aDtLpAPw3l5hMRIo=
-Received: by 10.204.142.7 with HTTP; Mon, 29 Mar 2010 10:28:10 -0700 (PDT)
-In-Reply-To: <alpine.LNX.2.00.1003291256020.14365@iabervon.org>
-Received: by 10.204.18.76 with SMTP id v12mr7389705bka.106.1269883710156; Mon, 
-	29 Mar 2010 10:28:30 -0700 (PDT)
+	id S1754205Ab0C2SB7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Mar 2010 14:01:59 -0400
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:55906
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754030Ab0C2SB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Mar 2010 14:01:59 -0400
+Received: by snark.thyrsus.com (Postfix, from userid 23)
+	id 4B03D20CBA3; Mon, 29 Mar 2010 14:01:58 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <4BB0CDEC.8000708@gmail.com>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143504>
 
-Heya,
+Gabriel Filion <lelutin@gmail.com>:
+> > 1. Turn unmodified tag directories into git tags
+> > 2. Turn odified tags into branches.
+> > 3. Recognize when a formerly unmodified tag has been modified, remove
+> >    the git tag, and turn it into a branch.
+> 
+> The 3rd point seems a bit weird to me.. users don't expect tags to
+> disappear magically. Especially if it's done during a fetch while working.
 
-On Mon, Mar 29, 2010 at 11:21, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> It would be good to have documentation on what the helper should do doing
-> here; it's relatively difficult to tell from this code.
+A reasonable objection.
+ 
+> Here's how I would change the scenario:
+> 
+> 1. For each creation of a sub-directory in SVN's tag directory, create a
+> git tag on the revision that was referenced by the directory copy in SVN.
+> 2. If (and only if) there are later modifications in the tag directory,
+> create a branch starting from that tag.
+> 
+> This way, the tag would be there but a branch would hold modifications
+> based on code at this point, if there is any.
 
-Yes, I plan to send a documentation patch as well but wanted to get
-this out the door first (since Documentation patches don't have to
-cook in next).
+That would work for me.
+ 
+> The problem with my scenario, though is that it doesn't take care of tag
+> creation + modification in the same commit (yuukkkk, but it's possible
+> that it exists somewhere). If it could be possible to verify if
+> modifications were made during the tag creation, then we could make the
+> case hit both points.
 
-> I think that it's getting some options (import and export marks) back from
-> the helper in a kind of ad-hoc and unclear fashion, and it should be doing
-> something more appropriate.
+Doesn't seem like that should be difficult.
 
-It's not really that ad-hoc or unclear. When the helper receives the
-export command it should write two lines, the first being the location
-where it should write the marks to, the second being the location
-where it should import marks from. Either line may be empty, meaning
-marks should not be written or read respectively.
+> The other big "thing" is that it expects a certain correct separation
+> into different directories (e.g. trunk/ tags/ branches/ ), which SVN
+> doesn't enforce.
 
-> (I'm not sure what the more appropriate thing
-> is, or really what the requirements are here as far as getting information
-> around, but I think it needs to be discussed.)
-
-The import command solves this by printing 'feature import-marks' and
-'feature export-marks' lines on the stream, but that doesn't work here
-since fast-export doesn't read from stdin. I don't think this needs a
-separate command.
-
+Are you suggesting that branch directory copies should be handled with
+the same rule? I think I could live with that.
 -- 
-Cheers,
-
-Sverre Rabbelier
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
