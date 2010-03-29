@@ -1,110 +1,242 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Can't assign user.name to "E F" in git config
-Date: Mon, 29 Mar 2010 16:55:59 -0400
-Message-ID: <32541b131003291355k5f93b251vded347e37315fee5@mail.gmail.com>
-References: <308d4701003291332s500cbbci68e10a784ac1aa81@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Disc Magnet <discmagnet@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 29 22:56:31 2010
+From: Chris Packham <judge.packham@gmail.com>
+Subject: [PATCHv3 1/2] Add git alternate command
+Date: Mon, 29 Mar 2010 14:39:40 -0700
+Message-ID: <1269898781-18564-2-git-send-email-judge.packham@gmail.com>
+References: <1269898781-18564-1-git-send-email-judge.packham@gmail.com>
+Cc: jrnieder@gmail.com, gitster@pobox.com, j.sixt@viscovery.net,
+	bebarino@gmail.com, Chris Packham <judge.packham@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 29 23:42:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwM0d-0003ew-7W
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 22:56:31 +0200
+	id 1NwMj5-0006WZ-Sr
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 23:42:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753676Ab0C2U4V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Mar 2010 16:56:21 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:39311 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752979Ab0C2U4U convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Mar 2010 16:56:20 -0400
-Received: by gyg13 with SMTP id 13so1703560gyg.19
-        for <git@vger.kernel.org>; Mon, 29 Mar 2010 13:56:19 -0700 (PDT)
+	id S1754019Ab0C2VmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Mar 2010 17:42:22 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:49392 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753920Ab0C2VmU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Mar 2010 17:42:20 -0400
+Received: by mail-pw0-f46.google.com with SMTP id 5so7068685pwi.19
+        for <git@vger.kernel.org>; Mon, 29 Mar 2010 14:42:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=YIOW2zpJeVAm6j8l4789i8G2u2vHkFElIlo6sh9tBqQ=;
-        b=aZ3z91Yvlvar2BHiDImHXAwPTmqGSdv2vq5FBVy+qAp/s5tpYgyuAP5e3hR+LfH9+l
-         HMZiraaSnf2MpXZ048aqQlf8Xo1SSkNZE3NZCsmUA3chfw89UDFjLZhEhhKYXboc8QKE
-         pGMWyLCW1kRQ+zc+um2xKub9g4v1sfnGZb7DY=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=h6ey2OfiNuxqCJDdVTV8WbdYskEFvjOpnkWURi6uQPs=;
+        b=V+dZTmlWJitHC3/vC86PuW7TtY4W9B89NG4Qbk+3WhY6hz+y/np6Z376BjNwBLnx+w
+         U8kotxDpw/2jYPvjgWrhEKIkotQmmwJ9spWmeh5AGBoUGbUWCDkZQfonXVVED4OQCpZh
+         pnPh2HsNwGUB7HEoV+rb60Qgm6xwLik2t3brY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=xliqX4MxaCexoWNu0vGOF6wwoecHtSqbsgBUSdfu6JwvT6oGm1weHmZVavTtREd0dg
-         L0DrXpqCv3/aFusBEPxQ5qCT6vJ3/rRRTtaRjjMmGAVYrrykFK8axhjgZ2lm76wN0Jpv
-         Hp4VYoURnwNS6AzpB8XJsTDt0DsIgyWDZulpc=
-Received: by 10.150.203.4 with HTTP; Mon, 29 Mar 2010 13:55:59 -0700 (PDT)
-In-Reply-To: <308d4701003291332s500cbbci68e10a784ac1aa81@mail.gmail.com>
-Received: by 10.150.254.7 with SMTP id b7mr4406318ybi.293.1269896179118; Mon, 
-	29 Mar 2010 13:56:19 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Xd29FMULQIASvfbuYjTuIsjw21tnKh4nWPXtFiin9Gl6yPD+WrPe6xqrUu0cB0WIaX
+         aR5QcAwOeKwQnTFlU0MsuGTHDvEcBLy3dx0wfqta36Z9VWFY3K+lKg9SSKUiuntRofj7
+         dYjwZycCanW+KeN+yvWyHcbekUUn2vhWnnf2M=
+Received: by 10.141.91.6 with SMTP id t6mr5097099rvl.265.1269898940469;
+        Mon, 29 Mar 2010 14:42:20 -0700 (PDT)
+Received: from localhost.localdomain (222-153-44-49.jetstream.xtra.co.nz [222.153.44.49])
+        by mx.google.com with ESMTPS id o38sm877571rvp.15.2010.03.29.14.42.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 29 Mar 2010 14:42:19 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.3
+In-Reply-To: <1269898781-18564-1-git-send-email-judge.packham@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143518>
 
-On Mon, Mar 29, 2010 at 4:32 PM, Disc Magnet <discmagnet@gmail.com> wro=
-te:
-> I've never done a git init and I don't have any .git directory in the
-> current directory. I get warnings in the following example. Moreover,
-> I can't assign user.name to "E F".
+The current UI around alternates is lacking. There are commands to add
+an alternate at the time of a clone (e.g. 'git clone --reference') but
+no commands to see what alternates have been configured or to add an
+alternate after a repository has been cloned. This patch adds a
+friendlier UI for displaying and configuring alternates.
 
-Take a look at 'man git-config' and search for "value_regex".  The
-behaviour is incredibly non-obvious, but git-config is working as
-documented:
+Signed-off-by: Chris Packham <judge.packham@gmail.com>
+---
+ Makefile         |    1 +
+ git-alternate.sh |  156 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 157 insertions(+), 0 deletions(-)
+ create mode 100755 git-alternate.sh
 
-> humpty@wall:~/work$ rm ~/.gitconfig
-> humpty@wall:~/work$ git config --global user.name A B
-> humpty@wall:~/work$ git config --global user.name C D
-> humpty@wall:~/work$ git config --global user.name "E F"
-> warning: user.name has multiple values
-> humpty@wall:~/work$ git config -l
-> user.name=3DA
-> user.name=3DC
-> humpty@wall:~/work$ cat ~/.gitconfig
-> [user]
-> =A0 =A0 =A0 =A0name =3D A
-> =A0 =A0 =A0 =A0name =3D C
-
-The A B line means "remove any user.name options containing B and then
-add A".  Similarly with C D.  But the "E F" line means "there is only
-one value of user.name, and it should be E F."  At that time,
-user.name has more than one value, so git assumes you've made a
-mistake and refuses to perform the operation (which would have
-resulted in potentially many lost lines of config information).
-
-You can fix it with "git config --global --unset-all user.name".
-
-> However, everything works fine here.
->
-> humpty@wall:~/work$ rm ~/.gitconfig
-> humpty@wall:~/work$ git config --global user.name A
-> humpty@wall:~/work$ git config --global user.name C
-> humpty@wall:~/work$ git config --global user.name "E F"
-> humpty@wall:~/work$ git config -l
-> user.name=3DE F
-> humpty@wall:~/work$ cat ~/.gitconfig
-> [user]
-> =A0 =A0 =A0 =A0name =3D E F
-
-In the above, you never created multiple values, because the first two
-lines didn't have extra parameters.
-
-> Is this an expected behavior or is it a bug?
-
-I didn't know about it before, and to be honest, it seems a little
-insane.  But I found it by reading the man page, so it's clearly
-"expected" behaviour, in the sense that we're told to expect it.  And
-now that it exists, removing it would break backward compatibility.
-
-Have fun,
-
-Avery
+diff --git a/Makefile b/Makefile
+index 3a6c6ea..0dc5e42 100644
+--- a/Makefile
++++ b/Makefile
+@@ -334,6 +334,7 @@ TEST_PROGRAMS_NEED_X =
+ unexport CDPATH
+ 
+ SCRIPT_SH += git-am.sh
++SCRIPT_SH += git-alternate.sh
+ SCRIPT_SH += git-bisect.sh
+ SCRIPT_SH += git-difftool--helper.sh
+ SCRIPT_SH += git-filter-branch.sh
+diff --git a/git-alternate.sh b/git-alternate.sh
+new file mode 100755
+index 0000000..ea9925b
+--- /dev/null
++++ b/git-alternate.sh
+@@ -0,0 +1,156 @@
++#!/bin/sh
++#
++# This file is licensed under the GPL v2
++#
++# Copyright (c) Chris Packham
++
++dashless=$(basename "$0" | sed -e 's/-/ /')
++OPTIONS_KEEPDASHDASH=
++OPTIONS_SPEC="\
++$dashless [-r|--recursive]
++$dashless [-a|--add <dir>]
++$dashless [-f|--force] [-d|delete <dir>]
++--
++r,recursive                    recursively follow alternates
++a,add=                         add dir as an alternate
++d,del=                         delete dir as an alternate
++f,force                        force a delete operation
++"
++. git-sh-setup
++
++#
++# Given the path in $1, which may or may not be a relative path,
++# convert it to an absolute path
++#
++abspath()
++{
++	cd "$1"
++	pwd
++	cd - > /dev/null
++}
++
++#
++# Runs through the alternates file calling the callback function $1
++# with the name of the alternate as the first argument to the callback
++# any additional arguments are passed to the callback function.
++#
++walk_alternates()
++{
++	alternates=$GIT_DIR/objects/info/alternates
++	callback=$1
++	shift
++
++	if test -f "$alternates"
++	then
++		while read line
++		do
++			$callback "$line" "$@"
++		done< "$alternates"
++	fi
++}
++
++#
++# Walk function to display one alternate object store and, if the user
++# has specified -r, recursively call show_alternates on the git
++# repository that the object store belongs to.
++#
++show_alternates_walk()
++{
++	say "Object store $1"
++	say "    referenced via $GIT_DIR"
++
++	new_git_dir=${line%%/objects}
++	if test "$recursive" = "true" && test "$GIT_DIR" != "$new_git_dir"
++	then
++	(
++		export GIT_DIR=$new_git_dir
++		show_alternates
++	)
++	fi
++}
++
++# Display alternates currently configured
++show_alternates()
++{
++	walk_alternates show_alternates_walk
++}
++
++#
++# Walk function to check that the specified alternate does not
++# already exist.
++#
++check_current_alternate_walk()
++{
++	if test "$1" = "$2"; then
++		die "fatal: Object store $2 is already used by $GIT_DIR"
++	fi
++}
++
++# Add a new alternate
++add_alternate()
++{
++	if test ! -d "$dir"; then
++		die "fatal: $dir is not a directory"
++	fi
++
++	abs_dir=$(abspath "$dir")
++	walk_alternates check_current_alternate_walk "$abs_dir"
++
++	# At this point we know that $dir is a directory that exists
++	# and that its not already being used as an alternate. We could
++	# go further and verify that $dir has valid objects.
++
++	# if we're still going we can safely add the alternate
++	echo "$abs_dir" >> $GIT_DIR/objects/info/alternates
++	say "$abs_dir added as an alternate"
++	say "    use 'git repack -adl' to remove duplicate objects"
++}
++
++# Deletes the name alternate from the alternates file.
++# If there are no more alternates the alternates file will be removed
++del_alternate()
++{
++	if test ! $force = "true"; then
++		say "Not forced, use"
++		say "    'git repack -a' to fetch missing objects, then "
++		say "    '$dashless -f -d \"$dir\"' to remove the alternate"
++		die
++	fi
++
++	alternates=$GIT_DIR/objects/info/alternates
++	new_alternates=$alternates.tmp
++
++	grep -v -F "$dir" <"$alternates" >"$new_alternates"
++	if test -s "$new_alternates"
++	then
++		mv "$new_alternates" "$alternates"
++	else
++		# save the git from repeatedly reading a 0 length file
++		rm -f "$alternates" "$new_alternates"
++	fi
++}
++
++dir=""
++oper=""
++force="false"
++
++# Option parsing
++while test $# != 0
++do
++	case "$1" in
++	-r|--recursive)  recursive="true" ;;
++	-a|--add)        oper="add"; dir="$2"; shift ;;
++	-d|--delete)     oper="del"; dir="$2"; shift ;;
++	-f|--force)      force="true" ;;
++	--)              shift; break ;;
++	*)               usage ;;
++	esac
++	shift
++done
++
++# Now go and do it
++case "$oper" in
++	add) add_alternate ;;
++	del) del_alternate ;;
++	*)   show_alternates ;;
++esac
+-- 
+1.7.0.3
