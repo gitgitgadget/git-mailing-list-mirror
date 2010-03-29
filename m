@@ -1,63 +1,74 @@
-From: "anand.arumug" <anand.arumug@gmail.com>
-Subject: Unable to create .rev_map file
-Date: Mon, 29 Mar 2010 08:06:29 -0800 (PST)
-Message-ID: <1269878789902-4818963.post@n2.nabble.com>
+From: Eli Barzilay <eli@barzilay.org>
+Subject: Re: `git check-attr' problems & questions
+Date: Mon, 29 Mar 2010 12:09:15 -0400
+Message-ID: <19376.53419.640007.930897@winooski.ccs.neu.edu>
+References: <m3iq8jn3ar.fsf@winooski.ccs.neu.edu>
+	<20100328014208.GA23015@progeny.tock>
+	<19376.50971.397375.810974@winooski.ccs.neu.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 29 18:06:42 2010
+To: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 29 18:09:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwHU4-0002O9-F1
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 18:06:36 +0200
+	id 1NwHWk-0003nL-Lf
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 18:09:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754079Ab0C2QGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Mar 2010 12:06:31 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:53042 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752338Ab0C2QGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Mar 2010 12:06:30 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <anand.arumug@gmail.com>)
-	id 1NwHTx-00046h-TT
-	for git@vger.kernel.org; Mon, 29 Mar 2010 09:06:29 -0700
+	id S1753034Ab0C2QJR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Mar 2010 12:09:17 -0400
+Received: from winooski.ccs.neu.edu ([129.10.115.117]:36207 "EHLO barzilay.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751784Ab0C2QJR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Mar 2010 12:09:17 -0400
+Received: from eli by barzilay.org with local (Exim 4.66)
+	(envelope-from <eli@barzilay.org>)
+	id 1NwHWd-0002QB-Kz; Mon, 29 Mar 2010 12:09:15 -0400
+In-Reply-To: <19376.50971.397375.810974@winooski.ccs.neu.edu>
+X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143490>
 
+On Mar 29, Eli Barzilay wrote:
+> On Mar 27, Jonathan Nieder wrote:
+> >  : "Usage: $0 commit check-attr-args" &&
+> > 
+> >  GIT_INDEX=tmp-index git read-tree --reset -i "$1" &&
+> >  shift &&
+> >  GIT_INDEX=tmp-index git check-attr "$@" &&
+> >  rm tmp-index
+> 
+> I tried that, but it doesn't work.  (I used GIT_INDEX_FILE.)
 
-Hello all!
+In case I'm doing something wrong, here's a script that shows the
+problem that I have:
 
-I am trying to clone a svn repo and I keep getting the following message:
-
-Couldn't create
-.git/svn/trunk/.rev_map.????????-????-????-????-????????????: No such file
-or directory
-
-Instead of cloning, I tried
-
-git svn init <svn-repo-URL> -T trunk -t tags -b branches
-   ===> This creates a .git folder successfully.
-
-git svn fetch -rNNNNN
-   ===> This does fetch the files but at the end the above quoted error
-message comes up.
-
-Not sure whats causing this problem. Any help is greatly appreciated.
-
-Thanks,
-Anand.
-
-PS: My apologies if this is a repeat question. I did search the mailing list
-using the error message I have quoted and couldn't find any previous post.
+  #!/bin/sh
+  rm -rf /tmp/test
+  mkdir /tmp/test
+  cd /tmp/test
+  mkdir t
+  cd t
+  git init > /dev/null
+  echo "Blah" > foo
+  echo "foo x=y" > .gitattributes
+  git add foo .gitattributes
+  git commit -m "stuff" > /dev/null
+  echo -n "check-attr in a working directory: "
+  git check-attr x foo
+  cd ..
+  git clone --bare t > /dev/null
+  cd t.git
+  git read-tree --reset -i master
+  echo -n "check-attr in a bare repository:   "
+  git check-attr x foo
 
 -- 
-View this message in context: http://n2.nabble.com/Unable-to-create-rev-map-file-tp4818963p4818963.html
-Sent from the git mailing list archive at Nabble.com.
+          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
+                    http://barzilay.org/                   Maze is Life!
