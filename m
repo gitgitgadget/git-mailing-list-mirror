@@ -1,74 +1,76 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC PATCH] Write new giturl(7) manpage
-Date: Mon, 29 Mar 2010 09:59:52 -0600
-Message-ID: <fabb9a1e1003290859p25be2d7aqc7dcb46f3ec7ba4f@mail.gmail.com>
-References: <f3271551003290759g154b149fl7877d9b83e1313e6@mail.gmail.com> 
-	<alpine.LNX.2.00.1003291140270.14365@iabervon.org> <20100329155523.GA31829@LK-Perkele-V2.elisa-laajakaista.fi>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [PATCH] Documentation/urls: Add <transport>::<address> syntax
+Date: Mon, 29 Mar 2010 19:01:48 +0300
+Message-ID: <20100329160148.GB31829@LK-Perkele-V2.elisa-laajakaista.fi>
+References: <f3271551003290810u4edbbbd0x2432bc7411333800@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
 	Gabriel Filion <lelutin@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Mon Mar 29 18:00:32 2010
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 29 18:02:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwHO8-0007Xj-Mf
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 18:00:29 +0200
+	id 1NwHPs-0000Bo-Od
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 18:02:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754540Ab0C2QAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Mar 2010 12:00:17 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:58138 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754529Ab0C2QAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Mar 2010 12:00:14 -0400
-Received: by bwz1 with SMTP id 1so3685012bwz.21
-        for <git@vger.kernel.org>; Mon, 29 Mar 2010 09:00:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type;
-        bh=kRzaRkM5Rb3WtJPZMUbLPIAPeO1xn29fDngDEwap9is=;
-        b=iY+3Mh9ARvpWZZVznAkm2NReYEZxdKxDBHvpf3HBlNKS26QqHyupji8ezwgSt6eDn7
-         4hHFHnG+HNjld6ZE5IHlLP60ZfvUWcCbnL1Pe+FJarpVgpVjRqLoEqmBFCid65leerLX
-         mpORm85jE4YIvmvphblIRJxAs4KcvV0HcnLz4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=YHSTPzhnkPANtAu9Es7rjhFGFYHxZtb8DqoD4oGz9iccyg+ootEDKUztGWT+QzxeDz
-         Ioql1Sb0U9wZtclojxlkkqauneB3gMy8VwXy+dUz2Fi0m6JeTTlQdW0BLjWaOzpQpgZ1
-         h+DAV3aqnNwRotvaEy0jGKVwr9366ehjhU3m8=
-Received: by 10.204.142.7 with HTTP; Mon, 29 Mar 2010 08:59:52 -0700 (PDT)
-In-Reply-To: <20100329155523.GA31829@LK-Perkele-V2.elisa-laajakaista.fi>
-Received: by 10.204.80.36 with SMTP id r36mr1837517bkk.75.1269878412353; Mon, 
-	29 Mar 2010 09:00:12 -0700 (PDT)
+	id S1754030Ab0C2QCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Mar 2010 12:02:12 -0400
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:38023 "EHLO
+	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751113Ab0C2QCK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Mar 2010 12:02:10 -0400
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id 4A7918C94B;
+	Mon, 29 Mar 2010 19:02:09 +0300 (EEST)
+Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A05A9E3C98D; Mon, 29 Mar 2010 19:02:09 +0300
+Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
+	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id EDE59158A6B;
+	Mon, 29 Mar 2010 19:01:59 +0300 (EEST)
+Content-Disposition: inline
+In-Reply-To: <f3271551003290810u4edbbbd0x2432bc7411333800@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143488>
 
-Heya,
+On Mon, Mar 29, 2010 at 08:40:07PM +0530, Ramkumar Ramachandra wrote:
+> Add <transport>::<address> syntax for explicitly invoking a remote
+> helper.
+> ---
+>  Documentation/urls.txt |    5 +++++
+>  1 files changed, 5 insertions(+), 0 deletions(-)
+> 
+> diff --git a/Documentation/urls.txt b/Documentation/urls.txt
+> index 459a394..041cbfe 100644
+> --- a/Documentation/urls.txt
+> +++ b/Documentation/urls.txt
+> @@ -30,6 +30,11 @@ To sync with a local directory, you can use:
+>  - /path/to/repo.git/
+>  - file:///path/to/repo.git/
+> 
+> +To explicity request a remote helper for a certain transport protocol,
+> +you can use:
+> +
+> +- <transport>::path/to/repo.git
+> +
 
-On Mon, Mar 29, 2010 at 09:55, Ilari Liusvaara
-<ilari.liusvaara@elisanet.fi> wrote:
-> AFAICT, urls.txt hasn't been touched since this commit.
+Except that what follows <transport>:: part depends on remote helper. For
+some helpers it may be a path. And for such helpers, it probably won't
+be git repository (so no .git ending). For other helpers, it might be
+server and path. Or something even more exotic.
 
-Yup, my bad for not updating urls.txt (mainly because I didn't know it
-existed :P). I think Ramkumar's patch [0] to fix that is a step in the
-right direction :).
-
-[] http://mid.gmane.org/f3271551003290810u4edbbbd0x2432bc7411333800@mail.gmail.com
-
--- 
-Cheers,
-
-Sverre Rabbelier
+-Ilari
