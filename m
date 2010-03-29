@@ -1,68 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] grep: Add the option '--open-files-in-pager'
-Date: Mon, 29 Mar 2010 19:13:08 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1003291912281.7596@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.1003261145500.7596@pacific.mpi-cbg.de> <alpine.DEB.1.00.1003261149040.7596@pacific.mpi-cbg.de> <20100328040938.GA2017@progeny.tock>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 5/7] remote-helpers: add support for an export command
+Date: Mon, 29 Mar 2010 13:21:45 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.1003291256020.14365@iabervon.org>
+References: <1269881309-19690-1-git-send-email-srabbelier@gmail.com> <1269881309-19690-6-git-send-email-srabbelier@gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1148985287-1269882788=:7596"
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 29 19:13:28 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 29 19:21:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwIWj-0003Si-8q
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 19:13:25 +0200
+	id 1NwIeu-0000ZH-Tu
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 19:21:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754820Ab0C2RNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Mar 2010 13:13:11 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35642 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754804Ab0C2RNJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Mar 2010 13:13:09 -0400
-Received: (qmail invoked by alias); 29 Mar 2010 17:13:07 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp043) with SMTP; 29 Mar 2010 19:13:07 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/kVVQYHvrkwROCpe11nLfZNbvTNYMvNhwE0YCW86
-	JLWinJ0JHKWuoW
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20100328040938.GA2017@progeny.tock>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1755215Ab0C2RVs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Mar 2010 13:21:48 -0400
+Received: from iabervon.org ([66.92.72.58]:54392 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755151Ab0C2RVr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Mar 2010 13:21:47 -0400
+Received: (qmail 7649 invoked by uid 1000); 29 Mar 2010 17:21:45 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 29 Mar 2010 17:21:45 -0000
+In-Reply-To: <1269881309-19690-6-git-send-email-srabbelier@gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143502>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, 29 Mar 2010, Sverre Rabbelier wrote:
 
---8323328-1148985287-1269882788=:7596
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-
-Hi,
-
-On Sat, 27 Mar 2010, Jonathan Nieder wrote:
-
-> Johannes Schindelin wrote:
+> ---
 > 
-> > diff --git a/builtin-grep.c b/builtin-grep.c
-> > index 5d83d9b..233c772 100644
-> 
-> I couldn’t get this to apply to current master or maint, and searching 
-> for blob 5d83d9b to find a more suitable merge base revealed that I 
-> don’t actually have that object in my repo.  Is this patch available 
-> already applied in a public git repo somewhere?
+> 	This complements the 'import' capability, making it possible
+> 	to use remote-helpers with only fast-import/fast-exports
+> 	streams.
 
-Yes, it is in 4msysgit.git's "grep-P" branch (still misnamed).
+It would be good to have documentation on what the helper should do doing 
+here; it's relatively difficult to tell from this code.
 
-Ciao,
-Dscho
+I think that it's getting some options (import and export marks) back from 
+the helper in a kind of ad-hoc and unclear fashion, and it should be doing 
+something more appropriate. (I'm not sure what the more appropriate thing 
+is, or really what the requirements are here as far as getting information 
+around, but I think it needs to be discussed.)
 
---8323328-1148985287-1269882788=:7596--
+	-Daniel
+*This .sig left intentionally blank*
