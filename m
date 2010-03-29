@@ -1,82 +1,95 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: native-git-svn: A Summer of Code 2010 proposal
-Date: Tue, 30 Mar 2010 01:34:53 +0530
-Message-ID: <f3271551003291304u27c56d8fr648d7546f6256857@mail.gmail.com>
-References: <3d4937ff1003262240t6159d9c5sc9253f555c3aed1@mail.gmail.com> 
-	<20100327091938.GA4395@thyrsus.com> <f3271551003280225v17af30d4s6d3d24b4d548ff7d@mail.gmail.com> 
-	<20100328121034.GC25402@thyrsus.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: RFC - "git editlog" feature for fixing up local commit messages
+Date: Mon, 29 Mar 2010 16:14:09 -0400
+Message-ID: <32541b131003291314r2f5a77e8g28e79b5983821e41@mail.gmail.com>
+References: <20100329133132.GA12201@thyrsus.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Peter Baumann <waste.manager@gmx.de>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Dave Olszewski <cxreg@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Steven Michalske <smichalske@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
+Cc: git@vger.kernel.org
 To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Mon Mar 29 22:05:24 2010
+X-From: git-owner@vger.kernel.org Mon Mar 29 22:14:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwLD8-0002jA-Rd
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 22:05:23 +0200
+	id 1NwLM9-00085y-L6
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 22:14:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753204Ab0C2UFQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Mar 2010 16:05:16 -0400
-Received: from mail-gx0-f217.google.com ([209.85.217.217]:36853 "EHLO
-	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751631Ab0C2UFO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Mar 2010 16:05:14 -0400
-Received: by gxk9 with SMTP id 9so1843406gxk.8
-        for <git@vger.kernel.org>; Mon, 29 Mar 2010 13:05:13 -0700 (PDT)
+	id S1753497Ab0C2UOj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Mar 2010 16:14:39 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:64108 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752527Ab0C2UOa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Mar 2010 16:14:30 -0400
+Received: by gwaa18 with SMTP id a18so4267798gwa.19
+        for <git@vger.kernel.org>; Mon, 29 Mar 2010 13:14:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :from:date:received:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=dkqJo5ytWGkKls9NL/hNpvQFJTluGhBpu8Jiz2jAHNw=;
-        b=tHnYAtjNOZXQSGXEJHsQrwvoeRUG4OsPgkGjoqYqm2i7eLpf4QWrCjh41mNyVFbUTJ
-         e2/wG7NaQpEYF5mnx2baKDlCVXVdjLE8YURb/lvOl3tR0liSq35Is1xhDwl5ntIG4ybD
-         nbFdZPQQOFrBjgHChVWf38bumudp75k2HKt48=
+        bh=3POjKKwRlG+he9GEMXom3f9hUU1sC3wBRgi2bgih1Vc=;
+        b=CrGaX+D+z7qDvJGcbxve8/c5eRwGmrjrowmzFi2vu7tXmm8uQMvX1oy/NKhrDLdH0y
+         7z0Rs42tOCcF3WlxH+Ac9sbP37rzxF0NSGXsdX5sJGvPmnWgIznrS6OcZ4DMCEiFGZ4Y
+         A5oW7+2UIoWo/vYb2dKhu5DAtfQnnfJsr0uCU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=FkI5JJ9wiiliwyp7Cy8MJI33kuoB6STlhtplESBAEMmj/yBjVUc2OWsWFMYzzrTXzx
-         lR85Ay1M8l+dwNPwH5OEMiwy7S2I28qSjFu2s7sz0m8E4qgKZfh6yzBX4aJ4LOjtuBa0
-         34GU11J1N0/LullEZ/HZt+xOcB6Y9ug4VEmf4=
-Received: by 10.90.69.14 with HTTP; Mon, 29 Mar 2010 13:04:53 -0700 (PDT)
-In-Reply-To: <20100328121034.GC25402@thyrsus.com>
-Received: by 10.90.60.3 with SMTP id i3mr4396489aga.103.1269893113237; Mon, 29 
-	Mar 2010 13:05:13 -0700 (PDT)
+        b=jdLC78JKvyFl/vSgxAD3kv5+ZfCvzgPa9yRLl1Ufx8wBvf5RW9TpSpabJ5OuVOvwk3
+         N2qsb0sVoab0Y/K/A8j0X7eyOfENypuKmUPzMct8Pmi4c9zjJU2lrzT2UKzrOtOG/h0Q
+         Azj8T5Vx3PPm1IOjrS4Gw7pew8w37OIwwbEgw=
+Received: by 10.150.203.4 with HTTP; Mon, 29 Mar 2010 13:14:09 -0700 (PDT)
+In-Reply-To: <20100329133132.GA12201@thyrsus.com>
+Received: by 10.150.180.12 with SMTP id c12mr5209313ybf.144.1269893669159; 
+	Mon, 29 Mar 2010 13:14:29 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143513>
 
-Hi,
+On Mon, Mar 29, 2010 at 9:31 AM, Eric Raymond <esr@thyrsus.com> wrote:
+> My editcomment script, as it exists, has a technical problem...the
+> editor needs to be something like emacsclient that actually invokes i=
+n
+> a different X window, otherwise whatever it writes to stdout will end
+> up stuffed in the comment along with the text I actually wanted to pu=
+t
+> there. =A0The underlying problem is that git-filter-branch is sort of=
+ a
+> nuclear-powered chainsaw - gets the job done, but in a way that is
+> prone to messy side effects. =A0A more elegant implementation would
+> probably need to tie deeper into the plumbing.
 
-Just a quick heads up: I've submitted my proposal via Google.
+It ought to be easy to work around this; simply extract the log
+message *before* filter-branch using something like
 
-On Sun, Mar 28, 2010 at 5:40 PM, Eric Raymond <esr@thyrsus.com> wrote:
-> Accordingly, I support Ramkumar's proposal to rethink and rewrite the
-> Subversion interface. =A0A concerted effort to do seamless interopera=
-bility
-> would be well justified given the ubiquity of Subversion. =A0I think =
-Rankumar
-> has chosen a goal that is useful, well defined, and realistically sco=
-ped.
+       git cat-file commit HEAD | tail -n +6 >msg.tmp
 
-Thank you :) I'll do my best.
+(I'm sure someone will correct me by providing a less revolting way to
+extract the commit message, but it's somehow not coming to me right
+now.)
 
--- Ram
+Then launch $EDITOR to edit the message, then inside the
+filter-branch, just use that file instead of launching the editor.
+
+Alternatively, in case you want the option of editing *multiple*
+commit messages at once, you could just redirect stdin/stdout to
+/dev/tty.
+
+A further option would be to extend git-rebase--interactive.sh (yes,
+it's just a shell script) to take an option that makes a given commit
+(or commits) 'reword' by default instead of 'pick'.  And maybe another
+option to make git-rebase--interactive.sh not actually pop up an
+editor before it starts running.  Then your editcommit script could
+just be a thin wrapper around rebase with those options.
+
+<insert obligatory wistful reference to git-sequencer> (I don't
+actually know anything about git-sequencer.)
+
+Have fun,
+
+Avery
