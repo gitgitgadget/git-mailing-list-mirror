@@ -1,85 +1,95 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH] Makefile: Remove usage of deprecated Python "has_key" 
-	method
-Date: Mon, 29 Mar 2010 08:23:41 +0800
-Message-ID: <be6fef0d1003281723h4f8788bdi3c5baa3f92724c11@mail.gmail.com>
-References: <1269737112-21631-1-git-send-email-davvid@gmail.com>
-	 <7vy6hc4d0h.fsf@alter.siamese.dyndns.org>
-	 <20100328215442.GA31195@gmail.com>
+From: Gabriel Filion <lelutin@gmail.com>
+Subject: Re: [PATCH v7 1/2] Documentation/remote-helpers: Rewrite description
+Date: Sun, 28 Mar 2010 21:17:31 -0400
+Message-ID: <4BAFFFAB.4080808@gmail.com>
+References: <f3271551003281103x68812b3cj806d6235965f0a32@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 29 02:24:02 2010
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 29 03:17:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nw2lu-0001DU-4y
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 02:24:02 +0200
+	id 1Nw3c3-0006iP-1L
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 03:17:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755438Ab0C2AXp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Mar 2010 20:23:45 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:47764 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755381Ab0C2AXo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 Mar 2010 20:23:44 -0400
-Received: by gwaa18 with SMTP id a18so3722895gwa.19
-        for <git@vger.kernel.org>; Sun, 28 Mar 2010 17:23:43 -0700 (PDT)
+	id S1755550Ab0C2BRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Mar 2010 21:17:42 -0400
+Received: from mail-qy0-f188.google.com ([209.85.221.188]:59250 "EHLO
+	mail-qy0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755521Ab0C2BRi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Mar 2010 21:17:38 -0400
+Received: by mail-qy0-f188.google.com with SMTP id 26so596740qyk.19
+        for <git@vger.kernel.org>; Sun, 28 Mar 2010 18:17:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+UYhuWZnOGbDFcylpUP1ol1QV2gpxN9ruMSzlnvJoxE=;
-        b=MACnYPxo2oSVq5+dOe7ooLQc2dh3+IDvfobG8EXUnDeQ8LrcYV0xFxFNyNud8XTOIz
-         udP+jL/UXUtHPOfyW5X3agEngdkUN6nMYLbehQ6JluyJUzYBaJuFlEntObvPEItKG/tF
-         8aW2J1Lr1UoSHgduINmKNWZBQ0kafGX0pIiCk=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=GRyZoF9U478cbBbWYDw0XL/SQ3tjoTKj+oUr66Jfbw0=;
+        b=sWfcMfeUQI3/kReNvtlvlX6a3E+xcXBwronZVzhgULirNNvJlwl9PCYUemnaMT0i8T
+         DOwZYwysZWqLIykStL1ReUxvmgovuOMqbpr2OmL6utHAGx2ToBiWxkHIoDmCJ73dwhkY
+         9Lq+wDxpjRF8zHMEqopbgzxsd4EPdBmm2BimQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fjxOMzJw9TsxoA6OMoY+juQBnGz2NkByiEes41IlzpUhQgjIcXZ4WI0snyzB6uLlQ+
-         II/FvYUZGyVMSFEOwfsYtfqNPFi1GDx8/jLovxQQX9d0KYjUt/SQr/ipXcj1HeNtb4Cy
-         pDHgRX7tE4Tw5GXTFOIelJzolru0v9wTzTRLE=
-Received: by 10.231.37.5 with HTTP; Sun, 28 Mar 2010 17:23:41 -0700 (PDT)
-In-Reply-To: <20100328215442.GA31195@gmail.com>
-Received: by 10.151.4.12 with SMTP id g12mr4336229ybi.319.1269822221734; Sun, 
-	28 Mar 2010 17:23:41 -0700 (PDT)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=XmetQDc4AbamCez7rKep70m+r2j1ocvOCod7xkY7IhW3VjZ006yttjrfeuQvz79UuJ
+         zfRlM2kfPjZjGwfnHD25iSdfcV3oyLgWQTP8nJk2x4YLQ3AiRRN4S26T+WgqB2RFEvAl
+         JX2G6C4fCJqkwMrDXsTj+SBreBOc2XQTotNOs=
+Received: by 10.229.222.205 with SMTP id ih13mr3563148qcb.73.1269825457441;
+        Sun, 28 Mar 2010 18:17:37 -0700 (PDT)
+Received: from [192.168.2.202] (dsl-148-189.aei.ca [66.36.148.189])
+        by mx.google.com with ESMTPS id 20sm2220052qyk.0.2010.03.28.18.17.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 28 Mar 2010 18:17:35 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20100108 Lightning/1.0b1 Icedove/3.0
+In-Reply-To: <f3271551003281103x68812b3cj806d6235965f0a32@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143425>
 
-Hi,
+Hello,
 
-On Mon, Mar 29, 2010 at 5:54 AM, David Aguilar <davvid@gmail.com> wrote=
-:
-> On Sun, Mar 28, 2010 at 09:38:54AM -0700, Junio C Hamano wrote:
->> David Aguilar <davvid@gmail.com> writes:
->>
->> > "has_key" is a deprecated dictionary method in Python 2.6+.
->> > Simplify the sys.path manipulation for installed scripts by
->> > passing a default value to os.getenv().
->>
->> It looks like the old code was replacing sys.path[0] but you are
->> prepending this. =A0Doesn't that change also make a difference?
->
-> The original code replaced sys.path[0] which is ''
-> (aka the current directory). =A0It's a little odd to
-> rely on the 0th element being something that is safe
-> to remove.
+On 2010-03-28 14:03, Ramkumar Ramachandra wrote:
+[...]
+> diff --git a/Documentation/git-remote-helpers.txt
+> b/Documentation/git-remote-helpers.txt
+> index 1b5f61a..1304813 100644
+> --- a/Documentation/git-remote-helpers.txt
+> +++ b/Documentation/git-remote-helpers.txt
+[...]
+> @@ -12,11 +12,31 @@ SYNOPSIS
+[...]
+> +repositories. They implement a subset of the capabilities documented
+> +here, and conform to the "remote helper protocol". When git needs
+> +needs to interact with a repository served by a remote helper, it
 
-more accurately, it's "directory containing the script that was used
-to invoke the Python interpreter":
+Oops, "needs" is repeated twice here...
 
-  http://docs.python.org/library/sys.html#sys.path
+Apart from that, it seems nice and helps to better understand what they
+should be used for.
 
---=20
-Cheers,
-Ray Chuan
+It doesn't really concern this patch but If I'm not wrong, there still
+is no documentation written on how exactly git invokes the remote
+helpers. A good description was given previously by Ilari Liusvaara (so
+I've added you, Ilari in the cc list). The description can be seen here:
+
+http://lists.zerezo.com/git/msg712892.html
+
+Should we add this information on this man page?
+
+-- 
+Gabriel Filion
