@@ -1,79 +1,102 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH v2 0/2] git-gui: git-gui: change to display the diff with 
-	the HEAD in the case of conflicts.
-Date: Tue, 30 Mar 2010 10:08:33 +1100
-Message-ID: <2cfc40321003291608r2b6c7aaap797b4452985438e9@mail.gmail.com>
-References: <2cfc40321003291600q70f0839bt8720dd025a3891f6@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: git check-attr in bare repositories
+Date: Mon, 29 Mar 2010 18:15:01 -0500
+Message-ID: <20100329231501.GA28194@progeny.tock>
+References: <m3iq8jn3ar.fsf@winooski.ccs.neu.edu>
+ <20100328014208.GA23015@progeny.tock>
+ <19376.50971.397375.810974@winooski.ccs.neu.edu>
+ <19376.53419.640007.930897@winooski.ccs.neu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Tue Mar 30 01:08:41 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Tue Mar 30 01:15:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwO4V-00007z-JS
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 01:08:39 +0200
+	id 1NwOAi-0002Ki-7y
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 01:15:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753124Ab0C2XIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Mar 2010 19:08:34 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:54882 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751014Ab0C2XIe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Mar 2010 19:08:34 -0400
-Received: by pwi5 with SMTP id 5so7157584pwi.19
-        for <git@vger.kernel.org>; Mon, 29 Mar 2010 16:08:33 -0700 (PDT)
+	id S1754816Ab0C2XO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Mar 2010 19:14:58 -0400
+Received: from mail-yw0-f172.google.com ([209.85.211.172]:50824 "EHLO
+	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754039Ab0C2XO5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Mar 2010 19:14:57 -0400
+Received: by ywh2 with SMTP id 2so5339259ywh.33
+        for <git@vger.kernel.org>; Mon, 29 Mar 2010 16:14:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:content-type;
-        bh=axZ/ilS6cf7wYCS4xDybVGueOyhNt6OuXUeC1bKdK7s=;
-        b=XBlPW1dVwuO+g9EABE3R315nyMY6kW5MCznCDRF0h+Znvjozwic/GSlSqR4lZGmMBa
-         aLZVOHP4segqtEwKhQV3JMUFoivOoRheLoHHXJqnpkRhuCQ2Rf9kckDD9PgmeLxpvzLY
-         Yx5uMygq4Z1uwY+SWMyLqbIdVHtfj4nVrsipg=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=Q4ecarKGTZ7XiBS1MhAXTPOvmnjU+RPaJCiKABKrw9o=;
+        b=K84Z86fcIfp+8SDBKJWhBHwbodCaWPcLWn+eHVII7Bfx/ZoW+aPGtrKa7t7PhfkDxR
+         IH03ANxtpXzv+kMH+f0IN3K0dQICi2eQIO7JNaKu55wr8r/GLJ+SbvUV7VuRvmaMoae9
+         ancXlUbRVZ58tJFh5xv5ya0HMVVzsXvoguNVU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=Ou5+s0AUKjDqI8wiJGpOcU8D2MKWRoV+vnKC3PSYqyjY5RhujG4lGAlYrzbvn9fdc/
-         B2unTVx6NNXLmz7wVC+7vFhzFwgzMYt7cS4mUzW7jRenrZIDU8u8pHmSaPQQKYcZmbXp
-         orE+dKEqydg18H/zlpuX9p/owIWrE8Nsuyj7o=
-Received: by 10.114.13.5 with HTTP; Mon, 29 Mar 2010 16:08:33 -0700 (PDT)
-In-Reply-To: <2cfc40321003291600q70f0839bt8720dd025a3891f6@mail.gmail.com>
-Received: by 10.114.164.24 with SMTP id m24mr5967591wae.138.1269904113726; 
-	Mon, 29 Mar 2010 16:08:33 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=q8E7pFMyqq6UXniXYQkm1Ax9dV3RGGFse8mJoJowVmqkKlSW9b0MXUxSO2qzl7RvGS
+         ch2xt4N5gC4wp8ikUQA6q2L4PT+prJhbKhDExFZ0M9egWDwhK8CIlh7F5MVLpJx7q2Np
+         UrN7QxqwqwmOV3DbBn1Gopn1elYschvUAcrW4=
+Received: by 10.150.175.2 with SMTP id x2mr5293297ybe.180.1269904495696;
+        Mon, 29 Mar 2010 16:14:55 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 22sm4417944iwn.8.2010.03.29.16.14.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 29 Mar 2010 16:14:54 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <19376.53419.640007.930897@winooski.ccs.neu.edu>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143531>
 
-Apologies, it broke again.
+Eli Barzilay wrote:
+> On Mar 29, Eli Barzilay wrote:
+>> On Mar 27, Jonathan Nieder wrote:
+[in a bare repository]
 
-The command I ran to submit the patch was:
+>>>  GIT_INDEX=tmp-index git check-attr "$@" &&
+[...]
+>> I tried that, but it doesn't work.  (I used GIT_INDEX_FILE.)
 
-   git format-patch -M git-gui-patch~2.. --stdout | git imap-send
+Yes, not sure how I confused myself.
 
-I did with git 1.6.6.1, running on cygwin however this process appears
-to be corrupting the patch.
+git explicitly guards against that in attr.c.
 
-Can anyone let me know what I have done wrong?
+	/*
+	 * Read from parent directories and push them down
+	 */
+	if (!is_bare_repository() || direction == GIT_ATTR_INDEX) {
 
-jon.
+That check comes from v1.5.6-rc3~9^2 (Ignore .gitattributes in bare
+repositories, 2008-06-08).  This is consistent with how bare
+repositories generally work: they are guarded against use with a
+populated index, since what filesystem tree would that index track?
 
-On Tue, Mar 30, 2010 at 10:00 AM, Jon Seymour <jon.seymour@gmail.com> wrote:
-> Resending because my original patch series wasn't whitespace clean and
-> I have now removed the configuration to make the safe behaviour
-> optional - it is not safe by default.
->
-> If there is any other reason why this patch should not be considered,
-> please let me know.
->
-> [PATCH v2 1/2] git-gui: Introduce is_unmerged global variable to
-> encapsulate its derivation.
-> [PATCH v2 2/2] git-gui: change to display the diff with the HEAD in
-> the case of conflicts.
->
-> jon.
->
+To support your use case, it would be nice for check-attr to learn a
+--direction option.  Maybe it would be safe to let check-attr read
+from the index in bare repositories by default anyway, since the
+index is usually missing anyway.
+
+Properly supporting general work in a bare repository would require
+a larger effort.  Maybe:
+
+ - Teach code that checks is_bare_repository() to check
+   get_git_work_tree() == NULL or similar instead.
+
+ - Make the work_tree and git_dir variables the responsibility of the
+   setup code.
+
+ - If the user sets GIT_INDEX_FILE or GIT_WORK_TREE, let the setup
+   code respect that wish even if core.bare is set.
+
+Thoughts?
+Jonathan
