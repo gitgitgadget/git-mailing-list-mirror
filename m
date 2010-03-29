@@ -1,74 +1,85 @@
-From: Eli Barzilay <eli@barzilay.org>
-Subject: Re: `git check-attr' problems & questions
-Date: Mon, 29 Mar 2010 12:09:15 -0400
-Message-ID: <19376.53419.640007.930897@winooski.ccs.neu.edu>
-References: <m3iq8jn3ar.fsf@winooski.ccs.neu.edu>
-	<20100328014208.GA23015@progeny.tock>
-	<19376.50971.397375.810974@winooski.ccs.neu.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 29 18:09:23 2010
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: [PATCH 0/7] remote-helpers: exporting
+Date: Mon, 29 Mar 2010 11:48:22 -0500
+Message-ID: <1269881309-19690-1-git-send-email-srabbelier@gmail.com>
+To: "Git List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Daniel Barkalow" <barkalow@iabervon.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Jonathan Niede
+X-From: git-owner@vger.kernel.org Mon Mar 29 18:48:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwHWk-0003nL-Lf
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 18:09:23 +0200
+	id 1NwI8w-0007Vo-LO
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 18:48:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753034Ab0C2QJR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Mar 2010 12:09:17 -0400
-Received: from winooski.ccs.neu.edu ([129.10.115.117]:36207 "EHLO barzilay.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751784Ab0C2QJR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Mar 2010 12:09:17 -0400
-Received: from eli by barzilay.org with local (Exim 4.66)
-	(envelope-from <eli@barzilay.org>)
-	id 1NwHWd-0002QB-Kz; Mon, 29 Mar 2010 12:09:15 -0400
-In-Reply-To: <19376.50971.397375.810974@winooski.ccs.neu.edu>
-X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
+	id S1754678Ab0C2Qsm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Mar 2010 12:48:42 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:44618 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754585Ab0C2Qsl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Mar 2010 12:48:41 -0400
+Received: by gyg13 with SMTP id 13so1551144gyg.19
+        for <git@vger.kernel.org>; Mon, 29 Mar 2010 09:48:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :message-id:x-mailer;
+        bh=3RvBR7TOP4wofzwzKvhwjAOmSC1kVJkD0Ye4a0bdv2k=;
+        b=FuGTJ6AOAMMMFRRwTyWrANzYeypjFmh3q0TNdwekDRP6ecKh+QXjzBSMWADIYlmOPj
+         3ICJSPlc5EFxL9ug69Jq38sZRzu/FeW7A3ujSIdgbP+HaCndoH22R5yvKpuoNLlAVz9P
+         A3P0xr56p7ZGj43s164a7o81hZU+lEnAGmErE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:message-id:x-mailer;
+        b=UqQTQGg5it/G2MbBInaEOqD1TNNDlc3abfVkQYcEcQIa7inEc3hNO+OfhZQeuQJdV7
+         /CpCUHwCPs/fJ0kR/+qR4taodcIZF4scO+wpAokzbAeAjhSu6Ve+93BxqVr+ydqEZ1JN
+         JlFhzUuYnyNfIqvd3CTde9InKvhSZoQw+ZW+Y=
+Received: by 10.143.20.1 with SMTP id x1mr1819628wfi.148.1269881320217;
+        Mon, 29 Mar 2010 09:48:40 -0700 (PDT)
+Received: from localhost.localdomain (97-114-181-145.frgo.qwest.net [97.114.181.145])
+        by mx.google.com with ESMTPS id 23sm4102040iwn.10.2010.03.29.09.48.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 29 Mar 2010 09:48:39 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.3.317.gbb04ec
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143491>
 
-On Mar 29, Eli Barzilay wrote:
-> On Mar 27, Jonathan Nieder wrote:
-> >  : "Usage: $0 commit check-attr-args" &&
-> > 
-> >  GIT_INDEX=tmp-index git read-tree --reset -i "$1" &&
-> >  shift &&
-> >  GIT_INDEX=tmp-index git check-attr "$@" &&
-> >  rm tmp-index
-> 
-> I tried that, but it doesn't work.  (I used GIT_INDEX_FILE.)
+Hopefully this is in time for 1.7.1, it'd be good to have the 'export'
+command in asap. I'm fairly sure that the first two patches are good
+(all tests pass, and I've spent a lot of time debugging the relevant
+code), but I'd still appreciate if the clone experts could give
+it a look.
 
-In case I'm doing something wrong, here's a script that shows the
-problem that I have:
+I'm really glad to finally get this working, hopefully I'll also have
+time to finish up the remote-hg implementation, but probably not
+before the 1.7.1 window closes (assuming that will be somewhere in
+the next few days).
 
-  #!/bin/sh
-  rm -rf /tmp/test
-  mkdir /tmp/test
-  cd /tmp/test
-  mkdir t
-  cd t
-  git init > /dev/null
-  echo "Blah" > foo
-  echo "foo x=y" > .gitattributes
-  git add foo .gitattributes
-  git commit -m "stuff" > /dev/null
-  echo -n "check-attr in a working directory: "
-  git check-attr x foo
-  cd ..
-  git clone --bare t > /dev/null
-  cd t.git
-  git read-tree --reset -i master
-  echo -n "check-attr in a bare repository:   "
-  git check-attr x foo
+Sverre Rabbelier (7):
+      clone: pass the remote name to remote_get
+      clone: also configure url for bare clones
+      fast-import: always create marks_file directories
+      remote-helpers: allow requesing the path to the .git directory
+      remote-helpers: add support for an export command
+      remote-helpers: add testgit helper
+      remote-helpers: add tests for testgit helper
 
--- 
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
-                    http://barzilay.org/                   Maze is Life!
+ .gitignore                          |    1 +
+ Makefile                            |    2 +
+ builtin/clone.c                     |   16 ++--
+ fast-import.c                       |    2 +
+ git-remote-testgit.py               |  233 +++++++++++++++++++++++++++++++++++
+ git_remote_helpers/git/exporter.py  |   51 ++++++++
+ git_remote_helpers/git/importer.py  |   38 ++++++
+ git_remote_helpers/git/non_local.py |   61 +++++++++
+ git_remote_helpers/git/repo.py      |   70 +++++++++++
+ t/t5800-remote-helpers.sh           |   70 +++++++++++
+ transport-helper.c                  |  141 +++++++++++++++++++--
+ 11 files changed, 665 insertions(+), 20 deletions(-)
