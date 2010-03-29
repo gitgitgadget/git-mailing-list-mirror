@@ -1,130 +1,259 @@
 From: =?UTF-8?q?Henrik=20Grubbstr=C3=B6m=20=28Grubba=29?= 
 	<grubba@grubba.org>
-Subject: [PATCH 2/5] convert: Keep foreign $Id$ on checkout.
-Date: Mon, 29 Mar 2010 13:28:56 +0200
-Message-ID: <6d9d8b0eaa022f441c507b141ff0efa3f21d1988.1269860022.git.grubba@grubba.org>
+Subject: [PATCH 5/5] convert: Added core.refilteronadd feature.
+Date: Mon, 29 Mar 2010 13:28:59 +0200
+Message-ID: <33b5ea46a0534af9dc755ae58e5dd4995525f643.1269860022.git.grubba@grubba.org>
 References: <cover.1269860022.git.grubba@grubba.org>
  <a75a46b1b6fdb9d52f608643676512e87474e16d.1269860022.git.grubba@grubba.org>
+ <6d9d8b0eaa022f441c507b141ff0efa3f21d1988.1269860022.git.grubba@grubba.org>
+ <74ce7980eb1fe629a651433ca9f1662f26495ce9.1269860022.git.grubba@grubba.org>
+ <81e71814080d0eca72809a751e4e90026f8fe0ea.1269860022.git.grubba@grubba.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Henrik=20Grubbstr=C3=B6m=20 (Grubba) ?= 
 	<grubba@grubba.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 29 13:29:25 2010
+X-From: git-owner@vger.kernel.org Mon Mar 29 13:29:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwD9j-0005ax-3n
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 13:29:19 +0200
+	id 1NwDA6-0005rg-3V
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 13:29:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752116Ab0C2L3L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Mar 2010 07:29:11 -0400
-Received: from mail.roxen.com ([212.247.29.220]:59699 "EHLO mail.roxen.com"
+	id S1752276Ab0C2L3W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Mar 2010 07:29:22 -0400
+Received: from mail.roxen.com ([212.247.29.220]:39360 "EHLO mail.roxen.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751434Ab0C2L3H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Mar 2010 07:29:07 -0400
+	id S1751590Ab0C2L3I (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Mar 2010 07:29:08 -0400
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.roxen.com (Postfix) with ESMTP id F053E628257
-	for <git@vger.kernel.org>; Mon, 29 Mar 2010 13:29:04 +0200 (CEST)
+	by mail.roxen.com (Postfix) with ESMTP id 3C3E9628253
+	for <git@vger.kernel.org>; Mon, 29 Mar 2010 13:29:07 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at roxen.com
 X-Amavis-Alert: BAD HEADER, Duplicate header field: "In-Reply-To"
 Received: from mail.roxen.com ([212.247.29.220])
 	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hLba+iHzOear; Mon, 29 Mar 2010 13:29:04 +0200 (CEST)
+	with ESMTP id CbhJRcsa3oLG; Mon, 29 Mar 2010 13:29:07 +0200 (CEST)
 Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
-	by mail.roxen.com (Postfix) with ESMTP id C897A628254;
-	Mon, 29 Mar 2010 13:29:04 +0200 (CEST)
+	by mail.roxen.com (Postfix) with ESMTP id 13C7662825B;
+	Mon, 29 Mar 2010 13:29:07 +0200 (CEST)
 Received: from shipon.roxen.com (localhost [127.0.0.1])
-	by shipon.roxen.com (8.13.8+Sun/8.13.8) with ESMTP id o2TBT40n006179;
-	Mon, 29 Mar 2010 13:29:04 +0200 (CEST)
+	by shipon.roxen.com (8.13.8+Sun/8.13.8) with ESMTP id o2TBT6Va006191;
+	Mon, 29 Mar 2010 13:29:06 +0200 (CEST)
 Received: (from grubba@localhost)
-	by shipon.roxen.com (8.13.8+Sun/8.13.8/Submit) id o2TBT4FF006178;
-	Mon, 29 Mar 2010 13:29:04 +0200 (CEST)
+	by shipon.roxen.com (8.13.8+Sun/8.13.8/Submit) id o2TBT62n006190;
+	Mon, 29 Mar 2010 13:29:06 +0200 (CEST)
 X-Mailer: git-send-email 1.6.4.122.g6ffd7
-In-Reply-To: <a75a46b1b6fdb9d52f608643676512e87474e16d.1269860022.git.grubba@grubba.org>
+In-Reply-To: <81e71814080d0eca72809a751e4e90026f8fe0ea.1269860022.git.grubba@grubba.org>
 In-Reply-To: <cover.1269860022.git.grubba@grubba.org>
 References: <cover.1269860022.git.grubba@grubba.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143460>
 
-If there are foreign $Id$ keywords in the repository, they are most
-likely there for a reason. Let's keep them on checkout (which is also
-what the documentation indicates). Foreign $Id$ keywords are now
-recognized by there being multiple space separated fields in $Id:xxxxx$=
-=2E
+When having $Id$ tags in other versioning systems, it is customary
+to recalculate the tags in the source on commit or equvivalent.
+This commit adds a configuration option to git that causes source
+files to pass through a conversion roundtrip when added to the index.
 
 Signed-off-by: Henrik Grubbstr=C3=B6m <grubba@grubba.org>
 ---
-The typical use case is for repositories that have been converted
-from some other VCS, where it is desirable to keep the old identifiers
-around until there's some other reason to alter the file.
+ Documentation/config.txt |    6 +++++
+ cache.h                  |    1 +
+ config.c                 |    5 ++++
+ environment.c            |    1 +
+ sha1_file.c              |   57 ++++++++++++++++++++++++++++++++++++++=
+++++++++
+ t/t0021-conversion.sh    |   35 ++++++++++++++++++++++++++++
+ 6 files changed, 105 insertions(+), 0 deletions(-)
 
- convert.c             |   16 ++++++++++++++--
- t/t0021-conversion.sh |    2 +-
- 2 files changed, 15 insertions(+), 3 deletions(-)
-
-diff --git a/convert.c b/convert.c
-index 239fa0a..5a0b7fb 100644
---- a/convert.c
-+++ b/convert.c
-@@ -477,7 +477,7 @@ static int ident_to_worktree(const char *path, cons=
-t char *src, size_t len,
-                              struct strbuf *buf, int ident)
- {
- 	unsigned char sha1[20];
--	char *to_free =3D NULL, *dollar;
-+	char *to_free =3D NULL, *dollar, *spc;
- 	int cnt;
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 06b2f82..ceb0d50 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -535,6 +535,12 @@ core.sparseCheckout::
+ 	Enable "sparse checkout" feature. See section "Sparse checkout" in
+ 	linkgit:git-read-tree[1] for more information.
 =20
- 	if (!ident)
-@@ -513,7 +513,10 @@ static int ident_to_worktree(const char *path, con=
-st char *src, size_t len,
- 		} else if (src[2] =3D=3D ':') {
- 			/*
- 			 * It's possible that an expanded Id has crept its way into the
--			 * repository, we cope with that by stripping the expansion out
-+			 * repository, we cope with that by stripping the expansion out.
-+			 * This is probably not a good idea, since it will cause changes
-+			 * on checkout, which won't go away by stash, but let's keep it
-+			 * for git-style ids.
- 			 */
- 			dollar =3D memchr(src + 3, '$', len - 3);
- 			if (!dollar) {
-@@ -526,6 +529,15 @@ static int ident_to_worktree(const char *path, con=
-st char *src, size_t len,
- 				continue;
- 			}
-=20
-+			spc =3D memchr(src + 4, ' ', dollar - src - 4);
-+			if (spc && spc < dollar-1) {
-+				/* There are spaces in unexpected places.
-+				 * This is probably an id from some other
-+				 * versioning system. Keep it for now.
-+				 */
-+				continue;
-+			}
++core.refilterOnAdd::
++	Enable "refilter on add" feature. This causes source files to be
++	behave as if they were checked out after a linkgit:git-add[1].
++	This is typically usefull if eg the `ident` attribute is active,
++	in which case the $Id$ tags will be updated.
 +
- 			len -=3D dollar + 1 - src;
- 			src  =3D dollar + 1;
- 		} else {
+ add.ignore-errors::
+ 	Tells 'git add' to continue adding files when some files cannot be
+ 	added due to indexing errors. Equivalent to the '--ignore-errors'
+diff --git a/cache.h b/cache.h
+index d510a22..8b5b9dc 100644
+--- a/cache.h
++++ b/cache.h
+@@ -552,6 +552,7 @@ extern int read_replace_refs;
+ extern int fsync_object_files;
+ extern int core_preload_index;
+ extern int core_apply_sparse_checkout;
++extern int core_refilter_on_add;
+=20
+ enum safe_crlf {
+ 	SAFE_CRLF_FALSE =3D 0,
+diff --git a/config.c b/config.c
+index 6963fbe..b1db505 100644
+--- a/config.c
++++ b/config.c
+@@ -523,6 +523,11 @@ static int git_default_core_config(const char *var=
+, const char *value)
+ 		return 0;
+ 	}
+=20
++	if (!strcmp(var, "core.refilteronadd")) {
++		core_refilter_on_add =3D git_config_bool(var, value);
++		return 0;
++	}
++
+ 	/* Add other config variables here and to Documentation/config.txt. *=
+/
+ 	return 0;
+ }
+diff --git a/environment.c b/environment.c
+index 876c5e5..25e1e47 100644
+--- a/environment.c
++++ b/environment.c
+@@ -52,6 +52,7 @@ enum object_creation_mode object_creation_mode =3D OB=
+JECT_CREATION_MODE;
+ char *notes_ref_name;
+ int grafts_replace_parents =3D 1;
+ int core_apply_sparse_checkout;
++int core_refilter_on_add;
+=20
+ /* Parallel index stat data preload? */
+ int core_preload_index =3D 0;
+diff --git a/sha1_file.c b/sha1_file.c
+index b7114fc..e0b0178 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2467,6 +2467,54 @@ int index_fd(unsigned char *sha1, int fd, struct=
+ stat *st, int write_object,
+ 	return ret;
+ }
+=20
++static int refilter_fd(int fd, struct stat *st, const char *path)
++{
++	int ret =3D -1;
++	size_t size =3D xsize_t(st->st_size);
++	struct strbuf gbuf =3D STRBUF_INIT;
++
++	if (!S_ISREG(st->st_mode)) {
++		struct strbuf sbuf =3D STRBUF_INIT;
++		if (strbuf_read(&sbuf, fd, 4096) >=3D 0)
++			ret =3D convert_to_git(path, sbuf.buf, sbuf.len, &gbuf, safe_crlf, =
+0);
++		else
++			ret =3D -1;
++		strbuf_release(&sbuf);
++	} else if (size) {
++		void *buf =3D xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
++		ret =3D convert_to_git(path, buf, size, &gbuf, safe_crlf, 0);
++		munmap(buf, size);
++	} else
++		ret =3D -1;
++
++	if (ret > 0) {
++		/* Something happened during conversion to git.
++		 * Now convert it back, and save the result.
++		 */
++		struct strbuf obuf =3D STRBUF_INIT;
++
++		lseek(fd, 0, SEEK_SET);
++
++		if (convert_to_working_tree(path, gbuf.buf, gbuf.len, &obuf)) {
++			if (write_or_whine(fd, obuf.buf, obuf.len, path))
++				ftruncate(fd, obuf.len);
++			else
++				ret =3D -1;
++		} else {
++			if (write_or_whine(fd, gbuf.buf, gbuf.len, path))
++				ftruncate(fd, gbuf.len);
++			else
++				ret =3D -1;
++		}
++
++		strbuf_release(&obuf);
++	}
++	strbuf_release(&gbuf);
++
++	close(fd);
++	return ret;
++}
++
+ int index_path(unsigned char *sha1, const char *path, struct stat *st,=
+ int write_object)
+ {
+ 	int fd;
+@@ -2481,6 +2529,15 @@ int index_path(unsigned char *sha1, const char *=
+path, struct stat *st, int write
+ 		if (index_fd(sha1, fd, st, write_object, OBJ_BLOB, path) < 0)
+ 			return error("%s: failed to insert into database",
+ 				     path);
++		if (write_object && core_refilter_on_add) {
++			fd =3D open(path, O_RDWR);
++			if (fd < 0)
++				return error("open(\"%s\"): %s", path,
++					     strerror(errno));
++			if (refilter_fd(fd, st, path) < 0)
++				return error("%s: failed to refilter file",
++					     path);
++		}
+ 		break;
+ 	case S_IFLNK:
+ 		if (strbuf_readlink(&sb, path, st->st_size)) {
 diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 29438c5..828e35b 100755
+index f695581..97528c5 100755
 --- a/t/t0021-conversion.sh
 +++ b/t/t0021-conversion.sh
-@@ -78,7 +78,7 @@ test_expect_success expanded_in_repo '
- 		echo "\$Id: fd0478f5f1486f3d5177d4c3f6eb2765e8fc56b9 \$"
- 		echo "\$Id: fd0478f5f1486f3d5177d4c3f6eb2765e8fc56b9 \$"
- 		echo "\$Id: NoTerminatingSymbol"
--		echo "\$Id: fd0478f5f1486f3d5177d4c3f6eb2765e8fc56b9 \$"
-+		echo "\$Id: Foreign Commit With Spaces \$"
- 		echo "\$Id: NoTerminatingSymbolAtEOF"
- 	} > expected-output &&
+@@ -114,4 +114,39 @@ test_expect_success keywords_not_modified '
+ 	test "x`git status --porcelain -- expanded-keywords2`" =3D x
+ '
 =20
++# Check that keywords are expanded on add when refilter is enabled.
++test_expect_success expanded_on_add '
++	git config --add core.refilteronadd true
++
++	echo "expanded-keywords3 ident" >> .gitattributes &&
++
++	{
++		echo "File with keyword"
++		echo "\$Id\$"
++	} > expanded-keywords3 &&
++
++	{
++		echo "File with keyword"
++		echo "\$Id: 0661580d6f976fe7cc1e4512f8db3f2ddb8d93cc \$"
++	} > expected-output3 &&
++
++	git add expanded-keywords3 &&
++
++	cat expanded-keywords3 &&
++	cmp expanded-keywords3 expected-output3
++'
++
++# Check that keywords are expanded on commit when refilter is enabled.
++test_expect_success expanded_on_commit '
++	{
++		echo "File with keyword"
++		echo "\$Id\$"
++	} > expanded-keywords3 &&
++
++	git commit -m "File with keyword" expanded-keywords3 &&
++
++	cat expanded-keywords3 &&
++	cmp expanded-keywords3 expected-output3
++'
++
+ test_done
 --=20
 1.6.4.122.g6ffd7
