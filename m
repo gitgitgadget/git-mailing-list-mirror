@@ -1,221 +1,94 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: [PATCHv3 2/2] tests for git alternate command
-Date: Mon, 29 Mar 2010 14:39:41 -0700
-Message-ID: <1269898781-18564-3-git-send-email-judge.packham@gmail.com>
-References: <1269898781-18564-1-git-send-email-judge.packham@gmail.com>
-Cc: jrnieder@gmail.com, gitster@pobox.com, j.sixt@viscovery.net,
-	bebarino@gmail.com, Chris Packham <judge.packham@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 29 23:42:51 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Some questions about GSoC
+Date: Mon, 29 Mar 2010 16:58:22 -0500
+Message-ID: <20100329215822.GA27793@progeny.tock>
+References: <201003272305.14827.igor@gplsoft.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Igor Murzov <igor@gplsoft.org>
+X-From: git-owner@vger.kernel.org Mon Mar 29 23:58:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwMjS-0006g2-KX
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 23:42:51 +0200
+	id 1NwMyY-0004qm-Tb
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 23:58:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754039Ab0C2Vm3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Mar 2010 17:42:29 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:49392 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754037Ab0C2Vm2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Mar 2010 17:42:28 -0400
-Received: by mail-pw0-f46.google.com with SMTP id 5so7068685pwi.19
-        for <git@vger.kernel.org>; Mon, 29 Mar 2010 14:42:28 -0700 (PDT)
+	id S1753230Ab0C2V6U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Mar 2010 17:58:20 -0400
+Received: from mail-yw0-f172.google.com ([209.85.211.172]:38838 "EHLO
+	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752673Ab0C2V6T (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Mar 2010 17:58:19 -0400
+Received: by ywh2 with SMTP id 2so5295692ywh.33
+        for <git@vger.kernel.org>; Mon, 29 Mar 2010 14:58:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=+WJnGwYbexvtULNmgTWNm3HZG7oqQ2dXjuv6ih+f+og=;
-        b=vj66SjWuqbDp/3xxKEYh/qr1ccgRUD5UjZmoXLl/yeZuXESi4RpTZZmxW770piXyJ3
-         ceKL9DdO5Pf7GO2e5xAXayi0ljgxsijLkA69T7HXifEJXtNZASx9lx8JX6Y0WwXQ/545
-         wNmLTV9VUv2O8qbVHVQsAv/hml8w/4yJ2Fgwo=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=wCdDtBQpaKBtNAPUZfFqZVQ24/rNcYT2mpiBd97YfCo=;
+        b=hdS9XibqAKI+k4ybbysnOaxwVmwh7W1lE+YtFCVRatoBKKlGjhym1YiHsFWwD+pZhS
+         gPhdgWCV3hdhYwVgGLZ0SJq/ry1bG8ZfQNUic382i9+zWqKzBbcBcEVrdMyQxCodUxf8
+         zknb18T9KthHCWYshdB7tUOIqopM25GYwWicU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=kw0b+513rSrqwer4ATRGYxD8fxUdRljrbv2wbP0IcnL3+QJmnMIj42MT3huKryH4G0
-         8zPwdJbKLei6CL7VHufLElsacuiXE5kGvzhe9XKFuH4sz0gdacQ1KWbXwXyHJPWU7BPo
-         gkwKifZES+BYSAx2TeICguigwOfRWlrLuJP/Y=
-Received: by 10.141.105.19 with SMTP id h19mr5074494rvm.281.1269898948013;
-        Mon, 29 Mar 2010 14:42:28 -0700 (PDT)
-Received: from localhost.localdomain (222-153-44-49.jetstream.xtra.co.nz [222.153.44.49])
-        by mx.google.com with ESMTPS id o38sm877571rvp.15.2010.03.29.14.42.23
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 29 Mar 2010 14:42:27 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.3
-In-Reply-To: <1269898781-18564-1-git-send-email-judge.packham@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=q1oCynTn7v79VkR8z1TMHOX/VFBNEofg5Oj+iMpar+DdAgiksmJ6OkthpzZP0T5jwi
+         i4723jcMk/I4ZRJ+6B89qIO6USBfDvJBqKC7QT1LzrMYgowg7RaUxTqGyleGYFgGiG6E
+         vwfmN2iux011S5boeambRcIQ8iV5SZrMImMjw=
+Received: by 10.100.22.31 with SMTP id 31mr1535217anv.39.1269899898480;
+        Mon, 29 Mar 2010 14:58:18 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 6sm1209075ywc.11.2010.03.29.14.58.17
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 29 Mar 2010 14:58:17 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <201003272305.14827.igor@gplsoft.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143521>
 
-Signed-off-by: Chris Packham <judge.packham@gmail.com>
----
- t/t1430-alternate-cmd.sh |  154 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 154 insertions(+), 0 deletions(-)
- create mode 100644 t/t1430-alternate-cmd.sh
+Hi,
 
-diff --git a/t/t1430-alternate-cmd.sh b/t/t1430-alternate-cmd.sh
-new file mode 100644
-index 0000000..ba27633
---- /dev/null
-+++ b/t/t1430-alternate-cmd.sh
-@@ -0,0 +1,154 @@
-+#!/bin/sh
-+#
-+# Copyright (c) Chris Packham
-+#
-+
-+test_description='Test of git alternate command'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup for rest of the test' '
-+
-+	mkdir -p base &&
-+	(
-+		cd base &&
-+		git init &&
-+		echo test > a.txt &&
-+		echo test > b.txt &&
-+		echo test > c.txt &&
-+		git add *.txt &&
-+		git commit -a -m "Initial Commit"
-+	)
-+	git clone base A &&
-+	git clone A B &&
-+	git clone A C &&
-+	git clone A D
-+	testbase=$(pwd)
-+'
-+
-+test_expect_success 'can add alternate after clone' '
-+
-+	(
-+		cd B &&
-+		git alternate -a ../base/.git/objects &&
-+
-+		echo "$testbase/base/.git/objects" > expect &&
-+		cp .git/objects/info/alternates actual   &&
-+
-+		test_cmp expect actual
-+
-+	)
-+'
-+
-+test_expect_success 'add same alternate fails (absolute path)' '
-+
-+	(
-+		cd B &&
-+		test_must_fail git alternate -a $(pwd)/base/.git/objects
-+	)
-+'
-+
-+test_expect_success 'add same alternate fails (relative path)' '
-+
-+	(
-+		cd B &&
-+		test_must_fail git alternate -a ../base/.git/objects
-+	)
-+'
-+
-+test_expect_success 'can add multiple alternates' '
-+
-+	(
-+		cd C &&
-+		git alternate -a ../base/.git/objects &&
-+		git alternate -a ../B/.git/objects &&
-+
-+		{
-+			echo "$testbase/base/.git/objects"
-+			echo "$testbase/B/.git/objects"
-+		} > expect &&
-+
-+		cp .git/objects/info/alternates actual   &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'can add recursive alternate' '
-+
-+	(
-+		cd D &&
-+		git alternate -a ../C/.git/objects
-+
-+		echo "$testbase/C/.git/objects" > expect &&
-+		cp .git/objects/info/alternates actual   &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'simple display' '
-+
-+	(
-+		cd B &&
-+		git alternate >actual &&
-+		{
-+			echo "Object store $testbase/base/.git/objects"
-+			echo "    referenced via $testbase/B/.git"
-+		} >expect &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'recursive display' '
-+
-+	(
-+		cd D &&
-+		git alternate -r >actual &&
-+
-+		{
-+			echo "Object store $testbase/C/.git/objects"
-+			echo "    referenced via $testbase/D/.git"
-+			echo "Object store $testbase/base/.git/objects"
-+			echo "    referenced via $testbase/C/.git"
-+			echo "Object store $testbase/B/.git/objects"
-+			echo "    referenced via $testbase/C/.git"
-+			echo "Object store $testbase/base/.git/objects"
-+			echo "    referenced via $testbase/B/.git"
-+		} >expect &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'cannot delete unless --forced' '
-+	(
-+		cd C &&
-+		test_must_fail git alternate -d "$testbase/B/.git/objects"
-+	)
-+'
-+
-+test_expect_success 'can delete one alternate' '
-+	(
-+		cd C &&
-+		git alternate -f -d "$testbase/B/.git/objects" &&
-+
-+		echo "$testbase/base/.git/objects" > expect &&
-+		cp .git/objects/info/alternates actual   &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'last alternate deleted removes file' '
-+	(
-+		cd C &&
-+		git alternate -f -d "$testbase/base/.git/objects" &&
-+
-+		test ! -e .git/objects/info/alternates
-+
-+	)
-+'
-+
-+test_done
--- 
-1.7.0.3
+Igor Murzov wrote:
+
+> I would like to work on "Unify Pathspec=20
+> Semantics" or "Git Submodules Enhancements" or "Complete libgit2"
+
+Some people are very excited about all three of these happening --- not
+necessarily this summer but ASAP. ;-)
+
+> Is chosen task make any impact on my=20
+> possibility to be taken for the gsoc?
+
+Yes.  If you do not seem like you would do a good job at your chosen
+task, that would really hurt your chances.
+
+To help your chances, it is best to show some initiative.  For example:
+
+ - Maybe write a patch or two now.  This would demonstrate that you=E2=80=
+=99ve
+   cloned the git.git repository and understand how our development
+   process works, and it would give us some sense of your working style=
+=2E
+
+   That may seem daunting if you are not up to speed with git sources
+   yet.  Not to worry: in that case, you would be in an ideal situation
+   to collaborate on writing documentation.
+
+ - Choose a task that scratches an itch you have, so you can write a
+   good proposal.  Write a proposal and get some feedback.  A good
+   proposal will probably require a few revisions.
+
+Good luck.
+
+Jonathan
