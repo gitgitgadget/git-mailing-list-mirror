@@ -1,51 +1,52 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: how to display a simplified graph of commits ?
-Date: Mon, 29 Mar 2010 15:57:22 +0200
-Message-ID: <adf1fd3d1003290657u64b4ef2fid8a6d94672085860@mail.gmail.com>
+Date: Mon, 29 Mar 2010 16:01:53 +0200
+Message-ID: <4BB0B2D1.507@viscovery.net>
 References: <20100329132439.GA734@aldebaran.xn--kwg.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: David Madore <david+news@madore.org>
-X-From: git-owner@vger.kernel.org Mon Mar 29 15:57:34 2010
+X-From: git-owner@vger.kernel.org Mon Mar 29 16:02:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwFT7-0000ff-S7
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 15:57:30 +0200
+	id 1NwFXW-0003Pw-8H
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 16:02:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752004Ab0C2N5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Mar 2010 09:57:25 -0400
-Received: from mail-fx0-f223.google.com ([209.85.220.223]:45025 "EHLO
-	mail-fx0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751373Ab0C2N5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Mar 2010 09:57:24 -0400
-Received: by fxm23 with SMTP id 23so854134fxm.21
-        for <git@vger.kernel.org>; Mon, 29 Mar 2010 06:57:22 -0700 (PDT)
-Received: by 10.103.239.19 with HTTP; Mon, 29 Mar 2010 06:57:22 -0700 (PDT)
+	id S1752072Ab0C2OB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Mar 2010 10:01:57 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:23847 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751213Ab0C2OB5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Mar 2010 10:01:57 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NwFXO-0000KM-Df; Mon, 29 Mar 2010 16:01:54 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 2B4AB1660F;
+	Mon, 29 Mar 2010 16:01:53 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
 In-Reply-To: <20100329132439.GA734@aldebaran.xn--kwg.net>
-Received: by 10.103.4.14 with SMTP id g14mr2675719mui.84.1269871042377; Mon, 
-	29 Mar 2010 06:57:22 -0700 (PDT)
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143475>
 
-On Mon, Mar 29, 2010 at 3:24 PM, David Madore <david+news@madore.org> wrote:
+Am 3/29/2010 15:24, schrieb David Madore:
+> I'd like to know if the following is possible and, if not, I'd like to
+> suggest it as a possible useful addition to the git frontend/graphical
+> tools: display a simplified graph of "interesting" commits showing the
+> relationship between a specified set of commits.
 
-[...]
+git log --graph --simplify-by-decoration
 
->
-> Is there another way I can restrict the set of commits to display,
-> with any kind of graphical tool like gitk?
+You have to tag the interesting commits to show up in this chart.
 
-You can use gitk --simplify-by-decoration. It only shows the commits
-with tags, plus some commits to make a meaningful graph. But it does
-not work with a generic list of commits, the list of interesting
-commits is always those with tags.
-
-HTH,
-Santi
+-- Hannes
