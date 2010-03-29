@@ -1,85 +1,58 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: Tree with leading '0' modes in 1.7.0.3
-Date: Sun, 28 Mar 2010 19:28:28 -0400
-Message-ID: <4BAFE61C.7060604@gmail.com>
-References: <32541b131003261656h430d77a8q753c6141297e8f86@mail.gmail.com>	 <20100327013443.GE10910@spearce.org>	 <alpine.LFD.2.00.1003262142121.694@xanadu.home>	 <d411cc4a1003270544l43f2f93dq5006efb737aa7bbc@mail.gmail.com>	 <alpine.LFD.2.00.1003270959110.694@xanadu.home>	 <20100327191405.GF10910@spearce.org> <4BAE5CB9.6020905@gmail.com>	 <20100327193222.GI10910@spearce.org> <4BAE5EEC.5090804@gmail.com>	 <4BAE601D.6010205@gmail.com> <2e24e5b91003281038u486cd966w1d9263b897e7c9b9@mail.gmail.com>
-Reply-To: gitzilla@gmail.com
+From: Ulrik Sverdrup <ulrik.sverdrup@gmail.com>
+Subject: git-am: Please don't be in "some state" when it fails early
+Date: Mon, 29 Mar 2010 02:14:24 +0200
+Message-ID: <a1b6cb1b1003281714u50dbcc2bh58c38b50a7b837cd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Scott Chacon <schacon@gmail.com>,
-	"Mike.lifeguard" <mike.lifeguard@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 29 01:28:37 2010
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 29 02:14:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nw1uG-0003Px-89
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 01:28:36 +0200
+	id 1Nw2ci-0005qi-4p
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Mar 2010 02:14:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755361Ab0C1X2b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Mar 2010 19:28:31 -0400
-Received: from mail-yw0-f198.google.com ([209.85.211.198]:48314 "EHLO
-	mail-yw0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755336Ab0C1X2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Mar 2010 19:28:30 -0400
-Received: by ywh36 with SMTP id 36so3016734ywh.4
-        for <git@vger.kernel.org>; Sun, 28 Mar 2010 16:28:30 -0700 (PDT)
+	id S1755421Ab0C2AO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Mar 2010 20:14:27 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:52603 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755419Ab0C2AO0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Mar 2010 20:14:26 -0400
+Received: by wwe15 with SMTP id 15so7930237wwe.19
+        for <git@vger.kernel.org>; Sun, 28 Mar 2010 17:14:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id
-         :disposition-notification-to:date:from:reply-to:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=7dXwGx0zf5aQu+sm3th/1X0/kiouYzMmXdYv59+9qs4=;
-        b=YJPr65Y/vRhmvI/aBlVrHkfV8iof0vmM/uiI/Z8+THKykCvpUyv0/MfOjFpyd+HQvr
-         OIK/6dEOuzjy3orI8AbCBac1BMV/+ACKjsNK33QHD8xa28GBw6gNEBx/N/4zCU/UrjpX
-         J4Baf3mTsV4ioryZdu32BsgIIVdBKKW1AsXB8=
+        h=domainkey-signature:mime-version:received:date:received:message-id
+         :subject:from:to:content-type;
+        bh=SQOi66ojMl4Hxc90RD1nwSVEuJj0VEdboBldG8UWZ/Y=;
+        b=f39ylzUMIF0q46bFpEP3jhEp+xWcvQgy0j7B6jJcv+aKRlKm+Uml0tIoVxZ10derk5
+         Vcv2+fvKnzoFwJx72bYdKwu2Skw+83ttrr2cVylSP/8QYfgaxsrrjQ/8QEygwfqQLSVp
+         EmuAZi4ePt5J8F65qUxJcG9KXPD74pZIUMu4w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        b=bXZTYxA7WOEnEXxREgvoTDvKllpNRGuyAoosz+AtPT0Clfc7w2PPGNYedpbOCCdF/L
-         RFCY1BES+gNvpPJ8vXzfX6r1Q/2ThP41jrDfZcLZuyDIwp89gk5Pd2mfCMg+SLtvDL5H
-         XgNj1C9frBJB4jnM5rufE3ES7Qp4nax/53UOM=
-Received: by 10.101.11.14 with SMTP id o14mr1237220ani.196.1269818910085;
-        Sun, 28 Mar 2010 16:28:30 -0700 (PDT)
-Received: from [10.0.0.6] (c-71-199-240-201.hsd1.fl.comcast.net [71.199.240.201])
-        by mx.google.com with ESMTPS id 15sm2219016gxk.6.2010.03.28.16.28.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 28 Mar 2010 16:28:29 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
-In-Reply-To: <2e24e5b91003281038u486cd966w1d9263b897e7c9b9@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=fi4huDIaSBVD7Py0gHtuCiha8ybvbhA1e0nhDUFQ5ObFcePXkDSqh56fAO5hBaobQ/
+         2LW62GrmnIbwBLktsP0GpM5i16RuJzwn9QzVR3Qa0hlD8Z5k4F20ZaUyqMle/yApni5g
+         rNyMyDF7pePQlK2oD0sV8KwM2gfLPTIN9hQdg=
+Received: by 10.216.22.194 with HTTP; Sun, 28 Mar 2010 17:14:24 -0700 (PDT)
+Received: by 10.216.91.16 with SMTP id g16mr2662188wef.102.1269821664840; Sun, 
+	28 Mar 2010 17:14:24 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143423>
 
-Sitaram Chamarty wrote:
-> On Sun, Mar 28, 2010 at 1:14 AM, A Large Angry SCM <gitzilla@gmail.com> wrote:
-> 
->> My combined repository also includes Scott's progit book and examples
->> repositories. I'm guessing that git-fsck did not limit itself to just the
->> object reachable from the torvalds/linux-2.6/master ref.
-> 
-> <struck speechless>
-> 
-> You have *one* repo containing both Scott's book and the Linux kernel
-> tree?  "large angry SCM" is probably an understatement then... any SCM
-> has the right to be angry mixing up things that are so unrelated!
-> 
-> Or did I totally, *totally* misunderstand...?
-> 
+If git am fails early, before even trying to apply the first patch, it
+would be great if am did not leave some state that has to be manually
+cleaned up (git am --abort). Even if I have a small 'AM' marker in my
+prompt, it is often missed. And why write state files to .git/ at all,
+if all it did was to tell me that the index is dirty?
 
-You understood correctly. I use that repository to track activities in a 
-number of different but related projects/communities. Scott's stuff has 
-since been purged until he fixes the corruption.
+This fixes an inconvenience, and I don't have to wonder (look up)
+every time if git am --abort will delete all the WIP I had in the way
+or not.
+
+Ulrik
