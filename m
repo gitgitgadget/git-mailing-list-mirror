@@ -1,73 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git cvsimport and case-insensitive config
-Date: Tue, 30 Mar 2010 14:20:30 -0700
-Message-ID: <7vr5n1v74x.fsf@alter.siamese.dyndns.org>
-References: <hoscv7$hmn$1@dough.gmane.org>
- <7vy6h9vhuk.fsf@alter.siamese.dyndns.org>
- <cb7bb73a1003301105v691624sdcdadf6809c50b89@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git check-attr in bare repositories
+Date: Tue, 30 Mar 2010 16:22:22 -0500
+Message-ID: <20100330212222.GA11192@progeny.tock>
+References: <m3iq8jn3ar.fsf@winooski.ccs.neu.edu>
+ <20100328014208.GA23015@progeny.tock>
+ <19376.50971.397375.810974@winooski.ccs.neu.edu>
+ <19376.53419.640007.930897@winooski.ccs.neu.edu>
+ <20100329231501.GA28194@progeny.tock>
+ <19377.33747.838003.360864@winooski.ccs.neu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 30 23:20:54 2010
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Tue Mar 30 23:22:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nwirj-0002Nu-Ay
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 23:20:51 +0200
+	id 1Nwit6-0003Eo-JK
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 23:22:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755951Ab0C3VUp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 17:20:45 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36224 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755386Ab0C3VUo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 17:20:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C833FA67AC;
-	Tue, 30 Mar 2010 17:20:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mn7w5P1iJ2SGYRPLt4ocdgfaq8o=; b=T37VI6
-	LWUF05H/9o97l2YVpwp5Is1fdgpAZh1lasJgUlcrfnimCaaVECBq5shCUrrHvF5L
-	6oSw/c6ro3FuyQ+wkvvpT4U07O+whQw5WFUdxv7ilfYl7qoaJCDHj5VWmKp64PG/
-	aJQEyeLeLkBDJKqlWF4j/gHNIm09OdFqOIdtw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CXx7RlSVjiuXoQisuZx18fNCNRnlQr2L
-	gRy+RpQw48Jy76mmVymEkuUAP5XzIf8KZ93eZMpOK6bkh3X0uCYaU+8goWhBBn3H
-	ScmUPi5+rrkgISRp1euE1e0eve/nW6r1OnMr/huxc4CDjfz1xYPWcUJNCT4LvlF6
-	E9lOx2EEkC8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CB5EA67A8;
-	Tue, 30 Mar 2010 17:20:39 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 37127A67A5; Tue, 30 Mar
- 2010 17:20:32 -0400 (EDT)
-In-Reply-To: <cb7bb73a1003301105v691624sdcdadf6809c50b89@mail.gmail.com>
- (Giuseppe Bilotta's message of "Tue\, 30 Mar 2010 20\:05\:57 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 170426E6-3C42-11DF-803A-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755970Ab0C3VWL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 17:22:11 -0400
+Received: from mail-gx0-f227.google.com ([209.85.217.227]:42877 "EHLO
+	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754992Ab0C3VWK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 17:22:10 -0400
+Received: by gxk27 with SMTP id 27so5082039gxk.1
+        for <git@vger.kernel.org>; Tue, 30 Mar 2010 14:22:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=4E28fJ686u0zzI6Ouhlu/1g2T1n1O+diTnjgko4Rlpc=;
+        b=P1eF2jAWe/6g5fmHT+KZrvrnb8cyeYIyFqQKMBxEoxLiLIGyKmPMnIJaylhBKLYWzq
+         H4r0Vhd4YL/qvGhTeuVoxj/KTGLsm1lKFvtkTtElyZuiC9xWK2bnNZLyL11udaMvYDqM
+         RJiaa/+XooFfoyXwj6ICrHfA2A06CgN8rE2BU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=KV8WAZ+r3cv2zcfvfNZMs1DkKbtJLsKgW1s8jIQ7UHZbNm18GFOMpala2PMrX+EeSC
+         ETXs7xEUTxKthMUrgXqjJuxDEsG4hoXU8571dX3S+4vEsFSTqMOs/TAozXFK7cJG/1KH
+         IqWXcHX1mz2PT9yOy9cjU+VIw1ZXjmY2kbSNs=
+Received: by 10.101.85.11 with SMTP id n11mr8779368anl.136.1269984129752;
+        Tue, 30 Mar 2010 14:22:09 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 35sm1453369yxh.69.2010.03.30.14.22.07
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 30 Mar 2010 14:22:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <19377.33747.838003.360864@winooski.ccs.neu.edu>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143604>
 
-Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+Eli Barzilay wrote:
 
-> We might be able to skip (2) by relying on the fact that if the
-> lowercase is boolean, the uppercase isn't, and conversely.
+> Well, using the index this way seems like a kind of a hack anyway, so
+> I'm not sure that there is any reason to do this.
 
-That was the idea I wrote in an earlier draft of my response that I later
-scrapped.  I started with "cvsimport.a?  If it is 'true' then that is -a;
-if it names an existing file, then it is -A."  I continued the draft up to
-'-p' vs '-P' (the former would begin with a hyphen, the latter likely
-wouldn't).  But I don't think you can reliably guess -s/-S (both strings).
+Most git commands do write out the tree they are working with to an
+(in-memory or on-disk) index, so using the index this way would make a
+warped kind of sense.  But I agree that it is ugly.
 
-A bigger reason is that, if you have _any_ combination that you cannot
-reliably guess, you would either need the user to ask for help, or you
-need to convert by reading the configuration file case-sensitively
-yourself to come up with a reliable conversion.  I opted for the latter.
+> If anything, I'd
+> like it if `check-attr' could just use the repository directly instea=
+d
+> of the index (or a work tree) in a bare repository.
+
+I think the right thing to do is to put this functionality in a new
+=E2=80=98git ls=E2=80=99 command.  Maybe something like this:
+
+ $ git ls --format=3D'%p %a(crlf)' master -- '*.txt'
+ some/path/foo.txt crlf:input
+ some/path/bar.txt crlf
+ some/path/other.txt !crlf
+ yet/another/path.txt=20
+ $
+
+I can not promise I will find time before the weekend to work on it.
+I wouldn=E2=80=99t be unhappy if someone else gets to it first.
+
+Thanks for the explanations.
+Jonathan
