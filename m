@@ -1,81 +1,64 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: the careless committer and fear of commitment (rebase -i vs add 
-	-p)
-Date: Tue, 30 Mar 2010 11:44:01 +0530
-Message-ID: <f3271551003292314v23058945vb432cc4c8a601aca@mail.gmail.com>
-References: <alpine.DEB.1.00.1003281834520.13534@pip.srcf.ucam.org> 
-	<32541b131003291331y3ae5ca23la33466d588c1b9e1@mail.gmail.com> 
-	<20100330030508.GA2887@progeny.tock> <32541b131003292132q10db3c5eh1bb6443d625fcb82@mail.gmail.com> 
-	<20100330045704.GA9004@progeny.tock>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2 0/2] git-gui: git-gui: change to display the diff with
+ the  HEAD in the case of conflicts.
+Date: Tue, 30 Mar 2010 08:44:13 +0200
+Message-ID: <4BB19DBD.90009@viscovery.net>
+References: <2cfc40321003291600q70f0839bt8720dd025a3891f6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Daniel Thomas <drt24@srcf.ucam.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 30 08:14:43 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, spearce@spearce.org
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 30 08:44:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwUia-00037y-Dy
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 08:14:28 +0200
+	id 1NwVBX-00087W-Ib
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 08:44:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755542Ab0C3GOX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 02:14:23 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:42644 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755481Ab0C3GOW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 02:14:22 -0400
-Received: by gyg13 with SMTP id 13so1977331gyg.19
-        for <git@vger.kernel.org>; Mon, 29 Mar 2010 23:14:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=e1gyW8hjH1qZvws7vEtZIIg6zywjTLrOj5Gz+FQZHZo=;
-        b=F5nIByQd9vpeZU4a/CR/AYauvCo4Y10Z9VnCnK5LpXrp+9oh86/7borH3M+WU9zxB1
-         i4QN2a5TPWqNOYLODP2HV2b5+BvJWbDK9Ef0Q8hGCSt+pBv94biCrYZ67KBsUsJk4mMz
-         fsRPZAnQOzCrZIRrSonTA8QSaa27sao9wM+GI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=jxNzYxmyNi7JCYU6HpzFpBxYBkYRmw2jMrkdvBJZmq3iu00npwbnOPSfx1s4A7gStt
-         4cGGw15N25KpGxUFOfe+qCBjk4KBUO/PDg0XnfGRwyMcMsrcy9a6bDm2lDSBcprMrYBs
-         emZmYpvxRVqSoAy7QX9If11/WfhR8J02M7Ghk=
-Received: by 10.90.69.14 with HTTP; Mon, 29 Mar 2010 23:14:01 -0700 (PDT)
-In-Reply-To: <20100330045704.GA9004@progeny.tock>
-Received: by 10.91.11.5 with SMTP id o5mr2128784agi.46.1269929661227; Mon, 29 
-	Mar 2010 23:14:21 -0700 (PDT)
+	id S1755775Ab0C3GoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 02:44:18 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:31973 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755628Ab0C3GoR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 02:44:17 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NwVBO-0005ZA-8m; Tue, 30 Mar 2010 08:44:14 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id F25C91660F;
+	Tue, 30 Mar 2010 08:44:13 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
+In-Reply-To: <2cfc40321003291600q70f0839bt8720dd025a3891f6@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143549>
 
-Hi,
+Am 3/30/2010 1:00, schrieb Jon Seymour:
+> Resending because my original patch series wasn't whitespace clean and
+> I have now removed the configuration to make the safe behaviour
+> optional - it is not safe by default.
+> 
+> If there is any other reason why this patch should not be considered,
+> please let me know.
+> 
+> [PATCH v2 1/2] git-gui: Introduce is_unmerged global variable to
+> encapsulate its derivation.
+> [PATCH v2 2/2] git-gui: change to display the diff with the HEAD in
+> the case of conflicts.
 
-On Tue, Mar 30, 2010 at 10:32 AM, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
-> I like =91git diff --cached=92 and =91git diff=92 to show the entire =
-list
-> of staged and unstaged changes. =A0I don=92t consider this =93wrong=94=
- at all.
+The default mode of diff in the case of conflicts is "condensed combined",
+which removes "unintersting" changes from the display. AFAIK, there also
+exists a mode that is only "combined". I would think that this mode is
+much more useful here because it shows the diff to both HEAD and
+MERGE_HEADs at the same time.
 
-On a related note, my workflow is somewhat similar: I just use Magit
-within Emacs, which essentially does the same thing. The staging area
-in Git really helps me organize my work, and I wouldn't mind attaching
-a small note to it that I can refer to while writing my commit message
-(much like Jonathan's idea). However, I don't think this task is large
-enough for an entire GSoC.
+Only that I don't know how to invoke this mode...
 
-Also, I'm positively opposed to the idea of a complex interactive
-command-line interface. If someone *did* want that kind of complexity/
-interactivity, they ought to use something like Magit: a cli can't
-even come close.
-
--- Ram
+-- Hannes
