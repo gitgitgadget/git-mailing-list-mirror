@@ -1,98 +1,102 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 2/2] refs.c: Write reflogs for notes just like for branch heads
-Date: Tue, 30 Mar 2010 20:00:35 +0200
-Message-ID: <201003302000.35616.johan@herland.net>
-References: <d6c334ec855bf04d9edb432b9cdc3590ab96d6e9.1269867675.git.git@drmicha.warpmail.net> <201003291625.22977.johan@herland.net> <20100330171932.GE17763@coredump.intra.peff.net>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: git cvsimport and case-insensitive config
+Date: Tue, 30 Mar 2010 20:05:57 +0200
+Message-ID: <cb7bb73a1003301105v691624sdcdadf6809c50b89@mail.gmail.com>
+References: <hoscv7$hmn$1@dough.gmane.org> <7vy6h9vhuk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 30 20:02:09 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 30 20:06:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwflQ-00079S-Bo
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 20:02:08 +0200
+	id 1Nwfpb-0000vW-6t
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 20:06:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754968Ab0C3SB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 14:01:57 -0400
-Received: from smtp.opera.com ([213.236.208.81]:51335 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754910Ab0C3SB5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 14:01:57 -0400
-Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o2UI0Z61009183
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 30 Mar 2010 18:00:36 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <20100330171932.GE17763@coredump.intra.peff.net>
-Content-Disposition: inline
+	id S1755077Ab0C3SGV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 14:06:21 -0400
+Received: from mail-ew0-f220.google.com ([209.85.219.220]:41594 "EHLO
+	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754975Ab0C3SGU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 14:06:20 -0400
+Received: by ewy20 with SMTP id 20so1528580ewy.1
+        for <git@vger.kernel.org>; Tue, 30 Mar 2010 11:06:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5306rcF9RLB3PMfpXZfx/ppFLxD192EpdqUiC0wxIhI=;
+        b=hL4thBr/TE7KgLs1rX89vxq58BGt23whqMXVHLeR2Wgz2OuIER12k8D0QCaO/EjP2L
+         7SydLrrEiAaHxvJjmW/gru6wEzuy4dsf2Sg2OJ0zauIqY6kVPlOlwhPm16yCsr8GM9YE
+         vpPeOD93IGdFNeItDoHRJ9AmLuYXoN+3RbbNM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=A36yBmEbFvaDoUe88pXtICH8ccqBND9EEfqLmkn87SrUGlL4v705+j3mFq/MoCyBgR
+         M0tpy/QIXAlQC3SGGqFHs/l3kN+OsZfmitvyAjaRwHmAFliUFFuSdvcwoBsTNJGyGpHI
+         eZgGfNaHSU5UJduvcLrzaJfhAu4Q0IdPoH90M=
+Received: by 10.213.114.132 with HTTP; Tue, 30 Mar 2010 11:05:57 -0700 (PDT)
+In-Reply-To: <7vy6h9vhuk.fsf@alter.siamese.dyndns.org>
+Received: by 10.213.109.149 with SMTP id j21mr3650292ebp.73.1269972377209; 
+	Tue, 30 Mar 2010 11:06:17 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143586>
 
-On Tuesday 30 March 2010, Jeff King wrote:
-> On Mon, Mar 29, 2010 at 04:25:22PM +0200, Johan Herland wrote:
-> > > This is actually inspired by Jeff's novel notes use. I think
-> > > there are use cases where a notes log makes sense (notes on
-> > > commits) and those where it does not (metadata/textconv). In both
-> > > cases having a reflog is useful. So, the next step is really to
-> > > allow notes trees without history, which also takes care of the
-> > > pruning issue. I know how to do this, I just have to decide about
-> > > the configuration options.
-> >
-> > I noticed that Jeff's proof-of-concept wrote notes trees without
-> > making notes commits, and although it seemed like a bug at first,
-> > it does - as you say - provide a rather nice way to store notes
-> > trees without history.
+On Tue, Mar 30, 2010 at 7:29 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 >
-> No, it was very much intentional.
+>> git cvsimport looks for cvsimport.* single-letter keys that match th=
+e
+>> command-line option (e.g. cvsimport.r for -r). However, since there =
+are some
+>> single-letter options which only differ by case (a vs A, r vs R) if =
+you set
+>> either you get annoying messages (and potentially also odd results, =
+although
+>> I haven't come across these yet).
 >
-> However, I think the next iteration will wrap the tree in an actual
-> commit, but just keep each commit parentless. That will provide a
-> nice spot for metadata like the cache validity information.
-
-Agreed.
-
-> I like the idea of having a reflog, just because you could use it to
-> salvage an old cache if you were playing around with your helper's
-> options (or debugging your helper :) ). The usual 90-day expiration
-> time is perhaps too long, though.
-
-Yes, 90 days as a default might be excessive, but you can always 
-override it with a "git gc --prune=now"...
-
-> > Note that I haven't explicitly designed the notes feature with this
-> > in mind, so it's wise to add testcases for expected behaviour once
-> > we start use history-less notes trees.
-> >
-> > Thinking about it, the notes code itself (notes.h/.c) only wants a
-> > notes _tree_ object, so will probably work fine with history-less
-> > notes trees. But builtin/notes.c with its public commit_notes()
-> > function may be another story...
+> Ouch.
 >
-> I was planning on using my own cache-specific helper instead of
-> commit_notes() anyway, so that shouldn't be a problem. By using a
-> commit wrapper, I don't think any of the display code should be
-> confused (since they need to handle the case of a root note commit
-> anyway). Once I have some example trees, I can poke at them with the
-> existing notes code and see how they behave (and how we _want_ them
-> to behave, since I'm not sure yet what sort of cache introspection,
-> if any, would be useful).
+> The only sensible solution in the longer term is to eventually rename=
+ them
+> to spell them out e.g. cvsimport.remote vs cvsimport.userevisionmap.
+>
+> The transition cost would be the same for either approach.
+>
+> =A0(1) Introduce long options for cvsimport; the code already uses
+> =A0 =A0 Getopt::Long, so this shouldn't be too bad.
+>
+> =A0(2) Add case-sensitive variant of "git config -l" that shows the c=
+onfig
+> =A0 =A0 variable names in the original case.
+>
+> =A0(3) Upon startup, use "git config -l -f $GIT_DIR/config" to check =
+for
+> =A0 =A0 historical short name (e.g. "cvsimport.a" or "cvsimport.A"). =
+=A0If
+> =A0 =A0 there are, map them to longer name, remove the short keys and=
+ write
+> =A0 =A0 the conversion back to the configuration file. =A0You might w=
+ant to do
+> =A0 =A0 the same for "$HOME/.gitconfig" as well.
+>
+> =A0(4) Then the rest of the code can stay the same.
 
-Looking forward to your patches. :)
+We might be able to skip (2) by relying on the fact that if the
+lowercase is boolean, the uppercase isn't, and conversely. So when
+upgrading we check first for the boolean case, if we get a failure (as
+opposed to no value) then we know it's the non-boolean one. Then we
+can migrate the values accordingly.
 
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+--=20
+Giuseppe "Oblomov" Bilotta
