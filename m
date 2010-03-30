@@ -1,102 +1,74 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v2] Documentation/remote-helpers: Add invocation section
-Date: Wed, 31 Mar 2010 02:12:44 +0530
-Message-ID: <f3271551003301342j2fcefee6l1e9c9fa2d012bc11@mail.gmail.com>
-References: <f3271551003300947u4c7c2a83q13aaf786140bfa37@mail.gmail.com> 
-	<20100330183748.GA10647@progeny.tock> <f3271551003301217h44c99d5bye4a614840661b05c@mail.gmail.com> 
-	<20100330201007.GA26121@LK-Perkele-V2.elisa-laajakaista.fi> 
-	<f3271551003301315i4bee002dm572e179819dbb1cd@mail.gmail.com> 
-	<20100330202511.GC10977@progeny.tock>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: mirror git repos: rsync vs. --mirror
+Date: Tue, 30 Mar 2010 20:54:09 +0000
+Message-ID: <robbat2-20100330T205331-531407911Z@orbis-terrarum.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Gabriel Filion <lelutin@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 30 22:43:17 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 30 23:01:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwiHK-000126-PQ
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 22:43:15 +0200
+	id 1NwiZB-00015s-L8
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 23:01:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754668Ab0C3UnI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 16:43:08 -0400
-Received: from mail-gx0-f227.google.com ([209.85.217.227]:63817 "EHLO
-	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754263Ab0C3UnH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 16:43:07 -0400
-Received: by gxk27 with SMTP id 27so5055492gxk.1
-        for <git@vger.kernel.org>; Tue, 30 Mar 2010 13:43:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=efeQUv5D4jBQLaz2xPEknBbzV6sbEeLO4xHYHsGVIMc=;
-        b=APJF2KYfiKfVdtdqIP8pYsUTCo56e/Ghs4jjN5BIHdsrSaG852wyYQ6t7lGZ6KzhZ4
-         Se8F4/iwtsnaZECqi2X8SQyg54AN4qLSFW7XFqiJ0WNPD6xyOzs69Sz6HsICjizf4/Eu
-         DVIun4DU4yPKjL2i6VgQaZqpUN0oSMnRH3TbM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=w60Co7mDJZU9tqZq4GrW46h6lpD6KSq2NkqWGjenKObpYNUUEeg4Inpw0vgCLHZ2hG
-         8Itjx3g4DczNDjucOX4J0RBAOyGtxv1myZbwv8L1j3yKr+J0zYQV1Wk5+dRgp6kyH+Sq
-         NUifbbsbhEbncS+uO44DCEbhQAlQANsr57IyQ=
-Received: by 10.90.69.14 with HTTP; Tue, 30 Mar 2010 13:42:44 -0700 (PDT)
-In-Reply-To: <20100330202511.GC10977@progeny.tock>
-Received: by 10.91.58.11 with SMTP id l11mr786061agk.0.1269981784864; Tue, 30 
-	Mar 2010 13:43:04 -0700 (PDT)
+	id S1755167Ab0C3VBg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 17:01:36 -0400
+Received: from [208.71.112.51] ([208.71.112.51]:55301 "EHLO mail.isohunt.com"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753360Ab0C3VBf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 17:01:35 -0400
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Mar 2010 17:01:35 EDT
+Received: (qmail 28388 invoked from network); 30 Mar 2010 20:54:12 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO grubbs.orbis-terrarum.net) (76.10.188.108)
+    by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (CAMELLIA256-SHA encrypted) ESMTPS; Tue, 30 Mar 2010 20:54:12 +0000
+Received: (qmail 2525 invoked by uid 10000); 30 Mar 2010 20:54:09 -0000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143602>
 
-Hi,
+I'm trying to see about the state of automated mirroring git
+repositories between different systems, eg. a private backend and a
+public frontend, and ran into a catch between two possible options, each
+with a downside. If there are other means besides these, I'm all ears
+for them.
 
-On Wed, Mar 31, 2010 at 1:55 AM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Hmm. =A0urls.txt is not currently its own page; instead, it is includ=
-ed
-> in git-clone(1) and so on. =A0I hope to change that this weekend.
+rsync:
+------
+How:
+- Simply rsync the git repository, atomically, and use --delete-after.
+Benefits:
+- Guaranteed to match between master/slaves.
+Caveats:
+- Need to know that the master repo is in a good state.
+- If a repo is repacked, there is a lot more traffic in the next sync.
 
-My thoughts exactly. The giturls(7) idea will have to be dropped. It
-looks like we have to post a patch for urls.txt to include some
-introductory text and turn it into giturls(1), a manpage in its own
-right. Then we have to remove references to urls.txt from all the
-documents and make them point to gituls(1). I suspect the whole thing
-will have to be done bit by bit, and go through several reviews. I can
-help out a bit, but I wait for you to write most of it first.
+git clone --mirror && git fetch:
+--------------------------------
+How:
+- Setup with: "git clone --mirror URL"
+- Cronjob with: "git fetch"
+Benefits:
+- Extremely fast
+- Light on traffic
+Caveats:
+- Branches and tags deleted in master persist in slaves :-(
+- Seperate gc/repack needed on slaves.
 
-One very realistic problem: Ambiguity between general URLS, "URLS
-recognized by Git", and "arbitrary strings that perform the same
-function as URLS".
+The traffic vs. deleted branches/tags is the main tradeoff here, esp. as
+repos get larger.
 
-> More to the point, wouldn=92t "URL recognized by Git" mean a string
-> like fd::3,4 rather than the 3,4 that is passed to =91git remote-fd=92=
-?
+Can git-fetch perhaps be made to delete the branches/tags?
 
-That falls under the <transport>::<address> category, but Ilari might
-very well come up with a totally new syntax for a remote helper he
-writes tomorrow.
-
-> Also worth keeping in mind: we want to support third-party helpers, t=
-oo.
-> So it is hard to have one centralized document that completely explai=
-ns
-> all possible URLs.
-
-Okay, I'll try to word it accordingly then. "URLS recognized by git,
-and arbitrary URL-like strings recognized by that specific remote
-helper program".
-
--- Ram
+-- 
+Robin Hugh Johnson
+Gentoo Linux: Developer, Trustee & Infrastructure Lead
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
