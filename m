@@ -1,88 +1,100 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: [GSoC Proposal/RFC] Rolling commit message writing
-Date: Tue, 30 Mar 2010 00:32:11 -0400
-Message-ID: <32541b131003292132q10db3c5eh1bb6443d625fcb82@mail.gmail.com>
-References: <alpine.DEB.1.00.1003281834520.13534@pip.srcf.ucam.org> 
-	<32541b131003291331y3ae5ca23la33466d588c1b9e1@mail.gmail.com> 
-	<20100330030508.GA2887@progeny.tock>
+From: Eli Barzilay <eli@barzilay.org>
+Subject: Re: git check-attr in bare repositories
+Date: Tue, 30 Mar 2010 00:53:39 -0400
+Message-ID: <19377.33747.838003.360864@winooski.ccs.neu.edu>
+References: <m3iq8jn3ar.fsf@winooski.ccs.neu.edu>
+	<20100328014208.GA23015@progeny.tock>
+	<19376.50971.397375.810974@winooski.ccs.neu.edu>
+	<19376.53419.640007.930897@winooski.ccs.neu.edu>
+	<20100329231501.GA28194@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Daniel Thomas <drt24@srcf.ucam.org>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 30 06:32:38 2010
+X-From: git-owner@vger.kernel.org Tue Mar 30 06:53:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwT81-0004X6-S5
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 06:32:38 +0200
+	id 1NwTSV-0004yc-F4
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 06:53:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751443Ab0C3Ecd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 00:32:33 -0400
-Received: from mail-gx0-f217.google.com ([209.85.217.217]:56660 "EHLO
-	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751088Ab0C3Ecc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 00:32:32 -0400
-Received: by gxk9 with SMTP id 9so2151457gxk.8
-        for <git@vger.kernel.org>; Mon, 29 Mar 2010 21:32:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zwoMip2Cz18qpRixAD58M1+/eS5hijzgv3J+N+4oVhQ=;
-        b=ITn+eOJx+jVXoYySNL+H6FNyEulke2TZvNFWWgNShZkASTrvbfYUQJGwv3Rx/SElF5
-         mt8QnEBEGdzZRB+gqmEvTb2KbaTvtTF/6FCuOUEiO/bbfMxNDz368Joo48t7SLDig8JH
-         NxKW9WwYSBTJ5RPRFfFeOiPKSLTscNknBKT08=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Z3yQgBAE6P+ljjOhLr5wEfJp8S+dQnRn3GFfMfES3vqa6JLudj/LiWzJ8YKHkTQgW6
-         auoZO8Ou69jeyNYL4zVQuynfQPZaZyRqkWs/7ZepvQVOVqrc37570tm4sawNJJ+VeD9T
-         2hCfb1j8s9TXT/gs+ziMoOQK6ruOD3mq9boJc=
-Received: by 10.150.203.4 with HTTP; Mon, 29 Mar 2010 21:32:11 -0700 (PDT)
-In-Reply-To: <20100330030508.GA2887@progeny.tock>
-Received: by 10.150.128.41 with SMTP id a41mr5565427ybd.245.1269923551116; 
-	Mon, 29 Mar 2010 21:32:31 -0700 (PDT)
+	id S1753637Ab0C3Exm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 00:53:42 -0400
+Received: from winooski.ccs.neu.edu ([129.10.115.117]:42639 "EHLO barzilay.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752290Ab0C3Exl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 00:53:41 -0400
+Received: from eli by barzilay.org with local (Exim 4.66)
+	(envelope-from <eli@barzilay.org>)
+	id 1NwTSN-0008KE-RQ; Tue, 30 Mar 2010 00:53:39 -0400
+In-Reply-To: <20100329231501.GA28194@progeny.tock>
+X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143543>
 
-On Mon, Mar 29, 2010 at 11:05 PM, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
-> Avery Pennarun wrote:
->> Given these existing capabilities, is it still worth adding the
->> feature you propose?
->
-> I think it might be, in some modified form.
->
-> Suppose I am working on a medium-sized change that for reasons of
-> bisectability or ontology has to be one commit. =A0In the middle of
-> working, I notice I needed to do something nonobvious. =A0Currently w=
-hen
-> this happens, I get out a pad of paper and write it down, so I can be
-> sure to mention it in the commit message.
+On Mar 29, Jonathan Nieder wrote:
+> Eli Barzilay wrote:
+> > On Mar 29, Eli Barzilay wrote:
+> >> On Mar 27, Jonathan Nieder wrote:
+> [in a bare repository]
+> 
+> >>>  GIT_INDEX=tmp-index git check-attr "$@" &&
+> [...]
+> >> I tried that, but it doesn't work.  (I used GIT_INDEX_FILE.)
+> 
+> Yes, not sure how I confused myself.
+> 
+> git explicitly guards against that in attr.c.
+> 
+> 	/*
+> 	 * Read from parent directories and push them down
+> 	 */
+> 	if (!is_bare_repository() || direction == GIT_ATTR_INDEX) {
 
-When I have this situation, I generally just make a temporary commit
-with "git commit", then revise it using "git commit --amend" over
-time.
+Ugh...!
 
-Or else I make a series of commits, then *later* squash them all
-together using 'git merge --squash' or 'git rebase -i'.
 
-It seems like the suggested feature would encourage people to do it
-the "wrong" way (not creating temporary commits, thus making it easy
-to make a mistake and blow things away) just because they aren't aware
-of the above options.
+> That check comes from v1.5.6-rc3~9^2 (Ignore .gitattributes in bare
+> repositories, 2008-06-08).  This is consistent with how bare
+> repositories generally work: they are guarded against use with a
+> populated index, since what filesystem tree would that index track?
 
-Is there a reason that these methods don't work for you?
+Well, I've seen more than a few places that say that git attributes
+are the right choice to use for svn properties...  (I think that I
+also asked a question about this here.)
 
-Thanks,
+There are a number of technicalities that make git attributes a poor
+substitute for svn properties -- mainly the fact that they limited in
+contents (basically just short strings, no quoting, no newlines), and
+the fact that they're not tracked with the files (as in svn, where
+moving a file somewhere will move its properties with it).  Both of
+these are not too bad for what we use them (files don't move often,
+and we use short strings only).  But having no access to them on the
+server (without a costly checkout) is making it even more problematic,
+to the point that coming up with our own home cooked thing is easier
+than using git attributes.  Given that they're not intended for
+end-user consumption (eg, `check-attr' being an internal helper) it
+looks like we're not giving up much anyway.
 
-Avery
+
+> To support your use case, it would be nice for check-attr to learn a
+> --direction option.  Maybe it would be safe to let check-attr read
+> from the index in bare repositories by default anyway, since the
+> index is usually missing anyway.
+
+Well, using the index this way seems like a kind of a hack anyway, so
+I'm not sure that there is any reason to do this.  If anything, I'd
+like it if `check-attr' could just use the repository directly instead
+of the index (or a work tree) in a bare repository.  Without that, and
+the best solution that I see in the short term, it should throw an
+appropriate error instead of just producing an "unspecified".
+
+-- 
+          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
+                    http://barzilay.org/                   Maze is Life!
