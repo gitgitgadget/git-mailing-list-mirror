@@ -1,68 +1,93 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v3 0/2] git-gui: change to display the combined diff in the 
-	case of conflicts.
-Date: Wed, 31 Mar 2010 03:34:17 +1200
-Message-ID: <2cfc40321003300834w59532e58m13d42acce4f2c5ce@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>, spearce@spearce.org,
-	Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Mar 30 17:34:28 2010
+Subject: [PATCH v3 1/2] git-gui: Introduce is_unmerged global variable to encapsulate its derivation.
+Date: Wed, 31 Mar 2010 02:34:48 +1100
+Message-ID: <1269963289-480-1-git-send-email-jon.seymour@gmail.com>
+Cc: git@vger.kernel.org, spearce@spearce.org, j.sixt@viscovery.net
+To: jon.seymour@gmail.com
+X-From: git-owner@vger.kernel.org Tue Mar 30 17:44:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwdST-0006b9-BM
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 17:34:25 +0200
+	id 1Nwdc6-00049m-E5
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 17:44:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753917Ab0C3PeT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 11:34:19 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:38601 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752447Ab0C3PeS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 11:34:18 -0400
-Received: by pwi5 with SMTP id 5so7825533pwi.19
-        for <git@vger.kernel.org>; Tue, 30 Mar 2010 08:34:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:received:message-id
-         :subject:from:to:content-type;
-        bh=1Ya/+karYlnXS52qusc40D9iP5/mLMErlwb6xC9JvOY=;
-        b=YSh4+SAs9GTRtHZaGQuFN8RlxdTiHRxgt8OJvmFDYOPOr4pzJHOmP1KCVYbC+BUGZE
-         g1+/MURnu8jsqgXdnSpDH0h9+Ca3h/MS6/hIQUonhIQ6BWa1Y2532c6C0GLDNWsbjpkS
-         pAZWzhcEm2iiAmCNYry0fZ8LIInmpCnA0IMPg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=qgEtHgOtMyDaY6X/m3omIuh10SzC17hoEVbokdm/wOpMLvO/IqWKAu+Ic7iPCotHho
-         gRJD+wdVMXP0gBOKpripawsiRwxvg3GCHB6MTJ74HLjtv5kPgF687nUwzj9+wpMnRvy5
-         DBuD8QxpY8AlXJ3J3dfp4+NBzc9t6++BJZ3hY=
-Received: by 10.114.13.5 with HTTP; Tue, 30 Mar 2010 08:34:17 -0700 (PDT)
-Received: by 10.114.187.19 with SMTP id k19mr6503555waf.20.1269963257441; Tue, 
-	30 Mar 2010 08:34:17 -0700 (PDT)
+	id S1754436Ab0C3PoO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 11:44:14 -0400
+Received: from outbound.icp-qv1-irony-out5.iinet.net.au ([203.59.1.105]:38094
+	"EHLO outbound.icp-qv1-irony-out5.iinet.net.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752218Ab0C3PoN (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 11:44:13 -0400
+X-Greylist: delayed 558 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Mar 2010 11:44:13 EDT
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvYFAHu3sUt8qoyc/2dsb2JhbACPP4FOiiJxr3mCK4R9LYhRhQAE
+X-IronPort-AV: E=Sophos;i="4.51,334,1267372800"; 
+   d="scan'208";a="122256063"
+Received: from unknown (HELO localhost.localdomain) ([124.170.140.156])
+  by outbound.icp-qv1-irony-out5.iinet.net.au with ESMTP; 30 Mar 2010 23:34:51 +0800
+X-Mailer: git-send-email 1.6.6.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143571>
 
-This variant of the patch uses git diff -c instead of git diff HEAD,
-at Johannes Sixt's suggestion.
+Defined is_unmerged to be [expr {[string first {U} $m] >= 0}]
+and then replaced uses of {[string first {U} $m] >= 0} with {$is_unmerged}.
 
-The diff displayed in case of a merge conflict now shows the
-differences between the merge result and each of the local and remote
-heads and thus now also allows the user to assess the consequences of
-"Use Remote Version" by showing how the merge result affects the state
-of the local branch.
+This change is made because the subsequent patch will introduce a 3rd use of this expression.
 
-I have avoided using gmail client to forward this version of  patch
-because of documented word-wrapping issues, so hopefully this will
-apply cleanly.
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+ git-gui/lib/diff.tcl |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
 
-[PATCH v3 1/2] git-gui: Introduce is_unmerged global variable to
-encapsulate its derivation.
-[PATCH v3 2/2] git-gui: change to display the combined diff in the
-case of conflicts.
-
-jon.
+diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
+index ec8c11e..e7b1986 100644
+--- a/git-gui/lib/diff.tcl
++++ b/git-gui/lib/diff.tcl
+@@ -80,6 +80,7 @@ proc show_diff {path w {lno {}} {scroll_pos {}} {callback {}}} {
+ 	global ui_diff ui_index ui_workdir
+ 	global current_diff_path current_diff_side current_diff_header
+ 	global current_diff_queue
++	global is_unmerged
+ 
+ 	if {$diff_active || ![lock_index read]} return
+ 
+@@ -98,6 +99,7 @@ proc show_diff {path w {lno {}} {scroll_pos {}} {callback {}}} {
+ 	set s $file_states($path)
+ 	set m [lindex $s 0]
+ 	set is_conflict_diff 0
++	set is_unmerged [expr {[string first {U} $m] >= 0}]
+ 	set current_diff_path $path
+ 	set current_diff_side $w
+ 	set current_diff_queue {}
+@@ -105,7 +107,7 @@ proc show_diff {path w {lno {}} {scroll_pos {}} {callback {}}} {
+ 
+ 	set cont_info [list $scroll_pos $callback]
+ 
+-	if {[string first {U} $m] >= 0} {
++	if {$is_unmerged} {
+ 		merge_load_stages $path [list show_unmerged_diff $cont_info]
+ 	} elseif {$m eq {_O}} {
+ 		show_other_diff $path $w $m $cont_info
+@@ -258,6 +260,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
+ 	global is_3way_diff is_submodule_diff diff_active repo_config
+ 	global ui_diff ui_index ui_workdir
+ 	global current_diff_path current_diff_side current_diff_header
++	global is_unmerged
+ 
+ 	set path $current_diff_path
+ 	set w $current_diff_side
+@@ -274,7 +277,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
+ 		lappend cmd diff-index
+ 		lappend cmd --cached
+ 	} elseif {$w eq $ui_workdir} {
+-		if {[string first {U} $m] >= 0} {
++	        if {$is_unmerged} {
+ 			lappend cmd diff
+ 		} else {
+ 			lappend cmd diff-files
+-- 
+1.6.6.1
