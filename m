@@ -1,68 +1,55 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/3] fast textconv
-Date: Tue, 30 Mar 2010 12:04:49 -0400
-Message-ID: <20100330160449.GB17763@coredump.intra.peff.net>
-References: <20100328145301.GA26213@coredump.intra.peff.net>
- <4BAF7F3F.5020604@drmicha.warpmail.net>
- <20100328161728.GA2828@coredump.intra.peff.net>
- <20100328161921.GA3435@coredump.intra.peff.net>
- <20100328165646.GA10293@coredump.intra.peff.net>
- <20100328173420.GA18047@coredump.intra.peff.net>
- <fabb9a1e1003281113o4cb1e723p4ed39521b645fffe@mail.gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Are the patches used to build git on cygwin available in a git repo 
+	somewhere?
+Date: Wed, 31 Mar 2010 04:16:56 +1200
+Message-ID: <2cfc40321003300916o305e4c15x7850549beafc26c0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 30 18:05:13 2010
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 30 18:17:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwdwC-0008Fu-Cu
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 18:05:08 +0200
+	id 1Nwe7n-0005lQ-Kr
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 18:17:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754045Ab0C3QFC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 12:05:02 -0400
-Received: from peff.net ([208.65.91.99]:48886 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753069Ab0C3QFA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 12:05:00 -0400
-Received: (qmail 21322 invoked by uid 107); 30 Mar 2010 16:05:35 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 30 Mar 2010 12:05:35 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Mar 2010 12:04:49 -0400
-Content-Disposition: inline
-In-Reply-To: <fabb9a1e1003281113o4cb1e723p4ed39521b645fffe@mail.gmail.com>
+	id S1752204Ab0C3QQ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 12:16:58 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:45305 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750902Ab0C3QQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 12:16:57 -0400
+Received: by pwi5 with SMTP id 5so7871026pwi.19
+        for <git@vger.kernel.org>; Tue, 30 Mar 2010 09:16:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:received:message-id
+         :subject:from:to:content-type;
+        bh=mvNiSMvp2oG8CXI2ep8BTDaMnF5dhMYDYurzC7Vs4KI=;
+        b=s505IoPhs0VADi0iTMqIVUSeT5wnja2NCNDyJKv5UGPEOw/11lQNFyZita6LREjqvG
+         z3AzUqyX+xWkRhgg1yi97uzja33k5JnFm94b0xxJGwDP5bLW4Wl7sHm8KyoKEqMCUuOW
+         n8vor40Y70KJ+oQNInoz8tdBAxcPipcID5WPg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=RRSZQn51PNlcUg7c1v72WiPk8ftlaPjO6qLsx7hAOhDNPUiEowRgkFMCh6To3o86Nx
+         j784A83QoOJsmjZIgyGT+GIJnivSPgYYbNhDwUVRQYdnrXU6eifteEtJoul7yhoP4tEa
+         M5fn0AnVzHWzDZl0U4E7PqkZqfdI7XXIHbScI=
+Received: by 10.114.13.5 with HTTP; Tue, 30 Mar 2010 09:16:56 -0700 (PDT)
+Received: by 10.114.164.24 with SMTP id m24mr6804722wae.138.1269965816373; 
+	Tue, 30 Mar 2010 09:16:56 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143576>
 
-On Sun, Mar 28, 2010 at 12:13:10PM -0600, Sverre Rabbelier wrote:
+I notice that certain tools, such as gitk, won't run correctly if git
+is built from the master branch.
 
-> On Sun, Mar 28, 2010 at 11:34, Jeff King <peff@peff.net> wrote:
-> > Here is a quick and dirty in-core implementation. The most notable
-> > defect is that all textconvs store under refs/notes/textconv, which is
-> > obviously bogus if you might textconv the same blob in two different
-> > ways.
-> 
-> What I did for the implementation of remote helpers is hash the url of
-> the remote when storing it locally, that way you don't have to worry
-> about escaping urls etc. You could do the same with the textconvs,
-> store it under  refs/notes/textconv/<hash of textconv filter>?
+Does anyone maintain a git repo with the patches used to successfully
+build the cygwin git packages?
 
-I thought about something like that, but we want to keep something that
-is comprehensible to the user. If my install of "exif" changes, I need
-to be able to say "invalidate the cache for exif". If it's
-human-readable, I know I need to clear refs/notes/textconv/exif. But if
-it's a hash, then I need a special tool to figure out which ref is
-relevant.
-
-Instead, my plan is to use refs/notes/textconv/$TYPE, where $TYPE is the
-same string used by the config (e.g., "diff.$TYPE.textconv") and the
-gitattributes file (e.g., "*.jpg diff=$TYPE"). The user has already
-provided us a with a short, unique, meaningful name.
-
--Peff
+jon.
