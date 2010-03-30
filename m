@@ -1,79 +1,65 @@
-From: Raymond Auge <raymond.auge@liferay.com>
-Subject: sadly requesting help
-Date: Tue, 30 Mar 2010 18:43:21 -0400
-Message-ID: <eaacf13c1003301543r45bb18b2n1d10d209f01e3326@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 3/3] Add support for GIT_ONE_FILESYSTEM
+Date: Tue, 30 Mar 2010 15:43:01 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.1003301537150.3707@i5.linux-foundation.org>
+References: <1268855753-25840-1-git-send-email-lars@pixar.com> <1268855753-25840-4-git-send-email-lars@pixar.com> <20100328092253.GA17563@coredump.intra.peff.net> <7vr5n44crq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 31 00:43:30 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, "Lars R. Damerow" <lars@pixar.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 31 00:48:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nwk9h-0005at-Aw
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 00:43:29 +0200
+	id 1NwkEH-0007a1-Dt
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 00:48:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546Ab0C3WnY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 18:43:24 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:53361 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752144Ab0C3WnX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 18:43:23 -0400
-Received: by wyb39 with SMTP id 39so1939601wyb.19
-        for <git@vger.kernel.org>; Tue, 30 Mar 2010 15:43:21 -0700 (PDT)
-Received: by 10.216.1.133 with HTTP; Tue, 30 Mar 2010 15:43:21 -0700 (PDT)
-Received: by 10.216.155.145 with SMTP id j17mr509549wek.147.1269989001342; 
-	Tue, 30 Mar 2010 15:43:21 -0700 (PDT)
+	id S1752653Ab0C3WsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 18:48:08 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:52128 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750962Ab0C3WsH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 18:48:07 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o2UMlSEN022108
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 30 Mar 2010 15:47:30 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o2UMlRUk009485;
+	Tue, 30 Mar 2010 15:47:28 -0700
+In-Reply-To: <7vr5n44crq.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.949 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143614>
-
-Hello,
-
-My name is Raymond Aug=C3=A9. I'm a senior developer on the Liferay Por=
-tal project.
-
-We had a colo failure over the last day or so and lost the last 50-60
-commits on our subversion repository (apparently, our backup strategy
-was not granular enough).
-
-Luckily I use Git locally using the git-svn conduit.
-
-I need to rewind my repository to an earlier revision and I'm hoping
-not to have to rebuild my local repo as the project is huge and takes
-me at least 16 hours to checkout using git-svn.
-
-I tried using:
-
-git svn reset --revision 49343
-
-where 49343 is the last revision before the failure.
-
-But I'm at git version 1.6.3.3 which doesn't support the "reset" operat=
-ion.
-
-I tried various incantations of
-
-git reset --hard <hash>
-
-where <hash> matched the subversion revision obtained
-
-git svn find-rev 49343
-
-But that didn't clear the svn indexes which still think it's at the
-much later revision.
-
-Does anyone know if there is an alternate way to rewind the "svn"
-portion of my repo to "forget" about the revs since 49343 so that I
-can restart the fetch process and catch up with the new stream (the
-git side seems to be more than ok with it)?
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143615>
 
 
-Sincerely,
 
-Raymond Aug=C3=A9
-Liferay Inc.
+On Sun, 28 Mar 2010, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
+> 
+> > With those fixes, I think it should be ready for 'next'.
+> 
+> Yeah, looks nice; thanks both.
+
+I realize that I'm late to the party, but I do wonder if the "one 
+filesystem" mode shouldn't be the default, rather than be enabled by a 
+config option? IOW, just switch the meaning of the config option the other 
+way.
+
+I suspect that it is _very_ unusual to have a source repo that crosses 
+multiple filesystems, and the original reason for this patch-series seems 
+to me to be likely to be more common than that multi-fs case. So having 
+the logic go the other way would seem to match the common case, no?
+
+			Linus
