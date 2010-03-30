@@ -1,73 +1,58 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [ANNOUNCE] JGit 0.7.1 / EGit 0.7.1
-Date: Mon, 29 Mar 2010 18:23:23 -0700
-Message-ID: <20100330012323.GD32653@spearce.org>
+From: Sebastian Pipping <webmaster@hartwork.org>
+Subject: Before svn2git you want to run: svneverever
+Date: Tue, 30 Mar 2010 03:36:48 +0200
+Message-ID: <4BB155B0.9020502@hartwork.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 30 03:23:35 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 30 03:37:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwQB3-0002Kt-IK
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 03:23:33 +0200
+	id 1NwQO4-000624-1W
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 03:37:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754910Ab0C3BX2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Mar 2010 21:23:28 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:60891 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754737Ab0C3BX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Mar 2010 21:23:27 -0400
-Received: by gwaa18 with SMTP id a18so4432970gwa.19
-        for <git@vger.kernel.org>; Mon, 29 Mar 2010 18:23:26 -0700 (PDT)
-Received: by 10.100.17.26 with SMTP id 26mr7929383anq.149.1269912206442;
-        Mon, 29 Mar 2010 18:23:26 -0700 (PDT)
-Received: from localhost (george.spearce.org [209.20.77.23])
-        by mx.google.com with ESMTPS id 21sm4554301iwn.15.2010.03.29.18.23.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 29 Mar 2010 18:23:25 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754882Ab0C3Bgy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Mar 2010 21:36:54 -0400
+Received: from smtprelay01.ispgateway.de ([80.67.31.35]:50299 "EHLO
+	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754447Ab0C3Bgx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Mar 2010 21:36:53 -0400
+Received: from [85.179.3.11] (helo=[192.168.0.3])
+	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <webmaster@hartwork.org>)
+	id 1NwQNt-0002tz-1B
+	for git@vger.kernel.org; Tue, 30 Mar 2010 03:36:49 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100310 Thunderbird/3.0.3
+X-Df-Sender: 874396
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143533>
 
-In mid-2009 the EGit and JGit projects started to move to the
-Eclipse Foundation.  Last week both projects shipped version 0.7.1,
-which is our first release since 0.5.0 in June 2009.
-
-Many bugs have been fixed, included the dreaded push corruption bug.
-But most of the release was us figuring out how to navigate the
-Eclipse Foundation's processes, so there aren't many new features
-relative to 0.5.0.
+Hello!
 
 
-About JGit:
+I have written a tool called svneverever [1] to aid conversion of SVN
+repositories to Git done by on KDE's svn2git [2].
 
-  JGit is a 100% pure-Java reimplementation of the Git version
-  control system, licensed under a BSD style license.  These days it
-  can be found embedded in quite a few software products.  Although
-  the library development is now hosted by the Eclipse Foundation,
-  it has no outside dependencies beyond the Java standard runtime,
-  and the BSD licensed JSch SSH client library.
-
-  * http://www.eclipse.org/jgit/
-  * http://www.eclipse.org/jgit/download/
+The blog post introducing it in detail is up at
+<http://blog.hartwork.org/?p=763>.
 
 
-About EGit:
+If you work with svn2git it's worth a check-out for you.
 
-  EGit is an Eclipse Team Provider plugin, providing Git features
-  directly within an Eclipse workspace.  It is built on top of the
-  JGit library, making the plugin very portable.
+Best,
 
-  * http://www.eclipse.org/egit/
-  * http://www.eclipse.org/egit/download/
-  * http://download.eclipse.org/egit/updates
 
--- 
-Shawn.
+
+Sebastian
+
+
+[1] http://git.goodpoint.de/?p=svneverever.git;a=summary
+[2] http://gitorious.org/svn2git/svn2git
