@@ -1,73 +1,80 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [ANNOUNCE] JGit 0.7.1 / EGit 0.7.1
-Date: Mon, 29 Mar 2010 20:51:49 -0500
-Message-ID: <fabb9a1e1003291851i73bc1389hadc6380a2884b678@mail.gmail.com>
-References: <20100330012323.GD32653@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Mar 30 03:52:17 2010
+From: Kevin Ballard <kevin@sb.org>
+Subject: [PATCH] format-patch: Squelch 'fatal: Not a range." error
+Date: Mon, 29 Mar 2010 19:46:38 -0700
+Message-ID: <1269917198-58320-1-git-send-email-kevin@sb.org>
+References: <46BEF37C-3E3F-4490-9CE6-C0109438C181@sb.org>
+Cc: Kevin Ballard <kevin@sb.org>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 30 04:47:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwQcq-00021V-N5
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 03:52:17 +0200
+	id 1NwRUP-000189-9N
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 04:47:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754976Ab0C3BwL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Mar 2010 21:52:11 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:33662 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754842Ab0C3BwL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Mar 2010 21:52:11 -0400
-Received: by bwz1 with SMTP id 1so4025331bwz.21
-        for <git@vger.kernel.org>; Mon, 29 Mar 2010 18:52:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=xp5XbBzxMaziQWxMYWr7notaul4yaSRNGO3rpz1qeGM=;
-        b=GSIp5KYACi/v8pcRwndFVoAVuxUcz6YvFncGXR0x/b6Os7hCtSWS8DCIsr3ALXrEIq
-         tUobjbiVtFzB1hMDYIWeiBRKiTvNcvR7D/h37zsvHUPxlM+wIh/b7rmmniegC+maYfX5
-         aIRFrhG29zNHraptFWTRLw+en42ZTBMpYETWI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=jfbvQPNj6dQjQRFCzmgZDhR6sSectlbmPSUNN5bfNtg3AvUxZq1M12aZyzoC9Cq18A
-         NQkO8YngHdR9GH61H6uHJuQo1elOkQEHzn7IoHSMHkRhpvaEZ78/RTlA4bLWO1LQDqtM
-         5xikc5pYsOj4xEgd1sJ9wD0SK4rcmTiOz/9rA=
-Received: by 10.204.142.7 with HTTP; Mon, 29 Mar 2010 18:51:49 -0700 (PDT)
-In-Reply-To: <20100330012323.GD32653@spearce.org>
-Received: by 10.204.36.199 with SMTP id u7mr4199841bkd.212.1269913929121; Mon, 
-	29 Mar 2010 18:52:09 -0700 (PDT)
+	id S1754953Ab0C3CrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Mar 2010 22:47:21 -0400
+Received: from caiajhbdccah.dreamhost.com ([208.97.132.207]:57125 "EHLO
+	randymail-a3.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754820Ab0C3CrU (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Mar 2010 22:47:20 -0400
+Received: from localhost.localdomain (173-13-153-133-sfba.hfc.comcastbusiness.net [173.13.153.133])
+	by randymail-a3.g.dreamhost.com (Postfix) with ESMTP id A98081857FA;
+	Mon, 29 Mar 2010 19:47:19 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.3.436.g3ff98
+In-Reply-To: <46BEF37C-3E3F-4490-9CE6-C0109438C181@sb.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143536>
 
-Heya,
+Don't output an error on `git format-patch --ignore-if-in-upstream HEAD`.
+This matches the behavior of `git format-patch HEAD`.
 
-On Mon, Mar 29, 2010 at 20:23, Shawn O. Pearce <spearce@spearce.org> wr=
-ote:
-> In mid-2009 the EGit and JGit projects started to move to the
-> Eclipse Foundation. =A0Last week both projects shipped version 0.7.1,
-> which is our first release since 0.5.0 in June 2009.
+Signed-off-by: Kevin Ballard <kevin@sb.org>
+---
+This seems like a safer change than just deleting the die("Not a range.").
+The conditional here is copied from cmd_cherry().
+ builtin/log.c           |    9 ++++++++-
+ t/t4014-format-patch.sh |    4 ++++
+ 2 files changed, 12 insertions(+), 1 deletions(-)
 
-Congratulations!
-
-> But most of the release was us figuring out how to navigate the
-> Eclipse Foundation's processes, so there aren't many new features
-> relative to 0.5.0.
-
-I hope the next release will be easier on you guys :).
-
---=20
-Cheers,
-
-Sverre Rabbelier
+diff --git a/builtin/log.c b/builtin/log.c
+index 0cb4d5a..362dd42 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1179,8 +1179,15 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			return 0;
+ 	}
+ 
+-	if (ignore_if_in_upstream)
++	if (ignore_if_in_upstream) {
++		/* Don't say anything if head and upstream are the same. */
++		if (rev.pending.nr == 2) {
++			struct object_array_entry *o = rev.pending.objects;
++			if (hashcmp(o[0].item->sha1, o[1].item->sha1) == 0)
++				return 0;
++		}
+ 		get_patch_ids(&rev, &ids, prefix);
++	}
+ 
+ 	if (!use_stdout)
+ 		realstdout = xfdopen(xdup(1), "w");
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index c7b6256..d21c37f 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -609,4 +609,8 @@ test_expect_success 'format-patch -- <path>' '
+ 	! grep "Use .--" error
+ '
+ 
++test_expect_success 'format-patch --ignore-if-in-upstream HEAD' '
++	git format-patch --ignore-if-in-upstream HEAD
++'
++
+ test_done
+-- 
+1.7.0.3.436.g3ff98
