@@ -1,96 +1,87 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH RFC/RFD] clone: quell the progress report from init
-Date: Tue, 30 Mar 2010 10:43:03 +0200
-Message-ID: <81b0412b1003300143s55a93fcqf9a6d5d727a4e786@mail.gmail.com>
-References: <4BAB2234.4070202@drmicha.warpmail.net>
-	 <7b9006620fab4214ee0db53ebc9e0caffc397959.1269506526.git.git@drmicha.warpmail.net>
-	 <7veij6lvze.fsf@alter.siamese.dyndns.org>
-	 <alpine.LFD.2.00.1003261611130.694@xanadu.home>
-	 <7v7houxu8n.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: RFC - "git editlog" feature for fixing up local commit messages
+Date: Tue, 30 Mar 2010 10:52:42 +0200
+Message-ID: <4BB1BBDA.2050102@drmicha.warpmail.net>
+References: <20100329133132.GA12201@thyrsus.com> <32541b131003291314r2f5a77e8g28e79b5983821e41@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	Neal Kreitzinger <neal@rsss.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 30 10:44:16 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: esr@thyrsus.com, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 30 10:55:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwX2l-0000Rr-CY
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 10:43:27 +0200
+	id 1NwXEa-0006k2-V7
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 10:55:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755820Ab0C3InK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 04:43:10 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:59650 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754186Ab0C3InI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 04:43:08 -0400
-Received: by bwz1 with SMTP id 1so4167883bwz.21
-        for <git@vger.kernel.org>; Tue, 30 Mar 2010 01:43:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=3osQW4n5WWB0UczkAlWpTQbKjk0UqohuunNVChVXM8Y=;
-        b=a7SPGdSyiausgN9Cia5hX45/pAdRDzPf/kt43KdS25vMKyaaSeJRJUTTf/zOIkNOUc
-         FOAHCyWaCmxetYsS1XFUcT9Umfw90h82XecIaFpZMiOwqDKdl+/9gdaheoKyEOd19ah6
-         /2wCCe9Uar5PboGtPu9eoWGgajllh8jychpB0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fwIZ0xt2xLyImLT9vyAJJAR/tV6v+Hw9DvbJ0+YEOp+3Vr4LNfgWgIMy4SLD4VCRpw
-         yqFcKTZbt9MAkysGStGeaYspPtlUZTGi6v7uihkSb+Au5Jv40coOLl57O3i31qGhKM7s
-         OJZ5q2Hd2drkTP9ovIWuegjOSBtUY2z9ovOU8=
-Received: by 10.204.112.77 with HTTP; Tue, 30 Mar 2010 01:43:03 -0700 (PDT)
-In-Reply-To: <7v7houxu8n.fsf@alter.siamese.dyndns.org>
-Received: by 10.204.81.145 with SMTP id x17mr1085392bkk.31.1269938583817; Tue, 
-	30 Mar 2010 01:43:03 -0700 (PDT)
+	id S1752290Ab0C3Ize (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 04:55:34 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:42908 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751088Ab0C3Izd (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 04:55:33 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 22410EA51E;
+	Tue, 30 Mar 2010 04:55:33 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 30 Mar 2010 04:55:33 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=zbhUH4vPR3uzzuWR6f6VKmPloNE=; b=uHYuzwXAWIeH24JquH0bk7xb/1WoLzShDdCsKslbfakSmitTGWf3IbTGxE6A4C5VT950/MKRNlLGxpwC6y7iLX/HLjaMdFyVzOGFvLkM+scZXnGrUoLTQPNZ0bIAlCJk6+c63J4otEwfBPiGgUEXXim9RkND6sU+8nC1XAA8+GY=
+X-Sasl-enc: ZwMxA2oP0jwqRhm5V3tvV3sVBUGgz1FZNRrcNIXruFly 1269939332
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 6BFC927A94;
+	Tue, 30 Mar 2010 04:55:32 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10pre) Gecko/20100319 Lightning/1.0b2pre Shredder/3.0.5pre
+In-Reply-To: <32541b131003291314r2f5a77e8g28e79b5983821e41@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143556>
 
-On Tue, Mar 30, 2010 at 07:18, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Nicolas Pitre <nico@fluxnic.net> writes:
->
->> Personally I like your suggestion above. =C2=A0A clone is not someth=
-ing you
->> perform repeatedly, and it is the first thing that random people tol=
-d to
+Avery Pennarun venit, vidit, dixit 29.03.2010 22:14:
+> On Mon, Mar 29, 2010 at 9:31 AM, Eric Raymond <esr@thyrsus.com> wrote:
+>> My editcomment script, as it exists, has a technical problem...the
+>> editor needs to be something like emacsclient that actually invokes in
+>> a different X window, otherwise whatever it writes to stdout will end
+>> up stuffed in the comment along with the text I actually wanted to put
+>> there.  The underlying problem is that git-filter-branch is sort of a
+>> nuclear-powered chainsaw - gets the job done, but in a way that is
+>> prone to messy side effects.  A more elegant implementation would
+>> probably need to tie deeper into the plumbing.
+> 
+> It ought to be easy to work around this; simply extract the log
+> message *before* filter-branch using something like
+> 
+>        git cat-file commit HEAD | tail -n +6 >msg.tmp
+> 
+> (I'm sure someone will correct me by providing a less revolting way to
+> extract the commit message, but it's somehow not coming to me right
+> now.)
+> 
+> Then launch $EDITOR to edit the message, then inside the
+> filter-branch, just use that file instead of launching the editor.
+> 
+> Alternatively, in case you want the option of editing *multiple*
+> commit messages at once, you could just redirect stdin/stdout to
+> /dev/tty.
+> 
+> A further option would be to extend git-rebase--interactive.sh (yes,
+> it's just a shell script) to take an option that makes a given commit
+> (or commits) 'reword' by default instead of 'pick'.  And maybe another
+> option to make git-rebase--interactive.sh not actually pop up an
+> editor before it starts running.  Then your editcommit script could
+> just be a thin wrapper around rebase with those options.
 
-Well, I have git clone in my top-20 used commands. I'm reasonably sure
-it is used many times in a row too.
+I think the OP's point was that filter-branch is better at keeping
+merges in place; I'm not sure if this is true when rebase-i is used with
+reword only.
 
->> use Git to grab a piece of code will do. =C2=A0Better give them some=
- comfort
->> by telling them what is happening.
->
-> Here is what such a change may look like. =C2=A0I'll leave adjusting
-> documentation (namely, tutorials) and perhaps tests as an exercise to=
- the
-> readers ;-)
+> <insert obligatory wistful reference to git-sequencer> (I don't
+> actually know anything about git-sequencer.)
 
-There still is no way to make things quiet by default.
+Oh yeah:)
 
-And at least for me the annoyance was when using it in command line,
-interactively. So yes, it makes it possible to make clone quieter, but =
-I
-wont use it, because I have to either make an alias for git (and that
-on every system I might come upon), or type in "-q" every time, at whic=
-h
-case I can also live with a little more output.
-
-But even if it is of no immediate use to me personall, I still like the=
- patch:
-now I can make some scripts quieter (with less risk of removing somethi=
-ng
-interesting by piping everything to /dev/null).
+Michael
