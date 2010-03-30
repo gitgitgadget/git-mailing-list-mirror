@@ -1,110 +1,98 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH] diff: fix textconv error zombies
-Date: Tue, 30 Mar 2010 19:36:03 +0200
-Message-ID: <201003301936.03394.j6t@kdbg.org>
-References: <20100328145301.GA26213@coredump.intra.peff.net> <201003282023.00913.j6t@kdbg.org> <20100330163004.GC17763@coredump.intra.peff.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 2/2] refs.c: Write reflogs for notes just like for branch heads
+Date: Tue, 30 Mar 2010 20:00:35 +0200
+Message-ID: <201003302000.35616.johan@herland.net>
+References: <d6c334ec855bf04d9edb432b9cdc3590ab96d6e9.1269867675.git.git@drmicha.warpmail.net> <201003291625.22977.johan@herland.net> <20100330171932.GE17763@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 30 19:38:22 2010
+X-From: git-owner@vger.kernel.org Tue Mar 30 20:02:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwfOO-0002rz-TB
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 19:38:21 +0200
+	id 1NwflQ-00079S-Bo
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 20:02:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752794Ab0C3RiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 13:38:15 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:24877 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752011Ab0C3RiO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 13:38:14 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id B92E4CDF84;
-	Tue, 30 Mar 2010 19:38:10 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id A268D19F6BF;
-	Tue, 30 Mar 2010 19:36:03 +0200 (CEST)
-User-Agent: KMail/1.9.10
-In-Reply-To: <20100330163004.GC17763@coredump.intra.peff.net>
+	id S1754968Ab0C3SB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 14:01:57 -0400
+Received: from smtp.opera.com ([213.236.208.81]:51335 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754910Ab0C3SB5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 14:01:57 -0400
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o2UI0Z61009183
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 30 Mar 2010 18:00:36 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <20100330171932.GE17763@coredump.intra.peff.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143585>
 
-To make the code simpler, run_textconv lumps all of its
-error checking into one conditional. However, the
-short-circuit means that an error in reading will prevent us
-from calling finish_command, leaving a zombie child.
-Clean up properly after errors.
+On Tuesday 30 March 2010, Jeff King wrote:
+> On Mon, Mar 29, 2010 at 04:25:22PM +0200, Johan Herland wrote:
+> > > This is actually inspired by Jeff's novel notes use. I think
+> > > there are use cases where a notes log makes sense (notes on
+> > > commits) and those where it does not (metadata/textconv). In both
+> > > cases having a reflog is useful. So, the next step is really to
+> > > allow notes trees without history, which also takes care of the
+> > > pruning issue. I know how to do this, I just have to decide about
+> > > the configuration options.
+> >
+> > I noticed that Jeff's proof-of-concept wrote notes trees without
+> > making notes commits, and although it seemed like a bug at first,
+> > it does - as you say - provide a rather nice way to store notes
+> > trees without history.
+>
+> No, it was very much intentional.
+>
+> However, I think the next iteration will wrap the tree in an actual
+> commit, but just keep each commit parentless. That will provide a
+> nice spot for metadata like the cache validity information.
 
-Based-on-work-by: Jeff King <peff@peff.net>
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
-Jeff,
+Agreed.
 
-> Yes, there are clever ways to make this shorter, but I think it is
-> clearer just written out.
+> I like the idea of having a reflog, just because you could use it to
+> salvage an old cache if you were playing around with your helper's
+> options (or debugging your helper :) ). The usual 90-day expiration
+> time is perhaps too long, though.
 
-Thanks for your work, but I'm worried that in your version the close()
-call is not before the finish_command (but that's really not _that_
-important in this case). My version is perhaps not as easy to read, but
-has a slightly better diff-stat.
+Yes, 90 days as a default might be excessive, but you can always 
+override it with a "git gc --prune=now"...
 
-Oh, I removed the error messages after start_command and finish_command,
-because these two print one themselves; Junio, if you disagree with
-this change, ditch my version and take Jeff's.
+> > Note that I haven't explicitly designed the notes feature with this
+> > in mind, so it's wise to add testcases for expected behaviour once
+> > we start use history-less notes trees.
+> >
+> > Thinking about it, the notes code itself (notes.h/.c) only wants a
+> > notes _tree_ object, so will probably work fine with history-less
+> > notes trees. But builtin/notes.c with its public commit_notes()
+> > function may be another story...
+>
+> I was planning on using my own cache-specific helper instead of
+> commit_notes() anyway, so that shouldn't be a problem. By using a
+> commit wrapper, I don't think any of the display code should be
+> confused (since they need to handle the case of a root note commit
+> anyway). Once I have some example trees, I can poke at them with the
+> existing notes code and see how they behave (and how we _want_ them
+> to behave, since I'm not sure yet what sort of cache introspection,
+> if any, would be useful).
 
--- Hannes
+Looking forward to your patches. :)
 
- diff.c |   17 +++++++++++------
- 1 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index dfdfa1a..b96faea 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3874,6 +3874,7 @@ static char *run_textconv(const char *pgm, struct diff_filespec *spec,
- 	const char **arg = argv;
- 	struct child_process child;
- 	struct strbuf buf = STRBUF_INIT;
-+	int err = 0;
- 
- 	temp = prepare_temp_file(spec->path, spec);
- 	*arg++ = pgm;
-@@ -3884,16 +3885,20 @@ static char *run_textconv(const char *pgm, struct diff_filespec *spec,
- 	child.use_shell = 1;
- 	child.argv = argv;
- 	child.out = -1;
--	if (start_command(&child) != 0 ||
--	    strbuf_read(&buf, child.out, 0) < 0 ||
--	    finish_command(&child) != 0) {
--		close(child.out);
--		strbuf_release(&buf);
-+	if (start_command(&child)) {
- 		remove_tempfile();
--		error("error running textconv command '%s'", pgm);
- 		return NULL;
- 	}
-+
-+	if (strbuf_read(&buf, child.out, 0) < 0)
-+		err = error("error reading from textconv command '%s'", pgm);
- 	close(child.out);
-+
-+	if (finish_command(&child) || err) {
-+		strbuf_release(&buf);
-+		remove_tempfile();
-+		return NULL;
-+	}
- 	remove_tempfile();
- 
- 	return strbuf_detach(&buf, outsize);
+...Johan
+
 -- 
-1.7.0.2.250.ge5578
+Johan Herland, <johan@herland.net>
+www.herland.net
