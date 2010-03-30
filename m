@@ -1,112 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] diff: add "fasttextconv" config option
-Date: Tue, 30 Mar 2010 12:30:04 -0400
-Message-ID: <20100330163004.GC17763@coredump.intra.peff.net>
-References: <20100328145301.GA26213@coredump.intra.peff.net>
- <20100328145421.GC27970@coredump.intra.peff.net>
- <201003282023.00913.j6t@kdbg.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v2] Documentation/remote-helpers: Add invocation section
+Date: Tue, 30 Mar 2010 22:17:10 +0530
+Message-ID: <f3271551003300947u4c7c2a83q13aaf786140bfa37@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Mar 30 18:30:25 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Gabriel Filion <lelutin@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Mar 30 18:47:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NweKe-0004Pp-G4
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 18:30:24 +0200
+	id 1NwebM-0005Hy-5M
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 18:47:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752312Ab0C3QaT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 12:30:19 -0400
-Received: from peff.net ([208.65.91.99]:33259 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752139Ab0C3QaR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 12:30:17 -0400
-Received: (qmail 22589 invoked by uid 107); 30 Mar 2010 16:30:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 30 Mar 2010 12:30:50 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Mar 2010 12:30:04 -0400
-Content-Disposition: inline
-In-Reply-To: <201003282023.00913.j6t@kdbg.org>
+	id S1753673Ab0C3Qre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 12:47:34 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:46331 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752795Ab0C3Qrd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 12:47:33 -0400
+Received: by gwaa18 with SMTP id a18so4818370gwa.19
+        for <git@vger.kernel.org>; Tue, 30 Mar 2010 09:47:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:received
+         :message-id:subject:to:cc:content-type;
+        bh=1IRKq2YCXB3le7x+1iJzuW36GVbPY0Nt0sN8NSfTKww=;
+        b=sCc+OHZS2vqUYu1UprBOOwjIJCQ6JLFqwtq96W70XRcIKDQlIbY7HXC+PbJZcZgugQ
+         aHmopwHRmVZuWbpI0k54syNKKGWharcpKxdShmWm7CXbSLNfU6Fn2izqH9gakiHQY5Hr
+         bl5RYsivfSU2ZXWQsxErSJoYe5QmaxuukRDos=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=Nr6wwWI1rUsQNaBDw2nGs6uKSrbiNQM+4GxzlDEXs26uqr5K+8GNWjkcMUxQQteUI+
+         HVAdpTnXCsr5YMS5kEzV5VHJCQe56s+nVqCZ3ROt7xEhf84GFkoF69usyrFNTpT+1KZz
+         Szv1lbnClP9G83J+h8z6wcSs+kyjULYAm7WTA=
+Received: by 10.90.69.14 with HTTP; Tue, 30 Mar 2010 09:47:10 -0700 (PDT)
+Received: by 10.91.163.11 with SMTP id q11mr2035299ago.90.1269967652658; Tue, 
+	30 Mar 2010 09:47:32 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143578>
 
-On Sun, Mar 28, 2010 at 08:23:00PM +0200, Johannes Sixt wrote:
-
-> On Sonntag, 28. M=C3=A4rz 2010, Jeff King wrote:
-> > +	if (start_command(&child) !=3D 0 ||
-> > +	    strbuf_read(&buf, child.out, 0) < 0 ||
-> > +	    finish_command(&child) !=3D 0) {
->=20
-> This conditional is somewhat dubious. If strbuf_read fails, you do no=
-t wait=20
-> for the child, and a zombie remains.
->=20
-> The have this sequence already in run_textconv().
-
-Ugh. I would blame the author of run_textconv, but that is also me. :)
-
-I doubt it is a big deal in practice, as the read() call is the least
-likely to produce an error, and even if we do get a zombie, it will die
-along with the diffing process. But it is still worth fixing. Thanks fo=
-r
-noticing.
-
-Junio, can you apply the patch below to maint?
-
--- >8 --
-Subject: [PATCH] diff: fix textconv error zombies
-
-To make the code simpler, run_textconv lumps all of its
-error checking into one conditional. However, the
-short-circuit means that an error in reading will prevent us
-from calling finish_command, leaving a zombie child.
-
-The cleanup requirements are actually different for each of
-the three error checks, so let's just write them out
-longhand.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Add an invocation section to specify what the command line arguments
+mean. Also include a link to git-remote in the see also section.
 ---
-Yes, there are clever ways to make this shorter, but I think it is
-clearer just written out.
+ The first version contained too much information.
+ Followed Daniel Barkalow's suggestion to strip it of caller information.
 
- diff.c |   16 +++++++++++++---
- 1 files changed, 13 insertions(+), 3 deletions(-)
+ Documentation/git-remote-helpers.txt |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 0d465fa..c268cfc 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3875,9 +3875,19 @@ static char *run_textconv(const char *pgm, struc=
-t diff_filespec *spec,
- 	child.use_shell =3D 1;
- 	child.argv =3D argv;
- 	child.out =3D -1;
--	if (start_command(&child) !=3D 0 ||
--	    strbuf_read(&buf, child.out, 0) < 0 ||
--	    finish_command(&child) !=3D 0) {
-+	if (start_command(&child) !=3D 0) {
-+		remove_tempfile();
-+		error("error running textconv command '%s'", pgm);
-+		return NULL;
-+	}
-+	if (strbuf_read(&buf, child.out, 0) < 0) {
-+		close(child.out);
-+		finish_command(&child);
-+		remove_tempfile();
-+		error("error reading from textconv command '%s'", pgm);
-+		return NULL;
-+	}
-+	if (finish_command(&child) !=3D 0) {
- 		close(child.out);
- 		strbuf_release(&buf);
- 		remove_tempfile();
---=20
-1.7.0.3.460.g6f052
+diff --git a/Documentation/git-remote-helpers.txt
+b/Documentation/git-remote-helpers.txt
+index 2382fb4..e9c9d77 100644
+--- a/Documentation/git-remote-helpers.txt
++++ b/Documentation/git-remote-helpers.txt
+@@ -38,6 +38,16 @@ Git comes with a "curl" family of remote helpers,
+specifically
+ 'git-remote-ftps'. They implement the capabilities 'fetch', 'option',
+ and 'push'.
+
++INVOCATION
++----------
++
++Remote helper programs are invoked with one or optionally two
++arguments on the command line. The first argument specifies a remote
++to use; typically, it is either the name of a remote in the
++configuration or just a URL. The second argument is a URL, and serves
++to resolve ambiguities that may arise when only the first argument is
++specified.
++
+ COMMANDS
+ --------
+
+@@ -206,6 +216,12 @@ OPTIONS
+ 	must not rely on this option being set before
+ 	connect request occurs.
+
++
++SEE ALSO
++--------
++linkgit:git-remote[1]
++
++
+ Documentation
+ -------------
+ Documentation by Daniel Barkalow and Ilari Liusvaara
+-- 
+1.7.0.3
