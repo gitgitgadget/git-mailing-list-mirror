@@ -1,74 +1,73 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: mirror git repos: rsync vs. --mirror
-Date: Tue, 30 Mar 2010 20:54:09 +0000
-Message-ID: <robbat2-20100330T205331-531407911Z@orbis-terrarum.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git cvsimport and case-insensitive config
+Date: Tue, 30 Mar 2010 14:20:30 -0700
+Message-ID: <7vr5n1v74x.fsf@alter.siamese.dyndns.org>
+References: <hoscv7$hmn$1@dough.gmane.org>
+ <7vy6h9vhuk.fsf@alter.siamese.dyndns.org>
+ <cb7bb73a1003301105v691624sdcdadf6809c50b89@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 30 23:01:47 2010
+Cc: git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 30 23:20:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwiZB-00015s-L8
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 23:01:42 +0200
+	id 1Nwirj-0002Nu-Ay
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 23:20:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755167Ab0C3VBg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 17:01:36 -0400
-Received: from [208.71.112.51] ([208.71.112.51]:55301 "EHLO mail.isohunt.com"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753360Ab0C3VBf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 17:01:35 -0400
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Mar 2010 17:01:35 EDT
-Received: (qmail 28388 invoked from network); 30 Mar 2010 20:54:12 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO grubbs.orbis-terrarum.net) (76.10.188.108)
-    by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (CAMELLIA256-SHA encrypted) ESMTPS; Tue, 30 Mar 2010 20:54:12 +0000
-Received: (qmail 2525 invoked by uid 10000); 30 Mar 2010 20:54:09 -0000
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755951Ab0C3VUp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 17:20:45 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36224 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755386Ab0C3VUo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 17:20:44 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C833FA67AC;
+	Tue, 30 Mar 2010 17:20:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mn7w5P1iJ2SGYRPLt4ocdgfaq8o=; b=T37VI6
+	LWUF05H/9o97l2YVpwp5Is1fdgpAZh1lasJgUlcrfnimCaaVECBq5shCUrrHvF5L
+	6oSw/c6ro3FuyQ+wkvvpT4U07O+whQw5WFUdxv7ilfYl7qoaJCDHj5VWmKp64PG/
+	aJQEyeLeLkBDJKqlWF4j/gHNIm09OdFqOIdtw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CXx7RlSVjiuXoQisuZx18fNCNRnlQr2L
+	gRy+RpQw48Jy76mmVymEkuUAP5XzIf8KZ93eZMpOK6bkh3X0uCYaU+8goWhBBn3H
+	ScmUPi5+rrkgISRp1euE1e0eve/nW6r1OnMr/huxc4CDjfz1xYPWcUJNCT4LvlF6
+	E9lOx2EEkC8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CB5EA67A8;
+	Tue, 30 Mar 2010 17:20:39 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 37127A67A5; Tue, 30 Mar
+ 2010 17:20:32 -0400 (EDT)
+In-Reply-To: <cb7bb73a1003301105v691624sdcdadf6809c50b89@mail.gmail.com>
+ (Giuseppe Bilotta's message of "Tue\, 30 Mar 2010 20\:05\:57 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 170426E6-3C42-11DF-803A-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143603>
 
-I'm trying to see about the state of automated mirroring git
-repositories between different systems, eg. a private backend and a
-public frontend, and ran into a catch between two possible options, each
-with a downside. If there are other means besides these, I'm all ears
-for them.
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-rsync:
-------
-How:
-- Simply rsync the git repository, atomically, and use --delete-after.
-Benefits:
-- Guaranteed to match between master/slaves.
-Caveats:
-- Need to know that the master repo is in a good state.
-- If a repo is repacked, there is a lot more traffic in the next sync.
+> We might be able to skip (2) by relying on the fact that if the
+> lowercase is boolean, the uppercase isn't, and conversely.
 
-git clone --mirror && git fetch:
---------------------------------
-How:
-- Setup with: "git clone --mirror URL"
-- Cronjob with: "git fetch"
-Benefits:
-- Extremely fast
-- Light on traffic
-Caveats:
-- Branches and tags deleted in master persist in slaves :-(
-- Seperate gc/repack needed on slaves.
+That was the idea I wrote in an earlier draft of my response that I later
+scrapped.  I started with "cvsimport.a?  If it is 'true' then that is -a;
+if it names an existing file, then it is -A."  I continued the draft up to
+'-p' vs '-P' (the former would begin with a hyphen, the latter likely
+wouldn't).  But I don't think you can reliably guess -s/-S (both strings).
 
-The traffic vs. deleted branches/tags is the main tradeoff here, esp. as
-repos get larger.
-
-Can git-fetch perhaps be made to delete the branches/tags?
-
--- 
-Robin Hugh Johnson
-Gentoo Linux: Developer, Trustee & Infrastructure Lead
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+A bigger reason is that, if you have _any_ combination that you cannot
+reliably guess, you would either need the user to ask for help, or you
+need to convert by reading the configuration file case-sensitively
+yourself to come up with a reliable conversion.  I opted for the latter.
