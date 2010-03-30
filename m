@@ -1,105 +1,113 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Carrying over attributes when moving files
-Date: Tue, 30 Mar 2010 16:30:49 -0500
-Message-ID: <20100330213049.GB11192@progeny.tock>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git check-attr in bare repositories
+Date: Tue, 30 Mar 2010 14:39:25 -0700 (PDT)
+Message-ID: <m3iq8dij6r.fsf@localhost.localdomain>
 References: <m3iq8jn3ar.fsf@winooski.ccs.neu.edu>
- <20100328014208.GA23015@progeny.tock>
- <19376.50971.397375.810974@winooski.ccs.neu.edu>
- <19376.53419.640007.930897@winooski.ccs.neu.edu>
- <20100329231501.GA28194@progeny.tock>
- <19377.33747.838003.360864@winooski.ccs.neu.edu>
+	<20100328014208.GA23015@progeny.tock>
+	<19376.50971.397375.810974@winooski.ccs.neu.edu>
+	<19376.53419.640007.930897@winooski.ccs.neu.edu>
+	<20100329231501.GA28194@progeny.tock>
+	<19377.33747.838003.360864@winooski.ccs.neu.edu>
+	<20100330212222.GA11192@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-7
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Eli Barzilay <eli@barzilay.org>
-X-From: git-owner@vger.kernel.org Tue Mar 30 23:30:49 2010
+Cc: Eli Barzilay <eli@barzilay.org>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 30 23:39:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nwj1H-0007sg-0N
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 23:30:43 +0200
+	id 1Nwj9q-00048y-Vz
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 23:39:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752241Ab0C3Vah convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 17:30:37 -0400
-Received: from mail-pz0-f186.google.com ([209.85.222.186]:47508 "EHLO
-	mail-pz0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751813Ab0C3Vah (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 17:30:37 -0400
-Received: by pzk16 with SMTP id 16so26361pzk.22
-        for <git@vger.kernel.org>; Tue, 30 Mar 2010 14:30:34 -0700 (PDT)
+	id S1753972Ab0C3Vja convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 17:39:30 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:36384 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752453Ab0C3Vj3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 17:39:29 -0400
+Received: by bwz1 with SMTP id 1so4753327bwz.21
+        for <git@vger.kernel.org>; Tue, 30 Mar 2010 14:39:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=C8Asa3QeSviIy6tStI2VseyjKSD4b2PTtwPKxsTgwXo=;
-        b=LaKVQt3xnKkxrPvfQX4YFTmVWfifAVugAZINMYnJ3e2j7Nqf2wC6VYOrPfdMXkFXNO
-         5dEVmxcYBNte6zYKev7GSJhgdfbdc+gns+S0AaWsh145ucFfHowqXi3U8IksZ47+z73x
-         YtLEixm+qhSGRAqcKWXyXVwv7cH1PpUKFlx7M=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=uuHJ0YWVCq5/fCfVXs1fH4kRkpOLekddyxdAfFoEu5Q=;
+        b=gsEGVvilo2wnTjEv6u3vUq71j5HF/rXvX/fSID3XLT+rEkOgYKWlUsopACsndgvrU8
+         rhWNx0GLuXOWiSoozrzPv7EHEW+E6CUAXSOt7I1/888fNrH8kOyWVAWxQ8hGxZ2gYOu1
+         vlMT2MuC3DDW3HCRnegiMfiZHpTKKcVj4xsGA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=KHGZfI++uhvb9lyBPuxY/rh85vYQRx8PMduOL8pSwczQLOgc/zVz+UkPUfdB321gWH
-         jim2ffccEDvrY5FXgt2LPWipdEUREVsoVSW63xJo6lTt+JdTBd+XFk3PBZSf7qrVLSwS
-         /7YP0MJ83nbscP53YLxQpguoXILxHaZ0t0HKc=
-Received: by 10.142.119.1 with SMTP id r1mr3052041wfc.80.1269984634535;
-        Tue, 30 Mar 2010 14:30:34 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id s21sm1213549wff.0.2010.03.30.14.30.32
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 30 Mar 2010 14:30:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <19377.33747.838003.360864@winooski.ccs.neu.edu>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=tD2VO8KgpPOrz4PBVaAziX+GGumRNGZlnMMzUm5fSXJJ9ajugFudDmJn68kzZ1213L
+         eUbq8Jhp/b3sjLhvXG1UKbaL+84OYPBpuQusZqVqi6fZJ2WHthP9x4zUUuLNWxgKodz9
+         9DnVepVq2NSZBu1nygTJpv6HEx4M/qlP+y/4I=
+Received: by 10.204.30.195 with SMTP id v3mr3503499bkc.3.1269985167534;
+        Tue, 30 Mar 2010 14:39:27 -0700 (PDT)
+Received: from localhost.localdomain (abvx12.neoplus.adsl.tpnet.pl [83.8.221.12])
+        by mx.google.com with ESMTPS id d5sm51337724bkd.19.2010.03.30.14.39.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 30 Mar 2010 14:39:25 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o2ULcsDp019041;
+	Tue, 30 Mar 2010 23:39:05 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o2ULcb9N019031;
+	Tue, 30 Mar 2010 23:38:37 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20100330212222.GA11192@progeny.tock>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143606>
 
-Eli Barzilay wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> There are a number of technicalities that make git attributes a poor
-> substitute for svn properties -- mainly
-[...]
-> and
-> the fact that they're not tracked with the files (as in svn, where
-> moving a file somewhere will move its properties with it).
+> Eli Barzilay wrote:
+>=20
+> > Well, using the index this way seems like a kind of a hack anyway, =
+so
+> > I'm not sure that there is any reason to do this.
+>=20
+> Most git commands do write out the tree they are working with to an
+> (in-memory or on-disk) index, so using the index this way would make =
+a
+> warped kind of sense.  But I agree that it is ugly.
+>=20
+> > If anything, I'd
+> > like it if `check-attr' could just use the repository directly inst=
+ead
+> > of the index (or a work tree) in a bare repository.
+>=20
+> I think the right thing to do is to put this functionality in a new
+> =A1git ls=A2 command.  Maybe something like this:
+>=20
+>  $ git ls --format=3D'%p %a(crlf)' master -- '*.txt'
+>  some/path/foo.txt crlf:input
+>  some/path/bar.txt crlf
+>  some/path/other.txt !crlf
+>  yet/another/path.txt=20
+>  $
 
-It would be great to improve this.
+Well, that or make `git check-attr` support reading .gitattributes
+from repository (from a corresponding tree object).
 
-Consider the following directory hierarchy.
+Unfortunately `git check-attr` doesn't have place to put revision...
+well unless as a parameter:
 
-	old-files/
-		.gitattributes
-		some-file.html
-		other-file.html
-	new-files/
-		unrelated-file.html
+  git check-attr [--cached|--tree <tree-ish>] <attr>... [--] <pathname>=
+=2E..
 
-=2Egitattributes specifies that old HTML files use a CRLF line ending.
-
-	*.html crlf
-
-What would you expect the following commands to do?
-
-	git mv old-files/some-file.html new-files/
-	git commit
-
-How about these?
-
-	mv old-files/some-file.html new-files/
-	git add new-files/some-file.html
-	git commit -a
-
-I don=E2=80=99t think there=E2=80=99s any fundamental reason this hasn=E2=
-=80=99t been taken
-care of; it=E2=80=99s just that nobody has done it yet.
-
-Thoughts welcome.
-Jonathan
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
