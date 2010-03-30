@@ -1,81 +1,92 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v7 1/2] Documentation/remote-helpers: Rewrite description
-Date: Tue, 30 Mar 2010 08:53:57 +0530
-Message-ID: <f3271551003292023v296f8d7q32ccc151ee246207@mail.gmail.com>
-References: <f3271551003281103x68812b3cj806d6235965f0a32@mail.gmail.com> 
-	<4BAFFFAB.4080808@gmail.com> <alpine.LNX.2.00.1003290055000.14365@iabervon.org> 
-	<f3271551003282318vc256d20j90bb83170b0a983@mail.gmail.com> 
-	<alpine.LNX.2.00.1003291124211.14365@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] fast textconv
+Date: Mon, 29 Mar 2010 20:52:04 -0700
+Message-ID: <7vtyryxy8r.fsf@alter.siamese.dyndns.org>
+References: <20100328145301.GA26213@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Gabriel Filion <lelutin@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Mar 30 05:24:24 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 30 05:52:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwS3z-0002Fu-KS
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 05:24:23 +0200
+	id 1NwSV0-0000UX-P3
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 05:52:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755301Ab0C3DYT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Mar 2010 23:24:19 -0400
-Received: from mail-yw0-f172.google.com ([209.85.211.172]:51060 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754974Ab0C3DYS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Mar 2010 23:24:18 -0400
-Received: by ywh2 with SMTP id 2so5473152ywh.33
-        for <git@vger.kernel.org>; Mon, 29 Mar 2010 20:24:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=pIFVvk0pxy/eR34P/I4Xf72DSJIJQDHjYAyzYbnOk6M=;
-        b=cDQI9DC6I/LjysgFi0VjzorGTpW3ZtwsB659ZrvAXNWip3zNt6Wf+LETp73FvIuIQ3
-         KP/ikFUYVx++gw34zWvbHB/I3Sc+dOds5PA4HdWMKaoWmBdT62icDyq5tMEEwSTx+uKN
-         lJKPC0kz8TInNxG5BEOrDRj5dBRqx4/21dvT8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=HyIU9aMiikc6WC89PEEnmvaMUFRlEDFdvdjDnXJfm6VC8TDMzIarO0++PLjWBiPZur
-         vUT2ssapBeXNkVnjPX8IG14KOQ1lWUoEPU5KS4s8smiNIPUmNtJSoZhI+lMg7mgJ5Rmw
-         wjdRUWuHrOxYBoYx5pqNBxb8CxzQmYcWRlMeA=
-Received: by 10.90.69.14 with HTTP; Mon, 29 Mar 2010 20:23:57 -0700 (PDT)
-In-Reply-To: <alpine.LNX.2.00.1003291124211.14365@iabervon.org>
-Received: by 10.90.57.15 with SMTP id f15mr4839992aga.107.1269919457145; Mon, 
-	29 Mar 2010 20:24:17 -0700 (PDT)
+	id S1755361Ab0C3DwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Mar 2010 23:52:13 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38189 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755349Ab0C3DwM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Mar 2010 23:52:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B325A6678;
+	Mon, 29 Mar 2010 23:52:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EcwP/Rgz/5klCOEVoY4YkR53g+E=; b=VyX8VJ
+	Y4C10ldQaR1AZKmVHVSpnqQ/WxkGbGJ9krpmh0d7pWkVNPoHJsIg4ZAjRzZroEVe
+	nNbaPCvAqWjNsjojoqW7TXUQyZXPy0GabM5RVZBqHdAlbzMtIEqk52tC31BwucmM
+	BxN/pe7mkRZIL3JNPi431D4sayBKhZBSRMOcw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=trDqH7wDTO9Uaj0pZ+zVjMbZxn/ts1UP
+	kF+uYf3PqJt2LGwRjHbMFWcLQPRQIAPYuQN3kkWWM9a7Urgp81AUUPo+WTt2m+sN
+	RlGOydNuY+aMryzKEvksSPj7d31503EHGAb0SFRSv0CKof4pvQkqVnttpiz/dIdS
+	zkB2yxRV7uY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B938A6677;
+	Mon, 29 Mar 2010 23:52:09 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 324C6A6675; Mon, 29 Mar
+ 2010 23:52:06 -0400 (EDT)
+In-Reply-To: <20100328145301.GA26213@coredump.intra.peff.net> (Jeff King's
+ message of "Sun\, 28 Mar 2010 10\:53\:02 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9D751746-3BAF-11DF-9899-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143541>
 
-On Mon, Mar 29, 2010 at 9:09 PM, Daniel Barkalow <barkalow@iabervon.org=
-> wrote:
-> The current answer is this:
-> =A0argv[1] is the name of a remote, which may be a nickname or some m=
-ore
-> =A0direct name; in any case, remote_get() will produce the available =
-data
-> =A0for it.
-> =A0argv[2] is the URL, if there is one. Since a remote could have mor=
-e than
-> =A0one URL, the helper gets the URL it should be handling. Some syste=
-ms
-> =A0don't use URLs, and these will just look at the remote or somethin=
-g like
-> =A0that.
+Jeff King <peff@peff.net> writes:
 
-Got it. I'll prepare a patch in the evening.
+> The speedup is purely from caching; I am not using the "we only need to
+> read the first part of the file" optimization.
 
--- Ram
+This made me wonder if the end result might be easier to use if the
+interface does not change "textconv", but adds some property to the
+filter, i.e. "the output from this filter is stable and it is safe to
+reuse a cached conversion result for a given blob object", boolean.  E.g.
+
+        [diff "jpg"]
+                textconv = exif
+                textconv_stable = true
+
+and let the calling side handle the caching.  I further suspect that
+an unstable textconv filter would be an anomaly, so this could even be on
+by default.
+
+If we do so, stock conversion filters people have accumulated in the past
+could be sped up without any additional change from the end user's side.
+
+I guess that I am suggesting to postpone the potential speed-up that could
+come from being able to inspect the header information as a separate
+topic.  Besides, some file format has metadata at the end, which won't
+help you.
+
+About the caching scheme; to help invalidating the cache, it probably is a
+good idea to use not just the blob object name but also at least the name
+(command line) of the textconv filter as the key for the caching layer.
+
+Instead of the "textconv_stable" boolean depicted above, you could add a
+"textconv_filter_version" variable there, compute a hash over blob object
+name, textconv filter name and textconv filter version, and use that as
+the key to look into the cache (filters lacking textconv_filter_version
+would then get no caching, and if you update your "exif" program you bump
+the "textconv_filter_version" variable).
