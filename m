@@ -1,58 +1,110 @@
-From: Greg Bacon <gbacon@dbresearch.net>
-Subject: [PATCH] Documentation: Clarify support for smart HTTP backend
-Date: Tue, 30 Mar 2010 12:20:57 -0500
-Message-ID: <1269969657-16101-1-git-send-email-gbacon@dbresearch.net>
-Cc: Greg Bacon <gbacon@dbresearch.net>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Mar 30 19:31:18 2010
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH] diff: fix textconv error zombies
+Date: Tue, 30 Mar 2010 19:36:03 +0200
+Message-ID: <201003301936.03394.j6t@kdbg.org>
+References: <20100328145301.GA26213@coredump.intra.peff.net> <201003282023.00913.j6t@kdbg.org> <20100330163004.GC17763@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 30 19:38:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwfHX-0007GN-IE
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 19:31:15 +0200
+	id 1NwfOO-0002rz-TB
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 19:38:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755341Ab0C3RbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 13:31:09 -0400
-Received: from smtp142.iad.emailsrvr.com ([207.97.245.142]:53001 "EHLO
-	smtp142.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754778Ab0C3RbI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 13:31:08 -0400
-X-Greylist: delayed 578 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Mar 2010 13:31:08 EDT
-Received: from relay4.r5.iad.mlsrvr.com (localhost [127.0.0.1])
-	by relay4.r5.iad.mlsrvr.com (SMTP Server) with ESMTP id 47124C296;
-	Tue, 30 Mar 2010 13:21:28 -0400 (EDT)
-Received: by relay4.r5.iad.mlsrvr.com (Authenticated sender: gbacon-AT-dbresearch.net) with ESMTPSA id 0D4B8C1C8;
-	Tue, 30 Mar 2010 13:21:28 -0400 (EDT)
-X-Mailer: git-send-email 1.6.6.2
+	id S1752794Ab0C3RiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 13:38:15 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:24877 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752011Ab0C3RiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 13:38:14 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id B92E4CDF84;
+	Tue, 30 Mar 2010 19:38:10 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id A268D19F6BF;
+	Tue, 30 Mar 2010 19:36:03 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <20100330163004.GC17763@coredump.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143584>
 
-In the description of http.getanyfile, replace the vague "older Git
-clients" with the earliest release whose client is able to use the
-upload pack service.
+To make the code simpler, run_textconv lumps all of its
+error checking into one conditional. However, the
+short-circuit means that an error in reading will prevent us
+from calling finish_command, leaving a zombie child.
+Clean up properly after errors.
 
-Signed-off-by: Greg Bacon <gbacon@dbresearch.net>
+Based-on-work-by: Jeff King <peff@peff.net>
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- Documentation/git-http-backend.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Jeff,
 
-diff --git a/Documentation/git-http-backend.txt b/Documentation/git-http-backend.txt
-index 5238820..277d9e1 100644
---- a/Documentation/git-http-backend.txt
-+++ b/Documentation/git-http-backend.txt
-@@ -35,7 +35,7 @@ These services can be enabled/disabled using the per-repository
- configuration file:
+> Yes, there are clever ways to make this shorter, but I think it is
+> clearer just written out.
+
+Thanks for your work, but I'm worried that in your version the close()
+call is not before the finish_command (but that's really not _that_
+important in this case). My version is perhaps not as easy to read, but
+has a slightly better diff-stat.
+
+Oh, I removed the error messages after start_command and finish_command,
+because these two print one themselves; Junio, if you disagree with
+this change, ditch my version and take Jeff's.
+
+-- Hannes
+
+ diff.c |   17 +++++++++++------
+ 1 files changed, 11 insertions(+), 6 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index dfdfa1a..b96faea 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3874,6 +3874,7 @@ static char *run_textconv(const char *pgm, struct diff_filespec *spec,
+ 	const char **arg = argv;
+ 	struct child_process child;
+ 	struct strbuf buf = STRBUF_INIT;
++	int err = 0;
  
- http.getanyfile::
--	This serves older Git clients which are unable to use the
-+	This serves Git clients older than version 1.6.6 that are unable to use the
- 	upload pack service.  When enabled, clients are able to read
- 	any file within the repository, including objects that are
- 	no longer reachable from a branch but are still present.
+ 	temp = prepare_temp_file(spec->path, spec);
+ 	*arg++ = pgm;
+@@ -3884,16 +3885,20 @@ static char *run_textconv(const char *pgm, struct diff_filespec *spec,
+ 	child.use_shell = 1;
+ 	child.argv = argv;
+ 	child.out = -1;
+-	if (start_command(&child) != 0 ||
+-	    strbuf_read(&buf, child.out, 0) < 0 ||
+-	    finish_command(&child) != 0) {
+-		close(child.out);
+-		strbuf_release(&buf);
++	if (start_command(&child)) {
+ 		remove_tempfile();
+-		error("error running textconv command '%s'", pgm);
+ 		return NULL;
+ 	}
++
++	if (strbuf_read(&buf, child.out, 0) < 0)
++		err = error("error reading from textconv command '%s'", pgm);
+ 	close(child.out);
++
++	if (finish_command(&child) || err) {
++		strbuf_release(&buf);
++		remove_tempfile();
++		return NULL;
++	}
+ 	remove_tempfile();
+ 
+ 	return strbuf_detach(&buf, outsize);
 -- 
-1.6.6.2
+1.7.0.2.250.ge5578
