@@ -1,88 +1,57 @@
-From: David Michael Barr <david.barr@cordelta.com>
-Subject: Re: Subversion integration with git
-Date: Wed, 31 Mar 2010 01:05:10 +1100
-Message-ID: <52A6E51B-058C-4B06-A271-26219B388BE7@cordelta.com>
-References: <3311ED3F-77BC-4F66-80D5-AA9E21ACF0E2@cordelta.com>  <40aa078e1003250731y2c900605k9c681475621a1ff2@mail.gmail.com>  <E560EF9A-AF07-4316-9047-6D1A1802F743@cordelta.com> <f3271551003251052j5863af46i3066f0f42788ba3b@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1077)
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [ANNOUNCE] JGit 0.7.1 / EGit 0.7.1
+Date: Tue, 30 Mar 2010 07:08:20 -0700
+Message-ID: <20100330140820.GA2097@spearce.org>
+References: <20100330012323.GD32653@spearce.org> <fabb9a1e1003291851i73bc1389hadc6380a2884b678@mail.gmail.com> <76c5b8581003300702t1fb31b22jc1e5e14f5c9edff4@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Erik Faye-Lund <kusmabite@googlemail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 30 16:05:31 2010
+Cc: git <git@vger.kernel.org>
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 30 16:08:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nwc4Q-0004Fk-OZ
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 16:05:31 +0200
+	id 1Nwc7J-0006tp-EH
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 16:08:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756325Ab0C3OFV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 10:05:21 -0400
-Received: from ironport1-mx.cbr1.mail-filtering.com.au ([203.88.115.241]:6943
-	"EHLO ironport1-mx.cbr1.mail-filtering.com.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754615Ab0C3OFU convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 10:05:20 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsEAGOisUvLWHsF/2dsb2JhbACbLXG3FYhFhQAEigk
-X-IronPort-AV: E=Sophos;i="4.51,334,1267362000"; 
-   d="scan'208";a="159920531"
-Received: from node2.alpha.aussiehq.net.au ([203.88.123.5])
-  by ironport1-mta.cbr1.mail-filtering.com.au with ESMTP; 31 Mar 2010 01:05:11 +1100
-Received: (qmail 26053 invoked from network); 31 Mar 2010 01:05:11 +1100
-Received: from d122-109-106-179.mit3.act.optusnet.com.au (HELO ?192.168.1.8?) (122.109.106.179)
-  by node2.alpha.aussiehq.net.au with SMTP; 31 Mar 2010 01:05:10 +1100
-In-Reply-To: <f3271551003251052j5863af46i3066f0f42788ba3b@mail.gmail.com>
-X-Mailer: Apple Mail (2.1077)
+	id S1755832Ab0C3OIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 10:08:25 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:60933 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752795Ab0C3OIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 10:08:24 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so3741637qwh.37
+        for <git@vger.kernel.org>; Tue, 30 Mar 2010 07:08:23 -0700 (PDT)
+Received: by 10.229.190.129 with SMTP id di1mr1475593qcb.75.1269958103311;
+        Tue, 30 Mar 2010 07:08:23 -0700 (PDT)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 22sm1444103ywh.46.2010.03.30.07.08.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 30 Mar 2010 07:08:22 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <76c5b8581003300702t1fb31b22jc1e5e14f5c9edff4@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143566>
 
-Hi,
+Eugene Sajine <euguess@gmail.com> wrote:
+> Is it possible to have the local update site available for download to
+> install Egit inside closed/firewalled LAN with no connectivity to
+> internet?
 
->> I think it falls very close to the native-git-svn Google SoC
->> project[1], and if you are able to share what you have I'm sure
->> Ramkumar (I hope you don't mind me CC'ing you, and that I spelled your
->> name right) would appreciate having a look.
-> 
-> Yes. Thank you for CC'ing me, Erik.
-> 
->> Is it worthwhile to start a new project - or would it be better to grok the internals of existing projects and try to make them scale?
-> 
-> ... if my proposal gets accepted, I
-> could work with you to get it integrated into the remote helper that
-> I'll be building. Depending on the complexity of your project, this
-> might only be possible at the end of my GSoC term.
-> 
-> 
-> 
-> -- Ram
+Open a bug against EGit (under the Technology project) at
+https://bugs.eclipse.org/.  We can try to add this package
+format to our download page.
 
-I've started looking at the first piece of the pipeline, reading from a
-remote subversion URL. I stumbled upon rsvndump[2], which is
-GPLv3+ licensed and promises to produce a Subversion dump from
-a remote repository. This could be piped to my utility,
-svn-dump-fast-export[3], to produce suitable input for git fast-import.
-I believe this would address the first two components of Ram's.
-proposal and allow more focus to be given to the interesting ones.
-That's presuming that I have a feature-complete release by the time
-the GSoC project begins.
-
-My project is currently under a two-clause BSD style license.
-This is primarily because the two projects it derives from were
-distributed under the same license, rather than any preference.
-
-As I've included a reference to my project, I'll emphasise that it is a
-work in progress, with a handful of known bugs.
-At present, symlinks are damaged on update and some files
-disappear late in the history of my test repository.
-I'm planning a rewrite of the parser once symlinks are complete.
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/142623
-[2] http://rsvndump.sourceforge.net/
-[3] http://github.com/barrbrain/svn-dump-fast-export/
+Right now I think you would need to mirror the update site
+using the P2 director.  Its not pretty.  Its probably much
+easier to install Maven 3, clone JGit and EGit sources,
+and build from source.
+ 
+-- 
+Shawn.
