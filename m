@@ -1,47 +1,60 @@
-From: Frans Pop <elendil@planet.nl>
-Subject: Re: Feature request: option to not fetch tags for 'git remote' branches
-Date: Tue, 30 Mar 2010 10:09:28 +0200
-Message-ID: <201003301009.29412.elendil@planet.nl>
-References: <201003242154.29245.elendil@planet.nl> <201003242246.16286.elendil@planet.nl> <2010-03-27-20-10-25+trackit+sam@rfc1149.net>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: git cvsimport and case-insensitive config
+Date: Tue, 30 Mar 2010 10:32:37 +0200
+Message-ID: <hoscv7$hmn$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: John Feuerstein <john@feurix.com>, git@vger.kernel.org
-To: Samuel Tardieu <sam@rfc1149.net>
-X-From: git-owner@vger.kernel.org Tue Mar 30 10:10:24 2010
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 30 10:33:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwWWj-0001yI-5m
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 10:10:21 +0200
+	id 1NwWsv-0003iN-8h
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 10:33:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755455Ab0C3IKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 04:10:13 -0400
-Received: from Cpsmtpm-eml108.kpnxchange.com ([195.121.3.12]:60091 "EHLO
-	CPSMTPM-EML108.kpnxchange.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755832Ab0C3IJe (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 04:09:34 -0400
-Received: from aragorn.fjphome.nl ([77.166.180.99]) by CPSMTPM-EML108.kpnxchange.com with Microsoft SMTPSVC(7.0.6001.18000);
-	 Tue, 30 Mar 2010 10:09:29 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <2010-03-27-20-10-25+trackit+sam@rfc1149.net>
-Content-Disposition: inline
-X-OriginalArrivalTime: 30 Mar 2010 08:09:29.0890 (UTC) FILETIME=[52999020:01CACFE0]
+	id S1755709Ab0C3Ic7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 04:32:59 -0400
+Received: from lo.gmane.org ([80.91.229.12]:47705 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754887Ab0C3Ic6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 04:32:58 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NwWsX-0003WW-MH
+	for git@vger.kernel.org; Tue, 30 Mar 2010 10:32:53 +0200
+Received: from 151.60.178.71 ([151.60.178.71])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 30 Mar 2010 10:32:53 +0200
+Received: from giuseppe.bilotta by 151.60.178.71 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 30 Mar 2010 10:32:53 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 151.60.178.71
+User-Agent: KNode/4.3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143554>
 
-On Saturday 27 March 2010, Samuel Tardieu wrote:
-> Add a '--no-tags' option to 'git remote add' which adds a
-> 'remote.REMOTE.tagopt = --no-tags' to the configuration file.
->
-> 'git add -f -n REMOTE' will create a new remote and fetch from it
-> without importing the tags. Subsequent 'git fetch REMOTE' will also
-> not import the tags.
+Hello all,
 
-Not tested, but looks as if it will do exactly what I had in mind. Thanks!
+I just noticed that there's an annoying buglet in the way git cvsimport 
+stores its configuration and the case-insensitive key lookup done by git.
+
+git cvsimport looks for cvsimport.* single-letter keys that match the 
+command-line option (e.g. cvsimport.r for -r). However, since there are some 
+single-letter options which only differ by case (a vs A, r vs R) if you set 
+either you get annoying messages (and potentially also odd results, although 
+I haven't come across these yet).
+
+I come with no patch because I'm not really sure what would be the best 
+approach at fixing this. Changing the way cvsimport matches config to 
+command-line options? An option to make git-config case-sensitive re. key 
+names? Something else?
