@@ -1,75 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote-curl: Add sanity check for url
-Date: Tue, 30 Mar 2010 16:45:36 -0700
-Message-ID: <7voci5qspr.fsf@alter.siamese.dyndns.org>
-References: <f3271551003301308y683173f6y6a4fadb01b791049@mail.gmail.com>
+Subject: Re: [PATCH] Add Tru64/OSF1 support in Makefile
+Date: Tue, 30 Mar 2010 16:54:48 -0700
+Message-ID: <7vfx3hqsaf.fsf@alter.siamese.dyndns.org>
+References: <d2d39d861003301122p646efc1fj9d88af1893b84b3c@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 31 01:46:14 2010
+Cc: git@vger.kernel.org
+To: Tor Arntsen <tor@spacetec.no>
+X-From: git-owner@vger.kernel.org Wed Mar 31 01:55:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nwl8P-0006te-MK
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 01:46:14 +0200
+	id 1NwlHB-0001be-I1
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 01:55:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757294Ab0C3XqB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 19:46:01 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52269 "EHLO
+	id S932535Ab0C3XzC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 19:55:02 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62303 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757291Ab0C3Xp6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 19:45:58 -0400
+	with ESMTP id S932074Ab0C3Xy5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 19:54:57 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2504711F6;
-	Tue, 30 Mar 2010 19:45:56 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0998013F8;
+	Tue, 30 Mar 2010 19:54:57 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YGIEDbv5ka2GCWOJLA80cyUq6gE=; b=VhMGTx
-	pXUMg8SiJz32Qx9Hgx5+fH9DhdetLEbjQ64jhM0tOFRRnZNSnkfzLOcaVul8pHvi
-	GninML2qjuENGwaDTdX3WFgdHKSwbr4/3t4Qjk9v4NP36A8jGe2IgzONnCD9ojPh
-	VO1zJI/HNbzLohccakM6TYplCOqYx2HCxEDVg=
+	:content-type; s=sasl; bh=J83AlHzDU5uDXu5oD19AB/vA3IA=; b=Dq0DFH
+	1es8I+e3uNG/0JGwwP2eqYbpDSlKK0WfhDw3ENIduHpaio6DPUD0eqBsWr+X7vym
+	C/Aav4jr0c35YUThW+zeRsMGBZIZI8ApgwKlX3K4VtlRAfv4EixFMT7J/HbMtS/s
+	tKKZbbMtj2Schod041NTAI/nXe0yssCm/8Yzo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LsPIY5BcHSxSvj3Ub8dSm4Dru7iw9Zig
-	3IJInkvFi3nnqdYGwlmLjlWOLCB6EJShctimBM0AMP4rtV0aqup3GiwwJ1o8Ueyt
-	sEUjbLz+RzA8vRMW6dL9gFhczoc5VaNLg6NmvmqDP3FieI1XQD1r6gKITYMNnPH2
-	HpPSnVBQBQE=
+	:content-type; q=dns; s=sasl; b=jqX+BooBUtqBNCWhxAZVASNBQn/P/C8Q
+	58aBz9l8ORgI0WGuCAfHoQ/PUdy8uLtdim+7B75Gai84fBKGlaqUGdTEemQQRTAH
+	JugAyNr+oJwB31Qa+GWl/1q8Soco3hLkH9lnHviMTeRx5ROxKTw4SE/FTkzi3aUB
+	7hXx/bmEz7M=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DB92A11EF;
-	Tue, 30 Mar 2010 19:45:47 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CD09E13F6;
+	Tue, 30 Mar 2010 19:54:52 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 93AAD11E5; Tue, 30 Mar
- 2010 19:45:38 -0400 (EDT)
-In-Reply-To: <f3271551003301308y683173f6y6a4fadb01b791049@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Wed\, 31 Mar 2010 01\:38\:42 +0530")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9593D13F2; Tue, 30 Mar
+ 2010 19:54:49 -0400 (EDT)
+In-Reply-To: <d2d39d861003301122p646efc1fj9d88af1893b84b3c@mail.gmail.com>
+ (Tor Arntsen's message of "Tue\, 30 Mar 2010 20\:22\:21 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5D7540F6-3C56-11DF-9916-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A256705E-3C57-11DF-BAA7-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143625>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Tor Arntsen <tor@spacetec.no> writes:
 
-> Previously, `git remote-http foo` and subsquent commands would try to
-> work on a HTML page. This patch fixes the bug by making one assumption
-> about the URL handled by libcurl: it must contain the string "://"
+> Patch included below, as well as attached (in case of
+> mailler-mangling). Please let me know if you feel there are any issues
+> with it.
 
-I may be being slow but I do not see the point of this patch.
+Thanks.
 
-I thought that remote-foo is never invoked directly from a command line
-with random arguments, and fetch/push frontends make the decision based on
-the shape of the "URL" (or whatever data used to reach the remote end)
-which helper to run.
+> From d4a5ba0727d7e3a4455320bad641cb34402d16fd Mon Sep 17 00:00:00 2001
+> From: Tor Arntsen <tor@spacetec.no>
+> Date: Tue, 30 Mar 2010 19:36:40 +0200
+> Subject: [PATCH] Add Tru64/OSF1 support in Makefile
+>
+> Tested with V5.1
 
-I do not think your patch would _break_ anything, but my question is more
-about the reason why we would want a duplicated check here.
+V5.1 "of Tru64/OSF1" I presume...
+
+> +ifeq ($(uname_S),OSF1)
+> +	# Tested with V5.1 w/libcurl and zlib-1.1.4-5 in /usr/local/
+> +	CC = cc
+> +	CFLAGS = -O2 -g3
+
+Is this because the compiler there does not like -Wall?
+
+Not a complaint; just a request for clarification.
