@@ -1,70 +1,185 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [GSoC Proposal/RFC] Rolling commit message writing
-Date: Tue, 30 Mar 2010 13:27:25 -0400
-Message-ID: <20100330172725.GF17763@coredump.intra.peff.net>
-References: <alpine.DEB.1.00.1003281834520.13534@pip.srcf.ucam.org>
- <32541b131003291331y3ae5ca23la33466d588c1b9e1@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git cvsimport and case-insensitive config
+Date: Tue, 30 Mar 2010 10:29:07 -0700
+Message-ID: <7vy6h9vhuk.fsf@alter.siamese.dyndns.org>
+References: <hoscv7$hmn$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Daniel Thomas <drt24@srcf.ucam.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 30 19:27:49 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 30 19:29:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwfE7-0005Fg-Pp
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 19:27:44 +0200
+	id 1NwfFj-0006Ar-0K
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 19:29:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755503Ab0C3R1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 13:27:38 -0400
-Received: from peff.net ([208.65.91.99]:49710 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754833Ab0C3R1h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 13:27:37 -0400
-Received: (qmail 22791 invoked by uid 107); 30 Mar 2010 17:28:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 30 Mar 2010 13:28:11 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Mar 2010 13:27:25 -0400
-Content-Disposition: inline
-In-Reply-To: <32541b131003291331y3ae5ca23la33466d588c1b9e1@mail.gmail.com>
+	id S1755552Ab0C3R3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 13:29:17 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57935 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755443Ab0C3R3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 13:29:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B476A6B47;
+	Tue, 30 Mar 2010 13:29:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KothyjsHkNG4VTpRYk2ETR29TX4=; b=gK0CXM
+	cns3pCA69Mdq+Tk/TaZZuAf/RTKMkghmKi0RujoCnJgrLLoo3kZIaavtu9HJ6iPH
+	QNUuSqf7hoF2ddewj1l2VrajpPxYMSZo3YrcN+GTPvTbb7BmMtJhSzW6iyL0Jozp
+	T588A1nEKJyQEb3hlQIpso9SMPkCAEO14NMyQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LYlsNH+ad3dGcw85txRrtbimfuBfE73m
+	EiQDgu9D8xjnyUcVz6QTpXgyS+EV4Si3CFNw0WDolXI0itLsfE6NTtdpK78MY06y
+	PZ5Tlh3rGsO+wr9LdWBNc5rQpeQdwQdUaovZOD9ELVHKo3YQI9FhLL65GJyRDtcb
+	zcnzmRYf0Gc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 67ED7A6B45;
+	Tue, 30 Mar 2010 13:29:11 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9A470A6B3B; Tue, 30 Mar
+ 2010 13:29:08 -0400 (EDT)
+In-Reply-To: <hoscv7$hmn$1@dough.gmane.org> (Giuseppe Bilotta's message of
+ "Tue\, 30 Mar 2010 10\:32\:37 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C0FF423C-3C21-11DF-BBCD-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143582>
 
-On Mon, Mar 29, 2010 at 04:31:00PM -0400, Avery Pennarun wrote:
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-> Secondly, I'm concerned that if you can't remember the description of
-> your entire commit by the time you commit it, then your commit is too
-> big.  The usual solution is to create multiple, smaller commits that
-> are easy to describe.  If at the end you find yourself with too many
-> commits, you can always join them together with git rebase.
+> git cvsimport looks for cvsimport.* single-letter keys that match the 
+> command-line option (e.g. cvsimport.r for -r). However, since there are some 
+> single-letter options which only differ by case (a vs A, r vs R) if you set 
+> either you get annoying messages (and potentially also odd results, although 
+> I haven't come across these yet).
 
-That was my first thought, too. I like your suggestion elsewhere in the
-thread of making many small commits, and then squashing them later if
-you like.
+Ouch.
 
-Still, I can see how people might prefer to use this as part of their
-workflow, so I am not against the feature itself.
+The only sensible solution in the longer term is to eventually rename them
+to spell them out e.g. cvsimport.remote vs cvsimport.userevisionmap.
 
-However, I am really concerned with it as a GSoC project. It just
-doesn't seem like a big enough feature to take the whole summer. In the
-schedule, there is a week of implementing "git add -p
---add-with-message". It seems like that should be hours, not days.
+The transition cost would be the same for either approach.
 
-I wonder if it could be rolled into a more comprehensive proposal
-concerning commit workflows (though I admit, I don't personally have any
-other ideas in the area).
+ (1) Introduce long options for cvsimport; the code already uses
+     Getopt::Long, so this shouldn't be too bad.
 
--Peff
+ (2) Add case-sensitive variant of "git config -l" that shows the config
+     variable names in the original case.
 
-PS Daniel (and other potential GSoC'ers who are reading), please don't
-take this as discouragement of presenting proposals that aren't on the
-ideas wiki. I really really like the concept of somebody working on
-their own itch, as I think they tend to have a clearer idea of what the
-solution should look like. I'm just concerned this particular proposal
-isn't big enough.
+ (3) Upon startup, use "git config -l -f $GIT_DIR/config" to check for
+     historical short name (e.g. "cvsimport.a" or "cvsimport.A").  If
+     there are, map them to longer name, remove the short keys and write
+     the conversion back to the configuration file.  You might want to do
+     the same for "$HOME/.gitconfig" as well.
+
+ (4) Then the rest of the code can stay the same.
+
+Step (2) may look like this.  Note that I made this "list with case"
+hidden and inaccessible on purpose, as this is primarily to write a tool
+to recover from mistakes like this.
+
+ builtin/config.c |   10 +++++++++-
+ cache.h          |    1 +
+ config.c         |   12 +++++++++---
+ 3 files changed, 19 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/config.c b/builtin/config.c
+index 4bc46b1..3684c3a 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -41,6 +41,7 @@ static int end_null;
+ #define ACTION_SET_ALL (1<<12)
+ #define ACTION_GET_COLOR (1<<13)
+ #define ACTION_GET_COLORBOOL (1<<14)
++#define ACTION_LIST_KEYS_WITH_CASE (1<<15)
+ 
+ #define TYPE_BOOL (1<<0)
+ #define TYPE_INT (1<<1)
+@@ -73,6 +74,11 @@ static struct option builtin_config_options[] = {
+ 	OPT_BIT(0, "path", &types, "value is a path (file or directory name)", TYPE_PATH),
+ 	OPT_GROUP("Other"),
+ 	OPT_BOOLEAN('z', "null", &end_null, "terminate values with NUL byte"),
++	{
++		OPTION_BIT, 0, "list-keys-with-case", &actions,
++		NULL, "list for conversion", PARSE_OPT_NOARG|PARSE_OPT_HIDDEN,
++		NULL, ACTION_LIST_KEYS_WITH_CASE,
++	},
+ 	OPT_END(),
+ };
+ 
+@@ -397,7 +403,9 @@ int cmd_config(int argc, const char **argv, const char *unused_prefix)
+ 			usage_with_options(builtin_config_usage, builtin_config_options);
+ 		}
+ 
+-	if (actions == ACTION_LIST) {
++	if (actions == ACTION_LIST || actions == ACTION_LIST_KEYS_WITH_CASE) {
++		if (actions == ACTION_LIST_KEYS_WITH_CASE)
++			config_return_keys_with_case = 1;
+ 		check_argc(argc, 0, 0);
+ 		if (git_config(show_all_config, NULL) < 0) {
+ 			if (config_exclusive_filename)
+diff --git a/cache.h b/cache.h
+index 6dcb100..4320288 100644
+--- a/cache.h
++++ b/cache.h
+@@ -953,6 +953,7 @@ extern int git_config_system(void);
+ extern int git_config_global(void);
+ extern int config_error_nonbool(const char *);
+ extern const char *config_exclusive_filename;
++extern int config_return_keys_with_case;
+ 
+ #define MAX_GITNAME (1000)
+ extern char git_default_email[MAX_GITNAME];
+diff --git a/config.c b/config.c
+index 6963fbe..c548cec 100644
+--- a/config.c
++++ b/config.c
+@@ -17,6 +17,11 @@ static int config_file_eof;
+ static int zlib_compression_seen;
+ 
+ const char *config_exclusive_filename = NULL;
++/*
++ * only used for config --list-case-sensitive-keys for recovering
++ * from mistakes.
++ */
++int config_return_keys_with_case;
+ 
+ static int get_next_char(void)
+ {
+@@ -123,7 +128,7 @@ static int get_value(config_fn_t fn, void *data, char *name, unsigned int len)
+ 			break;
+ 		if (!iskeychar(c))
+ 			break;
+-		name[len++] = tolower(c);
++		name[len++] = config_return_keys_with_case ? c : tolower(c);
+ 		if (len >= MAXNAME)
+ 			return -1;
+ 	}
+@@ -193,7 +198,8 @@ static int get_base_var(char *name)
+ 			return -1;
+ 		if (baselen > MAXNAME / 2)
+ 			return -1;
+-		name[baselen++] = tolower(c);
++		name[baselen++] = config_return_keys_with_case
++			? c : tolower(c);
+ 	}
+ }
+ 
+@@ -246,7 +252,7 @@ static int git_parse_file(config_fn_t fn, void *data)
+ 		}
+ 		if (!isalpha(c))
+ 			break;
+-		var[baselen] = tolower(c);
++		var[baselen] = config_return_keys_with_case ? c : tolower(c);
+ 		if (get_value(fn, data, var, baselen+1) < 0)
+ 			break;
+ 	}
