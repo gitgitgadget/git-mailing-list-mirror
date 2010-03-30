@@ -1,84 +1,53 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Before svn2git you want to run: svneverever
-Date: Tue, 30 Mar 2010 02:15:03 -0700 (PDT)
-Message-ID: <m3r5n2i32q.fsf@localhost.localdomain>
-References: <4BB155B0.9020502@hartwork.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: GSoC draft proposal: Line-level history browser
+Date: Tue, 30 Mar 2010 11:38:37 +0200
+Message-ID: <4BB1C69D.7040009@drmicha.warpmail.net>
+References: <41f08ee11003200218u59c45b6dl82a8eb56cc289256@mail.gmail.com>	 <201003282120.40536.trast@student.ethz.ch>	 <41f08ee11003282114m34aa0f61w536b996dce6cecab@mail.gmail.com>	 <201003292042.01549.trast@student.ethz.ch> <41f08ee11003291952r467601b1o970ce3be802d8521@mail.gmail.com> <4BB1BF4B.2060604@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sebastian Pipping <webmaster@hartwork.org>
-X-From: git-owner@vger.kernel.org Tue Mar 30 11:16:01 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Bo Yang <struggleyb.nku@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Tue Mar 30 11:41:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwXYH-0006PN-BY
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 11:16:01 +0200
+	id 1NwXx7-00082P-0O
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 11:41:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756095Ab0C3JPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 05:15:11 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:39928 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756083Ab0C3JPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 05:15:07 -0400
-Received: by bwz1 with SMTP id 1so4188834bwz.21
-        for <git@vger.kernel.org>; Tue, 30 Mar 2010 02:15:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=q5uqPyE7Tj8HSA3fHpmOzu9LQidzc1bczzpMN6a+u3A=;
-        b=DZtEqdTqwqlSKkRmKk4SoYMHTkrc6vQ5akfDKbCCsuXjGXGU5DYazzyOVFHJKk+0Ep
-         JEKUqkxYjeZyMlhAc9jvNlKkqsi76yJaKfXP5TIteu+GkNwN5ZdqovOYBzPdiR/yUxOx
-         YHuxb+suIeTx8e2zL5jECtL9K2JK6Ilm2SkfE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=j6ROu5t6JZvSpdxHEWYp3HfvWDwBpOEgsrfCG1+1vUdUUoytgWtJnB/B4K+9f/X1C0
-         krUG1Mop0jobqkKJjxw+ZCnabBJg6BYjPIm0JQv27bktaDHOo9PkQYm4Be/IFfNCMXE+
-         hZFn3PglKJMDhg73pjvMlFjzQKQMXnUoIXh9g=
-Received: by 10.204.6.70 with SMTP id 6mr930613bky.6.1269940504689;
-        Tue, 30 Mar 2010 02:15:04 -0700 (PDT)
-Received: from localhost.localdomain (abvx12.neoplus.adsl.tpnet.pl [83.8.221.12])
-        by mx.google.com with ESMTPS id 16sm2631179bwz.5.2010.03.30.02.15.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 30 Mar 2010 02:15:03 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o2U9Ea7v007213;
-	Tue, 30 Mar 2010 11:14:46 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o2U9EL4D007200;
-	Tue, 30 Mar 2010 11:14:21 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4BB155B0.9020502@hartwork.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1756077Ab0C3Jla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 05:41:30 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:46925 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752794Ab0C3Jl3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 05:41:29 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id A8B39E3359;
+	Tue, 30 Mar 2010 05:41:28 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Tue, 30 Mar 2010 05:41:28 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=anR3t3J8mHosjUjm3+/puyNcvcw=; b=K4PIW9o1/WhHos19KeQQ6XJ+uCtQ5HtnUemLvIOiNIo+egdWEg2pld8wX+wOH/oN79y35HGFXQApCJZPniXYni6QjYSvkTtGpp8qBnLoaLZ56SzXmm3lkR8cssy2W8B8dw2Z9jkTk9/6HkdBMVuCBfMAo9Twc42THbtrT/GgheI=
+X-Sasl-enc: TGl+AGOqDcqBXI0hIYx49wiHUrlorePd0stKWERxoxPi 1269942088
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 18CBD4C6B0B;
+	Tue, 30 Mar 2010 05:41:26 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10pre) Gecko/20100319 Lightning/1.0b2pre Shredder/3.0.5pre
+In-Reply-To: <4BB1BF4B.2060604@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143561>
 
-Sebastian Pipping <webmaster@hartwork.org> writes:
+Michael J Gruber venit, vidit, dixit 30.03.2010 11:07:
 
-> I have written a tool called svneverever [1] to aid conversion of SVN
-> repositories to Git done by on KDE's svn2git [2].
-> 
-> The blog post introducing it in detail is up at
-> <http://blog.hartwork.org/?p=763>.
-> 
-> 
-> If you work with svn2git it's worth a check-out for you.
+> You may want to create your repo as a fork of gitster/git instead.
 
-> [1] http://git.goodpoint.de/?p=svneverever.git;a=summary
-> [2] http://gitorious.org/svn2git/svn2git
+Actually, make this git/git, the other one isn't being updated... Sorry!
 
-Could you add (short) information about this tool to the wiki at
-http://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Michael
