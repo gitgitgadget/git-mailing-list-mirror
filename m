@@ -1,92 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git cvsimport and case-insensitive config
-Date: Tue, 30 Mar 2010 16:14:49 -0700
-Message-ID: <7vd3yls8pi.fsf@alter.siamese.dyndns.org>
-References: <hoscv7$hmn$1@dough.gmane.org>
- <7vy6h9vhuk.fsf@alter.siamese.dyndns.org>
- <cb7bb73a1003301105v691624sdcdadf6809c50b89@mail.gmail.com>
- <7vr5n1v74x.fsf@alter.siamese.dyndns.org>
- <cb7bb73a1003301517r29aed329j4a5f38fbc9b515ca@mail.gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: sadly requesting help
+Date: Tue, 30 Mar 2010 19:14:15 -0400
+Message-ID: <32541b131003301614iad1fedfl85020ba9e285045f@mail.gmail.com>
+References: <eaacf13c1003301543r45bb18b2n1d10d209f01e3326@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 31 01:15:11 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Raymond Auge <raymond.auge@liferay.com>
+X-From: git-owner@vger.kernel.org Wed Mar 31 01:15:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwkeM-0002Ca-7h
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 01:15:10 +0200
+	id 1NwkeL-0002Ca-3X
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 01:15:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756417Ab0C3XPA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 19:15:00 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48517 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932095Ab0C3XO6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 19:14:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 13BC5A6B78;
-	Tue, 30 Mar 2010 19:14:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Y7TPZijjsEXp
-	q8dTTLqiRgitrJA=; b=bXffNCP1E6i9MzqhrE0XujmDG6CEVk/wweDUmSscvYwv
-	VhE1yYKOMo6kqp3ef7WG4k5MVTcEVNroT/fIFVrr4mtuPkUqufkrdk2jWYID2zwP
-	8q4HCKW1P9Xzjv5p8fXOE8mQiZzSLJ5n6bgzUGG6Sjglup3ZLPU6WkPD/0aM2eM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=wp/eFM
-	KTwUb2w823ILfvCBDHALdy8Te+CMPrShAW/g8o5EPVciU4K/TKSOlJpPi++ISLp2
-	JAhzyo+agThUc7982S2Tcdeqop5bE1YhqPXt1/ilnCWmdimiDTeXM7OVMVruND8n
-	xhcly/OwtKEYc/jXO8dRENRlakL0XtuspakcE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CC1B0A6B76;
-	Tue, 30 Mar 2010 19:14:55 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC815A6B75; Tue, 30 Mar
- 2010 19:14:51 -0400 (EDT)
-In-Reply-To: <cb7bb73a1003301517r29aed329j4a5f38fbc9b515ca@mail.gmail.com>
- (Giuseppe Bilotta's message of "Wed\, 31 Mar 2010 00\:17\:31 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0D93519E-3C52-11DF-BDDE-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756498Ab0C3XOj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 19:14:39 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:51972 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756692Ab0C3XOh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 19:14:37 -0400
+Received: by gyg13 with SMTP id 13so2421559gyg.19
+        for <git@vger.kernel.org>; Tue, 30 Mar 2010 16:14:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type;
+        bh=OPOP+l9EkeZMSy5eePZbdI5Cr3t6ndryImlFAN/KCo8=;
+        b=LryxEn9v/5XADwGKnHduHFxoay/op9KumTQ7u4jwOty866tpBlKRlvS0QrzkPzuwog
+         1c+RH9fNp5sOOLLjOUlo4A1cCkHiwWu010E6BS/6AFyNe5nD7hlntBqAEmoa0NSwxK1H
+         HPLOwZp6d9eMIFDWhntYk8vpRoMbMMt/JEROY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=MjsVGW5V++6RIf2U2/c+H6EAr2X+c9QO5Wx7RwjtGeA8SbFT0eL4Wtqcv9Wo2SiZ61
+         FG2pLHeQMOMESHetQobczdG/04Qt6RgoD9oTyDDEyyP4i3Lacex3nrGXyZoFkuTgOO3+
+         8URNAq0C2D2dyALV4mHDu74yeYRifH8k2NSG4=
+Received: by 10.150.203.4 with HTTP; Tue, 30 Mar 2010 16:14:15 -0700 (PDT)
+In-Reply-To: <eaacf13c1003301543r45bb18b2n1d10d209f01e3326@mail.gmail.com>
+Received: by 10.151.86.14 with SMTP id o14mr6498078ybl.43.1269990875078; Tue, 
+	30 Mar 2010 16:14:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143623>
 
-Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
-
-> (-s likely has a single character, -S more than one. -S is likely to
-> have * or ?, -s not.)
-
-The value given to -S can just be 'tests', or even "\.", as the regexp
-match is not anchored on either side:
-
-		if ($opt_S && $fn =3D~ m/$opt_S/) {
-		    print "SKIPPING $fn v $rev\n";
-		    ...
-
-And "-s" would likely be one or more (but not too many) non-alphanumeri=
-c
-characters.
-
-But a bigger question is if you can bet on that heuristics, and when th=
-e
-heuristics does not work, what you would do.
-
->> A bigger reason is that, if you have _any_ combination that you cann=
-ot
->> reliably guess, you would either need the user to ask for help, or y=
-ou
->> need to convert by reading the configuration file case-sensitively
->> yourself to come up with a reliable conversion. =C2=A0I opted for th=
-e latter.
+On Tue, Mar 30, 2010 at 6:43 PM, Raymond Auge <raymond.auge@liferay.com> wrote:
+> I tried using:
 >
-> Would such a configuration work at all?
+> git svn reset --revision 49343
+>
+> where 49343 is the last revision before the failure.
+>
+> But I'm at git version 1.6.3.3 which doesn't support the "reset" operation.
 
-What configuration?
+I don't know about this option, but if it sounds like it would work,
+why not just upgrade your git?  It's very easy (easier than most
+programs) to compile it from source.
+
+> I tried various incantations of
+>
+> git reset --hard <hash>
+>
+> where <hash> matched the subversion revision obtained
+
+You probably need something like:
+
+    git update-ref refs/remotes/git-svn <commitid>
+
+Where "refs/remotes/git-svn" is the ref that git-svn is using (you can
+usually find this with "git branch -r" and then prepend refs/remotes/
+to the name it gives you).  And <commitid> is the commit you want to
+be the "most recent" one from svn.
+
+You may or may not also need to delete your svn cache dir (.git/svn).
+This should be harmless since git-svn can regenerate it later by
+reading through your local commits.
+
+MAKE SURE YOU BACKUP YOUR REPO BEFORE TRYING ANY OF THIS ADVICE.
+
+Good luck,
+
+Avery
