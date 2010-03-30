@@ -1,83 +1,68 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Subversion integration with git
-Date: Tue, 30 Mar 2010 19:59:56 +0530
-Message-ID: <f3271551003300729i340ee031r3151cad845e299be@mail.gmail.com>
-References: <3311ED3F-77BC-4F66-80D5-AA9E21ACF0E2@cordelta.com> 
-	<40aa078e1003250731y2c900605k9c681475621a1ff2@mail.gmail.com> 
-	<E560EF9A-AF07-4316-9047-6D1A1802F743@cordelta.com> <f3271551003251052j5863af46i3066f0f42788ba3b@mail.gmail.com> 
-	<52A6E51B-058C-4B06-A271-26219B388BE7@cordelta.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH v3 0/2] git-gui: change to display the combined diff in the 
+	case of conflicts.
+Date: Wed, 31 Mar 2010 03:34:17 +1200
+Message-ID: <2cfc40321003300834w59532e58m13d42acce4f2c5ce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Erik Faye-Lund <kusmabite@googlemail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Michael Barr <david.barr@cordelta.com>
-X-From: git-owner@vger.kernel.org Tue Mar 30 16:30:33 2010
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>, spearce@spearce.org,
+	Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Mar 30 17:34:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwcSa-0003Xh-Kl
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 16:30:29 +0200
+	id 1NwdST-0006b9-BM
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 17:34:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756422Ab0C3OaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 10:30:20 -0400
-Received: from mail-yw0-f172.google.com ([209.85.211.172]:58391 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756406Ab0C3OaR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 10:30:17 -0400
-Received: by ywh2 with SMTP id 2so5745934ywh.33
-        for <git@vger.kernel.org>; Tue, 30 Mar 2010 07:30:16 -0700 (PDT)
+	id S1753917Ab0C3PeT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 11:34:19 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:38601 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752447Ab0C3PeS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 11:34:18 -0400
+Received: by pwi5 with SMTP id 5so7825533pwi.19
+        for <git@vger.kernel.org>; Tue, 30 Mar 2010 08:34:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type;
-        bh=fumA8MPHfomOlnJm/S090smhoC09+Izt5IPpuYZafl8=;
-        b=ZKvbYaLNfXy3mayLwkeppKbGDfovvQDJKb2hxxL5Sdu05StWAOgeZ28ilhwt6QXeHN
-         NYyzDE/Jbh0bZJKHDFiq5Rk4XWpwmjWE65cAQEIJJBEyE/qYBx6AQHaAZejlmwcrI0nN
-         g/IrWuZFHOuk76haIfjOo3CkxakzsikqTeWGc=
+        h=domainkey-signature:mime-version:received:date:received:message-id
+         :subject:from:to:content-type;
+        bh=1Ya/+karYlnXS52qusc40D9iP5/mLMErlwb6xC9JvOY=;
+        b=YSh4+SAs9GTRtHZaGQuFN8RlxdTiHRxgt8OJvmFDYOPOr4pzJHOmP1KCVYbC+BUGZE
+         g1+/MURnu8jsqgXdnSpDH0h9+Ca3h/MS6/hIQUonhIQ6BWa1Y2532c6C0GLDNWsbjpkS
+         pAZWzhcEm2iiAmCNYry0fZ8LIInmpCnA0IMPg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=jxak0cmZAOvTpoUh7z35mI0oCqzjn30ZdWcJvaHETMlnSrdl+ILnViCqbgUoOtKL5d
-         pe+BwKnIKTg7kVZSLhmlwoInH0FGPQ33wPVsQ05fhYwKMT46ctULVHbf80RhYbt3+6Hh
-         Lo/aTHkep+6bP7DKfmtUarLGxJulxmAcKbAvE=
-Received: by 10.90.69.14 with HTTP; Tue, 30 Mar 2010 07:29:56 -0700 (PDT)
-In-Reply-To: <52A6E51B-058C-4B06-A271-26219B388BE7@cordelta.com>
-Received: by 10.91.161.39 with SMTP id n39mr864883ago.98.1269959416306; Tue, 
-	30 Mar 2010 07:30:16 -0700 (PDT)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=qgEtHgOtMyDaY6X/m3omIuh10SzC17hoEVbokdm/wOpMLvO/IqWKAu+Ic7iPCotHho
+         gRJD+wdVMXP0gBOKpripawsiRwxvg3GCHB6MTJ74HLjtv5kPgF687nUwzj9+wpMnRvy5
+         DBuD8QxpY8AlXJ3J3dfp4+NBzc9t6++BJZ3hY=
+Received: by 10.114.13.5 with HTTP; Tue, 30 Mar 2010 08:34:17 -0700 (PDT)
+Received: by 10.114.187.19 with SMTP id k19mr6503555waf.20.1269963257441; Tue, 
+	30 Mar 2010 08:34:17 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143570>
 
-Hi,
+This variant of the patch uses git diff -c instead of git diff HEAD,
+at Johannes Sixt's suggestion.
 
-On Tue, Mar 30, 2010 at 7:35 PM, David Michael Barr
-<david.barr@cordelta.com> wrote:
-> I've started looking at the first piece of the pipeline, reading from a
-> remote subversion URL. I stumbled upon rsvndump[2], which is
-> GPLv3+ licensed and promises to produce a Subversion dump from
-> a remote repository. This could be piped to my utility,
-> svn-dump-fast-export[3], to produce suitable input for git fast-import.
+The diff displayed in case of a merge conflict now shows the
+differences between the merge result and each of the local and remote
+heads and thus now also allows the user to assess the consequences of
+"Use Remote Version" by showing how the merge result affects the state
+of the local branch.
 
-In the latest version of my proposal, I've proposed to write a
-mirroring tool which will basically be a stripped down version of
-svnsync [1]. For testing, I therefore recommend that you use svnsync
-instead of rsvndump because the former is included in the official
-source tree. If however, you do a comparison and find that rsvndump is
-actually a better alternative, let me know.
+I have avoided using gmail client to forward this version of  patch
+because of documented word-wrapping issues, so hopefully this will
+apply cleanly.
 
-> I believe this would address the first two components of Ram's.
-> proposal and allow more focus to be given to the interesting ones.
-> That's presuming that I have a feature-complete release by the time
-> the GSoC project begins.
+[PATCH v3 1/2] git-gui: Introduce is_unmerged global variable to
+encapsulate its derivation.
+[PATCH v3 2/2] git-gui: change to display the combined diff in the
+case of conflicts.
 
-That's fantastic! I suspect you haven't looked at the latest revision
-of my proposal. Since Gmane doesn't seem to have indexed it, I just
-sent you a mail off the list.
-
--- Ram
+jon.
