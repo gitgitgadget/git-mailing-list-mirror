@@ -1,77 +1,84 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] remote-curl: Add sanity check for url
-Date: Wed, 31 Mar 2010 01:38:42 +0530
-Message-ID: <f3271551003301308y683173f6y6a4fadb01b791049@mail.gmail.com>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [PATCH v2] Documentation/remote-helpers: Add invocation section
+Date: Tue, 30 Mar 2010 23:10:07 +0300
+Message-ID: <20100330201007.GA26121@LK-Perkele-V2.elisa-laajakaista.fi>
+References: <f3271551003300947u4c7c2a83q13aaf786140bfa37@mail.gmail.com>
+ <20100330183748.GA10647@progeny.tock>
+ <f3271551003301217h44c99d5bye4a614840661b05c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Gabriel Filion <lelutin@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 30 22:09:12 2010
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 30 22:10:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwhkN-0008Bh-Da
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 22:09:11 +0200
+	id 1Nwhld-0000Oy-HO
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 22:10:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754644Ab0C3UJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 16:09:06 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:35254 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754405Ab0C3UJE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 16:09:04 -0400
-Received: by gwaa18 with SMTP id a18so4898936gwa.19
-        for <git@vger.kernel.org>; Tue, 30 Mar 2010 13:09:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:received
-         :message-id:subject:to:cc:content-type;
-        bh=6QFfy3TXIWmL/EsGFluxQm85x4EPeI+Y0sHOj9ypzMA=;
-        b=IW0Ubyo21dDUJh0xPrQYJX8LJQTyOMsQeMrcAsLopWEhsoiaAatfnr1zb34qXy5U2A
-         cf8AUDD3Mrnu7mQppsxC/h3JWpdxE199kfdOx56zgmxiEsCw4ov8oNDYm5lAsGFmiCWc
-         fbaBlA4MHkJ45UI5dtKBnMI0hbSE5yjRy/Lc4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        b=PrHmhlmZ/PdUCFjXsIyuueKYn4IyLFgQvr3AmR26/MPmBq+K27Wwq40eYnn9oPbAjP
-         T0H3jLebLUjELf5S4i9V/1OE9J1PgsozznBe6yYRJY6z7a5igonKffxtvlPkcMUhxgV5
-         LfDaBqW1/LwsLJaJuJSGJ0JRhrSErdxJRlmLA=
-Received: by 10.90.69.14 with HTTP; Tue, 30 Mar 2010 13:08:42 -0700 (PDT)
-Received: by 10.91.88.13 with SMTP id q13mr2356787agl.99.1269979742163; Tue, 
-	30 Mar 2010 13:09:02 -0700 (PDT)
+	id S1754405Ab0C3UKY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 16:10:24 -0400
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:59928 "EHLO
+	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753907Ab0C3UKX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 16:10:23 -0400
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 1290A8C078;
+	Tue, 30 Mar 2010 23:10:22 +0300 (EEST)
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A053580DEE3; Tue, 30 Mar 2010 23:10:22 +0300
+Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 7FAA12BD47;
+	Tue, 30 Mar 2010 23:10:12 +0300 (EEST)
+Content-Disposition: inline
+In-Reply-To: <f3271551003301217h44c99d5bye4a614840661b05c@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143598>
 
-Previously, `git remote-http foo` and subsquent commands would try to
-work on a HTML page. This patch fixes the bug by making one assumption
-about the URL handled by libcurl: it must contain the string "://"
+On Wed, Mar 31, 2010 at 12:47:09AM +0530, Ramkumar Ramachandra wrote:
+>=20
+> > =C2=A0The URL in the second argument can be an arbitrary string. =C2=
+=A0It is up
+> > =C2=A0to the remote helper to assign meaning to it.
+>=20
+> I'm not sure this is correct. Here's an excerpt from remote.c
+> 	if (argc > 2) {
+> 		url =3D argv[2];
+> 	} else {
+> 		url =3D remote->url[0];
+> 	}
+> Notice how url is set to remote->url[0], in the `else` branch, where
+> the remote is an "ordinary remote" built by remote_get(). Even though
+> url may be any arbitrary string in the `if` branch, there'll be
+> problems when the program gets into the `else` branch transparently.
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- remote-curl.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+Note that remote may have no URLs. Or the passed url may be like=20
+(pathological example):
 
-diff --git a/remote-curl.c b/remote-curl.c
-index b76bfcb..9320897 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -112,6 +112,9 @@ static struct discovery* discover_refs(const char *service)
- 	}
- 	refs_url = strbuf_detach(&buffer, NULL);
+'tls://srp-Ilari@[1067a6e3af81b5ea76d615280eee2bc3dd2e8079@tcp/ipv6~fe8=
+0::20e:a6ff:fe6f:2288%2]:7684/gitolite-admin'
 
-+	/* sanity check: does this look like a url expected by libcurl? */
-+	if (!strstr(url, "://"))
-+		die("%s is not a url supported by this remote helper", url);
- 	http_ret = http_get_strbuf(refs_url, &buffer, HTTP_NO_CACHE);
+Or it may be something even more exotic with absolutely no recognizable
+URL-like structure, say hypothetical git-remote-fd, which would have
+passed syntax like:
 
- 	/* try again with "plain" url (no ? or & appended) */
--- 
-1.7.0.3
+"3,4"
+
+Which doesn't even resemble an URL.
+
+-Ilari
