@@ -1,94 +1,92 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: RFC - "git editlog" feature for fixing up local commit messages
-Date: Tue, 30 Mar 2010 18:11:14 -0500
-Message-ID: <20100330231114.GA11591@progeny.tock>
-References: <20100329133132.GA12201@thyrsus.com>
- <32541b131003291314r2f5a77e8g28e79b5983821e41@mail.gmail.com>
- <4BB1BBDA.2050102@drmicha.warpmail.net>
- <32541b131003301136h4454f02cyd5a94d746e844a8d@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git cvsimport and case-insensitive config
+Date: Tue, 30 Mar 2010 16:14:49 -0700
+Message-ID: <7vd3yls8pi.fsf@alter.siamese.dyndns.org>
+References: <hoscv7$hmn$1@dough.gmane.org>
+ <7vy6h9vhuk.fsf@alter.siamese.dyndns.org>
+ <cb7bb73a1003301105v691624sdcdadf6809c50b89@mail.gmail.com>
+ <7vr5n1v74x.fsf@alter.siamese.dyndns.org>
+ <cb7bb73a1003301517r29aed329j4a5f38fbc9b515ca@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, esr@thyrsus.com,
-	git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 31 01:12:40 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 31 01:15:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nwkbq-0001JI-Gk
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 01:12:34 +0200
+	id 1NwkeM-0002Ca-7h
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 01:15:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755891Ab0C3XLE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 19:11:04 -0400
-Received: from mail-yw0-f172.google.com ([209.85.211.172]:42186 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756165Ab0C3XLA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 19:11:00 -0400
-Received: by ywh2 with SMTP id 2so5989244ywh.33
-        for <git@vger.kernel.org>; Tue, 30 Mar 2010 16:10:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=zHd1eoQumKgf6EfXKTg8WrEiDqEnbpd780RirRcW1Gg=;
-        b=Zvoh40npvhMbQkOR+EGvLQVvikOfCV/c7URJ5SA4gUK2n54qXLgiBhDoD+bdU8O/BM
-         FsVOlG7TRqsXVFLvAX3qJ79MnwtBXgvSb1BKkuvfjALc5b0mY85F8OmlwC9Ogg+cNIu4
-         Bn2mDcsCtf+pljlzOXUFAufAoPb/4fe1JoMX0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=QImbc3Slk7XFcHN36MyMCYfqz9obdITxVKqIqjcoGokE6wUIFclw7PNhKs/FhBZ38D
-         rjkMULFLjoCbLH5cdSdxLKu3MjXTGKmWfVKG8yUxMKbAE5dznJW7wn8X/4JYvnkL4sdX
-         IBKBQl2cA6+keUkDqjjx2ZwK2eLS+hn6GxJ2g=
-Received: by 10.150.176.9 with SMTP id y9mr6871207ybe.242.1269990659019;
-        Tue, 30 Mar 2010 16:10:59 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 21sm5436833iwn.15.2010.03.30.16.10.58
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 30 Mar 2010 16:10:58 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <32541b131003301136h4454f02cyd5a94d746e844a8d@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756417Ab0C3XPA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 19:15:00 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48517 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932095Ab0C3XO6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 19:14:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 13BC5A6B78;
+	Tue, 30 Mar 2010 19:14:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Y7TPZijjsEXp
+	q8dTTLqiRgitrJA=; b=bXffNCP1E6i9MzqhrE0XujmDG6CEVk/wweDUmSscvYwv
+	VhE1yYKOMo6kqp3ef7WG4k5MVTcEVNroT/fIFVrr4mtuPkUqufkrdk2jWYID2zwP
+	8q4HCKW1P9Xzjv5p8fXOE8mQiZzSLJ5n6bgzUGG6Sjglup3ZLPU6WkPD/0aM2eM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=wp/eFM
+	KTwUb2w823ILfvCBDHALdy8Te+CMPrShAW/g8o5EPVciU4K/TKSOlJpPi++ISLp2
+	JAhzyo+agThUc7982S2Tcdeqop5bE1YhqPXt1/ilnCWmdimiDTeXM7OVMVruND8n
+	xhcly/OwtKEYc/jXO8dRENRlakL0XtuspakcE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CC1B0A6B76;
+	Tue, 30 Mar 2010 19:14:55 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC815A6B75; Tue, 30 Mar
+ 2010 19:14:51 -0400 (EDT)
+In-Reply-To: <cb7bb73a1003301517r29aed329j4a5f38fbc9b515ca@mail.gmail.com>
+ (Giuseppe Bilotta's message of "Wed\, 31 Mar 2010 00\:17\:31 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0D93519E-3C52-11DF-BDDE-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143622>
 
-Avery Pennarun wrote:
-> On Tue, Mar 30, 2010 at 4:52 AM, Michael J Gruber
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
->> I think the OP's point was that filter-branch is better at keeping
->> merges in place; I'm not sure if this is true when rebase-i is used =
-with
->> reword only.
->
-> I've never actually tried the "--preserve-merges" option to git rebas=
+> (-s likely has a single character, -S more than one. -S is likely to
+> have * or ?, -s not.)
+
+The value given to -S can just be 'tests', or even "\.", as the regexp
+match is not anchored on either side:
+
+		if ($opt_S && $fn =3D~ m/$opt_S/) {
+		    print "SKIPPING $fn v $rev\n";
+		    ...
+
+And "-s" would likely be one or more (but not too many) non-alphanumeri=
+c
+characters.
+
+But a bigger question is if you can bet on that heuristics, and when th=
 e
-> -i, but the description sounds as if it's supposed to not have this
-> problem.  Can anyone confirm/deny?
+heuristics does not work, what you would do.
 
-preserve-merges is in bad shape.  I=E2=80=99d recommend not using it un=
-less you=E2=80=99re
-willing to hack on it.
+>> A bigger reason is that, if you have _any_ combination that you cann=
+ot
+>> reliably guess, you would either need the user to ask for help, or y=
+ou
+>> need to convert by reading the configuration file case-sensitively
+>> yourself to come up with a reliable conversion. =C2=A0I opted for th=
+e latter.
+>
+> Would such a configuration work at all?
 
-Example issues: interacts poorly with merge.log, reordering commits
-produces very confusing results.
-
-Example of why it is not necessarily the tool for all seasons: requires=
- a
-diff+apply cycle.  If you are tracking large or binary files or amendin=
-g a
-very old commit message, it makes more sense to avoid this overhead.  S=
-ee
-http://thread.gmane.org/gmane.comp.version-control.git/143426
-for example.
-
-Hope that helps,
-Jonathan
+What configuration?
