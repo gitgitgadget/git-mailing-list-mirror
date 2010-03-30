@@ -1,93 +1,51 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v3 2/2] git-gui: change to display the combined diff in the case of conflicts.
-Date: Wed, 31 Mar 2010 02:34:49 +1100
-Message-ID: <1269963289-480-2-git-send-email-jon.seymour@gmail.com>
-References: <1269963289-480-1-git-send-email-jon.seymour@gmail.com>
-Cc: git@vger.kernel.org, spearce@spearce.org, j.sixt@viscovery.net
-To: jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Tue Mar 30 17:44:27 2010
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: Re: [PATCH] Clarification for the command "git checkout <branch>"
+Date: Tue, 30 Mar 2010 17:57:33 +0200
+Message-ID: <4BB21F6D.7070804@web.de>
+References: <4B67227A.7030908@web.de> <4B898F97.90706@web.de> 	<7vr5o6s5xf.fsf@alter.siamese.dyndns.org> <4B8B9BF1.10408@web.de> 	<4b8bf32f.0706c00a.26cb.691d@mx.google.com> <4BA104C7.5020207@web.de> 	<32541b131003170944w7a0215frcace205f32d313bf@mail.gmail.com> 	<7vaau6q18q.fsf@alter.siamese.dyndns.org> <4BA1FC39.10300@web.de> 	<32541b131003180936x746dad06k386788d3cb6fcdeb@mail.gmail.com> <b4087cc51003181019r4408953bxcd5049c9521b8173@mail.gmail.com> <4BA3329E.6050304@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 30 17:57:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nwdc7-00049m-1Q
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 17:44:23 +0200
+	id 1Nwdp4-0004Lb-P4
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Mar 2010 17:57:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754461Ab0C3PoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 11:44:17 -0400
-Received: from outbound.icp-qv1-irony-out5.iinet.net.au ([203.59.1.105]:38094
-	"EHLO outbound.icp-qv1-irony-out5.iinet.net.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752218Ab0C3PoQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 11:44:16 -0400
-X-Greylist: delayed 558 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Mar 2010 11:44:13 EDT
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvYFAHu3sUt8qoyc/2dsb2JhbACPP4FOiiJxr3mCK4R9LYhRhQAE
-X-IronPort-AV: E=Sophos;i="4.51,334,1267372800"; 
-   d="scan'208";a="122256064"
-Received: from unknown (HELO localhost.localdomain) ([124.170.140.156])
-  by outbound.icp-qv1-irony-out5.iinet.net.au with ESMTP; 30 Mar 2010 23:34:51 +0800
-X-Mailer: git-send-email 1.6.6.1
-In-Reply-To: <1269963289-480-1-git-send-email-jon.seymour@gmail.com>
+	id S1754575Ab0C3P5m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 11:57:42 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:47629 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751822Ab0C3P5l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 11:57:41 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate01.web.de (Postfix) with ESMTP id CF0B1152FFD84;
+	Tue, 30 Mar 2010 17:57:38 +0200 (CEST)
+Received: from [78.49.170.0] (helo=[192.168.1.202])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #4)
+	id 1Nwdow-0006T1-00; Tue, 30 Mar 2010 17:57:38 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.8) Gecko/20100228 SUSE/3.0.3-1.1.1 Thunderbird/3.0.3
+In-Reply-To: <4BA3329E.6050304@web.de>
+X-Sender: Markus.Elfring@web.de
+X-Provags-ID: V01U2FsdGVkX1/r4lEUbet19dp1LNtPCEy+QaTFnTcTDRBu1Ccp
+	BGkzmF3Wi1m94RY9Kd4AMlSGbp3f8DTCWG0LpbKlbHmLUHwyzE
+	1s60TJTTmc0xfmC4uEZQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143573>
 
-The rationale for this change is that the previous behaviour did not allow
-the user to make an informed decision about the likely consequences
-of "Use Local Version", "Stage to commit" or "Use Remote Version" for conflicted files. The
-reason for this is that in the conflicted case, successfully staged
-remote hunks are effectively invisible to user (via the git-gui interface)
-and hence cannot inform the user's decision making process.
+> I find that the discussion is not finished yet. It was not achieved a common
+> conclusion and consensus on all mentioned details so far.
 
-For example, previously use of "Use Local Version" would silently discard
-from the index, and the working tree any successfully merged remote hunks.
-Since these hunks had never been displayed to the user, this
-loss would be unnoticed and unexpected.
+Can we achieve progress for an update of the manual?
 
-In the case of "Stage to commit", the successfully merged remote
-hunks would be preserved in the index and the working tree but the fact
-that there are successfully merged remote hunks would not be not
-visible until after the "Stage to commit" action has been taken.
-If the user did not check diff _after_ taking the action, the user
-may have unwittingly commit changes from a remote hunk
-that she was not aware of.
-
-Similar coniderations also imply that the probable consequences
-of "Use Remote Version" cannot be properly evaluated since the changes
-in the local branch that would be undone by accepting the remote
-branch's version of the file would are not visible to the user.
-
-With this change, in the case of conflicted paths only, the git-gui diff window
-displays the output of git diff -c. This output allows the user to properly
-evaluate the consequences of the possible resolution actions.
-
-Previous versions of this patch uses "diff HEAD" instead of "diff".
-This version uses "diff -c" at the suggestion of Johannes Sixt.
-
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- git-gui/lib/diff.tcl |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
-
-diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-index e7b1986..693830f 100644
---- a/git-gui/lib/diff.tcl
-+++ b/git-gui/lib/diff.tcl
-@@ -300,7 +300,11 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 	}
- 	if {$w eq $ui_index} {
- 		lappend cmd [PARENT]
--	}
-+	} else {
-+		if {$is_unmerged} {
-+			lappend cmd -c 
-+		}
-+        }
- 	if {$add_opts ne {}} {
- 		eval lappend cmd $add_opts
- 	} else {
--- 
-1.6.6.1
+Regards,
+Markus
