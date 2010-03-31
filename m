@@ -1,160 +1,97 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH v3 0/2] git-gui: change to display the combined diff in 
-	the case of conflicts.
-Date: Wed, 31 Mar 2010 23:50:02 +1200
-Message-ID: <l2z2cfc40321003310450p51363facu1142c665512d6825@mail.gmail.com>
-References: <2cfc40321003300834w59532e58m13d42acce4f2c5ce@mail.gmail.com>
-	 <4BB2F7A0.6020702@viscovery.net>
-	 <k2p2cfc40321003310412hf4c6d642n4349af3f644829ff@mail.gmail.com>
-	 <4BB3346C.7070700@viscovery.net>
+Subject: Re: Are the patches used to build git on cygwin available in a git 
+	repo somewhere?
+Date: Wed, 31 Mar 2010 23:58:18 +1200
+Message-ID: <w2y2cfc40321003310458vc0fc3dddjb47a8a7dddb1c41e@mail.gmail.com>
+References: <2cfc40321003300916o305e4c15x7850549beafc26c0@mail.gmail.com>
+	 <20100331025626.GA13501@progeny.tock>
+	 <20100331025856.GB13501@progeny.tock>
+	 <o2p2cfc40321003310055i4b26d46l29ac6113be9eb980@mail.gmail.com>
+	 <4BB336C1.4000504@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>, spearce@spearce.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Mar 31 13:50:12 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramsay Allan Jones <ramsay@ramsay1.demon.co.uk>,
+	Dmitry Potapov <dpotapov@gmail.com>
+To: Eric Blake <eblake@redhat.com>
+X-From: git-owner@vger.kernel.org Wed Mar 31 13:58:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwwR1-0002sk-R5
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 13:50:12 +0200
+	id 1NwwYz-0006St-SP
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 13:58:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932153Ab0CaLuF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Mar 2010 07:50:05 -0400
-Received: from mail-pz0-f186.google.com ([209.85.222.186]:41327 "EHLO
-	mail-pz0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756979Ab0CaLuC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 31 Mar 2010 07:50:02 -0400
-Received: by pzk16 with SMTP id 16so597336pzk.22
-        for <git@vger.kernel.org>; Wed, 31 Mar 2010 04:50:02 -0700 (PDT)
+	id S932188Ab0CaL6U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Mar 2010 07:58:20 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:52000 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757097Ab0CaL6T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Mar 2010 07:58:19 -0400
+Received: by pwi5 with SMTP id 5so4162pwi.19
+        for <git@vger.kernel.org>; Wed, 31 Mar 2010 04:58:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:received:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=1BpuTpzNDV+ZwfkYK8EZDWpkQTDmybkqi1zb/5pwb0k=;
-        b=UgHgkIhOi0z6ekaI/AbX/pq/c34u1MhH0qQTygP7V2TN1G2fjTBRjc3Od8b4R+CnfP
-         df1x7b7Z0aTGZYcbGVwjUC6aAx/UfGVYFnwHT88AN8UUU7yI2xKHqQ3gvMTKarqFv1tQ
-         tqzpazsopYhB45jE4mnTmHLRlbgfVoLceakbg=
+        bh=tDwis5wCoyyS1/T5ufOlD2gQL6Ed0/9LDmuKukxQq/M=;
+        b=avQdDtWV73FHqanPLtKEKPAMISDFAMQotS8HWNoSqMyPjRFHp5jtrhqHJqI1uuc++1
+         vve6AaHSU4QnHKgaLB2pV6xN0da+vQSUABdghiaKB0OSccnTb7GbMtagH/OvKOVJBMHb
+         p8qNbneZ5CO/bjRqawlKw6LWXn01g3IC+eeME=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=DagPHg0OdwBDpeSW2TmBeCM3uPSt4MY1sdvDxiCdczXJKKOE1Ist25H8Bnh4Fu3yNL
-         vR+NrL9OaVly0yu6J2hHsDntjjfTA6jDAUGFCCUhtzcK+fEHSF04tJ6d29oDtRcaLVlB
-         lFl7x6vxmYveSF1WOK3hvc2FTMjEEmy9qRTvc=
-Received: by 10.114.13.5 with HTTP; Wed, 31 Mar 2010 04:50:02 -0700 (PDT)
-In-Reply-To: <4BB3346C.7070700@viscovery.net>
-Received: by 10.115.80.1 with SMTP id h1mr3583067wal.116.1270036202283; Wed, 
-	31 Mar 2010 04:50:02 -0700 (PDT)
+        b=Eq6BcrMb/mmqyAMZLa1IJTzqgQgU84fjOSAwSfRFcX7KmWTsrX5JidfYt1krAEMkz1
+         74AEXMKgSsaCLPHLUtOKHdXPJErX0xt4JTanQhwXvm1q3j35/F8nzNwb/nd9VgYk0EGN
+         QsK/iad+ZkH2GTX+gWpT9YMpru5wW+oG2HlZ8=
+Received: by 10.114.13.5 with HTTP; Wed, 31 Mar 2010 04:58:18 -0700 (PDT)
+In-Reply-To: <4BB336C1.4000504@redhat.com>
+Received: by 10.115.38.31 with SMTP id q31mr7577083waj.113.1270036698728; Wed, 
+	31 Mar 2010 04:58:18 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143665>
 
-On Wed, Mar 31, 2010 at 11:39 PM, Johannes Sixt <j.sixt@viscovery.net> =
-wrote:
-> Am 3/31/2010 13:12, schrieb Jon Seymour:
->>> I looked at the result, but it does not convince me. In my case, I =
-have a
->>> large file that has many changes between the "maint" and "master"
->>> branches. Whenever there are conflicts after merging "maint" to "ma=
-ster",
->>> I see all these changes, and really they *are* uninteresting.
->>>
+On Wed, Mar 31, 2010 at 11:49 PM, Eric Blake <eblake@redhat.com> wrote:
+> According to Jon Seymour on 3/31/2010 1:55 AM:
+>> What I was looking for was a git repo that contains a branch with th=
+e
+>> patches that the cygwin folks mutate the official git release with.
+>> Such a repo would be quite useful because people could, in theory, u=
+se
+>> these to produce their own cygwin git builds at arbitrary commits
+>> instead of having to wait for cygwin to catch up.
 >>
->> I think you may have missed the point of my patch.
->>
->> The successfully merged lines may be uninteresting from the point of
->> deciding what I should *do* but they
->> are highly relevant to the question of what I really, really should =
-*not* do.
+>> Admittedly, it is not a big deal to build such a branch using the
+>> patch from the cygwin package source, but I was just wondering wheth=
+er
+>> there was a well-known repo that contained the patches already.
 >
-> How would you decide that if you cannot read the information that is
-> presented to you?
->
-> Can you tell without thinking for 10 seconds which of these two chang=
-es is
-> lost if you choose "Use local version"?
->
-> @@@ ... @@@
-> =C2=A0x
-> =C2=A0+foo
-> =C2=A0y
-> @@@ ... @@@
-> =C2=A0a
-> - bar
-> =C2=A0b
->
-> Oh, it's easy for the conflicted part of the diff, which you'll see
-> elsewhere as well:
->
-> @@@ ... @@@
-> =C2=A0r
-> ++<<<<<<< HEAD
-> =C2=A0+foo
-> ++=3D=3D=3D=3D=3D=3D=3D
-> + bar
-> ++>>>>>>> some-branch
-> =C2=A0s
->
-> Do not forget that in a case (like mine) where the non-condensed diff=
- is
-> actually huge, the conflict markers would no exactly be easy to find =
-in
-> the diff.
-
-But that's exactly the point - not to make the choice easy, but to
-make it obvious that the choice is *not easy*.
-
-The problem is that as it stands the user things the only choice is
-between choosing "foo" and choosing "bar".
-
-> ++<<<<<<< HEAD
-> =C2=A0+foo
-> ++=3D=3D=3D=3D=3D=3D=3D
-> + bar
-> ++>>>>>>> some-branch
-
-This is a false choice but it is not obviously so.
-
-The point of using diff -c is *precisely* to help the user understand
-that it isn't a choice between foo and bar, but a choice
-between losing all the changes that came with foo and all the changes
-that came with bar.
-
-
-> And therefore I suggest to disable these options.
+> Nope - the patchset that I apply when building the cygwin port is so =
+small
+> that so far I have just maintained it manually, rather than publishin=
+g a
+> git repo. =C2=A0But if you want me to make it more public, I can cert=
+ainly look
+> into doing that. =C2=A0And yes, now that 1.7.x is out for some time n=
+ow, I
+> should probably advance the cygwin port beyond 1.6.6.1.
 >
 
-I agree that this would be a better solution than leaving the behaviour=
- as is.
-
-> Which are those very simplest cases that you are referring to? If you=
- mean
-> modify/delete conflicts, then I indeed would like to keep the options=
- for
-> them.
-
-The simplest case is when the presented diff presents the *whole*
-difference between the local and remote branches.
-
-As it stands, the gui can mislead the user into believing that the
-presented diff is the whole difference and that their only
-choice is between foo and bar.
-
-Sure, users who have been bitten by this misapprehension will learn,
-but it is hard lesson to learn.
-
->
-> That said, your earlier patch that presented the diff against HEAD wa=
-s not
-> bad after all.
-
-I prefer the -c version - not because the output is easy to
-understand, but precisely because it gives pause.
+As you say, it's probably not worth the effort, but if you ever do
+decide to set such a thing up, do let me know.
 
 jon.
+
+> --
+> Eric Blake =C2=A0 eblake@redhat.com =C2=A0 =C2=A0+1-801-349-2682
+> Libvirt virtualization library http://libvirt.org
+>
+>
