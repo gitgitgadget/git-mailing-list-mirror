@@ -1,65 +1,69 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v3 0/2] git-gui: change to display the combined diff in
- 	the case of conflicts.
-Date: Wed, 31 Mar 2010 15:51:10 +0200
-Message-ID: <4BB3534E.3080803@viscovery.net>
-References: <2cfc40321003300834w59532e58m13d42acce4f2c5ce@mail.gmail.com>	 <4BB2F7A0.6020702@viscovery.net>	 <k2p2cfc40321003310412hf4c6d642n4349af3f644829ff@mail.gmail.com>	 <4BB3346C.7070700@viscovery.net> <t2u2cfc40321003310523u8fda9baeo883d2e0b3c6fa807@mail.gmail.com>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: Dealing with mac linefeeds in git repository
+Date: Wed, 31 Mar 2010 17:16:08 +0300
+Message-ID: <20100331141608.GA2542@LK-Perkele-V2.elisa-laajakaista.fi>
+References: <OF7E748769.D4E7BC90-ONC22576F7.00483B3D-C22576F7.00484D0A@sks.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>, spearce@spearce.org
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 31 15:51:24 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: jussi.sirpoma@sks.fi
+X-From: git-owner@vger.kernel.org Wed Mar 31 16:16:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwyKF-0002VI-Vl
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 15:51:20 +0200
+	id 1NwyiY-0007pO-Ua
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 16:16:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933407Ab0CaNvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Mar 2010 09:51:14 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:28790 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933397Ab0CaNvO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Mar 2010 09:51:14 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NwyK6-0004oW-LO; Wed, 31 Mar 2010 15:51:10 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 5FDA01660F;
-	Wed, 31 Mar 2010 15:51:10 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
-In-Reply-To: <t2u2cfc40321003310523u8fda9baeo883d2e0b3c6fa807@mail.gmail.com>
-X-Enigmail-Version: 1.0.1
-X-Spam-Score: -1.4 (-)
+	id S1756436Ab0CaOQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Mar 2010 10:16:21 -0400
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:52668 "EHLO
+	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756873Ab0CaOQU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Mar 2010 10:16:20 -0400
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 80C598C4D1;
+	Wed, 31 Mar 2010 17:16:19 +0300 (EEST)
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A0320B50B04; Wed, 31 Mar 2010 17:16:19 +0300
+Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
+	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id 68E6C1C6384;
+	Wed, 31 Mar 2010 17:16:17 +0300 (EEST)
+Content-Disposition: inline
+In-Reply-To: <OF7E748769.D4E7BC90-ONC22576F7.00483B3D-C22576F7.00484D0A@sks.fi>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143676>
 
-Am 3/31/2010 14:23, schrieb Jon Seymour:
-> What about the safe (but complicated) diff -c by default (to prevent
-> misinformed Use Remote/Local decisions, by default) and a "Conflicts
-> Only" option (disabled by default) that shows the diff --cc output for
-> those who know what they are doing?
+On Wed, Mar 31, 2010 at 04:07:40PM +0300, jussi.sirpoma@sks.fi wrote:
+> I am running cygwin git version 1.6.4.2.
+> 
+> Some of the source code for our projects is encoded in mac linefeeds due 
+> to proprietary
+> software platform. My current solution is to flag those files tu use no 
+> linefeed conversion and
+> to use separate diff program by having this in .gitattributes:
 
-You would like to have the worst of all three?
+> annotations or diffs. Now I am wondering if I could make git work with a 
+> little different 
+> configuration:
+> 
+> * The *.BA files with mac linefeeds would be stored with normal linux 
+> linefeeds
+> * The files would be converted on checkout to mac linefeeds the same way 
+> as core.autcrlf works
+> 
+> Is this doable or even a good approach?
+ 
+AFAIK, its doable. One can specify filter programs to be executed when
+checking out / adding files. That program could do CR <-> LF translation.
 
-1. dangerous menu options
-2. incomprehensible diff -c output
-3. and a config option on top of it
+See filter attribute in man gitattributes.
 
-I think we should have none of them.
-
-Yes, I suggested diff -c, but after seeing how it works (better: not
-works), I changed my mind.
-
-What sort of user guidance is it to present alluring menu options "Use
-local/remote version", but at the same time a scaring amount of diff -c
-output.
-
--- Hannes
+-Ilari
