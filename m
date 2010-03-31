@@ -1,104 +1,96 @@
-From: Yawar Amin <yawar.amin@gmail.com>
-Subject: Re: [PATCH] Documentation: clarify grammar
-Date: Wed, 31 Mar 2010 08:11:08 -0400
-Message-ID: <4BB33BDC.5000406@gmail.com>
-References: <4BB2B34B.1080508@gmail.com> <p2kf3271551003302216qc6e378a8u2f85751c9c8a24d5@mail.gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: Import ClearCaase with history?
+Date: Thu, 1 Apr 2010 00:13:57 +1200
+Message-ID: <p2k2cfc40321003310513tf6adbef1p69ac01c8b1472c59@mail.gmail.com>
+References: <1270035189.2785.11.camel@chumley>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------enig15B840AFBAED3EC62E1CEEE6"
-Cc: git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 31 14:11:51 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: David Hagood <david.hagood@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 31 14:14:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nwwlx-0003vs-N1
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 14:11:50 +0200
+	id 1Nwwo9-00051L-Nf
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 14:14:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757375Ab0CaML1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Mar 2010 08:11:27 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:54235 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757243Ab0CaMLW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Mar 2010 08:11:22 -0400
-Received: by vws20 with SMTP id 20so6821vws.19
-        for <git@vger.kernel.org>; Wed, 31 Mar 2010 05:11:21 -0700 (PDT)
+	id S1757347Ab0CaMN7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Mar 2010 08:13:59 -0400
+Received: from mail-pz0-f186.google.com ([209.85.222.186]:48232 "EHLO
+	mail-pz0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757311Ab0CaMN6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Mar 2010 08:13:58 -0400
+Received: by pzk16 with SMTP id 16so14342pzk.22
+        for <git@vger.kernel.org>; Wed, 31 Mar 2010 05:13:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type;
-        bh=R+6QRczTfol9gf1fSS65/3FBj4dl4H51iBt7YvweiLY=;
-        b=WPNaOjrvlhjar7gvYNyg7mAA+0mfo5k8AxeioXuDDpGfcOpJ6/hPwzd6+gxg+A66MK
-         tWWi5uWoRnqNUhto+CoojnUAnHMxgIk00oj8JD/bXf00eOzQSdoK4L6ps4vuD+YUPQ/O
-         oqTIqsvVM7A+30bKfksX76ODCTzBMQBYGATvY=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=d8Pui3TPMBrPIHIU0mGb8VQOwAw5944UC8Md0y5sHtk=;
+        b=aKQtoEdNhqfWNyWb8hxz7nwbLcbwc/iZUFo0CdznfrCFlvUkZblBxxCEp+/y410Viq
+         ew4msXJiZ8rp3OM4YDp74cj0sFEJILIL3w4HPe8plT6UJffqHExY8KDqy8TkGBXBoNFX
+         2FpD/eEUpO1bT6z5XxZLJI0FRWY1JdDLoOkko=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type;
-        b=UMuQsA97lfMcYe3N30C5iZMe04hm3iXw3VHQWKcXDcl9rh3nroWxp+fCoWiBdOdZYk
-         /bYesqmS5TQkOAYSKT2mS8ftIYZ2kNMm8VCCc5+Ywskq6zYOeuOOwSrKvT0C8L2AMb5S
-         6xqbORAD+22pccRim2Wnk+sUlxGHg9vdDGNfU=
-Received: by 10.220.108.227 with SMTP id g35mr4385695vcp.184.1270037480774;
-        Wed, 31 Mar 2010 05:11:20 -0700 (PDT)
-Received: from Yawar-Quadir-Amins-MacBook.local (CPE00173f9e1ecd-CM0014e827917c.cpe.net.cable.rogers.com [99.230.35.242])
-        by mx.google.com with ESMTPS id 25sm142636747vws.4.2010.03.31.05.11.18
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 31 Mar 2010 05:11:19 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.24 (Macintosh/20100228)
-In-Reply-To: <p2kf3271551003302216qc6e378a8u2f85751c9c8a24d5@mail.gmail.com>
-X-Enigmail-Version: 0.96.0
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=i2cWOCtHU8jwtfm9S/Chiii8sR84wAT+a45PmVYQSY22jGz/mEGth3Z6wmmaK++Z6O
+         DQGqgKyTTu+c+93k1ZybFtNA7PqoaFHhK94ni1T9A1E9fnNhLhIItuuSxFgVnitaP5xQ
+         dr5WNBUZsSTnsekpuXBRcbjGjURxJpAy4clrw=
+Received: by 10.114.13.5 with HTTP; Wed, 31 Mar 2010 05:13:57 -0700 (PDT)
+In-Reply-To: <1270035189.2785.11.camel@chumley>
+Received: by 10.114.33.18 with SMTP id g18mr7994520wag.2.1270037637442; Wed, 
+	31 Mar 2010 05:13:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143668>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig15B840AFBAED3EC62E1CEEE6
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-
-On 3/31/10 1:16 AM, Ramkumar Ramachandra said:
-> Hi,
+On Wed, Mar 31, 2010 at 11:33 PM, David Hagood <david.hagood@gmail.com>=
+ wrote:
+> I am trying to drag where I work into a more modern software developm=
+ent
+> process, but I am getting resistance from one division that has a lar=
+ge
+> amount of history for some projects in a Clearcase repository. If I
+> could show them that we could import all that history into git, it wo=
+uld
+> go a long way to removing that resistance.
 >
-> On Wed, Mar 31, 2010 at 7:58 AM, Yawar Amin <yawar.amin@gmail.com> wrot=
-e:
->  =20
->> Parenthesize the mention of the git protocol to make it clear that
->> `former' and `latter' refer to the standard SSH syntax and the
->> alternate SCP-like syntax, rather than the SSH protocol and git
->> protocol.
->>    =20
+> I've seen programs that purport to import Subversion (which is also
+> good, as they also are using Subversion for other projects....) but d=
+o
+> any such programs exist for Clearcase?
 >
-> I've already submitted a patch to rewrite large portions of the
-> urls.txt page [1]. Kindly submit patches against that.
->  =20
+> I know that, in theory, it would be possible to
+> =C2=A0for all checkins to Clearcase
+> =C2=A0 =C2=A0 check out of Clearcase
+> =C2=A0 =C2=A0 check into git
+> =C2=A0done
+>
+> but that would take an incredibly long time in practice, wouldn't it?
 
-I see there are some extensive changes. Do you have a public repo I
-could pull from and base my patch on? That should make things easier.
+I have no idea whether this is any good, but you might look at:
 
-Thanks,
+   http://www.clearvision-cm.com/clearvision-products/clearcase-and-git=
+-bridge-cc2git/ash_flypage.tpl.html
 
-Yawar
+I am sceptical that the performance could be anything other than
+glacial but I don't have any experience with it...
+
+jon.
 
 
-
---------------enig15B840AFBAED3EC62E1CEEE6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (Darwin)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEAREIAAYFAkuzO+IACgkQqOXNpejCDdSBHgCaA0LAKXvxHTnC3f7KP2BzmJQl
-EKoAoKfu3I7mk1xttUHuSGqjX+6J/gc2
-=A8aa
------END PGP SIGNATURE-----
-
---------------enig15B840AFBAED3EC62E1CEEE6--
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
+>
