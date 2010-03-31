@@ -1,74 +1,117 @@
-From: David Hagood <david.hagood@gmail.com>
-Subject: Import ClearCaase with history?
-Date: Wed, 31 Mar 2010 06:33:09 -0500
-Message-ID: <1270035189.2785.11.camel@chumley>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v3 0/2] git-gui: change to display the combined diff in
+ 	the case of conflicts.
+Date: Wed, 31 Mar 2010 13:39:24 +0200
+Message-ID: <4BB3346C.7070700@viscovery.net>
+References: <2cfc40321003300834w59532e58m13d42acce4f2c5ce@mail.gmail.com>	 <4BB2F7A0.6020702@viscovery.net> <k2p2cfc40321003310412hf4c6d642n4349af3f644829ff@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 31 13:33:30 2010
+Cc: Git Mailing List <git@vger.kernel.org>, spearce@spearce.org
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 31 13:39:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwwAo-0003uZ-88
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 13:33:26 +0200
+	id 1NwwGk-00070L-Fu
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 13:39:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757229Ab0CaLdU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Mar 2010 07:33:20 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:41681 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757078Ab0CaLdT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Mar 2010 07:33:19 -0400
-Received: by gyg13 with SMTP id 13so2743232gyg.19
-        for <git@vger.kernel.org>; Wed, 31 Mar 2010 04:33:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:subject:from:to
-         :content-type:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding;
-        bh=VoXkcdHwh9TopKH7pH0ewAh6x96ik3Wx93FpOMKnofk=;
-        b=jQEXqhHgU30dBAhZkN2zhhwUZ2GI5fNUy5ZuyYuNSj4Qx3WDaITsRedCyEu2kbhU93
-         tiHmyYSVoxlzPmGzBJc2YVrTukFnKqHEG/dDY+fppnQ7wpP3uXM+h7+eP5zpm3W0KFX2
-         DGob7e7/TerHpTll/u0L0uQNkpF4dBD86dHn0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding;
-        b=URbwmLMo+axccFrOUTsP7ZHuGGwiGZZcsDX6hm+vCUSx9NtlQBhmlVRa7JlZ0OUqxM
-         G5CudU91OjuFy0x3uE+EHPxRXKtiUp2Fx1zK5plsZkloSzrnscNt3Rh2AHpD4R9QT0JS
-         Dw+Ts/xcP6jDTCT8Jve8yHGedp4i1FDLiuwcg=
-Received: by 10.101.136.13 with SMTP id o13mr1034362ann.235.1270035193587;
-        Wed, 31 Mar 2010 04:33:13 -0700 (PDT)
-Received: from Deathwish.hagood.sktc.net (7206-2.clr.64.71.120.40.clradsl.sktc.net [64.71.120.40])
-        by mx.google.com with ESMTPS id 22sm6025573iwn.4.2010.03.31.04.33.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 31 Mar 2010 04:33:12 -0700 (PDT)
-Received: from [10.16.0.66] (chumley.hagood.sktc.net [10.16.0.66])
-	by Deathwish.hagood.sktc.net (Postfix) with ESMTP id 1F008C7B8044
-	for <git@vger.kernel.org>; Wed, 31 Mar 2010 06:33:10 -0500 (CDT)
-X-Mailer: Evolution 2.28.1 
+	id S1755839Ab0CaLj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Mar 2010 07:39:29 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:42214 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755484Ab0CaLj2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Mar 2010 07:39:28 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NwwGb-0000W8-9r; Wed, 31 Mar 2010 13:39:25 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 084151660F;
+	Wed, 31 Mar 2010 13:39:24 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
+In-Reply-To: <k2p2cfc40321003310412hf4c6d642n4349af3f644829ff@mail.gmail.com>
+X-Enigmail-Version: 1.0.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143662>
 
-I am trying to drag where I work into a more modern software development
-process, but I am getting resistance from one division that has a large
-amount of history for some projects in a Clearcase repository. If I
-could show them that we could import all that history into git, it would
-go a long way to removing that resistance.
+Am 3/31/2010 13:12, schrieb Jon Seymour:
+>> I looked at the result, but it does not convince me. In my case, I have a
+>> large file that has many changes between the "maint" and "master"
+>> branches. Whenever there are conflicts after merging "maint" to "master",
+>> I see all these changes, and really they *are* uninteresting.
+>>
+> 
+> I think you may have missed the point of my patch.
+> 
+> The successfully merged lines may be uninteresting from the point of
+> deciding what I should *do* but they
+> are highly relevant to the question of what I really, really should *not* do.
 
-I've seen programs that purport to import Subversion (which is also
-good, as they also are using Subversion for other projects....) but do
-any such programs exist for Clearcase?
+How would you decide that if you cannot read the information that is
+presented to you?
 
-I know that, in theory, it would be possible to 
-  for all checkins to Clearcase
-     check out of Clearcase
-     check into git
-  done
+Can you tell without thinking for 10 seconds which of these two changes is
+lost if you choose "Use local version"?
 
-but that would take an incredibly long time in practice, wouldn't it?
+@@@ ... @@@
+  x
+ +foo
+  y
+@@@ ... @@@
+  a
+- bar
+  b
+
+Oh, it's easy for the conflicted part of the diff, which you'll see
+elsewhere as well:
+
+@@@ ... @@@
+  r
+++<<<<<<< HEAD
+ +foo
+++=======
++ bar
+++>>>>>>> some-branch
+  s
+
+Do not forget that in a case (like mine) where the non-condensed diff is
+actually huge, the conflict markers would no exactly be easy to find in
+the diff.
+
+> If there are 100 successfully merged lines from each side of the merge
+> but only 2 conflicting lines, should I
+> 
+> a) pick the remote branch
+> b) pick the local branch
+> c) manually edit the conflicting line (or use a merge tool)
+> 
+> The point of my patch it to make it much more likely that you will pick c).
+
+And I was saying almost the same, namely that it should not only be "much
+more likely" to pick c, but to *always* pick c (by making it the only
+option available).
+
+> In the current state, the GUI doesn't make it clear that either a) or
+> b) is almost certainly a huge mistake.
+
+And therefore I suggest to disable these options.
+
+> Now, you could disable Use Remote and Use Local for all but the very
+> simplest cases - but you don't need it for these
+> cases. Hell, ed would do for these.
+
+Which are those very simplest cases that you are referring to? If you mean
+modify/delete conflicts, then I indeed would like to keep the options for
+them.
+
+That said, your earlier patch that presented the diff against HEAD was not
+bad after all.
+
+-- Hannes
