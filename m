@@ -1,146 +1,89 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 2/2] gitk: add the equivalent of diff --color-words
-Date: Wed, 31 Mar 2010 02:52:49 +0200
-Message-ID: <5850172da86408306dee764013d6a0aeed02e604.1269996525.git.trast@student.ethz.ch>
-References: <cover.1269996525.git.trast@student.ethz.ch>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH 3/3] Add support for GIT_ONE_FILESYSTEM
+Date: Wed, 31 Mar 2010 02:54:24 +0200
+Message-ID: <40aa078e1003301754u3a1e5e9je7bb2aa2dc04f6a1@mail.gmail.com>
+References: <1268855753-25840-1-git-send-email-lars@pixar.com>
+	 <1268855753-25840-4-git-send-email-lars@pixar.com>
+	 <20100328092253.GA17563@coredump.intra.peff.net>
+	 <7vr5n44crq.fsf@alter.siamese.dyndns.org>
+	 <alpine.LFD.2.00.1003301537150.3707@i5.linux-foundation.org>
+	 <20100330230211.GC608@coredump.intra.peff.net>
+	 <alpine.LFD.2.00.1003301610151.3707@i5.linux-foundation.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eelis van der Weegen <eelis@eelis.net>,
-	Paul Mackerras <paulus@samba.org>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 31 02:53:23 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	"Lars R. Damerow" <lars@pixar.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Mar 31 02:54:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwmBO-0006fH-Mx
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 02:53:23 +0200
+	id 1NwmCX-0006wT-QZ
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 02:54:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756042Ab0CaAxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 20:53:18 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:19431 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755338Ab0CaAxP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 20:53:15 -0400
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Wed, 31 Mar
- 2010 02:53:11 +0200
-Received: from localhost.localdomain (84.74.100.59) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Wed, 31 Mar
- 2010 02:52:50 +0200
-X-Mailer: git-send-email 1.7.0.3.522.ga3f6f.dirty
-In-Reply-To: <cover.1269996525.git.trast@student.ethz.ch>
+	id S1756888Ab0CaAy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 20:54:28 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:63733 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756560Ab0CaAy0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 20:54:26 -0400
+Received: by wyb39 with SMTP id 39so1975275wyb.19
+        for <git@vger.kernel.org>; Tue, 30 Mar 2010 17:54:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:received:message-id:subject:from:to:cc:content-type;
+        bh=PUBCN4FTjuG9cjy9Npa5g8evq5wZmo1BpAXNOzdRpG0=;
+        b=m+81GYFgUzg5ut2phgJaBaRACyDE4llNd9wILJOv+D4mQP4Cagub+od0yIuah3vYog
+         iVulBULjYznZyZzllwJ7te3LlPaqKyxTHOIX4PS946bqmCrnkUGGyhjztoEq1NGaKk2U
+         085F0XT8ptZMN1dlA0vqdsqXgoxrlbC/ajaPU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        b=GElCrTkmZEwOqnLOMKFWVnyDBUXOv/btB3Gny/4kUrbKGwUFx9iIloPrH/uNhYkDtB
+         VyOjJ6kx68RVnPoT7r0sppp9D3oOepD9rNrMuo67rh/DMKVYzMuy8VEl93771aeRwVmN
+         /ghYSH47jPiRgPR0sHkjaWw20a0rVKW3GhZwY=
+Received: by 10.216.11.20 with HTTP; Tue, 30 Mar 2010 17:54:24 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1003301610151.3707@i5.linux-foundation.org>
+Received: by 10.216.87.66 with SMTP id x44mr691537wee.96.1269996864773; Tue, 
+	30 Mar 2010 17:54:24 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143630>
 
-Use the newly added 'diff --color-words --porcelain' to teach gitk a
-color-words mode, triggered by a checkbox.
+On Wed, Mar 31, 2010 at 1:12 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>
+>
+> On Tue, 30 Mar 2010, Jeff King wrote:
+>>
+>> Fashionably late, of course. I agree with your reasoning that it is
+>> a more sane default. The only thing that would make me hesitate on it
+>> now is that it is a behavior change. I suspect the group we would be
+>> breaking is small or even zero, though.
+>
+> Well, I have to admit that I'm a _tiny_ bit nervous that some odd OS or
+> filesystem has special magic st_dev rules so that it changes randomly even
+> within a filesystem, but that would be very non-posix (think of the
+> confusion it would cause standard UNIX tools like 'find -xdev' etc), so
+> it's more a worry of "I have no idea what st_dev means on Windows" than
+> anything really solid.
+>
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- gitk-git/gitk |   29 +++++++++++++++++++++++++++--
- 1 files changed, 27 insertions(+), 2 deletions(-)
+st_dev means "Drive number of the disk containing the file (same as
+st_rdev)."[1], and mounting file systems as subdirs of other file
+systems is rare (but possible) on Windows.
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 1f36a3e..ee6e39c 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -2240,6 +2240,9 @@ proc makewindow {} {
-     ${NS}::checkbutton .bleft.mid.ignspace -text [mc "Ignore space change"] \
- 	-command changeignorespace -variable ignorespace
-     pack .bleft.mid.ignspace -side left -padx 5
-+    ${NS}::checkbutton .bleft.mid.worddiff -text [mc "Word diff"] \
-+	-command changeworddiff -variable worddiff
-+    pack .bleft.mid.worddiff -side left -padx 5
-     set ctext .bleft.bottom.ctext
-     text $ctext -background $bgcolor -foreground $fgcolor \
- 	-state disabled -font textfont \
-@@ -7494,11 +7497,16 @@ proc changeignorespace {} {
-     reselectline
- }
- 
-+proc changeworddiff {} {
-+    reselectline
-+}
-+
- proc getblobdiffs {ids} {
-     global blobdifffd diffids env
-     global diffinhdr treediffs
-     global diffcontext
-     global ignorespace
-+    global worddiff
-     global limitdiffs vfilelimit curview
-     global diffencoding targetline diffnparents
-     global git_version
-@@ -7515,6 +7523,9 @@ proc getblobdiffs {ids} {
-     if {$ignorespace} {
- 	append cmd " -w"
-     }
-+    if {$worddiff} {
-+	append cmd " --color-words --porcelain"
-+    }
-     if {$limitdiffs && $vfilelimit($curview) ne {}} {
- 	set cmd [concat $cmd -- $vfilelimit($curview)]
-     }
-@@ -7599,6 +7610,7 @@ proc getblobdiffline {bdf ids} {
-     global ctext_file_names ctext_file_lines
-     global diffinhdr treediffs mergemax diffnparents
-     global diffencoding jump_to_here targetline diffline
-+    global worddiff
- 
-     set nr 0
-     $ctext conf -state normal
-@@ -7727,15 +7739,22 @@ proc getblobdiffline {bdf ids} {
- 	    # parse the prefix - one ' ', '-' or '+' for each parent
- 	    set prefix [string range $line 0 [expr {$diffnparents - 1}]]
- 	    set tag [expr {$diffnparents > 1? "m": "d"}]
-+	    puts "prefix is '$prefix'"
- 	    if {[string trim $prefix " -+"] eq {}} {
- 		# prefix only has " ", "-" and "+" in it: normal diff line
- 		set num [string first "-" $prefix]
-+		if {$worddiff} {
-+		    set line [string range $line 1 end]
-+		}
- 		if {$num >= 0} {
- 		    # removed line, first parent with line is $num
- 		    if {$num >= $mergemax} {
- 			set num "max"
- 		    }
--		    $ctext insert end "$line\n" $tag$num
-+		    $ctext insert end "$line" $tag$num
-+		    if {!$worddiff} {
-+			$ctext insert end "\n" $tag$num
-+		    }
- 		} else {
- 		    set tags {}
- 		    if {[string first "+" $prefix] >= 0} {
-@@ -7759,8 +7778,13 @@ proc getblobdiffline {bdf ids} {
- 			    incr diffline
- 			}
- 		    }
--		    $ctext insert end "$line\n" $tags
-+		    $ctext insert end "$line" $tags
-+		    if {!$worddiff} {
-+			$ctext insert end "\n" $tags
-+		    }
- 		}
-+	    } elseif {$worddiff && $prefix eq "~"} {
-+		$ctext insert end "\n" {}
- 	    } else {
- 		# "\ No newline at end of file",
- 		# or something else we don't recognize
-@@ -11379,6 +11403,7 @@ if {[tk windowingsystem] eq "win32"} {
- set diffcolors {red "#00a000" blue}
- set diffcontext 3
- set ignorespace 0
-+set worddiff 0
- set markbgcolor "#e0e0ff"
- 
- set circlecolors {white blue gray blue blue}
+However, in our (f)stat implementation, st_dev means 0 -- but this
+might be possible to improve on.
+
+[1]: http://msdn.microsoft.com/en-us/library/14h5k7ff(VS.71).aspx
+
 -- 
-1.7.0.3.522.ga3f6f.dirty
+Erik "kusma" Faye-Lund
