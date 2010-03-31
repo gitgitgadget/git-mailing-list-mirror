@@ -1,114 +1,77 @@
-From: Eli Barzilay <eli@barzilay.org>
-Subject: Re: Carrying over attributes when moving files
-Date: Tue, 30 Mar 2010 23:30:25 -0400
-Message-ID: <19378.49617.251787.103542@winooski.ccs.neu.edu>
-References: <m3iq8jn3ar.fsf@winooski.ccs.neu.edu>
-	<20100328014208.GA23015@progeny.tock>
-	<19376.50971.397375.810974@winooski.ccs.neu.edu>
-	<19376.53419.640007.930897@winooski.ccs.neu.edu>
-	<20100329231501.GA28194@progeny.tock>
-	<19377.33747.838003.360864@winooski.ccs.neu.edu>
-	<20100330213049.GB11192@progeny.tock>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] Clarification for the command "git checkout <branch>"
+Date: Wed, 31 Mar 2010 09:28:20 +0530
+Message-ID: <p2nf3271551003302058ve6b54731h1bea42b5c6605928@mail.gmail.com>
+References: <4B67227A.7030908@web.de> <4BA104C7.5020207@web.de> 
+	<32541b131003170944w7a0215frcace205f32d313bf@mail.gmail.com> 
+	<7vaau6q18q.fsf@alter.siamese.dyndns.org> <4BA1FC39.10300@web.de> 
+	<32541b131003180936x746dad06k386788d3cb6fcdeb@mail.gmail.com> 
+	<b4087cc51003181019r4408953bxcd5049c9521b8173@mail.gmail.com> 
+	<4BA3329E.6050304@web.de> <4BB21F6D.7070804@web.de> <7vd3ylv4oq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 31 05:30:33 2010
+Cc: Markus Elfring <Markus.Elfring@web.de>,
+	Michael Witten <mfwitten@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 31 05:59:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwodU-0000ns-Mb
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 05:30:33 +0200
+	id 1Nwp51-0007s6-6D
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 05:58:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755213Ab0CaDa1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 23:30:27 -0400
-Received: from winooski.ccs.neu.edu ([129.10.115.117]:36312 "EHLO barzilay.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753850Ab0CaDa0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 23:30:26 -0400
-Received: from eli by barzilay.org with local (Exim 4.66)
-	(envelope-from <eli@barzilay.org>)
-	id 1NwodN-0000HT-8X; Tue, 30 Mar 2010 23:30:25 -0400
-In-Reply-To: <20100330213049.GB11192@progeny.tock>
-X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
+	id S1755958Ab0CaD6n convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 23:58:43 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:52237 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755570Ab0CaD6m convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 23:58:42 -0400
+Received: by pwi5 with SMTP id 5so8429883pwi.19
+        for <git@vger.kernel.org>; Tue, 30 Mar 2010 20:58:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NLu36LzUQe/UV58PolThij49aaR5LbiYxNetbJ0hsCM=;
+        b=Zdrkjn225MPF1mSHELlz7rZuRzm1fliTjsSYVNZzwt77M3nLTRspYq457HFxSeTQYH
+         FJ6xNyjtff5xMxGcQuAt53TpJpPPMU8Y3Ea+9adG5V/yIk1eoIoEADM3FcNnLXaulrQq
+         3Jw6I/XAK2pevshdL0hS23Q8LVgZxflFzVN68=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=KznCDwpiOZJ57h6xyw1WawfWLNegLzCyBiU2rrSywXKxlSVlIANjSFMuLkQ1BYqp+Y
+         260+Nhl4moQrsSZMWsGSmIATuIiLpv5J12BpOEZXC9cSuSDIiQT7Top8a9rQrm9JZAcy
+         +xUDQ1KpqOAjk/SNf5zb8q7g+mWpTbb3hXi3A=
+Received: by 10.142.109.19 with HTTP; Tue, 30 Mar 2010 20:58:20 -0700 (PDT)
+In-Reply-To: <7vd3ylv4oq.fsf@alter.siamese.dyndns.org>
+Received: by 10.142.208.2 with SMTP id f2mr2236409wfg.208.1270007920670; Tue, 
+	30 Mar 2010 20:58:40 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143644>
 
-On Mar 30, Jonathan Nieder wrote:
-> Eli Barzilay wrote:
->=20
-> > There are a number of technicalities that make git attributes a
-> > poor substitute for svn properties -- mainly
-> [...]
-> > and the fact that they're not tracked with the files (as in svn,
-> > where moving a file somewhere will move its properties with it).
->=20
-> It would be great to improve this.
->=20
-> Consider the following directory hierarchy.
->=20
-> 	old-files/
-> 		.gitattributes
-> 		some-file.html
-> 		other-file.html
-> 	new-files/
-> 		unrelated-file.html
->=20
-> .gitattributes specifies that old HTML files use a CRLF line ending.
->=20
-> 	*.html crlf
->=20
-> What would you expect the following commands to do?
->=20
-> 	git mv old-files/some-file.html new-files/
-> 	git commit
->=20
-> How about these?
->=20
-> 	mv old-files/some-file.html new-files/
-> 	git add new-files/some-file.html
-> 	git commit -a
->=20
-> I don=E2=80=99t think there=E2=80=99s any fundamental reason this has=
-n=E2=80=99t been taken
-> care of; it=E2=80=99s just that nobody has done it yet.
+Hi,
 
-There's of course a whole bunch of similar issues, like having
+On Wed, Mar 31, 2010 at 3:43 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> +such a case, you may want retry the command after recording the loca=
+l
+> +changes (1) in a temporary commit on the current branch, or (2) by u=
+sing
+> +"git stash". =A0Alternatively, use "-m" option to force a merge.
 
-  a/.gitattribute specifies: b/c foo=3Dbar
-  a/b/.gitattribute specifies: c foo=3Dbar
+Couple of things: Is (1) really an option? The user will have to go
+through documentation on rewriting history, which I find completely
+unnecessary to just switch branches. Second, you might want to mention
+a "git stash apply" and include a reference to git-stash
+documentation.
 
-or even worse -- when the two values are different.
-
-In any case, the way that attributes are specified (which is flexible
-and convenient, fwiw) is part of what makes them a bad substitution
-for subversion properties...  Making attributes tracked with their
-files would mean some change to how this specification is done.  For
-example, it could be that attributes that are in (tracked)
-=2Egitattribute files nad that have no "/" and no glob characters in th=
-e
-file names are the only ones that get tracked.  In short -- only
-simple names of immediate files and/or directories.  Having such a
-convention would also allow some equivalent of `svn propset' since
-there's a canonical place to add them.
-
-And this could be taken further -- for example, a command that will
-crawl a tree and find "non-canonicalized" attributes, or will turn
-them into such.  Another example would be to take something like
-"*.html crlf" as meaning that new *.html files should get the crlf
-attribute, etc.  But thinking about the kind of work that all of this
-would imply, it seems to me that doing the svn thing and making the
-attributes part of the content (ie, make them a part of the blob
-objects somehow) makes more sense.  But this is a big change too...
-
---=20
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay=
-:
-                    http://barzilay.org/                   Maze is Life=
-!
+-- Ram
