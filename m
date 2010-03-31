@@ -1,92 +1,105 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH v3 0/2] git-gui: change to display the combined diff in 
-	the case of conflicts.
-Date: Thu, 1 Apr 2010 07:52:44 +1200
-Message-ID: <v2z2cfc40321003311252s86d44ad7l540559eafb0636d4@mail.gmail.com>
-References: <2cfc40321003300834w59532e58m13d42acce4f2c5ce@mail.gmail.com>
-	 <4BB2F7A0.6020702@viscovery.net>
-	 <k2p2cfc40321003310412hf4c6d642n4349af3f644829ff@mail.gmail.com>
-	 <4BB3346C.7070700@viscovery.net>
-	 <t2u2cfc40321003310523u8fda9baeo883d2e0b3c6fa807@mail.gmail.com>
-	 <4BB3534E.3080803@viscovery.net>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: git branch -a prefixes origin/ branches with remotes/
+Date: Wed, 31 Mar 2010 17:59:49 -0400
+Message-ID: <k2r76718491003311459u4bbaeb4ax5b2e550acdd14c88@mail.gmail.com>
+References: <18137.1270056387@relay.known.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Wed Mar 31 21:53:11 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: layer <layer@known.net>
+X-From: git-owner@vger.kernel.org Thu Apr 01 00:00:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nx3yP-0004Mo-1A
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 21:53:09 +0200
+	id 1Nx5xH-0001TL-Iw
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Apr 2010 00:00:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757562Ab0CaTwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Mar 2010 15:52:46 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:56329 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757482Ab0CaTwp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Mar 2010 15:52:45 -0400
-Received: by pwi5 with SMTP id 5so488239pwi.19
-        for <git@vger.kernel.org>; Wed, 31 Mar 2010 12:52:44 -0700 (PDT)
+	id S1755007Ab0CaV76 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Mar 2010 17:59:58 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:50754 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753518Ab0CaV75 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Mar 2010 17:59:57 -0400
+Received: by gwaa18 with SMTP id a18so319904gwa.19
+        for <git@vger.kernel.org>; Wed, 31 Mar 2010 14:59:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:content-type;
-        bh=X3fVWMiDZDVq7wXGWOSdZM6kPOc6mFivV+1fTE36OuY=;
-        b=Lv7bn4iWux5AsmGmR88ZuQr3gHCP8vIddWoo+i6qo8ptzrRRoywt6/epO4y4ykSMj9
-         veNzCBGvT3PCIIs+otQaaxiAS744SVrM35FWHkUJEohrz1yx4L2zLq1clIF6mQ1SzG9x
-         bGLGQ3rAB6tUo6cv0FWbCkWy/yPkbGHN6H78U=
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=dU3bvzA738kxsgW7zaYFtvn46BGmxVsoBMazzy6qjxM=;
+        b=mtWpwn4NUiRH84gIgjYAqGvC7f1LEyCir87TjtUEPalAnqNNm2FJa9W7z510r7Uelq
+         kn1+lROUEYHqiXAT6Ru6BMqlX8CMcHQnEcd07KILwhoC4lEhbYaQ1TQHmv7671zcBgLU
+         lEFpVaCjyaO7EvNuSdhnCqN/6Iei9g6/f64GM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=lBqBDY1jgodb+5cUHRkniOz6SkynMkzzTtYBL3sF5CRGpQHNzC9f6D30Zu/l6aQoKQ
-         cNVCI/iVDR++xfik4iYjj5t1XfAficJDCpYxGwE1pzJ6HqcAjj94/7FhLzQOIP8jloOb
-         oeimtB//P8XenDRIkc3z235PjSbNfQdE4+JzU=
-Received: by 10.114.13.5 with HTTP; Wed, 31 Mar 2010 12:52:44 -0700 (PDT)
-In-Reply-To: <4BB3534E.3080803@viscovery.net>
-Received: by 10.114.164.19 with SMTP id m19mr323435wae.152.1270065164523; Wed, 
-	31 Mar 2010 12:52:44 -0700 (PDT)
+         :cc:content-type:content-transfer-encoding;
+        b=CqRajd8I7GC8HeaQc4dud1ILxoO3YkjEKlZL74UlkpCdZOX8aRboGf22crThY/bPa3
+         FVrz831Pg8ZPVH83lde9ZmAnZJJ3foRHYEankoO3dYsUtGTSnnZI6QvM0Y9ZHNDMIXqW
+         30mou8Xrz+StEi7yRv27hSruMf2V68cN4dcn8=
+Received: by 10.231.19.131 with HTTP; Wed, 31 Mar 2010 14:59:49 -0700 (PDT)
+In-Reply-To: <18137.1270056387@relay.known.net>
+Received: by 10.101.170.33 with SMTP id x33mr411768ano.139.1270072789796; Wed, 
+	31 Mar 2010 14:59:49 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143694>
 
-| apologies - missed the list
+On Wed, Mar 31, 2010 at 1:26 PM, layer <layer@known.net> wrote:
+> In git 1.6.6.1 & 1.6.3.3, "git branch -a" output is like this
+>
+> * master
+> =C2=A0remotes/origin/foo
+> =C2=A0...
+>
+> instead of like this for 1.6.1.3
+>
+> * master
+> =C2=A0origin/foo
+> =C2=A0...
+>
+> Is this a feature or bug? =C2=A0I searched the mailing list archives =
+and
+> announcements couldn't find any reference to this change.
 
-I agree that removing the options is better than preserving the
-current behaviour,
+=46eature. Introduced in 1.6.3:
 
-My argument is simply this:
+http://article.gmane.org/gmane.comp.version-control.git/116404
 
-That it is better to inform a user that an action is potentially
-dangerous than to "protect" them from
-a "scaring" amount of diff -c output by presenting a conflict-only
-summary. You claimed this output was "uninteresting" and hence should
-be suppressed, my point was that supresssing output because it was
-"uninteresting" is a dangerous thing to do because it is relevant to a
-decision not to act.
+See "builtin-branch: improve output when displaying remote branches"
 
-My preference for options are:
+> This is important to me because I use the output of "git branch -a" i=
+n
+> scripts.
+>
+> I should add that the scripts are merely testing for the existence of
+> remote tracking branches in the local repo.  If there's a better way
+> to do this, I'm game.  Thanks.
 
-* preserve the actions, but provide more information to the user
-* remove the actions
-* preserve the actions, make the safer output the default and enable
-the simpler, more dangerous output as an option
-* preserve the actions, make the current output the default and enable
-the safer, less dangerous output an option.
-* do nothing
+git branch is a so-called porcelain command, and as you've now been
+bitten by, the output of porcelain's is subject to change.
 
-We disagree about the relative order of options 1 and 2. But
-seriously, if you agree the actions are dangerous I can't see how you
-can argue that is preferable to suppress the scary amount of diff -c
-output.
+You probably want git for-each-ref.
 
-I would imagine that a change that proposed to remove the actions,
-without an option to enable them, would encounter stiff resistance
-from the list. However, perhaps the list can respond?
+Aside, the only list of plumbing vs porcelain commands I'm aware of is
+in the bash-completion script under contrib. See
+__git_list_porcelain_commands here:
 
-jon.
+http://git.kernel.org/?p=3Dgit/git.git;a=3Dblob;f=3Dcontrib/completion/=
+git-completion.bash
+
+Those are generally commands whose output you do not want to be
+parsing. All the other git commands installed under git-core are
+mostly plumbing upon which you can build additional functionality.
+
+(Note to git list: there should be a man page that has a single-line
+summary of each command and states whether the command is plumbing or
+porcelain. Maybe there is and I just don't know it.)
+
+j.
