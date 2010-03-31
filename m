@@ -1,77 +1,102 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] Clarification for the command "git checkout <branch>"
-Date: Wed, 31 Mar 2010 09:28:20 +0530
-Message-ID: <p2nf3271551003302058ve6b54731h1bea42b5c6605928@mail.gmail.com>
-References: <4B67227A.7030908@web.de> <4BA104C7.5020207@web.de> 
-	<32541b131003170944w7a0215frcace205f32d313bf@mail.gmail.com> 
-	<7vaau6q18q.fsf@alter.siamese.dyndns.org> <4BA1FC39.10300@web.de> 
-	<32541b131003180936x746dad06k386788d3cb6fcdeb@mail.gmail.com> 
-	<b4087cc51003181019r4408953bxcd5049c9521b8173@mail.gmail.com> 
-	<4BA3329E.6050304@web.de> <4BB21F6D.7070804@web.de> <7vd3ylv4oq.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Carrying over attributes when moving files
+Date: Tue, 30 Mar 2010 21:05:36 -0700
+Message-ID: <7vzl1pp23z.fsf@alter.siamese.dyndns.org>
+References: <m3iq8jn3ar.fsf@winooski.ccs.neu.edu>
+ <20100328014208.GA23015@progeny.tock>
+ <19376.50971.397375.810974@winooski.ccs.neu.edu>
+ <19376.53419.640007.930897@winooski.ccs.neu.edu>
+ <20100329231501.GA28194@progeny.tock>
+ <19377.33747.838003.360864@winooski.ccs.neu.edu>
+ <20100330213049.GB11192@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Markus Elfring <Markus.Elfring@web.de>,
-	Michael Witten <mfwitten@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 31 05:59:02 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Eli Barzilay <eli@barzilay.org>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 31 06:05:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nwp51-0007s6-6D
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 05:58:59 +0200
+	id 1NwpBj-0001DG-6A
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 06:05:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755958Ab0CaD6n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Mar 2010 23:58:43 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:52237 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755570Ab0CaD6m convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Mar 2010 23:58:42 -0400
-Received: by pwi5 with SMTP id 5so8429883pwi.19
-        for <git@vger.kernel.org>; Tue, 30 Mar 2010 20:58:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NLu36LzUQe/UV58PolThij49aaR5LbiYxNetbJ0hsCM=;
-        b=Zdrkjn225MPF1mSHELlz7rZuRzm1fliTjsSYVNZzwt77M3nLTRspYq457HFxSeTQYH
-         FJ6xNyjtff5xMxGcQuAt53TpJpPPMU8Y3Ea+9adG5V/yIk1eoIoEADM3FcNnLXaulrQq
-         3Jw6I/XAK2pevshdL0hS23Q8LVgZxflFzVN68=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=KznCDwpiOZJ57h6xyw1WawfWLNegLzCyBiU2rrSywXKxlSVlIANjSFMuLkQ1BYqp+Y
-         260+Nhl4moQrsSZMWsGSmIATuIiLpv5J12BpOEZXC9cSuSDIiQT7Top8a9rQrm9JZAcy
-         +xUDQ1KpqOAjk/SNf5zb8q7g+mWpTbb3hXi3A=
-Received: by 10.142.109.19 with HTTP; Tue, 30 Mar 2010 20:58:20 -0700 (PDT)
-In-Reply-To: <7vd3ylv4oq.fsf@alter.siamese.dyndns.org>
-Received: by 10.142.208.2 with SMTP id f2mr2236409wfg.208.1270007920670; Tue, 
-	30 Mar 2010 20:58:40 -0700 (PDT)
+	id S1753986Ab0CaEFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Mar 2010 00:05:50 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38097 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753587Ab0CaEFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Mar 2010 00:05:49 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F4E3A6E9B;
+	Wed, 31 Mar 2010 00:05:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sMYEql9vVI/zCCt8WbBTX28RrkY=; b=DxO5xS
+	F3l8iXU8UTFcAQKQerfqBg4W6gZHJvNUyl9n29xGhq9kkpusZ88p97zoZJyJzmmz
+	hGnZkda5qLS5m6yHyIoVPlPFXNUClA6MtvQQZimSF07L7Q4/yL1SsAqN4+VjD6sv
+	JGUQVwj/tf+tXuRYyvhU279HKvzSh+OTWi8DQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Tm6XQLVN65mFWXR/ZiGwG7L4MyapWjB1
+	OvanVnASIWG8NljoJxeLja78qlTuLMNt66I56XmLGK5a+QytLTYzIfLqd7K5GyfP
+	L/Vm3/tL3mBicgjhOhvrytl8qr7bguMl+ATgT9tY6hWKuguYM764lLPfYxqk+q2Q
+	EZ9fUcCZ5T4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C5EBA6E98;
+	Wed, 31 Mar 2010 00:05:42 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 668C1A6E95; Wed, 31 Mar
+ 2010 00:05:38 -0400 (EDT)
+In-Reply-To: <20100330213049.GB11192@progeny.tock> (Jonathan Nieder's message
+ of "Tue\, 30 Mar 2010 16\:30\:49 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: AC7F9F60-3C7A-11DF-8E89-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143645>
 
-Hi,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-On Wed, Mar 31, 2010 at 3:43 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> +such a case, you may want retry the command after recording the loca=
-l
-> +changes (1) in a temporary commit on the current branch, or (2) by u=
-sing
-> +"git stash". =A0Alternatively, use "-m" option to force a merge.
+> Consider the following directory hierarchy.
+>
+> 	old-files/
+> 		.gitattributes
+> 		some-file.html
+> 		other-file.html
+> 	new-files/
+> 		unrelated-file.html
+>
+> .gitattributes specifies that old HTML files use a CRLF line ending.
+>
+> 	*.html crlf
+>
+> What would you expect the following commands to do?
+>
+> 	git mv old-files/some-file.html new-files/
+> 	git commit
 
-Couple of things: Is (1) really an option? The user will have to go
-through documentation on rewriting history, which I find completely
-unnecessary to just switch branches. Second, you might want to mention
-a "git stash apply" and include a reference to git-stash
-documentation.
+I know what you are getting at, but I think it cuts both ways.
 
--- Ram
+I can well imagine that the build structure where "make && make install"
+will go to old-files and new-files directories and install the contents
+overlayed in the same destination, and .gitattributes may be being used as
+a way to "fix" some aspect of "oldness" in old-files/ files until the
+sources are fixed.  So an equally valid work sequence might be:
+
+ 	git mv old-files/some-file.html new-files/
+	edit new-files/some-file.html
+        git add new-files/some-file.html
+ 	git commit
+
+in which case adding a new "some-file.html crlf" entry to .gitattributes
+in new-files/ directory would be just _wrong_.
+
+So I am not opposed to a mechanism to _let_ users makes a copy of an entry
+that covers (or used to cover) one path to apply to another path that was
+not covered by it, but doing it unconditionally would not be such a good
+idea.
