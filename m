@@ -1,130 +1,72 @@
-From: Jan =?UTF-8?B?U3TEmXBpZcWE?= <jan@stepien.cc>
-Subject: Re: [PATCH] gitweb: The "Owner" column can be hidden
-Date: Wed, 31 Mar 2010 15:16:48 +0200
-Message-ID: <20100331151648.dbd8bd45.jan@stepien.cc>
-References: <1270026409-29543-1-git-send-email-jstepien@users.sourceforge.net>
-	<m3eij0iy5m.fsf@localhost.localdomain>
+From: jussi.sirpoma@sks.fi
+Subject: Dealing with mac linefeeds in git repository
+Date: Wed, 31 Mar 2010 16:07:40 +0300
+Message-ID: <OF7E748769.D4E7BC90-ONC22576F7.00483B3D-C22576F7.00484D0A@sks.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 31 15:25:17 2010
+Content-Type: text/plain; charset="US-ASCII"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 31 15:27:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nwxuz-000668-Mf
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 15:25:14 +0200
+	id 1Nwxwx-00075A-RR
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 15:27:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933291Ab0CaNZF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Mar 2010 09:25:05 -0400
-Received: from r245-52.iq.pl ([86.111.245.52]:35113 "EHLO stepien.cc"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757451Ab0CaNZE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Mar 2010 09:25:04 -0400
-X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Wed, 31 Mar 2010 09:25:03 EDT
-Received: from localhost.localdomain (chello089078159032.chello.pl [89.78.159.32])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by stepien.cc (Postfix) with ESMTPSA id 2FC4C2A10358;
-	Wed, 31 Mar 2010 15:16:55 +0200 (CEST)
-In-Reply-To: <m3eij0iy5m.fsf@localhost.localdomain>
-X-Mailer: Sylpheed 3.0.1 (GTK+ 2.18.9; i686-pc-linux-gnu)
+	id S933306Ab0CaN1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Mar 2010 09:27:08 -0400
+Received: from sksci1.sks.fi ([193.208.185.25]:41623 "EHLO msg.sks.fi"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1757686Ab0CaN1H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Mar 2010 09:27:07 -0400
+X-Greylist: delayed 1040 seconds by postgrey-1.27 at vger.kernel.org; Wed, 31 Mar 2010 09:27:06 EDT
+Received: from sksinfo.sks.fi ([10.1.2.231])
+	by msg.sks.fi (8.14.3/8.14.3) with ESMTP id o2VEmXX6022269
+	for <git@vger.kernel.org>; Wed, 31 Mar 2010 17:48:33 +0300
+X-KeepSent: 7E748769:D4E7BC90-C22576F7:00483B3D;
+ type=4; name=$KeepSent
+X-Mailer: Lotus Notes Release 8.0.2 August 07, 2008
+X-MIMETrack: Serialize by Router on srvdomino1/SKS(Release 8.0.2FP1|January 12, 2009) at
+ 31.03.2010 16:07:39,
+	Serialize complete at 31.03.2010 16:07:39
+X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.8161:2.4.5,1.2.40,4.0.166
+ definitions=2010-03-31_12:2010-02-06,2010-03-31,2010-03-30 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 phishscore=0
+ bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ engine=5.0.0-0908210000 definitions=main-1003310085
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143673>
 
-On Wed, 31 Mar 2010 03:28:24 -0700 (PDT)
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Jan St=C4=99pie=C5=84  <jstepien@users.sourceforge.net> writes:
->=20
-> > This commit adds $show_owner_column configuration variable which al=
-lows
-> > to hide the project list "Owner" column if desired.
-> >
->=20
-> This commit message is a bit lacking, in that it does not describe
-> *why* one would want to hide "Owner" column in projects list page.
-> It is not described either why "Owner" column is unique among all
-> other columns, in that it is the only column that can be hidden.
->=20
-> Besides for completeness you might want to hide "Owner" row in projec=
-t
-> summary page.
->=20
+I am running cygwin git version 1.6.4.2.
 
-The reason why I think gitweb should allow hiding the "Owner" row are
-situations when its used for displaying a single person's repositories.
-In such situation repeating the owner's name in each row may be
-unnecessary in one's point of view and an option for hiding the whole
-column could be a solution.
+Some of the source code for our projects is encoded in mac linefeeds due 
+to proprietary
+software platform. My current solution is to flag those files tu use no 
+linefeed conversion and
+to use separate diff program by having this in .gitattributes:
 
-> > Signed-off-by: Jan St=C4=99pie=C5=84 <jstepien@users.sourceforge.ne=
-t>
-> > ---
-> >  gitweb/gitweb.perl |    9 ++++++---
-> >  1 files changed, 6 insertions(+), 3 deletions(-)
->=20
-> While "Gitweb config file variables" section in gitweb/README does no=
-t
-> need to include _all_ gitweb configuration variables, you should thin=
-g
-> about it whether to include description of '$show_owner_column' (or
-> just '$show_owner') in gitweb/README, and whether to include note
-> about this variable in "Projects list file format" in this file.
->=20
+*.BA -crlf diff=winmerge
 
-I agree with you on adding it to the "Gitweb config file variables"
-section. On the other hand, I think that mentioning it in "Projects
-list file format" isn't necessary unless '$show_owner' would affect the
-way the projects list file would be parsed.
+I also have these crlf settings enabled:
 
-> >=20
-> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> > index a2d2283..95f7f06 100755
-> > --- a/gitweb/gitweb.perl
-> > +++ b/gitweb/gitweb.perl
-> > @@ -160,6 +160,9 @@ our @diff_opts =3D ('-M'); # taken from git_com=
-mit
-> >  # the gitweb domain.
-> >  our $prevent_xss =3D 0;
-> > =20
-> > +# presense of the projects list "Owner" column
->=20
-> I'd rather have here
->=20
-> +# If false, hide "Owner" column on projects list page, and "Owner" r=
-ow
-> +# in the project summary page.
->=20
+core.autocrlf=true
+core.safecrlf=true
 
-Yes, that sounds better.
+This solution works, but is not optimal as git cannot follow the changed 
+lines, produce
+annotations or diffs. Now I am wondering if I could make git work with a 
+little different 
+configuration:
 
-> > +our $show_owner_column =3D 1;
->=20
-> Perhaps it should be '$show_owner', or '$hide_owner'.
->=20
+* The *.BA files with mac linefeeds would be stored with normal linux 
+linefeeds
+* The files would be converted on checkout to mac linefeeds the same way 
+as core.autcrlf works
 
-Agreed. Given that displaying owner information is the default behaviou=
-r
-I guess that "$hide_owner" or "$omit_owner" will be a better name for
-it.
+Is this doable or even a good approach?
 
-> BTW. if it would hide owner everywhere, you might want to skip
-> generating / reading projects owners.
->=20
-
-Broadening the scope of this variable and hiding owner information also
-on the project info page is more than I initially thought of, but it
-seems like a good idea. In this case I'll add skipping owner generation
-to the next version of the patch.
-
-Thanks for comments!
-
-Cheers,
---=20
-Jan St=C4=99pie=C5=84 <jan@stepien.cc>
+- Jussi Sirpoma
