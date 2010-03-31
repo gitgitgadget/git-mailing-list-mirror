@@ -1,81 +1,89 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: Re: sadly requesting help
-Date: Wed, 31 Mar 2010 10:53:47 +0200
-Organization: RFC 1149 (see http://www.rfc1149.net/)
-Message-ID: <2010-03-31-10-53-47+trackit+sam@rfc1149.net>
-References: <eaacf13c1003301543r45bb18b2n1d10d209f01e3326@mail.gmail.com>
+From: =?UTF-8?q?Jan=20St=C4=99pie=C5=84?= 
+	<jstepien@users.sourceforge.net>
+Subject: [PATCH] gitweb: The "Owner" column can be hidden
+Date: Wed, 31 Mar 2010 11:06:49 +0200
+Message-ID: <1270026409-29543-1-git-send-email-jstepien@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Raymond Auge <raymond.auge@liferay.com>
-X-From: git-owner@vger.kernel.org Wed Mar 31 10:53:58 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Jan=20St=C4=99pie=C5=84?= 
+	<jstepien@users.sourceforge.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 31 11:15:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwtgS-0006yp-Jv
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 10:53:56 +0200
+	id 1Nwu1L-00078o-Qo
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 11:15:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932935Ab0CaIxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Mar 2010 04:53:51 -0400
-Received: from zoidberg.rfc1149.net ([91.121.19.179]:40293 "EHLO
-	zoidberg.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932881Ab0CaIxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Mar 2010 04:53:50 -0400
-Received: from localhost (unknown [IPv6:2001:6f8:37a:2:211:2fff:fe8a:af74])
-	by zoidberg.rfc1149.net (Postfix) with ESMTP id 395D46F69;
-	Wed, 31 Mar 2010 10:53:48 +0200 (CEST)
-In-Reply-To: <eaacf13c1003301543r45bb18b2n1d10d209f01e3326@mail.gmail.com>
-	(Raymond Auge's message of "Tue, 30 Mar 2010 18:43:21 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-WWW: http://www.rfc1149.net/sam
-X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
-X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
+	id S932954Ab0CaJPG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Mar 2010 05:15:06 -0400
+Received: from r245-52.iq.pl ([86.111.245.52]:39162 "EHLO stepien.cc"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757209Ab0CaJPF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Mar 2010 05:15:05 -0400
+X-Greylist: delayed 473 seconds by postgrey-1.27 at vger.kernel.org; Wed, 31 Mar 2010 05:15:04 EDT
+Received: from localhost.localdomain (chello089078159032.chello.pl [89.78.159.32])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by stepien.cc (Postfix) with ESMTPSA id 598F52A10EB7;
+	Wed, 31 Mar 2010 11:07:04 +0200 (CEST)
+X-Mailer: git-send-email 1.7.0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143654>
 
->>>>> "Raymond" == Raymond Auge <raymond.auge@liferay.com> writes:
+This commit adds $show_owner_column configuration variable which allows
+to hide the project list "Owner" column if desired.
 
-Raymond> We had a colo failure over the last day or so and lost the last
-Raymond> 50-60 commits on our subversion repository (apparently, our
-Raymond> backup strategy was not granular enough).
+Signed-off-by: Jan St=C4=99pie=C5=84 <jstepien@users.sourceforge.net>
+---
+ gitweb/gitweb.perl |    9 ++++++---
+ 1 files changed, 6 insertions(+), 3 deletions(-)
 
-Raymond> Luckily I use Git locally using the git-svn conduit.
-
-Raymond> I need to rewind my repository to an earlier revision and I'm
-Raymond> hoping not to have to rebuild my local repo as the project is
-Raymond> huge and takes me at least 16 hours to checkout using git-svn.
-
-I know this does not answer your question, but why not use this incident
-to switch to git, or at least to seriously investigate a possible future
-switch to git?
-
-As you probably know, with git it would have been really easy to restore
-the full repository if at least one person does have a local copy of
-each branch (typically, the last person to have committed on a branch is
-likely to still have a full copy of the branch). And backups can be done
-simply by running "git fetch" from a secondary machine at regular
-intervals.
-
-Success story: the company I worked for in 2008 had a similar incident a
-few months after we switched from svn to git. Not only were we able to
-restore a full repository copy, but also we were able to work in the
-meantime by setting one of the developers machine as the central
-repository, and development work was not disrupted for more than one
-hour (we had to educate some developers who were not familiar with
-setting remotes other than "origin" and pushing to them). We ran this
-degraded setting for a few days (degraded because we lost continuous
-testing and packaging capabilities that ran on the main server, and
-developers had to run the test themselves by issuing frequent "make
-check" commands), but it was certainly not considered a major failure.
-
-In four words: git saved the day.
-
-  Sam
--- 
-Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a2d2283..95f7f06 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -160,6 +160,9 @@ our @diff_opts =3D ('-M'); # taken from git_commit
+ # the gitweb domain.
+ our $prevent_xss =3D 0;
+=20
++# presense of the projects list "Owner" column
++our $show_owner_column =3D 1;
++
+ # information about snapshot formats that gitweb is capable of serving
+ our %known_snapshot_formats =3D (
+ 	# name =3D> {
+@@ -4430,7 +4433,7 @@ sub git_project_list_body {
+ 		}
+ 		print_sort_th('project', $order, 'Project');
+ 		print_sort_th('descr', $order, 'Description');
+-		print_sort_th('owner', $order, 'Owner');
++		print_sort_th('owner', $order, 'Owner') if $show_owner_column;
+ 		print_sort_th('age', $order, 'Last Change');
+ 		print "<th></th>\n" . # for links
+ 		      "</tr>\n";
+@@ -4469,8 +4472,8 @@ sub git_project_list_body {
+ 		                        -class =3D> "list"}, esc_html($pr->{'path'})=
+) . "</td>\n" .
+ 		      "<td>" . $cgi->a({-href =3D> href(project=3D>$pr->{'path'}, ac=
+tion=3D>"summary"),
+ 		                        -class =3D> "list", -title =3D> $pr->{'descr=
+_long'}},
+-		                        esc_html($pr->{'descr'})) . "</td>\n" .
+-		      "<td><i>" . chop_and_escape_str($pr->{'owner'}, 15) . "</i></t=
+d>\n";
++		                        esc_html($pr->{'descr'})) . "</td>\n";
++		print "<td><i>" . chop_and_escape_str($pr->{'owner'}, 15) .  "</i></=
+td>\n" if $show_owner_column;
+ 		print "<td class=3D\"". age_class($pr->{'age'}) . "\">" .
+ 		      (defined $pr->{'age_string'} ? $pr->{'age_string'} : "No commi=
+ts") . "</td>\n" .
+ 		      "<td class=3D\"link\">" .
+--=20
+1.7.0.3
