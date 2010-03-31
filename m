@@ -1,143 +1,105 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v4] gitk: Use git-difftool for external diffs
-Date: Tue, 30 Mar 2010 19:09:59 -0700
-Message-ID: <1270001399-26031-1-git-send-email-davvid@gmail.com>
-References: <201003281259.06947.markus.heidelberg@web.de>
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Markus Heidelberg <markus.heidelberg@web.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Mar 31 04:16:47 2010
+From: Yawar Amin <yawar.amin@gmail.com>
+Subject: [PATCH] Documentation: clarify grammar
+Date: Tue, 30 Mar 2010 22:28:27 -0400
+Message-ID: <4BB2B34B.1080508@gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------enig25FDC2FB09BD8E74083D522E"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 31 04:28:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwnTu-0005X0-9x
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 04:16:34 +0200
+	id 1Nwnfo-000147-D8
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 04:28:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758011Ab0CaCQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Mar 2010 22:16:20 -0400
-Received: from mail-iw0-f178.google.com ([209.85.223.178]:57198 "EHLO
-	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758006Ab0CaCQS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Mar 2010 22:16:18 -0400
-X-Greylist: delayed 374 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Mar 2010 22:16:18 EDT
-Received: by iwn8 with SMTP id 8so545274iwn.16
-        for <git@vger.kernel.org>; Tue, 30 Mar 2010 19:16:17 -0700 (PDT)
+	id S933021Ab0CaC2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Mar 2010 22:28:34 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:47219 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932937Ab0CaC2a (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Mar 2010 22:28:30 -0400
+Received: by vws20 with SMTP id 20so1222222vws.19
+        for <git@vger.kernel.org>; Tue, 30 Mar 2010 19:28:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=QumHlHvMrtfH+Cvz2uGi+wqI3o7fEuNPq/NAD4+TzSc=;
-        b=hGEOnjENsfcdgNQOfMQs+9CyIpMnLTgmYpI/YrND66jfG7k8wodZtS4Mcm7muNqZX7
-         XFAf3T3RcemcwL/Pa+j3Ru5XVTxngky65v6Q/wqrdIjjdMDwEfIZOmkqMmtm5wtK3yBX
-         OV4mwrd6sLMFBTke0xXXXmkLCFN+fY5GJH3ro=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:x-enigmail-version:content-type;
+        bh=N1TA8q0I36DvrstKBoFL4aMEgxI1zJcfDk5qsJHgG/Y=;
+        b=pTDcX7ymqVDKx3wJXLwo161dFKxoiti5Am1yxDjeBFdLiRK/JDcMtMTSgClh9INSRQ
+         BeBovH7guWSh/Dqfdw/h1+lt25zn0AJau6xnxcmrB4xGFlCLCe9v2bggPLHHSY+22Nex
+         fMI8TDxNkWdiLOA3fFBQv2zmkPRpK2bKBl8Aw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=b68Y2qAUzPQmAUgt+AS077zD5+ANqN4dGH6nR/FGFzUGKSUDb+/9oN77UrFbA1Uzyl
-         id2ktIR+4u7cjKPXjbTFBxc6UifHSAbLRp29s3ZBM2AbLQBab95pqK2kjYn+2l/4p4nU
-         IHrNBbEK8LovQmBJJSR6DghUkNej+XwjP/z6s=
-Received: by 10.231.79.136 with SMTP id p8mr3735895ibk.4.1270001404374;
-        Tue, 30 Mar 2010 19:10:04 -0700 (PDT)
-Received: from localhost (wdas-1.disneyanimation.com [198.187.190.1])
-        by mx.google.com with ESMTPS id co35sm6258422ibb.14.2010.03.30.19.10.03
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :x-enigmail-version:content-type;
+        b=ZwznhYydnA0c/M5AoT7zktV+dN1tBDSEBrN+26RKY4aoEvJrpgo12skdor9VlpDUVH
+         5EqYQDQsUcHulkGCeOtFdgizI3Lr/gVYB0Xu461XF+JAh+gCVe/txHNoI4tfWrLe/YEu
+         p+7Z2nV0o2lsicvnoZ+8XgMQX569b93zvP4P8=
+Received: by 10.220.126.197 with SMTP id d5mr4116060vcs.121.1270002509906;
+        Tue, 30 Mar 2010 19:28:29 -0700 (PDT)
+Received: from Yawar-Quadir-Amins-MacBook.local (CPE00173f9e1ecd-CM0014e827917c.cpe.net.cable.rogers.com [99.230.35.242])
+        by mx.google.com with ESMTPS id 29sm132834272vws.5.2010.03.30.19.28.28
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 30 Mar 2010 19:10:03 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.3.313.g87b3c
-In-Reply-To: <201003281259.06947.markus.heidelberg@web.de>
+        Tue, 30 Mar 2010 19:28:29 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.24 (Macintosh/20100228)
+X-Enigmail-Version: 0.96.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143636>
 
-This teaches gitk about git-difftool.  A benefit of this change
-is that gitk's external diff feature now works with read-only
-repositories.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig25FDC2FB09BD8E74083D522E
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
+Parenthesize the mention of the git protocol to make it clear that
+`former' and `latter' refer to the standard SSH syntax and the
+alternate SCP-like syntax, rather than the SSH protocol and git
+protocol.
+
+Signed-off-by: Yawar Amin <yawar.amin@gmail.com>
 ---
- gitk |   58 ++++++++--------------------------------------------------
- 1 files changed, 8 insertions(+), 50 deletions(-)
+ Please Cc replies to me, thanks.
 
-diff --git a/gitk b/gitk
-index 1f36a3e..71cb501 100755
---- a/gitk
-+++ b/gitk
-@@ -3317,39 +3317,6 @@ proc gitknewtmpdir {} {
-     return $diffdir
- }
- 
--proc save_file_from_commit {filename output what} {
--    global nullfile
--
--    if {[catch {exec git show $filename -- > $output} err]} {
--	if {[string match "fatal: bad revision *" $err]} {
--	    return $nullfile
--	}
--	error_popup "[mc "Error getting \"%s\" from %s:" $filename $what] $err"
--	return {}
--    }
--    return $output
--}
--
--proc external_diff_get_one_file {diffid filename diffdir} {
--    global nullid nullid2 nullfile
--    global gitdir
--
--    if {$diffid == $nullid} {
--        set difffile [file join [file dirname $gitdir] $filename]
--	if {[file exists $difffile]} {
--	    return $difffile
--	}
--	return $nullfile
--    }
--    if {$diffid == $nullid2} {
--        set difffile [file join $diffdir "\[index\] [file tail $filename]"]
--        return [save_file_from_commit :$filename $difffile index]
--    }
--    set difffile [file join $diffdir "\[$diffid\] [file tail $filename]"]
--    return [save_file_from_commit $diffid:$filename $difffile \
--	       "revision $diffid"]
--}
--
- proc external_diff {} {
-     global nullid nullid2
-     global flist_menu_file
-@@ -3375,24 +3342,15 @@ proc external_diff {} {
-         set diffidto [lindex $diffids 1]
-     }
- 
--    # make sure that several diffs wont collide
--    set diffdir [gitknewtmpdir]
--    if {$diffdir eq {}} return
--
--    # gather files to diff
--    set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
--    set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
--
--    if {$difffromfile ne {} && $difftofile ne {}} {
--        set cmd [list [shellsplit $extdifftool] $difffromfile $difftofile]
--        if {[catch {set fl [open |$cmd r]} err]} {
--            file delete -force $diffdir
--            error_popup "$extdifftool: [mc "command failed:"] $err"
--        } else {
--            fconfigure $fl -blocking 0
--            filerun $fl [list delete_at_eof $fl $diffdir]
--        }
-+    set cmd [list "git" "difftool" "--no-prompt" "--extcmd=$extdifftool"]
-+    if {$diffidfrom ne $nullid && $diffidfrom ne $nullid2} {
-+        lappend cmd $diffidfrom
-+    }
-+    if {$diffidto ne $nullid && $diffidto ne $nullid2} {
-+        lappend cmd $diffidto
-     }
-+    lappend cmd "--" $flist_menu_file
-+    eval exec $cmd &
- }
- 
- proc find_hunk_blamespec {base line} {
--- 
-1.7.0.3.313.g87b3c
+ Documentation/urls.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/urls.txt b/Documentation/urls.txt
+index 459a394..29ded16 100644
+--- a/Documentation/urls.txt
++++ b/Documentation/urls.txt
+@@ -17,7 +17,7 @@ to name the remote repository:
+ SSH is the default transport protocol over the network.  You can
+ optionally specify which user to log-in as, and an alternate,
+ scp-like syntax is also supported.  Both syntaxes support
+-username expansion, as does the native git protocol, but
++username expansion (as does the native git protocol) but
+ only the former supports port specification. The following
+ three are identical to the last three above, respectively:
+=20
+--=20
+1.7.0.2
+
+
+
+--------------enig25FDC2FB09BD8E74083D522E
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (Darwin)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEAREIAAYFAkuys0sACgkQqOXNpejCDdRZugCeJpItfGR2dzCWDUnCVwpwSXsV
+nNoAoJlZQRSCXFNyrzIvHCvKHoC1TkVd
+=Dehe
+-----END PGP SIGNATURE-----
+
+--------------enig25FDC2FB09BD8E74083D522E--
