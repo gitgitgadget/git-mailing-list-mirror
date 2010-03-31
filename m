@@ -1,82 +1,106 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH v3 0/2] git-gui: change to display the combined diff in 
-	the case of conflicts.
-Date: Wed, 31 Mar 2010 23:12:30 +1200
-Message-ID: <k2p2cfc40321003310412hf4c6d642n4349af3f644829ff@mail.gmail.com>
-References: <2cfc40321003300834w59532e58m13d42acce4f2c5ce@mail.gmail.com>
-	 <4BB2F7A0.6020702@viscovery.net>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: git cvsimport and case-insensitive config
+Date: Wed, 31 Mar 2010 13:17:01 +0200
+Message-ID: <p2mcb7bb73a1003310417u3821f8b1hd3df79e8b41502c3@mail.gmail.com>
+References: <hoscv7$hmn$1@dough.gmane.org> <7vy6h9vhuk.fsf@alter.siamese.dyndns.org> 
+	<cb7bb73a1003301105v691624sdcdadf6809c50b89@mail.gmail.com> 
+	<7vr5n1v74x.fsf@alter.siamese.dyndns.org> <cb7bb73a1003301517r29aed329j4a5f38fbc9b515ca@mail.gmail.com> 
+	<7vd3yls8pi.fsf@alter.siamese.dyndns.org> <y2kcb7bb73a1003302354wea191dd4iced4360b95d31a2a@mail.gmail.com> 
+	<7v634cq0yj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, spearce@spearce.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Mar 31 13:12:41 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 31 13:17:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nwvqh-0003ak-IM
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 13:12:39 +0200
+	id 1NwvvP-0005hr-Nr
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 13:17:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756930Ab0CaLMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Mar 2010 07:12:34 -0400
-Received: from mail-pz0-f186.google.com ([209.85.222.186]:45691 "EHLO
-	mail-pz0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756787Ab0CaLMd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Mar 2010 07:12:33 -0400
-Received: by pzk16 with SMTP id 16so572105pzk.22
-        for <git@vger.kernel.org>; Wed, 31 Mar 2010 04:12:30 -0700 (PDT)
+	id S1757155Ab0CaLRY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Mar 2010 07:17:24 -0400
+Received: from mail-ew0-f220.google.com ([209.85.219.220]:49254 "EHLO
+	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757123Ab0CaLRX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Mar 2010 07:17:23 -0400
+Received: by ewy20 with SMTP id 20so1831592ewy.1
+        for <git@vger.kernel.org>; Wed, 31 Mar 2010 04:17:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type;
-        bh=xM+HUv7rEL/wk+AmGplefancKaxD30wOk2RfMUkghnw=;
-        b=jzEOsWZV90Fi2Lv1bA9wKsb2pJ+ZPmptq/hLZKUc3RufdXnWYiVUnTXcpezW2hqXKO
-         /2ZfDohR0W9IVAHvgnEyMTPboH6kNB3rTmrjpmpqp69780ZAZi4uYRh8bu0G/SPbyZ5X
-         Mey/I1/My/mmkSH/bTAJa39xk8p8Qnba858MQ=
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=WuG/JKk1JyMZsl85snBKccQLcSLB/0mKgwssB1orvqo=;
+        b=m2isqN96opX4z4zHp5GgnPT/htCVEPbig5QcC8NrOAJVEcf9Y8BYR7B1Fvc0FDIqlk
+         T1GdsnpViivssLC4D4AQpK7pzdY2ENwRfeYJHO2EXStNv0hkZTID+hm19ekvHPXJAYVB
+         WJbxsYVN/FsYfeRZtTUQc9XCwltugpVxPehzk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=ejHYvO1OmpKxbCNjezJSy4TKP1/skAEeruVz3JgfhulWtlrT/I5cAFO071TdJG8KL8
-         635sIAyQihuMjdIzO+ZHN5lQ8AJS+93UhtkjUVAiTW1J5qsVL/gDJ0xcN1d62dwmnW1H
-         e2m244CO2J46nUOjI33Zy1RynoBdCitY/rpho=
-Received: by 10.114.13.5 with HTTP; Wed, 31 Mar 2010 04:12:30 -0700 (PDT)
-In-Reply-To: <4BB2F7A0.6020702@viscovery.net>
-Received: by 10.114.164.7 with SMTP id m7mr5945411wae.125.1270033950776; Wed, 
-	31 Mar 2010 04:12:30 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Lq4IFUp3LChrH4Qo1PoxBgJ1FPs4QQVPrFfqDgywUvMRW4TtpokG09A8Lm4S7xFXP/
+         y2sdzIsMGrsvm6p+0l2OX0Dmk2JdKn1z9t7u1ZkzxX9TuhZybEB6G6OOclB6vEycR0wO
+         Lk5To7Fdu+6glI1Fra317VOUOdbJ0sd9nn6xY=
+Received: by 10.213.114.132 with HTTP; Wed, 31 Mar 2010 04:17:01 -0700 (PDT)
+In-Reply-To: <7v634cq0yj.fsf@alter.siamese.dyndns.org>
+Received: by 10.213.42.136 with SMTP id s8mr2162687ebe.78.1270034241127; Wed, 
+	31 Mar 2010 04:17:21 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143660>
 
-> I looked at the result, but it does not convince me. In my case, I have a
-> large file that has many changes between the "maint" and "master"
-> branches. Whenever there are conflicts after merging "maint" to "master",
-> I see all these changes, and really they *are* uninteresting.
+On Wed, Mar 31, 2010 at 11:45 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 >
+>> What I wonder is: when would the heuristics not work? Are there git
+>> repositories that have a cvsimport configuration with both -s and -S
+>> specified?
+>
+> You are asking a wrong question. =A0Setting both -s and -S is not an =
+issue.
+> Not being able to tell reliably if the value you see for cvsimport.s =
+in
+> "config -l" output were specified for cvsimport.S or cvsimport.s is o=
+nly
+> by inspecting the value is.
 
-I think you may have missed the point of my patch.
+What I'm asking is rahter: is it worth to worry about this?
 
-The successfully merged lines may be uninteresting from the point of
-deciding what I should *do* but they
-are highly relevant to the question of what I really, really should *not* do.
+>> I strongly suspect the answer is NO because such a
+>> configuration would not work currently (at least not reliably as the
+>> wrong value would be assigned to at least one of the keys.
+>
+> So this is a moot point, but people who specified cvsimport.S expecti=
+ng
+> that it would stand for -S option are not getting what they want and =
+are
+> getting -s instead, which is also a case where the configuration is n=
+ot
+> working currently.
+>
+> Silently converting it to an equally non-working configuration is eas=
+y;
+> just treat as if everything were specified for lowercase option.
+>
+> But that would not help users at all. =A0I was hoping that you were a=
+iming
+> for something better than that. =A0At least that "case-sensitive" pat=
+ch was.
 
-If there are 100 successfully merged lines from each side of the merge
-but only 2 conflicting lines, should I
+Well, I wasn't thinking about a silent conversion for the uncertain
+options: in the case of dubious options which we can guess (a vs A, r
+vs R), a warning would be given, and for the unguessable case we could
+either still give a warning and continue or even abort the process
+altogether. Better than the silent conversion (which would not break
+anything that isn't broken already anyway), although probably not as
+sophisticated as your proposal.
 
-a) pick the remote branch
-b) pick the local branch
-c) manually edit the conflicting line (or use a merge tool)
-
-The point of my patch it to make it much more likely that you will pick c).
-
-In the current state, the GUI doesn't make it clear that either a) or
-b) is almost certainly a huge mistake.
-
-Now, you could disable Use Remote and Use Local for all but the very
-simplest cases - but you don't need it for these
-cases. Hell, ed would do for these.
-
-jon.
+--=20
+Giuseppe "Oblomov" Bilotta
