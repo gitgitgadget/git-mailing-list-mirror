@@ -1,96 +1,92 @@
-From: Jon Seymour <jon.seymour@gmail.com>
+From: Charles O'Farrell <charleso@gmail.com>
 Subject: Re: Import ClearCaase with history?
-Date: Thu, 1 Apr 2010 00:13:57 +1200
-Message-ID: <p2k2cfc40321003310513tf6adbef1p69ac01c8b1472c59@mail.gmail.com>
+Date: Wed, 31 Mar 2010 12:16:09 +0000 (UTC)
+Message-ID: <loom.20100331T135240-261@post.gmane.org>
 References: <1270035189.2785.11.camel@chumley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: David Hagood <david.hagood@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 31 14:14:06 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 31 14:20:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nwwo9-00051L-Nf
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 14:14:06 +0200
+	id 1NwwuE-0007mR-7a
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 14:20:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757347Ab0CaMN7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Mar 2010 08:13:59 -0400
-Received: from mail-pz0-f186.google.com ([209.85.222.186]:48232 "EHLO
-	mail-pz0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757311Ab0CaMN6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 31 Mar 2010 08:13:58 -0400
-Received: by pzk16 with SMTP id 16so14342pzk.22
-        for <git@vger.kernel.org>; Wed, 31 Mar 2010 05:13:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=d8Pui3TPMBrPIHIU0mGb8VQOwAw5944UC8Md0y5sHtk=;
-        b=aKQtoEdNhqfWNyWb8hxz7nwbLcbwc/iZUFo0CdznfrCFlvUkZblBxxCEp+/y410Viq
-         ew4msXJiZ8rp3OM4YDp74cj0sFEJILIL3w4HPe8plT6UJffqHExY8KDqy8TkGBXBoNFX
-         2FpD/eEUpO1bT6z5XxZLJI0FRWY1JdDLoOkko=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=i2cWOCtHU8jwtfm9S/Chiii8sR84wAT+a45PmVYQSY22jGz/mEGth3Z6wmmaK++Z6O
-         DQGqgKyTTu+c+93k1ZybFtNA7PqoaFHhK94ni1T9A1E9fnNhLhIItuuSxFgVnitaP5xQ
-         dr5WNBUZsSTnsekpuXBRcbjGjURxJpAy4clrw=
-Received: by 10.114.13.5 with HTTP; Wed, 31 Mar 2010 05:13:57 -0700 (PDT)
-In-Reply-To: <1270035189.2785.11.camel@chumley>
-Received: by 10.114.33.18 with SMTP id g18mr7994520wag.2.1270037637442; Wed, 
-	31 Mar 2010 05:13:57 -0700 (PDT)
+	id S932686Ab0CaMUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Mar 2010 08:20:13 -0400
+Received: from lo.gmane.org ([80.91.229.12]:52626 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932657Ab0CaMUL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Mar 2010 08:20:11 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Nwwtv-0007cm-UH
+	for git@vger.kernel.org; Wed, 31 Mar 2010 14:20:07 +0200
+Received: from 203-214-44-56.dyn.iinet.net.au ([203.214.44.56])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 31 Mar 2010 14:20:03 +0200
+Received: from charleso by 203-214-44-56.dyn.iinet.net.au with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 31 Mar 2010 14:20:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 203.214.44.56 (Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/533.3 (KHTML, like Gecko) Chrome/5.0.356.2 Safari/533.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143669>
 
-On Wed, Mar 31, 2010 at 11:33 PM, David Hagood <david.hagood@gmail.com>=
- wrote:
-> I am trying to drag where I work into a more modern software developm=
-ent
-> process, but I am getting resistance from one division that has a lar=
-ge
-> amount of history for some projects in a Clearcase repository. If I
-> could show them that we could import all that history into git, it wo=
-uld
-> go a long way to removing that resistance.
->
+Hi David,
+
 > I've seen programs that purport to import Subversion (which is also
-> good, as they also are using Subversion for other projects....) but d=
-o
+> good, as they also are using Subversion for other projects....) but do
 > any such programs exist for Clearcase?
->
-> I know that, in theory, it would be possible to
-> =C2=A0for all checkins to Clearcase
-> =C2=A0 =C2=A0 check out of Clearcase
-> =C2=A0 =C2=A0 check into git
-> =C2=A0done
->
+> 
+> I know that, in theory, it would be possible to 
+>   for all checkins to Clearcase
+>      check out of Clearcase
+>      check into git
+>   done
+> 
 > but that would take an incredibly long time in practice, wouldn't it?
 
-I have no idea whether this is any good, but you might look at:
+Well it certainly isn't lightning quick, but it's not 'incredibly' slow either. 
 
-   http://www.clearvision-cm.com/clearvision-products/clearcase-and-git=
--bridge-cc2git/ash_flypage.tpl.html
+http://github.com/charleso/git-cc
 
-I am sceptical that the performance could be anything other than
-glacial but I don't have any experience with it...
+It uses 'cleartool lshistory' to retrieve the changes to a given view, and then 
+'cleartool get' to download the contents, which can then be added directly to 
+Git. In practice this is reasonably quick, although it depends on the size of 
+your history. I've seen it take a few hours to complete the first step with a 
+medium sized VOB, but once that's complete it's (relatively) quick to fetch the 
+actual files. Git-cc is actually a bridge, and can be reused in this way to 
+retrieve new content after an initial import (which is much, much quicker). 
+Changes can also be pushed back to Clearcase.
 
-jon.
+As a word of warning, given the way in which Clearcase works you're not 
+technically retrieving the full and complete history; as such a thing is almost 
+impossible to export from Clearcase. What you see is the history of all the 
+_currently_ visible files in your _current_ view. So, for example, any files 
+that have been deleted or moved are completely ignored in the lshistory output. 
+If this is unacceptable the only other option would be to manually modify the 
+config spec to include this missing elements and take 'snapshots' of the history 
+over time.
 
+It's by no means as good or as complete as git-svn; partly because Clearcase is 
+so tricky and partly because I'm so lazy. I hope this helps in some way though.
 
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+Cheers,
+
+Charles
+
+PS. Take a look at the Git tools wiki page for some other alternatives.
+
+https://git.wiki.kernel.org/index.php/Interfaces,_frontends,_and_tools
