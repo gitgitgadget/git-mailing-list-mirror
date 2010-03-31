@@ -1,92 +1,65 @@
-From: Jan =?UTF-8?B?U3TEmXBpZcWE?= <jan@stepien.cc>
-Subject: Re: [PATCH] gitweb: The "Owner" column can be hidden
-Date: Wed, 31 Mar 2010 15:32:18 +0200
-Message-ID: <20100331153218.6b13853b.jan@stepien.cc>
-References: <1270026409-29543-1-git-send-email-jstepien@users.sourceforge.net>
-	<7vy6h8om7q.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v3 0/2] git-gui: change to display the combined diff in
+ 	the case of conflicts.
+Date: Wed, 31 Mar 2010 15:51:10 +0200
+Message-ID: <4BB3534E.3080803@viscovery.net>
+References: <2cfc40321003300834w59532e58m13d42acce4f2c5ce@mail.gmail.com>	 <4BB2F7A0.6020702@viscovery.net>	 <k2p2cfc40321003310412hf4c6d642n4349af3f644829ff@mail.gmail.com>	 <4BB3346C.7070700@viscovery.net> <t2u2cfc40321003310523u8fda9baeo883d2e0b3c6fa807@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 31 15:32:37 2010
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, spearce@spearce.org
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 31 15:51:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nwy25-0001UO-Ud
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 15:32:34 +0200
+	id 1NwyKF-0002VI-Vl
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 15:51:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933344Ab0CaNc2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Mar 2010 09:32:28 -0400
-Received: from r245-52.iq.pl ([86.111.245.52]:47694 "EHLO stepien.cc"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933319Ab0CaNc1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Mar 2010 09:32:27 -0400
-Received: from localhost.localdomain (chello089078159032.chello.pl [89.78.159.32])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by stepien.cc (Postfix) with ESMTPSA id 9282E2A10358;
-	Wed, 31 Mar 2010 15:32:25 +0200 (CEST)
-In-Reply-To: <7vy6h8om7q.fsf@alter.siamese.dyndns.org>
-X-Mailer: Sylpheed 3.0.1 (GTK+ 2.18.9; i686-pc-linux-gnu)
+	id S933407Ab0CaNvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Mar 2010 09:51:14 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:28790 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933397Ab0CaNvO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Mar 2010 09:51:14 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1NwyK6-0004oW-LO; Wed, 31 Mar 2010 15:51:10 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 5FDA01660F;
+	Wed, 31 Mar 2010 15:51:10 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
+In-Reply-To: <t2u2cfc40321003310523u8fda9baeo883d2e0b3c6fa807@mail.gmail.com>
+X-Enigmail-Version: 1.0.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143675>
 
-On Wed, 31 Mar 2010 02:48:57 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
-> Jan St=C4=99pie=C5=84  <jstepien@users.sourceforge.net> writes:
->=20
-> > This commit adds $show_owner_column configuration variable which al=
-lows
-> > to hide the project list "Owner" column if desired.
-> >=20
-> > @@ -4430,7 +4433,7 @@ sub git_project_list_body {
-> >  		}
-> >  		print_sort_th('project', $order, 'Project');
-> >  		print_sort_th('descr', $order, 'Description');
-> > -		print_sort_th('owner', $order, 'Owner');
-> > +		print_sort_th('owner', $order, 'Owner') if $show_owner_column;
-> >  		print_sort_th('age', $order, 'Last Change');
->=20
-> Ugly.  Think what you would do if somebody else asks you to allow him=
- to
-> omit 'Description', or perhaps 'Last Change'.
->=20
-> I would understand if the change was to introduce a configuration var=
-iable
-> of the array type @project_column whose default value is qw(project d=
-escr
-> owner age) that is used to control which columns are shown in what or=
-der.
->=20
-> If it is undesirable to allow reordering the columns, the configurati=
-on
-> should at least be %omit_project_column used like this, no?
->=20
-> 	print_sort_th('project', $order, 'Project')
->         	unless $omit_project_column{'project'};
-> 	print_sort_th('descr', $order, 'Description')
->         	unless $omit_project_column{'descr'};
-> 	...
->=20
+Am 3/31/2010 14:23, schrieb Jon Seymour:
+> What about the safe (but complicated) diff -c by default (to prevent
+> misinformed Use Remote/Local decisions, by default) and a "Conflicts
+> Only" option (disabled by default) that shows the diff --cc output for
+> those who know what they are doing?
 
-As I wrote in my e-mail to Jakub Narebski, the reason for hiding only
-the "Owner" column is a single-user situation. There's only one owner
-and repeating his name in each column isn't necessary.
+You would like to have the worst of all three?
 
-I agree that your solution is cleaner and allows further customization,
-but it covers a slightly different issue comparing to the one I'm
-addressing.
+1. dangerous menu options
+2. incomprehensible diff -c output
+3. and a config option on top of it
 
-I like the idea suggested by Jakub to make this config variable cover
-other pages. It could remove the owner information from both the
-project list and project summaries.
+I think we should have none of them.
 
-Cheers,
---=20
-Jan St=C4=99pie=C5=84 <jan@stepien.cc>
+Yes, I suggested diff -c, but after seeing how it works (better: not
+works), I changed my mind.
+
+What sort of user guidance is it to present alluring menu options "Use
+local/remote version", but at the same time a scaring amount of diff -c
+output.
+
+-- Hannes
