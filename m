@@ -1,106 +1,93 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: git cvsimport and case-insensitive config
-Date: Wed, 31 Mar 2010 08:54:50 +0200
-Message-ID: <y2kcb7bb73a1003302354wea191dd4iced4360b95d31a2a@mail.gmail.com>
-References: <hoscv7$hmn$1@dough.gmane.org> <7vy6h9vhuk.fsf@alter.siamese.dyndns.org> 
-	<cb7bb73a1003301105v691624sdcdadf6809c50b89@mail.gmail.com> 
-	<7vr5n1v74x.fsf@alter.siamese.dyndns.org> <cb7bb73a1003301517r29aed329j4a5f38fbc9b515ca@mail.gmail.com> 
-	<7vd3yls8pi.fsf@alter.siamese.dyndns.org>
+From: Fredrik Kuivinen <frekui@gmail.com>
+Subject: Re: [PATCH] Make xmalloc and xrealloc thread-safe
+Date: Wed, 31 Mar 2010 08:57:55 +0200
+Message-ID: <s2t4c8ef71003302357x5e9defa1l4dbde6391d533ca5@mail.gmail.com>
+References: <20100323161713.3183.57927.stgit@fredrik-laptop>
+	 <alpine.LFD.2.00.1003231945480.31128@xanadu.home>
+	 <4c8ef71003240823o7cd733bn5f19699305c94cba@mail.gmail.com>
+	 <alpine.LFD.2.00.1003241133430.694@xanadu.home>
+	 <ec874dac1003241122s3d592f26n1b23d23144939218@mail.gmail.com>
+	 <alpine.LFD.2.00.1003241435300.694@xanadu.home>
+	 <ec874dac1003241257r3cad86c9q1af84d3732e23ca8@mail.gmail.com>
+	 <alpine.LFD.2.00.1003241613020.694@xanadu.home>
+	 <4c8ef71003270626y45685e69j28ccb8a8738b9083@mail.gmail.com>
+	 <alpine.LFD.2.00.1003271035360.694@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 31 08:55:22 2010
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Wed Mar 31 08:58:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nwrph-0006is-KZ
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 08:55:21 +0200
+	id 1NwrsM-0007dd-L6
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 08:58:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754399Ab0CaGzN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Mar 2010 02:55:13 -0400
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:44212 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753931Ab0CaGzM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 31 Mar 2010 02:55:12 -0400
-Received: by ewy20 with SMTP id 20so1772249ewy.1
-        for <git@vger.kernel.org>; Tue, 30 Mar 2010 23:55:10 -0700 (PDT)
+	id S1751119Ab0CaG57 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Mar 2010 02:57:59 -0400
+Received: from mail-fx0-f223.google.com ([209.85.220.223]:38881 "EHLO
+	mail-fx0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755072Ab0CaG56 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Mar 2010 02:57:58 -0400
+Received: by fxm23 with SMTP id 23so897053fxm.21
+        for <git@vger.kernel.org>; Tue, 30 Mar 2010 23:57:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
+         :date:received:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=EsXvYYLJsmpUdarcpcsnVldIx35hXw/NI584NGWj1BU=;
-        b=LGf4tJnhaTGhDqbtdRaX0o1thw6hLw1P8epxSqdtwjgcYveYaybrIBMx3KPeUekf1x
-         gIefxuK8YdZTbhcyr4hhScayWy8DYGpYCuwqSj6rnzmwa9MgsE/9ejRxsuVoqmlb/LRd
-         /4qWgZO25X0/5ro3Z/CjvtoVwePI5fZE+2yss=
+        bh=A42xDASnjceJtlDolTJCzO5DWSwdNN0M9LNf0d0Ugjk=;
+        b=jI9KVLclonbD4P8Iw5CxXeeFtVuDVtHSqwoiOd8OIHXPAa5XUo5Qwf4mGAB5jTh4Gd
+         JpRz0CmArQ1CmH1IwL3Z2WFoVxySLt+u0QfVI8Og/6vUYlOMf0vGQhn0wlq6x9eSVPkb
+         BsP5uKsZVBW46zMsYC1inpZOSuIyGArhhuf6k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=JYcji17fI7229p4Sddq7V1Ug/UFrphRWB65u1l9AWNU1rQtFeyYgtZOdqe/1bYP3kw
-         2kzF2FSazX4v12RpJppslevhUQS99PLSExK1Zp/Yjf0RMdDRkeyMRXic8aDIXD0Ktqe3
-         /k4qWhaO0SIOpOgXjixCiwn1fcz5CnaOw8CYs=
-Received: by 10.213.114.132 with HTTP; Tue, 30 Mar 2010 23:54:50 -0700 (PDT)
-In-Reply-To: <7vd3yls8pi.fsf@alter.siamese.dyndns.org>
-Received: by 10.213.37.9 with SMTP id v9mr4200913ebd.38.1270018510124; Tue, 30 
-	Mar 2010 23:55:10 -0700 (PDT)
+        b=JXgdkK22t+FB5WcT8jOdg50RdJHFp4PxOx27oN84lmF1EPfbPgkTS6tV8YkYwlJZCm
+         vHTE9OZCRI+pfynYeXz0iZNZ3ONaZ3f4JqNUNAqlAoHf3+zB8ysH2Pgl7Zm3CvyMCMGL
+         23kysA5YjtN26K6G3veLOmPqIFT7Z33iX0dzI=
+Received: by 10.239.140.138 with HTTP; Tue, 30 Mar 2010 23:57:55 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1003271035360.694@xanadu.home>
+Received: by 10.239.134.148 with SMTP id 20mr646226hbz.42.1270018675876; Tue, 
+	30 Mar 2010 23:57:55 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143649>
 
-On Wed, Mar 31, 2010 at 1:14 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+On Sat, Mar 27, 2010 at 19:59, Nicolas Pitre <nico@fluxnic.net> wrote:
+> On Sat, 27 Mar 2010, Fredrik Kuivinen wrote:
 >
->> (-s likely has a single character, -S more than one. -S is likely to
->> have * or ?, -s not.)
->
-> The value given to -S can just be 'tests', or even "\.", as the regex=
-p
-> match is not anchored on either side:
->
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if ($opt_S && $fn =3D~ m/$opt_S/) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0print "SKIPPING $fn v $rev\n";
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0...
->
-> And "-s" would likely be one or more (but not too many) non-alphanume=
-ric
-> characters.
->
-> But a bigger question is if you can bet on that heuristics, and when =
-the
-> heuristics does not work, what you would do.
-
-What I wonder is: when would the heuristics not work? Are there git
-repositories that have a cvsimport configuration with both -s and -S
-specified? I strongly suspect the answer is NO because such a
-configuration would not work currently (at least not reliably as the
-wrong value would be assigned to at least one of the keys.
-
->>> A bigger reason is that, if you have _any_ combination that you can=
-not
->>> reliably guess, you would either need the user to ask for help, or =
-you
->>> need to convert by reading the configuration file case-sensitively
->>> yourself to come up with a reliable conversion. =A0I opted for the =
-latter.
+>> On Wed, Mar 24, 2010 at 21:22, Nicolas Pitre <nico@fluxnic.net> wrot=
+e:
+>> > +static void try_to_free_from_threads(size_t size)
+>> > +{
+>> > + =A0 =A0 =A0 read_lock();
+>> > + =A0 =A0 =A0 release_pack_memory(size, -1);
+>> > + =A0 =A0 =A0 read_unlock();
+>> > +}
+>> > +
 >>
->> Would such a configuration work at all?
+>> Will this really work in all cases? In the find_deltas -> try_delta =
+->
+>> read_sha1_file -> ... -> xmalloc call path, the mutex is already
+>> locked when we get to xmalloc.
 >
-> What configuration?
+> You're right. =A0Damn.
 
-One that specifies either of cvsimport.s and cvsimport.S, or any other
-conflicting key, in a way that the present config reading doesn't get
-too confused by. I think that for migration it would be sufficient to
-just follow the value assignments currently done by the code. With a
-big fat WARNING: notice, possibly.
+A simple fix is to make it a recursive mutex instead. This will work
+with a minimal change in win32 as well as the CRITICAL_SECTION type is
+recursive.
+
+I guess the downside is that the locking potentially gets slightly slow=
+er.
 
 
---=20
-Giuseppe "Oblomov" Bilotta
+- Fredrik
