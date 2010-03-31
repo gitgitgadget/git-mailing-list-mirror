@@ -1,117 +1,91 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v3 0/2] git-gui: change to display the combined diff in
- 	the case of conflicts.
-Date: Wed, 31 Mar 2010 13:39:24 +0200
-Message-ID: <4BB3346C.7070700@viscovery.net>
-References: <2cfc40321003300834w59532e58m13d42acce4f2c5ce@mail.gmail.com>	 <4BB2F7A0.6020702@viscovery.net> <k2p2cfc40321003310412hf4c6d642n4349af3f644829ff@mail.gmail.com>
+From: Eric Blake <eblake@redhat.com>
+Subject: Re: Are the patches used to build git on cygwin available in a git
+ 	repo somewhere?
+Date: Wed, 31 Mar 2010 05:49:21 -0600
+Organization: Red Hat
+Message-ID: <4BB336C1.4000504@redhat.com>
+References: <2cfc40321003300916o305e4c15x7850549beafc26c0@mail.gmail.com>	 <20100331025626.GA13501@progeny.tock>	 <20100331025856.GB13501@progeny.tock> <o2p2cfc40321003310055i4b26d46l29ac6113be9eb980@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>, spearce@spearce.org
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigA9EC8BAAC9A656A11C4AD233"
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramsay Allan Jones <ramsay@ramsay1.demon.co.uk>,
+	Dmitry Potapov <dpotapov@gmail.com>
 To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 31 13:39:35 2010
+X-From: git-owner@vger.kernel.org Wed Mar 31 13:49:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwwGk-00070L-Fu
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 13:39:34 +0200
+	id 1NwwQh-0002kG-L7
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 13:49:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755839Ab0CaLj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Mar 2010 07:39:29 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:42214 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755484Ab0CaLj2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Mar 2010 07:39:28 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1NwwGb-0000W8-9r; Wed, 31 Mar 2010 13:39:25 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 084151660F;
-	Wed, 31 Mar 2010 13:39:24 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
-In-Reply-To: <k2p2cfc40321003310412hf4c6d642n4349af3f644829ff@mail.gmail.com>
+	id S1756933Ab0CaLtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Mar 2010 07:49:46 -0400
+Received: from qmta06.emeryville.ca.mail.comcast.net ([76.96.30.56]:40607 "EHLO
+	qmta06.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756841Ab0CaLtp (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Mar 2010 07:49:45 -0400
+Received: from omta19.emeryville.ca.mail.comcast.net ([76.96.30.76])
+	by qmta06.emeryville.ca.mail.comcast.net with comcast
+	id znib1d0031eYJf8A6npmz0; Wed, 31 Mar 2010 11:49:46 +0000
+Received: from [192.168.0.5] ([24.10.248.129])
+	by omta19.emeryville.ca.mail.comcast.net with comcast
+	id znpj1d0082oEyzc01nplfx; Wed, 31 Mar 2010 11:49:45 +0000
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.23) Gecko/20090812 Thunderbird/2.0.0.23 Mnenhy/0.7.6.666
+In-Reply-To: <o2p2cfc40321003310055i4b26d46l29ac6113be9eb980@mail.gmail.com>
 X-Enigmail-Version: 1.0.1
-X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143663>
 
-Am 3/31/2010 13:12, schrieb Jon Seymour:
->> I looked at the result, but it does not convince me. In my case, I have a
->> large file that has many changes between the "maint" and "master"
->> branches. Whenever there are conflicts after merging "maint" to "master",
->> I see all these changes, and really they *are* uninteresting.
->>
-> 
-> I think you may have missed the point of my patch.
-> 
-> The successfully merged lines may be uninteresting from the point of
-> deciding what I should *do* but they
-> are highly relevant to the question of what I really, really should *not* do.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigA9EC8BAAC9A656A11C4AD233
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-How would you decide that if you cannot read the information that is
-presented to you?
+According to Jon Seymour on 3/31/2010 1:55 AM:
+> What I was looking for was a git repo that contains a branch with the
+> patches that the cygwin folks mutate the official git release with.
+> Such a repo would be quite useful because people could, in theory, use
+> these to produce their own cygwin git builds at arbitrary commits
+> instead of having to wait for cygwin to catch up.
+>=20
+> Admittedly, it is not a big deal to build such a branch using the
+> patch from the cygwin package source, but I was just wondering whether
+> there was a well-known repo that contained the patches already.
 
-Can you tell without thinking for 10 seconds which of these two changes is
-lost if you choose "Use local version"?
+Nope - the patchset that I apply when building the cygwin port is so smal=
+l
+that so far I have just maintained it manually, rather than publishing a
+git repo.  But if you want me to make it more public, I can certainly loo=
+k
+into doing that.  And yes, now that 1.7.x is out for some time now, I
+should probably advance the cygwin port beyond 1.6.6.1.
 
-@@@ ... @@@
-  x
- +foo
-  y
-@@@ ... @@@
-  a
-- bar
-  b
+--=20
+Eric Blake   eblake@redhat.com    +1-801-349-2682
+Libvirt virtualization library http://libvirt.org
 
-Oh, it's easy for the conflicted part of the diff, which you'll see
-elsewhere as well:
 
-@@@ ... @@@
-  r
-++<<<<<<< HEAD
- +foo
-++=======
-+ bar
-++>>>>>>> some-branch
-  s
+--------------enigA9EC8BAAC9A656A11C4AD233
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Do not forget that in a case (like mine) where the non-condensed diff is
-actually huge, the conflict markers would no exactly be easy to find in
-the diff.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (Cygwin)
+Comment: Public key at home.comcast.net/~ericblake/eblake.gpg
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-> If there are 100 successfully merged lines from each side of the merge
-> but only 2 conflicting lines, should I
-> 
-> a) pick the remote branch
-> b) pick the local branch
-> c) manually edit the conflicting line (or use a merge tool)
-> 
-> The point of my patch it to make it much more likely that you will pick c).
+iEYEARECAAYFAkuzNskACgkQ84KuGfSFAYBniQCfWKvMT/Wvy2P8uGjb1Swse/wt
+P1kAmgIu2UPW96FKxjdltYFAAUL5XYwh
+=d+Jq
+-----END PGP SIGNATURE-----
 
-And I was saying almost the same, namely that it should not only be "much
-more likely" to pick c, but to *always* pick c (by making it the only
-option available).
-
-> In the current state, the GUI doesn't make it clear that either a) or
-> b) is almost certainly a huge mistake.
-
-And therefore I suggest to disable these options.
-
-> Now, you could disable Use Remote and Use Local for all but the very
-> simplest cases - but you don't need it for these
-> cases. Hell, ed would do for these.
-
-Which are those very simplest cases that you are referring to? If you mean
-modify/delete conflicts, then I indeed would like to keep the options for
-them.
-
-That said, your earlier patch that presented the diff against HEAD was not
-bad after all.
-
--- Hannes
+--------------enigA9EC8BAAC9A656A11C4AD233--
