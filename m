@@ -1,102 +1,223 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Carrying over attributes when moving files
-Date: Tue, 30 Mar 2010 21:05:36 -0700
-Message-ID: <7vzl1pp23z.fsf@alter.siamese.dyndns.org>
-References: <m3iq8jn3ar.fsf@winooski.ccs.neu.edu>
- <20100328014208.GA23015@progeny.tock>
- <19376.50971.397375.810974@winooski.ccs.neu.edu>
- <19376.53419.640007.930897@winooski.ccs.neu.edu>
- <20100329231501.GA28194@progeny.tock>
- <19377.33747.838003.360864@winooski.ccs.neu.edu>
- <20100330213049.GB11192@progeny.tock>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [PATCHv2 1/2] Add git alternate command
+Date: Tue, 30 Mar 2010 21:35:16 -0700
+Message-ID: <a038bef51003302135k700446n5a5e9d50e35d1ad9@mail.gmail.com>
+References: <a038bef51003241335l1623ade4i4a9b7269546739d4@mail.gmail.com>
+	 <1269497251-13103-2-git-send-email-judge.packham@gmail.com>
+	 <7vr5n37fci.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eli Barzilay <eli@barzilay.org>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 31 06:05:56 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, jrnieder@gmail.com, bebarino@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 31 06:36:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwpBj-0001DG-6A
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 06:05:55 +0200
+	id 1NwpeS-0001c9-Ll
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 06:35:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753986Ab0CaEFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Mar 2010 00:05:50 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38097 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753587Ab0CaEFt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Mar 2010 00:05:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F4E3A6E9B;
-	Wed, 31 Mar 2010 00:05:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sMYEql9vVI/zCCt8WbBTX28RrkY=; b=DxO5xS
-	F3l8iXU8UTFcAQKQerfqBg4W6gZHJvNUyl9n29xGhq9kkpusZ88p97zoZJyJzmmz
-	hGnZkda5qLS5m6yHyIoVPlPFXNUClA6MtvQQZimSF07L7Q4/yL1SsAqN4+VjD6sv
-	JGUQVwj/tf+tXuRYyvhU279HKvzSh+OTWi8DQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Tm6XQLVN65mFWXR/ZiGwG7L4MyapWjB1
-	OvanVnASIWG8NljoJxeLja78qlTuLMNt66I56XmLGK5a+QytLTYzIfLqd7K5GyfP
-	L/Vm3/tL3mBicgjhOhvrytl8qr7bguMl+ATgT9tY6hWKuguYM764lLPfYxqk+q2Q
-	EZ9fUcCZ5T4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C5EBA6E98;
-	Wed, 31 Mar 2010 00:05:42 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 668C1A6E95; Wed, 31 Mar
- 2010 00:05:38 -0400 (EDT)
-In-Reply-To: <20100330213049.GB11192@progeny.tock> (Jonathan Nieder's message
- of "Tue\, 30 Mar 2010 16\:30\:49 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AC7F9F60-3C7A-11DF-8E89-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754180Ab0CaEfT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Mar 2010 00:35:19 -0400
+Received: from mail-qy0-f179.google.com ([209.85.221.179]:33311 "EHLO
+	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752131Ab0CaEfR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Mar 2010 00:35:17 -0400
+Received: by qyk9 with SMTP id 9so3474471qyk.1
+        for <git@vger.kernel.org>; Tue, 30 Mar 2010 21:35:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=PXXXlL6hMuJFlTI92vhBu6UV6RAqc/u3YQr5wdkDNlY=;
+        b=kzFoZahzWiSskehDoLDzcDoLW6x9ALfMPcRHR9Jq3Hw/4CFpg9ep3QquZPm92OdmAp
+         GvhcMFVqi7uuT5qNIm9SvUjMAlbjJfjgUw95ZAIA0ntt6ZvpDINovRKHC6US946/3FAk
+         5jv8eo6V5aZvqfIxrfYgeDQ9T9F/aaTGaU6GI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=og6p0dRlsJIHxykexZ2vFs9RTS2Yy4jESse5h4RhvgSK9mOsVExltY+mganKkry2BZ
+         2ARHtnZov8tzms5lwfBDbXcidaC2em9n3wZJTMUY5cq3EuN9P31pVnGEmQqAXMyeacKO
+         h8IMJrjI1zX5mujNCjDSMHNuWs287yNanoG9U=
+Received: by 10.229.27.141 with HTTP; Tue, 30 Mar 2010 21:35:16 -0700 (PDT)
+In-Reply-To: <7vr5n37fci.fsf@alter.siamese.dyndns.org>
+Received: by 10.229.212.213 with SMTP id gt21mr443131qcb.2.1270010116312; Tue, 
+	30 Mar 2010 21:35:16 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143646>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Sorry, just realized I missed this email before sending my last update.
 
-> Consider the following directory hierarchy.
+On Mon, Mar 29, 2010 at 12:32 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Chris Packham <judge.packham@gmail.com> writes:
 >
-> 	old-files/
-> 		.gitattributes
-> 		some-file.html
-> 		other-file.html
-> 	new-files/
-> 		unrelated-file.html
+>> +abspath()
+>> +{
+>> + =C2=A0 =C2=A0 cd "$1"
+>> + =C2=A0 =C2=A0 pwd
+>> + =C2=A0 =C2=A0 cd - > /dev/null
+>> +}
 >
-> .gitattributes specifies that old HTML files use a CRLF line ending.
+> I do not think "cd -" is all that portable. =C2=A0As you will be alwa=
+ys using this in
+> this form:
 >
-> 	*.html crlf
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0somevariable=3D$(abspath "$it")
 >
-> What would you expect the following commands to do?
+> you are in a subshell and won't affect the caller anyway. =C2=A0Why n=
+ot drop
+> the "go back to where we came from"?
+
+=46air enough. Should be safe.
+
+> Also a shell built-in "pwd" tends to be fooled by $PWD especially sin=
+ce
+> you are running "cd" without -P.
+
+Are you saying I should switch to "echo $PWD"?
+
+>> +#
+>> +# Runs through the alternates file calling the callback function $1
+>> +# with the name of the alternate as the first argument to the callb=
+ack
+>> +# any additional arguments are passed to the callback function.
+>> +#
+>> +walk_alternates()
 >
-> 	git mv old-files/some-file.html new-files/
-> 	git commit
+> This is more like "for_each_alternates"; "walk" can be mistaken as if=
+ you
+> are recursively looking at alternates defined in alternate repositori=
+es
+> of the repository you start from.
 
-I know what you are getting at, but I think it cuts both ways.
+Easy change.
 
-I can well imagine that the build structure where "make && make install"
-will go to old-files and new-files directories and install the contents
-overlayed in the same destination, and .gitattributes may be being used as
-a way to "fix" some aspect of "oldness" in old-files/ files until the
-sources are fixed.  So an equally valid work sequence might be:
+>> +{
+>> + =C2=A0 =C2=A0 alternates=3D$GIT_DIR/objects/info/alternates
+>> + =C2=A0 =C2=A0 callback=3D$1
+>> + =C2=A0 =C2=A0 shift
+>> +
+>> + =C2=A0 =C2=A0 if test -f "$alternates"
+>> + =C2=A0 =C2=A0 then
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 while read line
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 do
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 $callback "$line" "$@"
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 done< "$alternates"
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0done <"$alternates"
+>
+> How well does this handle relative alternate object stores?
 
- 	git mv old-files/some-file.html new-files/
-	edit new-files/some-file.html
-        git add new-files/some-file.html
- 	git commit
+Not well at all.
 
-in which case adding a new "some-file.html crlf" entry to .gitattributes
-in new-files/ directory would be just _wrong_.
+> Shouldn't it be more like this?
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0while read altdir
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0do
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case "$altdir"=
+ in
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/*) ;; # full =
+path
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*) altdir=3D"$=
+GIT_DIR/objects/$altdir" ;;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0esac &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0$callback "$al=
+tdir" "$@"
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0done <"$alternates"
+>
 
-So I am not opposed to a mechanism to _let_ users makes a copy of an entry
-that covers (or used to cover) one path to apply to another path that was
-not covered by it, but doing it unconditionally would not be such a good
-idea.
+Thanks, I was wondering how to handle relative paths.
+
+>> +# Walk function to display one alternate object store and, if the u=
+ser
+>> +# has specified -r, recursively call show_alternates on the git
+>> +# repository that the object store belongs to.
+>> +#
+>> +show_alternates_walk()
+>> +{
+>> + =C2=A0 =C2=A0 say "Object store $1"
+>> + =C2=A0 =C2=A0 say " =C2=A0 =C2=A0referenced via $GIT_DIR"
+>> +
+>> + =C2=A0 =C2=A0 new_git_dir=3D${line%%/objects}
+>
+> Do you need double-% here, not a single one?
+>
+
+Not if I'm not using a regex. I'll change it.
+
+>> +# Add a new alternate
+>> +add_alternate()
+>> +{
+>> + =C2=A0 =C2=A0 if test ! -d "$dir"; then
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die "fatal: $dir is not =
+a directory"
+>> + =C2=A0 =C2=A0 fi
+>> +
+>> + =C2=A0 =C2=A0 abs_dir=3D$(abspath "$dir")
+>> + =C2=A0 =C2=A0 walk_alternates check_current_alternate_walk "$abs_d=
+ir"
+>> +
+>> + =C2=A0 =C2=A0 # At this point we know that $dir is a directory tha=
+t exists
+>> + =C2=A0 =C2=A0 # and that its not already being used as an alternat=
+e. We could
+>
+> s/its/(it's|it is)/;
+>
+> But I don't think it is true that you have verified that it is not us=
+ed.
+> You are running abspath on the input from the end user, but you are u=
+sing
+> existing entries in the alternates file that may not be absolute. =C2=
+=A0They
+> can be relative to $GIT_DIR/objects/.
+>
+
+I'll add some actual verification
+
+>> + =C2=A0 =C2=A0 say " =C2=A0 =C2=A0use 'git repack -adl' to remove d=
+uplicate objects"
+>
+> Good.
+>
+>> +# Deletes the name alternate from the alternates file.
+>> +# If there are no more alternates the alternates file will be remov=
+ed
+>> +del_alternate()
+>> +{
+>> + =C2=A0 =C2=A0 if test ! $force =3D "true"; then
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 say "Not forced, use"
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 say " =C2=A0 =C2=A0'git =
+repack -a' to fetch missing objects, then "
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 say " =C2=A0 =C2=A0'$das=
+hless -f -d $dir' to remove the alternate"
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die
+>
+> Hmm, I am afraid that this will end up training users to always say -=
+f
+> without even thinking. =C2=A0Shouldn't this code be doing whatever ne=
+cessary
+> steps to make sure this repository has all the necessary objects with=
+out
+> the named alternates and then removing the file? =C2=A0An easiest mig=
+ht be to
+> temporarily remove the entry and run fsck, perhaps?
+>
+
+Yeah I had the same fear. I was wondering how to proceed with this part=
+=2E
+
+I take it your suggestion is to update the alternates file and run git
+fsck to see if any objects are missing then, if there are missing
+objects, switch to the original alternates file run git repack -a to
+fetch the missing objects and finally switch to the new alternates
+file. I'll code something up for us to discuss.
