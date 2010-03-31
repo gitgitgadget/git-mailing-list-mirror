@@ -1,91 +1,160 @@
-From: Eric Blake <eblake@redhat.com>
-Subject: Re: Are the patches used to build git on cygwin available in a git
- 	repo somewhere?
-Date: Wed, 31 Mar 2010 05:49:21 -0600
-Organization: Red Hat
-Message-ID: <4BB336C1.4000504@redhat.com>
-References: <2cfc40321003300916o305e4c15x7850549beafc26c0@mail.gmail.com>	 <20100331025626.GA13501@progeny.tock>	 <20100331025856.GB13501@progeny.tock> <o2p2cfc40321003310055i4b26d46l29ac6113be9eb980@mail.gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH v3 0/2] git-gui: change to display the combined diff in 
+	the case of conflicts.
+Date: Wed, 31 Mar 2010 23:50:02 +1200
+Message-ID: <l2z2cfc40321003310450p51363facu1142c665512d6825@mail.gmail.com>
+References: <2cfc40321003300834w59532e58m13d42acce4f2c5ce@mail.gmail.com>
+	 <4BB2F7A0.6020702@viscovery.net>
+	 <k2p2cfc40321003310412hf4c6d642n4349af3f644829ff@mail.gmail.com>
+	 <4BB3346C.7070700@viscovery.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigA9EC8BAAC9A656A11C4AD233"
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramsay Allan Jones <ramsay@ramsay1.demon.co.uk>,
-	Dmitry Potapov <dpotapov@gmail.com>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 31 13:49:52 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>, spearce@spearce.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Mar 31 13:50:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NwwQh-0002kG-L7
-	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 13:49:52 +0200
+	id 1NwwR1-0002sk-R5
+	for gcvg-git-2@lo.gmane.org; Wed, 31 Mar 2010 13:50:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756933Ab0CaLtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Mar 2010 07:49:46 -0400
-Received: from qmta06.emeryville.ca.mail.comcast.net ([76.96.30.56]:40607 "EHLO
-	qmta06.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756841Ab0CaLtp (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 31 Mar 2010 07:49:45 -0400
-Received: from omta19.emeryville.ca.mail.comcast.net ([76.96.30.76])
-	by qmta06.emeryville.ca.mail.comcast.net with comcast
-	id znib1d0031eYJf8A6npmz0; Wed, 31 Mar 2010 11:49:46 +0000
-Received: from [192.168.0.5] ([24.10.248.129])
-	by omta19.emeryville.ca.mail.comcast.net with comcast
-	id znpj1d0082oEyzc01nplfx; Wed, 31 Mar 2010 11:49:45 +0000
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.23) Gecko/20090812 Thunderbird/2.0.0.23 Mnenhy/0.7.6.666
-In-Reply-To: <o2p2cfc40321003310055i4b26d46l29ac6113be9eb980@mail.gmail.com>
-X-Enigmail-Version: 1.0.1
+	id S932153Ab0CaLuF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Mar 2010 07:50:05 -0400
+Received: from mail-pz0-f186.google.com ([209.85.222.186]:41327 "EHLO
+	mail-pz0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756979Ab0CaLuC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Mar 2010 07:50:02 -0400
+Received: by pzk16 with SMTP id 16so597336pzk.22
+        for <git@vger.kernel.org>; Wed, 31 Mar 2010 04:50:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=1BpuTpzNDV+ZwfkYK8EZDWpkQTDmybkqi1zb/5pwb0k=;
+        b=UgHgkIhOi0z6ekaI/AbX/pq/c34u1MhH0qQTygP7V2TN1G2fjTBRjc3Od8b4R+CnfP
+         df1x7b7Z0aTGZYcbGVwjUC6aAx/UfGVYFnwHT88AN8UUU7yI2xKHqQ3gvMTKarqFv1tQ
+         tqzpazsopYhB45jE4mnTmHLRlbgfVoLceakbg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=DagPHg0OdwBDpeSW2TmBeCM3uPSt4MY1sdvDxiCdczXJKKOE1Ist25H8Bnh4Fu3yNL
+         vR+NrL9OaVly0yu6J2hHsDntjjfTA6jDAUGFCCUhtzcK+fEHSF04tJ6d29oDtRcaLVlB
+         lFl7x6vxmYveSF1WOK3hvc2FTMjEEmy9qRTvc=
+Received: by 10.114.13.5 with HTTP; Wed, 31 Mar 2010 04:50:02 -0700 (PDT)
+In-Reply-To: <4BB3346C.7070700@viscovery.net>
+Received: by 10.115.80.1 with SMTP id h1mr3583067wal.116.1270036202283; Wed, 
+	31 Mar 2010 04:50:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143664>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigA9EC8BAAC9A656A11C4AD233
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Wed, Mar 31, 2010 at 11:39 PM, Johannes Sixt <j.sixt@viscovery.net> =
+wrote:
+> Am 3/31/2010 13:12, schrieb Jon Seymour:
+>>> I looked at the result, but it does not convince me. In my case, I =
+have a
+>>> large file that has many changes between the "maint" and "master"
+>>> branches. Whenever there are conflicts after merging "maint" to "ma=
+ster",
+>>> I see all these changes, and really they *are* uninteresting.
+>>>
+>>
+>> I think you may have missed the point of my patch.
+>>
+>> The successfully merged lines may be uninteresting from the point of
+>> deciding what I should *do* but they
+>> are highly relevant to the question of what I really, really should =
+*not* do.
+>
+> How would you decide that if you cannot read the information that is
+> presented to you?
+>
+> Can you tell without thinking for 10 seconds which of these two chang=
+es is
+> lost if you choose "Use local version"?
+>
+> @@@ ... @@@
+> =C2=A0x
+> =C2=A0+foo
+> =C2=A0y
+> @@@ ... @@@
+> =C2=A0a
+> - bar
+> =C2=A0b
+>
+> Oh, it's easy for the conflicted part of the diff, which you'll see
+> elsewhere as well:
+>
+> @@@ ... @@@
+> =C2=A0r
+> ++<<<<<<< HEAD
+> =C2=A0+foo
+> ++=3D=3D=3D=3D=3D=3D=3D
+> + bar
+> ++>>>>>>> some-branch
+> =C2=A0s
+>
+> Do not forget that in a case (like mine) where the non-condensed diff=
+ is
+> actually huge, the conflict markers would no exactly be easy to find =
+in
+> the diff.
 
-According to Jon Seymour on 3/31/2010 1:55 AM:
-> What I was looking for was a git repo that contains a branch with the
-> patches that the cygwin folks mutate the official git release with.
-> Such a repo would be quite useful because people could, in theory, use
-> these to produce their own cygwin git builds at arbitrary commits
-> instead of having to wait for cygwin to catch up.
->=20
-> Admittedly, it is not a big deal to build such a branch using the
-> patch from the cygwin package source, but I was just wondering whether
-> there was a well-known repo that contained the patches already.
+But that's exactly the point - not to make the choice easy, but to
+make it obvious that the choice is *not easy*.
 
-Nope - the patchset that I apply when building the cygwin port is so smal=
-l
-that so far I have just maintained it manually, rather than publishing a
-git repo.  But if you want me to make it more public, I can certainly loo=
-k
-into doing that.  And yes, now that 1.7.x is out for some time now, I
-should probably advance the cygwin port beyond 1.6.6.1.
+The problem is that as it stands the user things the only choice is
+between choosing "foo" and choosing "bar".
 
---=20
-Eric Blake   eblake@redhat.com    +1-801-349-2682
-Libvirt virtualization library http://libvirt.org
+> ++<<<<<<< HEAD
+> =C2=A0+foo
+> ++=3D=3D=3D=3D=3D=3D=3D
+> + bar
+> ++>>>>>>> some-branch
+
+This is a false choice but it is not obviously so.
+
+The point of using diff -c is *precisely* to help the user understand
+that it isn't a choice between foo and bar, but a choice
+between losing all the changes that came with foo and all the changes
+that came with bar.
 
 
---------------enigA9EC8BAAC9A656A11C4AD233
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+> And therefore I suggest to disable these options.
+>
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (Cygwin)
-Comment: Public key at home.comcast.net/~ericblake/eblake.gpg
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+I agree that this would be a better solution than leaving the behaviour=
+ as is.
 
-iEYEARECAAYFAkuzNskACgkQ84KuGfSFAYBniQCfWKvMT/Wvy2P8uGjb1Swse/wt
-P1kAmgIu2UPW96FKxjdltYFAAUL5XYwh
-=d+Jq
------END PGP SIGNATURE-----
+> Which are those very simplest cases that you are referring to? If you=
+ mean
+> modify/delete conflicts, then I indeed would like to keep the options=
+ for
+> them.
 
---------------enigA9EC8BAAC9A656A11C4AD233--
+The simplest case is when the presented diff presents the *whole*
+difference between the local and remote branches.
+
+As it stands, the gui can mislead the user into believing that the
+presented diff is the whole difference and that their only
+choice is between foo and bar.
+
+Sure, users who have been bitten by this misapprehension will learn,
+but it is hard lesson to learn.
+
+>
+> That said, your earlier patch that presented the diff against HEAD wa=
+s not
+> bad after all.
+
+I prefer the -c version - not because the output is easy to
+understand, but precisely because it gives pause.
+
+jon.
