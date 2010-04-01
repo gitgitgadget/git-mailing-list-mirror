@@ -1,206 +1,108 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv5 3/6] Gitweb: add autoconfigure support for minifiers
-Date: Fri, 2 Apr 2010 00:40:25 +0200
-Message-ID: <201004020040.26177.jnareb@gmail.com>
-References: <4BB430D9.1090900@mailservices.uwaterloo.ca>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Mark Rada <marada@uwaterloo.ca>
-X-From: git-owner@vger.kernel.org Fri Apr 02 00:40:46 2010
+From: Eric Blake <eblake@redhat.com>
+Subject: [PATCH] Makefile: update defaults for modern Cygwin
+Date: Thu,  1 Apr 2010 16:43:54 -0600
+Message-ID: <1270161834-9597-1-git-send-email-eblake@redhat.com>
+Cc: jon.seymour@gmail.com, jrnieder@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 02 00:45:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxT49-0005F6-96
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 00:40:45 +0200
+	id 1NxT8Z-0006qb-5C
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 00:45:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753524Ab0DAWki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Apr 2010 18:40:38 -0400
-Received: from mail-qy0-f171.google.com ([209.85.221.171]:59323 "EHLO
-	mail-qy0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751221Ab0DAWkf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Apr 2010 18:40:35 -0400
-Received: by qyk1 with SMTP id 1so1636971qyk.15
-        for <git@vger.kernel.org>; Thu, 01 Apr 2010 15:40:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=hTFzb22NMBxthW5P/T6N3pw0CkpzLq7ZXoZWVPPucSY=;
-        b=ApaE/6/M3rfTe/RcqTLRI7/mhdp21oNlPtchz72lLGVUDHGKeX8KEZWRNU1+svfdvY
-         phR/iE0XtRf5N2E+nbwaLur/SNwSPE6ZKQvGnUQ4raqfLA7ikH8vxDYhaKX3zfPPnIi9
-         5XhsUN+JRr3YqGKXxizl/UaVgJPYkQUk3NGeU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=UDTMnak27+4bW/yRPr50zaG8SHNRurxLN0d0Xd5py7CAwcTH4QWTLBpI3F6zQ/ZOdm
-         /Hgbi0A9+ug5v7HDOR9Uf21/SkcNsX9KWaoXsFJCeDFmf+Da1yCU1VMasBrQ+IcePkYl
-         yQKuM2csDcaT6CBBHVyGK7+/Y1JzcoGe8ucZE=
-Received: by 10.224.107.209 with SMTP id c17mr365483qap.308.1270161633850;
-        Thu, 01 Apr 2010 15:40:33 -0700 (PDT)
-Received: from [192.168.1.13] ([72.14.241.38])
-        by mx.google.com with ESMTPS id 22sm4455089qyk.6.2010.04.01.15.40.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 01 Apr 2010 15:40:32 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4BB430D9.1090900@mailservices.uwaterloo.ca>
-Content-Disposition: inline
+	id S1757317Ab0DAWpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Apr 2010 18:45:13 -0400
+Received: from qmta03.emeryville.ca.mail.comcast.net ([76.96.30.32]:55979 "EHLO
+	qmta03.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757253Ab0DAWpK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Apr 2010 18:45:10 -0400
+Received: from omta22.emeryville.ca.mail.comcast.net ([76.96.30.89])
+	by qmta03.emeryville.ca.mail.comcast.net with comcast
+	id 0GxR1e0091vN32cA3NlBZz; Thu, 01 Apr 2010 22:45:11 +0000
+Received: from localhost.localdomain ([24.10.248.129])
+	by omta22.emeryville.ca.mail.comcast.net with comcast
+	id 0NpW1e00N2oEyzc8iNpZkA; Thu, 01 Apr 2010 22:49:34 +0000
+X-Mailer: git-send-email 1.6.6.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143758>
 
-On Thu, 1 Apr 2010, Mark Rada wrote:
+Now that Cygwin 1.7.x has enabled lots of new features, and Cygwin 1.5
+is no longer actively supported by the Cygwin mailing lists, we might
+as well update the defaults to cater to those new features.
 
-> This will allow users to set a JavaScript/CSS minifier when/if they run
-> the autoconfigure script while building git.
+NO_TRUSTABLE_FILEMODE is only necessary on FAT drives; the Cygwin
+community recommends NTFS drives, but there is still too much use
+for FAT to switch the default.  Likewise, UNRELIABLE_FSTAT is probably
+file-system specific, but worth keeping unchanged.
 
-This is a good idea, IMHO.
+This commit does not change the default for NO_MMAP, although definitive
+proof of whether this option is necessary is lacking.
 
->                                              This is much more 
-> convenient than editing Makefile and gitweb/Makefile manually.
+Signed-off-by: Eric Blake <eblake@redhat.com>
+---
+ Makefile |   22 ++++++++++++----------
+ 1 files changed, 12 insertions(+), 10 deletions(-)
 
-Actually recommended way of customizing the build if one doesn't
-want to use ./configure script (besides providing values in
-command line when invoking make) is not to edit Makefile, but
-to add appropriate definitions to [untracked] config.mak file.
-
-> 
-> Signed-off-by: Mark Rada <marada@uwaterloo.ca>
-> 
-> ---
-> 
-> 	No changes since the previous version.
-> 
->  Makefile        |    4 ----
->  configure.ac    |   20 ++++++++++++++++++++
->  gitweb/Makefile |   14 ++------------
->  3 files changed, 22 insertions(+), 16 deletions(-)
-
-Why there is no change to config.mak.in?  I would thought that it
-would contain JSMIN=@JSMIN@ etc.
-
-But see also below: perhaps current version is a better version.
-
-> 
-> diff --git a/Makefile b/Makefile
-> index 450e4df..ef1a232 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -282,10 +282,6 @@ lib = lib
->  # DESTDIR=
->  pathsep = :
->  
-> -# JavaScript/CSS minifier invocation that can function as filter
-> -JSMIN =
-> -CSSMIN =
-> -
-
-I think it is a good change anyway, as we unset variables in Makefile
-only in "Guard against environment variables" for variables such as
-LIB_OBJS.  So even without support for JSMIN/CSSMIN in ./configure it
-would be a good change.
-
->  export prefix bindir sharedir sysconfdir
->  
->  CC = gcc
-> diff --git a/configure.ac b/configure.ac
-> index 914ae57..bf36c72 100644
-> --- a/configure.ac
-> +++ b/configure.ac
-> @@ -179,6 +179,26 @@ fi],
->     AC_MSG_NOTICE([Will try -pthread then -lpthread to enable POSIX Threads.])
->  ])
->  
-> +# Define option to enable JavaScript minification
-> +AC_ARG_ENABLE([jsmin],
-> + [AS_HELP_STRING([--enable-jsmin=ARG],
-> +   [ARG is the value to pass to make to enable JavaScript minification.])],
-> + [
-> +   JSMIN=$enableval;
-> +   AC_MSG_NOTICE([Setting JSMIN to '$JSMIN' to enable JavaScript minifying])
-> +   GIT_CONF_APPEND_LINE(JSMIN=$enableval);
-> + ])
-> +
-> +# Define option to enable CSS minification
-> +AC_ARG_ENABLE([cssmin],
-> + [AS_HELP_STRING([--enable-cssmin=ARG],
-> +   [ARG is the value to pass to make to enable CSS minification.])],
-> + [
-> +   CSSMIN=$enableval;
-> +   AC_MSG_NOTICE([Setting CSSMIN to '$CSSMIN' to enable CSS minifying])
-> +   GIT_CONF_APPEND_LINE(CSSMIN=$enableval);
-> + ])
-> +
-
-Why not follow the code as it was done e.g. for iconv (--without-iconv
-and --with-iconv=path); this would require JSMIN=@JSMIN@ in 
-config.mak.in (and respectively for CSSMIN).
-
-Alternatively, if you decide on appending to config.mak.autogen (by the
-way of config.mak.append) instead of filling config.mak.in, why not use
-ready macro GIT_PARSE_WITH_SET_MAKE_VAR?
-
-[...]
-> diff --git a/gitweb/Makefile b/gitweb/Makefile
-> index fffe700..ffee4bd 100644
-> --- a/gitweb/Makefile
-> +++ b/gitweb/Makefile
-> @@ -14,10 +14,6 @@ prefix ?= $(HOME)
->  bindir ?= $(prefix)/bin
->  RM ?= rm -f
->  
-> -# JavaScript/CSS minifier invocation that can function as filter
-> -JSMIN ?=
-> -CSSMIN ?=
-> -
-
-I can understand that this was not needed anyway.
-
->  # default configuration for gitweb
->  GITWEB_CONFIG = gitweb_config.perl
->  GITWEB_CONFIG_SYSTEM = /etc/gitweb.conf
-> @@ -30,18 +26,10 @@ GITWEB_STRICT_EXPORT =
->  GITWEB_BASE_URL =
->  GITWEB_LIST =
->  GITWEB_HOMETEXT = indextext.html
-> -ifdef CSSMIN
-> -GITWEB_CSS = gitweb.min.css
-> -else
->  GITWEB_CSS = gitweb.css
-> -endif
->  GITWEB_LOGO = git-logo.png
->  GITWEB_FAVICON = git-favicon.png
-> -ifdef JSMIN
-> -GITWEB_JS = gitweb.min.js
-> -else
->  GITWEB_JS = gitweb.js
-> -endif
->  GITWEB_SITE_HEADER =
->  GITWEB_SITE_FOOTER =
->  
-> @@ -95,9 +83,11 @@ all:: gitweb.cgi
->  FILES = gitweb.cgi
->  ifdef JSMIN
->  FILES += gitweb.min.js
-> +GITWEB_JS = gitweb.min.js
->  endif
->  ifdef CSSMIN
->  FILES += gitweb.min.css
-> +GITWEB_CSS = gitweb.min.css
->  endif
->  gitweb.cgi: gitweb.perl $(GITWEB_JS) $(GITWEB_CSS)
-
-O.K., this change means that it is two conditionals less...
-
+diff --git a/Makefile b/Makefile
+index 3e816e1..442ce0b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -34,7 +34,7 @@ all::
+ # Define NO_D_INO_IN_DIRENT if you don't have d_ino in your struct dirent.
+ #
+ # Define NO_D_TYPE_IN_DIRENT if your platform defines DT_UNKNOWN but lacks
+-# d_type in struct dirent (latest Cygwin -- will be fixed soonish).
++# d_type in struct dirent (Cygwin 1.5, fixed in Cygwin 1.7).
+ #
+ # Define NO_C99_FORMAT if your formatted IO functions (printf/scanf et.al.)
+ # do not support the 'size specifiers' introduced by C99, namely ll, hh,
+@@ -109,7 +109,7 @@ all::
+ # Define NO_PTHREADS if you do not have or do not want to use Pthreads.
+ #
+ # Define NO_PREAD if you have a problem with pread() system call (e.g.
+-# cygwin.dll before v1.5.22).
++# cygwin1.dll before v1.5.22).
+ #
+ # Define NO_FAST_WORKING_DIRECTORY if accessing objects in pack files is
+ # generally faster on your platform than accessing the working directory.
+@@ -831,22 +831,24 @@ ifeq ($(uname_S),SunOS)
+ 	BASIC_CFLAGS += -D__EXTENSIONS__ -D__sun__ -DHAVE_ALLOCA_H
+ endif
+ ifeq ($(uname_O),Cygwin)
+-	NO_D_TYPE_IN_DIRENT = YesPlease
+-	NO_D_INO_IN_DIRENT = YesPlease
+-	NO_STRCASESTR = YesPlease
+-	NO_MEMMEM = YesPlease
+-	NO_MKSTEMPS = YesPlease
+-	NO_SYMLINK_HEAD = YesPlease
++	ifneq ($(wordlist 1, 2, $(subst ., ,$(uname_R))),1 7)
++		NO_D_TYPE_IN_DIRENT = YesPlease
++		NO_D_INO_IN_DIRENT = YesPlease
++		NO_STRCASESTR = YesPlease
++		NO_MEMMEM = YesPlease
++		NO_MKSTEMPS = YesPlease
++		NO_SYMLINK_HEAD = YesPlease
++		NO_IPV6 = YesPlease
++		OLD_ICONV = UnfortunatelyYes
++	endif
+ 	NEEDS_LIBICONV = YesPlease
+ 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
+ 	NO_TRUSTABLE_FILEMODE = UnfortunatelyYes
+-	OLD_ICONV = UnfortunatelyYes
+ 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+ 	# There are conflicting reports about this.
+ 	# On some boxes NO_MMAP is needed, and not so elsewhere.
+ 	# Try commenting this out if you suspect MMAP is more efficient
+ 	NO_MMAP = YesPlease
+-	NO_IPV6 = YesPlease
+ 	X = .exe
+ 	COMPAT_OBJS += compat/cygwin.o
+ 	UNRELIABLE_FSTAT = UnfortunatelyYes
 -- 
-Jakub Narebski
-Poland
+1.6.6.1
