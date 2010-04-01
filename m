@@ -1,62 +1,79 @@
-From: Markus Elfring <Markus.Elfring@web.de>
-Subject: Re: [PATCH] Clarification for the command "git checkout <branch>"
-Date: Thu, 01 Apr 2010 08:38:52 +0200
-Message-ID: <4BB43F7C.8070003@web.de>
-References: <4B67227A.7030908@web.de> <4B898F97.90706@web.de> <7vr5o6s5xf.fsf@alter.siamese.dyndns.org> <4B8B9BF1.10408@web.de> <4b8bf32f.0706c00a.26cb.691d@mx.google.com> <4BA104C7.5020207@web.de> <32541b131003170944w7a0215frcace205f32d313bf@mail.gmail.com> <7vaau6q18q.fsf@alter.siamese.dyndns.org> <4BA1FC39.10300@web.de> <32541b131003180936x746dad06k386788d3cb6fcdeb@mail.gmail.com> <b4087cc51003181019r4408953bxcd5049c9521b8173@mail.gmail.com> <4BA3329E.6050304@web.de> <4BB21F6D.7070804@web.de> <7vd3ylv4oq.fsf@alter.siamese.dyndns.org>
+From: Frank Li <lznuaa@gmail.com>
+Subject: Re: Will tortoisesvn conflict with tortoisegit?
+Date: Thu, 1 Apr 2010 14:52:00 +0800
+Message-ID: <o2u1976ea661003312352q15077derf176d0731290165d@mail.gmail.com>
+References: <28104898.post@talk.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Michael Witten <mfwitten@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 01 08:39:09 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: fantasy1215 <albertkong1984@163.com>
+X-From: git-owner@vger.kernel.org Thu Apr 01 08:59:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxE3W-0005dd-VN
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Apr 2010 08:39:07 +0200
+	id 1NxENf-0003wb-Jw
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Apr 2010 08:59:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753669Ab0DAGjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Apr 2010 02:39:00 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:39074 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753657Ab0DAGi7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Apr 2010 02:38:59 -0400
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 18D8614A57673;
-	Thu,  1 Apr 2010 08:38:58 +0200 (CEST)
-Received: from [78.49.37.65] (helo=[192.168.1.2])
-	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #4)
-	id 1NxE3N-0001QZ-00; Thu, 01 Apr 2010 08:38:58 +0200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
-In-Reply-To: <7vd3ylv4oq.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.0.1
-X-Sender: Markus.Elfring@web.de
-X-Provags-ID: V01U2FsdGVkX1+p/fU5lGitd3ZG0op08GJ3yYAAr0IfxMDimg+y
-	om8M4pAUynukXDOvM9Sk27YtoQkpHuKjTMDpqNxFOAwXRQb1+C
-	cemCmtKdAw90WBjrF4mw==
+	id S1752935Ab0DAG7u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Apr 2010 02:59:50 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:54154 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752018Ab0DAG7t convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Apr 2010 02:59:49 -0400
+Received: by gyg13 with SMTP id 13so295985gyg.19
+        for <git@vger.kernel.org>; Wed, 31 Mar 2010 23:59:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=mir/pSAtn+IsaRHpkloIuf6hcJmT7G70tfacsGZiSZU=;
+        b=YbfOumzmZUdItjTexHNHxwPmNVoN2uIHTTyUGlCaBmvMpb/pR/E8AlhZBrUD32wOA6
+         uiejB2A4zNtzANwadpCnhFQRJmcad5wB0J2iF3/m5eVA0n5Bysz1rq/vURWb+dJeCzu4
+         joh2q6IQBxrOd6IRjls58hzBqBJZwRUr8FKaU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Kcrw6MzSN5wfnEdJtXkQMOu2eTI9Ht7TuF7DE/DsrOHJxBdbvhPfvCQepD5H503rxt
+         My/+SMyecPWcyzrqFVJH0iINmgujIwcvDaSUa+WH2w7lgw32kAzr0ExiIfjKY7QpIJrO
+         6Mz0F1194xca2OSNB1P0ADTzY2n5HWhsinUyQ=
+Received: by 10.150.206.6 with HTTP; Wed, 31 Mar 2010 23:52:00 -0700 (PDT)
+In-Reply-To: <28104898.post@talk.nabble.com>
+Received: by 10.150.159.6 with SMTP id h6mr1036286ybe.171.1270104720118; Wed, 
+	31 Mar 2010 23:52:00 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143720>
 
-> In such a case, you may want retry the command after recording
-> the local changes (1) in a temporary commit on the current branch,
+TortoiseSVN provides a way to share icon overlay between tortoise clien=
+t.
+TortoiseGit use this way.
+There are not conflict between tortoisesvn and tortoisegit.
 
-Should corresponding work flow actions be also mentioned to clean up such
-"temporaries"?
+The only limitation is tortoisegit and tortoisesvn using the same icon =
+set.
 
-
-> or (2) by using "git stash".
-
-Do we need a new feature "stash per branch" here?
-
-Will an option be useful to specify that uncommitted changes can be overwritten
-by data from the branch switch?
-
-Regards,
-Markus
+2010/4/1 fantasy1215 <albertkong1984@163.com>:
+>
+> I'm a tortoisesvn user, and I've installed tortoisesvn already!
+> I'm planning to use tortoisegit under windows xp.
+> But I know under windows, there's iconoverlay limit(I remember if you
+> installed tortoisesvn
+> and tortoiseCVS together, it may encounter IconOverlay conflict).
+> So will I encounter iconoverlay conflict?
+> --
+> View this message in context: http://old.nabble.com/Will-tortoisesvn-=
+conflict-with-tortoisegit--tp28104898p28104898.html
+> Sent from the git mailing list archive at Nabble.com.
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
