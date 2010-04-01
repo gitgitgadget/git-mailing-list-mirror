@@ -1,154 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.0.4
-Date: Wed, 31 Mar 2010 21:50:43 -0700
-Message-ID: <7vljd7srmk.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] Clarification for the command "git checkout <branch>"
+Date: Wed, 31 Mar 2010 21:52:52 -0700
+Message-ID: <7vd3yjsriz.fsf@alter.siamese.dyndns.org>
+References: <4B67227A.7030908@web.de> <4BA104C7.5020207@web.de>
+ <32541b131003170944w7a0215frcace205f32d313bf@mail.gmail.com>
+ <7vaau6q18q.fsf@alter.siamese.dyndns.org> <4BA1FC39.10300@web.de>
+ <32541b131003180936x746dad06k386788d3cb6fcdeb@mail.gmail.com>
+ <b4087cc51003181019r4408953bxcd5049c9521b8173@mail.gmail.com>
+ <4BA3329E.6050304@web.de> <4BB21F6D.7070804@web.de>
+ <7vd3ylv4oq.fsf@alter.siamese.dyndns.org>
+ <p2nf3271551003302058ve6b54731h1bea42b5c6605928@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 01 06:51:13 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Markus Elfring <Markus.Elfring@web.de>,
+	Michael Witten <mfwitten@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 01 06:53:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxCN6-0003Ne-LK
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Apr 2010 06:51:12 +0200
+	id 1NxCP4-0003w7-8L
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Apr 2010 06:53:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752554Ab0DAEu5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Apr 2010 00:50:57 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56392 "EHLO
+	id S1752588Ab0DAExI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Apr 2010 00:53:08 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57435 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752483Ab0DAEuy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Apr 2010 00:50:54 -0400
+	with ESMTP id S1752483Ab0DAExF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Apr 2010 00:53:05 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 022AFA7085;
-	Thu,  1 Apr 2010 00:50:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=29JMwqW24WuPupHneiFpe6CNT
-	xs=; b=hD/6LIbY+4t+4gsCgn/oXImYfQa3XfSAe2TiI4mI870o0LBh2AfgSyAXD
-	hf1C9cQUHpBjNcBrh65W0wKq14hO5go4WKNXHU5ebPs9kv76CuNAQdjJLd6LwUd4
-	vWsUR6mvQkqtqDSMzrWPjUoaF6EHqAP5k16OfYnLiILnRQabG0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=vpr25Src2lzvmSocmnD
-	JnXSA1EkakEG3pa8OtAIQu7plI4Qr9INGGIpWnrdX5Iz476cOQzcgc51PagpeRPu
-	IbEdXrBPS3YQERKJR5Ync2qCENVYGpjQn0iZ2Sx+YeoL96aFjxPZ7JsH5cgBfUDx
-	YdbukGfPmmzzqHaebRTw0D1w=
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7857BA70B0;
+	Thu,  1 Apr 2010 00:53:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=g6ZfT2ay7fYOUQ28iSgVjGEsXD4=; b=EjdxtL3AoGyAsLQl6mDnYiJ
+	Ba9MdjN544a80TE/GSkesuVeRRoQ2mcA8dOm7xntMWVDO2jsvZoMJG2eyNmAJU9U
+	7qoL+MA4dE8jQRTcB0KXJOf7w90CYAJYRvHHjy2gElIFXfyUdfWIHkZvGUbOOjuM
+	/cZ5RSf5xheQ747/o4n8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=hHo1Vk9MbQsDDEmKIRFqo39xrgfwO3Botq+olfQdLAUWtJieO
+	RR8AGTaQqYFP/0BgsX20x2Cy9yInY7v2m561SLKvpaou5i73SChHRQvHFgA/zi2C
+	bAvit/9c4vy5jA97ioA7w5VA+3ORMj6TSsjW/2VLAscif6ieRjkAaTFx2U=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C2EDBA7083;
-	Thu,  1 Apr 2010 00:50:48 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AED6A70AE;
+	Thu,  1 Apr 2010 00:53:00 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DDFD7A7082; Thu,  1 Apr
- 2010 00:50:44 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3C8EFA70AD; Thu,  1 Apr
+ 2010 00:52:54 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2424AE96-3D4A-11DF-A05A-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7273E6AC-3D4A-11DF-A05A-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143707>
 
-The latest maintenance release Git 1.7.0.4 is available at the
-usual places:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-  http://www.kernel.org/pub/software/scm/git/
+> On Wed, Mar 31, 2010 at 3:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> +such a case, you may want retry the command after recording the local
+>> +changes (1) in a temporary commit on the current branch, or (2) by using
+>> +"git stash". Alternatively, use "-m" option to force a merge.
+>
+> Couple of things: Is (1) really an option?
 
-  git-1.7.0.4.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.7.0.4.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.7.0.4.tar.{gz,bz2}		(preformatted docs)
+Of course; otherwise I wouldn't have written it, but another option (0)
+would be:
 
-The RPM binary packages for a few architectures are found in:
+    (0) if you are in the middle of working something for the current
+    branch, finish it first before switching to other task.
 
-  RPMS/$arch/git-*-1.7.0.4-1.fc11.$arch.rpm	(RPM)
+But that would go without saying.
 
-Git v1.7.0.4 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
+> The user will have to go
+> through documentation on rewriting history, which I find completely
+> unnecessary to just switch branches.
 
-=46ixes since v1.7.0.3
---------------------
+I think you are thinking backwards.  If the user always does a perfect job
+before making each and every commit, she doesn't ever need to learn
+"amend".  Otherwise, she will learn "amend" way before learning to switch
+between branches to work on different things at the same time.
 
- * Optimized ntohl/htonl on big-endian machines were broken.
-
- * Color values given to "color.<cmd>.<slot>" configuration can now hav=
-e
-   more than one attributes (e.g. "bold ul").
-
- * "git add -u nonexistent-path" did not complain.
-
- * "git apply --whitespace=3Dfix" didn't work well when an early patch =
-in
-   a patch series adds trailing blank lines and a later one depended on
-   such a block of blank lines at the end.
-
- * "git fast-export" didn't check error status and stop when marks file
-   cannot be opened.
-
- * "git format-patch --ignore-if-in-upstream" gave unwarranted errors
-   when the range was empty, instead of silently finishing.
-
- * "git remote prune" did not detect remote tracking refs that became
-   dangling correctly.
-
-And other minor fixes and documentation updates.
-
-----------------------------------------------------------------
-
-Changes since v1.7.0.3 are as follows:
-
-Bj=C3=B6rn Gustavsson (5):
-      apply: Don't unnecessarily update line lengths in the preimage
-      apply: Remove the quick rejection test
-      apply: Allow blank context lines to match beyond EOF
-      t4124: Add additional tests of --whitespace=3Dfix
-      t3417: Add test cases for "rebase --whitespace=3Dfix"
-
-Chris Packham (1):
-      test for add with non-existent pathspec
-
-David Aguilar (1):
-      difftool: Fix '--gui' when diff.guitool is unconfigured
-
-Greg Bacon (1):
-      Documentation: Clarify support for smart HTTP backend
-
-Holger Wei=C3=9F (3):
-      Don't redefine htonl and ntohl on big-endian
-      Link against libiconv on IRIX
-      Documentation: show-ref <pattern>s are optional
-
-Jakub Narebski (1):
-      gitweb: git_get_project_config requires only $git_dir, not also $=
-project
-
-Jan St=C4=99pie=C5=84 (1):
-      Updated the usage string of git reset
-
-Jeff King (1):
-      dir: fix COLLECT_IGNORED on excluded prefixes
-
-Johannes Sixt (2):
-      diff: fix textconv error zombies
-      Windows: fix utime() for read-only files
-
-Junio C Hamano (8):
-      git add -u: die on unmatched pathspec
-      color: allow multiple attributes
-      t0050: mark non-working test as such
-      tests for "git add ignored-dir/file" without -f
-      refs: ref entry with NULL sha1 is can be a dangling symref
-      t9350: fix careless use of "cd"
-      Prepare for 1.7.0.4
-      Git 1.7.0.4
-
-Kevin Ballard (1):
-      format-patch: Squelch 'fatal: Not a range." error
-
-Markus Heidelberg (1):
-      Documentation: explain the meaning of "-g" in git-describe output
-
-Sverre Rabbelier (1):
-      fast-export: don't segfault when marks file cannot be opened
+IOW, by the time the user learns branch switching, I expect she at least
+knows about "amend" (if not rebase-i/filter-branch), and that is all that
+is necessary to restart from a WIP commit when she comes back.
