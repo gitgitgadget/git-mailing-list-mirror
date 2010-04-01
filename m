@@ -1,110 +1,101 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv5 5/6] gitweb: add documentation to INSTALL regarding gitweb.js
-Date: Thu, 1 Apr 2010 13:46:53 +0200
-Message-ID: <201004011346.54530.jnareb@gmail.com>
-References: <4BB430FD.3050306@mailservices.uwaterloo.ca>
+Subject: Re: [PATCHv5 6/6] gitweb: update INSTALL to use shorter make target
+Date: Thu, 1 Apr 2010 14:25:29 +0200
+Message-ID: <201004011425.29869.jnareb@gmail.com>
+References: <4BB43105.7000201@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Mark Rada <marada@uwaterloo.ca>
-X-From: git-owner@vger.kernel.org Thu Apr 01 13:47:16 2010
+X-From: git-owner@vger.kernel.org Thu Apr 01 14:25:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxIrj-00049R-Rc
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Apr 2010 13:47:16 +0200
+	id 1NxJSx-0006Oy-Ka
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Apr 2010 14:25:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755611Ab0DALrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Apr 2010 07:47:09 -0400
-Received: from qw-out-2122.google.com ([74.125.92.24]:10158 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755549Ab0DALrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Apr 2010 07:47:05 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so351504qwh.37
-        for <git@vger.kernel.org>; Thu, 01 Apr 2010 04:47:05 -0700 (PDT)
+	id S1755977Ab0DAMZh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Apr 2010 08:25:37 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:55804 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755783Ab0DAMZf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Apr 2010 08:25:35 -0400
+Received: by bwz1 with SMTP id 1so794908bwz.21
+        for <git@vger.kernel.org>; Thu, 01 Apr 2010 05:25:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=NApzQ974qOddq06vpmuv6xsUOKcEUM3VZ74B/0/z+4Y=;
-        b=DdosuBnAJZlCtCWpxB7Z3eas4Nte8lMWFMc2wOq+k7Qc7r9yG9D6ABsnsb4KVLfk/p
-         EvOMu1JktUKI4DE4y64+3SI7qhgtRDYGhrrbDRdAPq8DH2U0DTdyJjgdCgldlt2JmO8M
-         ShBqtcqNA66YMONMhkgnfsUOIG5NbPuHTYRLY=
+        bh=rFAnlt/nCnsjZsxiWkBWYAjUk6TvspknPJMd1xrWZgk=;
+        b=OgV+T+Cj5/OaEMY3nmV7hlm9EXBM3KuPaXdZoNDmDkG7jLu6GAG/4BNuMce3WNADl2
+         Ynwc4AziIu500OBC7+vI6AfIsS+uvQsIgyvzcgjWOk54zoUY0xWNgJWxC7z2+nNKdEWz
+         DsB5pqpbGwQSi302TOGkMjzGUfRFwY+ikSysM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=sYYDwviZTOJG8y7gw4TKAt/qcWsfM7FUcYNhCxYg6ZrOer6+LReAh12Y+ecS5M1ABO
-         iijahlbiAIgbnpNSru+Vj5D8mZ/xZM0FM7RLXANlQwUiPUMDFS9uZma4+lYDN0Jo+bs2
-         a0bDuqTvNtxfOIeLhcpW6on7YLtp2BzZnd4GE=
-Received: by 10.229.217.130 with SMTP id hm2mr1151711qcb.59.1270122424750;
-        Thu, 01 Apr 2010 04:47:04 -0700 (PDT)
-Received: from [192.168.1.13] ([72.14.241.40])
-        by mx.google.com with ESMTPS id 20sm3973201qyk.12.2010.04.01.04.47.02
+        b=KRIRmd6qtxTG4MmG7o67HsO2P4IESJux88kr9I00hOEkmnVlvq17dGO3T62ICLBLCF
+         uU7doAqRCVLoP1Gut2/D/KWf33QQR8Ey11zM4SBwcdfXl0MgrPPgrRte/HmHpgwgZT9C
+         WTQDvTurH28152jNtbcltky/daZ5/jDI7RiXM=
+Received: by 10.204.151.71 with SMTP id b7mr1349690bkw.114.1270124733966;
+        Thu, 01 Apr 2010 05:25:33 -0700 (PDT)
+Received: from [192.168.1.13] (abws156.neoplus.adsl.tpnet.pl [83.8.242.156])
+        by mx.google.com with ESMTPS id 15sm4185956bwz.4.2010.04.01.05.25.31
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 01 Apr 2010 04:47:03 -0700 (PDT)
+        Thu, 01 Apr 2010 05:25:32 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <4BB430FD.3050306@mailservices.uwaterloo.ca>
+In-Reply-To: <4BB43105.7000201@mailservices.uwaterloo.ca>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143727>
 
 On Thu, 1 Apr 2010, Mark Rada wrote:
 
-> This patch updates gitweb/INSTALL to mention gitweb.js, including
-> JavaScript minification support.
-> 
-> Signed-off-by: Mark Rada <marada@uwaterloo.ca>
+> Gitweb can be generated by the gitweb/gitweb.cgi target or the gitweb
+> target. Since the gitweb target is shorter, I think it would be better
+> to have new users be instructed to use it.
 
-Thanks for this writeup.
+Good idea.
+  
+> -	$ make prefix=/usr gitweb/gitweb.cgi  ;# as yourself
+> +	$ make prefix=/usr gitweb.cgi         ;# as yourself
+>  	# cp gitweb/git* /var/www/cgi-bin/    ;# as root
 
-For what it is worth:
-Acked-by: Jakub Narebski <jnareb@gmail.com>
- 
-> ---
-> 
-> Changes since v4:
-> 	- Compacted the point about minification into CSS
-> 	  point about minification
+But it should read
 
-Nice to have differences from previous version described in 
-comments...
+-	$ make prefix=/usr gitweb/gitweb.cgi  ;# as yourself
++	$ make prefix=/usr gitweb             ;# as yourself
 
-> 
->  gitweb/INSTALL |   23 +++++++++++++----------
->  1 files changed, 13 insertions(+), 10 deletions(-)
-
-This change migh have been a bit smaller without accompanying
-rewrapping of affected paragraphs, but on the other hand it would
-leave gitweb/INSTALL less readable.
- 
-
-> @@ -79,13 +81,14 @@ Build example
->    we want to display are under /home/local/scm, you can do
+The target is "gitweb", not "gitweb.cgi"
+  
+>  Alternatively you can use autoconf generated ./configure script to
+> @@ -16,7 +15,7 @@ instead
 >  
->  	make GITWEB_PROJECTROOT="/home/local/scm" \
-> +             GITWEB_JS="/gitweb/gitweb.js" \
+>  	$ make configure                     ;# as yourself
+>  	$ ./configure --prefix=/usr          ;# as yourself
+> -	$ make gitweb/gitweb.cgi             ;# as yourself
+> +	$ make gitweb.cgi                    ;# as yourself
 
-Minor nit: other lines use TAB + 5 x SPACE, so it should read:
+Same here.
 
-  +	     GITWEB_JS="/gitweb/gitweb.js" \
 
-   -----^^^^^
-
->  	     GITWEB_CSS="/gitweb/gitweb.css" \
+> @@ -86,7 +84,7 @@ Build example
 >  	     GITWEB_LOGO="/gitweb/git-logo.png" \
 >  	     GITWEB_FAVICON="/gitweb/git-favicon.png" \
 >  	     bindir=/usr/local/bin \
->  	     gitweb/gitweb.cgi
+> -	     gitweb/gitweb.cgi
+> +             gitweb.cgi
+
+Same here.  Also spaces in place of TAB.
 
 -- 
 Jakub Narebski
