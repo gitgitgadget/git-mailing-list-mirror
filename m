@@ -1,133 +1,154 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Are the patches used to build git on cygwin available in a git
- repo somewhere?
-Date: Wed, 31 Mar 2010 21:35:26 -0500
-Message-ID: <20100401023526.GA20916@progeny.tock>
-References: <2cfc40321003300916o305e4c15x7850549beafc26c0@mail.gmail.com>
- <20100331025626.GA13501@progeny.tock>
- <20100331025856.GB13501@progeny.tock>
- <o2p2cfc40321003310055i4b26d46l29ac6113be9eb980@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git 1.7.0.4
+Date: Wed, 31 Mar 2010 21:50:43 -0700
+Message-ID: <7vljd7srmk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Ramsay Allan Jones <ramsay@ramsay1.demon.co.uk>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Eric Blake <eblake@redhat.com>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 01 04:41:10 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 01 06:51:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxALG-0001bo-3D
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Apr 2010 04:41:10 +0200
+	id 1NxCN6-0003Ne-LK
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Apr 2010 06:51:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753191Ab0DAClB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Mar 2010 22:41:01 -0400
-Received: from mail-yw0-f172.google.com ([209.85.211.172]:44742 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752585Ab0DAClA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Mar 2010 22:41:00 -0400
-Received: by ywh2 with SMTP id 2so553237ywh.33
-        for <git@vger.kernel.org>; Wed, 31 Mar 2010 19:40:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=7EcffCxljrwN4UeDqHdVZKnETvkprrOlTbAJ+BvCyNM=;
-        b=CQj1IFuERH/i4W4xcyUIgfI2rt0AS6s21BbZxdry3W3I903nTSyp03zrB/pvcwgS1H
-         N8PuC/VA90km0pygN6pGNvYKZtIKDppkP84lIJ1kroP4U2FIx9o6uO6iDKlR+5tScCSw
-         ObFEEAMMaMJoIlERlTwTKEg+dvByc4oGRTXGg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=x7q8PGUP6vu9zG6NCx6utd31y3S/Mtl580jUTXdVvXSrjdwMpRGfHUO1Jm+Vh3aSBM
-         hgGi+XgOcmOVrklgwxM7QBQLkYwvb93Dc8MktPYsJGiiNv6LOalxKNymhZIubp/BPMMl
-         GxGuZDfcn/H1gy0/2ND8GYAMEvfkmVobDEKMo=
-Received: by 10.90.5.24 with SMTP id 24mr856973age.47.1270089301960;
-        Wed, 31 Mar 2010 19:35:01 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm28906iwn.13.2010.03.31.19.35.00
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 31 Mar 2010 19:35:00 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <o2p2cfc40321003310055i4b26d46l29ac6113be9eb980@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752554Ab0DAEu5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Apr 2010 00:50:57 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56392 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752483Ab0DAEuy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Apr 2010 00:50:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 022AFA7085;
+	Thu,  1 Apr 2010 00:50:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=29JMwqW24WuPupHneiFpe6CNT
+	xs=; b=hD/6LIbY+4t+4gsCgn/oXImYfQa3XfSAe2TiI4mI870o0LBh2AfgSyAXD
+	hf1C9cQUHpBjNcBrh65W0wKq14hO5go4WKNXHU5ebPs9kv76CuNAQdjJLd6LwUd4
+	vWsUR6mvQkqtqDSMzrWPjUoaF6EHqAP5k16OfYnLiILnRQabG0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=vpr25Src2lzvmSocmnD
+	JnXSA1EkakEG3pa8OtAIQu7plI4Qr9INGGIpWnrdX5Iz476cOQzcgc51PagpeRPu
+	IbEdXrBPS3YQERKJR5Ync2qCENVYGpjQn0iZ2Sx+YeoL96aFjxPZ7JsH5cgBfUDx
+	YdbukGfPmmzzqHaebRTw0D1w=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C2EDBA7083;
+	Thu,  1 Apr 2010 00:50:48 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DDFD7A7082; Thu,  1 Apr
+ 2010 00:50:44 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 2424AE96-3D4A-11DF-A05A-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143706>
 
-Jon Seymour wrote:
+The latest maintenance release Git 1.7.0.4 is available at the
+usual places:
 
-> What I was looking for was a git repo that contains a branch with the
-> patches that the cygwin folks mutate the official git release with.
+  http://www.kernel.org/pub/software/scm/git/
 
-To clarify, I didn=E2=80=99t realize the Cygwin folks needed a patch at=
- all.
-Oh well, theory and practice.
+  git-1.7.0.4.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.7.0.4.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.7.0.4.tar.{gz,bz2}		(preformatted docs)
 
-I just fetched the packaging.
+The RPM binary packages for a few architectures are found in:
 
-  http://mirror.mcs.anl.gov/cygwin/release/git/git-1.6.6.1-1-src.tar.bz=
-2
+  RPMS/$arch/git-*-1.7.0.4-1.fc11.$arch.rpm	(RPM)
 
-gitk - work around stderr redirection on Cygwin
+Git v1.7.0.4 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
 
-  The description of this patch suggests it is meant to work around
-  the old Tcl/Tk version.  In that case, maybe stock gitk should learn
-  a workaround.  I don=E2=80=99t think it is supposed to require more r=
-ecent
-  Tcl/Tk than 8.4.
+=46ixes since v1.7.0.3
+--------------------
 
-  Unfortunately, I cannot find a relevant changelog entry.  Maybe
-  this is a Windows-specific bug?  http://wiki.tcl.tk/2620
-  describes a similar problem.
+ * Optimized ntohl/htonl on big-endian machines were broken.
 
-gitk - convert gitk-path to Windows if on Cygwin
+ * Color values given to "color.<cmd>.<slot>" configuration can now hav=
+e
+   more than one attributes (e.g. "bold ul").
 
-  This patch seems reasonable, and it only affects Cygwin.  I think it
-  looks reasonable for inclusion in stock gitk, though others might
-  disagree.
+ * "git add -u nonexistent-path" did not complain.
 
-Documentation/Makefile
+ * "git apply --whitespace=3Dfix" didn't work well when an early patch =
+in
+   a patch series adds trailing blank lines and a later one depended on
+   such a block of blank lines at the end.
 
-  Adds --unsafe to the asciidoc command line.  Why?
+ * "git fast-export" didn't check error status and stop when marks file
+   cannot be opened.
 
-Makefile
+ * "git format-patch --ignore-if-in-upstream" gave unwarranted errors
+   when the range was empty, instead of silently finishing.
 
-  Stops disabling so many features, since Cygwin has come a long way.
-  This looks worth applying upstream.  The conservative thing to do
-  would be to test $(uname -r), but since it is easy to bring a
-  Cygwin installation up to date and hard to figure out the appropriate
-  versions, it might make sense to make this change unconditionally.
+ * "git remote prune" did not detect remote tracking refs that became
+   dangling correctly.
 
-  A worrisome one is NO_MMAP.  Was that problem ever understood?  Maybe
-  v1.6.3-rc0~133 (MinGW: implement mmap, 2009-03-13) contains some clue=
-s
-  (just a hope).  The message for v1.5.0-rc1~182 (Set NO_MMAP for Cygwi=
-n
-  by default, 2006-12-27) indicates that it=E2=80=99s filesystem-specif=
-ic,=20
+And other minor fixes and documentation updates.
 
-Makefile: all:: perl/perl.mak
+----------------------------------------------------------------
 
-  Should be unnecessary. The scripts should pull it in already.
+Changes since v1.7.0.3 are as follows:
 
-Makefile: setting INSTALLDIRS=3Dvendor in the perl/perl.mak target
+Bj=C3=B6rn Gustavsson (5):
+      apply: Don't unnecessarily update line lengths in the preimage
+      apply: Remove the quick rejection test
+      apply: Allow blank context lines to match beyond EOF
+      t4124: Add additional tests of --whitespace=3Dfix
+      t3417: Add test cases for "rebase --whitespace=3Dfix"
 
-  Should be unnecessary.  Make passes on variable settings from the
-  command line to submakes already.
+Chris Packham (1):
+      test for add with non-existent pathspec
 
-git-gui/Makefile:
+David Aguilar (1):
+      difftool: Fix '--gui' when diff.guitool is unconfigured
 
-  Change to Cygwin-specific part.  Probably applicable upstream.
+Greg Bacon (1):
+      Documentation: Clarify support for smart HTTP backend
 
-Thoughts?
-Jonathan
+Holger Wei=C3=9F (3):
+      Don't redefine htonl and ntohl on big-endian
+      Link against libiconv on IRIX
+      Documentation: show-ref <pattern>s are optional
+
+Jakub Narebski (1):
+      gitweb: git_get_project_config requires only $git_dir, not also $=
+project
+
+Jan St=C4=99pie=C5=84 (1):
+      Updated the usage string of git reset
+
+Jeff King (1):
+      dir: fix COLLECT_IGNORED on excluded prefixes
+
+Johannes Sixt (2):
+      diff: fix textconv error zombies
+      Windows: fix utime() for read-only files
+
+Junio C Hamano (8):
+      git add -u: die on unmatched pathspec
+      color: allow multiple attributes
+      t0050: mark non-working test as such
+      tests for "git add ignored-dir/file" without -f
+      refs: ref entry with NULL sha1 is can be a dangling symref
+      t9350: fix careless use of "cd"
+      Prepare for 1.7.0.4
+      Git 1.7.0.4
+
+Kevin Ballard (1):
+      format-patch: Squelch 'fatal: Not a range." error
+
+Markus Heidelberg (1):
+      Documentation: explain the meaning of "-g" in git-describe output
+
+Sverre Rabbelier (1):
+      fast-export: don't segfault when marks file cannot be opened
