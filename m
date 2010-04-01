@@ -1,108 +1,90 @@
-From: Eric Blake <eblake@redhat.com>
-Subject: [PATCH] Makefile: update defaults for modern Cygwin
-Date: Thu,  1 Apr 2010 16:43:54 -0600
-Message-ID: <1270161834-9597-1-git-send-email-eblake@redhat.com>
-Cc: jon.seymour@gmail.com, jrnieder@gmail.com
+From: Mark Bryars <git@darkskiez.co.uk>
+Subject: [PATCH] git-svn: support svnmerge.py merge tickets from pre svn 1.5.0 releases
+Date: Thu, 1 Apr 2010 22:54:50 +0000 (UTC)
+Message-ID: <loom.20100402T005055-989@post.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 02 00:45:20 2010
+X-From: git-owner@vger.kernel.org Fri Apr 02 01:00:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxT8Z-0006qb-5C
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 00:45:19 +0200
+	id 1NxTMy-0003Sv-Ee
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 01:00:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757317Ab0DAWpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Apr 2010 18:45:13 -0400
-Received: from qmta03.emeryville.ca.mail.comcast.net ([76.96.30.32]:55979 "EHLO
-	qmta03.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757253Ab0DAWpK (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Apr 2010 18:45:10 -0400
-Received: from omta22.emeryville.ca.mail.comcast.net ([76.96.30.89])
-	by qmta03.emeryville.ca.mail.comcast.net with comcast
-	id 0GxR1e0091vN32cA3NlBZz; Thu, 01 Apr 2010 22:45:11 +0000
-Received: from localhost.localdomain ([24.10.248.129])
-	by omta22.emeryville.ca.mail.comcast.net with comcast
-	id 0NpW1e00N2oEyzc8iNpZkA; Thu, 01 Apr 2010 22:49:34 +0000
-X-Mailer: git-send-email 1.6.6.1
+	id S1757874Ab0DAXAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Apr 2010 19:00:06 -0400
+Received: from lo.gmane.org ([80.91.229.12]:60600 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756638Ab0DAXAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Apr 2010 19:00:04 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NxTMp-0003P2-0V
+	for git@vger.kernel.org; Fri, 02 Apr 2010 01:00:03 +0200
+Received: from cpc4-broo7-2-0-cust263.know.cable.virginmedia.com ([86.30.225.8])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 Apr 2010 01:00:02 +0200
+Received: from git by cpc4-broo7-2-0-cust263.know.cable.virginmedia.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 Apr 2010 01:00:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 86.30.225.8 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.6) Gecko/20091216 Iceweasel/3.5.8 (like Firefox/3.5.8))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143759>
 
-Now that Cygwin 1.7.x has enabled lots of new features, and Cygwin 1.5
-is no longer actively supported by the Cygwin mailing lists, we might
-as well update the defaults to cater to those new features.
 
-NO_TRUSTABLE_FILEMODE is only necessary on FAT drives; the Cygwin
-community recommends NTFS drives, but there is still too much use
-for FAT to switch the default.  Likewise, UNRELIABLE_FSTAT is probably
-file-system specific, but worth keeping unchanged.
+I currently have an SVN 1.3.x repository and am using the old svnmerge.py script
+to manage merges with it, it would be nice to migrate to git without first
+upgrading to SVN 1.5+, running the converter tool, and then migrating to git.
+This small patch allows me to skip that step by referencing the old property
+names in the repo.
 
-This commit does not change the default for NO_MMAP, although definitive
-proof of whether this option is necessary is lacking.
+Regards,
+ Mark Bryars
 
-Signed-off-by: Eric Blake <eblake@redhat.com>
+
+
+>From 15856073779bfdd1c5367ea9e01a55242c1e7568 Mon Sep 17 00:00:00 2001
+From: Mark Bryars <git@darkskiez.co.uk>
+Date: Thu, 1 Apr 2010 23:30:37 +0100
+Subject: [PATCH] git-svn: support svnmerge.py merge tickets from pre svn 1.5.0
+releases
+
+Pre svn 1.5.0 svnmerge.py used svnmerge-integrated properties.
+Small patch to check for these and apply them.
+
+Signed-off-by: Mark Bryars <git@darkskiez.co.uk>
 ---
- Makefile |   22 ++++++++++++----------
- 1 files changed, 12 insertions(+), 10 deletions(-)
+ git-svn.perl |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 3e816e1..442ce0b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -34,7 +34,7 @@ all::
- # Define NO_D_INO_IN_DIRENT if you don't have d_ino in your struct dirent.
- #
- # Define NO_D_TYPE_IN_DIRENT if your platform defines DT_UNKNOWN but lacks
--# d_type in struct dirent (latest Cygwin -- will be fixed soonish).
-+# d_type in struct dirent (Cygwin 1.5, fixed in Cygwin 1.7).
- #
- # Define NO_C99_FORMAT if your formatted IO functions (printf/scanf et.al.)
- # do not support the 'size specifiers' introduced by C99, namely ll, hh,
-@@ -109,7 +109,7 @@ all::
- # Define NO_PTHREADS if you do not have or do not want to use Pthreads.
- #
- # Define NO_PREAD if you have a problem with pread() system call (e.g.
--# cygwin.dll before v1.5.22).
-+# cygwin1.dll before v1.5.22).
- #
- # Define NO_FAST_WORKING_DIRECTORY if accessing objects in pack files is
- # generally faster on your platform than accessing the working directory.
-@@ -831,22 +831,24 @@ ifeq ($(uname_S),SunOS)
- 	BASIC_CFLAGS += -D__EXTENSIONS__ -D__sun__ -DHAVE_ALLOCA_H
- endif
- ifeq ($(uname_O),Cygwin)
--	NO_D_TYPE_IN_DIRENT = YesPlease
--	NO_D_INO_IN_DIRENT = YesPlease
--	NO_STRCASESTR = YesPlease
--	NO_MEMMEM = YesPlease
--	NO_MKSTEMPS = YesPlease
--	NO_SYMLINK_HEAD = YesPlease
-+	ifneq ($(wordlist 1, 2, $(subst ., ,$(uname_R))),1 7)
-+		NO_D_TYPE_IN_DIRENT = YesPlease
-+		NO_D_INO_IN_DIRENT = YesPlease
-+		NO_STRCASESTR = YesPlease
-+		NO_MEMMEM = YesPlease
-+		NO_MKSTEMPS = YesPlease
-+		NO_SYMLINK_HEAD = YesPlease
-+		NO_IPV6 = YesPlease
-+		OLD_ICONV = UnfortunatelyYes
-+	endif
- 	NEEDS_LIBICONV = YesPlease
- 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
- 	NO_TRUSTABLE_FILEMODE = UnfortunatelyYes
--	OLD_ICONV = UnfortunatelyYes
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
- 	# There are conflicting reports about this.
- 	# On some boxes NO_MMAP is needed, and not so elsewhere.
- 	# Try commenting this out if you suspect MMAP is more efficient
- 	NO_MMAP = YesPlease
--	NO_IPV6 = YesPlease
- 	X = .exe
- 	COMPAT_OBJS += compat/cygwin.o
- 	UNRELIABLE_FSTAT = UnfortunatelyYes
+diff --git a/git-svn.perl b/git-svn.perl
+index 2c86ea2..79eef5d 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -3304,6 +3304,12 @@ sub make_log_entry {
+ 				 $props->{"svn:mergeinfo"},
+ 				 \@parents);
+ 		}
++		if ( $props->{"svnmerge-integrated"} ) {
++			$self->find_extra_svn_parents
++				($ed,
++				 $props->{"svnmerge-integrated"},
++				 \@parents);
++		}
+ 	}
+ 
+ 	open my $un, '>>', "$self->{dir}/unhandled.log" or croak $!;
 -- 
-1.6.6.1
+1.7.0.3
