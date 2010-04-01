@@ -1,72 +1,103 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] Clarification for the command "git checkout <branch>"
-Date: Thu, 1 Apr 2010 18:39:24 +0530
-Message-ID: <x2zf3271551004010609l9edc6bf3jc9e8b70daca63f37@mail.gmail.com>
-References: <4B67227A.7030908@web.de> <7vaau6q18q.fsf@alter.siamese.dyndns.org> 
-	<4BA1FC39.10300@web.de> <32541b131003180936x746dad06k386788d3cb6fcdeb@mail.gmail.com> 
-	<b4087cc51003181019r4408953bxcd5049c9521b8173@mail.gmail.com> 
-	<4BA3329E.6050304@web.de> <4BB21F6D.7070804@web.de> <7vd3ylv4oq.fsf@alter.siamese.dyndns.org> 
-	<p2nf3271551003302058ve6b54731h1bea42b5c6605928@mail.gmail.com> 
-	<7vd3yjsriz.fsf@alter.siamese.dyndns.org>
+From: jussi.sirpoma@sks.fi
+Subject: Re: Dealing with mac linefeeds in git repository
+Date: Thu, 1 Apr 2010 16:19:05 +0300
+Message-ID: <OF04EBFCA7.AEB239AD-ONC22576F8.003BC70A-C22576F8.0049585D@sks.fi>
+References: <OF7E748769.D4E7BC90-ONC22576F7.00483B3D-C22576F7.00484D0A@sks.fi> <20100331141608.GA2542@LK-Perkele-V2.elisa-laajakaista.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Markus Elfring <Markus.Elfring@web.de>,
-	Michael Witten <mfwitten@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 01 15:10:10 2010
+Content-Type: text/plain; charset="US-ASCII"
+Cc: git@vger.kernel.org
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Thu Apr 01 15:27:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxK9u-0002jO-2x
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Apr 2010 15:10:06 +0200
+	id 1NxKQm-00037z-TL
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Apr 2010 15:27:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756303Ab0DANJt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Apr 2010 09:09:49 -0400
-Received: from mail-gx0-f209.google.com ([209.85.217.209]:37590 "EHLO
-	mail-gx0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755815Ab0DANJp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Apr 2010 09:09:45 -0400
-X-Greylist: delayed 88252 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Apr 2010 09:09:45 EDT
-Received: by gxk1 with SMTP id 1so1003934gxk.16
-        for <git@vger.kernel.org>; Thu, 01 Apr 2010 06:09:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/f/qsvJgCwi1uAipoQs/oTUS9MOXU/I6hXISIwhK7v8=;
-        b=R6HFlf+4Yc2we5fp+VKP5NaCXuzyXa4+L7wH25brWJDuOlgIwRLD9GcxmtjHoPmzkL
-         R7E5U85mw7tCiEc6vPQXmvoOSCCCtiUN2vmyL4QG7JTX3KIyXIs5cOP+sSbkjb3AGVuo
-         dIr50fRpSUiw3mSbt76G9e6AcVd1tj2aYTMv8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=kBzt3eYFlusRFKlXvuc0aGucbnNL/DjkM1fpuWO/Xh3W+4BbgyxheXfEUvbxWWGSFb
-         TEzOSZGJM/aegHqS6RrfpNzVqvtlaqKcFXl7BvNxv3qOAu5b/eBxr2+oaXm+4nayVDZX
-         xi5gLFjInbmm2OZ8TH1kZoYXKkAzfJytcIma4=
-Received: by 10.90.69.14 with HTTP; Thu, 1 Apr 2010 06:09:24 -0700 (PDT)
-In-Reply-To: <7vd3yjsriz.fsf@alter.siamese.dyndns.org>
-Received: by 10.91.136.20 with SMTP id o20mr1411612agn.12.1270127384336; Thu, 
-	01 Apr 2010 06:09:44 -0700 (PDT)
+	id S1750987Ab0DAN1W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Apr 2010 09:27:22 -0400
+Received: from sksci1.sks.fi ([193.208.185.25]:51743 "EHLO msg.sks.fi"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750867Ab0DAN1U (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Apr 2010 09:27:20 -0400
+X-Greylist: delayed 368 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Apr 2010 09:27:19 EDT
+Received: from sksinfo.sks.fi ([10.1.2.231])
+	by msg.sks.fi (8.14.3/8.14.3) with ESMTP id o31ExjfH015089;
+	Thu, 1 Apr 2010 17:59:46 +0300
+In-Reply-To: <20100331141608.GA2542@LK-Perkele-V2.elisa-laajakaista.fi>
+X-KeepSent: 04EBFCA7:AEB239AD-C22576F8:003BC70A;
+ type=4; name=$KeepSent
+X-Mailer: Lotus Notes Release 8.0.2 August 07, 2008
+X-MIMETrack: Serialize by Router on srvdomino1/SKS(Release 8.0.2FP1|January 12, 2009) at
+ 01.04.2010 16:19:05,
+	Serialize complete at 01.04.2010 16:19:05
+X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.8161:2.4.5,1.2.40,4.0.166
+ definitions=2010-04-01_09:2010-02-06,2010-04-01,2010-04-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 phishscore=0
+ bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ engine=5.0.0-0908210000 definitions=main-1004010098
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143729>
 
-> I think you are thinking backwards. =A0If the user always does a perf=
-ect job
-> before making each and every commit, she doesn't ever need to learn
-> "amend". =A0Otherwise, she will learn "amend" way before learning to =
-switch
-> between branches to work on different things at the same time.
+Thank you Ilari,
 
-Right. Got it. It's pretty difficult to think from a new user's
-perspective actually :)
+The filter approach seems to work nicely.
 
--- Ram
+git config --global filter.maclinefeed.smudge 'tr \\n \\r'
+git config --global filter.maclinefeed.clean 'tr \\r \\n'
+
+With suitable filter and -crlf settings in .gitattributes,
+
+- Jussi Sirpoma
+
+
+
+From:
+Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+To:
+jussi.sirpoma@sks.fi
+Cc:
+git@vger.kernel.org
+Date:
+31.03.2010 17:14
+Subject:
+Re: Dealing with mac linefeeds in git repository
+Sent by:
+git-owner@vger.kernel.org
+
+
+
+On Wed, Mar 31, 2010 at 04:07:40PM +0300, jussi.sirpoma@sks.fi wrote:
+> I am running cygwin git version 1.6.4.2.
+> 
+> Some of the source code for our projects is encoded in mac linefeeds due 
+
+> to proprietary
+> software platform. My current solution is to flag those files tu use no 
+> linefeed conversion and
+> to use separate diff program by having this in .gitattributes:
+
+> annotations or diffs. Now I am wondering if I could make git work with a 
+
+> little different 
+> configuration:
+> 
+> * The *.BA files with mac linefeeds would be stored with normal linux 
+> linefeeds
+> * The files would be converted on checkout to mac linefeeds the same way 
+
+> as core.autcrlf works
+> 
+> Is this doable or even a good approach?
+ 
+AFAIK, its doable. One can specify filter programs to be executed when
+checking out / adding files. That program could do CR <-> LF translation.
+
+See filter attribute in man gitattributes.
+
+-Ilari
