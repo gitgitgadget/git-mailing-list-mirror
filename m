@@ -1,219 +1,157 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/7] introduce notes-cache interface
-Date: Thu, 1 Apr 2010 20:07:40 -0400
-Message-ID: <20100402000739.GD16462@coredump.intra.peff.net>
+Subject: [PATCH 5/7] textconv: refactor calls to run_textconv
+Date: Thu, 1 Apr 2010 20:09:26 -0400
+Message-ID: <20100402000926.GE16462@coredump.intra.peff.net>
 References: <20100402000159.GA15101@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 02 02:07:58 2010
+X-From: git-owner@vger.kernel.org Fri Apr 02 02:09:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxUQX-0000kZ-9w
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 02:07:57 +0200
+	id 1NxUSG-0001Hl-2W
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 02:09:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759004Ab0DBAHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Apr 2010 20:07:53 -0400
-Received: from peff.net ([208.65.91.99]:60284 "EHLO peff.net"
+	id S1759054Ab0DBAJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Apr 2010 20:09:40 -0400
+Received: from peff.net ([208.65.91.99]:60286 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755400Ab0DBAHv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Apr 2010 20:07:51 -0400
-Received: (qmail 5205 invoked by uid 107); 2 Apr 2010 00:08:27 -0000
+	id S1755611Ab0DBAJi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Apr 2010 20:09:38 -0400
+Received: (qmail 5227 invoked by uid 107); 2 Apr 2010 00:10:13 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 01 Apr 2010 20:08:27 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Apr 2010 20:07:40 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 01 Apr 2010 20:10:13 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Apr 2010 20:09:26 -0400
 Content-Disposition: inline
 In-Reply-To: <20100402000159.GA15101@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143766>
 
-Notes provide a fast lookup mechanism for data keyed by
-sha1. This is ideal for caching certain operations, like
-textconv filters.
+This patch adds a fill_textconv wrapper, which centralizes
+some minor logic like error checking and handling the case
+of no-textconv.
 
-This patch builds some infrastructure to make it simpler to
-use notes trees as caches. In particular, caches:
-
-  1. don't have arbitrary commit messages. They store a
-     cache validity string in the commit, and clear the tree
-     when the cache validity string changes.
-
-  2. don't keep any commit history. The accumulated history
-     of a a cache is just useless cruft.
-
-  3. use a looser form of locking for ref updates. If two
-     processes try to write to the cache simultaneously, it
-     is OK if one overwrites the other, losing some changes.
-     It's just a cache, so we will just end up with an extra
-     miss.
+In addition to dropping the number of lines, this will make
+it easier in future patches to handle multiple types of
+textconv.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I tried lib-ifying commit_notes from builtin/notes.c, but for the
-reasons mentioned above, plus the totally different error handling (we
-need silent error returns because not writing to the cache should not be
-fatal), the code ended up having more "if (quiet)" and "if (nohistory)"
-than there was actual code. The notes_cache_write below ended up pretty
-terse and readable, I think.
+Similar to 1/3 from the previous series, but fixes some deficiencies
+there. Specifically, it handles !DIFF_FILE_VALID and filespec population
+better, which makes fill_textconv a full replacement for fill_mmfile,
+just with optional textconv-ing.
 
- Makefile      |    2 +
- notes-cache.c |   94 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- notes-cache.h |   20 ++++++++++++
- 3 files changed, 116 insertions(+), 0 deletions(-)
- create mode 100644 notes-cache.c
- create mode 100644 notes-cache.h
+ diff.c |   66 +++++++++++++++++++++++++++++----------------------------------
+ 1 files changed, 30 insertions(+), 36 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 8a0f5c4..24e92ab 100644
---- a/Makefile
-+++ b/Makefile
-@@ -486,6 +486,7 @@ LIB_H += log-tree.h
- LIB_H += mailmap.h
- LIB_H += merge-recursive.h
- LIB_H += notes.h
-+LIB_H += notes-cache.h
- LIB_H += object.h
- LIB_H += pack.h
- LIB_H += pack-refs.h
-@@ -575,6 +576,7 @@ LIB_OBJS += merge-file.o
- LIB_OBJS += merge-recursive.o
- LIB_OBJS += name-hash.o
- LIB_OBJS += notes.o
-+LIB_OBJS += notes-cache.o
- LIB_OBJS += object.o
- LIB_OBJS += pack-check.o
- LIB_OBJS += pack-refs.o
-diff --git a/notes-cache.c b/notes-cache.c
-new file mode 100644
-index 0000000..dee6d62
---- /dev/null
-+++ b/notes-cache.c
-@@ -0,0 +1,94 @@
-+#include "cache.h"
-+#include "notes-cache.h"
-+#include "commit.h"
-+#include "refs.h"
+diff --git a/diff.c b/diff.c
+index db2cd5d..9665d6d 100644
+--- a/diff.c
++++ b/diff.c
+@@ -43,7 +43,8 @@ static char diff_colors[][COLOR_MAXLEN] = {
+ };
+ 
+ static void diff_filespec_load_driver(struct diff_filespec *one);
+-static char *run_textconv(const char *, struct diff_filespec *, size_t *);
++static size_t fill_textconv(const char *cmd,
++			    struct diff_filespec *df, char **outbuf);
+ 
+ static int parse_diff_color_slot(const char *var, int ofs)
+ {
+@@ -477,7 +478,7 @@ static void emit_rewrite_diff(const char *name_a,
+ 	const char *reset = diff_get_color(color_diff, DIFF_RESET);
+ 	static struct strbuf a_name = STRBUF_INIT, b_name = STRBUF_INIT;
+ 	const char *a_prefix, *b_prefix;
+-	const char *data_one, *data_two;
++	char *data_one, *data_two;
+ 	size_t size_one, size_two;
+ 	struct emit_callback ecbdata;
+ 
+@@ -499,26 +500,8 @@ static void emit_rewrite_diff(const char *name_a,
+ 	quote_two_c_style(&a_name, a_prefix, name_a, 0);
+ 	quote_two_c_style(&b_name, b_prefix, name_b, 0);
+ 
+-	diff_populate_filespec(one, 0);
+-	diff_populate_filespec(two, 0);
+-	if (textconv_one) {
+-		data_one = run_textconv(textconv_one, one, &size_one);
+-		if (!data_one)
+-			die("unable to read files to diff");
+-	}
+-	else {
+-		data_one = one->data;
+-		size_one = one->size;
+-	}
+-	if (textconv_two) {
+-		data_two = run_textconv(textconv_two, two, &size_two);
+-		if (!data_two)
+-			die("unable to read files to diff");
+-	}
+-	else {
+-		data_two = two->data;
+-		size_two = two->size;
+-	}
++	size_one = fill_textconv(textconv_one, one, &data_one);
++	size_two = fill_textconv(textconv_two, two, &data_two);
+ 
+ 	memset(&ecbdata, 0, sizeof(ecbdata));
+ 	ecbdata.color_diff = color_diff;
+@@ -1717,20 +1700,8 @@ static void builtin_diff(const char *name_a,
+ 			strbuf_reset(&header);
+ 		}
+ 
+-		if (textconv_one) {
+-			size_t size;
+-			mf1.ptr = run_textconv(textconv_one, one, &size);
+-			if (!mf1.ptr)
+-				die("unable to read files to diff");
+-			mf1.size = size;
+-		}
+-		if (textconv_two) {
+-			size_t size;
+-			mf2.ptr = run_textconv(textconv_two, two, &size);
+-			if (!mf2.ptr)
+-				die("unable to read files to diff");
+-			mf2.size = size;
+-		}
++		mf1.size = fill_textconv(textconv_one, one, &mf1.ptr);
++		mf2.size = fill_textconv(textconv_two, two, &mf2.ptr);
+ 
+ 		pe = diff_funcname_pattern(one);
+ 		if (!pe)
+@@ -3916,3 +3887,26 @@ static char *run_textconv(const char *pgm, struct diff_filespec *spec,
+ 
+ 	return strbuf_detach(&buf, outsize);
+ }
 +
-+static int notes_cache_match_validity(const char *ref, const char *validity)
++static size_t fill_textconv(const char *cmd,
++			    struct diff_filespec *df,
++			    char **outbuf)
 +{
-+	unsigned char sha1[20];
-+	struct commit *commit;
-+	struct pretty_print_context pretty_ctx;
-+	struct strbuf msg = STRBUF_INIT;
-+	int ret;
++	size_t size;
 +
-+	if (read_ref(ref, sha1) < 0)
-+		return 0;
++	if (!cmd) {
++		if (!DIFF_FILE_VALID(df)) {
++			*outbuf = "";
++			return 0;
++		}
++		if (diff_populate_filespec(df, 0))
++			die("unable to read files to diff");
++		*outbuf = df->data;
++		return df->size;
++	}
 +
-+	commit = lookup_commit_reference_gently(sha1, 1);
-+	if (!commit)
-+		return 0;
-+
-+	memset(&pretty_ctx, 0, sizeof(pretty_ctx));
-+	format_commit_message(commit, "%s", &msg, &pretty_ctx);
-+	strbuf_trim(&msg);
-+
-+	ret = !strcmp(msg.buf, validity);
-+	strbuf_release(&msg);
-+
-+	return ret;
++	*outbuf = run_textconv(cmd, df, &size);
++	if (!*outbuf)
++		die("unable to read files to diff");
++	return size;
 +}
-+
-+void notes_cache_init(struct notes_cache *c, const char *name,
-+		     const char *validity)
-+{
-+	struct strbuf ref = STRBUF_INIT;
-+	int flags = 0;
-+
-+	memset(c, 0, sizeof(*c));
-+	c->validity = xstrdup(validity);
-+
-+	strbuf_addf(&ref, "refs/notes/%s", name);
-+	if (!notes_cache_match_validity(ref.buf, validity))
-+		flags = NOTES_INIT_EMPTY;
-+	init_notes(&c->tree, ref.buf, combine_notes_overwrite, flags);
-+	strbuf_release(&ref);
-+}
-+
-+int notes_cache_write(struct notes_cache *c)
-+{
-+	unsigned char tree_sha1[20];
-+	unsigned char commit_sha1[20];
-+
-+	if (!c || !c->tree.initialized || !c->tree.ref || !*c->tree.ref)
-+		return -1;
-+	if (!c->tree.dirty)
-+		return 0;
-+
-+	if (write_notes_tree(&c->tree, tree_sha1))
-+		return -1;
-+	if (commit_tree(c->validity, tree_sha1, NULL, commit_sha1, NULL) < 0)
-+		return -1;
-+	if (update_ref("update notes cache", c->tree.ref, commit_sha1, NULL,
-+		       0, QUIET_ON_ERR) < 0)
-+		return -1;
-+
-+	return 0;
-+}
-+
-+char *notes_cache_get(struct notes_cache *c, unsigned char key_sha1[20],
-+		      size_t *outsize)
-+{
-+	const unsigned char *value_sha1;
-+	enum object_type type;
-+	char *value;
-+	unsigned long size;
-+
-+	value_sha1 = get_note(&c->tree, key_sha1);
-+	if (!value_sha1)
-+		return NULL;
-+	value = read_sha1_file(value_sha1, &type, &size);
-+
-+	*outsize = size;
-+	return value;
-+}
-+
-+int notes_cache_put(struct notes_cache *c, unsigned char key_sha1[20],
-+		    const char *data, size_t size)
-+{
-+	unsigned char value_sha1[20];
-+
-+	if (write_sha1_file(data, size, "blob", value_sha1) < 0)
-+		return -1;
-+	add_note(&c->tree, key_sha1, value_sha1, NULL);
-+	return 0;
-+}
-diff --git a/notes-cache.h b/notes-cache.h
-new file mode 100644
-index 0000000..356f88f
---- /dev/null
-+++ b/notes-cache.h
-@@ -0,0 +1,20 @@
-+#ifndef NOTES_CACHE_H
-+#define NOTES_CACHE_H
-+
-+#include "notes.h"
-+
-+struct notes_cache {
-+	struct notes_tree tree;
-+	char *validity;
-+};
-+
-+void notes_cache_init(struct notes_cache *c, const char *name,
-+		     const char *validity);
-+int notes_cache_write(struct notes_cache *c);
-+
-+char *notes_cache_get(struct notes_cache *c, unsigned char sha1[20], size_t
-+		      *outsize);
-+int notes_cache_put(struct notes_cache *c, unsigned char sha1[20],
-+		    const char *data, size_t size);
-+
-+#endif /* NOTES_CACHE_H */
 -- 
 1.7.0.4.299.gba9d4
