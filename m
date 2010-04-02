@@ -1,59 +1,69 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] git status: refresh the index
-Date: Fri, 2 Apr 2010 17:21:20 -0400
-Message-ID: <20100402212120.GA28352@coredump.intra.peff.net>
-References: <1270211241-10795-1-git-send-email-markus.heidelberg@web.de>
- <1270211241-10795-5-git-send-email-markus.heidelberg@web.de>
- <20100402165759.GB18576@coredump.intra.peff.net>
- <201004022237.04130.markus.heidelberg@web.de>
+Subject: Re: Extremely slow progress during 'git reflog expire --all'
+Date: Fri, 2 Apr 2010 17:28:58 -0400
+Message-ID: <20100402212858.GA28531@coredump.intra.peff.net>
+References: <201004022154.14793.elendil@planet.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Markus Heidelberg <markus.heidelberg@web.de>
-X-From: git-owner@vger.kernel.org Fri Apr 02 23:21:38 2010
+Cc: git@vger.kernel.org
+To: Frans Pop <elendil@planet.nl>
+X-From: git-owner@vger.kernel.org Fri Apr 02 23:29:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxoJ7-0002t2-I0
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 23:21:37 +0200
+	id 1NxoQW-00062a-JE
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 23:29:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754732Ab0DBVVe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Apr 2010 17:21:34 -0400
-Received: from peff.net ([208.65.91.99]:60698 "EHLO peff.net"
+	id S1754779Ab0DBV3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Apr 2010 17:29:12 -0400
+Received: from peff.net ([208.65.91.99]:55843 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754546Ab0DBVVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Apr 2010 17:21:32 -0400
-Received: (qmail 18297 invoked by uid 107); 2 Apr 2010 21:22:08 -0000
+	id S1754551Ab0DBV3L (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Apr 2010 17:29:11 -0400
+Received: (qmail 18353 invoked by uid 107); 2 Apr 2010 21:29:46 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 02 Apr 2010 17:22:08 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Apr 2010 17:21:20 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 02 Apr 2010 17:29:46 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Apr 2010 17:28:58 -0400
 Content-Disposition: inline
-In-Reply-To: <201004022237.04130.markus.heidelberg@web.de>
+In-Reply-To: <201004022154.14793.elendil@planet.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143853>
 
-On Fri, Apr 02, 2010 at 09:37:03PM +0100, Markus Heidelberg wrote:
+On Fri, Apr 02, 2010 at 09:54:14PM +0200, Frans Pop wrote:
 
-> > Does this mean we will fail to run in a read-only repository?
+> I wanted to to a 'git gc' on my kernel repo, but that seemed to end in a 
+> loop: loads of CPU usage, no output. Using 'ps' I found it's not 'git gc' 
+> itself, but 'git reflog' that's causing the problem.
 > 
-> You're right.
-> But that was already the case when "status" was "commit --dry-run".
-> I have to admit, I didn't think about this scenario, but simply looked
-> for the differences between these two commands.
+> From the strace below it does seem like it still makes some progress, but 
+> I've never had it take anywhere near this long before. Normally it starts 
+> the count of objects almost immediately.
+> 
+> It's using hardly any memory at all but has one core going flat out.
+> 
+> I'm seeing this with both git 1.6.6.1 and 1.7.0.3 on the same repo.
+> Environment:
+> - Debian amd64/Lenny; Core Duo x86_64 2.6.34-rc3 -> 1.6.6.1
+> - Debian i386/Sid; chroot on the same machine -> 1.7.0.3
+> I've also tried with 2.6.33 to rule out a kernel issue.
+> 
+> Here's the tail end of an strace I ran. I broke it off after 9+ minutes, 
+> but I had let it go for longer than that earlier. You can clearly see 
+> where it starts to "stall" at 21:40:14.
 
-Sort of. See ab68545 (status: don't require the repository to be
-writable, 2010-01-19), which went onto maint while the "status is no
-longer commit --dry-run" topic was cooking elsewhere. So I think it
-would be a regression from 1.6.6.2 onwards.
+FWIW, I have seen this, too, and managed to get an strace snippet that
+looked similar to what you saw (mostly memory allocation, and otherwise
+chewing on the CPU). I'm guessing there is some O(n^2) loop in there
+somewhere. Unfortunately, mine actually completed after a few minutes
+and I wasn't able to replicate.
 
-At any rate, I think we all agree on what it _should_ do, so if you're
-willing to do an updated patch, that would be great. The patch from
-ab68545 may be helpful, as the code it changed is quite similar to what
-you posted in this series.
+Can you reproduce the problem on your repo? If so, can you possibly tar
+it up and make it available (probably just the .git directory would be
+enough)?
 
 -Peff
