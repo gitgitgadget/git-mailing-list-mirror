@@ -1,168 +1,82 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH WIP] t/test-lib.sh: support Korn shell by converting GIT_EXIT_OK to GIT_EXIT_CODE
-Date: Fri,  2 Apr 2010 07:39:45 -0800
-Message-ID: <kDdFf7r0jMi5GOJtQmTmiPdipx954DDuqFx6fJjMgLSspBES0K_moFKS75tCcQr2Dv5Zpb4KUWLzIVX61GA2Ug@cipher.nrlssc.navy.mil>
-References: <h2md2d39d861004020812t8463e4f8zbc825bd220fef961@mail.gmail.com>
-Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
-To: Tor Arntsen <tor@spacetec.no>
-X-From: git-owner@vger.kernel.org Fri Apr 02 17:36:35 2010
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: [PATCH] Prompt for a username when an HTTP request 401s
+Date: Fri, 2 Apr 2010 08:43:00 -0700
+Message-ID: <y2rd411cc4a1004020843we196537ak35ab6006ce28fefe@mail.gmail.com>
+References: <m2wd411cc4a1004011514w6d350ac7l15ab6bb1a6be8d89@mail.gmail.com>
+	 <7veiiymk75.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 02 17:43:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxivC-0000Gu-Rt
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 17:36:35 +0200
+	id 1Nxj1o-0003pv-2W
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 17:43:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751784Ab0DBPga (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Apr 2010 11:36:30 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:58196 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751717Ab0DBPg2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Apr 2010 11:36:28 -0400
-Received: by mail.nrlssc.navy.mil id o32FaCRD007693; Fri, 2 Apr 2010 10:36:12 -0500
-In-Reply-To: <h2md2d39d861004020812t8463e4f8zbc825bd220fef961@mail.gmail.com>
-X-OriginalArrivalTime: 02 Apr 2010 15:36:12.0367 (UTC) FILETIME=[395C3DF0:01CAD27A]
+	id S1751539Ab0DBPnF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Apr 2010 11:43:05 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:43598 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751160Ab0DBPnB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Apr 2010 11:43:01 -0400
+Received: by wwb17 with SMTP id 17so1441388wwb.19
+        for <git@vger.kernel.org>; Fri, 02 Apr 2010 08:43:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xd1DMKx0vJUjJ6kp8/rT9yQXNA5kpEPis8iADK9Llag=;
+        b=XyLcFF1kYkfVAQ4KMRc7/xmILOKBxAFuIEvPEg8+n+khPeFRlRcGcmNHNL2WHfnI++
+         czIZkBjqOp8a8kmpWQilGGuFBkgKqZnL1X7xTijWRf1ub06DNuG/OncBsSjYIC/2CmrP
+         BEQ6duNm6PQzK6DyNKGMUqtK2lHMaIYV7AJvM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Rrc2wWUX5qD08gq5O4b7F4iIYhNqckwNvXadEUmx4L/0ul0gIHTXLURAwgvvB+DX5K
+         6ejfKoT2DbWDJfS7Fbwkkd9cRYwL44cVY5F63F3c0sXH1XfjekQYDMsI6ny77c6Nr3D0
+         AKBU46ACxzwUQaTP6+fhOVsP3DqbySOxfO2Q4=
+Received: by 10.216.10.66 with HTTP; Fri, 2 Apr 2010 08:43:00 -0700 (PDT)
+In-Reply-To: <7veiiymk75.fsf@alter.siamese.dyndns.org>
+Received: by 10.216.162.204 with SMTP id y54mr1274931wek.224.1270222980185; 
+	Fri, 02 Apr 2010 08:43:00 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143821>
 
-From: Brandon Casey <drafnel@gmail.com>
+Hey,
 
-Commit 6e7b5aaf introduced the concept of GIT_EXIT_OK as a way to indicate
-to die(), the exit handler, whether the exit was initiated by the test
-harness, or whether it was unexpected.  die() expects $? to contain the
-value passed to exit(), and when GIT_EXIT_OK is set, die() calls exit with
-the value in $?.  This works as expected when using the Bash shell.  For
-the Korn shell, $? has the value of the last executed statement _before_
-the call to exit.  If that statement completed successfully, then die()
-would incorrectly exit with a successful status when GIT_EXIT_OK is set.
+On Thu, Apr 1, 2010 at 11:39 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> An obvious enhancement could be to make "http://user@host.com/repo.gi=
+t"
+> ask for password lazily. =C2=A0Then such a URL can be used even for a=
+n access
+> that does not need authentication and the user does not have to promp=
+ted
+> for the password each time, which was what you wanted to really solve=
+, no?
+>
+> Actually that could not just be an enhancement, but might be a better
+> alternative solution to the problem, but I haven't thought things
+> through.
 
-So, rather than relying on the behavior of Bash in order to get the exit
-code from $? inside die(), change GIT_EXIT_OK into GIT_EXIT_CODE, and set
-it to the code that we want to exit with.  This allows the test suite to
-be run with the Korn shell.
+Actually, what I want to do is be able to show a single URL that will
+work for everyone - both read-only and read-write users, so I much
+prefer the way I wrote the patch.  This way, GitHub and kernel.org and
+whomever else can just publish the one url and it will prompt if they
+need auth for some reason, and just work if not.
 
-The die() function still prints out the value of $? in the "unexpected exit"
-branch, but this value will not be valid under these broken versions of the
-Korn shell.
+I do however agree that if someone _does_ put their username in the
+url that it should only prompt for the password if it 401s.  That
+should probably be a separate patch, though.
 
-Incorporates suggestions from Jonathan Nieder <jrnieder@gmail.com>
-
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
-
-
-On 04/02/2010 10:12 AM, Tor Arntsen wrote:
-> On Fri, Apr 2, 2010 at 16:56, Brandon Casey
-> <brandon.casey.ctr@nrlssc.navy.mil> wrote:
-> 
->> Here's another snippet which will show whether $? has the correct
->> value inside a trap on EXIT:
->>
->>   (atrap () { exit $?; }
->>    trap atrap EXIT
->>    exit 1) && echo 'FAILURE' || echo 'SUCCESS'
->>
->> If that prints 'FAILURE', then you will need the patch that I have in
->> order to run the test suite.  ksh from IRIX 6.5 and Solaris both fail.
-> 
-> It's 'FAILURE' on Tru64 V5.1. I've confirmed 'FAILURE' on IRIX 6.5.30
-> and older too, as well as IRIX 6.2 and Solaris 10. And AIX 5.1 plus
-> AIX 6.2. in fact I've only got 'SUCCESS' on Linux (pdksh)...
-
-You'll need this patch to run the test suite.
-
--brandon
-
-
- t/test-lib.sh |   24 +++++++++++++-----------
- 1 files changed, 13 insertions(+), 11 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index c582964..8761586 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -164,8 +164,7 @@ fi
- 
- error () {
- 	say_color error "error: $*"
--	GIT_EXIT_OK=t
--	exit 1
-+	expected_exit 1
- }
- 
- say () {
-@@ -195,18 +194,23 @@ test_fixed=0
- test_broken=0
- test_success=0
- 
-+expected_exit () {
-+	GIT_EXIT_CODE=$1
-+	exit "$1"
-+}
-+
- die () {
- 	code=$?
--	if test -n "$GIT_EXIT_OK"
-+	if test -n "$GIT_EXIT_CODE"
- 	then
--		exit $code
-+		exit $GIT_EXIT_CODE
- 	else
- 		echo >&5 "FATAL: Unexpected exit with code $code"
- 		exit 1
- 	fi
- }
- 
--GIT_EXIT_OK=
-+GIT_EXIT_CODE=
- trap 'die' EXIT
- 
- # The semantics of the editor variables are that of invoking
-@@ -336,7 +340,7 @@ test_failure_ () {
- 	say_color error "FAIL $test_count: $1"
- 	shift
- 	echo "$@" | sed -e 's/^/	/'
--	test "$immediate" = "" || { GIT_EXIT_OK=t; exit 1; }
-+	test "$immediate" = "" || { expected_exit 1; }
- }
- 
- test_known_broken_ok_ () {
-@@ -549,7 +553,6 @@ test_create_repo () {
- }
- 
- test_done () {
--	GIT_EXIT_OK=t
- 	test_results_dir="$TEST_DIRECTORY/test-results"
- 	mkdir -p "$test_results_dir"
- 	test_results_path="$test_results_dir/${0%.sh}-$$"
-@@ -580,11 +583,11 @@ test_done () {
- 		cd "$(dirname "$remove_trash")" &&
- 		rm -rf "$(basename "$remove_trash")"
- 
--		exit 0 ;;
-+		expected_exit 0 ;;
- 
- 	*)
- 		say_color error "failed $test_failure among $msg"
--		exit 1 ;;
-+		expected_exit 1 ;;
- 
- 	esac
- }
-@@ -712,9 +715,8 @@ case "$test" in
- esac
- test ! -z "$debug" || remove_trash=$TRASH_DIRECTORY
- rm -fr "$test" || {
--	GIT_EXIT_OK=t
- 	echo >&5 "FATAL: Cannot prepare test area"
--	exit 1
-+	expected_exit 1
- }
- 
- test_create_repo "$test"
--- 
-1.6.6.2
+Scott
