@@ -1,74 +1,82 @@
-From: Michal Sojka <sojkam1@fel.cvut.cz>
-Subject: Git: relicensing test-lib.sh from GPLv2 to GPLv2+
-Date: Fri, 02 Apr 2010 09:29:11 +0200
-Message-ID: <87pr2i8g8o.fsf@steelpick.2x.cz>
-References: <87ljf8pvxx.fsf@yoom.home.cworth.org> <87hbpwpoko.fsf@yoom.home.cworth.org> <5641883d1002060727ia4e6c16lf800a92fc8735430@mail.gmail.com> <201002081614.24284.sojkam1@fel.cvut.cz> <871vgr78lr.fsf@yoom.home.cworth.org> <87iqa2y0gz.fsf@steelpick.localdomain> <87r5oqe7mi.fsf@yoom.home.cworth.org> <871vgmki4f.fsf@steelpick.localdomain> <7vaav8hpfo.fsf@alter.siamese.dyndns.org> <87tytdiqob.fsf@steelpick.localdomain> <alpine.DEB.1.00.1002191138280.20986@pacific.mpi-cbg.de> <873a0xhwxs.fsf@yoom.home.cworth.org> <alpine.DEB.1.00.1002192204050.20986@pacific.mpi-cbg.de> <87eikfhec1.fsf@yoom.home.cworth.org> <alpine.DEB.1.00.1002202321430.20986@pacific.mpi-cbg.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 6/7] diff: cache textconv output
+Date: Fri, 2 Apr 2010 03:38:32 -0400
+Message-ID: <20100402073832.GB2111@sigill.intra.peff.net>
+References: <20100402000159.GA15101@coredump.intra.peff.net>
+ <20100402001215.GF16462@coredump.intra.peff.net>
+ <7vpr2il3mt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 02 09:29:52 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 02 09:38:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxbKC-0008RB-3k
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 09:29:52 +0200
+	id 1NxbSi-0002ZW-Hu
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 09:38:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932231Ab0DBH3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Apr 2010 03:29:48 -0400
-Received: from max.feld.cvut.cz ([147.32.192.36]:36992 "EHLO max.feld.cvut.cz"
+	id S1759287Ab0DBHig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Apr 2010 03:38:36 -0400
+Received: from peff.net ([208.65.91.99]:57835 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932234Ab0DBH3q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Apr 2010 03:29:46 -0400
-Received: from localhost (unknown [192.168.200.4])
-	by max.feld.cvut.cz (Postfix) with ESMTP id 8731B19F3635;
-	Fri,  2 Apr 2010 09:29:45 +0200 (CEST)
-X-Virus-Scanned: IMAP AMAVIS
-Received: from max.feld.cvut.cz ([192.168.200.1])
-	by localhost (styx.feld.cvut.cz [192.168.200.4]) (amavisd-new, port 10044)
-	with ESMTP id pxjdgp-ACG8q; Fri,  2 Apr 2010 09:29:44 +0200 (CEST)
-Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
-	by max.feld.cvut.cz (Postfix) with ESMTP id 15D8A19F362E;
-	Fri,  2 Apr 2010 09:29:40 +0200 (CEST)
-Received: from steelpick.2x.cz (k335-30.felk.cvut.cz [147.32.86.30])
-	(Authenticated sender: sojkam1)
-	by imap.feld.cvut.cz (Postfix) with ESMTPSA id 62A25FA003;
-	Fri,  2 Apr 2010 09:29:11 +0200 (CEST)
-Received: from wsh by steelpick.2x.cz with local (Exim 4.71)
-	(envelope-from <sojkam1@fel.cvut.cz>)
-	id 1NxbJX-00079Z-2H; Fri, 02 Apr 2010 09:29:11 +0200
-In-Reply-To: <alpine.DEB.1.00.1002202321430.20986@pacific.mpi-cbg.de>
+	id S1759275Ab0DBHie (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Apr 2010 03:38:34 -0400
+Received: (qmail 10290 invoked by uid 107); 2 Apr 2010 07:39:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 02 Apr 2010 03:39:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Apr 2010 03:38:32 -0400
+Content-Disposition: inline
+In-Reply-To: <7vpr2il3mt.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143788>
 
-To all contributors to test-lib.sh mentioned in Bcc:
+On Fri, Apr 02, 2010 at 12:23:06AM -0700, Junio C Hamano wrote:
 
-You're getting this message because you're recorded as contributing one
-or more changes to the test-lib.sh file in the Git project, and are
-therefore one of many copyright holders in the file.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Running a textconv filter can take a long time. It's
+> > particularly bad for a large file which needs to be spooled
+> > to disk, but even for small files, the fork+exec overhead
+> > can add up for something like "git log -p".
+> 
+> Another reason that "log -p" gets benefit from caching is that you would
+> typically end up running textconv twice on the same blob, once when you
+> compare $commit:$path with $commit~1:$path, and again when you compare
+> $commit~$n-1:$path with $commit~$n:$path (assuming that the $path didn't
+> change between $commit~$n-1 and $commit~1).
 
-We would like to extend the license of that file from GPLv2 only
-license to GPLv2+ by adding the recommended "or any later version"
-clause to the license. This will give us license compatibility with
-GPLv3 projects, which would like to reuse test-lib.sh.
+Yep. I pointed out in one of my timing tests a slight slowdown in "git
+show" when generating the cache. But for revision walking, it should
+actually be faster, since you see each blob twice but cache after the
+first time.
 
-Please respond to this email with one of the following:
+> It _might_ give you even better performance characteristics if you noice
+> that you are walking history running many textconv, and cache the textconv
+> result from the "older" (i.e. "one" side) tree in-core, until it is used
+> in a "newer" (i.e. "two" side) tree, at which time you would evict it.
 
- YES, I agree to relicense all my contributions to test-lib.sh to GPLv2+
- with the addition of the "or any later version" clause.
+I doubt it is worth the effort. We are already caching the sha1 in-core
+due to the notes mechanism. So we could really only save one object
+retrieval. Which is already what a non-textconv diff will need to do, so
+we should have performance on par with regular diffs at this point.
 
- NO, I would rather not, please send me more email to convince me.
+In fact, your optimization could be applied to all diff revision
+walking, not just textconv, and you can halve the number of object
+retrievals. The problem is that you may have blobs sitting in the
+in-core cache as you walk many revisions, waiting for them to be changed
+again. Depending on the locality of changes and the size of your
+project, you won't be able to fit it all comfortably in memory, and will
+end up discarding entries.
 
-I'm putting your address to Bcc as most people are probably not
-interested in receiving responses from dozens of other people. I will
-track the status of received responses at
-https://git.wiki.kernel.org/index.php/Test-lib_reclicensing. Please do
-not remove git@vger.kernel.org when responding so that your response is
-available to everyone.
+And all of that to save a few object retrievals, which are something
+that git does very quickly already. Not to mention the ugly code that
+would be involved.
 
-Thanks!
-Michal Sojka
+-Peff
