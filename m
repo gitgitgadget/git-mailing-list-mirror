@@ -1,89 +1,107 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git: relicensing test-lib.sh from GPLv2 to GPLv2+
-Date: Fri, 2 Apr 2010 22:38:27 +0200
-Message-ID: <201004022238.29196.jnareb@gmail.com>
-References: <87ljf8pvxx.fsf@yoom.home.cworth.org> <alpine.DEB.1.00.1002202321430.20986@pacific.mpi-cbg.de> <87pr2i8g8o.fsf@steelpick.2x.cz>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: git ls-files unreliable?
+Date: Fri, 2 Apr 2010 22:54:28 +0200
+Message-ID: <n2p81b0412b1004021354z1ca4f6b4sa4400b484d97b46e@mail.gmail.com>
+References: <20100402180842.GA5798@twister.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michal Sojka <sojkam1@fel.cvut.cz>
-X-From: git-owner@vger.kernel.org Fri Apr 02 22:38:50 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 02 22:54:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nxndh-0000Tg-Cj
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 22:38:49 +0200
+	id 1Nxnsz-0007i5-AT
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 22:54:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753991Ab0DBUip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Apr 2010 16:38:45 -0400
-Received: from mail-qy0-f173.google.com ([209.85.221.173]:34460 "EHLO
-	mail-qy0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753237Ab0DBUio (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Apr 2010 16:38:44 -0400
-Received: by qyk4 with SMTP id 4so2941740qyk.24
-        for <git@vger.kernel.org>; Fri, 02 Apr 2010 13:38:42 -0700 (PDT)
+	id S1754269Ab0DBUya convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Apr 2010 16:54:30 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:41357 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753824Ab0DBUy3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Apr 2010 16:54:29 -0400
+Received: by gyg13 with SMTP id 13so1166186gyg.19
+        for <git@vger.kernel.org>; Fri, 02 Apr 2010 13:54:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=FE3gNmps6l8YFgDzg0IZGNzpXAElR2twc5Q9NHC6Mrs=;
-        b=uvfhVMJ8jyT1PZP8Mvwcha53ZWxDWgx1KVESWTsGBidqfQXkHJ3OxGEYjY/1cFQCsQ
-         lVksVeCthrZelPsyTGlanmLeC3cDPFvYWLlwtSH6XPr7snKeeC1fGdbj5bHvhiSTLZyO
-         5kwGnKSYDoeKks4QVmG6lNLWNezeyoNCvCIDI=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=yGmot4l2gT5Izd5/aXH+fK/brC9LXIvneFPQx7fvpVU=;
+        b=ABCCfSzRb64PzFQAmTkMS+YALl/8cCIB+FWbhuO63KjKtngkOro5zk12G/dJN9Ox83
+         GajzpR272LZ5JLiV3MqNUJ59Mo1FqmJOQSy/cK9BnvVtNVk5pSb7Qy7Ub1of247TFPvw
+         ilAxOzpf0zEYdbDW9iJrGCPmmvGNLDJEr4abM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=Rcx1jzhNA/UZwmvgCJotlDprcu2vxhXhW2uhGDD0CjiXVaURLMZcMshcMlKjp/eYd5
-         b6jD1SabSZEjcobHb3CvrDmEKh3VHeu/8Jqoljbz9h2U4swghxVTWiT9Kq6Iilwjr7mk
-         vQN+xRxN0vxNuCiaMSzxXMk0UgLREZKWFtP/Q=
-Received: by 10.224.57.77 with SMTP id b13mr846410qah.272.1270240722579;
-        Fri, 02 Apr 2010 13:38:42 -0700 (PDT)
-Received: from [192.168.1.13] ([72.14.241.40])
-        by mx.google.com with ESMTPS id 5sm12870071qwh.45.2010.04.02.13.38.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 02 Apr 2010 13:38:40 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <87pr2i8g8o.fsf@steelpick.2x.cz>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=T/d9Nw8sMYUgm2xO/+xOYOczOm9zv3Rbp0Q+nZJXW+OoNvugF8+uXeA/TFEsCxz2Wa
+         FJa3XpdcQUcf+2ckyyvfRDyaiclW9iR9RnX1VjUGk3lmaJbpwZoBC91hTQBisYaUEm/N
+         RF6mfnLNgqWsVOn1h1zTth1+/ADX2oNnO/Z50=
+Received: by 10.100.96.15 with HTTP; Fri, 2 Apr 2010 13:54:28 -0700 (PDT)
+In-Reply-To: <20100402180842.GA5798@twister.home>
+Received: by 10.101.4.27 with SMTP id g27mr6514794ani.221.1270241668162; Fri, 
+	02 Apr 2010 13:54:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143850>
 
-On Fri, 2 Apr 2010, Michal Sojka wrote:
-> To all contributors to test-lib.sh mentioned in Bcc:
-> 
-> You're getting this message because you're recorded as contributing one
-> or more changes to the test-lib.sh file in the Git project, and are
-> therefore one of many copyright holders in the file.
-> 
-> We would like to extend the license of that file from GPLv2 only
-> license to GPLv2+ by adding the recommended "or any later version"
-> clause to the license. This will give us license compatibility with
-> GPLv3 projects, which would like to reuse test-lib.sh.
-> 
-> Please respond to this email with one of the following:
-> 
->  YES, I agree to relicense all my contributions to test-lib.sh to GPLv2+
->  with the addition of the "or any later version" clause.
-> 
->  NO, I would rather not, please send me more email to convince me.
+On Fri, Apr 2, 2010 at 20:08, Gabor Gombas <gombasg@digikabel.hu> wrote=
+:
+> Hi,
+>
+> I want to verify from a script that the working directory is clean. S=
+ome
+> time ago Linus suggested to use "git diff --quiet --cached" followed =
+by
 
-As I said earlier, I don't think my contribution is significant enough
-(and large enough) to be copyrightable.  But again:
+In your script, you seem to have missed the "diff" part
 
-  YES, I agree to relicense all my contributions to test-lib.sh to GPLv2+
-  with the addition of the "or any later version" clause.
+> "git ls-files --exclude-standard -o -d -m -u". But:
+>
+> $ git status
+> # On branch git_workdir_check
+> # Your branch is ahead of 'origin/master' by 1 commit.
+> #
+> # Changes to be committed:
+> # =C2=A0 (use "git reset HEAD <file>..." to unstage)
+> #
+> # =C2=A0 =C2=A0 =C2=A0 modified: =C2=A0 ../../../test
+> #
+> # Changed but not updated:
+> # =C2=A0 (use "git add <file>..." to update what will be committed)
+> # =C2=A0 (use "git checkout -- <file>..." to discard changes in worki=
+ng
+> # =C2=A0 directory)
+> #
+> # =C2=A0 =C2=A0 =C2=A0 modified: =C2=A0 ../../../test
+> #
 
+Here. Were is your call to "git diff --cached"?
 
--- 
-Jakub Narebski
-Poland
+> $ git ls-files --exclude-standard -o -d -m -u
+> $ echo $?
+> 0
+
+This is correct.
+
+> So there _were_ uncommitted changes, "git status" showed them, but "g=
+it
+> ls-files" did not.
+
+Because it is not supposed to. The command "git ls-files" just shows
+the files not known to git. You have to parse the output. Not that it
+is complicated in this particular case: you consider the workdir unclea=
+n
+on any output.
+
+> Restriction: any solutions must work with git versions as old as 1.5.=
+4.
+
+It probably will, but please check "git diff --cached" exit code.
+It may be always 0, in which case you'll have to fallback to
+output parsing here too.
