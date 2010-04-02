@@ -1,63 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git: relicensing test-lib.sh from GPLv2 to GPLv2+
-Date: Fri, 2 Apr 2010 12:54:30 -0400
-Message-ID: <20100402165430.GA18576@coredump.intra.peff.net>
-References: <alpine.DEB.1.00.1002191138280.20986@pacific.mpi-cbg.de>
- <873a0xhwxs.fsf@yoom.home.cworth.org>
- <alpine.DEB.1.00.1002192204050.20986@pacific.mpi-cbg.de>
- <87eikfhec1.fsf@yoom.home.cworth.org>
- <alpine.DEB.1.00.1002202321430.20986@pacific.mpi-cbg.de>
- <87pr2i8g8o.fsf@steelpick.2x.cz>
- <20100402074343.GV3533@machine.or.cz>
- <87mxxm8f76.fsf@steelpick.2x.cz>
- <20100402081052.GW3533@machine.or.cz>
- <87iq8a8dj8.fsf@steelpick.2x.cz>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2010, #01; Fri, 02)
+Date: Fri, 2 Apr 2010 10:48:39 -0600
+Message-ID: <w2jfabb9a1e1004020948m159174faj3240eee211986fc2@mail.gmail.com>
+References: <7vaatmckmi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Michal Sojka <sojkam1@fel.cvut.cz>
-X-From: git-owner@vger.kernel.org Fri Apr 02 18:54:59 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 02 18:56:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nxk93-0000gn-5n
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 18:54:57 +0200
+	id 1NxkAd-0001eO-Ly
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 18:56:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755387Ab0DBQys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Apr 2010 12:54:48 -0400
-Received: from peff.net ([208.65.91.99]:49304 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755295Ab0DBQyn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Apr 2010 12:54:43 -0400
-Received: (qmail 15971 invoked by uid 107); 2 Apr 2010 16:55:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 02 Apr 2010 12:55:18 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Apr 2010 12:54:30 -0400
-Content-Disposition: inline
-In-Reply-To: <87iq8a8dj8.fsf@steelpick.2x.cz>
+	id S1755287Ab0DBQ4b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Apr 2010 12:56:31 -0400
+Received: from mail-gx0-f209.google.com ([209.85.217.209]:63036 "EHLO
+	mail-gx0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754961Ab0DBQ4a convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Apr 2010 12:56:30 -0400
+Received: by gxk1 with SMTP id 1so1750398gxk.16
+        for <git@vger.kernel.org>; Fri, 02 Apr 2010 09:56:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=rxix3sQDT7x3fYihqs2MhXOW8lyAZCQJqKEjCbYPvg4=;
+        b=eJ6hs3Xp6/HqltHjVVm6H7NX4QV3CNhm8cjUTaJa3L2UvyE8AbTFGaH7itVVrBMqaN
+         aUi6GNqHOyzxQbFng+W19DqhaAzGWB14uSkeoY4oOrY0C+BopWccm9/vf3mkhyPzEl28
+         0TEPslWz7rYWpgOVOyt21MYjr8/uLtctSYEKw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=G87D6YnVttUAuopGMRyKavIN2dc/OkUxayUxYZNclG+k8V/LgcCHZds8or76+xFaMT
+         3yRTW8RRKIsSuJSZ7Nxfb8K8mQv9EZoTGRubPdqa2sqhlzQIBLCg6zshkk0noxizB6Ht
+         Wj1I7zGtyNOqswZl3zFPhJmikQux5Gvimokeg=
+Received: by 10.100.206.13 with HTTP; Fri, 2 Apr 2010 09:48:39 -0700 (PDT)
+In-Reply-To: <7vaatmckmi.fsf@alter.siamese.dyndns.org>
+Received: by 10.101.2.29 with SMTP id e29mr5283910ani.212.1270226939346; Fri, 
+	02 Apr 2010 09:48:59 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143826>
 
-On Fri, Apr 02, 2010 at 10:27:39AM +0200, Michal Sojka wrote:
+Heya,
 
-> > Then perhaps you should exclude those who already replied earlier?
-> > It seems to me the list on the wiki is quite similar in magnitude to
-> > the recipient list of the last mail, surely there's no need to bother
-> > everyone again just for few extra people?
-> 
-> That's exactly what I did. I excluded those who stated explicitely that
-> they agree. Shall I take your response as an agreement?
+On Fri, Apr 2, 2010 at 02:40, Junio C Hamano <gitster@pobox.com> wrote:
+> * sr/remote-helper-export (2010-03-29) 7 commits
+> =A0- remote-helpers: add tests for testgit helper
+> =A0- remote-helpers: add testgit helper
+> =A0- remote-helpers: add support for an export command
+> =A0- remote-helpers: allow requesing the path to the .git directory
+> =A0- fast-import: always create marks_file directories
+> =A0- clone: also configure url for bare clones
+> =A0- clone: pass the remote name to remote_get
+>
+> May merge to 'next', but I would prefer waiting til 1.7.2 to have
+> this with a confidence than fast-tracking it.
 
-I'm not sure how you did it, but I already assented in the earlier
-thread (and am listed on the wiki) and still got the mail. But anyway,
-to be very clear:
+Agreed, if 1.7.2 will be a short cycle I don't mind waiting a few more =
+weeks :).
 
-   YES, I agree to relicense all my contributions to test-lib.sh to
-   GPLv2+ with the addition of the "or any later version" clause.
+--=20
+Cheers,
 
--Peff
+Sverre Rabbelier
