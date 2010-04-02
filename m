@@ -1,149 +1,100 @@
-From: =?UTF-8?q?Henrik=20Grubbstr=C3=B6m=20=28Grubba=29?= 
-	<grubba@grubba.org>
-Subject: [PATCH 2/2] Attr: Allow macros to override earlier attributes.
-Date: Fri,  2 Apr 2010 15:53:48 +0200
-Message-ID: <f02815e3761a8050aa76f46cd19288e72da14206.1270216006.git.grubba@grubba.org>
-References: <ca1f7f974d72a036dd8369309d487bbd047a8e2d.1270216006.git.grubba@grubba.org>
+From: Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH] Makefile: update defaults for modern Cygwin
+Date: Fri, 02 Apr 2010 08:03:59 -0600
+Organization: Red Hat
+Message-ID: <4BB5F94F.3090403@redhat.com>
+References: <1270161834-9597-1-git-send-email-eblake@redhat.com> <7vaatmmju9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Henrik=20Grubbstr=C3=B6m=20 (Grubba) ?= 
-	<grubba@grubba.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 02 15:54:13 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig2E668112C2857FDB74859FD6"
+Cc: git@vger.kernel.org, jon.seymour@gmail.com, jrnieder@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 02 16:05:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxhK9-0005Uk-GF
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 15:54:13 +0200
+	id 1NxhVB-0002Ro-Kc
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 16:05:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753947Ab0DBNyD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Apr 2010 09:54:03 -0400
-Received: from mail.roxen.com ([212.247.29.220]:33030 "EHLO mail.roxen.com"
+	id S1754254Ab0DBOFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Apr 2010 10:05:23 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:61014 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752895Ab0DBNx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Apr 2010 09:53:58 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.roxen.com (Postfix) with ESMTP id 4215F628165
-	for <git@vger.kernel.org>; Fri,  2 Apr 2010 15:53:57 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at roxen.com
-X-Amavis-Alert: BAD HEADER, Duplicate header field: "In-Reply-To"
-Received: from mail.roxen.com ([212.247.29.220])
-	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9QI2F1vbwvV5; Fri,  2 Apr 2010 15:53:57 +0200 (CEST)
-Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
-	by mail.roxen.com (Postfix) with ESMTP id 1A0DD62813E;
-	Fri,  2 Apr 2010 15:53:57 +0200 (CEST)
-Received: from shipon.roxen.com (localhost [127.0.0.1])
-	by shipon.roxen.com (8.13.8+Sun/8.13.8) with ESMTP id o32DrvW0026394;
-	Fri, 2 Apr 2010 15:53:57 +0200 (CEST)
-Received: (from grubba@localhost)
-	by shipon.roxen.com (8.13.8+Sun/8.13.8/Submit) id o32DruOM026393;
-	Fri, 2 Apr 2010 15:53:56 +0200 (CEST)
-X-Mailer: git-send-email 1.7.0.3.316.g33b5e
-In-Reply-To: <ca1f7f974d72a036dd8369309d487bbd047a8e2d.1270216006.git.grubba@grubba.org>
-In-Reply-To: <ca1f7f974d72a036dd8369309d487bbd047a8e2d.1270216006.git.grubba@grubba.org>
-References: <ca1f7f974d72a036dd8369309d487bbd047a8e2d.1270216006.git.grubba@grubba.org>
+	id S1752918Ab0DBOFV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Apr 2010 10:05:21 -0400
+Received: from int-mx05.intmail.prod.int.phx2.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com [10.5.11.18])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id o32E5Fq9008548
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Fri, 2 Apr 2010 10:05:15 -0400
+Received: from [10.11.9.154] (vpn-9-154.rdu.redhat.com [10.11.9.154])
+	by int-mx05.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id o32E5DVi032414;
+	Fri, 2 Apr 2010 10:05:14 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100330 Fedora/3.0.4-1.fc12 Lightning/1.0b1 Thunderbird/3.0.4
+In-Reply-To: <7vaatmmju9.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0.1
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.18
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143816>
 
-Macros need to be able to override earlier attribute values.
-Consider a .gitattributes file with the following content:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig2E668112C2857FDB74859FD6
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-[attr]mybinary	binary -ident
-*		ident
-foo.bin		mybinary
+On 04/02/2010 12:47 AM, Junio C Hamano wrote:
+> Thanks; as I lack Cygwin environment to test this myself, I'll apply th=
+is
+> directly on 'master' and see if anybody screams ;-)
 
-Without this patch foo.bin will still have the ident attribute set.
+Thanks.
 
-Signed-off-by: Henrik Grubbstr=C3=B6m <grubba@grubba.org>
----
- attr.c                |    8 ++++----
- t/t0003-attributes.sh |    6 ++++++
- 2 files changed, 10 insertions(+), 4 deletions(-)
+>=20
+>> +	ifneq ($(wordlist 1, 2, $(subst ., ,$(uname_R))),1 7)
+>=20
+> Do we need to update this part when Cygwin 1.8 is released?
 
-diff --git a/attr.c b/attr.c
-index 5c6464e..4d7ff02 100644
---- a/attr.c
-+++ b/attr.c
-@@ -594,7 +594,7 @@ static int path_matches(const char *pathname, int p=
-athlen,
- 	return fnmatch(pattern, pathname + baselen, FNM_PATHNAME) =3D=3D 0;
- }
-=20
--static int fill_one(const char *what, struct match_attr *a, int rem)
-+static int fill_one(const char *what, struct match_attr *a, int rem, i=
-nt force)
- {
- 	struct git_attr_check *check =3D check_all_attr;
- 	int i;
-@@ -604,7 +604,7 @@ static int fill_one(const char *what, struct match_=
-attr *a, int rem)
- 		const char **n =3D &(check[attr->attr_nr].value);
- 		const char *v =3D a->state[i].setto;
-=20
--		if (*n =3D=3D ATTR__UNKNOWN) {
-+		if (force || *n =3D=3D ATTR__UNKNOWN) {
- 			debug_set(what,
- 				  a->is_macro?a->u.attr->name:a->u.pattern,
- 				  attr, v);
-@@ -626,7 +626,7 @@ static int fill(const char *path, int pathlen, stru=
-ct attr_stack *stk, int rem)
- 			continue;
- 		if (path_matches(path, pathlen,
- 				 a->u.pattern, base, strlen(base)))
--			rem =3D fill_one("fill", a, rem);
-+			rem =3D fill_one("fill", a, rem, 0);
- 	}
- 	return rem;
- }
-@@ -642,7 +642,7 @@ static int macroexpand(struct attr_stack *stk, int =
-rem)
- 			continue;
- 		if (check[a->u.attr->attr_nr].value !=3D ATTR__TRUE)
- 			continue;
--		rem =3D fill_one("expand", a, rem);
-+		rem =3D fill_one("expand", a, rem, 1);
- 	}
- 	return rem;
- }
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index 1c77192..f8bc43b 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -20,8 +20,10 @@ test_expect_success 'setup' '
-=20
- 	mkdir -p a/b/d a/c &&
- 	(
-+		echo "[attr]notest !test"
- 		echo "f	test=3Df"
- 		echo "a/i test=3Da/i"
-+		echo "no notest"
- 	) >.gitattributes &&
- 	(
- 		echo "g test=3Da/g" &&
-@@ -44,6 +46,8 @@ test_expect_success 'attribute test' '
- 	attr_check b/g unspecified &&
- 	attr_check a/b/h a/b/h &&
- 	attr_check a/b/d/g "a/b/d/*"
-+	attr_check no unspecified
-+	attr_check a/b/d/no unspecified
-=20
- '
-=20
-@@ -58,6 +62,8 @@ a/b/g: test: a/b/g
- b/g: test: unspecified
- a/b/h: test: a/b/h
- a/b/d/g: test: a/b/d/*
-+no: test: unspecified
-+a/b/d/no: test: unspecified
- EOF
-=20
- 	sed -e "s/:.*//" < expect | git check-attr --stdin test > actual &&
+Odd numbers are public cygwin releases (1.5, 1.7), even numbers are Red
+Hat releases (1.6, 1.8), so cygwin 1.8 already does exist for Red Hat
+licensed customers.  It will probably be years before cygwin 1.9/1.10
+exists, at which point 1.5/1.6 will be such a distant memory that we
+could just delete this block altogether at that time.
+
+>  Replacing
+> this with "ifeq(... ,1 5)" may not be an improvement either, unless we =
+are
+> sure that nobody is using 1.4 or older, but I wonder if somebody else h=
+ave
+> better ideas?
+
+Nothing short of using $(shell) and doing some actual computation on the
+string in $(uname_R).  But that's not too hard, if people think it's
+worth it; speak up if you want me to rework it along those lines,
+otherwise I'll assume that things are good enough as-is.
+
 --=20
-1.7.0.3.316.g33b5e
+Eric Blake   eblake@redhat.com    +1-801-349-2682
+Libvirt virtualization library http://libvirt.org
+
+
+--------------enig2E668112C2857FDB74859FD6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Public key at home.comcast.net/~ericblake/eblake.gpg
+Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAku1+VIACgkQ84KuGfSFAYDSfgCfaqg7xwkg/GrZ1xr5zoBxa6aT
+5LYAn0FrUhsqSc55LTCn7/hkS7VcRo/E
+=uZVR
+-----END PGP SIGNATURE-----
+
+--------------enig2E668112C2857FDB74859FD6--
