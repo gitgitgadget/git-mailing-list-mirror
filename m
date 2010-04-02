@@ -1,82 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] clone: quell the progress report from init and report on
- clone
-Date: Fri, 02 Apr 2010 00:28:36 -0700
-Message-ID: <7vljd6l3dn.fsf@alter.siamese.dyndns.org>
-References: <7v7houxu8n.fsf@alter.siamese.dyndns.org>
- <4462210481812dc3b720b34f59e3051a65e41336.1270159202.git.git@drmicha.warpmail.net>
+From: Michal Sojka <sojkam1@fel.cvut.cz>
+Subject: Git: relicensing test-lib.sh from GPLv2 to GPLv2+
+Date: Fri, 02 Apr 2010 09:29:11 +0200
+Message-ID: <87pr2i8g8o.fsf@steelpick.2x.cz>
+References: <87ljf8pvxx.fsf@yoom.home.cworth.org> <87hbpwpoko.fsf@yoom.home.cworth.org> <5641883d1002060727ia4e6c16lf800a92fc8735430@mail.gmail.com> <201002081614.24284.sojkam1@fel.cvut.cz> <871vgr78lr.fsf@yoom.home.cworth.org> <87iqa2y0gz.fsf@steelpick.localdomain> <87r5oqe7mi.fsf@yoom.home.cworth.org> <871vgmki4f.fsf@steelpick.localdomain> <7vaav8hpfo.fsf@alter.siamese.dyndns.org> <87tytdiqob.fsf@steelpick.localdomain> <alpine.DEB.1.00.1002191138280.20986@pacific.mpi-cbg.de> <873a0xhwxs.fsf@yoom.home.cworth.org> <alpine.DEB.1.00.1002192204050.20986@pacific.mpi-cbg.de> <87eikfhec1.fsf@yoom.home.cworth.org> <alpine.DEB.1.00.1002202321430.20986@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Apr 02 09:28:57 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 02 09:29:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxbJG-0008A6-Eh
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 09:28:54 +0200
+	id 1NxbKC-0008RB-3k
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 09:29:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932269Ab0DBH2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Apr 2010 03:28:46 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45584 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932173Ab0DBH2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Apr 2010 03:28:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9AA71A7C64;
-	Fri,  2 Apr 2010 03:28:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=49HTuPBDYzt5g872FgGHWDiBP6o=; b=OJgnB6
-	V1bAG0Y7hb279DPSglE8RvNmWPvW3zKEwly6lM9AaRXc1yPMweSs3LssoMjhknIu
-	DJG8i1ONoq+NMekOnyryigSZHpLU5hpAjvfO7olt2EhrDWaKFR/1eAZq+UmjC9j6
-	vHIFtgeMOsieiSfANBFuoAZEOzv6IA5uZgkgo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=isYc7heh4AzccQh0zyWk8s7/nEU3GvD3
-	uaNN3d55j2MQYZL6UoPrqXxa+faPESdnl63c6XfNbk8QyC8lA0YD/3LDY/iuM5G1
-	TFWAyKQ8ZDD71rnyU2KYxapSn5IEO0+2XydEdBXBNOVu9FQwgH5AbYR7PQbgNm9b
-	g3sJgPzJTrE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 755FFA7C63;
-	Fri,  2 Apr 2010 03:28:41 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B9F2AA7C5E; Fri,  2 Apr
- 2010 03:28:37 -0400 (EDT)
-In-Reply-To: <4462210481812dc3b720b34f59e3051a65e41336.1270159202.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Fri\,  2 Apr 2010 00\:03\:06 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5CB78848-3E29-11DF-BE11-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932231Ab0DBH3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Apr 2010 03:29:48 -0400
+Received: from max.feld.cvut.cz ([147.32.192.36]:36992 "EHLO max.feld.cvut.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932234Ab0DBH3q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Apr 2010 03:29:46 -0400
+Received: from localhost (unknown [192.168.200.4])
+	by max.feld.cvut.cz (Postfix) with ESMTP id 8731B19F3635;
+	Fri,  2 Apr 2010 09:29:45 +0200 (CEST)
+X-Virus-Scanned: IMAP AMAVIS
+Received: from max.feld.cvut.cz ([192.168.200.1])
+	by localhost (styx.feld.cvut.cz [192.168.200.4]) (amavisd-new, port 10044)
+	with ESMTP id pxjdgp-ACG8q; Fri,  2 Apr 2010 09:29:44 +0200 (CEST)
+Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
+	by max.feld.cvut.cz (Postfix) with ESMTP id 15D8A19F362E;
+	Fri,  2 Apr 2010 09:29:40 +0200 (CEST)
+Received: from steelpick.2x.cz (k335-30.felk.cvut.cz [147.32.86.30])
+	(Authenticated sender: sojkam1)
+	by imap.feld.cvut.cz (Postfix) with ESMTPSA id 62A25FA003;
+	Fri,  2 Apr 2010 09:29:11 +0200 (CEST)
+Received: from wsh by steelpick.2x.cz with local (Exim 4.71)
+	(envelope-from <sojkam1@fel.cvut.cz>)
+	id 1NxbJX-00079Z-2H; Fri, 02 Apr 2010 09:29:11 +0200
+In-Reply-To: <alpine.DEB.1.00.1002202321430.20986@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143787>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+To all contributors to test-lib.sh mentioned in Bcc:
 
-> From: Junio C Hamano <gitster@pobox.com>
->
-> Currently, a local glit clone reports only initializing an empty
-> git dir, which is potentially confusing.
+You're getting this message because you're recorded as contributing one
+or more changes to the test-lib.sh file in the Git project, and are
+therefore one of many copyright holders in the file.
 
-glit?
+We would like to extend the license of that file from GPLv2 only
+license to GPLv2+ by adding the recommended "or any later version"
+clause to the license. This will give us license compatibility with
+GPLv3 projects, which would like to reuse test-lib.sh.
 
-> Instead, report that cloning is in progress and when it is done
-> (unless -q) is given, and suppres the init report (unless -v
-> is given).
->
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> I checked the documentation, there is really no place where the output
-> of git clone is documented - no documentation or test change is necesessary.
+Please respond to this email with one of the following:
 
-Thanks.
+ YES, I agree to relicense all my contributions to test-lib.sh to GPLv2+
+ with the addition of the "or any later version" clause.
 
-> I made it so that -v will restore the init message.
+ NO, I would rather not, please send me more email to convince me.
 
-I wonder how that would be useful, though.  The new message already says
-which directory is being worked on.  I didn't see a point of repeating
-that and made it silent on purpose.
+I'm putting your address to Bcc as most people are probably not
+interested in receiving responses from dozens of other people. I will
+track the status of received responses at
+https://git.wiki.kernel.org/index.php/Test-lib_reclicensing. Please do
+not remove git@vger.kernel.org when responding so that your response is
+available to everyone.
+
+Thanks!
+Michal Sojka
