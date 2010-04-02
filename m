@@ -1,75 +1,58 @@
-From: Gabor Gombas <gombasg@digikabel.hu>
-Subject: git ls-files unreliable?
-Date: Fri, 2 Apr 2010 20:08:43 +0200
-Message-ID: <20100402180842.GA5798@twister.home>
+From: HamletDRC <hamletdrc@gmail.com>
+Subject: revert all changes and go back to original state
+Date: Fri, 2 Apr 2010 12:00:54 -0700 (PDT)
+Message-ID: <28122043.post@talk.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 02 20:58:56 2010
+X-From: git-owner@vger.kernel.org Fri Apr 02 21:01:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nxm51-00033N-35
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 20:58:55 +0200
+	id 1Nxm73-00043G-2J
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 21:01:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753022Ab0DBS6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Apr 2010 14:58:51 -0400
-Received: from relay01.digicable.hu ([92.249.128.189]:50856 "EHLO
-	relay01.digicable.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750735Ab0DBS6u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Apr 2010 14:58:50 -0400
-X-Greylist: delayed 3004 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 Apr 2010 14:58:49 EDT
-Received: from [94.21.150.117] (helo=twister.home)
-	by relay01.digicable.hu with esmtpa
-	id 1NxlIR-00087e-LP for <git@vger.kernel.org>; Fri, 02 Apr 2010 20:08:43 +0200
-Received: by twister.home (Postfix, from userid 1000)
-	id 32E886C01; Fri,  2 Apr 2010 20:08:43 +0200 (CEST)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-X-Original: 94.21.150.117
+	id S1753432Ab0DBTA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Apr 2010 15:00:56 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:38544 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752643Ab0DBTAz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Apr 2010 15:00:55 -0400
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1Nxm6w-00007S-2i
+	for git@vger.kernel.org; Fri, 02 Apr 2010 12:00:54 -0700
+X-Nabble-From: hamletdrc@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143836>
 
-Hi,
 
-I want to verify from a script that the working directory is clean. Some
-time ago Linus suggested to use "git diff --quiet --cached" followed by
-"git ls-files --exclude-standard -o -d -m -u". But:
+Hi all, 
 
-$ git status
-# On branch git_workdir_check
-# Your branch is ahead of 'origin/master' by 1 commit.
-#
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       modified:   ../../../test
-#
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working
-#   directory)
-#
-#       modified:   ../../../test
-#
-$ git ls-files --exclude-standard -o -d -m -u
-$ echo $?
-0
+I have a github fork I created from Gradle. 
 
-So there _were_ uncommitted changes, "git status" showed them, but "git
-ls-files" did not. Unstaging the staged changes did not help, changing a
-different file did not help. Tried git versions 1.5.4.2 and 1.7.0-rc2,
-both showed the same behavior.
+The original gradle is here: git://github.com/gradle/gradle.git
+And my fork is here: http://github.com/HamletDRC/gradle
 
-When I did a "commit" and changed a file after that, then ls-files
-started to take notice. I don't know how to reproduce the state shown
-above. But this means that I cannot rely on "git ls-files" to check if
-the working directory is clean; so what should I use instead?
-Restriction: any solutions must work with git versions as old as 1.5.4.
+I made a bunch of changes and committed. 
 
-Gabor
+Now I want to revert everything I have back to be 100% in sync with the main
+gradle repo. 
+
+How do I do that? 
+
+
+-----
+--
+Hamlet D'Arcy
+
+-- 
+View this message in context: http://old.nabble.com/revert-all-changes-and-go-back-to-original-state-tp28122043p28122043.html
+Sent from the git mailing list archive at Nabble.com.
