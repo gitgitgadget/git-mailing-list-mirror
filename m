@@ -1,100 +1,115 @@
-From: Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH] Makefile: update defaults for modern Cygwin
-Date: Fri, 02 Apr 2010 08:03:59 -0600
-Organization: Red Hat
-Message-ID: <4BB5F94F.3090403@redhat.com>
-References: <1270161834-9597-1-git-send-email-eblake@redhat.com> <7vaatmmju9.fsf@alter.siamese.dyndns.org>
+From: Tor Arntsen <tor@spacetec.no>
+Subject: Re: [PATCH] Add Tru64/OSF1 support in Makefile
+Date: Fri, 2 Apr 2010 16:07:39 +0200
+Message-ID: <u2ld2d39d861004020707m7577182et40b4cd6b93bae830@mail.gmail.com>
+References: <d2d39d861003301122p646efc1fj9d88af1893b84b3c@mail.gmail.com>
+	 <DA8Or5TA0_betHA0BMcLIT0so7oVjDK6CYr4x1LCiX60SEmuPqVnXg@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig2E668112C2857FDB74859FD6"
-Cc: git@vger.kernel.org, jon.seymour@gmail.com, jrnieder@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 02 16:05:38 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Apr 02 16:07:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxhVB-0002Ro-Kc
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 16:05:37 +0200
+	id 1NxhXH-0003jV-UA
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 16:07:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754254Ab0DBOFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Apr 2010 10:05:23 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:61014 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752918Ab0DBOFV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Apr 2010 10:05:21 -0400
-Received: from int-mx05.intmail.prod.int.phx2.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com [10.5.11.18])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id o32E5Fq9008548
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Fri, 2 Apr 2010 10:05:15 -0400
-Received: from [10.11.9.154] (vpn-9-154.rdu.redhat.com [10.11.9.154])
-	by int-mx05.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id o32E5DVi032414;
-	Fri, 2 Apr 2010 10:05:14 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100330 Fedora/3.0.4-1.fc12 Lightning/1.0b1 Thunderbird/3.0.4
-In-Reply-To: <7vaatmmju9.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.0.1
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.18
+	id S1755055Ab0DBOHn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Apr 2010 10:07:43 -0400
+Received: from mail-fx0-f227.google.com ([209.85.220.227]:63896 "EHLO
+	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752918Ab0DBOHl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Apr 2010 10:07:41 -0400
+Received: by fxm27 with SMTP id 27so421745fxm.28
+        for <git@vger.kernel.org>; Fri, 02 Apr 2010 07:07:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:received:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=WBs+GHw0IquCRV8G9/vjt02kBFZUkdkHoFkuDRP7bx8=;
+        b=BMBMDcpN9Cwc0oAOLxGfwLGhRByMSgRoBjFeFtm0Yl117kxRhJ7aAY+fQFLHqkkGpy
+         wbCxWJyeC+d4KNUBue7u13YoVNtoUMrC3EEQRCGVDgspW6pUJctqrvz63q32htY7u92m
+         NODpO7HorX+uEYUK5j7YPZ+FWL2LzJ2+CYVvY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=Q2LXFmcViuicabBwDvg5mcBriu3fSJImxok3NEjNRA3qVppQ5fiqtFqStHOfKvTfFU
+         CvG7SbLzPUS4hk4KA9LHOL4efYjrvn5omsDiqkWPLjp1hrvz9NB4fEUM4EKmUwQ+zrvA
+         mq5EL/zDhsYbzrcVnRy++12jL4MAaTuv1t3/8=
+Received: by 10.239.138.80 with HTTP; Fri, 2 Apr 2010 07:07:39 -0700 (PDT)
+In-Reply-To: <DA8Or5TA0_betHA0BMcLIT0so7oVjDK6CYr4x1LCiX60SEmuPqVnXg@cipher.nrlssc.navy.mil>
+X-Google-Sender-Auth: 3ca72d93a8c2443e
+Received: by 10.239.185.19 with SMTP id a19mr171512hbh.159.1270217259708; Fri, 
+	02 Apr 2010 07:07:39 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143817>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig2E668112C2857FDB74859FD6
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+On Wed, Mar 31, 2010 at 18:29, Brandon Casey
+<brandon.casey.ctr@nrlssc.navy.mil> wrote:
+> On 03/30/2010 01:22 PM, Tor Arntsen wrote:
+>> This patch to Makefile makes git build for me on Tru64/OSF1 V5.1 wit=
+h
+>> the native compiler.
+[..]
+>> +ifeq ($(uname_S),OSF1)
+>> + =A0 =A0 # Tested with V5.1 w/libcurl and zlib-1.1.4-5 in /usr/loca=
+l/
+>> + =A0 =A0 CC =3D cc
+>> + =A0 =A0 CFLAGS =3D -O2 -g3
+>
+> I wonder if the native compiler will be the most common compiler
+> used on this platform? =A0I tend to lean towards configuring the
+> Makefile for gcc, unless gcc is not available for a platform. The
+> user can set CC and CFLAGS in config.mak and on the make command
+> line if they desire something different.
+>
+> This isn't an objection by me, I'm just mentioning it to bring
+> attention to the issue in case others think it is worthy for
+> git to have a stated policy one way or the other.
 
-On 04/02/2010 12:47 AM, Junio C Hamano wrote:
-> Thanks; as I lack Cygwin environment to test this myself, I'll apply th=
-is
-> directly on 'master' and see if anybody screams ;-)
+I'm not certain. I do in fact have gcc (3.3) installed on this Tru64
+box, but it doesn't seem to be part of the original 'freeware' CD that
+used to come with Tru64. Besides, the freeware CD was first removed as
+physical CD, and later (two or three years ago, apparently) pulled by
+HP from the online download which was used by their 'tachometer'
+('apt-get'-like) freeware tool. Tru64 V51B (which seems to be the
+latest, there's no 5.2 as I originally thought) is still available for
+download, and so is the native compiler. As far as I can tell it's
+incredibly difficult to find precompiled freeware/oss packages for
+Tru64 anymore.
 
-Thanks.
+>> + =A0 =A0 SHELL_PATH =3D /bin/ksh
+>
+> Can you run the test suite with this ksh? =A0If it suffers from
+> the same exit status behavior of ksh on IRIX and SunOS, then
+> I have a patch which allows the test suite to run.
 
->=20
->> +	ifneq ($(wordlist 1, 2, $(subst ., ,$(uname_R))),1 7)
->=20
-> Do we need to update this part when Cygwin 1.8 is released?
+Good idea. I'll do that, and maybe that would indicate if there are
+issues with using the native compiler as well.
 
-Odd numbers are public cygwin releases (1.5, 1.7), even numbers are Red
-Hat releases (1.6, 1.8), so cygwin 1.8 already does exist for Red Hat
-licensed customers.  It will probably be years before cygwin 1.9/1.10
-exists, at which point 1.5/1.6 will be such a distant memory that we
-could just delete this block altogether at that time.
+> Also, I wonder if it suffers from the same trap handling that
+> ksh has on SunOS.
+[..]
+I tested that snippet you provided, and it exits with 0 on Tru64 (I
+also verified that indeed it doesn't on Solaris 10).
 
->  Replacing
-> this with "ifeq(... ,1 5)" may not be an improvement either, unless we =
-are
-> sure that nobody is using 1.4 or older, but I wonder if somebody else h=
-ave
-> better ideas?
+>> + =A0 =A0 BASIC_CFLAGS +=3D -D_POSIX_C_SOURCE=3D1 -D_OSF_SOURCE=3D1
+>> + =A0 =A0 BASIC_CFLAGS +=3D -pthread
+>
+> There is a PTHREAD_LIBS variable and it seems there is precedent
+> for setting it to -pthread in the FreeBSD section.
 
-Nothing short of using $(shell) and doing some actual computation on the
-string in $(uname_R).  But that's not too hard, if people think it's
-worth it; speak up if you want me to rework it along those lines,
-otherwise I'll assume that things are good enough as-is.
+Right, I can do it similarly in my next version of the patch. Thanks
+for your comments!
 
---=20
-Eric Blake   eblake@redhat.com    +1-801-349-2682
-Libvirt virtualization library http://libvirt.org
-
-
---------------enig2E668112C2857FDB74859FD6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Public key at home.comcast.net/~ericblake/eblake.gpg
-Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAku1+VIACgkQ84KuGfSFAYDSfgCfaqg7xwkg/GrZ1xr5zoBxa6aT
-5LYAn0FrUhsqSc55LTCn7/hkS7VcRo/E
-=uZVR
------END PGP SIGNATURE-----
-
---------------enig2E668112C2857FDB74859FD6--
+-Tor
