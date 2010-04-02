@@ -1,130 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/7] textconv caching
-Date: Fri, 2 Apr 2010 02:14:21 -0400
-Message-ID: <20100402061420.GA5551@coredump.intra.peff.net>
-References: <20100402000159.GA15101@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Prompt for a username when an HTTP request 401s
+Date: Thu, 01 Apr 2010 23:39:58 -0700
+Message-ID: <7veiiymk75.fsf@alter.siamese.dyndns.org>
+References: <m2wd411cc4a1004011514w6d350ac7l15ab6bb1a6be8d89@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 02 08:14:41 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 02 08:40:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nxa9P-0000wv-W2
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 08:14:40 +0200
+	id 1NxaYD-0001fT-8H
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 08:40:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758189Ab0DBGOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Apr 2010 02:14:35 -0400
-Received: from peff.net ([208.65.91.99]:32816 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758028Ab0DBGOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Apr 2010 02:14:34 -0400
-Received: (qmail 8554 invoked by uid 107); 2 Apr 2010 06:15:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 02 Apr 2010 02:15:09 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Apr 2010 02:14:21 -0400
-Content-Disposition: inline
-In-Reply-To: <20100402000159.GA15101@coredump.intra.peff.net>
+	id S1758712Ab0DBGkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Apr 2010 02:40:12 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56220 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758693Ab0DBGkH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Apr 2010 02:40:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A5891A77E9;
+	Fri,  2 Apr 2010 02:40:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mN4nOv3mfIhramdHSnrbu3/S3MY=; b=WQjbyT
+	UGz5azPODIxfn5JZod5GwJWHQyW8nO2fiI5a6aZmXT7Pbyf3aWT/dkPptxvbin6f
+	cS69fZ428GpUdRdTu5Jmu1G1kBLUEYPpZHZEUI2TyWvdpi08w/1Zkl04In06VGht
+	4KuoyEO+OrpzClwOzxsjvCyGNf0Z/C8vVF4Ok=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=D6nqFEYD0bL+i+m94jte/DjjLQ0+HiOk
+	Ok9ZcBSikMhrRS8nkO+KViV3CJPffC+87RWcuJWSMiO0htqrWK7KTQDou4FHC8zH
+	Psvf8NA7p2VjzM0eMl5WhgIrCwHWKWr8jdu9VQMJwVhyP7c1CZwNgjXkvx6lAXya
+	h5VxduCiy6c=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DDF6A77E8;
+	Fri,  2 Apr 2010 02:40:02 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B3C1BA77E7; Fri,  2 Apr
+ 2010 02:39:59 -0400 (EDT)
+In-Reply-To: <m2wd411cc4a1004011514w6d350ac7l15ab6bb1a6be8d89@mail.gmail.com>
+ (Scott Chacon's message of "Thu\, 1 Apr 2010 15\:14\:35 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 90E02DF2-3E22-11DF-A37F-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143779>
 
-On Thu, Apr 01, 2010 at 08:01:59PM -0400, Jeff King wrote:
+Scott Chacon <schacon@gmail.com> writes:
 
->   [before]
->   $ time git show >/dev/null
->   real    0m13.724s
->   user    0m12.057s
->   sys     0m1.624s
-> 
->   [after (with cache primed)]
->   $ time git show >/dev/null
->   real    0m0.009s
->   user    0m0.004s
->   sys     0m0.004s
+> When an HTTP request returns a 401, Git will currently fail with a
+> confusing message saying that it got a 401, which is not very
+> descriptive.
+>
+> Currently if a user wants to use Git over HTTP, they have to use one
+> URL with the username in the URL (e.g. "http://user@host.com/repo.git")
+> for write access and another without the username for unauthenticated
+> read access (unless they want to be prompted for the password each
+> time). However, since the HTTP servers will return a 401 if an action
+> requires authentication, we can prompt for username and password if we
+> see this, allowing us to use a single URL for both purposes.
 
-Since this is a space-time tradeoff, I thought it would make sense to
-show some size numbers as a followup.
+Thanks; this illustrates the issue you are trying to solve much easier to
+see, don't you agree?
 
-To get a sense of the size of the repo (it's almost all photos and
-videos):
+An obvious enhancement could be to make "http://user@host.com/repo.git"
+ask for password lazily.  Then such a URL can be used even for an access
+that does not need authentication and the user does not have to prompted
+for the password each time, which was what you wanted to really solve, no?
 
-  [size of the repo, already fully packed]
-  $ du -sh .git/objects
-  4.0G    .git/objects
+Actually that could not just be an enhancement, but might be a better
+alternative solution to the problem, but I haven't thought things
+through.
 
-  [the number of unique blobs through all history; most are binary media]
-  $ git log --raw --no-abbrev | awk '/^:/ {print $3 "\n" $4}' | sort -u | wc -l
-  10605
+> Signed-off-by: Scott Chacon <schacon@gmail.com>
+> ---
+>
+> Updated the comments style and the commit message for Junio.
 
-In comparison, the metadata for a given file (produced by the textconv)
-is about 200 bytes of text.
+Heh, Message update is never _for_ me.  It is to clarify the problem you
+are trying to solve, so that we can be certain that the proposed patch is
+the best approach to solve it.
 
-So I did a big cache priming:
+> diff --git a/http.c b/http.c
+> index 4814217..51253e1 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -815,7 +815,21 @@ static int http_request(const char *url, void
+> *result, int target, int options)
 
-  $ time git log -p >/dev/null
-  real    39m29.748s
-  user    23m1.090s
-  sys     3m46.642s
+I fixed this up when I queued the previous version, and you have the same
+line wrapping problem in this version, which I have fixed, too, before
+replacing what was queued to 'pu'.
 
-Slow, and unsurprisingly spends quite a bit of time waiting on I/O. The
-result is a notes tree with almost one textconv per blob:
+I mention this not as a complaint (but I would appreciate if you try to be
+careful next time, especially if you plan to post more patches and to
+become a regular contributor), but primarily because it is curious that
+only the hunk headers are wrapped but not these long lines we see below:
 
-  $ git ls-tree -r notes/textconv/mfo | wc -l
-  10317
-
-We're now using almost 200M:
-
-  $ git count-objects
-  39513 objects, 198604 kilobytes
-
-But wait. Many of those objects are trees for stale versions of the
-cache.
-
-  $ git repack -d
-  $ (cd .git/objects/pack && du -k *.pack)
-  2056    pack-34170e72ec40a07e98aae044479abccc9e02751b.pack
-  4089224 pack-81797628f3aebf6a0bdc082fa05ec14932910534.pack
-  $ git count-objects
-  30685 objects, 163288 kilobytes
-
-In actuality, a fully packed cache is only about 2M (from 35M of
-loose objects; it deltas quite well because there is a lot of overlap
-in my metadata). And we can prune away the other 160M of cruft:
-
-  $ git prune
-  $ git count-objects
-  0 objects, 0 kilobytes
-
-And of course, the final speed result:
-
-  $ time git log -p >/dev/null
-  real    0m7.606s
-  user    0m6.084s
-  sys     0m0.788s
-
-So what I take away from this is two things:
-
-  1. The size tradeoff is definitely worthwhile for some workloads. In
-     this case, the textconv version is orders of magnitude smaller than
-     the original. I'd be interested to see numbers for something like a
-     repository of documents that get textconv'd to pure ascii.
-
-  2. We had 460% loose object overhead just from tree objects in
-     intermediate versions of the cache. While it was not too hard to
-     get rid of with a repack and a prune, we are probably better off
-     not generating it in the first place. In theory we could have
-     written only one notes tree, and kept the intermediate state in
-     memory. In practice, flushing once per commit-diff (instead of once
-     per file) would probably be fine, and would be simpler to
-     implement.
-
-And of course, now that I have a completely primed cache, I can push it
-around with "git push $dest notes/textconv/mfo". Yay for storing notes
-as git objects.
-
--Peff
+> ...
+> +			} else {
+> +				/*
+> +				 * git_getpass is needed here because its very likely stdin/stdout are
+> ...
