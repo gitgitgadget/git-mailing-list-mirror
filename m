@@ -1,280 +1,219 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/7] make commit_tree a library function
-Date: Thu, 1 Apr 2010 20:05:23 -0400
-Message-ID: <20100402000523.GC16462@coredump.intra.peff.net>
+Subject: [PATCH 4/7] introduce notes-cache interface
+Date: Thu, 1 Apr 2010 20:07:40 -0400
+Message-ID: <20100402000739.GD16462@coredump.intra.peff.net>
 References: <20100402000159.GA15101@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 02 02:05:43 2010
+X-From: git-owner@vger.kernel.org Fri Apr 02 02:07:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxUOL-0008Nk-Ii
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 02:05:42 +0200
+	id 1NxUQX-0000kZ-9w
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 02:07:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759049Ab0DBAFh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Apr 2010 20:05:37 -0400
-Received: from peff.net ([208.65.91.99]:33414 "EHLO peff.net"
+	id S1759004Ab0DBAHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Apr 2010 20:07:53 -0400
+Received: from peff.net ([208.65.91.99]:60284 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759045Ab0DBAFf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Apr 2010 20:05:35 -0400
-Received: (qmail 5175 invoked by uid 107); 2 Apr 2010 00:06:10 -0000
+	id S1755400Ab0DBAHv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Apr 2010 20:07:51 -0400
+Received: (qmail 5205 invoked by uid 107); 2 Apr 2010 00:08:27 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 01 Apr 2010 20:06:10 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Apr 2010 20:05:23 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 01 Apr 2010 20:08:27 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Apr 2010 20:07:40 -0400
 Content-Disposition: inline
 In-Reply-To: <20100402000159.GA15101@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143765>
 
-Until now, this has been part of the commit-tree builtin.
-However, it is already used by other builtins (like commit,
-merge, and notes), and it would be useful to access it from
-library code.
+Notes provide a fast lookup mechanism for data keyed by
+sha1. This is ideal for caching certain operations, like
+textconv filters.
 
-The check_valid helper has to come along, too, but is given
-a more library-ish name of "assert_sha1_type".
+This patch builds some infrastructure to make it simpler to
+use notes trees as caches. In particular, caches:
 
-Otherwise, the code is unchanged. There are still a few
-rough edges for a library function, like printing the utf8
-warning to stderr, but we can address those if and when they
-come up as inappropriate.
+  1. don't have arbitrary commit messages. They store a
+     cache validity string in the commit, and clear the tree
+     when the cache validity string changes.
+
+  2. don't keep any commit history. The accumulated history
+     of a a cache is just useless cruft.
+
+  3. use a looser form of locking for ref updates. If two
+     processes try to write to the cache simultaneously, it
+     is OK if one overwrites the other, losing some changes.
+     It's just a cache, so we will just end up with an extra
+     miss.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I'm not inclined to try lib-ifying it any more, as it would just feel
-like code churn. It's not as if we aren't calling it from all over
-already, so this is really just about moving it out of builtin/.
+I tried lib-ifying commit_notes from builtin/notes.c, but for the
+reasons mentioned above, plus the totally different error handling (we
+need silent error returns because not writing to the cache should not be
+fatal), the code ended up having more "if (quiet)" and "if (nohistory)"
+than there was actual code. The notes_cache_write below ended up pretty
+terse and readable, I think.
 
- builtin.h             |    3 --
- builtin/commit-tree.c |   70 +------------------------------------------------
- cache.h               |    2 +
- commit.c              |   55 ++++++++++++++++++++++++++++++++++++++
- commit.h              |    4 +++
- sha1_file.c           |   10 +++++++
- 6 files changed, 72 insertions(+), 72 deletions(-)
+ Makefile      |    2 +
+ notes-cache.c |   94 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ notes-cache.h |   20 ++++++++++++
+ 3 files changed, 116 insertions(+), 0 deletions(-)
+ create mode 100644 notes-cache.c
+ create mode 100644 notes-cache.h
 
-diff --git a/builtin.h b/builtin.h
-index 464588b..5c887ef 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -16,9 +16,6 @@ extern const char *help_unknown_cmd(const char *cmd);
- extern void prune_packed_objects(int);
- extern int fmt_merge_msg(int merge_summary, struct strbuf *in,
- 	struct strbuf *out);
--extern int commit_tree(const char *msg, unsigned char *tree,
--		struct commit_list *parents, unsigned char *ret,
--		const char *author);
- extern int commit_notes(struct notes_tree *t, const char *msg);
- 
- struct notes_rewrite_cfg {
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index 90dac34..87f0591 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -9,19 +9,6 @@
- #include "builtin.h"
- #include "utf8.h"
- 
--/*
-- * FIXME! Share the code with "write-tree.c"
-- */
--static void check_valid(unsigned char *sha1, enum object_type expect)
--{
--	enum object_type type = sha1_object_info(sha1, NULL);
--	if (type < 0)
--		die("%s is not a valid object", sha1_to_hex(sha1));
--	if (type != expect)
--		die("%s is not a valid '%s' object", sha1_to_hex(sha1),
--		    typename(expect));
--}
--
- static const char commit_tree_usage[] = "git commit-tree <sha1> [-p <sha1>]* < changelog";
- 
- static void new_parent(struct commit *parent, struct commit_list **parents_p)
-@@ -38,61 +25,6 @@ static void new_parent(struct commit *parent, struct commit_list **parents_p)
- 	commit_list_insert(parent, parents_p);
- }
- 
--static const char commit_utf8_warn[] =
--"Warning: commit message does not conform to UTF-8.\n"
--"You may want to amend it after fixing the message, or set the config\n"
--"variable i18n.commitencoding to the encoding your project uses.\n";
--
--int commit_tree(const char *msg, unsigned char *tree,
--		struct commit_list *parents, unsigned char *ret,
--		const char *author)
--{
--	int result;
--	int encoding_is_utf8;
--	struct strbuf buffer;
--
--	check_valid(tree, OBJ_TREE);
--
--	/* Not having i18n.commitencoding is the same as having utf-8 */
--	encoding_is_utf8 = is_encoding_utf8(git_commit_encoding);
--
--	strbuf_init(&buffer, 8192); /* should avoid reallocs for the headers */
--	strbuf_addf(&buffer, "tree %s\n", sha1_to_hex(tree));
--
--	/*
--	 * NOTE! This ordering means that the same exact tree merged with a
--	 * different order of parents will be a _different_ changeset even
--	 * if everything else stays the same.
--	 */
--	while (parents) {
--		struct commit_list *next = parents->next;
--		strbuf_addf(&buffer, "parent %s\n",
--			sha1_to_hex(parents->item->object.sha1));
--		free(parents);
--		parents = next;
--	}
--
--	/* Person/date information */
--	if (!author)
--		author = git_author_info(IDENT_ERROR_ON_NO_NAME);
--	strbuf_addf(&buffer, "author %s\n", author);
--	strbuf_addf(&buffer, "committer %s\n", git_committer_info(IDENT_ERROR_ON_NO_NAME));
--	if (!encoding_is_utf8)
--		strbuf_addf(&buffer, "encoding %s\n", git_commit_encoding);
--	strbuf_addch(&buffer, '\n');
--
--	/* And add the comment */
--	strbuf_addstr(&buffer, msg);
--
--	/* And check the encoding */
--	if (encoding_is_utf8 && !is_utf8(buffer.buf))
--		fprintf(stderr, commit_utf8_warn);
--
--	result = write_sha1_file(buffer.buf, buffer.len, commit_type, ret);
--	strbuf_release(&buffer);
--	return result;
--}
--
- int cmd_commit_tree(int argc, const char **argv, const char *prefix)
- {
- 	int i;
-@@ -117,7 +49,7 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
- 
- 		if (get_sha1(b, sha1))
- 			die("Not a valid object name %s", b);
--		check_valid(sha1, OBJ_COMMIT);
-+		assert_sha1_type(sha1, OBJ_COMMIT);
- 		new_parent(lookup_commit(sha1), &parents);
- 	}
- 
-diff --git a/cache.h b/cache.h
-index 5eb0573..bfc4d82 100644
---- a/cache.h
-+++ b/cache.h
-@@ -718,6 +718,8 @@ extern int has_loose_object_nonlocal(const unsigned char *sha1);
- 
- extern int has_pack_index(const unsigned char *sha1);
- 
-+extern void assert_sha1_type(const unsigned char *sha1, enum object_type expect);
+diff --git a/Makefile b/Makefile
+index 8a0f5c4..24e92ab 100644
+--- a/Makefile
++++ b/Makefile
+@@ -486,6 +486,7 @@ LIB_H += log-tree.h
+ LIB_H += mailmap.h
+ LIB_H += merge-recursive.h
+ LIB_H += notes.h
++LIB_H += notes-cache.h
+ LIB_H += object.h
+ LIB_H += pack.h
+ LIB_H += pack-refs.h
+@@ -575,6 +576,7 @@ LIB_OBJS += merge-file.o
+ LIB_OBJS += merge-recursive.o
+ LIB_OBJS += name-hash.o
+ LIB_OBJS += notes.o
++LIB_OBJS += notes-cache.o
+ LIB_OBJS += object.o
+ LIB_OBJS += pack-check.o
+ LIB_OBJS += pack-refs.o
+diff --git a/notes-cache.c b/notes-cache.c
+new file mode 100644
+index 0000000..dee6d62
+--- /dev/null
++++ b/notes-cache.c
+@@ -0,0 +1,94 @@
++#include "cache.h"
++#include "notes-cache.h"
++#include "commit.h"
++#include "refs.h"
 +
- extern const signed char hexval_table[256];
- static inline unsigned int hexval(unsigned char c)
- {
-diff --git a/commit.c b/commit.c
-index 731191e..e9b0750 100644
---- a/commit.c
-+++ b/commit.c
-@@ -790,3 +790,58 @@ struct commit_list *reduce_heads(struct commit_list *heads)
- 	free(other);
- 	return result;
- }
-+
-+static const char commit_utf8_warn[] =
-+"Warning: commit message does not conform to UTF-8.\n"
-+"You may want to amend it after fixing the message, or set the config\n"
-+"variable i18n.commitencoding to the encoding your project uses.\n";
-+
-+int commit_tree(const char *msg, unsigned char *tree,
-+		struct commit_list *parents, unsigned char *ret,
-+		const char *author)
++static int notes_cache_match_validity(const char *ref, const char *validity)
 +{
-+	int result;
-+	int encoding_is_utf8;
-+	struct strbuf buffer;
++	unsigned char sha1[20];
++	struct commit *commit;
++	struct pretty_print_context pretty_ctx;
++	struct strbuf msg = STRBUF_INIT;
++	int ret;
 +
-+	assert_sha1_type(tree, OBJ_TREE);
++	if (read_ref(ref, sha1) < 0)
++		return 0;
 +
-+	/* Not having i18n.commitencoding is the same as having utf-8 */
-+	encoding_is_utf8 = is_encoding_utf8(git_commit_encoding);
++	commit = lookup_commit_reference_gently(sha1, 1);
++	if (!commit)
++		return 0;
 +
-+	strbuf_init(&buffer, 8192); /* should avoid reallocs for the headers */
-+	strbuf_addf(&buffer, "tree %s\n", sha1_to_hex(tree));
++	memset(&pretty_ctx, 0, sizeof(pretty_ctx));
++	format_commit_message(commit, "%s", &msg, &pretty_ctx);
++	strbuf_trim(&msg);
 +
-+	/*
-+	 * NOTE! This ordering means that the same exact tree merged with a
-+	 * different order of parents will be a _different_ changeset even
-+	 * if everything else stays the same.
-+	 */
-+	while (parents) {
-+		struct commit_list *next = parents->next;
-+		strbuf_addf(&buffer, "parent %s\n",
-+			sha1_to_hex(parents->item->object.sha1));
-+		free(parents);
-+		parents = next;
-+	}
++	ret = !strcmp(msg.buf, validity);
++	strbuf_release(&msg);
 +
-+	/* Person/date information */
-+	if (!author)
-+		author = git_author_info(IDENT_ERROR_ON_NO_NAME);
-+	strbuf_addf(&buffer, "author %s\n", author);
-+	strbuf_addf(&buffer, "committer %s\n", git_committer_info(IDENT_ERROR_ON_NO_NAME));
-+	if (!encoding_is_utf8)
-+		strbuf_addf(&buffer, "encoding %s\n", git_commit_encoding);
-+	strbuf_addch(&buffer, '\n');
-+
-+	/* And add the comment */
-+	strbuf_addstr(&buffer, msg);
-+
-+	/* And check the encoding */
-+	if (encoding_is_utf8 && !is_utf8(buffer.buf))
-+		fprintf(stderr, commit_utf8_warn);
-+
-+	result = write_sha1_file(buffer.buf, buffer.len, commit_type, ret);
-+	strbuf_release(&buffer);
-+	return result;
++	return ret;
 +}
-diff --git a/commit.h b/commit.h
-index 3cf5166..2b7fd89 100644
---- a/commit.h
-+++ b/commit.h
-@@ -158,4 +158,8 @@ static inline int single_parent(struct commit *commit)
- 
- struct commit_list *reduce_heads(struct commit_list *heads);
- 
-+extern int commit_tree(const char *msg, unsigned char *tree,
-+		struct commit_list *parents, unsigned char *ret,
-+		const char *author);
 +
- #endif /* COMMIT_H */
-diff --git a/sha1_file.c b/sha1_file.c
-index ff65328..28c056e 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2516,3 +2516,13 @@ int read_pack_header(int fd, struct pack_header *header)
- 		return PH_ERROR_PROTOCOL;
- 	return 0;
- }
-+
-+void assert_sha1_type(const unsigned char *sha1, enum object_type expect)
++void notes_cache_init(struct notes_cache *c, const char *name,
++		     const char *validity)
 +{
-+	enum object_type type = sha1_object_info(sha1, NULL);
-+	if (type < 0)
-+		die("%s is not a valid object", sha1_to_hex(sha1));
-+	if (type != expect)
-+		die("%s is not a valid '%s' object", sha1_to_hex(sha1),
-+		    typename(expect));
++	struct strbuf ref = STRBUF_INIT;
++	int flags = 0;
++
++	memset(c, 0, sizeof(*c));
++	c->validity = xstrdup(validity);
++
++	strbuf_addf(&ref, "refs/notes/%s", name);
++	if (!notes_cache_match_validity(ref.buf, validity))
++		flags = NOTES_INIT_EMPTY;
++	init_notes(&c->tree, ref.buf, combine_notes_overwrite, flags);
++	strbuf_release(&ref);
 +}
++
++int notes_cache_write(struct notes_cache *c)
++{
++	unsigned char tree_sha1[20];
++	unsigned char commit_sha1[20];
++
++	if (!c || !c->tree.initialized || !c->tree.ref || !*c->tree.ref)
++		return -1;
++	if (!c->tree.dirty)
++		return 0;
++
++	if (write_notes_tree(&c->tree, tree_sha1))
++		return -1;
++	if (commit_tree(c->validity, tree_sha1, NULL, commit_sha1, NULL) < 0)
++		return -1;
++	if (update_ref("update notes cache", c->tree.ref, commit_sha1, NULL,
++		       0, QUIET_ON_ERR) < 0)
++		return -1;
++
++	return 0;
++}
++
++char *notes_cache_get(struct notes_cache *c, unsigned char key_sha1[20],
++		      size_t *outsize)
++{
++	const unsigned char *value_sha1;
++	enum object_type type;
++	char *value;
++	unsigned long size;
++
++	value_sha1 = get_note(&c->tree, key_sha1);
++	if (!value_sha1)
++		return NULL;
++	value = read_sha1_file(value_sha1, &type, &size);
++
++	*outsize = size;
++	return value;
++}
++
++int notes_cache_put(struct notes_cache *c, unsigned char key_sha1[20],
++		    const char *data, size_t size)
++{
++	unsigned char value_sha1[20];
++
++	if (write_sha1_file(data, size, "blob", value_sha1) < 0)
++		return -1;
++	add_note(&c->tree, key_sha1, value_sha1, NULL);
++	return 0;
++}
+diff --git a/notes-cache.h b/notes-cache.h
+new file mode 100644
+index 0000000..356f88f
+--- /dev/null
++++ b/notes-cache.h
+@@ -0,0 +1,20 @@
++#ifndef NOTES_CACHE_H
++#define NOTES_CACHE_H
++
++#include "notes.h"
++
++struct notes_cache {
++	struct notes_tree tree;
++	char *validity;
++};
++
++void notes_cache_init(struct notes_cache *c, const char *name,
++		     const char *validity);
++int notes_cache_write(struct notes_cache *c);
++
++char *notes_cache_get(struct notes_cache *c, unsigned char sha1[20], size_t
++		      *outsize);
++int notes_cache_put(struct notes_cache *c, unsigned char sha1[20],
++		    const char *data, size_t size);
++
++#endif /* NOTES_CACHE_H */
 -- 
 1.7.0.4.299.gba9d4
