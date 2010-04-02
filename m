@@ -1,58 +1,62 @@
-From: HamletDRC <hamletdrc@gmail.com>
-Subject: revert all changes and go back to original state
-Date: Fri, 2 Apr 2010 12:00:54 -0700 (PDT)
-Message-ID: <28122043.post@talk.nabble.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Integrate version 3 ciabot scripts into contrib/.
+Date: Fri, 02 Apr 2010 12:05:04 -0700
+Message-ID: <7vy6h5ad5r.fsf@alter.siamese.dyndns.org>
+References: <20100402101011.GA6806@thyrsus.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 02 21:01:01 2010
+Cc: git@vger.kernel.org
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Fri Apr 02 21:05:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nxm73-00043G-2J
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 21:01:01 +0200
+	id 1NxmBO-0006Hl-OY
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 21:05:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753432Ab0DBTA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Apr 2010 15:00:56 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:38544 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752643Ab0DBTAz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Apr 2010 15:00:55 -0400
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1Nxm6w-00007S-2i
-	for git@vger.kernel.org; Fri, 02 Apr 2010 12:00:54 -0700
-X-Nabble-From: hamletdrc@gmail.com
+	id S1754036Ab0DBTFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Apr 2010 15:05:13 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45672 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753933Ab0DBTFK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Apr 2010 15:05:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 93107A77D1;
+	Fri,  2 Apr 2010 15:05:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pAGgelbMyydrUKm40bGmNEMFaFU=; b=FTTxva
+	Ia3tT22sugQizFzAmwgTei85svF4BvH0kNr1MAgNqRPE4S37F+EJ+6P+OMQW8mpg
+	BEgTzAvkjq23lJ77pmwD9VmAg8Dkp6CPnr8lQfwhIkqo4i3Ngw1DTnUehzEMmiPC
+	QBTDtluGUa33VjTnIDxmRix7w5Iora2D3Q4ME=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hYwpqW+pOOin97Ptp5OT9uemOGd98CyY
+	NTriXHVUZqF++XjZEw4TfDrEEj+WKdEgditYEjFk0zWpqksH5uf6eIJy2MzESz+g
+	/+olDyVrSFmzOGhlD1Wzlw0h7kmS5AoeoLMXEcO+2qJAW7m8xPgWK076blTvZKK+
+	fgyEwXcfMgQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 70578A77CF;
+	Fri,  2 Apr 2010 15:05:08 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DDCF1A77CC; Fri,  2 Apr
+ 2010 15:05:05 -0400 (EDT)
+In-Reply-To: <20100402101011.GA6806@thyrsus.com> (Eric Raymond's message of
+ "Fri\, 2 Apr 2010 06\:10\:11 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A7B2A6B4-3E8A-11DF-B7F6-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143837>
 
+esr@thyrsus.com (Eric Raymond) writes:
 
-Hi all, 
+> These have been extensively live-tested in the last week. The version 2
+> ciabot.sh maintainer has passed the baton to me; ciabot.py is original.
 
-I have a github fork I created from Gradle. 
-
-The original gradle is here: git://github.com/gradle/gradle.git
-And my fork is here: http://github.com/HamletDRC/gradle
-
-I made a bunch of changes and committed. 
-
-Now I want to revert everything I have back to be 100% in sync with the main
-gradle repo. 
-
-How do I do that? 
-
-
------
---
-Hamlet D'Arcy
-
--- 
-View this message in context: http://old.nabble.com/revert-all-changes-and-go-back-to-original-state-tp28122043p28122043.html
-Sent from the git mailing list archive at Nabble.com.
+Thanks, will apply.
