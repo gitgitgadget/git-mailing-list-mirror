@@ -1,83 +1,65 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Git: relicensing test-lib.sh from GPLv2 to GPLv2+
-Date: Fri, 02 Apr 2010 19:19:00 +0200
-Message-ID: <1270228740.3619.3.camel@Nokia-N900-42-11>
-References: <871vgmki4f.fsf@steelpick.localdomain>
-	 <7vaav8hpfo.fsf@alter.siamese.dyndns.org>
-	 <87tytdiqob.fsf@steelpick.localdomain>
-	 <alpine.DEB.1.00.1002191138280.20986@pacific.mpi-cbg.de>
-	 <873a0xhwxs.fsf@yoom.home.cworth.org>
-	 <alpine.DEB.1.00.1002192204050.20986@pacific.mpi-cbg.de>
-	 <87eikfhec1.fsf@yoom.home.cworth.org>
-	 <alpine.DEB.1.00.1002202321430.20986@pacific.mpi-cbg.de>
-	 <87pr2i8g8o.fsf@steelpick.2x.cz> <20100402074343.GV3533@machine.or.cz>
-	  <20100402085932.GB26658@localhost>
-Reply-To: Johan Herland <johan@herland.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git describe bug?
+Date: Fri, 2 Apr 2010 11:31:47 -0700
+Message-ID: <20100402183147.GA20007@spearce.org>
+References: <0B8BD2B7-E6F9-4EFC-BCD6-2B2E876AD1FC@spy.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michal Sojka <sojkam1@fel.cvut.cz>, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Clemens Buchacher <drizzd@aon.at>, Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Apr 02 19:42:48 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dustin Sallings <dustin@spy.net>
+X-From: git-owner@vger.kernel.org Fri Apr 02 20:31:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxktD-0004NA-LG
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 19:42:40 +0200
+	id 1Nxlev-0006VC-4k
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 20:31:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755722Ab0DBRmf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Apr 2010 13:42:35 -0400
-Received: from mail.mailgateway.no ([82.117.37.108]:52120 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755299Ab0DBRmd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Apr 2010 13:42:33 -0400
-X-Greylist: delayed 1499 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 Apr 2010 13:42:33 EDT
-Received: from 77.16.40.171.tmi.telenormobil.no ([77.16.40.171])
-	by mail.mailgateway.no with esmtpsa (SSLv3:AES256-SHA:256)
-	(Exim 4.60 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1NxkUs-000HJi-LG; Fri, 02 Apr 2010 19:17:31 +0200
-X-Mailer: Modest 3.1
-In-Reply-To: <20100402085932.GB26658@localhost>
-Content-ID: <1270228739.3619.2.camel@Nokia-N900-42-11>
-X-MSMail-Priority: Normal
-X-Priority: 3
+	id S1752212Ab0DBSbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Apr 2010 14:31:52 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:38346 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751523Ab0DBSbv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Apr 2010 14:31:51 -0400
+Received: by pwi5 with SMTP id 5so1862318pwi.19
+        for <git@vger.kernel.org>; Fri, 02 Apr 2010 11:31:50 -0700 (PDT)
+Received: by 10.140.252.8 with SMTP id z8mr1833795rvh.35.1270233110157;
+        Fri, 02 Apr 2010 11:31:50 -0700 (PDT)
+Received: from localhost (george.spearce.org [209.20.77.23])
+        by mx.google.com with ESMTPS id 21sm2110928iwn.7.2010.04.02.11.31.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 02 Apr 2010 11:31:49 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <0B8BD2B7-E6F9-4EFC-BCD6-2B2E876AD1FC@spy.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143833>
 
-> On Fri, Apr 02, 2010, Petr Baudis wrote:
->
-> >=C2=A0 =C2=A0 Huh, didn't we just run through this about a month ago=
-? Is this some
-> > kind of stale e-mail message?
->
-> Yes. I'm afraid that E-Mail never made it to the list or to Michael, =
-because
-> neither were Cc'ed. Including myself, I got positive replies from the
-> following contributors.
->
->=C2=A0 Johan Herland
+Dustin Sallings <dustin@spy.net> wrote:
+> 
+> 	describe does not choose the most recent tag when multiple tags point to a single commit (for example, when an RC release becomes a proper release).
+> 
+> 	There's a bit of conflict in the documentation between the following:
+> 
+> 		``tags with newer dates will always be preferred over tags with older dates''
+> 
+> 	and the next sentence:
+> 
+> 		``If an exact match is found, its name will be output and searching will stop.''
+> 
+> 	The code does not allow for multiple exact matches, leading to what I would consider incorrect behavior as shown below:
 
-=46or the record, I'm still ok with the license change.
+Yes, I've seen this too.  IIRC we've actually discussed this in
+the past.  I can't find the thread (my search skills are sub-par
+despite who I work for...).  But the general idea if I remember
+it right was we wanted to use the older tag, because that tag
+came first.
 
+So its probably more a documentation bug than a software bug.
 
-=2E..Johan
-
-
->=C2=A0 Brandon Casey
->=C2=A0 Petr Baudis
->=C2=A0 Miklos Vajna
->=C2=A0 Shawn O. Pearce
->
-> It's probably best if you guys reply here again, for the record.
->
-> Clemens
+-- 
+Shawn.
