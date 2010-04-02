@@ -1,82 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 6/7] diff: cache textconv output
-Date: Fri, 2 Apr 2010 03:38:32 -0400
-Message-ID: <20100402073832.GB2111@sigill.intra.peff.net>
-References: <20100402000159.GA15101@coredump.intra.peff.net>
- <20100402001215.GF16462@coredump.intra.peff.net>
- <7vpr2il3mt.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Git: relicensing test-lib.sh from GPLv2 to GPLv2+
+Date: Fri, 2 Apr 2010 02:43:26 -0500
+Message-ID: <20100402074326.GA4112@progeny.tock>
+References: <87r5oqe7mi.fsf@yoom.home.cworth.org>
+ <871vgmki4f.fsf@steelpick.localdomain>
+ <7vaav8hpfo.fsf@alter.siamese.dyndns.org>
+ <87tytdiqob.fsf@steelpick.localdomain>
+ <alpine.DEB.1.00.1002191138280.20986@pacific.mpi-cbg.de>
+ <873a0xhwxs.fsf@yoom.home.cworth.org>
+ <alpine.DEB.1.00.1002192204050.20986@pacific.mpi-cbg.de>
+ <87eikfhec1.fsf@yoom.home.cworth.org>
+ <alpine.DEB.1.00.1002202321430.20986@pacific.mpi-cbg.de>
+ <87pr2i8g8o.fsf@steelpick.2x.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 02 09:38:40 2010
+To: Michal Sojka <sojkam1@fel.cvut.cz>
+X-From: git-owner@vger.kernel.org Fri Apr 02 09:43:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxbSi-0002ZW-Hu
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 09:38:40 +0200
+	id 1NxbXa-00047e-Qz
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 09:43:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759287Ab0DBHig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Apr 2010 03:38:36 -0400
-Received: from peff.net ([208.65.91.99]:57835 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759275Ab0DBHie (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Apr 2010 03:38:34 -0400
-Received: (qmail 10290 invoked by uid 107); 2 Apr 2010 07:39:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 02 Apr 2010 03:39:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Apr 2010 03:38:32 -0400
+	id S1759313Ab0DBHnc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Apr 2010 03:43:32 -0400
+Received: from mail-gx0-f209.google.com ([209.85.217.209]:33923 "EHLO
+	mail-gx0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759297Ab0DBHna (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Apr 2010 03:43:30 -0400
+X-Greylist: delayed 104907 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 Apr 2010 03:43:30 EDT
+Received: by gxk1 with SMTP id 1so1498850gxk.16
+        for <git@vger.kernel.org>; Fri, 02 Apr 2010 00:43:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=z8FNr6Dz7vufmKo+AD22ar0R1H/gCmwm8pJEoYZMmL0=;
+        b=KY4nKCSpmpdFmeeMvXFOdAu11Pc8QbvRdJN0483XMh3D2D2GJO1vUmpfWQ9O+Mw02K
+         pOtLzSEJeMUSo4GKrYndB21n8rHRvK54BnEOJYq+IBFxdynWIC4x8ZhdaXHhfbgvCMQf
+         2aEHAahmrG1z3OJ9LqBMH4242kfIsBPvi7aBQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=n17ou/f5TcrOjzbkD/LjaffLIZtCJRgRFir62OPdh8rnPvTS1lUAC2iGvBV9DvBP19
+         cvHxxUZ/vVn4e6jOWaJ0b5ZGJgX1ZxNBq4XL6UIuv+ou68+ixiB+zwwCcqXlooNypOrS
+         GdTaFiVdsSOGP8Rr0UfL0PjbXkpX9EJM+yN6Q=
+Received: by 10.90.39.6 with SMTP id m6mr2143523agm.49.1270194209344;
+        Fri, 02 Apr 2010 00:43:29 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 22sm7929492iwn.0.2010.04.02.00.43.28
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 02 Apr 2010 00:43:28 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7vpr2il3mt.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <87pr2i8g8o.fsf@steelpick.2x.cz>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143789>
 
-On Fri, Apr 02, 2010 at 12:23:06AM -0700, Junio C Hamano wrote:
+Hi Michal,
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Running a textconv filter can take a long time. It's
-> > particularly bad for a large file which needs to be spooled
-> > to disk, but even for small files, the fork+exec overhead
-> > can add up for something like "git log -p".
-> 
-> Another reason that "log -p" gets benefit from caching is that you would
-> typically end up running textconv twice on the same blob, once when you
-> compare $commit:$path with $commit~1:$path, and again when you compare
-> $commit~$n-1:$path with $commit~$n:$path (assuming that the $path didn't
-> change between $commit~$n-1 and $commit~1).
+I am happy for anyone to use, modify, distribute, and relicense my
+meagre contribution to t/test-lib.sh in any way they please.
 
-Yep. I pointed out in one of my timing tests a slight slowdown in "git
-show" when generating the cache. But for revision walking, it should
-actually be faster, since you see each blob twice but cache after the
-first time.
+In particular: yes, I agree to relicense all my contributions to
+test-lib.sh to GPLv2+ with the addition of the "or any later version"
+clause.
 
-> It _might_ give you even better performance characteristics if you noice
-> that you are walking history running many textconv, and cache the textconv
-> result from the "older" (i.e. "one" side) tree in-core, until it is used
-> in a "newer" (i.e. "two" side) tree, at which time you would evict it.
-
-I doubt it is worth the effort. We are already caching the sha1 in-core
-due to the notes mechanism. So we could really only save one object
-retrieval. Which is already what a non-textconv diff will need to do, so
-we should have performance on par with regular diffs at this point.
-
-In fact, your optimization could be applied to all diff revision
-walking, not just textconv, and you can halve the number of object
-retrievals. The problem is that you may have blobs sitting in the
-in-core cache as you walk many revisions, waiting for them to be changed
-again. Depending on the locality of changes and the size of your
-project, you won't be able to fit it all comfortably in memory, and will
-end up discarding entries.
-
-And all of that to save a few object retrievals, which are something
-that git does very quickly already. Not to mention the ugly code that
-would be involved.
-
--Peff
+Thanks,
+Jonathan
