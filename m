@@ -1,66 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] refs.c: Write reflogs for notes just like for
- branch heads
-Date: Thu, 1 Apr 2010 20:16:41 -0400
-Message-ID: <20100402001640.GH16462@coredump.intra.peff.net>
-References: <d6c334ec855bf04d9edb432b9cdc3590ab96d6e9.1269867675.git.git@drmicha.warpmail.net>
- <201003291625.22977.johan@herland.net>
- <20100330171932.GE17763@coredump.intra.peff.net>
- <201003302000.35616.johan@herland.net>
- <m3mxxpipqw.fsf@localhost.localdomain>
+From: Yawar Amin <yawar.amin@gmail.com>
+Subject: Re: [PATCH] Documentation: clarify grammar
+Date: Thu, 01 Apr 2010 21:23:39 -0400
+Message-ID: <4BB5471B.60606@gmail.com>
+References: <4BB2B34B.1080508@gmail.com> <p2kf3271551003302216qc6e378a8u2f85751c9c8a24d5@mail.gmail.com> 	<4BB33BDC.5000406@gmail.com> <q2jf3271551003310538z643e637g5bb7bc6691f46055@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johan Herland <johan@herland.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 02 02:16:59 2010
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------enig4CF36BC6D932FD021DE45606"
+Cc: git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 02 03:23:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxUZG-0003fA-7s
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 02:16:58 +0200
+	id 1NxVc1-0006p4-LM
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 03:23:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759064Ab0DBAQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Apr 2010 20:16:54 -0400
-Received: from peff.net ([208.65.91.99]:43547 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755733Ab0DBAQw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Apr 2010 20:16:52 -0400
-Received: (qmail 5300 invoked by uid 107); 2 Apr 2010 00:17:28 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 01 Apr 2010 20:17:28 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Apr 2010 20:16:41 -0400
-Content-Disposition: inline
-In-Reply-To: <m3mxxpipqw.fsf@localhost.localdomain>
+	id S1757453Ab0DBBXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Apr 2010 21:23:51 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:55944 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757447Ab0DBBXt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Apr 2010 21:23:49 -0400
+Received: by vws13 with SMTP id 13so370984vws.19
+        for <git@vger.kernel.org>; Thu, 01 Apr 2010 18:23:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type;
+        bh=BZOZUwb/Ix7cDPr1ZJlO9KndRplE9f5M6DpYcpBRUzA=;
+        b=mELR8S2Y+xLTVnC65DtFuvsyMZwQYmjCzqIeDprD94v8TZxHX57pMv+iGplFaFi9DK
+         6xe7BCk5VVPAJ69pL1xHUTFFFptwSbsLPBZKwxKWfWdkPYCTtESid4VeRpkEoYDPc+x6
+         RSywLdu4EzYam0jxrfpbN5mcVaBTq5KKx0quI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type;
+        b=TZOcFRMnzxyDJx3BnA4fGE3Du0AxyYUS5FeOPw4nD5u9PVTMOLppa8OX30eLeSrOjh
+         WExT3dVzBLmQId2RJmozk+YjJHW5nvCSRc0Gg0FP91NmOEcMsD4zVZojaUZA378XkgUl
+         DfjPwO2TjqJZsfHROfm7vIQzg5+VejXWMegAE=
+Received: by 10.220.126.201 with SMTP id d9mr850417vcs.106.1270171428242;
+        Thu, 01 Apr 2010 18:23:48 -0700 (PDT)
+Received: from Yawar-Quadir-Amins-MacBook.local (CPE00173f9e1ecd-CM0014e827917c.cpe.net.cable.rogers.com [99.230.35.242])
+        by mx.google.com with ESMTPS id 31sm179427792vws.7.2010.04.01.18.23.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 01 Apr 2010 18:23:46 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.24 (Macintosh/20100228)
+In-Reply-To: <q2jf3271551003310538z643e637g5bb7bc6691f46055@mail.gmail.com>
+X-Enigmail-Version: 0.96.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143770>
 
-On Tue, Mar 30, 2010 at 12:18:16PM -0700, Jakub Narebski wrote:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig4CF36BC6D932FD021DE45606
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-> > > I like the idea of having a reflog, just because you could use it to
-> > > salvage an old cache if you were playing around with your helper's
-> > > options (or debugging your helper :) ). The usual 90-day expiration
-> > > time is perhaps too long, though.
-> > 
-> > Yes, 90 days as a default might be excessive, but you can always 
-> > override it with a "git gc --prune=now"...
-> 
-> You can always set different expire time for notes by using
-> 
->   [gc "refs/notes"]
->         reflogExpire = 7 # days, I suppose
-> 
-> Which is not documented (I have found it in RelNotes-1.6.0.txt).  
-> Oh well...
+On 3/31/10 8:38 AM, Ramkumar Ramachandra said:
+>> I see there are some extensive changes. Do you have a public repo I
+>> could pull from and base my patch on? That should make things easier.
+>>    =20
+>
+> Um, yes but considering that this is just a simple documentation
+> patch, we can probably just wait for Junio to pick it up- a few days.
+>  =20
 
-Thanks, I didn't know about that feature. I just posted my series
-without dealing with the reflogs at all, but I think it may be sensible
-to drop the default for "refs/notes/textconv" in a followup patch.
+I'll wait a few days and resubmit. :-)
 
--Peff
+Thanks,
+
+Yawar
+
+
+
+--------------enig4CF36BC6D932FD021DE45606
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (Darwin)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEAREIAAYFAku1RyEACgkQqOXNpejCDdRJpQCePoCeDkPX6Xc+N3tMmgzAw7ea
+BRYAn1N2AY8WxUkGNvTGO9W3p4kTfZTt
+=PBDa
+-----END PGP SIGNATURE-----
+
+--------------enig4CF36BC6D932FD021DE45606--
