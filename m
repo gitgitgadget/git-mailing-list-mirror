@@ -1,81 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: update defaults for modern Cygwin
-Date: Thu, 01 Apr 2010 23:47:42 -0700
-Message-ID: <7vaatmmju9.fsf@alter.siamese.dyndns.org>
-References: <1270161834-9597-1-git-send-email-eblake@redhat.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: are hashes calculated from data
+Date: Fri, 2 Apr 2010 02:49:25 -0400
+Message-ID: <z2i32541b131004012349na7af3571j67c3a33e3e3ba78@mail.gmail.com>
+References: <g2veaacf13c1004011931w70695d1emdceeb977397aee0d@mail.gmail.com> 
+	<o2q32541b131004011950u6023ef29ocac1d80f2847ef6f@mail.gmail.com> 
+	<buozl1mbi0o.fsf@dhlpc061.dev.necel.com> <y2j32541b131004012148w283911f8pf04a21fc307f68ed@mail.gmail.com> 
+	<20100402061015.GC14999@m62s10.vlinux.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jon.seymour@gmail.com, jrnieder@gmail.com
-To: Eric Blake <eblake@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Apr 02 08:47:59 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Miles Bader <miles@gnu.org>,
+	Raymond Auge <raymond.auge@liferay.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Peter Baumann <waste.manager@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Apr 02 08:49:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nxafe-0004Po-Qt
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 08:47:59 +0200
+	id 1NxahU-0004ts-QE
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Apr 2010 08:49:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758790Ab0DBGry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Apr 2010 02:47:54 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59721 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758193Ab0DBGrx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Apr 2010 02:47:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C484AA787F;
-	Fri,  2 Apr 2010 02:47:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U8pXbkIw2UXXEVjjYhyZGyjbIZ8=; b=UX/oUj
-	yG0Xxo1a31AqSFB+sTB8oBfVcQn0okA71MVNr2UK45UomBhVQAJFYqraEcio4oFK
-	r+dImiqvudtmqjAlws0fqm6ok/BtA3CBjRg1NdWzOESVoIwZ/0qBv8yXB6+ZQEsl
-	ChDkdXcPUR0nrFcZekiOF8j2ux4bWc2pnTJlE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JTPIv2njIgL/c7t3pmx3sjO/DhYpInbA
-	eQ4Naaf9RTfWE2uMlChw93EvMa9eWsegtL+rlGBH1Qm9iuVmGiyorglnPV1MG8AH
-	Ci3MZWwbTXsuEyLbyBlidgUpofe/t/QBXqfuK0Fsebr1N5TZcwXzmHofxOnGEo2G
-	ddWGPg4VWK0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8198EA7876;
-	Fri,  2 Apr 2010 02:47:48 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E78DA7875; Fri,  2 Apr
- 2010 02:47:43 -0400 (EDT)
-In-Reply-To: <1270161834-9597-1-git-send-email-eblake@redhat.com> (Eric
- Blake's message of "Thu\,  1 Apr 2010 16\:43\:54 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A6A47FF2-3E23-11DF-A9BE-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1759189Ab0DBGts convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Apr 2010 02:49:48 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:64658 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758193Ab0DBGtq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Apr 2010 02:49:46 -0400
+Received: by gwb19 with SMTP id 19so15138gwb.19
+        for <git@vger.kernel.org>; Thu, 01 Apr 2010 23:49:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lc6bvkVpUDpoBHsz1T5dhiDj1/1AzpTqonGh6DKBexM=;
+        b=i38FwjUIo6M0uO85h1hI+ZfB2mS2J0UHjubU5cV3MI6AEni/9yaeIad16JK50Dz0gW
+         I7w299fchqBtccVTB31IlDB5eN44gcLQIbHQ5/Ps+HtGmxNaMnSuJUFNPVp5V1qmOBHE
+         9CP2ApRKvsRNQ7kqMaz9TpKJDMlXhwYwHONjw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=ZDmcNQdPXQoHzkYvwhKwqpS96gF6lAK5UNxGBc6IYmPvFVhvdLv5calFlDnE0dvNMD
+         aPJWiSB/MZsxKthB6iHPJKM+WmToMhzP+G4idJrBi1AcSV0DmcmPf1A9B9tWMBBJnXbh
+         SVR2AtwHoAlRH5OYdd9u63+erxjKD863eNVWU=
+Received: by 10.150.152.4 with HTTP; Thu, 1 Apr 2010 23:49:25 -0700 (PDT)
+In-Reply-To: <20100402061015.GC14999@m62s10.vlinux.de>
+Received: by 10.150.207.15 with SMTP id e15mr2696029ybg.124.1270190985166; 
+	Thu, 01 Apr 2010 23:49:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143781>
 
-Eric Blake <eblake@redhat.com> writes:
-
-> Now that Cygwin 1.7.x has enabled lots of new features, and Cygwin 1.5
-> is no longer actively supported by the Cygwin mailing lists, we might
-> as well update the defaults to cater to those new features.
+On Fri, Apr 2, 2010 at 2:10 AM, Peter Baumann <waste.manager@gmx.de> wr=
+ote:
+> On Fri, Apr 02, 2010 at 12:48:44AM -0400, Avery Pennarun wrote:
+>> =A0 =A0 =A0 =A0# configure your git-svn so that all its branches are=
+ under remotes/svn/*
+>> =A0 =A0 =A0 =A0git fetch origin
+>> =A0 =A0 =A0 =A0git svn fetch --fetch-all
+>> =A0 =A0 =A0 =A0for each branch in remotes/svn/*
+>> =A0 =A0 =A0 =A0 =A0 =A0git checkout remotes/svn/$branch =A0 # detach=
+es HEAD
+>> =A0 =A0 =A0 =A0 =A0 =A0git merge --no-ff origin/$branch
+>> =A0 =A0 =A0 =A0 =A0 =A0git svn dcommit =A0 # replaces merge commit
+>> =A0 =A0 =A0 =A0 =A0 =A0git checkout origin/$branch
+>> =A0 =A0 =A0 =A0 =A0 =A0git merge remotes/svn/$branch
+>> =A0 =A0 =A0 =A0 =A0 =A0git push origin HEAD:$branch
+>> =A0 =A0 =A0 =A0git push origin refs/remotes/svn/*:refs/heads/svn/*
 >
-> NO_TRUSTABLE_FILEMODE is only necessary on FAT drives; the Cygwin
-> community recommends NTFS drives, but there is still too much use
-> for FAT to switch the default.  Likewise, UNRELIABLE_FSTAT is probably
-> file-system specific, but worth keeping unchanged.
+> If I understand you correctly, this will commit only the the merge to=
+ svn
+> and won't show all the commits the developer made (because of the --n=
+o-ff).
+> From a SVN standpoint isn't it the same as doing the following?
 >
-> This commit does not change the default for NO_MMAP, although definitive
-> proof of whether this option is necessary is lacking.
+> =A0 =A0 =A0 =A0git checkout remotes/svn/$branch =A0 =A0 =A0 =A0# to d=
+eatch the HEAD
+> =A0 =A0 =A0 =A0git merge --squash =A0origin/$branch
+> =A0 =A0 =A0 =A0git svn dcommit
 >
-> Signed-off-by: Eric Blake <eblake@redhat.com>
+> I asked because in my workflow I can't to afford lossing the single c=
+ommits.
 
-Thanks; as I lack Cygwin environment to test this myself, I'll apply this
-directly on 'master' and see if anybody screams ;-)
+No, not quite the same.
 
-> +	ifneq ($(wordlist 1, 2, $(subst ., ,$(uname_R))),1 7)
+When git-svn replaces your merge commit with a new commit (as part of
+the 'git svn dcommit' step) the new commit *stays* a merge commit in
+git.  That means it has two parents: the svn parent commit, and the
+commit that you merged from in the first place.
 
-Do we need to update this part when Cygwin 1.8 is released?  Replacing
-this with "ifeq(... ,1 5)" may not be an improvement either, unless we are
-sure that nobody is using 1.4 or older, but I wonder if somebody else have
-better ideas?
+So what happens is that svn will see only a single commit, but your
+git history remains intact and git push/pulling will continue working
+as you expect.
+
+If you really need svn to see every individual commit, then you're out
+of luck.  The only way to do it is to rebase every time you want to
+commit to svn.  git-svn then replaces every single one of your commits
+(essentially another rebase, so it can add the git-svn: tags to the
+commit message) which makes push/pulling between git repos impossible.
+
+So those are your two choices.  Personally, I like my way as a
+transition plan, because the git repo keeps the precise history
+(including forks and merges), while the svn keeps *working* for the
+stragglers who want to keep using it.
+
+Have fun,
+
+Avery
