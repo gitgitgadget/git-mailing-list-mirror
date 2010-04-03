@@ -1,42 +1,45 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: Extremely slow progress during 'git reflog expire --all'
-Date: Sat, 3 Apr 2010 16:33:49 -0400
-Message-ID: <20100403203348.GA11433@coredump.intra.peff.net>
+Date: Sat, 3 Apr 2010 16:35:07 -0400
+Message-ID: <20100403203507.GA12262@coredump.intra.peff.net>
 References: <201004022154.14793.elendil@planet.nl>
  <201004022350.20999.elendil@planet.nl>
  <20100402224100.GA997@coredump.intra.peff.net>
  <201004031629.01970.elendil@planet.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, shawn@vger.kernel.org,
-	git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
 To: Frans Pop <elendil@planet.nl>
-X-From: git-owner@vger.kernel.org Sat Apr 03 22:34:17 2010
+X-From: git-owner@vger.kernel.org Sat Apr 03 22:35:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyA2p-00014h-P4
-	for gcvg-git-2@lo.gmane.org; Sat, 03 Apr 2010 22:34:16 +0200
+	id 1NyA3y-0001Xe-7w
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Apr 2010 22:35:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755927Ab0DCUeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Apr 2010 16:34:09 -0400
-Received: from peff.net ([208.65.91.99]:39288 "EHLO peff.net"
+	id S1755900Ab0DCUfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Apr 2010 16:35:22 -0400
+Received: from peff.net ([208.65.91.99]:39292 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755784Ab0DCUeG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Apr 2010 16:34:06 -0400
-Received: (qmail 32225 invoked by uid 107); 3 Apr 2010 20:34:40 -0000
+	id S1755585Ab0DCUfV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Apr 2010 16:35:21 -0400
+Received: (qmail 32277 invoked by uid 107); 3 Apr 2010 20:35:57 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 03 Apr 2010 16:34:40 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 03 Apr 2010 16:33:49 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 03 Apr 2010 16:35:57 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 03 Apr 2010 16:35:07 -0400
 Content-Disposition: inline
 In-Reply-To: <201004031629.01970.elendil@planet.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143902>
+
+[sorry, resend, I managed to totally screw up Shawn's email in the last
+one. Stupid mutt aliases.]
 
 On Sat, Apr 03, 2010 at 04:29:01PM +0200, Frans Pop wrote:
 
