@@ -1,75 +1,48 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Extremely slow progress during 'git reflog expire --all'
-Date: Sat, 3 Apr 2010 16:35:07 -0400
-Message-ID: <20100403203507.GA12262@coredump.intra.peff.net>
-References: <201004022154.14793.elendil@planet.nl>
- <201004022350.20999.elendil@planet.nl>
- <20100402224100.GA997@coredump.intra.peff.net>
- <201004031629.01970.elendil@planet.nl>
+From: Frans Pop <elendil@planet.nl>
+Subject: Re: 'git gc --aggressive' effectively unusable
+Date: Sat, 3 Apr 2010 23:16:19 +0200
+Message-ID: <201004032316.22483.elendil@planet.nl>
+References: <201004030005.35737.elendil@planet.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Frans Pop <elendil@planet.nl>
-X-From: git-owner@vger.kernel.org Sat Apr 03 22:35:29 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 03 23:16:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyA3y-0001Xe-7w
-	for gcvg-git-2@lo.gmane.org; Sat, 03 Apr 2010 22:35:26 +0200
+	id 1NyAhl-0000RA-Nr
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Apr 2010 23:16:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755900Ab0DCUfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Apr 2010 16:35:22 -0400
-Received: from peff.net ([208.65.91.99]:39292 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755585Ab0DCUfV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Apr 2010 16:35:21 -0400
-Received: (qmail 32277 invoked by uid 107); 3 Apr 2010 20:35:57 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 03 Apr 2010 16:35:57 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 03 Apr 2010 16:35:07 -0400
+	id S1755986Ab0DCVQ2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Apr 2010 17:16:28 -0400
+Received: from Cpsmtpm-eml108.kpnxchange.com ([195.121.3.12]:50278 "EHLO
+	CPSMTPM-EML108.kpnxchange.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755979Ab0DCVQ1 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 3 Apr 2010 17:16:27 -0400
+Received: from aragorn.fjphome.nl ([77.166.180.99]) by CPSMTPM-EML108.kpnxchange.com with Microsoft SMTPSVC(7.0.6001.18000);
+	 Sat, 3 Apr 2010 23:16:25 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <201004030005.35737.elendil@planet.nl>
 Content-Disposition: inline
-In-Reply-To: <201004031629.01970.elendil@planet.nl>
+X-OriginalArrivalTime: 03 Apr 2010 21:16:25.0843 (UTC) FILETIME=[EB273C30:01CAD372]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143903>
 
-[sorry, resend, I managed to totally screw up Shawn's email in the last
-one. Stupid mutt aliases.]
+On Saturday 03 April 2010, Frans Pop wrote:
+> Special about this repo is that it contains two huge objects [1], whi=
+ch
+> could maybe be a factor:
+> =A0 =A0 =A0size =A0 =A0pack =A0SHA
+> - packages/po/sublevel4/da.po:
+> =A0 =A0 =A0495661 =A04654 =A0801cd6451ece536c0ab41f79e09fc52efdf3361f
+> - packages/arch/powerpc/quik-installer/debian/po/da.po
+> =A0 =A0 =A0149515 =A01403 =A083a787b20817dc4d72db052de4055e7a7c9221d7=
+ =A0
 
-On Sat, Apr 03, 2010 at 04:29:01PM +0200, Frans Pop wrote:
-
-> On Saturday 03 April 2010, Jeff King wrote:
-> > > I can make that available, but it's going to take a while to upload
-> > > and I don't want to leave it up too long as I'll be abusing a project
-> > > service for that. So the people who want to look at it would have grab
-> > > it fairly promptly (within 2 days or so).
-> 
-> The tarball is up at:
-> http://alioth.debian.org/~fjp/.tmp/linux-2.6_reflog-issue.tar
-> 
-> Because of the Easter weekend I'll leave it up a bit longer. I plan to 
-> remove it sometime on Thursday.
-
-Thanks, I was able to get it and reproduce your problem. The slowness is
-in the expire-unreachable code. You can work around it with:
-
-  git config gc.reflogExpireUnreachable never
-
-Obviously that's not really a fix, but it should let your "git gc" work.
-
-It looks like we do two merge-base calculations for each reflog entry,
-which is what takes so long. Perhaps if we know we are going to do a
-large number of reachability checks, we can pre-mark all reachable
-commits, and then each reflog entry would just need to check the commit
-mark.
-
-I don't have any more time now to look at it, but I am cc'ing Junio (who
-wrote the original expire-unreachable code) and Shawn (the resident
-reflog expert), who may have more input.
-
--Peff
+To avoid confusion: these sizes are in kB.
