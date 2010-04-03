@@ -1,128 +1,78 @@
-From: Chris Webb <chris@arachsys.com>
-Subject: [PATCH 6/6] whitespace: tests for git-apply --whitespace=fix with
- tab-in-indent
-Date: Sat, 3 Apr 2010 00:37:37 +0100
-Message-ID: <0efb5aca7f738403283ec97ad53c645d8f7240eb.1270250437.git.chris@arachsys.com>
-References: <cover.1270250437.git.chris@arachsys.com>
+From: Mark Rada <marada@uwaterloo.ca>
+Subject: [PATCHv6 0/7] Gitweb: fill in missing parts of minify support
+Date: Fri, 02 Apr 2010 20:32:54 -0400
+Message-ID: <4BB68CB6.2000704@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 03 01:38:15 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 03 02:33:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NxqRL-0005Es-9e
-	for gcvg-git-2@lo.gmane.org; Sat, 03 Apr 2010 01:38:15 +0200
+	id 1NxrIw-0006x1-Cs
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Apr 2010 02:33:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755264Ab0DBXhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Apr 2010 19:37:42 -0400
-Received: from alpha.arachsys.com ([91.203.57.7]:39401 "EHLO
-	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754713Ab0DBXhj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Apr 2010 19:37:39 -0400
-Received: from [83.104.159.199] (helo=miranda.arachsys.com)
-	by alpha.arachsys.com with esmtpa (Exim 4.52)
-	id 1NxqQj-0004y1-N0; Sat, 03 Apr 2010 00:37:38 +0100
-Content-Disposition: inline
-In-Reply-To: <cover.1270250437.git.chris@arachsys.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753128Ab0DCAdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Apr 2010 20:33:33 -0400
+Received: from mailservices.uwaterloo.ca ([129.97.128.141]:54119 "EHLO
+	mailchk-m05.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752419Ab0DCAdc (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Apr 2010 20:33:32 -0400
+Received: from karakura.local (bas1-toronto01-1177657512.dsl.bell.ca [70.49.160.168])
+	(authenticated bits=0)
+	by mailchk-m05.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id o330Wt3N015616
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 2 Apr 2010 20:32:56 -0400
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+X-UUID: bacff9fc-0bc5-4c01-8869-968c383ae33c
+X-Miltered: at mailchk-m05 with ID 4BB68CB7.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: clamav-milter 0.95.2 at mailchk-m05
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m05.uwaterloo.ca [129.97.128.141]); Fri, 02 Apr 2010 20:32:57 -0400 (EDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143868>
 
-Signed-off-by: Chris Webb <chris@arachsys.com>
----
- t/t4124-apply-ws-rule.sh |   53 +++++++++++++++++++++++++--------------------
- 1 files changed, 29 insertions(+), 24 deletions(-)
+Minify support was added to gitweb.js, but that build feature was not
+really fleshed out too much; let's get changed!
 
-diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
-index fb9ad24..8d46df6 100755
---- a/t/t4124-apply-ws-rule.sh
-+++ b/t/t4124-apply-ws-rule.sh
-@@ -11,21 +11,22 @@ prepare_test_file () {
- 	#   	!  trailing-space
- 	#   	@  space-before-tab
- 	#   	#  indent-with-non-tab
-+	#   	%  tab-in-indent
- 	sed -e "s/_/ /g" -e "s/>/	/" <<-\EOF
- 		An_SP in an ordinary line>and a HT.
--		>A HT.
--		_>A SP and a HT (@).
--		_>_A SP, a HT and a SP (@).
-+		>A HT (%).
-+		_>A SP and a HT (@%).
-+		_>_A SP, a HT and a SP (@%).
- 		_______Seven SP.
- 		________Eight SP (#).
--		_______>Seven SP and a HT (@).
--		________>Eight SP and a HT (@#).
--		_______>_Seven SP, a HT and a SP (@).
--		________>_Eight SP, a HT and a SP (@#).
-+		_______>Seven SP and a HT (@%).
-+		________>Eight SP and a HT (@#%).
-+		_______>_Seven SP, a HT and a SP (@%).
-+		________>_Eight SP, a HT and a SP (@#%).
- 		_______________Fifteen SP (#).
--		_______________>Fifteen SP and a HT (@#).
-+		_______________>Fifteen SP and a HT (@#%).
- 		________________Sixteen SP (#).
--		________________>Sixteen SP and a HT (@#).
-+		________________>Sixteen SP and a HT (@#%).
- 		_____a__Five SP, a non WS, two SP.
- 		A line with a (!) trailing SP_
- 		A line with a (!) trailing HT>
-@@ -39,7 +40,6 @@ apply_patch () {
- }
- 
- test_fix () {
--
- 	# fix should not barf
- 	apply_patch --whitespace=fix || return 1
- 
-@@ -130,20 +130,25 @@ do
- 		for i in - ''
- 		do
- 			case "$i" in '') ti='#' ;; *) ti= ;; esac
--			rule=${t}trailing,${s}space,${i}indent
--
--			rm -f .gitattributes
--			test_expect_success "rule=$rule" '
--				git config core.whitespace "$rule" &&
--				test_fix "$tt$ts$ti"
--			'
--
--			test_expect_success "rule=$rule (attributes)" '
--				git config --unset core.whitespace &&
--				echo "target whitespace=$rule" >.gitattributes &&
--				test_fix "$tt$ts$ti"
--			'
--
-+			for h in - ''
-+			do
-+				[ -z "$h$i" ] && continue
-+				case "$h" in '') th='%' ;; *) th= ;; esac
-+				rule=${t}trailing,${s}space,${i}indent,${h}tab
-+
-+				rm -f .gitattributes
-+				test_expect_success "rule=$rule" '
-+					git config core.whitespace "$rule" &&
-+					test_fix "$tt$ts$ti$th"
-+				'
-+
-+				test_expect_success "rule=$rule (attributes)" '
-+					git config --unset core.whitespace &&
-+					echo "target whitespace=$rule" >.gitattributes &&
-+					test_fix "$tt$ts$ti$th"
-+				'
-+
-+			done
- 		done
- 	done
- done
+Added the missing ignore and clean rules, updated the documentation,
+added support in the autoconfigure script, enabled minification of
+gitweb.css, and fixed git-instaweb to use the minified files when they
+are generated.
+
+I went ahead and changed things based on the feedback that I have
+received from the last revision. Changes are noted in individual patches.
+
+Jakub, thanks for reviewing the patches last round, everything should
+be all fixed up this around.
+
+Mark Rada (6):
+	Gitweb: add ignore and clean rules for minified files
+	Gitweb: add support for minifying gitweb.css
+	Gitweb: add autoconfigure support for minifiers
+	instaweb: add minification awareness
+	gitweb: add documentation to INSTALL regarding gitweb.js
+	gitweb: update INSTALL to use shorter make target
+
+
+ .gitignore      |    1 +
+ Makefile        |   32 +++++++++++++++++++++++---------
+ configure.ac    |   20 ++++++++++++++++++++
+ git-instaweb.sh |    6 ++++--
+ gitweb/INSTALL  |   26 ++++++++++++++++----------
+ gitweb/Makefile |   30 +++++++++++++++++-------------
+ gitweb/README   |    3 ++-
+ 7 files changed, 83 insertions(+), 35 deletions(-)
+
+
 -- 
-1.7.0.3
+Mark Rada (ferrous26)
+marada@uwaterloo.ca
