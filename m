@@ -1,81 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Replace hard-coded path with one configurable at make
- time
-Date: Sun, 04 Apr 2010 14:38:23 -0700
-Message-ID: <7vk4sm7vao.fsf@alter.siamese.dyndns.org>
-References: <186fa4afcc08ad6ba10906a231c437536fbdb8e9.1270412075.git.chris@arachsys.com>
+Subject: Re: nd/setup
+Date: Sun, 04 Apr 2010 14:42:48 -0700
+Message-ID: <7vfx3a7v3b.fsf@alter.siamese.dyndns.org>
+References: <7vaatmckmi.fsf@alter.siamese.dyndns.org>
+ <j2wfcaeb9bf1004020423nc5b7a73cq2278d41d1675dc8f@mail.gmail.com>
+ <20100403050057.GA20525@progeny.tock>
+ <j2mfcaeb9bf1004041141p28fba95dz5cb11918c172d32f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Chris Webb <chris@arachsys.com>
-X-From: git-owner@vger.kernel.org Sun Apr 04 23:38:35 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 04 23:43:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyXWc-00063Y-QI
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 23:38:35 +0200
+	id 1NyXay-0002eY-KW
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 23:43:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752798Ab0DDVib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Apr 2010 17:38:31 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42671 "EHLO
+	id S1752965Ab0DDVm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Apr 2010 17:42:59 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44793 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752650Ab0DDVi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Apr 2010 17:38:29 -0400
+	with ESMTP id S1751425Ab0DDVm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Apr 2010 17:42:57 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1411EA856E;
-	Sun,  4 Apr 2010 17:38:29 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C7E80A85C9;
+	Sun,  4 Apr 2010 17:42:56 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WYc+vFrV60RN/VXjdvrmboJzSgs=; b=yC334U
-	5nIQ7Iw2iYzRXFvAAPi/YxoVR6RRx2OLoYmeJ6NseXktreJh7UDbtdHrQPCz/qpX
-	DwnggStl6tIkJFSrE30EVdeRVpefjfF1g84QTAr8HrJHDVe8cqT0uV6tAzFIVs+y
-	wqPe3Z0bMQ1WsyWJ1qzg0PB30rQwuwXo0nQRw=
+	:content-type; s=sasl; bh=cXWrdbl2wddmUqPTsQq8MPCDgVE=; b=skuRP7
+	yKN1As95ieLp95E6VOHpUTkue0EwMMt+nYKCvzhSsgCGQ29FI7PRAj9twEB2M0vZ
+	+sIEAMaZ4UhIzg+84BC/OoD+mPTt1U8XXcGPiuA4GAxb93K2m39KpiHXWip1eU99
+	WQISLc3QeDZmHhLcFnhyxGU+Bm7oLYKWt11AU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uXyEh5VekEsva+thpZj2dFuYcz5TTAEj
-	gB6I+ZMDGCgPdaPhsuxMzhM5Cn/AGpYhJ937QLfZSotuIHOeLLMy00JV3FXAlnYd
-	X6MWKX5DDgZlpaA/oKnV/6lOO+v14wwaZB5rpGPrKsSBE94iGjQKnI4IZh4xfFJ3
-	QMVdYERWuYo=
+	:content-type; q=dns; s=sasl; b=KRBvfONqycG56k2+xsj8Y4Y2EphMOcLP
+	wK4y0N598RDiyTvgtnNmRUBFM0xPT1lr1hCcbybnZ3Tf9tz4yOnpNd+cs0AuHe0m
+	27H0f7QwWBgALz/ZTOTuaTPETjJbLVSQaF+B072dC6hZ3nDCV0rQv8+6Dy5TZNJU
+	BMUAhjNOAmI=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E4157A8568;
-	Sun,  4 Apr 2010 17:38:26 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 96C54A85C8;
+	Sun,  4 Apr 2010 17:42:53 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5C42CA8567; Sun,  4 Apr
- 2010 17:38:24 -0400 (EDT)
-In-Reply-To: <186fa4afcc08ad6ba10906a231c437536fbdb8e9.1270412075.git.chris@arachsys.com>
- (Chris Webb's message of "Sun\, 4 Apr 2010 21\:48\:50 +0100")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA2BCA85C5; Sun,  4 Apr
+ 2010 17:42:49 -0400 (EDT)
+In-Reply-To: <j2mfcaeb9bf1004041141p28fba95dz5cb11918c172d32f@mail.gmail.com>
+ (Nguyen Thai Ngoc Duy's message of "Sun\, 4 Apr 2010 20\:41\:40 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 673DF4C2-4032-11DF-93A6-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 063267C0-4033-11DF-93A6-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143951>
 
-Chris Webb <chris@arachsys.com> writes:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> In exec_cmd.c and git-instaweb.sh, git hard-codes a default path of
-> /usr/local/bin:/usr/bin:/bin. Introduce a make variable allowing this to be
-> overridden by passing defpath to make.
+> I wanted to update nd/setup topic, but found nd/root-git was merged in
+> between its two parts, which resulted in non-trivial conflicts in the
+> end.
 
-A question and an issue.
+I am not quite sure what you want me to do.  Replacing these named commits
+in place (meaning, the merge with nd/root-git to adjust the later parts
+that depend on that fix is reproduced while rebuilding the topic) has some
+silly conflicts, and rebuilding the whole series without the merge but
+with the named commits replaced has different conflicts.
 
- * What's the point of making this configurable, other than "because we
-   can"?
-
- * Use of "$(x_SQ)" is about protecting whitespaces and single quotes in
-   the literal from make and shell, but does not have anything to do with
-   protecting things like $foo in that literal from the location $x is
-   eventually embedded in.  As long as paths on DEFPATH do not have double
-   quote in it (which would be a sane assumption), the patch to exec_cmd.c
-   would work fine, but I don't know if you need an extra quoting when
-   DEFPATH is used in shell scripts.  E.g. DEFPATH=$GIT_EXEC_PATH:/usr/bin
-   would have GIT_EXEC_PATH expanded in mongoose configuration file, but
-   will not be expanded in exec_cmd.c, leading to an inconsistent
-   behaviour.
-
-   Does this matter?
-  
+As the fix of nd/root-git is already in 'master', it might make more sense
+to apply the whole series rebased to the newer codebase instead of keeping
+the same fork point as the older series.  That also removes the worries
+for you about having to send conflict resolutions, no?
