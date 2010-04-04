@@ -1,81 +1,59 @@
-From: Tony Finch <dot@dotat.at>
-Subject: [PATCH] wrapper.c: simplify xread() and xwrite()
-Date: Sun, 04 Apr 2010 23:06:59 +0100
-Message-ID: <E1NyXy7-0005j7-14@hermes-2.csi.cam.ac.uk>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Apr 05 00:07:32 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add `%B' in format strings for raw commit body in `git
+ log' and friends
+Date: Sun, 04 Apr 2010 15:17:42 -0700
+Message-ID: <7v6346zwu1.fsf@alter.siamese.dyndns.org>
+References: <19370.53192.313137.191218@winooski.ccs.neu.edu>
+ <m3eiiunbky.fsf@winooski.ccs.neu.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Mon Apr 05 00:17:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyXyd-00056L-G6
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 00:07:31 +0200
+	id 1NyY8i-0008Oo-6f
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 00:17:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752990Ab0DDWHC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Apr 2010 18:07:02 -0400
-Received: from ppsw-5.csi.cam.ac.uk ([131.111.8.135]:49157 "EHLO
-	ppsw-5.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752342Ab0DDWHA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Apr 2010 18:07:00 -0400
-X-Cam-AntiVirus: no malware found
-X-Cam-SpamDetails: not scanned
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:44391)
-	by ppsw-5.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.155]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1NyXy7-0004SX-GI (Exim 4.70)
-	(return-path <fanf2@hermes.cam.ac.uk>); Sun, 04 Apr 2010 23:06:59 +0100
-Received: from fanf2 by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local id 1NyXy7-0005j7-14 (Exim 4.67)
-	(return-path <fanf2@hermes.cam.ac.uk>); Sun, 04 Apr 2010 23:06:59 +0100
+	id S1753344Ab0DDWRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Apr 2010 18:17:52 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:65410 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752586Ab0DDWRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Apr 2010 18:17:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 318D1A8958;
+	Sun,  4 Apr 2010 18:17:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RQkjx2bAB9JPAAFoSNY/9dfG8is=; b=eI4bvd
+	GH/d5Q6t7VVsGPdQ+/xjan/VhtOCoWI+UDSjyncWUEdJ4wG3eJ63SyZtDGGJqH3J
+	xahWB1HavQ8karuJDQbrPak3FYFoxwsJzcY2FSNBsQxGu+eswjRv9A6j90TfnoSJ
+	hglUQTenl4YB6qZowX5/tOOdbo2bboH7z6jf4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vfry6qE6rS5k2b1mr1ItGqV5/JUvicq7
+	haB2zpcY5lg2uOeL1lvpvW028aNY02cTJS619Dko8et3eecnYTsQljiJpJxX4THm
+	4e9nbU6Jezt1QCW7JOx3WXDxqWzi7Wdm6sJ696tZhGB2kz6AyvQd2cuikGZkAXCZ
+	mzzSuOG5nh0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F5DEA8956;
+	Sun,  4 Apr 2010 18:17:46 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 837A3A8955; Sun,  4 Apr
+ 2010 18:17:43 -0400 (EDT)
+In-Reply-To: <m3eiiunbky.fsf@winooski.ccs.neu.edu> (Eli Barzilay's message of
+ "Sun\, 04 Apr 2010 17\:37\:33 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E5644A9A-4037-11DF-9908-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143954>
 
-do/while is more straightforward than while(1)/if/continue/return.
-
-Signed-off-by: Tony Finch <dot@dotat.at>
----
- wrapper.c |   16 ++++++----------
- 1 files changed, 6 insertions(+), 10 deletions(-)
-
-diff --git a/wrapper.c b/wrapper.c
-index 9c71b21..f34f492 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -116,12 +116,10 @@ void *xmmap(void *start, size_t length,
- ssize_t xread(int fd, void *buf, size_t len)
- {
- 	ssize_t nr;
--	while (1) {
-+	do {
- 		nr = read(fd, buf, len);
--		if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
--			continue;
--		return nr;
--	}
-+	} while ((nr < 0) && (errno == EAGAIN || errno == EINTR));
-+	return nr;
- }
- 
- /*
-@@ -132,12 +130,10 @@ ssize_t xread(int fd, void *buf, size_t len)
- ssize_t xwrite(int fd, const void *buf, size_t len)
- {
- 	ssize_t nr;
--	while (1) {
-+	do {
- 		nr = write(fd, buf, len);
--		if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
--			continue;
--		return nr;
--	}
-+	} while ((nr < 0) && (errno == EAGAIN || errno == EINTR));
-+	return nr;
- }
- 
- ssize_t read_in_full(int fd, void *buf, size_t count)
--- 
-1.6.2.1
+Isn't this the same as "%s%n%+b"?
