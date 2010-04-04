@@ -1,60 +1,76 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: Git: relicensing test-lib.sh from GPLv2 to GPLv2+
-Date: Sun, 4 Apr 2010 13:56:42 +0200
-Message-ID: <201004041356.42783.robin.rosenberg@dewire.com>
-References: <87ljf8pvxx.fsf@yoom.home.cworth.org> <alpine.DEB.1.00.1002202321430.20986@pacific.mpi-cbg.de> <87pr2i8g8o.fsf@steelpick.2x.cz>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: Does Git really need a commit message to go with a commit?
+Date: Sun, 4 Apr 2010 14:37:59 +0200
+Message-ID: <n2madf1fd3d1004040537jd61d70c6we5ba3b294dfc10be@mail.gmail.com>
+References: <z2r51dd1af81004031506pc9ac1840ie9953ae6df91d01b@mail.gmail.com>
+	 <p2kadf1fd3d1004031526r3beff4e3ldd977dfc7e9da782@mail.gmail.com>
+	 <h2m51dd1af81004040415xc7381f6cp1bf81bcfd684b99d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michal Sojka <sojkam1@fel.cvut.cz>
-X-From: git-owner@vger.kernel.org Sun Apr 04 13:56:57 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 04 14:38:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyORk-0006ug-F2
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 13:56:56 +0200
+	id 1NyP5d-00074r-QR
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 14:38:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752285Ab0DDL4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Apr 2010 07:56:51 -0400
-Received: from mail.dewire.com ([83.140.172.130]:23889 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752798Ab0DDL4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Apr 2010 07:56:50 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 59DC580036B;
-	Sun,  4 Apr 2010 13:56:49 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sBKA20txcWqH; Sun,  4 Apr 2010 13:56:48 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 01FE8800267;
-	Sun,  4 Apr 2010 13:56:47 +0200 (CEST)
-User-Agent: KMail/1.12.4 (Linux/2.6.31-20-generic; KDE/4.3.5; i686; ; )
-In-Reply-To: <87pr2i8g8o.fsf@steelpick.2x.cz>
+	id S1754113Ab0DDMiF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Apr 2010 08:38:05 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:39531 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754049Ab0DDMiB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Apr 2010 08:38:01 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so447451fgg.1
+        for <git@vger.kernel.org>; Sun, 04 Apr 2010 05:37:59 -0700 (PDT)
+Received: by 10.103.239.19 with HTTP; Sun, 4 Apr 2010 05:37:59 -0700 (PDT)
+In-Reply-To: <h2m51dd1af81004040415xc7381f6cp1bf81bcfd684b99d@mail.gmail.com>
+Received: by 10.102.216.24 with SMTP id o24mr2359278mug.67.1270384679772; Sun, 
+	04 Apr 2010 05:37:59 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143920>
 
-fredagen den 2 april 2010 09.29.11 skrev  Michal Sojka:
-> To all contributors to test-lib.sh mentioned in Bcc:
-> 
-> You're getting this message because you're recorded as contributing one
-> or more changes to the test-lib.sh file in the Git project, and are
-> therefore one of many copyright holders in the file.
-> 
-> We would like to extend the license of that file from GPLv2 only
-> license to GPLv2+ by adding the recommended "or any later version"
-> clause to the license. This will give us license compatibility with
-> GPLv3 projects, which would like to reuse test-lib.sh.
+On Sun, Apr 4, 2010 at 1:15 PM, =C6var Arnfj=F6r=F0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Sat, Apr 3, 2010 at 22:26, Santi B=E9jar <santi@agolina.net> wrote=
+:
+>> On Sun, Apr 4, 2010 at 12:06 AM, =C6var Arnfj=F6r=F0 Bjarmason
+>> <avarab@gmail.com> wrote:
+>>> git-commit(1) doesn't allow you to make a commit without a commit
+>>> message. This is annoying and doesn't properly preserve history in
+>>> applications like snerp-vortex which replay a SVN dump into Git. Yo=
+u
+>>> have to add `$msg =3D "Git made me do it" unless length $msg' somew=
+here.
+>>>
+>>> Is there really no way to add a commit with no message with the git
+>>> tools? Will anything break if I manually construct a commit with no
+>>> message? Are commit messages inherently part of the format or does
+>>> git-commit(1) just think it knows better than me?
+>>
+>> Normally it does not make sense an empty commit message, so it is
+>> forbidden by default. But there is a flag (documented in the man pag=
+e)
+>> since v1.5.4 (v1.5.3.7-994-g36863af git-commit --allow-empty,
+>> 2007-12-03) to allow it.
+>
+> Actually --allow-empty allows you to commit an empty /tree/. It
+> doesn't do anything for the commit message itself.
 
-YES, I agree to relicense all my contributions to test-lib.sh to GPLv2+
-with the addition of the "or any later version" clause.
+Arg! You are right, sorry for the noise. I should not write emails
+during the night...
 
--- robin
+I then suppose your only option is to use plumbing commands (see
+git(1)), in this case git-commit-tree. In general if you write scripts
+around git you should use only plumbing commands as they don't change
+the behavior.
+
+HTH,
+Santi
