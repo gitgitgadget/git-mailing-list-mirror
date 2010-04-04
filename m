@@ -1,400 +1,478 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: nd/setup
-Date: Sun, 4 Apr 2010 20:41:40 +0200
-Message-ID: <j2mfcaeb9bf1004041141p28fba95dz5cb11918c172d32f@mail.gmail.com>
-References: <7vaatmckmi.fsf@alter.siamese.dyndns.org>
-	 <j2wfcaeb9bf1004020423nc5b7a73cq2278d41d1675dc8f@mail.gmail.com>
-	 <20100403050057.GA20525@progeny.tock>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (Apr 2010, #02; Sun, 04)
+Date: Sun, 04 Apr 2010 12:14:03 -0700
+Message-ID: <7vtyrr6nes.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=001485326135307ad304836d901e
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 04 20:42:06 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 04 21:14:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyUlo-0000oi-T3
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 20:42:05 +0200
+	id 1NyVH2-0004pe-6N
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 21:14:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753638Ab0DDSlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Apr 2010 14:41:46 -0400
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:55581 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753343Ab0DDSlo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Apr 2010 14:41:44 -0400
-Received: by ewy20 with SMTP id 20so915492ewy.1
-        for <git@vger.kernel.org>; Sun, 04 Apr 2010 11:41:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type;
-        bh=eT5IFC23snrm3RrpoLsZgH//HoZP+OP4PsIxIbMG+w0=;
-        b=UjZJ6y5gow6+Wbl5NahzSKu1cbJPhUkFbIKKuZGSlRo8FD73xpNaUhAzDr+5O8CziU
-         Kf6Hl0IAQVDt0NUZnStt4WLOmYd7phHAPGoHoz1AyOrhsvPUHDqED/oXL1ShCUnapmy4
-         uCPSYOduoSsDn3XXHjhg3BORmcCyP+p7om6jc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=ki8c3lWGMLB4ISfS/nskribvs0PDRhau1nHa2OkrUxzLoSq0Gl1VOiOGY321NRD5fT
-         tqxgjKGgpVbs2evsb2D60F3yNgClt9Kce7QdT+zZs7mPuH4ZSaoV+R+hbNWf6Tp7s5lr
-         mkhrvYeM13iVGek8w7QfCO4+Pa3o8db0UbQJQ=
-Received: by 10.213.105.130 with HTTP; Sun, 4 Apr 2010 11:41:40 -0700 (PDT)
-In-Reply-To: <20100403050057.GA20525@progeny.tock>
-Received: by 10.213.46.13 with SMTP id h13mr985357ebf.83.1270406500612; Sun, 
-	04 Apr 2010 11:41:40 -0700 (PDT)
+	id S1751784Ab0DDTOM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Apr 2010 15:14:12 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39720 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751444Ab0DDTOJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Apr 2010 15:14:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 60CB3A74F4;
+	Sun,  4 Apr 2010 15:14:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=uNXKV56sHeZLRrJZIkZRQZUVn
+	TQ=; b=Z2HKmEctHbVix3lcqETcN5RqYR3cbH2/f6dLKPivYjRf6e81LxwOWYhFl
+	pjcRrFQQ+VXhoi6xohSGFnUXDHqjigWtiXZrLas6YWl6ehk6R3RFWrUW+FWGrKrW
+	/sxmJRYiKMuJQoCDp2v+M95Z57RVso1p+i8ucbrwodvI+TEXfk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=Th/1eAR1dqVu6fEu7hx
+	u2DN+aXJBB/rT4dYlFkdWGNs0wrrKRqPTLferknDZE7lRgEtjERXCDErH3OLdGBQ
+	XFB80t3spPKTJ4G+PbsT1O4Rd3ekI0fADc5+Jb+fBYZT8vO2T0omeXAHFvVid78g
+	t96/szHS1BpyBedIhz1sosTY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DB49A74F3;
+	Sun,  4 Apr 2010 15:14:07 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 43274A74F1; Sun,  4 Apr
+ 2010 15:14:05 -0400 (EDT)
+X-master-at: 11766ca4a89ba960271e94281463d1b44654ca3b
+X-next-at: c303c1b3242eaacf3f3c56ba3a93a3eba1aeb693
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3DB4D09E-401E-11DF-B9CD-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143940>
 
---001485326135307ad304836d901e
-Content-Type: text/plain; charset=UTF-8
+Here are the topics that have been cooking.  Commits prefixed with '-' =
+are
+only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
+marked with '.' do not appear in any of the integration branches, but I=
+ am
+still holding onto them.
 
-Junio,
+--------------------------------------------------
+[Graduated to "master"]
 
-I wanted to update nd/setup topic, but found nd/root-git was merged in
-between its two parts, which resulted in non-trivial conflicts in the
-end. Changes are minor, mainly to clean up the topic. So it's up to
-you to either leave the topic as is (plus Jonathan's "help revert"
-patch on top) or replace with some patches I attach, because if I send
-the whole topic again, you would need to resolve conflicts manually.
-I'll make proper patch messages next time once I figure out how to
-send conflict resolutions through mail.
+* mg/mailmap-update (2010-03-19) 1 commit
+  (merged to 'next' on 2010-03-28 at 8ac3436)
+ + .mailmap: Entries for Alex Benn=C3=A9e, Deskin Miller, Vitaly "_Vi" =
+Shukela
 
-- 717b885 help: use RUN_SETUP_GENTLY
-  replaced by 0001 (needs to resolve conflict in the next patch in
-topic, but it's quite simple)
-- 450476a worktree setup: restore original state when things go wrong
-  replaced by 0002
-- bc7cd1c Guard unallowed access to repository when it's not set up
-  replaced by 0003 and 0004
-- a55fdda builtins: reset startup_info->have_run_setup_gitdir when
-unsetting up repository
-  dropped (splitted as part of 0002-0004)
---
-Duy
+* mg/maint-send-email-lazy-editor (2010-03-22) 1 commit
+  (merged to 'next' on 2010-03-28 at 7e8e58e)
+ + send-email: lazily assign editor variable
 
---001485326135307ad304836d901e
-Content-Type: application/octet-stream; 
-	name="0001-help-take-note-why-this-command-is-not-applicable-fo.patch"
-Content-Disposition: attachment; 
-	filename="0001-help-take-note-why-this-command-is-not-applicable-fo.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_g7m71fws0
+* mg/use-default-abbrev-length-in-rev-list (2010-03-22) 1 commit
+  (merged to 'next' on 2010-03-28 at d3e9f04)
+ + rev-list: use default abbrev length when abbrev-commit is in effect
 
-RnJvbSA0YzVkNmJjNDllMjYyZDMzMzEwNjlkZDdkOGZiOGZjNjc4NWY1ZDRiIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBKb25hdGhhbiBOaWVkZXIgPGpybmllZGVyQGdtYWlsLmNvbT4K
-RGF0ZTogU3VuLCA0IEFwciAyMDEwIDE3OjQ5OjM4ICswMjAwClN1YmplY3Q6IFtQQVRDSF0gaGVs
-cDogdGFrZSBub3RlIHdoeSB0aGlzIGNvbW1hbmQgaXMgbm90IGFwcGxpY2FibGUgZm9yIFJVTl9T
-RVRVUF9HRU5UTFkKTUlNRS1WZXJzaW9uOiAxLjAKQ29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBj
-aGFyc2V0PVVURi04CkNvbnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6IDhiaXQKCiJnaXQgaGVscCIg
-Y2FsbHMgc2V0dXBfZ2l0X2RpcmVjdG9yeV9nZW50bHkoKSwgdGh1cyBhIGNhbmRpZGF0ZSBmb3IK
-UlVOX1NFVFVQX0dFTlRMWS4gSG93ZXZlciBSVU5fU0VUVVBfR0VOVExZIHNob3VsZCBub3QgYmUg
-dXNlZCBmb3IKcGVyZm9ybWFuY2UgcmVhc29uLCBhcyBmb2xsb3dzLgoKSW4gYXV0b21vdW50IHNl
-dHVwcyBsaWtlIHRoYXQgd2hpY2ggcHJvbXB0ZWQgdjEuNi4wLXJjMH4xMjFeMn4xIChBZGQKc3Vw
-cG9ydCBmb3IgR0lUX0NFSUxJTkdfRElSRUNUT1JJRVMsIDIwMDgtMDUtMTkpLCBpZgpHSVRfQ0VJ
-TElOR19ESVJFQ1RPUklFUyBpcyB1bnNldCwgdGhlbiBwcm9iaW5nIGZvciB0aGUgR2l0IGRpcmVj
-dG9yeQpjYW4gdGFrZSBhIGxvbmcgdGltZS4gIFRodXMgdW5uZWNlc3NhcmlseSBzZWFyY2hpbmcg
-Zm9yIGEgZ2l0CmRpcmVjdG9yeSBjYW4gc2xvdyBkb3duICdnaXQgaGVscCAtYScgKGFuZCB0aHVz
-IGJhc2ggY29tcGxldGlvbikuCgonZ2l0IGhlbHAnIGRvZXMgbm90IHVzZSBSVU5fU0VUVVAgb3Ig
-VVNFX1BBR0VSLCBhbmQgbmVpdGhlciBvcHRpb24KcGFyc2luZyBub3IgcHJvZHVjaW5nIG91dHB1
-dCBmb3IgcGxhaW4gJ2dpdCBoZWxwJyBvciAnZ2l0IGhlbHAgLWEnCnJlcXVpcmVzIGFjY2VzcyB0
-byB0aGUgZ2l0IGNvbmZpZ3VyYXRpb24uICBUaGVyZWZvcmUgaXQgaXMgc2FmZSB0byBub3QKc2Vh
-cmNoIGZvciB0aGUgZ2l0IGRpcmVjdG9yeSBlYXJseSBpbiB0aGlzIGNhc2UuCgpBbHNvIGFkZCBz
-b21lIGNvbW1lbnRzIHRvIGRvY3VtZW50IHRoZSByZXF1aXJlbWVudHMgdGhpcyBwbGFjZXMgb24K
-bGlzdF9jb21tYW5kcygpIGFuZCBsaXN0X2NvbW1vbl9jbWRzX2hlbHAoKS4KClNpZ25lZC1vZmYt
-Ynk6IEpvbmF0aGFuIE5pZWRlciA8anJuaWVkZXJAZ21haWwuY29tPgpTaWduZWQtb2ZmLWJ5OiBO
-Z3V54buFbiBUaMOhaSBOZ+G7jWMgRHV5IDxwY2xvdWRzQGdtYWlsLmNvbT4KLS0tCiBidWlsdGlu
-L2hlbHAuYyB8ICAgIDUgKysrKysKIGhlbHAuYyAgICAgICAgIHwgICAgNCArKysrCiAyIGZpbGVz
-IGNoYW5nZWQsIDkgaW5zZXJ0aW9ucygrKSwgMCBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9i
-dWlsdGluL2hlbHAuYyBiL2J1aWx0aW4vaGVscC5jCmluZGV4IDMxODJhMmIuLjE2MjYyNTEgMTAw
-NjQ0Ci0tLSBhL2J1aWx0aW4vaGVscC5jCisrKyBiL2J1aWx0aW4vaGVscC5jCkBAIC0yNzEsNiAr
-MjcxLDExIEBAIHN0YXRpYyBpbnQgZ2l0X2hlbHBfY29uZmlnKGNvbnN0IGNoYXIgKnZhciwgY29u
-c3QgY2hhciAqdmFsdWUsIHZvaWQgKmNiKQogCiBzdGF0aWMgc3RydWN0IGNtZG5hbWVzIG1haW5f
-Y21kcywgb3RoZXJfY21kczsKIAorLyoKKyAqIFVzZWQgZm9yIHBsYWluICdnaXQnIGFuZCAnZ2l0
-IGhlbHAnLgorICogVGhlcmVmb3JlIHRoaXMgc2hvdWxkIG5vdCB1c2UgZ2l0X2NvbmZpZygpLCBu
-b3IgYW55IG90aGVyIGZ1bmN0aW9uCisgKiB0aGF0IHJlcXVpcmVzIHNlYXJjaGluZyBmb3IgYSBy
-ZXBvc2l0b3J5LgorICovCiB2b2lkIGxpc3RfY29tbW9uX2NtZHNfaGVscCh2b2lkKQogewogCWlu
-dCBpLCBsb25nZXN0ID0gMDsKZGlmZiAtLWdpdCBhL2hlbHAuYyBiL2hlbHAuYwppbmRleCA3ZjQ5
-MjhlLi5kNGMzMTY1IDEwMDY0NAotLS0gYS9oZWxwLmMKKysrIGIvaGVscC5jCkBAIC0yMjEsNiAr
-MjIxLDEwIEBAIHZvaWQgbG9hZF9jb21tYW5kX2xpc3QoY29uc3QgY2hhciAqcHJlZml4LAogCWV4
-Y2x1ZGVfY21kcyhvdGhlcl9jbWRzLCBtYWluX2NtZHMpOwogfQogCisvKgorICogVXNlZCBmb3Ig
-J2dpdCBoZWxwIC1hJy4gIFRoZXJlZm9yZSB0aGlzIHNob3VsZCBub3QgdXNlIGdpdF9jb25maWco
-KSwKKyAqIG5vciBhbnkgb3RoZXIgZnVuY3Rpb24gdGhhdCByZXF1aXJlcyBzZWFyY2hpbmcgZm9y
-IGEgcmVwb3NpdG9yeS4KKyAqLwogdm9pZCBsaXN0X2NvbW1hbmRzKGNvbnN0IGNoYXIgKnRpdGxl
-LCBzdHJ1Y3QgY21kbmFtZXMgKm1haW5fY21kcywKIAkJICAgc3RydWN0IGNtZG5hbWVzICpvdGhl
-cl9jbWRzKQogewotLSAKMS43LjAucmMxLjU0MS5nMmRhODIuZGlydHkKCg==
---001485326135307ad304836d901e
-Content-Type: application/octet-stream; 
-	name="0002-worktree-setup-restore-original-state-when-things-go.patch"
-Content-Disposition: attachment; 
-	filename="0002-worktree-setup-restore-original-state-when-things-go.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_g7m71fx31
+* rb/maint-python-path (2010-03-21) 1 commit
+  (merged to 'next' on 2010-03-28 at 58ba409)
+ + Correct references to /usr/bin/python which does not exist on FreeBS=
+D
 
-RnJvbSAwOTJiMjAzMzdhYzFmMTgyNGE2NjU2YmE1MjQ5YjQwOTYyNmNhNTJlIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiA9P1VURi04P3E/Tmd1eT1FMT1CQj04NW49MjBUaD1DMz1BMWk9
-MjBOZz1FMT1CQj04RGM9MjBEdXk/PSA8cGNsb3Vkc0BnbWFpbC5jb20+CkRhdGU6IFN1biwgMjEg
-TWFyIDIwMTAgMTc6MzA6MzQgKzA3MDAKU3ViamVjdDogW1BBVENIXSB3b3JrdHJlZSBzZXR1cDog
-cmVzdG9yZSBvcmlnaW5hbCBzdGF0ZSB3aGVuIHRoaW5ncyBnbyB3cm9uZwpNSU1FLVZlcnNpb246
-IDEuMApDb250ZW50LVR5cGU6IHRleHQvcGxhaW47IGNoYXJzZXQ9VVRGLTgKQ29udGVudC1UcmFu
-c2Zlci1FbmNvZGluZzogOGJpdAoKSW4gY3VycmVudCBzdGF0ZSBvZiBzZXR1cF9naXRfZGlyZWN0
-b3J5X2dlbnRseSgpLCB3aGVuIGEgcmVwb3NpdG9yeSBpcwpub3QgZm91bmQsIG1hbnkgdGhpbmdz
-IHdpbGwgbm90IGJlIHRoZSBzYW1lIGFzIHdoZW4gc2V0dXAgcHJvY2VkdXJlIGlzCnN0YXJ0ZWQg
-KHdoaWxlIHRoZXkgc2hvdWxkIGJlKS4gRm9yIG9uZSB0aGluZywgY3VycmVudCB3b3JraW5nCmRp
-cmVjdG9yeSB3aWxsIG5vdCBiZSB0aGUgc2FtZSBpbiBjZXJ0YWluIGNhc2VzLgoKVGhpcyBwYXRj
-aCByZW9yZGVycyBhY3Rpb25zIGluIGNsZWFyIHN0ZXBzIGFuZCByb2xscyBiYWNrIGlmIG9uZSBz
-dGVwCmlzIHdyb25nLiAoQWN0dWFsbHkgdGhlIGxhc3Qgc3RlcCwgc2V0dGluZyBnaXRfZGlyLCBj
-YW4ndCBiZSByb2xsZWQKYmFjayBieSB0aGlzIHBhdGNoKS4KClRoZSBzdGVwcyBhbmQgdGhlaXIg
-c3RhdGUgY2hhbmdlIGFyZToKCiAxLiBMb29raW5nIGluIHdvcmtpbmcgZGlyZWN0b3J5IGZvciBy
-ZXBvc2l0b3J5IGNhbmRpZGF0ZXMgKG9yICRHSVRfRElSCiAgICBpZiBpdCBpcyBzZXQpCgogICAg
-VGhpcyBzdGVwIG1heSBtb3ZlICQoY3dkKSB0byBzb21ld2hlcmUuCgogMi4gU2V0IGludGVybmFs
-IHZhcmlhYmxlcyB0byByZWNvcmQgcmVwb3NpdG9yeSBmZWF0dXJlcywgYmFzZWQgb25seQogICAg
-b24gcmVwb3NpdG9yeSBsb2NhdGlvbiBhbmQgZW52aXJvbm1lbnQgdmFyaWFibGVzLgoKICAgIFRo
-aXMgc3RlcCBzZXRzIHZhcmlhYmxlczoKICAgIC0gaW5zaWRlX2dpdF9kaXIKICAgIC0gaW5zaWRl
-X3dvcmtfdHJlZQoKIDMuIEluc3BlY3QgJEdJVF9ESVIvY29uZmlnIHRvIHNlZSBpZiBpdCdzIGEg
-dmFsaWQgcmVwb3NpdG9yeS4KCiAgICBUaGlzIHN0ZXAgbWF5IGNoYW5nZSB2YXJpYWJsZXM6CiAg
-ICAtIHJlcG9zaXRvcnlfZm9ybWF0X3ZlcnNpb24KICAgIC0gc2hhcmVkX3JlcG9zaXRvcnkKICAg
-IC0gaXNfYmFyZV9yZXBvc2l0b3J5X2NmZwogICAgLSBnaXRfd29ya190cmVlX2NmZwoKIDQuIFNh
-dmUgdGhlIHJlcG9zaXRvcnkgbG9jYXRpb24gZm9yIGxhdGVyIHVzZS4KCiAgICBUaGlzIHN0ZXAg
-Y2FsbHMgc2V0dXBfZ2l0X2RpcigpIHRvIHNldCBtYW55IHZhcmlhYmxlcyBpbiBlbnZpcm9ubWVu
-dC5jCgogNS4gQ2FsY3VsYXRlIHByZWZpeCAocmVsYXRpdmUgcGF0aCB0byB0aGUgb3JpZ2luYWwg
-Y3VycmVudCB3b3JraW5nCiAgICBkaXJlY3RvcnkpCgpTZXR1cCBwcm9jZWR1cmUgaXMgY29tcGxl
-dGVkIGF0IHN0ZXAgNS4gU3RvcHBpbmcgYXQgYW55IG90aGVyIHN0ZXBzCmlzIGNvbnNpZGVyZWQg
-YSBzZXR1cCBmYWlsdXJlLgoKSW4gY2FzZSBvZiBzZXR1cCBmYWlsdXJlLCBpZiBpdCdzIG5vdCBm
-YXRhbCBhbmQgbm9uZ2l0X29rIGlzIG5vdCBOVUxMLApwcmVmaXggbXVzdCBiZSBjYWxjdWxhdGVk
-IGJlZm9yZSByZXR1cm5pbmcgdG8gY2FsbGVyLiBJbiBvdGhlciB3b3JkczoKCiAgaWYgKCFmYXRh
-bCAmJiBnZW50bHkpCiAgICBnb3RvIHN0ZXBfNTsKClRoaW5ncyB0aGF0IGdvIHdyb25nIGJlZm9y
-ZSBzdGVwIDQgd2lsbCBiZSBjbGVhbmVkIHVwIGJ5CnVuc2V0X2dpdF9kaXJlY3RvcnkoKS4gU3Rl
-cCA0IGlzIGlycmV2ZXJzaWJsZSwgZm9yIG5vdy4KClNpZ25lZC1vZmYtYnk6IE5ndXnhu4VuIFRo
-w6FpIE5n4buNYyBEdXkgPHBjbG91ZHNAZ21haWwuY29tPgpTaWduZWQtb2ZmLWJ5OiBKdW5pbyBD
-IEhhbWFubyA8Z2l0c3RlckBwb2JveC5jb20+Ci0tLQogY2FjaGUuaCB8ICAgIDEgKwogc2V0dXAu
-YyB8ICAgNTUgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrLS0tLQogMiBmaWxlcyBjaGFuZ2VkLCA1MiBpbnNlcnRpb25zKCspLCA0IGRlbGV0aW9ucygt
-KQoKZGlmZiAtLWdpdCBhL2NhY2hlLmggYi9jYWNoZS5oCmluZGV4IDU3Y2Q3OWUuLjRkZWJlYWEg
-MTAwNjQ0Ci0tLSBhL2NhY2hlLmgKKysrIGIvY2FjaGUuaApAQCAtNDA5LDYgKzQwOSw3IEBAIGV4
-dGVybiBjb25zdCBjaGFyICoqZ2V0X3BhdGhzcGVjKGNvbnN0IGNoYXIgKnByZWZpeCwgY29uc3Qg
-Y2hhciAqKnBhdGhzcGVjKTsKIGV4dGVybiB2b2lkIHNldHVwX3dvcmtfdHJlZSh2b2lkKTsKIGV4
-dGVybiBjb25zdCBjaGFyICpzZXR1cF9naXRfZGlyZWN0b3J5X2dlbnRseShpbnQgKik7CiBleHRl
-cm4gY29uc3QgY2hhciAqc2V0dXBfZ2l0X2RpcmVjdG9yeSh2b2lkKTsKK2V4dGVybiB2b2lkIHVu
-c2V0X2dpdF9kaXJlY3RvcnkoY29uc3QgY2hhciAqcHJlZml4KTsKIGV4dGVybiBjb25zdCBjaGFy
-ICpwcmVmaXhfcGF0aChjb25zdCBjaGFyICpwcmVmaXgsIGludCBsZW4sIGNvbnN0IGNoYXIgKnBh
-dGgpOwogZXh0ZXJuIGNvbnN0IGNoYXIgKnByZWZpeF9maWxlbmFtZShjb25zdCBjaGFyICpwcmVm
-aXgsIGludCBsZW4sIGNvbnN0IGNoYXIgKnBhdGgpOwogZXh0ZXJuIGludCBjaGVja19maWxlbmFt
-ZShjb25zdCBjaGFyICpwcmVmaXgsIGNvbnN0IGNoYXIgKm5hbWUpOwpkaWZmIC0tZ2l0IGEvc2V0
-dXAuYyBiL3NldHVwLmMKaW5kZXggMTlmZTNlMy4uOTA4Y2ZmZiAxMDA2NDQKLS0tIGEvc2V0dXAu
-YworKysgYi9zZXR1cC5jCkBAIC0zMjIsNiArMzIyLDQyIEBAIGNvbnN0IGNoYXIgKnJlYWRfZ2l0
-ZmlsZV9nZW50bHkoY29uc3QgY2hhciAqcGF0aCkKIAlyZXR1cm4gcGF0aDsKIH0KIAordm9pZCB1
-bnNldF9naXRfZGlyZWN0b3J5KGNvbnN0IGNoYXIgKnByZWZpeCkKK3sKKwkvKgorCSAqIEZJWE1F
-OgorCSAqIGNoZGlyKHByZWZpeCkgbWF5IGJlIGVub3VnaCBmb3IgbW9zdCBvZiBjYXNlcywKKwkg
-KiBpZiBvcmlnaW5hbCBjd2QgaXMgb3V0c2lkZSB3b3JrdHJlZSwgcHJlZml4CisJICogd2lsbCBh
-bHdheXMgYmUgc2V0IE5VTEwsIHRodXMgaW1wb3NzaWJsZSB0byBtb3ZlCisJICogYmFjayB0byBv
-cmlnbmFsIGN3ZAorCSAqLworCWlmIChwcmVmaXggJiYgY2hkaXIocHJlZml4KSkKKwkJZGllKCJD
-YW5ub3QgY2hhbmdlIHRvICclcyciLCBwcmVmaXgpOworCisJaWYgKHN0YXJ0dXBfaW5mbykgewor
-CQlzdGFydHVwX2luZm8tPnByZWZpeCA9IE5VTEw7CisJCXN0YXJ0dXBfaW5mby0+aGF2ZV9yZXBv
-c2l0b3J5ID0gMDsKKwl9CisKKwkvKiBJbml0aWFsaXplZCBpbiBzZXR1cF9naXRfZGlyZWN0b3J5
-X2dlbnRseV8xKCkgKi8KKwlpbnNpZGVfd29ya190cmVlID0gLTE7CisJaW5zaWRlX2dpdF9kaXIg
-PSAtMTsKKworCS8qIEluaXRpYWxpemVkIGluIGNoZWNrX3JlcG9zaXRvcnlfZm9ybWF0X3ZlcnNp
-b24oKSAqLworCS8qCisJICogcmVwb3NpdG9yeV9mb3JtYXRfdmVyc2lvbiBpcyB6ZXJvIGZvciB0
-d28gcmVhc29uczoKKwkgKiAtIEZvciByZWFsbHkgb2xkIHJlcG9zLCB0aGVyZSB3b24ndCBiZSBj
-b3JlLnJlcG9zaXRvcnlmb3JtYXR2ZXJzaW9uCisJICogICB3ZSB0cmVhdCBpdCBhcyBzdXBwb3J0
-ZWQgdmVyc2lvbiB6ZXJvLgorCSAqIC0gRm9yIHJlcG8gY3JlYXRpbmcgY29tbWFuZHMgbGlrZSAi
-Z2l0IGluaXQiIG9yICJnaXQgY2xvbmUiCisJICogICAkR0lUX0RJUi9jb25maWcgbWF5IG5vdCBi
-ZSB0aGVyZSwganVzdCBsZXQgaXQgcGFzcywgdGhlCisJICogICByZXBvc2l0b3J5IHdpbGwgYmUg
-cHJvcGVybHkgaW5pdGlhbGl6ZWQgbGF0ZXIuCisJICogRm9yIGhpc3Rvcnkgb2YgdGhpcyBzZXR0
-aW5nIHNlZSBjb21taXRzIDRmNjI5NTMgYW5kIDk2ZjFlNTgKKwkgKi8KKwlyZXBvc2l0b3J5X2Zv
-cm1hdF92ZXJzaW9uID0gMDsKKwlzaGFyZWRfcmVwb3NpdG9yeSA9IFBFUk1fVU1BU0s7CisJaXNf
-YmFyZV9yZXBvc2l0b3J5X2NmZyA9IC0xOworCWdpdF93b3JrX3RyZWVfY2ZnID0gTlVMTDsKK30K
-IC8qCiAgKiBXZSBjYW5ub3QgZGVjaWRlIGluIHRoaXMgZnVuY3Rpb24gd2hldGhlciB3ZSBhcmUg
-aW4gdGhlIHdvcmsgdHJlZSBvcgogICogbm90LCBzaW5jZSB0aGUgY29uZmlnIGNhbiBvbmx5IGJl
-IHJlYWQgX2FmdGVyXyB0aGlzIGZ1bmN0aW9uIHdhcyBjYWxsZWQuCkBAIC00MDIsNiArNDM4LDEz
-IEBAIHN0YXRpYyBjb25zdCBjaGFyICpzZXR1cF9naXRfZGlyZWN0b3J5X2dlbnRseV8xKGludCAq
-bm9uZ2l0X29rKQogCSAqIC0gLi4vIChiYXJlKQogCSAqIC0gLi4vLi4vLmdpdC8KIAkgKiAgIGV0
-Yy4KKwkgKgorCSAqIFdoZW4gYSByZXBvc2l0b3J5IGlzIGZvdW5kOgorCSAqIC0gaW5zaWRlX2dp
-dF9kaXIvaW5zaWRlX3dvcmtfdHJlZSBhcmUgc2V0CisJICogLSBjaGVja19yZXBvc2l0b3J5X2Zv
-cm1hdF9nZW50bHkoKSBpcyBjYWxsZWQKKwkgKiAgIGlmIHJlcG8gdmVyc2lvbiBpcyBub3Qgc3Vw
-cG9ydGVkLCByZXN0b3JlIGN3ZAorCSAqIC0gc2V0X2dpdF9kaXIKKwkgKiAtIGNhbGN1bGF0ZSBh
-bmQgcmV0dXJuIHByZWZpeAogCSAqLwogCW9mZnNldCA9IGxlbiA9IHN0cmxlbihjd2QpOwogCWZv
-ciAoOzspIHsKQEAgLTQwOSwxMyArNDUyLDE1IEBAIHN0YXRpYyBjb25zdCBjaGFyICpzZXR1cF9n
-aXRfZGlyZWN0b3J5X2dlbnRseV8xKGludCAqbm9uZ2l0X29rKQogCQlpZiAoIWdpdGZpbGVfZGly
-ICYmIGlzX2dpdF9kaXJlY3RvcnkoREVGQVVMVF9HSVRfRElSX0VOVklST05NRU5UKSkKIAkJCWdp
-dGZpbGVfZGlyID0gREVGQVVMVF9HSVRfRElSX0VOVklST05NRU5UOwogCQlpZiAoZ2l0ZmlsZV9k
-aXIpIHsKLQkJCWlmIChzZXRfZ2l0X2RpcihnaXRmaWxlX2RpcikpCi0JCQkJZGllKCJSZXBvc2l0
-b3J5IHNldHVwIGZhaWxlZCIpOwogCQkJaW5zaWRlX2dpdF9kaXIgPSAwOwogCQkJaWYgKCF3b3Jr
-X3RyZWVfZW52KQogCQkJCWluc2lkZV93b3JrX3RyZWUgPSAxOwotCQkJaWYgKGNoZWNrX3JlcG9z
-aXRvcnlfZm9ybWF0X2dlbnRseShnaXRmaWxlX2Rpciwgbm9uZ2l0X29rKSkKKwkJCWlmIChjaGVj
-a19yZXBvc2l0b3J5X2Zvcm1hdF9nZW50bHkoZ2l0ZmlsZV9kaXIsIG5vbmdpdF9vaykpIHsKKwkJ
-CQl1bnNldF9naXRfZGlyZWN0b3J5KG9mZnNldCAhPSBsZW4gPyBjd2QgKyBvZmZzZXQgKyAxOiBO
-VUxMKTsKIAkJCQlyZXR1cm4gTlVMTDsKKwkJCX0KKwkJCWlmIChzZXRfZ2l0X2RpcihnaXRmaWxl
-X2RpcikpCisJCQkJZGllKCJSZXBvc2l0b3J5IHNldHVwIGZhaWxlZCIpOwogCQkJcm9vdF9sZW4g
-PSBvZmZzZXRfMXN0X2NvbXBvbmVudChjd2QpOwogCQkJZ2l0X3dvcmtfdHJlZV9jZmcgPSB4c3Ry
-bmR1cChjd2QsIG9mZnNldCA+IHJvb3RfbGVuID8gb2Zmc2V0IDogcm9vdF9sZW4pOwogCQkJYnJl
-YWs7CkBAIC00MjQsOCArNDY5LDEwIEBAIHN0YXRpYyBjb25zdCBjaGFyICpzZXR1cF9naXRfZGly
-ZWN0b3J5X2dlbnRseV8xKGludCAqbm9uZ2l0X29rKQogCQkJaW5zaWRlX2dpdF9kaXIgPSAxOwog
-CQkJaWYgKCF3b3JrX3RyZWVfZW52KQogCQkJCWluc2lkZV93b3JrX3RyZWUgPSAwOwotCQkJaWYg
-KGNoZWNrX3JlcG9zaXRvcnlfZm9ybWF0X2dlbnRseSgiLiIsIG5vbmdpdF9vaykpCisJCQlpZiAo
-Y2hlY2tfcmVwb3NpdG9yeV9mb3JtYXRfZ2VudGx5KCIuIiwgbm9uZ2l0X29rKSkgeworCQkJCXVu
-c2V0X2dpdF9kaXJlY3Rvcnkob2Zmc2V0ICE9IGxlbiA/IGN3ZCArIG9mZnNldCArIDE6IE5VTEwp
-OwogCQkJCXJldHVybiBOVUxMOworCQkJfQogCQkJaWYgKG9mZnNldCAhPSBsZW4pIHsKIAkJCQlj
-d2Rbb2Zmc2V0XSA9ICdcMCc7CiAJCQkJc2V0X2dpdF9kaXIoY3dkKTsKLS0gCjEuNy4wLnJjMS41
-NDEuZzJkYTgyLmRpcnR5Cgo=
---001485326135307ad304836d901e
-Content-Type: application/octet-stream; 
-	name="0003-Guard-unallowed-access-to-repository-when-it-s-not-s.patch"
-Content-Disposition: attachment; 
-	filename="0003-Guard-unallowed-access-to-repository-when-it-s-not-s.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_g7m71fxc2
+* rr/imap-send-unconfuse-from-line (2010-03-22) 1 commit
+  (merged to 'next' on 2010-03-28 at fbedd77)
+ + imap-send: Remove limitation on message body
 
-RnJvbSAxYzFlNGFmMDUyNjJiNTdmNTc3OWU3ZjgyNWUyNTk0NWM4YzIxNzU0IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiA9P1VURi04P3E/Tmd1eT1FMT1CQj04NW49MjBUaD1DMz1BMWk9
-MjBOZz1FMT1CQj04RGM9MjBEdXk/PSA8cGNsb3Vkc0BnbWFpbC5jb20+CkRhdGU6IFN1biwgMjEg
-TWFyIDIwMTAgMTc6MzA6NDYgKzA3MDAKU3ViamVjdDogW1BBVENIXSBHdWFyZCB1bmFsbG93ZWQg
-YWNjZXNzIHRvIHJlcG9zaXRvcnkgd2hlbiBpdCdzIG5vdCBzZXQgdXAKTUlNRS1WZXJzaW9uOiAx
-LjAKQ29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBjaGFyc2V0PVVURi04CkNvbnRlbnQtVHJhbnNm
-ZXItRW5jb2Rpbmc6IDhiaXQKCk1hbnkgY29kZSBwYXRoIHdpbGwgc2tpcCByZXBvIGFjY2VzcyBp
-ZiBzdGFydHVwX2luZm8tPmhhdmVfcmVwb3NpdG9yeQppcyBmYWxzZS4gVGhpcyBtYXkgYmUgYSBm
-YXVsdCBpZiBzdGFydHVwX2luZm8tPmhhdmVfcmVwb3NpdG9yeSBoYXMgbm90CmJlZW4gcHJvcGVy
-bHkgaW5pdGlhbGl6ZWQuCgpTbyB0aGUgcnVsZSBpcyBvbmUgb2YgdGhlIGZvbGxvd2luZyBjb21t
-YW5kcyBtdXN0IGJlIHJ1biBiZWZvcmUgYW55CnJlcG8gYWNjZXNzLiBBbmQgbm9uZSBvZiB0aGVt
-IGNhbiBiZSBjYWxsZWQgdHdpY2UuCgogLSBzZXR1cF9naXRfZGlyZWN0b3J5KgogLSBlbnRlcl9y
-ZXBvCiAtIGluaXRfZGIKClNpZ25lZC1vZmYtYnk6IE5ndXnhu4VuIFRow6FpIE5n4buNYyBEdXkg
-PHBjbG91ZHNAZ21haWwuY29tPgotLS0KIGJ1aWx0aW4vaW5pdC1kYi5jIHwgICAgMSArCiBjYWNo
-ZS5oICAgICAgICAgICB8ICAgIDEgKwogY29uZmlnLmMgICAgICAgICAgfCAgICAyICsrCiBlbnZp
-cm9ubWVudC5jICAgICB8ICAgMTMgKysrKysrKysrKystLQogZ2l0LmMgICAgICAgICAgICAgfCAg
-IDE2ICsrKysrKysrKysrLS0tLS0KIHNldHVwLmMgICAgICAgICAgIHwgICAxMyArKysrKysrKysr
-KysrCiA2IGZpbGVzIGNoYW5nZWQsIDM5IGluc2VydGlvbnMoKyksIDcgZGVsZXRpb25zKC0pCgpk
-aWZmIC0tZ2l0IGEvYnVpbHRpbi9pbml0LWRiLmMgYi9idWlsdGluL2luaXQtZGIuYwppbmRleCA1
-YjIxMTNiLi44MjQyZmI5IDEwMDY0NAotLS0gYS9idWlsdGluL2luaXQtZGIuYworKysgYi9idWls
-dGluL2luaXQtZGIuYwpAQCAtMjg4LDYgKzI4OCw3IEBAIGludCBpbml0X2RiKGNvbnN0IGNoYXIg
-KmdpdF9kaXIsIGNvbnN0IGNoYXIgKnRlbXBsYXRlX2RpciwgdW5zaWduZWQgaW50IGZsYWdzKQog
-CiAJc2V0X2dpdF9kaXIobWFrZV9hYnNvbHV0ZV9wYXRoKGdpdF9kaXIpKTsKIAlzdGFydHVwX2lu
-Zm8tPmhhdmVfcmVwb3NpdG9yeSA9IDE7CisJc3RhcnR1cF9pbmZvLT5oYXZlX3J1bl9zZXR1cF9n
-aXRkaXIgPSAxOwogCiAJc2FmZV9jcmVhdGVfZGlyKGdldF9naXRfZGlyKCksIDApOwogCmRpZmYg
-LS1naXQgYS9jYWNoZS5oIGIvY2FjaGUuaAppbmRleCAxYjU1YWQ3Li5jMTE4OTM1IDEwMDY0NAot
-LS0gYS9jYWNoZS5oCisrKyBiL2NhY2hlLmgKQEAgLTEwNDYsNiArMTA0Niw3IEBAIGludCBzcGxp
-dF9jbWRsaW5lKGNoYXIgKmNtZGxpbmUsIGNvbnN0IGNoYXIgKioqYXJndik7CiAvKiBnaXQuYyAq
-Lwogc3RydWN0IHN0YXJ0dXBfaW5mbyB7CiAJY29uc3QgY2hhciAqcHJlZml4OworCWludCBoYXZl
-X3J1bl9zZXR1cF9naXRkaXI7CiAJaW50IGhhdmVfcmVwb3NpdG9yeTsKIAlpbnQgaGVscDsKIH07
-CmRpZmYgLS1naXQgYS9jb25maWcuYyBiL2NvbmZpZy5jCmluZGV4IDA3ZDg1NGEuLjk5ODFiMDkg
-MTAwNjQ0Ci0tLSBhL2NvbmZpZy5jCisrKyBiL2NvbmZpZy5jCkBAIC03MzcsNiArNzM3LDggQEAg
-aW50IGdpdF9jb25maWcoY29uZmlnX2ZuX3QgZm4sIHZvaWQgKmRhdGEpCiAJY2hhciAqcmVwb19j
-b25maWcgPSBOVUxMOwogCWludCByZXQ7CiAKKwlpZiAoc3RhcnR1cF9pbmZvICYmICFzdGFydHVw
-X2luZm8tPmhhdmVfcnVuX3NldHVwX2dpdGRpcikKKwkJZGllKCJpbnRlcm5hbCBlcnJvcjogYWNj
-ZXNzIHRvIC5naXQvY29uZmlnIHdpdGhvdXQgcmVwbyBzZXR1cCIpOwogCWlmICghc3RhcnR1cF9p
-bmZvIHx8IHN0YXJ0dXBfaW5mby0+aGF2ZV9yZXBvc2l0b3J5KQogCQlyZXBvX2NvbmZpZyA9IGdp
-dF9wYXRoZHVwKCJjb25maWciKTsKIAlyZXQgPSBnaXRfY29uZmlnX2Vhcmx5KGZuLCBkYXRhLCBy
-ZXBvX2NvbmZpZyk7CmRpZmYgLS1naXQgYS9lbnZpcm9ubWVudC5jIGIvZW52aXJvbm1lbnQuYwpp
-bmRleCBlYWQwMGEzLi5jYTM0YTdiIDEwMDY0NAotLS0gYS9lbnZpcm9ubWVudC5jCisrKyBiL2Vu
-dmlyb25tZW50LmMKQEAgLTgxLDkgKzgxLDE4IEBAIHZvaWQgdW5zZXRfZ2l0X2Vudih2b2lkKQog
-CiBzdGF0aWMgdm9pZCBzZXR1cF9naXRfZW52KHZvaWQpCiB7CisJaWYgKHN0YXJ0dXBfaW5mbyAm
-JiBzdGFydHVwX2luZm8tPmhhdmVfcnVuX3NldHVwX2dpdGRpcikKKwkJZGllKCJpbnRlcm5hbCBl
-cnJvcjogc2V0dXBfZ2l0X2VudiBjYW4ndCBiZSBjYWxsZWQgdHdpY2UiKTsKIAlnaXRfZGlyID0g
-Z2V0ZW52KEdJVF9ESVJfRU5WSVJPTk1FTlQpOwotCWlmICghZ2l0X2RpcikKLQkJZ2l0X2RpciA9
-IHJlYWRfZ2l0ZmlsZV9nZW50bHkoREVGQVVMVF9HSVRfRElSX0VOVklST05NRU5UKTsKKwlpZiAo
-IWdpdF9kaXIpIHsKKwkJLyoKKwkJICogUmVwbyBkZXRlY3Rpb24gc2hvdWxkIGJlIGRvbmUgYnkg
-c2V0dXBfZ2l0X2RpcmVjdG9yeSoKKwkJICogb3IgZW50ZXJfcmVwbywgbm90IGJ5IHRoaXMgZnVu
-Y3Rpb24KKwkJICovCisJCSBpZiAoc3RhcnR1cF9pbmZvKQorCQkJIGRpZSgiaW50ZXJuYWwgZXJy
-b3I6ICRHSVRfRElSIGlzIGVtcHR5Iik7CisJCSBnaXRfZGlyID0gcmVhZF9naXRmaWxlX2dlbnRs
-eShERUZBVUxUX0dJVF9ESVJfRU5WSVJPTk1FTlQpOworCX0KIAlpZiAoIWdpdF9kaXIpCiAJCWdp
-dF9kaXIgPSBERUZBVUxUX0dJVF9ESVJfRU5WSVJPTk1FTlQ7CiAJZ2l0X29iamVjdF9kaXIgPSBn
-ZXRlbnYoREJfRU5WSVJPTk1FTlQpOwpkaWZmIC0tZ2l0IGEvZ2l0LmMgYi9naXQuYwppbmRleCBk
-ZWJhNDlhLi4yMTI3MmQ4IDEwMDY0NAotLS0gYS9naXQuYworKysgYi9naXQuYwpAQCAtMjQyLDEx
-ICsyNDIsMTQgQEAgc3RhdGljIGludCBydW5fYnVpbHRpbihzdHJ1Y3QgY21kX3N0cnVjdCAqcCwg
-aW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2KQogCQkJaW50IG5vbmdpdF9vazsKIAkJCXNldHVw
-X2dpdF9kaXJlY3RvcnlfZ2VudGx5KCZub25naXRfb2spOwogCQl9Ci0JCWVsc2UgaWYgKHN0YXJ0
-dXBfaW5mby0+aGF2ZV9yZXBvc2l0b3J5KSB7Ci0JCQlpZiAocC0+b3B0aW9uICYgKFJVTl9TRVRV
-UF9HRU5UTFkgfCBSVU5fU0VUVVApKQotCQkJCTsgLyogZG9uZSBhbHJlYWR5ICovCi0JCQllbHNl
-Ci0JCQkJdW5zZXRfZ2l0X2RpcmVjdG9yeShzdGFydHVwX2luZm8tPnByZWZpeCk7CisJCWVsc2Ug
-aWYgKHN0YXJ0dXBfaW5mby0+aGF2ZV9ydW5fc2V0dXBfZ2l0ZGlyKSB7CisJCQlpZiAoc3RhcnR1
-cF9pbmZvLT5oYXZlX3JlcG9zaXRvcnkpIHsKKwkJCQlpZiAocC0+b3B0aW9uICYgKFJVTl9TRVRV
-UF9HRU5UTFkgfCBSVU5fU0VUVVApKQorCQkJCQk7IC8qIGRvbmUgYWxyZWFkeSAqLworCQkJCWVs
-c2UKKwkJCQkJdW5zZXRfZ2l0X2RpcmVjdG9yeShzdGFydHVwX2luZm8tPnByZWZpeCk7CisJCQl9
-CisJCQlzdGFydHVwX2luZm8tPmhhdmVfcnVuX3NldHVwX2dpdGRpciA9IDA7CiAJCX0KIAogCQlp
-ZiAodXNlX3BhZ2VyID09IC0xICYmIHAtPm9wdGlvbiAmIFJVTl9TRVRVUCkKQEAgLTI1Nyw2ICsy
-NjAsOSBAQCBzdGF0aWMgaW50IHJ1bl9idWlsdGluKHN0cnVjdCBjbWRfc3RydWN0ICpwLCBpbnQg
-YXJnYywgY29uc3QgY2hhciAqKmFyZ3YpCiAJCQl1c2VfcGFnZXIgPSAxOwogCQl9CiAJfQorCWVs
-c2UKKwkJLyogU3RvcCBnaXRfY29uZmlnKCkgZnJvbSBjb21wbGFpbmluZyB0aGF0IG5vIHJlcG9z
-aXRvcnkgZm91bmQuICovCisJCXN0YXJ0dXBfaW5mby0+aGF2ZV9ydW5fc2V0dXBfZ2l0ZGlyID0g
-MTsKIAljb21taXRfcGFnZXJfY2hvaWNlKCk7CiAKIAlpZiAoIXN0YXJ0dXBfaW5mby0+aGVscCAm
-JiBwLT5vcHRpb24gJiBORUVEX1dPUktfVFJFRSkKZGlmZiAtLWdpdCBhL3NldHVwLmMgYi9zZXR1
-cC5jCmluZGV4IDc5Mzg0ODEuLjNiYjNhOTIgMTAwNjQ0Ci0tLSBhL3NldHVwLmMKKysrIGIvc2V0
-dXAuYwpAQCAtMjM2LDcgKzIzNiwxNyBAQCB2b2lkIHNldHVwX3dvcmtfdHJlZSh2b2lkKQogCQln
-aXRfZGlyID0gbWFrZV9hYnNvbHV0ZV9wYXRoKGdpdF9kaXIpOwogCWlmICghd29ya190cmVlIHx8
-IGNoZGlyKHdvcmtfdHJlZSkpCiAJCWRpZSgiVGhpcyBvcGVyYXRpb24gbXVzdCBiZSBydW4gaW4g
-YSB3b3JrIHRyZWUiKTsKKworCS8qCisJICogaGF2ZV9ydW5fc2V0dXBfZ2l0ZGlyIGlzIHVuc2V0
-IGluIG9yZGVyIHRvIGF2b2lkIGRpZSgpaW5nCisJICogaW5zaWRlIHNldF9naXRfZW52KCkuIFdl
-IGRvbid0IGFjdHVhbGx5IGluaXRpYWxpemUKKwkgKiByZXBvIHR3aWNlLCB3ZSdyZSBqdXN0IHJl
-bGF0aXZlLWl6aW5nIGdpdGRpcgorCSAqLworCWlmIChzdGFydHVwX2luZm8pCisJCXN0YXJ0dXBf
-aW5mby0+aGF2ZV9ydW5fc2V0dXBfZ2l0ZGlyID0gMDsKIAlzZXRfZ2l0X2RpcihtYWtlX3JlbGF0
-aXZlX3BhdGgoZ2l0X2Rpciwgd29ya190cmVlKSk7CisJaWYgKHN0YXJ0dXBfaW5mbykKKwkJc3Rh
-cnR1cF9pbmZvLT5oYXZlX3J1bl9zZXR1cF9naXRkaXIgPSAxOwogCWluaXRpYWxpemVkID0gMTsK
-IH0KIApAQCAtMzM5LDYgKzM0OSw3IEBAIHZvaWQgdW5zZXRfZ2l0X2RpcmVjdG9yeShjb25zdCBj
-aGFyICpwcmVmaXgpCiAJCQl1bnNldF9naXRfZW52KCk7CiAJCXN0YXJ0dXBfaW5mby0+cHJlZml4
-ID0gTlVMTDsKIAkJc3RhcnR1cF9pbmZvLT5oYXZlX3JlcG9zaXRvcnkgPSAwOworCQlzdGFydHVw
-X2luZm8tPmhhdmVfcnVuX3NldHVwX2dpdGRpciA9IDA7CiAJfQogCiAJLyogSW5pdGlhbGl6ZWQg
-aW4gc2V0dXBfZ2l0X2RpcmVjdG9yeV9nZW50bHlfMSgpICovCkBAIC01MTMsNiArNTI0LDcgQEAg
-Y29uc3QgY2hhciAqc2V0dXBfZ2l0X2RpcmVjdG9yeV9nZW50bHkoaW50ICpub25naXRfb2spCiAJ
-cHJlZml4ID0gc2V0dXBfZ2l0X2RpcmVjdG9yeV9nZW50bHlfMShub25naXRfb2spOwogCWlmIChz
-dGFydHVwX2luZm8pIHsKIAkJc3RhcnR1cF9pbmZvLT5wcmVmaXggPSBwcmVmaXg7CisJCXN0YXJ0
-dXBfaW5mby0+aGF2ZV9ydW5fc2V0dXBfZ2l0ZGlyID0gMTsKIAkJc3RhcnR1cF9pbmZvLT5oYXZl
-X3JlcG9zaXRvcnkgPSAhbm9uZ2l0X29rIHx8ICEqbm9uZ2l0X29rOwogCX0KIAlyZXR1cm4gcHJl
-Zml4OwpAQCAtNjA3LDYgKzYxOSw3IEBAIGNoYXIgKmVudGVyX3JlcG8oY2hhciAqcGF0aCwgaW50
-IHN0cmljdCkKIAkJc2V0X2dpdF9kaXIoIi4iKTsKIAkJaWYgKHN0YXJ0dXBfaW5mbykgewogCQkJ
-c3RhcnR1cF9pbmZvLT5wcmVmaXggPSBOVUxMOworCQkJc3RhcnR1cF9pbmZvLT5oYXZlX3J1bl9z
-ZXR1cF9naXRkaXIgPSAxOwogCQkJc3RhcnR1cF9pbmZvLT5oYXZlX3JlcG9zaXRvcnkgPSAxOwog
-CQl9CiAJCXJldHVybiBwYXRoOwotLSAKMS43LjAucmMxLjU0MS5nMmRhODIuZGlydHkKCg==
---001485326135307ad304836d901e
-Content-Type: application/octet-stream; 
-	name="0004-t0001-Add-test-cases-for-git-init-with-aliases.patch"
-Content-Disposition: attachment; 
-	filename="0004-t0001-Add-test-cases-for-git-init-with-aliases.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_g7m71fxl3
+* sp/maint-http-backend-die-triggers-die-recursively (2010-03-22) 1 com=
+mit
+  (merged to 'next' on 2010-03-28 at bf02879)
+ + http-backend: Don't infinite loop during die()
 
-RnJvbSA3YzUwZWViYmVmYzFhMWFmZTY2NWEwMzE1YjE0MTZiMzVjMjAyMWUwIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBKb25hdGhhbiBOaWVkZXIgPGpybmllZGVyQGdtYWlsLmNvbT4K
-RGF0ZTogU3VuLCA0IEFwciAyMDEwIDE4OjE2OjUzICswMjAwClN1YmplY3Q6IFtQQVRDSF0gdDAw
-MDE6IEFkZCB0ZXN0IGNhc2VzIGZvciAiZ2l0IGluaXQiIHdpdGggYWxpYXNlcwpNSU1FLVZlcnNp
-b246IDEuMApDb250ZW50LVR5cGU6IHRleHQvcGxhaW47IGNoYXJzZXQ9VVRGLTgKQ29udGVudC1U
-cmFuc2Zlci1FbmNvZGluZzogOGJpdAoKClNpZ25lZC1vZmYtYnk6IEpvbmF0aGFuIE5pZWRlciA8
-anJuaWVkZXJAZ21haWwuY29tPgpTaWduZWQtb2ZmLWJ5OiBOZ3V54buFbiBUaMOhaSBOZ+G7jWMg
-RHV5IDxwY2xvdWRzQGdtYWlsLmNvbT4KLS0tCiB0L3QwMDAxLWluaXQuc2ggfCAgIDUyICsrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysKIDEgZmlsZXMg
-Y2hhbmdlZCwgNTIgaW5zZXJ0aW9ucygrKSwgMCBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS90
-L3QwMDAxLWluaXQuc2ggYi90L3QwMDAxLWluaXQuc2gKaW5kZXggNTM4NjUwNC4uMjQ1YzAxYSAx
-MDA3NTUKLS0tIGEvdC90MDAwMS1pbml0LnNoCisrKyBiL3QvdDAwMDEtaW5pdC5zaApAQCAtMzMs
-NiArMzMsNTggQEAgdGVzdF9leHBlY3Rfc3VjY2VzcyAncGxhaW4nICcKIAljaGVja19jb25maWcg
-cGxhaW4vLmdpdCBmYWxzZSB1bnNldAogJwogCit0ZXN0X2V4cGVjdF9zdWNjZXNzICdwbGFpbiBu
-ZXN0ZWQgaW4gYmFyZScgJworCSgKKwkJdW5zZXQgR0lUX0RJUiBHSVRfV09SS19UUkVFICYmCisJ
-CWdpdCBpbml0IC0tYmFyZSBiYXJlLWFuY2VzdG9yLmdpdCAmJgorCQljZCBiYXJlLWFuY2VzdG9y
-LmdpdCAmJgorCQlta2RpciBwbGFpbi1uZXN0ZWQgJiYKKwkJY2QgcGxhaW4tbmVzdGVkICYmCisJ
-CWdpdCBpbml0CisJKSAmJgorCWNoZWNrX2NvbmZpZyBiYXJlLWFuY2VzdG9yLmdpdC9wbGFpbi1u
-ZXN0ZWQvLmdpdCBmYWxzZSB1bnNldAorJworCit0ZXN0X2V4cGVjdF9zdWNjZXNzICdwbGFpbiB0
-aHJvdWdoIGFsaWFzZWQgY29tbWFuZCcgJworCSgKKwkJdW5zZXQgR0lUX0RJUiBHSVRfV09SS19U
-UkVFIEdJVF9DT05GSUdfTk9HTE9CQUwgJiYKKwkJSE9NRT0kKHB3ZCkvYWxpYXMtY29uZmlnICYm
-CisJCWV4cG9ydCBIT01FICYmCisJCW1rZGlyIGFsaWFzLWNvbmZpZyAmJgorCQllY2hvICJbYWxp
-YXNdIGFsaWFzZWRpbml0ID0gaW5pdCIgPmFsaWFzLWNvbmZpZy8uZ2l0Y29uZmlnICYmCisJCW1r
-ZGlyIHBsYWluLWFsaWFzZWQgJiYKKwkJY2QgcGxhaW4tYWxpYXNlZCAmJgorCQlnaXQgYWxpYXNl
-ZGluaXQKKwkpICYmCisJY2hlY2tfY29uZmlnIHBsYWluLWFsaWFzZWQvLmdpdCBmYWxzZSB1bnNl
-dAorJworCit0ZXN0X2V4cGVjdF9zdWNjZXNzICdwbGFpbiBuZXN0ZWQgdGhyb3VnaCBhbGlhc2Vk
-IGNvbW1hbmQnICcKKwkoCisJCXVuc2V0IEdJVF9ESVIgR0lUX1dPUktfVFJFRSAmJgorCQlnaXQg
-aW5pdCBwbGFpbi1hbmNlc3Rvci1hbGlhc2VkICYmCisJCWNkIHBsYWluLWFuY2VzdG9yLWFsaWFz
-ZWQgJiYKKwkJZWNobyAiW2FsaWFzXSBhbGlhc2VkaW5pdCA9IGluaXQiID4+LmdpdC9jb25maWcg
-JiYKKwkJbWtkaXIgcGxhaW4tbmVzdGVkICYmCisJCWNkIHBsYWluLW5lc3RlZCAmJgorCQlnaXQg
-YWxpYXNlZGluaXQKKwkpICYmCisJY2hlY2tfY29uZmlnIHBsYWluLWFuY2VzdG9yLWFsaWFzZWQv
-cGxhaW4tbmVzdGVkLy5naXQgZmFsc2UgdW5zZXQKKycKKwordGVzdF9leHBlY3Rfc3VjY2VzcyAn
-cGxhaW4gbmVzdGVkIGluIGJhcmUgdGhyb3VnaCBhbGlhc2VkIGNvbW1hbmQnICcKKwkoCisJCXVu
-c2V0IEdJVF9ESVIgR0lUX1dPUktfVFJFRSAmJgorCQlnaXQgaW5pdCAtLWJhcmUgYmFyZS1hbmNl
-c3Rvci1hbGlhc2VkLmdpdCAmJgorCQljZCBiYXJlLWFuY2VzdG9yLWFsaWFzZWQuZ2l0ICYmCisJ
-CWVjaG8gIlthbGlhc10gYWxpYXNlZGluaXQgPSBpbml0IiA+PmNvbmZpZyAmJgorCQlta2RpciBw
-bGFpbi1uZXN0ZWQgJiYKKwkJY2QgcGxhaW4tbmVzdGVkICYmCisJCWdpdCBhbGlhc2VkaW5pdAor
-CSkgJiYKKwljaGVja19jb25maWcgYmFyZS1hbmNlc3Rvci1hbGlhc2VkLmdpdC9wbGFpbi1uZXN0
-ZWQvLmdpdCBmYWxzZSB1bnNldAorJworCiB0ZXN0X2V4cGVjdF9zdWNjZXNzICdwbGFpbiB3aXRo
-IEdJVF9XT1JLX1RSRUUnICcKIAlpZiAoCiAJCXVuc2V0IEdJVF9ESVIKLS0gCjEuNy4wLnJjMS41
-NDEuZzJkYTgyLmRpcnR5Cgo=
---001485326135307ad304836d901e--
+* bc/t5505-fix (2010-03-19) 3 commits
+  (merged to 'next' on 2010-03-28 at 1b097af)
+ + t/t5505-remote.sh: escape * to prevent interpretation by shell as gl=
+ob
+ + t5505: add missing &&
+ + t5505: remove unnecessary subshell invocations
+
+* bw/template-tool-buildconfig (2010-03-20) 2 commits
+  (merged to 'next' on 2010-03-28 at 1e6fd8d)
+ + Modernize git calling conventions in hook templates
+ + Make templates honour SHELL_PATH and PERL_PATH
+
+* mb/rebase-i-no-ff (2010-03-24) 1 commit
+  (merged to 'next' on 2010-03-28 at b2c54cb)
+ + Teach rebase the --no-ff option.
+
+* jn/merge-diff3-label (2010-03-20) 14 commits
+  (merged to 'next' on 2010-03-20 at 26f1805)
+ + merge-recursive: add a label for ancestor
+ + cherry-pick, revert: add a label for ancestor
+ + revert: clarify label on conflict hunks
+ + compat: add mempcpy()
+ + checkout -m --conflict=3Ddiff3: add a label for ancestor
+ + merge_trees(): add ancestor label parameter for diff3-style output
+ + merge_file(): add comment explaining behavior wrt conflict style
+ + checkout --conflict=3Ddiff3: add a label for ancestor
+ + ll_merge(): add ancestor label parameter for diff3-style output
+ + merge-file --diff3: add a label for ancestor
+ + xdl_merge(): move file1 and file2 labels to xmparam structure
+ + xdl_merge(): add optional ancestor label to diff3-style output
+ + tests: document cherry-pick behavior in face of conflicts
+ + tests: document format of conflicts from checkout -m
+ (this branch is used by cc/revert-strategy.)
+
+* do/rebase-i-arbitrary (2010-03-14) 1 commit
+  (merged to 'next' on 2010-03-28 at 5ba9970)
+ + rebase--interactive: don't require what's rebased to be a branch
+
+* ja/send-email-ehlo (2010-03-14) 3 commits
+  (merged to 'next' on 2010-03-28 at 00964a8)
+ + git-send-email.perl - try to give real name of the calling host to H=
+ELO/EHLO
+ + git-send-email.perl: add option --smtp-debug
+ + git-send-email.perl: improve error message in send_message()
+
+* ak/everyday-git (2009-10-21) 1 commit
+  (merged to 'next' on 2010-03-28 at ae67548)
+ + everyday: fsck and gc are not everyday operations
+
+* bc/acl-test (2010-03-15) 5 commits
+  (merged to 'next' on 2010-03-28 at b40fa09)
+ + t/t1304: make a second colon optional in the mask ACL check
+ + t/t1304: set the ACL effective rights mask
+ + t/t1304: use 'test -r' to test readability rather than looking at mo=
+de bits
+ + t/t1304: set the Default ACL base entries
+ + t/t1304: avoid -d option to setfacl
+
+* bc/maint-daemon-sans-ss-family (2010-03-15) 1 commit
+  (merged to 'next' on 2010-03-28 at 305ad0b)
+ + daemon.c: avoid accessing ss_family member of struct sockaddr_storag=
+e
+
+* ef/cherry-abbrev (2010-03-20) 2 commits
+  (merged to 'next' on 2010-03-28 at eb3825c)
+ + ls: remove redundant logic
+ + cherry: support --abbrev option
+
+* gh/maint-stash-show-error-message (2010-03-16) 1 commit
+  (merged to 'next' on 2010-03-28 at 61a5643)
+ + Improve error messages from 'git stash show'
+
+* rs/threaded-grep-context (2010-03-15) 1 commit
+  (merged to 'next' on 2010-03-28 at 1934af1)
+ + grep: enable threading for context line printing
+
+--------------------------------------------------
+[New Topics]
+
+* mh/status-optionally-refresh (2010-04-03) 3 commits
+ - t7508: add a test for "git status" in a read-only repository
+ - git status: refresh the index if possible
+ - t7508: add test for "git status" refreshing the index
+
+* jn/mailinfo-scissors (2010-04-03) 1 commit
+ - Teach mailinfo %< as an alternative scissors mark
+
+* tr/word-diff (2010-04-04) 2 commits
+ - gitk: add the equivalent of diff --color-words
+ - diff: add --word-diff option that generalizes --color-words
+
+The tip "gitk" one I'd prefer to wait until we get Ack from Paulus.
+
+--------------------------------------------------
+[Stalled]
+
+* js/rebase-origin-x (2010-02-05) 1 commit
+ - [RFC w/o test and incomplete] rebase: add -x option to record origin=
+al commit name
+
+I retract my objection against the idea of -x; needs polishing before
+moving forward.
+
+* js/grep-open (2010-03-26) 2 commits
+ - grep -O: allow optional argument specifying the pager (or editor)
+ - grep: Add the option '--open-files-in-pager'
+
+Probably needs to support --no-index mode as well.
+
+* sd/log-decorate (2010-02-17) 3 commits
+  (merged to 'next' on 2010-03-08 at 58a6fba)
+ + log.decorate: usability fixes
+ + Add `log.decorate' configuration variable.
+ + git_config_maybe_bool()
+
+Needs squelching the configuration setting when "--pretty=3Draw" is giv=
+en,
+at least, or possibly when any "--pretty" is explicitly given.
+
+* np/malloc-threading (2010-03-24) 1 commit
+ - Make xmalloc and xrealloc thread-safe
+
+Still has locking issues?
+
+* js/async-thread (2010-03-09) 7 commits
+ - Enable threaded async procedures whenever pthreads is available
+  (merged to 'next' on 2010-03-20 at 9939243)
+ + Dying in an async procedure should only exit the thread, not the pro=
+cess.
+ + Reimplement async procedures using pthreads
+ + Windows: more pthreads functions
+ + Fix signature of fcntl() compatibility dummy
+ + Make report() from usage.c public as vreportf() and use it.
+ + Modernize t5530-upload-pack-error.
+
+Waiting for resolution of locking issues in malloc-threading.
+
+--------------------------------------------------
+[Cooking]
+
+* sg/bash-completion (2010-02-23) 4 commits
+  (merged to 'next' on 2010-03-08 at bc59860)
+ + bash: completion for gitk aliases
+ + bash: support user-supplied completion scripts for aliases
+ + bash: support user-supplied completion scripts for user's git comman=
+ds
+ + bash: improve aliased command recognition
+
+Nobody seems to care about "_git_frotz" that may potentially crash with
+whatever random things the end users is doing in their environment, and
+renaming them to "_git_complete_frotz" to avoid that.  So let's not wor=
+ry
+about that.
+
+* cw/ws-indent-with-tab (2010-04-03) 6 commits
+ - whitespace: tests for git-apply --whitespace=3Dfix with tab-in-inden=
+t
+ - whitespace: add tab-in-indent support for --whitespace=3Dfix
+ - whitespace: replumb ws_fix_copy to take a strbuf *dst instead of cha=
+r *dst
+ - whitespace: tests for git-diff --check with tab-in-indent error clas=
+s
+ - whitespace: add tab-in-indent error class
+ - whitespace: we cannot "catch all errors known to git" anymore
+
+Looked sensible.
+
+* ic/bash-completion-rpm (2010-03-26) 1 commit
+  (merged to 'next' on 2010-04-02 at 0358304)
+ + RPM spec: include bash completion support
+
+This is needed in 'master' by -rc1 at the latest.
+
+* mg/notes-reflog (2010-03-29) 2 commits
+ - refs.c: Write reflogs for notes just like for branch heads
+ - t3301-notes: Test the creation of reflog entries
+
+Implementation is trivially correct; I am unsure if "notes" tree wants
+reflog in the first place, though.  Please convince me and I'll move it
+to 'next' soon, aiming for -rc0 or -rc1 at the latest.
+
+* rr/remote-helper-doc (2010-03-28) 2 commits
+ - Documentation/remote-helpers: Fix some typos
+ - Documentation/remote-helpers: Rewrite description
+
+Although I lost track of this series with too rapid succession of
+updates, intermixed with some documentation updates in the related
+areas, my impression is that area experts haven't Acked them yet.
+
+* sr/remote-helper-export (2010-03-29) 7 commits
+ - remote-helpers: add tests for testgit helper
+ - remote-helpers: add testgit helper
+ - remote-helpers: add support for an export command
+ - remote-helpers: allow requesing the path to the .git directory
+ - fast-import: always create marks_file directories
+ - clone: also configure url for bare clones
+ - clone: pass the remote name to remote_get
+
+May merge to 'next', but I would prefer waiting til 1.7.2 to have
+this with a confidence than fast-tracking it.
+
+* cc/revert-strategy (2010-03-31) 5 commits
+ - revert: add "--strategy" option to choose merge strategy
+ - merge: make function try_merge_command non static
+ - merge: refactor code that calls "git merge-STRATEGY"
+ - revert: refactor merge recursive code into its own function
+ - revert: use strbuf to refactor the code that writes the merge messag=
+e
+
+May merge to 'next' soon, but this is more about debugging and we are n=
+ot
+in a great hurry.
+
+* mr/gitweb-jsmin (2010-04-02) 6 commits
+ - gitweb: update INSTALL to use shorter make target
+ - gitweb: add documentation to INSTALL regarding gitweb.js
+ - instaweb: add minification awareness
+ - Gitweb: add autoconfigure support for minifiers
+ - Gitweb: add support for minifying gitweb.css
+ - Gitweb: add ignore and clean rules for minified files
+
+Soon in 'next', to iron out leftover issues if any.
+
+* sc/http-late-auth (2010-04-01) 1 commit
+  (merged to 'next' on 2010-04-02 at c991acf)
+ + Prompt for a username when an HTTP request 401s
+
+I would prefer waiting til 1.7.2 to have this with a confidence than
+fast-tracking it.
+
+* jk/cached-textconv (2010-04-01) 7 commits
+  (merged to 'next' on 2010-04-02 at a023e3c)
+ + diff: avoid useless filespec population
+ + diff: cache textconv output
+ + textconv: refactor calls to run_textconv
+ + introduce notes-cache interface
+ + make commit_tree a library function
+ + fix textconv leak in emit_rewrite_diff
+ + fix const-correctness of write_sha1_file
+
+I would prefer waiting til 1.7.2 to have this with a confidence than
+fast-tracking it.
+
+* da/maint-python-startup (2010-03-27) 1 commit
+  (merged to 'next' on 2010-04-01 at ca6897a)
+ + Makefile: Remove usage of deprecated Python "has_key" method
+
+Hopefully will merge to 'master' by -rc0.
+
+* jc/conflict-marker-size (2010-03-24) 1 commit
+  (merged to 'next' on 2010-04-01 at 164b1f4)
+ + diff --check: honor conflict-marker-size attribute
+
+Hopefully will merge to 'master' by -rc0.
+
+* ld/discovery-limit-to-fs (2010-04-04) 4 commits
+ - GIT_ONE_FILESYSTEM: flip the default to stop at filesystem boundarie=
+s
+ - Add support for GIT_ONE_FILESYSTEM
+ - truncate cwd string before printing error message
+ - config.c: remove static keyword from git_env_bool()
+
+Linus made a good point of making this a default, and Erick Mattos
+confirmed that it won't be a problem even on Windows.
+
+The tip one is my attempt to do just that, but I have a feeling that
+it is introducing a double-negation.  ONE-FILESYSTEM that defaults to
+true but the user can flip it to false to trigger NOT-LIMITED-TO-ONE
+semantics.  Perhaps it should be renamed to GIT_DISCOVER_REPOSITORY_XDE=
+V
+or something that defaults to false.
+
+* sb/fmt-merge-msg (2010-03-24) 7 commits
+  (merged to 'next' on 2010-04-01 at 5fcbec5)
+ + fmt-merge-msg: hide summary option
+ + fmt-merge-msg: remove custom string_list implementation
+ + string-list: add unsorted_string_list_lookup()
+ + fmt-merge-msg: use pretty.c routines
+ + t6200: test fmt-merge-msg more
+ + t6200: modernize with test_tick
+ + fmt-merge-msg: be quiet if nothing to merge
+
+Hopefully will merge to 'master' by -rc0.
+
+* pc/remove-warn (2010-03-26) 4 commits
+  (merged to 'next' on 2010-04-02 at 52fc00d)
+ + Remove a redundant errno test in a usage of remove_path
+ + Introduce remove_or_warn function
+ + Implement the rmdir_or_warn function
+ + Generalise the unlink_or_warn function
+
+I cherry-picked only obviously sensible bits.
+
+* ef/maint-empty-commit-log (2010-03-21) 1 commit
+  (merged to 'next' on 2010-03-28 at aa103e5)
+ + rev-list: fix --pretty=3Doneline with empty message
+
+Hopefully will merge to 'master' by -rc0.
+
+* em/checkout-orphan (2010-03-21) 1 commit
+  (merged to 'next' on 2010-03-28 at 86b6a4f)
+ + git checkout: create unparented branch by --orphan
+
+Perhaps needs a bit of documentation updates, describing the "going ope=
+n
+source" scenario.
+
+* ar/config-from-command-line (2010-03-26) 2 commits
+ - Use strbufs instead of open-coded string manipulation
+ - Allow passing of configuration parameters in the command line
+
+May merge to 'next', but I would prefer waiting til 1.7.2 to have
+this with a confidence than fast-tracking it.
+
+* nd/setup (2010-03-25) 43 commits
+ - builtins: do not commit pager choice early
+ - builtins: reset startup_info->have_run_setup_gitdir when unsetting u=
+p repository
+ - builtins: setup repository before print unknown command error
+ - Guard unallowed access to repository when it's not set up
+ - alias: keep repository found while collecting aliases as long as pos=
+sible
+ - Allow to undo setup_git_directory_gently() gracefully (and fix alias=
+ code)
+ - builtins: check for startup_info->help, print and exit early
+ - builtins: utilize startup_info->help where possible
+ - run_builtin(): save "-h" detection result for later use
+ - config: do not read .git/config if there is no repository
+ - apply: do not check sha1 when repository has not been found
+ - Do not read .git/info/attributes if there is no repository
+ - Do not read .git/info/exclude if there is no repository
+ - git_config(): do not read .git/config if there is no repository
+ - init/clone: turn on startup->have_repository properly
+ - worktree setup: restore original state when things go wrong
+ - Use git_config_early() instead of git_config() during repo setup
+ - Add git_config_early()
+ - worktree setup: call set_git_dir explicitly
+ - rev-parse --git-dir: print relative gitdir correctly
+ - enter_repo(): initialize other variables as setup_git_directory_gent=
+ly() does
+ - Move enter_repo() to setup.c
+ - index-pack: use RUN_SETUP_GENTLY
+ - index-pack: trust the prefix returned by setup_git_directory_gently(=
+)
+ - worktree setup: calculate prefix even if no worktree is found
+ - merge-file: use RUN_SETUP_GENTLY
+ - var: use RUN_SETUP_GENTLY
+ - ls-remote: use RUN_SETUP_GENTLY
+ - help: use RUN_SETUP_GENTLY
+ - diff: use RUN_SETUP_GENTLY
+ - bundle: use RUN_SETUP_GENTLY
+ - apply: use RUN_SETUP_GENTLY
+ - verify-pack: use RUN_SETUP_GENTLY
+ - check-ref-format: use RUN_SETUP_GENTLY
+ - mailinfo: use RUN_SETUP_GENTLY
+ - archive: use RUN_SETUP_GENTLY
+ - builtin: USE_PAGER should not be used without RUN_SETUP*
+ - grep: use RUN_SETUP_GENTLY
+ - shortlog: use RUN_SETUP_GENTLY
+ - hash-object: use RUN_SETUP_GENTLY
+ - config: use RUN_SETUP_GENTLY
+ - builtin: Support RUN_SETUP_GENTLY to set up repository early if foun=
+d
+ - builtin: introduce startup_info struct
+
+--------------------------------------------------
+[Dropped]
+
+* cw/test-lib-relicense (2010-02-22) 1 commit
+ . test-lib.sh: Add explicit license detail, with change from GPLv2 to =
+GPLv2+.
+
+I am hoping Carl or Michal Sojka can take the topic to completion witho=
+ut
+my keeping an eye on it.  Waiting for the one with full set of Acks.
+
+* hg/convert (2010-03-29) 5 commits
+ . convert: Added core.refilteronadd feature.
+ . convert: Inhibit contraction of foreign $Id$ during stats.
+ . convert: Use the enum constant SAFE_CRLF_FALSE.
+ . convert: Keep foreign $Id$ on checkout.
+ . convert: Safer handling of $Id$ contraction.
+
+The first two looked sensible but later one looked more like showing th=
+at
+it may not have been a good idea in the first place.
