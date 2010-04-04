@@ -1,86 +1,51 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 2/2] pack-protocol.txt: fix pkt-line lengths
-Date: Sun,  4 Apr 2010 21:12:17 +0800
-Message-ID: <1270386737-1424-2-git-send-email-rctay89@gmail.com>
-References: <1270386737-1424-1-git-send-email-rctay89@gmail.com>
-Cc: "Junio C Hamano" <gitster@pobox.com>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 04 15:12:36 2010
+From: "Vitaly R. Tskhovrebov" <tskhovrebov@vitalyk.ru>
+Subject: git-svn --set-tree question
+Date: Sun, 4 Apr 2010 17:27:23 +0400
+Message-ID: <71104242.20100404172723@vitalyk.ru>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 04 15:27:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyPcw-0004Nm-NM
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 15:12:35 +0200
+	id 1NyPrS-0000Ji-T1
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 15:27:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754122Ab0DDNMd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Apr 2010 09:12:33 -0400
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:61292 "EHLO
-	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754116Ab0DDNMa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Apr 2010 09:12:30 -0400
-Received: by mail-qy0-f179.google.com with SMTP id 9so224129qyk.1
-        for <git@vger.kernel.org>; Sun, 04 Apr 2010 06:12:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=jouFjTEKfSIGcfTQqDIdQj740ar+zkMfbQkZPoxB9OM=;
-        b=r9E4/AvHsfefT16J+7nCMam4wljY6P6/YcBFWOnkNQ6clZ8SmkvW0XvhNLVfNwKcgC
-         RfzVN2FvMX9q9IdbeT8O2fALavxBuPG/ORQtC6W1FGQXClNpoXJ3YNu4oTJU2p6zq5fW
-         9d806gchtlcR4+idw1rrS1Qu7PmSlGRSj0YbU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=vo7Hn0W0jXB1AG4Hq/M+p4NMRolLBw4uJ6fEf7/hH0i3Rmpy1HCmFSAqbKO5U9D4Pu
-         AGztmXrAHc+q3gzCjEuwtLeqoG/LAl2MYtVOQqNHCsi6Tk2bRvETbpwX7MpeVkr08mV5
-         LOQdgfZ5rLu6+My8gb/GfKFntBOGOApIDkYjk=
-Received: by 10.229.192.10 with SMTP id do10mr7506628qcb.48.1270386749519;
-        Sun, 04 Apr 2010 06:12:29 -0700 (PDT)
-Received: from localhost.localdomain (cm46.zeta153.maxonline.com.sg [116.87.153.46])
-        by mx.google.com with ESMTPS id w30sm3582239qce.16.2010.04.04.06.12.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 04 Apr 2010 06:12:28 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.20.gcb44ed
-In-Reply-To: <1270386737-1424-1-git-send-email-rctay89@gmail.com>
+	id S1754141Ab0DDN1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Apr 2010 09:27:30 -0400
+Received: from mail-ew0-f220.google.com ([209.85.219.220]:50569 "EHLO
+	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753255Ab0DDN13 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Apr 2010 09:27:29 -0400
+Received: by ewy20 with SMTP id 20so880630ewy.1
+        for <git@vger.kernel.org>; Sun, 04 Apr 2010 06:27:27 -0700 (PDT)
+Received: by 10.213.62.142 with SMTP id x14mr855664ebh.71.1270387647543;
+        Sun, 04 Apr 2010 06:27:27 -0700 (PDT)
+Received: from vetal-laptop (95-28-4-6.broadband.corbina.ru [95.28.4.6])
+        by mx.google.com with ESMTPS id 14sm5904794ewy.10.2010.04.04.06.27.25
+        (version=SSLv3 cipher=OTHER);
+        Sun, 04 Apr 2010 06:27:26 -0700 (PDT)
+X-Priority: 3 (Normal)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143925>
 
-Previously, the lengths were 4-bytes short. Fix it such that the lengths
-reflect the total length of the pkt-line, as per spec.
+Hello, guys.
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
----
- Documentation/technical/pack-protocol.txt |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+I have some unusual situation here.
 
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index f9468a1..369f91d 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -331,7 +331,7 @@ An incremental update (fetch) response might look like this:
- 
-    C: 0009done\n
- 
--   S: 003aACK 74730d410fcb6603ace96f1dc55ea6196122532d\n
-+   S: 0031ACK 74730d410fcb6603ace96f1dc55ea6196122532d\n
-    S: [PACKFILE]
- ----
- 
-@@ -488,7 +488,7 @@ An example client/server communication might look like this:
-    C: 0000
-    C: [PACKDATA]
- 
--   S: 000aunpack ok\n
--   S: 0014ok refs/heads/debug\n
--   S: 0026ng refs/heads/master non-fast-forward\n
-+   S: 000eunpack ok\n
-+   S: 0018ok refs/heads/debug\n
-+   S: 002ang refs/heads/master non-fast-forward\n
- ----
--- 
-1.7.0.20.gcb44ed
+We  need  to  move  git  repo  to  svn with commit history. After some
+research I found a way with creating an empty svn, and then making
+git svn --set-tree [git_revision_number_here]
+
+Commit  history  imports  well,  but  i  loose  commiters'  names  and
+comments. How to move them too?
+
+
+Thanks a lot, Vitaly.
