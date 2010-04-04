@@ -1,51 +1,81 @@
-From: "Vitaly R. Tskhovrebov" <tskhovrebov@vitalyk.ru>
-Subject: git-svn --set-tree question
-Date: Sun, 4 Apr 2010 17:27:23 +0400
-Message-ID: <71104242.20100404172723@vitalyk.ru>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH 0/2] gitk --color-words
+Date: Sun, 4 Apr 2010 15:46:37 +0200
+Message-ID: <cover.1270388195.git.trast@student.ethz.ch>
+References: <cover.1269996525.git.trast@student.ethz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1251
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 04 15:27:35 2010
+Content-Type: text/plain
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eelis van der Weegen <eelis@eelis.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Paul Mackerras <paulus@samba.org>, Miles Bader <miles@gnu.org>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 04 15:47:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyPrS-0000Ji-T1
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 15:27:35 +0200
+	id 1NyQAg-0000pk-Ud
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 15:47:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754141Ab0DDN1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Apr 2010 09:27:30 -0400
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:50569 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753255Ab0DDN13 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Apr 2010 09:27:29 -0400
-Received: by ewy20 with SMTP id 20so880630ewy.1
-        for <git@vger.kernel.org>; Sun, 04 Apr 2010 06:27:27 -0700 (PDT)
-Received: by 10.213.62.142 with SMTP id x14mr855664ebh.71.1270387647543;
-        Sun, 04 Apr 2010 06:27:27 -0700 (PDT)
-Received: from vetal-laptop (95-28-4-6.broadband.corbina.ru [95.28.4.6])
-        by mx.google.com with ESMTPS id 14sm5904794ewy.10.2010.04.04.06.27.25
-        (version=SSLv3 cipher=OTHER);
-        Sun, 04 Apr 2010 06:27:26 -0700 (PDT)
-X-Priority: 3 (Normal)
+	id S1754206Ab0DDNrH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Apr 2010 09:47:07 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:55444 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752271Ab0DDNrF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Apr 2010 09:47:05 -0400
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sun, 4 Apr
+ 2010 15:47:01 +0200
+Received: from localhost.localdomain (217.162.250.31) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Sun, 4 Apr
+ 2010 15:46:40 +0200
+X-Mailer: git-send-email 1.7.0.3.521.ga1e9e
+In-Reply-To: <cover.1269996525.git.trast@student.ethz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143926>
 
-Hello, guys.
+Miles Bader wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> > How readable can you make this for human consumption while still keeping
+> > it machine readable?  The answer could be it already is human readble.
+> >
+> > Two reasons I ask the above question are that I find the feature quite
+> > interesting, and would want to see if it can be also fed to humans, and
+> > that the combination of this new option and the existing --color-words is
+> > misnamed.
+> 
+> There's the format used by the "wdiff" program, which is more like
+> traditional diff output in that it doesn't use color, but is human
+> friendly, and also seems to be somewhat machine-parseable:
+> 
+>    $ echo 'This is a test' > /tmp/a
+>    $ echo 'This is funky test' > /tmp/b
+>    $ wdiff /tmp/a /tmp/b
+>    This is [-a-] {+funky+} test
+> 
+> [I say "somewhat" because wdiff itself doesn't appear to escape potentially
+> ambiguous content, e.g., if there's actually a "{+" in the file....]
 
-I have some unusual situation here.
+Junio C Hamano wrote:
+> If you call this --word-diff, then it would become more clear that
+> --color-words perhaps should have been called --word-diff=color or
+> something.
 
-We  need  to  move  git  repo  to  svn with commit history. After some
-research I found a way with creating an empty svn, and then making
-git svn --set-tree [git_revision_number_here]
+Excellent ideas!  I don't have anything to add ;-)
 
-Commit  history  imports  well,  but  i  loose  commiters'  names  and
-comments. How to move them too?
+This makes [1/2] a rather new patch though, I moved the whole
+prefix/suffix handing further out to accommodate different styles.
+
+There's a little change in [2/2] apart from the obvious option
+renaming, too: it interprets --color-words and --word-diff as an
+initial setting for the checkbox.
 
 
-Thanks a lot, Vitaly.
+Thomas Rast (2):
+  diff: add --word-diff option that generalizes --color-words
+  gitk: add the equivalent of diff --color-words
