@@ -1,102 +1,82 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: git gc error - cannot lock ref 'RENAMED-REF..1'
-Date: Sat, 3 Apr 2010 23:52:35 -0400
-Message-ID: <v2i76c5b8581004032052q950584e1y603319ec6f341542@mail.gmail.com>
-References: <j2k76c5b8581004011037rb81d80cdu1a4713cde31d4b56@mail.gmail.com>
-	 <g2x76c5b8581004011908r35cbaf3au545b7f11bd6db8fc@mail.gmail.com>
-	 <u2s76c5b8581004022038rf8aa0017l5dea55689c738fd9@mail.gmail.com>
-	 <20100403042211.GA22150@coredump.intra.peff.net>
+From: Mike Galbraith <efault@gmx.de>
+Subject: Re: 'git gc --aggressive' effectively unusable
+Date: Sun, 04 Apr 2010 06:27:47 +0200
+Message-ID: <1270355267.6307.43.camel@marge.simson.net>
+References: <201004030005.35737.elendil@planet.nl>
+	 <p2gb4087cc51004031433xc57e52bbq733d1d3c5f37f238@mail.gmail.com>
+	 <201004040123.06877.elendil@planet.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 04 05:52:57 2010
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
+To: Frans Pop <elendil@planet.nl>
+X-From: git-owner@vger.kernel.org Sun Apr 04 06:28:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyGtI-0001Ru-8y
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 05:52:52 +0200
+	id 1NyHRO-0001b8-BD
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 06:28:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752008Ab0DDDwh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Apr 2010 23:52:37 -0400
-Received: from mail-iw0-f197.google.com ([209.85.223.197]:39393 "EHLO
-	mail-iw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751942Ab0DDDwf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Apr 2010 23:52:35 -0400
-Received: by iwn35 with SMTP id 35so634479iwn.21
-        for <git@vger.kernel.org>; Sat, 03 Apr 2010 20:52:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=cUdWMbhD6ZgqFPhxbOLpOR79KMPjyZHqROYO32aXSUg=;
-        b=XSBVvjSySoR5a9T/y7I3Da9KswavdOqNbwQXZlYdhkx95ySzmwFx9IlY//F9Ctx4d+
-         YqlunOF/IDl30cIF/PUKpsAvedeoyVa3oK6Mc0JZ+kmvCF+1F5bD0SYQju+UxJQuvTVm
-         6Npxx6JnbFiL/DsrMeunVq1iakpgX5ns5yjM8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=Wk/gYLhPy0DJV+Ub9P4HWw3yqt0BOm91gvxeon4eVibDOs2MsW2PnVr8tZ92vOOfOI
-         vwLnrvQ14VmeTwzjg0HWjazcExnBIZE74YpO9CZiqrkKQdmw1sPGoJk28befYDTevgLD
-         /bM0ccknGNxzrVfs4eyiqOGhOFfIAezThFTRE=
-Received: by 10.231.155.143 with HTTP; Sat, 3 Apr 2010 20:52:35 -0700 (PDT)
-In-Reply-To: <20100403042211.GA22150@coredump.intra.peff.net>
-Received: by 10.231.146.66 with SMTP id g2mr1831913ibv.60.1270353155069; Sat, 
-	03 Apr 2010 20:52:35 -0700 (PDT)
+	id S1750810Ab0DDE1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Apr 2010 00:27:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55557 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750791Ab0DDE1v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Apr 2010 00:27:51 -0400
+Received: (qmail invoked by alias); 04 Apr 2010 04:27:48 -0000
+Received: from p4FE1A6AC.dip0.t-ipconnect.de (EHLO [192.168.178.27]) [79.225.166.172]
+  by mail.gmx.net (mp006) with SMTP; 04 Apr 2010 06:27:48 +0200
+X-Authenticated: #14349625
+X-Provags-ID: V01U2FsdGVkX1/9vTAn8yD9wbo8R/rsKBan8da2cMeb9RLhaGb3Nf
+	yDNT9n/ZcOl9oG
+In-Reply-To: <201004040123.06877.elendil@planet.nl>
+X-Mailer: Evolution 2.24.1.1 
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53000000000000003
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143914>
 
-On Sat, Apr 3, 2010 at 12:22 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Apr 02, 2010 at 11:38:03PM -0400, Eugene Sajine wrote:
->
->> On Thu, Apr 1, 2010 at 10:08 PM, Eugene Sajine <euguess@gmail.com> w=
-rote:
->> > Hi,
->> >
->> > I was running git gc weekly on my machine and today for some reaso=
-n it
->> > failed on one of my repos with an error saying
->> >
->> > Error: cannot lock ref =E2=80=98RENAMED-REF..1=E2=80=99
->> > Error: failed to run ref-log
->> >
->> > The problem is I have no idea what it is talking about=E2=80=A6 =E2=
-=80=9Cgit show-ref=E2=80=9D
->> > doesn=E2=80=99t show anything even close to this name. Fools day j=
-oke?;)
->> > Any advice?
->
-> If you look in the .git directory, is there a file named RENAMED-REF.=
-=2E1?
-> I have no idea how you would create such a ref, nor why it would fail=
- to
-> lock (perhaps because of the funny name?), but removing it should
-> probably clear up your problem at least.
->
-> The name "RENAMED-REF" is only used by git during ref renames, and th=
-ose
-> only happen when renaming branches (via "git branch -m") or remotes (=
-via
-> "git remote rename"). So presumably the source of the problem is rela=
-ted
-> to one of those operations.
->
-> -Peff
->
+On Sun, 2010-04-04 at 01:23 +0200, Frans Pop wrote:
+> On Saturday 03 April 2010, Michael Witten wrote:
+> > On Fri, Apr 2, 2010 at 16:05, Frans Pop <elendil@planet.nl> wrote:
+> > > I haven't had the patience to let it finish
+> >
+> > There's your problem.
+> 
+> Yes, I had seen that. But there's a difference between taking much more 
+> time and slowing down to such an extend that it never finishes.
+> 
+> I've tried it today on my linux-2.6 repo as well and the same thing 
+> happened. At first the progress is not fast but reasonable. When it gets 
+> to about 45% percent it starts slowing down a lot: from ~1500 objects per 
+> update of the counters to ~300 objects per update. And who knows what the 
+> progress is going to be when it reaches 70% or 90%: 10 per update?
+> 
+> With a total of over 2 milion objects in the repository such a low speed is 
+> simply not going to work, ever. So I maintain that it is effectively 
+> unusable.
 
-Thanks Jeff,
+As a data point, when I do gc, I routinely use --aggressive.  It takes a
+while here, but not forever.  (I'm a tad short of 2 million objects)
 
-i will take a look if i will be able to find this ref. The problem
-though is that i don't remeber doing any renaming of branches or
-remote in this repo. Probably somebody did and pushed it to the
-mainline where i got it from by pull... I'll tyr to check this out.
+Repo is mainline + next + tip + stable >= 2.6.22 + local branches.
 
-Thanks,
-Eugene
+git@marge:..git/linux-2.6> time git gc --aggressive
+Counting objects: 1909894, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (1889774/1889774), done.
+Writing objects: 100% (1909894/1909894), done.
+Total 1909894 (delta 1674098), reused 0 (delta 0)
+
+real    22m24.943s
+user    55m33.756s
+sys     0m8.149s
+
+git is 1.7.0.3
+
+	-Mike
