@@ -1,80 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: Git-Automerge
-Date: Sun, 04 Apr 2010 18:53:33 +0200
-Message-ID: <vpqr5mv40s2.fsf@bauges.imag.fr>
+Date: Sun, 4 Apr 2010 22:30:15 +0530
+Message-ID: <z2sf3271551004041000yaba616fbu20701cd505c5dbf7@mail.gmail.com>
 References: <w2j1f05046e1004040947k3b812063ndbc2f8da3496effb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Nico =?iso-8859-1?Q?Sch=FCmann?= <nico.schuemann@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 04 18:57:06 2010
+To: =?ISO-8859-1?Q?Nico_Sch=FCmann?= <nico.schuemann@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 04 19:00:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyT8E-0000eQ-3N
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 18:57:06 +0200
+	id 1NyTBj-0005jC-Bl
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 19:00:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751115Ab0DDQ4s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Apr 2010 12:56:48 -0400
-Received: from imag.imag.fr ([129.88.30.1]:45186 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750721Ab0DDQ4q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Apr 2010 12:56:46 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o34GrYcs023382
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 4 Apr 2010 18:53:34 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1NyT4o-0004Vw-0Z; Sun, 04 Apr 2010 18:53:34 +0200
-In-Reply-To: <w2j1f05046e1004040947k3b812063ndbc2f8da3496effb@mail.gmail.com> ("Nico
- =?iso-8859-1?Q?Sch=FCmann=22's?= message of "Sun\, 4 Apr 2010 18\:47\:14
- +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 04 Apr 2010 18:53:34 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1751961Ab0DDRAi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Apr 2010 13:00:38 -0400
+Received: from mail-yw0-f172.google.com ([209.85.211.172]:57232 "EHLO
+	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751769Ab0DDRAh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Apr 2010 13:00:37 -0400
+Received: by ywh2 with SMTP id 2so2131233ywh.33
+        for <git@vger.kernel.org>; Sun, 04 Apr 2010 10:00:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=RPO3TwplLqjVXiWOm/5F1YcnlazpPF8nVTq9srQ/kiI=;
+        b=N+z3uK08HPuTMOg0TRyDQTDKJMXk39EinY+SsQYQwPwLtXZkdKvHWj4pwOCyEdrnJO
+         H7dhZtsuRS0zp41Xm6eUG9jLnC5eu+UqNDfaaHyvruzmOwFd0pt2KdJCPpb0kgxW6PWx
+         KYF7XURql24yfHv54Gk0N0NMmWyGaKYYpZTeo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=m/ugIDjs5/3KiynV1ectQu3Y+4tgyUeZeD6JJfunZXaqCNOH0ALa+eGujAHF2xMB7q
+         I3jI6lGBOebbinsfLrroe96gnjTtXsckVt2dFcylbkh+aVliEZShvFrVgNPed8QKZLgr
+         edlxZ+cppUbbVemXohN2OBvNKnesT2eX/SRI0=
+Received: by 10.90.69.14 with HTTP; Sun, 4 Apr 2010 10:00:15 -0700 (PDT)
+In-Reply-To: <w2j1f05046e1004040947k3b812063ndbc2f8da3496effb@mail.gmail.com>
+Received: by 10.91.129.4 with SMTP id g4mr662172agn.11.1270400436155; Sun, 04 
+	Apr 2010 10:00:36 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143933>
 
-Nico Sch=FCmann <nico.schuemann@googlemail.com> writes:
+Hi,
 
+On Sun, Apr 4, 2010 at 10:17 PM, Nico Sch=FCmann
+<nico.schuemann@googlemail.com> wrote:
+> $ git push
+>
 > But the changes do not appear on the master server. I have to type
 >
 > # git reset --hard=A0=A0=A0=A0=A0 or
 > # git checkout -f
 
-You pushed to a checked-out branch. You shouldn't do that, and recent
-Git prevent you from doing it.
+git-push only propagates history and updates refs. It doesn't touch
+files in the working tree. I suspect you're pushing to a non-bare
+remote. Please see --bare option in git-init (1) and this FAQ [0] on
+the Git Wiki for more.
 
-The reason Git cannot do the merge automatically is that a merge can
-go wrong, and may require a human interaction to resolve conflicts.
-Hence, "push" never does a merge, only "pull" (and obviously local
-merge) will do.
+[0] https://git.wiki.kernel.org/index.php/GitFaq#Why_won.27t_I_see_chan=
+ges_in_the_remote_repo_after_.22git_push.22.3F
 
-You can do
-
-client-machine$ git push URL-OF-SERVER HEAD:tmp
-
-to push your current HEAD to a branch named "tmp" on the server, and
-then
-
-server-machine$ git merge tmp
-
-to merge the changes in the current branch of the server. Another
-option is to have a bare repository reachable from both machines, and
-both machine would push/pull to this repository (just like you'd do
-with a centralized version control system).
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-- Ram
