@@ -1,73 +1,61 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Git-Automerge
-Date: Sun, 4 Apr 2010 22:30:15 +0530
-Message-ID: <z2sf3271551004041000yaba616fbu20701cd505c5dbf7@mail.gmail.com>
-References: <w2j1f05046e1004040947k3b812063ndbc2f8da3496effb@mail.gmail.com>
+From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+Subject: Re: Git: relicensing test-lib.sh from GPLv2 to GPLv2+
+Date: Sun, 4 Apr 2010 11:41:08 -0600
+Message-ID: <20100404174108.GA4707@comcast.net>
+References: <87r5oqe7mi.fsf@yoom.home.cworth.org>
+ <871vgmki4f.fsf@steelpick.localdomain>
+ <7vaav8hpfo.fsf@alter.siamese.dyndns.org>
+ <87tytdiqob.fsf@steelpick.localdomain>
+ <alpine.DEB.1.00.1002191138280.20986@pacific.mpi-cbg.de>
+ <873a0xhwxs.fsf@yoom.home.cworth.org>
+ <alpine.DEB.1.00.1002192204050.20986@pacific.mpi-cbg.de>
+ <87eikfhec1.fsf@yoom.home.cworth.org>
+ <alpine.DEB.1.00.1002202321430.20986@pacific.mpi-cbg.de>
+ <87pr2i8g8o.fsf@steelpick.2x.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Nico_Sch=FCmann?= <nico.schuemann@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 04 19:00:44 2010
+To: Michal Sojka <sojkam1@fel.cvut.cz>
+X-From: git-owner@vger.kernel.org Sun Apr 04 19:41:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyTBj-0005jC-Bl
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 19:00:43 +0200
+	id 1NyTpB-0005Qy-Sn
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 19:41:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751961Ab0DDRAi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Apr 2010 13:00:38 -0400
-Received: from mail-yw0-f172.google.com ([209.85.211.172]:57232 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751769Ab0DDRAh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Apr 2010 13:00:37 -0400
-Received: by ywh2 with SMTP id 2so2131233ywh.33
-        for <git@vger.kernel.org>; Sun, 04 Apr 2010 10:00:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RPO3TwplLqjVXiWOm/5F1YcnlazpPF8nVTq9srQ/kiI=;
-        b=N+z3uK08HPuTMOg0TRyDQTDKJMXk39EinY+SsQYQwPwLtXZkdKvHWj4pwOCyEdrnJO
-         H7dhZtsuRS0zp41Xm6eUG9jLnC5eu+UqNDfaaHyvruzmOwFd0pt2KdJCPpb0kgxW6PWx
-         KYF7XURql24yfHv54Gk0N0NMmWyGaKYYpZTeo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=m/ugIDjs5/3KiynV1ectQu3Y+4tgyUeZeD6JJfunZXaqCNOH0ALa+eGujAHF2xMB7q
-         I3jI6lGBOebbinsfLrroe96gnjTtXsckVt2dFcylbkh+aVliEZShvFrVgNPed8QKZLgr
-         edlxZ+cppUbbVemXohN2OBvNKnesT2eX/SRI0=
-Received: by 10.90.69.14 with HTTP; Sun, 4 Apr 2010 10:00:15 -0700 (PDT)
-In-Reply-To: <w2j1f05046e1004040947k3b812063ndbc2f8da3496effb@mail.gmail.com>
-Received: by 10.91.129.4 with SMTP id g4mr662172agn.11.1270400436155; Sun, 04 
-	Apr 2010 10:00:36 -0700 (PDT)
+	id S1752621Ab0DDRlN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Apr 2010 13:41:13 -0400
+Received: from qmta08.emeryville.ca.mail.comcast.net ([76.96.30.80]:56252 "EHLO
+	qmta08.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752052Ab0DDRlL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Apr 2010 13:41:11 -0400
+Received: from omta17.emeryville.ca.mail.comcast.net ([76.96.30.73])
+	by qmta08.emeryville.ca.mail.comcast.net with comcast
+	id 1Vdb1e0051afHeLA8VhBMC; Sun, 04 Apr 2010 17:41:11 +0000
+Received: from mmogilvi.homeip.net ([98.245.128.35])
+	by omta17.emeryville.ca.mail.comcast.net with comcast
+	id 1VhA1e00C0lxfSS8dVhAjr; Sun, 04 Apr 2010 17:41:11 +0000
+Received: by mmogilvi.homeip.net (Postfix, from userid 501)
+	id BD9591E9625D; Sun,  4 Apr 2010 11:41:08 -0600 (MDT)
+Content-Disposition: inline
+In-Reply-To: <87pr2i8g8o.fsf@steelpick.2x.cz>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143934>
 
-Hi,
+On Fri, Apr 02, 2010 at 09:29:11AM +0200, Michal Sojka wrote:
+> Please respond to this email with one of the following:
+> 
+>  YES, I agree to relicense all my contributions to test-lib.sh to GPLv2+
+>  with the addition of the "or any later version" clause.
+> 
+>  NO, I would rather not, please send me more email to convince me.
 
-On Sun, Apr 4, 2010 at 10:17 PM, Nico Sch=FCmann
-<nico.schuemann@googlemail.com> wrote:
-> $ git push
->
-> But the changes do not appear on the master server. I have to type
->
-> # git reset --hard=A0=A0=A0=A0=A0 or
-> # git checkout -f
+Yes, the relicensing is fine with me.
 
-git-push only propagates history and updates refs. It doesn't touch
-files in the working tree. I suspect you're pushing to a non-bare
-remote. Please see --bare option in git-init (1) and this FAQ [0] on
-the Git Wiki for more.
-
-[0] https://git.wiki.kernel.org/index.php/GitFaq#Why_won.27t_I_see_chan=
-ges_in_the_remote_repo_after_.22git_push.22.3F
-
--- Ram
+             - Matthew Ogilvie
