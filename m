@@ -1,66 +1,109 @@
-From: hoijui <hoijui.quaero@gmail.com>
-Subject: git-gui bug: multiple files selection using [Ctrl]
-Date: Sun, 4 Apr 2010 20:02:16 +0200
-Message-ID: <h2jf27d62f81004041102med1633b9h1d149dc52b598f8b@mail.gmail.com>
-References: <w2of27d62f81004041057h59d440bare6a91a57b0788224@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Extremely slow progress during 'git reflog expire --all'
+Date: Sun, 04 Apr 2010 11:22:18 -0700
+Message-ID: <7vy6h36pt1.fsf@alter.siamese.dyndns.org>
+References: <201004022154.14793.elendil@planet.nl>
+ <201004022350.20999.elendil@planet.nl>
+ <20100402224100.GA997@coredump.intra.peff.net>
+ <201004031629.01970.elendil@planet.nl>
+ <20100403203507.GA12262@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 04 20:02:25 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Frans Pop <elendil@planet.nl>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Apr 04 20:22:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyU9Q-0004Mb-Dq
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 20:02:24 +0200
+	id 1NyUT0-0003YX-OC
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 20:22:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753158Ab0DDSCT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Apr 2010 14:02:19 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:39370 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752696Ab0DDSCR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Apr 2010 14:02:17 -0400
-Received: by bwz1 with SMTP id 1so2445335bwz.21
-        for <git@vger.kernel.org>; Sun, 04 Apr 2010 11:02:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:received:message-id:subject
-         :from:to:content-type;
-        bh=O3t8tUKhgo0bKZv+p4fqqGqvb0+4mXTLoGCqkbW0W+k=;
-        b=MXCqoJFZkB/AyFbkH0Oks2F5ut8ZqGMb1PmpSL3NOkbR7/4TIOKhulz+BRkiWernkW
-         GlZ0mAp7EAcGHp4iRnmeTyPvCE6D9jcvCNofJ1v+OHaAATLiX+7bNn2MJmWOWhLWtkDg
-         MCqqQmmV1YaNjlroLK5jY7lDbqalrj57L9X9A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type;
-        b=E7gKtoGfsSTSRuKvDAVbQMqo/wirhXx9HRxGW61Y1rlyxJxh3irrcCzQfqOH6Dj3+2
-         V4AzCN857lHilgiUHXbFPDD+CXALblpV5Tz1r+mec03FmEwwBpgbGPb63BL3Wt/g3aQG
-         syv2MFsS8GmdZOz19NgFM+56qlW3U48CXyVIo=
-Received: by 10.204.57.145 with HTTP; Sun, 4 Apr 2010 11:02:16 -0700 (PDT)
-In-Reply-To: <w2of27d62f81004041057h59d440bare6a91a57b0788224@mail.gmail.com>
-X-Google-Sender-Auth: 4f27f2ee111d40e0
-Received: by 10.204.152.17 with SMTP id e17mr5608348bkw.105.1270404136125; 
-	Sun, 04 Apr 2010 11:02:16 -0700 (PDT)
+	id S1753372Ab0DDSWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Apr 2010 14:22:34 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50672 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752582Ab0DDSWc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Apr 2010 14:22:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 44F92A8F3B;
+	Sun,  4 Apr 2010 14:22:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=o2SYJdhis7jORaVi3qWT9tvtkEg=; b=oKus/A
+	oOunvKUC6js+kPlAq1Y0H8LGXSmqm6xqzR4OytMU9lk0rdYcjvnJrCDIERMNds31
+	BPk0Qa24rRNQ3VtXok1PSVB6qrGdMEpSnMbk+5rUHScM8YTpbU3/CZItaTarws1D
+	lRaDtb7Bo1aLby2CuNEKRSIWLmQIBFpxFTbO8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sXUZAoH3cbk9zLtmhfAhjUuVhKpEsDO/
+	aZYIiuF4dNUDJOfDCOHfMcIHGcMXR+CIsLsVMkhZC7ZAqobpmqRB4jf0TOtX+t8K
+	ljeeH5aaelX0LBqNvZzbWiTq8K8kobmRRYW8sZmMvZkwsW4AG2GtsnSB7pVt3U//
+	XbFmhsmvuuU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 008EFA8F3A;
+	Sun,  4 Apr 2010 14:22:24 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F0218A8F39; Sun,  4 Apr
+ 2010 14:22:19 -0400 (EDT)
+In-Reply-To: <20100403203507.GA12262@coredump.intra.peff.net> (Jeff King's
+ message of "Sat\, 3 Apr 2010 16\:35\:07 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0495860C-4017-11DF-B7AE-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143937>
 
-Hello :-)
+Jeff King <peff@peff.net> writes:
 
-tested with: v1.7.0.4-297-g6555b19
+> Thanks, I was able to get it and reproduce your problem. The slowness is
+> in the expire-unreachable code. You can work around it with:
+>
+>   git config gc.reflogExpireUnreachable never
+>
+> Obviously that's not really a fix, but it should let your "git gc" work.
+>
+> It looks like we do two merge-base calculations for each reflog entry,
+> which is what takes so long. Perhaps if we know we are going to do a
+> large number of reachability checks, we can pre-mark all reachable
+> commits, and then each reflog entry would just need to check the commit
+> mark.
 
-how to reproduce:
-1. open git-gui on a repo which has multiple files with unstaged changes.
-2. select one file with unstaged changes using [left-mouse-click]
-3. select one or more files with unstaged changes using [Ctrl] +
-[left-mouse-click]
-4. [Ctrl]+t
-The files selected in step 3 will be staged, the one selected in step
-2 will NOT be staged, even though it should be.
+Thanks for the analysis, but expire_reflog() that is run for each ref
+already does that, I think.  It first runs mark_reachable(), then walks
+each reflog entry for the ref to call expire_reflog_ent(), which in turn
+calls unreachable() that first checks if mark_reachable() has marked the
+commit, and if so we don't run in_merge_bases().
 
-robin
+But if the commit in question is not reachable, then we end up running
+in_merge_bases() to double-check anyway, which is probably the symptom
+that was observed.
+
+So perhaps this is a workable compromise?
+
+ builtin/reflog.c |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 64e45bd..7e278b8 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -230,6 +230,13 @@ static int unreachable(struct expire_reflog_cb *cb, struct commit *commit, unsig
+ 	/* Reachable from the current ref?  Don't prune. */
+ 	if (commit->object.flags & REACHABLE)
+ 		return 0;
++	/*
++	 * Unless there was a clock skew, younger ones that are
++	 * reachable should have been marked by mark_reachable().
++	 */
++	if (cb->cmd->expire_total < commit->date)
++		return 1;
++
+ 	if (in_merge_bases(commit, &cb->ref_commit, 1))
+ 		return 0;
+ 
