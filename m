@@ -1,84 +1,80 @@
-From: =?UTF-8?Q?Nico_Sch=C3=BCmann?= <nico.schuemann@googlemail.com>
-Subject: Git-Automerge
-Date: Sun, 4 Apr 2010 18:47:14 +0200
-Message-ID: <w2j1f05046e1004040947k3b812063ndbc2f8da3496effb@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Git-Automerge
+Date: Sun, 04 Apr 2010 18:53:33 +0200
+Message-ID: <vpqr5mv40s2.fsf@bauges.imag.fr>
+References: <w2j1f05046e1004040947k3b812063ndbc2f8da3496effb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 04 18:47:25 2010
+Cc: git@vger.kernel.org
+To: Nico =?iso-8859-1?Q?Sch=FCmann?= <nico.schuemann@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 04 18:57:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NySyq-000464-OO
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 18:47:25 +0200
+	id 1NyT8E-0000eQ-3N
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Apr 2010 18:57:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751130Ab0DDQrR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Apr 2010 12:47:17 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:35525 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751049Ab0DDQrQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Apr 2010 12:47:16 -0400
-Received: by bwz1 with SMTP id 1so2419833bwz.21
-        for <git@vger.kernel.org>; Sun, 04 Apr 2010 09:47:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:received:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        bh=GBANvDuS7OUsugYgzbsvehH5yrPKfxuI2C3pg4sp63c=;
-        b=YYEspVHS5GC3+wMJWySGVaW015VBgT0e0kmbs1jzBTQIMhlBWOyT9tyJ40iv1U/ur+
-         TqWaKMLmfu03puWHutAPv6+OQGCLdh5FRI7mgD9Uyn293v5/rV2FxUi7CsAJkyFHkLug
-         G0B5LkFdpzB3KWK4F5WzeVLQVbN8ceBhQHHec=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=UToq2Cb0OF1ISlroAoYLNmAOa0g3HCnWFB2kqiv45S72MTGzwwgrzzUp179nqo3gjn
-         qj64GemQaGl7ZdWzVj3droWDgi1KOnvVnUpHET55A+srghkBY37KIaEUDx1Y1MCkbl0b
-         rgXTHwYhNGAOhA8bU0IzF2Fq/S0nk8jOC6EBM=
-Received: by 10.204.67.195 with HTTP; Sun, 4 Apr 2010 09:47:14 -0700 (PDT)
-Received: by 10.204.134.87 with SMTP id i23mr1656114bkt.125.1270399634985; 
-	Sun, 04 Apr 2010 09:47:14 -0700 (PDT)
+	id S1751115Ab0DDQ4s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Apr 2010 12:56:48 -0400
+Received: from imag.imag.fr ([129.88.30.1]:45186 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750721Ab0DDQ4q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Apr 2010 12:56:46 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o34GrYcs023382
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 4 Apr 2010 18:53:34 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1NyT4o-0004Vw-0Z; Sun, 04 Apr 2010 18:53:34 +0200
+In-Reply-To: <w2j1f05046e1004040947k3b812063ndbc2f8da3496effb@mail.gmail.com> ("Nico
+ =?iso-8859-1?Q?Sch=FCmann=22's?= message of "Sun\, 4 Apr 2010 18\:47\:14
+ +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 04 Apr 2010 18:53:34 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143932>
 
-Dear Git people,
+Nico Sch=FCmann <nico.schuemann@googlemail.com> writes:
 
-after having been convinced by Linus Torvald's talk on git, I've been
-using it for some days now.
+> But the changes do not appear on the master server. I have to type
+>
+> # git reset --hard=A0=A0=A0=A0=A0 or
+> # git checkout -f
 
-But there is one thing that just does not get into my mind, or maybe I
-am just thinking too complicated.
+You pushed to a checked-out branch. You shouldn't do that, and recent
+Git prevent you from doing it.
 
-What I have is a productive system, let's call it MASTER and my
-development machine, call it ME.
+The reason Git cannot do the merge automatically is that a merge can
+go wrong, and may require a human interaction to resolve conflicts.
+Hence, "push" never does a merge, only "pull" (and obviously local
+merge) will do.
 
-Now I made a copy of the MASTER tree by
-$ git pull me@master:/path/to/stuff
+You can do
 
-And did some changes:
-$ nano -w blablabla
+client-machine$ git push URL-OF-SERVER HEAD:tmp
 
-Then I commited:
-$ git commit
+to push your current HEAD to a branch named "tmp" on the server, and
+then
 
-Everything fine until now.
+server-machine$ git merge tmp
 
-What I want now are the changes to apper on the MASTER server, so I say
-$ git push
+to merge the changes in the current branch of the server. Another
+option is to have a bare repository reachable from both machines, and
+both machine would push/pull to this repository (just like you'd do
+with a centralized version control system).
 
-But the changes do not appear on the master server. I have to type
-
-# git reset --hard=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 or
-# git checkout -f
-in order to make the changes appear. Since I do not want to login onto
-that MASTER machine every time, what command do I miss on my developer
-machine?
-
-Thanks in advantage,
-Nico
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
