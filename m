@@ -1,77 +1,85 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH] Makefile: avoid a fork in Cygwin version check
-Date: Mon, 05 Apr 2010 17:36:48 +0200
-Message-ID: <m2eiitc3n3.fsf@igel.home>
-References: <1270161834-9597-1-git-send-email-eblake@redhat.com>
-	<7vaatmmju9.fsf@alter.siamese.dyndns.org>
-	<4BB5F94F.3090403@redhat.com> <20100403074700.GA24176@progeny.tock>
-	<4BB9E24E.4090206@redhat.com> <20100405143053.GA13093@progeny.tock>
-	<4BB9F756.7030701@redhat.com> <20100405151059.GB13761@progeny.tock>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: [PATCH] Link against libiconv on IRIX
+Date: Mon, 05 Apr 2010 11:45:32 -0500
+Message-ID: <1UypQMCHLT57SnjSQIM66RTkLalsvavG8xXoQJv4rEQ@cipher.nrlssc.navy.mil>
+References: <20100329105748.GD14869@CIS.FU-Berlin.DE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Blake <eblake@redhat.com>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, jon.seymour@gmail.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 05 17:36:59 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: holger@zedat.fu-berlin.de
+X-From: git-owner@vger.kernel.org Mon Apr 05 18:45:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyoMD-0005xs-Mm
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 17:36:58 +0200
+	id 1NypQp-0007WB-0R
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 18:45:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755388Ab0DEPgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Apr 2010 11:36:53 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:50819 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755370Ab0DEPgv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Apr 2010 11:36:51 -0400
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id 91AF21C0024A;
-	Mon,  5 Apr 2010 17:36:49 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id 82D3490393;
-	Mon,  5 Apr 2010 17:36:49 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.3.149])
-	by localhost (dynscan1.mnet-online.de [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id PsVYSpKK2GFH; Mon,  5 Apr 2010 17:36:48 +0200 (CEST)
-Received: from igel.home (ppp-88-217-101-104.dynamic.mnet-online.de [88.217.101.104])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Mon,  5 Apr 2010 17:36:48 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 45DDBCA297; Mon,  5 Apr 2010 17:36:48 +0200 (CEST)
-X-Yow: ...Get me a GIN and TONIC!!...make it HAIR TONIC!!
-In-Reply-To: <20100405151059.GB13761@progeny.tock> (Jonathan Nieder's message
-	of "Mon, 5 Apr 2010 10:11:00 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.95 (gnu/linux)
+	id S1755415Ab0DEQpm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Apr 2010 12:45:42 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:37950 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755213Ab0DEQpl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Apr 2010 12:45:41 -0400
+Received: by mail.nrlssc.navy.mil id o35GjW57013682; Mon, 5 Apr 2010 11:45:33 -0500
+In-Reply-To: <20100329105748.GD14869@CIS.FU-Berlin.DE>
+X-OriginalArrivalTime: 05 Apr 2010 16:45:32.0780 (UTC) FILETIME=[686622C0:01CAD4DF]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143993>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On 03/29/2010 05:57 AM, Holger Wei=C3=9F wrote:
+> On IRIX, "-liconv" must be added to the linker command line in order =
+to
+> get iconv(3) support; set the according Makefile variable appropriate=
+ly.
 
+This breaks compilation on IRIX 6.5.29m for me since there
+is no separate libiconv.so.
+
+What version of IRIX are you using?
+
+On my system, even the iconv utility doesn't link against
+a libiconv shared object.  It seems the iconv functionality is in libc.
+
+   # ldd /usr/bin/iconv
+           libc.so.1  =3D>    /usr/lib32/libc.so.1
+
+Could it be that you are using a third party iconv library?
+I've experienced this on another system and the problem was related
+to curl.  In that case, curl was linked against an external iconv and
+not the native library, so if I tried to build with curl support, I had
+to also build against the external iconv library.
+
+-brandon
+
+
+> Signed-off-by: Holger Wei=C3=9F <holger@zedat.fu-berlin.de>
+> ---
+>  Makefile |    2 ++
+>  1 files changed, 2 insertions(+), 0 deletions(-)
+>=20
 > diff --git a/Makefile b/Makefile
-> index e210a42..767fb66 100644
+> index 3a6c6ea..8a0f5c4 100644
 > --- a/Makefile
 > +++ b/Makefile
-> @@ -831,7 +831,7 @@ ifeq ($(uname_S),SunOS)
->  	BASIC_CFLAGS += -D__EXTENSIONS__ -D__sun__ -DHAVE_ALLOCA_H
+> @@ -919,6 +919,7 @@ ifeq ($(uname_S),IRIX)
+>  	SNPRINTF_RETURNS_BOGUS =3D YesPlease
+>  	SHELL_PATH =3D /usr/gnu/bin/bash
+>  	NEEDS_LIBGEN =3D YesPlease
+> +	NEEDS_LIBICONV =3D YesPlease
 >  endif
->  ifeq ($(uname_O),Cygwin)
-> -	ifeq ($(shell expr "$(uname_R)" : '1\.[1-6]\.'),4)
-> +	ifeq ($(shell case '$(uname_R)' in (1.[1-6].*) echo old;; esac),old)
-
-Even less forks:
-
-        ifneq ($(filter 1.1.% 1.2.% 1.3.% 1.4.% 1.5.% 1.6.%,$(uname_R)),)
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+>  ifeq ($(uname_S),IRIX64)
+>  	NO_SETENV=3DYesPlease
+> @@ -937,6 +938,7 @@ ifeq ($(uname_S),IRIX64)
+>  	SNPRINTF_RETURNS_BOGUS =3D YesPlease
+>  	SHELL_PATH=3D/usr/gnu/bin/bash
+>  	NEEDS_LIBGEN =3D YesPlease
+> +	NEEDS_LIBICONV =3D YesPlease
+>  endif
+>  ifeq ($(uname_S),HP-UX)
+>  	NO_IPV6=3DYesPlease
