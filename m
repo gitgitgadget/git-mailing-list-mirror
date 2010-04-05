@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 22/43] Move enter_repo() to setup.c
-Date: Mon,  5 Apr 2010 20:41:07 +0200
-Message-ID: <1270492888-26589-23-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 26/43] Add git_config_early()
+Date: Mon,  5 Apr 2010 20:41:11 +0200
+Message-ID: <1270492888-26589-27-git-send-email-pclouds@gmail.com>
 References: <1270492888-26589-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,278 +11,128 @@ Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
 	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Jonathan Niedier <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 05 20:43:51 2010
+X-From: git-owner@vger.kernel.org Mon Apr 05 20:43:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyrH4-0000ps-Em
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 20:43:50 +0200
+	id 1NyrH7-0000ps-9K
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 20:43:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756086Ab0DESmy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Apr 2010 14:42:54 -0400
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:62876 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756061Ab0DESmp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Apr 2010 14:42:45 -0400
-Received: by mail-fx0-f227.google.com with SMTP id 27so1250782fxm.28
-        for <git@vger.kernel.org>; Mon, 05 Apr 2010 11:42:44 -0700 (PDT)
+	id S1756101Ab0DESnJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Apr 2010 14:43:09 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:53625 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756099Ab0DESnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Apr 2010 14:43:05 -0400
+Received: by pva18 with SMTP id 18so1902790pva.19
+        for <git@vger.kernel.org>; Mon, 05 Apr 2010 11:43:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=ZX3wUauUXbzPzrXrYkMZpN+kkuaKl+vqo7ZJc1xROGI=;
-        b=x7/X99UvjiEtL9My349BlDKKA2A7QWvqAHYDQfs3PjK6TMxTt57YvgA6H0yHgdl8zb
-         oSBqi7DDkaDpag15BJb5/QfJ3xSa9PKYTSXF6qKEehj+a/bQAKuJt7C81hAncBnPU+Gq
-         NXCgSwn6KfJYuz+AUu/JbCe8kGRiYMGOVmEn8=
+        bh=8fUbQEaOMZsESIo+RsmYFeVq7Uv2NA8dX5SMdCmAerM=;
+        b=Loyn6Tj0q+5DIs3hGvicdQ+180FYtqSlw1B0CpfnIGV1w8AT0teV3kLbjIu05Moi/8
+         2OKb0Ndw/H/a1NDG07vx1QuKrhxpFQeRyiQthLO9UWAnLpyYsel31tmqnCIdlKYKbzij
+         fd72nTnTm3cPbIZgHJHAYzFmIdZIJaNiGwcl4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=uoN0vKPBrhokDU8BbVRCBe0cYlGoNADTbMYnB72k/AGsgJONSkVOUWjNOg2IOA8kGy
-         gBF1purSNBDD3sxgTxNQJfJRP33gvJU3eDWGEZatwgkWuUdOYw3/dKix4QeTWTK8EoCm
-         T7260+faF8FvhsZpQOGm6c1eXdD7OzgBsJckw=
-Received: by 10.223.144.77 with SMTP id y13mr6001448fau.86.1270492964875;
-        Mon, 05 Apr 2010 11:42:44 -0700 (PDT)
-Received: from dektop ([212.247.124.209])
-        by mx.google.com with ESMTPS id 16sm8201706fxm.0.2010.04.05.11.42.43
+        b=bmXAQKLnx4eEf+hmd9ny+1RbIL0cf4ulwg+o39g7CfYHDr3w1JxC2bLOLNichhuK04
+         CS80tVsd9fS7d2tx1v8V2X6BgdjhPl1L162lHxGgcX6m1fxcVdS1ED8MYbuGLDl8/lFx
+         axPtkDfnjk4qUYmRo2wNvS9XkJrJ6c6pIKVCo=
+Received: by 10.141.89.13 with SMTP id r13mr4049586rvl.236.1270492984886;
+        Mon, 05 Apr 2010 11:43:04 -0700 (PDT)
+Received: from dektop ([72.14.241.34])
+        by mx.google.com with ESMTPS id 5sm2998558yxg.28.2010.04.05.11.43.02
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 05 Apr 2010 11:42:44 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Mon,  5 Apr 2010 20:42:41 +0200
+        Mon, 05 Apr 2010 11:43:04 -0700 (PDT)
+Received: by dektop (sSMTP sendmail emulation); Mon,  5 Apr 2010 20:42:59 +0200
 X-Mailer: git-send-email 1.7.0.rc1.541.g2da82.dirty
 In-Reply-To: <1270492888-26589-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144019>
 
-enter_repo() is to set up a repository, it fits better in setup.c
+This version of git_config() will be used during repository setup.
+As a repository is being set up, $GIT_DIR is not nailed down yet,
+git_pathdup() should not be used to get $GIT_DIR/config.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- path.c  |   91 -------------------------------------------------------=
---------
- setup.c |   91 +++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 2 files changed, 91 insertions(+), 91 deletions(-)
+ cache.h  |    1 +
+ config.c |   19 ++++++++++++++-----
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/path.c b/path.c
-index b4c8d91..f42eb1b 100644
---- a/path.c
-+++ b/path.c
-@@ -332,97 +332,6 @@ return_null:
- 	return NULL;
+diff --git a/cache.h b/cache.h
+index fa13bf7..f4935b8 100644
+--- a/cache.h
++++ b/cache.h
+@@ -937,6 +937,7 @@ typedef int (*config_fn_t)(const char *, const char=
+ *, void *);
+ extern int git_default_config(const char *, const char *, void *);
+ extern int git_config_from_file(config_fn_t fn, const char *, void *);
+ extern int git_config(config_fn_t fn, void *);
++extern int git_config_early(config_fn_t fn, void *, const char *repo_c=
+onfig);
+ extern int git_parse_ulong(const char *, unsigned long *);
+ extern int git_config_int(const char *, const char *);
+ extern unsigned long git_config_ulong(const char *, const char *);
+diff --git a/config.c b/config.c
+index 6963fbe..2d38096 100644
+--- a/config.c
++++ b/config.c
+@@ -699,10 +699,9 @@ int git_config_global(void)
+ 	return !git_env_bool("GIT_CONFIG_NOGLOBAL", 0);
  }
 =20
--/*
-- * First, one directory to try is determined by the following algorith=
-m.
-- *
-- * (0) If "strict" is given, the path is used as given and no DWIM is
-- *     done. Otherwise:
-- * (1) "~/path" to mean path under the running user's home directory;
-- * (2) "~user/path" to mean path under named user's home directory;
-- * (3) "relative/path" to mean cwd relative directory; or
-- * (4) "/absolute/path" to mean absolute directory.
-- *
-- * Unless "strict" is given, we try access() for existence of "%s.git/=
-=2Egit",
-- * "%s/.git", "%s.git", "%s" in this order.  The first one that exists=
- is
-- * what we try.
-- *
-- * Second, we try chdir() to that.  Upon failure, we return NULL.
-- *
-- * Then, we try if the current directory is a valid git repository.
-- * Upon failure, we return NULL.
-- *
-- * If all goes well, we return the directory we used to chdir() (but
-- * before ~user is expanded), avoiding getcwd() resolving symbolic
-- * links.  User relative paths are also returned as they are given,
-- * except DWIM suffixing.
-- */
--char *enter_repo(char *path, int strict)
--{
--	static char used_path[PATH_MAX];
--	static char validated_path[PATH_MAX];
--
--	if (!path)
--		return NULL;
--
--	if (!strict) {
--		static const char *suffix[] =3D {
--			".git/.git", "/.git", ".git", "", NULL,
--		};
--		int len =3D strlen(path);
--		int i;
--		while ((1 < len) && (path[len-1] =3D=3D '/')) {
--			path[len-1] =3D 0;
--			len--;
--		}
--		if (PATH_MAX <=3D len)
--			return NULL;
--		if (path[0] =3D=3D '~') {
--			char *newpath =3D expand_user_path(path);
--			if (!newpath || (PATH_MAX - 10 < strlen(newpath))) {
--				free(newpath);
--				return NULL;
--			}
--			/*
--			 * Copy back into the static buffer. A pity
--			 * since newpath was not bounded, but other
--			 * branches of the if are limited by PATH_MAX
--			 * anyway.
--			 */
--			strcpy(used_path, newpath); free(newpath);
--			strcpy(validated_path, path);
--			path =3D used_path;
--		}
--		else if (PATH_MAX - 10 < len)
--			return NULL;
--		else {
--			path =3D strcpy(used_path, path);
--			strcpy(validated_path, path);
--		}
--		len =3D strlen(path);
--		for (i =3D 0; suffix[i]; i++) {
--			strcpy(path + len, suffix[i]);
--			if (!access(path, F_OK)) {
--				strcat(validated_path, suffix[i]);
--				break;
--			}
--		}
--		if (!suffix[i] || chdir(path))
--			return NULL;
--		path =3D validated_path;
--	}
--	else if (chdir(path))
--		return NULL;
--
--	if (access("objects", X_OK) =3D=3D 0 && access("refs", X_OK) =3D=3D 0=
- &&
--	    validate_headref("HEAD") =3D=3D 0) {
--		set_git_dir(".");
--		check_repository_format();
--		return path;
--	}
--
--	return NULL;
--}
--
- int set_shared_perm(const char *path, int mode)
+-int git_config(config_fn_t fn, void *data)
++int git_config_early(config_fn_t fn, void *data, const char *repo_conf=
+ig)
  {
- 	struct stat st;
-diff --git a/setup.c b/setup.c
-index 8796c6f..3019da2 100644
---- a/setup.c
-+++ b/setup.c
-@@ -452,6 +452,97 @@ const char *setup_git_directory_gently(int *nongit=
-_ok)
- 	return prefix;
+ 	int ret =3D 0, found =3D 0;
+-	char *repo_config =3D NULL;
+ 	const char *home =3D NULL;
+=20
+ 	/* Setting $GIT_CONFIG makes git read _only_ the given config file. *=
+/
+@@ -724,17 +723,27 @@ int git_config(config_fn_t fn, void *data)
+ 		free(user_config);
+ 	}
+=20
+-	repo_config =3D git_pathdup("config");
+-	if (!access(repo_config, R_OK)) {
++	if (repo_config && !access(repo_config, R_OK)) {
+ 		ret +=3D git_config_from_file(fn, repo_config, data);
+ 		found +=3D 1;
+ 	}
+-	free(repo_config);
+ 	if (found =3D=3D 0)
+ 		return -1;
+ 	return ret;
  }
 =20
-+/*
-+ * First, one directory to try is determined by the following algorith=
-m.
-+ *
-+ * (0) If "strict" is given, the path is used as given and no DWIM is
-+ *     done. Otherwise:
-+ * (1) "~/path" to mean path under the running user's home directory;
-+ * (2) "~user/path" to mean path under named user's home directory;
-+ * (3) "relative/path" to mean cwd relative directory; or
-+ * (4) "/absolute/path" to mean absolute directory.
-+ *
-+ * Unless "strict" is given, we try access() for existence of "%s.git/=
-=2Egit",
-+ * "%s/.git", "%s.git", "%s" in this order.  The first one that exists=
- is
-+ * what we try.
-+ *
-+ * Second, we try chdir() to that.  Upon failure, we return NULL.
-+ *
-+ * Then, we try if the current directory is a valid git repository.
-+ * Upon failure, we return NULL.
-+ *
-+ * If all goes well, we return the directory we used to chdir() (but
-+ * before ~user is expanded), avoiding getcwd() resolving symbolic
-+ * links.  User relative paths are also returned as they are given,
-+ * except DWIM suffixing.
-+ */
-+char *enter_repo(char *path, int strict)
++int git_config(config_fn_t fn, void *data)
 +{
-+	static char used_path[PATH_MAX];
-+	static char validated_path[PATH_MAX];
++	char *repo_config =3D NULL;
++	int ret;
 +
-+	if (!path)
-+		return NULL;
-+
-+	if (!strict) {
-+		static const char *suffix[] =3D {
-+			".git/.git", "/.git", ".git", "", NULL,
-+		};
-+		int len =3D strlen(path);
-+		int i;
-+		while ((1 < len) && (path[len-1] =3D=3D '/')) {
-+			path[len-1] =3D 0;
-+			len--;
-+		}
-+		if (PATH_MAX <=3D len)
-+			return NULL;
-+		if (path[0] =3D=3D '~') {
-+			char *newpath =3D expand_user_path(path);
-+			if (!newpath || (PATH_MAX - 10 < strlen(newpath))) {
-+				free(newpath);
-+				return NULL;
-+			}
-+			/*
-+			 * Copy back into the static buffer. A pity
-+			 * since newpath was not bounded, but other
-+			 * branches of the if are limited by PATH_MAX
-+			 * anyway.
-+			 */
-+			strcpy(used_path, newpath); free(newpath);
-+			strcpy(validated_path, path);
-+			path =3D used_path;
-+		}
-+		else if (PATH_MAX - 10 < len)
-+			return NULL;
-+		else {
-+			path =3D strcpy(used_path, path);
-+			strcpy(validated_path, path);
-+		}
-+		len =3D strlen(path);
-+		for (i =3D 0; suffix[i]; i++) {
-+			strcpy(path + len, suffix[i]);
-+			if (!access(path, F_OK)) {
-+				strcat(validated_path, suffix[i]);
-+				break;
-+			}
-+		}
-+		if (!suffix[i] || chdir(path))
-+			return NULL;
-+		path =3D validated_path;
-+	}
-+	else if (chdir(path))
-+		return NULL;
-+
-+	if (access("objects", X_OK) =3D=3D 0 && access("refs", X_OK) =3D=3D 0=
- &&
-+	    validate_headref("HEAD") =3D=3D 0) {
-+		set_git_dir(".");
-+		check_repository_format();
-+		return path;
-+	}
-+
-+	return NULL;
++	repo_config =3D git_pathdup("config");
++	ret =3D git_config_early(fn, data, repo_config);
++	if (repo_config)
++		free(repo_config);
++	return ret;
 +}
 +
- int git_config_perm(const char *var, const char *value)
- {
- 	int i;
+ /*
+  * Find all the stuff for git_config_set() below.
+  */
 --=20
 1.7.0.rc1.541.g2da82.dirty
