@@ -1,64 +1,68 @@
-From: Howard Miller <howard@e-learndesign.co.uk>
-Subject: Mysterious junk in file.... "not commited yet"
-Date: Mon, 5 Apr 2010 19:13:46 +0100
-Message-ID: <i2v26ae428a1004051113q68a0cf13o65fbf1349f941648@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: How to keep different version numbers in different branches?
+Date: Mon, 05 Apr 2010 20:15:47 +0200
+Message-ID: <vpqhbnprcj0.fsf@bauges.imag.fr>
+References: <hpcscv$umg$3@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 05 20:13:54 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Stephen Kelly <steveire@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 05 20:16:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nyqo5-0007fw-RH
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 20:13:54 +0200
+	id 1NyqqJ-000587-0S
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 20:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754301Ab0DESNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Apr 2010 14:13:49 -0400
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:46260 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753868Ab0DESNs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Apr 2010 14:13:48 -0400
-Received: by fxm27 with SMTP id 27so1222091fxm.28
-        for <git@vger.kernel.org>; Mon, 05 Apr 2010 11:13:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:date
-         :x-google-sender-auth:received:message-id:subject:from:to
-         :content-type;
-        bh=CJBHJF17JXJvEWZgLKTZZhOCnjps/MRv120roPTPTb0=;
-        b=v5w1HruvzXIZxqaDW8VW0J9vGawvb1RX1zGDxryzs49o2uG0rfvn3NV8vS32ZEKOy/
-         7qNCJ/4fxhmSs6pdfvkAss40fvP2n1dKqOA/eMSSUsYgq1GyD20yQAbA3PlAXThk7idH
-         IL5fyS7BocJuTqQhFkndDNvphNTd9bVTpHo5A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        b=ejhB7XumQZmSxP35brFRBopJmT3D/KM56T/7xc+ECNkK6muJBZLFKx3HjfyoLhbadJ
-         4RfQindWceCBGJddDKw3kA5NLqUKCFnO2EJQZtpK0IQQ1Pb7iMWkjTnwHw/79wORSDfO
-         B7iWGc9cOJQYszTiikocEH2iueBmWX1pum13E=
-Received: by 10.239.160.143 with HTTP; Mon, 5 Apr 2010 11:13:46 -0700 (PDT)
-X-Google-Sender-Auth: c63e3ceec3111b34
-Received: by 10.239.167.203 with SMTP id h11mr546836hbe.53.1270491226773; Mon, 
-	05 Apr 2010 11:13:46 -0700 (PDT)
+	id S1755130Ab0DESP5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Apr 2010 14:15:57 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:58069 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751732Ab0DESPz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Apr 2010 14:15:55 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o35IBKgG004575
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 5 Apr 2010 20:11:21 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Nyqpv-0005ux-J9; Mon, 05 Apr 2010 20:15:47 +0200
+In-Reply-To: <hpcscv$umg$3@dough.gmane.org> (Stephen Kelly's message of "Mon\, 05 Apr 2010 16\:34\:07 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 05 Apr 2010 20:11:21 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o35IBKgG004575
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1271095881.6136@p0giPAazk79HbjwP+PLJ8A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143999>
 
-Hi,
+Stephen Kelly <steveire@gmail.com> writes:
 
-I just found a file in my project that has "junk" at the beginning
-(looks like some binary stuff at the start of a php file). Git status
-and diff show nothing unusual (nothing to commit). Git log shows
-nothing I wouldn't expect and show 'shows' show noting. Git blame on
-the other shows the offending line as 'not commited yet'. I tried
-doing 'git checkout <filename>' but it didn't fix it.
+> Hi,
+>
+> My project uses git and so far has only one branch, 'master'.
+>
+> http://gitorious.org/grantlee/grantlee
+>
+> I want to make a 0.1 release, so that would mean creating a 0.1 branch and 
+> updating files contained in the branch such as the README file and the CMake 
+> files and the api documentation to report version 0.1.0, and creating the 
+> 0.1.0 tag. The next tag on that branch would be 0.1.1 etc. Simultaneously, 
+> the version number in those files is changes to 0.2.0 in the master branch.
 
-What am I missing? Has git broken somewhere?
+You can have this number generated by your build script instead of
+having to commit it. See what git does, for example. The command "git
+describe" should help.
 
-Thanks,
-
-Howard
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
