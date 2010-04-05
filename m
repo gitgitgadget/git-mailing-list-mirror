@@ -1,102 +1,75 @@
-From: Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH] Makefile: update defaults for modern Cygwin
-Date: Mon, 05 Apr 2010 08:44:38 -0600
-Organization: Red Hat
-Message-ID: <4BB9F756.7030701@redhat.com>
-References: <1270161834-9597-1-git-send-email-eblake@redhat.com> <7vaatmmju9.fsf@alter.siamese.dyndns.org> <4BB5F94F.3090403@redhat.com> <20100403074700.GA24176@progeny.tock> <4BB9E24E.4090206@redhat.com> <20100405143053.GA13093@progeny.tock>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] Add option to git-commit to allow empty log messages
+Date: Mon, 5 Apr 2010 09:46:47 -0500
+Message-ID: <k2lfabb9a1e1004050746if7efaa74k62be6c1f3f97053@mail.gmail.com>
+References: <z2r51dd1af81004031506pc9ac1840ie9953ae6df91d01b@mail.gmail.com> 
+	<1270392557-26538-1-git-send-email-avarab@gmail.com> <20100404224324.GB12655@gmail.com> 
+	<y2j51dd1af81004041653g9a09915el60104c575dcf6481@mail.gmail.com> 
+	<7vy6h2wsvg.fsf@alter.siamese.dyndns.org> <h2rfabb9a1e1004041915u3754016cr10e874c12f2a24e6@mail.gmail.com> 
+	<7vy6h2pn51.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig6CD3A7A311689346C7E94685"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	jon.seymour@gmail.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 05 16:46:42 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 05 16:47:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NynZY-0004if-Jl
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 16:46:41 +0200
+	id 1NynaA-000736-2F
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 16:47:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755185Ab0DEOqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Apr 2010 10:46:34 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:59057 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755166Ab0DEOqd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Apr 2010 10:46:33 -0400
-Received: from int-mx03.intmail.prod.int.phx2.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com [10.5.11.16])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id o35EjvvS027577
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Mon, 5 Apr 2010 10:45:57 -0400
-Received: from [10.11.9.20] (vpn-9-20.rdu.redhat.com [10.11.9.20])
-	by int-mx03.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id o35Ejtoc016000;
-	Mon, 5 Apr 2010 10:45:55 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100330 Fedora/3.0.4-1.fc12 Lightning/1.0b1 Thunderbird/3.0.4
-In-Reply-To: <20100405143053.GA13093@progeny.tock>
-X-Enigmail-Version: 1.0.1
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.16
+	id S1755189Ab0DEOrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Apr 2010 10:47:12 -0400
+Received: from mail-gx0-f217.google.com ([209.85.217.217]:60331 "EHLO
+	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755006Ab0DEOrJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Apr 2010 10:47:09 -0400
+Received: by gxk9 with SMTP id 9so3000665gxk.8
+        for <git@vger.kernel.org>; Mon, 05 Apr 2010 07:47:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type;
+        bh=mvjmUmCkr3uSBflpAS/1y8AfyQhyNRAIJL/UodMGS0c=;
+        b=EKG9eN39hQStvqKTT+8nXpinacyXVn21zxGZEWOkEOKJgNxqn0GkFNHiig14jKGsub
+         CmMQYJlqTiBxILJcu8+Xv5sXmV0MVWvNJgcK81eBSvRe36Ey7NJ6+p5E17LP0K+9jt5N
+         gQy6etaoPuxe+7IcAEvYWWQMQOmapQn8GZBc8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=g6i8zqsXT6RKor/yStJOLe9mMM3j43hxNg40OK7CQXu0ej4xiMp/F56RWc21EnzDHl
+         Fjku/FpyUcLnWY0RVsikc9b2jZI/+R4uEc9foFsaFyyycoI7ashfWHRe/wMDOIiGZBYO
+         VRUVdfXlUagg0RHkIFk6ZM7QPgS+6ihxyOZXw=
+Received: by 10.100.206.13 with HTTP; Mon, 5 Apr 2010 07:46:47 -0700 (PDT)
+In-Reply-To: <7vy6h2pn51.fsf@alter.siamese.dyndns.org>
+Received: by 10.101.135.38 with SMTP id m38mr6945043ann.248.1270478827281; 
+	Mon, 05 Apr 2010 07:47:07 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143988>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig6CD3A7A311689346C7E94685
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Heya,
 
-On 04/05/2010 08:30 AM, Jonathan Nieder wrote:
-> Eric Blake wrote:
->=20
->> Cygwin 1.6 is on par with 1.5 feature-wise, so your cutoff of 1.6 as t=
-he
->> last old version is correct.
->=20
-> Thanks for explaining.
->=20
->> ifeq ($(shell case '$(uname_R)' in (1.[1-6].*) echo old;; esac),old)
->=20
-> Looks good to me.
+On Sun, Apr 4, 2010 at 22:57, Junio C Hamano <gitster@pobox.com> wrote:
+> Sverre Rabbelier <srabbelier@gmail.com> writes:
+>> You contradict yourself:
+>
+> I personally don't mind very much removing --allow-empty, though.
 
-Junio mentioned he had already queued your first version of the patch;
-are you going to re-submit it with this tweak?
+Ah, hmm. I vaguely remember some discussion in the past about empty
+commits, but I'm not sure what the conclusion there was? I think it
+was something like "if you want to create a marker, use tags instead,
+there's really no reason to be using --allow-empty". Wasn't there some
+use case for "--allow-emtpy" when creating an unrooted branch with an
+empty starting point, or somesuch?
 
->=20
-> While I have your attention, do you know of a simple way to test
-> Cygwin programs under Linux?  setup.exe does not work well under wine,
-> so I am asking mostly in the hope that there is a .tar.gz or .zip
-> binary distribution somewhere I could play with.
+-- 
+Cheers,
 
-Sadly, the fact that wine is not yet able to run setup.exe is evidence
-that wine is still lacking some emulation abilities, and while I am
-aware that the situation is trying to be improved, I am not actively
-participating in that effort.  For now, I am only aware of the ability
-to run cygwin on native windows boxes (including virtual machines).  In
-fact, I'm currently using a 240-day evaluation license of Windows Sever
-2008 inside a VM to experiment with cygwin on my Linux box, without
-having spent any extra money.
-
---=20
-Eric Blake   eblake@redhat.com    +1-801-349-2682
-Libvirt virtualization library http://libvirt.org
-
-
---------------enig6CD3A7A311689346C7E94685
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Public key at home.comcast.net/~ericblake/eblake.gpg
-Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAku591kACgkQ84KuGfSFAYD0DACcDbio3yRqvv4M/eJYwP5Uh0ep
-ZO4AoLUisKx8GdfKtVnIaAuIImBFwgPs
-=RgvI
------END PGP SIGNATURE-----
-
---------------enig6CD3A7A311689346C7E94685--
+Sverre Rabbelier
