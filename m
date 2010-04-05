@@ -1,100 +1,80 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Add option to git-commit to allow empty log messages
-Date: Sun, 4 Apr 2010 21:15:13 -0500
-Message-ID: <h2rfabb9a1e1004041915u3754016cr10e874c12f2a24e6@mail.gmail.com>
-References: <z2r51dd1af81004031506pc9ac1840ie9953ae6df91d01b@mail.gmail.com> 
-	<1270392557-26538-1-git-send-email-avarab@gmail.com> <20100404224324.GB12655@gmail.com> 
-	<y2j51dd1af81004041653g9a09915el60104c575dcf6481@mail.gmail.com> 
-	<7vy6h2wsvg.fsf@alter.siamese.dyndns.org>
+Date: Sun, 04 Apr 2010 20:57:14 -0700
+Message-ID: <7vy6h2pn51.fsf@alter.siamese.dyndns.org>
+References: <z2r51dd1af81004031506pc9ac1840ie9953ae6df91d01b@mail.gmail.com>
+ <1270392557-26538-1-git-send-email-avarab@gmail.com>
+ <20100404224324.GB12655@gmail.com>
+ <y2j51dd1af81004041653g9a09915el60104c575dcf6481@mail.gmail.com>
+ <7vy6h2wsvg.fsf@alter.siamese.dyndns.org>
+ <h2rfabb9a1e1004041915u3754016cr10e874c12f2a24e6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
 	David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 05 04:15:39 2010
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 05 05:57:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nybql-0003p1-CB
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 04:15:39 +0200
+	id 1NydRP-0005sR-Do
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 05:57:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753909Ab0DECPf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Apr 2010 22:15:35 -0400
-Received: from mail-yx0-f191.google.com ([209.85.210.191]:40507 "EHLO
-	mail-yx0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753630Ab0DECPd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Apr 2010 22:15:33 -0400
-Received: by yxe29 with SMTP id 29so1883859yxe.4
-        for <git@vger.kernel.org>; Sun, 04 Apr 2010 19:15:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5poeFlazzz/Z5U4TRDxk44JyTdeA16WvUUtPzsni7Ss=;
-        b=sl6xb7aH/UnDmhNPEaur4BkjK/YSTC+pfwJ82KQY606Hf06c5HtVlYLq6UAkt5Apkg
-         sl7LVc+gg0vq8KpGRKA7tQhezOLVds6zYabRxs18UXdRI45l/HHBSszUbR7ryOqQ54cm
-         vdNgByYxugp+fUumuW0hJ4k5v7t+ZjFVggxqg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=vNl9hC8Aw1eoIhSVXwzkPbLwsPR61NuviHwiP+5hhZq1Bjf963gLhzcLQ3Fx4tB3L0
-         gr84dmZp91uOgw+KNOxtj1KlJp0/SFEipWpZiHZESj28q1xkXukFs3G+LnyxCYGpy73Z
-         10Z2845sWQVeMDddsJu5C5nwB/8KDUkmtJUqo=
-Received: by 10.100.206.13 with HTTP; Sun, 4 Apr 2010 19:15:13 -0700 (PDT)
-In-Reply-To: <7vy6h2wsvg.fsf@alter.siamese.dyndns.org>
-Received: by 10.101.28.5 with SMTP id f5mr9336544anj.35.1270433733150; Sun, 04 
-	Apr 2010 19:15:33 -0700 (PDT)
+	id S1754206Ab0DED52 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Apr 2010 23:57:28 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47585 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754035Ab0DED50 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Apr 2010 23:57:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 13531A8715;
+	Sun,  4 Apr 2010 23:57:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=9VO1PyOEVnUv
+	HF+UbauU512ecKs=; b=Iw8yClYBd3WD05ZUJOSUK9LE99Vs3+43ixlVR1ckyHwh
+	MPAcQ05Nh/ufOhc2r6isUo0DblE9DoDEC9A9r0yEavwrpzKSGxnK5suIVtsclt2W
+	ym0vF5haQLf2gZDw2GxEbbStRsJvXkK17Y+rEOwyj9ZZMzMIx/wGQNAsBgi0aYM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ag9mqc
+	Dyzw+slKC3VwEu1zOM46uRWXvXpPKVpVIKT51yhG7mCY386likprRu0XtGiH21lB
+	L4FBUQYjEFbUKdNJXur7NB6wwtqKQ3ECDqQwJ5jxyECa9PwQk2Ev51bGnHDPS1+P
+	xxQqMTX3hmqjUfsRI95OgrFzP9fVlJnHS26J4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C691FA8713;
+	Sun,  4 Apr 2010 23:57:20 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1B6DFA870E; Sun,  4 Apr
+ 2010 23:57:15 -0400 (EDT)
+In-Reply-To: <h2rfabb9a1e1004041915u3754016cr10e874c12f2a24e6@mail.gmail.com>
+ (Sverre Rabbelier's message of "Sun\, 4 Apr 2010 21\:15\:13 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 55B07BDC-4067-11DF-99C2-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143967>
 
-Heya,
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-On Sun, Apr 4, 2010 at 21:11, Junio C Hamano <gitster@pobox.com> wrote:
-> As a Porcelain, "git commit" has some leeway to enforce sensible poli=
-cy on
-> the users, and "forbid commit that does not explain anything" is one =
-such
-> policy. =A0It is not generally a good idea to expose the full capabil=
-ities
-> of plumbing to Porcelain if it leads to bad user behaviour, and such
-> "artificial" limitations are safety features we do not want to remove=
-=2E
+> On Sun, Apr 4, 2010 at 21:11, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+>> As a Porcelain, "git commit" has some leeway to enforce sensible pol=
+icy on
+>> the users, and "forbid commit that does not explain anything" is one=
+ such
+>> policy. =C2=A0It is not generally a good idea to expose the full cap=
+abilities
+>> of plumbing to Porcelain if it leads to bad user behaviour, and such
+>> "artificial" limitations are safety features we do not want to remov=
+e.
+>
+> You contradict yourself:
 
-You contradict yourself:
-
-commit 5241b6bfe2285a6da598a0348c37b77964035bc8
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Mon Dec 3 00:03:10 2007 -0800
-
-    git-commit --allow-empty
-
-    It does not usually make sense to record a commit that has the exac=
-t
-    same tree as its sole parent commit and that is why git-commit prev=
-ents
-    you from making such a mistake, but when data from foreign scm is
-    involved, it is a different story.  We are equipped to represent su=
-ch an
-    (perhaps insane, perhaps by mistake, or perhaps done on purpose) em=
-pty
-    change, and it is better to represent it bypassing the safety valve=
- for
-    native use.
-
-    This is primarily for use by foreign scm interface scripts.
-
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-
---=20
-Cheers,
-
-Sverre Rabbelier
+I personally don't mind very much removing --allow-empty, though.
