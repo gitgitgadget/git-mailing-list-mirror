@@ -1,62 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Link against libiconv on IRIX
-Date: Mon, 05 Apr 2010 10:15:59 -0700
-Message-ID: <7vfx39q0q8.fsf@alter.siamese.dyndns.org>
-References: <20100329105748.GD14869@CIS.FU-Berlin.DE>
- <1UypQMCHLT57SnjSQIM66RTkLalsvavG8xXoQJv4rEQ@cipher.nrlssc.navy.mil>
+From: Christian MICHON <christian.michon@gmail.com>
+Subject: Re: How to keep different version numbers in different branches?
+Date: Mon, 5 Apr 2010 19:50:01 +0200
+Message-ID: <i2j46d6db661004051050rfb6aa9d0i3a9e20a348e5a110@mail.gmail.com>
+References: <hpcscv$umg$3@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: holger@zedat.fu-berlin.de, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Mon Apr 05 19:16:22 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Stephen Kelly <steveire@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 05 19:50:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NypuN-0007qv-AB
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 19:16:19 +0200
+	id 1NyqRB-00033i-LM
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 19:50:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755658Ab0DERQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Apr 2010 13:16:14 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42982 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755630Ab0DERQM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Apr 2010 13:16:12 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 19CFFA8ED9;
-	Mon,  5 Apr 2010 13:16:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=i7M8oBl82Eo2bCpGC8JBrDLenMA=; b=VEWNhY
-	o6wkqc9leUBs5p9ekg6QKGi5HIRGuhEo44INM6sQeQjY3WZi66OEpagqv9FegGQt
-	3yTXgllBgqz1e1PK9iPXZf1JVpjQrT9fqNiqEFOiY9SWvK0LEd3V3GLmJT6lNklP
-	X/Ics9rUrn8+gKoUBG+y+hU2573Pp6iw4Jca8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BLYa7imLyTC/0Wg60oKXP9wQR09eD/4s
-	5WuLDxQyDYziY3/TEiyYzNS5iwej71KCduCv4gf0MqLlz4rn+rxALaBILFTt2Orx
-	fWk59Lng1plhua+kUYWjgA9g/lx2uvySauh7cAy/UHzw2/dbxQ528IxGrBWqAikD
-	XYXoHAMoims=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D9615A8ED8;
-	Mon,  5 Apr 2010 13:16:05 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1F634A8ED5; Mon,  5 Apr
- 2010 13:16:00 -0400 (EDT)
-In-Reply-To: <1UypQMCHLT57SnjSQIM66RTkLalsvavG8xXoQJv4rEQ@cipher.nrlssc.navy.mil> (Brandon
- Casey's message of "Mon\, 05 Apr 2010 11\:45\:32 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EB41EB94-40D6-11DF-9676-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754811Ab0DERuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Apr 2010 13:50:08 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:57421 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753728Ab0DERuG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Apr 2010 13:50:06 -0400
+Received: by bwz1 with SMTP id 1so2949334bwz.21
+        for <git@vger.kernel.org>; Mon, 05 Apr 2010 10:50:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type;
+        bh=fbC4ZeuprYjWuS2YfqPZir0jg8pYZJvEFJ09ml91Gsw=;
+        b=c6p1+CP0/mVs1/FgiAHcdtpxwTt9WmV+UF2jTdTrCXTV7ydydcjo9ty5arCk6rwg+T
+         MA2O2OQIf0k/l7oJtrRlWcKGyjrrNmCzVj/1Ae3PDrLU9r5EmQ3QRpvDGyf3AtlRZEOB
+         B/ta2jBaqF4VkdmHy1MUdIhI/wqK0NvcSaOB4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=xwysPBfAFS9F8rCmmcz/iVOQYvV7kD75L7tc69Iutmy0ZBjooNkt+p5QKtTHZknQom
+         os+ZxWsBCJr09leoPl736pz8vYzUQ87LVLBypkdPo1U6p/0VltLThxVEiOEBnWCQr31Z
+         e63I3Gui1josXtYgEM9Yxe+ofoMOR63UTLVFs=
+Received: by 10.204.72.6 with HTTP; Mon, 5 Apr 2010 10:50:01 -0700 (PDT)
+In-Reply-To: <hpcscv$umg$3@dough.gmane.org>
+Received: by 10.204.162.145 with SMTP id v17mr2695816bkx.83.1270489802895; 
+	Mon, 05 Apr 2010 10:50:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143995>
 
-Thanks for the report.
+On Mon, Apr 5, 2010 at 4:34 PM, Stephen Kelly <steveire@gmail.com> wrote:
+>
+> Hi,
+>
+> My project uses git and so far has only one branch, 'master'.
+>
+> http://gitorious.org/grantlee/grantlee
+>
+> I want to make a 0.1 release, so that would mean creating a 0.1 branch and
+> updating files contained in the branch such as the README file and the CMake
+> files and the api documentation to report version 0.1.0, and creating the
+> 0.1.0 tag. The next tag on that branch would be 0.1.1 etc. Simultaneously,
+> the version number in those files is changes to 0.2.0 in the master branch.
+>
+> However, now I have changes in my maintenance branch (0.1) which should not
+> be merged into master (that is, the commits which change the version
+> number).
+>
+> How are you supposed to handle that with git? Simply merge and resolve the
+> conflict on master by keeping its version number? Am I missing some other
+> way of doing it here?
+>
+> Additionally, I have some stuff currently in master that should not be in
+> the 0.1 release, but should be in the 0.2 release. If I branch and then
+> remove those files from the 0.1 branch, a merge will then remove them from
+> master too? How do I keep them on master but delete them on 0.1 and still be
+> able to merge from 0.1 into master?
+>
+> The only option I can think of are to do the merge, then revert the commit
+> sha on master that does the delete.
+>
+> Is that the recommended way of doing this? I have read the git workflows
+> page, but it doesn't seem to cover either of these scenarios.
+>
+> http://www.kernel.org/pub/software/scm/git/docs/gitworkflows.html
+>
+> Thanks,
+>
+> Steve.
+>
 
-In the meantime I'll revert 2170422 (Link against libiconv on IRIX,
-2010-03-29) and wait for an improved, probably a conditional, change.
+Steve,
+
+you might want to have a look at this: http://nvie.com/git-model
+
+Rgds,
+
+-- 
+Christian
+--
+http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
