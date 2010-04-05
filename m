@@ -1,101 +1,88 @@
-From: Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH] Makefile: update defaults for modern Cygwin
-Date: Mon, 05 Apr 2010 07:14:54 -0600
-Organization: Red Hat
-Message-ID: <4BB9E24E.4090206@redhat.com>
-References: <1270161834-9597-1-git-send-email-eblake@redhat.com> <7vaatmmju9.fsf@alter.siamese.dyndns.org> <4BB5F94F.3090403@redhat.com> <20100403074700.GA24176@progeny.tock>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: git gc error - cannot lock ref 'RENAMED-REF..1'
+Date: Mon, 5 Apr 2010 09:42:30 -0400
+Message-ID: <l2m76c5b8581004050642n2ea328f6wdbfbe3991a1f5e50@mail.gmail.com>
+References: <j2k76c5b8581004011037rb81d80cdu1a4713cde31d4b56@mail.gmail.com>
+	 <g2x76c5b8581004011908r35cbaf3au545b7f11bd6db8fc@mail.gmail.com>
+	 <u2s76c5b8581004022038rf8aa0017l5dea55689c738fd9@mail.gmail.com>
+	 <20100403042211.GA22150@coredump.intra.peff.net>
+	 <v2i76c5b8581004032052q950584e1y603319ec6f341542@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig605641185EB44463AD3CEB6F"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	jon.seymour@gmail.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 05 15:16:44 2010
+Content-Type: text/plain; charset=UTF-8
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 05 15:50:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NymAV-0002R8-TD
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 15:16:44 +0200
+	id 1NymhN-0006Lq-9R
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 15:50:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754596Ab0DENQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Apr 2010 09:16:36 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:10057 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754465Ab0DENQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Apr 2010 09:16:34 -0400
-Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id o35DGBfU003473
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Mon, 5 Apr 2010 09:16:12 -0400
-Received: from [10.11.9.20] (vpn-9-20.rdu.redhat.com [10.11.9.20])
-	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id o35DGAxr014708;
-	Mon, 5 Apr 2010 09:16:10 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100330 Fedora/3.0.4-1.fc12 Lightning/1.0b1 Thunderbird/3.0.4
-In-Reply-To: <20100403074700.GA24176@progeny.tock>
-X-Enigmail-Version: 1.0.1
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
+	id S1751941Ab0DENug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Apr 2010 09:50:36 -0400
+Received: from mail-pz0-f193.google.com ([209.85.222.193]:42969 "EHLO
+	mail-pz0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751444Ab0DENue (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Apr 2010 09:50:34 -0400
+X-Greylist: delayed 484 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Apr 2010 09:50:34 EDT
+Received: by pzk31 with SMTP id 31so456454pzk.33
+        for <git@vger.kernel.org>; Mon, 05 Apr 2010 06:50:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:content-type;
+        bh=RTdKaz/DvqVPT8cfp25RPW5ho4KHAyHi+tD7kjKFCOM=;
+        b=SLhIrCFFqHlAVImQDGpDMpgHGunfHYZkEpzSSifC2FsGxazhy4aW5/7K48UAFuBB/P
+         BnAQVO3OCTbTPDXZJRoWiyIwXr6IJVYaUqqYT7/cvUnfi36Cav5StGSqeQVm4qlVBEeH
+         2MSp47quyFHyU/feum7cC7hSr9hCzIrFn2zlU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        b=IRPLltCnQi9spyCcU71RtIOtW5tHV0yzbGfjPnH3w1rFC0TIwpbgwNTQXK9B4Nldka
+         7ymBfQqAUwmWAYO9vCgRBn0uvOiv9bmKOqiNZKxbKv8z7OJ+gA1gjQxOAubCcEtBgguJ
+         eoHBjYhqhnWb6CUdnFAC0cHrajnHjsbUoU18w=
+Received: by 10.231.155.143 with HTTP; Mon, 5 Apr 2010 06:42:30 -0700 (PDT)
+In-Reply-To: <v2i76c5b8581004032052q950584e1y603319ec6f341542@mail.gmail.com>
+Received: by 10.115.29.8 with SMTP id g8mr4162719waj.211.1270474950100; Mon, 
+	05 Apr 2010 06:42:30 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143981>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig605641185EB44463AD3CEB6F
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+>> If you look in the .git directory, is there a file named RENAMED-REF..1?
+>> I have no idea how you would create such a ref, nor why it would fail to
+>> lock (perhaps because of the funny name?), but removing it should
+>> probably clear up your problem at least.
+>>
+>> The name "RENAMED-REF" is only used by git during ref renames, and those
+>> only happen when renaming branches (via "git branch -m") or remotes (via
+>> "git remote rename"). So presumably the source of the problem is related
+>> to one of those operations.
+>>
+>> -Peff
+>>
+>
+> Thanks Jeff,
+>
+> i will take a look if i will be able to find this ref. The problem
+> though is that i don't remeber doing any renaming of branches or
+> remote in this repo. Probably somebody did and pushed it to the
+> mainline where i got it from by pull... I'll tyr to check this out.
+>
+> Thanks,
+> Eugene
+>
 
-On 04/03/2010 01:47 AM, Jonathan Nieder wrote:
-> Red Hat internal people might want to be able to use 1.8 when it comes
-> out.  Maybe something like this would do the trick?  I don=E2=80=99t kn=
-ow whether
-> Cygwin 1.6 has the fixes 1.7 does, so in my ignorance I lumped it with
-> 1.5.
+Well, I have removed the file "RENAMEDREF..1" and it didn't resolve
+the problem. But then i made a "find -name REN*" and found another
+instance in logs folder. Removing this actually resolved the problem
+with gc. Still - i have no idea how this ref has appeared there as i
+believe there was no renaming operations done as well as no manual
+creation of such ref of course...
 
-Cygwin 1.6 is on par with 1.5 feature-wise, so your cutoff of 1.6 as the
-last old version is correct.
-
-> @@ -831,7 +831,7 @@ ifeq ($(uname_S),SunOS)
->  	BASIC_CFLAGS +=3D -D__EXTENSIONS__ -D__sun__ -DHAVE_ALLOCA_H
->  endif
->  ifeq ($(uname_O),Cygwin)
-> -	ifneq ($(wordlist 1, 2, $(subst ., ,$(uname_R))),1 7)
-> +	ifeq ($(shell expr "$(uname_R)" : '1\.[1-6]\.'),4)
-
-It would be nice to use fewer processes, since forking is so expensive
-on cygwin:
-
-ifeq ($(shell case '$(uname_R)' in 1.[1-6].*) echo old;; esac),old)
-
-But does that work to have unbalanced ) in a makefile $(shell)?  On the
-other hand, this is already in a chunk guarded by $(uname_S) being
-cygwin, and we know that cygwin shells understand:
-
-ifeq ($(shell case '$(uname_R)' in (1.[1-6].*) echo old;; esac),old)
-
-even though it is not portable to other shells, like Solaris /bin/sh.
-
---=20
-Eric Blake   eblake@redhat.com    +1-801-349-2682
-Libvirt virtualization library http://libvirt.org
-
-
---------------enig605641185EB44463AD3CEB6F
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Public key at home.comcast.net/~ericblake/eblake.gpg
-Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAku54lAACgkQ84KuGfSFAYBczgCgs73sEfvj0n9q94N1fsZVmEig
-uIYAn1hPLRsgHBx8kXrgaFsbpBLn34Su
-=smLx
------END PGP SIGNATURE-----
-
---------------enig605641185EB44463AD3CEB6F--
+Thanks,
+Eugene
