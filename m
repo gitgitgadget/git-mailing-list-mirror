@@ -1,75 +1,95 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] Add option to git-commit to allow empty log messages
-Date: Mon, 5 Apr 2010 09:46:47 -0500
-Message-ID: <k2lfabb9a1e1004050746if7efaa74k62be6c1f3f97053@mail.gmail.com>
-References: <z2r51dd1af81004031506pc9ac1840ie9953ae6df91d01b@mail.gmail.com> 
-	<1270392557-26538-1-git-send-email-avarab@gmail.com> <20100404224324.GB12655@gmail.com> 
-	<y2j51dd1af81004041653g9a09915el60104c575dcf6481@mail.gmail.com> 
-	<7vy6h2wsvg.fsf@alter.siamese.dyndns.org> <h2rfabb9a1e1004041915u3754016cr10e874c12f2a24e6@mail.gmail.com> 
-	<7vy6h2pn51.fsf@alter.siamese.dyndns.org>
+From: "Scott R. Godin" <scottg.wp-hackers@mhg2.com>
+Subject: Re: git http-backend error message
+Date: Mon, 05 Apr 2010 10:52:47 -0400
+Organization: MAD House Graphics
+Message-ID: <hpctg0$416$1@dough.gmane.org>
+References: <A55E5483-425E-4303-87F2-FABC46F6BFE5@pelagicore.com> <7v3a01v796.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 05 16:47:20 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 05 16:53:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NynaA-000736-2F
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 16:47:18 +0200
+	id 1Nynft-0005Fp-Fi
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 16:53:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755189Ab0DEOrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Apr 2010 10:47:12 -0400
-Received: from mail-gx0-f217.google.com ([209.85.217.217]:60331 "EHLO
-	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755006Ab0DEOrJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Apr 2010 10:47:09 -0400
-Received: by gxk9 with SMTP id 9so3000665gxk.8
-        for <git@vger.kernel.org>; Mon, 05 Apr 2010 07:47:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type;
-        bh=mvjmUmCkr3uSBflpAS/1y8AfyQhyNRAIJL/UodMGS0c=;
-        b=EKG9eN39hQStvqKTT+8nXpinacyXVn21zxGZEWOkEOKJgNxqn0GkFNHiig14jKGsub
-         CmMQYJlqTiBxILJcu8+Xv5sXmV0MVWvNJgcK81eBSvRe36Ey7NJ6+p5E17LP0K+9jt5N
-         gQy6etaoPuxe+7IcAEvYWWQMQOmapQn8GZBc8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=g6i8zqsXT6RKor/yStJOLe9mMM3j43hxNg40OK7CQXu0ej4xiMp/F56RWc21EnzDHl
-         Fjku/FpyUcLnWY0RVsikc9b2jZI/+R4uEc9foFsaFyyycoI7ashfWHRe/wMDOIiGZBYO
-         VRUVdfXlUagg0RHkIFk6ZM7QPgS+6ihxyOZXw=
-Received: by 10.100.206.13 with HTTP; Mon, 5 Apr 2010 07:46:47 -0700 (PDT)
-In-Reply-To: <7vy6h2pn51.fsf@alter.siamese.dyndns.org>
-Received: by 10.101.135.38 with SMTP id m38mr6945043ann.248.1270478827281; 
-	Mon, 05 Apr 2010 07:47:07 -0700 (PDT)
+	id S1755215Ab0DEOxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Apr 2010 10:53:06 -0400
+Received: from lo.gmane.org ([80.91.229.12]:55852 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755060Ab0DEOxB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Apr 2010 10:53:01 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Nynfe-0004Mx-PL
+	for git@vger.kernel.org; Mon, 05 Apr 2010 16:52:58 +0200
+Received: from c-71-58-29-3.hsd1.de.comcast.net ([71.58.29.3])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 05 Apr 2010 16:52:58 +0200
+Received: from scottg.wp-hackers by c-71-58-29-3.hsd1.de.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 05 Apr 2010 16:52:58 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: c-71-58-29-3.hsd1.de.comcast.net
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100330 Fedora/3.0.4-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.4
+In-Reply-To: <7v3a01v796.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143989>
 
-Heya,
-
-On Sun, Apr 4, 2010 at 22:57, Junio C Hamano <gitster@pobox.com> wrote:
-> Sverre Rabbelier <srabbelier@gmail.com> writes:
->> You contradict yourself:
+On 03/15/2010 01:12 PM, Junio C Hamano wrote:
+> Jeremiah Foster<jeremiah.foster@pelagicore.com>  writes:
+>> 	Or is it smarter to just create a bare repository, clone some
+>> 	content into it, and then push?
 >
-> I personally don't mind very much removing --allow-empty, though.
+> It depends on what you are trying to achieve by pushing into this
+> repository that is not bare, iow what this pushed-into repository is used
+> for.
+>
+> Pushing into a repository is done for two reasons:
+>
+>   - You push into repository A so that the development done in other
+>     repositories B, C, D,... can all be collected, kept safe, and
+>     transferred out to other repositories (iow, B, C, D uses A as a shared
+>     meeting place).
+>
+>     This is the primary use case of "push", and because in repository A
+>     there will not be any development of its own, people make A a (shared)
+>     bare repository.
+>
+>   - You do perform your own development in repository A, and you would want
+>     to interact with other repositories B, C, D,..., by doing "git pull B"
+>     etc., but for network configuration reasons, you can only make
+>     connection to A from B, C, D..., and not in the other direction.  In
+>     this case, because "git pull B" run on A is "git fetch B" followed by
+>     "git merge", you substitute the first "git fetch B" part by running
+>     "git push A" on B instead, because you can make connections from B to A
+>     but not A to B.
+>
+>     In this case, you do not want your "git push A" run on B to overwrite
+>     the branch that is checked out in A, and the above error is issued if
+>     you attempted to do so.  This would show a proper arrangement for such
+>     a "push instead of fetch":
+>
+>     http://git.wiki.kernel.org/index.php/GitFaq#push-is-reverse-of-fetch
 
-Ah, hmm. I vaguely remember some discussion in the past about empty
-commits, but I'm not sure what the conclusion there was? I think it
-was something like "if you want to create a marker, use tags instead,
-there's really no reason to be using --allow-empty". Wasn't there some
-use case for "--allow-emtpy" when creating an unrooted branch with an
-empty starting point, or somesuch?
+Thanks, this actually helped clear up a few things for me as well. I 
+haven't yet started working with remotes; mostly I've been using it to 
+take care of things on my end (this is a bit less problematic since I 
+mostly use it for web devel tracking anyway) and then rsync to the 
+webserver. However, this is definitely going in my collection of notes 
+and bookmarks for reference when I get to that point.
+
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+(please respond to the list as opposed to my email box directly,
+unless you are supplying private information you don't want public
+on the list)
