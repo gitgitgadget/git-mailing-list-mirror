@@ -1,89 +1,64 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: How to keep different version numbers in different branches?
-Date: Mon, 5 Apr 2010 15:36:51 -0400
-Message-ID: <n2x32541b131004051236m3a800c57k41536729ae3f192@mail.gmail.com>
-References: <hpcscv$umg$3@dough.gmane.org> <y2i32541b131004051151v8f4b8774q360c04ecdb046778@mail.gmail.com> 
-	<vpqd3ydr9g6.fsf@bauges.imag.fr>
+From: Holger =?iso-8859-1?Q?Wei=DF?= <holger@CIS.FU-Berlin.DE>
+Subject: Re: [PATCH] Link against libiconv on IRIX
+Date: Mon, 5 Apr 2010 21:44:54 +0200
+Organization: Freie =?iso-8859-1?Q?Universit=E4t?= Berlin
+Message-ID: <20100405194454.GA3808951@CIS.FU-Berlin.DE>
+References: <20100329105748.GD14869@CIS.FU-Berlin.DE>
+ <1UypQMCHLT57SnjSQIM66RTkLalsvavG8xXoQJv4rEQ@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stephen Kelly <steveire@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 05 21:37:39 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Mon Apr 05 21:45:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nys76-000362-Ec
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 21:37:36 +0200
+	id 1NysEJ-00061U-E7
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 21:45:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756276Ab0DEThQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Apr 2010 15:37:16 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:63879 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756264Ab0DEThN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Apr 2010 15:37:13 -0400
-Received: by gwb19 with SMTP id 19so1334283gwb.19
-        for <git@vger.kernel.org>; Mon, 05 Apr 2010 12:37:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/V6thWvoOCnq2FPhhegvKFcj3SkfATPYBVNa1hdMJJI=;
-        b=INcmuJ8RpV9HIinO75Vz76KJJN6EILumHxvv3j1Qv7zv46vaXOOLr+fPRp+iyBxMoA
-         bexqn1vxiTylUmmPXWurUZECpjDkbiFMKYJ3psLo36C+vuSm6Sx8y6JbXdPKHDZcbnW8
-         vMxZ+cc+KdiVqXlr/9EcAqGs0bNcaRS9DSCVw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=al5pjuRUq7t/ZHnobfPApT2kudnJSYXeQgxMMp3GVFc6dWi8fkKvbHjuQFD9qwSvVz
-         MSzS5D9+vwZZ2HDTG9JdrA3fsSnWn8IRIjcqQQVnj3bqrveJDjN3JjTBMzXSDRT5rSLT
-         /5aKzyVODzCae/PBAniciTzbvtI+dmRf/wTo0=
-Received: by 10.150.199.19 with HTTP; Mon, 5 Apr 2010 12:36:51 -0700 (PDT)
-In-Reply-To: <vpqd3ydr9g6.fsf@bauges.imag.fr>
-Received: by 10.150.252.13 with SMTP id z13mr6658117ybh.76.1270496231577; Mon, 
-	05 Apr 2010 12:37:11 -0700 (PDT)
+	id S1755746Ab0DETo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Apr 2010 15:44:58 -0400
+Received: from outpost1.zedat.fu-berlin.de ([130.133.4.66]:50964 "EHLO
+	outpost1.zedat.fu-berlin.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753416Ab0DETo5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Apr 2010 15:44:57 -0400
+Received: from relay1.zedat.fu-berlin.de ([130.133.4.67])
+          by outpost1.zedat.fu-berlin.de (Exim 4.69)
+          with esmtp
+          (envelope-from <holger@cis.fu-berlin.de>)
+          id <1NysEC-0000Ih-DL>; Mon, 05 Apr 2010 21:44:56 +0200
+Received: from mail.cis.fu-berlin.de ([160.45.11.138])
+          by relay1.zedat.fu-berlin.de (Exim 4.69)
+          with esmtp
+          (envelope-from <holger@cis.fu-berlin.de>)
+          id <1NysEB-0007EL-3p>; Mon, 05 Apr 2010 21:44:55 +0200
+Received: by Mail.CIS.FU-Berlin.DE (Exim 4.69)
+          with local
+          (envelope-from <holger@cis.fu-berlin.de>)
+          id <1NysEB-00GoR9-04>; Mon, 05 Apr 2010 21:44:55 +0200
+Mail-Followup-To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>,
+	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <1UypQMCHLT57SnjSQIM66RTkLalsvavG8xXoQJv4rEQ@cipher.nrlssc.navy.mil>
+X-Operating-System: IRIX64 6.5.30f
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Originating-IP: 160.45.11.138
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144056>
 
-On Mon, Apr 5, 2010 at 3:22 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> You can even make sure it _never_ happens, by making a one-commit
-> release branch which changes the version number for each release. Thi=
-s
-> one-commit is never merged in anything:
->
-> =A00.1 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 0.2
-> =A0| =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 |
-> =A0v =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 v
-> --o--o--o--o--o--o--o--o---o--o--o <--- master branch
-> =A0 \ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0/
-> =A0 =A0o--o--o--o--o--o--o--o--- ... =A0<--- maintainance branch
-> =A0 =A0 =A0 =A0 =A0 \ =A0 =A0 =A0 =A0 =A0 =A0 =A0\
-> =A0 =A0 =A0 =A0 =A0 =A0o <- 0.1.1 =A0 =A0 o <- 0.1.2
->
-> Here, the maintainance branch never changes the version number in
-> README & friends.
+* Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil> [2010-04-05 11:45]:
+> Could it be that you are using a third party iconv library?
+> I've experienced this on another system and the problem was related
+> to curl.  In that case, curl was linked against an external iconv and
+> not the native library, so if I tried to build with curl support, I had
+> to also build against the external iconv library.
 
-This works too.  In fact, I even do it on one of my projects.
-However, I find it a little annoying, because then I don't know which
-version to tag: the pre-number-changed version, or the
-post-number-changed version.
+This was exactly the problem in our case, too.  I'm sorry for the
+incorrect patch.
 
-The latter sounds like the obvious answer, but if I do that, then "git
-describe" never says anything useful on my master branch.  But if I do
-the former instead, then the tag doesn't accurately reflect the
-version I *actually* released.
-
-I've never found an adequate solution to this problem, other than not
-including the version number in the repo at all.
-
-Have fun,
-
-Avery
+Holger
