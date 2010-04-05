@@ -1,80 +1,83 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Makefile: update defaults for modern Cygwin
-Date: Mon, 5 Apr 2010 09:30:53 -0500
-Message-ID: <20100405143053.GA13093@progeny.tock>
-References: <1270161834-9597-1-git-send-email-eblake@redhat.com>
- <7vaatmmju9.fsf@alter.siamese.dyndns.org>
- <4BB5F94F.3090403@redhat.com>
- <20100403074700.GA24176@progeny.tock>
- <4BB9E24E.4090206@redhat.com>
+From: Stephen Kelly <steveire@gmail.com>
+Subject: How to keep different version numbers in different branches?
+Date: Mon, 05 Apr 2010 16:34:07 +0200
+Message-ID: <hpcscv$umg$3@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	jon.seymour@gmail.com
-To: Eric Blake <eblake@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Apr 05 16:30:36 2010
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 05 16:34:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NynK0-0008V1-Aj
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 16:30:36 +0200
+	id 1NynNg-0005Uz-4I
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 16:34:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754838Ab0DEOab (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Apr 2010 10:30:31 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:34415 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754064Ab0DEOaa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Apr 2010 10:30:30 -0400
-Received: by pwj9 with SMTP id 9so255095pwj.19
-        for <git@vger.kernel.org>; Mon, 05 Apr 2010 07:30:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=0kaDcEK7nKf9ce5YlaSwkCOsH1B0G3WkoWoRSwOxRj0=;
-        b=KcqmebFhJYi2nzVsceerK8es+TemV27M5z42d9fMVAhK9HMbg13rtWouYrHp6Y7EMB
-         TFEzZAw0MMMmOsU1hSY0LCTPU3d30knjn6lmAzazsktf60tz0e47AfxvWWkdCVYftFUU
-         4Le+E+s79VReeJ1MFvl+gRYvf/OO4TEx8Hcs8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=jOFcbOgHWrZ8EaKFEFa4mtEh8BFsk8u0dSFiQ+S3vmRIAacU7qbJwrv4ZGCVtorZbp
-         /JcPF4WvBg3bDKzmuQblg6ybeO6gPC31w46s4THFogC1bqV92wMR3V3xqOP9GGafOzov
-         NlPAqwyW/lTcP/0ZZVOJhR6mUYTosKi70yPCk=
-Received: by 10.114.251.32 with SMTP id y32mr4381187wah.149.1270477829701;
-        Mon, 05 Apr 2010 07:30:29 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm4620916iwn.9.2010.04.05.07.30.28
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 05 Apr 2010 07:30:29 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4BB9E24E.4090206@redhat.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754996Ab0DEOeT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Apr 2010 10:34:19 -0400
+Received: from lo.gmane.org ([80.91.229.12]:52842 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754915Ab0DEOeS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Apr 2010 10:34:18 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NynNY-0004ue-MG
+	for git@vger.kernel.org; Mon, 05 Apr 2010 16:34:16 +0200
+Received: from dslb-188-103-017-106.pools.arcor-ip.net ([188.103.17.106])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 05 Apr 2010 16:34:16 +0200
+Received: from steveire by dslb-188-103-017-106.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 05 Apr 2010 16:34:16 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: dslb-188-103-017-106.pools.arcor-ip.net
+User-Agent: KNode/4.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/143985>
 
-Eric Blake wrote:
 
-> Cygwin 1.6 is on par with 1.5 feature-wise, so your cutoff of 1.6 as the
-> last old version is correct.
+Hi,
 
-Thanks for explaining.
+My project uses git and so far has only one branch, 'master'.
 
-> ifeq ($(shell case '$(uname_R)' in (1.[1-6].*) echo old;; esac),old)
+http://gitorious.org/grantlee/grantlee
 
-Looks good to me.
+I want to make a 0.1 release, so that would mean creating a 0.1 branch and 
+updating files contained in the branch such as the README file and the CMake 
+files and the api documentation to report version 0.1.0, and creating the 
+0.1.0 tag. The next tag on that branch would be 0.1.1 etc. Simultaneously, 
+the version number in those files is changes to 0.2.0 in the master branch.
 
-While I have your attention, do you know of a simple way to test
-Cygwin programs under Linux?  setup.exe does not work well under wine,
-so I am asking mostly in the hope that there is a .tar.gz or .zip
-binary distribution somewhere I could play with.
+However, now I have changes in my maintenance branch (0.1) which should not 
+be merged into master (that is, the commits which change the version 
+number). 
+
+How are you supposed to handle that with git? Simply merge and resolve the 
+conflict on master by keeping its version number? Am I missing some other 
+way of doing it here?
+
+Additionally, I have some stuff currently in master that should not be in 
+the 0.1 release, but should be in the 0.2 release. If I branch and then 
+remove those files from the 0.1 branch, a merge will then remove them from 
+master too? How do I keep them on master but delete them on 0.1 and still be 
+able to merge from 0.1 into master?
+
+The only option I can think of are to do the merge, then revert the commit 
+sha on master that does the delete.
+
+Is that the recommended way of doing this? I have read the git workflows 
+page, but it doesn't seem to cover either of these scenarios.
+
+http://www.kernel.org/pub/software/scm/git/docs/gitworkflows.html
 
 Thanks,
-Jonathan
+
+Steve.
