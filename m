@@ -1,101 +1,104 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 43/43] builtins: do not commit pager choice early
-Date: Mon,  5 Apr 2010 20:41:28 +0200
-Message-ID: <1270492888-26589-44-git-send-email-pclouds@gmail.com>
-References: <1270492888-26589-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] diff: add --word-diff option that generalizes
+ --color-words
+Date: Mon, 05 Apr 2010 11:46:11 -0700
+Message-ID: <7v6345pwjw.fsf@alter.siamese.dyndns.org>
+References: <cover.1270388195.git.trast@student.ethz.ch>
+ <a1e9ef6a4eb1d7930f69e9ac4b63dc3152ebc98c.1270388195.git.trast@student.ethz.ch> <7v39zay7or.fsf@alter.siamese.dyndns.org> <201004051220.47400.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Niedier <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 05 20:44:57 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eelis van der Weegen <eelis@eelis.net>,
+	Paul Mackerras <paulus@samba.org>, Miles Bader <miles@gnu.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Apr 05 20:46:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyrI7-0003NW-02
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 20:44:55 +0200
+	id 1NyrJi-0007m2-43
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 20:46:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756160Ab0DESoS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Apr 2010 14:44:18 -0400
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:44752 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756145Ab0DESoO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Apr 2010 14:44:14 -0400
-Received: by mail-fx0-f227.google.com with SMTP id 27so1251549fxm.28
-        for <git@vger.kernel.org>; Mon, 05 Apr 2010 11:44:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=94TF9qqLoO6NsZDsypOIzsCAUTphx64YhVV8uAYlkdA=;
-        b=twngkJErwb51GtD3Y+GDI7/hoZjfYj62wGZLEAmchdqm2R/cKbc2auJPrZxgwjRRca
-         qqaolJlcfIQ7HOEQENPy0hnAWsYZHJAAxOwcCoWNaWBwwgu8FEX6ohLKPIcV55kQIEAb
-         oDxCqLIWjfawwDMmYo0rFt7Ry6NQ5cma+1Sng=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=YypnQkHg7KLNXfrbQw9nn0RQi7tACaCOfdQ0c7rYrTGhNy0aViX98WvVyUuqP254tU
-         brIIA07+yh3KrBBOOPt3t14n6H/Cv1iQi4dUck0PFEx7sFAvKCtlJkz2qWWze8ru0HHn
-         /xEaryTlTBGg0RNrAwtSxdj3cpb9V1xTUKh18=
-Received: by 10.223.42.22 with SMTP id q22mr6152161fae.40.1270493051559;
-        Mon, 05 Apr 2010 11:44:11 -0700 (PDT)
-Received: from dektop ([212.247.124.209])
-        by mx.google.com with ESMTPS id h2sm27054314fkh.55.2010.04.05.11.44.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 05 Apr 2010 11:44:10 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Mon,  5 Apr 2010 20:44:08 +0200
-X-Mailer: git-send-email 1.7.0.rc1.541.g2da82.dirty
-In-Reply-To: <1270492888-26589-1-git-send-email-pclouds@gmail.com>
+	id S1756170Ab0DESq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Apr 2010 14:46:29 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39235 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755907Ab0DESq1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Apr 2010 14:46:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E424A80F5;
+	Mon,  5 Apr 2010 14:46:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jgyjo794GGkZOip+2j0lI8CP1eA=; b=GO98Jb
+	Vuw70WdAu5evfu+RsKPFeDjv1KfyI4vz2dYoBbp5zqPGpW6/gAqYAczxVugGizmd
+	2ssAfm/L/BVgp9FmBQgtFijbCSNQ+2j19WgPAOaBkkAQZLtP/JRudzCG9rsBjDGB
+	7qHYuS8lZ1rHiaFVXixEkTnVVYnbQdtFlodyc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oEb8VzDhn9POvhi60es0uHYLSdp2v1lN
+	0BxCktjx90BMxw5sy5TP8Kwbz2qyfcxSW8BW1DdMkVApX0IvA0SUv2/i95oPwaqd
+	UmdkkyTaJqdahyJX3NsQVYLkE0Aslsg23DAEXUv91KIhxHsO6wfYACEKD0wSu2CL
+	dhSr9LODHTU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A0C05A80DD;
+	Mon,  5 Apr 2010 14:46:19 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A5C4A80CE; Mon,  5 Apr
+ 2010 14:46:12 -0400 (EDT)
+In-Reply-To: <201004051220.47400.trast@student.ethz.ch> (Thomas Rast's
+ message of "Mon\, 5 Apr 2010 12\:20\:46 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 861D337E-40E3-11DF-A86F-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144042>
 
-Committing pager choice may require setting up the pager, which
-will need access to repository.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-At the time after handle_options() is called, the repository has not
-been found yet. As a result, unallowed access to repository may
-happen.
+>> I think it is a bug that "git show --word-diff" gives the colored format
+>> output when I have "color.ui" configuration.
+>> 
+>> Even though I may have "color.ui = auto" in the configuration, I am
+>> telling the command to do a --word-diff, not --color-words, from the
+>> command line, and that should override color.ui settings.
+>
+> I don't really see why the user would forfeit the convenience and
+> readability of a color-words diff when the terminal supports colors.
 
-There are several possible code path after
-handle_options()/commit_pager_choice() is called:
+There is one difference between other uses of colors and color-words, but
+I can imagine that ordinary people may not have even realized nor thought
+about it.
 
-1. list_common_cmds_help()
-2. run_argv()
-3. help_unknown_cmd()
+To people who are somewhat but not completely color-challenged (like
+myself), it still helps to paint hunk headers in a color that is different
+from the body text to make the boundary of each hunk more visible.  Even
+without the perception of exact color/hue, the contrast alone helps in
+that case.
 
-Case 2. will have commit_pager_choice() called inside run_builtin() if
-a command is found. Case 1. and 3. won't need a pager, it's short
-printout and should be fitted within a screen. So, removing
-commit_pager_choice() call after handle_options() is safe.
+The body of the diff is painted in deleted and added colors; the color is
+used only as a way to additionally enhance the output, while still keeping
+the plus/minus/SP at the leftmost column.  Even to somebody who is
+completely color challenged, the necessary information is still there.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- git.c |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
+Compare --color-words with these.  The output uses color as the _only_ way
+to say which words appear before and after.  The contrast among the three
+colors used for the plain body, deleted and added text may still help, or
+it may not, to a partially color challenged person.
 
-diff --git a/git.c b/git.c
-index 1fb478f..060cfe8 100644
---- a/git.c
-+++ b/git.c
-@@ -521,7 +521,6 @@ int main(int argc, const char **argv)
- 	argv++;
- 	argc--;
- 	handle_options(&argv, &argc, NULL);
--	commit_pager_choice();
- 	if (argc > 0) {
- 		if (!prefixcmp(argv[0], "--"))
- 			argv[0] +=3D 2;
---=20
-1.7.0.rc1.541.g2da82.dirty
+I also happen to see "--word-diff=color" more as just a customization to
+the "plain" output formatting to say "use these byte sequences that happen
+to be ANSI color codes, instead of '{+', '+}', etc." than as a part of
+what the ui.color switch wants to specify, which is "are various parts of
+the output colored to further help distinguishing them visually?"
+
+So color me somewhat biased, but there is a case where the suggestion in
+the message you are responding to makes a difference.
+
+I also think --color --word-diff=plain could show "{+new+}" in green and
+"[-old-]" in red and that may make things more consistent.
