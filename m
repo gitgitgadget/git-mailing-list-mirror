@@ -1,280 +1,129 @@
-From: Nick Edelen <sirnot@gmail.com>
-Subject: [PATCH 7/7 (v5)] graft awareness
-Date: Mon, 05 Apr 2010 20:58:51 +0100
-Message-ID: <4BBA40FB.6040204@gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: 'git gc --aggressive' effectively unusable
+Date: Mon, 05 Apr 2010 17:07:32 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1004051615070.7232@xanadu.home>
+References: <201004030005.35737.elendil@planet.nl>
+ <p2gb4087cc51004031433xc57e52bbq733d1d3c5f37f238@mail.gmail.com>
+ <201004040123.06877.elendil@planet.nl> <87oci0m5v4.fsf@catnip.gol.com>
+ <87zl1js248.fsf@troilus.org> <20100404203850.GA8798@coredump.intra.peff.net>
+ <20100404214944.GA15104@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sam Vilain <sam@vilain.net>,
-	Michael J Gruber <git@drmicha.warpmail
-X-From: git-owner@vger.kernel.org Mon Apr 05 21:58:56 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Michael Poole <mdpoole@troilus.org>, Miles Bader <miles@gnu.org>,
+	Michael Witten <mfwitten@gmail.com>,
+	Frans Pop <elendil@planet.nl>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 05 23:07:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NysRj-0001h7-1B
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 21:58:55 +0200
+	id 1NytWG-0003KL-N3
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 23:07:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756421Ab0DET6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Apr 2010 15:58:53 -0400
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:33419 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756412Ab0DET6v (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Apr 2010 15:58:51 -0400
-Received: by mail-ew0-f220.google.com with SMTP id 20so121824ewy.1
-        for <git@vger.kernel.org>; Mon, 05 Apr 2010 12:58:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=PPMT5mE/k/OClUuvrA2SNVfxKYx3eZiclIswnwOXExE=;
-        b=E+NTf1Mcly4wb+yKOSrgjzGfJqkAD0CobtIxNlab375ZxdGVmQYVQQ7SQhitdO3if/
-         Dpi0VQUSAUWB2PaYUyR1AJBHPw/u3wmqGkqhksPLM/SujyOzWw4WuoDobEJGqYWet9fL
-         edwZCPJJ1Nix9X9j145i0dMW/CTOq7mzSFkFQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=XYY1VtcmodrrNYp+SqeCQANSHz+I7ZrhJXpl26HhdKy2kxkjZJzlonz5i9ucCkQbgG
-         cn5L9f7uBgNG9yRAujehIYPdeqLcPqUi4Y8GgRd+2NSV5r7bf8ulfGxxObptN0Wv1QGQ
-         5/HuUN/MVfPU6z8DNOSUX1qyH5CjQdmw0WpC8=
-Received: by 10.213.42.78 with SMTP id r14mr3265691ebe.11.1270497531161;
-        Mon, 05 Apr 2010 12:58:51 -0700 (PDT)
-Received: from [192.168.55.86] (dhcp-077-251-020-197.chello.nl [77.251.20.197])
-        by mx.google.com with ESMTPS id 13sm6452019ewy.13.2010.04.05.12.58.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 05 Apr 2010 12:58:50 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+	id S1756630Ab0DEVHg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Apr 2010 17:07:36 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:18988 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756589Ab0DEVHe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Apr 2010 17:07:34 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0L0F00H4W9CKJO60@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 05 Apr 2010 17:07:33 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20100404214944.GA15104@coredump.intra.peff.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144066>
 
-Adds support for graft commits in rev-cache (w/ test), and slightly alters
-graft mechanism.  Before, parse_commit() checked the graft list on every
-commit.  Now register_commit_graft() preemptively loads graft commits into
-memory, and sets a new 'graft' flag in the object.  This allows awareness of
-the commits' medical history without searching a (normally private) array upon
-each commit.
+On Sun, 4 Apr 2010, Jeff King wrote:
 
-Signed-off-by: Nick Edelen <sirnot@gmail.com>
+> On Sun, Apr 04, 2010 at 04:38:50PM -0400, Jeff King wrote:
+> 
+> > I packed Frans' sample kernel repo with "git gc --aggressive" last
+> > night. It did finish after about 9 hours. I didn't take memory usage
+> > measurements, but here's what time said:
+> > 
+> >   real    535m38.898s
+> >   user    216m46.437s
+> >   sys     0m24.186s
+> > 
+> > That's 3.6 hours of CPU time over almost 9 hours (on a dual-core
+> > machine). The non-agressive pack was about 680M, and the result was
+> > 480M. The machine has 2G of RAM, and not much else running. So I would
+> > really not expect there to be much disk I/O required, but clearly we
+> > were waiting quite a bit.
+> > 
+> > I'll try tweaking a few of the pack memory limits and try again.
+> 
+> Hmm, this may be relevant:
+> 
+>   http://thread.gmane.org/gmane.comp.version-control.git/67791/focus=94797
+> 
+> In my experiments, memory usage is increasing but valgrind doesn't
+> leaks. So perhaps it is fragmentation in the memory allocator.
 
----
- builtin/rev-cache.c       |   14 ++++++++++++--
- commit.c                  |   34 +++++++++++++++++++++++++++++++---
- object.h                  |    3 ++-
- rev-cache.c               |   32 ++++++++++++++++++++++++++++++++
- t/t6019-rev-cache-list.sh |    7 +++++++
- 5 files changed, 84 insertions(+), 6 deletions(-)
+To verify this, simply try with pack.threads = 1.  That should help the 
+memory allocator not to fragment memory allocation across threads 
+randomly.
 
-diff --git a/builtin/rev-cache.c b/builtin/rev-cache.c
-index 59fc833..404e48c 100644
---- a/builtin/rev-cache.c
-+++ b/builtin/rev-cache.c
-@@ -102,8 +102,18 @@ static int test_rev_list(int argc, const char *argv[])
- 			flags ^= UNINTERESTING;
- 		else if (!strcmp(argv[i], "--objects"))
- 			revs.tree_objects = revs.blob_objects = 1;
--		else
--			handle_revision_arg(argv[i], &revs, flags, 1);
-+		else {
-+			struct commit_graft graft;
-+
-+			if (argv[i][0] == ':') {
-+				handle_revision_arg(argv[i] + 1, &revs, flags, 1);
-+
-+				hashcpy(graft.sha1, revs.pending.objects[revs.pending.nr - 1].item->sha1);
-+				graft.nr_parent = -1;
-+				register_commit_graft(&graft, 0);
-+			} else
-+				handle_revision_arg(argv[i], &revs, flags, 1);
-+		}
- 	}
- 
- 	setup_revisions(0, 0, &revs, 0);
-diff --git a/commit.c b/commit.c
-index 263dd74..23f3bb9 100644
---- a/commit.c
-+++ b/commit.c
-@@ -100,6 +100,7 @@ static int commit_graft_pos(const unsigned char *sha1)
- 
- int register_commit_graft(struct commit_graft *graft, int ignore_dups)
- {
-+	struct commit *commit;
- 	int pos = commit_graft_pos(graft->sha1);
- 
- 	if (0 <= pos) {
-@@ -124,6 +125,17 @@ int register_commit_graft(struct commit_graft *graft, int ignore_dups)
- 			(commit_graft_nr - pos - 1) *
- 			sizeof(*commit_graft));
- 	commit_graft[pos] = graft;
-+
-+	commit = lookup_commit(graft->sha1);
-+	commit->object.graft = 1;
-+	if (commit->object.parsed) {
-+		/* we don't want to call this from a parse_commit(), but
-+		 * we should ensure commit's parents are "correct"
-+		 */
-+		commit->object.parsed = 0;
-+		parse_commit(commit);
-+	}
-+
- 	return 0;
- }
- 
-@@ -220,6 +232,7 @@ int write_shallow_commits(struct strbuf *out, int use_pack_protocol)
- 
- int unregister_shallow(const unsigned char *sha1)
- {
-+	struct commit *commit;
- 	int pos = commit_graft_pos(sha1);
- 	if (pos < 0)
- 		return -1;
-@@ -228,6 +241,12 @@ int unregister_shallow(const unsigned char *sha1)
- 				sizeof(struct commit_graft *)
- 				* (commit_graft_nr - pos - 1));
- 	commit_graft_nr--;
-+
-+	commit = lookup_commit(sha1);
-+	commit->object.graft = 0;
-+	commit->object.parsed = 0;
-+	parse_commit(commit);
-+
- 	return 0;
- }
- 
-@@ -241,7 +260,6 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
- 
- 	if (item->object.parsed)
- 		return 0;
--	item->object.parsed = 1;
- 	tail += size;
- 	if (tail <= bufptr + 46 || memcmp(bufptr, "tree ", 5) || bufptr[45] != '\n')
- 		return error("bogus commit object %s", sha1_to_hex(item->object.sha1));
-@@ -254,7 +272,13 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
- 	while (pop_commit(pptr))
- 		; /* clear anything from cache */
- 
--	graft = lookup_commit_graft(item->object.sha1);
-+	/* make sure .graft flag is initialized */
-+	prepare_commit_graft();
-+	if (item->object.graft)
-+		graft = lookup_commit_graft(item->object.sha1);
-+	else
-+		graft = 0;
-+
- 	while (bufptr + 48 < tail && !memcmp(bufptr, "parent ", 7)) {
- 		struct commit *new_parent;
- 
-@@ -282,8 +306,12 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
- 				continue;
- 			pptr = &commit_list_insert(new_parent, pptr)->next;
- 		}
--	}
-+		item->object.graft = 1;
-+	} else
-+		item->object.graft = 0;
-+
- 	item->date = parse_commit_date(bufptr, tail);
-+	item->object.parsed = 1;
- 
- 	return 0;
- }
-diff --git a/object.h b/object.h
-index 82877c8..8123824 100644
---- a/object.h
-+++ b/object.h
-@@ -22,7 +22,7 @@ struct object_array {
- };
- 
- #define TYPE_BITS   3
--#define FLAG_BITS  27
-+#define FLAG_BITS  26
- 
- /*
-  * The object type is stored in 3 bits.
-@@ -30,6 +30,7 @@ struct object_array {
- struct object {
- 	unsigned parsed : 1;
- 	unsigned used : 1;
-+	unsigned graft : 1;
- 	unsigned type : TYPE_BITS;
- 	unsigned flags : FLAG_BITS;
- 	unsigned char sha1[20];
-diff --git a/rev-cache.c b/rev-cache.c
-index 4f1ea34..dfb3212 100644
---- a/rev-cache.c
-+++ b/rev-cache.c
-@@ -754,9 +754,41 @@ static int traverse_cache_slice_1(struct rc_slice_header *head, unsigned char *m
- 			}
- 		} else if (!ipath_nr && co->date <= date)
- 			slop--;
-+		else if (!ipath_nr && !upath_nr)
-+			break;
- 		else
- 			slop = SLOP;
- 
-+		/* before opening further topo-relations, check if the parenting has had medical attention */
-+		if (obj->graft) {
-+			struct commit_list *list;
-+
-+			parse_commit(co);
-+			obj->flags &= ~FACE_VALUE;
-+			last_objects[path] = 0;
-+
-+			/* we're only interested in its indirect influence */
-+			for (list = co->parents; list; list = list->next) {
-+				struct rc_index_entry *iep;
-+				struct object *po = &list->item->object;
-+
-+				iep = search_index(po->sha1);
-+				if (!iep || hashcmp(idx_caches + 20 * iep->cache_index, head->sha1)) {
-+					if (!(obj->flags & UNINTERESTING) && !(po->flags & UNINTERESTING))
-+						ioutside = 1;
-+				}
-+			}
-+
-+			/* an abrupt end */
-+			myworkp = &commit_list_insert(co, myworkp)->next;
-+			if (uninteresting)
-+				upath_nr--;
-+			else
-+				ipath_nr--;
-+			paths[path] = 0;
-+			continue;
-+		}
-+
- 		/* open parents */
- 		if (entry->merge_nr) {
- 			int j, off = index + OBJECT_ENTRY_SIZE;
-diff --git a/t/t6019-rev-cache-list.sh b/t/t6019-rev-cache-list.sh
-index b7eff3f..5664de7 100644
---- a/t/t6019-rev-cache-list.sh
-+++ b/t/t6019-rev-cache-list.sh
-@@ -92,6 +92,7 @@ git rev-list --topo-order HEAD --not HEAD~2 >proper_commit_list_limited2
- git rev-list --topo-order HEAD >proper_commit_list
- git rev-list --objects HEAD >proper_object_list
- git rev-list HEAD --max-age=$min_date --min-age=$max_date >proper_list_date_limited
-+git rev-cache test HEAD :HEAD~2 >proper_shallow_list 2>/dev/null
- 
- cache_sha1=`git rev-cache add HEAD 2>output.err`
- 
-@@ -252,5 +253,11 @@ test_expect_success 'test --ignore-size function in fuse' '
- 	test -e .git/rev-cache/$cache_sha1
- '
- 
-+#test graft handling
-+test_expect_success 'check graft handling' '
-+	git rev-cache test HEAD :HEAD~2 >list
-+	test_cmp list proper_shallow_list
-+'
-+
- test_done
- 
--- 
-tg: (68204ac..) t/rc/graft (depends on: t/rc/names)
+Also, going multithreaded _may_ be faster only if you can afford the 
+increased memory usage.  Especially with gc --aggressive, each thread is 
+adding its own share of memory usage in the delta window.
+
+First thing to try for the biggest possible improvement is 
+pack.threads=1.  On a quad core machine this means repacking 4 times 
+slower, but this is certainly much faster than 100 times slower when the 
+system starts swapping. That might even make the resulting pack a tad 
+tighter due to delta windows not being fragmented across different 
+threads.
+
+If that is not enough, then try:
+
+	pack.deltaCacheSize = 1
+	core.packedGitWindowSize = 16m
+	core.packedGitLimit = 128m
+
+This should reduce Git's memory usage while making it slower without 
+affecting the packing outcome.  Again "slower" could mean "much faster" 
+if by reducing memory usage then swapping is completely avoided.
+
+If that still doesn't help much, then the next tweaks will affect the 
+packing result:
+
+	pack.windowMemory = 256m
+
+Here 256m is arbitrary and must be guessed from the size of the objects 
+being packed.  The idea is to let smallish objects completely fill the 
+search window (it has 250 entries by default with --aggressive) while 
+not letting that many huge objects completely eat up all memory.  If 
+there is still swapping going on then you can try 64m instead.  That 
+means that if you have a large set of 1MB objects then the delta search 
+window will be scaled down to less than 64 entries in that case.  This 
+is why packing might be less optimal as there are fewer delta 
+combinations being considered.
+
+If this still doesn't prevent swapping then you should really consider 
+installing more RAM.  There are fundamental object accounting structures 
+that can hardly be shrunk such as struct object_entry in 
+builtin/pack-objects.c, and one instance of such structure is needed for 
+each object.  On a 64-bit machine this structure occupies 120 bytes, 
+meaning 2M objects requires 240MB of RAM just for that.  The data set 
+also has to fit in the file cache to avoid IO trashing.  So if your 
+repository is larger than the available RAM then some trashing is almost 
+unavoidable.  Sometimes a badly packed repository may require 2GB of 
+disk space in the .git directory alone while the fully packed version is 
+only a few hundred megabytes.  Such repositories may need to be repacked 
+on a big machine first, before machines with less RAM are able to handle 
+it afterwards.
+
+Hope this helps.
+
+
+Nicolas
