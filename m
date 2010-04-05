@@ -1,77 +1,70 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH 1/2] diff: add --word-diff option that generalizes 
-	--color-words
-Date: Tue, 6 Apr 2010 03:53:41 +0900
-Message-ID: <s2kfc339e4a1004051153yc950b858lb919740f0de80e9@mail.gmail.com>
-References: <cover.1270388195.git.trast@student.ethz.ch> <a1e9ef6a4eb1d7930f69e9ac4b63dc3152ebc98c.1270388195.git.trast@student.ethz.ch> 
-	<7v39zay7or.fsf@alter.siamese.dyndns.org> <201004051220.47400.trast@student.ethz.ch> 
-	<7v6345pwjw.fsf@alter.siamese.dyndns.org>
+From: Howard Miller <howard@e-learndesign.co.uk>
+Subject: Re: Mysterious junk in file.... "not commited yet"
+Date: Mon, 5 Apr 2010 20:03:11 +0100
+Message-ID: <p2y26ae428a1004051203jbb7c838eh8de0cb5f6ae1dcb1@mail.gmail.com>
+References: <i2v26ae428a1004051113q68a0cf13o65fbf1349f941648@mail.gmail.com>
+	 <o2n32541b131004051152ie6c82b3wdab0f38a9e657943@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eelis van der Weegen <eelis@eelis.net>,
-	Paul Mackerras <paulus@samba.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 05 21:01:15 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 05 21:03:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyrXs-0000SA-8M
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 21:01:12 +0200
+	id 1NyrZu-0000uL-AN
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 21:03:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755481Ab0DETBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Apr 2010 15:01:07 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:65283 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754736Ab0DETBF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Apr 2010 15:01:05 -0400
-Received: by pwj9 with SMTP id 9so554431pwj.19
-        for <git@vger.kernel.org>; Mon, 05 Apr 2010 12:01:04 -0700 (PDT)
+	id S1755489Ab0DETDO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Apr 2010 15:03:14 -0400
+Received: from mail-fx0-f227.google.com ([209.85.220.227]:56416 "EHLO
+	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754736Ab0DETDM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Apr 2010 15:03:12 -0400
+Received: by fxm27 with SMTP id 27so1273220fxm.28
+        for <git@vger.kernel.org>; Mon, 05 Apr 2010 12:03:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
+        d=googlemail.com; s=gamma;
         h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:from:date:x-google-sender-auth:received:message-id
-         :subject:to:cc:content-type;
-        bh=HCmx0Xf/J2MmN/J4oHBzlf46sCVZhVFkrfnSVs6B3Fk=;
-        b=rNNs/ecvIvd6MmFhgIcGk4BRCszc0uu3y3nN1Te60ajLaZlDY9wmY67tTKpHXLStzP
-         0IUoRXK01WzNKK6qoPtifertZTzeoQZgYufcAAJwgtUHVv1DRAuP0n5DBXAXz3c1+kDx
-         cNrz3j0Td1TN/BPnnC7f/MzmEr4OMt1m3vXaE=
+         :references:date:x-google-sender-auth:received:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=4LQYViDqtQsTIT+5mKn0rskLH/naL+X+sC52PBJlIBU=;
+        b=XPUuRasyrEfN8StiKV9ZneH2GQYT2sioaFc9ir2iebAeGuNaCJuPuiyDAcpbOeXZ1s
+         lpbOWBJfZvfy/SuhWYrvCT7mY7EW4C3iSnYyQ8OAvX6TSQgQC6od3HOIP2peswM5BHtI
+         JQzBcHw6mtvRCHzUU9cXMjIBZY1BzI3j0i6Ro=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        b=NLZvnqBKFltmBnwiRQElBY+Vm5UaT53PB7cwUpXUS0ade45KZjSElT/KsQuXJmcSHI
-         mBmef4/traaR/Pu13zFGy2JWu2X63PgKTBDgkgUZQaAM3+0mv+nRCqk4qcZxJ+2JcywI
-         YSXL8KS9lP34kJYOn8Xfoo32dypJbxOhVssjo=
-Received: by 10.231.16.141 with HTTP; Mon, 5 Apr 2010 11:53:41 -0700 (PDT)
-In-Reply-To: <7v6345pwjw.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: 3e01e521ff328a8a
-Received: by 10.114.253.34 with SMTP id a34mr4548444wai.43.1270493641347; Mon, 
-	05 Apr 2010 11:54:01 -0700 (PDT)
+        d=googlemail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=kMD7NCOLf10b0AsuEwYZTdOgRf6YCuHJ4fReRlCJSv7HaEWW5lEkpNlw9CKNNW0vuq
+         5svfZvJq1gTF97L7xiMv/TMoT3//un2NXPt9LDaoR8QBEN9mvlqq0MlZYxcEJGxoL15N
+         HA4NR1+Nao7Gyt6mjIf8Zx5/i86BqkWgHyd/Y=
+Received: by 10.239.160.143 with HTTP; Mon, 5 Apr 2010 12:03:11 -0700 (PDT)
+In-Reply-To: <o2n32541b131004051152ie6c82b3wdab0f38a9e657943@mail.gmail.com>
+X-Google-Sender-Auth: a40090c3b9cf1afa
+Received: by 10.239.158.68 with SMTP id t4mr514920hbc.72.1270494191085; Mon, 
+	05 Apr 2010 12:03:11 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144049>
 
-On Tue, Apr 6, 2010 at 3:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> I also think --color --word-diff=plain could show "{+new+}" in green and
-> "[-old-]" in red and that may make things more consistent.
+>
+> You might have 'git add'ed the changed line. =A0Try this:
+>
+> =A0 git checkout HEAD -- <filename>
+>
+> Have fun,
+>
+> Avery
+>
 
-I agree.
+Hmmm... fixed. I've never even heard of 'git add' before. Why is this
+different to plain old 'checkout' without the HEAD?
 
-For some reason, even though I can see the red and green well enough,
-I find the current --color-words output hard to parse.
-The use of _only_ color to distinguish old/new somehow doesn't jive
-with my brain...
-
-I find _highlighting_ using color very useful, but I think using
-syntax and color together is better than using just color.
-
--Miles
-
--- 
-Do not taunt Happy Fun Ball.
+Anyway... thanks. Day saved :)
