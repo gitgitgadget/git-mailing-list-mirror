@@ -1,156 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] Documentation/remote-helpers: Add invocation section
-Date: Mon, 05 Apr 2010 16:01:46 -0700
-Message-ID: <7v1vetmrl1.fsf@alter.siamese.dyndns.org>
-References: <x2zf3271551003311240i53ecb2fck173c8f34bdb3257@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [RFD} Use regex's in :/ revision naming machinery
+Date: Mon, 5 Apr 2010 16:00:59 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.1004051551180.21411@i5.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Gabriel Filion <lelutin@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 06 01:02:18 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 06 01:05:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyvJB-0000Ez-73
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 01:02:17 +0200
+	id 1NyvM1-0008VW-SS
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 01:05:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756837Ab0DEXCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Apr 2010 19:02:12 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57241 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756817Ab0DEXCJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Apr 2010 19:02:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DA6FA8217;
-	Mon,  5 Apr 2010 19:02:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rvSDW0v/yJgKDh5Vna7xwi2i5D4=; b=alZPoN
-	1bsCdKLwqRCC174UwE/l3Nwb4z+Y77PDTuzZmRLRgVHEkdObJuHP9axIRMc7A/+y
-	3Q1szjUZMorX+CBia9VN6hTakL8+vv3O0paoLUDaqk5GcD3r/8OM7IVeQWroIYYR
-	Q4JAC6lNEVyFz9bdqYoyk0VZaJizMGiJt8tJc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Rm9ZVsKTcLvAh6Z1qeJEduiYRrGwCEeA
-	TxMzYQMjyPOThQU1+N4iMn62X23f2CWzbziStu1f6hDbMc5tSrKNJS+q2y2IuOCV
-	LP3uVF8pkkI/u+/20QAQEGsBGtp2RHhvWPUeKBdGyj6QIKzX4OWfsGoShPpaIOgu
-	yMDULBfVw9U=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 07AA1A820F;
-	Mon,  5 Apr 2010 19:01:57 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8FACCA8203; Mon,  5 Apr
- 2010 19:01:47 -0400 (EDT)
-In-Reply-To: <x2zf3271551003311240i53ecb2fck173c8f34bdb3257@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Thu\, 1 Apr 2010 01\:10\:04 +0530")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3BE6F8F2-4107-11DF-918B-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756896Ab0DEXEr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Apr 2010 19:04:47 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:52342 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756867Ab0DEXEq (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Apr 2010 19:04:46 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o35N4erN018730
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 5 Apr 2010 16:04:41 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o35N4eRT014433;
+	Mon, 5 Apr 2010 16:04:40 -0700
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.45 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144073>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> Add an invocation section to specify what the command line arguments
-> mean. Also include a link to git-remote in the see also section.
->
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  What changed since v3: Clarification on what URLs can be, and
->  possibility of second argument making the first redundant.
->
->  Documentation/git-remote-helpers.txt |   18 ++++++++++++++++++
->  1 files changed, 18 insertions(+), 0 deletions(-)
->
-> diff --git a/Documentation/git-remote-helpers.txt
-> b/Documentation/git-remote-helpers.txt
-> index 2382fb4..f2b2738 100644
-> --- a/Documentation/git-remote-helpers.txt
-> +++ b/Documentation/git-remote-helpers.txt
-> @@ -38,6 +38,20 @@ Git comes with a "curl" family of remote helpers,
-> specifically
->  'git-remote-ftps'. They implement the capabilities 'fetch', 'option',
->  and 'push'.
->
-> +INVOCATION
-> +----------
-> +
-> +Remote helper programs are invoked with one or (optionally) two
-> +command line arguments. The first argument specifies a remote
-> +repository as in git; typically, it is either the name of a configured
-> +remote or just a URL. The second argument, if present, is a URL. When
-> +the remote specified in the first argument has more than one
-> +configured URL, it serves to resolve the ambiguity and pick one of the
-> +URLs. Depending on the remote helper, supplying the second argument
-> +can make the first argument redundant. URLs may be those normally
-> +recognized by git, or arbitrary URL-like strings recognized by the
-> +specific remote helper being invoked.
-> +
+So this is very much debatable, but I'm including a patch for the 
+discussion to start.
 
-What is the target audience of this paragraph?  You would need to keep
-these questions in mind, depending on what your target audience is:
+I never use ':/', and part of it is that it's so horribly cumbersome. I'd 
+_like_ to use it to do things like 
 
- - As a potential developer for a new "remote helper", how would one be
-   helped by this description?
+	gitk :/slabh..
 
- - As a user of non-native transport served by a remote helper, how would
-   one be helped by this description?
+which would (right now) show what happened since I merged the 'slabh' 
+branch. But that doesn't work, I would need to write it as
 
-Suppose I am writing a remote helper 'frotz' to interact with the frotz
-SCM.  What are the things I need to know about the remote-helper
-mechanism?
+	gitk :/"Merge branch 'slabh'"..
 
- - I will write "git-remote-frotz"; it will need to be told which
-   "repository" in native frotz SCM format the program should interact
-   with, and that information would eventually come from the end users.
+at which point it really isn't all that useful any more - in order to 
+figure out the string I need to use, I had to look up the commit, so the 
+whole :/ format was useless. I might as well just have used the SHA1 value 
+instead.
 
-   By the way, is this even clear in the existing documentation?
+The thing is, I'm not quite sure _who_ uses :/ as things are now, so maybe 
+there is some reason for that incredibly annoying interface.
 
- - The user will somehow specify that 'frotz' helper is called for the
-   repository.  Perhaps "git clone frotz::<some info>" will create a new
-   git repository and leave enough information in its .git/config so that
-   later "git fetch" or "git pull" will automatically know that the name
-   'origin' refers to my 'frotz' helper, and <some info> is passed to my
-   "git-remote-frotz" program in some way.
+But with this trivial (LARGELY UNTESTED!) patch, I get the behaviour _I_ 
+want, and I can do my simpler version instead.
 
-   During the initial cloning, my 'frotz' helper will be called and will
-   be given <some info> so that it can interact with the remote before
-   having enough information in .git/config, perhaps.
+It also allows me to do silly things like this:
 
-   "git remote add mine frotz::<some info>" would leave similar kind of
-   information in .git/config so that the nickname 'mine' refers to my
-   'frotz' helper, and <some info> is passed to my "git-remote-frotz"
-   program in some way, hopefully the same way as the above.
+	git show :/'Signed-off-by: Linus'
 
-   Or "git fetch frotz::<some info>" from the command line may be used
-   without any additional information from .git/config and would call my
-   "git-fermote-frotz" with <some info>.
+which shows the last commit that was signed off by me. Is that really 
+useful? Not bloody likely. But it shows how much more flexible the whole 
+notion of "let's grep the commit message" is than having to match exactly 
+the beginning of it.
 
-This INVOCATION section needs to spell out exact details of how that <some
-info> is given to git-remote-frotz, so that I can decide how to encode the
-repository information the program would use.
+		Linus
 
-With some transports like the p4 example given in earlier discussion,
-perhaps a single token that can be given from the command line may not
-be sufficient to identify a foreign repository, in which case <some
-info> might be just 'p4' and I would need to look up 'p4.origin.*' for
-additional information on my own.  The details of p4 implementation does
-not have to be spelled out in this INVOCATIONS section, but it needs to
-hint the possibility of doing something like that.
+PS. Do note the "largely untested" part. I think this patch is kind of 
+cool, but it might be totally broken. I did run the test-suite on it, and 
+it still says "failed  0", but that's probably more indicative of limited 
+test coverage of :/ than anything else.
 
-I would think that INVOCATION section needs to specify how the helper is
-selected (e.g. taking "frotz" out of "frotz::<some info>", or using the
-configuration variable remote.origin.vcs), and where the one or two
-parameters given to the program come from, to help such a developer who
-wants to add his own remote helper.
+---
+ sha1_name.c |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
+
+diff --git a/sha1_name.c b/sha1_name.c
+index bf92417..7570f1a 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -692,12 +692,17 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1)
+ 	struct commit_list *list = NULL, *backup = NULL, *l;
+ 	int retval = -1;
+ 	char *temp_commit_buffer = NULL;
++	regex_t regex;
+ 
+ 	if (prefix[0] == '!') {
+ 		if (prefix[1] != '!')
+ 			die ("Invalid search pattern: %s", prefix);
+ 		prefix++;
+ 	}
++
++	if (regcomp(&regex, prefix, REG_EXTENDED))
++		die("Invalid search pattern: %s", prefix);
++
+ 	for_each_ref(handle_one_ref, &list);
+ 	for (l = list; l; l = l->next)
+ 		commit_list_insert(l->item, &backup);
+@@ -721,12 +726,13 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1)
+ 		}
+ 		if (!(p = strstr(p, "\n\n")))
+ 			continue;
+-		if (!prefixcmp(p + 2, prefix)) {
++		if (!regexec(&regex, p + 2, 0, NULL, 0)) {
+ 			hashcpy(sha1, commit->object.sha1);
+ 			retval = 0;
+ 			break;
+ 		}
+ 	}
++	regfree(&regex);
+ 	free(temp_commit_buffer);
+ 	free_commit_list(list);
+ 	for (l = backup; l; l = l->next)
