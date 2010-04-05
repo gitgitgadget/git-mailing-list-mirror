@@ -1,235 +1,165 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 28/43] worktree setup: restore original state when things go wrong
-Date: Mon,  5 Apr 2010 20:41:13 +0200
-Message-ID: <1270492888-26589-29-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 27/43] Use git_config_early() instead of git_config() during repo setup
+Date: Mon,  5 Apr 2010 20:41:12 +0200
+Message-ID: <1270492888-26589-28-git-send-email-pclouds@gmail.com>
 References: <1270492888-26589-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
+	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Jonathan Niedier <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 05 20:43:54 2010
+X-From: git-owner@vger.kernel.org Mon Apr 05 20:43:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyrH8-0000ps-ID
+	id 1NyrH7-0000ps-SA
 	for gcvg-git-2@lo.gmane.org; Mon, 05 Apr 2010 20:43:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756106Ab0DESnS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Apr 2010 14:43:18 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:25858 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756094Ab0DESnP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Apr 2010 14:43:15 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so1460167qwh.37
-        for <git@vger.kernel.org>; Mon, 05 Apr 2010 11:43:14 -0700 (PDT)
+	id S1756102Ab0DESnN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Apr 2010 14:43:13 -0400
+Received: from mail-fx0-f227.google.com ([209.85.220.227]:44752 "EHLO
+	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756094Ab0DESnI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Apr 2010 14:43:08 -0400
+Received: by mail-fx0-f227.google.com with SMTP id 27so1251549fxm.28
+        for <git@vger.kernel.org>; Mon, 05 Apr 2010 11:43:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=OVhOKk8/N0azLg6WshJrVnT9qwZZ+FGB4q1IsW9G1B4=;
-        b=Ug6vxGj3dtnZBebOA1EL6NTnhW/d+Ck96BTfE391jvO4Z8ZSUTU27XpK52MryjcTIx
-         KhIA8hy3UKiieC4pAOpsKSiwOjA4anDXRvQ8EAvqBfJcwStbMdJGZ9GvUREaz6g2HuoK
-         xuo6AkT2k27bA3SV9PEL29Afth9A4shjePR/k=
+        bh=gWkOwpoEX7Gzn4RsHTtYlgMbvWYPLFok4kCuVa9Vsec=;
+        b=ZlmXtUXcCeayNMFCI/YE4ks/IRyadNYQUskie0VztOQ1oLUPH8IBxFXkeH9tIv/hXW
+         g9s7+HTj6vRIxI6y8zZjdqY2TxuqTnmCcXL0q2oVWyqdy/+OWDa6AoqoLTIUHOULecxN
+         ZDchD34Cy0V3JcWQl8Mu48yEXV08rP1sKPSyg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=SwKsx3FCv8FRuB4eVkjwOxAzVfgcpjK0+9I6pWwwZKWgfRpmSwa7AeDiELMqNdPYxi
-         Du+l6+E/u9XfPZJfLK5tcZcxWU8OVWEfaxks72z0VZpNleQewSxu88764M415aJIDHnu
-         z81ds63XNtqQGJ8dAI8U4HbvUZqaOIMxKICbE=
-Received: by 10.224.23.70 with SMTP id q6mr2164004qab.339.1270492994358;
-        Mon, 05 Apr 2010 11:43:14 -0700 (PDT)
-Received: from dektop ([72.14.241.40])
-        by mx.google.com with ESMTPS id 22sm7257876qyk.2.2010.04.05.11.43.11
+        b=gbHA8TEL9d4tlxGmUo/+3eE/YErWLesUmzoGn6gDeDN2li0bn8UsH7BVVNfj/t8/62
+         Vvc+pO+3kO/IjmGJoPNaXDfmB+JLoPHkHCc4vSJg+ZWNQ3Q1RBklJYn+dwdJ93XWt6Av
+         R2C4/QWiqaxV9oy/0AVf3jRN7WGPMwksFh6A0=
+Received: by 10.223.7.76 with SMTP id c12mr1863464fac.42.1270492988206;
+        Mon, 05 Apr 2010 11:43:08 -0700 (PDT)
+Received: from dektop ([212.247.124.209])
+        by mx.google.com with ESMTPS id 19sm27060481fkr.9.2010.04.05.11.43.06
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 05 Apr 2010 11:43:13 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Mon,  5 Apr 2010 20:43:08 +0200
+        Mon, 05 Apr 2010 11:43:07 -0700 (PDT)
+Received: by dektop (sSMTP sendmail emulation); Mon,  5 Apr 2010 20:43:05 +0200
 X-Mailer: git-send-email 1.7.0.rc1.541.g2da82.dirty
 In-Reply-To: <1270492888-26589-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144020>
-
-In current state of setup_git_directory_gently(), when a repository is
-not found, many things will not be the same as when setup procedure is
-started (while they should be). For one thing, current working
-directory will not be the same in certain cases.
-
-This patch reorders actions in clear steps and rolls back if one step
-is wrong. (Actually the last step, setting git_dir, can't be rolled
-back by this patch).
-
-The steps and their state change are:
-
- 1. Looking in working directory for repository candidates (or $GIT_DIR
-    if it is set)
-
-    This step may move $(cwd) to somewhere.
-
- 2. Set internal variables to record repository features, based only
-    on repository location and environment variables.
-
-    This step sets variables:
-    - inside_git_dir
-    - inside_work_tree
-
- 3. Inspect $GIT_DIR/config to see if it's a valid repository.
-
-    This step may change variables:
-    - repository_format_version
-    - shared_repository
-    - is_bare_repository_cfg
-    - git_work_tree_cfg
-
- 4. Save the repository location for later use.
-
-    This step calls setup_git_dir() to set many variables in environmen=
-t.c
-
- 5. Calculate prefix (relative path to the original current working
-    directory)
-
-Setup procedure is completed at step 5. Stopping at any other steps
-is considered a setup failure.
-
-In case of setup failure, if it's not fatal and nongit_ok is not NULL,
-prefix must be calculated before returning to caller. In other words:
-
-  if (!fatal && gently)
-    goto step_5;
-
-Things that go wrong before step 4 will be cleaned up by
-unset_git_directory(). Step 4 is irreversible, for now.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144021>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- cache.h |    1 +
- setup.c |   55 +++++++++++++++++++++++++++++++++++++++++++++++++++----
- 2 files changed, 52 insertions(+), 4 deletions(-)
+ setup.c |   30 ++++++++++++++++++++++--------
+ 1 files changed, 22 insertions(+), 8 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index f4935b8..f53fb32 100644
---- a/cache.h
-+++ b/cache.h
-@@ -421,6 +421,7 @@ extern const char **get_pathspec(const char *prefix=
-, const char **pathspec);
- extern void setup_work_tree(void);
- extern const char *setup_git_directory_gently(int *);
- extern const char *setup_git_directory(void);
-+extern void unset_git_directory(const char *prefix);
- extern const char *prefix_path(const char *prefix, int len, const char=
- *path);
- extern const char *prefix_filename(const char *prefix, int len, const =
-char *path);
- extern int check_filename(const char *prefix, const char *name);
 diff --git a/setup.c b/setup.c
-index 2c1b64f..858cf6b 100644
+index 43a8609..2c1b64f 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -323,6 +323,42 @@ const char *read_gitfile_gently(const char *path)
- 	return path;
+@@ -241,9 +241,21 @@ void setup_work_tree(void)
+ 	initialized =3D 1;
  }
 =20
-+void unset_git_directory(const char *prefix)
-+{
+-static int check_repository_format_gently(int *nongit_ok)
++static int check_repository_format_gently(const char *gitdir, int *non=
+git_ok)
+ {
+-	git_config(check_repository_format_version, NULL);
++	char repo_config[PATH_MAX+1];
++
 +	/*
-+	 * FIXME:
-+	 * chdir(prefix) may be enough for most of cases,
-+	 * if original cwd is outside worktree, prefix
-+	 * will always be set NULL, thus impossible to move
-+	 * back to orignal cwd
-+	 */
-+	if (prefix && chdir(prefix))
-+		die("Cannot change to '%s'", prefix);
-+
-+	if (startup_info) {
-+		startup_info->prefix =3D NULL;
-+		startup_info->have_repository =3D 0;
-+	}
-+
-+	/* Initialized in setup_git_directory_gently_1() */
-+	inside_work_tree =3D -1;
-+	inside_git_dir =3D -1;
-+
-+	/* Initialized in check_repository_format_version() */
-+	/*
-+	 * repository_format_version is zero for two reasons:
-+	 * - For really old repos, there won't be core.repositoryformatversio=
-n
-+	 *   we treat it as supported version zero.
-+	 * - For repo creating commands like "git init" or "git clone"
-+	 *   $GIT_DIR/config may not be there, just let it pass, the
-+	 *   repository will be properly initialized later.
-+	 * For history of this setting see commits 4f62953 and 96f1e58
-+	 */
-+	repository_format_version =3D 0;
-+	shared_repository =3D PERM_UMASK;
-+	is_bare_repository_cfg =3D -1;
-+	git_work_tree_cfg =3D NULL;
-+}
- /*
-  * We cannot decide in this function whether we are in the work tree o=
-r
-  * not, since the config can only be read _after_ this function was ca=
-lled.
-@@ -403,6 +439,13 @@ static const char *setup_git_directory_gently_1(in=
-t *nongit_ok)
- 	 * - ../ (bare)
- 	 * - ../../.git/
- 	 *   etc.
++	 * git_config() can't be used here because it calls git_pathdup()
++	 * to get $GIT_CONFIG/config. That call will make setup_git_env()
++	 * set git_dir to ".git".
 +	 *
-+	 * When a repository is found:
-+	 * - inside_git_dir/inside_work_tree are set
-+	 * - check_repository_format_gently() is called
-+	 *   if repo version is not supported, restore cwd
-+	 * - set_git_dir
-+	 * - calculate and return prefix
- 	 */
- 	offset =3D len =3D strlen(cwd);
- 	for (;;) {
-@@ -410,13 +453,15 @@ static const char *setup_git_directory_gently_1(i=
++	 * We are in gitdir setup, no git dir has been found useable yet.
++	 * Use a gentler version of git_config() to check if this repo
++	 * is a good one.
++	 */
++	snprintf(repo_config, PATH_MAX, "%s/config", gitdir);
++	git_config_early(check_repository_format_version, NULL, repo_config);
+ 	if (GIT_REPO_VERSION < repository_format_version) {
+ 		if (!nongit_ok)
+ 			die ("Expected git repo version <=3D %d, found %d",
+@@ -348,12 +360,12 @@ static const char *setup_git_directory_gently_1(i=
 nt *nongit_ok)
- 		if (!gitfile_dir && is_git_directory(DEFAULT_GIT_DIR_ENVIRONMENT))
- 			gitfile_dir =3D DEFAULT_GIT_DIR_ENVIRONMENT;
- 		if (gitfile_dir) {
--			if (set_git_dir(gitfile_dir))
--				die("Repository setup failed");
+ 			if (!work_tree_env) {
+ 				retval =3D set_work_tree(gitdirenv);
+ 				/* config may override worktree */
+-				if (check_repository_format_gently(nongit_ok))
++				if (check_repository_format_gently(gitdirenv, nongit_ok))
+ 					return NULL;
+ 				set_git_dir(gitdirenv);
+ 				return retval;
+ 			}
+-			if (check_repository_format_gently(nongit_ok))
++			if (check_repository_format_gently(gitdirenv, nongit_ok))
+ 				return NULL;
+ 			retval =3D get_relative_cwd(buffer, sizeof(buffer) - 1,
+ 					get_git_work_tree());
+@@ -403,6 +415,8 @@ static const char *setup_git_directory_gently_1(int=
+ *nongit_ok)
  			inside_git_dir =3D 0;
  			if (!work_tree_env)
  				inside_work_tree =3D 1;
--			if (check_repository_format_gently(gitfile_dir, nongit_ok))
-+			if (check_repository_format_gently(gitfile_dir, nongit_ok)) {
-+				unset_git_directory(offset !=3D len ? cwd + offset + 1: NULL);
- 				return NULL;
-+			}
-+			if (set_git_dir(gitfile_dir))
-+				die("Repository setup failed");
++			if (check_repository_format_gently(gitfile_dir, nongit_ok))
++				return NULL;
  			root_len =3D offset_1st_component(cwd);
  			git_work_tree_cfg =3D xstrndup(cwd, offset > root_len ? offset : ro=
 ot_len);
  			break;
-@@ -425,8 +470,10 @@ static const char *setup_git_directory_gently_1(in=
-t *nongit_ok)
+@@ -411,6 +425,8 @@ static const char *setup_git_directory_gently_1(int=
+ *nongit_ok)
  			inside_git_dir =3D 1;
  			if (!work_tree_env)
  				inside_work_tree =3D 0;
--			if (check_repository_format_gently(".", nongit_ok))
-+			if (check_repository_format_gently(".", nongit_ok)) {
-+				unset_git_directory(offset !=3D len ? cwd + offset + 1: NULL);
- 				return NULL;
-+			}
++			if (check_repository_format_gently(".", nongit_ok))
++				return NULL;
  			if (offset !=3D len) {
  				root_len =3D offset_1st_component(cwd);
  				cwd[offset > root_len ? offset : root_len] =3D '\0';
+@@ -433,8 +449,6 @@ static const char *setup_git_directory_gently_1(int=
+ *nongit_ok)
+ 			die_errno("Cannot change to '%s/..'", cwd);
+ 	}
+=20
+-	if (check_repository_format_gently(nongit_ok))
+-		return NULL;
+ 	if (offset =3D=3D len)
+ 		return NULL;
+=20
+@@ -542,7 +556,7 @@ char *enter_repo(char *path, int strict)
+ 	    validate_headref("HEAD") =3D=3D 0) {
+ 		inside_work_tree =3D 0;
+ 		inside_git_dir =3D 1;
+-		check_repository_format();
++		check_repository_format_gently(".", NULL);
+ 		set_git_dir(".");
+ 		if (startup_info) {
+ 			startup_info->prefix =3D NULL;
+@@ -627,7 +641,7 @@ int check_repository_format_version(const char *var=
+, const char *value, void *cb
+=20
+ int check_repository_format(void)
+ {
+-	return check_repository_format_gently(NULL);
++	return check_repository_format_gently(get_git_dir(), NULL);
+ }
+=20
+ const char *setup_git_directory(void)
 --=20
 1.7.0.rc1.541.g2da82.dirty
