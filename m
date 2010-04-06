@@ -1,64 +1,58 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git clone: very long "resolving deltas" phase
-Date: Tue, 06 Apr 2010 17:32:05 +0200
-Message-ID: <4BBB53F5.9010106@op5.se>
-References: <loom.20100406T161552-321@post.gmane.org> <vpqljd062xb.fsf@bauges.imag.fr> <4BBB5346.6070607@gmail.com>
+From: Eric Raible <raible@gmail.com>
+Subject: Re: What happens in this example case?
+Date: Tue, 6 Apr 2010 15:42:05 +0000 (UTC)
+Message-ID: <loom.20100406T173712-277@post.gmane.org>
+References: <201004060913.56760.k@11.lv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-To: Vitaly <vitaly.berov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 06 17:32:56 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 06 17:42:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzAln-000488-WF
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 17:32:52 +0200
+	id 1NzAv1-000161-Gr
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 17:42:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754895Ab0DFPcq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Apr 2010 11:32:46 -0400
-Received: from na3sys009aog107.obsmtp.com ([74.125.149.197]:34448 "HELO
-	na3sys009aog107.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751665Ab0DFPcp (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Apr 2010 11:32:45 -0400
-Received: from source ([72.14.220.155]) by na3sys009aob107.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKS7tUG/bQtsEjo9UXmw911vJamldKEOAE@postini.com; Tue, 06 Apr 2010 08:32:45 PDT
-Received: by fg-out-1718.google.com with SMTP id 22so943320fge.11
-        for <git@vger.kernel.org>; Tue, 06 Apr 2010 08:32:42 -0700 (PDT)
-Received: by 10.87.2.15 with SMTP id e15mr13002fgi.23.1270567928063;
-        Tue, 06 Apr 2010 08:32:08 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id e11sm11732148fga.3.2010.04.06.08.32.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 06 Apr 2010 08:32:06 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.9) Gecko/20100330 Fedora/3.0.4-1.fc12 Thunderbird/3.0.4 ThunderGit/0.1a
-In-Reply-To: <4BBB5346.6070607@gmail.com>
+	id S1756229Ab0DFPmV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 11:42:21 -0400
+Received: from lo.gmane.org ([80.91.229.12]:47921 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753220Ab0DFPmT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Apr 2010 11:42:19 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1NzAus-00010u-QV
+	for git@vger.kernel.org; Tue, 06 Apr 2010 17:42:17 +0200
+Received: from mail.nextest.com ([12.96.234.114])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Apr 2010 17:42:14 +0200
+Received: from raible by mail.nextest.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Apr 2010 17:42:14 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 12.96.234.114 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/532.5 (KHTML, like Gecko) Chrome/4.1.249.1042 Safari/532.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144150>
 
-On 04/06/2010 05:29 PM, Vitaly wrote:
-> I didn't try this, but I'll give it a try, thanks.
-> 
-> And what does this stage mean?
-> 
+K=C4=81rlis Repsons <k <at> 11.lv> writes:
 
-It means the server is busy creating a packfile to send
-over the wire. If you pack the repository before cloning
-from it, deltas from the packfile will simply be copied
-into the new pack. This will provide a huge speedboost,
-so make sure to repack the repository on the server every
-once in a while.
+>=20
+> Hi,
+> it would be good if someone explained how is git doing things interna=
+lly when:
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Hi,
+it would be good if someone did basic research before asking such quest=
+ions.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Start with http://book.git-scm.com.
