@@ -1,182 +1,95 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH v2] Add option to git-commit to allow empty log messages
-Date: Tue,  6 Apr 2010 08:40:35 +0000
-Message-ID: <1270543235-8570-1-git-send-email-avarab@gmail.com>
-References: <20100406055530.GE3901@coredump.intra.peff.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] Add option to git-commit to allow empty log messages
+Date: Tue, 6 Apr 2010 08:42:10 +0000
+Message-ID: <h2h51dd1af81004060142p25194aaai58492f617419d0f8@mail.gmail.com>
+References: <z2r51dd1af81004031506pc9ac1840ie9953ae6df91d01b@mail.gmail.com>
+	 <1270392557-26538-1-git-send-email-avarab@gmail.com>
+	 <20100404224324.GB12655@gmail.com>
+	 <y2j51dd1af81004041653g9a09915el60104c575dcf6481@mail.gmail.com>
+	 <7vy6h2wsvg.fsf@alter.siamese.dyndns.org>
+	 <buor5mu7acd.fsf@dhlpc061.dev.necel.com>
+	 <20100405055139.GA28730@coredump.intra.peff.net>
+	 <o2h51dd1af81004050550v9427b9flfb13a9e1ad4056a@mail.gmail.com>
+	 <20100405175822.GA32083@progeny.tock>
+	 <20100406055530.GE3901@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 06 10:41:11 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Miles Bader <miles@gnu.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 06 10:42:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nz4LN-0003WE-Hi
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 10:41:09 +0200
+	id 1Nz4MU-0006zT-DM
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 10:42:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460Ab0DFIlD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 04:41:03 -0400
-Received: from mail-fx0-f223.google.com ([209.85.220.223]:63389 "EHLO
-	mail-fx0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751157Ab0DFIlA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Apr 2010 04:41:00 -0400
-Received: by fxm23 with SMTP id 23so3465452fxm.21
-        for <git@vger.kernel.org>; Tue, 06 Apr 2010 01:40:58 -0700 (PDT)
+	id S1751083Ab0DFImO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 04:42:14 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:42215 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751157Ab0DFImM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Apr 2010 04:42:12 -0400
+Received: by bwz1 with SMTP id 1so3384724bwz.21
+        for <git@vger.kernel.org>; Tue, 06 Apr 2010 01:42:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=RICS8GvGeMh7cBiCHPO4heLOhE4uQbfgvyTzyk69UBM=;
-        b=JeuRWN/Vdv3LQ5/qonlRQqmzBQgZr5VjW+SyK+lS7Bo/sWCNbidZIZSVqhSHHOYeK0
-         4Oa+tpb5TFBVbOWLEd3MmSQ3oxaL1TR4Y5wRtJIWKv7Ih/Sv5IT4wW2Ao2iek+Ec6I93
-         /vs9xNe+mMqM7RTgkNfWbPXmtjB+k6fNPpivE=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=bPjEvHi/nfeqy1DqqykcsOJiv1vEXTduMRCNFHfNob8=;
+        b=LpMGn8Cza9uaWqbDmd0ztHjsuQ8S0Av35xeiuG5kTwXapcV35drzjWl3Mzkmcnydeu
+         Sl99Gx7hmSpc2G4DdRY2a81jx2buwiMfaVhjhzypByXX38EHr806XbGs0ZsgUXnoZo0/
+         S8tgQbjam3S+GAEeWxTO7UMZDebYr9wbxGOfI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=rXhmJjHiZg/an/rzsgLOGxLGLioPJgrGOVH/FK1V0up3XXYsiA7PPHf8+v3B9mSqd0
-         2ZFB+E/1KcDVCONdgHJIoEsXNlI4ptxCpPKXKsf7zSNyoi7avWCh/e6mdqd9fljmmZwm
-         a4PWXD3tzyG6vd4ZWZCpO0pajTCrpIRY6rNUc=
-Received: by 10.102.12.13 with SMTP id 13mr3629424mul.133.1270543258492;
-        Tue, 06 Apr 2010 01:40:58 -0700 (PDT)
-Received: from localhost.localdomain (pD950775A.dip0.t-ipconnect.de [217.80.119.90])
-        by mx.google.com with ESMTPS id n10sm54075380mue.42.2010.04.06.01.40.56
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 06 Apr 2010 01:40:56 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.4.298.gc81d
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=tFrCNbz2MX3yaEG/Zt7nxOpB72Hopgy6lwjL+MMOnWGemhOWd2M1afjaMaZtGGV70M
+         zFpNr0d2UIZdaiOZR1po9YhwhOiHkrNNVx1K4Xrh8PPh7I8ggDuu6TUqhsYJY/8oyDsk
+         PZPPo7MuB/67TtnlTJJlWnBDHJUBRU5QDzH3I=
+Received: by 10.204.121.195 with HTTP; Tue, 6 Apr 2010 01:42:10 -0700 (PDT)
 In-Reply-To: <20100406055530.GE3901@coredump.intra.peff.net>
+Received: by 10.204.7.220 with SMTP id e28mr5210904bke.33.1270543330570; Tue, 
+	06 Apr 2010 01:42:10 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144116>
 
-Change git-commit(1) to accept a --allow-empty-message option
-analogous to the existing --allow-empty option which allows empty
-trees. This is mainly for compatability with foreign SCM systems.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+On Tue, Apr 6, 2010 at 05:55, Jeff King <peff@peff.net> wrote:
+> On Mon, Apr 05, 2010 at 12:58:22PM -0500, Jonathan Nieder wrote:
 >
----
- Documentation/git-commit.txt          |    6 +++++
- builtin/commit.c                      |    7 +++--
- t/t7510-commit-allow-empty-message.sh |   41 +++++++++++++++++++++++++=
-++++++++
- 3 files changed, 51 insertions(+), 3 deletions(-)
- create mode 100755 t/t7510-commit-allow-empty-message.sh
+>> > There's probably a lot of code out there doing `git commit -m"Yet
+>> > another revision"' from some cron job.
+>>
+>> FWIW, I have no strong opinion about whether to add this --allow-emp=
+ty-message
+>> option. =C2=A0Maybe it would make something more convenient for some=
+one,
+>> though that has to be weighed against it making it harder for everyo=
+ne
+>> else to read the manual.
+>
+> I meant to mention this in my other response: I would prefer if such =
+an
+> option doesn't clutter up the usage message. --allow-empty is already
+> there, and probably doesn't need to be. "git commit -h 2>&1 | wc -l"
+> shows a whopping 39 lines, which IMHO is too many for a short usage
+> summary. I mean, "--no-post-rewrite", is that really one of the top-u=
+sed
+> options?
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.tx=
-t
-index 64fb458..aa18bee 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -131,6 +131,12 @@ OPTIONS
- 	from making such a commit.  This option bypasses the safety, and
- 	is primarily for use by foreign scm interface scripts.
-=20
-+--allow-empty-message::
-+       Like --allow-empty this command is primarily for use by foreign
-+       scm interface scripts. It allows you to create a commit with an
-+       empty commit message without using plumbing commands like
-+       linkgit:git-commit-tree[1].
-+
- --cleanup=3D<mode>::
- 	This option sets how the commit message is cleaned up.
- 	The  '<mode>' can be one of 'verbatim', 'whitespace', 'strip',
-diff --git a/builtin/commit.c b/builtin/commit.c
-index c5ab683..7fd963e 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -65,8 +65,8 @@ static const char *template_file;
- static char *edit_message, *use_message;
- static char *author_name, *author_email, *author_date;
- static int all, edit_flag, also, interactive, only, amend, signoff;
--static int quiet, verbose, no_verify, allow_empty, dry_run, renew_auth=
-orship;
--static int no_post_rewrite;
-+static int quiet, verbose, no_verify, allow_empty, allow_empty_message=
-, dry_run;
-+static int no_post_rewrite, renew_authorship;
- static char *untracked_files_arg, *force_date;
- /*
-  * The default commit message cleanup mode will remove the lines
-@@ -141,6 +141,7 @@ static struct option builtin_commit_options[] =3D {
- 	OPT_BOOLEAN(0, "no-post-rewrite", &no_post_rewrite, "bypass post-rewr=
-ite hook"),
- 	{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, "mode"=
-, "show untracked files, optional modes: all, normal, no. (Default: all=
-)", PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
- 	OPT_BOOLEAN(0, "allow-empty", &allow_empty, "ok to record an empty ch=
-ange"),
-+	OPT_BOOLEAN(0, "allow-empty-message", &allow_empty_message, "ok to re=
-cord a change with an empty message"),
- 	/* end commit contents options */
-=20
- 	OPT_END()
-@@ -1293,7 +1294,7 @@ int cmd_commit(int argc, const char **argv, const=
- char *prefix)
-=20
- 	if (cleanup_mode !=3D CLEANUP_NONE)
- 		stripspace(&sb, cleanup_mode =3D=3D CLEANUP_ALL);
--	if (message_is_empty(&sb)) {
-+	if (message_is_empty(&sb) && !allow_empty_message) {
- 		rollback_index_files();
- 		fprintf(stderr, "Aborting commit due to empty commit message.\n");
- 		exit(1);
-diff --git a/t/t7510-commit-allow-empty-message.sh b/t/t7510-commit-all=
-ow-empty-message.sh
-new file mode 100755
-index 0000000..d7dc0da
---- /dev/null
-+++ b/t/t7510-commit-allow-empty-message.sh
-@@ -0,0 +1,41 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2010 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-+#
-+
-+test_description=3D'git commit --allow-empty-message'
-+
-+. ./test-lib.sh
-+
-+commit_msg_is () {
-+	test "`git log --pretty=3Dformat:%s%b -1`" =3D "$1"
-+}
-+
-+# A sanity check to see if commit is working at all.
-+test_expect_success 'a basic commit in an empty tree should succeed' '
-+	(
-+		echo content > foo &&
-+		git add foo &&
-+		git commit -m "initial commit"
-+	) &&
-+	commit_msg_is "initial commit"
-+'
-+
-+test_expect_success 'Commit no message with --allow-empty-message' '
-+	(
-+		echo "more content" >> foo &&
-+		git add foo &&
-+		printf "" | git commit --allow-empty-message
-+	) &&
-+	commit_msg_is ""
-+'
-+
-+test_expect_success 'Commit a message with --allow-empty-message' '
-+	(
-+		echo "even more content" >> foo &&
-+		git add foo &&
-+		git commit --allow-empty-message -m"hello there"
-+	) &&
-+	commit_msg_is "hello there"
-+'
-+test_done
---=20
-1.7.0.4.298.gc81d
+I just put it there because --allow-empty was there and I thought the
+SYNOPSIS might be going for a complete listing. I completely agree
+though, the option shouldn't be in the SYNOPSIS, and neither should
+--allow-empty be. They're both analogous to obscure options like
+--porcelain (which isn't listed).
+
+I've just submitted a new patch to rectify this. I can send another
+one to remove --allow-empty from the SYNOPSIS.
