@@ -1,89 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] fix weird git --paginate behavior
-Date: Tue, 06 Apr 2010 00:17:25 -0700
-Message-ID: <7v1vetjbi2.fsf@alter.siamese.dyndns.org>
-References: <1270492888-26589-1-git-send-email-pclouds@gmail.com>
- <1270492888-26589-44-git-send-email-pclouds@gmail.com>
- <20100406040145.GA30403@progeny.tock>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH/RFC] Documentation: reorganize documentation of URLs 
+	understood by git
+Date: Tue, 6 Apr 2010 13:10:44 +0530
+Message-ID: <l2hf3271551004060040v4eca088ck8f1ab3376c0f889c@mail.gmail.com>
+References: <f3271551003290759g154b149fl7877d9b83e1313e6@mail.gmail.com> 
+	<20100329191832.GA26842@progeny.tock> <f3271551003291224s7fb0d8d3sce75b7c893fabfa8@mail.gmail.com> 
+	<20100406060606.GA26629@progeny.tock> <7v6345jcfq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 06 09:17:43 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Gabriel Filion <lelutin@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 06 09:41:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nz32b-0004q2-TP
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 09:17:42 +0200
+	id 1Nz3PR-0005EL-Aj
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 09:41:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757340Ab0DFHRh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 03:17:37 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42875 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757280Ab0DFHRf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Apr 2010 03:17:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 70B2BA8627;
-	Tue,  6 Apr 2010 03:17:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=B0LFq9sk3pS+
-	Aj7fVez4R+N0xqU=; b=O+wS5ZHtbEgaTPlK6yafTl4vw9+HsQ8CMgHPzaVZ6jwv
-	4pvBBDrpK/NAuuNvRNK7Sfl7xBCfGrnjdAehWtArA2B2gkOD1N1oEZUQgJxYzn4T
-	njPYimaH41Dvir+2mKm/gdpmx6gN3cVRb1Khhztfc19JqnT6zrTMxGs9Db2kyi8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qIVj4u
-	JTGJKZ4xmpXry5l3MyKvlCTDXE3EbLisoRiHR2qFoc+Blkkc5wpbaIka7DJh/LDn
-	Xt6ytXNCs5UJebWuL6Viqz6LzTWx87tHkuegSb1QNWQNeRwFM9cOwHmyVtYcKnVn
-	cUVdPQ0eqx1NrzGgcm9L9jvHSCWJTviTQb03M=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3EC0AA8626;
-	Tue,  6 Apr 2010 03:17:31 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14EF6A8625; Tue,  6 Apr
- 2010 03:17:26 -0400 (EDT)
-In-Reply-To: <20100406040145.GA30403@progeny.tock> (Jonathan Nieder's message
- of "Mon\, 5 Apr 2010 23\:01\:46 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 76DD7BBC-414C-11DF-B02A-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757377Ab0DFHlM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 03:41:12 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:61896 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757342Ab0DFHlK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Apr 2010 03:41:10 -0400
+Received: by gwb19 with SMTP id 19so1654633gwb.19
+        for <git@vger.kernel.org>; Tue, 06 Apr 2010 00:41:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=CP0HG5NMxQQ2yJYuMrmrA2I7tR6Gm8Qht0U0PVAb5sE=;
+        b=Ex0nM+Cn4X1HAosZZZxccZInvuXGz3kfkIA6KNrI6zABWOs0kpoKlbHlXjZVdLk2Jh
+         Hiey/9/TCIN8W6mL6ep08RkqPQ7JXhPb8mBLm/NExH5/4oQHuefjS+iHshM0l79r62VR
+         1APAR9Q/vZIvTXgR19mtZJy6pqqK5kN84xl1k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=xVrJ3/ckdACIXzwklkWnuNMXOFhwoFEp0l1WUEb5nTGcgXzBAxEBEDVTUW8VFb3fYb
+         yMVCOMiSpaecOVzRCZyQFMI8H8jLRx0MPjLyPdQWpQEuCl+AxApWQpqEEG4vL0XFAc+p
+         9+eCuSIInkTj2dIZsIYEdiUxFmw7yElZiDX7w=
+Received: by 10.90.69.14 with HTTP; Tue, 6 Apr 2010 00:40:44 -0700 (PDT)
+In-Reply-To: <7v6345jcfq.fsf@alter.siamese.dyndns.org>
+Received: by 10.90.62.22 with SMTP id k22mr1909572aga.72.1270539666660; Tue, 
+	06 Apr 2010 00:41:06 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144111>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi,
 
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> Thanks for posting this series.  I had not read it in full before.
->
-> The series is very long and it is hard to make certain it does not
-> introduce regressions.  Here is my idea for working around this: the
-> idea is to grab patches from the series to form short, independently
-> justifiable mini-series.
+> While I fully share your
+> "cover-to-cover" concern, the current organization was chosen to mini=
+mize
+> such indirection. =A0It is optimized for different audiences than we =
+are (I
+> am also from "cover-to-cover" school) who want to pick only the pages
+> relevant to the task at hand.
 
-Thanks for trying out your idea.
+I am of the opinion that we can have both. Jonathan's document can be
+a more elaborate version of the standard urls.txt included in all
+these documents. I can see several usecases- for example, in documents
+like remote-helpers.txt, including a full section from urls.txt would
+be a bit of an overkill; we could include a reference to this document
+instead. Is redundancy an issue? We'd have to update both urls.txt and
+this document everytime we change something.
 
-I've been having trouble reviewing this series.  I can read bits and
-pieces and find things that I mostly agree with, or things that I find
-questionable.  But in either case, I cannot be sure about my judgement
-without having a clear idea of where the series is trying to go upfront=
-=2E
-
-While a re-roll will certainly give us a chance to review the series
-"cover-to-cover", it would make it much easier to swallow if this can b=
-e
-split into independently digestable bite-sized pieces.  I am somewhat
-skeptical if a major part of the series will become that smaller,
-though...
+-- Ram
