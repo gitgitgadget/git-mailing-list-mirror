@@ -1,73 +1,77 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] Initialize notes trees if %N is used and no --show-notes given
-Date: Tue, 6 Apr 2010 13:52:21 +0200
-Message-ID: <201004061352.21945.trast@student.ethz.ch>
-References: <20100405115548.GA19971@macbook.lan.lan> <201004061127.01471.trast@student.ethz.ch> <20100406111904.GA46425@macbook.lan.lan>
+From: =?iso-8859-1?Q?Henrik_Grubbstr=F6m?= <grubba@roxen.com>
+Subject: Re: [PATCH 4/5] convert: Inhibit contraction of foreign $Id$ during
+ stats.
+Date: Tue, 6 Apr 2010 13:53:16 +0200 (CEST)
+Organization: Roxen Internet Software AB
+Message-ID: <Pine.GSO.4.63.1004061324530.1164@shipon.roxen.com>
+References: <cover.1269860022.git.grubba@grubba.org>
+ <a75a46b1b6fdb9d52f608643676512e87474e16d.1269860022.git.grubba@grubba.org>
+ <6d9d8b0eaa022f441c507b141ff0efa3f21d1988.1269860022.git.grubba@grubba.org>
+ <74ce7980eb1fe629a651433ca9f1662f26495ce9.1269860022.git.grubba@grubba.org>
+ <81e71814080d0eca72809a751e4e90026f8fe0ea.1269860022.git.grubba@grubba.org>
+ <7v634bosjg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Git ML <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Johannes Gilger <heipei@hackvalue.de>
-X-From: git-owner@vger.kernel.org Tue Apr 06 13:52:42 2010
+Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-1847939343-1270554796=:1164"
+Cc: git@vger.kernel.org,
+	=?iso-8859-1?Q?Henrik_Grubbstr=F6m?= <grubba@grubba.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 06 13:53:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nz7Kj-0003ID-G5
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 13:52:41 +0200
+	id 1Nz7LS-0003Yc-5M
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 13:53:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754989Ab0DFLwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Apr 2010 07:52:25 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:11395 "EHLO gwse.ethz.ch"
+	id S1754779Ab0DFLxV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Apr 2010 07:53:21 -0400
+Received: from mail.roxen.com ([212.247.29.220]:45961 "EHLO mail.roxen.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754913Ab0DFLwY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Apr 2010 07:52:24 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.234.1; Tue, 6 Apr
- 2010 13:52:23 +0200
-Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.234.1; Tue, 6 Apr
- 2010 13:52:22 +0200
-User-Agent: KMail/1.13.2 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.2; x86_64; ; )
-In-Reply-To: <20100406111904.GA46425@macbook.lan.lan>
+	id S1754686Ab0DFLxT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Apr 2010 07:53:19 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.roxen.com (Postfix) with ESMTP id 74F25628180;
+	Tue,  6 Apr 2010 13:53:17 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at roxen.com
+Received: from mail.roxen.com ([212.247.29.220])
+	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id tjS90lz03pkS; Tue,  6 Apr 2010 13:53:16 +0200 (CEST)
+Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
+	by mail.roxen.com (Postfix) with ESMTP id ACADA628173;
+	Tue,  6 Apr 2010 13:53:16 +0200 (CEST)
+In-Reply-To: <7v634bosjg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144131>
 
-Johannes Gilger wrote:
-> 
-> The first option would be confusing. I, for one, would simply put %N in
-> my log and never really know that existing notes aren't displayed. I
-> wasn't even sure my git.git checkout had notes, so I created one myself.
-> A better behaviour would be to not expand %N if notes are disabled, so a
-> user gets some kind of feedback that %N isn't working.
-> 
-> I'd really like %N to do the initialization. There is no other
-> placeholder which requires an extra option to work, if I see it
-> correctly.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-%g[dDs] expand to nothing unless the log command walks reflogs, so
-there is some precedent.
+---559023410-1847939343-1270554796=:1164
+Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-One thing I didn't consider in my other mail was that --pretty
-automatically disables notes.  I think in my plan (%N expands to
-nothing with --no-notes) this would have to change to the effect that
---pretty only disables the *normal* note-showing code, but still
-initializes according to the same rules.
+On Thu, 1 Apr 2010, Junio C Hamano wrote:
 
-I'll have to check whether that amounts to the same as "silent
-initialization".
+> "Henrik Grubbström (Grubba)"  <grubba@grubba.org> writes:
+>
+>> @@ -462,6 +463,20 @@ static int ident_to_git(const char *path, const char *src, size_t len,
+[...]
+>
+> Somehow this feels to me that it is applying a band-aid to solve a problem
+> that does not exist, only because the second patch in this series to keep
+> the foreign one left expanded were not such a good change after all...
 
-> As for the builtin formats I was under the impressions that they worked
-> completely outside the parser for placeholders, so one would not use
-> '%N' in a builtin format, and %N initializing the notes would not
-> conflict with --no-notes and builtin formats.
+True, this was the patch that I was least satisfied with, since it only 
+solved a special case (albeit the special case that I was interested in).
 
-That's true, which is why I said "notionally".
+The general case is when the canonic (ie *_to_git) conversion filter for a
+file has changed after the file was committed.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+--
+Henrik Grubbström					grubba@grubba.org
+Roxen Internet Software AB				grubba@roxen.com
+---559023410-1847939343-1270554796=:1164--
