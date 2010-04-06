@@ -1,8 +1,9 @@
 From: =?UTF-8?q?Henrik=20Grubbstr=C3=B6m=20=28Grubba=29?= 
 	<grubba@grubba.org>
-Subject: [PATCH v4 0/8] Attribute and conversion patches
-Date: Tue,  6 Apr 2010 14:46:36 +0200
-Message-ID: <cover.1270554878.git.grubba@grubba.org>
+Subject: [PATCH v4 8/8] attr: Expand macros immediately when encountered.
+Date: Tue,  6 Apr 2010 14:46:44 +0200
+Message-ID: <81e89ac808ac41d2e6914635974fa45564f73279.1270554878.git.grubba@grubba.org>
+References: <cover.1270554878.git.grubba@grubba.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -15,67 +16,187 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nz8Bj-0004uy-2f
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 14:47:28 +0200
+	id 1Nz8Bm-0004uy-Vv
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 14:47:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755476Ab0DFMq4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 08:46:56 -0400
-Received: from mail.roxen.com ([212.247.29.220]:39923 "EHLO mail.roxen.com"
+	id S1755525Ab0DFMrR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 08:47:17 -0400
+Received: from mail.roxen.com ([212.247.29.220]:51189 "EHLO mail.roxen.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753516Ab0DFMqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Apr 2010 08:46:52 -0400
+	id S1755461Ab0DFMq4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Apr 2010 08:46:56 -0400
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.roxen.com (Postfix) with ESMTP id 079BD628180
-	for <git@vger.kernel.org>; Tue,  6 Apr 2010 14:46:47 +0200 (CEST)
+	by mail.roxen.com (Postfix) with ESMTP id B03CB628180
+	for <git@vger.kernel.org>; Tue,  6 Apr 2010 14:46:55 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at roxen.com
+X-Amavis-Alert: BAD HEADER, Duplicate header field: "In-Reply-To"
 Received: from mail.roxen.com ([212.247.29.220])
 	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id auOIn70CHVsW; Tue,  6 Apr 2010 14:46:46 +0200 (CEST)
+	with ESMTP id ZMHgYfLQneHO; Tue,  6 Apr 2010 14:46:55 +0200 (CEST)
 Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
-	by mail.roxen.com (Postfix) with ESMTP id DBE5B628173;
-	Tue,  6 Apr 2010 14:46:46 +0200 (CEST)
+	by mail.roxen.com (Postfix) with ESMTP id 87D8F628173;
+	Tue,  6 Apr 2010 14:46:55 +0200 (CEST)
 Received: from shipon.roxen.com (localhost [127.0.0.1])
-	by shipon.roxen.com (8.13.8+Sun/8.13.8) with ESMTP id o36CkktE028638;
-	Tue, 6 Apr 2010 14:46:46 +0200 (CEST)
+	by shipon.roxen.com (8.13.8+Sun/8.13.8) with ESMTP id o36Ckttp028670;
+	Tue, 6 Apr 2010 14:46:55 +0200 (CEST)
 Received: (from grubba@localhost)
-	by shipon.roxen.com (8.13.8+Sun/8.13.8/Submit) id o36CkkoT028637;
-	Tue, 6 Apr 2010 14:46:46 +0200 (CEST)
+	by shipon.roxen.com (8.13.8+Sun/8.13.8/Submit) id o36CktsV028669;
+	Tue, 6 Apr 2010 14:46:55 +0200 (CEST)
 X-Mailer: git-send-email 1.7.0.3.316.g33b5e
+In-Reply-To: <cover.1270554878.git.grubba@grubba.org>
+In-Reply-To: <cover.1270554878.git.grubba@grubba.org>
+References: <cover.1270554878.git.grubba@grubba.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144139>
 
-These are some patches that are needed to get the support for
-attributes and especially the 'ident' attribute to a useable
-state.
+When using macros it is otherwise hard to know whether an
+attribute set by the macro should override an already set
+attribute. Consider the following .gitattributes file:
 
-Since last time the 'ident'-specific patch "Inhibit contraction of
-foreign $Id$ during stats." is gone, and replaced with the generic
-"Filter files that have changed only due to conversion changes.".
+[attr]mybinary	binary -ident
+*		ident
+foo.bin		mybinary
+bar.bin		mybinary ident
 
-Henrik Grubbstr=C3=B6m (Grubba) (8):
-  convert: Safer handling of $Id$ contraction.
-  convert: Keep foreign $Id$ on checkout.
-  status: Added missing calls to diff_unmodified_pair() in
-    format_callbacks.
-  diff: Filter files that have changed only due to conversion changes.
-  convert: Added core.refilteronadd feature.
-  attr: Fixed debug output for macro expansion.
-  attr: Allow multiple changes to an attribute on the same line.
-  attr: Expand macros immediately when encountered.
+Without this patch both foo.bin and bar.bin will have
+the ident attribute set, which is probably not what
+the user expects. With this patch foo.bin will have an
+unset ident attribute, while bar.bin will have it set.
 
- Documentation/config.txt |   12 +++++++
- attr.c                   |   38 ++++++++++++++--------
- cache.h                  |    2 +
- config.c                 |   10 ++++++
- convert.c                |   28 ++++++++++++++++-
- diff.c                   |   42 +++++++++++++++++++++++++
- environment.c            |    2 +
- sha1_file.c              |   57 ++++++++++++++++++++++++++++++++++
- t/t0003-attributes.sh    |   15 +++++++++
- t/t0021-conversion.sh    |   76 ++++++++++++++++++++++++++++++++++++++=
-++++----
- wt-status.c              |    4 ++
- 11 files changed, 264 insertions(+), 22 deletions(-)
+Signed-off-by: Henrik Grubbstr=C3=B6m <grubba@grubba.org>
+---
+=46YI: The use case I attempted was:
+
+ *.c			crlf ident
+ [attr]foreign_ident	-ident block_commit=3DRemove-foreign_ident-attribu=
+te.
+ src/version.c		foreign_ident
+
+Which currently causes src/version.c to have the ident attribute set.
+
+ attr.c                |   32 ++++++++++++++++++++------------
+ t/t0003-attributes.sh |    9 +++++++++
+ 2 files changed, 29 insertions(+), 12 deletions(-)
+
+diff --git a/attr.c b/attr.c
+index 968fb8b..f90bb8e 100644
+--- a/attr.c
++++ b/attr.c
+@@ -594,6 +594,8 @@ static int path_matches(const char *pathname, int p=
+athlen,
+ 	return fnmatch(pattern, pathname + baselen, FNM_PATHNAME) =3D=3D 0;
+ }
+=20
++static int macroexpand_one(int attr_nr, int rem);
++
+ static int fill_one(const char *what, struct match_attr *a, int rem)
+ {
+ 	struct git_attr_check *check =3D check_all_attr;
+@@ -610,6 +612,7 @@ static int fill_one(const char *what, struct match_=
+attr *a, int rem)
+ 				  attr, v);
+ 			*n =3D v;
+ 			rem--;
++			rem =3D macroexpand_one(attr->attr_nr, rem);
+ 		}
+ 	}
+ 	return rem;
+@@ -631,19 +634,27 @@ static int fill(const char *path, int pathlen, st=
+ruct attr_stack *stk, int rem)
+ 	return rem;
+ }
+=20
+-static int macroexpand(struct attr_stack *stk, int rem)
++static int macroexpand_one(int attr_nr, int rem)
+ {
++	struct attr_stack *stk;
++	struct match_attr *a =3D NULL;
+ 	int i;
+-	struct git_attr_check *check =3D check_all_attr;
+=20
+-	for (i =3D stk->num_matches - 1; 0 < rem && 0 <=3D i; i--) {
+-		struct match_attr *a =3D stk->attrs[i];
+-		if (!a->is_macro)
+-			continue;
+-		if (check[a->u.attr->attr_nr].value !=3D ATTR__TRUE)
+-			continue;
++	if (check_all_attr[attr_nr].value !=3D ATTR__TRUE)
++		return rem;
++
++	for (stk =3D attr_stack; !a && stk; stk =3D stk->prev)
++		for (i =3D stk->num_matches - 1; !a && 0 <=3D i; i--) {
++			struct match_attr *ma =3D stk->attrs[i];
++			if (!ma->is_macro)
++				continue;
++			if (ma->u.attr->attr_nr =3D=3D attr_nr)
++				a =3D ma;
++		}
++
++	if (a)
+ 		rem =3D fill_one("expand", a, rem);
+-	}
++
+ 	return rem;
+ }
+=20
+@@ -668,9 +679,6 @@ int git_checkattr(const char *path, int num, struct=
+ git_attr_check *check)
+ 	for (stk =3D attr_stack; 0 < rem && stk; stk =3D stk->prev)
+ 		rem =3D fill(path, pathlen, stk, rem);
+=20
+-	for (stk =3D attr_stack; 0 < rem && stk; stk =3D stk->prev)
+-		rem =3D macroexpand(stk, rem);
+-
+ 	for (i =3D 0; i < num; i++) {
+ 		const char *value =3D check_all_attr[check[i].attr->attr_nr].value;
+ 		if (value =3D=3D ATTR__UNKNOWN)
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index bd9c8de..53bd7fc 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -20,10 +20,12 @@ test_expect_success 'setup' '
+=20
+ 	mkdir -p a/b/d a/c &&
+ 	(
++		echo "[attr]notest !test"
+ 		echo "f	test=3Df"
+ 		echo "a/i test=3Da/i"
+ 		echo "onoff test -test"
+ 		echo "offon -test test"
++		echo "no notest"
+ 	) >.gitattributes &&
+ 	(
+ 		echo "g test=3Da/g" &&
+@@ -32,6 +34,7 @@ test_expect_success 'setup' '
+ 	(
+ 		echo "h test=3Da/b/h" &&
+ 		echo "d/* test=3Da/b/d/*"
++		echo "d/yes notest"
+ 	) >a/b/.gitattributes
+=20
+ '
+@@ -48,6 +51,9 @@ test_expect_success 'attribute test' '
+ 	attr_check a/b/d/g "a/b/d/*"
+ 	attr_check onoff unset
+ 	attr_check offon set
++	attr_check no unspecified
++	attr_check a/b/d/no "a/b/d/*"
++	attr_check a/b/d/yes unspecified
+=20
+ '
+=20
+@@ -64,6 +70,9 @@ a/b/h: test: a/b/h
+ a/b/d/g: test: a/b/d/*
+ onoff: test: unset
+ offon: test: set
++no: test: unspecified
++a/b/d/no: test: a/b/d/*
++a/b/d/yes: test: unspecified
+ EOF
+=20
+ 	sed -e "s/:.*//" < expect | git check-attr --stdin test > actual &&
+--=20
+1.7.0.3.316.g33b5e
