@@ -1,91 +1,89 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: [RFD} Use regex's in :/ revision naming machinery
-Date: Tue, 06 Apr 2010 09:02:00 +0200
-Organization: Bertin Technologies
-Message-ID: <20100406090200.46a7c66b@chalon.bertin.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] fix weird git --paginate behavior
+Date: Tue, 06 Apr 2010 00:17:25 -0700
+Message-ID: <7v1vetjbi2.fsf@alter.siamese.dyndns.org>
+References: <1270492888-26589-1-git-send-email-pclouds@gmail.com>
+ <1270492888-26589-44-git-send-email-pclouds@gmail.com>
+ <20100406040145.GA30403@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: ydirson@free.fr
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 06 09:13:19 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 06 09:17:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nz2yL-0007gP-Ii
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 09:13:17 +0200
+	id 1Nz32b-0004q2-TP
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 09:17:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757357Ab0DFHNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Apr 2010 03:13:13 -0400
-Received: from blois.bertin.fr ([212.234.8.70]:58817 "EHLO blois.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755877Ab0DFHNL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Apr 2010 03:13:11 -0400
-X-Greylist: delayed 514 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Apr 2010 03:13:11 EDT
-Received: from blois.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id 2B1885450F
-	for <git@vger.kernel.org>; Tue,  6 Apr 2010 09:04:33 +0200 (CEST)
-Received: from YPORT1 (unknown [192.168.1.13])
-	by blois.bertin.fr (Postfix) with ESMTP id 085725435E
-	for <git@vger.kernel.org>; Tue,  6 Apr 2010 09:03:58 +0200 (CEST)
-Received: from chalon.bertin.fr ([172.16.3.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0L0G001PC0YLDF10@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Tue, 06 Apr 2010 09:03:58 +0200 (CEST)
-X-Mailer: Claws Mail 3.7.5 (GTK+ 2.12.12; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8146-6.0.0.1038-17302.005
+	id S1757340Ab0DFHRh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 03:17:37 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42875 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757280Ab0DFHRf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Apr 2010 03:17:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 70B2BA8627;
+	Tue,  6 Apr 2010 03:17:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=B0LFq9sk3pS+
+	Aj7fVez4R+N0xqU=; b=O+wS5ZHtbEgaTPlK6yafTl4vw9+HsQ8CMgHPzaVZ6jwv
+	4pvBBDrpK/NAuuNvRNK7Sfl7xBCfGrnjdAehWtArA2B2gkOD1N1oEZUQgJxYzn4T
+	njPYimaH41Dvir+2mKm/gdpmx6gN3cVRb1Khhztfc19JqnT6zrTMxGs9Db2kyi8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qIVj4u
+	JTGJKZ4xmpXry5l3MyKvlCTDXE3EbLisoRiHR2qFoc+Blkkc5wpbaIka7DJh/LDn
+	Xt6ytXNCs5UJebWuL6Viqz6LzTWx87tHkuegSb1QNWQNeRwFM9cOwHmyVtYcKnVn
+	cUVdPQ0eqx1NrzGgcm9L9jvHSCWJTviTQb03M=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3EC0AA8626;
+	Tue,  6 Apr 2010 03:17:31 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14EF6A8625; Tue,  6 Apr
+ 2010 03:17:26 -0400 (EDT)
+In-Reply-To: <20100406040145.GA30403@progeny.tock> (Jonathan Nieder's message
+ of "Mon\, 5 Apr 2010 23\:01\:46 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 76DD7BBC-414C-11DF-B02A-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144110>
 
-Let's step in as a user of the feature :)
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-I started to use :/ very recently, and found it very convenient for my
-particular use.  I'm running a script which takes a treeish as
-argument, which I regularly run on a dev branch on which I am editing
-the commits regularly - that is, the commit message rarely change, but
-the sha1's do.  Then once I have a working :/ expr, I can just reuse
-the line from shell history, saving typing.
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>
+> Thanks for posting this series.  I had not read it in full before.
+>
+> The series is very long and it is hard to make certain it does not
+> introduce regressions.  Here is my idea for working around this: the
+> idea is to grab patches from the series to form short, independently
+> justifiable mini-series.
 
-Also, for composing the :/ expression, I make use of "git slog|head"
-(slog being an alias of mostly "git log --pretty=oneline"), which helps
-figuring out a prefix string that does not require too much
-keystrokes.  There again, it is a gain compared to grabbing the mouse
-to cut+paste a sha1.
+Thanks for trying out your idea.
 
-Junio wrote:
->I also happen to think that the current ':/' is more or less useless
->because you cannot tell it to start digging from only these branches,
->and it becomes dice-throwing which commit it would find.
+I've been having trouble reviewing this series.  I can read bits and
+pieces and find things that I mostly agree with, or things that I find
+questionable.  But in either case, I cannot be sure about my judgement
+without having a clear idea of where the series is trying to go upfront=
+=2E
 
-Now what I found really strange, is that the ":" in :/ would not act as
-it does in the [<treeish>]:<file> syntax.  Allowing to use
-[<treeish>]:/<regexp> would not only make it more useful, but also more
-consistent with that other syntax.
-
-
->A related but a larger issue is that I suspect this "two-dot" would not
->work, as the syntax looks for "Merge branch 'slabh'.." (two-dot taken
->literally).
-
-Right there is a problem here - even if it works when you mean ".." as
-the range separator, it makes it hard to specify a ".." search pattern.
-
-What about using ":/pattern/" as a syntax instead ?  That would also be
-close to other familiar stuff - although it would now require quoting
-a "/" to include it in the search pattern...
-
-Another issue would be to (de)activate regexp processing (as compared
-to just substring or leading-substring behaviour).  Maybe we could use
-sed-like trailing modifiers for this - eg. if regexp is made the
-default, ":/obj.c/f" would not match "object".  This would also give us
-provision to add classical pattern modifiers like /i, and at 1st sight
-would still be unambiguous wrt the .. separator.
-
-Does that make sense ?
--- 
-Yann
+While a re-roll will certainly give us a chance to review the series
+"cover-to-cover", it would make it much easier to swallow if this can b=
+e
+split into independently digestable bite-sized pieces.  I am somewhat
+skeptical if a major part of the series will become that smaller,
+though...
