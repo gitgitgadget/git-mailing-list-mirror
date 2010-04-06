@@ -1,491 +1,614 @@
 From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: [PATCH 3/6] string_list: Fix argument order for string_list_insert
-Date: Tue, 06 Apr 2010 02:11:35 +0100
-Message-ID: <20100406011139.71279.30985.julian@quantumfyre.co.uk>
+Subject: [PATCH 6/6] string_list: Fix argument order for string_list_append
+Date: Tue, 06 Apr 2010 02:11:38 +0100
+Message-ID: <20100406011139.71279.67117.julian@quantumfyre.co.uk>
 References: <20100406011106.71279.92681.julian@quantumfyre.co.uk>
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 06 03:29:24 2010
+X-From: git-owner@vger.kernel.org Tue Apr 06 03:29:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NyxbW-0001M8-VY
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 03:29:23 +0200
+	id 1NyxbZ-0001M8-9I
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 03:29:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932094Ab0DFB2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Apr 2010 21:28:55 -0400
-Received: from positron.quantumfyre.co.uk ([213.165.84.138]:45405 "EHLO
+	id S932112Ab0DFB3G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Apr 2010 21:29:06 -0400
+Received: from positron.quantumfyre.co.uk ([213.165.84.138]:45408 "EHLO
 	positron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756661Ab0DFB2r (ORCPT
+	by vger.kernel.org with ESMTP id S1756236Ab0DFB2r (ORCPT
 	<rfc822;git@vger.kernel.org>); Mon, 5 Apr 2010 21:28:47 -0400
 Received: from reaper.quantumfyre.co.uk (reaper.quantumfyre.co.uk [212.159.54.234])
-	by positron.quantumfyre.co.uk (Postfix) with ESMTP id 90BBA819C3A8;
-	Tue,  6 Apr 2010 02:28:40 +0100 (BST)
+	by positron.quantumfyre.co.uk (Postfix) with ESMTP id 427E5819A7F7;
+	Tue,  6 Apr 2010 02:28:41 +0100 (BST)
 Received: from localhost (localhost [127.0.0.1])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 0780420C8E7;
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id C15B6204C00;
 	Tue,  6 Apr 2010 02:28:45 +0100 (BST)
 X-Virus-Scanned: amavisd-new at reaper
 Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
 	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id Ja-pxi5nix77; Tue,  6 Apr 2010 02:28:44 +0100 (BST)
+	with LMTP id V6BDQ7PrSyOc; Tue,  6 Apr 2010 02:28:45 +0100 (BST)
 Received: from rayne.quantumfyre.co.uk (rayne.quantumfyre.co.uk [192.168.0.18])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 5C49520C8EB;
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id C936317773B;
 	Tue,  6 Apr 2010 02:28:44 +0100 (BST)
-X-git-sha1: 88550d14ecabc95d171acc8a930051471f5a25c2 
+X-git-sha1: bb19cb37b3d80f7bd9da16bde5dab6b798e7e851 
 X-Mailer: git-mail-commits v0.5.3
 In-Reply-To: <20100406011106.71279.92681.julian@quantumfyre.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144080>
 
-Update the definition and callers of string_list_insert to use
+Update the definition and callers of string_list_append to use
 the string_list as the first argument.  This helps make the string_list
 API easier to use by being more consistent.
 
 Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
 ---
- builtin/apply.c     |    6 +++---
- builtin/commit.c    |    2 +-
- builtin/fetch.c     |    4 ++--
- builtin/mailsplit.c |    2 +-
- builtin/mv.c        |    2 +-
- builtin/remote.c    |    6 +++---
- builtin/shortlog.c  |    2 +-
- builtin/show-ref.c  |    2 +-
- diff-no-index.c     |    2 +-
- http-backend.c      |    2 +-
- mailmap.c           |    2 +-
- merge-recursive.c   |   16 ++++++++--------
- reflog-walk.c       |    2 +-
- remote.c            |    2 +-
- rerere.c            |   10 +++++-----
- resolve-undo.c      |    4 ++--
- string-list.c       |    2 +-
- string-list.h       |    2 +-
- wt-status.c         |    8 ++++----
- 19 files changed, 39 insertions(+), 39 deletions(-)
+ Documentation/technical/api-string-list.txt |    4 +-
+ builtin/apply.c                             |    2 +-
+ builtin/fast-export.c                       |    4 +-
+ builtin/fetch.c                             |    8 ++--
+ builtin/fmt-merge-msg.c                     |   18 +++++-----
+ builtin/grep.c                              |    6 ++--
+ builtin/log.c                               |   20 ++++++------
+ builtin/remote.c                            |   46 +++++++++++++-------------
+ builtin/rerere.c                            |    2 +-
+ builtin/shortlog.c                          |    2 +-
+ notes.c                                     |    6 ++--
+ remote.c                                    |    2 +-
+ revision.c                                  |    4 +-
+ string-list.c                               |    2 +-
+ string-list.h                               |    2 +-
+ transport-helper.c                          |    4 +-
+ 16 files changed, 66 insertions(+), 66 deletions(-)
 
+diff --git a/Documentation/technical/api-string-list.txt b/Documentation/technical/api-string-list.txt
+index 6d8c24b..3f575bd 100644
+--- a/Documentation/technical/api-string-list.txt
++++ b/Documentation/technical/api-string-list.txt
+@@ -38,8 +38,8 @@ struct string_list list;
+ int i;
+ 
+ memset(&list, 0, sizeof(struct string_list));
+-string_list_append("foo", &list);
+-string_list_append("bar", &list);
++string_list_append(&list, "foo");
++string_list_append(&list, "bar");
+ for (i = 0; i < list.nr; i++)
+ 	printf("%s\n", list.items[i].string)
+ ----
 diff --git a/builtin/apply.c b/builtin/apply.c
-index af4695f..aea852c 100644
+index 19bdce4..9f8fd41 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -2664,7 +2664,7 @@ static void add_to_fn_table(struct patch *patch)
- 	 * file creations and copies
- 	 */
- 	if (patch->new_name != NULL) {
--		item = string_list_insert(patch->new_name, &fn_table);
-+		item = string_list_insert(&fn_table, patch->new_name);
- 		item->util = patch;
- 	}
+@@ -3397,7 +3397,7 @@ static void add_name_limit(const char *name, int exclude)
+ {
+ 	struct string_list_item *it;
  
-@@ -2673,7 +2673,7 @@ static void add_to_fn_table(struct patch *patch)
- 	 * later chunks shouldn't patch old names
- 	 */
- 	if ((patch->new_name == NULL) || (patch->is_rename)) {
--		item = string_list_insert(patch->old_name, &fn_table);
-+		item = string_list_insert(&fn_table, patch->old_name);
- 		item->util = PATH_WAS_DELETED;
- 	}
+-	it = string_list_append(name, &limit_by_name);
++	it = string_list_append(&limit_by_name, name);
+ 	it->util = exclude ? NULL : (void *) 1;
  }
-@@ -2686,7 +2686,7 @@ static void prepare_fn_table(struct patch *patch)
- 	while (patch) {
- 		if ((patch->new_name == NULL) || (patch->is_rename)) {
- 			struct string_list_item *item;
--			item = string_list_insert(patch->old_name, &fn_table);
-+			item = string_list_insert(&fn_table, patch->old_name);
- 			item->util = PATH_TO_BE_DELETED;
+ 
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index c6dd71a..9fe25ff 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -438,7 +438,7 @@ static void get_tags_and_duplicates(struct object_array *pending,
+ 			/* handle nested tags */
+ 			while (tag && tag->object.type == OBJ_TAG) {
+ 				parse_object(tag->object.sha1);
+-				string_list_append(full_name, extra_refs)->util = tag;
++				string_list_append(extra_refs, full_name)->util = tag;
+ 				tag = (struct tag *)tag->tagged;
+ 			}
+ 			if (!tag)
+@@ -464,7 +464,7 @@ static void get_tags_and_duplicates(struct object_array *pending,
  		}
- 		patch = patch->next;
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 8f1ddc3..750bf39 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -205,7 +205,7 @@ static int list_paths(struct string_list *list, const char *with_tree,
- 			continue;
- 		if (!match_pathspec(pattern, ce->name, ce_namelen(ce), 0, m))
- 			continue;
--		item = string_list_insert(ce->name, list);
-+		item = string_list_insert(list, ce->name);
- 		if (ce_skip_worktree(ce))
- 			item->util = item; /* better a valid pointer than a fake one */
+ 		if (commit->util)
+ 			/* more than one name for the same object */
+-			string_list_append(full_name, extra_refs)->util = commit;
++			string_list_append(extra_refs, full_name)->util = commit;
+ 		else
+ 			commit->util = full_name;
  	}
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 31cec51..cebfe1a 100644
+index 4e78464..962963d 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -528,7 +528,7 @@ static int add_existing(const char *refname, const unsigned char *sha1,
- 			int flag, void *cbdata)
+@@ -745,7 +745,7 @@ static int get_one_remote_for_fetch(struct remote *remote, void *priv)
  {
- 	struct string_list *list = (struct string_list *)cbdata;
--	struct string_list_item *item = string_list_insert(refname, list);
-+	struct string_list_item *item = string_list_insert(list, refname);
- 	item->util = (void *)sha1;
+ 	struct string_list *list = priv;
+ 	if (!remote->skip_default_update)
+-		string_list_append(remote->name, list);
++		string_list_append(list, remote->name);
  	return 0;
  }
-@@ -616,7 +616,7 @@ static void find_non_local_tags(struct transport *transport,
- 		    string_list_has_string(&existing_refs, ref->name))
- 			continue;
  
--		item = string_list_insert(ref->name, &remote_refs);
-+		item = string_list_insert(&remote_refs, ref->name);
- 		item->util = (void *)ref->old_sha1;
+@@ -764,8 +764,8 @@ static int get_remote_group(const char *key, const char *value, void *priv)
+ 		int space = strcspn(value, " \t\n");
+ 		while (*value) {
+ 			if (space > 1) {
+-				string_list_append(xstrndup(value, space),
+-						   g->list);
++				string_list_append(g->list,
++						   xstrndup(value, space));
+ 			}
+ 			value += space + (value[space] != '\0');
+ 			space = strcspn(value, " \t\n");
+@@ -786,7 +786,7 @@ static int add_remote_or_group(const char *name, struct string_list *list)
+ 		if (!remote_is_configured(name))
+ 			return 0;
+ 		remote = remote_get(name);
+-		string_list_append(remote->name, list);
++		string_list_append(list, remote->name);
  	}
- 	string_list_clear(&existing_refs, 0);
-diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
-index cdfc1b7..e4560da 100644
---- a/builtin/mailsplit.c
-+++ b/builtin/mailsplit.c
-@@ -121,7 +121,7 @@ static int populate_maildir_list(struct string_list *list, const char *path)
- 			if (dent->d_name[0] == '.')
- 				continue;
- 			snprintf(name, sizeof(name), "%s/%s", *sub, dent->d_name);
--			string_list_insert(name, list);
-+			string_list_insert(list, name);
- 		}
+ 	return 1;
+ }
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 379a031..6012012 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -82,7 +82,7 @@ static int handle_line(char *line)
  
- 		closedir(dir);
-diff --git a/builtin/mv.c b/builtin/mv.c
-index c07f53b..38574b8 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -180,7 +180,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		} else if (string_list_has_string(&src_for_dst, dst))
- 			bad = "multiple sources for the same target";
+ 	item = unsorted_string_list_lookup(&srcs, src);
+ 	if (!item) {
+-		item = string_list_append(src, &srcs);
++		item = string_list_append(&srcs, src);
+ 		item->util = xcalloc(1, sizeof(struct src_data));
+ 		init_src_data(item->util);
+ 	}
+@@ -93,19 +93,19 @@ static int handle_line(char *line)
+ 		src_data->head_status |= 1;
+ 	} else if (!prefixcmp(line, "branch ")) {
+ 		origin = line + 7;
+-		string_list_append(origin, &src_data->branch);
++		string_list_append(&src_data->branch, origin);
+ 		src_data->head_status |= 2;
+ 	} else if (!prefixcmp(line, "tag ")) {
+ 		origin = line;
+-		string_list_append(origin + 4, &src_data->tag);
++		string_list_append(&src_data->tag, origin + 4);
+ 		src_data->head_status |= 2;
+ 	} else if (!prefixcmp(line, "remote branch ")) {
+ 		origin = line + 14;
+-		string_list_append(origin, &src_data->r_branch);
++		string_list_append(&src_data->r_branch, origin);
+ 		src_data->head_status |= 2;
+ 	} else {
+ 		origin = src;
+-		string_list_append(line, &src_data->generic);
++		string_list_append(&src_data->generic, line);
+ 		src_data->head_status |= 2;
+ 	}
+ 
+@@ -118,7 +118,7 @@ static int handle_line(char *line)
+ 		sprintf(new_origin, "%s of %s", origin, src);
+ 		origin = new_origin;
+ 	}
+-	string_list_append(origin, &origins)->util = sha1;
++	string_list_append(&origins, origin)->util = sha1;
+ 	return 0;
+ }
+ 
+@@ -176,10 +176,10 @@ static void shortlog(const char *name, unsigned char *sha1,
+ 		strbuf_ltrim(&sb);
+ 
+ 		if (!sb.len)
+-			string_list_append(sha1_to_hex(commit->object.sha1),
+-					   &subjects);
++			string_list_append(&subjects,
++					   sha1_to_hex(commit->object.sha1));
  		else
--			string_list_insert(dst, &src_for_dst);
-+			string_list_insert(&src_for_dst, dst);
+-			string_list_append(strbuf_detach(&sb, NULL), &subjects);
++			string_list_append(&subjects, strbuf_detach(&sb, NULL));
+ 	}
  
- 		if (bad) {
- 			if (ignore_errors) {
+ 	if (count > limit)
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 29454d7..243ef75 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -563,7 +563,7 @@ static void append_path(struct grep_opt *opt, const void *data, size_t len)
+ 
+ 	if (len == 1 && *(char *)data == '\0')
+ 		return;
+-	string_list_append(xstrndup(data, len), path_list);
++	string_list_append(path_list, xstrndup(data, len));
+ }
+ 
+ static void run_pager(struct grep_opt *opt, const char *prefix)
+@@ -983,7 +983,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		opt.null_following_name = 1;
+ 		opt.output_priv = &path_list;
+ 		opt.output = append_path;
+-		string_list_append(show_in_pager, &path_list);
++		string_list_append(&path_list, show_in_pager);
+ 		use_threads = 0;
+ 	}
+ 
+@@ -1070,7 +1070,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			strbuf_addf(&buf, "+/%s%s",
+ 					strcmp("less", pager) ? "" : "*",
+ 					opt.pattern_list->pattern);
+-			string_list_append(buf.buf, &path_list);
++			string_list_append(&path_list, buf.buf);
+ 			strbuf_detach(&buf, NULL);
+ 		}
+ 	}
+diff --git a/builtin/log.c b/builtin/log.c
+index 9e8e7bd..8c94712 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -515,13 +515,13 @@ static void add_header(const char *value)
+ 		len--;
+ 
+ 	if (!strncasecmp(value, "to: ", 4)) {
+-		item = string_list_append(value + 4, &extra_to);
++		item = string_list_append(&extra_to, value + 4);
+ 		len -= 4;
+ 	} else if (!strncasecmp(value, "cc: ", 4)) {
+-		item = string_list_append(value + 4, &extra_cc);
++		item = string_list_append(&extra_cc, value + 4);
+ 		len -= 4;
+ 	} else {
+-		item = string_list_append(value, &extra_hdr);
++		item = string_list_append(&extra_hdr, value);
+ 	}
+ 
+ 	item->string[len] = '\0';
+@@ -545,13 +545,13 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ 	if (!strcmp(var, "format.to")) {
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		string_list_append(value, &extra_to);
++		string_list_append(&extra_to, value);
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "format.cc")) {
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		string_list_append(value, &extra_cc);
++		string_list_append(&extra_cc, value);
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff")) {
+@@ -929,7 +929,7 @@ static int to_callback(const struct option *opt, const char *arg, int unset)
+ 	if (unset)
+ 		string_list_clear(&extra_to, 0);
+ 	else
+-		string_list_append(arg, &extra_to);
++		string_list_append(&extra_to, arg);
+ 	return 0;
+ }
+ 
+@@ -938,7 +938,7 @@ static int cc_callback(const struct option *opt, const char *arg, int unset)
+ 	if (unset)
+ 		string_list_clear(&extra_cc, 0);
+ 	else
+-		string_list_append(arg, &extra_cc);
++		string_list_append(&extra_cc, arg);
+ 	return 0;
+ }
+ 
+@@ -1219,7 +1219,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		rev.ref_message_ids = xcalloc(1, sizeof(struct string_list));
+ 	if (in_reply_to) {
+ 		const char *msgid = clean_message_id(in_reply_to);
+-		string_list_append(msgid, rev.ref_message_ids);
++		string_list_append(rev.ref_message_ids, msgid);
+ 	}
+ 	rev.numbered_files = numbered_files;
+ 	rev.patch_suffix = fmt_patch_suffix;
+@@ -1266,8 +1266,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 				    && (!cover_letter || rev.nr > 1))
+ 					free(rev.message_id);
+ 				else
+-					string_list_append(rev.message_id,
+-							   rev.ref_message_ids);
++					string_list_append(rev.ref_message_ids,
++							   rev.message_id);
+ 			}
+ 			gen_message_id(&rev, sha1_to_hex(commit->object.sha1));
+ 		}
 diff --git a/builtin/remote.c b/builtin/remote.c
-index 015ae71..87edc37 100644
+index 87edc37..0869069 100644
 --- a/builtin/remote.c
 +++ b/builtin/remote.c
-@@ -232,7 +232,7 @@ static int config_read_branches(const char *key, const char *value, void *cb)
- 		} else
- 			return 0;
- 
--		item = string_list_insert(name, &branch_list);
-+		item = string_list_insert(&branch_list, name);
- 
- 		if (!item->util)
- 			item->util = xcalloc(sizeof(struct branch_info), 1);
-@@ -851,7 +851,7 @@ static int add_remote_to_show_info(struct string_list_item *item, void *cb_data)
- 	int n = strlen(item->string);
- 	if (n > info->width)
- 		info->width = n;
--	string_list_insert(item->string, info->list);
-+	string_list_insert(info->list, item->string);
+@@ -87,7 +87,7 @@ static int opt_parse_track(const struct option *opt, const char *arg, int not)
+ 	if (not)
+ 		string_list_clear(list, 0);
+ 	else
+-		string_list_append(arg, list);
++		string_list_append(list, arg);
  	return 0;
  }
  
-@@ -898,7 +898,7 @@ static int add_local_to_show_info(struct string_list_item *branch_item, void *cb
- 	if (branch_info->rebase)
- 		show_info->any_rebase = 1;
+@@ -149,7 +149,7 @@ static int add(int argc, const char **argv)
+ 	strbuf_addf(&buf, "remote.%s.fetch", name);
  
--	item = string_list_insert(branch_item->string, show_info->list);
-+	item = string_list_insert(show_info->list, branch_item->string);
- 	item->util = branch_info;
+ 	if (track.nr == 0)
+-		string_list_append("*", &track);
++		string_list_append(&track, "*");
+ 	for (i = 0; i < track.nr; i++) {
+ 		struct string_list_item *item = track.items + i;
+ 
+@@ -247,11 +247,11 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+ 			while (space) {
+ 				char *merge;
+ 				merge = xstrndup(value, space - value);
+-				string_list_append(merge, &info->merge);
++				string_list_append(&info->merge, merge);
+ 				value = abbrev_branch(space + 1);
+ 				space = strchr(value, ' ');
+ 			}
+-			string_list_append(xstrdup(value), &info->merge);
++			string_list_append(&info->merge, xstrdup(value));
+ 		} else
+ 			info->rebase = git_config_bool(orig_key, value);
+ 	}
+@@ -288,14 +288,14 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
+ 	for (ref = fetch_map; ref; ref = ref->next) {
+ 		unsigned char sha1[20];
+ 		if (!ref->peer_ref || read_ref(ref->peer_ref->name, sha1))
+-			string_list_append(abbrev_branch(ref->name), &states->new);
++			string_list_append(&states->new, abbrev_branch(ref->name));
+ 		else
+-			string_list_append(abbrev_branch(ref->name), &states->tracked);
++			string_list_append(&states->tracked, abbrev_branch(ref->name));
+ 	}
+ 	stale_refs = get_stale_heads(states->remote, fetch_map);
+ 	for (ref = stale_refs; ref; ref = ref->next) {
+ 		struct string_list_item *item =
+-			string_list_append(abbrev_branch(ref->name), &states->stale);
++			string_list_append(&states->stale, abbrev_branch(ref->name));
+ 		item->util = xstrdup(ref->name);
+ 	}
+ 	free_refs(stale_refs);
+@@ -344,8 +344,8 @@ static int get_push_ref_states(const struct ref *remote_refs,
+ 			continue;
+ 		hashcpy(ref->new_sha1, ref->peer_ref->new_sha1);
+ 
+-		item = string_list_append(abbrev_branch(ref->peer_ref->name),
+-					  &states->push);
++		item = string_list_append(&states->push,
++					  abbrev_branch(ref->peer_ref->name));
+ 		item->util = xcalloc(sizeof(struct push_info), 1);
+ 		info = item->util;
+ 		info->forced = ref->force;
+@@ -380,7 +380,7 @@ static int get_push_ref_states_noquery(struct ref_states *states)
+ 
+ 	states->push.strdup_strings = 1;
+ 	if (!remote->push_refspec_nr) {
+-		item = string_list_append("(matching)", &states->push);
++		item = string_list_append(&states->push, "(matching)");
+ 		info = item->util = xcalloc(sizeof(struct push_info), 1);
+ 		info->status = PUSH_STATUS_NOTQUERIED;
+ 		info->dest = xstrdup(item->string);
+@@ -388,11 +388,11 @@ static int get_push_ref_states_noquery(struct ref_states *states)
+ 	for (i = 0; i < remote->push_refspec_nr; i++) {
+ 		struct refspec *spec = remote->push + i;
+ 		if (spec->matching)
+-			item = string_list_append("(matching)", &states->push);
++			item = string_list_append(&states->push, "(matching)");
+ 		else if (strlen(spec->src))
+-			item = string_list_append(spec->src, &states->push);
++			item = string_list_append(&states->push, spec->src);
+ 		else
+-			item = string_list_append("(delete)", &states->push);
++			item = string_list_append(&states->push, "(delete)");
+ 
+ 		info = item->util = xcalloc(sizeof(struct push_info), 1);
+ 		info->forced = spec->force;
+@@ -416,7 +416,7 @@ static int get_head_names(const struct ref *remote_refs, struct ref_states *stat
+ 	matches = guess_remote_head(find_ref_by_name(remote_refs, "HEAD"),
+ 				    fetch_map, 1);
+ 	for (ref = matches; ref; ref = ref->next)
+-		string_list_append(abbrev_branch(ref->name), &states->heads);
++		string_list_append(&states->heads, abbrev_branch(ref->name));
+ 
+ 	free_refs(fetch_map);
+ 	free_refs(matches);
+@@ -480,8 +480,8 @@ static int add_branch_for_removal(const char *refname,
+ 	if (prefixcmp(refname, "refs/remotes")) {
+ 		/* advise user how to delete local branches */
+ 		if (!prefixcmp(refname, "refs/heads/"))
+-			string_list_append(abbrev_branch(refname),
+-					   branches->skipped);
++			string_list_append(branches->skipped,
++					   abbrev_branch(refname));
+ 		/* silently skip over other non-remote refs */
+ 		return 0;
+ 	}
+@@ -490,7 +490,7 @@ static int add_branch_for_removal(const char *refname,
+ 	if (flags & REF_ISSYMREF)
+ 		return unlink(git_path("%s", refname));
+ 
+-	item = string_list_append(refname, branches->branches);
++	item = string_list_append(branches->branches, refname);
+ 	item->util = xmalloc(20);
+ 	hashcpy(item->util, sha1);
+ 
+@@ -515,7 +515,7 @@ static int read_remote_branches(const char *refname,
+ 
+ 	strbuf_addf(&buf, "refs/remotes/%s", rename->old);
+ 	if (!prefixcmp(refname, buf.buf)) {
+-		item = string_list_append(xstrdup(refname), rename->remote_branches);
++		item = string_list_append(rename->remote_branches, xstrdup(refname));
+ 		symref = resolve_ref(refname, orig_sha1, 1, &flag);
+ 		if (flag & REF_ISSYMREF)
+ 			item->util = xstrdup(symref);
+@@ -798,7 +798,7 @@ static int append_ref_to_tracked_list(const char *refname,
+ 	memset(&refspec, 0, sizeof(refspec));
+ 	refspec.dst = (char *)refname;
+ 	if (!remote_find_tracking(states->remote, &refspec))
+-		string_list_append(abbrev_branch(refspec.src), &states->tracked);
++		string_list_append(&states->tracked, abbrev_branch(refspec.src));
  
  	return 0;
+ }
+@@ -946,7 +946,7 @@ static int add_push_to_show_info(struct string_list_item *push_item, void *cb_da
+ 		show_info->width = n;
+ 	if ((n = strlen(push_info->dest)) > show_info->width2)
+ 		show_info->width2 = n;
+-	item = string_list_append(push_item->string, show_info->list);
++	item = string_list_append(show_info->list, push_item->string);
+ 	item->util = push_item->util;
+ 	return 0;
+ }
+@@ -1360,10 +1360,10 @@ static int get_one_entry(struct remote *remote, void *priv)
+ 
+ 	if (remote->url_nr > 0) {
+ 		strbuf_addf(&url_buf, "%s (fetch)", remote->url[0]);
+-		string_list_append(remote->name, list)->util =
++		string_list_append(list, remote->name)->util =
+ 				strbuf_detach(&url_buf, NULL);
+ 	} else
+-		string_list_append(remote->name, list)->util = NULL;
++		string_list_append(list, remote->name)->util = NULL;
+ 	if (remote->pushurl_nr) {
+ 		url = remote->pushurl;
+ 		url_nr = remote->pushurl_nr;
+@@ -1374,7 +1374,7 @@ static int get_one_entry(struct remote *remote, void *priv)
+ 	for (i = 0; i < url_nr; i++)
+ 	{
+ 		strbuf_addf(&url_buf, "%s (push)", url[i]);
+-		string_list_append(remote->name, list)->util =
++		string_list_append(list, remote->name)->util =
+ 				strbuf_detach(&url_buf, NULL);
+ 	}
+ 
+diff --git a/builtin/rerere.c b/builtin/rerere.c
+index 34f9ace..73610b6 100644
+--- a/builtin/rerere.c
++++ b/builtin/rerere.c
+@@ -59,7 +59,7 @@ static void garbage_collect(struct string_list *rr)
+ 		cutoff = (has_rerere_resolution(e->d_name)
+ 			  ? cutoff_resolve : cutoff_noresolve);
+ 		if (then < now - cutoff * 86400)
+-			string_list_append(e->d_name, &to_remove);
++			string_list_append(&to_remove, e->d_name);
+ 	}
+ 	for (i = 0; i < to_remove.nr; i++)
+ 		unlink_rr_item(to_remove.items[i].string);
 diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index bdf3402..3620cc0 100644
+index 3620cc0..3b59401 100644
 --- a/builtin/shortlog.c
 +++ b/builtin/shortlog.c
-@@ -84,7 +84,7 @@ static void insert_one_record(struct shortlog *log,
- 		snprintf(namebuf + len, room, " <%.*s>", maillen, emailbuf);
+@@ -115,7 +115,7 @@ static void insert_one_record(struct shortlog *log,
+ 		}
  	}
  
--	item = string_list_insert(namebuf, &log->list);
-+	item = string_list_insert(&log->list, namebuf);
- 	if (item->util == NULL)
- 		item->util = xcalloc(1, sizeof(struct string_list));
+-	string_list_append(buffer, item->util);
++	string_list_append(item->util, buffer);
+ }
  
-diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index 59f90df..703727f 100644
---- a/builtin/show-ref.c
-+++ b/builtin/show-ref.c
-@@ -105,7 +105,7 @@ match:
- static int add_existing(const char *refname, const unsigned char *sha1, int flag, void *cbdata)
+ static void read_from_stdin(struct shortlog *log)
+diff --git a/notes.c b/notes.c
+index 70170db..4a541e4 100644
+--- a/notes.c
++++ b/notes.c
+@@ -838,7 +838,7 @@ static int string_list_add_one_ref(const char *path, const unsigned char *sha1,
  {
- 	struct string_list *list = (struct string_list *)cbdata;
--	string_list_insert(refname, list);
-+	string_list_insert(list, refname);
+ 	struct string_list *refs = cb;
+ 	if (!unsorted_string_list_has_string(refs, path))
+-		string_list_append(path, refs);
++		string_list_append(refs, path);
  	return 0;
  }
  
-diff --git a/diff-no-index.c b/diff-no-index.c
-index aae8e7a..3ffb028 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -26,7 +26,7 @@ static int read_directory(const char *path, struct string_list *list)
- 
- 	while ((e = readdir(dir)))
- 		if (strcmp(".", e->d_name) && strcmp("..", e->d_name))
--			string_list_insert(e->d_name, list);
-+			string_list_insert(list, e->d_name);
- 
- 	closedir(dir);
- 	return 0;
-diff --git a/http-backend.c b/http-backend.c
-index af6a756..fa5e0f5 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -92,7 +92,7 @@ static struct string_list *get_parameters(void)
- 
- 			i = string_list_lookup(name, query_params);
- 			if (!i)
--				i = string_list_insert(name, query_params);
-+				i = string_list_insert(query_params, name);
- 			else
- 				free(i->util);
- 			i->util = value;
-diff --git a/mailmap.c b/mailmap.c
-index b68c1fe..badf6a4 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -92,7 +92,7 @@ static void add_mapping(struct string_list *map,
- 			mi->name = xstrdup(new_name);
- 		if (new_email)
- 			mi->email = xstrdup(new_email);
--		string_list_insert(old_name, &me->namemap)->util = mi;
-+		string_list_insert(&me->namemap, old_name)->util = mi;
+@@ -851,7 +851,7 @@ void string_list_add_refs_by_glob(struct string_list *list, const char *glob)
+ 		if (get_sha1(glob, sha1))
+ 			warning("notes ref %s is invalid", glob);
+ 		if (!unsorted_string_list_has_string(list, glob))
+-			string_list_append(glob, list);
++			string_list_append(list, glob);
  	}
- 
- 	debug_mm("mailmap:  '%s' <%s> -> '%s' <%s>\n",
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 206c103..5e60f4b 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -238,9 +238,9 @@ static int save_files_dirs(const unsigned char *sha1,
- 	newpath[baselen + len] = '\0';
- 
- 	if (S_ISDIR(mode))
--		string_list_insert(newpath, &o->current_directory_set);
-+		string_list_insert(&o->current_directory_set, newpath);
- 	else
--		string_list_insert(newpath, &o->current_file_set);
-+		string_list_insert(&o->current_file_set, newpath);
- 	free(newpath);
- 
- 	return (S_ISDIR(mode) ? READ_TREE_RECURSIVE : 0);
-@@ -271,7 +271,7 @@ static struct stage_data *insert_stage_data(const char *path,
- 			e->stages[2].sha, &e->stages[2].mode);
- 	get_tree_entry(b->object.sha1, path,
- 			e->stages[3].sha, &e->stages[3].mode);
--	item = string_list_insert(path, entries);
-+	item = string_list_insert(entries, path);
- 	item->util = e;
- 	return e;
- }
-@@ -296,7 +296,7 @@ static struct string_list *get_unmerged(void)
- 
- 		item = string_list_lookup(ce->name, unmerged);
- 		if (!item) {
--			item = string_list_insert(ce->name, unmerged);
-+			item = string_list_insert(unmerged, ce->name);
- 			item->util = xcalloc(1, sizeof(struct stage_data));
- 		}
- 		e = item->util;
-@@ -369,7 +369,7 @@ static struct string_list *get_renames(struct merge_options *o,
- 					o_tree, a_tree, b_tree, entries);
- 		else
- 			re->dst_entry = item->util;
--		item = string_list_insert(pair->one->path, renames);
-+		item = string_list_insert(renames, pair->one->path);
- 		item->util = re;
- 	}
- 	opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-@@ -432,7 +432,7 @@ static char *unique_path(struct merge_options *o, const char *path, const char *
- 	       lstat(newpath, &st) == 0)
- 		sprintf(p, "_%d", suffix++);
- 
--	string_list_insert(newpath, &o->current_file_set);
-+	string_list_insert(&o->current_file_set, newpath);
- 	return newpath;
  }
  
-@@ -811,12 +811,12 @@ static int process_renames(struct merge_options *o,
+@@ -983,7 +983,7 @@ void init_display_notes(struct display_notes_opt *opt)
+ 	assert(!display_notes_trees);
  
- 	for (i = 0; i < a_renames->nr; i++) {
- 		sre = a_renames->items[i].util;
--		string_list_insert(sre->pair->two->path, &a_by_dst)->util
-+		string_list_insert(&a_by_dst, sre->pair->two->path)->util
- 			= sre->dst_entry;
- 	}
- 	for (i = 0; i < b_renames->nr; i++) {
- 		sre = b_renames->items[i].util;
--		string_list_insert(sre->pair->two->path, &b_by_dst)->util
-+		string_list_insert(&b_by_dst, sre->pair->two->path)->util
- 			= sre->dst_entry;
- 	}
- 
-diff --git a/reflog-walk.c b/reflog-walk.c
-index caba4f7..f125f37 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -190,7 +190,7 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
- 		}
- 		if (!reflogs || reflogs->nr == 0)
- 			return -1;
--		string_list_insert(branch, &info->complete_reflogs)->util
-+		string_list_insert(&info->complete_reflogs, branch)->util
- 			= reflogs;
- 	}
- 
+ 	if (!opt || !opt->suppress_default_notes) {
+-		string_list_append(default_notes_ref(), &display_notes_refs);
++		string_list_append(&display_notes_refs, default_notes_ref());
+ 		display_ref_env = getenv(GIT_NOTES_DISPLAY_REF_ENVIRONMENT);
+ 		if (display_ref_env) {
+ 			string_list_add_refs_from_colon_sep(&display_notes_refs,
 diff --git a/remote.c b/remote.c
-index c70181c..4014c5b 100644
+index b089770..15e6222 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -776,7 +776,7 @@ void ref_remove_duplicates(struct ref *ref_map)
- 			continue;
- 		}
- 
--		item = string_list_insert(ref_map->peer_ref->name, &refs);
-+		item = string_list_insert(&refs, ref_map->peer_ref->name);
- 		item->util = ref_map;
- 	}
- 	string_list_clear(&refs, 0);
-diff --git a/rerere.c b/rerere.c
-index f221bed..910cfd9 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -46,7 +46,7 @@ static void read_rr(struct string_list *rr)
- 			; /* do nothing */
- 		if (i == sizeof(buf))
- 			die("filename too long");
--		string_list_insert(buf, rr)->util = name;
-+		string_list_insert(rr, buf)->util = name;
- 	}
- 	fclose(in);
- }
-@@ -354,7 +354,7 @@ static int find_conflict(struct string_list *conflict)
- 		    ce_same_name(e2, e3) &&
- 		    S_ISREG(e2->ce_mode) &&
- 		    S_ISREG(e3->ce_mode)) {
--			string_list_insert((const char *)e2->name, conflict);
-+			string_list_insert(conflict, (const char *)e2->name);
- 			i++; /* skip over both #2 and #3 */
- 		}
- 	}
-@@ -449,7 +449,7 @@ static int do_plain_rerere(struct string_list *rr, int fd)
- 			if (ret < 1)
- 				continue;
- 			hex = xstrdup(sha1_to_hex(sha1));
--			string_list_insert(path, rr)->util = hex;
-+			string_list_insert(rr, path)->util = hex;
- 			if (mkdir(git_path("rr-cache/%s", hex), 0755))
- 				continue;
- 			handle_file(path, NULL, rerere_path(hex, "preimage"));
-@@ -471,7 +471,7 @@ static int do_plain_rerere(struct string_list *rr, int fd)
- 		if (has_rerere_resolution(name)) {
- 			if (!merge(name, path)) {
- 				if (rerere_autoupdate)
--					string_list_insert(path, &update);
-+					string_list_insert(&update, path);
- 				fprintf(stderr,
- 					"%s '%s' using previous resolution.\n",
- 					rerere_autoupdate
-@@ -577,7 +577,7 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
- 	fprintf(stderr, "Updated preimage for '%s'\n", path);
- 
- 
--	string_list_insert(path, rr)->util = hex;
-+	string_list_insert(rr, path)->util = hex;
- 	fprintf(stderr, "Forgot resolution for %s\n", path);
- 	return 0;
- }
-diff --git a/resolve-undo.c b/resolve-undo.c
-index e93b3d1..8b93559 100644
---- a/resolve-undo.c
-+++ b/resolve-undo.c
-@@ -20,7 +20,7 @@ void record_resolve_undo(struct index_state *istate, struct cache_entry *ce)
- 		istate->resolve_undo = resolve_undo;
- 	}
- 	resolve_undo = istate->resolve_undo;
--	lost = string_list_insert(ce->name, resolve_undo);
-+	lost = string_list_insert(resolve_undo, ce->name);
- 	if (!lost->util)
- 		lost->util = xcalloc(1, sizeof(*ui));
- 	ui = lost->util;
-@@ -70,7 +70,7 @@ struct string_list *resolve_undo_read(const char *data, unsigned long size)
- 		len = strlen(data) + 1;
- 		if (size <= len)
- 			goto error;
--		lost = string_list_insert(data, resolve_undo);
-+		lost = string_list_insert(resolve_undo, data);
- 		if (!lost->util)
- 			lost->util = xcalloc(1, sizeof(*ui));
- 		ui = lost->util;
+@@ -1709,7 +1709,7 @@ struct ref *get_stale_heads(struct remote *remote, struct ref *fetch_map)
+ 	info.ref_names = &ref_names;
+ 	info.stale_refs_tail = &stale_refs;
+ 	for (ref = fetch_map; ref; ref = ref->next)
+-		string_list_append(ref->name, &ref_names);
++		string_list_append(&ref_names, ref->name);
+ 	sort_string_list(&ref_names);
+ 	for_each_ref(get_stale_heads_cb, &info);
+ 	string_list_clear(&ref_names, 0);
+diff --git a/revision.c b/revision.c
+index f4b8b38..28f1c6d 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1205,8 +1205,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		else
+ 			strbuf_addstr(&buf, "refs/notes/");
+ 		strbuf_addstr(&buf, arg+13);
+-		string_list_append(strbuf_detach(&buf, NULL),
+-				   revs->notes_opt.extra_notes_refs);
++		string_list_append(revs->notes_opt.extra_notes_refs,
++				   strbuf_detach(&buf, NULL));
+ 	} else if (!strcmp(arg, "--no-notes")) {
+ 		revs->show_notes = 0;
+ 		revs->show_notes_given = 1;
 diff --git a/string-list.c b/string-list.c
-index 09798a2..de89efd 100644
+index 7b616ae..9b023a2 100644
 --- a/string-list.c
 +++ b/string-list.c
-@@ -51,7 +51,7 @@ static int add_entry(int insert_at, struct string_list *list, const char *string
- 	return index;
+@@ -148,7 +148,7 @@ void print_string_list(const struct string_list *p, const char *text)
+ 		printf("%s:%p\n", p->items[i].string, p->items[i].util);
  }
  
--struct string_list_item *string_list_insert(const char *string, struct string_list *list)
-+struct string_list_item *string_list_insert(struct string_list *list, const char *string)
+-struct string_list_item *string_list_append(const char *string, struct string_list *list)
++struct string_list_item *string_list_append(struct string_list *list, const char *string)
  {
- 	return string_list_insert_at_index(-1, string, list);
- }
+ 	ALLOC_GROW(list->items, list->nr + 1, list->alloc);
+ 	list->items[list->nr].string =
 diff --git a/string-list.h b/string-list.h
-index 1e2dfc3..3d5a8de 100644
+index 4a30e9d..680d600 100644
 --- a/string-list.h
 +++ b/string-list.h
-@@ -29,7 +29,7 @@ int for_each_string_list(struct string_list *list,
- int string_list_has_string(const struct string_list *list, const char *string);
- int string_list_find_insert_index(const struct string_list *list, const char *string,
- 				  int negative_existing_index);
--struct string_list_item *string_list_insert(const char *string, struct string_list *list);
-+struct string_list_item *string_list_insert(struct string_list *list, const char *string);
- struct string_list_item *string_list_insert_at_index(int insert_at,
- 						     const char *string, struct string_list *list);
- struct string_list_item *string_list_lookup(const char *string, struct string_list *list);
-diff --git a/wt-status.c b/wt-status.c
-index 8ca59a2..8ba8f0c 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -229,7 +229,7 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
- 		struct wt_status_change_data *d;
+@@ -35,7 +35,7 @@ struct string_list_item *string_list_insert_at_index(struct string_list *list,
+ struct string_list_item *string_list_lookup(struct string_list *list, const char *string);
  
- 		p = q->queue[i];
--		it = string_list_insert(p->one->path, &s->change);
-+		it = string_list_insert(&s->change, p->one->path);
- 		d = it->util;
- 		if (!d) {
- 			d = xcalloc(1, sizeof(*d));
-@@ -276,7 +276,7 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
- 		struct wt_status_change_data *d;
+ /* Use these functions only on unsorted lists: */
+-struct string_list_item *string_list_append(const char *string, struct string_list *list);
++struct string_list_item *string_list_append(struct string_list *list, const char *string);
+ void sort_string_list(struct string_list *list);
+ int unsorted_string_list_has_string(struct string_list *list, const char *string);
+ struct string_list_item *unsorted_string_list_lookup(struct string_list *list,
+diff --git a/transport-helper.c b/transport-helper.c
+index 0381de5..191fbf7 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -727,10 +727,10 @@ static int push_refs_with_export(struct transport *transport,
+ 		private = apply_refspecs(data->refspecs, data->refspec_nr, ref->name);
+ 		if (private && !get_sha1(private, sha1)) {
+ 			strbuf_addf(&buf, "^%s", private);
+-			string_list_append(strbuf_detach(&buf, NULL), &revlist_args);
++			string_list_append(&revlist_args, strbuf_detach(&buf, NULL));
+ 		}
  
- 		p = q->queue[i];
--		it = string_list_insert(p->two->path, &s->change);
-+		it = string_list_insert(&s->change, p->two->path);
- 		d = it->util;
- 		if (!d) {
- 			d = xcalloc(1, sizeof(*d));
-@@ -343,7 +343,7 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
+-		string_list_append(ref->name, &revlist_args);
++		string_list_append(&revlist_args, ref->name);
  
- 		if (!ce_path_match(ce, s->pathspec))
- 			continue;
--		it = string_list_insert(ce->name, &s->change);
-+		it = string_list_insert(&s->change, ce->name);
- 		d = it->util;
- 		if (!d) {
- 			d = xcalloc(1, sizeof(*d));
-@@ -379,7 +379,7 @@ static void wt_status_collect_untracked(struct wt_status *s)
- 		if (!match_pathspec(s->pathspec, ent->name, ent->len, 0, NULL))
- 			continue;
- 		s->workdir_untracked = 1;
--		string_list_insert(ent->name, &s->untracked);
-+		string_list_insert(&s->untracked, ent->name);
  	}
- }
  
 -- 
 1.7.0.2
