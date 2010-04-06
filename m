@@ -1,100 +1,126 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Is there interest in reading ~/.gitconfig.d/* and  /etc/gitconfig.d/*?
-Date: Tue, 06 Apr 2010 02:02:26 -0700 (PDT)
-Message-ID: <m36345hs4d.fsf@localhost.localdomain>
-References: <z2s51dd1af81004011420ka5d3a800kf6b3e4591527fc12@mail.gmail.com>
-	<alpine.DEB.2.00.1004040922500.30612@perkele.intern.softwolves.pp.se>
-	<19384.17579.205005.86711@winooski.ccs.neu.edu>
-	<u2i51dd1af81004060115t5f837840z5adcf83622fa8882@mail.gmail.com>
+From: Stephen Kelly <steveire@gmail.com>
+Subject: Re: How to keep different version numbers in different branches?
+Date: Tue, 06 Apr 2010 11:06:42 +0100
+Message-ID: <hpetj1$6af$1@dough.gmane.org>
+References: <hpcscv$umg$3@dough.gmane.org> <y2i32541b131004051151v8f4b8774q360c04ecdb046778@mail.gmail.com> <vpqd3ydr9g6.fsf@bauges.imag.fr> <n2x32541b131004051236m3a800c57k41536729ae3f192@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eli Barzilay <eli@barzilay.org>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 06 11:02:41 2010
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 06 11:07:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nz4g8-00042M-Ay
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 11:02:36 +0200
+	id 1Nz4kU-0005ra-53
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 11:07:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752108Ab0DFJCb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 05:02:31 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:16958 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751617Ab0DFJCa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Apr 2010 05:02:30 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so928977fgg.1
-        for <git@vger.kernel.org>; Tue, 06 Apr 2010 02:02:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=kBr/STGbF++B301+w0UkKUAH61WVSXoygUpftWhgW3E=;
-        b=Frypj28QLTAZ22hUTj9AUTPfgEqRh3Y3t13YdNxcY4DOtVkG6DuLTJUccvC0HfMmzd
-         6mLOJxqKXjtFsOurKXjqxILAx/0ncQ+AzLxNj729+EdtaDMC9wouwzFk32UaRaqWaCwP
-         oQ37vIge9vhqxXQ1vaL2fwA/v2SDZXypHtloA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=Dg7Ctkls5OU2EmlpPqqJCjVMGuSm+F3AX6zO8gC1bAHvEaxEaZmu0d7Bi3wEYKymTY
-         4qwyaQgjMOSc/iPKxb6iCILe3XLNj8a87pEWfAoG4ng/isRfZOkpakbAkK80V8nFRgcl
-         QusKf2f9aOFVgHDtDcXiYhQlHKC80+HB2J2Bc=
-Received: by 10.86.124.35 with SMTP id w35mr10627108fgc.49.1270544548281;
-        Tue, 06 Apr 2010 02:02:28 -0700 (PDT)
-Received: from localhost.localdomain (abwr38.neoplus.adsl.tpnet.pl [83.8.241.38])
-        by mx.google.com with ESMTPS id 14sm8491567fxm.1.2010.04.06.02.02.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 06 Apr 2010 02:02:26 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o3691lnn025265;
-	Tue, 6 Apr 2010 11:01:58 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o3691OUY025255;
-	Tue, 6 Apr 2010 11:01:24 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <u2i51dd1af81004060115t5f837840z5adcf83622fa8882@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752173Ab0DFJG7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Apr 2010 05:06:59 -0400
+Received: from lo.gmane.org ([80.91.229.12]:45509 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751157Ab0DFJG5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Apr 2010 05:06:57 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Nz4kG-0005mw-Rh
+	for git@vger.kernel.org; Tue, 06 Apr 2010 11:06:52 +0200
+Received: from dialbs-092-079-186-075.static.arcor-ip.net ([92.79.186.75])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Apr 2010 11:06:52 +0200
+Received: from steveire by dialbs-092-079-186-075.static.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Apr 2010 11:06:52 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: dialbs-092-079-186-075.static.arcor-ip.net
+User-Agent: KNode/0.99.01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144119>
 
-=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
-> On Sun, Apr 4, 2010 at 07:50, Eli Barzilay <eli@barzilay.org> wrote:
+Avery Pennarun wrote:
 
-> > Isn't it better to have a way to include files instead?
->=20
-> Probably yes. Programs like Apache HTTPD, rsyslog and others just use
-> ${foo}conf.d by convention by supporting config inclusion.
->=20
-> What would be the ideal config syntax for that? AFAICT git-config
-> doesn't (yet) support top-level keys so maybe this:
->=20
->     [INCLUDE]
->         path =3D ~/.gitconfig.d/*
->=20
-> Or if top-level support was added:
->=20
->     INCLUDE =3D ~/.gitconfig.d/*
+> On Mon, Apr 5, 2010 at 3:22 PM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> You can even make sure it _never_ happens, by making a one-commit
+>> release branch which changes the version number for each release. This
+>> one-commit is never merged in anything:
+>>
+>> 0.1                         0.2
+>> |                           |
+>> v                           v
+>> --o--o--o--o--o--o--o--o---o--o--o <--- master branch
+>> \                      /
+>> o--o--o--o--o--o--o--o--- ...  <--- maintainance branch
+>> \              \
+>> o <- 0.1.1     o <- 0.1.2
+>>
+>> Here, the maintainance branch never changes the version number in
+>> README & friends.
+> 
+> This works too.  In fact, I even do it on one of my projects.
+> However, I find it a little annoying, because then I don't know which
+> version to tag: the pre-number-changed version, or the
+> post-number-changed version.
+> 
+> The latter sounds like the obvious answer, but if I do that, then "git
+> describe" never says anything useful on my master branch.  But if I do
+> the former instead, then the tag doesn't accurately reflect the
+> version I *actually* released.
+> 
+> I've never found an adequate solution to this problem, other than not
+> including the version number in the repo at all.
 
-<bikeshedding mode on>
+Hi all, 
 
-I think that it would be better to use
+Thanks for the pointers. I considered the above solution too, but 
+disregarded it for the same reason.
 
-        include ~/.gitconfig.d/*
+I also considered the git describe solution, but disregarded it because in 
+CMake I need to know each component of the version separately 
+(Grantlee_VERSION_MAJOR, Grantlee_VERSION_MINOR and Grantlee_VERSION_PATCH). 
+I could split it on '.', but I think the better solution is to just put the 
+version into the CMake files and deal with the conflict in that one place as 
+it comes up. I can always switch in the future anyway if using describe 
+makes more sense.
 
-<bikeshedding mode off>
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+> you might want to have a look at this: http://nvie.com/git-model
+
+Yes, that is an interesting read, but he doesn't cover this issue. In fact, 
+he references a fictional script which updates the version number in the 
+tracked files.
+
+Junio C Hamano wrote:
+>> Additionally, I have some stuff currently in master that should not be in
+>> the 0.1 release, but should be in the 0.2 release. If I branch and then
+>> remove those files from the 0.1 branch, a merge will then remove them
+>> from master too? How do I keep them on master but delete them on 0.1 and
+>> still be able to merge from 0.1 into master?
+> 
+> You do not have to fork maint-0.1 branch from the tip of the master.  In
+> the earlier parts of the master branch there must be a point where
+> everything before are for 0.1 and all things after that are not, and you
+> fork from there.  After that, queue changes that are applicable to both to
+> the 0.1 branch and merge that to 'master' as necessary, while queueing
+> changes not for 0.1 to 'master'.
+> 
+
+There might be such a point, yes, but there are also likely commits which 
+touch files which should be included and files which should not, so I'd 
+probably end up rebasing ancient history of master and or creating a big 
+mess.
+
+I think for this situation the best solution is indeed the merge_revert 
+commit.
+
+Thanks for the responses.
+
+All the best,
+
+Steve.
