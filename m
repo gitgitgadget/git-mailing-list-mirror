@@ -1,77 +1,74 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v4] Documentation/remote-helpers: Add invocation section
-Date: Tue, 6 Apr 2010 08:13:49 +0530
-Message-ID: <r2gf3271551004051943u6111c956p24f4fd2897c08d0c@mail.gmail.com>
-References: <x2zf3271551003311240i53ecb2fck173c8f34bdb3257@mail.gmail.com> 
-	<7v1vetmrl1.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 2/2] Documentation/remote-helpers: Fix some typos
+Date: Tue, 6 Apr 2010 08:16:43 +0530
+Message-ID: <i2vf3271551004051946i26856d58lb5d093a5656c3953@mail.gmail.com>
+References: <f3271551003281104h9b672abk1a8ecccd7a4f8964@mail.gmail.com> 
+	<7vpr2dmu9y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Gabriel Filion <lelutin@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Apr 06 04:44:21 2010
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 06 04:47:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nyym1-0004UU-IL
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 04:44:17 +0200
+	id 1Nyyop-0004Vd-7k
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 04:47:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932133Ab0DFCoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Apr 2010 22:44:12 -0400
-Received: from mail-yw0-f198.google.com ([209.85.211.198]:53128 "EHLO
-	mail-yw0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932100Ab0DFCoK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Apr 2010 22:44:10 -0400
-Received: by ywh36 with SMTP id 36so2500950ywh.4
-        for <git@vger.kernel.org>; Mon, 05 Apr 2010 19:44:09 -0700 (PDT)
+	id S1757178Ab0DFCrH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Apr 2010 22:47:07 -0400
+Received: from mail-yx0-f200.google.com ([209.85.210.200]:35930 "EHLO
+	mail-yx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757102Ab0DFCrF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Apr 2010 22:47:05 -0400
+Received: by yxe38 with SMTP id 38so1016781yxe.22
+        for <git@vger.kernel.org>; Mon, 05 Apr 2010 19:47:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type;
-        bh=fO/Lx+NJSiQ2TpPvs3i59VXGUoR4QadLVi50JecNRtY=;
-        b=ApbQp9eMbG0JJ/CA+Dd8hPR0L9wdPDz2Lg4jtzhtkji1DC6GsHDT8tBmcj6yvAIjH5
-         rpXui7fnPzPBG3wwzqcAZyeR9a0VAIi6z9ZDZ9a1Z0Sc1KcxCnGO0rnkAkLQG7o7nbZE
-         5QYGtNnqrPwIdZCFHGITeO/U8dZhrtAFgmj4o=
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=CQv+If6Zh/UutAIQtZKE8rAVfHLMuJiCYsisBuj01iY=;
+        b=P9AjDnxplfL4SS83rTPHy+k7qzxAi/d3zL9Z85Sx3cZGwwJu5PsAzdIJpmfDxcqlvT
+         4yfLWtlHpRv8CjsEIf9NhsiHMk6pYaiHbTW/tAu+BdFjNFXjg3wcY6ALaPrCUHvngqwp
+         f72pmupUhN6l21eHChOGoSUGsqpg2IoNfF7sg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=c2CV5Ee1qESSMyRwOa9ko49clkG/z1Z0iIDY1Izh3S9j4pK2r06Ah1T7npKGWosWPs
-         mhGkSHl5N4OAI6yWxS3vkjwbuA+Nw9AILhNVda9eBnKovppGJLJqa1Bb07FvPtpfgyT9
-         kRdgsIfyvFiqCKuo3n/+uBk9Su/QIQ7+rlCrg=
-Received: by 10.90.69.14 with HTTP; Mon, 5 Apr 2010 19:43:49 -0700 (PDT)
-In-Reply-To: <7v1vetmrl1.fsf@alter.siamese.dyndns.org>
-Received: by 10.90.19.22 with SMTP id 22mr1862204ags.67.1270521849245; Mon, 05 
-	Apr 2010 19:44:09 -0700 (PDT)
+         :cc:content-type:content-transfer-encoding;
+        b=Ua1SFJgAj98VU4VlGgar6PDOQi9YZTQRS5Km49UPA6xZmieVVnLg7UTCDjG7q5z2w0
+         EzpDmowJ3QYZk+QPrHPOmqahieCfx2/j2WMhLkLWBCqwSZW8nUxx2jO2sqJsgANPKqAn
+         je+iHbcjM1/WyMyCRwW0cXMwokdmX4M2wVtAY=
+Received: by 10.90.69.14 with HTTP; Mon, 5 Apr 2010 19:46:43 -0700 (PDT)
+In-Reply-To: <7vpr2dmu9y.fsf@alter.siamese.dyndns.org>
+Received: by 10.91.147.7 with SMTP id z7mr1474567agn.2.1270522023094; Mon, 05 
+	Apr 2010 19:47:03 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144087>
 
-Hi,
+On Tue, Apr 6, 2010 at 3:33 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> This not just fixes typo but changes what is being said, doesn't it? =
+=A0The
+> point of the original about the "error" is that the caller does not h=
+ave
+> to issue a redundant error message when the helper closes the connect=
+ion
+> without reporting the status back, but that information which probabl=
+y is
+> critical when maintaining the caller (and writing a new callee) is lo=
+st.
 
-On Tue, Apr 6, 2010 at 4:31 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> I would think that INVOCATION section needs to specify how the helper is
-> selected (e.g. taking "frotz" out of "frotz::<some info>", or using the
-> configuration variable remote.origin.vcs), and where the one or two
-> parameters given to the program come from, to help such a developer who
-> wants to add his own remote helper.
-
-Junio: I think the first revision of my patch [1] is more along these
-lines. I prepared this revision after Daniel Barkalow's comments [2]
-and [3].
-Daniel: Could you please comment on this?
+Yes, I think you're right. Kindly revert this hunk.
 
 -- Ram
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/143434
-[2] http://thread.gmane.org/gmane.comp.version-control.git/143438
-[3] http://thread.gmane.org/gmane.comp.version-control.git/143483
