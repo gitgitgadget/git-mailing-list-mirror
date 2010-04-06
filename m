@@ -1,58 +1,70 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [RFD} Use regex's in :/ revision naming machinery
-Date: Tue, 06 Apr 2010 09:55:48 +0200
-Message-ID: <4BBAE904.6010105@viscovery.net>
-References: <alpine.LFD.2.00.1004051551180.21411@i5.linux-foundation.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Is there interest in reading ~/.gitconfig.d/* and 
+	/etc/gitconfig.d/*?
+Date: Tue, 6 Apr 2010 08:15:35 +0000
+Message-ID: <u2i51dd1af81004060115t5f837840z5adcf83622fa8882@mail.gmail.com>
+References: <z2s51dd1af81004011420ka5d3a800kf6b3e4591527fc12@mail.gmail.com>
+	 <alpine.DEB.2.00.1004040922500.30612@perkele.intern.softwolves.pp.se>
+	 <19384.17579.205005.86711@winooski.ccs.neu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Apr 06 09:56:11 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Peter Krefting <peter@softwolves.pp.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Tue Apr 06 10:16:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nz3do-0002QD-9n
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 09:56:08 +0200
+	id 1Nz3x1-00075T-RD
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 10:16:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757366Ab0DFHz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Apr 2010 03:55:57 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:51590 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757280Ab0DFHz4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Apr 2010 03:55:56 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Nz3dV-0006rj-Ct; Tue, 06 Apr 2010 09:55:49 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 22FEE1660F;
-	Tue,  6 Apr 2010 09:55:49 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <alpine.LFD.2.00.1004051551180.21411@i5.linux-foundation.org>
-X-Spam-Score: -1.4 (-)
+	id S1751035Ab0DFIPk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Apr 2010 04:15:40 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:38029 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750698Ab0DFIPh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Apr 2010 04:15:37 -0400
+Received: by bwz1 with SMTP id 1so3367055bwz.21
+        for <git@vger.kernel.org>; Tue, 06 Apr 2010 01:15:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type;
+        bh=j+pNNQJNj+tnto5kRJjX2/EkLh7Bee2GVD21/BQ4eio=;
+        b=wFT/SvwUF0/CENVhhCijX1mvlua+7RjoL0pBIHgNAVH90F37bsCFu699qDKJ/G7MOa
+         qO5Uc3JCzmZD3aScNmNH8H1UgUmnLDotlY72WmA5TyvUrS3oHDqORCAHC7RUXN9OMbSP
+         18keb0HEvl8r6eMZfDjxNyzF0VFUcOtbiRRhk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=s/94AjRjE06YSjKGD2zPljzjeep2fDrMtuE7uGK5tub2EnJrbaQaWOeFAleE9gwpq3
+         AymZecvHmk8xgiG8TSQumiemlBxIG38HtLb/6ktCnNYeRMuOjFiVwMu4DdTM0ShK/upz
+         1pP/ce7VXu9Sp345p8/SeIWyw0IRCA0/wPjnQ=
+Received: by 10.204.121.195 with HTTP; Tue, 6 Apr 2010 01:15:35 -0700 (PDT)
+In-Reply-To: <19384.17579.205005.86711@winooski.ccs.neu.edu>
+Received: by 10.204.146.135 with SMTP id h7mr7091164bkv.200.1270541735955; 
+	Tue, 06 Apr 2010 01:15:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144113>
 
-Am 4/6/2010 1:00, schrieb Linus Torvalds:
-> I never use ':/', and part of it is that it's so horribly cumbersome. I'd 
-> _like_ to use it to do things like 
-> 
-> 	gitk :/slabh..
+On Sun, Apr 4, 2010 at 07:50, Eli Barzilay <eli@barzilay.org> wrote:
+> Isn't it better to have a way to include files instead?
 
-Rhethoric question: Do you mean history _starting_ at the commit that
-contains "slabh" or _ending_ at the commit that contains "slabh" followed
-by two arbitrary characters?
+Probably yes. Programs like Apache HTTPD, rsyslog and others just use
+${foo}conf.d by convention by supporting config inclusion.
 
-If :/ is pattern-ized in some way, then IMO pattern matching syntax would
-be more use-friendly than (extended) regular expresssions, particluarly
-also because the single-character wildcard would be ? and avoid the
-otherwise overloaded dot.
+What would be the ideal config syntax for that? AFAICT git-config
+doesn't (yet) support top-level keys so maybe this:
 
--- Hannes
+    [INCLUDE]
+        path = ~/.gitconfig.d/*
+
+Or if top-level support was added:
+
+    INCLUDE = ~/.gitconfig.d/*
