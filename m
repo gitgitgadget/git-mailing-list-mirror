@@ -1,141 +1,71 @@
-From: =?UTF-8?q?Henrik=20Grubbstr=C3=B6m=20=28Grubba=29?= 
-	<grubba@grubba.org>
-Subject: [PATCH v4 1/8] convert: Safer handling of $Id$ contraction.
-Date: Tue,  6 Apr 2010 14:46:37 +0200
-Message-ID: <e310bd4e1f1c797cc286044a4dbee0f12c1c90a0.1270554878.git.grubba@grubba.org>
-References: <cover.1270554878.git.grubba@grubba.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v5] Documentation/remote-helpers: Add invocation section
+Date: Tue, 6 Apr 2010 18:53:00 +0530
+Message-ID: <o2yf3271551004060623z46cdc599kec7f6f6dc0f28e9@mail.gmail.com>
+References: <t2sf3271551004060404xe41ff754i9d16a265a4222a28@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Henrik=20Grubbstr=C3=B6m=20 (Grubba) ?= 
-	<grubba@grubba.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 06 14:47:33 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Gabriel Filion <lelutin@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 06 15:23:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nz8Bk-0004uy-Of
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 14:47:29 +0200
+	id 1Nz8kk-0005Gn-Pa
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 15:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755483Ab0DFMrE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 08:47:04 -0400
-Received: from mail.roxen.com ([212.247.29.220]:36161 "EHLO mail.roxen.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754426Ab0DFMqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Apr 2010 08:46:52 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.roxen.com (Postfix) with ESMTP id 17D0C62817F
-	for <git@vger.kernel.org>; Tue,  6 Apr 2010 14:46:48 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at roxen.com
-X-Amavis-Alert: BAD HEADER, Duplicate header field: "In-Reply-To"
-Received: from mail.roxen.com ([212.247.29.220])
-	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EHS9BGPw+WCi; Tue,  6 Apr 2010 14:46:47 +0200 (CEST)
-Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
-	by mail.roxen.com (Postfix) with ESMTP id DA469628173;
-	Tue,  6 Apr 2010 14:46:47 +0200 (CEST)
-Received: from shipon.roxen.com (localhost [127.0.0.1])
-	by shipon.roxen.com (8.13.8+Sun/8.13.8) with ESMTP id o36CkloU028642;
-	Tue, 6 Apr 2010 14:46:47 +0200 (CEST)
-Received: (from grubba@localhost)
-	by shipon.roxen.com (8.13.8+Sun/8.13.8/Submit) id o36CkltW028641;
-	Tue, 6 Apr 2010 14:46:47 +0200 (CEST)
-X-Mailer: git-send-email 1.7.0.3.316.g33b5e
-In-Reply-To: <cover.1270554878.git.grubba@grubba.org>
-In-Reply-To: <cover.1270554878.git.grubba@grubba.org>
-References: <cover.1270554878.git.grubba@grubba.org>
+	id S1754908Ab0DFNXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Apr 2010 09:23:23 -0400
+Received: from mail-yx0-f191.google.com ([209.85.210.191]:51281 "EHLO
+	mail-yx0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752843Ab0DFNXV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Apr 2010 09:23:21 -0400
+Received: by yxe29 with SMTP id 29so2722724yxe.4
+        for <git@vger.kernel.org>; Tue, 06 Apr 2010 06:23:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type;
+        bh=CBLc8MwWoIm0Lzgd87q4BojOMjrJLOm65X79rM3IYGA=;
+        b=h76IxrjVok6CeNNmx2/Z1bHmWQnT6JBIOT2OajTQCBCkQwEJBrR96cgWRApjnAgSFq
+         hHy3SosCaQGzv7WKsYKDd6b6I2dQwgINx49toNcNbaSFsx1LUfCLZ40zabzx0nZE23y9
+         Mtg+IEksxY5B6bOfsEyYzPiwzflCUOS0pWo0k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=Aq2LDByiNA1/Xbz29OGxN7uBxFg+Y9a5oNX/R2JHbBCar1Zr6Ozt8ZN7+7XVT0shkB
+         OIY0PwwQg/S9QiLU9ayi3uoAQJFrSS6OLNibnTDJHlVg8BDCKpl+XL4PhFuX094sk8JC
+         ahC3t0oZEs8iVqcYHt3uyqDQn7agI3yrXmkHU=
+Received: by 10.90.69.14 with HTTP; Tue, 6 Apr 2010 06:23:00 -0700 (PDT)
+In-Reply-To: <t2sf3271551004060404xe41ff754i9d16a265a4222a28@mail.gmail.com>
+Received: by 10.90.19.22 with SMTP id 22mr2157828ags.67.1270560200161; Tue, 06 
+	Apr 2010 06:23:20 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144141>
 
-The code to contract $Id:xxxxx$ strings could eat an arbitrary amount
-of source text if the terminating $ was lost. It now refuses to
-contract $Id:xxxxx$ strings spanning multiple lines.
+> +<nickname> with vcs set
+> +~~~~~~~~~~~~~~~~~~~~~~~
+> +
+> +A remote can be configured to use the
+> +'git remote-<transport>' helper by setting the vcs variable to
+> +<transport> in the [remote "<nickname>"] section of a configuration file.
+> +The url variable in such a section is optional and can be set to an
+> +arbitrary string <address>.
 
-Signed-off-by: Henrik Grubbstr=C3=B6m <grubba@grubba.org>
----
-The behaviour implemented by the patch is in line with what other
-VCSes that implement $Id$ do.
+I'm sorry- this was sloppy. Plus, it doesn't apply to master or pu.
+I'll send in another revision of the patch with this hunk removed
+rebased on pu.
 
- convert.c             |   12 ++++++++++++
- t/t0021-conversion.sh |   16 ++++++++++------
- 2 files changed, 22 insertions(+), 6 deletions(-)
-
-diff --git a/convert.c b/convert.c
-index 4f8fcb7..239fa0a 100644
---- a/convert.c
-+++ b/convert.c
-@@ -425,6 +425,8 @@ static int count_ident(const char *cp, unsigned lon=
-g size)
- 				cnt++;
- 				break;
- 			}
-+			if (ch =3D=3D '\n')
-+				break;
- 		}
- 	}
- 	return cnt;
-@@ -455,6 +457,11 @@ static int ident_to_git(const char *path, const ch=
-ar *src, size_t len,
- 			dollar =3D memchr(src + 3, '$', len - 3);
- 			if (!dollar)
- 				break;
-+			if (memchr(src + 3, '\n', dollar - src - 3)) {
-+				/* Line break before the next dollar. */
-+				continue;
-+			}
-+
- 			memcpy(dst, "Id$", 3);
- 			dst +=3D 3;
- 			len -=3D dollar + 1 - src;
-@@ -514,6 +521,11 @@ static int ident_to_worktree(const char *path, con=
-st char *src, size_t len,
- 				break;
- 			}
-=20
-+			if (memchr(src + 3, '\n', dollar - src - 3)) {
-+				/* Line break before the next dollar. */
-+				continue;
-+			}
-+
- 			len -=3D dollar + 1 - src;
- 			src  =3D dollar + 1;
- 		} else {
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 6cb8d60..29438c5 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -65,17 +65,21 @@ test_expect_success expanded_in_repo '
- 		echo "\$Id:NoSpaceAtFront \$"
- 		echo "\$Id:NoSpaceAtEitherEnd\$"
- 		echo "\$Id: NoTerminatingSymbol"
-+		echo "\$Id: Foreign Commit With Spaces \$"
-+		echo "\$Id: NoTerminatingSymbolAtEOF"
- 	} > expanded-keywords &&
-=20
- 	{
- 		echo "File with expanded keywords"
--		echo "\$Id: 4f21723e7b15065df7de95bd46c8ba6fb1818f4c \$"
--		echo "\$Id: 4f21723e7b15065df7de95bd46c8ba6fb1818f4c \$"
--		echo "\$Id: 4f21723e7b15065df7de95bd46c8ba6fb1818f4c \$"
--		echo "\$Id: 4f21723e7b15065df7de95bd46c8ba6fb1818f4c \$"
--		echo "\$Id: 4f21723e7b15065df7de95bd46c8ba6fb1818f4c \$"
--		echo "\$Id: 4f21723e7b15065df7de95bd46c8ba6fb1818f4c \$"
-+		echo "\$Id: fd0478f5f1486f3d5177d4c3f6eb2765e8fc56b9 \$"
-+		echo "\$Id: fd0478f5f1486f3d5177d4c3f6eb2765e8fc56b9 \$"
-+		echo "\$Id: fd0478f5f1486f3d5177d4c3f6eb2765e8fc56b9 \$"
-+		echo "\$Id: fd0478f5f1486f3d5177d4c3f6eb2765e8fc56b9 \$"
-+		echo "\$Id: fd0478f5f1486f3d5177d4c3f6eb2765e8fc56b9 \$"
-+		echo "\$Id: fd0478f5f1486f3d5177d4c3f6eb2765e8fc56b9 \$"
- 		echo "\$Id: NoTerminatingSymbol"
-+		echo "\$Id: fd0478f5f1486f3d5177d4c3f6eb2765e8fc56b9 \$"
-+		echo "\$Id: NoTerminatingSymbolAtEOF"
- 	} > expected-output &&
-=20
- 	git add expanded-keywords &&
---=20
-1.7.0.3.316.g33b5e
+-- Ram
