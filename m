@@ -1,144 +1,70 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/RFC] Documentation: reorganize documentation of URLs
- understood by git
-Date: Tue, 6 Apr 2010 16:33:41 -0500
-Message-ID: <20100406213341.GA8448@progeny.tock>
-References: <f3271551003290759g154b149fl7877d9b83e1313e6@mail.gmail.com>
- <20100329191832.GA26842@progeny.tock>
- <f3271551003291224s7fb0d8d3sce75b7c893fabfa8@mail.gmail.com>
- <20100406060606.GA26629@progeny.tock>
- <7v6345jcfq.fsf@alter.siamese.dyndns.org>
+From: Nick Edelen <sirnot@gmail.com>
+Subject: Re: [PATCH 2/7 (v5)] basic api and porcelain
+Date: Tue, 6 Apr 2010 23:40:35 +0200
+Message-ID: <g2jc77435a81004061440l47f98094v99930eeb4ae6088@mail.gmail.com>
+References: <4BBA40CD.5040301@gmail.com>
+	 <dbe35e7547614331d19b811c180731aa@212.159.54.234>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Gabriel Filion <lelutin@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
+Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sam Vilain <sam@vilain.net>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 06 23:33:17 2010
+	Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Andreas Ericsson <exon@op5.se>,
+	Christian Couder <christian@couder.net>, git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Tue Apr 06 23:40:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzGOa-0005yu-IE
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 23:33:16 +0200
+	id 1NzGVo-0000Nm-5y
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 23:40:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756973Ab0DFVdK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 17:33:10 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:46881 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756918Ab0DFVdG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Apr 2010 17:33:06 -0400
-Received: by vws13 with SMTP id 13so173777vws.19
-        for <git@vger.kernel.org>; Tue, 06 Apr 2010 14:33:06 -0700 (PDT)
+	id S1756671Ab0DFVkj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 17:40:39 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:50109 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752381Ab0DFVkh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Apr 2010 17:40:37 -0400
+Received: by bwz1 with SMTP id 1so320170bwz.21
+        for <git@vger.kernel.org>; Tue, 06 Apr 2010 14:40:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=Elq+xv2ieiooy9/o+n82/YE7GebIryDEArnL05c71iE=;
-        b=tO26KJTAlGDbcG9Z51eYyD8mIyBnbCfe3+gRtfX9NQs6ujVTpuUASFDzPAmSCmW/xo
-         Bx7PuDme33NpzNm27eSnTD3jf5M7/txgGAla8ZSURt/KN9D9xlAFJFDCo8ZAaMcZgbd7
-         aeWkmL2wU1Z+37X41OVn8BW3Rbtc0eUVNZ/GQ=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=fJCgXPYeOXzF/Zcve8hUhCnJHBB1bgn9WnhlmEWLDsw=;
+        b=YxIvjqCRBGDPjkssD5GAwQrU9XyHrrKWTks0k3D4Jn2OtVRzw7t6YxjBGMzDgycUGp
+         kWLopAeVIOK61kY3jPZXWuE6k66jNMPpU0hFMtOoGSfltnpj2hCA6rgRNj6HdiPzBdUX
+         nw+3dxY5FN2evHQ0USB/cENl2SEHBPRWVIWaw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=GwjAy9FbDRztt+fGGbV+njrCChzoF33wPPYE1bYJ4Uew/PelPEEehDtx/QeWE+Wbnl
-         Gdqg5DAPt6teeyeqqAocClW1N1qy8jn/2eeaQQxocR8CgQ3HVu3fcEJZ2ctUM7ztDfW8
-         z8t2G89QZiLNtwOPdWUFSozx0uAzP68TAP7/k=
-Received: by 10.220.62.134 with SMTP id x6mr1569952vch.48.1270589585908;
-        Tue, 06 Apr 2010 14:33:05 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm1082721yxe.5.2010.04.06.14.33.03
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 06 Apr 2010 14:33:04 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v6345jcfq.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=JOrnDvhnKr4pKtO/1zZ2jachbej9X42Tqa2ouYYKMvOaM/yPYbdjcC8QPi5CTjX+SF
+         x23jjvvRgu3cm78aIu0ID00lQ8PSXRhfjP9c9R2ike99Ql/J2pLSOF+GtoZCuBhuAOv1
+         4hKuyQRl44eHMl9AIZH3jDqGslOUIHnQzUgRs=
+Received: by 10.204.120.70 with HTTP; Tue, 6 Apr 2010 14:40:35 -0700 (PDT)
+In-Reply-To: <dbe35e7547614331d19b811c180731aa@212.159.54.234>
+Received: by 10.204.39.206 with SMTP id h14mr8823149bke.50.1270590035510; Tue, 
+	06 Apr 2010 14:40:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144174>
 
-Junio C Hamano wrote:
+> head.signature is 8 characters (see below), and so is "REVCACHE". =A0=
+Surely
+> either
+> head.signature needs to be 9 characters, or you shouldn't use strcpy.
+> Indeed, mostly you do seem to be using memcpy ...
 
-> I am of two minds.  It is frustrating if "git clone" (or "git fetch",=
- or
-> "git remote") page didn't list any examples an intelligent person (or=
- at
-> least one who thinks he is intelligent enough) to mimic and instead
-> referred him with "look there" indirections.
-
-Makes sense.  So it should be self-contained for at least the common ca=
-ses.
-Something like:
-
-GIT URLS
-
-	One of the following notations can be used to name the remote reposito=
-ry:
-
-	=C2=B7   git://host.xz[:port]/path/to/repo.git/
-	=C2=B7   git://host.xz[:port]/~user/path/to/repo.git/
-	=C2=B7   [user@]host.xz:~user/path/to/repo.git/
-	=C2=B7   [user@]host.xz:/path/to/repo.git/
-	=C2=B7   [user@]host.xz:path/to/repo.git/
-	=C2=B7   ssh://host.xz[:port]/path/to/repo.git/
-	=C2=B7   ssh://host.xz[:port]/~user/path/to/repo.git/
-	=C2=B7   /path/to/local/repo.git/
-	=C2=B7   path/to/local/repo.git/
-	=C2=B7   file:///path/to/repo.git/
-	=C2=B7   svn::http://host.xz[:port]/path/to/repo/
-
-	Schemas supported include git, ssh, file, rsync, and if HTTP support
-	is installed, http, https, ftp, and ftps.
-
-	Git can be taught to support additional schemas by installing a
-	'git-remote-<schema>' helper to your $PATH.  See git-remote-helpers(7)
-	if you want to write one.
-
-	The url.*.insteadOf and url.*.pushInsteadOf configuration items
-	affect URLs supplied to this command.  This can be useful if
-	there are a large number of similarly-named remote repositories
-	and you want to use a different format for them.  See gitconfig(5)
-	for details on setting this up.
-
-Unfortunately, that leaves out any explanation of which transport you w=
-ould
-want to use; in particular, it doesn=E2=80=99t say
-
- * Using local paths implies a request for "clone --local" unless the
-   louder file:// syntax is used;
-
- * If you were thinking of using host.xz:port:/path/to/, use ssh://
-   instead. [1]
-
- * The git protocol is very nice, but it does not support authenticatio=
-n.
-   If that is a problem for you, use ssh instead for pushing.
-
-   The rsync protocol support is bitrotting.
-
-   http and ftp can be used as =E2=80=9Csmart=E2=80=9D or =E2=80=9Cdumb=
-=E2=80=9D protocols; the former
-   requires that the server administrator install a CGI script to serve
-   requests efficiently; the latter is all some hosting services
-   provide, and it has some caveats like requiring update-server-info.
-
-Not sure where this should go.
-
-Thanks for the food for thought,
-Jonathan
-
-[1] Aside: Is there any reason for git and scp not to learn to support
-the two-colon syntax?  I would think directories named 1087: are a rath=
-er
-rare beast, and they could still be accessed as "host.xz:./1087:/".
+aw shit, don't know how those slipped in there...  managed to do that
+with slice pointer initialization too.  looks like I might have to do
+another submission later.
