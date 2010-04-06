@@ -1,91 +1,89 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add option to git-commit to allow empty log messages
-Date: Tue, 6 Apr 2010 01:55:30 -0400
-Message-ID: <20100406055530.GE3901@coredump.intra.peff.net>
-References: <z2r51dd1af81004031506pc9ac1840ie9953ae6df91d01b@mail.gmail.com>
- <1270392557-26538-1-git-send-email-avarab@gmail.com>
- <20100404224324.GB12655@gmail.com>
- <y2j51dd1af81004041653g9a09915el60104c575dcf6481@mail.gmail.com>
- <7vy6h2wsvg.fsf@alter.siamese.dyndns.org>
- <buor5mu7acd.fsf@dhlpc061.dev.necel.com>
- <20100405055139.GA28730@coredump.intra.peff.net>
- <o2h51dd1af81004050550v9427b9flfb13a9e1ad4056a@mail.gmail.com>
- <20100405175822.GA32083@progeny.tock>
+Subject: Re: Extremely slow progress during 'git reflog expire --all'
+Date: Tue, 6 Apr 2010 02:02:17 -0400
+Message-ID: <20100406060217.GF3901@coredump.intra.peff.net>
+References: <201004022154.14793.elendil@planet.nl>
+ <201004022350.20999.elendil@planet.nl>
+ <20100402224100.GA997@coredump.intra.peff.net>
+ <201004031629.01970.elendil@planet.nl>
+ <20100403203507.GA12262@coredump.intra.peff.net>
+ <7vy6h36pt1.fsf@alter.siamese.dyndns.org>
+ <20100405062621.GA30934@coredump.intra.peff.net>
+ <7v1vetpw63.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Miles Bader <miles@gnu.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 06 07:55:56 2010
+Cc: Frans Pop <elendil@planet.nl>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 06 08:02:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nz1lS-000375-ES
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 07:55:55 +0200
+	id 1Nz1s0-0007iW-4d
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 08:02:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752171Ab0DFFzu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Apr 2010 01:55:50 -0400
-Received: from peff.net ([208.65.91.99]:58580 "EHLO peff.net"
+	id S1752443Ab0DFGCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Apr 2010 02:02:36 -0400
+Received: from peff.net ([208.65.91.99]:47869 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750992Ab0DFFzs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Apr 2010 01:55:48 -0400
-Received: (qmail 3245 invoked by uid 107); 6 Apr 2010 05:56:26 -0000
+	id S1751926Ab0DFGCe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Apr 2010 02:02:34 -0400
+Received: (qmail 3321 invoked by uid 107); 6 Apr 2010 06:03:12 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 06 Apr 2010 01:56:26 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Apr 2010 01:55:30 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 06 Apr 2010 02:03:12 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Apr 2010 02:02:17 -0400
 Content-Disposition: inline
-In-Reply-To: <20100405175822.GA32083@progeny.tock>
+In-Reply-To: <7v1vetpw63.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144101>
 
-On Mon, Apr 05, 2010 at 12:58:22PM -0500, Jonathan Nieder wrote:
+On Mon, Apr 05, 2010 at 11:54:28AM -0700, Junio C Hamano wrote:
 
-> > There's probably a lot of code out there doing `git commit -m"Yet
-> > another revision"' from some cron job.
+> Jeff King <peff@peff.net> writes:
 > 
-> FWIW, I have no strong opinion about whether to add this --allow-empty-message
-> option.  Maybe it would make something more convenient for someone,
-> though that has to be weighed against it making it harder for everyone
-> else to read the manual.
-
-I meant to mention this in my other response: I would prefer if such an
-option doesn't clutter up the usage message. --allow-empty is already
-there, and probably doesn't need to be. "git commit -h 2>&1 | wc -l"
-shows a whopping 39 lines, which IMHO is too many for a short usage
-summary. I mean, "--no-post-rewrite", is that really one of the top-used
-options?
-
-> Hint:
+> > Hmm. It looks like mark_reachable() stops traversing when it hits a
+> > commit older than expire_total. I imagine that's to avoid going all the
+> > way to the roots. But if we hit any unreachable entry, in_merge_bases()
+> > is going to have to go all the way to the roots, anyway.
 > 
-> 	parent=HEAD && : or whatever &&
-> 	tree=$(git write-tree) &&
-> 	printf "%s\n" message |
-> 	commit=$(git commit-tree "$tree" -p "$parent") &&
-> 	git update-ref refs/heads/somebranch "$commit"
+> Yeah, an alternative is to keep the list of commits where the initial
+> mark_reachable() run stopped, and instead of doing in_merge_bases(),
+> lazily restart the traversal all the way down to root, and then rely
+> solely on the REACHABLE bit from then on.
 
-In addition to the bug you mention later, you also probably want to do:
+Ah, yeah, that is much more clever. It has the same worst case
+performance as what I proposed, but is much more optimistic that we
+won't have to do it at all.
 
-  parent=`git rev-parse --verify HEAD`
-  [...]
-  git update-ref \
-    -m 'automated commit by tool X' \
-    refs/heads/somebranch $commit $parent
+> > I wonder if, in addition to your patch, we should remove the
+> > double-check in_merge_bases and simply report those old ones as
+> > reachable. We may be wrong, but we are erring on the side of keeping
+> > entries, and they will eventually expire in the regular cycle (i.e., 90
+> > days instead of 30).
+> >
+> > All of that being said, your patch does drop Frans' case down to about
+> > 1s of CPU time, so perhaps it is not worth worrying about beyond that.
+> 
+> I think a reasonable solution would be along the lines you described, but
+> the patch you are responding to does err on the wrong side when a clock
+> skew is there.  Does it matter?  Probably not.
 
-which will give your reflog entry a more useful message, and will
-protect against simultaneous updates losing history (update-ref will
-make sure, while locked, that somebranch contains the $parent sha1 you
-wrote as part of the commit object).
+True. With the technique you mentioned above, you would reverse your
+test and do:
 
-And of course it still doesn't handle parentless root commits.
+  if (flags & REACHABLE)
+    return 0;
+  if (expanded_reachable_to_root)
+    return 1; /* we know it's not */
+  expand_reachable_to_root();
+  return !(flags & REACHABLE);
 
-So doing it right really is a bit more work than just calling "git
-commit".
+I don't think I care enough to do a patch, though. I don't have a
+problem with you applying what you posted earlier.
 
 -Peff
