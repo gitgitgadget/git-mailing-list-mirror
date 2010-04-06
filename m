@@ -1,68 +1,73 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Initialize notes trees if %N is used and no
- --show-notes given
-Date: Tue, 6 Apr 2010 01:32:35 -0400
-Message-ID: <20100406053234.GC3901@coredump.intra.peff.net>
-References: <20100405115548.GA19971@macbook.lan.lan>
+Subject: Re: [PATCH] Add option to git-commit to allow empty log messages
+Date: Tue, 6 Apr 2010 01:43:56 -0400
+Message-ID: <20100406054356.GD3901@coredump.intra.peff.net>
+References: <z2r51dd1af81004031506pc9ac1840ie9953ae6df91d01b@mail.gmail.com>
+ <1270392557-26538-1-git-send-email-avarab@gmail.com>
+ <20100404224324.GB12655@gmail.com>
+ <y2j51dd1af81004041653g9a09915el60104c575dcf6481@mail.gmail.com>
+ <7vy6h2wsvg.fsf@alter.siamese.dyndns.org>
+ <buor5mu7acd.fsf@dhlpc061.dev.necel.com>
+ <20100405055139.GA28730@coredump.intra.peff.net>
+ <o2h51dd1af81004050550v9427b9flfb13a9e1ad4056a@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Git ML <git@vger.kernel.org>
-To: Johannes Gilger <heipei@hackvalue.de>
-X-From: git-owner@vger.kernel.org Tue Apr 06 07:33:01 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Miles Bader <miles@gnu.org>, Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 06 07:44:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nz1PH-0005uK-Of
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 07:33:00 +0200
+	id 1Nz1aI-0008N9-LN
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 07:44:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451Ab0DFFcy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Apr 2010 01:32:54 -0400
-Received: from peff.net ([208.65.91.99]:53197 "EHLO peff.net"
+	id S1751370Ab0DFFoQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 01:44:16 -0400
+Received: from peff.net ([208.65.91.99]:37039 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751212Ab0DFFcx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Apr 2010 01:32:53 -0400
-Received: (qmail 3130 invoked by uid 107); 6 Apr 2010 05:33:30 -0000
+	id S1750992Ab0DFFoP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Apr 2010 01:44:15 -0400
+Received: (qmail 3206 invoked by uid 107); 6 Apr 2010 05:44:51 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 06 Apr 2010 01:33:30 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Apr 2010 01:32:35 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 06 Apr 2010 01:44:51 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Apr 2010 01:43:56 -0400
 Content-Disposition: inline
-In-Reply-To: <20100405115548.GA19971@macbook.lan.lan>
+In-Reply-To: <o2h51dd1af81004050550v9427b9flfb13a9e1ad4056a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144099>
 
-On Mon, Apr 05, 2010 at 01:55:48PM +0200, Johannes Gilger wrote:
+On Mon, Apr 05, 2010 at 12:50:11PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
-> While this patch fixes this behaviour, I'm not sure it's at the right
-> place or doesn't impact performance. So this is meant more as a
-> bug-report.
-> [...]
-> --- a/notes.c
-> +++ b/notes.c
-> @@ -1183,6 +1183,8 @@ void format_display_notes(const unsigned char *object_sha1,
->  			  struct strbuf *sb, const char *output_encoding, int flags)
->  {
->  	int i;
-> +	if (!display_notes_trees)
-> +		init_display_notes(NULL);
->  	assert(display_notes_trees);
->  	for (i = 0; display_notes_trees[i]; i++)
->  		format_note(display_notes_trees[i], object_sha1, sb,
+> Thanks for looking at the importer, that'll be very useful when fixin=
+g
+> it. But FWIW that `find` invocation isn't a bug. Perl doesn't have a =
+"
+> " input field separator so "my @files =3D `find . -type f`" does the
+> right thing, unlike in the shell.
 
-I'm not sure if it is right to just pass NULL. We shouldn't have any
-extra_refs in our display_notes_opt, because we would have had to
-pass --show-notes to do so (at least from my brief reading of the code).
+He calls `find $dir -type f`, without a quotemeta on $dir, which perl
+will pass to the shell to interpret (and is actually a security issue i=
+f
+I can convince you to try importing my svn repository with directory ';
+rm -rf /;').
 
-But shouldn't "git show --no-standard-notes --format=%N" pass a
-display_notes_opt with suppress_default_notes set?
+> I'm sorry that I brought snerp-vortex into this at all. It wasn't the
+> main motivation behind this patch, just the straw that broke the
+> camel's back.
 
-I don't see it as all that likely (since without --show-notes, you
-wouldn't have _any_ notes, so why are you using %N?), but it seems to be
-the correct behavior, and might be useful for a script that uses '%N' in
-combination with user-provided options.
+I don't in particular have a problem with --allow-empty-message for
+casual use. Why anybody would want to use it when they could type the
+much shorter -mnone, I don't know. But it is long enough that people
+will have to think about using it, which means the people who do so wil=
+l
+probably really want it.
 
 -Peff
