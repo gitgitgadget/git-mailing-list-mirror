@@ -1,96 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Getting rid of a stale remote?
-Date: Tue, 6 Apr 2010 14:42:56 -0400
-Message-ID: <20100406184256.GA14281@coredump.intra.peff.net>
-References: <x2jc115fd3c1004061103z3154b6b3ge34493260f12925e@mail.gmail.com>
- <w2if3271551004061107rb25b83b9p19a284f19e7d4f87@mail.gmail.com>
- <x2uc115fd3c1004061125i695f66bbi9f949ccc1958750@mail.gmail.com>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [PATCH 2/7 (v5)] basic api and porcelain
+Date: Tue, 06 Apr 2010 20:25:57 +0100
+Message-ID: <dbe35e7547614331d19b811c180731aa@212.159.54.234>
+References: <4BBA40CD.5040301@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Tim Visher <tim.visher@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 06 20:43:25 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sam Vilain <sam@vilain.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Andreas Ericsson <exon@op5.se>,
+	Christian Couder <christian@couder.net>, <git@vger.kernel.org>
+To: Nick Edelen <sirnot@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 06 21:26:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzDkA-0000co-LI
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 20:43:23 +0200
+	id 1NzEPZ-0001D6-Js
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 21:26:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757164Ab0DFSnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Apr 2010 14:43:16 -0400
-Received: from peff.net ([208.65.91.99]:49016 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756104Ab0DFSnO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Apr 2010 14:43:14 -0400
-Received: (qmail 26400 invoked by uid 107); 6 Apr 2010 18:43:52 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 06 Apr 2010 14:43:52 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Apr 2010 14:42:56 -0400
-Content-Disposition: inline
-In-Reply-To: <x2uc115fd3c1004061125i695f66bbi9f949ccc1958750@mail.gmail.com>
+	id S1757119Ab0DFT0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Apr 2010 15:26:04 -0400
+Received: from positron.quantumfyre.co.uk ([213.165.84.138]:46740 "EHLO
+	positron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753224Ab0DFT0B (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Apr 2010 15:26:01 -0400
+Received: from reaper.quantumfyre.co.uk (reaper.quantumfyre.co.uk [212.159.54.234])
+	by positron.quantumfyre.co.uk (Postfix) with ESMTP id EAC6F819C76D;
+	Tue,  6 Apr 2010 20:25:54 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 6FD5820C6C3;
+	Tue,  6 Apr 2010 20:25:59 +0100 (BST)
+X-Virus-Scanned: amavisd-new at reaper
+Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
+	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id Zr5qoZ5JFlsV; Tue,  6 Apr 2010 20:25:59 +0100 (BST)
+Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id A1D87105040;
+	Tue,  6 Apr 2010 20:25:57 +0100 (BST)
+In-Reply-To: <4BBA40CD.5040301@gmail.com>
+X-Sender: julian@quantumfyre.co.uk
+User-Agent: RoundCube Webmail/0.1-rc1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144166>
 
-On Tue, Apr 06, 2010 at 02:25:07PM -0400, Tim Visher wrote:
+On Mon, 05 Apr 2010 20:58:05 +0100, Nick Edelen <sirnot@gmail.com> wrote:
+> +	/* initialize header */
+> +	strcpy(head.signature, "REVCACHE");
 
-> >   prune
-> >       Deletes all stale tracking branches under <name>. These stale branches
-> >       have already been removed from the remote repository referenced by
-> >       <name>, but are still locally available in "remotes/<name>".
-> 
-> I'm unclear as to how this solves my problem.  Consider the following:
+head.signature is 8 characters (see below), and so is "REVCACHE".  Surely
+either
+head.signature needs to be 9 characters, or you shouldn't use strcpy. 
+Indeed, mostly you do seem to be using memcpy ...
 
-It doesn't. Prune is about removing stale branches of _existing_
-remotes, but you want to remove the whole remote.
+This is in a couple of other places too, with both rc_index_header, and
+rc_slice_header.
 
->     $ git remote
->     a
->     b
->     c
+> +/* single index maps objects to cache files */
+> +struct rc_index_header {
+> +	char signature[8]; /* REVINDEX */
+> +	unsigned char version;
+> +	uint32_t ofs_objects;
+> +
+> +	uint32_t object_nr;
+> +	unsigned char cache_nr;
+> +
+> +	uint32_t max_date;
+> +};
 
-So you don't have a remote 'd' at this point.
+> +/* structure for actual cache file */
+> +struct rc_slice_header {
+> +	char signature[8]; /* REVCACHE */
+> +	unsigned char version;
+> +	uint32_t ofs_objects;
+> +
+> +	uint32_t object_nr;
+> +	uint16_t path_nr;
+> +	uint32_t size;
+> +
+> +	unsigned char sha1[20];
+> +};
 
->     $ git branch -a
->     a
->     b
->     c
->     remotes/a/branch
->     remotes/b/branch
->     remotes/c/branch
->     remotes/d/branch
-
-But you do have a crufty tracking branch.
-
->     $ git remote prune d
->     fatal: 'd' does not appear to be a git repository
->     fatal: The remote end hung up unexpectedly
-
-You don't have a remote 'd', so we try to a git repository in the
-directory 'd'. Which obviously doesn't work.
-
->     $ git remote rm d
->     error: Could not remove config section 'remote.d'
-
-And this fails because you have no configured remote 'd', just the
-crufty branch. How you got into that state, I don't know, but I imagine
-it was from deleting the config in .git/config manually instead of using
-"git remote rm" in the first place.
-
-It would be tempting to say that "git remote rm" should continue if the
-config simply doesn't exist and remove the crufty branch, but that is
-not quite right. We actually need the config to tell us "here is where
-we store the tracking branches for remote d". Of course, unless you have
-munged the config manually, it will always be "refs/remotes/d". So we
-could perhaps guess that for the case of missing config (possibly with
-"git remote rm -f" or something).
-
-But if you just want to do things manually, try "git branch -d -r
-d/branch".
-
--Peff
+-- 
+Julian
