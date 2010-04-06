@@ -1,76 +1,100 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v3] Documentation/urls: Rewrite to accomodate 
-	<transport>::<address>
-Date: Tue, 6 Apr 2010 14:14:03 +0530
-Message-ID: <h2yf3271551004060144uc7ae9662s2148c11f697a2dd0@mail.gmail.com>
-References: <n2rf3271551004050656vdd7d242dpeebacb25d4082f75@mail.gmail.com> 
-	<7vhbnpmteu.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Is there interest in reading ~/.gitconfig.d/* and  /etc/gitconfig.d/*?
+Date: Tue, 06 Apr 2010 02:02:26 -0700 (PDT)
+Message-ID: <m36345hs4d.fsf@localhost.localdomain>
+References: <z2s51dd1af81004011420ka5d3a800kf6b3e4591527fc12@mail.gmail.com>
+	<alpine.DEB.2.00.1004040922500.30612@perkele.intern.softwolves.pp.se>
+	<19384.17579.205005.86711@winooski.ccs.neu.edu>
+	<u2i51dd1af81004060115t5f837840z5adcf83622fa8882@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Gabriel Filion <lelutin@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 06 10:44:35 2010
+Cc: Eli Barzilay <eli@barzilay.org>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 06 11:02:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nz4Ob-0005PP-D9
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 10:44:29 +0200
+	id 1Nz4g8-00042M-Ay
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 11:02:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751288Ab0DFIoZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 04:44:25 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:53248 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751092Ab0DFIoY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Apr 2010 04:44:24 -0400
-Received: by gyg13 with SMTP id 13so2503880gyg.19
-        for <git@vger.kernel.org>; Tue, 06 Apr 2010 01:44:23 -0700 (PDT)
+	id S1752108Ab0DFJCb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 05:02:31 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:16958 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751617Ab0DFJCa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Apr 2010 05:02:30 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so928977fgg.1
+        for <git@vger.kernel.org>; Tue, 06 Apr 2010 02:02:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
          :content-transfer-encoding;
-        bh=eSzX2FOEqRwpAkl5qSI1tmGNnEtgqEDgIDBTpwpLtXM=;
-        b=SGggyeZnNSKnhreTWOlCK/D4/h2lPuDr53n7FXHI9W9rva4V59h2IFnhJRPu2Td0gT
-         a+li/Hzv5zHIp12VPWVw5ZwXSiMvRz9HSCk76ZpAU0aoXwP4+RgfHAMvBP6B5STzb7Kn
-         WPdyEB+vXArZ/vQSr5T+N0RioN692k26vS6PM=
+        bh=kBr/STGbF++B301+w0UkKUAH61WVSXoygUpftWhgW3E=;
+        b=Frypj28QLTAZ22hUTj9AUTPfgEqRh3Y3t13YdNxcY4DOtVkG6DuLTJUccvC0HfMmzd
+         6mLOJxqKXjtFsOurKXjqxILAx/0ncQ+AzLxNj729+EdtaDMC9wouwzFk32UaRaqWaCwP
+         oQ37vIge9vhqxXQ1vaL2fwA/v2SDZXypHtloA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=lA3sKnVmv8P02DMHkfnF2I8IOSwQrnRZSEqtD5iGbpDNAFDUjlJ0gJ1V9YHqeG914l
-         zQ5nzOljFEKyWQjwiFcrsEiqArPjF7voWlZAIVLXGGmsWkUBOc06WPub5mdE7gF5vZQu
-         9q/BINSoFIupH3XkNGul5vFdv2Xd8HHlQeaF8=
-Received: by 10.90.69.14 with HTTP; Tue, 6 Apr 2010 01:44:03 -0700 (PDT)
-In-Reply-To: <7vhbnpmteu.fsf@alter.siamese.dyndns.org>
-Received: by 10.90.5.24 with SMTP id 24mr2074949age.47.1270543463198; Tue, 06 
-	Apr 2010 01:44:23 -0700 (PDT)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=Dg7Ctkls5OU2EmlpPqqJCjVMGuSm+F3AX6zO8gC1bAHvEaxEaZmu0d7Bi3wEYKymTY
+         4qwyaQgjMOSc/iPKxb6iCILe3XLNj8a87pEWfAoG4ng/isRfZOkpakbAkK80V8nFRgcl
+         QusKf2f9aOFVgHDtDcXiYhQlHKC80+HB2J2Bc=
+Received: by 10.86.124.35 with SMTP id w35mr10627108fgc.49.1270544548281;
+        Tue, 06 Apr 2010 02:02:28 -0700 (PDT)
+Received: from localhost.localdomain (abwr38.neoplus.adsl.tpnet.pl [83.8.241.38])
+        by mx.google.com with ESMTPS id 14sm8491567fxm.1.2010.04.06.02.02.26
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 06 Apr 2010 02:02:26 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o3691lnn025265;
+	Tue, 6 Apr 2010 11:01:58 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o3691OUY025255;
+	Tue, 6 Apr 2010 11:01:24 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <u2i51dd1af81004060115t5f837840z5adcf83622fa8882@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144118>
 
-Hi,
+=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
+> On Sun, Apr 4, 2010 at 07:50, Eli Barzilay <eli@barzilay.org> wrote:
 
-On Tue, Apr 6, 2010 at 3:52 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> I don't see why we want to single out ssh:// being the default at all=
-; in
-> fact I do not think it is the default in any way. =A0To "git clone" o=
-r "git
-> remote add" you always specify what URL to use.
+> > Isn't it better to have a way to include files instead?
+>=20
+> Probably yes. Programs like Apache HTTPD, rsyslog and others just use
+> ${foo}conf.d by convention by supporting config inclusion.
+>=20
+> What would be the ideal config syntax for that? AFAICT git-config
+> doesn't (yet) support top-level keys so maybe this:
+>=20
+>     [INCLUDE]
+>         path =3D ~/.gitconfig.d/*
+>=20
+> Or if top-level support was added:
+>=20
+>     INCLUDE =3D ~/.gitconfig.d/*
 
-Junio: Thanks for this! I was wondering about the same thing, and
-waiting for someone to comment. I've addressed this, and all your
-other concerns in v4.
+<bikeshedding mode on>
 
--- Ram
+I think that it would be better to use
+
+        include ~/.gitconfig.d/*
+
+<bikeshedding mode off>
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
