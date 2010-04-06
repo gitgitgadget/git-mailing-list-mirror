@@ -1,69 +1,68 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Re: [RFC PATCH 1/4] Document the HTTP transport protocol
-Date: Mon, 5 Apr 2010 21:57:11 -0700
-Message-ID: <m2md411cc4a1004052157v200f902ek22420456e4a45512@mail.gmail.com>
-References: <1255065768-10428-1-git-send-email-spearce@spearce.org>
-	 <1255065768-10428-2-git-send-email-spearce@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Initialize notes trees if %N is used and no
+ --show-notes given
+Date: Tue, 6 Apr 2010 01:32:35 -0400
+Message-ID: <20100406053234.GC3901@coredump.intra.peff.net>
+References: <20100405115548.GA19971@macbook.lan.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Apr 06 06:57:31 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Git ML <git@vger.kernel.org>
+To: Johannes Gilger <heipei@hackvalue.de>
+X-From: git-owner@vger.kernel.org Tue Apr 06 07:33:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nz0qw-0002zP-JO
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 06:57:30 +0200
+	id 1Nz1PH-0005uK-Of
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 07:33:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751168Ab0DFE5P convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 00:57:15 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:27367 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750999Ab0DFE5N convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Apr 2010 00:57:13 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so511300fga.1
-        for <git@vger.kernel.org>; Mon, 05 Apr 2010 21:57:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=d9dEnXhy5nqF7k5BdXum0E6aoZubsOiFukKZEclWJSk=;
-        b=GF742TcUAC6GAuxFpg9MFpwa7dSzyCTOs0PWLf3OUO1L0VdTFiAwNQg9/miQFUakvR
-         Z/SbS2LBUgqiCukLKabjhfmtxy5n69/GiSoS6qNlZZ4byRvwKLcQmcdVfgv+JocTmNFh
-         9cdbmVZc/qv4L1yDLYOluLHtSJ7R0qKuekmUk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=rWLc6qXb+nT9qSPqInN7ssZN8jNy/Rdq7xsedXqa7bk4OsE08Y7REVhOikAbs0AKBi
-         F5IdniFwbTIIpLYzL0MVPAXaAI86XrI9ep7z9TyI3T/mT4ZdikYv1ZJu1w4vt71Gj+sn
-         wOgrshbMgiv4LhMRADfdTJIMe731EXmxO5kKw=
-Received: by 10.86.53.2 with HTTP; Mon, 5 Apr 2010 21:57:11 -0700 (PDT)
-In-Reply-To: <1255065768-10428-2-git-send-email-spearce@spearce.org>
-Received: by 10.87.70.7 with SMTP id x7mr1488007fgk.77.1270529831909; Mon, 05 
-	Apr 2010 21:57:11 -0700 (PDT)
+	id S1751451Ab0DFFcy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Apr 2010 01:32:54 -0400
+Received: from peff.net ([208.65.91.99]:53197 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751212Ab0DFFcx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Apr 2010 01:32:53 -0400
+Received: (qmail 3130 invoked by uid 107); 6 Apr 2010 05:33:30 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 06 Apr 2010 01:33:30 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Apr 2010 01:32:35 -0400
+Content-Disposition: inline
+In-Reply-To: <20100405115548.GA19971@macbook.lan.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144098>
 
-Hey,
+On Mon, Apr 05, 2010 at 01:55:48PM +0200, Johannes Gilger wrote:
 
-On Thu, Oct 8, 2009 at 10:22 PM, Shawn O. Pearce <spearce@spearce.org> =
-wrote:
-> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> ---
-> =C2=A0Documentation/technical/http-protocol.txt | =C2=A0542 +++++++++=
-++++++++++++++++++++
-> =C2=A01 files changed, 542 insertions(+), 0 deletions(-)
-> =C2=A0create mode 100644 Documentation/technical/http-protocol.txt
+> While this patch fixes this behaviour, I'm not sure it's at the right
+> place or doesn't impact performance. So this is meant more as a
+> bug-report.
+> [...]
+> --- a/notes.c
+> +++ b/notes.c
+> @@ -1183,6 +1183,8 @@ void format_display_notes(const unsigned char *object_sha1,
+>  			  struct strbuf *sb, const char *output_encoding, int flags)
+>  {
+>  	int i;
+> +	if (!display_notes_trees)
+> +		init_display_notes(NULL);
+>  	assert(display_notes_trees);
+>  	for (i = 0; display_notes_trees[i]; i++)
+>  		format_note(display_notes_trees[i], object_sha1, sb,
 
-I just spent a while looking for this in my email archive - why was
-this document not added to the technical/ dir?  Can we put it there?
+I'm not sure if it is right to just pass NULL. We shouldn't have any
+extra_refs in our display_notes_opt, because we would have had to
+pass --show-notes to do so (at least from my brief reading of the code).
 
-Scott
+But shouldn't "git show --no-standard-notes --format=%N" pass a
+display_notes_opt with suppress_default_notes set?
+
+I don't see it as all that likely (since without --show-notes, you
+wouldn't have _any_ notes, so why are you using %N?), but it seems to be
+the correct behavior, and might be useful for a script that uses '%N' in
+combination with user-provided options.
+
+-Peff
