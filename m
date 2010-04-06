@@ -1,126 +1,79 @@
-From: Stephen Kelly <steveire@gmail.com>
-Subject: Re: How to keep different version numbers in different branches?
-Date: Tue, 06 Apr 2010 11:06:42 +0100
-Message-ID: <hpetj1$6af$1@dough.gmane.org>
-References: <hpcscv$umg$3@dough.gmane.org> <y2i32541b131004051151v8f4b8774q360c04ecdb046778@mail.gmail.com> <vpqd3ydr9g6.fsf@bauges.imag.fr> <n2x32541b131004051236m3a800c57k41536729ae3f192@mail.gmail.com>
+From: =?utf-8?q?K=C4=81rlis_Repsons?= <k@11.lv>
+Subject: What happens in this example case?
+Date: Tue, 6 Apr 2010 09:13:53 +0000
+Message-ID: <201004060913.56760.k@11.lv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7Bit
+Content-Type: multipart/signed;
+  boundary="nextPart5724661.4GxF4TDRGX";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 06 11:07:06 2010
+X-From: git-owner@vger.kernel.org Tue Apr 06 11:14:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nz4kU-0005ra-53
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 11:07:06 +0200
+	id 1Nz4rG-00024C-Qn
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Apr 2010 11:14:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752173Ab0DFJG7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Apr 2010 05:06:59 -0400
-Received: from lo.gmane.org ([80.91.229.12]:45509 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751157Ab0DFJG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Apr 2010 05:06:57 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Nz4kG-0005mw-Rh
-	for git@vger.kernel.org; Tue, 06 Apr 2010 11:06:52 +0200
-Received: from dialbs-092-079-186-075.static.arcor-ip.net ([92.79.186.75])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 06 Apr 2010 11:06:52 +0200
-Received: from steveire by dialbs-092-079-186-075.static.arcor-ip.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 06 Apr 2010 11:06:52 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: dialbs-092-079-186-075.static.arcor-ip.net
-User-Agent: KNode/0.99.01
+	id S1752240Ab0DFJN7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Apr 2010 05:13:59 -0400
+Received: from [85.15.210.5] ([85.15.210.5]:48183 "EHLO pasts.trikata.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751804Ab0DFJN7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Apr 2010 05:13:59 -0400
+Received: from keeper.loca (unknown [85.15.210.9])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pasts.trikata.com (Postfix) with ESMTPSA id C7AE26ED29
+	for <git@vger.kernel.org>; Tue,  6 Apr 2010 12:17:47 +0300 (EEST)
+Received: from station.localnet (station [192.168.7.93])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by keeper.loca (Postfix) with ESMTPSA id 7331D14F4D1A
+	for <git@vger.kernel.org>; Tue,  6 Apr 2010 09:13:57 +0000 (GMT)
+User-Agent: KMail/1.12.4 (Linux/2.6.32-gentoo-r7-2010-03-28; KDE/4.3.5; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144120>
 
-Avery Pennarun wrote:
+--nextPart5724661.4GxF4TDRGX
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
 
-> On Mon, Apr 5, 2010 at 3:22 PM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> You can even make sure it _never_ happens, by making a one-commit
->> release branch which changes the version number for each release. This
->> one-commit is never merged in anything:
->>
->> 0.1                         0.2
->> |                           |
->> v                           v
->> --o--o--o--o--o--o--o--o---o--o--o <--- master branch
->> \                      /
->> o--o--o--o--o--o--o--o--- ...  <--- maintainance branch
->> \              \
->> o <- 0.1.1     o <- 0.1.2
->>
->> Here, the maintainance branch never changes the version number in
->> README & friends.
-> 
-> This works too.  In fact, I even do it on one of my projects.
-> However, I find it a little annoying, because then I don't know which
-> version to tag: the pre-number-changed version, or the
-> post-number-changed version.
-> 
-> The latter sounds like the obvious answer, but if I do that, then "git
-> describe" never says anything useful on my master branch.  But if I do
-> the former instead, then the tag doesn't accurately reflect the
-> version I *actually* released.
-> 
-> I've never found an adequate solution to this problem, other than not
-> including the version number in the repo at all.
+Hi,
+it would be good if someone explained how is git doing things internally when:
 
-Hi all, 
+1.
+mkdir dir; cd dir; git init; echo -e "A\na\nA" > file; git add .; git commit -a -m comm1
 
-Thanks for the pointers. I considered the above solution too, but 
-disregarded it for the same reason.
+2.
+echo -e "A\nb\nA" > file; git commit -a -m comm2;
 
-I also considered the git describe solution, but disregarded it because in 
-CMake I need to know each component of the version separately 
-(Grantlee_VERSION_MAJOR, Grantlee_VERSION_MINOR and Grantlee_VERSION_PATCH). 
-I could split it on '.', but I think the better solution is to just put the 
-version into the CMake files and deal with the conflict in that one place as 
-it comes up. I can always switch in the future anyway if using describe 
-makes more sense.
 
-> you might want to have a look at this: http://nvie.com/git-model
+I want to understand how those three letters are stored in each of the
+two cases and how can the contents of file be recovered from .git
+archive, say, after git reset --hard <commit-hash>?
 
-Yes, that is an interesting read, but he doesn't cover this issue. In fact, 
-he references a fictional script which updates the version number in the 
-tracked files.
+(is git storing just the position of change for 'b' and 'b' in the second
+case? why is $(git cat-file -p) showing all three letters for the respective
+objects in both cases?)
 
-Junio C Hamano wrote:
->> Additionally, I have some stuff currently in master that should not be in
->> the 0.1 release, but should be in the 0.2 release. If I branch and then
->> remove those files from the 0.1 branch, a merge will then remove them
->> from master too? How do I keep them on master but delete them on 0.1 and
->> still be able to merge from 0.1 into master?
-> 
-> You do not have to fork maint-0.1 branch from the tip of the master.  In
-> the earlier parts of the master branch there must be a point where
-> everything before are for 0.1 and all things after that are not, and you
-> fork from there.  After that, queue changes that are applicable to both to
-> the 0.1 branch and merge that to 'master' as necessary, while queueing
-> changes not for 0.1 to 'master'.
-> 
+--nextPart5724661.4GxF4TDRGX
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-There might be such a point, yes, but there are also likely commits which 
-touch files which should be included and files which should not, so I'd 
-probably end up rebasing ancient history of master and or creating a big 
-mess.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
 
-I think for this situation the best solution is indeed the merge_revert 
-commit.
+iEYEABECAAYFAku6+1QACgkQHuSu329e3GGIAwCgw+F+pDWcq/4P00ZTTQCnTeF1
+HO0An3b85V5V6Knoi7E+E1sRRoJ6dVHR
+=bP7S
+-----END PGP SIGNATURE-----
 
-Thanks for the responses.
-
-All the best,
-
-Steve.
+--nextPart5724661.4GxF4TDRGX--
