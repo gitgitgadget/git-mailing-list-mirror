@@ -1,82 +1,129 @@
-From: Vitaly <vitaly.berov@gmail.com>
-Subject: Re: git clone: very long "resolving deltas" phase
-Date: Wed, 07 Apr 2010 09:55:19 +0400
-Message-ID: <4BBC1E47.80308@gmail.com>
-References: <loom.20100406T161552-321@post.gmane.org> <vpqljd062xb.fsf@bauges.imag.fr> <4BBB5346.6070607@gmail.com> <4BBB53F5.9010106@op5.se> <q2mec874dac1004060850r5eaa41fak2ba9889d07794651@mail.gmail.com> <v2qecffb261004060856qcb769a06vf40ad2a75a3aa4fd@mail.gmail.com> <alpine.LFD.2.00.1004061705390.7232@xanadu.home>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v9] Documentation/remote-helpers: Add invocation section
+Date: Wed, 7 Apr 2010 11:27:12 +0530
+Message-ID: <g2vf3271551004062257ycbda64d3z3d3004d802a03fc3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Shawn Pearce <spearce@spearce.org>, Andreas Ericsson <ae@op5.se>,
-	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Wed Apr 07 07:55:51 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Gabriel Filion <lelutin@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 07 07:57:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzOEw-000497-Qn
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 07:55:51 +0200
+	id 1NzOGh-0004eD-HV
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 07:57:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752838Ab0DGFzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Apr 2010 01:55:46 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:41248 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752758Ab0DGFzp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 01:55:45 -0400
-Received: by bwz1 with SMTP id 1so497194bwz.21
-        for <git@vger.kernel.org>; Tue, 06 Apr 2010 22:55:43 -0700 (PDT)
+	id S1752868Ab0DGF5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Apr 2010 01:57:34 -0400
+Received: from mail-yw0-f172.google.com ([209.85.211.172]:50165 "EHLO
+	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752863Ab0DGF5d (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Apr 2010 01:57:33 -0400
+Received: by ywh2 with SMTP id 2so438820ywh.33
+        for <git@vger.kernel.org>; Tue, 06 Apr 2010 22:57:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=R1z8lWRcY5YJBxn4EYaQF6R8rdH+gTBsQFaeKYcHqFs=;
-        b=RAJdNVT5wd0bdSt//i7u5CNZOCGpeuLsyaHapFtGoiwO9n/8rtSlkWS5iCSPLmtDFf
-         gdOtjPwq28E+j+fAQELkbFGSmRn4e8W/OOKfejLNAdl87scc9J1V8LKhMo+IcfyCh6Ip
-         NaP5w2IRHL9XY1YPdyj7GgNPXqN1Wrz4FrtGk=
+        h=domainkey-signature:mime-version:received:from:date:received
+         :message-id:subject:to:cc:content-type;
+        bh=Yhjl32Qxevd452xRAwZ0/TVz7kZxjDdIlrumLy5PG4Q=;
+        b=Gm25mQzBAnSFtDFd6JX88QmxWavF+ngkV/KlIO+yfTmVD4yZWrKLMAZke0O8JFjj6l
+         wxLGgWKRE2XkFFNVigkAihM7CR8b2Ue3lqtGtdhxNt/bRNMUxnlxDd2Sdju3OpJD/RbW
+         1zDBR9Axx0z0bLBSz5inGl3sCobjg8xzoLIo0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=aCrONQZ5/qtbF9Cf5qYjaqQpurxlSlzpZiQjOHBRoiBsbSWFL8/A4gNbx/kcTcYoXx
-         AvStfOi84wlaKdDo/q+2tNz8AUlQ5oO7qucDY2f5R3jfJ91k+ly6REmR+V1Xljwm9uuW
-         E8ZHXJ2DMvqXY5pzMhAlPTf887/z7TN7c9K48=
-Received: by 10.204.25.145 with SMTP id z17mr8457844bkb.181.1270619743769;
-        Tue, 06 Apr 2010 22:55:43 -0700 (PDT)
-Received: from [172.16.11.219] ([195.218.191.171])
-        by mx.google.com with ESMTPS id 14sm6631708bwz.2.2010.04.06.22.55.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 06 Apr 2010 22:55:42 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9pre) Gecko/20100217 Shredder/3.0.3pre
-In-Reply-To: <alpine.LFD.2.00.1004061705390.7232@xanadu.home>
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=pLfb1dXnvNNW/axRtJ6n2MwI/fd1sHC53FsdVJaXvuxZBISZm2iagADfckVRyZWyra
+         FIafmtme37EG0SMdUOkA1zBbkxzYxFu2edvXIACDqbGsV0DBeovCplynwzEZLcgJplc8
+         ulD87TqbuI6TiA+03FP0+kvGl0n0vISRVRPpM=
+Received: by 10.90.69.14 with HTTP; Tue, 6 Apr 2010 22:57:12 -0700 (PDT)
+Received: by 10.90.59.29 with SMTP id h29mr599717aga.14.1270619852100; Tue, 06 
+	Apr 2010 22:57:32 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144199>
 
-I suspected the security reasons.
+Add an 'Invocation' section to specify what the command line arguments
+mean. Also include a link to git-remote in the 'See Also' section.
 
-Ok, we work in trusted environment. How can we turn this behavior off?
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ Changes: The second argument may be an arbitrary string as
+ Jonathan pointed out.
 
-On 04/07/2010 01:09 AM, Nicolas Pitre wrote:
-> On Tue, 6 Apr 2010, Vitaly Berov wrote:
->
->    
->> Why does git compute checksums on the client side? Isn't it already
->> calculated on the "server" side?
->>      
-> Yes.  But Git clients can't trust the server like that.
->
-> The only way to make sure the server didn't send you crap data, or worse
-> maliciously altered data, is actually to not transfer any checksum data
-> but to recompute and validate the received payload locally.
->
-> This being said, you should never have to wait 6 hours for that phase to
-> complete.  It is typically a matter of minutes if not seconds.
->
->
-> Nicolas
->
->    
+ Documentation/git-remote-helpers.txt |   34 +++++++++++++++++++++++++++++++++-
+ 1 files changed, 33 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-remote-helpers.txt
+b/Documentation/git-remote-helpers.txt
+index 7a5569c..b0e7d54 100644
+--- a/Documentation/git-remote-helpers.txt
++++ b/Documentation/git-remote-helpers.txt
+@@ -7,7 +7,7 @@ git-remote-helpers - Helper programs to interact with
+remote repositories
+
+ SYNOPSIS
+ --------
+-'git remote-<transport>' <remote>
++'git remote-<transport>' <repository> [<URL>]
+
+ DESCRIPTION
+ -----------
+@@ -38,6 +38,34 @@ transport protocols, such as 'git-remote-http',
+'git-remote-https',
+ 'git-remote-ftp' and 'git-remote-ftps'. They implement the capabilities
+ 'fetch', 'option', and 'push'.
+
++INVOCATION
++----------
++
++Remote helper programs are invoked with one or (optionally) two
++arguments. The first argument specifies a remote repository as in git;
++it is either the name of a configured remote or a URL. The second
++argument specifies a URL; it is usually of the form
++'<transport>://<address>', but any arbitrary string is possible.
++
++When git encounters a URL of the form '<transport>://<address>', where
++'<transport>' is a protocol that it cannot handle natively, it
++automatically invokes 'git remote-<transport>' with the full URL as
++the second argument. If such a URL is encountered directly on the
++command line, the first argument is the same as the second, and if it
++is encountered in a configured remote, the first argument is the name
++of that remote.
++
++A URL of the form '<transport>::<address>' explicitly instructs git to
++invoke 'git remote-<transport>' with '<address>' as the second
++argument. If such a URL is encountered directly on the command line,
++the first argument is '<address>', and if it is encountered in a
++configured remote, the first argument is the name of that remote.
++
++Additionally, when a configured remote has 'remote.<name>.vcs' set to
++'<transport>', git explicitly invokes 'git remote-<transport>' with
++'<name>' as the first argument. If set, the second argument is
++'remote.<name>.url'; otherwise, the second argument is omitted.
++
+ COMMANDS
+ --------
+
+@@ -206,6 +234,10 @@ OPTIONS
+ 	must not rely on this option being set before
+ 	connect request occurs.
+
++SEE ALSO
++--------
++linkgit:git-remote[1]
++
+ Documentation
+ -------------
+ Documentation by Daniel Barkalow and Ilari Liusvaara
+-- 
+1.7.0.3
