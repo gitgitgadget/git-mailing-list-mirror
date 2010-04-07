@@ -1,333 +1,129 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: (resend v2) Re: [RFC PATCH 1/4] Document the HTTP transport
- protocol
-Date: Thu, 8 Apr 2010 03:24:42 +0800
-Message-ID: <20100408032442.992ab183.rctay89@gmail.com>
-References: <1255065768-10428-1-git-send-email-spearce@spearce.org>
- <1255065768-10428-2-git-send-email-spearce@spearce.org>
- <7vskdss3ei.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH v4] Remove --allow-empty from the git-commit synopsis
+Date: Wed,  7 Apr 2010 19:28:18 +0000
+Message-ID: <1270668498-30495-1-git-send-email-avarab@gmail.com>
+References: <7vfx37cckf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 07 21:25:01 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, gitster@pobox.com,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 07 21:28:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nzas0-0003i0-K0
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 21:25:01 +0200
+	id 1Nzavg-0005V2-Pf
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 21:28:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752127Ab0DGTYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Apr 2010 15:24:54 -0400
-Received: from mail-fx0-f223.google.com ([209.85.220.223]:62945 "EHLO
-	mail-fx0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751288Ab0DGTYx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 15:24:53 -0400
-Received: by fxm23 with SMTP id 23so1393183fxm.21
-        for <git@vger.kernel.org>; Wed, 07 Apr 2010 12:24:52 -0700 (PDT)
+	id S1752207Ab0DGT2o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Apr 2010 15:28:44 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:61628 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751035Ab0DGT2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Apr 2010 15:28:43 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1664533fgg.1
+        for <git@vger.kernel.org>; Wed, 07 Apr 2010 12:28:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:in-reply-to:references:x-mailer:mime-version
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=h2RaOR5K/E6FRgNc+88bpQ4qb95tLa8q6b0kTI+AG3Y=;
-        b=GiwPZr+/7ZBYDLoAYnD3V7USNPgUVxOHqpH+em8qm6Gyapv4rIbNJRE7RNiXpL4N02
-         I++axTOOoj7H5OOasS3aOrklWfF4WtX00zf4K+6GNVu41SGDSPgRdN7nNsXBypw09szg
-         upYtSQldrySHPDpyk8VKU/CtSadj0vSKHGNXk=
+        bh=k5zl+2VWR9WTaqC5aQFMg7GU08B7cXMvixb6JlNZJFA=;
+        b=iAO2WofxfTNkPp+jtpSEQiFPgYKGLGmeU4u6u9HBZClv0KX3CYR0BVYLtMAh0c5HfM
+         dkFKT6WdWrO4w6461veZQv4lcGHWK9hYn0x+xKEJbxE4EYsmxFVnwXBjPl6UoSej9viC
+         90Hr5YkiUpNK7LVb+K/J/v56Xowtx9tll+FLw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=VkgOQrkA2+ZN6kLuBvkgT8OGs93S+7grF3znc88lQ6W3eEtZCrmitgIZtupYIQIiCk
-         UqWag+RxgCxe6KPgtYw0avcyMmFSKEVGh4HhPjY8Fw5Xj0SIw9RVhy3THtB54I/qaQ37
-         MB1VCWZgqF7LAjfS+ICXAa5kZV76fL1MJe4NI=
-Received: by 10.103.35.5 with SMTP id n5mr5048477muj.93.1270668291136;
-        Wed, 07 Apr 2010 12:24:51 -0700 (PDT)
-Received: from your-cukc5e3z5n (cm46.zeta153.maxonline.com.sg [116.87.153.46])
-        by mx.google.com with ESMTPS id w5sm5490833mue.54.2010.04.07.12.24.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 07 Apr 2010 12:24:50 -0700 (PDT)
-In-Reply-To: <7vskdss3ei.fsf@alter.siamese.dyndns.org>
-X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
+        b=lX5ELt051WmFCig2Bzc8GG3G3znwN8xRth8Cv5AsAUsgZ3M+Yr3N6lk10mNhdaSW7V
+         DzyJGeoW3bZEVUwTIaVajiVUWREYRQOFfyflYAbjKqlOK4u/ULNZzCAJ8KEaheKghWEO
+         D5CEMfZIHCexhNMTih5+4zJmLGl1QTHAe8p70=
+Received: by 10.87.67.25 with SMTP id u25mr260125fgk.32.1270668521604;
+        Wed, 07 Apr 2010 12:28:41 -0700 (PDT)
+Received: from localhost.localdomain ([188.104.23.89])
+        by mx.google.com with ESMTPS id e3sm2901841fga.24.2010.04.07.12.28.40
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 07 Apr 2010 12:28:40 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.4.298.gc81d
+In-Reply-To: <7vfx37cckf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144274>
 
-(sorry for the multiple copies - something wrong with my MUA. Had to
-give it a kiss in the a** to get it working.)
+The --allow-empty option is too rarely used to warrant being displayed
+in the SYNOPSIS. It should only be mentioned in the main body of the
+documentation like --porcelain.
 
-(v2 - added back headers. My apologies again.)
-
-Hi,
-
-(I'm reviving this thread to complete the document. What I have right
-now is available at my github repo; you can see it at
-
-  http://github.com/rctay/git/compare/git/next...feature/http-doc#files_bucket
-
-.
-
-An inlined patch should be sent in soon.)
-
-On Fri, 09 Oct 2009 13:44:53 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
-
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
-> > new file mode 100644
-> > index 0000000..316d9b6
-> > --- /dev/null
-> > +++ b/Documentation/technical/http-protocol.txt
-> > @@ -0,0 +1,542 @@
-> > +HTTP transfer protocols
-> > +=======================
-> > ...
-> > +As a design feature smart clients can automatically upgrade "dumb"
-> > +protocol URLs to smart URLs.  This permits all users to have the
-> > +same published URL, and the peers automatically select the most
-> > +efficient transport available to them.
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
-> The first sentence feels backwards although the conclusion in the second
-> sentence is true.  It is more like smart ones trying smart protocol first,
-> and downgrading to "dumb" after noticing that the server is not smart.
+---
 
-I think Shawn is trying to describe this from the persepective of the
-client implementation - a "dumb" url is first constructed, then
-"upgraded" to a "smart" one.
+> If you mention what Peff said, it would be nice to Cc: him.
 
-> > +Authentication
-> > +--------------
-> > ...
-> > +Clients SHOULD support Basic authentication as described by RFC 2616.
-> > +Servers SHOULD support Basic authentication by relying upon the
-> > +HTTP server placed in front of the Git server software.
->
-> It is perfectly fine to make it a requirement for a server to support the
-> Basic authentication, but should you make it a requirement that the
-> support is done by a specific implementation, i.e. "by relying upon..."?
+Corrected.
 
-I think the term "Server" in this document is implied as an amalgam of
-the HTTP server, and a CGI script/program ("Git server software"). I
-think what Shawn meant was for Basic authentication to be implemented
-at the server layer, not in the CGI scripts/program.
+> Please don't cite marc
 
-> > +Session State
-> > +-------------
-> > ...
-> > +retained and managed by the client process.  This permits simple
-> > +round-robin load-balancing on the server side, without needing to
-> > +worry about state mangement.
->
-> s/mangement/management/;
+Sorry, I'm new here and there was no mention of this in
+Documentation/SubmittingPatches. I looked through `git log' for the
+project and found 10 such links in other commit messages.
 
-Done.
+Now that I look closer there are 14 references to some `Message-ID:',
+but of course someone getting it wrong in the past doesn't mean that
+it's a good idea to follow their example. I won't cite marc.info
+again.
 
-> > +pkt-line Format
-> > +---------------
-> > ...
-> > +Examples (as C-style strings):
-> > +
-> > +  pkt-line          actual value
-> > +  ---------------------------------
-> > +  "0006a\n"         "a\n"
-> > +  "0005a"           "a"
-> > +  "000bfoobar\n"    "foobar\n"
-> > +  "0004"            ""
-> > +
-> > +A pkt-line with a length of 0 ("0000") is a special case and MUST
-> > +be treated as a message break or terminator in the payload.
->
-> Isn't this "MUST be" wrong?
->
-> It is not an advice to the implementors, but the protocol specification
-> itself defines what the flush packet means.  IOW, "The author of this
-> specification, Shawn, MUST treat a flush packet as a message break or
-> terminator in the payload, when designing this protocol."
+> I do not think Jeff was against having a complete listing in the
+> documentation.  Wasn't his suggestion about "git commit -h" output
 
-This section has been purged; we already have this in
-Documentation/technical/protocol-common.txt.
+Yes I misread (or rather, mis-recalled) the content of his message. He
+was indeed talking about `git commit -h' output, but I subsequently
+updated my --allow-empty-message patch to omit it from the SYNOPSIS
+for git-commit(1). I've removed the links to `marc.info' (or any
+Message-ID's) since they aren't pertinent anymore.
 
-> > +General Request Processing
-> > +--------------------------
-> > +
-> > +Except where noted, all standard HTTP behavior SHOULD be assumed
-> > +by both client and server.  This includes (but is not necessarily
-> > +limited to):
-> > +
-> > +If there is no repository at $GIT_URL, the server MUST respond with
-> > +the '404 Not Found' HTTP status code.
->
-> We may also want to add
->
->     If there is no object at $GIT_URL/some/path, the server MUST respond
->     with the '404 Not Found' HTTP status code.
->
-> to help dumb clients.
+The relatively obscure --allow-empty* options should regardless of
+that misunderstanding probably be omitted from the SYNOPSIS
+section. It would reduce the cognitive load of the casual manual
+reader who's trying to get an idea of the most common usage for the
+command.
 
-Proposed re-wording:
+As for Jeff's suggestion of omitting options from the `--help' output:
+I couldn't find a way to do that using parse-options.[ch]. It's also
+customary for `--help' to include the full usage examples regardless
+of how long they get (just look at wget, ls etc.). The SYNOPSIS
+sections in manual pages by comparison usually aim for brevity.
 
-  If there is no repository at $GIT_URL, or the resource pointed to by a
-  location containing $GIT_URL does not exist, the server MUST NOT respond
-  with '200 OK' response.  A server SHOULD respond with
-  '404 Not Found', '410 Gone', or any other suitable HTTP status code
-  which does not imply the resource exists as requested.
+ Documentation/git-commit.txt |    5 ++---
+ 1 files changed, 2 insertions(+), 3 deletions(-)
 
-(The 'valid info/refs response' part has been dropped.)
-
-> > +Dumb Clients
-> > +~~~~~~~~~~~~
-> > +
-> > +HTTP clients that only support the "dumb" protocol MUST discover
-> > +references by making a request for the special info/refs file of
-> > +the repository.
-> > +
-> > +Dumb HTTP clients MUST NOT include search/query parameters when
-> > +fetching the info/refs file.  (That is, '?' must not appear in the
-> > +requested URL.)
->
-> It is unclear if '?' can be part of $GIT_URL. E.g.
->
->     $ wget http://example.xz/serve.cgi?path=git.git/info/refs
->     $ git clone http://example.xz/serve.cgi?path=git.git
->
-> It might be clearer to just say
->
->     Dumb HTTP clients MUST make a GET request against $GIT_URL/info/refs,
->     without any search/query parameters.  I.e.
->
-> 	C: GET $GIT_URL/info/refs HTTP/1.0
->
-> to also exclude methods other than GET.
-
-Done.
-
-> > +	C: GET $GIT_URL/info/refs HTTP/1.0
-> > +
-> > +	S: 200 OK
-> > ...
-> > +When examining the response clients SHOULD only examine the HTTP
-> > +status code.  Valid responses are '200 OK', or '304 Not Modified'.
->
-> Isn't 401 ("Ah, I was given a wrong URL") and 403 ("Ok, I do not have an
-> access to this repository") also valid?
-
-I think "valid" for the client means "ok, continue processing
-normally".
-
-> > +The returned content is a UNIX formatted text file describing
-> > +each ref and its known value.  The file SHOULD be sorted by name
-> > +according to the C locale ordering.  The file SHOULD NOT include
-> > +the default ref named 'HEAD'.
->
-> I know you said "known" to imply "concurrent operations may change it
-> while the server is serving this client", but it feels rather awkward.
-
-TODO
-
-> > +Smart Server Response
-> > +^^^^^^^^^^^^^^^^^^^^^
-> > +
-> > +Smart servers MUST respond with the smart server reply format.
-> > +If the server does not recognize the requested service name, or the
-> > +requested service name has been disabled by the server administrator,
-> > +the server MUST respond with the '403 Forbidden' HTTP status code.
->
-> This is a bit confusing.
->
-> If you as a server administrator want to disable the smart upload-pack for
-> one repository (but not for other repositories), you would not be able to
-> force smart clients to fall back to the dumb protocol by giving "403" for
-> that repository.
->
-> Maybe in 2 years somebody smarter than us will have invented a more
-> efficient git-upload-pack-2 service, which is the only fetch protocol his
-> server supports other than dumb.  If your v1 smart client asks for the
-> original git-upload-pack service and gets a "403", you won't be able to
-> fall back to "dumb".
->
-> The solution for such cases likely is to pretend as if you are a dumb
-> server for the smart request.  That unfortunately means that the first
-> sentence is misleading, and the second sentence is also an inappropriate
-> advice.
-
-Proposed rewording:
-
-  If the server does not recognize the requested service name, or the
-  requested service name has been disabled by the server administrator,
-  the server MUST respond with the '403 Forbidden' HTTP status code.
-
-  Otherwise, smart servers MUST respond with the smart server reply
-  format for the requested service name.
-
-> > +The Content-Type MUST be 'application/x-$servicename-advertisement'.
-> > +Clients SHOULD fall back to the dumb protocol if another content
-> > +type is returned.  When falling back to the dumb protocol clients
-> > +SHOULD NOT make an additional request to $GIT_URL/info/refs, but
-> > +instead SHOULD use the response already in hand.  Clients MUST NOT
-> > +continue if they do not support the dumb protocol.
->
-> The part I commented on (the beginning of Smart Server Response) was
-> written as a generic description, not specific to git-upload-pack service,
-> and the beginning of this paragraph also pretends to be a generic
-> description, but it is misleading.  This is a specific instruction to the
-> clients that asked for git-upload-pack service and got a dumb server
-> response (if the above were talking about something other than upload-pack
-> service, there is no guarantee that "response already in hand" is useful
-> to talk to dumb servers).
-
-Previous hunk should fix this.
-
-> > +	ref_list       = empty_list | populated_list
-> > +
-> > +	empty_list     = PKT-LINE(id SP "capabilities^{}" NUL cap_list LF)
-> > +
-> > +	non_empty_list = PKT-LINE(id SP name NUL cap_list LF)
-> > +	                 *ref_record
->
-> [snip]
->
-> Did you define what "populated_list" is?
-
-I think "non_empty_list" was meant.
-
-Ideally, ref advertisements should be in protocol-common.txt.
-
-> > +Smart Service git-upload-pack
-> > +------------------------------
-> > +This service reads from the remote repository.
->
-> The wording "remote repository" felt confusing.  I know it is "from the
-> repository served by the server", but if it were named without
-> "upload-pack", I might have mistaken that you are allowing to proxy a
-> request to access a third-party repository by this server.  The same
-> comment applies to the git-receive-pack service.
-
-Would
-
-  This service reads from the repository pointed to by $GIT_URL.
-
-be an improvement?
-
-> > +Capability include-tag
-> > +~~~~~~~~~~~~~~~~~~~~~~
-> > +
-> > +When packing an object that an annotated tag points at, include the
-> > +tag object too.  Clients can request this if they want to fetch
-> > +tags, but don't know which tags they will need until after they
-> > +receive the branch data.  By enabling include-tag an entire call
-> > +to upload-pack can be avoided.
-> > +
->
-> I think you are avoiding an "extra" call; you would need one entire call
-> to upload-pack anyway for the primary transfer.
-
-Done.
-
---
-Cheers,
-Ray Chuan
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.tx=
+t
+index 64fb458..ed2cd95 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -10,9 +10,8 @@ SYNOPSIS
+ [verse]
+ 'git commit' [-a | --interactive] [-s] [-v] [-u<mode>] [--amend] [--dr=
+y-run]
+ 	   [(-c | -C) <commit>] [-F <file> | -m <msg>] [--reset-author]
+-	   [--allow-empty] [--no-verify] [-e] [--author=3D<author>]
+-	   [--date=3D<date>] [--cleanup=3D<mode>] [--status | --no-status] [-=
+-]
+-	   [[-i | -o ]<file>...]
++	   [--no-verify] [-e] [--author=3D<author>] [--date=3D<date>]
++	   [--cleanup=3D<mode>] [--status | --no-status] [--] [[-i | -o ]<fil=
+e>...]
+=20
+ DESCRIPTION
+ -----------
+--=20
+1.7.0.4.298.gc81d
