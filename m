@@ -1,103 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v9] Documentation/remote-helpers: Add invocation section
-Date: Wed, 07 Apr 2010 10:23:38 -0700
-Message-ID: <7vzl1fch2d.fsf@alter.siamese.dyndns.org>
-References: <g2vf3271551004062257ycbda64d3z3d3004d802a03fc3@mail.gmail.com>
- <7vsk77e20r.fsf@alter.siamese.dyndns.org>
- <n2nf3271551004070950ucf314b40g56087d49dfbd29f1@mail.gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH v2] Remove --allow-empty from the git-commit synopsis
+Date: Wed,  7 Apr 2010 17:28:47 +0000
+Message-ID: <1270661327-28078-1-git-send-email-avarab@gmail.com>
+References: <w2zfabb9a1e1004070829ob9da47e6oacf2703129be9107@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Tapsell <johnflux@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Gabriel Filion <lelutin@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 07 19:24:10 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 07 19:29:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzYz3-00017U-DO
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 19:24:09 +0200
+	id 1NzZ3v-0005Hv-2d
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 19:29:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758111Ab0DGRYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Apr 2010 13:24:04 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56250 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758063Ab0DGRYB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 13:24:01 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D31E9A8FF3;
-	Wed,  7 Apr 2010 13:23:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; s=sasl; bh=gnthrt3apZAyhfhY5OSmJP0kddM=; b=C200e7
-	0m/l7eR5FJygtvwOqtJcHDNjcbzWzJup6BexovCy3g2Oo72k3ZZfJXvcgeWEQkh5
-	LVgxNdkQ8bwMQmNwkJaWFnzdGz6B0Cs4yzwDjO4ARQFyjgIkTeDRofe58DxGoA8a
-	wuQkXCEqQax2DJksE+tqpkUVOFPQ2XKmUWoko=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TrECc58ZeokOcLWV/iw7db/v4olQEHKD
-	KvCOhRhdQL+kd5NHqvf9ohEtBfcybSMAykpGMBUKSEOXqAvs3SuCG86jNNRid7Zm
-	8LfPG6i6pLLkvqocajdPggAXS6lRYfHv5WNFpg6C8LPqfzaiypMyWlu/JlZ/Szsx
-	BIrN91vXnLY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 43BB9A8FEE;
-	Wed,  7 Apr 2010 13:23:50 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E734FA8FE9; Wed,  7 Apr
- 2010 13:23:39 -0400 (EDT)
-In-Reply-To: <n2nf3271551004070950ucf314b40g56087d49dfbd29f1@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Wed\, 7 Apr 2010 22\:20\:52 +0530")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 54E2428A-426A-11DF-A89F-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754339Ab0DGR3E convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Apr 2010 13:29:04 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:19117 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758217Ab0DGR3C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Apr 2010 13:29:02 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so558202fga.1
+        for <git@vger.kernel.org>; Wed, 07 Apr 2010 10:29:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=XCdPy12jxdfCTvzWPIymaiWCG6VHzsw/mPLOc/oe9tM=;
+        b=RGCtZTM/oxKrRdjx49ZpwGiosD11sEdwr2sOdbipsBrp11pVxWFIkX6dEV50XkTbJ5
+         Z/h7w8EQBp6dwRvm7dyIjgYKgurxvATSE3ptYAh2rylvPb8bTM/Ko65BiNToqvkrssQS
+         3wMjYvsB4BXpDyRO5Eb0m4gP8iRZ9KGYMpewI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=DOhPWbsob/hHMSInqhDIBltUUJV4L4ms3S8Y1GoVRUDBC3tSRjCm+PGg4PUJz+ABSy
+         M21P5YnUDzyxAgoi069+3OqjHbxwukN5NxJEOelfgKc9xPcjvcBa7XP8tD9BlbdiRdyh
+         XmDZu4ctDbENkfV7TDPZOgEAs9bbnmR7iHcLg=
+Received: by 10.87.17.34 with SMTP id u34mr2217323fgi.10.1270661341021;
+        Wed, 07 Apr 2010 10:29:01 -0700 (PDT)
+Received: from localhost.localdomain ([188.104.23.89])
+        by mx.google.com with ESMTPS id d4sm19259365fga.25.2010.04.07.10.28.59
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 07 Apr 2010 10:29:00 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.4.298.gc81d
+In-Reply-To: <w2zfabb9a1e1004070829ob9da47e6oacf2703129be9107@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144254>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+The --allow-empty option is too rarley used to warrant being displayed
+in the SYNOPSIS. It should only be mentioned in the main body of the
+documentation like --porcelain.
 
-> Can someone tell me what I'm doing wrong? Earlier, Junio also had a
-> problem with one of my patches being corrupt. I used git-imap-send and
-> the GMail web interface to fill out the "to", "cc" and some comments.
+The issue was raised in the thread discussing the new
+--allow-empty-message option by Jeff King <peff@peff.net>:
 
-In the above procedure, up to imap-send, everything would be fine, but I
-heard GMail web interface still wraps lines before sending the result out.
+    http://marc.info/?l=3Dgit&m=3D127039258902941
+    http://marc.info/?l=3Dgit&m=3D127054334121604
 
-Gmail section in Documentation/SubmittingPatches says:
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+I'd forgotten how the Git project likes rebasing :)
 
-  GMail does not appear to have any way to turn off line wrapping in the web
-  interface, so this will mangle any emails that you send.  You can however
-  use any IMAP email client to connect to the google imap server, and forward
-  the emails through that.  Just make sure to disable line wrapping in that
-  email client.  Alternatively, use "git send-email" instead.
+Here's a better patch that just cites the two relevant mailing list
+posts instead of the commit sha1.
 
-This is a tangent, but I think this can still be further improved.  What
-it says is not incorrect per-se, but the "can however" gives a false hope
-to people who have been burned by the web interface.  The fact it lists
-are:
+ Documentation/git-commit.txt |    5 ++---
+ 1 files changed, 2 insertions(+), 3 deletions(-)
 
- - GMail web interface will wrap lines and corrupt patches, no matter what
-   you do;
-
- - With imap-send, you can stuff messages to your outbox at GMail, and
-   using IMAP client that does _not_ corrupt messages, you can send things
-   out.
-
-Combined together, these mean that you lose even if you preprare your
-outbox with imap-send if you send out the end result from their web
-interface.
-
-At the minimum, we could add a parenthesized comment like this.
-
-  the emails through that.  Just make sure to disable line wrapping in
-  that email client (again, there is no way to tell GMail web interface to
-  do so).
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.tx=
+t
+index 64fb458..ed2cd95 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -10,9 +10,8 @@ SYNOPSIS
+ [verse]
+ 'git commit' [-a | --interactive] [-s] [-v] [-u<mode>] [--amend] [--dr=
+y-run]
+ 	   [(-c | -C) <commit>] [-F <file> | -m <msg>] [--reset-author]
+-	   [--allow-empty] [--no-verify] [-e] [--author=3D<author>]
+-	   [--date=3D<date>] [--cleanup=3D<mode>] [--status | --no-status] [-=
+-]
+-	   [[-i | -o ]<file>...]
++	   [--no-verify] [-e] [--author=3D<author>] [--date=3D<date>]
++	   [--cleanup=3D<mode>] [--status | --no-status] [--] [[-i | -o ]<fil=
+e>...]
+=20
+ DESCRIPTION
+ -----------
+--=20
+1.7.0.4.298.gc81d
