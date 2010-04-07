@@ -1,68 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v9] Documentation/remote-helpers: Add invocation section
-Date: Wed, 07 Apr 2010 08:05:40 -0700
-Message-ID: <7vsk77e20r.fsf@alter.siamese.dyndns.org>
-References: <g2vf3271551004062257ycbda64d3z3d3004d802a03fc3@mail.gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH v2] Make xmalloc and xrealloc thread-safe
+Date: Wed, 07 Apr 2010 11:08:41 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1004071103341.7232@xanadu.home>
+References: <ec874dac1003241122s3d592f26n1b23d23144939218@mail.gmail.com>
+ <alpine.LFD.2.00.1003241435300.694@xanadu.home>
+ <ec874dac1003241257r3cad86c9q1af84d3732e23ca8@mail.gmail.com>
+ <alpine.LFD.2.00.1003241613020.694@xanadu.home>
+ <4c8ef71003270626y45685e69j28ccb8a8738b9083@mail.gmail.com>
+ <alpine.LFD.2.00.1004062152260.7232@xanadu.home>
+ <20100407031655.GA7156@spearce.org>
+ <alpine.LFD.2.00.1004070043450.7232@xanadu.home>
+ <r2xec874dac1004070529p3d21d23z533e471636194c00@mail.gmail.com>
+ <alpine.LFD.2.00.1004070859540.7232@xanadu.home>
+ <20100407144555.GA23911@fredrik-laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Gabriel Filion <lelutin@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 07 17:06:50 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
+To: Fredrik Kuivinen <frekui@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 07 17:08:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzWq8-0001iR-EY
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 17:06:48 +0200
+	id 1NzWs3-0002qQ-U7
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 17:08:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932722Ab0DGPGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Apr 2010 11:06:05 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58909 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932659Ab0DGPGD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 11:06:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0CCB0A81A7;
-	Wed,  7 Apr 2010 11:06:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=Fw3oS0woT5X9oea/hjEa4cMWbUg=; b=sp4l0wiokl2GijbKIKw8Jc8
-	kn5dPlcsfj66Q9o61prL7yNqhdt2jisytX4SQUefXixzFPTB6jKNrX3UpUlEaN79
-	N8rFnJQ7jNkJjQDHO2Ms25ADkzYZvsTmKhfE4R3ss+oGfzhfqBWC3ih7r9aED/HG
-	G7T/c2ABrfASgjm2WbrU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=HFkRMNS2n9pD/FZi7h5v6djtMsq69wkUUjf+x3SglsLm9JLZ/
-	IZRNqe3pge/3rIEXqY/N/6LuTmxHE5dRr7r/sGh5o2wYfJpIX8P9oz/2CE+OA3dD
-	pxDkuce3L/bhQ+q66U+GH7CPxspplIQPnAR/FRC/7FhGuQZxJkHLsTJgMY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 73E0DA819F;
-	Wed,  7 Apr 2010 11:05:51 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 47C19A8191; Wed,  7 Apr
- 2010 11:05:42 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0E552188-4257-11DF-8221-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932616Ab0DGPIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Apr 2010 11:08:43 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:23097 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932581Ab0DGPIm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Apr 2010 11:08:42 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0L0I00J9YI2H1K40@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 07 Apr 2010 11:08:41 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20100407144555.GA23911@fredrik-laptop>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144234>
 
-You keep sending a broken patch.  I've queued v7 and replaced with v8 and
-both times I had to fix them in my editor.
+On Wed, 7 Apr 2010, Fredrik Kuivinen wrote:
 
-I'm not replacing v8 with this tonight, as my pre-push test cycles are
-already running (finished in one vm and continuing in another).  Please
-check what I queued and make sure your future patches applies on top of
-what I have.
+> As I mentioned in another mail in this thread, our mutex
+> implementation on WIN32 already is recursive. It is implemented on top
+> of the CRITICAL_SECTION type, which is recursive. See
+> http://msdn.microsoft.com/en-us/library/ms682530%28VS.85%29.aspx
 
-Thanks.
+Ahhhh.  Goodie.
+
+> We only need something like the following (on top of Nico's previous
+> patch). Warning: It hasn't even been compile tested on WIN32.
+> 
+[...]
+> diff --git a/thread-utils.c b/thread-utils.c
+> index 4f9c829..3c8d817 100644
+> --- a/thread-utils.c
+> +++ b/thread-utils.c
+> @@ -1,4 +1,5 @@
+>  #include "cache.h"
+> +#include <pthread.h>
+
+This will fail compilation on Windows surely?
+
+>  #if defined(hpux) || defined(__hpux) || defined(_hpux)
+>  #  include <sys/pstat.h>
+> @@ -43,3 +44,24 @@ int online_cpus(void)
+>  
+>  	return 1;
+>  }
+> +
+> +int init_recursive_mutex(pthread_mutex_t *m)
+> +{
+> +#ifdef _WIN32
+> +	/* The mutexes in the WIN32 pthreads emulation layer are
+> +	 * recursive, so we don't have to do anything extra here. */
+> +	return pthread_mutex_init(m, NULL);
+> +#else
+> +	pthread_mutexattr_t a;
+> +	int ret;
+> +	if (pthread_mutexattr_init(&a))
+> +		die("pthread_mutexattr_init failed: %s", strerror(errno));
+> +
+> +	if (pthread_mutexattr_settype(&a, PTHREAD_MUTEX_RECURSIVE))
+> +		die("pthread_mutexattr_settype failed: %s", strerror(errno));
+> +
+> +	ret = pthread_mutex_init(m, &a);
+> +	pthread_mutexattr_destroy(&a);
+> +	return ret;
+
+Are you sure the pthread_mutexattr_t object can be destroyed even if the 
+mutex is still in use?  Is the attribute object "attached" to the mutex 
+or merely used as a template?
+
+
+Nicolas
