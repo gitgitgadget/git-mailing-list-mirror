@@ -1,92 +1,204 @@
-From: Vitaly <vitaly.berov@gmail.com>
-Subject: Re: git clone: very long "resolving deltas" phase
-Date: Wed, 07 Apr 2010 12:14:36 +0400
-Message-ID: <4BBC3EEC.6010702@gmail.com>
-References: <loom.20100406T161552-321@post.gmane.org> <vpqljd062xb.fsf@bauges.imag.fr> <4BBB5346.6070607@gmail.com> <4BBB53F5.9010106@op5.se> <q2mec874dac1004060850r5eaa41fak2ba9889d07794651@mail.gmail.com> <v2qecffb261004060856qcb769a06vf40ad2a75a3aa4fd@mail.gmail.com> <alpine.LFD.2.00.1004061705390.7232@xanadu.home> <4BBC1E15.9040403@gmail.com> <20100407080049.GA14041@LK-Perkele-V2.elisa-laajakaista.fi>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v2] Documentation/remote-helpers: Fix typos and improve 
+	language
+Date: Wed, 7 Apr 2010 14:21:32 +0530
+Message-ID: <t2zf3271551004070151had4ef656xe8ef9d04884c6a46@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>,
-	Andreas Ericsson <ae@op5.se>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Wed Apr 07 10:15:15 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 07 10:52:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzQPq-00062u-HP
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 10:15:14 +0200
+	id 1NzQzX-0003sg-E2
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 10:52:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756304Ab0DGIPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Apr 2010 04:15:09 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:44961 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756230Ab0DGIPF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 04:15:05 -0400
-Received: by bwz1 with SMTP id 1so571181bwz.21
-        for <git@vger.kernel.org>; Wed, 07 Apr 2010 01:15:03 -0700 (PDT)
+	id S932373Ab0DGIv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Apr 2010 04:51:56 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:51732 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932260Ab0DGIvx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Apr 2010 04:51:53 -0400
+Received: by gwb19 with SMTP id 19so488616gwb.19
+        for <git@vger.kernel.org>; Wed, 07 Apr 2010 01:51:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=0AVDlX84WJzb16iGOsvcEc53lB64DtngjcT2xbVoEm0=;
-        b=l3TomnVs2nBQapmazbbV8aEXimNkiu93dE0bek9F/cAb/LSzbECX04TDl/ytJpyPzl
-         i+xQ8at1WzjOrYowkYRhR8hc1X6m9hCT+WDimjq+pgkOd5jMdS5F7wInexqjprsrp+t+
-         udGh2M4PWOVrvllcC1Vgyuz5CZFcw7zsgO4ZY=
+        h=domainkey-signature:mime-version:received:from:date:received
+         :message-id:subject:to:cc:content-type;
+        bh=LPKpOpht/tMpswP1ICg2/im4Va6s2MErTeaGYYozm6w=;
+        b=HvKtcliPfZdPo+S4+LWhczD4j5FbOE1GNT9r32eb4KbQFZtseAHQDQ8s3jlMU0nLpF
+         Q/uddgIi2yjNMDr6OLFJwJvPePhmjm4N+wR6UQG2JALuQ3z2K9yqPpVvNSqAViJrgeqi
+         TT5BBEVx0CE/hxgRKtdn5vLah08ADyGc73mqk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=D4yk6T9VjqWemr6+1yoAJqWdCgLInwKMxjM3r47GDn40SHMBkvBBzDQhhCSBzqDOz7
-         jnH/WMbczlGUxPSXiKQoRZJV7rUmnvjd8glx6LNDK6Gvq/NUCcwi8xcsF5nVNqrzQgv8
-         ID8S3HuF3yHg3ys7jKTuu4YhAjdla22Mh+f2I=
-Received: by 10.204.134.87 with SMTP id i23mr4932451bkt.125.1270628103610;
-        Wed, 07 Apr 2010 01:15:03 -0700 (PDT)
-Received: from [172.16.11.219] ([195.218.191.171])
-        by mx.google.com with ESMTPS id 13sm6700764bwz.7.2010.04.07.01.15.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 07 Apr 2010 01:15:02 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9pre) Gecko/20100217 Shredder/3.0.3pre
-In-Reply-To: <20100407080049.GA14041@LK-Perkele-V2.elisa-laajakaista.fi>
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=QlDkg9oJuK4B3tLsPiguCjWdLDxoURuA8KX/w0sgYMQvB//X2Mv31KNmIOKMbAk84Z
+         hxyfA+VzqlXinSedu6Lb2aQR/CNDsS798RBiRwe67hDcNhhxz4hx7OPibpi2YMAasb+D
+         FbDV6FpeZ+ydTFn+brVo4LIlSUCMOmBnoTvYI=
+Received: by 10.90.69.14 with HTTP; Wed, 7 Apr 2010 01:51:32 -0700 (PDT)
+Received: by 10.90.24.32 with SMTP id 32mr3026740agx.76.1270630312162; Wed, 07 
+	Apr 2010 01:51:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144205>
 
-Too bad..
-Yes, we really have a very large repo with binary files.
+Fix some typos and grammar/ tense errors.
 
-So, as far as I understand, the fastest way is to use rsync or smth like 
-this instead of "git clone".
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ Changes since v1: Reverted one bad hunk pointed out by Junio.
+ Now rebased to apply cleanly to pu.
 
-P.S. Btw, how can I ask for a feature of incorporating hashes into 
-transport stream in trusted environments?
+ Documentation/git-remote-helpers.txt |   51 +++++++++++++++------------------
+ 1 files changed, 23 insertions(+), 28 deletions(-)
 
-On 04/07/2010 12:00 PM, Ilari Liusvaara wrote:
-> On Wed, Apr 07, 2010 at 09:54:29AM +0400, Vitaly Berov wrote:
->    
->> I suspected the security reasons.
->>
->> Ok, we work in trusted environment. How can we turn this behavior off?
->>      
->
-> It can't be turned off. Protocol requires client to recompute hashes
-> as they are not explicitly available in transport stream (must be inferred
-> instead).
->
->    
->>> This being said, you should never have to wait 6 hours for that phase to
->>> complete.  It is typically a matter of minutes if not seconds.
->>>        
-> The reasons why it might take 6 hours (offhand from memory):
->
-> - Extremely large repo
-> - Very large files in repo pushing client into swap.
->
-> -Ilari
->
->    
+diff --git a/Documentation/git-remote-helpers.txt
+b/Documentation/git-remote-helpers.txt
+index 25a0a16..8838388 100644
+--- a/Documentation/git-remote-helpers.txt
++++ b/Documentation/git-remote-helpers.txt
+@@ -74,8 +74,8 @@ Commands are given by the caller on the helper's
+standard input, one per line.
+
+ 'capabilities'::
+ 	Lists the capabilities of the helper, one per line, ending
+-	with a blank line. Each capability may be preceded with '*'.
+-	This marks them mandatory for git version using the remote
++	with a blank line. Each capability may be preceded with '*',
++	which marks them mandatory for git version using the remote
+ 	helper to understand (unknown mandatory capability is fatal
+ 	error).
+
+@@ -84,27 +84,27 @@ Commands are given by the caller on the helper's
+standard input, one per line.
+ 	[<attr> ...]". The value may be a hex sha1 hash, "@<dest>" for
+ 	a symref, or "?" to indicate that the helper could not get the
+ 	value of the ref. A space-separated list of attributes follows
+-	the name; unrecognized attributes are ignored. After the
+-	complete list, outputs a blank line.
++	the name; unrecognized attributes are ignored. The list ends
++	with a blank line.
+ +
+ If 'push' is supported this may be called as 'list for-push'
+ to obtain the current refs prior to sending one or more 'push'
+ commands to the helper.
+
+ 'option' <name> <value>::
+-	Set the transport helper option <name> to <value>.  Outputs a
++	Sets the transport helper option <name> to <value>.  Outputs a
+ 	single line containing one of 'ok' (option successfully set),
+ 	'unsupported' (option not recognized) or 'error <msg>'
+-	(option <name> is supported but <value> is not correct
++	(option <name> is supported but <value> is not valid
+ 	for it).  Options should be set before other commands,
+-	and may how those commands behave.
++	and may influence the behavior of those commands.
+ +
+ Supported if the helper has the "option" capability.
+
+ 'fetch' <sha1> <name>::
+ 	Fetches the given object, writing the necessary objects
+ 	to the database.  Fetch commands are sent in a batch, one
+-	per line, and the batch is terminated with a blank line.
++	per line, terminated with a blank line.
+ 	Outputs a single blank line when all fetch commands in the
+ 	same batch are complete. Only objects which were reported
+ 	in the ref list with a sha1 may be fetched this way.
+@@ -116,7 +116,7 @@ suitably updated.
+ Supported if the helper has the "fetch" capability.
+
+ 'push' +<src>:<dst>::
+-	Pushes the given <src> commit or branch locally to the
++	Pushes the given local <src> commit or branch to the
+ 	remote branch described by <dst>.  A batch sequence of
+ 	one or more push commands is terminated with a blank line.
+ +
+@@ -140,6 +140,9 @@ Supported if the helper has the "push" capability.
+ 	by applying the refspecs from the "refspec" capability to the
+ 	name of the ref.
+ +
++Especially useful for interoperability with a foreign versioning
++system.
+++
+ Supported if the helper has the "import" capability.
+
+ 'connect' <service>::
+@@ -168,16 +171,11 @@ CAPABILITIES
+ ------------
+
+ 'fetch'::
+-	This helper supports the 'fetch' command.
+-
+ 'option'::
+-	This helper supports the option command.
+-
+ 'push'::
+-	This helper supports the 'push' command.
+-
+ 'import'::
+-	This helper supports the 'import' command.
++'connect'::
++	This helper supports the corresponding command with the same name.
+
+ 'refspec' 'spec'::
+ 	When using the import command, expect the source ref to have
+@@ -189,9 +187,6 @@ CAPABILITIES
+ 	all, it must cover all refs reported by the list command; if
+ 	it is not used, it is effectively "*:*"
+
+-'connect'::
+-	This helper supports the 'connect' command.
+-
+ REF LIST ATTRIBUTES
+ -------------------
+
+@@ -207,19 +202,19 @@ REF LIST ATTRIBUTES
+ OPTIONS
+ -------
+ 'option verbosity' <N>::
+-	Change the level of messages displayed by the helper.
+-	When N is 0 the end-user has asked the process to be
+-	quiet, and the helper should produce only error output.
+-	N of 1 is the default level of verbosity, higher values
++	Changes the verbosity of messages displayed by the helper.
++	A value of 0 for N means that processes operate
++	quietly, and the helper produces only error output.
++	1 is the default level of verbosity, and higher values
+ 	of N correspond to the number of -v flags passed on the
+ 	command line.
+
+ 'option progress' \{'true'|'false'\}::
+-	Enable (or disable) progress messages displayed by the
++	Enables (or disables) progress messages displayed by the
+ 	transport helper during a command.
+
+ 'option depth' <depth>::
+-	Deepen the history of a shallow repository.
++	Deepens the history of a shallow repository.
+
+ 'option followtags' \{'true'|'false'\}::
+ 	If enabled the helper should automatically fetch annotated
+@@ -235,9 +230,9 @@ OPTIONS
+ 	helpers this only applies to the 'push', if supported.
+
+ 'option servpath <c-style-quoted-path>'::
+-	Set service path (--upload-pack, --receive-pack etc.) for
+-	next connect. Remote helper MAY support this option. Remote
+-	helper MUST NOT rely on this option being set before
++	Sets service path (--upload-pack, --receive-pack etc.) for
++	next connect. Remote helper may support this option, but
++	must not rely on this option being set before
+ 	connect request occurs.
+
+ SEE ALSO
+-- 
+1.7.0.3
