@@ -1,100 +1,57 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH v3] Remove --allow-empty from the git-commit synopsis
-Date: Wed,  7 Apr 2010 18:48:52 +0000
-Message-ID: <1270666132-29430-1-git-send-email-avarab@gmail.com>
-References: <v2ybe6fef0d1004071121gcdd530dcvaaed78c0b989fc99@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2] Make xmalloc and xrealloc thread-safe
+Date: Wed, 7 Apr 2010 20:49:08 +0200
+Message-ID: <201004072049.08819.j6t@kdbg.org>
+References: <ec874dac1003241122s3d592f26n1b23d23144939218@mail.gmail.com> <alpine.LFD.2.00.1004070859540.7232@xanadu.home> <20100407144555.GA23911@fredrik-laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 07 20:49:18 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+	Shawn Pearce <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Fredrik Kuivinen <frekui@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 07 20:51:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzaJR-0002HA-IJ
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 20:49:17 +0200
+	id 1NzaLZ-0003VS-31
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 20:51:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754186Ab0DGStJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Apr 2010 14:49:09 -0400
-Received: from mail-fx0-f223.google.com ([209.85.220.223]:35323 "EHLO
-	mail-fx0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753645Ab0DGStI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 14:49:08 -0400
-Received: by fxm23 with SMTP id 23so1357073fxm.21
-        for <git@vger.kernel.org>; Wed, 07 Apr 2010 11:49:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=2IcVHT+JczF9xWtRNuAZIjYJ+L7M3VWJANwRj0FrHZs=;
-        b=XbJO7+93LJSzgZt4CvNHo+OQjts35RHecUlA2EstN8i8s0KCdLGarawBiNXZ+ap0Rl
-         gAuXR05jr8Ue87CvgdeS2kz1X8DYS7B/DWX+78uuPoGA7vEfXC9gWPtvI3BkaR467eWS
-         p4Ay8U8MVIz/NAru3sqhFZQj9uYuHkNiRt+bI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=r6albKN31VJXSLjS273rMtJmkpA3NwaesPZvsury3jOvuntgprS8pPk/126aDpKS7v
-         VXOSCeOGn4CJPlwQvf2Zy9bCP1Aq8KSQY6SE5+3zB/YxMmWmeu1S7Lh8tE8UUErvPF/y
-         /lIYnemZrpvtodOHo0NDSV5/CHgFmWUNalkfw=
-Received: by 10.87.50.37 with SMTP id c37mr14552591fgk.68.1270666145726;
-        Wed, 07 Apr 2010 11:49:05 -0700 (PDT)
-Received: from localhost.localdomain ([188.104.23.89])
-        by mx.google.com with ESMTPS id d8sm15320529fga.16.2010.04.07.11.49.02
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 07 Apr 2010 11:49:03 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.4.298.gc81d
-In-Reply-To: <v2ybe6fef0d1004071121gcdd530dcvaaed78c0b989fc99@mail.gmail.com>
+	id S1758049Ab0DGSvY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Apr 2010 14:51:24 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:36675 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756503Ab0DGSvX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Apr 2010 14:51:23 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id AE962CDF92;
+	Wed,  7 Apr 2010 20:51:20 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id E4F4F19F5BF;
+	Wed,  7 Apr 2010 20:49:08 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <20100407144555.GA23911@fredrik-laptop>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144268>
 
-The --allow-empty option is too rarely used to warrant being displayed
-in the SYNOPSIS. It should only be mentioned in the main body of the
-documentation like --porcelain.
+On Mittwoch, 7. April 2010, Fredrik Kuivinen wrote:
+> As I mentioned in another mail in this thread, our mutex
+> implementation on WIN32 already is recursive. It is implemented on top
+> of the CRITICAL_SECTION type, which is recursive. See
+> http://msdn.microsoft.com/en-us/library/ms682530%28VS.85%29.aspx
 
-The issue was raised in the thread discussing the new
---allow-empty-message option by Jeff King <peff@peff.net>:
+Very true!
 
-    http://marc.info/?l=3Dgit&m=3D127039258902941
-    http://marc.info/?l=3Dgit&m=3D127054334121604
+> +	if (pthread_mutexattr_settype(&a, PTHREAD_MUTEX_RECURSIVE))
 
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
----
-Thanks for catching that. Here's the commit without the tyop :)
+I wonder how many pthreads implementations there are that do not support 
+recursive mutexes...
 
- Documentation/git-commit.txt |    5 ++---
- 1 files changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.tx=
-t
-index 64fb458..ed2cd95 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -10,9 +10,8 @@ SYNOPSIS
- [verse]
- 'git commit' [-a | --interactive] [-s] [-v] [-u<mode>] [--amend] [--dr=
-y-run]
- 	   [(-c | -C) <commit>] [-F <file> | -m <msg>] [--reset-author]
--	   [--allow-empty] [--no-verify] [-e] [--author=3D<author>]
--	   [--date=3D<date>] [--cleanup=3D<mode>] [--status | --no-status] [-=
--]
--	   [[-i | -o ]<file>...]
-+	   [--no-verify] [-e] [--author=3D<author>] [--date=3D<date>]
-+	   [--cleanup=3D<mode>] [--status | --no-status] [--] [[-i | -o ]<fil=
-e>...]
-=20
- DESCRIPTION
- -----------
---=20
-1.7.0.4.298.gc81d
+-- Hannes
