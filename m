@@ -1,150 +1,178 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [RFC] war on "sleep" in tests
-Date: Tue, 06 Apr 2010 17:08:54 -0700
-Message-ID: <7vfx38gm3t.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC] gitk: refresh index before checking for local changes
+Date: Tue, 6 Apr 2010 19:43:53 -0500
+Message-ID: <20100407004353.GA11346@progeny.tock>
+References: <l2hc6c947f61004061557x8085600fif5e973077d9eb4f3@mail.gmail.com>
+ <20100406233601.GA27533@progeny.tock>
+ <n2kc6c947f61004061647ybb6c2f55zc70197362764ef8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 07 02:09:18 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Alexander Gladysh <agladysh@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 07 02:44:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzIpa-0008F6-AR
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 02:09:18 +0200
+	id 1NzJNT-0000wd-6s
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 02:44:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932228Ab0DGAJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Apr 2010 20:09:06 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46148 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932182Ab0DGAJB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Apr 2010 20:09:01 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 14CFAA8B71;
-	Tue,  6 Apr 2010 20:08:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=D2kC
-	5uM15szH4NqGSyM63/J10hw=; b=ncFcE8EyYtzeE/HFYzOiE5AEGCltpwu7zeLK
-	z3yorBrzCk8nuoBpSJXMaveNpM6G67SNWvzbCRDu++ByEb/VtfQ1Z56apiR/vzfO
-	XCGuXyINwc853/BGfAOnH0qi9XE7f6O5FLcCDHVkG9rSOwIjQK/2Ux9UXKlX73BX
-	Y187cbg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=E4I
-	1XoNIvNwAHvBNwwYK9oM7yJXcugQyDgUwQCaw+7XqUxW36TLqK7QtMXO0p8764ql
-	CSlMaWtbRVnVCRrZMW0j02mqcN+QoWpENjs6fPb3a2sHG5LdbReQyPHZz9wgu76h
-	F+dxBqxdgWZnRJWzLFbxD+Yh1MM+x4W3+XYcMWUE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 96D1FA8B6E;
-	Tue,  6 Apr 2010 20:08:57 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 690DAA8B67; Tue,  6 Apr
- 2010 20:08:55 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C2A3C5E6-41D9-11DF-ADFF-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932243Ab0DGAoB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Apr 2010 20:44:01 -0400
+Received: from mail-yx0-f171.google.com ([209.85.210.171]:48934 "EHLO
+	mail-yx0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757750Ab0DGAn7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Apr 2010 20:43:59 -0400
+Received: by yxe1 with SMTP id 1so44009yxe.33
+        for <git@vger.kernel.org>; Tue, 06 Apr 2010 17:43:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=adQKXoP84G3Sf0jw1FHSatp/fjJ+C12o6EH7uWFdqEw=;
+        b=R8sNLA40l0J9SIMtxD8WKaP2xDEaeD2eb+nD0Xlh+LR43lOiESedntPk1Ox1lGrxK4
+         V51xmLAzkxyZWBnSAET4kzry9al4gjzIMRvsn/vNB3EB6E3omu/9sW9S/DxXe3VP46xV
+         JgkWzi3FY37SIgBOhMTwEAdWqZ4Bbr3+4T+9M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=wyRAkq44+ey7q+9gFRx8vI4jd2/QMQJS9jkJ9fPY3WEyjE9CY5pYtS6ZvP22+4U9Kt
+         3S9cFIvtlZGnD54asBp1zTZZwBKKI3io8sW1dHQyeoOC3mM39550dw4VyBv/amqzDhBZ
+         S1D9hOwn59EsgmzB0zb52+xUYHw4nkhGI8cbw=
+Received: by 10.100.233.40 with SMTP id f40mr2421173anh.135.1270601038994;
+        Tue, 06 Apr 2010 17:43:58 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 15sm3403246yxh.4.2010.04.06.17.43.57
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 06 Apr 2010 17:43:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <n2kc6c947f61004061647ybb6c2f55zc70197362764ef8@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144182>
 
-In many places in test suite we have "sleep"s that do not have to be
-there.
+Most git porcelain silently refreshes stat-dirty index entries.  Teach
+gitk to, too; this will make the behavior easier to understand when a
+person makes a change to a file and then changes mind and restores the
+old version in her editor of choice.
 
- - I do not simply see the point of the one in t3500.  It may be making
-   sure that the timestamp order of commits generated during the test is
-   stable, in which case test_tick is the right ingredient to use without
-   wasting tester's time.
+This patch does not change the =E2=80=98checkout=E2=80=99 code path, si=
+nce it is
+assumed that the index is already being cleaned in that case.
 
- - The one in t4011 is to make sure that the plumbing diff-index notices
-   the stat-dirtyness of a removed then identically recreated symlink.
-   Keeping the old symlink around to make sure that a newly created
-   symlink gets different ino would be sufficient for that purpose.
+Testing is needed to check if this breaks operation with read-only
+access to a repository.
 
- - The one in t7600 is to make sure that "git merge" does not get confused
-   by stat-dirty "file" in the working tree.  Again, keeping the old file
-   around and creating an identical copy to ensure a different ino would
-   be sufficient for that purpose.
-
-The "racy git" tests in t0010 are inherently about mtime between the index
-itself and index entries.  The "sleep" in that test must stay as they are.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Requested-by: Alexander Gladysh <agladysh@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
+Alexander Gladysh wrote:
+> Jonathan Nieder wrote:
 
- t/t3500-cherry.sh       |    5 ++++-
- t/t4011-diff-symlink.sh |    5 ++---
- t/t7600-merge.sh        |    3 +--
- 3 files changed, 7 insertions(+), 6 deletions(-)
+[some nonsense about configurability]
 
-diff --git a/t/t3500-cherry.sh b/t/t3500-cherry.sh
-index dadbbc2..f038f34 100755
---- a/t/t3500-cherry.sh
-+++ b/t/t3500-cherry.sh
-@@ -17,17 +17,19 @@ test_expect_success \
-     'prepare repository with topic branch, and check cherry finds the 2 patches from there' \
-     'echo First > A &&
-      git update-index --add A &&
-+     test_tick &&
-      git commit -m "Add A." &&
- 
-      git checkout -b my-topic-branch &&
- 
-      echo Second > B &&
-      git update-index --add B &&
-+     test_tick &&
-      git commit -m "Add B." &&
- 
--     sleep 2 &&
-      echo AnotherSecond > C &&
-      git update-index --add C &&
-+     test_tick &&
-      git commit -m "Add C." &&
- 
-      git checkout -f master &&
-@@ -35,6 +37,7 @@ test_expect_success \
- 
-      echo Third >> A &&
-      git update-index A &&
-+     test_tick &&
-      git commit -m "Modify A." &&
- 
-      expr "$(echo $(git cherry master my-topic-branch) )" : "+ [^ ]* + .*"
-diff --git a/t/t4011-diff-symlink.sh b/t/t4011-diff-symlink.sh
-index d7e327c..e12fbea 100755
---- a/t/t4011-diff-symlink.sh
-+++ b/t/t4011-diff-symlink.sh
-@@ -54,7 +54,7 @@ EOF
- 
- test_expect_success \
-     'diff removed symlink' \
--    'rm frotz &&
-+    'mv frotz frotz2 &&
-     git diff-index -M -p $tree > current &&
-     compare_diff_patch current expected'
- 
-@@ -64,8 +64,7 @@ EOF
- 
- test_expect_success \
-     'diff identical, but newly created symlink' \
--    'sleep 3 &&
--    ln -s xyzzy frotz &&
-+    'ln -s xyzzy frotz &&
-     git diff-index -M -p $tree > current &&
-     compare_diff_patch current expected'
- 
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 57f6d2b..cde8390 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -554,8 +554,7 @@ test_debug 'gitk --all'
- 
- test_expect_success 'refresh the index before merging' '
- 	git reset --hard c1 &&
--	sleep 1 &&
--	touch file &&
-+	cp file file.n && mv -f file.n file &&
- 	git merge c3
- '
- 
+> That's fine as far as I'm concerned.
+>=20
+> The current behaviour is really annoying.
+
+Maybe that could be added in the future.  From testing this out,
+refreshing unconditionally seems fast enough, at least.
+
+ gitk |   50 +++++++++++++++++++++++++++++++++++++++++---------
+ 1 files changed, 41 insertions(+), 9 deletions(-)
+
+diff --git a/gitk b/gitk
+index 1f36a3e..2753446 100755
+--- a/gitk
++++ b/gitk
+@@ -375,7 +375,7 @@ proc start_rev_list {view} {
+ 	get_viewmainhead $view
+     }
+     if {$showlocalchanges && $viewmainheadid($view) ne {}} {
+-	interestedin $viewmainheadid($view) dodiffindex
++	interestedin $viewmainheadid($view) dorefreshindex
+     }
+     fconfigure $fd -blocking 0 -translation lf -eofchar {}
+     if {$tclencoding !=3D {}} {
+@@ -4974,9 +4974,9 @@ proc doshowlocalchanges {} {
+=20
+     if {$viewmainheadid($curview) eq {}} return
+     if {[commitinview $viewmainheadid($curview) $curview]} {
+-	dodiffindex
++	dorefreshindex
+     } else {
+-	interestedin $viewmainheadid($curview) dodiffindex
++	interestedin $viewmainheadid($curview) dorefreshindex
+     }
+ }
+=20
+@@ -4992,6 +4992,42 @@ proc dohidelocalchanges {} {
+     incr lserial
+ }
+=20
++# spawn off a process to refresh the index
++proc dorefreshindex {} {
++    global lserial showlocalchanges isworktree vfilelimit curview
++
++    if {!$showlocalchanges || !$isworktree} return
++    incr lserial
++    set cmd "|git update-index --refresh -q"
++    if {$vfilelimit($curview) ne {}} {
++	set cmd [concat $cmd -- $vfilelimit($curview)]
++    }
++    set fd [open $cmd r]
++    fconfigure $fd -blocking 0
++    set i [reg_instance $fd]
++    filerun $fd [list readrefreshindex $fd $lserial $i]
++}
++
++# update-index --refresh -q finished?
++proc readrefreshindex {fd serial inst} {
++    global lserial
++
++    if {$serial !=3D $lserial} {
++	stop_instance $inst
++	return 0
++    }
++    if {[gets $fd line] =3D=3D 0} {
++	# ignore output
++	return 0
++    }
++    if {![eof $fd]} {
++        return 1
++    }
++    stop_instance $inst
++    dodiffindex
++    return 0
++}
++
+ # spawn off a process to do git diff-index --cached HEAD
+ proc dodiffindex {} {
+     global lserial showlocalchanges vfilelimit curview
+@@ -7504,13 +7540,9 @@ proc getblobdiffs {ids} {
+     global git_version
+=20
+     set textconv {}
+-    if {[package vcompare $git_version "1.6.1"] >=3D 0} {
+-	set textconv "--textconv"
+-    }
++    set textconv "--textconv"
+     set submodule {}
+-    if {[package vcompare $git_version "1.6.6"] >=3D 0} {
+-	set submodule "--submodule"
+-    }
++    set submodule "--submodule"
+     set cmd [diffcmd $ids "-p $textconv $submodule  -C --cc --no-commi=
+t-id -U$diffcontext"]
+     if {$ignorespace} {
+ 	append cmd " -w"
+--=20
+debian.1.7.0.3.1.469.g398f8
