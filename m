@@ -1,70 +1,90 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] Documentation/SubmittingPatches: Clarify Gmail section
-Date: Thu, 8 Apr 2010 01:48:33 +0530
-Message-ID: <y2gf3271551004071318zb4ed7ef6o93a6c98c6009d8df@mail.gmail.com>
-References: <1270668793-2187-1-git-send-email-artagnon@gmail.com> 
-	<1270668793-2187-2-git-send-email-artagnon@gmail.com> <7vwrwjav4h.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] log: respect log.shownotes variable
+Date: Wed, 7 Apr 2010 16:45:36 -0400
+Message-ID: <20100407204536.GA32382@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	John Tapsell <johnflux@gmail.com>,
-	Aaron Crane <git@aaroncrane.co.uk>,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jacob Helwig <jacob.helwig@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 07 22:19:05 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Apr 07 22:46:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzbiF-0003Lg-SR
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 22:19:00 +0200
+	id 1Nzc8e-0007N5-6a
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 22:46:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751907Ab0DGUSy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Apr 2010 16:18:54 -0400
-Received: from mail-yx0-f171.google.com ([209.85.210.171]:45289 "EHLO
-	mail-yx0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750986Ab0DGUSy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 16:18:54 -0400
-Received: by yxe1 with SMTP id 1so355326yxe.33
-        for <git@vger.kernel.org>; Wed, 07 Apr 2010 13:18:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type;
-        bh=USXZmPLfBYsWPfkFTn/pncgzTCHAZ715F2Fr5wlt/ZE=;
-        b=u1CjBO5I83LtI/zdimTOw9LbMylU7tWfU8UVjRq45WPWJGLd2K1yu1nBtmLXcm1mNP
-         oAxpBtWav5vZC56OHkavCTWsnQFiItinYumvzox6aJQmz/perBwDH8RJ7VlhdDAw6En1
-         +ONUMDKZG+emyRETkBDV6mCUDLW0E3qMj15NU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=cAEo968/k6NeSiF9hu7UXKr6oaEt6BgLram+ZPGQGgG4RE9WGg7IHipvPC7PcHwMgH
-         bBB0gGuAfhcYSHEyKCPPsJDW7Crd4/GgbVTBclfTInVLFFUrAmFZ/DXSSejpxVQGglEh
-         PSmWCZgzpIYryzS3TkYxaUM34k/qW4P4/KrtQ=
-Received: by 10.90.69.14 with HTTP; Wed, 7 Apr 2010 13:18:33 -0700 (PDT)
-In-Reply-To: <7vwrwjav4h.fsf@alter.siamese.dyndns.org>
-Received: by 10.90.2.23 with SMTP id 23mr3233305agb.103.1270671533190; Wed, 07 
-	Apr 2010 13:18:53 -0700 (PDT)
+	id S1751539Ab0DGUp5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Apr 2010 16:45:57 -0400
+Received: from peff.net ([208.65.91.99]:33331 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750878Ab0DGUp4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Apr 2010 16:45:56 -0400
+Received: (qmail 10678 invoked by uid 107); 7 Apr 2010 20:45:55 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 07 Apr 2010 16:45:55 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Apr 2010 16:45:36 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144283>
 
-> Is the web interface the _only_ way to interact with IMAP drafts on Gmail?
-> If that is the case, your patch (or Aaron's earlier attempt) to make the
-> document not to talk about imap-send in the context of Gmail makes sense.
+Log shows notes by default if no --pretty format is given.
+However, depending on what's in your default notes ref, that
+may actually be quite distracting when reading a normal log.
+Let's let the user decide whether they want to see notes by
+default.
 
-No. An email client can sync with the drafts folder in GMail over
-IMAP. However, sending the final email has to be done over SMTP.
-The effect of "git imap-send" can be replicated by copy-pasting text
-into the email client's compose interface. So, using "git imap-send"
-seems like a bit of a roundabout way to me. There are some usecases
-though (like queuing up patches as drafts before sending): so I'll add
-a paragraph about this in my next revision.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+My git repository has your mailing list reference notes in
+refs/notes/commits. They're quite bulky, and being headers, they look
+kind of like a new commit stanza, which always confuses me when reading
+log output. I got tired of typing --no-notes.
 
--- Ram
+I guess an alternate solution would be for me to store them in some
+other ref, and then use --show-notes=email when I do want to see them
+(instead of just --show-notes, as I would do with this patch). But I
+still wonder if log.shownotes is a sensible addition, just for the sake
+of completeness.
+
+ builtin/log.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/log.c b/builtin/log.c
+index 046f3e4..3d93607 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -24,6 +24,7 @@
+ static const char *default_date_mode = NULL;
+ 
+ static int default_show_root = 1;
++static int default_show_notes = 1;
+ static int decoration_style;
+ static const char *fmt_patch_subject_prefix = "PATCH";
+ static const char *fmt_pretty;
+@@ -77,7 +78,7 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 	argc = setup_revisions(argc, argv, rev, opt);
+ 
+ 	if (!rev->show_notes_given && !rev->pretty_given)
+-		rev->show_notes = 1;
++		rev->show_notes = default_show_notes;
+ 	if (rev->show_notes)
+ 		init_display_notes(&rev->notes_opt);
+ 
+@@ -291,6 +292,10 @@ static int git_log_config(const char *var, const char *value, void *cb)
+ 		default_show_root = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "log.shownotes")) {
++		default_show_notes = git_config_bool(var, value);
++		return 0;
++	}
+ 	return git_diff_ui_config(var, value, cb);
+ }
+ 
+-- 
+1.7.1.rc0.220.g92be4.dirty
