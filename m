@@ -1,89 +1,200 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH] Documentation/SubmittingPatches: Clarify Gmail section
-Date: Thu, 8 Apr 2010 08:23:22 +1000
-Message-ID: <k2m2cfc40321004071523z8c036cccs12302a70f25bb413@mail.gmail.com>
-References: <1270668793-2187-1-git-send-email-artagnon@gmail.com>
-	 <1270668793-2187-2-git-send-email-artagnon@gmail.com>
-	 <7vwrwjav4h.fsf@alter.siamese.dyndns.org>
-	 <y2gf3271551004071318zb4ed7ef6o93a6c98c6009d8df@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Remove --allow-empty from the git-commit synopsis
+Date: Wed, 07 Apr 2010 15:25:36 -0700
+Message-ID: <7vbpduc333.fsf@alter.siamese.dyndns.org>
+References: <w2zfabb9a1e1004070829ob9da47e6oacf2703129be9107@mail.gmail.com>
+ <1270661327-28078-1-git-send-email-avarab@gmail.com>
+ <7vfx37cckf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	John Tapsell <johnflux@gmail.com>,
-	Aaron Crane <git@aaroncrane.co.uk>,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jacob Helwig <jacob.helwig@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 08 00:23:31 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 08 00:26:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nzdej-0002DX-24
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 00:23:29 +0200
+	id 1Nzdh9-0003JA-SY
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 00:26:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753669Ab0DGWXY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Apr 2010 18:23:24 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:33809 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752271Ab0DGWXX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 18:23:23 -0400
-Received: by pwj9 with SMTP id 9so1462081pwj.19
-        for <git@vger.kernel.org>; Wed, 07 Apr 2010 15:23:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type;
-        bh=uLQuMFi9k3okja8PAVzzWGFpTH5d1wTIBzm6B+cdO1c=;
-        b=PckR6k0UA8KUlv6FPBnTww0taw8yEywu7GlCZv46JDhTiu/Fqcc5qLtV8qAxnbFJvL
-         gjQx2O5tVnAOFMyg38I+D5o1YYBMRQqbwO8VZUT7FJXm4tUVJDEtbDWGFiG7N/x2qTQW
-         sJ1h39FL+nEXHe1oBoNFGLsC5B7HXGMTwk+ck=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=p/uneOYb/WHP14JG+0dLdmNweTFHWx3L9Rs8fNl+vG4b5cv+Ekrbp2b6nWiycyRDK4
-         FVDIdu3w3V2/bgteb5JewT0bh4GeedfSwdKFr91YuXjhSXFT5HbPBn6+tb0Ib22uGIod
-         /k2B8Yuf93/Cd17x7IrVFgD26EuCxYGhKbvSI=
-Received: by 10.114.112.15 with HTTP; Wed, 7 Apr 2010 15:23:22 -0700 (PDT)
-In-Reply-To: <y2gf3271551004071318zb4ed7ef6o93a6c98c6009d8df@mail.gmail.com>
-Received: by 10.114.188.31 with SMTP id l31mr1784532waf.32.1270679003010; Wed, 
-	07 Apr 2010 15:23:23 -0700 (PDT)
+	id S1755212Ab0DGWZz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Apr 2010 18:25:55 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63167 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754186Ab0DGWZy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Apr 2010 18:25:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 10BD8A8F32;
+	Wed,  7 Apr 2010 18:25:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=6vKAW8Z+ROPF
+	KnMX7AwGNjLH4Ts=; b=a9Ug0tICcV3pqYGjqNlRkzF0wSYoFsWCmwemPHSclOFU
+	Wun837JxLAYxvQhGCeGdFIIbRUi96r4bx63vVLKDsc99h9o6hGcOYgBSUC5n+fZu
+	4aBaUAp8dcqUSrai/ean2mfCi5/gORa8uC61Dv2lMEYZY3O/j2g5pnNDP6moBGU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Sm5kgp
+	/uAiOv3pkSMgOEY7DHyK27/XIY6KuL1/LNhgP6/FEnl/O1xD0quvBg8/GyFDLFR2
+	oBCdE6UA1McE5aYKnAlw8pAg5v4EzRGfm2EPEi+vSby6xzhwXZQCpdPdD0AlmQw0
+	iIxJjT9Dop6ySyqhYDAonvWft3+g5uT9L+Rnc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C266A8F2B;
+	Wed,  7 Apr 2010 18:25:49 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8158DA8F1E; Wed,  7 Apr
+ 2010 18:25:38 -0400 (EDT)
+In-Reply-To: <7vfx37cckf.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed\, 07 Apr 2010 12\:00\:48 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 846FE456-4294-11DF-9A28-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144293>
 
-On Thu, Apr 8, 2010 at 6:18 AM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
->> Is the web interface the _only_ way to interact with IMAP drafts on Gmail?
->> If that is the case, your patch (or Aaron's earlier attempt) to make the
->> document not to talk about imap-send in the context of Gmail makes sense.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> I do not think Jeff was against having a complete listing in the
+> documentation.  Wasn't his suggestion about "git commit -h" output?
+
+I'll amend the earlier "allow-empty-message" one from you to cover this
+topic.
+
+-- >8 --
+=46rom: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Date: Tue, 6 Apr 2010 08:40:35 +0000
+Subject: [PATCH] Add option to git-commit to allow empty log messages
+
+Change git-commit(1) to accept the --allow-empty-message option
+to allow a commit with an empty message.  This is analogous to the
+existing --allow-empty option which allows a commit that records
+no changes.  As these are mainly for interoperating with foreign SCM
+systems, and are not meant for normal use, ensure that "git commit -h"
+does not talk about them.
+
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
-> No. An email client can sync with the drafts folder in GMail over
-> IMAP. However, sending the final email has to be done over SMTP.
-> The effect of "git imap-send" can be replicated by copy-pasting text
-> into the email client's compose interface. So, using "git imap-send"
-> seems like a bit of a roundabout way to me. There are some usecases
-> though (like queuing up patches as drafts before sending): so I'll add
-> a paragraph about this in my next revision.
->
-> -- Ram
-> --
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-commit.txt |    8 +++++++-
+ builtin/commit.c             |   12 +++++++++---
+ t/t7500-commit.sh            |   22 ++++++++++++++++++++++
+ 3 files changed, 38 insertions(+), 4 deletions(-)
 
-git imap-send has far less manual steps than cut and pasting into an
-e-mail client, so it is certainly preferable to cut-and-paste which
-seems particularly error prone.
-
-Perhaps the words could be changed to something like:
-
-If you do want to use the imap-send option with Gmail you MUST use an
-IMAP client that does not line wrap to do any final polishing of the
-patch e-mails prior to submitting them to the list. If you use the
-gmail web interface to edit the draft  messages in any way, line
-wrapping WILL occur.
-
-jon.
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.tx=
+t
+index 64fb458..32c482f 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ [verse]
+ 'git commit' [-a | --interactive] [-s] [-v] [-u<mode>] [--amend] [--dr=
+y-run]
+ 	   [(-c | -C) <commit>] [-F <file> | -m <msg>] [--reset-author]
+-	   [--allow-empty] [--no-verify] [-e] [--author=3D<author>]
++	   [--allow-empty] [--allow-empty-message] [--no-verify] [-e] [--auth=
+or=3D<author>]
+ 	   [--date=3D<date>] [--cleanup=3D<mode>] [--status | --no-status] [-=
+-]
+ 	   [[-i | -o ]<file>...]
+=20
+@@ -131,6 +131,12 @@ OPTIONS
+ 	from making such a commit.  This option bypasses the safety, and
+ 	is primarily for use by foreign scm interface scripts.
+=20
++--allow-empty-message::
++       Like --allow-empty this command is primarily for use by foreign
++       scm interface scripts. It allows you to create a commit with an
++       empty commit message without using plumbing commands like
++       linkgit:git-commit-tree[1].
++
+ --cleanup=3D<mode>::
+ 	This option sets how the commit message is cleaned up.
+ 	The  '<mode>' can be one of 'verbatim', 'whitespace', 'strip',
+diff --git a/builtin/commit.c b/builtin/commit.c
+index c5ab683..821a49d 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -66,7 +66,7 @@ static char *edit_message, *use_message;
+ static char *author_name, *author_email, *author_date;
+ static int all, edit_flag, also, interactive, only, amend, signoff;
+ static int quiet, verbose, no_verify, allow_empty, dry_run, renew_auth=
+orship;
+-static int no_post_rewrite;
++static int no_post_rewrite, allow_empty_message;
+ static char *untracked_files_arg, *force_date;
+ /*
+  * The default commit message cleanup mode will remove the lines
+@@ -140,9 +140,15 @@ static struct option builtin_commit_options[] =3D =
+{
+ 	OPT_BOOLEAN(0, "amend", &amend, "amend previous commit"),
+ 	OPT_BOOLEAN(0, "no-post-rewrite", &no_post_rewrite, "bypass post-rewr=
+ite hook"),
+ 	{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, "mode"=
+, "show untracked files, optional modes: all, normal, no. (Default: all=
+)", PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
+-	OPT_BOOLEAN(0, "allow-empty", &allow_empty, "ok to record an empty ch=
+ange"),
+ 	/* end commit contents options */
+=20
++	{ OPTION_BOOLEAN, 0, "allow-empty", &allow_empty, NULL,
++	  "ok to record an empty change",
++	  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN },
++	{ OPTION_BOOLEAN, 0, "allow-empty-message", &allow_empty_message, NUL=
+L,
++	  "ok to record a change with an empty message",
++	  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN },
++
+ 	OPT_END()
+ };
+=20
+@@ -1293,7 +1299,7 @@ int cmd_commit(int argc, const char **argv, const=
+ char *prefix)
+=20
+ 	if (cleanup_mode !=3D CLEANUP_NONE)
+ 		stripspace(&sb, cleanup_mode =3D=3D CLEANUP_ALL);
+-	if (message_is_empty(&sb)) {
++	if (message_is_empty(&sb) && !allow_empty_message) {
+ 		rollback_index_files();
+ 		fprintf(stderr, "Aborting commit due to empty commit message.\n");
+ 		exit(1);
+diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
+index 9f5c3ed..aa9c577 100755
+--- a/t/t7500-commit.sh
++++ b/t/t7500-commit.sh
+@@ -193,4 +193,26 @@ test_expect_success 'commit -F overrides -t' '
+ 	commit_msg_is "-F log"
+ '
+=20
++test_expect_success 'Commit without message is allowed with --allow-em=
+pty-message' '
++	echo "more content" >>foo &&
++	git add foo &&
++	>empty &&
++	git commit --allow-empty-message <empty &&
++	commit_msg_is ""
++'
++
++test_expect_success 'Commit without message is no-no without --allow-e=
+mpty-message' '
++	echo "more content" >>foo &&
++	git add foo &&
++	>empty &&
++	test_must_fail git commit <empty
++'
++
++test_expect_success 'Commit a message with --allow-empty-message' '
++	echo "even more content" >>foo &&
++	git add foo &&
++	git commit --allow-empty-message -m"hello there" &&
++	commit_msg_is "hello there"
++'
++
+ test_done
+--=20
+1.7.1.rc0.212.gbd88f
