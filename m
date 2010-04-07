@@ -1,76 +1,103 @@
-From: John Dlugosz <JDlugosz@TradeStation.com>
-Subject: rebasing and submodules
-Date: Wed, 7 Apr 2010 13:21:07 -0400
-Message-ID: <89030B4A18ECCD45978A3A6B639D1F24032A074E4C@FL01EXMB01.trad.tradestation.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v9] Documentation/remote-helpers: Add invocation section
+Date: Wed, 07 Apr 2010 10:23:38 -0700
+Message-ID: <7vzl1fch2d.fsf@alter.siamese.dyndns.org>
+References: <g2vf3271551004062257ycbda64d3z3d3004d802a03fc3@mail.gmail.com>
+ <7vsk77e20r.fsf@alter.siamese.dyndns.org>
+ <n2nf3271551004070950ucf314b40g56087d49dfbd29f1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 07 19:21:26 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: John Tapsell <johnflux@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Gabriel Filion <lelutin@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 07 19:24:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzYwP-0007eK-Fu
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 19:21:25 +0200
+	id 1NzYz3-00017U-DO
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 19:24:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758103Ab0DGRVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Apr 2010 13:21:10 -0400
-Received: from mail2.tradestation.com ([63.99.207.80]:38073 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756986Ab0DGRVJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Apr 2010 13:21:09 -0400
-X-ASG-Debug-ID: 1270660868-4934f87d0001-QuoKaX
-Received: from FL01EXCAHT02.trad.tradestation.com (fl01excaht02.trad.tradestation.com [10.4.0.167]) by mail2.tradestation.com with ESMTP id OTIYzPnvNIR3m8uK (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO) for <git@vger.kernel.org>; Wed, 07 Apr 2010 1
-X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
-X-ASG-Whitelist: Client
-Received: from FL01EXMB01.trad.tradestation.com ([::1]) by
- FL01EXCAHT02.trad.tradestation.com ([::1]) with mapi; Wed, 7 Apr 2010
- 13:21:07 -0400
-X-Barracuda-BBL-IP: ::1
-X-Barracuda-RBL-IP: ::1
-X-ASG-Orig-Subj: rebasing and submodules
-Thread-Topic: rebasing and submodules
-Thread-Index: AcrWdrVrVXtN/kWfTjqnRFhyCioDQw==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-Barracuda-Connect: fl01excaht02.trad.tradestation.com[10.4.0.167]
-X-Barracuda-Start-Time: 1270660868
-X-Barracuda-Encrypted: AES128-SHA
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at tradestation.com
+	id S1758111Ab0DGRYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Apr 2010 13:24:04 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56250 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758063Ab0DGRYB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Apr 2010 13:24:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D31E9A8FF3;
+	Wed,  7 Apr 2010 13:23:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; s=sasl; bh=gnthrt3apZAyhfhY5OSmJP0kddM=; b=C200e7
+	0m/l7eR5FJygtvwOqtJcHDNjcbzWzJup6BexovCy3g2Oo72k3ZZfJXvcgeWEQkh5
+	LVgxNdkQ8bwMQmNwkJaWFnzdGz6B0Cs4yzwDjO4ARQFyjgIkTeDRofe58DxGoA8a
+	wuQkXCEqQax2DJksE+tqpkUVOFPQ2XKmUWoko=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TrECc58ZeokOcLWV/iw7db/v4olQEHKD
+	KvCOhRhdQL+kd5NHqvf9ohEtBfcybSMAykpGMBUKSEOXqAvs3SuCG86jNNRid7Zm
+	8LfPG6i6pLLkvqocajdPggAXS6lRYfHv5WNFpg6C8LPqfzaiypMyWlu/JlZ/Szsx
+	BIrN91vXnLY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 43BB9A8FEE;
+	Wed,  7 Apr 2010 13:23:50 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E734FA8FE9; Wed,  7 Apr
+ 2010 13:23:39 -0400 (EDT)
+In-Reply-To: <n2nf3271551004070950ucf314b40g56087d49dfbd29f1@mail.gmail.com>
+ (Ramkumar Ramachandra's message of "Wed\, 7 Apr 2010 22\:20\:52 +0530")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 54E2428A-426A-11DF-A89F-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144253>
 
-The workflow I've introduced into the group is to use "topic" branches that stay floating on top of the "dev" tip by rebasing each day.  A completed "topic", when it's ready for everyone to use, gets merged back onto "dev" (either merge to preserve the detailed history, or squished to be a single change).
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
+> Can someone tell me what I'm doing wrong? Earlier, Junio also had a
+> problem with one of my patches being corrupt. I used git-imap-send and
+> the GMail web interface to fill out the "to", "cc" and some comments.
 
+In the above procedure, up to imap-send, everything would be fine, but I
+heard GMail web interface still wraps lines before sending the result out.
 
-I'm quite comfortable with that, and it works well.
+Gmail section in Documentation/SubmittingPatches says:
 
+  GMail does not appear to have any way to turn off line wrapping in the web
+  interface, so this will mangle any emails that you send.  You can however
+  use any IMAP email client to connect to the google imap server, and forward
+  the emails through that.  Just make sure to disable line wrapping in that
+  email client.  Alternatively, use "git send-email" instead.
 
+This is a tangent, but I think this can still be further improved.  What
+it says is not incorrect per-se, but the "can however" gives a false hope
+to people who have been burned by the web interface.  The fact it lists
+are:
 
-But submodules seem to throw a spanner into the works.  Perhaps it's a problem with the tools.  But if a submodule has been changed, the rebasing does not go smoothly.  At the very least, it stops to report a conflict.
+ - GMail web interface will wrap lines and corrupt patches, no matter what
+   you do;
 
+ - With imap-send, you can stuff messages to your outbox at GMail, and
+   using IMAP client that does _not_ corrupt messages, you can send things
+   out.
 
+Combined together, these mean that you lose even if you preprare your
+outbox with imap-send if you send out the end result from their web
+interface.
 
-What's going on here?  Is it something with the tools that doesn't like submodules that well?  What should I do when this happens?  What should I be doing as a general technique to prevent problems?  Is there already a treatment of this somewhere on the web?
+At the minimum, we could add a parenthesized comment like this.
 
-
-
-Thanks,
-
---John
-
-
-
-
-TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
-  If you received this in error, please contact the sender and delete the material from any computer.
+  the emails through that.  Just make sure to disable line wrapping in
+  that email client (again, there is no way to tell GMail web interface to
+  do so).
