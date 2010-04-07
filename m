@@ -1,55 +1,55 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v2 1/2] http: make end_url_with_slash() public
-Date: Wed,  7 Apr 2010 23:58:37 +0800
-Message-ID: <1270655917-5188-1-git-send-email-rctay89@gmail.com>
+Subject: [PATCH v2 resend 1/2] http: make end_url_with_slash() public
+Date: Thu,  8 Apr 2010 00:01:06 +0800
+Message-ID: <1270656067-688-1-git-send-email-rctay89@gmail.com>
 References: <p2ube6fef0d1004070857j874c2b60z6a4794d472b0ee8a@mail.gmail.com>
 Cc: "Shawn O. Pearce" <spearce@spearce.org>,
 	"Junio C Hamano" <gitster@pobox.com>
 To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 07 17:59:00 2010
+X-From: git-owner@vger.kernel.org Wed Apr 07 18:01:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzXed-0002CL-Jd
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 17:58:59 +0200
+	id 1NzXh6-0003dk-PZ
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 18:01:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932813Ab0DGP6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Apr 2010 11:58:54 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:52487 "EHLO
+	id S1758034Ab0DGQBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Apr 2010 12:01:25 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:43812 "EHLO
 	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932581Ab0DGP6x (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 11:58:53 -0400
-Received: by bwz1 with SMTP id 1so968846bwz.21
-        for <git@vger.kernel.org>; Wed, 07 Apr 2010 08:58:52 -0700 (PDT)
+	with ESMTP id S1753431Ab0DGQBZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Apr 2010 12:01:25 -0400
+Received: by mail-bw0-f209.google.com with SMTP id 1so971657bwz.21
+        for <git@vger.kernel.org>; Wed, 07 Apr 2010 09:01:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=v0xIqwEBaQ9YtPi9lSI5/kwuPyL+uJL+aMf13P5qmVc=;
-        b=vnrM7neE6UUR1MUrWuNWBAUttArH4de3bzOcTFnVzfG86yutO9HeqwpXMbsqxBylnj
-         qUWVU42ATGhBFFv8UhHfxgsGq0dcdjbtzrLwMssfGCUQohFt3Cggy/mKp4Z6P8yXaa+J
-         blNLUPyfr0qN2hYcz58OQPrEEeAmDtdfs58gs=
+        bh=d7zgcZl6IbcD4RDGP6rWPNGdkNHl4za0eP3yRXvpP7Y=;
+        b=TG7+DQml2Q4+HSm0tm77j6h5zlBGy0yOs1RBJtWpz3FjZk9rYzr/5dLIDB20abcKFb
+         P9qRl9YUUyNSllljOs96GgzNJkDahJGhkcq9Hru4gTduAy9uy4EIaPGrCZffNELkeGQp
+         SZGG+uJWnS3PEayL2w7wV8BPE6qdgu/wU4LzY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=hjw+WRLs1wxR7cMe14spc6az53BBJotORJmY5tmBQWMIdU1BkHeNftGjpZU0kbI8c4
-         NrqrnbnNeWQTafPnkAKCEVJik//sWuZjNLjf4l5tAXBKP4F6wT6jhkha1Sy1vzP7zAcw
-         feLNlyce+voVnRZ58VoueqQ4xKWiXLjqs5+do=
-Received: by 10.204.32.77 with SMTP id b13mr9545318bkd.113.1270655932035;
-        Wed, 07 Apr 2010 08:58:52 -0700 (PDT)
+        b=ffw/qPMfrS0pKAQYsDibyv9oiM9SUkG1zgX4KnA7EX65uvUv2hwQ9BoNgzqvdjuHrM
+         YyO1IzKK245Iyh42H7ARakXN5k6V+8b2jggIXpP6O5nEtiZLps8AcDhrp6vgofDgC2Yn
+         454yEPtc7b8UIyzOeia9+Yyqd9dUtyfP3UYow=
+Received: by 10.204.6.212 with SMTP id a20mr1625422bka.22.1270656083181;
+        Wed, 07 Apr 2010 09:01:23 -0700 (PDT)
 Received: from localhost.localdomain (cm46.zeta153.maxonline.com.sg [116.87.153.46])
-        by mx.google.com with ESMTPS id 14sm7005641bwz.2.2010.04.07.08.58.48
+        by mx.google.com with ESMTPS id 14sm7039360bwz.6.2010.04.07.09.01.19
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 07 Apr 2010 08:58:51 -0700 (PDT)
+        Wed, 07 Apr 2010 09:01:22 -0700 (PDT)
 X-Mailer: git-send-email 1.7.0.20.gcb44ed
 In-Reply-To: <p2ube6fef0d1004070857j874c2b60z6a4794d472b0ee8a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144242>
 
 ---
  http.c |    2 +-
@@ -81,76 +81,5 @@ index 2dd03e8..37a6a6a 100644
  
  /* Options for http_request_*() */
  #define HTTP_NO_CACHE		1
--- 
-1.6.6.1368.g82eeb
-
-
->From 38c2aba1e77591d9cd57790d9a993f59659496ae Mon Sep 17 00:00:00 2001
-From: Tay Ray Chuan <rctay89@gmail.com>
-Date: Wed, 7 Apr 2010 23:44:01 +0800
-Subject: [PATCH v2 2/2] remote-curl: ensure that URLs have a trailing slash
-
----
- remote-curl.c |   16 +++++++++++-----
- 1 files changed, 11 insertions(+), 5 deletions(-)
-
-diff --git a/remote-curl.c b/remote-curl.c
-index 0782756..ae14137 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -9,6 +9,10 @@
- #include "sideband.h"
- 
- static struct remote *remote;
-+
-+/* At assignment-time, we append a trailing slash; always use this as
-+ * if it ends with a slash.
-+ */
- static const char *url;
- 
- struct options {
-@@ -101,7 +105,7 @@ static struct discovery* discover_refs(const char *service)
- 		return last;
- 	free_discovery(last);
- 
--	strbuf_addf(&buffer, "%s/info/refs", url);
-+	strbuf_addf(&buffer, "%sinfo/refs", url);
- 	if (!prefixcmp(url, "http://") || !prefixcmp(url, "https://")) {
- 		is_http = 1;
- 		if (!strchr(url, '?'))
-@@ -120,7 +124,7 @@ static struct discovery* discover_refs(const char *service)
- 		strbuf_reset(&buffer);
- 
- 		proto_git_candidate = 0;
--		strbuf_addf(&buffer, "%s/info/refs", url);
-+		strbuf_addf(&buffer, "%sinfo/refs", url);
- 		refs_url = strbuf_detach(&buffer, NULL);
- 
- 		http_ret = http_get_strbuf(refs_url, &buffer, HTTP_NO_CACHE);
-@@ -511,7 +515,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
- 	rpc->out = client.out;
- 	strbuf_init(&rpc->result, 0);
- 
--	strbuf_addf(&buf, "%s/%s", url, svc);
-+	strbuf_addf(&buf, "%s%s", url, svc);
- 	rpc->service_url = strbuf_detach(&buf, NULL);
- 
- 	strbuf_addf(&buf, "Content-Type: application/x-%s-request", svc);
-@@ -800,11 +804,13 @@ int main(int argc, const char **argv)
- 	remote = remote_get(argv[1]);
- 
- 	if (argc > 2) {
--		url = argv[2];
-+		end_url_with_slash(&buf, argv[2]);
- 	} else {
--		url = remote->url[0];
-+		end_url_with_slash(&buf, remote->url[0]);
- 	}
- 
-+	url = strbuf_detach(&buf, NULL);
-+
- 	http_init(remote);
- 
- 	do {
 -- 
 1.6.6.1368.g82eeb
