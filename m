@@ -1,94 +1,96 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git clone: very long "resolving deltas" phase
-Date: Wed, 07 Apr 2010 02:37:20 -0700 (PDT)
-Message-ID: <m31veriozm.fsf@localhost.localdomain>
-References: <loom.20100406T161552-321@post.gmane.org>
-	<vpqljd062xb.fsf@bauges.imag.fr> <4BBB5346.6070607@gmail.com>
-	<4BBB53F5.9010106@op5.se>
-	<q2mec874dac1004060850r5eaa41fak2ba9889d07794651@mail.gmail.com>
-	<v2qecffb261004060856qcb769a06vf40ad2a75a3aa4fd@mail.gmail.com>
-	<alpine.LFD.2.00.1004061705390.7232@xanadu.home>
-	<4BBC1E15.9040403@gmail.com>
-	<20100407080049.GA14041@LK-Perkele-V2.elisa-laajakaista.fi>
-	<4BBC3EEC.6010702@gmail.com>
+From: Paul Bolle <pebolle@tiscali.nl>
+Subject: Re: git-svn clone fails
+Date: Wed, 07 Apr 2010 11:31:31 +0200
+Message-ID: <1270632691.5703.21.camel@localhost.localdomain>
+References: <4BBAFEC5.6030103@tut.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>,
-	Andreas Ericsson <ae@op5.se>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Vitaly <vitaly.berov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 07 11:37:33 2010
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Heikki Orsila <heikki.orsila@tut.fi>,
+	Santtu Pajukanta <santtu.pajukanta@tut.fi>
+To: Janne Kulmala <janne.t.kulmala@tut.fi>
+X-From: git-owner@vger.kernel.org Wed Apr 07 11:45:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzRhT-0003X3-VQ
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 11:37:32 +0200
+	id 1NzRpA-0006Lk-Mj
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 11:45:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932489Ab0DGJh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Apr 2010 05:37:27 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:43780 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932269Ab0DGJhZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 05:37:25 -0400
-Received: by bwz1 with SMTP id 1so628729bwz.21
-        for <git@vger.kernel.org>; Wed, 07 Apr 2010 02:37:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=tBU+1ply5C4NrbogMukvJIz7Zgwj37kIwfnXpLcjWcw=;
-        b=d6zqRjpAGVfHKNlO/tdw1l7kuCnMiuYwA86QpEBfdud+oDIgid/AHogJcCDNHPV6y2
-         GbTS+Y8giKLBOdwOYu2auXxm3NQ06R+Dm6pEHn4gNDYs15ukSiKGPjx2sG5Jz5X4qdNy
-         x4eA+Y0ZvuWILTdPvZqepP0fcAY0Txmgx87FQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=OTERibpJ07MuEky/aGTD6Qicg8NammScVWh5CAttopVPfddPvFv1jLHmYUxQ4qzgZp
-         dKXG3lSbNuwiZAmMwtSODXhGD5gm579b0N37/XEJ/BVphyPg/FaAI4W9OFB7triZoOZZ
-         EHWy7bXgerV50aj62OTDsPziNgJXY9N80WTew=
-Received: by 10.204.137.81 with SMTP id v17mr1198094bkt.93.1270633042900;
-        Wed, 07 Apr 2010 02:37:22 -0700 (PDT)
-Received: from localhost.localdomain (abvp11.neoplus.adsl.tpnet.pl [83.8.213.11])
-        by mx.google.com with ESMTPS id 15sm7158433bwz.8.2010.04.07.02.37.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 07 Apr 2010 02:37:20 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o379aP6F005782;
-	Wed, 7 Apr 2010 11:36:41 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o379Zv1L005777;
-	Wed, 7 Apr 2010 11:35:57 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4BBC3EEC.6010702@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1755806Ab0DGJpY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Apr 2010 05:45:24 -0400
+Received: from smtp-out1.tiscali.nl ([195.241.79.176]:48332 "EHLO
+	smtp-out1.tiscali.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753362Ab0DGJpW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Apr 2010 05:45:22 -0400
+X-Greylist: delayed 825 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Apr 2010 05:45:22 EDT
+Received: from [212.123.169.34] (helo=[192.168.1.100])
+	by smtp-out1.tiscali.nl with esmtp (Exim)
+	(envelope-from <pebolle@tiscali.nl>)
+	id 1NzRbk-0003Ua-Eq; Wed, 07 Apr 2010 11:31:36 +0200
+In-Reply-To: <4BBAFEC5.6030103@tut.fi>
+X-Mailer: Evolution 2.29.91 (2.29.91-1.fc13) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144210>
 
-Please do not toppost.
-
-Vitaly <vitaly.berov@gmail.com> writes:
-
-> Too bad..
-> Yes, we really have a very large repo with binary files.
+On Tue, 2010-04-06 at 12:28 +0300, Janne Kulmala wrote:
+> I'm trying to clone OpenTTD subversion repository using git-svn from 
+> Debian Lenny testing. Git version is 1.7.0. The clone operationg always 
+> fails at the same revision with same error message.
 > 
-> So, as far as I understand, the fastest way is to use rsync or smth
-> like this instead of "git clone".
+> I am using the following command:
 > 
-> P.S. Btw, how can I ask for a feature of incorporating hashes into
-> transport stream in trusted environments?
+> 	git svn clone svn://svn.openttd.org/trunk openttd
+> 
+> Which gives this error message:
+> 
+> r1170 = 12fbf791d6e353346315756bf46cbbf75a325833 (refs/remotes/git-svn)
+> Use of uninitialized value in concatenation (.) or string at 
+> /usr/lib/perl5/SVN/Core.pm line 584.
 
-If you have very large binary files, perhaps git-bigfiles fork would
-help you: http://caca.zoy.org/wiki/git-bigfiles
+I don't do perl but this looks like a bug in subversion's perl bindings.
+This seems to fix it (where fix basically means something like "make
+sure this warning/error isn't printed again):
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+--- /usr/lib/perl5/SVN/Core.pm.oud	2008-08-13 18:32:32.000000000 +0200
++++ /usr/lib/perl5/SVN/Core.pm	2010-04-07 10:30:19.000000000 +0200
+@@ -581,7 +581,9 @@
+ 
+ 		my $error_message = $svn_error->strerror();
+ 		while ($svn_error) {
+-		    $error_message .= ': ' . $svn_error->message();
++                    if ($svn_error->message()) {
++		        $error_message .= ': ' . $svn_error->message();
++                    }
+ 				$svn_error = $svn_error->child();
+ 		}
+ 		return $error_message;
+
+> Network connection closed unexpectedly:  at /usr/lib/git-core/git-svn 
+> line 5047
+>
+> Is this a Debian-specific problem, or a bug in git-svn?
+
+No, the exact same problem can be triggered in fedora rawhide too (with
+git-svn-1.7.0.1-1.fc14.noarch). It seems openttd's svn server terminates
+the connection after fetching (roughly) 1000 commits. (I'm not sure what
+happens. I don't know how to debug perl.)
+
+A workaround might be to enter the openttd directory you just created
+and do "git svn fetch" a number of times. (I stopped after it terminated
+for the third time, around commit 2600. There are over 19.500 commits in
+that trunk, so that might take a while. Whether you'll end up with a
+working and correct clone I can't say.)
+
+Could it be openttd's svn server doesn't really appreciate the way
+git-svn uses it (a straightforward svn checkout finished much quicker
+and in one session)?
+
+Regards,
+
+
+Paul Bolle
