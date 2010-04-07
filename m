@@ -1,103 +1,118 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH v2] Remove --allow-empty from the git-commit synopsis
-Date: Wed,  7 Apr 2010 17:28:47 +0000
-Message-ID: <1270661327-28078-1-git-send-email-avarab@gmail.com>
-References: <w2zfabb9a1e1004070829ob9da47e6oacf2703129be9107@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] Documentation/SubmittingPatches: Clarify Gmail section
+Date: Wed, 7 Apr 2010 23:22:28 +0530
+Message-ID: <s2kf3271551004071052o58656534z80de5068b207bdb2@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 07 19:29:32 2010
+Cc: John Tapsell <johnflux@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	A Large Angry SCM <gitzilla@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 07 19:52:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzZ3v-0005Hv-2d
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 19:29:11 +0200
+	id 1NzZQt-0002sk-UA
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 19:52:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754339Ab0DGR3E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Apr 2010 13:29:04 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:19117 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758217Ab0DGR3C (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 13:29:02 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so558202fga.1
-        for <git@vger.kernel.org>; Wed, 07 Apr 2010 10:29:01 -0700 (PDT)
+	id S1754900Ab0DGRwu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Apr 2010 13:52:50 -0400
+Received: from mail-yw0-f172.google.com ([209.85.211.172]:57667 "EHLO
+	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756503Ab0DGRwt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Apr 2010 13:52:49 -0400
+Received: by ywh2 with SMTP id 2so685300ywh.33
+        for <git@vger.kernel.org>; Wed, 07 Apr 2010 10:52:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=XCdPy12jxdfCTvzWPIymaiWCG6VHzsw/mPLOc/oe9tM=;
-        b=RGCtZTM/oxKrRdjx49ZpwGiosD11sEdwr2sOdbipsBrp11pVxWFIkX6dEV50XkTbJ5
-         Z/h7w8EQBp6dwRvm7dyIjgYKgurxvATSE3ptYAh2rylvPb8bTM/Ko65BiNToqvkrssQS
-         3wMjYvsB4BXpDyRO5Eb0m4gP8iRZ9KGYMpewI=
+        h=domainkey-signature:mime-version:received:from:date:received
+         :message-id:subject:to:cc:content-type;
+        bh=cEYzg++LfLyf7l+Ivgw9e9mXr1+GJ0yAoKz6UE0ZNZo=;
+        b=ga6erl1FR0du9k6s89V45ll5+kTd3X9GPT/uI2rr9jDTZOTYJng8f73yZB16q/NiIZ
+         XkASzJkO556yDYL47p1QDhIvQE21hbwnWyaqxRgu29E7+ZZ7th/iMtP7zIubzEdx+h/4
+         hOyEwwxzyXZMA4eZ7Tf/2VLTcipUbm6HW4Y54=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=DOhPWbsob/hHMSInqhDIBltUUJV4L4ms3S8Y1GoVRUDBC3tSRjCm+PGg4PUJz+ABSy
-         M21P5YnUDzyxAgoi069+3OqjHbxwukN5NxJEOelfgKc9xPcjvcBa7XP8tD9BlbdiRdyh
-         XmDZu4ctDbENkfV7TDPZOgEAs9bbnmR7iHcLg=
-Received: by 10.87.17.34 with SMTP id u34mr2217323fgi.10.1270661341021;
-        Wed, 07 Apr 2010 10:29:01 -0700 (PDT)
-Received: from localhost.localdomain ([188.104.23.89])
-        by mx.google.com with ESMTPS id d4sm19259365fga.25.2010.04.07.10.28.59
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 07 Apr 2010 10:29:00 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.4.298.gc81d
-In-Reply-To: <w2zfabb9a1e1004070829ob9da47e6oacf2703129be9107@mail.gmail.com>
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=e0oAoExOUiSlgxWJKxOwLI4x72JC36SbfbzUYFrOIwfKy/VyDkvtmPz1Oy4jqVaxKj
+         DLpsOxiFUpOGZAwi+guF6OGBT2DGDZFM2LIiCCTFnlWBm/QAX/Veyzs5Ho9CxnnTlh0a
+         l6H+8ebGbmmUvC64z01znEl7VW4zMu7UJl4OI=
+Received: by 10.90.69.14 with HTTP; Wed, 7 Apr 2010 10:52:28 -0700 (PDT)
+Received: by 10.91.95.15 with SMTP id x15mr3040804agl.104.1270662768144; Wed, 
+	07 Apr 2010 10:52:48 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144255>
 
-The --allow-empty option is too rarley used to warrant being displayed
-in the SYNOPSIS. It should only be mentioned in the main body of the
-documentation like --porcelain.
+Clarify the Gmail section: the user should not touch the message body
+after using "git imap-send", otherwise the patch will get mangled.
 
-The issue was raised in the thread discussing the new
---allow-empty-message option by Jeff King <peff@peff.net>:
-
-    http://marc.info/?l=3Dgit&m=3D127039258902941
-    http://marc.info/?l=3Dgit&m=3D127054334121604
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
-I'd forgotten how the Git project likes rebasing :)
+ Documentation/SubmittingPatches |   36 ++++++++++++++++++------------------
+ 1 files changed, 18 insertions(+), 18 deletions(-)
 
-Here's a better patch that just cites the two relevant mailing list
-posts instead of the commit sha1.
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index c686f86..ff0e1b6 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -517,15 +517,20 @@ message, complete the addressing and subject
+fields, and press send.
+ Gmail
+ -----
 
- Documentation/git-commit.txt |    5 ++---
- 1 files changed, 2 insertions(+), 3 deletions(-)
+-GMail does not appear to have any way to turn off line wrapping in the web
+-interface, so this will mangle any emails that you send.  You can however
+-use any IMAP email client to connect to the google imap server, and forward
+-the emails through that.  Just make sure to disable line wrapping in that
+-email client.  Alternatively, use "git send-email" instead.
++GMail does not have any way to turn off line wrapping in the web
++interface, so this will mangle any emails that you send.  You have a
++couple of options here:
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.tx=
-t
-index 64fb458..ed2cd95 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -10,9 +10,8 @@ SYNOPSIS
- [verse]
- 'git commit' [-a | --interactive] [-s] [-v] [-u<mode>] [--amend] [--dr=
-y-run]
- 	   [(-c | -C) <commit>] [-F <file> | -m <msg>] [--reset-author]
--	   [--allow-empty] [--no-verify] [-e] [--author=3D<author>]
--	   [--date=3D<date>] [--cleanup=3D<mode>] [--status | --no-status] [-=
--]
--	   [[-i | -o ]<file>...]
-+	   [--no-verify] [-e] [--author=3D<author>] [--date=3D<date>]
-+	   [--cleanup=3D<mode>] [--status | --no-status] [--] [[-i | -o ]<fil=
-e>...]
-=20
- DESCRIPTION
- -----------
---=20
-1.7.0.4.298.gc81d
+-Submitting properly formatted patches via Gmail is simple now that
+-IMAP support is available. First, edit your ~/.gitconfig to specify your
+-account settings:
++1. Use an email client that doesn't automatically wrap lines to send
++emails through the Google SMTP server, or use "git send-email" to
++achieve the same effect.
++
++2. Use "git imap-send" to push an email to the GMail Drafts folder via
++IMAP. Then use the GMail web interface to fill out the To: and CC:
++fields, taking care not to touch the message body, and send away!
++
++To get it working, edit your ~/.gitconfig to specify your account
++settings:
+
+ [imap]
+ 	folder = "[Gmail]/Drafts"
+@@ -536,16 +541,11 @@ account settings:
+ 	sslverify = false
+
+ You might need to instead use: folder = "[Google Mail]/Drafts" if you
+get an error
+-that the "Folder doesn't exist".
+-
+-Next, ensure that your Gmail settings are correct. In "Settings" the
+-"Use Unicode (UTF-8) encoding for outgoing messages" should be checked.
++that the "Folder doesn't exist". Also ensure that under the GMail
++"Settings", the "Use Unicode (UTF-8) encoding for outgoing messages"
++is checked.
+
+-Once your commits are ready to send to the mailing list, run the following
+-command to send the patch emails to your Gmail Drafts folder.
++Once your commits are ready to send to the mailing list, run the
++following command.
+
+ 	$ git format-patch -M --stdout origin/master | git imap-send
+-
+-Go to your Gmail account, open the Drafts folder, find the patch email, fill
+-in the To: and CC: fields and send away!
+-
+-- 
+1.7.0.3
