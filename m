@@ -1,118 +1,120 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v2 resend 2/2] remote-curl: ensure that URLs have a trailing slash
-Date: Thu,  8 Apr 2010 00:01:07 +0800
-Message-ID: <1270656067-688-2-git-send-email-rctay89@gmail.com>
-References: <p2ube6fef0d1004070857j874c2b60z6a4794d472b0ee8a@mail.gmail.com>
- <1270656067-688-1-git-send-email-rctay89@gmail.com>
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 07 18:01:35 2010
+From: Fredrik Kuivinen <frekui@gmail.com>
+Subject: Re: [PATCH v2] Make xmalloc and xrealloc thread-safe
+Date: Wed, 7 Apr 2010 18:13:18 +0200
+Message-ID: <v2t4c8ef71004070913r2de3c8car31f39a2ab7aa6d15@mail.gmail.com>
+References: <ec874dac1003241122s3d592f26n1b23d23144939218@mail.gmail.com>
+	 <alpine.LFD.2.00.1003241613020.694@xanadu.home>
+	 <4c8ef71003270626y45685e69j28ccb8a8738b9083@mail.gmail.com>
+	 <alpine.LFD.2.00.1004062152260.7232@xanadu.home>
+	 <20100407031655.GA7156@spearce.org>
+	 <alpine.LFD.2.00.1004070043450.7232@xanadu.home>
+	 <r2xec874dac1004070529p3d21d23z533e471636194c00@mail.gmail.com>
+	 <alpine.LFD.2.00.1004070859540.7232@xanadu.home>
+	 <20100407144555.GA23911@fredrik-laptop>
+	 <alpine.LFD.2.00.1004071103341.7232@xanadu.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Wed Apr 07 18:13:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzXh7-0003dk-B1
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 18:01:33 +0200
+	id 1NzXsc-00037T-Gf
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 18:13:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932686Ab0DGQB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Apr 2010 12:01:29 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:43812 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753431Ab0DGQB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 12:01:28 -0400
-Received: by mail-bw0-f209.google.com with SMTP id 1so971657bwz.21
-        for <git@vger.kernel.org>; Wed, 07 Apr 2010 09:01:27 -0700 (PDT)
+	id S1758051Ab0DGQNV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Apr 2010 12:13:21 -0400
+Received: from mail-fx0-f223.google.com ([209.85.220.223]:37728 "EHLO
+	mail-fx0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757580Ab0DGQNU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Apr 2010 12:13:20 -0400
+Received: by fxm23 with SMTP id 23so1197375fxm.21
+        for <git@vger.kernel.org>; Wed, 07 Apr 2010 09:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=0Ay9RtSFOcURX60E0L5szX8/R7eiNVimu8W/Rc7H0CE=;
-        b=nI8ofZ5fayNeuQjOujOL42FrpdPEritZ7t8QZwowKCZKk6Icefr5YQFfPLMDjEOpJv
-         z9Vv+Kbk2kz8+5iKeYAMCALCZWh6ovz8glIeYjP3l1oMCbaxdi2OClJaUjaB7w4qobUh
-         2piB1H/yC/9HxTWATv3jVOOdJXHR9s9Heel+M=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Kfit/VneJfR/Fo2rTynhBlal5cL2SAfGpNM/x4SQhbc=;
+        b=R2fCWG6VfDNRJ9sPGlM0aX/1ugRMBbOm+kKlxnxwcJOIjUGe+6KDPQ8qeM/2tcBT+f
+         SyxnCSQ+xCfy0a7LUIQvMOHx7ptXBzdvPfNNB5vq/WyaIH/LsVqsAZr9AmwSxgjlu9Gg
+         eWmkFdsbmkeIWA65h4IhSfKEhx8TODAvc/IQg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=JtXM93rZoAMevzOEE/s7/wUJtJy0Ig/FFtrIDjtmdIm7UHDZ+0OjdyQfCVOh5nGsl1
-         kkVoVT70wO9kHtFu1PXG+3UsumjrhYSHX0rdo69ElRTHZgQP6RkHCF1VS78N0blHgpEk
-         K8adILgIX55DekGNqN+W6cNEsGkKd0Uc/oOyg=
-Received: by 10.204.174.201 with SMTP id u9mr538655bkz.68.1270656087748;
-        Wed, 07 Apr 2010 09:01:27 -0700 (PDT)
-Received: from localhost.localdomain (cm46.zeta153.maxonline.com.sg [116.87.153.46])
-        by mx.google.com with ESMTPS id 14sm7039360bwz.6.2010.04.07.09.01.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 07 Apr 2010 09:01:26 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.20.gcb44ed
-In-Reply-To: <1270656067-688-1-git-send-email-rctay89@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=bA/0CTNFgh1KGF1uwvTQ8CKoXmEyc4apsVc9F5xvL1x8xCLPt5bEhd3GZ22cUHzQBA
+         cfOAkB4xdMQjonH/kaesBb4Rn/KGX/0RtOHgvBMwvF4Bxx3QejLc31qomPXBht+5n951
+         h1Y0km5L8tnbdFlpxqXNmaBmD0UcpFpk/6veI=
+Received: by 10.239.140.138 with HTTP; Wed, 7 Apr 2010 09:13:18 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1004071103341.7232@xanadu.home>
+Received: by 10.239.193.139 with SMTP id j11mr880980hbi.127.1270656798497; 
+	Wed, 07 Apr 2010 09:13:18 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144244>
 
----
- remote-curl.c |   16 +++++++++++-----
- 1 files changed, 11 insertions(+), 5 deletions(-)
+On Wed, Apr 7, 2010 at 17:08, Nicolas Pitre <nico@fluxnic.net> wrote:
+> On Wed, 7 Apr 2010, Fredrik Kuivinen wrote:
+>> diff --git a/thread-utils.c b/thread-utils.c
+>> index 4f9c829..3c8d817 100644
+>> --- a/thread-utils.c
+>> +++ b/thread-utils.c
+>> @@ -1,4 +1,5 @@
+>> =A0#include "cache.h"
+>> +#include <pthread.h>
+>
+> This will fail compilation on Windows surely?
 
-diff --git a/remote-curl.c b/remote-curl.c
-index 0782756..ae14137 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -9,6 +9,10 @@
- #include "sideband.h"
- 
- static struct remote *remote;
-+
-+/* At assignment-time, we append a trailing slash; always use this as
-+ * if it ends with a slash.
-+ */
- static const char *url;
- 
- struct options {
-@@ -101,7 +105,7 @@ static struct discovery* discover_refs(const char *service)
- 		return last;
- 	free_discovery(last);
- 
--	strbuf_addf(&buffer, "%s/info/refs", url);
-+	strbuf_addf(&buffer, "%sinfo/refs", url);
- 	if (!prefixcmp(url, "http://") || !prefixcmp(url, "https://")) {
- 		is_http = 1;
- 		if (!strchr(url, '?'))
-@@ -120,7 +124,7 @@ static struct discovery* discover_refs(const char *service)
- 		strbuf_reset(&buffer);
- 
- 		proto_git_candidate = 0;
--		strbuf_addf(&buffer, "%s/info/refs", url);
-+		strbuf_addf(&buffer, "%sinfo/refs", url);
- 		refs_url = strbuf_detach(&buffer, NULL);
- 
- 		http_ret = http_get_strbuf(refs_url, &buffer, HTTP_NO_CACHE);
-@@ -511,7 +515,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
- 	rpc->out = client.out;
- 	strbuf_init(&rpc->result, 0);
- 
--	strbuf_addf(&buf, "%s/%s", url, svc);
-+	strbuf_addf(&buf, "%s%s", url, svc);
- 	rpc->service_url = strbuf_detach(&buf, NULL);
- 
- 	strbuf_addf(&buf, "Content-Type: application/x-%s-request", svc);
-@@ -800,11 +804,13 @@ int main(int argc, const char **argv)
- 	remote = remote_get(argv[1]);
- 
- 	if (argc > 2) {
--		url = argv[2];
-+		end_url_with_slash(&buf, argv[2]);
- 	} else {
--		url = remote->url[0];
-+		end_url_with_slash(&buf, remote->url[0]);
- 	}
- 
-+	url = strbuf_detach(&buf, NULL);
-+
- 	http_init(remote);
- 
- 	do {
--- 
-1.6.6.1368.g82eeb
+I think it will work. We use "#include <pthread.h>" in builtin/grep.c,
+builtin/pack-objects.c, and preload-index.c already.
+
+>> =A0#if defined(hpux) || defined(__hpux) || defined(_hpux)
+>> =A0# =A0include <sys/pstat.h>
+>> @@ -43,3 +44,24 @@ int online_cpus(void)
+>>
+>> =A0 =A0 =A0 return 1;
+>> =A0}
+>> +
+>> +int init_recursive_mutex(pthread_mutex_t *m)
+>> +{
+>> +#ifdef _WIN32
+>> + =A0 =A0 /* The mutexes in the WIN32 pthreads emulation layer are
+>> + =A0 =A0 =A0* recursive, so we don't have to do anything extra here=
+=2E */
+>> + =A0 =A0 return pthread_mutex_init(m, NULL);
+>> +#else
+>> + =A0 =A0 pthread_mutexattr_t a;
+>> + =A0 =A0 int ret;
+>> + =A0 =A0 if (pthread_mutexattr_init(&a))
+>> + =A0 =A0 =A0 =A0 =A0 =A0 die("pthread_mutexattr_init failed: %s", s=
+trerror(errno));
+>> +
+>> + =A0 =A0 if (pthread_mutexattr_settype(&a, PTHREAD_MUTEX_RECURSIVE)=
+)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 die("pthread_mutexattr_settype failed: %s"=
+, strerror(errno));
+>> +
+>> + =A0 =A0 ret =3D pthread_mutex_init(m, &a);
+>> + =A0 =A0 pthread_mutexattr_destroy(&a);
+>> + =A0 =A0 return ret;
+>
+> Are you sure the pthread_mutexattr_t object can be destroyed even if =
+the
+> mutex is still in use? =A0Is the attribute object "attached" to the m=
+utex
+> or merely used as a template?
+
+It is safe. See
+http://www.opengroup.org/onlinepubs/009695399/functions/pthread_mutexat=
+tr_init.html
+
+- Fredrik
