@@ -1,131 +1,68 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v8] Documentation/remote-helpers: Add invocation section
-Date: Wed, 7 Apr 2010 11:14:41 +0530
-Message-ID: <h2gf3271551004062244t99a6da09o4fee6be399953c9b@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] gitk: refresh index before checking for local
+ changes
+Date: Tue, 06 Apr 2010 22:47:41 -0700
+Message-ID: <7vfx37g6f6.fsf@alter.siamese.dyndns.org>
+References: <l2hc6c947f61004061557x8085600fif5e973077d9eb4f3@mail.gmail.com>
+ <20100406233601.GA27533@progeny.tock>
+ <n2kc6c947f61004061647ybb6c2f55zc70197362764ef8@mail.gmail.com>
+ <20100407004353.GA11346@progeny.tock> <4BBBEC43.5000100@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Gabriel Filion <lelutin@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 07 07:45:32 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Alexander Gladysh <agladysh@gmail.com>, git@vger.kernel.org
+To: gitzilla@gmail.com
+X-From: git-owner@vger.kernel.org Wed Apr 07 07:47:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzO4w-00088h-OM
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 07:45:31 +0200
+	id 1NzO7K-0000p1-LG
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 07:47:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752230Ab0DGFpF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Apr 2010 01:45:05 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:44096 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752549Ab0DGFpD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 01:45:03 -0400
-Received: by gwb19 with SMTP id 19so426655gwb.19
-        for <git@vger.kernel.org>; Tue, 06 Apr 2010 22:45:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:received
-         :message-id:subject:to:cc:content-type;
-        bh=iFX41GeYJlD2YL4d1qIFffmEE/a5+ZoXnQoQRKodrko=;
-        b=rOdBGNMok8uOF9Op3+I5NhHyczpWHjumUq/KXgtC2Kxi3IQ++JkwQGb78NydwUPyZ/
-         lK/pKaMBPSkfpfOP77JmOrRDMBzKeUzkP6kyuS8cREqmq86VIZBfPaIBZuKERCjilmad
-         FBP6xTpXfTZEbko6GNBJCVcNa2mcczY5ZBHbQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        b=ELuVSNgvaF1aQqK7M3PdTg6JXTrnG+KXCqa0mCZf717wPw3X9i12bwy3gOypQ0HlA6
-         Yuj5Ovp2tJbmXzTG7RKc3RjPMn3VBTq+/BDw99i9uoc6/EMKOahBa6IF+BR8Lf4jwdd2
-         o3sbfAHfmclnDcLK+W3jbEcPArB9+XUBUvX1M=
-Received: by 10.90.69.14 with HTTP; Tue, 6 Apr 2010 22:44:41 -0700 (PDT)
-Received: by 10.91.219.15 with SMTP id w15mr356715agq.18.1270619101395; Tue, 
-	06 Apr 2010 22:45:01 -0700 (PDT)
+	id S1752813Ab0DGFry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Apr 2010 01:47:54 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61999 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752659Ab0DGFrx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Apr 2010 01:47:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EF3DA8CEB;
+	Wed,  7 Apr 2010 01:47:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BwiSrekxl/tqbFFYWoA3ACeOj9I=; b=VHqTiw
+	UCoBR8iWZFltNhwuqNAtyKmNheRjVni6OLmYL183FhvKwBlS1JiIC4lxgXqynUHo
+	FhmTjwD9VNSFMODMIPfIRa687zMe3NEFTS/f1YYKtg7CzrXhlI8Z5X/ozBJRsUmv
+	Iuu8WHFH8pRX4HTLF0rKjqco7xVzgvUWUH+sE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=u1x5HpM7iV7lUgKamI07T4QyW4e8wfeI
+	PpQ8mR+VQUsGk4x9IUkA1b58lU5SOjxYtHrnc2EqzO8dKHLNiiMj0MqPAQ6yfwqL
+	Th1wnIxgoPgkL2hlVtTl67AVisIFa/Fa1OWzGw4cSOR9ZDJZQmtoTmMWoxhuKNSh
+	Gy+f2fRXDVQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B417A8CE9;
+	Wed,  7 Apr 2010 01:47:48 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A109A8CE7; Wed,  7 Apr
+ 2010 01:47:43 -0400 (EDT)
+In-Reply-To: <4BBBEC43.5000100@gmail.com> (A. Large Angry's message of "Tue\,
+ 06 Apr 2010 22\:21\:55 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 18A77B98-4209-11DF-B60B-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144196>
 
-Add an 'Invocation' section to specify what the command line arguments
-mean. Also include a link to git-remote in the 'See Also' section.
+A Large Angry SCM <gitzilla@gmail.com> writes:
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- I forgot to send v7 to the list, so here are the changes since v6:
- Corrected some factual errors pointed out by Jonathan and incorporated
- some other minor suggestions by Junio and Jonathan.
+> NAK - gitk should not modify a repository and/or working dir unless
+> _explicitly_ prompted to by the user.
 
- Documentation/git-remote-helpers.txt |   35 +++++++++++++++++++++++++++++++++-
- 1 files changed, 34 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git-remote-helpers.txt
-b/Documentation/git-remote-helpers.txt
-index 7a5569c..5a11b28 100644
---- a/Documentation/git-remote-helpers.txt
-+++ b/Documentation/git-remote-helpers.txt
-@@ -7,7 +7,7 @@ git-remote-helpers - Helper programs to interact with
-remote repositories
-
- SYNOPSIS
- --------
--'git remote-<transport>' <remote>
-+'git remote-<transport>' <repository> [<URL>]
-
- DESCRIPTION
- -----------
-@@ -38,6 +38,35 @@ transport protocols, such as 'git-remote-http',
-'git-remote-https',
- 'git-remote-ftp' and 'git-remote-ftps'. They implement the capabilities
- 'fetch', 'option', and 'push'.
-
-+INVOCATION
-+----------
-+
-+Remote helper programs are invoked with one or (optionally) two
-+arguments. The first argument specifies a remote repository as in git;
-+it is either the name of a configured remote or a URL. The second
-+argument specifies a URL of the form '<transport>://<address>' or
-+'<transport>::<address>', where '<address>' may be an arbitrary
-+string.
-+
-+When git encounters a URL of the form '<transport>://<address>', where
-+'<transport>' is a protocol that it cannot handle natively, it
-+automatically invokes 'git remote-<transport>' with the full URL as
-+the second argument. If such a URL is encountered directly on the
-+command line, the first argument is the same as the second, and if it
-+is encountered in a configured remote, the first argument is the name
-+of that remote.
-+
-+A URL of the form '<transport>::<address>' explicitly instructs git to
-+invoke 'git remote-<transport>' with '<address>' as the second
-+argument. If such a URL is encountered directly on the command line,
-+the first argument is '<address>', and if it is encountered in a
-+configured remote, the first argument is the name of that remote.
-+
-+Additionally, when a configured remote has 'remote.<name>.vcs' set to
-+'<transport>', git explicitly invokes 'git remote-<transport>' with
-+'<name>' as the first argument. If set, the second argument is
-+'remote.<name>.url'; otherwise, the second argument is omitted.
-+
- COMMANDS
- --------
-
-@@ -206,6 +235,10 @@ OPTIONS
- 	must not rely on this option being set before
- 	connect request occurs.
-
-+SEE ALSO
-+--------
-+linkgit:git-remote[1]
-+
- Documentation
- -------------
- Documentation by Daniel Barkalow and Ilari Liusvaara
--- 
-1.7.0.3
+I used to think that way, until I realized that gitk has operations like
+"Tag this commit" that does write into the repository.
