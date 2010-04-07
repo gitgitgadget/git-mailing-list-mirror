@@ -1,87 +1,156 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH] remote-curl: ensure that URLs do not have a trailing 
-	slash
-Date: Wed, 7 Apr 2010 23:57:28 +0800
-Message-ID: <p2ube6fef0d1004070857j874c2b60z6a4794d472b0ee8a@mail.gmail.com>
-References: <1270651892-5712-1-git-send-email-rctay89@gmail.com>
-	 <7viq83e1pd.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 07 17:57:40 2010
+Subject: [PATCH v2 1/2] http: make end_url_with_slash() public
+Date: Wed,  7 Apr 2010 23:58:37 +0800
+Message-ID: <1270655917-5188-1-git-send-email-rctay89@gmail.com>
+References: <p2ube6fef0d1004070857j874c2b60z6a4794d472b0ee8a@mail.gmail.com>
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 07 17:59:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzXdI-0001Si-Qa
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 17:57:37 +0200
+	id 1NzXed-0002CL-Jd
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 17:58:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932810Ab0DGP5a convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Apr 2010 11:57:30 -0400
-Received: from mail-iw0-f197.google.com ([209.85.223.197]:35641 "EHLO
-	mail-iw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932729Ab0DGP53 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Apr 2010 11:57:29 -0400
-Received: by iwn35 with SMTP id 35so653109iwn.21
-        for <git@vger.kernel.org>; Wed, 07 Apr 2010 08:57:28 -0700 (PDT)
+	id S932813Ab0DGP6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Apr 2010 11:58:54 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:52487 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932581Ab0DGP6x (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Apr 2010 11:58:53 -0400
+Received: by bwz1 with SMTP id 1so968846bwz.21
+        for <git@vger.kernel.org>; Wed, 07 Apr 2010 08:58:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=imWgwzk1rULAA0tdyCiMZ7bo8NxNMqHVELh0fxfutLE=;
-        b=bo0cnzrFaOM5Nzli5eYWgc9+RRKTRxAK6C9vYaB2zek4u8Mzxz2QEczjJPSi/z4724
-         SXQ+N2tiTZA9f3Y8KwTRjUCLlyvR59EIoOQcPf0S1rlMkGQd0xg9S0uclgEVpUqWeW7S
-         lCQIbak1sdo9CZzOtpcoq/SbCsVc2sRrJzkrA=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=v0xIqwEBaQ9YtPi9lSI5/kwuPyL+uJL+aMf13P5qmVc=;
+        b=vnrM7neE6UUR1MUrWuNWBAUttArH4de3bzOcTFnVzfG86yutO9HeqwpXMbsqxBylnj
+         qUWVU42ATGhBFFv8UhHfxgsGq0dcdjbtzrLwMssfGCUQohFt3Cggy/mKp4Z6P8yXaa+J
+         blNLUPyfr0qN2hYcz58OQPrEEeAmDtdfs58gs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=cgjqdGFG/+bz6apwu5rmzGIZ5iQTe4EzTYliSNi3eqqH6J4xBE7GzCEpAPkPt0lHDc
-         hE0L4jJH8l5V5UwezxF7l7OOl1vcAbRbKu+rB3TdVAKNbE3gHythXVKRzlMfzGcGMrBQ
-         10ukJ1KYFzYad5iREtgKkOUek3DGJ6xC2yILQ=
-Received: by 10.231.10.65 with HTTP; Wed, 7 Apr 2010 08:57:28 -0700 (PDT)
-In-Reply-To: <7viq83e1pd.fsf@alter.siamese.dyndns.org>
-Received: by 10.231.167.4 with SMTP id o4mr1774110iby.66.1270655848601; Wed, 
-	07 Apr 2010 08:57:28 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=hjw+WRLs1wxR7cMe14spc6az53BBJotORJmY5tmBQWMIdU1BkHeNftGjpZU0kbI8c4
+         NrqrnbnNeWQTafPnkAKCEVJik//sWuZjNLjf4l5tAXBKP4F6wT6jhkha1Sy1vzP7zAcw
+         feLNlyce+voVnRZ58VoueqQ4xKWiXLjqs5+do=
+Received: by 10.204.32.77 with SMTP id b13mr9545318bkd.113.1270655932035;
+        Wed, 07 Apr 2010 08:58:52 -0700 (PDT)
+Received: from localhost.localdomain (cm46.zeta153.maxonline.com.sg [116.87.153.46])
+        by mx.google.com with ESMTPS id 14sm7005641bwz.2.2010.04.07.08.58.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 07 Apr 2010 08:58:51 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.20.gcb44ed
+In-Reply-To: <p2ube6fef0d1004070857j874c2b60z6a4794d472b0ee8a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144241>
 
-Hi,
+---
+ http.c |    2 +-
+ http.h |    1 +
+ 2 files changed, 2 insertions(+), 1 deletions(-)
 
-On Wed, Apr 7, 2010 at 11:12 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> The code does not look like it is making sure things do not have a
-> trailing slash. =A0For example, if svc has trailing slash, either %s/=
-%s or
-> strbuf_addf() would have the last character of svc in rpc->service_ur=
-l.
->
-> You are fixing something else.
->
-> The new code avoids duplicated slashes in the middle if "url" can but=
- does
-> not necessarily end with a slash. =A0Is that what you are trying to f=
-ix?
+diff --git a/http.c b/http.c
+index 51253e1..07a03fd 100644
+--- a/http.c
++++ b/http.c
+@@ -720,7 +720,7 @@ static inline int hex(int v)
+ 		return 'A' + v - 10;
+ }
+ 
+-static void end_url_with_slash(struct strbuf *buf, const char *url)
++void end_url_with_slash(struct strbuf *buf, const char *url)
+ {
+ 	strbuf_addstr(buf, url);
+ 	if (buf->len && buf->buf[buf->len - 1] != '/')
+diff --git a/http.h b/http.h
+index 2dd03e8..37a6a6a 100644
+--- a/http.h
++++ b/http.h
+@@ -117,6 +117,7 @@ extern void append_remote_object_url(struct strbuf *buf, const char *url,
+ 				     int only_two_digit_prefix);
+ extern char *get_remote_object_url(const char *url, const char *hex,
+ 				   int only_two_digit_prefix);
++extern void end_url_with_slash(struct strbuf *buf, const char *url);
+ 
+ /* Options for http_request_*() */
+ #define HTTP_NO_CACHE		1
+-- 
+1.6.6.1368.g82eeb
 
-the commit message is misleading, yes. I'll have another go at it.
 
-> =A0I
-> wonder if it makes more sense to make sure "url" always ends with a s=
-lash
-> at the calling sites where it is obtained from either the end user or=
- from
-> the running environment...
+>From 38c2aba1e77591d9cd57790d9a993f59659496ae Mon Sep 17 00:00:00 2001
+From: Tay Ray Chuan <rctay89@gmail.com>
+Date: Wed, 7 Apr 2010 23:44:01 +0800
+Subject: [PATCH v2 2/2] remote-curl: ensure that URLs have a trailing slash
 
-Good idea.
+---
+ remote-curl.c |   16 +++++++++++-----
+ 1 files changed, 11 insertions(+), 5 deletions(-)
 
---=20
-Cheers,
-Ray Chuan
+diff --git a/remote-curl.c b/remote-curl.c
+index 0782756..ae14137 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -9,6 +9,10 @@
+ #include "sideband.h"
+ 
+ static struct remote *remote;
++
++/* At assignment-time, we append a trailing slash; always use this as
++ * if it ends with a slash.
++ */
+ static const char *url;
+ 
+ struct options {
+@@ -101,7 +105,7 @@ static struct discovery* discover_refs(const char *service)
+ 		return last;
+ 	free_discovery(last);
+ 
+-	strbuf_addf(&buffer, "%s/info/refs", url);
++	strbuf_addf(&buffer, "%sinfo/refs", url);
+ 	if (!prefixcmp(url, "http://") || !prefixcmp(url, "https://")) {
+ 		is_http = 1;
+ 		if (!strchr(url, '?'))
+@@ -120,7 +124,7 @@ static struct discovery* discover_refs(const char *service)
+ 		strbuf_reset(&buffer);
+ 
+ 		proto_git_candidate = 0;
+-		strbuf_addf(&buffer, "%s/info/refs", url);
++		strbuf_addf(&buffer, "%sinfo/refs", url);
+ 		refs_url = strbuf_detach(&buffer, NULL);
+ 
+ 		http_ret = http_get_strbuf(refs_url, &buffer, HTTP_NO_CACHE);
+@@ -511,7 +515,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
+ 	rpc->out = client.out;
+ 	strbuf_init(&rpc->result, 0);
+ 
+-	strbuf_addf(&buf, "%s/%s", url, svc);
++	strbuf_addf(&buf, "%s%s", url, svc);
+ 	rpc->service_url = strbuf_detach(&buf, NULL);
+ 
+ 	strbuf_addf(&buf, "Content-Type: application/x-%s-request", svc);
+@@ -800,11 +804,13 @@ int main(int argc, const char **argv)
+ 	remote = remote_get(argv[1]);
+ 
+ 	if (argc > 2) {
+-		url = argv[2];
++		end_url_with_slash(&buf, argv[2]);
+ 	} else {
+-		url = remote->url[0];
++		end_url_with_slash(&buf, remote->url[0]);
+ 	}
+ 
++	url = strbuf_detach(&buf, NULL);
++
+ 	http_init(remote);
+ 
+ 	do {
+-- 
+1.6.6.1368.g82eeb
