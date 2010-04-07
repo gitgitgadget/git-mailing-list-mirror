@@ -1,62 +1,61 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
 Subject: Re: [RFC PATCH 1/4] Document the HTTP transport protocol
-Date: Thu, 8 Apr 2010 02:16:54 +0800
-Message-ID: <20100408021654.00006eee@unknown>
+Date: Thu, 8 Apr 2010 02:19:46 +0800
+Message-ID: <20100408021946.00007a27@unknown>
 References: <1255065768-10428-1-git-send-email-spearce@spearce.org>
-	<1255065768-10428-2-git-send-email-spearce@spearce.org>
-	<7vskdss3ei.fsf@alter.siamese.dyndns.org>
+ <1255065768-10428-2-git-send-email-spearce@spearce.org>
+ <7vskdss3ei.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 07 20:34:50 2010
+X-From: git-owner@vger.kernel.org Wed Apr 07 20:35:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nza5N-0003G4-Fg
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 20:34:46 +0200
+	id 1Nza6R-0003lo-AY
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 20:35:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757435Ab0DGSej (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Apr 2010 14:34:39 -0400
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:56082 "EHLO
+	id S1754248Ab0DGSfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Apr 2010 14:35:46 -0400
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:40137 "EHLO
 	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752402Ab0DGSei (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 14:34:38 -0400
-X-Greylist: delayed 1045 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Apr 2010 14:34:38 EDT
-Received: by bwz1 with SMTP id 1so123946bwz.1
-        for <git@vger.kernel.org>; Wed, 07 Apr 2010 11:34:36 -0700 (PDT)
+	with ESMTP id S1751692Ab0DGSfp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Apr 2010 14:35:45 -0400
+Received: by bwz1 with SMTP id 1so124081bwz.1
+        for <git@vger.kernel.org>; Wed, 07 Apr 2010 11:35:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:in-reply-to:references:x-mailer:mime-version
          :content-type:content-transfer-encoding;
         bh=50o2Ni8Lt/4UAbbLxqB4DBRbpqWVe6vf0n1gI0cUEos=;
-        b=TKpkNgasz1GMdwpbRSlOyKVRbRx/Ebvhj3cyT+LzhIa2bxQ2EuZP67AdCso8U7zVUW
-         pjxMGbnSpPvYJUL2gaaFNyyTah66JsrpmAIhO1AiLbGU16qwGUncYLs2AoMJ53tTa5rt
-         VyS3wv2xffVqePjZOO9M/6DaWltGjEG1AmaMY=
+        b=Whg1hcaJU1PcQQl4JQmK8uFchBMtbLZJk9QV/WuLCP1xM/5Xpa9PuaVCTZ+1sNggF5
+         nQDMi6uTRnqNvy3lSTsIdxHl6/phGR3yfPgwFbypJODY1BGL70FCwlYMhFIjTp2VWE8F
+         rd0M9LvZG2dznRPxfFIfqR+gWed3RW5vF1sWQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
          :mime-version:content-type:content-transfer-encoding;
-        b=uzimIDbD5NndtJjGvE7oM2UgSHLjp0IsgQMmcQb9twxBLypKPigsmA6ad5cHS9CuF6
-         45DbfySaBpgylmyTBwG8xostnnFCuy8SzS+OMMcEWTnHZwEWAjdGEBdZfOSTdBCgxmzo
-         swlKM28n8UBccJ1Enok6WvR6z96w6nxyPKgkw=
-Received: by 10.204.134.193 with SMTP id k1mr6856497bkt.165.1270664231476;
-        Wed, 07 Apr 2010 11:17:11 -0700 (PDT)
+        b=oGC4ibA+9IpNzzrSAFxQF33PJOeMqBKv2lZQM8oF5+4XgfovURPJPPkThTqUZDO/Go
+         1jokaEmyJwEKu6LYOcRGtU/DrTyZJ8tx7HAHjpTJyuXVgHfMxWeCCGv74teZaaCG2SCM
+         iHAb/H+V6+eBSeqpUG0RSHqweZymAaW+g/BNY=
+Received: by 10.204.21.20 with SMTP id h20mr1779846bkb.149.1270664400186;
+        Wed, 07 Apr 2010 11:20:00 -0700 (PDT)
 Received: from unknown (cm46.zeta153.maxonline.com.sg [116.87.153.46])
-        by mx.google.com with ESMTPS id 15sm7434636bwz.0.2010.04.07.11.17.08
+        by mx.google.com with ESMTPS id 15sm7423779bwz.4.2010.04.07.11.19.57
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 07 Apr 2010 11:17:10 -0700 (PDT)
+        Wed, 07 Apr 2010 11:19:59 -0700 (PDT)
 In-Reply-To: <7vskdss3ei.fsf@alter.siamese.dyndns.org>
 X-Mailer: Claws Mail 3.7.4cvs1 (GTK+ 2.16.0; i586-pc-mingw32msvc)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144263>
 
 Hi,
 
