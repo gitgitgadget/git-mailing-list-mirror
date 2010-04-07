@@ -1,78 +1,125 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: git clone: very long "resolving deltas" phase
-Date: Wed, 07 Apr 2010 10:20:41 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1004071009180.7232@xanadu.home>
-References: <loom.20100406T161552-321@post.gmane.org>
- <vpqljd062xb.fsf@bauges.imag.fr> <4BBB5346.6070607@gmail.com>
- <4BBB53F5.9010106@op5.se>
- <q2mec874dac1004060850r5eaa41fak2ba9889d07794651@mail.gmail.com>
- <v2qecffb261004060856qcb769a06vf40ad2a75a3aa4fd@mail.gmail.com>
- <alpine.LFD.2.00.1004061705390.7232@xanadu.home> <4BBC1E15.9040403@gmail.com>
- <20100407080049.GA14041@LK-Perkele-V2.elisa-laajakaista.fi>
- <4BBC3EEC.6010702@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH v2] Add option to git-commit to allow empty log messages
+Date: Wed, 7 Apr 2010 14:28:06 +0000
+Message-ID: <t2u51dd1af81004070728q491ae158gd6808f6ef4165b21@mail.gmail.com>
+References: <20100406055530.GE3901@coredump.intra.peff.net>
+	 <1270543235-8570-1-git-send-email-avarab@gmail.com>
+	 <7vsk77g7um.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>,
-	Andreas Ericsson <ae@op5.se>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Vitaly <vitaly.berov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 07 16:20:55 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 07 16:28:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzW7c-0004Uk-Nx
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 16:20:49 +0200
+	id 1NzWEp-0008VZ-RN
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Apr 2010 16:28:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932577Ab0DGOUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Apr 2010 10:20:43 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:65133 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932283Ab0DGOUn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 10:20:43 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0L0I000CWFUHP2J0@VL-MH-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 07 Apr 2010 10:20:42 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <4BBC3EEC.6010702@gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1757982Ab0DGO2K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Apr 2010 10:28:10 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:37559 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753431Ab0DGO2I convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Apr 2010 10:28:08 -0400
+Received: by bwz1 with SMTP id 1so871872bwz.21
+        for <git@vger.kernel.org>; Wed, 07 Apr 2010 07:28:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=vWvIBzX2mPob84I7SJ8nyu1usKPBlxDofm7Ym8/J+ec=;
+        b=OTVYYOqzc8V3s6vYxfzHOJJan/xFntXSQ8A3Xa+YCCEA7fIGtl3CgY6sedZEtojOsx
+         UBuJQu8OLA3nnD60jOCqwpEXBlM8lsecZNNiVWfuuoY8/6p//cEeG3U1Aikib7yUfD9M
+         Vgk6PCs+rRZYhsd9NbAznbp3mdE5+Jj7cd9ys=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=w7l/aRfuaZgVbzJMB74lVOX5v4l6fduREHDguTYxc0kf6fvSSaIzD2TtRJ5XEXpHDD
+         nXREqcWKN4CbegDmZlN2gYLxfNl2C0zaFTxnnyu5AWHoXdyHZytTR4d9XBqm7lUmVhqB
+         g/mRqSEpum/91fxGyqbwfNQJhtigMjeyYeOcY=
+Received: by 10.204.121.195 with HTTP; Wed, 7 Apr 2010 07:28:06 -0700 (PDT)
+In-Reply-To: <7vsk77g7um.fsf@alter.siamese.dyndns.org>
+Received: by 10.204.83.26 with SMTP id d26mr6138242bkl.157.1270650487069; Wed, 
+	07 Apr 2010 07:28:07 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144221>
 
-On Wed, 7 Apr 2010, Vitaly wrote:
+On Wed, Apr 7, 2010 at 05:16, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> diff --git a/t/t7510-commit-allow-empty-message.sh b/t/t7510-commit-=
+allow-empty-message.sh
+>> new file mode 100755
+>> index 0000000..d7dc0da
+>
+> I do not think a separate script is worth it. =C2=A0I'd just add test=
+s to t7500.
+>
+>> +test_expect_success 'a basic commit in an empty tree should succeed=
+' '
+>> + =C2=A0 =C2=A0 (
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo content > foo &&
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git add foo &&
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git commit -m "initial c=
+ommit"
+>> + =C2=A0 =C2=A0 ) &&
+>> + =C2=A0 =C2=A0 commit_msg_is "initial commit"
+>> +'
+>
+> No need for this, especially if this becomes part of t7500.
+>
+>> +test_expect_success 'Commit no message with --allow-empty-message' =
+'
+>> + =C2=A0 =C2=A0 (
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "more content" >> f=
+oo &&
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git add foo &&
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 printf "" | git commit -=
+-allow-empty-message
+>> + =C2=A0 =C2=A0 ) &&
+>> + =C2=A0 =C2=A0 commit_msg_is ""
+>> +'
+>
+> No need for subprocess, nor printf piped to the command.
+>
+>> +test_expect_success 'Commit a message with --allow-empty-message' '
+>> + =C2=A0 =C2=A0 (
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "even more content"=
+ >> foo &&
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git add foo &&
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git commit --allow-empty=
+-message -m"hello there"
+>> + =C2=A0 =C2=A0 ) &&
+>> + =C2=A0 =C2=A0 commit_msg_is "hello there"
+>> +'
+>
+> Ditto.
+>
+> You are falling into the same trap as everybody else does when showin=
+g off
+> your shiny new toy. =C2=A0A missing but very necessary test is that "=
+commit"
+> with your patch does still fail when an empty message is given withou=
+t the
+> new option.
+>
+> It takes a conscious effort to carefully make sure that your shiny ne=
+w toy
+> does not trigger when it shouldn't, especially when you are so excite=
+d by
+> seeing it work when it should.
+>
+> But that is part of the art of writing good test scripts.
 
-> Too bad..
-> Yes, we really have a very large repo with binary files.
-> 
-> So, as far as I understand, the fastest way is to use rsync or smth like this
-> instead of "git clone".
-
-You should still be able to use 'git clone' with a rsync:// style URL.
-
-> P.S. Btw, how can I ask for a feature of incorporating hashes into transport
-> stream in trusted environments?
-
-As I'm trying to make you understand repeatedly now, this shouldn't be 
-needed.  A real fix for the bad behavior would be in order before 
-papering over it.
-
-If the large binary blobs are the source of the clone problem, then they 
-will cause the same problems with other commands such as 'git diff' or 
-even 'git checkout' later on.  So that "feature" you're asking for is 
-misguided.
-
-What you might try on your client machines is this:
-
-	git config --global core.deltaBaseCacheLimit 256m
-
-before doing a clone.
-
-
-Nicolas
+Thanks for shepherding the patch and committing it, and for pointing
+out what I could have done better. I'll try not to make similar
+mistakes with future submissions.
