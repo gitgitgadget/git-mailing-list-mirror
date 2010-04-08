@@ -1,80 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Add a basic idea section for git-blame.
-Date: Thu, 08 Apr 2010 09:51:21 -0700
-Message-ID: <7v8w8x7ura.fsf@alter.siamese.dyndns.org>
-References: <1270709490-19163-1-git-send-email-struggleyb.nku@gmail.com>
- <1270709490-19163-2-git-send-email-struggleyb.nku@gmail.com>
- <7vmxxe74s2.fsf@alter.siamese.dyndns.org>
- <201004081827.22706.trast@student.ethz.ch>
+Subject: Re: [PATCH] log: respect log.shownotes variable
+Date: Thu, 08 Apr 2010 09:55:50 -0700
+Message-ID: <7v39z57ujt.fsf@alter.siamese.dyndns.org>
+References: <20100407204536.GA32382@coredump.intra.peff.net>
+ <201004081812.50112.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Bo Yang <struggleyb.nku@gmail.com>, <git@vger.kernel.org>
+Cc: Jeff King <peff@peff.net>, <git@vger.kernel.org>
 To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Apr 08 18:51:48 2010
+X-From: git-owner@vger.kernel.org Thu Apr 08 18:56:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzuxH-0006w3-6h
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 18:51:47 +0200
+	id 1Nzv1T-0000iv-2D
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 18:56:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758286Ab0DHQvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Apr 2010 12:51:42 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46188 "EHLO
+	id S1758728Ab0DHQ4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Apr 2010 12:56:00 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49457 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751092Ab0DHQvl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Apr 2010 12:51:41 -0400
+	with ESMTP id S1758286Ab0DHQz7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Apr 2010 12:55:59 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 63228A9EBE;
-	Thu,  8 Apr 2010 12:51:39 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BF89BA9F78;
+	Thu,  8 Apr 2010 12:55:58 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=t1HAGkacp0+uvDgotgwQyzd9tRw=; b=iY8lXh
-	5ezNcVt0bAlEw3sncRY6xZagneczrgOjPS6DzdDJx1iaL90keyA41q1k3/PNGZTE
-	1hoRbOz5WeFPk92Miup/X0dwCnem6V24NRc+F2aFQrzyjSmINnBjONmA6IblnYQS
-	jzOS0bMEKyL1WBsput7Jz1Hxfzpq9Wjql1k2Y=
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=4qYLYqfmKk4CzWTlQ8hTDXMp5t4=; b=ZF4/Ksm5ERv8wmW58libFLm
+	BJC3RVgF9D6jm+Aw+gCAs5IsiHK4N2IDpl2cn7RPAArlv4hyiJtN5/ZtBPSpsa1w
+	lMk9S/SdzaBmpKIEpD6CNw6LVd77b/0n9B3KtrTTxzivZ/C0hWvj/AOSM/MHykrn
+	NI8xrw1AhiFfBV7WAxho=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GGpjkqoeuiOMVcDao+G+3upTPI7nqWC0
-	srEeCYDL1ObwYea421gv+fH85Rakc35y8ZJRFFZqwSMNA4rPy8o6Ti2HCnAYDpoC
-	fhoh+Hf/BOTLppvqLrYn1XDvQaAMeb88nEacEcgeaQV4yv24j4rnRMMLVcQu4+2x
-	5+7BAS7vIfs=
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=fdtq5HKcAmmNMU//g+ldADou+KsbLqjcGM0h6+V1b1K61/wEH
+	floAYDTmGgADSov+tiO21qOAT7rX4q8p9xpzpSPIYUlvI6kUtjjw/QnhdOKAyu+r
+	pGCVIRBvXjjLKhFZQ8JDoZOBvRlR2SkHBzjPD4yedO4BFQgSjSqsofc/rk=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2FFECA9EBB;
-	Thu,  8 Apr 2010 12:51:36 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 82B96A9F76;
+	Thu,  8 Apr 2010 12:55:55 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 28841A9EB8; Thu,  8 Apr
- 2010 12:51:30 -0400 (EDT)
-In-Reply-To: <201004081827.22706.trast@student.ethz.ch> (Thomas Rast's
- message of "Thu\, 8 Apr 2010 18\:27\:22 +0200")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7B4FFA9F75; Thu,  8 Apr
+ 2010 12:55:51 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FE7E9BB2-432E-11DF-8FDE-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 99104B08-432F-11DF-A36E-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144362>
 
 Thomas Rast <trast@student.ethz.ch> writes:
 
-> "Horrifying" seems a fairly harsh word for another way to describe the
-> process *in linear history* and with default settings, doesn't it?
+> Looks useful to me, and the patch looks obviously correct.
 
-No, even in a linear setting, if you start from "We discard "-" and take
-blame for +", you can never get to -M/-C.
+It looked obviously correct and "because we can" not "because we need" to me.
 
-Suppose you had "a/b/c/" in the parent and "1/b/c/2/a/3/4/a/5/" in the
-child ("/" stands for LF).  Your "b/c/" would match and you say "I added
-1/, 2/a/3/4/a/5/".  How would you fix that so that you can say that "a/"
-after "2/" was actually moved from the first line, and possibly the second
-"a/" was also copied from the same line, if you discard all "-"?
+> I think it is a useful addition, *especially* in the case where the
+> configuration departs from the default.  Typing --show-notes=email
+> --show-notes=commits just to avoid showing a third set of notes in
+> refs/notes/bulky will get old fairly quickly...
 
-You can say "in linear history and no -M nor -C, you could annotate things
-this way", but then you are not describing "blame" anymore; you are
-describing something else that may work very well in much simpler setting
-and it might even be how some other SCMs would do it.
+I initially thought so until I realized that notes.displayRef is already
+there.  But you are the one who did 894a9d3 (Support showing notes from
+more than one notes tree, 2010-03-12) to add that feature, so I suspect
+I forgot something while reaching my conclusion in [*1*].
 
-But it _is_ horrifying to see that in a section that begins with "blame
-works as follows".
+[reference]
+
+*1* Message-ID: <7vljczapzt.fsf@alter.siamese.dyndns.org>
+    $gmane/144286
