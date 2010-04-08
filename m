@@ -1,114 +1,68 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] ls-remote: default to 'origin' when no remote specified
-Date: Thu, 8 Apr 2010 02:34:22 -0400
-Message-ID: <20100408063422.GD30473@coredump.intra.peff.net>
+Date: Wed, 07 Apr 2010 23:44:08 -0700
+Message-ID: <7vsk7678av.fsf@alter.siamese.dyndns.org>
 References: <1270699083-5424-1-git-send-email-rctay89@gmail.com>
  <20100408044552.GA30473@coredump.intra.peff.net>
  <l2xbe6fef0d1004072307ma8dff5c2ic5dce170b28e5957@mail.gmail.com>
+ <20100408063422.GD30473@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 08 08:35:10 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Tay Ray Chuan <rctay89@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 08 08:44:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzlKY-0003rK-Cu
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 08:35:10 +0200
+	id 1NzlTW-00071A-5l
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 08:44:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758242Ab0DHGex convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Apr 2010 02:34:53 -0400
-Received: from peff.net ([208.65.91.99]:46225 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756382Ab0DHGem (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Apr 2010 02:34:42 -0400
-Received: (qmail 16738 invoked by uid 107); 8 Apr 2010 06:34:42 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 08 Apr 2010 02:34:42 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Apr 2010 02:34:22 -0400
-Content-Disposition: inline
-In-Reply-To: <l2xbe6fef0d1004072307ma8dff5c2ic5dce170b28e5957@mail.gmail.com>
+	id S1757004Ab0DHGoU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Apr 2010 02:44:20 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41431 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752567Ab0DHGoT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Apr 2010 02:44:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C2886A9C4E;
+	Thu,  8 Apr 2010 02:44:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1aPDCjhl/+0Kqt//ZoXSiuWUcoM=; b=RrNiYe
+	qMR5nIPel3LHI7dMVW9K5x/YD/X5kLp0gNjNGkTiIJ52FKA1ygeFjz9UcYxgeqtw
+	drJWuF/rbJC9klRnxe30WvTkzwVfzXhmWfOBXjERm7D3tHOLIESKv4rKbQexD0HO
+	42V14AoyQCDkqCqt+5u23p6jLDBqh6FheiViM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dYsfJDsHk4Pv3+vY9r5kn7CV2hr03/cR
+	WUK2k+NYGQRG5srqus/f/xyN2NCyWG/RP7hIHcc80zm80pAFsHe/CXvbFjA6g6So
+	JN41/4VdnZU54/1sVOdzkXCM564gk/y3mxGWgpzDUvdJ4zuXoDqJA0OLr/c+A3wM
+	4dPpB1uJwXc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 40EEEA9C4C;
+	Thu,  8 Apr 2010 02:44:14 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC57FA9C4B; Thu,  8 Apr
+ 2010 02:44:10 -0400 (EDT)
+In-Reply-To: <20100408063422.GD30473@coredump.intra.peff.net> (Jeff King's
+ message of "Thu\, 8 Apr 2010 02\:34\:22 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 25B843A4-42DA-11DF-8C1B-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144327>
 
-On Thu, Apr 08, 2010 at 02:07:11PM +0800, Tay Ray Chuan wrote:
+Jeff King <peff@peff.net> writes:
 
-> > I don't really see a problem with this. The current behavior produc=
-es an
-> > error, so it is not as if we are breaking somebody's workflow, and =
-the
-> > only sensible default is the same one used by the other commands.
->=20
-> I'm trying to make it behave like the other commands that deal with
-> remotes, such as git-fetch and git-push; when they are run without an=
-y
-> arguments, they default to "origin" or branch.<name>.remote.
->=20
-> Assuming that you and I are talking about the same "other commands",
-> than the default isn't an issue; the rules used to determine the
-> default remote is done in remote_get(), so they are similar.
+> Fetch's message is equally hard to trigger, I think, which is perhaps
+> why nobody has complained about it yet.
 
-The commands I meant were push, fetch, and pull. I couldn't think of an=
-y
-others.
+See http://thread.gmane.org/gmane.comp.version-control.git/143229/focus=143404
 
-> >> + =C2=A0 =C2=A0 if (!remote)
-> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die("Where do you want=
- to list from today?");
-> >
-> > Heh.
->=20
-> Do you think this is too light-hearted for ls-remote's role? If so,
-> I'll just revert back exiting with the usage text.
-
-Perhaps. In general that is not a helpful message to show to the user,
-but it is very unlikely to be shown at all. You would have to have no
-configured remote for your current branch, _and_ you would have had to
-delete the config for the "origin" remote.
-
-=46etch's message is equally hard to trigger, I think, which is perhaps
-why nobody has complained about it yet.
-
-> > This seems like a very odd thing to be testing. Should you not inst=
-ead
-> > test that "git ls-remote $foo" still treats $foo as a remote and li=
-sts
-> > it, which is what we really care about?
->=20
-> There are already existing tests to test "git ls-remote $foo" (unless
-> you mean '$' to have a special significance, like '*' does).
-
-No, I meant $foo as a variable, as you interpreted.
-
-> The test was to let current and future git hackers/users know that th=
-e
-> usage of <pattern> as the remote by git-ls-remote ("<pattern> does no=
-t
-> appear to be a git repository") is indeed expected behaviour.
-
-I think documenting that in the commit message would be fine, but I
-don't have a strong opinion. It seems like the existing "git ls-remote
-$foo" tests would cover this by correctly interpreting $foo as a remote=
-=2E
-
-If you do keep it, it also should use test_must_fail.
-
-Also, I note that you are testing for:
-
-  fatal: 'refs*master' does not appear to be a git repository
-  fatal: The remote end hung up unexpectedly
-
-which is coming from two separate processes, which means the output may
-have a race condition. I suspect we're OK because the second message is
-triggered by closing the fd which must happen after the first message i=
-s
-printed.
-
--Peff
+;-)
