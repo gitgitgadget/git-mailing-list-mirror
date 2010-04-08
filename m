@@ -1,110 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] request-pull: return the entered branch if more branches
- are at the same commit
-Date: Wed, 07 Apr 2010 18:45:46 -0700
-Message-ID: <7vvdc290ol.fsf@alter.siamese.dyndns.org>
-References: <1270678956.27317.34.camel@neo>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: (resend v2) Re: [RFC PATCH 1/4] Document the HTTP transport 
+	protocol
+Date: Thu, 8 Apr 2010 09:47:28 +0800
+Message-ID: <r2ibe6fef0d1004071847mc1b25e35q6e2db59f89ec15ee@mail.gmail.com>
+References: <1255065768-10428-1-git-send-email-spearce@spearce.org>
+	 <1255065768-10428-2-git-send-email-spearce@spearce.org>
+	 <7vskdss3ei.fsf@alter.siamese.dyndns.org>
+	 <20100408031159.00006ec7@unknown>
+	 <7v1verca7d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Lars.Jarnbo.Pedersen@gmail.com
-X-From: git-owner@vger.kernel.org Thu Apr 08 03:46:01 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 08 03:47:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nzgoi-00046M-Vj
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 03:46:01 +0200
+	id 1NzgqF-0004PL-Un
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 03:47:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757547Ab0DHBpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Apr 2010 21:45:55 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38350 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752731Ab0DHBpy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Apr 2010 21:45:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A3717A9336;
-	Wed,  7 Apr 2010 21:45:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; s=sasl; bh=SQtBOqXm2DU8OlmsJaxmYhSJmQg=; b=A8X04e
-	wYNUA9r1/KpRcHq0mEb8ZEsIktJhlzkNy/3sxw9QlSeBxsd2OhAVGsq4bQUL+43X
-	7FYUXThH42gRZobFOany/GBo/vEFl7Ye5Zqm6Ak/imEgIVGm/hPrhp7JAEvyT6a/
-	E4C+sxeDBOTXQ/e1bOT9w597feA7hK+gpotOE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=E7zn7mTUV8YgElZw1yNTv2xECd8gmKfe
-	yjSPlIhFPXva7UifjLhQAC50JDeoYfD78UavQlnk6eamTBGq6xHAKGUuhUi7NY/n
-	MPuIGcdUtgUABoQ4LW7iulkR6LLTcSSePIDbasXIPSz2AvzxY3sd+Nczd/qDE2DD
-	jiVXVeZR/pg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8054DA9334;
-	Wed,  7 Apr 2010 21:45:50 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 72D2FA932C; Wed,  7 Apr
- 2010 21:45:47 -0400 (EDT)
-In-Reply-To: <1270678956.27317.34.camel@neo> (Lars Jarnbo Pedersen's message
- of "Thu\, 08 Apr 2010 00\:22\:36 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 75F2EEA2-42B0-11DF-B14A-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758279Ab0DHBrb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Apr 2010 21:47:31 -0400
+Received: from mail-gx0-f217.google.com ([209.85.217.217]:58570 "EHLO
+	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752731Ab0DHBra convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Apr 2010 21:47:30 -0400
+Received: by gxk9 with SMTP id 9so1033920gxk.8
+        for <git@vger.kernel.org>; Wed, 07 Apr 2010 18:47:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FHAtO9m/WHkE3QHbv6VFNBviwY141/I1D6Xxk61R0LU=;
+        b=Jk97bt4iDoj1TTR334tfd5lbhA0Zqbb3ILoevUlrwctyORWFC0kYEgn0ickITPZ3c3
+         guBGx19VfXsGOslmH+3WAf75xXwWIY+eQs7majCVfx01XtDS6XTmbzhfqleIYxsbm3XD
+         1T61ANMDBQ5qDhQLLEwKnFLGHg7nyLrgmf5VA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SIfzII20dwKTYes/P1f1EIcZxCbqAiZb0nMiWAG4A5b27yGsLTjaoIJQ0UwuJa4jSG
+         bB+cjfypPeHy8C7mWc2CzQ+7XPb4QO8WQzVKUd8lb2hCGrukCdaxqwFwbLg3H9J426O4
+         TsQiebDijd+NGSfrRKV/hZ1OzPVeo6pPTsaps=
+Received: by 10.231.10.65 with HTTP; Wed, 7 Apr 2010 18:47:28 -0700 (PDT)
+In-Reply-To: <7v1verca7d.fsf@alter.siamese.dyndns.org>
+Received: by 10.100.50.7 with SMTP id x7mr19260830anx.191.1270691248237; Wed, 
+	07 Apr 2010 18:47:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144301>
 
-Lars Jarnbo Pedersen <lars.jarnbo.pedersen@gmail.com> writes:
+Hi,
 
->  git-request-pull.sh |   10 ++++++++++
->  1 files changed, 10 insertions(+), 0 deletions(-)
+On Thu, Apr 8, 2010 at 3:51 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Tay Ray Chuan <rctay89@gmail.com> writes:
 >
-> diff --git a/git-request-pull.sh b/git-request-pull.sh
-> index 8fd15f6..787383f 100755
-> --- a/git-request-pull.sh
-> +++ b/git-request-pull.sh
-> @@ -49,11 +49,21 @@ merge_base=`git merge-base $baserev $headrev` ||
->  die "fatal: No commits in common between $base and $head"
->  
->  branch=$(git ls-remote "$url" \
-> +	| sed -n -e "/^$headrev	refs.heads.$head/{
+>> (I'm reviving this thread to complete the document. What I have righ=
+t
+>> now is available at my github repo; you can see it at
+>>
+>> =A0 http://github.com/rctay/git/compare/git/next...feature/http-doc#=
+files_bucket
+>
+> I looked at the above page; it was quite readable. =A0You seem to hav=
+e
+> picked up Shawn's non-patch responses to reviews quite well.
 
-Isn't $head often omitted, defaulting to HEAD?
+Thanks.
 
-Since the original version of this logic was written, git has changed a
-lot, not in an incompatible way, but simply it got a lot richer.  Some
-assumptions the script made when it was written may need to be revisited,
-working backwards from the command line to see what we can compute better
-and how.
+> By the way, aren't there a better way than visiting:
+>
+> =A0 =A0http://github.com/rctay/git/commits/feature/http-doc/Documenta=
+tion/technical/http-protocol.txt
 
-    $ git request-pull [options] start url [end]
+to view just the blob - yeah, but I'm so used to using github's
+"Compare view", it's the first thing I do.
 
-When "end" is specified, and if that is the name of a branch, we know what
-branch you are talking about.  We can dereference HEAD with symbolic-ref
-if "end" was missing and we defaulted to HEAD.  Either way, in majority of
-the cases, the user has pushed out the tip of a local branch and that is
-what "end" would be.
+> and then repeat (click each commit, go back)
+>
+> to get a moral equivalent of "git log -p feature/http-doc -- $that_pa=
+th"?
 
-But that "end" branch may not necessarily be the name of the branch your
-publishing repository has.  By looking at configured refspec mapping and
-the push.default configuration, we can tell which remote ref a push to the
-url should have updated.  The script predates many configurations that
-control this process, and that is the primary reason it currently guesses
-from ls-remote output.
+The Compare view let's you select a range of revisions, so it's not equ=
+ivalent.
 
-You are introducing something better than a guess, but it is not quite
-there, I suspect.  Who says that your branch 'my/topic' will push to your
-published branch 'my/topic', not 'topic' with "push = my/topic:topic", or
-"branch.my/topic.merge = topic", for example?
-
-We can take one step at a time, and your patch might be a good first step
-in the right direction, but I think overhauling this script to be more
-aware of the ref mapping is worth discussing before moving forward.  After
-such a discussion, it may turn out that majority of people do:
-
-    $ git push $my_public_repo master~3:for-linus
-
-and say "git request-pull origin master~3", in which case the current
-program output is already correct and the new code may not be adding much
-value in practice.
+--=20
+Cheers,
+Ray Chuan
