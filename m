@@ -1,82 +1,89 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 (resend)] ls-remote: fall-back to default remotes
- when no remote specified
-Date: Thu, 8 Apr 2010 03:16:39 -0400
-Message-ID: <20100408071639.GJ30473@coredump.intra.peff.net>
-References: <1270699083-5424-1-git-send-email-rctay89@gmail.com>
- <1270710427-6680-1-git-send-email-rctay89@gmail.com>
+Subject: Re: log --pretty/--oneline: ignore log.decorate
+Date: Thu, 8 Apr 2010 03:30:14 -0400
+Message-ID: <20100408073014.GA15474@coredump.intra.peff.net>
+References: <7vtyrr6nes.fsf@alter.siamese.dyndns.org>
+ <7vmxxggsl4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 08 09:17:15 2010
+Cc: git@vger.kernel.org, Steven Drake <sdrake@xnet.co.nz>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 08 09:30:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzlzE-0001qU-Nn
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 09:17:13 +0200
+	id 1NzmCL-0006Ur-3H
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 09:30:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758495Ab0DHHRA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Apr 2010 03:17:00 -0400
-Received: from peff.net ([208.65.91.99]:47109 "EHLO peff.net"
+	id S1758400Ab0DHHag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Apr 2010 03:30:36 -0400
+Received: from peff.net ([208.65.91.99]:57631 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758446Ab0DHHQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Apr 2010 03:16:59 -0400
-Received: (qmail 17199 invoked by uid 107); 8 Apr 2010 07:16:59 -0000
+	id S1758276Ab0DHHaf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Apr 2010 03:30:35 -0400
+Received: (qmail 18409 invoked by uid 107); 8 Apr 2010 07:30:34 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 08 Apr 2010 03:16:59 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Apr 2010 03:16:39 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 08 Apr 2010 03:30:34 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Apr 2010 03:30:14 -0400
 Content-Disposition: inline
-In-Reply-To: <1270710427-6680-1-git-send-email-rctay89@gmail.com>
+In-Reply-To: <7vmxxggsl4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144341>
 
-On Thu, Apr 08, 2010 at 03:07:07PM +0800, Tay Ray Chuan wrote:
+On Tue, Apr 06, 2010 at 02:48:55PM -0700, Junio C Hamano wrote:
 
->  	remote = remote_get(dest);
-> +	if (!remote)
-> +		usage(ls_remote_usage);
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > [Stalled]
+> >
+> > * sd/log-decorate (2010-02-17) 3 commits
+> >   (merged to 'next' on 2010-03-08 at 58a6fba)
+> >  + log.decorate: usability fixes
+> >  + Add `log.decorate' configuration variable.
+> >  + git_config_maybe_bool()
+> >
+> > Needs squelching the configuration setting when "--pretty=raw" is given,
+> > at least, or possibly when any "--pretty" is explicitly given.
+> 
+> This is necessary if we want to let users specify log.decorate and still
+> use gitk.  A patch should look like this (of course untested).
 
-I don't see an update to ls_remote_usage, but shouldn't it now be:
+Hmm. You took the "any --pretty" option with this patch.
 
-  git ls-remote [--heads] [--tags]  [-u <exec> | --upload-pack <exec>]
-    [repository] [<refs>...]
+And given the markups to the test suite:
 
-or something now (while we're at it, maybe we can wrap it better as it's
-larger than 80 characters).
+> -	git log --oneline >expect.none &&
+> -	git log --oneline --decorate >expect.short &&
+> -	git log --oneline --decorate=full >expect.full &&
+> +	git log >expect.none &&
+> +	git log --decorate >expect.short &&
+> +	git log --decorate=full >expect.full &&
+> +	git log --oneline >expect.oneline &&
 
-But once that is done, shouldn't the (!remote) case say something like
-"you don't have a default remote". The user didn't invoke ls-remote
-incorrectly (as the usage message shows), but rather there was a
-configuration problem.
+I suspect that will annoy users who have set log.decorate. Wouldn't they
+expect to see it with "--oneline" if they have it configured (I would
+guess that "git log" and "git log --oneline" are the most commonly
+viewed forms by humans).
 
-> +test_expect_success 'use branch.<name>.remote if possible' '
-> +
-> +	# Remove "origin" so that we know that ls-remote is not using it.
-> +	#
-> +	# Ideally, we should test that branch.<name>.remote takes precedence
-> +	# over "origin", but that is another matter altogether.
-> +	#
-> +	git remote rm origin &&
-> +	git config branch.master.remote self &&
-> +	git ls-remote >actual &&
-> +	test_cmp expected.all actual
-> +
-> +'
+It seems reasonable to say "git log --pretty=raw should be consumable by
+scripts", but I don't know that we need to do so for every pretty
+format.
 
-Wouldn't your "ideally" just be:
+However:
 
-  git clone . other-remote &&
-  git push other-remote HEAD:unique-ref &&
-  git config branch.master.remote other-remote &&
-  ...
+  $ git grep oneline *.sh
+  git-rebase--interactive.sh:             git rev-list $MERGES_OPTION --pretty=oneline --abbrev-commit \
+  git-stash.sh:           head=$(git log --no-color --abbrev-commit --pretty=oneline -n 1 HEAD --)
+  git-submodule.sh:                       git log --pretty=oneline --first-parent $range | wc -l
 
-and check for "unique-ref" in the output?
+rebase--interactive properly uses rev-list. The submodule invocation
+would uselessly look up the decoration, and the stash one would add it
+to the stash commit message. But I am inclined to say that both of those
+scripts are at fault, and should be converted to rev-list.
 
 -Peff
