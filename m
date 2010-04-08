@@ -1,77 +1,79 @@
-From: Thomas Kistler <tkistler@nvidia.com>
-Subject: cherry pick into remote / git-p4
-Date: Thu, 8 Apr 2010 08:55:33 -0700
-Message-ID: <B978892CA0FBD142827E74F92AC4BBD429B5EDD0BC@HQMAIL03.nvidia.com>
-References: <B978892CA0FBD142827E74F92AC4BBD429B2444D4D@HQMAIL03.nvidia.com>
-	 <4880E32B-7880-40BF-8AFD-AC00DA457CEE@meyerhome.net>
-	 <B978892CA0FBD142827E74F92AC4BBD429B2444D5C@HQMAIL03.nvidia.com>
-	 <1a6be5fa1003231038h695ebbf2k8a765b4a9b6e274d@mail.gmail.com>
-	 <B978892CA0FBD142827E74F92AC4BBD429B2444D66@HQMAIL03.nvidia.com>
- <1a6be5fa1003231111pc98bfbbg299ea0f95a7926a7@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] log: respect log.shownotes variable
+Date: Thu, 8 Apr 2010 18:12:49 +0200
+Message-ID: <201004081812.50112.trast@student.ethz.ch>
+References: <20100407204536.GA32382@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 08 18:00:43 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 08 18:13:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nzu9p-0003Ab-5l
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 18:00:41 +0200
+	id 1NzuLm-0003B5-Tt
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 18:13:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932532Ab0DHQAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Apr 2010 12:00:36 -0400
-Received: from hqemgate04.nvidia.com ([216.228.121.35]:6338 "EHLO
-	hqemgate04.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758771Ab0DHQAf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Apr 2010 12:00:35 -0400
-X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Apr 2010 12:00:35 EDT
-Received: from hqnvupgp04.nvidia.com (Not Verified[172.20.161.48]) by hqemgate04.nvidia.com
-	id <B4bbdfbde0001>; Thu, 08 Apr 2010 08:53:02 -0700
-Received: from hqemhub03.nvidia.com ([172.17.108.22])
-  by hqnvupgp04.nvidia.com (PGP Universal service);
-  Thu, 08 Apr 2010 08:55:34 -0700
-X-PGP-Universal: processed;
-	by hqnvupgp04.nvidia.com on Thu, 08 Apr 2010 08:55:34 -0700
-Received: from HQMAIL03.nvidia.com ([172.17.200.13]) by hqemhub03.nvidia.com
- ([172.20.150.15]) with mapi; Thu, 8 Apr 2010 08:55:34 -0700
-Thread-Topic: cherry pick into remote / git-p4
-Thread-Index: AcrKtFk/880LUyDNSG611JMDJTk5KwMfeJcg
-In-Reply-To: <1a6be5fa1003231111pc98bfbbg299ea0f95a7926a7@mail.gmail.com>
-Accept-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-Content-Language: en-US
+	id S932718Ab0DHQMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Apr 2010 12:12:53 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:16208 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754833Ab0DHQMw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Apr 2010 12:12:52 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.247.2; Thu, 8 Apr
+ 2010 18:12:50 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.247.2; Thu, 8 Apr
+ 2010 18:12:50 +0200
+User-Agent: KMail/1.13.2 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.2; x86_64; ; )
+In-Reply-To: <20100407204536.GA32382@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144358>
 
-QmVmb3JlIGRvaW5nIGEgbG90IG9mIHdvcmsgSSB3YW50ZWQgdG8gc2VlIHdoZXRoZXIgc29tZW9u
-ZSBoYXMgYSBzaW1wbGUgc29sdXRpb24gdG8gY2hlcnJ5IHBpY2sgYSBwYXJ0aWN1bGFyIGNvbW1p
-dCBpbnRvIGEgcmVtb3RlIGJyYW5jaCAoYW5kIGJ5IHRoYXQgSSBtZWFuIHRoZSByZWZzL3JlbW90
-ZSBicmFuY2ggaW4gdGhlIGxvY2FsIHJlcG9zaXRvcnkgYW5kIG5vdCB0aGUgcmVtb3RlIHJlcG9z
-aXRvcnkpLg0KDQpIZXJlIGlzIHNvbWUgbW9yZSBiYWNrZ3JvdW5kLiBJbiBvdXIgc2V0dXAsIHdl
-IHBlcmlvZGljYWxseSBidW5jaCBnaXQgY2hhbmdlcyB1cCBhbmQgc3VibWl0IHRoZW0gYmFjayB0
-byBhbiBleHRlcm5hbCBwZXJmb3JjZSByZXBvc2l0b3J5ICh1c2luZyBhIG1vZGlmaWVkIHZlcnNp
-b24gb2YgZ2l0LXA0KS4gV2hlbiB0aG9zZSBjaGFuZ2VzIGNvbWUgYmFjayBpbnRvIHRoZSBnaXQg
-cmVwb3NpdG9yeSAodXNpbmcgZ2l0LXA0IHN5bmMpIHdlIHNlZSB0aGUgY29tYmluZWQgY2hhbmdl
-cyByYXRoZXIgdGhhbiB0aGUgaW5kaXZpZHVhbCBvbmVzLCB3aGljaCBjYW4gbGVhZCB0byByZWJh
-c2UgY29uZmxpY3RzLiBTbyByYXRoZXIgdGhhbiBpbXBvcnRpbmcgdGhlIGNvbWJpbmVkIGNoYW5n
-ZXMsIHdlJ2QgbGlrZSB0byByZXBsYXkgdGhlIGluZGl2aWR1YWwgY2hhbmdlcyBmcm9tIHRoZSBt
-YXN0ZXIgYnJhbmNoIGlmIHByZXNlbnQgKHdlIHN0b3JlIHRoZSBnaXQgY29tbWl0IGlkcyBhcyBw
-YXJ0IG9mIG91ciBwZXJmb3JjZSBjb21taXQgbWVzc2FnZSBzbyB3ZSBrbm93IHdoaWNoIGlkcyB0
-byByZXBsYXkpLiBCdXQgdGhlcmUgZG9lc24ndCBzZWVtIHRvIGJlIGFuIGVhc3kgd2F5IHRvIGRv
-IHRoYXQuDQoNCi1UaG9tYXMgDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpUaGlzIGVt
-YWlsIG1lc3NhZ2UgaXMgZm9yIHRoZSBzb2xlIHVzZSBvZiB0aGUgaW50ZW5kZWQgcmVjaXBpZW50
-KHMpIGFuZCBtYXkgY29udGFpbg0KY29uZmlkZW50aWFsIGluZm9ybWF0aW9uLiAgQW55IHVuYXV0
-aG9yaXplZCByZXZpZXcsIHVzZSwgZGlzY2xvc3VyZSBvciBkaXN0cmlidXRpb24NCmlzIHByb2hp
-Yml0ZWQuICBJZiB5b3UgYXJlIG5vdCB0aGUgaW50ZW5kZWQgcmVjaXBpZW50LCBwbGVhc2UgY29u
-dGFjdCB0aGUgc2VuZGVyIGJ5DQpyZXBseSBlbWFpbCBhbmQgZGVzdHJveSBhbGwgY29waWVzIG9m
-IHRoZSBvcmlnaW5hbCBtZXNzYWdlLg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg==
+Jeff King wrote:
+> Log shows notes by default if no --pretty format is given.
+> However, depending on what's in your default notes ref, that
+> may actually be quite distracting when reading a normal log.
+> Let's let the user decide whether they want to see notes by
+> default.
+
+Looks useful to me, and the patch looks obviously correct.
+
+> My git repository has your mailing list reference notes in
+> refs/notes/commits. They're quite bulky, and being headers, they look
+> kind of like a new commit stanza, which always confuses me when reading
+> log output. I got tired of typing --no-notes.
+> 
+> I guess an alternate solution would be for me to store them in some
+> other ref, and then use --show-notes=email when I do want to see them
+> (instead of just --show-notes, as I would do with this patch). But I
+> still wonder if log.shownotes is a sensible addition, just for the sake
+> of completeness.
+
+I think it is a useful addition, *especially* in the case where the
+configuration departs from the default.  Typing --show-notes=email
+--show-notes=commits just to avoid showing a third set of notes in
+refs/notes/bulky will get old fairly quickly...
+
+BTW, now that I seem to have a couple of users for those notes: what
+would you like to see in the "short" version (notes/terse)?  Improving
+that to be the "common" case has been on my todo list for quite some
+time.  For example, I'm considering changing the 'permalink' to
+'thread' so that access to the full thread is easier (you'll still
+have to click the subject to find the root).  Also, the message text
+snippets have been broken since I revived it in February, does anyone
+miss them?  They made the output even bulkier.
+
+Of course, I also hope that in the long run we can somehow generate
+this from Junio's amlog for better accuracy :-)
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
