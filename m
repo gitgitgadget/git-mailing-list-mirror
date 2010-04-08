@@ -1,70 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] ls-remote: default to 'origin' when no remote specified
-Date: Wed, 07 Apr 2010 22:35:40 -0700
-Message-ID: <7v8w8y8q1f.fsf@alter.siamese.dyndns.org>
-References: <1270699083-5424-1-git-send-email-rctay89@gmail.com>
- <20100408044552.GA30473@coredump.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git pull with "no common commits" : danger?
+Date: Thu, 8 Apr 2010 00:44:05 -0500
+Message-ID: <20100408054349.GA6067@progeny.tock>
+References: <v2t3abd05a91004071856s5811e086q17241996a359e172@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tay Ray Chuan <rctay89@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 08 07:35:57 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Aghiles <aghilesk@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 08 07:44:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzkPE-0000BC-Sx
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 07:35:57 +0200
+	id 1NzkX9-0002bB-6f
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 07:44:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753616Ab0DHFfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Apr 2010 01:35:51 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33485 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753064Ab0DHFft (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Apr 2010 01:35:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 16CE6A953B;
-	Thu,  8 Apr 2010 01:35:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5dsYb1buLsGTNj+EVDLyRrKnMnQ=; b=UCm9mR
-	MJNivROUK0EMV6Ux8BC0O7SG+8PP20T+Dg45lQGsUqwa9bHyLeXHgOp/Wn0IR8vW
-	TJsz9h7ihmGO6a2QKBmChlXSJphjjL/0YcRuzJp83i2eLtxRrLHSeKjEl57AV89G
-	Yfwgj5sjosAEMres1Jpw4KhwsERnpittHJS8g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n34mjfKltSySysZw+RCKd2g/PIJSfN4l
-	RZo6CeK0w5omRfjDvjGUlIlLE9ex4RO3NmSEBiMozJufvGQsVYLFIkZFxDa1vCwF
-	JihgjrZLuFwdF7PJa4LLc6p/dcgz3uVK/DUl7IT8tLhEMnQeTtOSA84geVfxkvAw
-	PutQYHihriQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CED94A9539;
-	Thu,  8 Apr 2010 01:35:45 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C2AF3A9536; Thu,  8 Apr
- 2010 01:35:41 -0400 (EDT)
-In-Reply-To: <20100408044552.GA30473@coredump.intra.peff.net> (Jeff King's
- message of "Thu\, 8 Apr 2010 00\:45\:52 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9496C0CA-42D0-11DF-A1FE-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753825Ab0DHFoB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Apr 2010 01:44:01 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:6594 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752944Ab0DHFoA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Apr 2010 01:44:00 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so674337qwh.37
+        for <git@vger.kernel.org>; Wed, 07 Apr 2010 22:43:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=2dfeDZFvqeBjYHMAiinGZDeohbRQAj2oo79gZEauya8=;
+        b=Qtma8NFR/jtG8NguKUZX5CQd8LIKHXT67OhAWj2WMReyaQ37QIMOSzSVj2W4COLgck
+         o6r7VQhgXLzmUOHOKZ+Hxb4OhY7otB2belzcvSc7P19SdaxdASv9/xQ/Sw1tCrU8KWNg
+         argRZjq8qVxKn2t/bZwPtuLUNMvVxK09iUslw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=pEZ+93cVJKK4azFJ27Wsp5sW5xXNJQHwECu3d3vByy4Hu5QvJRgboV1ZcTFDm0U8im
+         ImvQe1V2Vy2SToveAKejYTRwQFHK7ie6qF+hZLcYzxfMrvKu1EOLxkafUgJglD8rlLZ3
+         cQ1Rlxp3k+X2d/+FhcDrNJo8r0t7f+u6YiIbY=
+Received: by 10.224.65.199 with SMTP id k7mr1702181qai.257.1270705439378;
+        Wed, 07 Apr 2010 22:43:59 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 21sm4106936iwn.11.2010.04.07.22.43.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 07 Apr 2010 22:43:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <v2t3abd05a91004071856s5811e086q17241996a359e172@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144319>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> I don't really see a problem with this. The current behavior produces an
-> error, so it is not as if we are breaking somebody's workflow, and the
-> only sensible default is the same one used by the other commands.
+Aghiles wrote:
 
-I'd agree only if "the other commands" default to the same remote;
-otherwise as a plumbing, ls-remote should insist that the user be more
-explicit.
+> I mistakenly pulled a project into another project. I had the
+> "warning: no common commits" but the pull did proceed.
 
-The only odd-man out that would worry me is "git pull", as I expect
-everybody written in C would just use remote_get(NULL).
+=46irst: you are aware that interrupting the pull will have no bad
+side-effects, right?  So if the worry is lost time, then git is not
+advertising its features well enough.
+
+Because of this, if =E2=80=98git fetch=E2=80=99 starts refusing to fetc=
+h when there
+are no common commits, I will be unhappy, because it imposes hassle on
+the user for basically no benefit.
+
+On the other hand, =E2=80=98git pull=E2=80=99 is a little different.  T=
+he fetch has
+very little cost because it=E2=80=99s interruptible, but the merge coul=
+d
+result in two unrelated pieces of history being merged, requiring
+the user to use =E2=80=98git reset --keep HEAD^=E2=80=99 to get back to=
+ the
+previous state.  A more likely outcome is a merge conflict, requiring
+=E2=80=98git reset --merge=E2=80=99 to recover.
+
+Can we make this less painful?  Is it worth adding yet another option
+to =E2=80=98git pull=E2=80=99 to avoid this pain?  I don=E2=80=99t know=
+=2E
+
+Regards,
+Jonathan
