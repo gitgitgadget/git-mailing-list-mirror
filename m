@@ -1,144 +1,95 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH] ls-remote: default to 'origin' when no remote specified
-Date: Thu, 8 Apr 2010 14:07:11 +0800
-Message-ID: <l2xbe6fef0d1004072307ma8dff5c2ic5dce170b28e5957@mail.gmail.com>
-References: <1270699083-5424-1-git-send-email-rctay89@gmail.com>
-	 <20100408044552.GA30473@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git pull with "no common commits" : danger?
+Date: Wed, 07 Apr 2010 23:20:40 -0700
+Message-ID: <7v1veq8nyf.fsf@alter.siamese.dyndns.org>
+References: <v2t3abd05a91004071856s5811e086q17241996a359e172@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 08 08:07:21 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Aghiles <aghilesk@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 08 08:21:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nzkta-00019t-5J
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 08:07:18 +0200
+	id 1Nzl78-0005EG-2X
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 08:21:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755545Ab0DHGHN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Apr 2010 02:07:13 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:56388 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755215Ab0DHGHM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Apr 2010 02:07:12 -0400
-Received: by gyg13 with SMTP id 13so1010499gyg.19
-        for <git@vger.kernel.org>; Wed, 07 Apr 2010 23:07:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Lvml4S1AmXsB/0CKaSc0mVeK97RmkU+QEohYHSAwyuo=;
-        b=dHqc3tD9XisLHM4HJTrr/sFxkkdEwxs7AO+ZDOunDZbzAbFI3iay6yzC866dubtuDL
-         uO+GwwyrF5vcv0ZnK/yjIrivJahBsnXGvTPDiOFI7mYW1NQX7ILBR3s6mcj3241BCBbg
-         kkwCSQEtx/N/yd+rxoMdsnF7XfdLZTI01Bn9I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=i2hyfiFxGYp8kqraHxcxWB4uRG2bmyeLnTnzHji/2G9g1Bv+ssegIE5rvGr5hyEQ7O
-         ZgGiSnEJ8LV+itlV7hEoiIOjhFznAZ02Xm4gNiQnpjNVmhLnz21roMxdTLbKuH56JxOA
-         Gk43ipR4ke8yGe/isO8hEVOhr7DgQ9fZ1WOQo=
-Received: by 10.231.10.65 with HTTP; Wed, 7 Apr 2010 23:07:11 -0700 (PDT)
-In-Reply-To: <20100408044552.GA30473@coredump.intra.peff.net>
-Received: by 10.151.61.8 with SMTP id o8mr4188384ybk.57.1270706831362; Wed, 07 
-	Apr 2010 23:07:11 -0700 (PDT)
+	id S1758203Ab0DHGUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Apr 2010 02:20:50 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62275 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758026Ab0DHGUt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Apr 2010 02:20:49 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 62171A9A05;
+	Thu,  8 Apr 2010 02:20:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=71GQeSQAuonVCI8/4JPk8inr/VI=; b=M27iQ2
+	Vr5h3oXIqYmMt484A5sV5DSHJYlFox12AldV4bPyUArvE+3NptA9JpuNZlErKb+v
+	SPX8OpYn043kiL4wkwr5/6GwM2bePUSRrVGHm/HYgfmMS7u5d1XE0vN0drHVuIvB
+	+G9m5gGqpGOs1v6Lwk5Z0QK6uvSa5jxZYXnTw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gg0GbEGP/oqsE9EZkV5upfQ4JnPBG/f5
+	1ufsPHBFrJs8ti/+eiOIuMsiHFQaI2lWUnDminTCx8DdKWtP2scOL1r+YWyx8kch
+	ZFvY8NzQzFFNvok7TAtC0i3g+kzN6yiGQJY42/UzUMgotqguSE1hItDEpybK6qQt
+	OtoasRCVBWA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4006DA9A04;
+	Thu,  8 Apr 2010 02:20:46 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B316A9A02; Thu,  8 Apr
+ 2010 02:20:41 -0400 (EDT)
+In-Reply-To: <v2t3abd05a91004071856s5811e086q17241996a359e172@mail.gmail.com>
+ (Aghiles's message of "Wed\, 7 Apr 2010 21\:56\:56 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DE2CFF50-42D6-11DF-B3C7-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144323>
 
-Hi,
+Aghiles <aghilesk@gmail.com> writes:
 
-On Thu, Apr 8, 2010 at 12:45 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Apr 08, 2010 at 11:58:03AM +0800, Tay Ray Chuan wrote:
->
->> Instead of breaking execution when no remote (as specified in the
->> variable dest) is specified when git-ls-remote is invoked, continue =
-on
->> and let remote_get() handle it.
->>
->> That way, we are able to use the default remote (by default, "origin=
-"),
->> as git-fetch, git-push, and others, do.
->>
->> While we're at it, die with a more interesting message ("Where do yo=
-u
->> want to..."), as git-fetch does, instead of the plain usage help.
->
-> I don't really see a problem with this. The current behavior produces=
- an
-> error, so it is not as if we are breaking somebody's workflow, and th=
-e
-> only sensible default is the same one used by the other commands.
+> I mistakenly pulled a project into another project. I had the
+> "warning: no common commits" but the pull did proceed.
+> I am wondering if, from a usability point of view, it would be
+> best to avoid doing so by default.
 
-I'm trying to make it behave like the other commands that deal with
-remotes, such as git-fetch and git-push; when they are run without any
-arguments, they default to "origin" or branch.<name>.remote.
+Refusing this without an escape hatch would regress two minor but valid
+workflows.
 
-Assuming that you and I are talking about the same "other commands",
-than the default isn't an issue; the rules used to determine the
-default remote is done in remote_get(), so they are similar.
+ 1. "a cross-project merge" like 5569bf9 (Do a cross-project merge of Paul
+    Mackerras' gitk visualizer, 2005-06-22) aka "The coolest merge ever".
+    Being able to do this kind of merge after the fact is the whole point
+    of allowing merges between two histories with no common commits.
 
->> + =A0 =A0 if (!remote)
->> + =A0 =A0 =A0 =A0 =A0 =A0 die("Where do you want to list from today?=
-");
->
-> Heh.
+ 2. A not so uncommon newbie mistake sequence:
 
-Do you think this is too light-hearted for ls-remote's role? If so,
-I'll just revert back exiting with the usage text.
+    $ git init
+    $ git pull $there
 
->> +test_expect_success 'dies with message when no remote specified and=
- no default remote found' '
->> +
->> + =A0 =A0 !(git ls-remote >actual 2>&1) &&
->> + =A0 =A0 test_cmp exp actual
->
-> Use test_must_fail?
+    instead of the usual
 
-Noted.
+    $ git clone $there
+    
+    which was an actual complaint that led to the "merge into emptiness"
+    behaviour of "git pull" in such a case added as a new feature.
 
->> +cat >exp <<EOF
->> +fatal: 'refs*master' does not appear to be a git repository
->> +fatal: The remote end hung up unexpectedly
->> +EOF
->> +test_expect_success 'confuses pattern as remote when no remote spec=
-ified' '
->> + =A0 =A0 #
->> + =A0 =A0 # Although ugly, this behaviour is akin to the confusion o=
-f refspecs for
->> + =A0 =A0 # remotes by git-fetch and git-push, eg:
->> + =A0 =A0 #
->> + =A0 =A0 # =A0 $ git fetch branch
->> + =A0 =A0 #
->> +
->> + =A0 =A0 # We could just as easily have used "master"; the "*" emph=
-asizes its
->> + =A0 =A0 # role as a pattern.
->> + =A0 =A0 !(git ls-remote refs*master >actual 2>&1) &&
->> + =A0 =A0 test_cmp exp actual
->> +
->> +'
->
-> This seems like a very odd thing to be testing. Should you not instea=
-d
-> test that "git ls-remote $foo" still treats $foo as a remote and list=
-s
-> it, which is what we really care about?
+If we were to forbid a "nothing in common" merge by default and add an
+option to explicitly allow it on demand, I would not be worried too much
+about the first use case.  Anybody who runs a cross-project merge has
+already learned git well enough that having to add an extra option is not
+a problem.
 
-There are already existing tests to test "git ls-remote $foo" (unless
-you mean '$' to have a special significance, like '*' does).
+But I would be unhappy if I have to be the one to hear complaints from
+newbies who are now forced to add an obscure option to his "git pull" in
+the second case.
 
-The test was to let current and future git hackers/users know that the
-usage of <pattern> as the remote by git-ls-remote ("<pattern> does not
-appear to be a git repository") is indeed expected behaviour.
-
---=20
-Cheers,
-Ray Chuan
+So this is not so cut-and-dried from the usability point of view as you
+seem to think.
