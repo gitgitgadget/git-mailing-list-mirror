@@ -1,90 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: ghost refs
-Date: Thu, 8 Apr 2010 15:49:08 -0400
-Message-ID: <20100408194908.GB4222@sigill.intra.peff.net>
-References: <89030B4A18ECCD45978A3A6B639D1F24032A074E1C@FL01EXMB01.trad.tradestation.com>
- <r2h32541b131004070958pa66bb7a3g6a1ecfaea0419965@mail.gmail.com>
- <20100407210010.GB27012@coredump.intra.peff.net>
- <89030B4A18ECCD45978A3A6B639D1F24032A0750BE@FL01EXMB01.trad.tradestation.com>
- <k2p32541b131004071503g4ce66e5bjac8270b10790a2af@mail.gmail.com>
- <89030B4A18ECCD45978A3A6B639D1F24032A0750CC@FL01EXMB01.trad.tradestation.com>
- <k2x32541b131004071511i9bbe883az504547d6133aef@mail.gmail.com>
- <20100408043059.GA28768@coredump.intra.peff.net>
- <89030B4A18ECCD45978A3A6B639D1F24032A075390@FL01EXMB01.trad.tradestation.com>
- <7vwrwh6fz8.fsf@alter.siamese.dyndns.org>
+From: Aghiles <aghilesk@gmail.com>
+Subject: Re: git pull with "no common commits" : danger?
+Date: Thu, 8 Apr 2010 15:55:23 -0400
+Message-ID: <t2j3abd05a91004081255h58d2aca3leeb41adf53dc6a4f@mail.gmail.com>
+References: <v2t3abd05a91004071856s5811e086q17241996a359e172@mail.gmail.com> 
+	<20100408054349.GA6067@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: John Dlugosz <JDlugosz@TradeStation.com>, git@vger.kernel.org,
-	Avery Pennarun <apenwarr@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 08 21:49:19 2010
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 08 21:55:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nzxj4-0007yl-5e
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 21:49:18 +0200
+	id 1NzxpT-0002jc-RB
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 21:55:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933144Ab0DHTtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Apr 2010 15:49:12 -0400
-Received: from peff.net ([208.65.91.99]:51951 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933028Ab0DHTtL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Apr 2010 15:49:11 -0400
-Received: (qmail 26060 invoked by uid 107); 8 Apr 2010 19:49:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 08 Apr 2010 15:49:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Apr 2010 15:49:09 -0400
-Content-Disposition: inline
-In-Reply-To: <7vwrwh6fz8.fsf@alter.siamese.dyndns.org>
+	id S933373Ab0DHTzq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Apr 2010 15:55:46 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:49563 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933315Ab0DHTzp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Apr 2010 15:55:45 -0400
+Received: by wyb39 with SMTP id 39so161463wyb.19
+        for <git@vger.kernel.org>; Thu, 08 Apr 2010 12:55:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=OasZ8+I9wnUrdlnC4/wXkP3B9Q/PV5brz2A9UVPsdm8=;
+        b=cd6cjV8XINSd9raKd+D57dI+uOVCVPjfJvk9xttGkMGpBI75QzlIEc9WZxsq8BlwYG
+         l900rynHAPJP7FXYLvrr7LoZwy5hrUWanKAjFJIgC5Oal3kkI9ZM4S4W9/kNrnR/Mb0x
+         VcEb7cEBVXeK9S5XwD17hKrs+2QdB+78f04hY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Weo2jaaVhOARj3y6k5yYhd48eYwseTo7MM/B0NZq/jQtnfkP1iRB6CqupTrrEkOvqN
+         JSgQMEjjkF+L4Mh/R84qncF7ZuaW713xFocYGmEP39erLUh3g1VZAmS91Y/4sCtvGY6u
+         xUtoJ7s+1Dmjvo+CkcYFMlQHdV5ZzEbPnb9/w=
+Received: by 10.216.170.8 with HTTP; Thu, 8 Apr 2010 12:55:23 -0700 (PDT)
+In-Reply-To: <20100408054349.GA6067@progeny.tock>
+Received: by 10.216.172.70 with SMTP id s48mr299152wel.114.1270756543167; Thu, 
+	08 Apr 2010 12:55:43 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144377>
 
-On Thu, Apr 08, 2010 at 09:55:55AM -0700, Junio C Hamano wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+> ...
+>
+> On the other hand, =91git pull=92 is a little different. =A0The fetch=
+ has
+> very little cost because it=92s interruptible, but the merge could
+> result in two unrelated pieces of history being merged, requiring
+> the user to use =91git reset --keep HEAD^=92 to get back to the
+> previous state. =A0A more likely outcome is a merge conflict, requiri=
+ng
+> =91git reset --merge=92 to recover.
+>
+> Can we make this less painful? =A0Is it worth adding yet another opti=
+on
+> to =91git pull=92 to avoid this pain? =A0I don=92t know.
 
-> John Dlugosz <JDlugosz@TradeStation.com> writes:
-> 
-> > In git-branch,
-> >
-> > 	-l
-> >
-> > 	    Create the branch's reflog. This activates recording of all
-> > 	    changes made to the branch ref, enabling use of date based
-> > 	    sha1 expressions such as "<branchname>@{yesterday}".
-> 
-> That is how you selectively enable reflog for that particular branch when
-> you have explicitly disabled "reflog by default" with the configuration.
+That is exactly the case I was talking about.  I never lost any data
+because of this and considering what Junio Hamano is saying I
+probably should just continue to do the 'git reset'.
 
-Maybe:
-
--- >8 --
-Subject: [PATCH] docs: clarify "branch -l"
-
-This option is mostly useless these days because we turn on
-reflogs by default in non-bare repos.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-branch.txt |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 903a690..d78f4c7 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -72,6 +72,8 @@ OPTIONS
- 	Create the branch's reflog.  This activates recording of
- 	all changes made to the branch ref, enabling use of date
- 	based sha1 expressions such as "<branchname>@\{yesterday}".
-+	Note that in non-bare repositories, reflogs are usually
-+	enabled by default by the `core.logallrefupdates` config option.
- 
- -f::
- --force::
--- 
-1.7.1.rc0.248.g055378.dirty
+  -- aghiles
