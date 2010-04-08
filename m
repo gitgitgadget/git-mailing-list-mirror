@@ -1,117 +1,186 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: log --pretty/--oneline: ignore log.decorate
-Date: Thu, 08 Apr 2010 10:14:24 -0700
-Message-ID: <7vljcx6f4f.fsf@alter.siamese.dyndns.org>
-References: <7vtyrr6nes.fsf@alter.siamese.dyndns.org>
- <7vmxxggsl4.fsf@alter.siamese.dyndns.org>
- <20100408073014.GA15474@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Steven Drake <sdrake@xnet.co.nz>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 08 19:14:49 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH v3] ls-remote: fall-back to default remotes when no remote specified
+Date: Fri,  9 Apr 2010 01:21:13 +0800
+Message-ID: <1270747273-1504-1-git-send-email-rctay89@gmail.com>
+References: <1270710427-6680-1-git-send-email-rctay89@gmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 08 19:21:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzvJW-0002Le-Gh
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 19:14:46 +0200
+	id 1NzvQ7-00063M-TS
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 19:21:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932833Ab0DHROm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Apr 2010 13:14:42 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52916 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932653Ab0DHROk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Apr 2010 13:14:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BA433A8354;
-	Thu,  8 Apr 2010 13:14:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PskieJjVJZR9A032NfjF4vTTR2w=; b=EmpHN7
-	xrVbeSWhuJVAnsuSDc2ph1K+mVsDl5Fdux7OmaEa0LfdfZzf/z1K2twnkmh7cCwm
-	HS8UpoVD3jgYP6HGB/qazyhOQ3WUjkMo8mjz5agppcwdYyq37029r/6Sp/BlIcE0
-	YEE95D4BPn+MkmzBZlwkIicqylZ5+MP4ChD0k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YcVwXyl1a7d/pduVcrmKxOJHsUQl1jlw
-	suRC/3RX9NYQ1PTMw4ehFcLgJzYdv8jjMVS+Otlt6lgM7pUpjSPEc1i6YhC5ueLb
-	YB/Bb9sxu+lvkwEftrDlA5thdgm/7pcdnpURji54rVA7fOHsljeeT+sUCCosvmRj
-	GRTuqyPQ9vc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 78ECEA8353;
-	Thu,  8 Apr 2010 13:14:36 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 88D7EA834A; Thu,  8 Apr
- 2010 13:14:27 -0400 (EDT)
-In-Reply-To: <20100408073014.GA15474@coredump.intra.peff.net> (Jeff King's
- message of "Thu\, 8 Apr 2010 03\:30\:14 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 35363022-4332-11DF-9D50-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932952Ab0DHRVa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Apr 2010 13:21:30 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:62390 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753847Ab0DHRV3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Apr 2010 13:21:29 -0400
+Received: by bwz1 with SMTP id 1so1966336bwz.21
+        for <git@vger.kernel.org>; Thu, 08 Apr 2010 10:21:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=6GVmWW20wViXB3WkL8aRt5hAFGl//DSeFruXvQayb0c=;
+        b=CmKGpit9UxOKOnvNFYMEbYllfa7nkdm3gQU+KQn7HacPCynCaZ4o1VBXleCZexk4oT
+         VR0qmvAhaS9JCG9Zeyhf/bMiDIy8Rx9zbxwuhc1LXNamm3SSmX+fysyl6XXF5Qw//O3k
+         aDU/pWhgI+GAH8TyMwam1i/Cnewv4xBxhomQo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=HS2ttvFdB59Th9eE2HWuSg9eH+1lYvjaY0pjm8dlUkpbJ1HBhyhPmgAa0RT7ea5QWO
+         Bz/X/VvK6Qh4ACqPTftd1V/fDP+mwWLBS5Pu4kdK4+gsAHgM9xuD7I6+HW7ITjciz1cg
+         oaKCzF2zqNR/yBujBfCCdW6w7WMnJ0KTqISG8=
+Received: by 10.204.32.77 with SMTP id b13mr477231bkd.113.1270747286580;
+        Thu, 08 Apr 2010 10:21:26 -0700 (PDT)
+Received: from localhost.localdomain (cm46.zeta153.maxonline.com.sg [116.87.153.46])
+        by mx.google.com with ESMTPS id d5sm1998102bkd.19.2010.04.08.10.21.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 08 Apr 2010 10:21:25 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.20.gcb44ed
+In-Reply-To: <1270710427-6680-1-git-send-email-rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144366>
 
-Jeff King <peff@peff.net> writes:
+Instead of breaking execution when no remote (as specified in the
+variable dest) is specified when git-ls-remote is invoked, continue on
+and let remote_get() handle it.
 
->> > * sd/log-decorate (2010-02-17) 3 commits
->> >   (merged to 'next' on 2010-03-08 at 58a6fba)
->> >  + log.decorate: usability fixes
->> >  + Add `log.decorate' configuration variable.
->> >  + git_config_maybe_bool()
->> >
->> > Needs squelching the configuration setting when "--pretty=raw" is given,
->> > at least, or possibly when any "--pretty" is explicitly given.
->> 
->> This is necessary if we want to let users specify log.decorate and still
->> use gitk.  A patch should look like this (of course untested).
->
-> Hmm. You took the "any --pretty" option with this patch.
+This way, we are able to use the default remotes (eg. "origin",
+branch.<name>.remote), as git-fetch, git-push, and other users of
+remote_get(), do.
 
-Yeah, I considered to further narrow it down to the --pretty=raw case;
-because that is not something we do for the default --show-notes, I opted
-for consistency.  But a decoration and notes are quite different, and
-such a consistency perhaps is not worth it.  How about this on top?
+If no suitable remote is found, exit with a message describing the
+issue, instead of just the usage text, as we do previously.
 
--- >8 --
-Subject: log: only "--pretty=raw" defeats log.decorate from the command line
+Add several tests to check that git-ls-remote handles the
+no-remote-specified situation.
 
-Unlike notes that are often multi-line and disrupting to be placed in many
-output formats, a decoration is designed to be a small token that can be
-tacked after an existing line of the output where a commit object name sits.
+Also add a test that "git ls-remote <pattern>" does not work; we are
+unable to guess the remote in that situation, as are git-fetch and
+git-push.
 
-Disabling log.decorate for something like "log --oneline" would defeat the
-purpose of the configuration.
+In that test, we are testing for messages coming from two separate
+processes, but we should be OK, because the second message is triggered
+by closing the fd which must happen after the first message is printed.
+(analysis by Jeff King.)
 
-We _might_ want to change it further in the future to force scripts that
-do not want to be broken by random end user configurations to explicitly
-say "log --no-decorate", but that would be an incompatible change that
-needs the usual multi-release-cycle deprecation process.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
- builtin-log.c |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+ builtin/ls-remote.c  |   11 ++++++---
+ t/t5512-ls-remote.sh |   58 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 65 insertions(+), 4 deletions(-)
 
-diff --git a/builtin-log.c b/builtin-log.c
-index 7f4186f..017fcf8 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -108,10 +108,11 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index 70f5622..6c738c9 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -4,7 +4,8 @@
+ #include "remote.h"
+ 
+ static const char ls_remote_usage[] =
+-"git ls-remote [--heads] [--tags]  [-u <exec> | --upload-pack <exec>] <repository> <refs>...";
++       "git ls-remote [--heads] [--tags]  [-u <exec> | --upload-pack <exec>]\n"
++"                     [<repository> [<refs>...]]";
+ 
+ /*
+  * Is there one among the list of patterns that match the tail part
+@@ -73,9 +74,6 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 		break;
  	}
  
- 	/*
--	 * defeat log.decorate configuration interacting with --pretty
-+	 * defeat log.decorate configuration interacting with --pretty=raw
- 	 * from the command line.
- 	 */
--	if (!decoration_given && rev->pretty_given)
-+	if (!decoration_given && rev->pretty_given
-+	    && rev->commit_format == CMIT_FMT_RAW)
- 		decoration_style = 0;
+-	if (!dest)
+-		usage(ls_remote_usage);
+-
+ 	if (argv[i]) {
+ 		int j;
+ 		pattern = xcalloc(sizeof(const char *), argc - i + 1);
+@@ -87,6 +85,11 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 	remote = remote_get(dest);
++	if (!remote) {
++		if (dest)
++			die("bad repository '%s'", dest);
++		die("No remote configured to list refs from.");
++	}
+ 	if (!remote->url_nr)
+ 		die("remote %s has no configured URL", dest);
+ 	transport = transport_get(remote, NULL);
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index 1dd8eed..3cf1b3d 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -49,4 +49,62 @@ test_expect_success 'ls-remote self' '
  
- 	if (decoration_style) {
+ '
+ 
++test_expect_success 'dies when no remote specified and no default remotes found' '
++
++	test_must_fail git ls-remote
++
++'
++
++test_expect_success 'use "origin" when no remote specified' '
++
++	git remote add origin "$(pwd)/.git" &&
++	git ls-remote >actual &&
++	test_cmp expected.all actual
++
++'
++
++test_expect_success 'use branch.<name>.remote if possible' '
++
++	#
++	# Test that we are indeed using branch.<name>.remote, not "origin", even
++	# though the "origin" remote has been set.
++	#
++
++	# setup a new remote to differentiate from "origin"
++	git clone . other.git &&
++	(
++		cd other.git &&
++		echo "$(git rev-parse HEAD)	HEAD"
++		git show-ref	| sed -e "s/ /	/"
++	) >exp &&
++
++	git remote add other other.git &&
++	git config branch.master.remote other &&
++
++	git ls-remote >actual &&
++	test_cmp exp actual
++
++'
++
++cat >exp <<EOF
++fatal: 'refs*master' does not appear to be a git repository
++fatal: The remote end hung up unexpectedly
++EOF
++test_expect_success 'confuses pattern as remote when no remote specified' '
++	#
++	# Do not expect "git ls-remote <pattern>" to work; ls-remote, correctly,
++	# confuses <pattern> for <remote>. Although ugly, this behaviour is akin
++	# to the confusion of refspecs for remotes by git-fetch and git-push,
++	# eg:
++	#
++	#   $ git fetch branch
++	#
++
++	# We could just as easily have used "master"; the "*" emphasizes its
++	# role as a pattern.
++	test_must_fail git ls-remote refs*master >actual 2>&1 &&
++	test_cmp exp actual
++
++'
++
+ test_done
+-- 
+1.7.0.97.g1372c
