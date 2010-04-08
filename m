@@ -1,87 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Apr 2010, #03; Wed, 07)
-Date: Thu, 8 Apr 2010 03:38:26 -0400
-Message-ID: <20100408073825.GA15153@coredump.intra.peff.net>
-References: <7v6342ahx9.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Add a basic idea section for git-blame.
+Date: Thu, 08 Apr 2010 01:00:13 -0700
+Message-ID: <7vmxxe74s2.fsf@alter.siamese.dyndns.org>
+References: <1270709490-19163-1-git-send-email-struggleyb.nku@gmail.com>
+ <1270709490-19163-2-git-send-email-struggleyb.nku@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 08 09:38:54 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, trast@student.ethz.ch
+To: Bo Yang <struggleyb.nku@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 08 10:00:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzmKC-00011v-F6
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 09:38:52 +0200
+	id 1Nzmf9-0002xN-OG
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 10:00:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932145Ab0DHHir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Apr 2010 03:38:47 -0400
-Received: from peff.net ([208.65.91.99]:60590 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932113Ab0DHHiq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Apr 2010 03:38:46 -0400
-Received: (qmail 18443 invoked by uid 107); 8 Apr 2010 07:38:45 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 08 Apr 2010 03:38:45 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Apr 2010 03:38:26 -0400
-Content-Disposition: inline
-In-Reply-To: <7v6342ahx9.fsf@alter.siamese.dyndns.org>
+	id S1751938Ab0DHIA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Apr 2010 04:00:26 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48496 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751001Ab0DHIAZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Apr 2010 04:00:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E1C4BA8632;
+	Thu,  8 Apr 2010 04:00:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=z/4kCE8wrRDwvWQLRX86bef4XEY=; b=GZqJRp
+	VHFExPQ0H6gRQBCS8pOOYtIk1JPneTZ6VhwifKVwjEMeke88wN99KUG+1uH7xb8U
+	DGQHn6/zJrSLVGJZJdPqCZoAlOnjOH3sCmKz0K5Xv09csTBwSVp6WuUBEHBnX6az
+	eZyEktE/mOd2C//CZ8cl1j2U1p6qHZn1TmjN8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aW6favJMK1qv44P5++JKse+Bbeag2iXt
+	lKf7qSRtBaNZzuodjl2Uls0fS2l3pY+OlU11ll9cQ00z3oK6kRajqL67Nb4K3Ks5
+	4THL3i/IQhtacKnrLB/MFLZJAjALmqQT92Xj/rqRizs7bYJA6ad1IlWmYDO4vqrG
+	9dZE6Bi30as=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A468FA8631;
+	Thu,  8 Apr 2010 04:00:18 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA9AAA862F; Thu,  8 Apr
+ 2010 04:00:14 -0400 (EDT)
+In-Reply-To: <1270709490-19163-2-git-send-email-struggleyb.nku@gmail.com> (Bo
+ Yang's message of "Wed\,  7 Apr 2010 23\:51\:29 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C5FB937A-42E4-11DF-B58D-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144343>
 
-On Wed, Apr 07, 2010 at 05:48:02PM -0700, Junio C Hamano wrote:
+Bo Yang <struggleyb.nku@gmail.com> writes:
 
-> * jc/test-sleepless (2010-04-06) 1 commit
->   (merged to 'next' on 2010-04-07 at 8ccf40a)
->  + war on "sleep" in tests
+> +A call to `git-blame <rev> -- <file>` works as follows:
+> +
+> +- Look at `git diff <rev>^ <rev>` to see what the commit did.
+> +
+> +- Discard all `-` lines in the diff, since they are no longer part of
+> +  `<file>`.
+> +
+> +- Take blame for all `+` lines; i.e., the newly added lines according
+> +  to the diff are attributed to `<rev>`.
 
-I read this one, and it looked fine to me.
+I hate to say it, but this is horrifying; it works quite the other way
+around.
 
-> * sd/log-decorate (2010-04-06) 4 commits
->   (merged to 'next' on 2010-04-06 at 992c9ad)
->  + log --pretty/--oneline: ignore log.decorate
->   (merged to 'next' on 2010-03-08 at 58a6fba)
->  + log.decorate: usability fixes
->  + Add `log.decorate' configuration variable.
->  + git_config_maybe_bool()
-> 
-> I did the tip one myself.  An extra set or two of eyeballs would be
-> appreciated.
+The name of the game is not "take blame by looking at the diff to see what
+we introduced"; it is "avoid taking blame at all cost, by looking at the
+diff to see what we might have inherited from our parents".
 
-I just responded in that thread.
+A description closer to the truth would be:
 
-> * jk/cached-textconv (2010-04-01) 7 commits
->   (merged to 'next' on 2010-04-02 at a023e3c)
->  + diff: avoid useless filespec population
->  + diff: cache textconv output
->  + textconv: refactor calls to run_textconv
->  + introduce notes-cache interface
->  + make commit_tree a library function
->  + fix textconv leak in emit_rewrite_diff
->  + fix const-correctness of write_sha1_file
+ - Look at output of "git diff <rev>^$n <rev>" for each parent ($n runs
+   from 1 to number of parents);
 
-You mentioned pushing this off to 1.7.2. I don't have a problem with
-that, but you may want to cherry-pick or merge up to the "fix textconv
-leak", as it is an unrelated fix.
+ - Ignore all +/- lines.  The context ' ' lines and lines outside of diff
+   hunks are known to have been inherited from $n-th parent and they are
+   not our fault.  We can happily pass blame for these lines to our
+   parent.
 
-I think it makes sense to target 1.7.2 with the feature, and then flip
-the default for diff.*.cachetextconv to 'true' in 1.7.3. That will give
-it some wider exposure before we start running it by default.
+ - Do the above for all the parents.  We (grudgingly) take blame for lines
+   that we failed to find corresponding lines in our parents.
 
-> * nd/setup (2010-04-05) 43 commits
-> [...]
-> Rerolled.  I need to look at this series during the feature freeze so that
-> we can decide to (or not to) include it in 'next' early in post 1.7.1 cycle.
+The -M option affects what happens between the second and the third step.
+We try to see if the lines that we did not pass blame to <rev>^$n might
+have come from <rev>^$n by running diff between the remainder and the blob
+in <rev>^$n *again*.  This lets us catch code movement within the blob,
+hence the name of the option -M.
 
-I really should review this, but it's just so dauntingly large and
-boring looking that I haven't gotten around to it. Probably one or both
-of us should look at it before applying it to next, but assuming it
-passes a basic sanity check, I think the best thing will be to get it in
-'next' early so we can shake out any bugs during the next cycle.
+The -C option affects the choice of the blob in <rev>^$n.  Usually, we
+internally run an equivalent of "git diff -M <rev>^$n <rev>" to notice
+that the file F that we are analyzing used to be called F' in $n-th
+parent, and run the diff against it, but -C allows us to check with paths
+other than that, and additional -C enlarges the search space.  This is to
+notice code movement (with a single -C) or copies (with more -Cs) across
+paths.
 
--Peff
+For illustrated description, read the classic:
+ 
+    http://thread.gmane.org/gmane.comp.version-control.git/28826
+
+Almost all the hits in the first page from this query would help, too:
+
+http://search.gmane.org/?query=On+blame%2Fpickaxe&author=Junio+C+Hamano&group=gmane.comp.version-control.git&sort=revdate&DEFAULTOP=and&[=2&xP=blame%09pickaxe&xFILTERS=Gcomp.version-control.git-Ac-Ahamano-Ajunio---A
