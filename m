@@ -1,160 +1,88 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: ghost refs
-Date: Thu, 08 Apr 2010 13:42:01 -0700
-Message-ID: <7vbpdt65ie.fsf@alter.siamese.dyndns.org>
-References: <89030B4A18ECCD45978A3A6B639D1F24032A074E1C@FL01EXMB01.trad.tradestation.com>
- <r2h32541b131004070958pa66bb7a3g6a1ecfaea0419965@mail.gmail.com>
- <20100407210010.GB27012@coredump.intra.peff.net>
- <89030B4A18ECCD45978A3A6B639D1F24032A0750BE@FL01EXMB01.trad.tradestation.com>
- <k2p32541b131004071503g4ce66e5bjac8270b10790a2af@mail.gmail.com>
- <89030B4A18ECCD45978A3A6B639D1F24032A0750CC@FL01EXMB01.trad.tradestation.com>
- <k2x32541b131004071511i9bbe883az504547d6133aef@mail.gmail.com>
- <20100408043059.GA28768@coredump.intra.peff.net>
- <89030B4A18ECCD45978A3A6B639D1F24032A075390@FL01EXMB01.trad.tradestation.com>
- <7vwrwh6fz8.fsf@alter.siamese.dyndns.org>
- <20100408194908.GB4222@sigill.intra.peff.net>
+Subject: Re: Re*: [PATCH v9] Documentation/remote-helpers: Add invocation 
+ section
+Date: Thu, 08 Apr 2010 13:45:56 -0700
+Message-ID: <7v634165bv.fsf@alter.siamese.dyndns.org>
+References: <g2vf3271551004062257ycbda64d3z3d3004d802a03fc3@mail.gmail.com>
+ <7vsk77e20r.fsf@alter.siamese.dyndns.org>
+ <n2nf3271551004070950ucf314b40g56087d49dfbd29f1@mail.gmail.com>
+ <20100407224942.GA20239@progeny.tock>
+ <7vzl1eamss.fsf@alter.siamese.dyndns.org>
+ <h2ifabb9a1e1004081152hbca48fbex11134249aef9df14@mail.gmail.com>
+ <7vfx3567e2.fsf_-_@alter.siamese.dyndns.org>
+ <r2ifabb9a1e1004081321ia91ad7f7r58f39b9173594af1@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: John Dlugosz <JDlugosz@TradeStation.com>, git@vger.kernel.org,
-	Avery Pennarun <apenwarr@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 08 22:42:21 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Gabriel Filion <lelutin@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 08 22:46:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzyYO-0000M7-AE
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 22:42:20 +0200
+	id 1NzycL-0002GH-1d
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 22:46:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933268Ab0DHUmP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Apr 2010 16:42:15 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44885 "EHLO
+	id S933389Ab0DHUqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Apr 2010 16:46:19 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53196 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933242Ab0DHUmN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Apr 2010 16:42:13 -0400
+	with ESMTP id S933229Ab0DHUqS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Apr 2010 16:46:18 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 53E64A8E60;
-	Thu,  8 Apr 2010 16:42:12 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AA543A8F3B;
+	Thu,  8 Apr 2010 16:46:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8DNN8GI/l/jJgo5k4a95FNIJ90U=; b=jHgG+b
-	AnWnFwo0UTXXIfOKnc+3Z9HNPLoNoRsVnU2SQaC5GmKchzRcDCKqAV1EJeWL5gm+
-	c33ntcnvPu/uYH9mSdIxdSGnEaUlZJKaiLKugAUlMjAFEZX7DzqqQClTvLUePLET
-	5AnimEXuzV+/UtT4SuGhk6POYxx+jS8IBkU1s=
+	:content-type; s=sasl; bh=m8zgONwRBItEZmDs3yjlhPf4hWU=; b=ayAqDB
+	Su+17K46iwUT6ygzasraD0gC/He0556I52giLnPWUqn9oqlOSOv8EasXu4ld91Jf
+	DDsQYHJUY714O+QySiJBEBoyEseqoy6vMqBH51iayIs+rK4fArVx1ivT/zx5LDNC
+	1eidYPZIJ3pdsc2oskGEfiMRxfUCsEUkFMQG0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vh8DYZ6cpzvyo2eotnWb5yty+8esg1uv
-	XAcSCW2KuEXSZ/W1dZTEd1HZsVoYrz5CvXov0y8h5enSjZYe43e3eYC+U8/7KxP/
-	eSNc4RYy6gEntuOmsdqT+7Qr1dH0SdRLtdcnTSXUL52Ul63+Uou402OoRcmxfBha
-	RRTWI3zTieQ=
+	:content-type; q=dns; s=sasl; b=bMU4E71kS/1aGqTtfXeC1E83XbUIlgE9
+	kC6NvxJnwB8o6qyT6Lj7byhFLh4UQPTN/uo+pogK2kAKgHOJfluHc1w4N5uV4rdv
+	W2lD9ZBDYPnmOaADGTnb1xLrNckft+PWzEAN/pWD0KGi1gDusva8v4pGZgkIhluV
+	pEsV7jw03rw=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B41BBA8E59;
-	Thu,  8 Apr 2010 16:42:07 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E558A8F35;
+	Thu,  8 Apr 2010 16:46:08 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6A315A8E56; Thu,  8 Apr
- 2010 16:42:02 -0400 (EDT)
-In-Reply-To: <20100408194908.GB4222@sigill.intra.peff.net> (Jeff King's
- message of "Thu\, 8 Apr 2010 15\:49\:08 -0400")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1105DA8F32; Thu,  8 Apr
+ 2010 16:45:57 -0400 (EDT)
+In-Reply-To: <r2ifabb9a1e1004081321ia91ad7f7r58f39b9173594af1@mail.gmail.com>
+ (Sverre Rabbelier's message of "Thu\, 8 Apr 2010 22\:21\:44 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 32B26754-434F-11DF-A579-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C2489CD0-434F-11DF-B7D1-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144382>
 
-Jeff King <peff@peff.net> writes:
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-> Maybe:
+> I like it, but...
 >
-> -- >8 --
-> Subject: [PATCH] docs: clarify "branch -l"
+>> -Note that your maintainer does not necessarily read everything
+>> -on the git mailing list.
 >
-> This option is mostly useless these days because we turn on
-> reflogs by default in non-bare repos.
+>> -Also note that your maintainer does not actively involve himself in
+>> -maintaining what are in contrib/ hierarchy.
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  Documentation/git-branch.txt |    2 ++
->  1 files changed, 2 insertions(+), 0 deletions(-)
->
-> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-> index 903a690..d78f4c7 100644
-> --- a/Documentation/git-branch.txt
-> +++ b/Documentation/git-branch.txt
-> @@ -72,6 +72,8 @@ OPTIONS
->  	Create the branch's reflog.  This activates recording of
->  	all changes made to the branch ref, enabling use of date
->  	based sha1 expressions such as "<branchname>@\{yesterday}".
-> +	Note that in non-bare repositories, reflogs are usually
-> +	enabled by default by the `core.logallrefupdates` config option.
->  
->  -f::
->  --force::
+> ... I'm curious as to why you removed these two statements.
 
-That certainly is an improvement, but I've been wondering if it makes
-sense to also have a section in each commands the configuration variables
-that affects the behaviour of the command.  core.logallrefupdates surely
-is not the only variable that affects how "git branch" behaves.
-
-We might want to have a general concensus on what we want to have in the
-documentation.  As you noted, some have too sparse SYNOPSIS, while others
-have full list of options.  Some mention configuration variables, while
-others don't.  Some have extensive examples, while others lack any.
-Once we know the general direction in which we are going, we can hand off
-the actual documentation updates to the crowd ;-)
-
-I'll list my preference off the top of my head as a firestarter.
-
-NAME::
-
-The name followed by what it is used for
-
-SYNOPSIS::
-
-I prefer to have (almost) complete set of options in SYNOPSIS, rather than
-"command [<options>] <args>..." which is next to useless.  This is
-especially true for commands whose one set of options is incompatible with
-other set of options and arguments (e.g. there is no place for "-b" to
-"checkout" that checks out paths out of the index or a tree-ish).
-
-I also prefer not to list "purely for backward compatibility" options in
-SYNOPSIS section.
-
-DESCRIPTION::
-
-The description section should first state what the command is used for,
-iow, in which situation the user might want to use that command.
-
-OPTIONS::
-
-List of full options.  Some existing pages list them alphabetically, while
-others list them in functional groups.  I prefer the latter which tends to
-make the page more concise, and is more suited for people who got used to
-the system (and remember, nobody stays to be a newbie forever, and people
-who stay to be newbies forever are not our primary audience).
-
-Detailed discussion of concepts::
-
-Some manual pages need to have discussion of basic concepts that would not
-be a good fit for the DESCRIPTION section (e.g. "Detached HEAD" section in
-"checkout" manual).  I am not sure if this kind of material is better
-given in OPTIONS section close to the functional group (e.g. "History
-Siimplification" heading in "log" manual).
-
-
-EXAMPLES::
-
-I prefer to make it mandatory for Porcelain command manual pages to have a
-list of often used patterns that a reasonably intelligent person can guess
-how to tweak to match the particular situation s/he is in.
-
-
-AUTHOR/DOCUMENTAITON::
-
-These sections in most pages are not kept up to date, and I prefer to
-remove them altogether.  They do not help end users who never clone
-git.git, and those who clone git.git will have shortlog to give them more
-accurate information.
+The rewritten paragraph already covers these two points, no?  Proposals
+can be cc:ed to me only if what I did in the past is relevant to the
+proposal, meaning "treat the maintainer just like any other contributors
+and reviewers", and it applies to all the codebase, not just the contrib/
+area.
