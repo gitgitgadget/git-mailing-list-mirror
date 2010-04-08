@@ -1,149 +1,160 @@
-From: Lars Jarnbo Pedersen <lars.jarnbo.pedersen@gmail.com>
-Subject: Re: [PATCH] request-pull: return the entered branch if more
- branches are at the same commit
-Date: Thu, 08 Apr 2010 22:37:17 +0200
-Organization: Home
-Message-ID: <1270759037.27317.104.camel@neo>
-References: <1270678956.27317.34.camel@neo>
-	 <7vvdc290ol.fsf@alter.siamese.dyndns.org>
-Reply-To: Lars.Jarnbo.Pedersen@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: ghost refs
+Date: Thu, 08 Apr 2010 13:42:01 -0700
+Message-ID: <7vbpdt65ie.fsf@alter.siamese.dyndns.org>
+References: <89030B4A18ECCD45978A3A6B639D1F24032A074E1C@FL01EXMB01.trad.tradestation.com>
+ <r2h32541b131004070958pa66bb7a3g6a1ecfaea0419965@mail.gmail.com>
+ <20100407210010.GB27012@coredump.intra.peff.net>
+ <89030B4A18ECCD45978A3A6B639D1F24032A0750BE@FL01EXMB01.trad.tradestation.com>
+ <k2p32541b131004071503g4ce66e5bjac8270b10790a2af@mail.gmail.com>
+ <89030B4A18ECCD45978A3A6B639D1F24032A0750CC@FL01EXMB01.trad.tradestation.com>
+ <k2x32541b131004071511i9bbe883az504547d6133aef@mail.gmail.com>
+ <20100408043059.GA28768@coredump.intra.peff.net>
+ <89030B4A18ECCD45978A3A6B639D1F24032A075390@FL01EXMB01.trad.tradestation.com>
+ <7vwrwh6fz8.fsf@alter.siamese.dyndns.org>
+ <20100408194908.GB4222@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 08 22:37:32 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: John Dlugosz <JDlugosz@TradeStation.com>, git@vger.kernel.org,
+	Avery Pennarun <apenwarr@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 08 22:42:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1NzyTi-0006VF-SD
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 22:37:31 +0200
+	id 1NzyYO-0000M7-AE
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 22:42:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933325Ab0DHUhY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Apr 2010 16:37:24 -0400
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:41521 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933259Ab0DHUhX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Apr 2010 16:37:23 -0400
-Received: by ewy20 with SMTP id 20so1143782ewy.1
-        for <git@vger.kernel.org>; Thu, 08 Apr 2010 13:37:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:reply-to:to:cc
-         :in-reply-to:references:content-type:organization:date:message-id
-         :mime-version:x-mailer:content-transfer-encoding;
-        bh=QoILY83m3Ae15PhbBq4sBskND/oy953oBYPTsETJlns=;
-        b=JnAiqJV5OW6GWV4dl+Z9R43dtMXIuEB1MtQuhjT3fn4w4sowa9X4HJIJ8nFBR9lUbW
-         gsTc7WRlMy5TEMRVfXIaq5tbXHtTIkOPYTVf7yBB7/0DObBNXWpSDPOqFPLNtgLbmOkA
-         d4uorj4ko2VjJejQ0Uk7LKOBPH/D8I/IlKJH0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:reply-to:to:cc:in-reply-to:references:content-type
-         :organization:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding;
-        b=TPNzUXMM7u3Q6aww79yJneMbKhM9CkNFQIpTjznNSrAlJ38+nk+MIpgEFcoU4pC7mH
-         q5zA8LeMBudKpXKWMeoPNJYJt+ekiL+Ni77tLslAwz6u/jI0DQFIYR//+XFUKaGy6Zm4
-         PsQ2omjUw6NtGHLc7CpHmUAB6/2bjcKTFoY/c=
-Received: by 10.213.54.147 with SMTP id q19mr426773ebg.46.1270759040671;
-        Thu, 08 Apr 2010 13:37:20 -0700 (PDT)
-Received: from [192.168.1.109] (port137.ds1-kj.adsl.cybercity.dk [217.157.186.14])
-        by mx.google.com with ESMTPS id 13sm289803ewy.5.2010.04.08.13.37.18
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 08 Apr 2010 13:37:19 -0700 (PDT)
-In-Reply-To: <7vvdc290ol.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.28.1
+	id S933268Ab0DHUmP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Apr 2010 16:42:15 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44885 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933242Ab0DHUmN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Apr 2010 16:42:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 53E64A8E60;
+	Thu,  8 Apr 2010 16:42:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8DNN8GI/l/jJgo5k4a95FNIJ90U=; b=jHgG+b
+	AnWnFwo0UTXXIfOKnc+3Z9HNPLoNoRsVnU2SQaC5GmKchzRcDCKqAV1EJeWL5gm+
+	c33ntcnvPu/uYH9mSdIxdSGnEaUlZJKaiLKugAUlMjAFEZX7DzqqQClTvLUePLET
+	5AnimEXuzV+/UtT4SuGhk6POYxx+jS8IBkU1s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vh8DYZ6cpzvyo2eotnWb5yty+8esg1uv
+	XAcSCW2KuEXSZ/W1dZTEd1HZsVoYrz5CvXov0y8h5enSjZYe43e3eYC+U8/7KxP/
+	eSNc4RYy6gEntuOmsdqT+7Qr1dH0SdRLtdcnTSXUL52Ul63+Uou402OoRcmxfBha
+	RRTWI3zTieQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B41BBA8E59;
+	Thu,  8 Apr 2010 16:42:07 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6A315A8E56; Thu,  8 Apr
+ 2010 16:42:02 -0400 (EDT)
+In-Reply-To: <20100408194908.GB4222@sigill.intra.peff.net> (Jeff King's
+ message of "Thu\, 8 Apr 2010 15\:49\:08 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 32B26754-434F-11DF-A579-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144381>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-I clearly did not understand the full usage of the request-pull command
-when I wrote this patch. 
+> Maybe:
+>
+> -- >8 --
+> Subject: [PATCH] docs: clarify "branch -l"
+>
+> This option is mostly useless these days because we turn on
+> reflogs by default in non-bare repos.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  Documentation/git-branch.txt |    2 ++
+>  1 files changed, 2 insertions(+), 0 deletions(-)
+>
+> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+> index 903a690..d78f4c7 100644
+> --- a/Documentation/git-branch.txt
+> +++ b/Documentation/git-branch.txt
+> @@ -72,6 +72,8 @@ OPTIONS
+>  	Create the branch's reflog.  This activates recording of
+>  	all changes made to the branch ref, enabling use of date
+>  	based sha1 expressions such as "<branchname>@\{yesterday}".
+> +	Note that in non-bare repositories, reflogs are usually
+> +	enabled by default by the `core.logallrefupdates` config option.
+>  
+>  -f::
+>  --force::
 
-The development group I'm working with uses the request-pull command in
-a pretty "naive" way. We all have one or more development repos all
-cloning from the same public repo. We have one "Release Manager" that
-puts the next release together by pulling from our development repos on
-request. When the next release is ready the public repo gets updated.
+That certainly is an improvement, but I've been wondering if it makes
+sense to also have a section in each commands the configuration variables
+that affects the behaviour of the command.  core.logallrefupdates surely
+is not the only variable that affects how "git branch" behaves.
 
-When I want to notify the Release Manager that I have new commits I run
-the following command:
+We might want to have a general concensus on what we want to have in the
+documentation.  As you noted, some have too sparse SYNOPSIS, while others
+have full list of options.  Some mention configuration variables, while
+others don't.  Some have extensive examples, while others lack any.
+Once we know the general direction in which we are going, we can hand off
+the actual documentation updates to the crowd ;-)
 
-git request-pull origin/master <my repo> my_dev_branch
+I'll list my preference off the top of my head as a firestarter.
 
-So we dont use public repos for each developer (even if it may be best
-practice) and therefore I missed some of the points of the request-pull
-command.
+NAME::
 
-My main problem with the fact that request-pull may pick the wrong
-branch is that there is often a delay between sending of the
-request-pull command and the Release Manager actually pulling the
-commits and therefore pulling from the wrong branch is potentially very
-dangerous. 
+The name followed by what it is used for
 
-That said I agree with all of your points below.
+SYNOPSIS::
 
-Regards,
+I prefer to have (almost) complete set of options in SYNOPSIS, rather than
+"command [<options>] <args>..." which is next to useless.  This is
+especially true for commands whose one set of options is incompatible with
+other set of options and arguments (e.g. there is no place for "-b" to
+"checkout" that checks out paths out of the index or a tree-ish).
 
-- Lars
+I also prefer not to list "purely for backward compatibility" options in
+SYNOPSIS section.
 
-On Wed, 2010-04-07 at 18:45 -0700, Junio C Hamano wrote:
-> Lars Jarnbo Pedersen <lars.jarnbo.pedersen@gmail.com> writes:
-> 
-> >  git-request-pull.sh |   10 ++++++++++
-> >  1 files changed, 10 insertions(+), 0 deletions(-)
-> >
-> > diff --git a/git-request-pull.sh b/git-request-pull.sh
-> > index 8fd15f6..787383f 100755
-> > --- a/git-request-pull.sh
-> > +++ b/git-request-pull.sh
-> > @@ -49,11 +49,21 @@ merge_base=`git merge-base $baserev $headrev` ||
-> >  die "fatal: No commits in common between $base and $head"
-> >  
-> >  branch=$(git ls-remote "$url" \
-> > +	| sed -n -e "/^$headrev	refs.heads.$head/{
-> 
-> Isn't $head often omitted, defaulting to HEAD?
-> 
-> Since the original version of this logic was written, git has changed a
-> lot, not in an incompatible way, but simply it got a lot richer.  Some
-> assumptions the script made when it was written may need to be revisited,
-> working backwards from the command line to see what we can compute better
-> and how.
-> 
->     $ git request-pull [options] start url [end]
-> 
-> When "end" is specified, and if that is the name of a branch, we know what
-> branch you are talking about.  We can dereference HEAD with symbolic-ref
-> if "end" was missing and we defaulted to HEAD.  Either way, in majority of
-> the cases, the user has pushed out the tip of a local branch and that is
-> what "end" would be.
-> 
-> But that "end" branch may not necessarily be the name of the branch your
-> publishing repository has.  By looking at configured refspec mapping and
-> the push.default configuration, we can tell which remote ref a push to the
-> url should have updated.  The script predates many configurations that
-> control this process, and that is the primary reason it currently guesses
-> from ls-remote output.
-> 
-> You are introducing something better than a guess, but it is not quite
-> there, I suspect.  Who says that your branch 'my/topic' will push to your
-> published branch 'my/topic', not 'topic' with "push = my/topic:topic", or
-> "branch.my/topic.merge = topic", for example?
-> 
-> We can take one step at a time, and your patch might be a good first step
-> in the right direction, but I think overhauling this script to be more
-> aware of the ref mapping is worth discussing before moving forward.  After
-> such a discussion, it may turn out that majority of people do:
-> 
->     $ git push $my_public_repo master~3:for-linus
-> 
-> and say "git request-pull origin master~3", in which case the current
-> program output is already correct and the new code may not be adding much
-> value in practice.
-> 
+DESCRIPTION::
+
+The description section should first state what the command is used for,
+iow, in which situation the user might want to use that command.
+
+OPTIONS::
+
+List of full options.  Some existing pages list them alphabetically, while
+others list them in functional groups.  I prefer the latter which tends to
+make the page more concise, and is more suited for people who got used to
+the system (and remember, nobody stays to be a newbie forever, and people
+who stay to be newbies forever are not our primary audience).
+
+Detailed discussion of concepts::
+
+Some manual pages need to have discussion of basic concepts that would not
+be a good fit for the DESCRIPTION section (e.g. "Detached HEAD" section in
+"checkout" manual).  I am not sure if this kind of material is better
+given in OPTIONS section close to the functional group (e.g. "History
+Siimplification" heading in "log" manual).
+
+
+EXAMPLES::
+
+I prefer to make it mandatory for Porcelain command manual pages to have a
+list of often used patterns that a reasonably intelligent person can guess
+how to tweak to match the particular situation s/he is in.
+
+
+AUTHOR/DOCUMENTAITON::
+
+These sections in most pages are not kept up to date, and I prefer to
+remove them altogether.  They do not help end users who never clone
+git.git, and those who clone git.git will have shortlog to give them more
+accurate information.
