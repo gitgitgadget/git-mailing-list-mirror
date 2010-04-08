@@ -1,65 +1,78 @@
-From: Ori Avtalion <ori@avtalion.name>
-Subject: Re: [PATCH] Docs: Describe omitted <repository> behavior in a prominent
- place
-Date: Thu, 08 Apr 2010 21:07:53 +0300
-Message-ID: <4BBE1B79.2090902@avtalion.name>
-References: <4bbb8fa3.0f1abc0a.2383.7991@mx.google.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH v9] Documentation/remote-helpers: Add invocation section
+Date: Thu, 8 Apr 2010 20:52:12 +0200
+Message-ID: <h2ifabb9a1e1004081152hbca48fbex11134249aef9df14@mail.gmail.com>
+References: <g2vf3271551004062257ycbda64d3z3d3004d802a03fc3@mail.gmail.com> 
+	<7vsk77e20r.fsf@alter.siamese.dyndns.org> <n2nf3271551004070950ucf314b40g56087d49dfbd29f1@mail.gmail.com> 
+	<20100407224942.GA20239@progeny.tock> <7vzl1eamss.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 08 20:08:13 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Gabriel Filion <lelutin@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 08 20:52:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Nzw9C-0002GB-Ps
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 20:08:11 +0200
+	id 1NzwqF-0008TN-E2
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Apr 2010 20:52:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932977Ab0DHSIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Apr 2010 14:08:06 -0400
-Received: from mail-fx0-f223.google.com ([209.85.220.223]:34468 "EHLO
-	mail-fx0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932896Ab0DHSIC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Apr 2010 14:08:02 -0400
-Received: by fxm23 with SMTP id 23so2283157fxm.21
-        for <git@vger.kernel.org>; Thu, 08 Apr 2010 11:08:00 -0700 (PDT)
+	id S1758967Ab0DHSwe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Apr 2010 14:52:34 -0400
+Received: from mail-qy0-f179.google.com ([209.85.221.179]:35563 "EHLO
+	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754201Ab0DHSwd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Apr 2010 14:52:33 -0400
+Received: by qyk9 with SMTP id 9so480771qyk.1
+        for <git@vger.kernel.org>; Thu, 08 Apr 2010 11:52:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=wVj+5ZNKGksPO6qWDaTsbSfCOhMq5mGLDeqeNMVv4L4=;
-        b=kPOgitTsAxNLkDKzgGUPu0mUXdiwX4LqSUsH2Rm+nHdc1I6vS0wtrk9qFzTDE4KdXL
-         +GogyObxjWeuRJBnJcdf+N3CTLx1MuqoFkLnAXVDVOoUGXpoEX5UXTQRVXimdF+wzfxM
-         hXoI8fQGqkkCbVBcwuJYFi2IE57TG2K7rCTTY=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type;
+        bh=uLDwiE7NzepZd8gPgZOmUtUrbeg7fz8rvp+xItCTwxE=;
+        b=Yky0L2ph16pYEXU1qyNTca+O7xyX/eCSuG+xuVx9zSgZL4vMmhqGJlpn7u/jGTNaFq
+         wCVD38xEza3SCJIh82hbgpxqqzNYFNtVEb8aexcK/QrqjDCVzuKXvCvZEUdZ0pJRsFoh
+         c2PNZpKfDQg/7PuKgrHHyyDUmXA8PzD4W2RsA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=YPV64wHlvG8pjYp234VVsio83D8XdGN1lqGDDO1xS3o1L9rSs7UjHNXjFLDUrIF5nw
-         Dppl0HDKkyZtFznvXP1WbrV1FY5VxBuFd1i+k23Gm5RIXiKgEfgdWhpu1QerrJxF2J1c
-         hHNu7ufJAZ/ZmqJxJpZ8xJUaIUwu3dr+hCl/U=
-Received: by 10.223.143.12 with SMTP id s12mr529546fau.9.1270750079696;
-        Thu, 08 Apr 2010 11:07:59 -0700 (PDT)
-Received: from [192.168.1.55] (bzq-79-176-18-170.red.bezeqint.net [79.176.18.170])
-        by mx.google.com with ESMTPS id 19sm819115fkr.9.2010.04.08.11.07.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 08 Apr 2010 11:07:58 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100404 Thunderbird/3.0.4
-In-Reply-To: <4bbb8fa3.0f1abc0a.2383.7991@mx.google.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=Grf9nJQUJYkxNxsvzcQIDE6PXIsvUVx8J88kHa1IdvpYu/CS/ILiAWFd7TqtSMxDjt
+         sATf+UZDJINwereClegONCFrgQ37uH+RmorU3rfvLzKgl6/floquCYWc49DPxol+Tm38
+         pgirN0G/iQv/BjF4wFl+nzw9loW2YZeRqC7W4=
+Received: by 10.224.74.3 with HTTP; Thu, 8 Apr 2010 11:52:12 -0700 (PDT)
+In-Reply-To: <7vzl1eamss.fsf@alter.siamese.dyndns.org>
+Received: by 10.224.73.17 with SMTP id o17mr210692qaj.301.1270752752069; Thu, 
+	08 Apr 2010 11:52:32 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144370>
 
-On 04/06/2010 10:32 PM, Ori Avtalion wrote:
-> The documentation of which repository is pushed to when the repository
-> flag is omitted was only mentioned under the --repo flag.
+Heya,
+
+On Thu, Apr 8, 2010 at 01:02, Junio C Hamano <gitster@pobox.com> wrote:
+> It might look unrelated, but I found it the most helpful information in
+> your message ;-) I really hate it when people base their patches on 'pu'.
 >
-> It is now described under the <repository>  argument.
+> At least it would be helpful for me if people based their follow-up
+> patches on top of their own topics.
 
-Does anyone want to comment on this patch? It seems to get lost in the 
-flood.
+Hmmm, perhaps we should update SubmittingPatches to say something
+about that? The section that talks about what to base your patch
+against [0] is not very explicit in that aspect.
+
+[0] http://git.kernel.org/?p=git/git.git;a=blob;f=Documentation/SubmittingPatches#l106
+
+-- 
+Cheers,
+
+Sverre Rabbelier
