@@ -1,60 +1,70 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Subject: Re: How can I tell if a file is ignored by git?
-Date: Fri, 9 Apr 2010 10:20:13 +0530
-Message-ID: <w2hf3271551004082150x620aa21az72b7254f57fbc3f5@mail.gmail.com>
+Date: Fri, 9 Apr 2010 05:01:46 +0000
+Message-ID: <w2i51dd1af81004082201j81a2758di2e430785a72a5b03@mail.gmail.com>
 References: <20100409040434.8602620CBBC@snark.thyrsus.com>
+	 <w2hf3271551004082150x620aa21az72b7254f57fbc3f5@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jacob Helwig <jacob.helwig@gmail.com>
-To: Eric Raymond <esr@snark.thyrsus.com>
-X-From: git-owner@vger.kernel.org Fri Apr 09 06:50:53 2010
+Cc: Eric Raymond <esr@snark.thyrsus.com>, git@vger.kernel.org,
+	Jacob Helwig <jacob.helwig@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 09 07:01:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O06BA-0004FW-Jr
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 06:50:52 +0200
+	id 1O06Lt-00017Z-F3
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 07:01:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753111Ab0DIEuk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Apr 2010 00:50:40 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:51161 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753067Ab0DIEue (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Apr 2010 00:50:34 -0400
-Received: by gyg13 with SMTP id 13so1592722gyg.19
-        for <git@vger.kernel.org>; Thu, 08 Apr 2010 21:50:33 -0700 (PDT)
+	id S1752801Ab0DIFBu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 01:01:50 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:47169 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750845Ab0DIFBt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 01:01:49 -0400
+Received: by bwz1 with SMTP id 1so2257273bwz.21
+        for <git@vger.kernel.org>; Thu, 08 Apr 2010 22:01:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type;
-        bh=fCTMamX9DzJ+E7Q1e2Tk9TSvKKrASHrv78p0/utDVW4=;
-        b=Qq1YDbi14d9sBogRPEpMzc/cI/7hY7ht/i/debBynnhH20UTnWlM4qm70FvPPe2+A8
-         1gGdZ0OnfEVrgsc7FJY3TCDhDVmC746tb5OLsPwSKt1FzybHfcF40DfHAu8pxRQSrHnS
-         gxLmFMDJpIEDoyjYgE9TNqAw5aQV5Q5wBNU7Q=
+         :date:received:message-id:subject:from:to:cc:content-type;
+        bh=BtSRQow2KnpITNsEsxRvw5+6FlFjIUCc/iuhCRFAyh8=;
+        b=UtnBj2X4EtRXK2YQI2e0oQbE4ORDjbL6j8BxZAhkTiObSSQHKaDs6TOpwlTz0GBrBR
+         AIUIM77pWLZqgPJOZVVsTm0uZ2YnWy7RppQDlhMHkBdMXBNLQQ/Z+wEnqHI2LHPy1yHo
+         OXwwpGvQZ5DgEGLPWC/Fe9RqMJTNxekNq+hQ4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        b=XbS7nRW05osaqv10VsUSs33SjleNAj79W+ywIaEpt7lIB8e9HybH7VDOb7QuZdKFPn
-         oLvub+lv/PoPgRj5HpoHDc+BK1mq3qn7cdY00vOyi1xUqR8IsoNlWDd5/zzhYaWmSo45
-         bbqAoCfzFndzY0zOVU0Smyd4LaxX9sceHVK9Y=
-Received: by 10.90.69.14 with HTTP; Thu, 8 Apr 2010 21:50:13 -0700 (PDT)
-In-Reply-To: <20100409040434.8602620CBBC@snark.thyrsus.com>
-Received: by 10.90.17.23 with SMTP id 23mr443003agq.82.1270788633176; Thu, 08 
-	Apr 2010 21:50:33 -0700 (PDT)
+        b=L9r2fhGfDSPWWOcsLSQ8kJezFXZCdpAnZtznfKSI4n6Yje1BcySbTpMfc3LngjZAu6
+         eG3sSk4lvaRX0ATj1pj6gdUwjpJRRNHwkTnUGazLgG7vlC0eDxdF3zPJ5ZzQAQqg2HhF
+         mYmDtSHlQJgmljNST9K1TB0ugq+sew7eGd1nU=
+Received: by 10.204.121.195 with HTTP; Thu, 8 Apr 2010 22:01:46 -0700 (PDT)
+In-Reply-To: <w2hf3271551004082150x620aa21az72b7254f57fbc3f5@mail.gmail.com>
+Received: by 10.204.132.214 with SMTP id c22mr1255361bkt.60.1270789306875; 
+	Thu, 08 Apr 2010 22:01:46 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144397>
 
-Hi,
+On Fri, Apr 9, 2010 at 04:50, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+> I personally use Magit [1]. Just thought you might want to look at it.
 
-> I'm planning some work on Emacs VC mode.
+Eric might be a bit too personally invested vc.el at this point :)
 
-I personally use Magit [1]. Just thought you might want to look at it.
+But yeah, magit is great, unlike vc-dir and vc it makes really good
+use of Git's index & stash features. Instead of staging individual
+files for commit you stage chunks, the quality and granularity of my
+commits has gone up since I switched to it from vc due to that.
 
--- Ram
+But to help with the original question: magit has an ignore feature
+but it doesn't check whether something is ignored, it just counts on
+you not ignoring already ignored stuff because it isn't displayed to
+you.
 
-[1] http://zagadka.vm.bytemark.co.uk/magit/
+Depending on how you're planning to implement .gitignore support you
+might want to go this route.
