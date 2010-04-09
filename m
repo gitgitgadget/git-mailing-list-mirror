@@ -1,110 +1,97 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] Makefile: Remove excess backslashes from sed
-Date: Thu, 8 Apr 2010 23:04:28 -0700
-Message-ID: <20100409060427.GA6012@gmail.com>
-References: <1270783330-35215-1-git-send-email-brian@gernhardtsoftware.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: nd/setup
+Date: Fri, 9 Apr 2010 00:57:01 -0500
+Message-ID: <20100409055701.GA9554@progeny.tock>
+References: <7v6342ahx9.fsf@alter.siamese.dyndns.org>
+ <20100408073825.GA15153@coredump.intra.peff.net>
+ <20100408214233.GA32441@progeny.tock>
+ <q2pfcaeb9bf1004082246w3fb6e18bw21943150cbeeb5c7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Fri Apr 09 07:48:59 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 09 07:57:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O075P-0007fr-49
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 07:48:59 +0200
+	id 1O07D9-0001dh-SC
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 07:57:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754613Ab0DIFsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Apr 2010 01:48:53 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:43823 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754182Ab0DIFsw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Apr 2010 01:48:52 -0400
-Received: by gwb19 with SMTP id 19so1609533gwb.19
-        for <git@vger.kernel.org>; Thu, 08 Apr 2010 22:48:51 -0700 (PDT)
+	id S1754527Ab0DIF4r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Apr 2010 01:56:47 -0400
+Received: from mail-gx0-f217.google.com ([209.85.217.217]:54401 "EHLO
+	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754160Ab0DIF4q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 01:56:46 -0400
+Received: by gxk9 with SMTP id 9so1856653gxk.8
+        for <git@vger.kernel.org>; Thu, 08 Apr 2010 22:56:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=hD2TzM+yxqlO+y0Mvb7D9GccPsTa8uy/1IlfqY6A4fk=;
-        b=d8JzqIepa9ifAt8KV1mH2NzORMX3NyAMqiDGAWfde3WTe5bCdTeLTvQ8FfgVyjMcyb
-         kpW0vZybJobcNL/Nx/RRQRxdPvkuySAOXi9UzpMUajpqpl+zND1HjxSEn7FX2yWBunNk
-         DbSgqF5ODHvz2k4grdHP/TfoL1Jr7PwuO3+lk=
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=DDrCjhNqor0gF4huySTjh1q/g7hRxhhtMi/j9VjOndQ=;
+        b=patluUESzadoQ86o0MGLm3cxQa1cq0ZvH6tS2R0DVaXbjtIjOI40qYDpI3nTWjfqel
+         +fJG1UgLcj0MpUL2LogsM4AcvbhnZEzJQ9hQySUheXDXk5Q0UdpEA5OfSVY9jdoepogu
+         W0U7j0zzUuwcgzdcGev96/A2FKkZXjcVBZJGI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=vTboQfi4Djasy8UgsxZvFwa12o2P61MCqLbkhBXnCDhY2m5He6V26Z0OnxUJm5uEOA
-         SJDFRBlmY8Ky/ZEmAA76MrwMRpftJctt7+OwQGCJx8RWkijI1ClhmFvQZOTdRMLV0ew+
-         vgaWWRqWilnhzEOgGz/+wfSv0lraZnu0wG40c=
-Received: by 10.151.94.1 with SMTP id w1mr1337568ybl.72.1270792131448;
-        Thu, 08 Apr 2010 22:48:51 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 23sm235686ywh.0.2010.04.08.22.48.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 08 Apr 2010 22:48:50 -0700 (PDT)
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=W2KnwfFbv+GYa/Mx2NUT1a9905LfdWYcuMRqSjZL/yqvSRCCYhDxOTvzG1w7UYpiek
+         zILniuRD7EsBIGlpi2omdUB5nffRi5hIAduLCzMoc3qhnAQsQMtFKP3fZagxMYhMQlmG
+         bEWePMR6kkr9uRvIbh7P5AItT6m9g7VSzZZlQ=
+Received: by 10.91.39.4 with SMTP id r4mr451595agj.107.1270792605879;
+        Thu, 08 Apr 2010 22:56:45 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 20sm621006iwn.9.2010.04.08.22.56.44
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 08 Apr 2010 22:56:45 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1270783330-35215-1-git-send-email-brian@gernhardtsoftware.com>
+In-Reply-To: <q2pfcaeb9bf1004082246w3fb6e18bw21943150cbeeb5c7@mail.gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144408>
 
-On Thu, Apr 08, 2010 at 11:22:10PM -0400, Brian Gernhardt wrote:
-> The sed script that was intended to add lines altering the sys.path
-> had extra backslashes in them.  Instead resulting [snip]
->   import sys; \ import os; \ sys.path.insert( ... )
+Nguyen Thai Ngoc Duy wrote:
+> 2010/4/8 Jonathan Nieder <jrnieder@gmail.com>:
 
-On linux sed I get (or I was dreaming when I tried it):
+>> A few of the earlier patches seem iffy, though they all start with a
+>> correct idea. =C2=A0For example, one of them changes the semantics o=
+f
+>> rev-parse --show-prefix without documenting it. =C2=A0So I have been=
+ looking
+>
+> You meant "rev-parse --git-dir"?
 
-import sys; \
-	import os; \
-	sys.path.insert(0, os.getenv(foo,
-	                             bar))
+I meant --show-prefix.  ad36c84 (worktree setup: calculate prefix even
+if no worktree is found, 2010-04-05) teaches rev-parse to produce a
+nonempty prefix even when there is no workdir but didn=E2=80=99t update=
+ the
+documentation:
 
-We should instead smash it all into one line instead to
-avoid differences in sed behavior:
+    --show-prefix
+         When the command is invoked from a subdirectory, show the
+         path of the current directory relative to the top-level
+         directory.
 
-import sys; import os; sys.path.insert(0, os.getenv(foo,
-                                                    bar))
+I suspect it=E2=80=99s a good change.  Git ought to correctly honor rel=
+ative
+paths on the command line even when there is no work tree.  But the
+semantics are not clear any more --- when there is no top-level
+directory, what is the prefix relative to?
 
-If that's what it is, then your patch would produce this on
-linux:
+Probably my other words of warning were also too extreme.  I have been
+using a copy of git with nd/setup included, and aside from the
+ls-remote problem I mentioned, I haven=E2=80=99t run into any trouble.
 
-import sys;
-	import os;
-	sys.path.insert(foo,
-	                bar)
-
-...which is invalid syntax.
-
-So let's smash it all onto one line instead.  That way I don't
-have to think about or test whether there's any difference in
-how sed handles newlines.  It'll be the Obviously Correct(tm)
-sol'n.  Or maybe I was dreaming?
-
-If you don't beat me to it by the tomorrow night I'll try and
-throw together a patch.  Thanks for catching this.
-
-> diff --git a/Makefile b/Makefile
-> index f0fe351..b9eb1ca 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1632,8 +1632,8 @@ $(patsubst %.py,%,$(SCRIPT_PYTHON)): % : %.py
->  	sed -e '1{' \
->  	    -e '	s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
->  	    -e '}' \
-> -	    -e 's|^import sys.*|&; \\\
-> -	           import os; \\\
-> +	    -e 's|^import sys.*|&; \
-> +	           import os; \
->  	           sys.path.insert(0, os.getenv("GITPYTHONLIB",\
->  	                                        "@@INSTLIBDIR@@"));|' \
--- 
-
-	David
+Cheers,
+Jonathan
