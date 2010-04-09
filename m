@@ -1,98 +1,77 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: nd/setup
-Date: Fri, 9 Apr 2010 08:56:46 +0200
-Message-ID: <l2ofcaeb9bf1004082356t2c304902l3f089b701299cec0@mail.gmail.com>
-References: <7v6342ahx9.fsf@alter.siamese.dyndns.org> <20100408073825.GA15153@coredump.intra.peff.net> 
-	<20100408214233.GA32441@progeny.tock> <q2pfcaeb9bf1004082246w3fb6e18bw21943150cbeeb5c7@mail.gmail.com> 
-	<20100409055701.GA9554@progeny.tock>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 09 08:57:29 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH] branch: say "Reset to" in reflog entries for 'git branch -f' operations
+Date: Fri,  9 Apr 2010 15:45:12 +0800
+Message-ID: <1270799112-4308-1-git-send-email-rctay89@gmail.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 09 09:45:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O089T-0005pC-4A
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 08:57:15 +0200
+	id 1O08uU-0000Su-9W
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 09:45:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754141Ab0DIG5L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Apr 2010 02:57:11 -0400
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:58174 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754135Ab0DIG5I convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Apr 2010 02:57:08 -0400
-Received: by ewy20 with SMTP id 20so1229776ewy.1
-        for <git@vger.kernel.org>; Thu, 08 Apr 2010 23:57:06 -0700 (PDT)
+	id S1756355Ab0DIHpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 03:45:32 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:47544 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756321Ab0DIHpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 03:45:31 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so1107821qwh.37
+        for <git@vger.kernel.org>; Fri, 09 Apr 2010 00:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=E4qBkV19O7Ox0LZRMbNRU+b9bMfwh8ODkPLWQELDb2M=;
-        b=LZB8/JvMVqinVgUBYfPuCOjzSPifRiCx9oXPxOTKmZg+WvjG6vm7QcAOtgBf50i74Q
-         Z+6cEAPtKbgx1kSqYpV4Zz7jHDLRTC54x2hR58V6/C54K+Ug4GmNwn2K5oKOTg/ZeQT2
-         p/IUWC/Fqj/mHGUECFIbQZWdxx5bss4Ak0paQ=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :message-id:x-mailer;
+        bh=oJ+gJqmA/A7Z9bg6sYSJSxGG83ZPuRkHy4ZrC0mZj/E=;
+        b=Tz71EsBgeSiEA0PrOUWRZCbxN3QoD7XGZm1+JmjJ/9ilXi4Njd4r1yTVEh7Da3USJ3
+         hIMaHkjtF5Np0bXrClbiLrhkLf3Ntwxp/PfTLrHAhToARIGZoo8XkdkciXvwzQE0gQEO
+         uZYG76KYNT7znKHZFS8Lgqvs48O3E1DF+4vvQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Q/E+AM3547adznv9D62UbRbOChtMuFlgWvSpKCnTKZODoYV1TXXSul+B1a12NlsDBi
-         G7qG1vpry4X9Rsn0/F+s4WuMuosJww8ymW2d4krH5a1E4L9PdSoF1203kA3QpuKQVysh
-         GwBQbqaicjsC/uY+W12H3s3ZgaIdOh3rZ6Sfw=
-Received: by 10.213.105.130 with HTTP; Thu, 8 Apr 2010 23:56:46 -0700 (PDT)
-In-Reply-To: <20100409055701.GA9554@progeny.tock>
-Received: by 10.213.55.8 with SMTP id s8mr171390ebg.57.1270796226302; Thu, 08 
-	Apr 2010 23:57:06 -0700 (PDT)
+        h=from:to:subject:date:message-id:x-mailer;
+        b=chN5Ee/cW42BFTy+ASRQQ174CMfqe9GiJGzjcJVGH0BYTvM11FjG12lAQPMhEI/4Qe
+         K8QjVqj9QvMRMOQtbZE82rh1IJ2AJkKiZjmNGypxueKQYcscOBcZJGNzWSJTDMiCb470
+         oO7x9bJp2GfNFzQVoqs70w6m5Joha8/bww6Zo=
+Received: by 10.229.227.5 with SMTP id iy5mr1752925qcb.29.1270799129913;
+        Fri, 09 Apr 2010 00:45:29 -0700 (PDT)
+Received: from localhost.localdomain (cm46.zeta153.maxonline.com.sg [116.87.153.46])
+        by mx.google.com with ESMTPS id v37sm1447322qce.12.2010.04.09.00.45.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 09 Apr 2010 00:45:28 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.rc0.240.gba75f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144414>
 
-On Fri, Apr 9, 2010 at 7:57 AM, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
-> Nguyen Thai Ngoc Duy wrote:
->> 2010/4/8 Jonathan Nieder <jrnieder@gmail.com>:
->
->>> A few of the earlier patches seem iffy, though they all start with =
-a
->>> correct idea.  For example, one of them changes the semantics of
->>> rev-parse --show-prefix without documenting it.  So I have been loo=
-king
->>
->> You meant "rev-parse --git-dir"?
->
-> I meant --show-prefix.  ad36c84 (worktree setup: calculate prefix eve=
-n
-> if no worktree is found, 2010-04-05) teaches rev-parse to produce a
-> nonempty prefix even when there is no workdir but didn=E2=80=99t upda=
-te the
-> documentation:
->
->    --show-prefix
->         When the command is invoked from a subdirectory, show the
->         path of the current directory relative to the top-level
->         directory.
->
-> I suspect it=E2=80=99s a good change.  Git ought to correctly honor r=
-elative
-> paths on the command line even when there is no work tree.  But the
-> semantics are not clear any more --- when there is no top-level
-> directory, what is the prefix relative to?
->
-> Probably my other words of warning were also too extreme.  I have bee=
-n
-> using a copy of git with nd/setup included, and aside from the
-> ls-remote problem I mentioned, I haven=E2=80=99t run into any trouble=
-=2E
+In 5f856dd (fix reflog entries for "git-branch"), it is mentioned that
+'git branch -f' is intended to be equivalent to 'git reset'. Since we
+usually say "reset to <commit>" in the git-reset Documentation and
+elsewhere, it would make sense to say "Reset to" here as well.
 
-OK. I thought it was expectation and did not check documentation. The
-assumption that $GIT_DIR stays at worktree's top directory is still
-around.. I'll rethink about this.
---=20
-Duy
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
+
+  I happened to be perusing my branch's reflog when I spotted this.
+
+ branch.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/branch.c b/branch.c
+index 9e1f63e..2ab42aa 100644
+--- a/branch.c
++++ b/branch.c
+@@ -198,7 +198,7 @@ void create_branch(const char *head,
+ 		log_all_ref_updates = 1;
+
+ 	if (forcing)
+-		snprintf(msg, sizeof msg, "branch: Reset from %s",
++		snprintf(msg, sizeof msg, "branch: Reset to %s",
+ 			 start_name);
+ 	else if (!dont_change_ref)
+ 		snprintf(msg, sizeof msg, "branch: Created from %s",
+--
+1.7.1.rc0.240.gba75f
