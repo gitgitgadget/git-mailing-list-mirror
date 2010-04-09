@@ -1,101 +1,75 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: Re: git pull suggestion
-Date: Fri, 9 Apr 2010 01:11:54 +0200
-Message-ID: <20100408231154.GB13704@vidovic>
-References: <r2x3abd05a91004071617z9ffd6e02v83d825405bb6ef1@mail.gmail.com> <201004081754.24954.trast@student.ethz.ch> <p2x3abd05a91004081233j77b7177bm5928913a64de0e57@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: nd/setup
+Date: Thu, 8 Apr 2010 20:13:22 -0400
+Message-ID: <20100409001322.GB23501@coredump.intra.peff.net>
+References: <7v6342ahx9.fsf@alter.siamese.dyndns.org>
+ <20100408073825.GA15153@coredump.intra.peff.net>
+ <20100408214233.GA32441@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	git list <git@vger.kernel.org>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-To: Aghiles <aghilesk@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 09 01:12:11 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 09 02:13:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O00tO-00039S-S2
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 01:12:11 +0200
+	id 1O01r5-0005Mv-Lt
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 02:13:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933795Ab0DHXMG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Apr 2010 19:12:06 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:57084 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933780Ab0DHXMB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Apr 2010 19:12:01 -0400
-Received: by bwz1 with SMTP id 1so2175614bwz.21
-        for <git@vger.kernel.org>; Thu, 08 Apr 2010 16:11:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=2XKVi02cApKK4zl2m941eXZW5Rn4qdze7ge0kOfbmL8=;
-        b=bF+DENSNHbPnobjhOzmqsj1cgtgbutRkmeEn5Xnh/j9zQKAQIUcLXy/uD7W5wi9bFH
-         7PZfaJYkGae4glEBOrYmydoiOMpMqKKegA2afeL8Nvqa7GDCnVl3hVrp1L4bQk9+k/cx
-         8Jh2JyNDOZ8ztKG3VE+Jfu1BfcQ8GGIe3Syyg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=NjgUlPoWlSLnVomnKvRdZPvM2iR5xIPGGB1CduZR+eRhUS4VFARf33pGk9W9jVD9QH
-         /wYagJBOjbrB9qOtI3BalRC9UeT7+ilnGM2Je+WVYuKLTDraDgclQiZu80QHM1Y4mWuh
-         3Myc31U6t3RXiaTndry9U5gv+Wh2uM/3TKsUM=
-Received: by 10.204.34.81 with SMTP id k17mr905361bkd.78.1270768317617;
-        Thu, 08 Apr 2010 16:11:57 -0700 (PDT)
-Received: from @ (88-121-119-67.rev.libertysurf.net [88.121.119.67])
-        by mx.google.com with ESMTPS id x16sm4220867bku.11.2010.04.08.16.11.56
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 08 Apr 2010 16:11:57 -0700 (PDT)
+	id S933944Ab0DIANq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Apr 2010 20:13:46 -0400
+Received: from peff.net ([208.65.91.99]:48238 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933796Ab0DIANp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Apr 2010 20:13:45 -0400
+Received: (qmail 28082 invoked by uid 107); 9 Apr 2010 00:13:43 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 08 Apr 2010 20:13:43 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Apr 2010 20:13:22 -0400
 Content-Disposition: inline
-In-Reply-To: <p2x3abd05a91004081233j77b7177bm5928913a64de0e57@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <20100408214233.GA32441@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144388>
 
-The 08/04/10, Aghiles wrote:
-> >>
-> >> It would be nice to have _all_ the WIP conflicts listed when pulli=
-ng.
-> >> As of now, one has to fix the currently showed conflict to see the=
- next one.
-> >
-> > Are you using 'git pull --rebase' or the equivalent
-> > branch.<name>.rebase setting?
-> >
-> > If so, note that git-rebase (which does all the hard work) can't kn=
-ow
-> > the later conflicts once it hits the first one: your resolution of =
-the
-> > first conflict constitutes the base onto which the further patches =
-are
-> > applied. =A0So depending on what changes you make during the resolu=
-tion,
-> > there may be more or fewer conflicts in the rest of the rebase.
-> >
-> > If not, I can't see how your question makes sense as ordinary 'git
-> > pull' does a merge, and during a 'git merge' there can only ever be
-> > one conflict resolution phase.
+On Thu, Apr 08, 2010 at 04:42:33PM -0500, Jonathan Nieder wrote:
+
+> >> * nd/setup (2010-04-05) 43 commits
+> [...]
+> > Probably one or both
+> > of us should look at it before applying it to next, but assuming it
+> > passes a basic sanity check, I think the best thing will be to get =
+it in
+> > 'next' early so we can shake out any bugs during the next cycle.
 >=20
-> Sorry, my explanation was not clear. I am talking about changes in th=
-e
-> working directory that are not in the index. So my working directory =
-is
-> "dirty" and I just issue a 'git pull'. Because some files are not "up=
- to date"
-> git would abort the pull, saying that a certain file is not "up to da=
-te".
-> So I was suggesting to list all the "problematic" files in one go ins=
-tead.
+> I don=E2=80=99t think it=E2=80=99s anywhere near master material yet.
 
-Doesn't 'git status' ouput what you want ? Or am I out of the scope ?
+To clarify, I don't think that either. But sitting in pu, nobody is eve=
+n
+running it. This seems to me like the sort of topic where there will be
+a lot of unintended fallouts. Besides review, the best way to find
+them is to get people running it, and 'next' is the most bleeding-edge
+we have.
 
---=20
-Nicolas Sebrecht
+> when run outside any repository.  Probably the checker should be
+> configured by an environment variable that indicates where to print
+> its messages and whether to bail out when a problem is detected (for
+> tests).
+
+Yeah, that sounds reasonable, especially if merging this to 'next' woul=
+d
+make git unusable. We want to shake out bugs, not punish people running
+next. :) But I haven't even really looked at the topic in detail yet.
+
+> Sorry to be the bearer of bad tidings,
+
+Not at all. This is exactly the sort of in-depth review that is very
+helpful. Thanks.
+
+-Peff
