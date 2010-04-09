@@ -1,76 +1,82 @@
-From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: Re: [PATCH 2/2] Change the description of '-M' and '-C' option.
-Date: Thu, 8 Apr 2010 22:15:50 -0700
-Message-ID: <q2y41f08ee11004082215y3cf6c581i3673b1dcc8bb3f37@mail.gmail.com>
-References: <20100408100719.7fc89300@chalon.bertin.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] send-email: Don't use FQDNs without a '.'
+Date: Thu, 08 Apr 2010 22:36:11 -0700
+Message-ID: <7v1vep427o.fsf@alter.siamese.dyndns.org>
+References: <1270789906-23735-1-git-send-email-brian@gernhardtsoftware.com>
+ <1270789906-23735-2-git-send-email-brian@gernhardtsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, ydirson@free.fr
-To: Yann Dirson <dirson@bertin.fr>
-X-From: git-owner@vger.kernel.org Fri Apr 09 07:15:56 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jari Aalto <jari.aalto@cante.net>, Git List <git@vger.kernel.org>
+To: Brian Gernhardt <brian@gernhardtsoftware.com>
+X-From: git-owner@vger.kernel.org Fri Apr 09 07:36:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O06ZQ-0004lf-8F
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 07:15:56 +0200
+	id 1O06tT-0004ML-5p
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 07:36:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754091Ab0DIFPv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Apr 2010 01:15:51 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:5946 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753104Ab0DIFPv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Apr 2010 01:15:51 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so1080723qwh.37
-        for <git@vger.kernel.org>; Thu, 08 Apr 2010 22:15:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=PVAK/J9sZLedQ3KkKPxhfv3pEqOEW3sJBb9eqj60FOk=;
-        b=g/atsUTDcYrvCbFIRfYczSb0zpcbEipGm9D+/UMT1oZH1emEf0A87Ke3ruS5tsPr0C
-         H+x/tMT0BA0SmqOpb6cSlze/mXwOrpuz0q4cTxhNO6Kq3BRdP+wVUJ6En0w8SEkJPe09
-         YgGxFr4LwU9Yc5iU9qgIH23YLMzu4UFKPnucY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=J0svKb3W6z6z2+dud+cg77o1Ohyn4x2hpqob+9C1ySTgHhPuE1MIVyu/WKr7R4jxMJ
-         h36vWKDaqzwWNQTKnnXu6ozrcj9gmtJAy65+PLG7fK7hjZ9utawanqAmyphoTy1LRpNZ
-         HlVzwXOkgT27kEkNSc2G/AkHAsdNaLLgdY1pY=
-Received: by 10.229.95.147 with HTTP; Thu, 8 Apr 2010 22:15:50 -0700 (PDT)
-In-Reply-To: <20100408100719.7fc89300@chalon.bertin.fr>
-Received: by 10.229.190.21 with SMTP id dg21mr1699617qcb.69.1270790150284; 
-	Thu, 08 Apr 2010 22:15:50 -0700 (PDT)
+	id S1751520Ab0DIFgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 01:36:22 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37193 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751188Ab0DIFgV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 01:36:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EC811A9F7B;
+	Fri,  9 Apr 2010 01:36:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GwDvyQZtK6kY5RmcxOE52LGWwqs=; b=HYPz7N
+	G9u4F0iCpPaS/XJ/oChoXX8J1B0LsSjGqx3LO+XB4whLp0N75k5YEzvOaSSuahsT
+	dixCViUcTSgFx55yP/vkqM4+VGutvwHn8fNyaB4U27vTrSIn8CKjFpaCH+vKZa6Z
+	gSISoKYEyyMMjhX8+zeh1J0wqUn3mKncTV8EY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SzE29C32c3/bwWpKCu/+D1oRg9cj30S0
+	EK1x7cpH0ILVP8923cxuYfntp/U9IrkH9oqpwnc4n2+hsYjxfZM7wXLtIDVtRZnf
+	QM7HZDT479eIthOmxTITdqRrSVlhIxSf6TPzysnSkNojbmTDpqXNpxoiWm8+WYQ5
+	+mb3xds0zhE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B51A1A9F77;
+	Fri,  9 Apr 2010 01:36:16 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 00B71A9F73; Fri,  9 Apr
+ 2010 01:36:12 -0400 (EDT)
+In-Reply-To: <1270789906-23735-2-git-send-email-brian@gernhardtsoftware.com>
+ (Brian Gernhardt's message of "Fri\,  9 Apr 2010 01\:11\:44 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D16D5C60-4399-11DF-A031-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144404>
 
-Hi Yann,
-On Thu, Apr 8, 2010 at 1:07 AM, Yann Dirson <dirson@bertin.fr> wrote:
-> Very interesting addition, indeed - thanks much.
->
-> Some information may still be missing, though:
->
-> - the default value of the numeric argument to -M/-C
-> - the meaning of numeric arguments to the various flags when several
-> =A0are given (eg. what does "blame -M10 -C5 -C15" mean ?)
-> - the numeric arguments are not visible in the summary
+Brian Gernhardt <brian@gernhardtsoftware.com> writes:
 
-Ah, thanks a lot for these advice, I will add them on next version of
-this patch.
+>  		$maildomain = $domain
+> -			unless $^O eq 'darwin' && $domain =~ /\.local$/;
+> +			unless $^O eq 'darwin' && $domain =~ /\.local$/
+> +				or $domain !~ /\./;
 
-> On another aspect, given the nature of repetitive -C we may want to w=
-arn
-> the user of bomb out if more than 3 occurences of the flag happen ?
+It would become *much* easier to read if we stop using the statement
+modifier, and write it in a more straightforward way:
 
-En, sound rationale, I think. I will try another patch to add this. Tha=
-nks!
+	unless (($^O eq 'darwin' && $domain =~ /\.local$/)
+        	|| $domain !~ /\./) {
+                $maildomain = $domain;
+	}
 
-Regards!
-Bo
+as the condition seems to have grown large enough to exceed "by the way
+don't do this under this narrow condition", which is what statement
+modifiers are designed to be used.  Also mixing && and or that have
+different precedence taxes readers' brainpower unnecessarily.
+
+I also think that this particular exception logic should probably be in a
+separate helper function that is called from the two places.
+
+Jari, you are the last person who touched code around this area.  What do
+you think?
