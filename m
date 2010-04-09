@@ -1,67 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [WIP PATCH 4/4] Teach checkout-index to recursively checkout
- submodules
-Date: Fri, 09 Apr 2010 15:04:10 -0700
-Message-ID: <7v8w8w1dwl.fsf@alter.siamese.dyndns.org>
-References: <4BBF9D6F.2000006@web.de> <4BBF9ED3.9010502@web.de>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: am: be more helpful
+Date: Sat, 10 Apr 2010 00:59:11 +0200
+Message-ID: <t2kfabb9a1e1004091559u92230e17h957f2c5565c133e3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sat Apr 10 00:04:23 2010
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 10 00:59:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0MJK-0003q6-VD
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 00:04:23 +0200
+	id 1O0NAn-0005EU-Lv
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 00:59:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751035Ab0DIWES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Apr 2010 18:04:18 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45779 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750828Ab0DIWER (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Apr 2010 18:04:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 44C2FA9B0D;
-	Fri,  9 Apr 2010 18:04:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VLs/v8IjUZ6B6ad86D5fj+s55wA=; b=FrnNJX
-	VQ6Vyz+0Ny2ZlIZiF+YTnib3JOHF50e9MvhdF8uo00seHeSKt8A0Xz/nfNWBH2Yi
-	osjDP6+NOgdaEDYMcYXXwf7RRNpNfwD/0bn07+biIWJEg56FagSeHZwP/WGEuGG2
-	EBEAQL0kxfaGlu/SQW48HdD8ElD60Paoc+tlw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=whVbsx8WPbW3o8YcoJlje2A+m0tnOqLw
-	njUyN4cothhkXrnpSJoySUKyETQYppLFC4q1QYO0msoOcXbTstAxMxzTinNUYN8V
-	i1/j1J3Zum3Sw6G3agtUFAtTK9UbhjICzmOBxf9q2cCbEo+x2iftX76T9uAeeeDZ
-	H3FgtNVfY4E=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 05139A9B0B;
-	Fri,  9 Apr 2010 18:04:14 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7EB14A9B09; Fri,  9 Apr
- 2010 18:04:11 -0400 (EDT)
-In-Reply-To: <4BBF9ED3.9010502@web.de> (Jens Lehmann's message of "Fri\, 09
- Apr 2010 23\:40\:35 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D60434EE-4423-11DF-BFC0-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752320Ab0DIW7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 18:59:32 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:47178 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751292Ab0DIW7c (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 18:59:32 -0400
+Received: by gwj19 with SMTP id 19so44840gwj.19
+        for <git@vger.kernel.org>; Fri, 09 Apr 2010 15:59:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:received
+         :message-id:subject:to:content-type;
+        bh=7vVSzxxmeWQirNNlVvBq+o5rY7NapiGHOzXTXz1/JMo=;
+        b=BbQ85Rpr6z57niUyIQyQX9oeooO2TbEGeicnQBkLXvoLoBK3Jz4nJdYoMJYDue1rUm
+         4nZnfq5cVUsS1l+5ofuWyKh/PJmxKtpRl8pf02pBgPEOadR8he+ADVTIOnQVTNb6To9V
+         V5zkhbPe/inmJG75NVcFyrn2Grf9yFUnqN5Y0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=vzysLbcGGIQxfAGOj2uCXYIdj5gWnI+v+9lS+cNPZKTw2BcGOx6LvhQJvKVZrck+TH
+         AvOdWu1bgdR2oSFkVYdODc+BfPf85f+e9dK8NxMX/kCXNf3IitGyx0M48TCM9Sy5kLFb
+         jDewQj4W1ICLvFvdQv+7NcPoX32uJHa2BCcY0=
+Received: by 10.100.206.13 with HTTP; Fri, 9 Apr 2010 15:59:11 -0700 (PDT)
+Received: by 10.101.177.39 with SMTP id e39mr971453anp.32.1270853971163; Fri, 
+	09 Apr 2010 15:59:31 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144481>
 
-As a plumbing I would prefer to leave checkout-index as is; script writers
-can choose to recurse if they choose to.
+Heya,
 
-This is not limited to checkout-index, but what is the stance of this new
-feature on failures from sub-checkout when there are local modifications
-in the work tree?  Some parts of the work tree is checked out while the
-ones after the failure that sorts later in the alphabetical order will not
-be checked out, resulting in an inconsistent state (I am not saying that
-it is good or bad---I am trying to see what the users should expect from
-this new feature)?
+I run into this problem every now and then when I manually apply a
+patch. I apply it, do some stuff, and then having forgotten I already
+applied it, try to apply it again, and am confused as to why it won't
+apply. Would it be difficult to teach 'git am' to see if the patch-id
+of the patch that couldn't be applied has been applied already
+(similar to what 'git cherry' does I guess?) and print a helpful
+message saying "warning: patch already applied" when there is a
+conflict trying to apply such an already-applied patch?
+
+-- 
+Cheers,
+
+Sverre Rabbelier
