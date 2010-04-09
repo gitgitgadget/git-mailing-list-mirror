@@ -1,144 +1,75 @@
-From: Eric Raymond <esr@thyrsus.com>
-Subject: Re: Status of all files (was: Re: How can I tell if a file is
- ignored by git?
-Date: Fri, 9 Apr 2010 10:02:15 -0400
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20100409140215.GB27899@thyrsus.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Status of all files (was: Re: How can I tell if a file is ignored by git?
+Date: Fri, 09 Apr 2010 16:23:11 +0200
+Message-ID: <vpqy6gw7lio.fsf@bauges.imag.fr>
 References: <20100409040434.8602620CBBC@snark.thyrsus.com>
- <j2z8c9a061004082110se894f925i80c1389cd4e247f@mail.gmail.com>
- <20100409113248.GB27353@thyrsus.com>
- <m3sk74hjkg.fsf@localhost.localdomain>
-Reply-To: esr@thyrsus.com
+	<j2z8c9a061004082110se894f925i80c1389cd4e247f@mail.gmail.com>
+	<20100409113248.GB27353@thyrsus.com>
+	<m3sk74hjkg.fsf@localhost.localdomain>
+	<20100409140215.GB27899@thyrsus.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jacob Helwig <jacob.helwig@gmail.com>,
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>,
 	Eric Raymond <esr@snark.thyrsus.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 09 16:02:58 2010
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Fri Apr 09 16:23:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0EnP-0006mO-D3
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 16:02:55 +0200
+	id 1O0F7J-0002sE-9d
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 16:23:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753064Ab0DIOCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Apr 2010 10:02:18 -0400
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:52109
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752618Ab0DIOCQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Apr 2010 10:02:16 -0400
-Received: by snark.thyrsus.com (Postfix, from userid 23)
-	id 5095A475FEF; Fri,  9 Apr 2010 10:02:15 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <m3sk74hjkg.fsf@localhost.localdomain>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752055Ab0DIOXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 10:23:22 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:45025 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750810Ab0DIOXV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 10:23:21 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o39EIWVo022378
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 9 Apr 2010 16:18:32 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1O0F71-0000h7-Lz; Fri, 09 Apr 2010 16:23:11 +0200
+In-Reply-To: <20100409140215.GB27899@thyrsus.com> (Eric Raymond's message of "Fri\, 9 Apr 2010 10\:02\:15 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 09 Apr 2010 16:18:33 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o39EIWVo022378
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1271427513.69157@0NL9Qqg8CXMHNJtRvXACjw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144434>
 
-Jakub Narebski <jnareb@gmail.com>:
-> There is also
-> 
->         git status --short
+Eric Raymond <esr@thyrsus.com> writes:
 
-Not documented in my installed version, 1.6.3.3.  Where can I go in the
-repo to read about this?
+> (The ls-files -t codes need better documentation.  If I get detailed enough
+> answers, I will write some.)
 
-> > Our canonical list (omitting two that apply only to locking systems)
-> > is:
-> > 
-> >   'up-to-date        The working file is unmodified with respect to the
-> >                      latest version on the current branch, and not locked.
-> 
-> In Git you don't have locking, but you have three versions: in the
-> working area (the working file), in the index, and latest version on
-> the current branch (the HEAD version).
-> 
-> So 'up-to-date in Git would probably mean working tree = cached = HEAD
-> version.
+http://thread.gmane.org/gmane.comp.version-control.git/126516
 
-Yes, that was what I thought.  Is this what ls-files is reporting as 'H'?  
+In short, "git ls-files -t" was written long ago, never tested, and
+probably mostly used by no one. It has a very strange behavior, it's
+not just the doc. I'd advise against using it.
 
-(The ls-files -t codes need better documentation.  If I get detailed enough
-answers, I will write some.)
- 
-> > 
-> >   'edited            The working file has been edited by the user.
-> 
-> Does this include stat-dirty files, i.e. if file has been modified
-> (mtime), but the contents is the same in working file and in HEAD
-> version?
+"git status --porcelain" is probably what you want:
 
-No, it does not.  Thank you for asking that question, I have just
-added a note about this to the VC code exactly where it will do the
-most good.
+       --porcelain
+           Give the output in a stable, easy-to-parse format for
+           scripts. Currently this is identical to --short output, but
+           is guaranteed not to change in the future, making it safe
+           for scripts.
 
-> > 
-> >   'needs-update      The file has not been edited by the user, but there is
-> >                      a more recent version on the current branch stored
-> >                      in the master file.
-> 
-> Needs *update* looks like it came from centralized VCS like CVS and
-> Subversion, where you use update-the-commit method.  You can't say
-> that HEAD version is more recent that working file...
-> 
-> The rought equivalent would be that upstream branch for current
-> branch (e.g. 'origin/master' can be upstream for 'master' branch) is
-> in fast-forward state i.e. current branch is direct ancestor of
-> corresponding upstream branch, and the file was modified upstream.
-
-Agreed. But there's no way to tell that this is the case without 
-doing a pull operation or otherwise querying origin, and I'm
-not going to do that.
-
-Explanation: My general rule for DVCS back ends is that the status commands
-aren't allowed to do network operations, and it's OK for them not to
-report a state code if that would be required.  This is so VC will fully
-support disconnected operation when the VCS does.
-
-I have, however, added a note to vc-git.el explaining that this is
-possible if we ever teach the mode front end to behave differently when
-it knows it has live Internet.  I might do this in the future.
- 
-> > 
-> >   'needs-merge       The file has been edited by the user, and there is also
-> >                      a more recent version on the current branch stored in
-> >                      the master file.  This state can only occur if locking
-> >                      is not used for the file.
-> 
-> This, like 'needs-update, looks like it is relevant only in
-> update-the-commit workflow centralized VCS.
-
-Following your previous logic, I think it would make sense to set this if 
-we could detect that the upstream of the current branch has forward commits 
-touching this file.  Again, this would require a network operation in the
-general case.
-
-> >   'conflict          The file contains conflicts as the result of a merge.
-> 
-> Note that with Git you can have other merge conflict than simple
-> CONFLICT(contents).  With CONFLICT(rename/rename) for example the file
-> would not contain textual conflict, so e.g. it won't have conflict
-> markers, etc.
-
-It is unclear what Emacs wants in this situation; I will try to find out.
-The documentation says this:
-
-                     For now the conflicts are text conflicts.  In the
-                     future this might be extended to deal with metadata
-                     conflicts too.
-
-I don't think anyone was thinking about rename/rename conficts...
- 
-> > I am unclear on what your "unmerged" (M) status means.
-> 
-> Probably 'conflict.
-
-That was my best guess too.  Can anyone say more definitely?
 -- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
