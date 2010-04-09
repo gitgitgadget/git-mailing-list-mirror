@@ -1,75 +1,77 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: potential improvement to 'git log' with a range
-Date: Sat, 10 Apr 2010 01:33:47 +0200
-Message-ID: <i2kfabb9a1e1004091633nc70f2f19hd16ea9704f0933b0@mail.gmail.com>
-References: <w2j3abd05a91004091624mb2836ff4v118a1ae9ac5ca6e7@mail.gmail.com>
+From: Tait <git.git@t41t.com>
+Subject: Re: [PATCH] Replace hard-coded path with one from <paths.h>
+Date: Fri, 9 Apr 2010 16:54:55 -0700
+Message-ID: <20100409235455.GI2480@ece.pdx.edu>
+References: <186fa4afcc08ad6ba10906a231c437536fbdb8e9.1270412075.git.chris@arachsys.com> <7vk4sm7vao.fsf@alter.siamese.dyndns.org> <20100404222801.GB31315@arachsys.com> <20100406163525.GF15306@arachsys.com> <20100406163643.GG15306@arachsys.com> <n2u40aa078e1004070357m143cfaccvdc754a3bc5fe1ae1@mail.gmail.com> <20100408105850.GD2146@arachsys.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>
-To: Aghiles <aghilesk@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 10 01:39:38 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Chris Webb <chris@arachsys.com>, kusmabite@gmail.com,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 10 01:55:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0NnT-0007q9-C3
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 01:39:35 +0200
+	id 1O0O2m-0003oz-UF
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 01:55:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755434Ab0DIXjb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Apr 2010 19:39:31 -0400
-Received: from mail-gx0-f217.google.com ([209.85.217.217]:64215 "EHLO
-	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755380Ab0DIXja convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Apr 2010 19:39:30 -0400
-Received: by gxk9 with SMTP id 9so2250081gxk.8
-        for <git@vger.kernel.org>; Fri, 09 Apr 2010 16:39:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=DN7F84bgxiRxvenVJj45BU3L9ZQWpKgOr+pbRyYqyhA=;
-        b=bm8fJPutBrJcFzhzEobyg7OiUVLDWYyoMcWDX00mbgatXCvTMaDwXqwJdXAdHu0KDu
-         lFssOk1HbLLlIcC4mTAtfm33lECQcT04LVqo21ehiHPspw4H+bqAzgRKdTO/inpxwW3K
-         QMkblWkTAqBCURQisSrWAuyXUPiKj3aipblb8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=iarqt0I9lgLefCVcbmDPYOw0YU9F97OPJBe/cyDEUtHI90eZ2fsvs8h+9WEAwwyRTA
-         cQKRFbF62U9yfH5oEXEQpVpNide987p+ERGrIU23ZsJN8ym5A1IkcWBwKVXbUnjaP1kR
-         tGEffi9ZkROI6NRiM6aqkLaAzywJ1fUWSBw6Y=
-Received: by 10.100.206.13 with HTTP; Fri, 9 Apr 2010 16:33:47 -0700 (PDT)
-In-Reply-To: <w2j3abd05a91004091624mb2836ff4v118a1ae9ac5ca6e7@mail.gmail.com>
-Received: by 10.101.109.20 with SMTP id l20mr1443440anm.37.1270856369371; Fri, 
-	09 Apr 2010 16:39:29 -0700 (PDT)
+	id S1755857Ab0DIXzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 19:55:09 -0400
+Received: from ehlo.cat.pdx.edu ([131.252.208.106]:47796 "EHLO
+	ehlo.cat.pdx.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755542Ab0DIXzI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 19:55:08 -0400
+Received: from nemo.ece.pdx.edu (root@nemo.ece.pdx.edu [131.252.209.162])
+	by ehlo.cat.pdx.edu (8.14.2/8.14.2/Debian-2build1) with ESMTP id o39NsvV2012245
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 9 Apr 2010 16:54:57 -0700
+Received: from nemo.ece.pdx.edu (tait@localhost [127.0.0.1])
+	by nemo.ece.pdx.edu (8.13.6/8.13.1) with ESMTP id o39NsuRi021248;
+	Fri, 9 Apr 2010 16:54:56 -0700 (PDT)
+Received: (from tait@localhost)
+	by nemo.ece.pdx.edu (8.13.6/8.12.6/Submit) id o39NstZc021233;
+	Fri, 9 Apr 2010 16:54:55 -0700 (PDT)
+X-Authentication-Warning: nemo.ece.pdx.edu: tait set sender to git.git@t41t.com using -f
+Content-Disposition: inline
+In-Reply-To: <20100408105850.GD2146@arachsys.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ehlo.cat.pdx.edu [131.252.208.106]); Fri, 09 Apr 2010 16:54:57 -0700 (PDT)
+X-Spam-Status: No, score=0.0 required=6.0 tests=none autolearn=failed
+	version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on ehlo.cat.pdx.edu
+X-Virus-Scanned: clamav-milter 0.95.2 at ehlo.cat.pdx.edu
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144490>
 
-Heya,
-
-On Sat, Apr 10, 2010 at 01:24, Aghiles <aghilesk@gmail.com> wrote:
-> If I type:
+> > > +#include <paths.h>
+> >
+> > This breaks on Windows due to missing paths.h. I guess you need some
+> > guard to detect if the header is present or not.
 >
-> =C2=A0 =C2=A0git log FETCH_HEAD~4..HEAD
->
-> I get something. But if I type:
->
-> =C2=A0 =C2=A0git log HEAD..FETCH_HEAD~4
->
-> I get nothing. Is there a good reason for that ?
+> Is this true of all WIN32, or just __MINGW32__ / __CYGWIN__? Presumably
+> /usr/local/bin:/usr/bin:/bin is the wrong default PATH on windows too, so
+> perhaps I should sort that at the same point---what would a canonical
+> default PATH be for Windows?
 
-Yes, read up on the documentation as to what ".." means. Hint, a \ b
-is not the same as b \ a [0].
+Paths.h is not found on my version of mingw/msys.
 
-[0] http://en.wikipedia.org/wiki/Intersection_(set_theory)
+The "canonical" Windows path is usually the system directory, and system32
+and system32\Wbem under the system directory. The system directory could
+be anywhere. C:\WINDOWS is common, but the WINDOWS (or even the C:) are
+subject to change on any given installation. So for example on my computer,
+	C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem
 
---=20
-Cheers,
+is the path before adding in PowerShell, Resource Kits, GTK, etc. Windows
+also assumes '.' is part of your path, even though it's not explicitly
+present in %PATH%.
 
-Sverre Rabbelier
+My version of mingw seems to prepend to the above,
+	.:/usr/local/bin:/mingw/bin:/bin
+
+besides also using : instead of ; as a separator.
