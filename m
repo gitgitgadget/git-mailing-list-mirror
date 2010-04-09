@@ -1,75 +1,56 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Status of all files (was: Re: How can I tell if a file is ignored by git?
-Date: Fri, 09 Apr 2010 16:23:11 +0200
-Message-ID: <vpqy6gw7lio.fsf@bauges.imag.fr>
-References: <20100409040434.8602620CBBC@snark.thyrsus.com>
-	<j2z8c9a061004082110se894f925i80c1389cd4e247f@mail.gmail.com>
-	<20100409113248.GB27353@thyrsus.com>
-	<m3sk74hjkg.fsf@localhost.localdomain>
-	<20100409140215.GB27899@thyrsus.com>
-Mime-Version: 1.0
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: Re: [PATCH] Makefile: Remove excess backslashes from sed
+Date: Fri, 9 Apr 2010 10:33:57 -0400
+Message-ID: <1C4F213E-9DF1-4184-B953-303DEDD69AC1@gernhardtsoftware.com>
+References: <1270783330-35215-1-git-send-email-brian@gernhardtsoftware.com> <7vvdc12mmz.fsf@alter.siamese.dyndns.org> <20100409080256.GA12527@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1078)
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Jacob Helwig <jacob.helwig@gmail.com>,
-	Eric Raymond <esr@snark.thyrsus.com>, git@vger.kernel.org
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Fri Apr 09 16:23:33 2010
+Content-Transfer-Encoding: 8BIT
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 09 16:34:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0F7J-0002sE-9d
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 16:23:29 +0200
+	id 1O0FHe-0008He-4A
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 16:34:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752055Ab0DIOXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Apr 2010 10:23:22 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:45025 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750810Ab0DIOXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Apr 2010 10:23:21 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o39EIWVo022378
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 9 Apr 2010 16:18:32 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1O0F71-0000h7-Lz; Fri, 09 Apr 2010 16:23:11 +0200
-In-Reply-To: <20100409140215.GB27899@thyrsus.com> (Eric Raymond's message of "Fri\, 9 Apr 2010 10\:02\:15 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 09 Apr 2010 16:18:33 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o39EIWVo022378
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1271427513.69157@0NL9Qqg8CXMHNJtRvXACjw
+	id S1752731Ab0DIOeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 10:34:00 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:60713 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752178Ab0DIOeA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Apr 2010 10:34:00 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 1C8271FFC058; Fri,  9 Apr 2010 14:33:56 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.5.113] (unknown [64.134.102.129])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 50E6E1FFC056;
+	Fri,  9 Apr 2010 14:33:55 +0000 (UTC)
+In-Reply-To: <20100409080256.GA12527@gmail.com>
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144435>
 
-Eric Raymond <esr@thyrsus.com> writes:
 
-> (The ls-files -t codes need better documentation.  If I get detailed enough
-> answers, I will write some.)
+On Apr 9, 2010, at 4:02 AM, David Aguilar wrote:
 
-http://thread.gmane.org/gmane.comp.version-control.git/126516
+> Is the \n@@STARTUP\n thing portable?
 
-In short, "git ls-files -t" was written long ago, never tested, and
-probably mostly used by no one. It has a very strange behavior, it's
-not just the doc. I'd advise against using it.
+No.  OS X's sed renders it as 
 
-"git status --porcelain" is probably what you want:
+  #!/usr/bin/pythonnimport os, sys; sys.path.insert(0, os.getenv("GITPYTHONLIB", "/usr/local/lib/python2.6/site-packages"))
 
-       --porcelain
-           Give the output in a stable, easy-to-parse format for
-           scripts. Currently this is identical to --short output, but
-           is guaranteed not to change in the future, making it safe
-           for scripts.
+So NAK for your patch.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+~~ Brian
