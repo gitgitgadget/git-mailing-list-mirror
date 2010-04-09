@@ -1,68 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Status of all files (was: Re: How can I tell if a file is
- ignored by git?
-Date: Fri, 09 Apr 2010 09:52:37 -0700
-Message-ID: <7v8w8w36wa.fsf@alter.siamese.dyndns.org>
-References: <20100409040434.8602620CBBC@snark.thyrsus.com>
- <j2z8c9a061004082110se894f925i80c1389cd4e247f@mail.gmail.com>
- <20100409113248.GB27353@thyrsus.com> <m3sk74hjkg.fsf@localhost.localdomain>
- <20100409140215.GB27899@thyrsus.com> <vpqy6gw7lio.fsf@bauges.imag.fr>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2 3/3] send-email: Add sendemail.smtpdomain
+Date: Fri, 9 Apr 2010 20:40:49 +0200
+Message-ID: <201004092040.50142.jnareb@gmail.com>
+References: <1270827245-28958-1-git-send-email-brian@gernhardtsoftware.com> <1270827245-28958-4-git-send-email-brian@gernhardtsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: esr@thyrsus.com, Jakub Narebski <jnareb@gmail.com>,
-	Jacob Helwig <jacob.helwig@gmail.com>,
-	Eric Raymond <esr@snark.thyrsus.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Apr 09 18:53:01 2010
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Brian Gernhardt <brian@gernhardtsoftware.com>
+X-From: git-owner@vger.kernel.org Fri Apr 09 20:41:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0HS0-0007zt-3u
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 18:53:00 +0200
+	id 1O0J8Z-0008S3-5s
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 20:41:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754457Ab0DIQwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Apr 2010 12:52:55 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49172 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752869Ab0DIQwy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Apr 2010 12:52:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2631AA909C;
-	Fri,  9 Apr 2010 12:52:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IB3SuzY7jfm5BThnhKfXmZtNG90=; b=WGsdS+
-	myJ2o9jPb5Yqdb7U/N0L3iVckOBmZ+ksSjPu++oskgMtwddXVNjHNfFQQqCrY8Ja
-	AN2al5+duV3tFpB25RZzngyZCo1w5O18gOn+GCShsv7DLUprufSw4+RxwmbvZ05M
-	qUhcbcvkT7Mk3jfjmtLeih5FqskTvgDHV6fKE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f0KJdy36LwmM6AM9pRpwpwt8tPkVSZyS
-	nvAHhWNnJtZ9VIokOfBp7gxl8DvvLoBB9WgUMTERlantB2i+lw5Pyh8I/Lv81bXM
-	jCmkewJ9xYxVwNlermZ4QyaFAERj3DxCWG78iCRNSjys16usQM9T9RZXe1Y308Hm
-	Kv66Keax8CU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B410BA9092;
-	Fri,  9 Apr 2010 12:52:45 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C559CA908D; Fri,  9 Apr
- 2010 12:52:38 -0400 (EDT)
-In-Reply-To: <vpqy6gw7lio.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Fri\, 09 Apr 2010 16\:23\:11 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 525B90FE-43F8-11DF-B374-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755299Ab0DISk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 14:40:58 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:45250 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752892Ab0DISk5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 14:40:57 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1298056fga.1
+        for <git@vger.kernel.org>; Fri, 09 Apr 2010 11:40:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=b0YgvO10UYLsVz1Ycz3ZH+31JPz+HuG7PrYwj+B9K+o=;
+        b=UgLQ4dL0MaWfWraGUagzKb9sVXteA0jgwlz2gi6eif/tM0fwkirofoHxObzgbyn6PK
+         cZx+RZImbrsKLvAP+84JNw03h5QC/QJfJ1te3YI9pbo1j7ZZ6MLgfL1YlJUVsLybQrBx
+         YHufXw7CZmPin+cm5QSZb/Mp+EK7XPpkidM0I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=fFZRR3sqmp8dyXL3M3mIRJE2BbJooTzM2Pe7V83yA5NNeoo8sJPP+3CdNkaOh57CMM
+         Y85L1R/tBq1I+Tuhi9gIQ2d6J9GEbO2nq27w9nZbxIvfH+G7ce0adzYVddAo/MqDs2/2
+         ZAfke5xGi8CYlIzktQdFBGLBz+a01DphiFCo4=
+Received: by 10.87.1.2 with SMTP id d2mr939626fgi.34.1270838455895;
+        Fri, 09 Apr 2010 11:40:55 -0700 (PDT)
+Received: from [192.168.1.13] (abvc167.neoplus.adsl.tpnet.pl [83.8.200.167])
+        by mx.google.com with ESMTPS id 16sm908537fxm.4.2010.04.09.11.40.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 09 Apr 2010 11:40:54 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1270827245-28958-4-git-send-email-brian@gernhardtsoftware.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144454>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Fri, 9 Apr 2010, Brian Gernhardt wrote:
 
-> In short, "git ls-files -t" was written long ago, never tested, and
-> probably mostly used by no one.
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index f491d44..bdfe3f2 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -132,8 +132,7 @@ my $have_email_valid = eval { require Email::Valid; 1 };
+>  my $have_mail_address = eval { require Mail::Address; 1 };
+>  my $smtp;
+>  my $auth;
+> -my $mail_domain_default = "localhost.localdomain";
+> -my $mail_domain;
+> +my $smtp_domain_default = "localhost.localdomain";
 
-It was added primarily for Cogito, which is presumably dead by now.
+Why this change, this renaming of variables from $mail_domain_default
+and $mail_domain to $smtp_domain_default and $smtp_domain?  Why you
+have removed this forward declaration of $smtp_domain/$mail_domain?
+  
+>  sub unique_email_list(@);
+>  sub cleanup_compose_files();
+> @@ -190,7 +189,7 @@ sub do_edit {
+>  # Variables with corresponding config settings
+>  my ($thread, $chain_reply_to, $suppress_from, $signed_off_by_cc, $cc_cmd);
+>  my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_encryption);
+> -my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts);
+> +my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts, $smtp_domain);
+>  my ($validate, $confirm);
+>  my (@suppress_cc);
+
+Why have you moved $smtp_domain declaration (formerly $mail_domain)
+here?  And why it is not described in commit message (at least "Cleanup.",
+or something like this)?
+
+-- 
+Jakub Narebski
+Poland
