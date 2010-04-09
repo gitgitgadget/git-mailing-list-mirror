@@ -1,59 +1,80 @@
-From: Yury Polyanskiy <polyanskiy@gmail.com>
-Subject: Why not show ORIG_HEAD in git-log --decorate?
-Date: Fri, 9 Apr 2010 12:07:00 -0400
-Message-ID: <s2zea182b21004090907i9af49416za4fdb4650af5ae29@mail.gmail.com>
+From: Eric Raymond <esr@thyrsus.com>
+Subject: Re: Status of all files (was: Re: How can I tell if a file is
+ ignored by git?
+Date: Fri, 9 Apr 2010 12:24:25 -0400
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20100409162425.GA32575@thyrsus.com>
+References: <20100409040434.8602620CBBC@snark.thyrsus.com>
+ <j2z8c9a061004082110se894f925i80c1389cd4e247f@mail.gmail.com>
+ <20100409113248.GB27353@thyrsus.com>
+ <m3sk74hjkg.fsf@localhost.localdomain>
+ <20100409140215.GB27899@thyrsus.com>
+ <vpqy6gw7lio.fsf@bauges.imag.fr>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 09 18:07:11 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>,
+	Eric Raymond <esr@snark.thyrsus.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Apr 09 18:24:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0Gjd-00022U-OB
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 18:07:10 +0200
+	id 1O0H0T-0002RA-M4
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 18:24:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753854Ab0DIQHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Apr 2010 12:07:04 -0400
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:36271 "EHLO
-	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751244Ab0DIQHC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Apr 2010 12:07:02 -0400
-Received: by qyk9 with SMTP id 9so1518808qyk.1
-        for <git@vger.kernel.org>; Fri, 09 Apr 2010 09:07:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:received:message-id
-         :subject:from:to:content-type;
-        bh=WHt8KoFtFkPwVjXQqsJ5jEebrsvNwunnpFNyi/rwdB0=;
-        b=n2dCTpLcmHn146E8D06coEUK/dPSdQiW0ydAyiQW8Cw5oAeK1xoK0mDCcopUeRp5sb
-         ylt6WnLZaB/hfwRcM4tqW1EgdNtlVT+NV46XWUL2TDfU2DuEWDAKvq5Awrazqt2bhmqJ
-         i2pg1xz8VeHe3DUXL0CA5e4glpjLascGqBcQY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=scsDLN3tLDcWSLdjx+N699QsZoHzIqXuArX7Nn0Kg0LNlLolZr9WhuzasV/epMEPuA
-         TmOOWWLwDXd7s3d9uCORimYe75N84YFfbIui/IBMMor0Uspg7t0K+V5S7avRVmDYxMKu
-         c+Q6GcLquR7UPxfSSdWQdzhcOraao1ove2oB0=
-Received: by 10.229.230.131 with HTTP; Fri, 9 Apr 2010 09:07:00 -0700 (PDT)
-Received: by 10.229.227.149 with SMTP id ja21mr213282qcb.74.1270829220541; 
-	Fri, 09 Apr 2010 09:07:00 -0700 (PDT)
+	id S1754283Ab0DIQY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 12:24:27 -0400
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:56728
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751041Ab0DIQY0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 12:24:26 -0400
+Received: by snark.thyrsus.com (Postfix, from userid 23)
+	id 83081475FEF; Fri,  9 Apr 2010 12:24:25 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <vpqy6gw7lio.fsf@bauges.imag.fr>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144450>
 
-Hello list!
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
+> Eric Raymond <esr@thyrsus.com> writes:
+> 
+> > (The ls-files -t codes need better documentation.  If I get detailed enough
+> > answers, I will write some.)
+> 
+> http://thread.gmane.org/gmane.comp.version-control.git/126516
+> 
+> In short, "git ls-files -t" was written long ago, never tested, and
+> probably mostly used by no one. It has a very strange behavior, it's
+> not just the doc. I'd advise against using it.
 
-It would be very convenient if after git-pull I could see the new
-merged-in commits in the git-log. The simplest solution for this is to
-simply mark ORIG_HEAD in the output of git-log --decorate (and ideally
-also in gitk).
+It sounds very much to me as though this feature should be scheduled
+for deletion.
+ 
+> "git status --porcelain" is probably what you want:
+> 
+>        --porcelain
+>            Give the output in a stable, easy-to-parse format for
+>            scripts. Currently this is identical to --short output, but
+>            is guaranteed not to change in the future, making it safe
+>            for scripts.
 
-Just thought to throw in this idea to developers. Perhaps it is not
-that hard to implement.
+Yes, this looks like what I would want, all right - if the status
+codes were actually *comprehensible*! 
 
-Best,
-Yury
+We should tackle this right now, because VC is not the last front end
+that will need to parse the format and at least I am willing to patch
+your docs based on what I learn.  Most of your other customers won't
+do that.
+
+I'm going to start a separate thread about this.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
