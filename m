@@ -1,82 +1,58 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: [BUG] - git rebase -i performs rebase when it shouldn't?
-Date: Fri, 9 Apr 2010 15:35:42 -0400
-Message-ID: <z2q76c5b8581004091235ucd9b2a52i223b3191b288c42a@mail.gmail.com>
+From: Eric Raymond <esr@thyrsus.com>
+Subject: Re: More git status --porcelain lossage
+Date: Fri, 9 Apr 2010 15:50:29 -0400
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20100409195029.GA15810@thyrsus.com>
+References: <20100409190601.47B37475FEF@snark.thyrsus.com>
+ <m3ochsh1oc.fsf@localhost.localdomain>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 09 21:35:51 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Raymond <esr@snark.thyrsus.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 09 21:51:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0Jza-0005f1-FL
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 21:35:50 +0200
+	id 1O0KEN-00051C-Oq
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 21:51:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755595Ab0DITfq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Apr 2010 15:35:46 -0400
-Received: from mail-bw0-f209.google.com ([209.85.218.209]:65496 "EHLO
-	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754327Ab0DITfp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Apr 2010 15:35:45 -0400
-Received: by bwz1 with SMTP id 1so2779068bwz.21
-        for <git@vger.kernel.org>; Fri, 09 Apr 2010 12:35:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:received:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        bh=kF/s+uQXqy937QQvFmOraNEA4Kbw9N6jGFiGnkT5JnM=;
-        b=Lsw21DNlYfVW1jvG2saxNqwoih0g+wggKATByG18UNLCdgZ3XYHK+euJ6Tgm4C738g
-         np43OnDVQnAb27P/4t6L+GOiMdSLtiL3rz4rqllX1aDVB4TUGQZpj9nfQK75l7oBqvFO
-         W1GkzefxW+nQC+064Mpt4imkd4+ZftCJjLEmk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=AYs/lficiKwHo2Zyj/L/njOA4UmGtB7Q9eO/noKWdJqj0SYj2Wk2ZFs8yNoeNGoXx/
-         8qjq9xIdK8a60NtGGu0jEg0XpDpy4BXAGLwybRx5wKj328Mu1oCizYUWHMp3yCxyjqaH
-         0fK2ztXHRB2JJWXxtoz2/RgBLDZ/WCE00HHu8=
-Received: by 10.204.120.202 with HTTP; Fri, 9 Apr 2010 12:35:42 -0700 (PDT)
-Received: by 10.204.134.84 with SMTP id i20mr506210bkt.192.1270841742834; Fri, 
-	09 Apr 2010 12:35:42 -0700 (PDT)
+	id S1756535Ab0DITuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 15:50:35 -0400
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:38280
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755966Ab0DITua (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 15:50:30 -0400
+Received: by snark.thyrsus.com (Postfix, from userid 23)
+	id 03347475FEF; Fri,  9 Apr 2010 15:50:30 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <m3ochsh1oc.fsf@localhost.localdomain>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144465>
 
-Hi,
+Jakub Narebski <jnareb@gmail.com>:
+> > Conclusion: As it is presently, git status --porcelain format is
+> > irretrievably botched.  You need a field separator that's musch less
+> > likely to land in a filename, like '|' - and to warn in the documentation
+> > that careful front ends must check for and ignore '\|'. 
+> 
+> Or follow what other porcelain does, like git-diff-tree raw output
+> format, where all fields except final filename are space separated,
+> filename is separated by tab character (or NUL when '-z' options is
+> used).  If there are two names (in the case of copy or renames),
+> they are separated by a tab (or NUL).  Record ends with LF (or NUL).
+> 
+> When '-z' option is not used, TAB, LF, " and backslash characters
+> are represented by '\t', '\n', '\"' and \\, and the filename is
+> enclosed in '"' doublequotes.
 
-
-In case of this situation
-
-=C2=A0 =C2=A0 =C2=A0 =C2=A0A =C2=A0master
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 \
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0B =C2=A0next
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0C =C2=A0topic
-
-
-$ git rebase --onto master topic
-=46irst, rewinding head to replay your work on top of it...
-fatal: Not a range.
-Nothing to do.
-
-Which is OK.
-
-When I fired up interactive rebase, it printed me =E2=80=9Cnoop=E2=80=9D=
-, so I was
-expecting it to do nothing and exited the vi, without deleting this
-"noop". But it did performed some operation and I actually have commit
-C lost, with topic pointing to the same commit as master.
-
-$ git rebase -i --onto master topic
-Successfully rebased and updated refs/heads/topic.
-
-I believe this is wrong.
-
-
-Thanks,
-Eugene
+That would be a bit trickier to parse, but acceptable.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
