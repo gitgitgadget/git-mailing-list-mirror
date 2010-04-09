@@ -1,209 +1,105 @@
-From: Eric Raymond <esr@snark.thyrsus.com>
-Subject: git status --porcelain is a mess that needs fixing
-Date: Fri,  9 Apr 2010 14:46:08 -0400 (EDT)
-Message-ID: <20100409184608.C7C61475FEF@snark.thyrsus.com>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: git rebase command and docs questions
+Date: Fri, 9 Apr 2010 14:49:52 -0400
+Message-ID: <h2j76c5b8581004091149y9f5f93a8o5f11b3ffc657623@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eugene Sajine <euguess@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 09 20:46:21 2010
+X-From: git-owner@vger.kernel.org Fri Apr 09 20:50:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0JDd-0002LN-87
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 20:46:17 +0200
+	id 1O0JHE-0004DX-6Y
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 20:50:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755375Ab0DISqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Apr 2010 14:46:12 -0400
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:48518
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753570Ab0DISqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Apr 2010 14:46:09 -0400
-Received: by snark.thyrsus.com (Postfix, from userid 23)
-	id C7C61475FEF; Fri,  9 Apr 2010 14:46:08 -0400 (EDT)
+	id S1755389Ab0DIStz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Apr 2010 14:49:55 -0400
+Received: from mail-bw0-f209.google.com ([209.85.218.209]:62222 "EHLO
+	mail-bw0-f209.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755204Ab0DISty convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Apr 2010 14:49:54 -0400
+Received: by bwz1 with SMTP id 1so2754913bwz.21
+        for <git@vger.kernel.org>; Fri, 09 Apr 2010 11:49:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:received:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=hYTGqRYlV8q8cNI0KBrRHgEavIr8WdmWYqZTTQ7weXQ=;
+        b=teE5jJzUCLV46ncQdjaVoxJcnJP5hv1TNZ3RjCbtI2DvRt3btPsc6xQUPCYWZmF0GF
+         KcnD839fLPpls4D8wZn/4JIeRlAOaNAcqoejl9wUAonBsf9QqEBF0EZwH6vNQz7gn+yE
+         njKIQU0on/NznuOfkK0edWJawWPXSFxiRLZdg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=Rxc6BO27RWHQJAZRzjsqvGB1NAIXUsEZJMwXfJhKZpIrYWDQmu1J/XiKJ975i+rs1z
+         f8DlqL2/VIQt7DQfgoFucU4rH4B0j5xFA6ewjLzGX0Dw1uzn3nKPCLvg8nguPGt9CeRj
+         QcMLC5SUYQuXDI6gHgdWL4udFgLmfrRPRsQ6s=
+Received: by 10.204.120.202 with HTTP; Fri, 9 Apr 2010 11:49:52 -0700 (PDT)
+Received: by 10.204.161.211 with SMTP id s19mr487743bkx.129.1270838992842; 
+	Fri, 09 Apr 2010 11:49:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144456>
 
-I'm going to gripe a lot in this mail, possibly verging on flaming.
-Therefore I want to start by making clear that I am not here to
-complain without pitching in to help fix the problems.  If I can get
-responsive answers to my questions, I will take responsibility for
-editing them into the relevant git documentation,
+Hi,
 
-Short version: "git status --porcelain" is horribly badly documented
-and appears to be seriously maldesigned.  Both these problems need to
-be fixed before git causes a lot of unnecessary grief for people
-trying to use it.
+I have few questions about rebase and its help content:
 
-Here is the entire documentation on this feature in HEAD:
+1. In case of this situation
 
-=============================================================================
-
-In short-format, the status of each path is shown as
-
-	XY PATH1 -> PATH2
-
-where `PATH1` is the path in the `HEAD`, and ` -> PATH2` part is
-shown only when `PATH1` corresponds to a different path in the
-index/worktree (i.e. renamed).
-
-For unmerged entries, `X` shows the status of stage #2 (i.e. ours) and `Y`
-shows the status of stage #3 (i.e. theirs).
-
-For entries that do not have conflicts, `X` shows the status of the index,
-and `Y` shows the status of the work tree.  For untracked paths, `XY` are
-`??`.
-
-    X          Y     Meaning
-    -------------------------------------------------
-              [MD]   not updated
-    M        [ MD]   updated in index
-    A        [ MD]   added to index
-    D        [ MD]   deleted from index
-    R        [ MD]   renamed in index
-    C        [ MD]   copied in index
-    [MARC]           index and work tree matches
-    [ MARC]     M    work tree changed since index
-    [ MARC]     D    deleted in work tree
-    -------------------------------------------------
-    D           D    unmerged, both deleted
-    A           U    unmerged, added by us
-    U           D    unmerged, deleted by them
-    U           A    unmerged, added by them
-    D           U    unmerged, deleted by us
-    A           A    unmerged, both added
-    U           U    unmerged, both modified
-    -------------------------------------------------
-    ?           ?    untracked
-    -------------------------------------------------
-
-=============================================================================
-
-This was clearly written as an aide-memoire by someone intimately
-familiar with the system, but I have to tell you it is so confusing
-to me as to be nearly worse than useless.  
-
-In addition, some of the design choices it appears to imply are quite
-bad - so I hope I am wrong about those implications.  If I am not, you
-have specified a misdesigned format that will frustrate and annoy your
-customers (script and front-end writers). And that would be a problem.
-
-As I criticize, bear in mind that (a) none of my issues are VC
-specific, and (b) I am the author of several version-control front
-ends - *I have done this before.* My objections are *not*
-theoretical!
-
-First, the documentation issues, in roughly increasing order of severity:
-
-1. What separates the XY column from the first path?
-
-I'd assume a tab, but it's not documented. It needs to be documented.
-
-2. What separates the '->' on either side from the path columns?
-
-Not documented.  Needs to be documented.  
-
-3. What do the status codes M A D R C mean?
-
-I can guess, but I should not have to guess.  They should be documented.
-
-4. Some columns in the table have sets of codes enclosed by [].  Is
-this indicating alternation?
-
-My guess is yes, but I should not have to guess.  This should be documented.
-
-5. What is 'us' versus 'them'? What are "stage #2" and "stage #3"?
-
-It makes my brain hurt just trying to list all the things "us"
-and "them" could mean.
-
-Remember that because you're advertising a format for script use, your
-audience for this page is not git hackers.  It's not git power
-users. It's not even ordinary git users. It's people whose main
-expertise is is *other tools*.  They want to get in, write their
-script and get out, having learned as little about git as they can get
-away with.
-
-If 'us'/'them'/'stage #2'/'stage #3' are git terms of art that are well
-defined elsewhere, you must reference that elsewhere.  If they are
-not, you need to define them here.  And because of the special
-audience for this page, it needs to be more self-contained and make
-fewer assumptions about the reader's knowledge than usual.
-
-Note: I, personally, read very fast and don't mind the mental effort
-of skimming 50-100 pages of other documentation.  But you must *not*
-assume I am anything but an exception.  This *particular* section on
-this *particular* page needs (more than others) to be written so it
-would be comprehensible to a lazy idiot who vaguely knows about
-otther version-control systems and can't be bothered to read 
-about this one, either.  
+o---o---o---o---o =C2=A0master
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 \
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0o---o---o---o---o =C2=A0next
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 \
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0o---o---o =C2=A0topic
 
 
-Now to the functional problems, again in roughly increasing order of
-severity:
+=E2=80=9Cgit rebase master topic=E2=80=9D says:
+The current branch topic is up-to-date.
 
-A. The '->' separator considered harmful
+This message seems to be confusing and even incorrect.
+The actual problem, as I understand, is that topic branch is not a
+direct descendant of the master branch, therefore
+=E2=80=9Cgit rebase =E2=80=93onto master next topic=E2=80=9D should be =
+used instead.
+Is there a way for git to identify this problem more correctly and
+print more helpful error message?
 
-The '->' was superfluous and thus a poor design choice; the
-distinction between two columns and three columns is easy enough to
-make in any scripting language.  As it is, it's meaningless and
-scripts will actually have to go to some extra effort to throw it
-away.
+2. The rebase help is a bit confusing in its =E2=80=9C=E2=80=93onto=E2=80=
+=9D option part.
+Initially help says that the form:
 
-I think the underlying problem here is that whoever designed this
-never got past the idea that it needed to have cues for human
-eyeballs in it.  That was a mistake.  If you're serious about it
-being easily parseable, design it that way.
+git rebase master topic
 
-B. Does "untracked" include "ignored"?  
+is a shorthand for git checkout topic, git rebase master
 
-If so, that is a problem -- front ends care about the difference, for
-example when C-x v v is trying to compute the logical next action.
-For an unregistered file, it's to register it.  For an ignored file,
-it's to throw a user-visible error.
+But, in =E2=80=9Cgit rebase =E2=80=93onto master next topic=E2=80=9D th=
+e meaning of the =E2=80=9Cnext
+topic=E2=80=9D parameters is different: as I understand, it actually sp=
+ecifies
+a range of commits from next to topic, =C2=A0because =E2=80=93onto chan=
+ges the way
+the whole command is working, but it is not clarified in help. Is that
+correct understanding?
 
-C. If "untracked" does not include "ignored", how is an ignored file tagged?
 
-If ignored files are not listed, that's another problem. Even more
-serious, actually.
+3. The part of help from =E2=80=9CAnother example of --onto option is t=
+o
+rebase part of a branch.=E2=80=9D Is actually demonstrating absolutely =
+the
+same thing as the one before with the only difference that in the
+second example the master has not advanced. There was probably some
+different intention, but currently it looks like confusing
+duplication.
 
-D. How do I tell the conflict/no-conflict cases apart?
-
-You have three divisions in the table.  The first two are supposed
-to pertain to "entries that do not have conflicts" and "unmerged
-entries".  
-
-They share code letters.  *How do I tell them apart?* 
-
-Illustrative case: I see the status code "DD". How do I distinguish
-between case 4 ("deleted from index") and case 10 ("unmerged, both
-deleted")?
-
-If the distinction is meaningless, then why are they listed
-separately?
-
-E. Are you *really* using a space as a status character?
-
-It certainly appears so from the first and seventh rows of the table.
-If so, this was a major blunder. It complicates parsing code
-unnecessarily, because the easiest way to separate columns is with the
-equivalent of a Python or Perl split() operation that will eat that
-space.  Then we have to special-case depending on the field width.
-
-The correct way to design a format like this for script parseability
-is to (a) never make the difference between space and tab significant,
-and (b) never use whitespace as anything but a field separator.  If
-you want the equivalent of "blank" you use '-', as in Unix ls -l
-output.
-
-This may sound like a nitpick, but it's actually a crash landing, or
-close to it.  Front-end writers look at things like this and think
-"Idiots.  Can't trust them an inch...".  And git already has a bad
-reputation for interface spikiness to live down.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
-
-A right is not what someone gives you; it's what no one can take from you. 
-	-- Ramsey Clark
+Thanks,
+Eugene
