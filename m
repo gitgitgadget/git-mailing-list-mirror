@@ -1,58 +1,70 @@
-From: Aghiles <aghilesk@gmail.com>
-Subject: potential improvement to 'git log' with a range
-Date: Fri, 9 Apr 2010 19:24:30 -0400
-Message-ID: <w2j3abd05a91004091624mb2836ff4v118a1ae9ac5ca6e7@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: am: be more helpful
+Date: Fri, 09 Apr 2010 16:27:37 -0700
+Message-ID: <7v4ojk1a1i.fsf@alter.siamese.dyndns.org>
+References: <t2kfabb9a1e1004091559u92230e17h957f2c5565c133e3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 10 01:24:56 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 10 01:27:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0NZI-0003zf-Ey
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 01:24:56 +0200
+	id 1O0NcD-0004rZ-57
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 01:27:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754283Ab0DIXYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Apr 2010 19:24:52 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:61298 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753243Ab0DIXYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Apr 2010 19:24:51 -0400
-Received: by wwi17 with SMTP id 17so1188277wwi.19
-        for <git@vger.kernel.org>; Fri, 09 Apr 2010 16:24:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:received
-         :message-id:subject:to:content-type;
-        bh=Zbjfhej8TzRJ4gne+n3G8MVagRi6nyDrjoG2edC9phI=;
-        b=KbseF46zvrWAeNLZ6325RHjgTxyWM4ZcTKCxdNpAfwK7Qtul43UiFqgEqHzoHwZ1dK
-         8Ov3eOtJeNrU3jc1vEJ5D10g6mMeMyFIIOGnCIxIfXw5juAfRU8bYE1yHtvfp+s70SHQ
-         +tDHvFcdcXW83Njg7kiWE/ikMlcgn+mo0lrkw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=cjmhN7px7UktoSJmlFo+nf9yFd5HrrKj8EllqaNBjNqjqpkgAmSV+HUGycl5Pmg7GV
-         l9YMp6riCk/qpCfObrURB1dPewBLP0aq85I0EUWZfBhpBrkgEb7zRyhGK8i/FvSu+ldW
-         TKFOissB6qVgiu1b3LnL3oT86x0tTLnZdTPh0=
-Received: by 10.216.170.8 with HTTP; Fri, 9 Apr 2010 16:24:30 -0700 (PDT)
-Received: by 10.216.156.209 with SMTP id m59mr430186wek.105.1270855490242; 
-	Fri, 09 Apr 2010 16:24:50 -0700 (PDT)
+	id S1754903Ab0DIX1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 19:27:52 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51879 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753900Ab0DIX1v (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 19:27:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B919A97CA;
+	Fri,  9 Apr 2010 19:27:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=el6hBPUwNh4cr8YT8mNcz+ktuiw=; b=taO9qk
+	SB1fQDcegWk6zZSS0RjZSnvH21NLeOVzJX0SFfHHcCNPt7wKpiZcTTPaDb0VGU/N
+	2yxgKx+BuK6jfQPEdJVwzVUwq5M1YdYMjINmPP7PpIC7Jmy7MNP2OYsb5IRvW9Dj
+	TOTxOpHt9w8oJeMzbdT0Wrz8TpFzqS9zMWCAs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZyN1zOlaTXY+hW15UYITNGUHwhdKAujw
+	XIQ88HCVESYDBz79tNLUwRPA2tNqlfCY9JS/hNmp06zXMHiMl6cbpYgkkQCHLW3l
+	YDgOCH9oNxFQ6V+NMFrCKMDbnRcxi2q7XF7+XREOaSDsVJT2d7sVxQiymiKJkGWN
+	TICEQmmNT40=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7FDC2A97C9;
+	Fri,  9 Apr 2010 19:27:44 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 199C5A97C8; Fri,  9 Apr
+ 2010 19:27:38 -0400 (EDT)
+In-Reply-To: <t2kfabb9a1e1004091559u92230e17h957f2c5565c133e3@mail.gmail.com>
+ (Sverre Rabbelier's message of "Sat\, 10 Apr 2010 00\:59\:11 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 7F78B152-442F-11DF-99C8-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144486>
 
-If I type:
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-    git log FETCH_HEAD~4..HEAD
+> Heya,
+>
+> I run into this problem every now and then when I manually apply a
+> patch. I apply it, do some stuff, and then having forgotten I already
+> applied it, try to apply it again, and am confused as to why it won't
+> apply. Would it be difficult to teach 'git am' to see if the patch-id
+> of the patch that couldn't be applied has been applied already
+> (similar to what 'git cherry' does I guess?) and print a helpful
+> message saying "warning: patch already applied" when there is a
+> conflict trying to apply such an already-applied patch?
 
-I get something. But if I type:
-
-    git log HEAD..FETCH_HEAD~4
-
-I get nothing. Is there a good reason for that ?
-
-  -- aghiles
+"am -3"?
