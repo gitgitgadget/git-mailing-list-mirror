@@ -1,87 +1,73 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: [PATCH] Makefile: Simplify handling of python scripts
-Date: Fri,  9 Apr 2010 11:35:15 -0400
-Message-ID: <1270827315-29024-1-git-send-email-brian@gernhardtsoftware.com>
-References: <7vvdc12mmz.fsf@alter.siamese.dyndns.org>
-Cc: David Aguilar <davvid@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 09 17:35:27 2010
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] Makefile: Simplify handling of python scripts
+Date: Fri, 9 Apr 2010 17:39:12 +0200
+Message-ID: <i2ifabb9a1e1004090839hd55a81bfid820180815c8d94d@mail.gmail.com>
+References: <1270827245-28958-1-git-send-email-brian@gernhardtsoftware.com> 
+	<1270827245-28958-2-git-send-email-brian@gernhardtsoftware.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>
+To: Brian Gernhardt <brian@gernhardtsoftware.com>
+X-From: git-owner@vger.kernel.org Fri Apr 09 17:39:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0GEw-0000mB-Fm
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 17:35:26 +0200
+	id 1O0GJ3-00030Z-5O
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 17:39:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754163Ab0DIPfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Apr 2010 11:35:21 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:37823 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750952Ab0DIPfS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Apr 2010 11:35:18 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 867CA1FFC058; Fri,  9 Apr 2010 15:35:13 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.6 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from Hermes.local.net (unknown [64.134.102.129])
-	by silverinsanity.com (Postfix) with ESMTPA id 8EC7F1FFC056;
-	Fri,  9 Apr 2010 15:35:12 +0000 (UTC)
-X-Mailer: git-send-email 1.7.1.rc0.243.g2ce66
-In-Reply-To: <7vvdc12mmz.fsf@alter.siamese.dyndns.org>
+	id S1754386Ab0DIPjg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Apr 2010 11:39:36 -0400
+Received: from mail-qy0-f179.google.com ([209.85.221.179]:35117 "EHLO
+	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754143Ab0DIPjf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Apr 2010 11:39:35 -0400
+Received: by qyk9 with SMTP id 9so1483721qyk.1
+        for <git@vger.kernel.org>; Fri, 09 Apr 2010 08:39:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=gDH/v7fuHFhXXX0RCZh7Jbk6pEHkK5kSRvBEk/Zzci4=;
+        b=bZR1GeToyr+MFUejaPLAKhzVgNMMv5eZsn32qO2CAeQ976et+YDrx2mjT2ZcctOS0T
+         dPsu7qUu/OiiAmEuP/nQOBd+LpsNYvdM6fw4YaY/57p32iq4WPnAvUntFkJelfTdlZKQ
+         KnFegKHHsVR8cXujTsTsNWBEBj9EdJJAEkSHE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=MzANUyNsP8ynDwOPk5xzEUNC6kOOrIIFUJxZOxVb7mb7TeWBb6RPJjLPAg5cpETU9v
+         YKUhVu90LKtcRHZWzYx8SmlHKc3eNtdhi05yLkijG/ocdl3wZPSrMlYmrOzsgmReeain
+         EzP9cge01/6uAnoyc6jeu0w6mpl6BTsJTTMtY=
+Received: by 10.224.74.3 with HTTP; Fri, 9 Apr 2010 08:39:12 -0700 (PDT)
+In-Reply-To: <1270827245-28958-2-git-send-email-brian@gernhardtsoftware.com>
+Received: by 10.224.70.129 with SMTP id d1mr66431qaj.357.1270827572103; Fri, 
+	09 Apr 2010 08:39:32 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144445>
 
-The sed script intended to add a standard opening to python scripts
-was non-compatible and overly complex.  Simplifying it down to a set
-of one-liners removes the compatibility issues of newlines.  Moving
-the environment alterations from the Makefile to the python scripts
-makes also makes the scripts easier to run in-place.
+Heya,
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
----
- Makefile              |    9 ++-------
- git-remote-testgit.py |    2 ++
- 2 files changed, 4 insertions(+), 7 deletions(-)
+On Fri, Apr 9, 2010 at 17:34, Brian Gernhardt
+<brian@gernhardtsoftware.com> wrote:
+> The sed script intended to add a standard opening to python scripts
+> was non-compatible and overly complex. =C2=A0Simplifying it down to a=
+ set
+> of one-liners removes the compatibility issues of newlines. =C2=A0Mov=
+ing
+> the environment alterations from the Makefile to the python scripts
+> makes also makes the scripts easier to run in-place.
 
-diff --git a/Makefile b/Makefile
-index f0fe351..87c90d6 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1629,13 +1629,8 @@ $(patsubst %.py,%,$(SCRIPT_PYTHON)): % : %.py
- 	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C git_remote_helpers -s \
- 		--no-print-directory prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' \
- 		instlibdir` && \
--	sed -e '1{' \
--	    -e '	s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
--	    -e '}' \
--	    -e 's|^import sys.*|&; \\\
--	           import os; \\\
--	           sys.path.insert(0, os.getenv("GITPYTHONLIB",\
--	                                        "@@INSTLIBDIR@@"));|' \
-+	sed -e '1s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
-+	    -e 's|\(os\.getenv("GITPYTHONLIB"\)[^)]*)|\1,"@@INSTLIBDIR@@")|' \
- 	    -e 's|@@INSTLIBDIR@@|'"$$INSTLIBDIR"'|g' \
- 	    $@.py >$@+ && \
- 	chmod +x $@+ && \
-diff --git a/git-remote-testgit.py b/git-remote-testgit.py
-index f61624e..9253922 100644
---- a/git-remote-testgit.py
-+++ b/git-remote-testgit.py
-@@ -2,6 +2,8 @@
- 
- import hashlib
- import sys
-+import os
-+sys.path.insert(0, os.getenv("GITPYTHONLIB","."))
- 
- from git_remote_helpers.util import die, debug, warn
- from git_remote_helpers.git.repo import GitRepo
--- 
-1.7.1.rc0.243.g2ce66
+My sed foo is not that great, can you explain (in the commit message)
+what exactly the new sed script does?
+
+--=20
+Cheers,
+
+Sverre Rabbelier
