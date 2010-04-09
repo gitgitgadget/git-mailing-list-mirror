@@ -1,41 +1,41 @@
 From: Brian Gernhardt <brian@gernhardtsoftware.com>
 Subject: [PATCH] Makefile: Simplify handling of python scripts
-Date: Fri,  9 Apr 2010 11:34:03 -0400
-Message-ID: <1270827245-28958-2-git-send-email-brian@gernhardtsoftware.com>
-References: <1270827245-28958-1-git-send-email-brian@gernhardtsoftware.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
+Date: Fri,  9 Apr 2010 11:35:15 -0400
+Message-ID: <1270827315-29024-1-git-send-email-brian@gernhardtsoftware.com>
+References: <7vvdc12mmz.fsf@alter.siamese.dyndns.org>
+Cc: David Aguilar <davvid@gmail.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 09 17:35:17 2010
+X-From: git-owner@vger.kernel.org Fri Apr 09 17:35:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0GEk-0000fO-Hl
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 17:35:14 +0200
+	id 1O0GEw-0000mB-Fm
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 17:35:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754373Ab0DIPee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Apr 2010 11:34:34 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:53655 "EHLO
+	id S1754163Ab0DIPfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 11:35:21 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:37823 "EHLO
 	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754201Ab0DIPeP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Apr 2010 11:34:15 -0400
+	with ESMTP id S1750952Ab0DIPfS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 11:35:18 -0400
 Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 4644C1FFC05B; Fri,  9 Apr 2010 15:34:11 +0000 (UTC)
+	id 867CA1FFC058; Fri,  9 Apr 2010 15:35:13 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.6 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
 	autolearn=ham version=3.2.5
 Received: from Hermes.local.net (unknown [64.134.102.129])
-	by silverinsanity.com (Postfix) with ESMTPA id 7C46F1FFC057;
-	Fri,  9 Apr 2010 15:34:09 +0000 (UTC)
+	by silverinsanity.com (Postfix) with ESMTPA id 8EC7F1FFC056;
+	Fri,  9 Apr 2010 15:35:12 +0000 (UTC)
 X-Mailer: git-send-email 1.7.1.rc0.243.g2ce66
-In-Reply-To: <1270827245-28958-1-git-send-email-brian@gernhardtsoftware.com>
+In-Reply-To: <7vvdc12mmz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144444>
 
 The sed script intended to add a standard opening to python scripts
 was non-compatible and overly complex.  Simplifying it down to a set
