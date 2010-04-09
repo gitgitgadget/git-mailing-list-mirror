@@ -1,97 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: nd/setup
-Date: Fri, 9 Apr 2010 00:57:01 -0500
-Message-ID: <20100409055701.GA9554@progeny.tock>
-References: <7v6342ahx9.fsf@alter.siamese.dyndns.org>
- <20100408073825.GA15153@coredump.intra.peff.net>
- <20100408214233.GA32441@progeny.tock>
- <q2pfcaeb9bf1004082246w3fb6e18bw21943150cbeeb5c7@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Makefile: Remove excess backslashes from sed
+Date: Thu, 08 Apr 2010 22:57:56 -0700
+Message-ID: <7vvdc12mmz.fsf@alter.siamese.dyndns.org>
+References: <1270783330-35215-1-git-send-email-brian@gernhardtsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 09 07:57:00 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Brian Gernhardt <brian@gernhardtsoftware.com>
+X-From: git-owner@vger.kernel.org Fri Apr 09 07:58:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O07D9-0001dh-SC
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 07:57:00 +0200
+	id 1O07EL-0001tI-FK
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 07:58:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754527Ab0DIF4r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Apr 2010 01:56:47 -0400
-Received: from mail-gx0-f217.google.com ([209.85.217.217]:54401 "EHLO
-	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754160Ab0DIF4q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Apr 2010 01:56:46 -0400
-Received: by gxk9 with SMTP id 9so1856653gxk.8
-        for <git@vger.kernel.org>; Thu, 08 Apr 2010 22:56:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=DDrCjhNqor0gF4huySTjh1q/g7hRxhhtMi/j9VjOndQ=;
-        b=patluUESzadoQ86o0MGLm3cxQa1cq0ZvH6tS2R0DVaXbjtIjOI40qYDpI3nTWjfqel
-         +fJG1UgLcj0MpUL2LogsM4AcvbhnZEzJQ9hQySUheXDXk5Q0UdpEA5OfSVY9jdoepogu
-         W0U7j0zzUuwcgzdcGev96/A2FKkZXjcVBZJGI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=W2KnwfFbv+GYa/Mx2NUT1a9905LfdWYcuMRqSjZL/yqvSRCCYhDxOTvzG1w7UYpiek
-         zILniuRD7EsBIGlpi2omdUB5nffRi5hIAduLCzMoc3qhnAQsQMtFKP3fZagxMYhMQlmG
-         bEWePMR6kkr9uRvIbh7P5AItT6m9g7VSzZZlQ=
-Received: by 10.91.39.4 with SMTP id r4mr451595agj.107.1270792605879;
-        Thu, 08 Apr 2010 22:56:45 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm621006iwn.9.2010.04.08.22.56.44
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 08 Apr 2010 22:56:45 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <q2pfcaeb9bf1004082246w3fb6e18bw21943150cbeeb5c7@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754532Ab0DIF6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 01:58:08 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48734 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750878Ab0DIF6E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 01:58:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B15B1A91F7;
+	Fri,  9 Apr 2010 01:58:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=D+JK/lZw0+rJCadvH4mXIUNhhKo=; b=H0PxoD
+	yJaxPsUNCbEjVU26pLKygND+0qQsam9XuKME98UTe621RJay90wnlO4iLSPYqbKh
+	lxzQjeWYEYcPCp4k8nR0GK2hv8LY/5oK109c0MG/0eyiyTWr2n+fZMbtPrQ+oToi
+	ygdI6FD4mHxKu5HBWdRSgLqaDZSk5964GiQ98=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OYp8ZmHQDrSISA0XIljMDyghgN0Iu+Ws
+	bibo3FkRmjLE/qSuPhjSyQ9VhVgG3/ANZ9wu8fyjyH6hOu/6xOs95qix9bjqKEB6
+	NHa8WArxmZ1owN9AQsSQ0d+p08yj13ziNbG6u8vn3t7Wn38oMXLR0XqmL0wu3gt5
+	L8MkXs6pEXk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DCC0A91F2;
+	Fri,  9 Apr 2010 01:58:00 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E1B45A91F1; Fri,  9 Apr
+ 2010 01:57:57 -0400 (EDT)
+In-Reply-To: <1270783330-35215-1-git-send-email-brian@gernhardtsoftware.com>
+ (Brian Gernhardt's message of "Thu\,  8 Apr 2010 23\:22\:10 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DA944558-439C-11DF-8AF3-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144409>
 
-Nguyen Thai Ngoc Duy wrote:
-> 2010/4/8 Jonathan Nieder <jrnieder@gmail.com>:
+Brian Gernhardt <brian@gernhardtsoftware.com> writes:
 
->> A few of the earlier patches seem iffy, though they all start with a
->> correct idea. =C2=A0For example, one of them changes the semantics o=
-f
->> rev-parse --show-prefix without documenting it. =C2=A0So I have been=
- looking
+> The sed script that was intended to add lines altering the sys.path
+> had extra backslashes in them.  Instead resulting in
 >
-> You meant "rev-parse --git-dir"?
+>   import sys;  import os;  sys.path.insert( ... )
+>
+> It output
+>
+>   import sys; \ import os; \ sys.path.insert( ... )
+>
+> Unfortunately this caused python (2.6.1 on OS X 10.6.3) to error
+>
+>   SyntaxError: unexpected character after line continuation character
+>
+> Removing two of the backslashes solves this problem.
 
-I meant --show-prefix.  ad36c84 (worktree setup: calculate prefix even
-if no worktree is found, 2010-04-05) teaches rev-parse to produce a
-nonempty prefix even when there is no workdir but didn=E2=80=99t update=
- the
-documentation:
+Traditionally, multi-line sed statements written in the Makefile were
+portability nightmare, as the line folding rules (especially how the
+backslash is treated in the output) in make implementations were subtly
+different, and implementations of sed also got multi-line statement often
+wrong.  These days, things might have gotten much better, but in olden
+days (back when BSD vs SysV war was still raging), the trick to write
+things like this portably was to invoke a shell script that has multi-line
+sed statement from the Makefile.  It was painful.
 
-    --show-prefix
-         When the command is invoked from a subdirectory, show the
-         path of the current directory relative to the top-level
-         directory.
+I wonder if we can make this a lot simpler to avoid multi-line sed script.
+For example, we could write the source Python script to always begin with:
 
-I suspect it=E2=80=99s a good change.  Git ought to correctly honor rel=
-ative
-paths on the command line even when there is no work tree.  But the
-semantics are not clear any more --- when there is no top-level
-directory, what is the prefix relative to?
+	#!/usr/bin/python
+        import sys;
+        import os;
+        sys.path.insert(0, os.getenv("GITPYTHONLIB","."));
 
-Probably my other words of warning were also too extreme.  I have been
-using a copy of git with nd/setup included, and aside from the
-ls-remote problem I mentioned, I haven=E2=80=99t run into any trouble.
+and then do something like this in the Makefile:
 
-Cheers,
-Jonathan
+	INSTLIBDIR=... && \
+	sed -e '1s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
+        -e 's|\(os\.getenv("GITPYTHONLIB"\)[^)]*)|\1,"'"$$INSTLIBDIR"'")|' \
+        <$@.py >$@+
+	mv $@+ $@
+
+Contributors can then run things in-place while developing the scripts,
+perhaps setting GITPYTHONLIB to the source area.
