@@ -1,68 +1,116 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: question about sparse checkout
-Date: Fri, 9 Apr 2010 13:13:13 +0200
-Message-ID: <j2hfcaeb9bf1004090413ud934f42ch633b04e4b282b3f@mail.gmail.com>
-References: <i2t8ba6bed41004090318k265095e9i72c9c1e79b3bfcd7@mail.gmail.com>
+From: Eric Raymond <esr@thyrsus.com>
+Subject: Status of all files (was: Re: How can I tell if a file is ignored
+ by git?
+Date: Fri, 9 Apr 2010 07:32:48 -0400
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20100409113248.GB27353@thyrsus.com>
+References: <20100409040434.8602620CBBC@snark.thyrsus.com>
+ <j2z8c9a061004082110se894f925i80c1389cd4e247f@mail.gmail.com>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Matt Rice <ratmice@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 09 13:13:41 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Raymond <esr@snark.thyrsus.com>, git@vger.kernel.org
+To: Jacob Helwig <jacob.helwig@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 09 13:32:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0C9c-0003nn-UY
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 13:13:41 +0200
+	id 1O0CSE-0003Qc-UH
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 13:32:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752145Ab0DILNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Apr 2010 07:13:35 -0400
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:44033 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751641Ab0DILNe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Apr 2010 07:13:34 -0400
-Received: by ewy20 with SMTP id 20so1285519ewy.1
-        for <git@vger.kernel.org>; Fri, 09 Apr 2010 04:13:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:content-type;
-        bh=znP2hlQSnMwMPY6QiB9cC9OYhAfaSMrTzM1X1oWtkkA=;
-        b=D+IsWasJiBVnxBjePQV8kWBUFVh1IP3C0OZFu4GUbqO6OEbDIX95L3ZWBfsdcy/m68
-         VvWa8VYmR+d3JYI/ffM7sz21kJcKcR/5x8NX1M/BZr3fMXUlcPkEz6qh1xkjpQZQXQr3
-         x7OG154nuYo44uazO//3U1txT7yl5LB01eG8Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        b=freye7hgsnhCGIUnfNPvg0zjujV22CK+PRL8x0dT6Ey2yg2RvqLmyHUByOPNs8tiyo
-         h31IibwDZfDgsAjJ/ep5koJZeztNuZ9u3logOqGbK3msRJJplDdGg35wXObdQomTovOB
-         +m2i4YKdQh72cdAVNoMP1O/7WQuNbeDFcn42Y=
-Received: by 10.213.105.130 with HTTP; Fri, 9 Apr 2010 04:13:13 -0700 (PDT)
-In-Reply-To: <i2t8ba6bed41004090318k265095e9i72c9c1e79b3bfcd7@mail.gmail.com>
-Received: by 10.213.57.140 with SMTP id c12mr819310ebh.3.1270811613125; Fri, 
-	09 Apr 2010 04:13:33 -0700 (PDT)
+	id S1751726Ab0DILct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 07:32:49 -0400
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:33069
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750943Ab0DILcs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 07:32:48 -0400
+Received: by snark.thyrsus.com (Postfix, from userid 23)
+	id 1AC6120CBBC; Fri,  9 Apr 2010 07:32:48 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <j2z8c9a061004082110se894f925i80c1389cd4e247f@mail.gmail.com>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144424>
 
-On Fri, Apr 9, 2010 at 12:18 PM, Matt Rice <ratmice@gmail.com> wrote:
-> hi,
->
-> is there some way that cloning a sparse checkout can also clone the
-> sparsity of the checkout?
+Jacob Helwig <jacob.helwig@gmail.com>:
+> On Thu, Apr 8, 2010 at 21:04, Eric Raymond <esr@snark.thyrsus.com> wrote:
+> > I'm planning some work on Emacs VC mode.
+> >
+> > I need a command I can run on a path to tell if it's ignored by git.
+> 
+> What about a variant of:
+>     git ls-files -i -o --exclude-standard
 
-No. The sparsity is a property of worktree, it can't be cloned.
+That will do nicely, thank you.
 
-> currently, when cloning, I have to set up the sparsity on each cloned
-> repository, after fetching
-> by providing something like a shell script for each 'view' of the repository
-> just wondering if there was a way to make this a transferrable property.
+There could be something better.  Emacs VC mode, and other similar
+front ends, would be greatly aided by a command that lists all files,
+each with a status code it can understand.  Our canonical list
+(omitting two that apply only to locking systems) is:
 
-I have a similar problem (transferring remote.* by cloning). Maybe we
-could extend git protocol a little bit to allow these customizations?
+  'up-to-date        The working file is unmodified with respect to the
+                     latest version on the current branch, and not locked.
+
+  'edited            The working file has been edited by the user.
+
+  'needs-update      The file has not been edited by the user, but there is
+                     a more recent version on the current branch stored
+                     in the master file.
+
+  'needs-merge       The file has been edited by the user, and there is also
+                     a more recent version on the current branch stored in
+                     the master file.  This state can only occur if locking
+                     is not used for the file.
+
+  'added             Scheduled to go into the repository on the next commit.
+
+  'removed           Scheduled to be deleted from the repository on next commit.
+
+  'conflict          The file contains conflicts as the result of a merge.
+
+  'missing           The file is not present in the file system, but the VC
+                     system still tracks it.
+
+  'ignored           The file showed up in a dir-status listing with a flag
+                     indicating the version-control system is ignoring it,
+
+  'unregistered      The file is not under version control.
+
+The -t mode of ls-files appears to be almost what is wanted, but not quite.
+(Among other things, it does not list ignored files.)  I request comment
+on some related questions:
+
+1. How do these statuses map to git terminology?  My tentative map, in terms 
+of git file-list -t codes, is
+
+up-to-date   = H?
+edited       = C
+needs-update = no equivalent
+needs-merge  = no equivalent
+added        = no equivalent
+removed      = K
+conflict     = no equivalent
+missing      = R
+ignored      = no equivalent
+unregistered = no equivalent
+
+I am unclear on what your "unmerged" (M) status means.
+
+2. I've played with various option combinations, but I can't seem to find one
+that lists these codes for all files.  Is there one?
+
+3. Is the use case for -t such that it would make sense to modify it so
+it does a complete listing?
+
+4. If the answer to question 3 is 'yes', is there some Emacs user here
+who already knows git internals and would be willing to do this in
+order to help VC be faster and more effective?  I would handle the VC
+end, of course.
 -- 
-Duy
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
