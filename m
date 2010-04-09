@@ -1,85 +1,57 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: nd/setup
-Date: Fri, 9 Apr 2010 07:46:53 +0200
-Message-ID: <q2pfcaeb9bf1004082246w3fb6e18bw21943150cbeeb5c7@mail.gmail.com>
-References: <7v6342ahx9.fsf@alter.siamese.dyndns.org>
-	 <20100408073825.GA15153@coredump.intra.peff.net>
-	 <20100408214233.GA32441@progeny.tock>
+From: Chris Webb <chris@arachsys.com>
+Subject: Re: [PATCH v2] Replace hard-coded path with one from <paths.h>
+Date: Fri, 9 Apr 2010 06:45:36 +0100
+Message-ID: <20100409054536.GB2151@arachsys.com>
+References: <186fa4afcc08ad6ba10906a231c437536fbdb8e9.1270412075.git.chris@arachsys.com>
+ <7vk4sm7vao.fsf@alter.siamese.dyndns.org>
+ <20100404222801.GB31315@arachsys.com>
+ <20100406163525.GF15306@arachsys.com>
+ <20100406163643.GG15306@arachsys.com>
+ <n2u40aa078e1004070357m143cfaccvdc754a3bc5fe1ae1@mail.gmail.com>
+ <20100408105850.GD2146@arachsys.com>
+ <m2x40aa078e1004080426u98fbe6b2zfa9a2726172f725@mail.gmail.com>
+ <20100408115706.GE2077@arachsys.com>
+ <z2o40aa078e1004080508z17c5e71by371bbe6e1cdb8c50@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 09 07:47:02 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Fri Apr 09 07:48:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O073V-00079d-4n
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 07:47:01 +0200
+	id 1O074t-0007XV-7G
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 07:48:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754346Ab0DIFqz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Apr 2010 01:46:55 -0400
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:55058 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752291Ab0DIFqy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Apr 2010 01:46:54 -0400
-Received: by ewy20 with SMTP id 20so1219761ewy.1
-        for <git@vger.kernel.org>; Thu, 08 Apr 2010 22:46:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=6De4o/HI7Ga0wG2IYu3A7sTe62VwQDqn+5/u2tjwxUo=;
-        b=kkp5AlccB/RKyPPifFtClKwdVxNxVvK4iKVe+ZP9bVIZiKfNxNCa+QE078wk0zaK8g
-         YSnfVCN198u7yVlHO6stynTPNJAseQ6cw9FqUCdnHB37IsC3G6ed4g7fTAXhUKVTzHmg
-         L/Cl//MSMK59mXitPa6PHsLrq+/nigu4Y6BFo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xNr0tNpMWQU5jVXEPamWYqk7UpH8cVrrh8I9NQ4lEv6c+KazDaCLd6Fsbbsf3KGNXd
-         TjRlKhPywoWt9Ov1ryQYmFBgibGdxm5DRogOnBpf5cmadnvfiQQE2Cpa/cOqtkzAxJ79
-         K5YIZyUqg4NFXBKZrdtDVlNFMatFeGaKsYqpw=
-Received: by 10.213.105.130 with HTTP; Thu, 8 Apr 2010 22:46:53 -0700 (PDT)
-In-Reply-To: <20100408214233.GA32441@progeny.tock>
-Received: by 10.213.57.140 with SMTP id c12mr648668ebh.3.1270792013117; Thu, 
-	08 Apr 2010 22:46:53 -0700 (PDT)
+	id S1754769Ab0DIFrb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 01:47:31 -0400
+Received: from alpha.arachsys.com ([91.203.57.7]:39904 "EHLO
+	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754481Ab0DIFra (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 01:47:30 -0400
+Received: from [91.137.68.80] (helo=miranda.arachsys.com)
+	by alpha.arachsys.com with esmtpa (Exim 4.52)
+	id 1O073w-000160-9O; Fri, 09 Apr 2010 06:47:28 +0100
+Content-Disposition: inline
+In-Reply-To: <z2o40aa078e1004080508z17c5e71by371bbe6e1cdb8c50@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144406>
 
-2010/4/8 Jonathan Nieder <jrnieder@gmail.com>:
-> When lockdep finds a locking problem, it quietly prints a message to
-> the kernel log and the kernel is able to keep going without worrying
-> about it. =C2=A0Unfortunately, the repository access checker from nd/=
-setup
-> is not so graceful: it makes git die even though it should be able to
-> carry on just fine. =C2=A0Example: with nd/setup, ls-remote currently=
- fails
-> when run outside any repository. =C2=A0Probably the checker should be
-> configured by an environment variable that indicates where to print
-> its messages and whether to bail out when a problem is detected (for
-> tests).
+Erik Faye-Lund <kusmabite@googlemail.com> writes:
 
-The intention was to let that patch stay on next/pu for very long time
-(or ever), while the rest of fixes can be merged up to master. That's
-why it was the last patch (now close to the last).
+> Are you sure that all non-Windows platforms have paths.h? It seems
+> that at least some Open Solaris versions[1] are missing it as well.
+> Perhaps this should be guarded by a HAVE_PATHS_H define instead?
 
-I did use an env variable to control whether it die() when unallowed
-access is found in early versions. Perhaps I should resurrect that env
-variable.
+Yes, you're probably right. I'll just set HAVE_PATHS_H for the platforms I'm
+sure (or can check) have it for now.
 
-> A few of the earlier patches seem iffy, though they all start with a
-> correct idea. =C2=A0For example, one of them changes the semantics of
-> rev-parse --show-prefix without documenting it. =C2=A0So I have been =
-looking
+Cheers,
 
-You meant "rev-parse --git-dir"?
---=20
-Duy
+Chris.
