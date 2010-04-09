@@ -1,157 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
 Subject: Re: git rebase command and docs questions
-Date: Fri, 09 Apr 2010 14:11:37 -0700
-Message-ID: <7vhbnk1gc6.fsf@alter.siamese.dyndns.org>
-References: <h2j76c5b8581004091149y9f5f93a8o5f11b3ffc657623@mail.gmail.com>
- <r2mfabb9a1e1004091337w8ec2b721y3a5082d5e0f5925c@mail.gmail.com>
+Date: Fri, 9 Apr 2010 23:23:23 +0200
+Message-ID: <l2nfabb9a1e1004091423te78b692btd8bbb03785f94a16@mail.gmail.com>
+References: <h2j76c5b8581004091149y9f5f93a8o5f11b3ffc657623@mail.gmail.com> 
+	<r2mfabb9a1e1004091337w8ec2b721y3a5082d5e0f5925c@mail.gmail.com> 
+	<7vhbnk1gc6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 09 23:11:54 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 09 23:23:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0LUX-0006X0-Un
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 23:11:54 +0200
+	id 1O0LgE-0002xF-1f
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Apr 2010 23:23:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756535Ab0DIVLt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Apr 2010 17:11:49 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60724 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751790Ab0DIVLs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Apr 2010 17:11:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D3DE4A912B;
-	Fri,  9 Apr 2010 17:11:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=N0RaJvrNb7ZR
-	yTXzJrfQtyoIvCE=; b=n2XJCsKzqkQkvBO+LE/C1TXf5lPsPWMvkweinuDOmiGq
-	meV2Nf9X6T/MSC8Uo5kF6wL3N3XKa+GA5bGCB+Krg8BbmlR/DGlaelCi1x2FOzfh
-	WASm9YN2vlOqAUrEVaD9upPNkI8Xo2DXBMeS2cNvNFsnuv3CYg4nJTAiuaeBX+k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=wd9IjG
-	WYbYrGNK/Gwi3QWgpLq7HVR3t8AZTqTuH+tOaWoHH3CCk5pIrTfRXhMXRaJEyY+r
-	KPSRjwFMcYBlsLWZv9ZIgGnKNJT5EGQUWz+Q845PXSCfvGvSgbje4dmijtKscGF5
-	cts7qEohWvUklxGrkWoM+nhNFYEKc/62k+ANo=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CB74A912A;
-	Fri,  9 Apr 2010 17:11:43 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5AEF9A9129; Fri,  9 Apr
- 2010 17:11:39 -0400 (EDT)
-In-Reply-To: <r2mfabb9a1e1004091337w8ec2b721y3a5082d5e0f5925c@mail.gmail.com>
- (Sverre Rabbelier's message of "Fri\, 9 Apr 2010 22\:37\:15 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7F8FE25E-441C-11DF-BAA5-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757818Ab0DIVXq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Apr 2010 17:23:46 -0400
+Received: from mail-yx0-f171.google.com ([209.85.210.171]:38071 "EHLO
+	mail-yx0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757817Ab0DIVXp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Apr 2010 17:23:45 -0400
+Received: by yxe1 with SMTP id 1so1568917yxe.33
+        for <git@vger.kernel.org>; Fri, 09 Apr 2010 14:23:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=SMPs5l9lwe3ArpnOMbJrZ6rEob4kM0gkCPTzGyIld4A=;
+        b=qpHSwVhe1g7Fay6CKimhcph8iLGIyrIl2qgARh6Qqnq+U02jAZjyql1Yup3ww+2HNU
+         V18EqhVa+jDW+v34skxJ54zZMabi3CToyMhhe+IDiZr2NJTwB9dibsdq6jWaOaPjyhKZ
+         WOaKSlXEuOEydftnH/9Kvm1wBLzUToCKW8EDA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=SdD+Oc8bj7zCaPm+v73vW7ORrZmmUpYtJLORRNjjCoZiUpkC2UAAuMIXSLKJZXpP5t
+         mPVoIuI2kCEDMnQYiBgw7aBEaPjLcKohfOXgI5Al3FuPDw4y01DgItFLM48IDveHp8fm
+         sweKgO7hAr9fPp/Nx33wETAp5gcviRzlPxVhw=
+Received: by 10.100.206.13 with HTTP; Fri, 9 Apr 2010 14:23:23 -0700 (PDT)
+In-Reply-To: <7vhbnk1gc6.fsf@alter.siamese.dyndns.org>
+Received: by 10.101.128.17 with SMTP id f17mr629718ann.173.1270848225013; Fri, 
+	09 Apr 2010 14:23:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144473>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Heya,
 
-> On Fri, Apr 9, 2010 at 20:49, Eugene Sajine <euguess@gmail.com> wrote=
-:
->> But, in =E2=80=9Cgit rebase =E2=80=93onto master next topic=E2=80=9D=
- the meaning of the =E2=80=9Cnext
->> topic=E2=80=9D parameters is different: as I understand, it actually=
- specifies
->> a range of commits from next to topic,  because =E2=80=93onto change=
-s the way
->> the whole command is working, but it is not clarified in help. Is th=
-at
->> correct understanding?
+On Fri, Apr 9, 2010 at 23:11, Junio C Hamano <gitster@pobox.com> wrote:
+> Hmm, re*base* means "change the base to _this one_"; the above is mor=
+e
+> like "replay these on master", which is often a useful operation but =
+is
+> different.
+
+Yes, I guess that's true.
+
+> If you _had_ your "replay" command, the workflow for this would be:
 >
-> I've never been able to remember how rebase --onto works, perhaps if
-> we actually let users specify a range it would be more intuitive?
->
-> $ git rebase next..topic master
+> =C2=A0 =C2=A0$ git checkout -b maint-fixes origin/maint
+> =C2=A0 =C2=A0$ git replay origin..fixes
 
-Hmm, re*base* means "change the base to _this one_"; the above is more
-like "replay these on master", which is often a useful operation but is
-different.
+True again.
 
-Suppose other people have worked on the project and made their pushes
-since you started working on your changes:
+> Before somebody else makes useless noises, "cherry-pick" could be a g=
+ood
+> command in the existing UI set to do that kind of thing.
 
-      o---o master
-     /
- ---o---o---o---o origin
+I still think the UI for --onto is awkward. At the very least it should=
+ be:
 
-"git rebase origin" asks "I know my current work is based on a tad stal=
-e
-state, and I'd prefer a linear history, so change the base to origin".
+git rebase --fork-at=3Dorigin origin/maint fixes
 
-If the thing of whose base you want to change is not your "current work=
-",
-then you name that explicitly, i.e. "git rebase origin master" (i.e. th=
-e
-second branch name defaults to HEAD as usual).
+Or something like that. Since currently you suddenly have to specify
+an argument to --onto that was previously positional. Does that make
+sense?
 
-Onto is an optional feature that is primarily for correcting your earli=
-er
-mistakes.  Notice in the above picture, other people doing parallel wor=
-k
-and pushing their changes out is part of the normal life of distributed
-development; there is no mistake on your part involved.
+Case 1:
+git rebase origin fixes
+git rebase <new_base> <tip>
 
-But suppose you started building bugfixes in a topic forked from origin=
-,
-but after that you realize they should be based on origin/maint:
+Case 2:
+git rebase --onto origin/maint origin fixes
+git rebase --onto=3D<new_base> <fork_point> <tip>
 
-                   X---Y fixes
-                  /
-         o---o---o---o---o origin
-        /
-    ---o---o---o origin/maint
+I know that in the --onto case <new_base> is not an argument to
+--onto, but that's what it looks/feels like. Said differently, it's
+just _really weird_ that a new argument (for a different mode) shows
+up between two other arguments. It should either be at the beginning,
+or at the end, but in the middle is just awkward, no?
 
-You could have made fixes branch that houses X and Y on origin/maint (a=
-nd
-later merge that to master to be pushed to origin), but you did not hav=
-e
-perfect foresight.  You do not obviously want to change the base of who=
-le
-'fixes' branch to 'origin/maint', as that will pull in changes in origi=
-n
-that are not related to your fixes.
+So another solution might be to change the position of the
+<fork_point> in the --onto case.
 
-You would want to rebase 'fixes' branch (whose fork point can be specif=
-ied
-with 'origin') but not on top of 'origin', but on 'origin/maint'.  Henc=
-e
-instead of running "git rebase origin" to produce
+--=20
+Cheers,
 
-                           X'--Y' fixes
-                          /
-         o---o---o---o---o origin
-        /
-    ---o---o---o origin/maint
-
-You would say "git rebase --onto origin/maint origin" to transplant X' =
-and
-Y' as if you started working from 'origin/maint':
-
-
-         o---o---o---o---o origin
-        /
-    ---o---o---o origin/maint
-                \
-                 X'--Y' fixes
-
-If you _had_ your "replay" command, the workflow for this would be:
-
-    $ git checkout -b maint-fixes origin/maint
-    $ git replay origin..fixes
-
-
-Before somebody else makes useless noises, "cherry-pick" could be a goo=
-d
-command in the existing UI set to do that kind of thing.
+Sverre Rabbelier
