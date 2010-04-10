@@ -1,89 +1,52 @@
-From: Vitaly Berov <vitaly.berov@gmail.com>
-Subject: Re: git clone: very long "resolving deltas" phase
-Date: Sat, 10 Apr 2010 17:25:29 +0400
-Message-ID: <hppu9a$ugq$1@dough.gmane.org>
-References: <loom.20100406T161552-321@post.gmane.org> <alpine.LFD.2.00.1004061709360.7232@xanadu.home> <4BBC1ED3.6020008@gmail.com> <alpine.LFD.2.00.1004070842580.7232@xanadu.home>
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: Re: [PATCH] Clarification for the command "git checkout <branch>"
+Date: Sat, 10 Apr 2010 15:30:41 +0200
+Message-ID: <4BC07D81.6040402@web.de>
+References: <4B67227A.7030908@web.de> <4B898F97.90706@web.de> <7vr5o6s5xf.fsf@alter.siamese.dyndns.org> <4B8B9BF1.10408@web.de> <4b8bf32f.0706c00a.26cb.691d@mx.google.com> <4BA104C7.5020207@web.de> <32541b131003170944w7a0215frcace205f32d313bf@mail.gmail.com> <7vaau6q18q.fsf@alter.siamese.dyndns.org> <4BA1FC39.10300@web.de> <32541b131003180936x746dad06k386788d3cb6fcdeb@mail.gmail.com> <b4087cc51003181019r4408953bxcd5049c9521b8173@mail.gmail.com> <4BA3329E.6050304@web.de> <4BB21F6D.7070804@web.de> <7vd3ylv4oq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 10 15:26:18 2010
+Cc: Michael Witten <mfwitten@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 10 15:30:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0ahV-0000Yt-Ar
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 15:26:17 +0200
+	id 1O0alx-0002Iw-H6
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 15:30:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751317Ab0DJN0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 09:26:12 -0400
-Received: from lo.gmane.org ([80.91.229.12]:40761 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751033Ab0DJN0L (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 09:26:11 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1O0ahO-0000WX-0h
-	for git@vger.kernel.org; Sat, 10 Apr 2010 15:26:10 +0200
-Received: from 195.218.191.171 ([195.218.191.171])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Apr 2010 15:26:10 +0200
-Received: from vitaly.berov by 195.218.191.171 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Apr 2010 15:26:10 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 195.218.191.171
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9pre) Gecko/20100217 Shredder/3.0.3pre
-In-Reply-To: <alpine.LFD.2.00.1004070842580.7232@xanadu.home>
+	id S1751403Ab0DJNat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 09:30:49 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:50614 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751065Ab0DJNas (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 09:30:48 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 00BD615D746DA;
+	Sat, 10 Apr 2010 15:30:47 +0200 (CEST)
+Received: from [78.48.201.158] (helo=[192.168.1.2])
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #4)
+	id 1O0alq-0004HN-00; Sat, 10 Apr 2010 15:30:46 +0200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
+In-Reply-To: <7vd3ylv4oq.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0.1
+X-Sender: Markus.Elfring@web.de
+X-Provags-ID: V01U2FsdGVkX18oB+D2VhnRNAmaSjHgkvXt+Q7ms87UoaOgG1iI
+	VvoMdesS9CiwnnZEVbKNPEDnsJCuvzG+HvNMB9BmmlAHzGHKej
+	6KwUhZ63fzSLZSfOSfzQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144545>
 
-Hi,
+> Something like this?
 
-On 04/07/2010 04:55 PM, Nicolas Pitre wrote:
-> On Wed, 7 Apr 2010, Vitaly wrote:
->
->
-> OK then.  What happens if you do the following on the server machine
-> where the repository is stored:
->
-> 	git repack -a -f -d
->
-> How long does this take?
->
-> If the "Resolving deltas" takes more than 10 minutes, could you capture
-> a strace dump from that process during a minute or so and post it here?
+Which update will be published for the manual?
 
-Nicolas, I took strace and sent it to you personally.
-
-Here is the extract (99% of strace is the same):
---------------
-access("/home/vitaly/Projects/test/a1/.git/objects/0f/9a3d28766f8b767fb64166139dd65c079512de", 
-F_OK) = -1 ENOENT (No such file or directory)
-pread(5, 
-"x\234\324\275y\\Ni\374\377\177\256\323]\335Q\271S\332\220\"\n\241\10Q\10!$!d/\262"..., 
-214850, 8944159649) = 214850
-access("/home/vitaly/Projects/test/a1/.git/objects/a5/5430cbc6674b56d7c2d2d81ef5b7d5c8ebdec8", 
-F_OK) = -1 ENOENT (No such file or directory)
-pread(5, "x\234\354\275\vT\224U\0270<\347\231\v\363\250\244#\f0 
-\"\"\"\312ETD\300af"..., 159502, 8944374506) = 159502
-access("/home/vitaly/Projects/test/a1/.git/objects/e5/02b7d050d1b81ebc256234e303eac17116c9fb", 
-F_OK) = -1 ENOENT (No such file or directory)
-pread(5, 
-"x\234\324\274yX\24G\3607>\3353\263,\310\342\"7\2.\202\342\1\10\212\210\212\10\236x\341"..., 
-61131, 8944534014) = 61131
-access("/home/vitaly/Projects/test/a1/.git/objects/5b/6bdba61771e5ba63ba8b43659db1612345c2eb", 
-F_OK) = -1 ENOENT (No such file or directory)
-pread(5, 
-"x\234\324\275\tX\216Y\3747~\237\323\366DOJiyR\236\210B*$!\311\276\223=[\n"..., 
-236685, 8944595152) = 236685
------------------
-As for me, it looks very suspicious.
-
-Vitaly
+Regards,
+Markus
