@@ -1,77 +1,81 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: git rebase command and docs questions
-Date: Sat, 10 Apr 2010 18:40:45 -0400
-Message-ID: <p2s76c5b8581004101540h729564e8vc87fa269143b3633@mail.gmail.com>
-References: <h2j76c5b8581004091149y9f5f93a8o5f11b3ffc657623@mail.gmail.com>
-	 <r2mfabb9a1e1004091337w8ec2b721y3a5082d5e0f5925c@mail.gmail.com>
-	 <7vhbnk1gc6.fsf@alter.siamese.dyndns.org>
-	 <l2nfabb9a1e1004091423te78b692btd8bbb03785f94a16@mail.gmail.com>
-	 <s2l76c5b8581004101530h171f3c2dv6a2fc9d4225fbd4e@mail.gmail.com>
-	 <j2kfabb9a1e1004101532tf16f9d55y404b5f7595d587c3@mail.gmail.com>
+From: Eric Raymond <esr@thyrsus.com>
+Subject: Re: More git status --porcelain lossage
+Date: Sat, 10 Apr 2010 18:57:04 -0400
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20100410225704.GA4623@thyrsus.com>
+References: <20100409190601.47B37475FEF@snark.thyrsus.com>
+ <m3k4sfgmjc.fsf@localhost.localdomain>
+ <20100410194154.GB28768@thyrsus.com>
+ <201004102321.59263.jnareb@gmail.com>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 11 00:40:54 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Simon <turner25@gmail.com>, Eric Raymond <esr@snark.thyrsus.com>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 11 00:57:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0jMC-0006Yu-OG
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 00:40:53 +0200
+	id 1O0jc2-0004zq-Fv
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 00:57:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752355Ab0DJWks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 18:40:48 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:49733 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751177Ab0DJWkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 18:40:47 -0400
-Received: by bwz19 with SMTP id 19so88025bwz.21
-        for <git@vger.kernel.org>; Sat, 10 Apr 2010 15:40:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type;
-        bh=Tdv3QynhVYZC95W4+7dL/bjdQb1lyxmdK9/PyfpDn0Y=;
-        b=k4PWNz60Cjs8PwR/sGTcqAMd1AQFyVimNvBGZBtK1z5aq6sqhaVciUwaxtwQsskkGO
-         ZuuYCEbaXSEv5bQYxAMOPuI1Lp9vTGqljPCGYgoygaaEZJNVLQ2QWgkEuT2cCjq83V9d
-         C+7zvEqivRA8S4fW+7+fA2K/2tlP35Kg8qzso=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=ukBocUZRSztJOL/8oRs3hQLaYdUERHZLXwAZBnmRGU69X+ss4LO1kLy2tr7H38XpCo
-         BYhiDwWy7QIuipWSmDBWoHjtmynnYzRKorrHRV5QZACrqKEEIViqPEqVICEQNKgWjdWA
-         3DzEbygVF7pUu2A9t1b+QAYG+WNhvPy2CXQ+0=
-Received: by 10.204.97.202 with HTTP; Sat, 10 Apr 2010 15:40:45 -0700 (PDT)
-In-Reply-To: <j2kfabb9a1e1004101532tf16f9d55y404b5f7595d587c3@mail.gmail.com>
-Received: by 10.204.34.201 with SMTP id m9mr2161193bkd.127.1270939245689; Sat, 
-	10 Apr 2010 15:40:45 -0700 (PDT)
+	id S1752386Ab0DJW5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 18:57:07 -0400
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:56510
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752063Ab0DJW5G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 18:57:06 -0400
+Received: by snark.thyrsus.com (Postfix, from userid 23)
+	id 117D020CBBC; Sat, 10 Apr 2010 18:57:04 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <201004102321.59263.jnareb@gmail.com>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144611>
 
-On Sat, Apr 10, 2010 at 6:32 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> Heya,
->
-> On Sun, Apr 11, 2010 at 00:30, Eugene Sajine <euguess@gmail.com> wrote:
->> How is that possible that it is not an argument to --onto???
->
-> What I meant is that it's not "--onto=<value>", "--onto" is a boolean flag.
->
-> --
-> Cheers,
->
-> Sverre Rabbelier
->
+Jakub Narebski <jnareb@gmail.com>:
+> [JSON] is a bit chatty, but is to some extent self documenting.
 
-Oh, OK. I didn't know that - your paragraph makes sense to me now;)
-Thanks!
+Yes. But to my mind, the big win of JSON is that you can extend it without
+breaking parsers looking for older versions - they just skip the new
+fields and all is happy.
 
-Still all three questions from original mail are open...
+Jakub, you seem to know this, but other listmermbers may not: I've
+recently re-engineered GPSD, a service daemon for watching geolocation
+sensors, to report JSON objects up the socket to client apps.  The
+benefits in clarity and extensibility of the protocol have been
+*huge*.  Like, today I'm adding a reporting type for digital
+compass/gyroscope sensors.
 
-Thanks,
-Eugene
+> The question is whether it should output well formed array of objects,
+> or just list of objects not wrapped in array...
+
+Yes, I know this dance.  Answer: one big JSON object, tagged by the
+name of the output generator, and also *containing a version-stamp
+field*.  Array of file status objects is another top-level member.
+
+The point is: later, if we want to enrich the reporting format, we add
+whatever fields we want and bump the version stamp.  Self-describing
+goodness.  Python, Perl, JavaScript, and Emacs LISP clients win
+especially big.  Slurping this into a native data structure is one
+function call.
+
+The more I think about this, the better I like it.
+ 
+> What I am worrying about is correct handling of escaping, quoting,
+> and non-ASCII characters in strings (the JSON-quoting and JSON-escapes
+> are different than C escape codes, IIRC).  JSON rules are simple,
+> but are different than C.
+
+Yes. Perhaps there's some scope for reuse here after all.  GPSD has
+well-tested code for uttering the JSON quote/escape conventions. 
+The git project is welcome to it.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
