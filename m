@@ -1,70 +1,69 @@
-From: Khaled al Habache <khellls@gmail.com>
-Subject: Strange case with stash
-Date: Sat, 10 Apr 2010 21:04:53 +0300
-Message-ID: <v2w918f64e01004101104xd4f1b4eciec01d2e87691ee72@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Peter Collingbourne <peter@pcc.me.uk>
+Subject: [PATCH v2 0/9] Improve handling of moving and removing submodules
+Date: Sat, 10 Apr 2010 19:23:41 +0100
+Message-ID: <1270923830-11830-1-git-send-email-peter@pcc.me.uk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 10 20:05:26 2010
+X-From: git-owner@vger.kernel.org Sat Apr 10 20:24:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0f3b-0000g5-K1
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 20:05:23 +0200
+	id 1O0fLt-0007Ck-Kn
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 20:24:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752038Ab0DJSFP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 14:05:15 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:43179 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751926Ab0DJSFO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 14:05:14 -0400
-Received: by wwi17 with SMTP id 17so1443834wwi.19
-        for <git@vger.kernel.org>; Sat, 10 Apr 2010 11:05:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:received
-         :message-id:subject:to:content-type;
-        bh=a4EDIfxXOFqtTTJtSiyVkPHoMeqWEzZLCsHOqL310bA=;
-        b=Pqs8rCLSnz2jImnkBhhxHyfZQGv1vPxC+7b74waHjxrDp6SKS3vePiW1Q2ptD9iHzr
-         qa78MmThY44yydDVAOunFR0mmRVI68j/dslctcGIswNuLgxkK75AB/s0yWQTxJumeSw1
-         gUsAzqQfwszXz4qxbbTEE161nMj2O+5XGCX2M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=tbjnoDtYP1eY6UZiKWxYnxjoj9egW5uME4+tlgdiRzvbnraMQgyFXVB4J/4c4cOuvJ
-         kTnSgi3meOdHMdf5DFxv7dnYrYcOpk9kml2lFELndHbH3n9gNEyvzaoD41UxQcQkqwN/
-         XfR8d0gcS6ZVyx/2n+c0txLPk6oMIiQ/Fpkz0=
-Received: by 10.216.182.207 with HTTP; Sat, 10 Apr 2010 11:04:53 -0700 (PDT)
-Received: by 10.216.85.133 with SMTP id u5mr1006511wee.91.1270922713115; Sat, 
-	10 Apr 2010 11:05:13 -0700 (PDT)
+	id S1752043Ab0DJSXy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 14:23:54 -0400
+Received: from master.pcc.me.uk ([207.192.74.179]:37784 "EHLO master.pcc.me.uk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751926Ab0DJSXx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 14:23:53 -0400
+Received: from lapas.pcc.me.uk ([10.179.130.3])
+	by master.pcc.me.uk with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <peter@pcc.me.uk>)
+	id 1O0fLV-0006qN-4B
+	for git@vger.kernel.org; Sat, 10 Apr 2010 19:23:53 +0100
+Received: from peter by lapas.pcc.me.uk with local (Exim 4.69)
+	(envelope-from <peter@pcc.me.uk>)
+	id 1O0fLU-000366-5S
+	for git@vger.kernel.org; Sat, 10 Apr 2010 19:23:52 +0100
+X-Mailer: git-send-email 1.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144561>
 
-Hey,
+Changes since v1:
+ - Generate a more user friendly unique ID
+ - Added tests for "git rm" error cases (thanks Jonathan Nieder)
 
-I have faced this scenario, which is best described
-http://stackoverflow.com/questions/2613956/strange-git-case, I hope
-you guys investigate it cause it wasted 5 hours of my time, and I
-don't wish that happens again to anyone using Git.
+Peter Collingbourne (9):
+      Generate unique ID for submodules created using "git submodule add"
+      Implement "git mv" for submodules
+      git rm: test failure behaviour for multiple removals
+      git rm: display a warning for every unremovable file
+      git rm: collect file modes
+      Add a mode parameter to the remove_path function
+      git rm: do not abort due to an initialised submodule
+      git submodule: infrastructure for reading .gitmodules files in arbitrary locations
+      git rm: remove submodule entries from .gitmodules
 
--------------------------------
-Khaled alHabache
-Software Engineer
-
-Blog:
-http://www.khelll.com
-
-Rails Magazine:
-http://www.railsmagazine.com/team
-
-Twitter:
-http://twitter.com/khelll
-
-Mobile:
-+963933727070
-+962785257212
+ Documentation/git-mv.txt        |    7 ++-
+ Documentation/git-rm.txt        |    5 ++-
+ Documentation/git-submodule.txt |    8 +++-
+ builtin/apply.c                 |    2 +-
+ builtin/mv.c                    |   33 +++++++++++--
+ builtin/rm.c                    |   45 ++++++++++++++---
+ dir.c                           |    4 +-
+ dir.h                           |    2 +-
+ git-submodule.sh                |   98 ++++++++++++++++++++++++++++++++++--
+ merge-recursive.c               |   27 ++++++----
+ t/t3600-rm.sh                   |   69 +++++++++++++++++++++++++
+ t/t7403-submodule-sync.sh       |    2 +-
+ t/t7405-submodule-merge.sh      |   13 +++++
+ t/t7406-submodule-update.sh     |    6 +-
+ t/t7407-submodule-foreach.sh    |   14 +++---
+ t/t7409-submodule-mv-rm.sh      |  105 +++++++++++++++++++++++++++++++++++++++
+ 16 files changed, 395 insertions(+), 45 deletions(-)
