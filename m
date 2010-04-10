@@ -1,169 +1,101 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: [PATCH v3 4/4] send-email: Cleanup smtp-domain and add config
-Date: Sat, 10 Apr 2010 10:53:56 -0400
-Message-ID: <1270911236-32476-5-git-send-email-brian@gernhardtsoftware.com>
-References: <1270911236-32476-1-git-send-email-brian@gernhardtsoftware.com>
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 10 16:54:37 2010
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: git status --porcelain is a mess that needs fixing
+Date: Sun, 11 Apr 2010 00:56:47 +1000
+Message-ID: <h2j2cfc40321004100756g15ad7f12jf37e500f924e7b96@mail.gmail.com>
+References: <20100409184608.C7C61475FEF@snark.thyrsus.com>
+	 <20100410040959.GA11977@coredump.intra.peff.net>
+	 <9c7e1f33b7ec0dab68a92aa8f067989e@212.159.54.234>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Eric Raymond <esr@snark.thyrsus.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Sat Apr 10 16:56:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0c4w-0006h6-Ge
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 16:54:34 +0200
+	id 1O0c7B-0007Uu-IH
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 16:56:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751900Ab0DJOyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 10:54:09 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:45717 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751806Ab0DJOyG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 10:54:06 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 676AA1FFC05B; Sat, 10 Apr 2010 14:54:01 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.8 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from Hermes.local.net (unknown [64.134.103.20])
-	by silverinsanity.com (Postfix) with ESMTPA id E06C91FFC056;
-	Sat, 10 Apr 2010 14:53:59 +0000 (UTC)
-X-Mailer: git-send-email 1.7.1.rc0.251.g42f41
-In-Reply-To: <1270911236-32476-1-git-send-email-brian@gernhardtsoftware.com>
+	id S1751907Ab0DJO4t convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Apr 2010 10:56:49 -0400
+Received: from mail-qy0-f179.google.com ([209.85.221.179]:56399 "EHLO
+	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751743Ab0DJO4s convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Apr 2010 10:56:48 -0400
+Received: by qyk9 with SMTP id 9so2409644qyk.1
+        for <git@vger.kernel.org>; Sat, 10 Apr 2010 07:56:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=JAzZyvXfAZ8/owZaThP3bsZhakn5dJ1y0iWdr75ddaU=;
+        b=U01LwsCLcHkAiQh20QX9lC+fR7dGZcDfWf9XH8CyoSLS6J+cc28pLET0eke6/WITOw
+         91bJx3L0h68udBfwpsslAtMtaWHsCZ5swze5J810vOrKpyBuYvYEbSMmlcBl4J+UQa8y
+         p+FC6GBvtHaQNau3Xu5UNpHldvJ3wBFIDG9Lo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=M2a+3dH65fYk2QCYh2bSPcY1GAvj5b+4GhQpddzChvDVKCTnXfSZp1JugSOKviUJHE
+         fuWxOs6dLBqxAaLSXTjKtIcueDSBqbtzGOpzDNtiMUIL2et4bDPGYdysFH3bA0YpFcfw
+         fmIfexAKok71OJnkchQbH7uO7lRUJ4rxPqnCE=
+Received: by 10.229.185.136 with HTTP; Sat, 10 Apr 2010 07:56:47 -0700 (PDT)
+In-Reply-To: <9c7e1f33b7ec0dab68a92aa8f067989e@212.159.54.234>
+Received: by 10.229.251.72 with SMTP id mr8mr2448092qcb.30.1270911407428; Sat, 
+	10 Apr 2010 07:56:47 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144557>
 
-The way the code stored --smtp-domain was unlike its handling of other
-similar options.  Bring it in line with the others by:
+On Sat, Apr 10, 2010 at 11:35 PM, Julian Phillips
+<julian@quantumfyre.co.uk> wrote:
+> On Sat, 10 Apr 2010 00:09:59 -0400, Jeff King <peff@peff.net> wrote:
+>> Your parser is already broken if you are calling split, as the filen=
+ames
+>> may contain spaces (and will be quoted in that case, and you need to
+>> unmangle). You should use "-z".
+>>
+>> You will probably then realize that the "-z" format looks like:
+>>
+>> =C2=A0 XY file1\0file2\0
+>>
+>> which still sucks. It would be more friendly as:
+>>
+>> =C2=A0 XY\0file1\0file2\0
+>>
+>> So you could split on "\0". But even with that, you can't just blind=
+ly
+>> split, as the column and record separators are the same, and you mig=
+ht
+>> have one or two filenames.
+>
+> Not true. =C2=A0If the second form was used, then you _can_ split on =
+\0. =C2=A0It
+> will tokenise the data for you, and then you consume ether two or thr=
+ee
+> tokens depending on the status flags. =C2=A0So it would make the pars=
+ing
+> simpler. =C2=A0But to make it even easier, how about adding a -Z that=
+ makes the
+> output format "XY\0file1\0[file2]\0" (i.e. always three tokens per re=
+cord,
+> with the third token being empty if there is no second filename)? =C2=
+=A0Though
+> if future expandability was wanted you could end each record with \0\=
+0 and
+> then parsing would be a two stages of split on \0\0 for records and t=
+hen
+> split on \0 for entries?
 
-- Renaming $mail_domain to $smtp_domain to match the command line
-  option. Also move its declaration from near the top of the file to
-  near other option variables.
+Surely that won't work - if file2 can be empty, \0[file2]\0 reduces to
+\0\0 which would be confused with the \0\0 proposed as a record
+separator.
 
-- Removing $mail_domain_default.  The variable was used once and only
-  served to move the default away from where it gets used.
-
-- Adding a sendemail.smtpdomain config option.  smtp-domain was the
-  only SMTP configuration option that couldn't be set in the user's
-  .gitconfig.
-
-Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
----
- Documentation/config.txt         |    1 +
- Documentation/git-send-email.txt |    3 ++-
- git-send-email.perl              |   19 +++++++++----------
- 3 files changed, 12 insertions(+), 11 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 626b19a..b755beb 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1651,6 +1651,7 @@ sendemail.smtppass::
- sendemail.suppresscc::
- sendemail.suppressfrom::
- sendemail.to::
-+sendemail.smtpdomain::
- sendemail.smtpserver::
- sendemail.smtpserverport::
- sendemail.smtpuser::
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index f171471..288a4ec 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -123,7 +123,8 @@ Sending
- 	Specifies the Fully Qualified Domain Name (FQDN) used in the
- 	HELO/EHLO command to the SMTP server.  Some servers require the
- 	FQDN to match your IP address.  If not set, git send-email attempts
--	to determine your FQDN automatically.
-+	to determine your FQDN automatically.  Default is the value of
-+	'sendemail.smtpdomain'.
- 
- --smtp-pass[=<password>]::
- 	Password for SMTP-AUTH. The argument is optional: If no
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 1e9bec1..111c981 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -132,8 +132,6 @@ my $have_email_valid = eval { require Email::Valid; 1 };
- my $have_mail_address = eval { require Mail::Address; 1 };
- my $smtp;
- my $auth;
--my $mail_domain_default = "localhost.localdomain";
--my $mail_domain;
- 
- sub unique_email_list(@);
- sub cleanup_compose_files();
-@@ -190,7 +188,7 @@ sub do_edit {
- # Variables with corresponding config settings
- my ($thread, $chain_reply_to, $suppress_from, $signed_off_by_cc, $cc_cmd);
- my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_encryption);
--my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts);
-+my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts, $smtp_domain);
- my ($validate, $confirm);
- my (@suppress_cc);
- 
-@@ -212,6 +210,7 @@ my %config_settings = (
-     "smtpserverport" => \$smtp_server_port,
-     "smtpuser" => \$smtp_authuser,
-     "smtppass" => \$smtp_authpass,
-+	"smtpdomain" => \$smtp_domain,
-     "to" => \@to,
-     "cc" => \@initial_cc,
-     "cccmd" => \$cc_cmd,
-@@ -283,7 +282,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
- 		    "smtp-ssl" => sub { $smtp_encryption = 'ssl' },
- 		    "smtp-encryption=s" => \$smtp_encryption,
- 		    "smtp-debug:i" => \$debug_net_smtp,
--		    "smtp-domain:s" => \$mail_domain,
-+		    "smtp-domain:s" => \$smtp_domain,
- 		    "identity=s" => \$identity,
- 		    "annotate" => \$annotate,
- 		    "compose" => \$compose,
-@@ -898,7 +897,7 @@ sub maildomain_mta {
- }
- 
- sub maildomain {
--	return maildomain_net() || maildomain_mta() || $mail_domain_default;
-+	return maildomain_net() || maildomain_mta() || 'localhost.localdomain';
- }
- 
- # Returns 1 if the message was sent, and 0 otherwise.
-@@ -1002,18 +1001,18 @@ X-Mailer: git-send-email $gitversion
- 		if ($smtp_encryption eq 'ssl') {
- 			$smtp_server_port ||= 465; # ssmtp
- 			require Net::SMTP::SSL;
--			$mail_domain ||= maildomain();
-+			$smtp_domain ||= maildomain();
- 			$smtp ||= Net::SMTP::SSL->new($smtp_server,
--						      Hello => $mail_domain,
-+						      Hello => $smtp_domain,
- 						      Port => $smtp_server_port);
- 		}
- 		else {
- 			require Net::SMTP;
--			$mail_domain ||= maildomain();
-+			$smtp_domain ||= maildomain();
- 			$smtp ||= Net::SMTP->new((defined $smtp_server_port)
- 						 ? "$smtp_server:$smtp_server_port"
- 						 : $smtp_server,
--						 Hello => $mail_domain,
-+						 Hello => $smtp_domain,
- 						 Debug => $debug_net_smtp);
- 			if ($smtp_encryption eq 'tls' && $smtp) {
- 				require Net::SMTP::SSL;
-@@ -1036,7 +1035,7 @@ X-Mailer: git-send-email $gitversion
- 			die "Unable to initialize SMTP properly. Check config and use --smtp-debug. ",
- 			    "VALUES: server=$smtp_server ",
- 			    "encryption=$smtp_encryption ",
--			    "maildomain=$mail_domain",
-+			    "hello=$smtp_domain",
- 			    defined $smtp_server_port ? "port=$smtp_server_port" : "";
- 		}
- 
--- 
-1.7.1.rc0.251.g42f41
+jon.
