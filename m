@@ -1,154 +1,83 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: git rebase command and docs questions
-Date: Sat, 10 Apr 2010 18:30:56 -0400
-Message-ID: <s2l76c5b8581004101530h171f3c2dv6a2fc9d4225fbd4e@mail.gmail.com>
-References: <h2j76c5b8581004091149y9f5f93a8o5f11b3ffc657623@mail.gmail.com>
-	 <r2mfabb9a1e1004091337w8ec2b721y3a5082d5e0f5925c@mail.gmail.com>
-	 <7vhbnk1gc6.fsf@alter.siamese.dyndns.org>
-	 <l2nfabb9a1e1004091423te78b692btd8bbb03785f94a16@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Clarification for the command "git checkout <branch>"
+Date: Sat, 10 Apr 2010 15:31:38 -0700
+Message-ID: <7vhbnjuegl.fsf@alter.siamese.dyndns.org>
+References: <4B67227A.7030908@web.de> <4B898F97.90706@web.de>
+ <7vr5o6s5xf.fsf@alter.siamese.dyndns.org> <4B8B9BF1.10408@web.de>
+ <4b8bf32f.0706c00a.26cb.691d@mx.google.com> <4BA104C7.5020207@web.de>
+ <32541b131003170944w7a0215frcace205f32d313bf@mail.gmail.com>
+ <7vaau6q18q.fsf@alter.siamese.dyndns.org> <4BA1FC39.10300@web.de>
+ <32541b131003180936x746dad06k386788d3cb6fcdeb@mail.gmail.com>
+ <b4087cc51003181019r4408953bxcd5049c9521b8173@mail.gmail.com>
+ <4BA3329E.6050304@web.de> <4BB21F6D.7070804@web.de>
+ <7vd3ylv4oq.fsf@alter.siamese.dyndns.org> <4BC07D81.6040402@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 11 00:31:06 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Witten <mfwitten@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
+To: Markus Elfring <Markus.Elfring@web.de>
+X-From: git-owner@vger.kernel.org Sun Apr 11 00:31:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0jCi-0004Ab-Pm
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 00:31:05 +0200
+	id 1O0jDW-0004Ld-61
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 00:31:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752298Ab0DJWa7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Apr 2010 18:30:59 -0400
-Received: from mail-bw0-f225.google.com ([209.85.218.225]:33314 "EHLO
-	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752203Ab0DJWa6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Apr 2010 18:30:58 -0400
-Received: by bwz25 with SMTP id 25so3299156bwz.28
-        for <git@vger.kernel.org>; Sat, 10 Apr 2010 15:30:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QpnkwOyuyK3bewNCBal50fJxwcMv4AVsCUII+RFx2Bs=;
-        b=iTUAIhJMUWWLoMo8Er3TJHyt6zVHvzRJpwQOGS3P9Z8JgxuQT5hoT4w+iueWRHnktj
-         X68gp/zSb2YZ8AvA8nz0LUK1/GD4hATiRG9jAt6g34Kl+D/NSU3pGzMvmhN4+HQGQe2f
-         6Xr6VXB6g13Zb/IfTVHm3CmIjwYIUNJ/0cYYE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=qTdfq9+JwPliyUqpqu3QW0L/ci0kqH75u+relwKQMVWbQz3OaWc3tqLmwgE1k05uNj
-         xnWYi+Ww5pzsZd1IZn01aKiIDq059dIXHqCwSovViezNHhgKf0i4we6o6YfkAFBrSvsW
-         jk3BQsMmiOB2dz4xOupox7IoTh2m1C7ZiXWCc=
-Received: by 10.204.97.202 with HTTP; Sat, 10 Apr 2010 15:30:56 -0700 (PDT)
-In-Reply-To: <l2nfabb9a1e1004091423te78b692btd8bbb03785f94a16@mail.gmail.com>
-Received: by 10.204.151.71 with SMTP id b7mr2231329bkw.114.1270938656655; Sat, 
-	10 Apr 2010 15:30:56 -0700 (PDT)
+	id S1752309Ab0DJWbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 18:31:49 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42583 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752203Ab0DJWbt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 18:31:49 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A9D87A96DF;
+	Sat, 10 Apr 2010 18:31:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=pLX8zS6NNZZ4xLnJOrLzUwW3Qfk=; b=XPg+50tCqhzi562D9v7JA2J
+	FhZL1OyRXHLof1pgJxHL+m589SNJ1v2XGm4KePua0qFXZYYA3RO5RXBwMfaecb4p
+	rJh3ORGqWOx6nQ3SlP5ITJ0vaZt2eg31ycYlXFRsr7lxaMX/BHieoutSIxHsjWVC
+	yejK2RI3jo9+SQHGEjos=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=LuP/C0mNbDKBOBOQWL+VwK+VEHQGg11C2NOvvi6PH5GLxPD8v
+	er84SsLAn0Apdviuek5ruQv8otieRzq9kfIUz1ECdQzDXLwfxKfkWEFdqDRs9xn2
+	U+XxsG7ubOrUu7xwgZ6UJpbNgFs4sz3Bxascbzb8wOb/CHVc3jHsC8MAOc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 68A97A96DD;
+	Sat, 10 Apr 2010 18:31:44 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 98931A96D5; Sat, 10 Apr
+ 2010 18:31:39 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D792AF0C-44F0-11DF-BB0E-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144605>
 
-On Fri, Apr 9, 2010 at 5:23 PM, Sverre Rabbelier <srabbelier@gmail.com>=
- wrote:
-> Heya,
+Markus Elfring <Markus.Elfring@web.de> writes:
+
+>> Something like this?
 >
-> On Fri, Apr 9, 2010 at 23:11, Junio C Hamano <gitster@pobox.com> wrot=
-e:
->> Hmm, re*base* means "change the base to _this one_"; the above is mo=
-re
->> like "replay these on master", which is often a useful operation but=
- is
->> different.
->
-> Yes, I guess that's true.
+> Which update will be published for the manual?
 
-I'm a bit confused. Isn't the rebase actually replaying the commits
-one by one starting from new base instead of old one?
-I believe it does apply diffs one by one, else there would be no
-conflicts during rebase whatsoever.
-Secondly, git complains about range not specified if you will try to
-execute something like
+Neither one without any clear support by reviews on the list.  You asked
 
-git rebase --onto  master topic
+    Markus Elfring <Markus.Elfring@web.de> writes:
 
-when topic is not direct descendant of master.
-Git will say "not a range".
+    >> I find that the discussion is not finished yet. It was not achieved a common
+    >> conclusion and consensus on all mentioned details so far.
+    >
+    > Can we achieve progress for an update of the manual?
 
-So, That's why i make a conclusion that the real meaning of
+and the patch was only to illustrate what _you_ could do to help the
+topic.
 
-git rebase --onto master next topic
-
-is very close if not exactly matching the
-
-git rebase --onto master next..topic
-
->
->> If you _had_ your "replay" command, the workflow for this would be:
->>
->> =C2=A0 =C2=A0$ git checkout -b maint-fixes origin/maint
->> =C2=A0 =C2=A0$ git replay origin..fixes
->
-> True again.
->Yep therefore the interface
->
->> Before somebody else makes useless noises, "cherry-pick" could be a =
-good
->> command in the existing UI set to do that kind of thing.
->
-> I still think the UI for --onto is awkward. At the very least it shou=
-ld be:
->
-> git rebase --fork-at=3Dorigin origin/maint fixes
->
-> Or something like that. Since currently you suddenly have to specify
-> an argument to --onto that was previously positional. Does that make
-> sense?
->
-> Case 1:
-> git rebase origin fixes
-> git rebase <new_base> <tip>
->
-> Case 2:
-> git rebase --onto origin/maint origin fixes
-> git rebase --onto=3D<new_base> <fork_point> <tip>
->
-> I know that in the --onto case <new_base> is not an argument to
-> --onto, but that's what it looks/feels like.
-
-How is that possible that it is not an argument to --onto???
-
-from docs:
-
-SYNOPSIS
-
-git rebase [-i | --interactive] [options] [--onto <newbase>]
-        <upstream> [<branch>]
-git rebase [-i | --interactive] [options] --onto <newbase>
-        --root [<branch>]
-git rebase --continue | --skip | --abort
-
-When i'm executing
-git rebase --onto master next topic
-
-master is exactly the new base, new fork point for topic, which was
-previously forked from next!
-
->Said differently, it's
-> just _really weird_ that a new argument (for a different mode) shows
-> up between two other arguments. It should either be at the beginning,
-> or at the end, but in the middle is just awkward, no?
->
-> So another solution might be to change the position of the
-> <fork_point> in the --onto case.
->
-> --
-> Cheers,
->
-> Sverre Rabbelier
->
+IOW, the message you are responding to is a "Yes you could help it by
+doing something like this and asking for comments" in response to "Can we
+achieve progress?"
