@@ -1,68 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] "status --ignored"
-Date: Sat, 10 Apr 2010 00:48:49 -0700
-Message-ID: <7vd3y7ycgu.fsf@alter.siamese.dyndns.org>
-References: <20100410040959.GA11977@coredump.intra.peff.net>
- <1270885256-31589-1-git-send-email-gitster@pobox.com>
- <20100410074430.GA12567@coredump.intra.peff.net>
+From: Vitaly Berov <vitaly.berov@gmail.com>
+Subject: Re: git clone: very long "resolving deltas" phase
+Date: Sat, 10 Apr 2010 11:58:44 +0400
+Message-ID: <hppb4i$a8m$1@dough.gmane.org>
+References: <loom.20100406T161552-321@post.gmane.org> <alpine.LFD.2.00.1004061709360.7232@xanadu.home> <4BBC1ED3.6020008@gmail.com> <alpine.LFD.2.00.1004070842580.7232@xanadu.home> <4BBECE44.4040608@gmail.com> <alpine.LFD.2.00.1004091518500.7232@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Eric Raymond <esr@snark.thyrsus.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 10 09:49:10 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 10 09:59:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0VRC-0004h2-HA
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 09:49:06 +0200
+	id 1O0VbR-0007dF-07
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 09:59:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750945Ab0DJHtA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 03:49:00 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59651 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750892Ab0DJHs7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 03:48:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D855A9601;
-	Sat, 10 Apr 2010 03:48:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ck1oQi0N0Kq+B7ZrrO37Qjiq65g=; b=k/EmJO
-	Uc1utLiijTQjaJnkhZKXJ1xulikEMhOHPguU99D9dXHb1DDYIz/j7eQLs2pFISct
-	LgrvkP4McppDeKi8ACFJsq5rcR6z73ASQ0cBmnXslW1Rpu41pEaPrmKmRJp+Ryuc
-	s+bbESY7ELq8eWRZI44H2gp0rBVEcM83TpxgI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PwbDC7aXjsqKpE0I1pQNb0vQKTLuQd7Q
-	LAjySx4smApy2FkO3T+Ii1eHT66U+/jULL1w8HcAzmtCB7qkDIFbbML6WjqvwyZY
-	LevT7YG7kluLM6Y7/C5qzZGjbpHn5wGhMcz0JpnYfDw45Mapv82CxRxa06AccgF7
-	V9d0yl4eolw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A136A95FF;
-	Sat, 10 Apr 2010 03:48:55 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 92073A95FD; Sat, 10 Apr
- 2010 03:48:51 -0400 (EDT)
-In-Reply-To: <20100410074430.GA12567@coredump.intra.peff.net> (Jeff King's
- message of "Sat\, 10 Apr 2010 03\:44\:30 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 83A9C1EE-4475-11DF-B165-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1750924Ab0DJH7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 03:59:24 -0400
+Received: from lo.gmane.org ([80.91.229.12]:44828 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750743Ab0DJH7Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 03:59:24 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1O0Vb9-0007Zo-3t
+	for git@vger.kernel.org; Sat, 10 Apr 2010 09:59:23 +0200
+Received: from 195.218.191.171 ([195.218.191.171])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 10 Apr 2010 09:59:23 +0200
+Received: from vitaly.berov by 195.218.191.171 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 10 Apr 2010 09:59:23 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 195.218.191.171
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9pre) Gecko/20100217 Shredder/3.0.3pre
+In-Reply-To: <alpine.LFD.2.00.1004091518500.7232@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144532>
 
-Jeff King <peff@peff.net> writes:
+On 04/09/2010 11:25 PM, Nicolas Pitre wrote:
+>>
+>> Objects amount: 3997548.
+>> Size of the repository: ~57Gb.
+>
+> OK.  You probably have a size record.  :-)
+That's game development. We have ~100 artists who produce text and 
+binary files as "sources". FYI, the "end client version" is ~2.5GB.
 
-> +	dir.flags |= DIR_COLLECT_IGNORED;
+> How big is the .pack file in .git/objects/pack/ ?
+~56Gb
 
-I thought about using collect-ignored so that fill_directory() does not
-have to be run twice, but IIRC it can short-circuit an entire directory
-using the "simplify" logic (as it was designed to be used for "git add"),
-no?
+>
+>> By the way, we have a large amount of binary files in our rep.
+>
+> How many?  How big?
 
-Mine is not "less ugly", but just "simple and stupid" ;-).
+Total amount of files ~400000, amount of binaries ~200000.
+Distribution of sizes:  5% of 4M - 32K, 5% of 32K - 12K, 12K - 6K, 6K - 
+4K, 4K - 2.5K, 2.5K - 2.3K, 2.3K - 2K, the rest
+
+Vitaly
+
+P.S. By the way, msysgit can't handle this repository, blocker bug is:
+http://code.google.com/p/msysgit/issues/detail?id=365&q=mmap&colspec=ID%20Type%20Status%20Priority%20Component%20Owner%20Summary.
+So I thinking about stopping the evaluation, though I like git 
+(especially after a long subversion experience :))
