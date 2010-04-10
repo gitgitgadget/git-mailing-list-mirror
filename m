@@ -1,89 +1,59 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: Re: [PATCH v2 3/3] send-email: Add sendemail.smtpdomain
-Date: Sat, 10 Apr 2010 09:51:36 -0400
-Message-ID: <503EF023-77C0-4763-947C-385C67D3875A@gernhardtsoftware.com>
-References: <1270827245-28958-1-git-send-email-brian@gernhardtsoftware.com> <1270827245-28958-4-git-send-email-brian@gernhardtsoftware.com> <201004092040.50142.jnareb@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Git List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 10 15:51:58 2010
+From: "Theodore Ts'o" <tytso@mit.edu>
+Subject: [PATCH] guilt: Add support for git version 1.7.x.y
+Date: Sat, 10 Apr 2010 10:10:31 -0400
+Message-ID: <1270908631-5263-1-git-send-email-tytso@mit.edu>
+Cc: git@vger.kernel.org, "Theodore Ts'o" <tytso@mit.edu>
+To: jeffpc@josefsipek.net
+X-From: git-owner@vger.kernel.org Sat Apr 10 16:11:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0b6K-0001UM-6c
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 15:51:56 +0200
+	id 1O0bOk-00008D-DH
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 16:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751523Ab0DJNvk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 09:51:40 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:35290 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751315Ab0DJNvj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Apr 2010 09:51:39 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 0D3A91FFC058; Sat, 10 Apr 2010 13:51:36 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.8 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.5.97] (unknown [64.134.103.20])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id B4FFD1FFC056;
-	Sat, 10 Apr 2010 13:51:34 +0000 (UTC)
-In-Reply-To: <201004092040.50142.jnareb@gmail.com>
-X-Mailer: Apple Mail (2.1078)
+	id S1751594Ab0DJOKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 10:10:42 -0400
+Received: from smtp-out.google.com ([74.125.121.35]:17289 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751527Ab0DJOKl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 10:10:41 -0400
+Received: from hpaq14.eem.corp.google.com (hpaq14.eem.corp.google.com [10.3.21.14])
+	by smtp-out.google.com with ESMTP id o3AEAY7Y000820;
+	Sat, 10 Apr 2010 16:10:35 +0200
+Received: from tsx-11.cam.corp.google.com (tsx-11.cam.corp.google.com [172.31.196.108])
+	by hpaq14.eem.corp.google.com with ESMTP id o3AEAW4M023680;
+	Sat, 10 Apr 2010 16:10:32 +0200
+Received: by tsx-11.cam.corp.google.com (Postfix, from userid 102944)
+	id EA89211C443; Sat, 10 Apr 2010 10:10:31 -0400 (EDT)
+X-Mailer: git-send-email 1.7.0.1
+X-System-Of-Record: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144549>
 
+The regression tests pass, so let's add support for
+git 1.7.
 
-On Apr 9, 2010, at 2:40 PM, Jakub Narebski wrote:
+Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
+---
+ guilt |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-> On Fri, 9 Apr 2010, Brian Gernhardt wrote:
-> 
->> diff --git a/git-send-email.perl b/git-send-email.perl
->> index f491d44..bdfe3f2 100755
->> --- a/git-send-email.perl
->> +++ b/git-send-email.perl
->> @@ -132,8 +132,7 @@ my $have_email_valid = eval { require Email::Valid; 1 };
->> my $have_mail_address = eval { require Mail::Address; 1 };
->> my $smtp;
->> my $auth;
->> -my $mail_domain_default = "localhost.localdomain";
->> -my $mail_domain;
->> +my $smtp_domain_default = "localhost.localdomain";
-> 
-> Why this change, this renaming of variables from $mail_domain_default
-> and $mail_domain to $smtp_domain_default and $smtp_domain?  Why you
-> have removed this forward declaration of $smtp_domain/$mail_domain?
-
-I changed it to better match many of the other variables in the script.  The variables that hold command line options are usually named after the option.  I left the default there as this seemed to be an area of the script that set "constant" variables (like $have_email_valid and $have_mail_address).
-
->> sub unique_email_list(@);
->> sub cleanup_compose_files();
->> @@ -190,7 +189,7 @@ sub do_edit {
->> # Variables with corresponding config settings
->> my ($thread, $chain_reply_to, $suppress_from, $signed_off_by_cc, $cc_cmd);
->> my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_encryption);
->> -my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts);
->> +my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts, $smtp_domain);
->> my ($validate, $confirm);
->> my (@suppress_cc);
-> 
-> Why have you moved $smtp_domain declaration (formerly $mail_domain)
-> here?  And why it is not described in commit message (at least "Cleanup.",
-> or something like this)?
-
-$smtp_domain moved here to match comment just above "Variables with corresponding config settings".  $mail_domain was up near some unrelated globals and I wanted to move it near other similar variables.
-
-Yes, all of this should have been in my commit message.  I blame the hour I was originally coding.  I had intended to fix my Python problem and send it in, but then I had to fix send-email because my MTA complained about "EHLO My-Computer".
-
-I appreciate the review and help, although I wish I wasn't making a fool of myself in public.  ;-)
-
-~~ Brian Gernhardt
+diff --git a/guilt b/guilt
+index 485710b..43fea8e 100755
+--- a/guilt
++++ b/guilt
+@@ -32,6 +32,7 @@ gitver=`git --version | cut -d' ' -f3 | sed -e 's/^debian\.//'`
+ case "$gitver" in
+ 	1.5.*)	;; # git config
+ 	1.6.*)	;; # git config
++	1.7.*)	;; # git config
+ 	*)	die "Unsupported version of git ($gitver)" ;;
+ esac
+ 
+-- 
+1.7.0.1
