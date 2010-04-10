@@ -1,64 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/5] "status --ignored"
-Date: Sat, 10 Apr 2010 04:40:07 -0400
-Message-ID: <20100410084007.GA16843@coredump.intra.peff.net>
-References: <20100410040959.GA11977@coredump.intra.peff.net>
- <1270885256-31589-1-git-send-email-gitster@pobox.com>
- <20100410074430.GA12567@coredump.intra.peff.net>
- <7vd3y7ycgu.fsf@alter.siamese.dyndns.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Why not show ORIG_HEAD in git-log --decorate?
+Date: Sat, 10 Apr 2010 11:00:42 +0200
+Message-ID: <20100410090042.GA13109@atjola.homenet>
+References: <s2zea182b21004090907i9af49416za4fdb4650af5ae29@mail.gmail.com>
+ <20100410012903.GA32428@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Eric Raymond <esr@snark.thyrsus.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 10 10:40:41 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Yury Polyanskiy <polyanskiy@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Apr 10 11:00:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0WF5-0004Le-6n
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 10:40:39 +0200
+	id 1O0WYi-0003Fq-7q
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 11:00:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751284Ab0DJIkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 04:40:33 -0400
-Received: from peff.net ([208.65.91.99]:56921 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750945Ab0DJIkc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 04:40:32 -0400
-Received: (qmail 17275 invoked by uid 107); 10 Apr 2010 08:40:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 10 Apr 2010 04:40:31 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Apr 2010 04:40:07 -0400
+	id S1751635Ab0DJJAt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Apr 2010 05:00:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36034 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751137Ab0DJJAs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 05:00:48 -0400
+Received: (qmail invoked by alias); 10 Apr 2010 09:00:45 -0000
+Received: from i59F569CE.versanet.de (EHLO atjola.homenet) [89.245.105.206]
+  by mail.gmx.net (mp065) with SMTP; 10 Apr 2010 11:00:45 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19tA/8/APVtR3juMmOf9qFqBgYO9h2iilRAM1Ja8R
+	rPyuzxTvTu8IWF
 Content-Disposition: inline
-In-Reply-To: <7vd3y7ycgu.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20100410012903.GA32428@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59999999999999998
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144535>
 
-On Sat, Apr 10, 2010 at 12:48:49AM -0700, Junio C Hamano wrote:
+On 2010.04.09 21:29:03 -0400, Jeff King wrote:
+> On Fri, Apr 09, 2010 at 12:07:00PM -0400, Yury Polyanskiy wrote:
+>=20
+> > It would be very convenient if after git-pull I could see the new
+> > merged-in commits in the git-log. The simplest solution for this is=
+ to
+> > simply mark ORIG_HEAD in the output of git-log --decorate (and idea=
+lly
+> > also in gitk).
+>=20
+> I think most people do something like:
+>=20
+>   gitk HEAD^..ORIG_HEAD
+>=20
+> To see everything in ORIG_HEAD that isn't in HEAD^ (the first parent =
+of
+> HEAD, or what you had just before the pull).
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > +	dir.flags |= DIR_COLLECT_IGNORED;
-> 
-> I thought about using collect-ignored so that fill_directory() does not
-> have to be run twice, but IIRC it can short-circuit an entire directory
-> using the "simplify" logic (as it was designed to be used for "git add"),
-> no?
+I guess you meant to say "gitk ORIG_HEAD.." there. ORIG_HEAD is already
+the pre-pull state. So if the merge actually created a merge commit,
+then HEAD^ =3D=3D ORIG_HEAD, and if it was a fast-forward, then ORIG_HE=
+AD is
+either the same as HEAD^ or one of its ancestors. In either case,
+HEAD^..ORIG_HEAD will be empty.
 
-Hmm.  I didn't consider that. It may be sufficient to say "foo/ is
-ignored" and let callers decide for themselves that "foo/bar" is
-ignored, too (unless, of course, it appears as tracked earlier in the
-list).
-
-I just worry that your version will perform less well. I'm not that
-worried about the double traversal (on any reasonable system everything
-will be cached after the first traversal). But finding every file means
-we have to traverse areas that git otherwise wouldn't look at, which
-might mean going to disk to pull in all of the "foo/" directory
-structure (which is less likely to be cached, since the rest of git
-isn't touching it), even though it may not even be of interest to us.
-
--Peff
+Bj=F6rn
