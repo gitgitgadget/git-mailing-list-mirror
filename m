@@ -1,76 +1,77 @@
-From: Eric Raymond <esr@thyrsus.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Subject: Re: More git status --porcelain lossage
-Date: Sat, 10 Apr 2010 15:41:54 -0400
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20100410194154.GB28768@thyrsus.com>
+Date: Sat, 10 Apr 2010 19:39:59 +0000
+Message-ID: <h2t51dd1af81004101239pe340cc54lcbb1a5b3702ec091@mail.gmail.com>
 References: <20100409190601.47B37475FEF@snark.thyrsus.com>
- <l2k5f14cf5e1004101148h5cf8dc4bm1836cf1c5fc8abfb@mail.gmail.com>
- <m3k4sfgmjc.fsf@localhost.localdomain>
-Reply-To: esr@thyrsus.com
+	 <l2k5f14cf5e1004101148h5cf8dc4bm1836cf1c5fc8abfb@mail.gmail.com>
+	 <20100410193039.GA28768@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Simon <turner25@gmail.com>, Eric Raymond <esr@snark.thyrsus.com>,
 	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 10 21:42:06 2010
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Sat Apr 10 21:47:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0gZ7-0001Ha-KL
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 21:42:02 +0200
+	id 1O0geF-0003UR-IE
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 21:47:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751916Ab0DJTl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 15:41:56 -0400
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:60191
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751692Ab0DJTlz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 15:41:55 -0400
-Received: by snark.thyrsus.com (Postfix, from userid 23)
-	id 10D3920CBBC; Sat, 10 Apr 2010 15:41:54 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <m3k4sfgmjc.fsf@localhost.localdomain>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751703Ab0DJTq7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Apr 2010 15:46:59 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:64309 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751177Ab0DJTq6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Apr 2010 15:46:58 -0400
+X-Greylist: delayed 416 seconds by postgrey-1.27 at vger.kernel.org; Sat, 10 Apr 2010 15:46:58 EDT
+Received: by bwz19 with SMTP id 19so36204bwz.21
+        for <git@vger.kernel.org>; Sat, 10 Apr 2010 12:46:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=N/2fmqb2YYnws6EcilwRyK3OfwIx/tYZoDTXRmmE7W0=;
+        b=Dm0vPlTy6QrkTo7IdLYl8ZdpWhD9peRtB+7FiIoXwryYLIl68jrOxstPQrbU7KLb6O
+         8ffD3AVaNugk6Bm2C2vidg/KkuR4XUrm20mTWpODbs/hUWa8Gnc3Pvd0I4ke9di3nDb2
+         9rI4ejwU9P6aA9X/rUVJiOjGi0KuF7OFDzXjM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=HstAUhAxP/rNZIeLIYrOcfYmGyBVcdp98ApmRS0ZS2Moi5+za23K5X24kTTjk0uaqw
+         zwbEmoJsTgPf0MZ6Bg0JNmL+frMiBXadHiueXwMRbiOlqnXZMSxgsx0HwzroMJl3SJIY
+         N34pPo/bZ6CUxFfz7mfYaZPl/p0EMDLqv1pNE=
+Received: by 10.204.121.195 with HTTP; Sat, 10 Apr 2010 12:39:59 -0700 (PDT)
+In-Reply-To: <20100410193039.GA28768@thyrsus.com>
+Received: by 10.204.6.193 with SMTP id a1mr2050809bka.104.1270928399785; Sat, 
+	10 Apr 2010 12:39:59 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144584>
 
-Jakub Narebski <jnareb@gmail.com>:
-> Are out of your f**g mind?  XML, really?  XML might be good choice to
-> *define* _document_ formats, but is really poor data exchange /
-> serialization format (being overly verbose, among others).  Also, XML
-> is not language but meta-language.
+On Sat, Apr 10, 2010 at 19:30, Eric Raymond <esr@thyrsus.com> wrote:
+> Simon <turner25@gmail.com>:
+>> Why not use an XML output?
+>> Plain text is easier to parse, but XML may give this extra durabilit=
+y
+>> you are looking for?
+>
+> Because XML is awfully heavyewight, and XML parsers tend to be slow.
+>
+> If we were going to buld on a metaprotocol, JSON would be better. =C2=
+=A0IMHO.
 
-Agreed.
- 
-> I could understand providing JSON format, specified using --json
-> option.
+A lot of web services (like some Catalyst-based applications) support
+all of these equally. If Git had machine readable output like this it
+would be nice if every git-* program just had --format=3D* where * coul=
+d
+be xml, json, yaml, sexp, perl etc.
 
-You know, that's actually an interesting idea.  I mentioned it
-previously as the not-XML if we want to build on a metaprotocol;
-I wasn't considering it seriously then.  But I am now, and it is
-not without attractions.  JSON would certainly solve all the delimiter
-and empty-object edge cases, and it has excellent extensibility.
-
->    I think there is some GPLv2 compatibile JSON generating code
-> in C (MIT licensed code is GPLv2 compatibilie, isn't it?); we can
-> always borrow compact JSON generation code from GPSD project (if
-> license allows it) from ESR.
-
-My license would allow it, but there's not really a lot of win in 
-trying to reuse JSON generator code - writing your own printfs for
-it by hand is easy and fast.
-
-Emacs Lisp has a JSON parser, so it would meet my needs.
-
-Alternatively, a cleaned-up --porcelain -Z along the lines
-previously suggested would be good.
-
-Supplying both might not be a bad idea.  The volume of code involved
-would be low.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+The program would just construct a native datastructure and then there
+would be an output driver to generate the textual representation.
