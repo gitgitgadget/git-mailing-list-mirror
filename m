@@ -1,80 +1,98 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: git status --porcelain is a mess that needs fixing
-Date: Sat, 10 Apr 2010 14:35:25 +0100
-Message-ID: <9c7e1f33b7ec0dab68a92aa8f067989e@212.159.54.234>
-References: <20100409184608.C7C61475FEF@snark.thyrsus.com> <20100410040959.GA11977@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Eric Raymond <esr@snark.thyrsus.com>,
-	Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 10 15:35:35 2010
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: Re: [PATCH v2 1/3] send-email: Don't use FQDNs without a '.'
+Date: Sat, 10 Apr 2010 09:44:24 -0400
+Message-ID: <CD79B09D-D728-4A3A-945F-9D117C15FFB5@gernhardtsoftware.com>
+References: <1270827245-28958-1-git-send-email-brian@gernhardtsoftware.com> <1270827746-29229-1-git-send-email-brian@gernhardtsoftware.com> <201004091831.49066.jnareb@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Git List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 10 15:44:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0aqV-0003zd-EG
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 15:35:35 +0200
+	id 1O0azC-00077q-NM
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 15:44:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751403Ab0DJNfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 09:35:30 -0400
-Received: from positron.quantumfyre.co.uk ([213.165.84.138]:44801 "EHLO
-	positron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751033Ab0DJNf3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Apr 2010 09:35:29 -0400
-Received: from reaper.quantumfyre.co.uk (reaper.quantumfyre.co.uk [212.159.54.234])
-	by positron.quantumfyre.co.uk (Postfix) with ESMTP id C7FB9819C4B6;
-	Sat, 10 Apr 2010 14:35:21 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 3A3A620C8F3;
-	Sat, 10 Apr 2010 14:35:27 +0100 (BST)
-X-Virus-Scanned: amavisd-new at reaper
-Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
-	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id M+L0+54dMet7; Sat, 10 Apr 2010 14:35:26 +0100 (BST)
-Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id B0BF010F788;
-	Sat, 10 Apr 2010 14:35:25 +0100 (BST)
-In-Reply-To: <20100410040959.GA11977@coredump.intra.peff.net>
-X-Sender: julian@quantumfyre.co.uk
-User-Agent: RoundCube Webmail/0.1-rc1
+	id S1751480Ab0DJNo3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 09:44:29 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:49948 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751315Ab0DJNo2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Apr 2010 09:44:28 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id C1BBE1FFC058; Sat, 10 Apr 2010 13:44:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.8 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.5.97] (unknown [64.134.103.20])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 5F3C71FFC056;
+	Sat, 10 Apr 2010 13:44:23 +0000 (UTC)
+In-Reply-To: <201004091831.49066.jnareb@gmail.com>
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144547>
 
-On Sat, 10 Apr 2010 00:09:59 -0400, Jeff King <peff@peff.net> wrote:
-> Your parser is already broken if you are calling split, as the filenames
-> may contain spaces (and will be quoted in that case, and you need to
-> unmangle). You should use "-z".
-> 
-> You will probably then realize that the "-z" format looks like:
-> 
->   XY file1\0file2\0
-> 
-> which still sucks. It would be more friendly as:
-> 
->   XY\0file1\0file2\0
-> 
-> So you could split on "\0". But even with that, you can't just blindly
-> split, as the column and record separators are the same, and you might
-> have one or two filenames.
 
-Not true.  If the second form was used, then you _can_ split on \0.  It
-will tokenise the data for you, and then you consume ether two or three
-tokens depending on the status flags.  So it would make the parsing
-simpler.  But to make it even easier, how about adding a -Z that makes the
-output format "XY\0file1\0[file2]\0" (i.e. always three tokens per record,
-with the third token being empty if there is no second filename)?  Though
-if future expandability was wanted you could end each record with \0\0 and
-then parsing would be a two stages of split on \0\0 for records and then
-split on \0 for entries?  The is already precedence for the -z option to
-change the output format, so a second similar switch should be ok?  Then
-the updated documentation could recommend --porcelain -Z for new users
-without affecting old ones.
+On Apr 9, 2010, at 12:31 PM, Jakub Narebski wrote:
 
--- 
-Julian
+> Note that the comments below are just nitpicking about Perl style.
+
+Fair enough.  I've been using Ruby and Shell far more than Perl recently.  I've gotten a bit rusty.
+
+> A matter of style: in Perl it more usual to use
+> 
+>  sub <name> {
+>  	...
+>  }
+> 
+> style rather than
+> 
+>  sub <name>
+>  {
+>  	...
+>  }
+> 
+> Unfortunately git-send-email.perl is a bit inconsistent in the style used;
+> 23 subroutines use Perl style, 5 subroutines including previous one i.e.
+> sanitize_address use C-like style (one of).
+
+I was copying style from the other functions I was working on.  I'll make my additions more "standard" and add a patch to clean up the rest.
+
+> Also, the usual way of unrolling @_; is to use either
+> 
+>  my ($par1, $par2, ...) = @_;
+> 
+> or use
+> 
+>  mu $par = shift;
+> 
+> The form $_[0] etc. is used very rarely.  I think it is even against 
+> Perl Best Practices (see http://www.perlcritic.org and Perl::Critic).
+
+I knew that.  I really did.  But I started off trying to write
+
+sub valid_fqdn( $domain )
+
+Which would be valid Perl 6, but not Perl 5.  So then I tried using
+
+my $domain = $1
+
+Which, while valid, is wrong.  So I changed it to @_[1], @_[0], and finally $_[0].  My brain wasn't running at 100% yesterday, apparently.
+
+> Style: usually there is no space around function arguments, so 
+> 'valid_fqdn($domain);'.
+
+University training is difficult to overcome.  They demanded spaces nearly everywhere, so I type them by something akin to reflex.
+
+Thank you for all the review!
+~~ Brian Gernhardt
