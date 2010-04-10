@@ -1,82 +1,121 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: potential improvement to 'git log' with a range
-Date: Fri, 9 Apr 2010 18:20:03 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.1004091807220.3558@i5.linux-foundation.org>
-References: <w2j3abd05a91004091624mb2836ff4v118a1ae9ac5ca6e7@mail.gmail.com>  <i2kfabb9a1e1004091633nc70f2f19hd16ea9704f0933b0@mail.gmail.com> <n2t3abd05a91004091713s4d081106qd74419425b25e8e@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Why not show ORIG_HEAD in git-log --decorate?
+Date: Fri, 9 Apr 2010 21:29:03 -0400
+Message-ID: <20100410012903.GA32428@coredump.intra.peff.net>
+References: <s2zea182b21004090907i9af49416za4fdb4650af5ae29@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	git list <git@vger.kernel.org>
-To: Aghiles <aghilesk@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 10 03:24:19 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Yury Polyanskiy <polyanskiy@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 10 03:29:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0PQo-0002LR-Jp
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 03:24:18 +0200
+	id 1O0PVs-0003TB-Uv
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 03:29:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752055Ab0DJBYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Apr 2010 21:24:12 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:56849 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751062Ab0DJBYL (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Apr 2010 21:24:11 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o3A1Nfu4004993
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 9 Apr 2010 18:23:42 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o3A1Nf7j022382;
-	Fri, 9 Apr 2010 18:23:41 -0700
-In-Reply-To: <n2t3abd05a91004091713s4d081106qd74419425b25e8e@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.448 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753839Ab0DJB31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 21:29:27 -0400
+Received: from peff.net ([208.65.91.99]:55173 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753111Ab0DJB31 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 21:29:27 -0400
+Received: (qmail 12754 invoked by uid 107); 10 Apr 2010 01:29:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 09 Apr 2010 21:29:27 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Apr 2010 21:29:03 -0400
+Content-Disposition: inline
+In-Reply-To: <s2zea182b21004090907i9af49416za4fdb4650af5ae29@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144495>
 
+On Fri, Apr 09, 2010 at 12:07:00PM -0400, Yury Polyanskiy wrote:
 
+> It would be very convenient if after git-pull I could see the new
+> merged-in commits in the git-log. The simplest solution for this is to
+> simply mark ORIG_HEAD in the output of git-log --decorate (and ideally
+> also in gitk).
 
-On Fri, 9 Apr 2010, Aghiles wrote:
-> 
-> Oh, I should have read the documentation. I was certain that ".." stands
-> for a range but it is a ... complement.
+I think most people do something like:
 
-Well, technically ".." means two different things
+  gitk HEAD^..ORIG_HEAD
 
- - for "set operations" (ie "git log" and friends) it's the "relative 
-   complement" of two sets (or "'reachable from A' \ 'reachable from B'").
+To see everything in ORIG_HEAD that isn't in HEAD^ (the first parent of
+HEAD, or what you had just before the pull).
 
- - for "edge operations" (ie "git diff" and friends) it's just two 
-   end-points (aka "range"). A diff doesn't work on sets, it only works on 
-   the two endpoints.
+> Just thought to throw in this idea to developers. Perhaps it is not
+> that hard to implement.
 
-It's arguably a bit confusing, but quite frankly, the room for confusion 
-is very small, and the biggest source of confusion is probably not so much 
-that ".." means two different things in two (clearly different) contexts, 
-as much as just the fact that people aren't used to thinking in terms of 
-set operations at all. 
+Marking ORIG_HEAD in git-log is pretty straightforward. If we wanted to
+do that, probably MERGE_HEAD and FETCH_HEAD should be marked, too.
+I don't really have an opinion, as I don't generally use "git log
+--decorate", but the patch for git-log would look something like what is
+below (I am not planning on taking it further, but if somebody wants to
+think more about the issues, they are welcome to pick it up and work on
+it).
 
-Most SCM's really talk about "ranges". Once you think in those terms, 
-complex history doesn't work. Git very fundamentally is much about set 
-theory, and "ranges" is a bad word to use.
+gitk would need a separate patch, as it uses a separate mechanism.
 
-To make things even more exciting triple-dot, "A...B" has two different 
-meanings too, again one that is about sets ("symmetric difference") for 
-the log-based ones, and one that is a somewhat badly defined range for the 
-diff based ones (where the end-points are "one common nearest ancestor of 
-A and B" and "B" respectively).
-
-It's all actually very natural when you get used to it, although that 
-"A...B" as a range really isn't well-defined, since there can be more than 
-one common nearest ancestors. It's still often enough useful in practice 
-that I wouldn't get rid of it, but it's not the greatest feature.
-
-		Linus
+diff --git a/log-tree.c b/log-tree.c
+index d3ae969..e2034c4 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -43,7 +43,7 @@ void load_ref_decorations(int flags)
+ 	if (!loaded) {
+ 		loaded = 1;
+ 		for_each_ref(add_ref_decoration, &flags);
+-		head_ref(add_ref_decoration, &flags);
++		for_each_metaref(add_ref_decoration, &flags);
+ 	}
+ }
+ 
+diff --git a/refs.c b/refs.c
+index d3db15a..eef7e13 100644
+--- a/refs.c
++++ b/refs.c
+@@ -663,6 +663,28 @@ int head_ref(each_ref_fn fn, void *cb_data)
+ 	return 0;
+ }
+ 
++int for_each_metaref(each_ref_fn fn, void *cb_data)
++{
++	static const char *meta_refs[] = {
++		"HEAD",
++		"ORIG_HEAD",
++		"FETCH_HEAD",
++		"MERGE_HEAD",
++	};
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(meta_refs); i++) {
++		unsigned char sha1[20];
++		int flag;
++		if (resolve_ref(meta_refs[i], sha1, 1, &flag)) {
++			int ret = fn(meta_refs[i], sha1, flag, cb_data);
++			if (ret)
++				return ret;
++		}
++	}
++	return 0;
++}
++
+ int for_each_ref(each_ref_fn fn, void *cb_data)
+ {
+ 	return do_for_each_ref("refs/", fn, 0, 0, cb_data);
+diff --git a/refs.h b/refs.h
+index 4a18b08..7e72c4d 100644
+--- a/refs.h
++++ b/refs.h
+@@ -19,6 +19,7 @@ struct ref_lock {
+  */
+ typedef int each_ref_fn(const char *refname, const unsigned char *sha1, int flags, void *cb_data);
+ extern int head_ref(each_ref_fn, void *);
++extern int for_each_metaref(each_ref_fn, void *);
+ extern int for_each_ref(each_ref_fn, void *);
+ extern int for_each_ref_in(const char *, each_ref_fn, void *);
+ extern int for_each_tag_ref(each_ref_fn, void *);
