@@ -1,78 +1,88 @@
-From: Eric Raymond <esr@thyrsus.com>
-Subject: Re: git status --porcelain is a mess that needs fixing
-Date: Sat, 10 Apr 2010 10:43:34 -0400
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20100410144334.GB23959@thyrsus.com>
-References: <20100409184608.C7C61475FEF@snark.thyrsus.com>
- <20100410040959.GA11977@coredump.intra.peff.net>
- <9c7e1f33b7ec0dab68a92aa8f067989e@212.159.54.234>
-Reply-To: esr@thyrsus.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Eric Raymond <esr@snark.thyrsus.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Sat Apr 10 16:43:40 2010
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: [PATCH v3 2/4] send-email: Don't use FQDNs without a '.'
+Date: Sat, 10 Apr 2010 10:53:54 -0400
+Message-ID: <1270911236-32476-3-git-send-email-brian@gernhardtsoftware.com>
+References: <1270911236-32476-1-git-send-email-brian@gernhardtsoftware.com>
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 10 16:54:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0buN-0001xr-Ub
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 16:43:40 +0200
+	id 1O0c4c-0006Uv-9h
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 16:54:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751760Ab0DJOnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 10:43:35 -0400
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:39217
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751743Ab0DJOne (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 10:43:34 -0400
-Received: by snark.thyrsus.com (Postfix, from userid 23)
-	id 2F1AA20CBBC; Sat, 10 Apr 2010 10:43:34 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <9c7e1f33b7ec0dab68a92aa8f067989e@212.159.54.234>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751897Ab0DJOyI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 10:54:08 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:52326 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751777Ab0DJOyG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 10:54:06 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 64EAE1FFC083; Sat, 10 Apr 2010 14:54:00 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.8 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from Hermes.local.net (unknown [64.134.103.20])
+	by silverinsanity.com (Postfix) with ESMTPA id 1F42C1FFC058;
+	Sat, 10 Apr 2010 14:53:59 +0000 (UTC)
+X-Mailer: git-send-email 1.7.1.rc0.251.g42f41
+In-Reply-To: <1270911236-32476-1-git-send-email-brian@gernhardtsoftware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144552>
 
-Julian Phillips <julian@quantumfyre.co.uk>:
-> On Sat, 10 Apr 2010 00:09:59 -0400, Jeff King <peff@peff.net> wrote:
-> > Your parser is already broken if you are calling split, as the filenames
-> > may contain spaces (and will be quoted in that case, and you need to
-> > unmangle). You should use "-z".
-> > 
-> > You will probably then realize that the "-z" format looks like:
-> > 
-> >   XY file1\0file2\0
-> > 
-> > which still sucks. It would be more friendly as:
-> > 
-> >   XY\0file1\0file2\0
-> > 
-> > So you could split on "\0". But even with that, you can't just blindly
-> > split, as the column and record separators are the same, and you might
-> > have one or two filenames.
-> 
-> Not true.  If the second form was used, then you _can_ split on \0.  It
-> will tokenise the data for you, and then you consume ether two or three
-> tokens depending on the status flags.  So it would make the parsing
-> simpler.  But to make it even easier, how about adding a -Z that makes the
-> output format "XY\0file1\0[file2]\0" (i.e. always three tokens per record,
-> with the third token being empty if there is no second filename)?  Though
-> if future expandability was wanted you could end each record with \0\0 and
-> then parsing would be a two stages of split on \0\0 for records and then
-> split on \0 for entries?  The is already precedence for the -z option to
-> change the output format, so a second similar switch should be ok?  Then
-> the updated documentation could recommend --porcelain -Z for new users
-> without affecting old ones.
+Although Net::Domain::domainname attempts to be very thorough, the
+host's configuration can still refuse to give a FQDN.  Check to see if
+what we receive contains a dot as a basic sanity check.
 
-+1
+Since the same condition is used twice and getting complex, let's move
+it to a new function.
 
--Z could fix some of the other issues, as well, like use of space
-as a flag character.
+Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+---
+ git-send-email.perl |   11 +++++++----
+ 1 files changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 26fe624..1e9bec1 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -861,13 +861,17 @@ sub sanitize_address {
+ # This maildomain*() code is based on ideas in Perl library Test::Reporter
+ # /usr/share/perl5/Test/Reporter/Mail/Util.pm ==> sub _maildomain ()
+ 
++sub valid_fqdn {
++	my $domain = shift;
++	return !($^O eq 'darwin' && $domain =~ /\.local$/) && $domain =~ /\./;
++}
++
+ sub maildomain_net {
+ 	my $maildomain;
+ 
+ 	if (eval { require Net::Domain; 1 }) {
+ 		my $domain = Net::Domain::domainname();
+-		$maildomain = $domain
+-			unless $^O eq 'darwin' && $domain =~ /\.local$/;
++		$maildomain = $domain if valid_fqdn($domain);
+ 	}
+ 
+ 	return $maildomain;
+@@ -883,8 +887,7 @@ sub maildomain_mta {
+ 				my $domain = $smtp->domain;
+ 				$smtp->quit;
+ 
+-				$maildomain = $domain
+-					unless $^O eq 'darwin' && $domain =~ /\.local$/;
++				$maildomain = $domain if valid_fqdn($domain);
+ 
+ 				last if $maildomain;
+ 			}
 -- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+1.7.1.rc0.251.g42f41
