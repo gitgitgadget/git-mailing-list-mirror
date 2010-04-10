@@ -1,61 +1,85 @@
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Subject: Local unset override global options
-Date: Sat, 10 Apr 2010 07:54:28 +0100
-Message-ID: <z2kfbd9d3991004092354y21d3ac3fgf1f0675cdb5c51a8@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 10 08:55:10 2010
+From: Johannes Gilger <heipei@hackvalue.de>
+Subject: [PATCH] pretty.c: Don't expand %N without --show-notes
+Date: Sat, 10 Apr 2010 09:05:27 +0200
+Message-ID: <1270883127-11488-1-git-send-email-heipei@hackvalue.de>
+References: <201004061127.01471.trast@student.ethz.ch>
+Cc: Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Gilger <heipei@hackvalue.de>
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 10 09:05:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0Uaz-0004Qn-3X
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 08:55:09 +0200
+	id 1O0UlS-0007CP-2z
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 09:05:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751120Ab0DJGyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 02:54:33 -0400
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:47313 "EHLO
-	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751360Ab0DJGy3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 02:54:29 -0400
-Received: by qyk9 with SMTP id 9so2209828qyk.1
-        for <git@vger.kernel.org>; Fri, 09 Apr 2010 23:54:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:received:message-id
-         :subject:from:to:content-type;
-        bh=0f96GFERFcZrRgoPgOLQZFIEHTxVz3/3+aygPeCzYoE=;
-        b=QDMwOL7Rak79++50jc2EdEowIblVjclQ9gKujVDcD/18a2Z6ze6WpPn+VIjERiffJp
-         /0W+6s2cSJRgaqzz4dWjmaz/oZjcdpz5fvaH02Qu8H7bNOOOrZTLcOyi3Zzl/CFBqRH1
-         A5fvDaup3uTyB5CyyvWN744ejuZ4aGCOEizHM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=HdEpH88P+xWd/wCelcd4fJFqthjFf+i8Q/MeeLH22Z6NB5k0bKGwb0n8Oy+eBGFynU
-         2+a3rdFP2CEwmJeCI3shPE8JDTbhF3lavJTARSrOQQARSKy3z3Ed2amkjL3EPrnh3Z89
-         g0/Aw1Zq1RGbxd7rfik23gLleEoKF5ojmOxPM=
-Received: by 10.229.223.196 with HTTP; Fri, 9 Apr 2010 23:54:28 -0700 (PDT)
-Received: by 10.229.190.21 with SMTP id dg21mr1604847qcb.69.1270882468127; 
-	Fri, 09 Apr 2010 23:54:28 -0700 (PDT)
+	id S1751331Ab0DJHFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 03:05:53 -0400
+Received: from avalon.gnuzifer.de ([78.46.211.2]:36971 "EHLO
+	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751021Ab0DJHFw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 03:05:52 -0400
+Received: from u-6-099.vpn.rwth-aachen.de ([137.226.102.99]:45734 helo=localhost)
+	by avalon.gnuzifer.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <heipei@hackvalue.de>)
+	id 1O0UlF-0007VU-I4; Sat, 10 Apr 2010 09:05:45 +0200
+X-Mailer: git-send-email 1.7.0.2.201.g80978
+In-Reply-To: <201004061127.01471.trast@student.ethz.ch>
+X-Verified-Sender: yes
+X-SA-Exim-Connect-IP: 137.226.102.99
+X-SA-Exim-Mail-From: heipei@hackvalue.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144522>
 
-I have default settings for sending email in the global git config.
-However, for one repo different email settings are necessary.  That
-specific SMTP server does not want authentication, therefore smtpuser
-should be unset.
+The %N placeholder will only work if --show-notes was provided to log.
+By not expanding the user is given feedback that he won't be shown any
+notes.
 
-The issue is that global smtpuser is set for the default SMTP server
-and unsetting local smtpuser results in the global smtpuser being
-inherited.  What I'd like is smtpuser to be unset for this particular
-repo.
+Signed-off-by: Johannes Gilger <heipei@hackvalue.de>
+---
+ Ok, this is another stab. I don't really know whether we want %N to expand to
+ an empty string or not expand at all in case of no --show-notes. Obviously
+ using 'return 1;' would implement the former behaviour, while I chose the
+ latter because it prevents people like me from building useless log aliases.
 
-Is there any way to "unset override" options locally?  If not, is this
-something that could and should be implemented?
+ Documentation/pretty-formats.txt |    3 ++-
+ pretty.c                         |    3 +++
+ 2 files changed, 5 insertions(+), 1 deletions(-)
 
-Stefan
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 1686a54..bf7813f 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -143,7 +143,8 @@ NOTE: Some placeholders may depend on other options given to the
+ revision traversal engine. For example, the `%g*` reflog options will
+ insert an empty string unless we are traversing reflog entries (e.g., by
+ `git log -g`). The `%d` placeholder will use the "short" decoration
+-format if `--decorate` was not already provided on the command line.
++format if `--decorate` was not already provided on the command line. The %N
++placeholder won't be expanded unless `--show-notes` was provided.
+ 
+ If you add a `{plus}` (plus sign) after '%' of a placeholder, a line-feed
+ is inserted immediately before the expansion if and only if the
+diff --git a/pretty.c b/pretty.c
+index 6ba3da8..b39e2d5 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -775,6 +775,9 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
+ 		}
+ 		return 0;	/* unknown %g placeholder */
+ 	case 'N':
++		if (!c->pretty_ctx->show_notes)
++			return 0;
++
+ 		format_display_notes(commit->object.sha1, sb,
+ 			    git_log_output_encoding ? git_log_output_encoding
+ 						    : git_commit_encoding, 0);
+-- 
+1.7.0.2.201.g80978
