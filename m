@@ -1,78 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Notes: Connect the %N flag to --{show,no}-notes
-Date: Sat, 10 Apr 2010 18:08:43 -0400
-Message-ID: <20100410220843.GA29987@coredump.intra.peff.net>
-References: <7vaatbw00u.fsf@alter.siamese.dyndns.org>
- <1270935032-10536-1-git-send-email-heipei@hackvalue.de>
- <7v1venvuv8.fsf@alter.siamese.dyndns.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: Status of all files
+Date: Sun, 11 Apr 2010 00:12:33 +0200
+Message-ID: <4BC0F7D1.6000003@gnu.org>
+References: <20100409040434.8602620CBBC@snark.thyrsus.com> <j2z8c9a061004082110se894f925i80c1389cd4e247f@mail.gmail.com> <20100409113248.GB27353@thyrsus.com> <m3sk74hjkg.fsf@localhost.localdomain> <20100409140215.GB27899@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Gilger <heipei@hackvalue.de>,
-	Git ML <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 11 00:09:34 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>, git@vger.kernel.org
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Sun Apr 11 00:12:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0irs-0006xE-VW
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 00:09:33 +0200
+	id 1O0iuz-0007pd-Ca
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 00:12:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751865Ab0DJWJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 18:09:10 -0400
-Received: from peff.net ([208.65.91.99]:56112 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751692Ab0DJWJJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 18:09:09 -0400
-Received: (qmail 26494 invoked by uid 107); 10 Apr 2010 22:09:08 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 10 Apr 2010 18:09:08 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Apr 2010 18:08:43 -0400
-Content-Disposition: inline
-In-Reply-To: <7v1venvuv8.fsf@alter.siamese.dyndns.org>
+	id S1752063Ab0DJWMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 18:12:40 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:54448 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751768Ab0DJWMj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 18:12:39 -0400
+Received: by fg-out-1718.google.com with SMTP id 22so55523fge.1
+        for <git@vger.kernel.org>; Sat, 10 Apr 2010 15:12:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=DDqFPQLHF3yPPpzt0YAmM37yJ+CQeqH7HxRFaZMrCfk=;
+        b=pHhS2XP6F6TA9YAtr9WWVJD68ZXXYi5ZKJYn09/5hhMMSoQGCpMMvFhtefZfvwHlOO
+         dg6KS21SN9V+ZnXSyusDQKEBneHhuEdmvF0ccJpJwJZDWcuaL6SD5A8ABh7R//5OPQ2k
+         JOloVpG72qWD/nboDgS+ymnWJRXgJK+9tOZ8g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=dxFY9vczrpb8+dGwiLxYUWYeGwGoKJdRsiv8Otgeq9xxZgCfiIJGW3bo3eDZ6Gn/j2
+         jNJJY43GCxRq+NRUpwgW0uWQJs/S2kxJD/Kvy2cNox7sash8QZ9gAGyNhwYpv1wK7MXQ
+         AwxeiGA0FHK9Hiart4IE+NdLktBcdByb97/Ak=
+Received: by 10.223.5.207 with SMTP id 15mr1734052faw.6.1270937556938;
+        Sat, 10 Apr 2010 15:12:36 -0700 (PDT)
+Received: from yakj.usersys.redhat.com (s209p8.home.99maxprogres.cz [85.93.118.17])
+        by mx.google.com with ESMTPS id 19sm5792333fkr.39.2010.04.10.15.12.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 10 Apr 2010 15:12:35 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.8) Gecko/20100301 Fedora/3.0.3-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.3
+In-Reply-To: <20100409140215.GB27899@thyrsus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144600>
 
-On Sat, Apr 10, 2010 at 02:51:55PM -0700, Junio C Hamano wrote:
+On 04/09/2010 04:02 PM, Eric Raymond wrote:
+>>> >  >
+>>> >  >     'needs-update      The file has not been edited by the user, but there is
+>>> >  >                        a more recent version on the current branch stored
+>>> >  >                        in the master file.
+>> >
+>> >  Needs*update*  looks like it came from centralized VCS like CVS and
+>> >  Subversion, where you use update-the-commit method.  You can't say
+>> >  that HEAD version is more recent that working file...
+>> >
+>> >  The rought equivalent would be that upstream branch for current
+>> >  branch (e.g. 'origin/master' can be upstream for 'master' branch) is
+>> >  in fast-forward state i.e. current branch is direct ancestor of
+>> >  corresponding upstream branch, and the file was modified upstream.
+>
+> Agreed. But there's no way to tell that this is the case without
+> doing a pull operation or otherwise querying origin, and I'm
+> not going to do that.
 
-> > +++ b/builtin/log.c
-> > @@ -58,9 +58,9 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
-> >  		usage(builtin_log_usage);
-> >  	argc = setup_revisions(argc, argv, rev, opt);
-> >  
-> > -	if (!rev->show_notes_given && !rev->pretty_given)
-> > +	if (!rev->show_notes_given)
-> >  		rev->show_notes = 1;
-> 
-> I am puzzled by this change and its possible interaction with codepaths
-> that do not have anything to do with %N.  When there is no show-notes and
-> an explicit --pretty, we do not want to have rev->show_notes set.
+You can query the origin _as it was on the last fetch_.
 
-Could we perhaps just do:
+If you are on branch X, the logic is as follows:
 
-  if (!rev->show_notes_given &&
-      (!rev->pretty_given ||
-       (rev->commit_format == CMIT_FMT_USERFORMAT && fmt_wants_notes(...))
+- Let R be the value of configuration key branch.X.remote,
+- let M be the value of configuration key branch.X.merge,
+- for all values S of configuration key remote.R.fetch,
+   - strip an initial +
+   - if S is M:N, return N
+   - if S is P/*:Q/* where P is a prefix of M, take M, replace this
+     prefix with Q and return the result
 
-where fmt_wants_notes is similar to what I posted earlier, or even just
-strstr(fmt, "%N")? As I discussed earlier, it is not 100% accurate, but
-it is extremely unlikely for it to be wrong, and when it is, we will
-load notes when we don't need to. Which is an optimization failure, but
-not a correctness failure.
+In the most common case you will have:
 
-And then just guard the '%N' placeholder by checking show_notes. That
-will protect random codepaths that call format_commit_message() but
-aren't log (they can't trigger an assert, but will just get '%N'
-unexpanded or whatever). And doing:
+- X = master
+- R = origin
+- M = refs/heads/master
+- one key S = +refs/heads/*:refs/remotes/origin/*
 
-  git log --no-notes --format='%N'
+so the prefix "refs/heads/" is replaced with "refs/remotes/origin/" and 
+the result is refs/remotes/origin/master.
 
-should also just fail to expand %N. Which is maybe a little crazy, but
-what the user is asking for is crazy, and it makes the most sense to me.
-
--Peff
+Paolo
