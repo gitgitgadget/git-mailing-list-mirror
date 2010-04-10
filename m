@@ -1,95 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Simon <turner25@gmail.com>
 Subject: Re: More git status --porcelain lossage
-Date: Sat, 10 Apr 2010 23:21:58 +0200
-Message-ID: <201004102321.59263.jnareb@gmail.com>
-References: <20100409190601.47B37475FEF@snark.thyrsus.com> <m3k4sfgmjc.fsf@localhost.localdomain> <20100410194154.GB28768@thyrsus.com>
+Date: Sat, 10 Apr 2010 17:24:35 -0400
+Message-ID: <p2u5f14cf5e1004101424q2d6a871fs2466988f7a4202fe@mail.gmail.com>
+References: <20100409190601.47B37475FEF@snark.thyrsus.com>
+	 <l2k5f14cf5e1004101148h5cf8dc4bm1836cf1c5fc8abfb@mail.gmail.com>
+	 <20100410193039.GA28768@thyrsus.com>
+	 <h2t51dd1af81004101239pe340cc54lcbb1a5b3702ec091@mail.gmail.com>
+Reply-To: turner25@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Simon <turner25@gmail.com>, Eric Raymond <esr@snark.thyrsus.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: esr@thyrsus.com, Eric Raymond <esr@snark.thyrsus.com>,
 	git@vger.kernel.org
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Sat Apr 10 23:22:33 2010
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 10 23:24:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0i8P-0001dz-DA
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 23:22:33 +0200
+	id 1O0iAU-0002Nq-4I
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 23:24:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752291Ab0DJVWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 17:22:16 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:47727 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752270Ab0DJVWK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 17:22:10 -0400
-Received: by fg-out-1718.google.com with SMTP id 22so35815fge.1
-        for <git@vger.kernel.org>; Sat, 10 Apr 2010 14:22:08 -0700 (PDT)
+	id S1752212Ab0DJVYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 17:24:36 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:60866 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752091Ab0DJVYg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 17:24:36 -0400
+Received: by gwj19 with SMTP id 19so359920gwj.19
+        for <git@vger.kernel.org>; Sat, 10 Apr 2010 14:24:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=f1B6vsb7E0dh1maI5GNHt/19H+0TVTSP7AaWzF1bKs4=;
-        b=xcvHMUqmk5Sz9KkJ+hmff3QeqvMQ7BKT6Kstvq5AMh79kREWLE1efHLX1rs+SLLw4Y
-         i/JlHeGpVFBYf4NdC8wHQkjnWL2S5YB01vZLGU4MQg6VTfE/ZcEYKJsKN4U3s8UbCV4+
-         ZrqwhbEnLtq4DnwycZAoxxXv5S9MeK52t4Dck=
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:received:message-id:subject:from:to:cc:content-type;
+        bh=tgf/gD+1P8rS5+iGc3WiS1n3dUjKo7RBjqFdzWJg228=;
+        b=OMBb9JQRlNr5iH/yu7UTMija7pz3pZHdQ77LJO1kvPzGvTVwvkeFUSv0neheWNMcoc
+         RwKarrzNbWeQ6lVB7iBXuKnq22/QXUvzhiJNsoNWma3T/WNaPf+yQ9FTuJ4Zj3JN11jv
+         nrsGRwrhG7ShOtitZP2g/v/tt8ebN9MacVHXE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=BiQ9lGOOfNH4KiaqOmvNfKS9KaX7zEv3K0RUSL0ZYOePY5eY04WyCjCSyuJelRb59d
-         ZpBSFCDmgf/Gl8FNl3fdgWITR36xE2xZh61ppj5Tq4d4sSSSks9T6dTS7laFzXTRZOlC
-         m34DE4v3lujdtJfV41rNNpGm1+GZ+eerQ4oIA=
-Received: by 10.103.7.30 with SMTP id k30mr938513mui.24.1270934528029;
-        Sat, 10 Apr 2010 14:22:08 -0700 (PDT)
-Received: from [192.168.1.13] (abvp94.neoplus.adsl.tpnet.pl [83.8.213.94])
-        by mx.google.com with ESMTPS id w5sm10883522mue.54.2010.04.10.14.22.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 10 Apr 2010 14:22:07 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20100410194154.GB28768@thyrsus.com>
-Content-Disposition: inline
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        b=bBY3bQPAdyQ0lUwTHP/T7ef648eBH89uqGNPemVSgBsqFn/b1fMme0QZgLN28H36Ea
+         ka9cv/AQUNf0/uOcH67PznRkVResr6neHX37I9XI28kLCLaaiZqeVJHtlVf+ESuDHPic
+         w7HyaqixF4eYrFDq35ZwIpLZz+gKLUQQLYwVs=
+Received: by 10.100.142.16 with HTTP; Sat, 10 Apr 2010 14:24:35 -0700 (PDT)
+In-Reply-To: <h2t51dd1af81004101239pe340cc54lcbb1a5b3702ec091@mail.gmail.com>
+Received: by 10.101.58.8 with SMTP id l8mr3228672ank.7.1270934675296; Sat, 10 
+	Apr 2010 14:24:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144596>
 
-On Sat, 10 Apr 2010, Eric Raymond wrote:
-> Jakub Narebski <jnareb@gmail.com>:
->  
-> > I could understand providing JSON format, specified using --json
-> > option.
-> 
-> You know, that's actually an interesting idea.  I mentioned it
-> previously as the not-XML if we want to build on a metaprotocol;
-> I wasn't considering it seriously then.  But I am now, and it is
-> not without attractions.  JSON would certainly solve all the delimiter
-> and empty-object edge cases, and it has excellent extensibility.
+> A lot of web services (like some Catalyst-based applications) support
+> all of these equally. If Git had machine readable output like this it
+> would be nice if every git-* program just had --format=* where * could
+> be xml, json, yaml, sexp, perl etc.
+>
+> The program would just construct a native datastructure and then there
+> would be an output driver to generate the textual representation.
+>
 
-It is a bit chatty, but is to some extent self documenting.
+I had something just like this in mind when I suggested XML...
+I would personally avoid it for same reasons others have pointed out, but...
+There are lots of tools out there that can parse and display XML very
+well natively.  Firefox is one such example.
 
-The question is whether it should output well formed array of objects,
-or just list of objects not wrapped in array...
+My intention is not to start a flame here, rather try to keep our
+options flexible.  ASCII would clearly remain the default though! ;)
 
-> >    I think there is some GPLv2 compatibile JSON generating code
-> > in C (MIT licensed code is GPLv2 compatibilie, isn't it?); we can
-> > always borrow compact JSON generation code from GPSD project (if
-> > license allows it) from ESR.
-> 
-> My license would allow it, but there's not really a lot of win in 
-> trying to reuse JSON generator code - writing your own printfs for
-> it by hand is easy and fast.
-
-What I am worrying about is correct handling of escaping, quoting,
-and non-ASCII characters in strings (the JSON-quoting and JSON-escapes
-are different than C escape codes, IIRC).  JSON rules are simple,
-but are different than C.
-
--- 
-Jakub Narebski
-Poland
+Simon
