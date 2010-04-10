@@ -1,80 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git status --porcelain is a mess that needs fixing
-Date: Sat, 10 Apr 2010 02:32:15 -0400
-Message-ID: <20100410063215.GA6260@coredump.intra.peff.net>
-References: <20100409184608.C7C61475FEF@snark.thyrsus.com>
- <20100410040959.GA11977@coredump.intra.peff.net>
- <20100410054645.GA17711@progeny.tock>
- <20100410055124.GA17778@progeny.tock>
- <20100410060353.GA4585@coredump.intra.peff.net>
- <20100410061224.GA18715@progeny.tock>
+From: Vitaly Berov <vitaly.berov@gmail.com>
+Subject: Re: git clone: very long "resolving deltas" phase
+Date: Sat, 10 Apr 2010 10:32:55 +0400
+Message-ID: <4BC01B97.5080601@gmail.com>
+References: <loom.20100406T161552-321@post.gmane.org> <vpqljd062xb.fsf@bauges.imag.fr> <4BBB5346.6070607@gmail.com> <4BBB53F5.9010106@op5.se> <q2mec874dac1004060850r5eaa41fak2ba9889d07794651@mail.gmail.com> <v2qecffb261004060856qcb769a06vf40ad2a75a3aa4fd@mail.gmail.com> <alpine.LFD.2.00.1004061705390.7232@xanadu.home> <4BBC1E15.9040403@gmail.com> <20100407080049.GA14041@LK-Perkele-V2.elisa-laajakaista.fi> <4BBC3EEC.6010702@gmail.com> <alpine.LFD.2.00.1004071009180.7232@xanadu.home> <4BBC981F.1000802@gmail.com> <alpine.LFD.2.00.1004071048340.7232@xanadu.home> <4BBECD31.9080307@gmail.com> <alpine.LFD.2.00.1004091525480.7232@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Raymond <esr@snark.thyrsus.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 10 08:32:57 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Shawn Pearce <spearce@spearce.org>,
+	Andreas Ericsson <ae@op5.se>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 10 08:33:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0UFU-0007Uc-MS
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 08:32:57 +0200
+	id 1O0UG8-0007dc-Qv
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 08:33:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751284Ab0DJGck convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Apr 2010 02:32:40 -0400
-Received: from peff.net ([208.65.91.99]:53916 "EHLO peff.net"
+	id S1751288Ab0DJGdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 02:33:32 -0400
+Received: from lo.gmane.org ([80.91.229.12]:39832 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751260Ab0DJGck (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 02:32:40 -0400
-Received: (qmail 15369 invoked by uid 107); 10 Apr 2010 06:32:39 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 10 Apr 2010 02:32:39 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Apr 2010 02:32:15 -0400
-Content-Disposition: inline
-In-Reply-To: <20100410061224.GA18715@progeny.tock>
+	id S1751260Ab0DJGdb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 02:33:31 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1O0UG2-0007cV-BW
+	for git@vger.kernel.org; Sat, 10 Apr 2010 08:33:30 +0200
+Received: from 195.218.191.171 ([195.218.191.171])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 10 Apr 2010 08:33:30 +0200
+Received: from vitaly.berov by 195.218.191.171 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 10 Apr 2010 08:33:30 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 195.218.191.171
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9pre) Gecko/20100217 Shredder/3.0.3pre
+In-Reply-To: <alpine.LFD.2.00.1004091525480.7232@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144519>
 
-On Sat, Apr 10, 2010 at 01:12:24AM -0500, Jonathan Nieder wrote:
+On 04/09/2010 11:30 PM, Nicolas Pitre wrote:
+> On Fri, 9 Apr 2010, Vitaly Berov wrote:
+>
+>> Hi,
+>>
+>> On 04/07/2010 06:55 PM, Nicolas Pitre wrote:
+>>>
+>>> Then playing with core.deltaBaseCacheLimit instead would be quite
+>>> interesting.
+>> It's difficult to play with parameters because only receiving objects phase
+>> takes 1.5-2 hours.
+>
+> Huh...  I guess that's over 100Mbps ethernet?
+>
+> 57GB / 1.5h ->  approx 10MB/s
 
-> Jeff King wrote:
->=20
-> > You do "git clean -ndX" to see
-> > _everything_ that is untracked, and "git clean -nd" to see things t=
-hat
-> > are untracked but not ignored.
->=20
-> No, the capital X tells clean to only list excluded files.  The
-> standard use is as a poor man=E2=80=99s =E2=80=9Cmake maintainer-clea=
-n=E2=80=9D, leaving
-> unrelated files alone.
+Yes
 
-Ah, I read it as "-x" (probably because I had never heard of "-X"
-either...).
-
-So yes, it would do the right thing. I still think a --show-ignored
-option to git-status would probably be better (in addition to being
-sanctioned plumbing, it means we only have to traverse the tree once
-for Eric's case, instead of twice).
-
-> I only learned about it just now.  I=E2=80=99m glad I did (I often us=
-e the
-> lowercase version for this because I just didn=E2=80=99t know about -=
-X), but
-> as you mentioned, it is not so applicable here because not plumbing.
-
-The "-X" mode seems much safer to me, as you are less likely to blow
-away things you actually wanted to keep while cleaning the tree of
-crufty build products. It seems like it should have been the
-easier-to-type "-x", but it is far too late for such bikeshedding at
-this point.
-
-Thanks for the pointer.
-
--Peff
+Vitaly
