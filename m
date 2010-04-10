@@ -1,79 +1,81 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Git and Linux tarball size evolution
-Date: Sat, 10 Apr 2010 13:31:48 +0200
-Message-ID: <h2u81b0412b1004100431o8c543d4di7b6489211d053c98@mail.gmail.com>
-References: <r2l1454bf6f1004090933g4e58277dh51c731ca6b097a45@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Victor Grishchenko <victor.grishchenko@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 10 13:32:04 2010
+From: Bo Yang <struggleyb.nku@gmail.com>
+Subject: [PATCH] Warn the users when more than 3 '-C' given.
+Date: Sat, 10 Apr 2010 19:51:48 +0800
+Message-ID: <1270900308-20147-1-git-send-email-struggleyb.nku@gmail.com>
+Cc: gitster@pobox.com, trast@student.ethz.ch, dirson@bertin.fr
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 10 13:52:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0Yuw-0001j3-Fd
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 13:32:02 +0200
+	id 1O0ZEa-00029n-7n
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 13:52:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751873Ab0DJLbx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 07:31:53 -0400
-Received: from mail-yx0-f171.google.com ([209.85.210.171]:59304 "EHLO
-	mail-yx0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751816Ab0DJLbw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 07:31:52 -0400
-Received: by yxe1 with SMTP id 1so1757819yxe.33
-        for <git@vger.kernel.org>; Sat, 10 Apr 2010 04:31:49 -0700 (PDT)
+	id S1751894Ab0DJLv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 07:51:59 -0400
+Received: from mail-qy0-f179.google.com ([209.85.221.179]:46971 "EHLO
+	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751749Ab0DJLv7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 07:51:59 -0400
+Received: by qyk9 with SMTP id 9so2308798qyk.1
+        for <git@vger.kernel.org>; Sat, 10 Apr 2010 04:51:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type;
-        bh=nNSiOVgCdHamzVQA5bvBSqTY+c1brZDDhU/8tGYNZZk=;
-        b=JTVp2SunQfS4HgyZQcxTAdIlGInuNhcj6CwIZIpLdSHITmZwEbSXYSMSw2j8f+MRFC
-         P+D/WjcTo8Gh3ncfMALoHE3eLwBuLmbX9+ybynLEQORqo1VR4HZrurVIett0PUFftMIc
-         VL1h3XGnV13u2F+H8YHM1TTMEMSAvoY6uCQb4=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=LfrLaGLvJ7j9gyHK3aydOBDNhc22b9w/3XAAbXIZUjs=;
+        b=ZnoU1N6xjmHydvhbPFJTeoVK0QJjjU0u45XyS3T7qUcLas4Cy6BgK9ObxhYU2dplSt
+         DrmqQWvivAlE4Wq63NziiXnGhAgYCGyx1YHlKsR8/LoX2fy0Pjejrqed/feODyYLr5AE
+         8Fl6uOJ8RljAYomof6IYTVetQ0VWlJ5bsL228=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=qLlq+fCfRYjxYzDVfaOKMqsHvGjgEsrGwz/OoVvODwOBzxvDHNJ7IYEVTdWWUuksg4
-         unk/BjxRA9zEDYsYB7ArmmXleJJh14yRKqRRZ9B46JA3ZHVqAMG3YE2w6Ws88uJYu6Me
-         1GV2MfUXCuAfA1NTsy7LSOij8LTw2eBTt5CeE=
-Received: by 10.100.212.9 with HTTP; Sat, 10 Apr 2010 04:31:48 -0700 (PDT)
-In-Reply-To: <r2l1454bf6f1004090933g4e58277dh51c731ca6b097a45@mail.gmail.com>
-Received: by 10.101.197.32 with SMTP id z32mr1948942anp.201.1270899108597; 
-	Sat, 10 Apr 2010 04:31:48 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ubM39D9ZyZvvhOxbvrU+ut3bvXjDc10gUQDKY8H1xi2t/bIZ39VmVglyGP2IuWkyTc
+         7TO8jkQ1Q6BHcCaUAR7pEfuuPr6kwBDrlK3iTr52uPIG4Ji0YkFlSDsfg8RQ89yky+jy
+         IqhJLjccyJPxgdtG/KbEm+bJyMNF2Gg3u1y2A=
+Received: by 10.229.212.4 with SMTP id gq4mr754358qcb.62.1270900317957;
+        Sat, 10 Apr 2010 04:51:57 -0700 (PDT)
+Received: from localhost.localdomain ([117.15.72.219])
+        by mx.google.com with ESMTPS id f5sm2988168qcg.8.2010.04.10.04.51.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 10 Apr 2010 04:51:57 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.2.273.gc2413.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144541>
 
-On Fri, Apr 9, 2010 at 18:33, Victor Grishchenko
-<victor.grishchenko@gmail.com> wrote:
-> http://bouillon.math.usu.ru/files/linux-tarball-evol.png
->
-> I plotted sizes of official linux kernel tarballs found at
-> ftp://ftp.kernel.org against their dates. (Yep, the methodology is
-> extremely dirty.)
+Output a warning message to users when there are more than
+3 '-C' options given. And ignore the numeric argument value
+provided by the additional '-C' options.
 
-Could you try using the sizes of *unpacked* tarballs?
-gzip/bzip2 will offset the real growth a bit (maybe even a big bit).
+Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
+---
+ builtin/blame.c |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
 
-> It is clear that git has changed the release pattern. But was it the
-> reason why the development (and tarball size) returned to accelerated
-> growth? Another possible interpretation is that 2.5->2.6 stage
-> involved too much of reengineering, so "normal" incremental
-> development slowed down for a while.
-
-There were a lot of cleaning up in 2.5/2.6.
-
-> Do git developers have any opinion on that?
-
-The was Bitkeeper before Git, but also the development process
-has changed, with Linus becoming less of nexus of it. He does
-more merges than ever now, with a large part of integration and
-testing done by subsystem maintainers and people like Andrew
-Morton.
-Besides, you cannot ignore the developments outside of Linux
-world, which percipitate into kernel (things like new architectures).
+diff --git a/builtin/blame.c b/builtin/blame.c
+index fc15863..e8ed547 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2165,6 +2165,15 @@ static int blame_copy_callback(const struct option *option, const char *arg, int
+ 	int *opt = option->value;
+ 
+ 	/*
++	 * Warn the users when more than 3 '-C' options are given and
++	 * ignore the corresponding numeric argument of it.
++	 */
++	if (*opt & PICKAXE_BLAME_COPY_HARDEST) {
++		warning("The additional '-C' above 3 is not supported.");
++		return 0;
++	}
++
++	/*
+ 	 * -C enables copy from removed files;
+ 	 * -C -C enables copy from existing files, but only
+ 	 *       when blaming a new file;
+-- 
+1.7.0.2.273.gc2413.dirty
