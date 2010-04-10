@@ -1,73 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Warn the users when more than 3 '-C' given.
-Date: Sat, 10 Apr 2010 12:12:58 -0700
-Message-ID: <7vochrw285.fsf@alter.siamese.dyndns.org>
-References: <1270900308-20147-1-git-send-email-struggleyb.nku@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 0/5] "status --ignored"
+Date: Sat, 10 Apr 2010 12:20:42 -0700 (PDT)
+Message-ID: <m3fx33glob.fsf@localhost.localdomain>
+References: <20100410040959.GA11977@coredump.intra.peff.net>
+	<1270885256-31589-1-git-send-email-gitster@pobox.com>
+	<20100410074430.GA12567@coredump.intra.peff.net>
+	<7vd3y7ycgu.fsf@alter.siamese.dyndns.org>
+	<20100410084007.GA16843@coredump.intra.peff.net>
+	<7v633zxiw4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, trast@student.ethz.ch,
-	dirson@bertin.fr
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 10 21:13:19 2010
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Eric Raymond <esr@snark.thyrsus.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 10 21:20:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0g7L-00079G-9M
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 21:13:19 +0200
+	id 1O0gEd-0001Fs-MB
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 21:20:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752215Ab0DJTNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 15:13:12 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50858 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752038Ab0DJTNK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 15:13:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 186F2A9D0B;
-	Sat, 10 Apr 2010 15:13:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uSKpQNBRKJckHHUOyT+xIMtgpXg=; b=LTXugG
-	9QCK8WNcNDG08PE/rHmAHROEGLDyRWmpWO1oGCEaQMIbbBAbblqx3Smr6M3VpmE0
-	u8kZD6OAB0NcMj1GKNR585yrvylEy3d88e/ndAsCq/5foU5rzDABlpT3sHIliXQj
-	62foEItfkkQgFjAJBMvK1cK8bRz2HEDIXUPvo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LgJ+Omr1069Modrnj71QMdTuUMu91RMw
-	xddK5AGU2xm485C77OIVpMszwVJQNQ5bEclVFKTqJS0q1xn8xm4PMBs9iM8DEKMZ
-	jNnmBP3YqvSAtxfGVjPMeKDcBUpOPTtc/A69nPrdHZ1ZFPri1mJ37GhXrRrIdWdr
-	lHTh6iXiNgo=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C99E9A9D03;
-	Sat, 10 Apr 2010 15:13:05 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0175DA9CFF; Sat, 10 Apr
- 2010 15:12:59 -0400 (EDT)
-In-Reply-To: <1270900308-20147-1-git-send-email-struggleyb.nku@gmail.com> (Bo
- Yang's message of "Sat\, 10 Apr 2010 19\:51\:48 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1788B24E-44D5-11DF-8D38-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751177Ab0DJTUp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 15:20:45 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:47104 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750829Ab0DJTUo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 15:20:44 -0400
+Received: by mail-bw0-f219.google.com with SMTP id 19so26194bwz.21
+        for <git@vger.kernel.org>; Sat, 10 Apr 2010 12:20:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=Vf7YF1NQD4hIPtg4Y2BQUZHqBh6bxKUTbP9oHQbXoPs=;
+        b=MZH9f0FiCKVwbnVOSHrMolmZQ4vXeIFoXJ5ysyeg5WRvLeyGZKvyo4cPhRXd94oUFM
+         hHdPQAnbOCCPFwmcd2p1r10GC1B0y+anIVJIq71OTiiQ7TEfnY2LA1Q08a28r8pvqOmA
+         Wh942oyTAAUQlsxSfRtIJoTdT6paFaKjk0YU8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=j5z5SEM2GiedNTmpSUHvVMudLaolkrmUa98eV9cj9S8LOdlm+ryVNvrtz8pDRDfEZq
+         OLjoggZujMtGgWGsOTp2JOLuVh/DwzpZSkS36k5gCIcHZohl/pJVjWxqaennL7U7pyW8
+         vilxobKrkgc4L/KbnxTBC9D9O4CBciCaHLZBw=
+Received: by 10.204.80.99 with SMTP id s35mr1914962bkk.183.1270927242648;
+        Sat, 10 Apr 2010 12:20:42 -0700 (PDT)
+Received: from localhost.localdomain (abvp94.neoplus.adsl.tpnet.pl [83.8.213.94])
+        by mx.google.com with ESMTPS id a11sm21414198bkc.21.2010.04.10.12.20.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 10 Apr 2010 12:20:42 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o3AJJxdG023985;
+	Sat, 10 Apr 2010 21:20:09 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o3AJJWWL023981;
+	Sat, 10 Apr 2010 21:19:32 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7v633zxiw4.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144580>
 
-Bo Yang <struggleyb.nku@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Output a warning message to users when there are more than
-> 3 '-C' options given. And ignore the numeric argument value
-> provided by the additional '-C' options.
+> Jeff King <peff@peff.net> writes:
+> 
+> > ... But finding every file means
+> > we have to traverse areas that git otherwise wouldn't look at, which
+> > might mean going to disk to pull in all of the "foo/" directory
+> > structure (which is less likely to be cached, since the rest of git
+> > isn't touching it), even though it may not even be of interest to us.
+> 
+> Yes, that is why it is adequate for us use COLLECT_IGNORED in "git add"
+> and give "foo/ is outside---you as an intelligent human should be able to
+> infer that your foo/bar is also" without double traversal.
+> 
+> Eric's tool might want the same abbreviated information if it is just
+> relaying our output to an intelligent human.  Or it might want to get all
+> paths if it wants to operate on them itself.  Knowing VC I chose to
+> illustrate how to do the latter, but in the real implementation, we may
+> want --show-ignored=normal vs --show-ignored=expanded to support both
+> uses.
 
-How were you bitten by the lack of this warning?  You gave four or five to
-see how output would change, spent sleepless nights but couldn't figure
-out what the differences between third and fourth levels are, and wasted
-too much time?
+Or rather -i / --ignored-files[=(no|normal|all)], default to 'normal' 
+in the '--ignored-files' form (without optional <mode>), similarly
+to currently existing -u / --untracked-files option to git-status.
 
-IOW, what does this fix?
-
-I personally do not see much value in this patch.  It would be just a
-hindrance to remember to remove this hunk when somebody improves the
-algorithm to add fourth level of detail to the inspection logic.
+Let's not introduce yet another CLI inconsistency^TM in Git... ;-)
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
