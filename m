@@ -1,121 +1,140 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Why not show ORIG_HEAD in git-log --decorate?
-Date: Fri, 9 Apr 2010 21:29:03 -0400
-Message-ID: <20100410012903.GA32428@coredump.intra.peff.net>
-References: <s2zea182b21004090907i9af49416za4fdb4650af5ae29@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Yury Polyanskiy <polyanskiy@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 10 03:29:38 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH] fetch/push: fix usage strings
+Date: Sat, 10 Apr 2010 10:50:19 +0800
+Message-ID: <1270867819-5224-1-git-send-email-rctay89@gmail.com>
+Cc: "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 10 04:50:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0PVs-0003TB-Uv
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 03:29:33 +0200
+	id 1O0QmM-0007OT-Nq
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 04:50:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753839Ab0DJB31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Apr 2010 21:29:27 -0400
-Received: from peff.net ([208.65.91.99]:55173 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753111Ab0DJB31 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Apr 2010 21:29:27 -0400
-Received: (qmail 12754 invoked by uid 107); 10 Apr 2010 01:29:27 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 09 Apr 2010 21:29:27 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Apr 2010 21:29:03 -0400
-Content-Disposition: inline
-In-Reply-To: <s2zea182b21004090907i9af49416za4fdb4650af5ae29@mail.gmail.com>
+	id S1753111Ab0DJCud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Apr 2010 22:50:33 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:64668 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751487Ab0DJCuc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Apr 2010 22:50:32 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so1432587qwh.37
+        for <git@vger.kernel.org>; Fri, 09 Apr 2010 19:50:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=2+fLg50ndmbE/TelIU6PvNwOuyfPhKVghiKl0PhWpTo=;
+        b=hwg9p+0SSn/pT2xAodPDgjOFNnzfGHP4vf6cArlTj4HkZXzpGyOVGNkFdJo0xNlfcC
+         KR7O+L+nmHKIvSXUsmpS/2163yIEypS7NZAH9ebEHZU22eq41GyGg4NYUjaLp+Rui/pI
+         rnnIfjhKSB7JiGNRz3XvOu7X59UPDpLYG4/Xs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ip9/IGOI5afshlfCA0Cxf2msJ9QdYAioR8sJqmeoI/HD0kpvntLhhaJCsx8HmpE/l7
+         0O77EIoli3rsbrxpkAKjG75avZNW7V0C1CWs/OmJd0Y4eMilq7uxYt9wniD3s3khpOXr
+         CW1YeTJZwQ9cs5suDwzNTzXN2auI12hWgbZps=
+Received: by 10.229.191.18 with SMTP id dk18mr1365902qcb.9.1270867831631;
+        Fri, 09 Apr 2010 19:50:31 -0700 (PDT)
+Received: from localhost.localdomain (cm46.zeta153.maxonline.com.sg [116.87.153.46])
+        by mx.google.com with ESMTPS id v26sm2655508qce.1.2010.04.09.19.50.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 09 Apr 2010 19:50:30 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.rc0.240.gba75f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144496>
 
-On Fri, Apr 09, 2010 at 12:07:00PM -0400, Yury Polyanskiy wrote:
+ - use "<options>" instead of just "options".
+ - use "[<repository> [<refspec>...]]" to indicate that <repository> and
+   <refspec> are optional, and that <refspec> cannot be specified
+   without specifying <repository>.
 
-> It would be very convenient if after git-pull I could see the new
-> merged-in commits in the git-log. The simplest solution for this is to
-> simply mark ORIG_HEAD in the output of git-log --decorate (and ideally
-> also in gitk).
+Note that when called without specifying <repository> (eg. "git fetch
+-f"), it is accurate to say that the "git fetch [<options>]
+[<repository> ...]" case takes precedence over "git fetch [<options>]
+<group>".
 
-I think most people do something like:
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
 
-  gitk HEAD^..ORIG_HEAD
+  Related to, but does not depend on, the recent ls-remote patch.
 
-To see everything in ORIG_HEAD that isn't in HEAD^ (the first parent of
-HEAD, or what you had just before the pull).
+ Documentation/git-fetch.txt |    8 ++++----
+ Documentation/git-push.txt  |    2 +-
+ builtin/fetch.c             |    8 ++++----
+ builtin/push.c              |    2 +-
+ 4 files changed, 10 insertions(+), 10 deletions(-)
 
-> Just thought to throw in this idea to developers. Perhaps it is not
-> that hard to implement.
+diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+index 948ea26..400fe7f 100644
+--- a/Documentation/git-fetch.txt
++++ b/Documentation/git-fetch.txt
+@@ -8,13 +8,13 @@ git-fetch - Download objects and refs from another repository
 
-Marking ORIG_HEAD in git-log is pretty straightforward. If we wanted to
-do that, probably MERGE_HEAD and FETCH_HEAD should be marked, too.
-I don't really have an opinion, as I don't generally use "git log
---decorate", but the patch for git-log would look something like what is
-below (I am not planning on taking it further, but if somebody wants to
-think more about the issues, they are welcome to pick it up and work on
-it).
+ SYNOPSIS
+ --------
+-'git fetch' <options> <repository> <refspec>...
++'git fetch' [<options>] [<repository> [<refspec>...]]
 
-gitk would need a separate patch, as it uses a separate mechanism.
+-'git fetch' <options> <group>
++'git fetch' [<options>] <group>
 
-diff --git a/log-tree.c b/log-tree.c
-index d3ae969..e2034c4 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -43,7 +43,7 @@ void load_ref_decorations(int flags)
- 	if (!loaded) {
- 		loaded = 1;
- 		for_each_ref(add_ref_decoration, &flags);
--		head_ref(add_ref_decoration, &flags);
-+		for_each_metaref(add_ref_decoration, &flags);
- 	}
- }
- 
-diff --git a/refs.c b/refs.c
-index d3db15a..eef7e13 100644
---- a/refs.c
-+++ b/refs.c
-@@ -663,6 +663,28 @@ int head_ref(each_ref_fn fn, void *cb_data)
- 	return 0;
- }
- 
-+int for_each_metaref(each_ref_fn fn, void *cb_data)
-+{
-+	static const char *meta_refs[] = {
-+		"HEAD",
-+		"ORIG_HEAD",
-+		"FETCH_HEAD",
-+		"MERGE_HEAD",
-+	};
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(meta_refs); i++) {
-+		unsigned char sha1[20];
-+		int flag;
-+		if (resolve_ref(meta_refs[i], sha1, 1, &flag)) {
-+			int ret = fn(meta_refs[i], sha1, flag, cb_data);
-+			if (ret)
-+				return ret;
-+		}
-+	}
-+	return 0;
-+}
-+
- int for_each_ref(each_ref_fn fn, void *cb_data)
- {
- 	return do_for_each_ref("refs/", fn, 0, 0, cb_data);
-diff --git a/refs.h b/refs.h
-index 4a18b08..7e72c4d 100644
---- a/refs.h
-+++ b/refs.h
-@@ -19,6 +19,7 @@ struct ref_lock {
-  */
- typedef int each_ref_fn(const char *refname, const unsigned char *sha1, int flags, void *cb_data);
- extern int head_ref(each_ref_fn, void *);
-+extern int for_each_metaref(each_ref_fn, void *);
- extern int for_each_ref(each_ref_fn, void *);
- extern int for_each_ref_in(const char *, each_ref_fn, void *);
- extern int for_each_tag_ref(each_ref_fn, void *);
+-'git fetch' --multiple <options> [<repository> | <group>]...
++'git fetch' --multiple [<options>] [<repository> | <group>]...
+
+-'git fetch' --all <options>
++'git fetch' --all [<options>]
+
+
+ DESCRIPTION
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 59dc8b1..4857024 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git push' [--all | --mirror | --tags] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
+ 	   [--repo=<repository>] [-f | --force] [-v | --verbose] [-u | --set-upstream]
+-	   [<repository> <refspec>...]
++	   [<repository> [<refspec>...]]
+
+ DESCRIPTION
+ -----------
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 957be9f..8470850 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -14,10 +14,10 @@
+ #include "transport.h"
+
+ static const char * const builtin_fetch_usage[] = {
+-	"git fetch [options] [<repository> <refspec>...]",
+-	"git fetch [options] <group>",
+-	"git fetch --multiple [options] [<repository> | <group>]...",
+-	"git fetch --all [options]",
++	"git fetch [<options>] [<repository> [<refspec>...]]",
++	"git fetch [<options>] <group>",
++	"git fetch --multiple [<options>] [<repository> | <group>]...",
++	"git fetch --all [<options>]",
+ 	NULL
+ };
+
+diff --git a/builtin/push.c b/builtin/push.c
+index 62957ed..f4358b9 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -10,7 +10,7 @@
+ #include "parse-options.h"
+
+ static const char * const push_usage[] = {
+-	"git push [<options>] [<repository> <refspec>...]",
++	"git push [<options>] [<repository> [<refspec>...]]",
+ 	NULL,
+ };
+
+--
+1.6.6.1368.g82eeb
