@@ -1,73 +1,64 @@
-From: Vitaly Berov <vitaly.berov@gmail.com>
-Subject: Re: git clone: very long "resolving deltas" phase
-Date: Sat, 10 Apr 2010 12:05:54 +0400
-Message-ID: <hppbhu$bc7$1@dough.gmane.org>
-References: <loom.20100406T161552-321@post.gmane.org>	<alpine.LFD.2.00.1004061709360.7232@xanadu.home>	<4BBC1ED3.6020008@gmail.com>	<alpine.LFD.2.00.1004070842580.7232@xanadu.home>	<4BBECE44.4040608@gmail.com> <vpqr5mp6o1q.fsf@bauges.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/5] "status --ignored"
+Date: Sat, 10 Apr 2010 04:40:07 -0400
+Message-ID: <20100410084007.GA16843@coredump.intra.peff.net>
+References: <20100410040959.GA11977@coredump.intra.peff.net>
+ <1270885256-31589-1-git-send-email-gitster@pobox.com>
+ <20100410074430.GA12567@coredump.intra.peff.net>
+ <7vd3y7ycgu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 10 10:06:43 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Eric Raymond <esr@snark.thyrsus.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 10 10:40:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0ViC-0001O6-Ul
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 10:06:41 +0200
+	id 1O0WF5-0004Le-6n
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 10:40:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751108Ab0DJIGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Apr 2010 04:06:37 -0400
-Received: from lo.gmane.org ([80.91.229.12]:35244 "EHLO lo.gmane.org"
+	id S1751284Ab0DJIkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 04:40:33 -0400
+Received: from peff.net ([208.65.91.99]:56921 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751026Ab0DJIGd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 04:06:33 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1O0Vi2-0001Jz-4w
-	for git@vger.kernel.org; Sat, 10 Apr 2010 10:06:30 +0200
-Received: from 195.218.191.171 ([195.218.191.171])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Apr 2010 10:06:30 +0200
-Received: from vitaly.berov by 195.218.191.171 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Apr 2010 10:06:30 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 195.218.191.171
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9pre) Gecko/20100217 Shredder/3.0.3pre
-In-Reply-To: <vpqr5mp6o1q.fsf@bauges.imag.fr>
+	id S1750945Ab0DJIkc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 04:40:32 -0400
+Received: (qmail 17275 invoked by uid 107); 10 Apr 2010 08:40:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 10 Apr 2010 04:40:31 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Apr 2010 04:40:07 -0400
+Content-Disposition: inline
+In-Reply-To: <7vd3y7ycgu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144534>
 
-On 04/09/2010 12:13 PM, Matthieu Moy wrote:
-> Vitaly Berov<vitaly.berov@gmail.com>  writes:
->
->> Objects amount: 3997548.
->> Size of the repository: ~57Gb.
-> [...]
->> By the way, we have a large amount of binary files in our rep.
->
-> This is clearly not the kind of repositories Git is good at.
-Hmm.. I'm looking for a good repository because I'm tired of subversion, 
-Perforce isn't an option to (very expensive and even more 
-uncomfortable). It seems like there only Git/Mercurial are good options. 
-Can you recommend some other scms?
+On Sat, Apr 10, 2010 at 12:48:49AM -0700, Junio C Hamano wrote:
 
-> I encourage you to continue this discussion, and try to find a way to
-> get it working, but the standard approach (probably a "my 2 cents"
-> kind of advices, but ...) would be:
->
-> * Split your repo into smaller ones (submodules ...)
->
-> * Avoid versionning binary files
+> Jeff King <peff@peff.net> writes:
+> 
+> > +	dir.flags |= DIR_COLLECT_IGNORED;
+> 
+> I thought about using collect-ignored so that fill_directory() does not
+> have to be run twice, but IIRC it can short-circuit an entire directory
+> using the "simplify" logic (as it was designed to be used for "git add"),
+> no?
 
-I can't get rid of binary files because they are the "sources" of our 
-artists work (the develop a game).
-Splitting a repo can be an option, but it's very inconvenient for us.
+Hmm.  I didn't consider that. It may be sufficient to say "foo/ is
+ignored" and let callers decide for themselves that "foo/bar" is
+ignored, too (unless, of course, it appears as tracked earlier in the
+list).
 
-Vitaly
+I just worry that your version will perform less well. I'm not that
+worried about the double traversal (on any reasonable system everything
+will be cached after the first traversal). But finding every file means
+we have to traverse areas that git otherwise wouldn't look at, which
+might mean going to disk to pull in all of the "foo/" directory
+structure (which is less likely to be cached, since the rest of git
+isn't touching it), even though it may not even be of interest to us.
+
+-Peff
