@@ -1,66 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Why not show ORIG_HEAD in git-log --decorate?
-Date: Sat, 10 Apr 2010 05:04:41 -0400
-Message-ID: <20100410090441.GA18772@coredump.intra.peff.net>
-References: <s2zea182b21004090907i9af49416za4fdb4650af5ae29@mail.gmail.com>
- <20100410012903.GA32428@coredump.intra.peff.net>
- <20100410090042.GA13109@atjola.homenet>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Yury Polyanskiy <polyanskiy@gmail.com>, git@vger.kernel.org
-To: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Apr 10 11:05:13 2010
+From: Bo Yang <struggleyb.nku@gmail.com>
+Subject: [PATCH 0/2 v2] Document update for 'git-blame' '-M' and '-C' option
+Date: Sat, 10 Apr 2010 18:15:28 +0800
+Message-ID: <1270894530-6486-1-git-send-email-struggleyb.nku@gmail.com>
+Cc: gitster@pobox.com, trast@student.ethz.ch
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 10 12:16:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0Wcq-0004UY-0T
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 11:05:12 +0200
+	id 1O0XjM-0001PU-OP
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Apr 2010 12:16:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751653Ab0DJJFH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Apr 2010 05:05:07 -0400
-Received: from peff.net ([208.65.91.99]:56707 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751122Ab0DJJFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Apr 2010 05:05:06 -0400
-Received: (qmail 17417 invoked by uid 107); 10 Apr 2010 09:05:05 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 10 Apr 2010 05:05:05 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Apr 2010 05:04:41 -0400
-Content-Disposition: inline
-In-Reply-To: <20100410090042.GA13109@atjola.homenet>
+	id S1751476Ab0DJKPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Apr 2010 06:15:42 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:48933 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751248Ab0DJKPl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Apr 2010 06:15:41 -0400
+Received: by vws18 with SMTP id 18so416067vws.19
+        for <git@vger.kernel.org>; Sat, 10 Apr 2010 03:15:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=AJU8Mx24lajMprxW/5tEdg9fdbhHsvL3CDqj8J1SwxA=;
+        b=s8pkGhNFbn0EWSQv/Gwv3FcarHO40kmqM5bE9lYBlS1PwWSu+PU0UITanbPBaa5BWK
+         8s23fiJfqDHxgh9I58PQttOZQESSwr6YaE2KioKjn4ibzo4vu8buzxlIecY8+h8IAhb2
+         6sK5COH0FLC9/sWdm+UnE9jnVP0K8GgmtDiZk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=bGCUgpUsdgTq7CXyJA6e9jQTxXXEhFH/HeXfjK5MipYW4cCg/tFrWcHUqG+FlWmdnL
+         M6DtWaY5lJ6puU647OcTaAhuFx2QYf+iA2E1ihe75kPzd3FLLm7qR/CEFVjqcWbc5RGn
+         M/UxMYkhAm/7hbd5U+WMPkZiMY73Lp32q+2Xk=
+Received: by 10.220.126.197 with SMTP id d5mr697447vcs.121.1270894540518;
+        Sat, 10 Apr 2010 03:15:40 -0700 (PDT)
+Received: from localhost.localdomain ([117.15.72.219])
+        by mx.google.com with ESMTPS id 25sm46893343vws.1.2010.04.10.03.15.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 10 Apr 2010 03:15:39 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.2.273.gc2413.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144537>
 
-On Sat, Apr 10, 2010 at 11:00:42AM +0200, Bj=C3=B6rn Steinbrink wrote:
+The second version of the patches.
 
-> > I think most people do something like:
-> >=20
-> >   gitk HEAD^..ORIG_HEAD
-> >=20
-> > To see everything in ORIG_HEAD that isn't in HEAD^ (the first paren=
-t of
-> > HEAD, or what you had just before the pull).
->=20
-> I guess you meant to say "gitk ORIG_HEAD.." there. ORIG_HEAD is alrea=
-dy
-> the pre-pull state. So if the merge actually created a merge commit,
-> then HEAD^ =3D=3D ORIG_HEAD, and if it was a fast-forward, then ORIG_=
-HEAD is
-> either the same as HEAD^ or one of its ancestors. In either case,
-> HEAD^..ORIG_HEAD will be empty.
+Bo Yang (2):
+  Add a basic idea section for git-blame.
+  Change the description of '-M' and '-C' option.
 
-Urgh, yes. Sorry, I was totally not thinking when I wrote that.
-
-I never use ORIG_HEAD, as I always do a fetch + inspect + merge, rather
-than pull. But I can't even figure out what thought process led me to
-write what I did above.
-
-Thanks for the correction.
-
--Peff
+ Documentation/blame-options.txt |   46 +++++++++++++++++++++++---------------
+ Documentation/git-blame.txt     |   35 ++++++++++++++++++++++++++++-
+ 2 files changed, 62 insertions(+), 19 deletions(-)
