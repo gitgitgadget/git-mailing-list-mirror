@@ -1,79 +1,65 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Status of all files
-Date: Sun, 11 Apr 2010 06:25:35 -0400
-Message-ID: <20100411102534.GC20484@coredump.intra.peff.net>
-References: <20100409040434.8602620CBBC@snark.thyrsus.com>
- <j2z8c9a061004082110se894f925i80c1389cd4e247f@mail.gmail.com>
- <20100409113248.GB27353@thyrsus.com>
- <m3sk74hjkg.fsf@localhost.localdomain>
- <20100409140215.GB27899@thyrsus.com>
- <4BC0F7D1.6000003@gnu.org>
+Subject: Re: [PATCH 0/5] "status --ignored"
+Date: Sun, 11 Apr 2010 06:35:10 -0400
+Message-ID: <20100411103510.GD20484@coredump.intra.peff.net>
+References: <20100410040959.GA11977@coredump.intra.peff.net>
+ <1270885256-31589-1-git-send-email-gitster@pobox.com>
+ <20100410074430.GA12567@coredump.intra.peff.net>
+ <7vd3y7ycgu.fsf@alter.siamese.dyndns.org>
+ <20100410084007.GA16843@coredump.intra.peff.net>
+ <7v633zxiw4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: esr@thyrsus.com, Jakub Narebski <jnareb@gmail.com>,
-	Jacob Helwig <jacob.helwig@gmail.com>, git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Apr 11 12:26:12 2010
+Cc: git@vger.kernel.org, Eric Raymond <esr@snark.thyrsus.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 11 12:35:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0uMj-0000EC-0i
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 12:26:09 +0200
+	id 1O0uWB-0002xp-Av
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 12:35:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751688Ab0DKK0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Apr 2010 06:26:04 -0400
-Received: from peff.net ([208.65.91.99]:40565 "EHLO peff.net"
+	id S1751676Ab0DKKfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Apr 2010 06:35:38 -0400
+Received: from peff.net ([208.65.91.99]:44948 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751538Ab0DKK0B (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Apr 2010 06:26:01 -0400
-Received: (qmail 3102 invoked by uid 107); 11 Apr 2010 10:26:01 -0000
+	id S1751383Ab0DKKfh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Apr 2010 06:35:37 -0400
+Received: (qmail 3262 invoked by uid 107); 11 Apr 2010 10:35:37 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 11 Apr 2010 06:26:01 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 11 Apr 2010 06:25:35 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 11 Apr 2010 06:35:37 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 11 Apr 2010 06:35:10 -0400
 Content-Disposition: inline
-In-Reply-To: <4BC0F7D1.6000003@gnu.org>
+In-Reply-To: <7v633zxiw4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144637>
 
-On Sun, Apr 11, 2010 at 12:12:33AM +0200, Paolo Bonzini wrote:
+On Sat, Apr 10, 2010 at 11:27:39AM -0700, Junio C Hamano wrote:
 
-> >Agreed. But there's no way to tell that this is the case without
-> >doing a pull operation or otherwise querying origin, and I'm
-> >not going to do that.
+> > ... But finding every file means
+> > we have to traverse areas that git otherwise wouldn't look at, which
+> > might mean going to disk to pull in all of the "foo/" directory
+> > structure (which is less likely to be cached, since the rest of git
+> > isn't touching it), even though it may not even be of interest to us.
 > 
-> You can query the origin _as it was on the last fetch_.
-> 
-> If you are on branch X, the logic is as follows:
-> 
-> - Let R be the value of configuration key branch.X.remote,
-> - let M be the value of configuration key branch.X.merge,
-> - for all values S of configuration key remote.R.fetch,
->   - strip an initial +
->   - if S is M:N, return N
->   - if S is P/*:Q/* where P is a prefix of M, take M, replace this
->     prefix with Q and return the result
-> 
-> In the most common case you will have:
-> 
-> - X = master
-> - R = origin
-> - M = refs/heads/master
-> - one key S = +refs/heads/*:refs/remotes/origin/*
-> 
-> so the prefix "refs/heads/" is replaced with "refs/remotes/origin/"
-> and the result is refs/remotes/origin/master.
+> Yes, that is why it is adequate for us use COLLECT_IGNORED in "git add"
+> and give "foo/ is outside---you as an intelligent human should be able to
+> infer that your foo/bar is also" without double traversal.
 
-BTW, this procedure is complex enough that we have exposed it via a
-plumbing interface:
+It would be adequate here, too, if we want to know whether a specific
+file is ignored. It just takes more work from the caller. But Eric has
+already said he would prefer to just get all files, so let's go with
+what you wrote.
 
-  $ git for-each-ref --format='%(upstream)' refs/heads/master
-  refs/remotes/origin/master
-
-which does all of the correct magic internally.
+If another caller wants a more restricted but efficient interface later,
+we can add it as you suggest (or more likely, they want to check a
+particular _set_ of files, so we don't want to do a full traversal
+anyway. We would want to get their list of candidates and traverse just
+enough of the .gitignore stack to get answers for their set).
 
 -Peff
