@@ -1,126 +1,140 @@
-From: Pete Harlan <pgit@pcharlan.com>
-Subject: Re: [PATCH 1/2 v2] Add a basic idea section for git-blame.
-Date: Sun, 11 Apr 2010 11:13:30 -0700
-Message-ID: <4BC2114A.5080406@pcharlan.com>
-References: <1270894530-6486-1-git-send-email-struggleyb.nku@gmail.com> <1270894530-6486-2-git-send-email-struggleyb.nku@gmail.com> <7veiinw0bw.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 2/3] add a library of code for producing structured
+ output
+Date: Sun, 11 Apr 2010 11:16:18 -0700
+Message-ID: <7vy6gtonwt.fsf@alter.siamese.dyndns.org>
+References: <20100411112928.80010.1786.julian@quantumfyre.co.uk>
+ <20100411113733.80010.3767.julian@quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Bo Yang <struggleyb.nku@gmail.com>, git@vger.kernel.org,
-	trast@student.ethz.ch
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 11 20:14:03 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Eric Raymond <esr@thyrsus.com>
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Sun Apr 11 20:16:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O11fR-0007Pk-15
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 20:13:57 +0200
+	id 1O11hy-0008Kp-Ps
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 20:16:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752556Ab0DKSNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Apr 2010 14:13:39 -0400
-Received: from caibbdcaaaaf.dreamhost.com ([208.113.200.5]:37199 "EHLO
-	swarthymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752456Ab0DKSNi (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Apr 2010 14:13:38 -0400
-Received: from [192.168.0.119] (185.132-78-65.ftth.swbr.surewest.net [65.78.132.185])
-	by swarthymail-a1.g.dreamhost.com (Postfix) with ESMTP id 5A0248F227;
-	Sun, 11 Apr 2010 11:13:36 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100404 Thunderbird/3.0.4
-In-Reply-To: <7veiinw0bw.fsf@alter.siamese.dyndns.org>
+	id S1752639Ab0DKSQa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Apr 2010 14:16:30 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54265 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752456Ab0DKSQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Apr 2010 14:16:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CEB93AAA3C;
+	Sun, 11 Apr 2010 14:16:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rw5N5NQJ4a6nmhVnODyyPQS4imc=; b=sWYaxY
+	LjEXhBArj4y3dYlLda1xr2QUL/jVJYhz3VjyYfqBgQ2nlyx53cbXCq9sn+BaY1Jq
+	yqiyLU1i8HUNTCvySCHJxhuezcWMZYrnWTOvToEza7xPGOv7yqtQBAZqeN/NCiCk
+	XlnF6BC9a1uM5blfxT7ogyj2hXQmlrkLcDMlI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Jg0kiGuRMti+Uhy4bAoiaicxYYQ3T4Ur
+	OpsmJp6OJ1GekxqAVKq4nfJryb4R9Sr1OIPglOivuiK/kexRN7GtAyqccAiANBFQ
+	4j6RDWQng+BjDxtBHF+m8cW0xIUrS3pQP6SjU+UdWK5NDZ/N6STf1tING/9Tzg8Z
+	4kfSDJ+sbHk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B6AFAAA3B;
+	Sun, 11 Apr 2010 14:16:23 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C44D5AAA3A; Sun, 11 Apr
+ 2010 14:16:19 -0400 (EDT)
+In-Reply-To: <20100411113733.80010.3767.julian@quantumfyre.co.uk> (Julian
+ Phillips's message of "Sun\, 11 Apr 2010 12\:37\:31 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 56152C2E-4596-11DF-AFCA-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144674>
 
-On 04/10/2010 12:53 PM, Junio C Hamano wrote:
-> Bo Yang <struggleyb.nku@gmail.com> writes:
-> 
->> +With `-M`, this command detects same lines of the current blaming code
->> +inside the current file. And it will shift the blame to the author of
->> +the original lines instead of author of current blaming code. It does
->> +the same for `-C` except that it will search across file boundary and
->> +multiple commits.
-> 
-> I grant you that the understanding what M/C options do by the end users
-> (the target audience of the document) would improve if they understood the
-> above paragraph.  And I know you thought the text leading to the above
-> paragraph (omitted) would help them understand what this paragraph tells
-> them.
-> 
-> But I think we should try to do better.  We can always say "With a
-> technical description of how it works internally, you can understand why
-> these options give you the behaviour you want", but that should be the
-> last resort when we cannot give meaningful description without going into
-> the implementation details.
-> 
-> It may also help git hacker wannabes (not end users) to have more detailed
-> and precise description of how the algorithm works in a separate document
-> in the Documentation/technical/ area, but that is a separate issue.
-> 
-> If the goal is to help the end users use M/C options and understand the
-> output better, can't we take a more direct approach?
-> 
-> It doesn't really matter to them _why_ only B is blamed to the parent in
-> "A B" -> "B A" movement without -M (and your "BASIC IDEA" section is too
-> sketchy for readers to guess why, even if they wanted to learn the
-> implementation detail, which they typically don't).
-> 
-> Things like:
-> 
->     - they can use -M to annotate across block-of-lines swappage within a file;
->     - use of -M adds cost --- it spends extra cycles;
->     - similarly -C annotates across block-of-lines swappage between files;
->     - use -f -C adds larger cost; ...
-> 
-> are the only important things they want to know about, no?
-> 
->  Documentation/blame-options.txt |   19 ++++++++++---------
->  1 files changed, 10 insertions(+), 9 deletions(-)
-> 
-> diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-> index 4833cac..5d5ed37 100644
-> --- a/Documentation/blame-options.txt
-> +++ b/Documentation/blame-options.txt
-> @@ -79,14 +79,15 @@ of lines before or after the line given by <start>.
->  	of the --date option at linkgit:git-log[1].
->  
->  -M|<num>|::
-> -	Detect moving lines in the file as well.  When a commit
-> -	moves a block of lines in a file (e.g. the original file
-> -	has A and then B, and the commit changes it to B and
-> -	then A), the traditional 'blame' algorithm typically blames
-> -	the lines that were moved up (i.e. B) to the parent and
-> -	assigns blame to the lines that were moved down (i.e. A)
-> -	to the child commit.  With this option, both groups of lines
-> -	are blamed on the parent.
-> +	Detect moved or copied lines within a file. When a commit
-> +	moves or copies a block of lines (e.g. the original file
-> +	has A and then B, and the commit changes it to B and then
-> +	A), the traditional 'blame' algorithm notices only the
+Julian Phillips <julian@quantumfyre.co.uk> writes:
 
-There's an extraneous "the" at the end of this line.
+> Add a library that allows commands to produce structured output in any
+> of a range of formats using a single API.
+>
+> The API includes an OPT_OUTPUT and handle_output_arg so that the
+> option handling for different commands will be as similar as possible.
 
-Other than that everything you say here sounds like a good idea to me.
+I was hoping that the existing low-level -z routines (e.g. "diff-* -z")
+follow similar enough patterns to have a corresponding output-z.c and be
+handled inside output.c library.  But that is not a requirement, just
+"would have been nicer if the original were written that way".
 
---Pete
+> diff --git a/output-json.c b/output-json.c
+> new file mode 100644
+> index 0000000..0eb66b2
+> --- /dev/null
+> +++ b/output-json.c
+> @@ -0,0 +1,128 @@
+> +#include "git-compat-util.h"
+> +#include "output.h"
+> +#include "strbuf.h"
+> +
+> +static char *json_quote(char *s)
+> +{
+> +	struct strbuf buf = STRBUF_INIT;
+> +
+> +	while (*s) {
+> +		switch (*s) {
+> +...
+> +		default:
+> +			/* All control characters must be encode, even if they
+> +			 * don't have a specific escape character of their own */
+> +			if (*s < 0x20)
+> +				strbuf_addf(&buf, "\\u%04x", *s);
 
-> +	half of the movement and typically blames the lines that were
-> +	moved up (i.e. B) to the parent and assigns blame to the lines
-> +	that were moved down (i.e. A) to the child commit.  With this
-> +	option, both groups of lines are blamed on the parent by
-> +	running extra passes of inspection.
->  +
->  <num> is optional but it is the lower bound on the number of
->  alphanumeric characters that git must detect as moving
-> @@ -94,7 +95,7 @@ within a file for it to associate those lines with the parent
->  commit.
->  
->  -C|<num>|::
-> -	In addition to `-M`, detect lines copied from other
-> +	In addition to `-M`, detect lines moved or copied from other
->  	files that were modified in the same commit.  This is
->  	useful when you reorganize your program and move code
->  	around across files.  When this option is given twice,
+As you didn't say your "char" is either signed or unsigned upfront, this
+will behave differently when you are fed a UTF-8 string.  If it is signed,
+you will end up showing bytes in a single letter separately at wrong
+codepoint, and if it is unsigned, you will give UTF-8 string unquoted,
+which probably is what you meant to do.
+
+What is your design intention regarding legacy encoding?  This code does
+not yet declare "dear user, if you plan to use json/xml output, your
+repository metadata (notably the pathnames) has to be in UTF-8", as the
+caller _could_ transliterate legacy data before feeding it to output.c
+layer.  An alternative would be for the output.c layer to know about the
+encoding of incoming data and transliterate when the output format
+requires a particular encoding.
+
+> +static void json_obj_item_start(FILE *file, char *name, int first)
+> +{
+> +	char *quoted = json_quote(name);
+> +	if (!first)
+> +		fprintf(file, ",\n");
+> +	fprintf(file, "\"%s\" : ", quoted);
+> +	free(quoted);
+> +}
+> + ...
+> +static void json_str(FILE *file, char *value)
+> +{
+> +	char *quoted = json_quote(value);
+> +	fprintf(file, "\"%s\"", quoted);
+> +	free(quoted);
+> +}
+
+An obvious improvement would be to make json_quote() to take FILE * to
+avoid wasteful allocation and copy, as it doesn't do anything but addstr
+and addch, and all of its callers don't do anything but spitting the
+result out to FILE *.
+
+> diff --git a/output-xml.c b/output-xml.c
+> new file mode 100644
+> index 0000000..50dd7d6
+> --- /dev/null
+> +++ b/output-xml.c
+> @@ -0,0 +1,68 @@
+> +#include "git-compat-util.h"
+> +#include "output.h"
+
+This seems to totally lack quoting of any metacharacters for "name" and
+string "value".
