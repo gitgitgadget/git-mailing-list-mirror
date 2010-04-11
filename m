@@ -1,119 +1,89 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] Take it easy on unallowed access to non-existent repository
-Date: Sun, 11 Apr 2010 13:01:22 +0200
-Message-ID: <1270983682-12215-1-git-send-email-pclouds@gmail.com>
-References: <20100409001322.GB23501@coredump.intra.peff.net>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: More git status --porcelain lossage
+Date: Sun, 11 Apr 2010 11:04:06 +0000 (UTC)
+Message-ID: <20100413050247.GA31108@gmail.com>
+References: <20100409190601.47B37475FEF@snark.thyrsus.com> <l2k5f14cf5e1004101148h5cf8dc4bm1836cf1c5fc8abfb@mail.gmail.com> <m3k4sfgmjc.fsf@localhost.localdomain> <20100410194154.GB28768@thyrsus.com> <s2i46a038f91004101331g1cdca78cya3e125275446a0a9@mail.gmail.com> <4BC0FB94.6050409@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Niedier <jrnieder@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 11 13:01:27 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Apr 11 13:04:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0uur-0001Hg-Ii
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 13:01:25 +0200
+	id 1O0uxQ-00021s-It
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 13:04:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832Ab0DKLBE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Apr 2010 07:01:04 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:62196 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751801Ab0DKLBB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Apr 2010 07:01:01 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so826119fgg.1
-        for <git@vger.kernel.org>; Sun, 11 Apr 2010 04:00:59 -0700 (PDT)
+	id S1751844Ab0DKLD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Apr 2010 07:03:59 -0400
+Received: from mail-yw0-f194.google.com ([209.85.211.194]:63490 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751801Ab0DKLD6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Apr 2010 07:03:58 -0400
+Received: by ywh32 with SMTP id 32so1089856ywh.33
+        for <git@vger.kernel.org>; Sun, 11 Apr 2010 04:03:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=s6BumL8mfbHybxBar4TZZkBQbKAnuNSbgMDhPxmcabE=;
-        b=RBwbsxXx3rARCwqQUvuqIdQ/wqWaT6edGNIZtvwpSi3m0vqYcWjzx9wxyQzApL1sh/
-         0ADq1H1eq2KGIAJIQGggMx2YKmnVGetrZ/DI2UgO/9vjT1ueLNfHDBcB5jc93BDMHBIG
-         KtE2bmB9iPidOvatLxJzbUkpzaJZo//xRxFGo=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=DJ96HmxIu99LzmdD9xFSIMTs/GnK4CDSEVqmvWFXOIk=;
+        b=MvV/vPWm/pDUdJTBbLdL8TnSW3Jlul5NhI++Vxl9wZO0/eaI2BBtSiDn1xEBXK3b30
+         hxgXrxHxv4tYEhNUOhqJr0pdy3w1L2U9mAmn3XwhqSEJjOc6/x1DQRWWfNsCnttNjhC1
+         60K7C1rvvrH8CcRJOWvA17s6XsKIBdNrgAG2k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=jbHa3R2xEyzKb3hA1NdrUgbs1KEacVi2y3rwslmTFqoBOiCK7iHik3YaWs26zeRqoS
-         pJefTL58w1uDeFhdWCtUHEECvbPzeORZj45rPSgRhPKuDS/r++CEd5XGEUIFe9nlzYk0
-         u9zLcwphDD7KpBBSrw/zicjzxG9YLiDTcDyA0=
-Received: by 10.223.15.133 with SMTP id k5mr1957330faa.39.1270983659364;
-        Sun, 11 Apr 2010 04:00:59 -0700 (PDT)
-Received: from dektop ([212.247.124.209])
-        by mx.google.com with ESMTPS id k29sm6420934fkk.15.2010.04.11.04.00.57
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=waX3y6HMcipp4MF09beg9lI25gKdsquJ+vL7u7r0ADoR9e0rwi0Gm3qys0ZygyGVsu
+         4+qyVCYEEG/GottVc7g/Jk/+lJSP2nrVLW98obMq4VvSnSji8piStxyUokFysMZRcaIh
+         /K5svGeVl+B87mnuYSKXmtxT71cTg4O8J8rkk=
+Received: by 10.101.141.9 with SMTP id t9mr4203999ann.55.1270983837037;
+        Sun, 11 Apr 2010 04:03:57 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id 23sm2843220iwn.10.2010.04.11.04.03.55
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 11 Apr 2010 04:00:58 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Sun, 11 Apr 2010 13:01:23 +0200
-X-Mailer: git-send-email 1.7.0.rc1.541.g2da82.dirty
-In-Reply-To: <20100409001322.GB23501@coredump.intra.peff.net>
+        Sun, 11 Apr 2010 04:03:56 -0700 (PDT)
+Date: Mon, 12 Apr 2010 22:02:49 -0700
+Content-Disposition: inline
+In-Reply-To: <4BC0FB94.6050409@gnu.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144639>
 
+On Sun, Apr 11, 2010 at 12:28:36AM +0200, Paolo Bonzini wrote:
+> On 04/10/2010 10:31 PM, Martin Langhoff wrote:
+>> On Sat, Apr 10, 2010 at 3:41 PM, Eric Raymond<esr@thyrsus.com>  wrote:
+>>>> I could understand providing JSON format, specified using --json
+>>>> option.
+>>>
+>>> You know, that's actually an interesting idea.  I mentioned it
+>>> previously as the not-XML if we want to build on a metaprotocol;
+>>
+>> One issue is that there's no stream-parser JSON implementations that
+>> I'm aware of.
+>
+> Here is one.  It's ugly as hell, you're warned.  The only missing piece  
+> is making the stack state resizable.
+>
+> Paolo
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- 2010/4/9 Jeff King <peff@peff.net>:
- > Yeah, that sounds reasonable, especially if merging this to 'next' w=
-ould
- > make git unusable. We want to shake out bugs, not punish people runn=
-ing
- > next. :) But I haven't even really looked at the topic in detail yet=
-=2E
+Here's a fairly popular stream parser:
 
- This patch could be squashed into 551a5786 (Guard unallowed access to =
-repository..)
- Still don't know what to do with "git ls-remote". I'm not familiar wit=
-h it.
+http://lloyd.github.com/yajl/
 
- config.c      |    2 +-
- environment.c |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+Yet Another JSON Library. YAJL is a small event-driven
+(SAX-style) JSON parser written in ANSI C, and a small
+validating JSON generator. YAJL is released under the BSD
+license.
 
-diff --git a/config.c b/config.c
-index 9981b09..63702bf 100644
---- a/config.c
-+++ b/config.c
-@@ -738,7 +738,7 @@ int git_config(config_fn_t fn, void *data)
- 	int ret;
-=20
- 	if (startup_info && !startup_info->have_run_setup_gitdir)
--		die("internal error: access to .git/config without repo setup");
-+		warning("Broken repository setup: early access to $GIT_DIR/config");
- 	if (!startup_info || startup_info->have_repository)
- 		repo_config =3D git_pathdup("config");
- 	ret =3D git_config_early(fn, data, repo_config);
-diff --git a/environment.c b/environment.c
-index 28624ad..dbaed04 100644
---- a/environment.c
-+++ b/environment.c
-@@ -99,7 +99,7 @@ void unset_git_env(void)
- static void setup_git_env(void)
- {
- 	if (startup_info && startup_info->have_run_setup_gitdir)
--		die("internal error: setup_git_env can't be called twice");
-+		warning("Broken repository setup: setup_git_env() called twice");
- 	git_dir =3D getenv(GIT_DIR_ENVIRONMENT);
- 	if (!git_dir) {
- 		/*
-@@ -107,7 +107,7 @@ static void setup_git_env(void)
- 		 * or enter_repo, not by this function
- 		 */
- 		if (startup_info)
--			die("internal error: $GIT_DIR is empty");
-+			warning("Broken respository setup: git_dir is empty");
- 		git_dir =3D read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
- 	}
- 	if (!git_dir)
---=20
-1.7.0.rc1.541.g2da82.dirty
+The license is BSD-with-advertising-clause.
+Perhaps the author did not know about modified BSD.
+
+-- 
+		David
