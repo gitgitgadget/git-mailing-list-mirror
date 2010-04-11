@@ -1,77 +1,65 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC/PATCH 2/3] add a library of code for producing structured 
-	output
-Date: Sun, 11 Apr 2010 20:26:00 +0200
-Message-ID: <s2hfabb9a1e1004111126i6822abc1ne0e0e5bad6f4ac7@mail.gmail.com>
-References: <20100411112928.80010.1786.julian@quantumfyre.co.uk> 
-	<20100411113733.80010.3767.julian@quantumfyre.co.uk> <7vy6gtonwt.fsf@alter.siamese.dyndns.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] t3507: Make test executable
+Date: Sun, 11 Apr 2010 11:52:11 -0700
+Message-ID: <4BC21A5B.8020802@gmail.com>
+References: <1270975426-17459-1-git-send-email-bebarino@gmail.com> <m339z1hoyv.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org,
-	Eric Raymond <esr@thyrsus.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 11 20:26:36 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 11 20:52:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O11rg-0003Zi-4M
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 20:26:36 +0200
+	id 1O12Gl-0005p1-KW
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 20:52:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752708Ab0DKS0V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Apr 2010 14:26:21 -0400
-Received: from mail-gx0-f217.google.com ([209.85.217.217]:54624 "EHLO
-	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752456Ab0DKS0V convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Apr 2010 14:26:21 -0400
-Received: by gxk9 with SMTP id 9so2949636gxk.8
-        for <git@vger.kernel.org>; Sun, 11 Apr 2010 11:26:20 -0700 (PDT)
+	id S1752769Ab0DKSwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Apr 2010 14:52:17 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:62693 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752693Ab0DKSwQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Apr 2010 14:52:16 -0400
+Received: by gyg13 with SMTP id 13so2484068gyg.19
+        for <git@vger.kernel.org>; Sun, 11 Apr 2010 11:52:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=P2Y6e2Y4Vq4ELHGXB2RLRXsXruCdGDsXZ6zBgpy0dds=;
-        b=rE0f3ZjqdawUF0YNMZ5u8dtruEtgHmVrpjJ5qK74t8z26iXDtgC/hDs9LxXu/dPoYF
-         VRbxhxpiGirMx8XBUw7DHwFX22NODXI1HNosqOl1QobMtkA1H5dB4YN0VF7y7GfpDPTW
-         wSE1OI0/Lkla2+nFZwUJOtyVRcZW+yqa/omtw=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=dJJeqhBQmQfAQLGKVZ53QewNNwF74Va8swbedJ9aqXk=;
+        b=pV/qpL5JIwNSWmKEw6zGFSxDB54UQjmQ1NppqMHKbN0UypDN105CCk19Iui60WsPNk
+         Y7i76Azk9es/TMZlCnqQW82teWcVKzacT8CjJEXNK8rl6ImasWJfPcq/FWxZYk4e5e8m
+         qE2tMt3R8A7kfnEKM0hiAaDWl8pV4SzXwXUFU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=revan25ISa5O/giP6uLpaRjoI16NmE2EM/N4ZkS4ZPCbKG3IeaUSBSA6ildZRQAa0T
-         FV6ljtUuU/vKfg7rVtg89Hiy4s/fkfbj2TZ6ocPXcNUHYIUlQyTTgnHosUNaBEH/Q5q/
-         HssgZ+FYVpgQ0D4sfL7Ri5CX0d3SVPpHmSR+8=
-Received: by 10.100.206.13 with HTTP; Sun, 11 Apr 2010 11:26:00 -0700 (PDT)
-In-Reply-To: <7vy6gtonwt.fsf@alter.siamese.dyndns.org>
-Received: by 10.101.152.13 with SMTP id e13mr4998363ano.0.1271010380320; Sun, 
-	11 Apr 2010 11:26:20 -0700 (PDT)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=RjAQLhkK2C7iGlfrUpDkpXMG3nwCyF0AS8ZT1XrmFZgh4fL97w+2muvYTHt1HSe02C
+         w8RUc2MOB7LyAQD5+MAFEFf43OYi1jwfrk1uT3p0RhkzHjg63+S1uE+povahB4UYAQMD
+         +p5GCuxJNECUQJmBQ2T2mr3EW0Tvqaxk5Lt28=
+Received: by 10.151.118.9 with SMTP id v9mr2468096ybm.346.1271011934809;
+        Sun, 11 Apr 2010 11:52:14 -0700 (PDT)
+Received: from [192.168.1.5] (user-0c9haca.cable.mindspring.com [24.152.169.138])
+        by mx.google.com with ESMTPS id 4sm910519ywd.58.2010.04.11.11.52.13
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 11 Apr 2010 11:52:14 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7pre) Gecko/20091214 Shredder/3.0.1pre
+In-Reply-To: <m339z1hoyv.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144676>
 
-Heya,
+On 04/11/2010 10:36 AM, Jakub Narebski wrote:
+> While at it: should t/test-lib.sh be executable?  Other t/*lib*.sh
+> files are not...
+>
+>   
 
-On Sun, Apr 11, 2010 at 20:16, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> I was hoping that the existing low-level -z routines (e.g. "diff-* -z=
-")
-> follow similar enough patterns to have a corresponding output-z.c and=
- be
-> handled inside output.c library. =C2=A0But that is not a requirement,=
- just
-> "would have been nicer if the original were written that way".
-
-I like that idea, I think it would make our plumbing interface more
-consistent, and further validate the API design. Any plumbing command
-(once converted) can then be used with -z (or --format=3Dzero or
-whatever it is) and give a similar output format, very nice.
-
---=20
-Cheers,
-
-Sverre Rabbelier
+I don't see a reason why anybody would run t/test-lib.sh directly so I
+think no.
