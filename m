@@ -1,94 +1,183 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [ANNOUNCE] Git 1.7.1.rc1
-Date: Sun, 11 Apr 2010 17:14:30 +0000
-Message-ID: <s2s51dd1af81004111014za26552e9vba2dd629675d1c1d@mail.gmail.com>
-References: <7vmxxar5h7.fsf@alter.siamese.dyndns.org>
-	 <y2i51dd1af81004110908mcf6ce8cahf04225d7c261a85b@mail.gmail.com>
-	 <m2pr26c4jt.fsf@igel.home>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [RFC/PATCH 0/3] JSON/XML output for scripting interface
+Date: Sun, 11 Apr 2010 18:30:58 +0100
+Message-ID: <cb4ed5763e71bd84b4e80109923494ca@212.159.54.234>
+References: <20100411112928.80010.1786.julian@quantumfyre.co.uk> <k2pfabb9a1e1004110848u15859465qf14e3d40eb4ba877@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Apr 11 19:14:41 2010
+Cc: <git@vger.kernel.org>, Eric Raymond <esr@thyrsus.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 11 19:31:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O10k3-0003Rs-DA
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 19:14:39 +0200
+	id 1O110G-0001ER-Cb
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 19:31:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752443Ab0DKROd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Apr 2010 13:14:33 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:45664 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752336Ab0DKROd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Apr 2010 13:14:33 -0400
-Received: by bwz19 with SMTP id 19so12210bwz.21
-        for <git@vger.kernel.org>; Sun, 11 Apr 2010 10:14:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=fptrJRmFXUcRJTMSsBQ1b0YVFwZ89zKszp9Y3fzA/kA=;
-        b=TQqlqaCagVtAucX2FPj27zm8OOKdsvSnPsBnS5pSaxgbDAFWlxvuaPwBYft6gedAN3
-         utTh8bRmIy2o2WI/L+P8Sul26H7rRwBisc0gHKSTos0fGeSjsm0T7uRTTA6A/qa9Ya0g
-         OaJ7JNwllZdfxMZ5I3+5UsCjF1AyggLq2gPMk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=TAaOSG1MNRn5ICV+2EziRL8BPhkkyD8rcnjsNXBi5kzvBHdZ1aTctDPC5uejUqLuxI
-         6tCLSqMcuADFQhOAogZDQw6VKrm+h9JAVG2usATaShmm2qLaU5DnCPlRnV6ITe3IgEEP
-         amiW/nHUofUpqo/Ju2wxgA3bzxFwUFtV0S/Dk=
-Received: by 10.204.121.195 with HTTP; Sun, 11 Apr 2010 10:14:30 -0700 (PDT)
-In-Reply-To: <m2pr26c4jt.fsf@igel.home>
-Received: by 10.204.4.211 with SMTP id 19mr3273193bks.166.1271006070791; Sun, 
-	11 Apr 2010 10:14:30 -0700 (PDT)
+	id S1752395Ab0DKRbD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Apr 2010 13:31:03 -0400
+Received: from positron.quantumfyre.co.uk ([213.165.84.138]:55269 "EHLO
+	positron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752336Ab0DKRbA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Apr 2010 13:31:00 -0400
+Received: from reaper.quantumfyre.co.uk (reaper.quantumfyre.co.uk [212.159.54.234])
+	by positron.quantumfyre.co.uk (Postfix) with ESMTP id 627D4819C6D7;
+	Sun, 11 Apr 2010 18:30:53 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 2282820CF4D;
+	Sun, 11 Apr 2010 18:30:59 +0100 (BST)
+X-Virus-Scanned: amavisd-new at reaper
+Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
+	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id hpgC8FSCgfQs; Sun, 11 Apr 2010 18:30:58 +0100 (BST)
+Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 65A66C8153;
+	Sun, 11 Apr 2010 18:30:58 +0100 (BST)
+In-Reply-To: <k2pfabb9a1e1004110848u15859465qf14e3d40eb4ba877@mail.gmail.com>
+X-Sender: julian@quantumfyre.co.uk
+User-Agent: RoundCube Webmail/0.1-rc1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144661>
 
-On Sun, Apr 11, 2010 at 16:55, Andreas Schwab <schwab@linux-m68k.org> w=
-rote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> On Sun, Apr 11, 2010 at 04:13, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->>> A release candidate Git 1.7.1.rc1 is available at the usual places
->>> for testing:
->>
->> This is a minor nit but when I generate the info docs from master I
->> get this at the top of user-manual.texi:
->>
->> =C2=A0 =C2=A0 @menu
->> =C2=A0 =C2=A0 * : id2860714.
->> =C2=A0 =C2=A0 * Repositories and Branches::
->> =C2=A0 =C2=A0 * Exploring git history::
->> =C2=A0 =C2=A0 * Developing with git::
->>
->> I can't find what produces that token but here are all occurrences o=
-f it:
->
-> That appears to be because the first title is empty:
->
-> $ head -n 9 user-manual.xml
-> <?xml version=3D"1.0" encoding=3D"UTF-8"?>
-> <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://ww=
-w.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
->
-> <book lang=3D"en">
-> <bookinfo>
-> =C2=A0 =C2=A0<title>Git User&#8217;s Manual (for version 1.5.3 or new=
-er)</title>
-> </bookinfo>
-> <preface>
-> <title></title>
+On Sun, 11 Apr 2010 17:48:28 +0200, Sverre Rabbelier
+<srabbelier@gmail.com>
+wrote:
+> Heya,
+>=20
+> On Sun, Apr 11, 2010 at 13:37, Julian Phillips
+<julian@quantumfyre.co.uk>
+> wrote:
+>> Here is an attempt at making a format agnostic structured output
+>> library. =C2=A0The
+>> idea being that the command doing the output doesn't have to care wh=
+at
+>> the
+>> actual output format is, it just uses the abstract notion of objects
+and
+>> arrays.
+>=20
+> How easy is it to add support for this to other commands using the
+> infrastructure this command adds? I assume that we'd want to do this
+> for all/most plumbing commands, so I think it's important that we mak=
+e
+> sure it's easy to add for other commands other than 'git status', no?
 
-The original error is going to be in user-manual.txt. That's where I
-couldn't track down the error. The XML and TexInfo files are
-automatically generated from the .txt source.
+It's intended to be easy, as the intention was to make the structured
+output available from all plumbing commands (and maybe even some porcel=
+ain
+commands, if they are often scripted?).  Easy is in the eye of the beho=
+lder
+though.  I've done ls-tree as an example below (I expect my MUA will
+probably mangle the patch - sorry).  I didn't think it was too hard, bu=
+t
+that's not really surprising since I wrote the API ... you'll have to t=
+ell
+me what you think.
+
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index dc86b0d..7b5a5e8 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -10,6 +10,7 @@
+ #include "quote.h"
+ #include "builtin.h"
+ #include "parse-options.h"
++#include "output.h"
+=20
+ static int line_termination =3D '\n';
+ #define LS_RECURSIVE 1
+@@ -22,6 +23,7 @@ static int ls_options;
+ static const char **pathspec;
+ static int chomp_prefix;
+ static const char *ls_tree_prefix;
++static struct output_context *oc;
+=20
+ static const  char * const ls_tree_usage[] =3D {
+ 	"git ls-tree [<options>] <tree-ish> [path...]",
+@@ -90,6 +92,25 @@ static int show_tree(const unsigned char *sha1, cons=
+t
+char *base, int baselen,
+ 	    (baselen < chomp_prefix || memcmp(ls_tree_prefix, base,
+chomp_prefix)))
+ 		return 0;
+=20
++	if (oc !=3D NULL) {
++		output_start_object(oc, "entry");
++		output_strf(oc, "path", "%s%s", base + chomp_prefix, pathname);
++		if (!(ls_options & LS_NAME_ONLY)) {
++			output_strf(oc, "mode", "%06o", mode);
++			output_str(oc, "type", type);
++			output_str(oc, "hash", sha1_to_hex(sha1));
++			if ((ls_options & LS_SHOW_SIZE) && !strcmp(type, blob_type)) {
++				unsigned long size;
++				if (sha1_object_info(sha1, &size) =3D=3D OBJ_BAD)
++					output_str(oc, "size", "bad");
++				else
++					output_uint(oc, "size", size);
++			}
++		}
++		output_end_current(oc);
++		return retval;
++	}
++
+ 	if (!(ls_options & LS_NAME_ONLY)) {
+ 		if (ls_options & LS_SHOW_SIZE) {
+ 			char size_text[24];
+@@ -119,6 +140,8 @@ int cmd_ls_tree(int argc, const char **argv, const
+char *prefix)
+ 	unsigned char sha1[20];
+ 	struct tree *tree;
+ 	int full_tree =3D 0;
++	char *structured_output_arg =3D NULL;
++	enum output_style output_style;
+ 	const struct option ls_tree_options[] =3D {
+ 		OPT_BIT('d', NULL, &ls_options, "only show trees",
+ 			LS_TREE_ONLY),
+@@ -140,6 +163,7 @@ int cmd_ls_tree(int argc, const char **argv, const
+char *prefix)
+ 			    "list entire tree; not just current directory "
+ 			    "(implies --full-name)"),
+ 		OPT__ABBREV(&abbrev),
++		OPT_OUTPUT(0, "structured-output", &structured_output_arg),
+ 		OPT_END()
+ 	};
+=20
+@@ -159,6 +183,8 @@ int cmd_ls_tree(int argc, const char **argv, const
+char *prefix)
+ 	    ((LS_TREE_ONLY|LS_RECURSIVE) & ls_options))
+ 		ls_options |=3D LS_SHOW_TREES;
+=20
++	output_style =3D handle_output_arg(structured_output_arg);
++
+ 	if (argc < 1)
+ 		usage_with_options(ls_tree_usage, ls_tree_options);
+ 	if (get_sha1(argv[0], sha1))
+@@ -168,7 +194,16 @@ int cmd_ls_tree(int argc, const char **argv, const
+char *prefix)
+ 	tree =3D parse_tree_indirect(sha1);
+ 	if (!tree)
+ 		die("not a tree object");
++
++	if (output_style !=3D OUTPUT_NORMAL) {
++		oc =3D output_start(output_style);
++		output_start_array(oc, "entries");
++	}
++
+ 	read_tree_recursive(tree, "", 0, 0, pathspec, show_tree, NULL);
+=20
++	if (output_style !=3D OUTPUT_NORMAL)
++		output_end(oc);
++
+ 	return 0;
+ }
+
+
+--=20
+Julian
