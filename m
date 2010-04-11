@@ -1,85 +1,97 @@
-From: Aghiles <aghilesk@gmail.com>
-Subject: Re: potential improvement to 'git log' with a range
-Date: Sun, 11 Apr 2010 16:31:51 -0400
-Message-ID: <k2r3abd05a91004111331ld522220ehfffeb65c45040a94@mail.gmail.com>
-References: <w2j3abd05a91004091624mb2836ff4v118a1ae9ac5ca6e7@mail.gmail.com> 
-	<i2kfabb9a1e1004091633nc70f2f19hd16ea9704f0933b0@mail.gmail.com> 
-	<n2t3abd05a91004091713s4d081106qd74419425b25e8e@mail.gmail.com> 
-	<alpine.LFD.2.00.1004091807220.3558@i5.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH 2/3] add a library of code for producing structured output
+Date: Sun, 11 Apr 2010 13:34:59 -0700 (PDT)
+Message-ID: <m3y6gtg24x.fsf@localhost.localdomain>
+References: <20100411112928.80010.1786.julian@quantumfyre.co.uk>
+	<20100411113733.80010.3767.julian@quantumfyre.co.uk>
+	<7vy6gtonwt.fsf@alter.siamese.dyndns.org>
+	<91d4c9c4ecdd32166bedb6dc0bd007d6@212.159.54.234>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	git list <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Apr 11 22:32:23 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
+	Eric Raymond <esr@thyrsus.com>
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Sun Apr 11 22:35:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O13pN-0002tO-Jw
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 22:32:21 +0200
+	id 1O13s8-0003fK-15
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 22:35:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752863Ab0DKUcR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Apr 2010 16:32:17 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:58501 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752834Ab0DKUcQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Apr 2010 16:32:16 -0400
-Received: by wyb39 with SMTP id 39so1052293wyb.19
-        for <git@vger.kernel.org>; Sun, 11 Apr 2010 13:32:11 -0700 (PDT)
+	id S1752901Ab0DKUfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Apr 2010 16:35:06 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:64171 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752842Ab0DKUfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Apr 2010 16:35:04 -0400
+Received: by bwz19 with SMTP id 19so55648bwz.21
+        for <git@vger.kernel.org>; Sun, 11 Apr 2010 13:35:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=6DPilqWXCNeNr4iAcVx5YiEHhnnntS3HYD7diCE80TU=;
-        b=lQmwO+0H9/Nbg6m1FG6ab71F5RKoUFi/c2km+quFO73HZaJtZtzyOlIuiHCO1+oqH5
-         aRLR+IanQC8tfEU5BLxrm3bI1VfLIGCrF3wrZIpRS/2B20Fk3unOiNKkkyfdNd82LCTd
-         OvNqzfM5CtjlfordEsVxlvvVcQ54oAUDlssqg=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=M45eQ3iTofnbLVpHAYOgp5x52+w/Lprk1XSiZ2Ni4sk=;
+        b=PRbFd3xbQkghuAD6p+GhoyU/tCHkKWDV2/0CGDQpitD7RhyzAgkSRd5ckmY5VDpjVD
+         fkRmvKxwBVBP4maOK9mtuOJ/lVVmZscB1aLsgImcXehqUGJ6rXVwi10BOx4UJe5vpwKw
+         1Vyz/tnyCVJluT3iTOIuMlLESsbUA5BwKAkvc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Tt/whFyAxDGNbXk8Mpg6fwFIZ9ac8WFKHYgnxIJA1kusIueeyyZ5PC0k6yQhj1603O
-         QLb16x3oGCBPECinYMORNLCdbFDQ7A7ljT8atu3VRgSd/Df/PFJQ2dvBiXRn9aKWPpV4
-         uXKRVure8kUeuYZJTb1/V0HYDr2qcwj6lb+WU=
-Received: by 10.216.157.212 with HTTP; Sun, 11 Apr 2010 13:31:51 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.1004091807220.3558@i5.linux-foundation.org>
-Received: by 10.216.165.5 with SMTP id d5mr1674667wel.143.1271017931122; Sun, 
-	11 Apr 2010 13:32:11 -0700 (PDT)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=UHOV6U7o6qTMogUBNYb5bXaGyHdkth4iwqeiXxKb1sDNR3G6sZIcXlLH7Nrl4JWG8t
+         bni6WpwIrdnSWSa/5BnWbzkt8W+nzhjMavFtlnRLZ9uyjwxnHheHWEM0lUjrEMGP9v30
+         +lnXCLFv0YpP2399QWHK/xVQ8IIq22h9qXLXU=
+Received: by 10.204.15.23 with SMTP id i23mr3674102bka.106.1271018100694;
+        Sun, 11 Apr 2010 13:35:00 -0700 (PDT)
+Received: from localhost.localdomain (abwq147.neoplus.adsl.tpnet.pl [83.8.240.147])
+        by mx.google.com with ESMTPS id 16sm1466336bwz.5.2010.04.11.13.34.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 11 Apr 2010 13:34:59 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o3BKYIkk012873;
+	Sun, 11 Apr 2010 22:34:28 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o3BKXpRA012859;
+	Sun, 11 Apr 2010 22:33:51 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <91d4c9c4ecdd32166bedb6dc0bd007d6@212.159.54.234>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144681>
 
-On Fri, Apr 9, 2010, Linus Torvalds wrote:
-> Well, technically ".." means two different things
->
-> =A0- for "set operations" (ie "git log" and friends) it's the "relati=
-ve
-> =A0 complement" of two sets (or "'reachable from A' \ 'reachable from=
- B'").
->
-> =A0- for "edge operations" (ie "git diff" and friends) it's just two
-> =A0 end-points (aka "range"). A diff doesn't work on sets, it only wo=
-rks on
-> =A0 the two endpoints.
+Julian Phillips <julian@quantumfyre.co.uk> writes:
+> On Sun, 11 Apr 2010 11:16:18 -0700, Junio C Hamano <gitster@pobox.com>
+> wrote:
+>> Julian Phillips <julian@quantumfyre.co.uk> writes:
+>> 
+>>> Add a library that allows commands to produce structured output in any
+>>> of a range of formats using a single API.
+>>>
+>>> The API includes an OPT_OUTPUT and handle_output_arg so that the
+>>> option handling for different commands will be as similar as possible.
+>> 
+>> I was hoping that the existing low-level -z routines (e.g. "diff-* -z")
+>> follow similar enough patterns to have a corresponding output-z.c and be
+>> handled inside output.c library.  But that is not a requirement, just
+>> "would have been nicer if the original were written that way".
+> 
+> As the API currently stands, I don't think it would be possible to
+> recreate the existing output of -z, as the separator between values is not
+> constant.  I haven't really looked into whether the output is completely
+> incompatible with structured output though (i.e. could -z be supported by
+> adding one or two functions to the API?).
 
-OK.
+What about the new(ly) proposed -Z output in one of its variants,
+namely with single NUL ("\0") as field separator, and double NUL ("\0\0")
+as a record terminator?
 
-> Most SCM's really talk about "ranges". Once you think in those terms,
-> complex history doesn't work. Git very fundamentally is much about se=
-t
-> theory, and "ranges" is a bad word to use.
-
-I see how ranges are not powerful enough for complex history. It is jus=
-t
-that for me (and maybe for some others), the ".." sign has a strong
-association with "range".
-
-Thank you very much for the explanation,
-
-  -- aghiles
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
