@@ -1,60 +1,61 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH] t3507: Make test executable
-Date: Sun, 11 Apr 2010 01:43:46 -0700
-Message-ID: <1270975426-17459-1-git-send-email-bebarino@gmail.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 11 10:44:13 2010
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] - git rebase -i performs rebase when it shouldn't?
+Date: Sun, 11 Apr 2010 06:15:26 -0400
+Message-ID: <20100411101526.GA20484@coredump.intra.peff.net>
+References: <z2q76c5b8581004091235ucd9b2a52i223b3191b288c42a@mail.gmail.com>
+ <20100410042609.GA24295@coredump.intra.peff.net>
+ <7vsk73zzt1.fsf@alter.siamese.dyndns.org>
+ <4BC0D87E.70001@kdbg.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sun Apr 11 12:16:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0sm1-0005Be-Px
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 10:44:10 +0200
+	id 1O0uD5-0006RQ-2I
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 12:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751341Ab0DKInx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Apr 2010 04:43:53 -0400
-Received: from mail-yx0-f171.google.com ([209.85.210.171]:48111 "EHLO
-	mail-yx0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751244Ab0DKInw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Apr 2010 04:43:52 -0400
-Received: by yxe1 with SMTP id 1so2047275yxe.33
-        for <git@vger.kernel.org>; Sun, 11 Apr 2010 01:43:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=DWsdmYVLkt/E+t8YtHNcuLQiMmqBlmAetqJ4C0MqqSk=;
-        b=eHyleoxenWNUcs/1nSH+edwGKNpjAwTeDE7t84kpa/fRXxkveytYdYZLIUPeZZIFaL
-         GEbyaqIfRI/GbT02vrQqZTZc2rkrDuwc85Pu7zmPJWQwZ/WoeyvJizaYx/h65nn+k0g9
-         Tb7Rayw7BWB2W6pS9oagwgnvT8MfW5opi/cfw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=th0875tSXYWdfxRCgPmXkHVgNBMrb9tsqAmCqa1IABjD03BnHFTfMdTWZjskwbhqmY
-         phbNv6Q70jkER4aoDLS1Ne1dBvOcRLUPPWHy0BR0G19Dj+8eX1aBgghPPAKAHEnt2VfW
-         /u0NRcmsZ4BNSMoLiU/bbd//YPwNJKw3VCcT8=
-Received: by 10.101.58.8 with SMTP id l8mr3970310ank.7.1270975429539;
-        Sun, 11 Apr 2010 01:43:49 -0700 (PDT)
-Received: from localhost (user-0c9haca.cable.mindspring.com [24.152.169.138])
-        by mx.google.com with ESMTPS id 22sm2745237iwn.0.2010.04.11.01.43.48
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 11 Apr 2010 01:43:49 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.rc1
+	id S1751390Ab0DKKPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Apr 2010 06:15:53 -0400
+Received: from peff.net ([208.65.91.99]:56346 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750770Ab0DKKPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Apr 2010 06:15:52 -0400
+Received: (qmail 1741 invoked by uid 107); 11 Apr 2010 10:15:52 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 11 Apr 2010 06:15:52 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 11 Apr 2010 06:15:26 -0400
+Content-Disposition: inline
+In-Reply-To: <4BC0D87E.70001@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144634>
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
- 0 files changed, 0 insertions(+), 0 deletions(-)
- mode change 100644 => 100755 t/t3507-cherry-pick-conflict.sh
+On Sat, Apr 10, 2010 at 09:58:54PM +0200, Johannes Sixt wrote:
 
-diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
-old mode 100644
-new mode 100755
--- 
-1.7.1.rc1
+> >	git checkout foo&&  git rebase master
+> >	git checkout bar&&  git rebase master
+> >	git checkout baz&&  git rebase master
+> 
+> I'm actually very glad that the current interface is the way it is -
+> because it can do the rebase *without* the checkout. This way you can
+> save a lot of recompilation due to changed timestamps if the topic is
+> based on an old version.
+> 
+> Only that some (all?) variants of rebase still unnecessarily do the
+> checkout...
+
+Good point. Originally, we did the rebase directly on the branch, though
+I'm not sure if we did "checkout $branch && reset $onto" or "branch -f
+$branch $onto && checkout $branch". These days we operate on a detached
+HEAD, and we seem to "checkout $onto^0", which should do the
+optimization you mention.
+
+-Peff
