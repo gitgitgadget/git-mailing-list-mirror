@@ -1,80 +1,77 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [RFC/PATCH 0/3] JSON/XML output for scripting interface
-Date: Mon, 12 Apr 2010 00:30:33 +0100
-Message-ID: <61c2a556d3b557df82cc5da764b5d0f2@212.159.54.234>
-References: <20100411112928.80010.1786.julian@quantumfyre.co.uk> <k2pfabb9a1e1004110848u15859465qf14e3d40eb4ba877@mail.gmail.com> <cb4ed5763e71bd84b4e80109923494ca@212.159.54.234> <w2lfabb9a1e1004111034n1aec73f2h3cf5f1d8468b6036@mail.gmail.com> <d0869259b375a26df46ef92a2b973615@212.159.54.234> <p2ofabb9a1e1004111050x660c37fdke4d5316baaa0cfbe@mail.gmail.com> <q2i2cfc40321004111522kd177fb89k6b9265c641d7deec@mail.gmail.com> <776480BE-3652-489A-96C9-9312321E49C0@gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC/PATCH v2 0/4] A new library for plumbing output
+Date: Mon, 12 Apr 2010 01:35:26 +0200
+Message-ID: <l2jfabb9a1e1004111635v16e4dc86g405883ca12d316b9@mail.gmail.com>
+References: <20100411231824.67460.24844.julian@quantumfyre.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, <git@vger.kernel.org>,
-	Eric Raymond <esr@thyrsus.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 12 01:30:41 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jakub Narebsk <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Raymond <esr@thyrsus.com>
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Mon Apr 12 01:36:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O16bx-0001br-8A
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 01:30:41 +0200
+	id 1O16h8-0002o3-1v
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 01:36:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753191Ab0DKXag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Apr 2010 19:30:36 -0400
-Received: from positron.quantumfyre.co.uk ([213.165.84.138]:40887 "EHLO
-	positron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753092Ab0DKXaf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Apr 2010 19:30:35 -0400
-Received: from reaper.quantumfyre.co.uk (reaper.quantumfyre.co.uk [212.159.54.234])
-	by positron.quantumfyre.co.uk (Postfix) with ESMTP id 7EF30819C6C6;
-	Mon, 12 Apr 2010 00:30:28 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 31BB120CF50;
-	Mon, 12 Apr 2010 00:30:34 +0100 (BST)
-X-Virus-Scanned: amavisd-new at reaper
-Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
-	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id pUzSAzTxjl+I; Mon, 12 Apr 2010 00:30:33 +0100 (BST)
-Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 8DCF7554CB;
-	Mon, 12 Apr 2010 00:30:33 +0100 (BST)
-In-Reply-To: <776480BE-3652-489A-96C9-9312321E49C0@gmail.com>
-X-Sender: julian@quantumfyre.co.uk
-User-Agent: RoundCube Webmail/0.1-rc1
+	id S1753221Ab0DKXfr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Apr 2010 19:35:47 -0400
+Received: from qw-out-2122.google.com ([74.125.92.27]:8100 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753092Ab0DKXfq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Apr 2010 19:35:46 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so1823111qwh.37
+        for <git@vger.kernel.org>; Sun, 11 Apr 2010 16:35:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ODynlDTsywC8xqMvBAD2SiBBDAz3WhgsjDVMCvdEH/Q=;
+        b=J21pa6NxX58IL/lioU77Y6MiqwPZooMuyXnlobMkjbhf2vR4KujjRTTE/HJtgDKy8R
+         M4J1VBMSTQWAzwXVwI43/0KjQUGlv+ttmfnNTBiH3KgCrB+YpE0v23CXwdf1mhrPMMy0
+         xD2D5mzZf6P0SdbT0hAAdRr5X7s9a/YPtwE6Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=R5CNz0Wu+4sJoqhEzDY6iNV3a5nFdnYNYMBgK9DMDjSeEavqfv8LQkVQ/7wlIRDz1+
+         9uwuSJKTOcT+LBunJJF4DguHiJc+kCLt4cCfe29ri8YK7qXWScjQZ4QbQadxAvm8uy17
+         B3fP7JvtpcdH0jbSX/FJEWFOOuxg7/cMF8Rak=
+Received: by 10.224.74.3 with HTTP; Sun, 11 Apr 2010 16:35:26 -0700 (PDT)
+In-Reply-To: <20100411231824.67460.24844.julian@quantumfyre.co.uk>
+Received: by 10.224.50.79 with SMTP id y15mr1168569qaf.7.1271028946125; Sun, 
+	11 Apr 2010 16:35:46 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144699>
 
-On Mon, 12 Apr 2010 09:25:04 +1000, Jon Seymour <jon.seymour@gmail.com>
-wrote:
-> On 12/04/2010, at 8:22, Jon Seymour <jon.seymour@gmail.com> wrote:
->>
->> So, would it be worth providing a hint as to record type in the
->> output_start_object call so that if it was later desired to subsume
->> line-oriented formats under the same framework, there is enough
->> information available to the backend to do that?
-> 
-> Of course, one way to do this would be to use a more descriptive  
-> record name than "entry". This would make the record itself (as  
-> opposed to just it's fields) self-describing.
-> 
-> The point is, you would want to start using descriptive record names  
-> now so that you don't end up locked into a partially context sensitive  
-> base of consumers who are expecting their JSON records to be called  
-> "entry" and using context hints to infer the actual record type.
+Heya,
 
-I have to admit that most of the names were just "first idea out of the
-hat" - not really something I was paying too much attention to.  It's
-fairly easy to tweak them later, provided it's done before they get
-published.
+On Mon, Apr 12, 2010 at 01:21, Julian Phillips <julian@quantumfyre.co.u=
+k> wrote:
+> Probably the biggest change from v1 is an expanded aim. =C2=A0Now the=
+ output library
+> is aimed at controlling _all_ plubming output. =C2=A0This series incl=
+udes a patch for
+> ls-tree that has all it's output going through the library, and a pat=
+ch for
+> status that has all the --porcelain output going through the library.
 
-Having said that, I've just mailed out v2 patches, which already include
-line-based output (using a different approach). ;)
+I like where this is going, a lot, especially since we don't have to
+convert everything in one go, but we can do it as desired, similar to
+optparsification. I still think more commands than just these two
+should be converted to validate the design though, perhaps something
+like 'git blame', or 'git for-each-ref'?
 
-More descriptive names are probably something that should be done anyway
-though.
+--=20
+Cheers,
 
--- 
-Julian
+Sverre Rabbelier
