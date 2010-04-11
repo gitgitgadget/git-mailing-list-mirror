@@ -1,89 +1,101 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: More git status --porcelain lossage
-Date: Sun, 11 Apr 2010 11:04:06 +0000 (UTC)
-Message-ID: <20100413050247.GA31108@gmail.com>
-References: <20100409190601.47B37475FEF@snark.thyrsus.com> <l2k5f14cf5e1004101148h5cf8dc4bm1836cf1c5fc8abfb@mail.gmail.com> <m3k4sfgmjc.fsf@localhost.localdomain> <20100410194154.GB28768@thyrsus.com> <s2i46a038f91004101331g1cdca78cya3e125275446a0a9@mail.gmail.com> <4BC0FB94.6050409@gnu.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Apr 11 13:04:05 2010
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: [RFC/PATCH 1/3] strbuf: Add strbuf_vaddf function
+Date: Sun, 11 Apr 2010 12:37:30 +0100
+Message-ID: <20100411113733.80010.78232.julian@quantumfyre.co.uk>
+References: <20100411112928.80010.1786.julian@quantumfyre.co.uk>
+Cc: Eric Raymond <esr@thyrsus.com>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 11 13:38:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0uxQ-00021s-It
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 13:04:04 +0200
+	id 1O0vUt-0003XF-8E
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 13:38:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751844Ab0DKLD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Apr 2010 07:03:59 -0400
-Received: from mail-yw0-f194.google.com ([209.85.211.194]:63490 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751801Ab0DKLD6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Apr 2010 07:03:58 -0400
-Received: by ywh32 with SMTP id 32so1089856ywh.33
-        for <git@vger.kernel.org>; Sun, 11 Apr 2010 04:03:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=DJ96HmxIu99LzmdD9xFSIMTs/GnK4CDSEVqmvWFXOIk=;
-        b=MvV/vPWm/pDUdJTBbLdL8TnSW3Jlul5NhI++Vxl9wZO0/eaI2BBtSiDn1xEBXK3b30
-         hxgXrxHxv4tYEhNUOhqJr0pdy3w1L2U9mAmn3XwhqSEJjOc6/x1DQRWWfNsCnttNjhC1
-         60K7C1rvvrH8CcRJOWvA17s6XsKIBdNrgAG2k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=waX3y6HMcipp4MF09beg9lI25gKdsquJ+vL7u7r0ADoR9e0rwi0Gm3qys0ZygyGVsu
-         4+qyVCYEEG/GottVc7g/Jk/+lJSP2nrVLW98obMq4VvSnSji8piStxyUokFysMZRcaIh
-         /K5svGeVl+B87mnuYSKXmtxT71cTg4O8J8rkk=
-Received: by 10.101.141.9 with SMTP id t9mr4203999ann.55.1270983837037;
-        Sun, 11 Apr 2010 04:03:57 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 23sm2843220iwn.10.2010.04.11.04.03.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 11 Apr 2010 04:03:56 -0700 (PDT)
-Date: Mon, 12 Apr 2010 22:02:49 -0700
-Content-Disposition: inline
-In-Reply-To: <4BC0FB94.6050409@gnu.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1751308Ab0DKLi2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Apr 2010 07:38:28 -0400
+Received: from positron.quantumfyre.co.uk ([213.165.84.138]:41424 "EHLO
+	positron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751022Ab0DKLi1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Apr 2010 07:38:27 -0400
+Received: from reaper.quantumfyre.co.uk (reaper.quantumfyre.co.uk [212.159.54.234])
+	by positron.quantumfyre.co.uk (Postfix) with ESMTP id 2471D819C4C4;
+	Sun, 11 Apr 2010 12:38:20 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id D0A2220CF4C;
+	Sun, 11 Apr 2010 12:38:25 +0100 (BST)
+X-Virus-Scanned: amavisd-new at reaper
+Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
+	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 47wv0HoFLjlC; Sun, 11 Apr 2010 12:38:25 +0100 (BST)
+Received: from rayne.quantumfyre.co.uk (rayne.quantumfyre.co.uk [192.168.0.18])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 70D7520CF48;
+	Sun, 11 Apr 2010 12:38:25 +0100 (BST)
+X-git-sha1: 880462d9d504b9d1d962ac9c5c2a7b206c31288c 
+X-Mailer: git-mail-commits v0.5.3
+In-Reply-To: <20100411112928.80010.1786.julian@quantumfyre.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144640>
 
-On Sun, Apr 11, 2010 at 12:28:36AM +0200, Paolo Bonzini wrote:
-> On 04/10/2010 10:31 PM, Martin Langhoff wrote:
->> On Sat, Apr 10, 2010 at 3:41 PM, Eric Raymond<esr@thyrsus.com>  wrote:
->>>> I could understand providing JSON format, specified using --json
->>>> option.
->>>
->>> You know, that's actually an interesting idea.  I mentioned it
->>> previously as the not-XML if we want to build on a metaprotocol;
->>
->> One issue is that there's no stream-parser JSON implementations that
->> I'm aware of.
->
-> Here is one.  It's ugly as hell, you're warned.  The only missing piece  
-> is making the stack state resizable.
->
-> Paolo
+Add strbuf_vaddf which is to strbuf_addf as vprintf is to printf.
 
-Here's a fairly popular stream parser:
+Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
+---
+ strbuf.c |   13 +++++++++++--
+ strbuf.h |    1 +
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-http://lloyd.github.com/yajl/
-
-Yet Another JSON Library. YAJL is a small event-driven
-(SAX-style) JSON parser written in ANSI C, and a small
-validating JSON generator. YAJL is released under the BSD
-license.
-
-The license is BSD-with-advertising-clause.
-Perhaps the author did not know about modified BSD.
-
+diff --git a/strbuf.c b/strbuf.c
+index bc3a080..8f312f8 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -194,19 +194,28 @@ void strbuf_adddup(struct strbuf *sb, size_t pos, size_t len)
+ 
+ void strbuf_addf(struct strbuf *sb, const char *fmt, ...)
+ {
++	va_list ap;
++
++	va_start(ap, fmt);
++        strbuf_vaddf(sb, fmt, ap);
++	va_end(ap);
++}
++
++void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list args)
++{
+ 	int len;
+ 	va_list ap;
+ 
+ 	if (!strbuf_avail(sb))
+ 		strbuf_grow(sb, 64);
+-	va_start(ap, fmt);
++	va_copy(ap, args);
+ 	len = vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, ap);
+ 	va_end(ap);
+ 	if (len < 0)
+ 		die("your vsnprintf is broken");
+ 	if (len > strbuf_avail(sb)) {
+ 		strbuf_grow(sb, len);
+-		va_start(ap, fmt);
++		va_copy(ap, args);
+ 		len = vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, ap);
+ 		va_end(ap);
+ 		if (len > strbuf_avail(sb)) {
+diff --git a/strbuf.h b/strbuf.h
+index fac2dbc..ac52834 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -120,6 +120,7 @@ extern void strbuf_addbuf_percentquote(struct strbuf *dst, const struct strbuf *
+ 
+ __attribute__((format (printf,2,3)))
+ extern void strbuf_addf(struct strbuf *sb, const char *fmt, ...);
++extern void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list args);
+ 
+ extern size_t strbuf_fread(struct strbuf *, size_t, FILE *);
+ /* XXX: if read fails, any partial read is undone */
 -- 
-		David
+1.7.0.4
