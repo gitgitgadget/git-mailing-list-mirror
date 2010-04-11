@@ -1,75 +1,93 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git pull suggestion
-Date: Sun, 11 Apr 2010 18:33:22 +0200
-Message-ID: <vpq4ojit0dp.fsf@bauges.imag.fr>
-References: <r2x3abd05a91004071617z9ffd6e02v83d825405bb6ef1@mail.gmail.com>
-	<201004081754.24954.trast@student.ethz.ch>
-	<p2x3abd05a91004081233j77b7177bm5928913a64de0e57@mail.gmail.com>
-	<20100408231154.GB13704@vidovic>
-	<v2r3abd05a91004082006v74e243f2x33b500f2f6dadc9f@mail.gmail.com>
-	<20100409034911.GA4020@coredump.intra.peff.net>
-	<i2y3abd05a91004091233nc11ee5f8m4f40e7451e02518a@mail.gmail.com>
-	<20100410043535.GA22481@coredump.intra.peff.net>
-	<m2v3abd05a91004102301i95bf7091ib2bd9da5e8a208c1@mail.gmail.com>
-	<7vaataphi7.fsf@alter.siamese.dyndns.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [ANNOUNCE] Git 1.7.1.rc1
+Date: Sun, 11 Apr 2010 18:55:18 +0200
+Message-ID: <m2pr26c4jt.fsf@igel.home>
+References: <7vmxxar5h7.fsf@alter.siamese.dyndns.org>
+	<y2i51dd1af81004110908mcf6ce8cahf04225d7c261a85b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Aghiles <aghilesk@gmail.com>, Jeff King <peff@peff.net>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Thomas Rast <trast@student.ethz.ch>,
-	git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 11 18:37:21 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 11 18:55:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O109t-0007un-Pp
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 18:37:18 +0200
+	id 1O10Ra-0005UF-Fj
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 18:55:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752173Ab0DKQhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Apr 2010 12:37:10 -0400
-Received: from imag.imag.fr ([129.88.30.1]:59250 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752162Ab0DKQhJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Apr 2010 12:37:09 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o3BGXMxD011747
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 11 Apr 2010 18:33:22 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1O1066-00071b-NH; Sun, 11 Apr 2010 18:33:22 +0200
-In-Reply-To: <7vaataphi7.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Sun\, 11 Apr 2010 00\:37\:04 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 11 Apr 2010 18:33:24 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1752181Ab0DKQzX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Apr 2010 12:55:23 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:51197 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751953Ab0DKQzW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Apr 2010 12:55:22 -0400
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id F3F6B1C15694;
+	Sun, 11 Apr 2010 18:55:19 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id EC62E902D4;
+	Sun, 11 Apr 2010 18:55:19 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan1.mnet-online.de [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id k1T8Yzz3LXxn; Sun, 11 Apr 2010 18:55:18 +0200 (CEST)
+Received: from igel.home (ppp-88-217-112-45.dynamic.mnet-online.de [88.217.112.45])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Sun, 11 Apr 2010 18:55:18 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id BB5B4CA297; Sun, 11 Apr 2010 18:55:18 +0200 (CEST)
+X-Yow: I think I am an overnight sensation right now!!
+In-Reply-To: <y2i51dd1af81004110908mcf6ce8cahf04225d7c261a85b@mail.gmail.com>
+	(=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 11 Apr
+ 2010 16:08:27
+	+0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.95 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144657>
 
-Junio C Hamano <gitster@pobox.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> git does _not_ implement a handy Porcelain to do this, but we could script
-> it like this (I am only illustrating that it can be done, but I am leaving
-> the reason why git chooses not to to a later part of this message).
+> On Sun, Apr 11, 2010 at 04:13, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>> A release candidate Git 1.7.1.rc1 is available at the usual places
+>> for testing:
+>
+> This is a minor nit but when I generate the info docs from master I
+> get this at the top of user-manual.texi:
+>
+>     @menu
+>     * : id2860714.
+>     * Repositories and Branches::
+>     * Exploring git history::
+>     * Developing with git::
+>
+> I can't find what produces that token but here are all occurrences of=
+ it:
 
-Actually, another way to do this is
+That appears to be because the first title is empty:
 
-git commit -a
-git rebase origin/where-you-want-to-merge-from
-git reset HEAD^
+$ head -n 9 user-manual.xml
+<?xml version=3D"1.0" encoding=3D"UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.=
+oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 
-That would not necessarily be a good way to implement a command, but I
-often use variants of this interactively.
+<book lang=3D"en">
+<bookinfo>
+    <title>Git User&#8217;s Manual (for version 1.5.3 or newer)</title>
+</bookinfo>
+<preface>
+<title></title>
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Andreas.
+
+--=20
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
+ED5
+"And now for something completely different."
