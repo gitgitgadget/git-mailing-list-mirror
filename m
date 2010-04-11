@@ -1,77 +1,60 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [RFC/PATCH 0/3] JSON/XML output for scripting interface
-Date: Sun, 11 Apr 2010 18:45:52 +0100
-Message-ID: <d0869259b375a26df46ef92a2b973615@212.159.54.234>
-References: <20100411112928.80010.1786.julian@quantumfyre.co.uk> <k2pfabb9a1e1004110848u15859465qf14e3d40eb4ba877@mail.gmail.com> <cb4ed5763e71bd84b4e80109923494ca@212.159.54.234> <w2lfabb9a1e1004111034n1aec73f2h3cf5f1d8468b6036@mail.gmail.com>
+From: Damien Tournoud <damien@tournoud.net>
+Subject: Re: [PATCH] More flexible URL patterns for gitweb
+Date: Sun, 11 Apr 2010 19:46:06 +0200
+Message-ID: <r2te821df551004111046v2ef3219x5c012af27f2cc974@mail.gmail.com>
+References: <1270946429-5366-1-git-send-email-damien@tournoud.net>
+	 <m37hodhp3e.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: <git@vger.kernel.org>, Eric Raymond <esr@thyrsus.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 11 19:46:09 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 11 19:46:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O11ER-0006T2-Sk
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 19:46:04 +0200
+	id 1O11Ef-0006Za-8x
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 19:46:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752634Ab0DKRpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Apr 2010 13:45:55 -0400
-Received: from positron.quantumfyre.co.uk ([213.165.84.138]:50872 "EHLO
-	positron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752484Ab0DKRpy (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Apr 2010 13:45:54 -0400
-Received: from reaper.quantumfyre.co.uk (reaper.quantumfyre.co.uk [212.159.54.234])
-	by positron.quantumfyre.co.uk (Postfix) with ESMTP id 3E7CF819C6D7;
-	Sun, 11 Apr 2010 18:45:47 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 070E420CF4D;
-	Sun, 11 Apr 2010 18:45:53 +0100 (BST)
-X-Virus-Scanned: amavisd-new at reaper
-Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
-	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id G2NHzDYCBJ6h; Sun, 11 Apr 2010 18:45:52 +0100 (BST)
-Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id A55A5554CB;
-	Sun, 11 Apr 2010 18:45:52 +0100 (BST)
-In-Reply-To: <w2lfabb9a1e1004111034n1aec73f2h3cf5f1d8468b6036@mail.gmail.com>
-X-Sender: julian@quantumfyre.co.uk
-User-Agent: RoundCube Webmail/0.1-rc1
+	id S1752653Ab0DKRqK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Apr 2010 13:46:10 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:47138 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752484Ab0DKRqJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Apr 2010 13:46:09 -0400
+Received: by bwz19 with SMTP id 19so29684bwz.21
+        for <git@vger.kernel.org>; Sun, 11 Apr 2010 10:46:06 -0700 (PDT)
+Received: by 10.204.24.136 with HTTP; Sun, 11 Apr 2010 10:46:06 -0700 (PDT)
+In-Reply-To: <m37hodhp3e.fsf@localhost.localdomain>
+Received: by 10.204.32.196 with SMTP id e4mr3237862bkd.131.1271007966727; Sun, 
+	11 Apr 2010 10:46:06 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144666>
 
-On Sun, 11 Apr 2010 19:34:13 +0200, Sverre Rabbelier
-<srabbelier@gmail.com>
-wrote:
-> Heya,
-> 
-> On Sun, Apr 11, 2010 at 19:30, Julian Phillips
-<julian@quantumfyre.co.uk>
-> wrote:
->> you'll have to tell me what you think.
-> 
-> The patch does look fairly simple, but I worry that not all commands
-> will be so simple, that is, they might not all have such an easy point
-> where you can hook in a different output method? Or am I seeing bears
-> where there are none?
+On Sun, Apr 11, 2010 at 7:33 PM, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+> To not break backward compatibility, wouldn't it be better to check i=
+f
+> elements of @git_base_url_list end with ':' or '/', and join base wit=
+h
+> project path depending on this condition, i.e.:
+>
+> + =C2=A0 =C2=A0 =C2=A0 @url_list =3D map { m/[/:]$/ ? "$_$project" : =
+"$_/$project" } @git_base_url_list
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 unless @url_list;
+>
+> This means: if base ends with colon ':' or slash '/', concatenate bas=
+e
+> and project path, otherwise join them using '/' as field separator.
 
-I think that there probably are commands where it will be more work to
-integrate the output - but I think that is probably more to do with the
-structure of the current code than the API of the new.  Does it make a
-difference what the API of the new output code is if there isn't currently
-a sensible hook-in point?
+Thanks for the review. Indeed this way sounds better.
 
-If code has been written without the expectation that the output format
-could be changed then the effort to add a new output format could be
-considerably more than for status or ls-tree.  However, with the
-frontend/backend design hopefully we only have to endure the effort once to
-get multiple output formats.
+All this is new to me so I'm not sure what is the way forward. Should
+I publish another patch or would you?
 
--- 
-Julian
+Damien Tournoud
