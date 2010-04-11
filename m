@@ -1,135 +1,142 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [RFC/PATCH 2/3] add a library of code for producing structured output
-Date: Sun, 11 Apr 2010 14:03:38 +0100
-Message-ID: <df8300572068e1da19ac8905a3ecaee4@212.159.54.234>
-References: <20100411112928.80010.1786.julian@quantumfyre.co.uk> <20100411113733.80010.3767.julian@quantumfyre.co.uk> <g2z40aa078e1004110551s98e34b74w66c5bcc49538ca45@mail.gmail.com>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: [BUG] - git rebase -i performs rebase when it shouldn't?
+Date: Sun, 11 Apr 2010 10:06:00 -0400
+Message-ID: <y2s76c5b8581004110706p7b63900aqf90f9c1462a1f637@mail.gmail.com>
+References: <z2q76c5b8581004091235ucd9b2a52i223b3191b288c42a@mail.gmail.com>
+	 <20100410042609.GA24295@coredump.intra.peff.net>
+	 <h2x76c5b8581004101510hc1d15f42u7e48dafbc275c998@mail.gmail.com>
+	 <20100411102255.GB20484@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, Eric Raymond <esr@thyrsus.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 11 15:03:49 2010
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Apr 11 16:06:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0wpI-00053h-74
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 15:03:48 +0200
+	id 1O0xnt-0001Hy-PU
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 16:06:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751891Ab0DKNDl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Apr 2010 09:03:41 -0400
-Received: from positron.quantumfyre.co.uk ([213.165.84.138]:35973 "EHLO
-	positron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751861Ab0DKNDk (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Apr 2010 09:03:40 -0400
-Received: from reaper.quantumfyre.co.uk (reaper.quantumfyre.co.uk [212.159.54.234])
-	by positron.quantumfyre.co.uk (Postfix) with ESMTP id 652EB819C6D7;
-	Sun, 11 Apr 2010 14:03:33 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 1F3BD20CF47;
-	Sun, 11 Apr 2010 14:03:39 +0100 (BST)
-X-Virus-Scanned: amavisd-new at reaper
-Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
-	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id b5hk-pe9VbSg; Sun, 11 Apr 2010 14:03:38 +0100 (BST)
-Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id C9F1BA91DC;
-	Sun, 11 Apr 2010 14:03:38 +0100 (BST)
-In-Reply-To: <g2z40aa078e1004110551s98e34b74w66c5bcc49538ca45@mail.gmail.com>
-X-Sender: julian@quantumfyre.co.uk
-User-Agent: RoundCube Webmail/0.1-rc1
+	id S1752019Ab0DKOGF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Apr 2010 10:06:05 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:58914 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751927Ab0DKOGC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Apr 2010 10:06:02 -0400
+Received: by bwz19 with SMTP id 19so314582bwz.21
+        for <git@vger.kernel.org>; Sun, 11 Apr 2010 07:06:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=uU9JXwxjj42qZyrM4YNGfR9nz2/LC2faK3WEbpSxizw=;
+        b=NF3s2kwkPA/JrA0ukAIyReg9NXSnDCb3znoenW9L657zEFI92UY6hclK/PNtu6NgmZ
+         VM3SBhdkq7ResPiIpdpV3ZM98ZU1Ly68hC2pYb2NJkZs2MIs9Sh9GAyNWmMReUy29FZN
+         3f2gLhhvKn0oR+QmhyI5vcsEYAnbIa3bm/F0M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ED1M7REi1vPjR3g/Er0a3cDIhDcCGshW3S733aYbwLvv/jMIBHjKiJnZpf9VxI4uIu
+         1QQFtDB7a3fCq/110UkODAtewWm0s7tKYR4fRHAuQofvZuPSe1hXJcNhYeqiviE/si9w
+         HClzZXK89PtHPywpXKxHPkuqVh/POKrzHwqtg=
+Received: by 10.204.97.202 with HTTP; Sun, 11 Apr 2010 07:06:00 -0700 (PDT)
+In-Reply-To: <20100411102255.GB20484@coredump.intra.peff.net>
+Received: by 10.204.81.145 with SMTP id x17mr3179036bkk.31.1270994761010; Sun, 
+	11 Apr 2010 07:06:01 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144649>
 
-On Sun, 11 Apr 2010 14:51:37 +0200, Erik Faye-Lund
-<kusmabite@googlemail.com> wrote:
-> On Sun, Apr 11, 2010 at 1:37 PM, Julian Phillips
-> <julian@quantumfyre.co.uk> wrote:
->> Add a library that allows commands to produce structured output in a=
-ny
->> of a range of formats using a single API.
->>
->> The API includes an OPT_OUTPUT and handle_output_arg so that the
->> option handling for different commands will be as similar as possibl=
-e.
->>
->> At the moment JSON and XML output options are available - though the
->> XML output is _very_ rudimentary.
->>
->> Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
->> ---
->> =C2=A0Makefile =C2=A0 =C2=A0 =C2=A0| =C2=A0 =C2=A03 +
->> =C2=A0output-json.c | =C2=A0128 ++++++++++++++++++++++++++++++++++
->> =C2=A0output-xml.c =C2=A0| =C2=A0 68 ++++++++++++++++++
->> =C2=A0output.c =C2=A0 =C2=A0 =C2=A0| =C2=A0212
->> +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->> =C2=A0output.h =C2=A0 =C2=A0 =C2=A0| =C2=A0 71 +++++++++++++++++++
->> =C2=A05 files changed, 482 insertions(+), 0 deletions(-)
->> =C2=A0create mode 100644 output-json.c
->> =C2=A0create mode 100644 output-xml.c
->> =C2=A0create mode 100644 output.c
->> =C2=A0create mode 100644 output.h
->>
->> diff --git a/Makefile b/Makefile
->> index 910f471..4ba2a4f 100644
->> --- a/Makefile
->> +++ b/Makefile
->> @@ -576,6 +576,9 @@ LIB_OBJS +=3D merge-recursive.o
->> =C2=A0LIB_OBJS +=3D name-hash.o
->> =C2=A0LIB_OBJS +=3D notes.o
->> =C2=A0LIB_OBJS +=3D object.o
->> +LIB_OBJS +=3D output.o
->> +LIB_OBJS +=3D output-json.o
->> +LIB_OBJS +=3D output-xml.o
->> =C2=A0LIB_OBJS +=3D pack-check.o
->> =C2=A0LIB_OBJS +=3D pack-refs.o
->> =C2=A0LIB_OBJS +=3D pack-revindex.o
->> diff --git a/output-json.c b/output-json.c
->> new file mode 100644
->> index 0000000..0eb66b2
->> --- /dev/null
->> +++ b/output-json.c
->> @@ -0,0 +1,128 @@
->> <snip>
->> +
->> +static void json_str(FILE *file, char *value)
->> +{
->> + =C2=A0 =C2=A0 =C2=A0 char *quoted =3D json_quote(value);
->> + =C2=A0 =C2=A0 =C2=A0 fprintf(file, "\"%s\"", quoted);
->> + =C2=A0 =C2=A0 =C2=A0 free(quoted);
->> +}
->> +
->> <snip>
->> diff --git a/output-xml.c b/output-xml.c
->> new file mode 100644
->> index 0000000..50dd7d6
->> --- /dev/null
->> +++ b/output-xml.c
->> @@ -0,0 +1,68 @@
->> <snip>
->> +
->> +static void xml_str(FILE *file, char *value)
->> +{
->> + =C2=A0 =C2=A0 =C2=A0 fprintf(file, "\"%s\"", value);
->> +}
->> +
->=20
-> Don't you need to quote this one, like you did in json_str()?
+I got your point about the HEAD which is by default get's added to the
+end of the command, so it becomes
 
-Yes.  That would be part of the reason for the "_very_" in the comment =
-=2E..
+git rebase --onto master topic HEAD
 
-As it stands the XML code is more of an example of a second output form=
-at
-than actually usable.  However, since I envision that the frontend/back=
-end
-API probably needs tweaking to accommodate backends other than JSON I
-wanted to get at least one other backend going ...
+I will think about it it more.
 
---=20
-Julian
+I'm pretty sure that i was surprised by the fact that i've got
+different behavior in interactive and non-interactive variants, but i
+will recheck.
+
+I forgot to mention it was in windows version of git.
+I will try to provide the printout of my actions tomorrow when i will
+get to this machine.
+
+Thanks a lot,
+Eugene
+
+On Sun, Apr 11, 2010 at 6:22 AM, Jeff King <peff@peff.net> wrote:
+> On Sat, Apr 10, 2010 at 06:10:53PM -0400, Eugene Sajine wrote:
+>
+>> Actually no, i was not thinking about what you think i was;). What i
+>> was trying to understand with this command (git rebase --onto master
+>> topic) is the behavior of the system when the topic branch is indire=
+ct
+>> descendant of the master and the direct parent of topic (next) is
+>> omitted, skipped.
+>
+> But in "git rebase --onto master topic", the relationship between mas=
+ter
+> and topic is irrelevant. It is the same as:
+>
+> =C2=A0git rebase --onto master topic HEAD
+>
+> which will consider the range between topic and HEAD as the set of
+> commits to rebase.
+>
+> Did you want to do:
+>
+> =C2=A0git rebase --onto master next topic
+>
+> ? That would take the commits between next and topic (i.e., just "top=
+ic"
+> in your example), and rebuild them on top of master.
+>
+>> Now the problem i have is that:
+>>
+>> git rebase -i --onto master topic
+>>
+>> actually worked and did something, what i would not expect it to do.
+>>
+>> So, the problem is: non-interactive rebase DOES NOT execute the
+>> command, interactive DOES execute.
+>
+> That's not the result I get. The non-interactive rebase _does_ do the
+> same thing. Try this:
+>
+> =C2=A0mkdir repo
+> =C2=A0cd repo
+> =C2=A0git init
+>
+> =C2=A0echo content >>file && git add file && git commit -m one
+> =C2=A0git checkout -b next
+> =C2=A0echo content >>file && git add file && git commit -m two
+> =C2=A0git checkout -b topic
+> =C2=A0echo content >>file && git add file && git commit -m three
+>
+> =C2=A0git rebase --onto master topic
+>
+> You will see that "topic" has been reset back to commit one, the same=
+ as
+> master.
+>
+> If that was not happening before, it was likely because you were not
+> actually on the "topic" branch before. So who knows what the implicit
+> "HEAD" argument referred to.
+>
+>> The bug is in the fact that rebase works differently in interactive
+>> and non-interactive variants.
+>
+> I don't think it does, as shown by my example above. If you still thi=
+nk
+> so, please create a short test case that demonstrates the difference.
+>
+> -Peff
+>
