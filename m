@@ -1,68 +1,55 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [ANNOUNCE] Git 1.7.1.rc1
-Date: Sun, 11 Apr 2010 23:49:59 +0200
-Message-ID: <m2vdbxveuw.fsf@igel.home>
-References: <7vmxxar5h7.fsf@alter.siamese.dyndns.org>
-	<y2i51dd1af81004110908mcf6ce8cahf04225d7c261a85b@mail.gmail.com>
-	<m2pr26c4jt.fsf@igel.home>
-	<s2s51dd1af81004111014za26552e9vba2dd629675d1c1d@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH jl/maint-submodule-gitfile-awareness] Windows: start_command:
+ Support non-NULL dir in struct child_process
+Date: Sun, 11 Apr 2010 23:51:13 +0200
+Message-ID: <4BC24451.8010304@web.de>
+References: <7vmxxar5h7.fsf@alter.siamese.dyndns.org> <loom.20100411T174751-103@post.gmane.org> <4BC233AC.3090603@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 11 23:50:12 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?B?Wm9sdMOhbkbDvHplc2k=?= <zfuzesi@eaglet.hu>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sun Apr 11 23:51:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O152h-0001EI-TV
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 23:50:12 +0200
+	id 1O153u-0001Zb-46
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 23:51:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753023Ab0DKVuF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Apr 2010 17:50:05 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:59305 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752388Ab0DKVuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Apr 2010 17:50:04 -0400
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id 934601C15668;
-	Sun, 11 Apr 2010 23:50:02 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id 8AFB89029E;
-	Sun, 11 Apr 2010 23:50:02 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.3.149])
-	by localhost (dynscan1.mnet-online.de [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id nq0sPhjiEQJY; Sun, 11 Apr 2010 23:50:01 +0200 (CEST)
-Received: from igel.home (ppp-88-217-112-45.dynamic.mnet-online.de [88.217.112.45])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Sun, 11 Apr 2010 23:50:01 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 3E401CA297; Sun, 11 Apr 2010 23:50:01 +0200 (CEST)
-X-Yow: I joined scientology at a garage sale!!
-In-Reply-To: <s2s51dd1af81004111014za26552e9vba2dd629675d1c1d@mail.gmail.com>
-	(=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 11 Apr
- 2010 17:14:30
-	+0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.95 (gnu/linux)
+	id S1753066Ab0DKVvV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Apr 2010 17:51:21 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:60442 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753040Ab0DKVvU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Apr 2010 17:51:20 -0400
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 7B89515D8B700;
+	Sun, 11 Apr 2010 23:51:18 +0200 (CEST)
+Received: from [80.128.50.239] (helo=[192.168.178.26])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #4)
+	id 1O153m-0000tR-00; Sun, 11 Apr 2010 23:51:18 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <4BC233AC.3090603@kdbg.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18Nvl19FebaYiZHrBNQUnJeixQFoUvnNxBdUoyR
+	fw1IHUrEKrEDQ8hZLVy7hOf2hbVbw2lmHKogeXPyrKLDYc82hs
+	r5KBbPPJLq2bGVobFo3g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144689>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Am 11.04.2010 22:40, schrieb Johannes Sixt:
+> A caller of start_command can set the member 'dir' to a directory to
+> request that the child process starts with that directory as CWD. The first
+> user of this feature was added recently in eee49b6 (Teach diff --submodule
+> and status to handle .git files in submodules).
+> 
+> On Windows, we have been lazy and had not implemented support for this
+> feature, yet. This fixes the shortcoming.
 
-> The original error is going to be in user-manual.txt.
-
-Or the way asciidoc works.
-
-Andreas.
-
---=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+Thanks, I didn't know this was missing from the Windows port.
