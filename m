@@ -1,80 +1,75 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [ANNOUNCE] Git 1.7.1.rc1
-Date: Sun, 11 Apr 2010 16:08:27 +0000
-Message-ID: <y2i51dd1af81004110908mcf6ce8cahf04225d7c261a85b@mail.gmail.com>
-References: <7vmxxar5h7.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git pull suggestion
+Date: Sun, 11 Apr 2010 18:33:22 +0200
+Message-ID: <vpq4ojit0dp.fsf@bauges.imag.fr>
+References: <r2x3abd05a91004071617z9ffd6e02v83d825405bb6ef1@mail.gmail.com>
+	<201004081754.24954.trast@student.ethz.ch>
+	<p2x3abd05a91004081233j77b7177bm5928913a64de0e57@mail.gmail.com>
+	<20100408231154.GB13704@vidovic>
+	<v2r3abd05a91004082006v74e243f2x33b500f2f6dadc9f@mail.gmail.com>
+	<20100409034911.GA4020@coredump.intra.peff.net>
+	<i2y3abd05a91004091233nc11ee5f8m4f40e7451e02518a@mail.gmail.com>
+	<20100410043535.GA22481@coredump.intra.peff.net>
+	<m2v3abd05a91004102301i95bf7091ib2bd9da5e8a208c1@mail.gmail.com>
+	<7vaataphi7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Aghiles <aghilesk@gmail.com>, Jeff King <peff@peff.net>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Thomas Rast <trast@student.ethz.ch>,
+	git list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 11 18:08:36 2010
+X-From: git-owner@vger.kernel.org Sun Apr 11 18:37:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O0zi7-0006gF-IF
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 18:08:35 +0200
+	id 1O109t-0007un-Pp
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Apr 2010 18:37:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752150Ab0DKQI3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Apr 2010 12:08:29 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:32908 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752137Ab0DKQI2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Apr 2010 12:08:28 -0400
-Received: by bwz19 with SMTP id 19so46687bwz.21
-        for <git@vger.kernel.org>; Sun, 11 Apr 2010 09:08:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=aC5NqMvVYcJbG5TJaZZEJMX3SB60gUUmYLsLugW2ce0=;
-        b=pjRUAMSViQD+T7BoRK61ChMChjk4B+txWCWY7AHCyu4aFB73cxrqjNuNr7SmjYIWWL
-         a50DqHgdyAlJyYsLbey4a2NCcU/Me1WnyQJAlloenDQwpKw6MzEQHLw9KDwNe74X76DN
-         66sV4SFjVDmSFFbOtE+89H6Ct+cEZ5p/BzA8I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=nxVpWS+xUtG5GQDH1TYC/87jxrus7TsVkoUv68DD+LvZ1zbaAS1fZefJX3hVWmB6BH
-         w++hXXOvsH93gpjBXIg5KGu2aw3XIsm1hDkBbC9j/7rleM5FqX7Xnv0pcue+XfG03eJt
-         wbJ0qXXIdAeOIe3t1Q03Uu4krdGcYvupYQXZk=
-Received: by 10.204.121.195 with HTTP; Sun, 11 Apr 2010 09:08:27 -0700 (PDT)
-In-Reply-To: <7vmxxar5h7.fsf@alter.siamese.dyndns.org>
-Received: by 10.204.9.6 with SMTP id j6mr3390523bkj.37.1271002107538; Sun, 11 
-	Apr 2010 09:08:27 -0700 (PDT)
+	id S1752173Ab0DKQhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Apr 2010 12:37:10 -0400
+Received: from imag.imag.fr ([129.88.30.1]:59250 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752162Ab0DKQhJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Apr 2010 12:37:09 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o3BGXMxD011747
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 11 Apr 2010 18:33:22 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1O1066-00071b-NH; Sun, 11 Apr 2010 18:33:22 +0200
+In-Reply-To: <7vaataphi7.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Sun\, 11 Apr 2010 00\:37\:04 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 11 Apr 2010 18:33:24 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144656>
 
-On Sun, Apr 11, 2010 at 04:13, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> A release candidate Git 1.7.1.rc1 is available at the usual places
-> for testing:
+Junio C Hamano <gitster@pobox.com> writes:
 
-This is a minor nit but when I generate the info docs from master I
-get this at the top of user-manual.texi:
+> git does _not_ implement a handy Porcelain to do this, but we could script
+> it like this (I am only illustrating that it can be done, but I am leaving
+> the reason why git chooses not to to a later part of this message).
 
-    @menu
-    * : id2860714.
-    * Repositories and Branches::
-    * Exploring git history::
-    * Developing with git::
+Actually, another way to do this is
 
-I can't find what produces that token but here are all occurrences of i=
-t:
+git commit -a
+git rebase origin/where-you-want-to-merge-from
+git reset HEAD^
 
-  4 matches for "id2860714" in buffer: user-manual.texi
-     10:@node Top, id2860714, , (dir)
-     15:* : id2860714.
-    130:@node id2860714, Repositories and Branches, Top, Top
-    171:@node Repositories and Branches, Exploring git history, id28607=
-14, Top
+That would not necessarily be a good way to implement a command, but I
+often use variants of this interactively.
 
-This bug results in an empty list item when viewing the Git User=E2=80=99=
-s
-Manual with info.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
