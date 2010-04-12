@@ -1,59 +1,62 @@
-From: Eric Raymond <esr@thyrsus.com>
-Subject: Re: [RFC/PATCH v2 0/4] A new library for plumbing output
-Date: Sun, 11 Apr 2010 20:46:26 -0400
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20100412004625.GA19373@thyrsus.com>
-References: <20100411231824.67460.24844.julian@quantumfyre.co.uk>
- <l2jfabb9a1e1004111635v16e4dc86g405883ca12d316b9@mail.gmail.com>
-Reply-To: esr@thyrsus.com
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] - git rebase -i performs rebase when it shouldn't?
+Date: Sun, 11 Apr 2010 21:01:23 -0400
+Message-ID: <20100412010123.GA11051@coredump.intra.peff.net>
+References: <z2q76c5b8581004091235ucd9b2a52i223b3191b288c42a@mail.gmail.com>
+ <4BC0D87E.70001@kdbg.org>
+ <20100411101526.GA20484@coredump.intra.peff.net>
+ <201004111954.38156.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org,
-	Jakub Narebsk <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 12 02:46:44 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Apr 12 03:02:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O17nX-00027u-B0
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 02:46:43 +0200
+	id 1O182T-0005ME-7O
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 03:02:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753279Ab0DLAq1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Apr 2010 20:46:27 -0400
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:42527
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753212Ab0DLAq0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Apr 2010 20:46:26 -0400
-Received: by snark.thyrsus.com (Postfix, from userid 23)
-	id 09BC720CD3D; Sun, 11 Apr 2010 20:46:26 -0400 (EDT)
+	id S1753290Ab0DLBBu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Apr 2010 21:01:50 -0400
+Received: from peff.net ([208.65.91.99]:35772 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753212Ab0DLBBt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Apr 2010 21:01:49 -0400
+Received: (qmail 11999 invoked by uid 107); 12 Apr 2010 01:01:50 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 11 Apr 2010 21:01:50 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 11 Apr 2010 21:01:23 -0400
 Content-Disposition: inline
-In-Reply-To: <l2jfabb9a1e1004111635v16e4dc86g405883ca12d316b9@mail.gmail.com>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <201004111954.38156.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144701>
 
-Sverre Rabbelier <srabbelier@gmail.com>:
-> On Mon, Apr 12, 2010 at 01:21, Julian Phillips <julian@quantumfyre.co=
-=2Euk> wrote:
-> > Probably the biggest change from v1 is an expanded aim. =A0Now the
-> > output library is aimed at controlling _all_ plubming
-> > output. =A0This series includes a patch for ls-tree that has all
-> > it's output going through the library, and a patch for status that
-> > has all the --porcelain output going through the library.
->=20
-> I like where this is going, a lot, especially since we don't have to
-> convert everything in one go, but we can do it as desired, similar to
-> optparsification.
+On Sun, Apr 11, 2010 at 07:54:37PM +0200, Johannes Sixt wrote:
 
-Speaking as a major customer for the new capabilities it will enable,
-I strongly concur.
---=20
-		<a href=3D"http://www.catb.org/~esr/">Eric S. Raymond</a>
+> On Sonntag, 11. April 2010, Jeff King wrote:
+> > Good point. Originally, we did the rebase directly on the branch, though
+> > I'm not sure if we did "checkout $branch && reset $onto" or "branch -f
+> > $branch $onto && checkout $branch". These days we operate on a detached
+> > HEAD, and we seem to "checkout $onto^0", which should do the
+> > optimization you mention.
+> 
+> But before this "checkout $onto^0" happens, some (all?) variants still 
+> do "checkout topic && rev-list upstream..HEAD" instead of just "rev-list 
+> upstream..topic".
+
+I don't think this is the case any longer for regular rebase, from my
+reading of the code and doing a rebase under GIT_TRACE. Grepping the
+history turns up 0cb0664 (rebase [--onto O] A B: omit needless checkout,
+2008-03-15).
+
+But doing an interactive rebase under GIT_TRACE, it looks like it still
+does the unnecessary checkout.
+
+-Peff
