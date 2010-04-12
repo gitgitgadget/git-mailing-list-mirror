@@ -1,81 +1,97 @@
-From: Wincent Colaiuta <win@wincent.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Is it possible to have a file shared between branches?
-Date: Mon, 12 Apr 2010 11:36:16 +0200
-Message-ID: <95BBC559-1EDC-4BF8-98A2-05729BFCCA1D@wincent.com>
+Date: Mon, 12 Apr 2010 03:07:49 -0700 (PDT)
+Message-ID: <m3ljctf0hs.fsf@localhost.localdomain>
 References: <alpine.OSX.2.01.1004121058390.52293@kroll.spectro.jussieu.fr>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Eric LEBIGOT <Eric.Lebigot@normalesup.org>
-X-From: git-owner@vger.kernel.org Mon Apr 12 11:52:31 2010
+X-From: git-owner@vger.kernel.org Mon Apr 12 12:08:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1GJh-0003AD-1a
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 11:52:29 +0200
+	id 1O1GYg-0007zt-8i
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 12:07:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753410Ab0DLJwX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Apr 2010 05:52:23 -0400
-Received: from outmail148115.authsmtp.co.uk ([62.13.148.115]:61188 "EHLO
-	outmail148115.authsmtp.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752961Ab0DLJwW convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Apr 2010 05:52:22 -0400
-X-Greylist: delayed 953 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Apr 2010 05:52:22 EDT
-Received: from mail-c193.authsmtp.com (mail-c193.authsmtp.com [62.13.128.118])
-	by punt2.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id o3C9aPxC090422;
-	Mon, 12 Apr 2010 09:36:25 GMT
-Received: from zenyatta.unixhosts.net (ec2-184-73-234-210.compute-1.amazonaws.com [184.73.234.210])
-	(authenticated bits=128)
-	by mail.authsmtp.com (8.14.2/8.14.2) with ESMTP id o3C9aNXa087030
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 12 Apr 2010 10:36:24 +0100 (BST)
-Received: from [192.168.1.6] (25.Red-83-60-136.dynamicIP.rima-tde.net [83.60.136.25] (may be forged))
-	(authenticated bits=0)
-	by zenyatta.unixhosts.net (8.14.2/8.14.2) with ESMTP id o3C9aH6u026070
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 12 Apr 2010 05:36:21 -0400
+	id S1753440Ab0DLKHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Apr 2010 06:07:53 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:61544 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752282Ab0DLKHw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Apr 2010 06:07:52 -0400
+Received: by bwz19 with SMTP id 19so2537bwz.21
+        for <git@vger.kernel.org>; Mon, 12 Apr 2010 03:07:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=ZMZ121oWdfmFyx8LUGzfjXTO8te3D5tpLLwD4N9omrs=;
+        b=lPHk4zxMP9atrOHNokcYqwuObGvyTCPAUEjE8n7+yTg+Ngk6UcEKbED++eH+/La6M3
+         r9wohtSusGJb8CifGjHbS9ot1RPhKkDO4F7EfZBg0uTN0/l8KNVUicr36Uyb1VgLFzDl
+         J/lHupePotO1JBvBZe5IssvHf5gyJHqoFGGNk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=AcFKLo7e1fIG9LkwTwTXxEK2+JH5rqPgpOe6apVxKejSO2v/OAcfHZObNqb0Zr6FRz
+         iOB397hDmOrE3b3Yxs/MquL6wGFFpPO8wrjxMhcf/PqBmtJ0HgQEn9ZD8oxXhU9Q1iKN
+         bIrDNKFRpJwAWFhMT00yxqki7xvIO3uNGV1Bo=
+Received: by 10.103.48.12 with SMTP id a12mr1879310muk.14.1271066870420;
+        Mon, 12 Apr 2010 03:07:50 -0700 (PDT)
+Received: from localhost.localdomain (abvy192.neoplus.adsl.tpnet.pl [83.8.222.192])
+        by mx.google.com with ESMTPS id s11sm16330947mue.41.2010.04.12.03.07.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 12 Apr 2010 03:07:49 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o3CA7BIn023128;
+	Mon, 12 Apr 2010 12:07:21 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o3CA6t0L023124;
+	Mon, 12 Apr 2010 12:06:55 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
 In-Reply-To: <alpine.OSX.2.01.1004121058390.52293@kroll.spectro.jussieu.fr>
-X-Mailer: Apple Mail (2.1078)
-X-Server-Quench: dc59bf9d-4616-11df-97bb-002264978518
-X-AuthReport-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
-X-AuthRoute: OCd3ZggRAFZKTQIy FSICByJGVUMuIRha BAIHMQpCJFdJD0VH axwdB0JJdwdEHAkR AmYBWFJeUlk/WGtx dQ1ScwdeZlRMXgV1 Uk1WQxwNF3ZhUGJp Vx4WVRlxd0tDf3h5 KxIxW3kJCk0uaEJ7 Q0hJFGxSM3ppbzJN TUBYdQFSdApNdhpE Yh4dAXkdGCYXPz5w BwgoJDE7OTgXNCMd QggTIBobCUgKGjN0 XBALBzgjVUcIWzo+ IhpuIEQVGk0RP15l WQAA
-X-Authentic-SMTP: 61633436303433.1014:706/Kp
-X-AuthFastPath: 0 (Was 255)
-X-AuthVirus-Status: No virus detected - but ensure you scan with your own anti-virus system.
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144720>
 
-El 12/04/2010, a las 11:10, Eric LEBIGOT escribi=F3:
+Eric LEBIGOT <Eric.Lebigot@normalesup.org> writes:
 
-> Hello,
->=20
-> Is it possible for git to track a single file that would be shared ac=
-cross branches?  Case in point: a to-do list file that describes what h=
-as to be done in all the branches; it can be convenient to put all the =
-things that have to be done in a single, shared file, while keeping thi=
-s to-do list in sync with the code (so that it lists what has been done=
-, and what remains to be done).  Committing in a branch would in effect=
- also commit the shared file in the other branches (another possibility=
- may be to have in effect many "trees" in a single git directory, with =
-a specific tree for the to-do list).
->=20
+> Is it possible for git to track a single file that would be shared
+> accross branches?  Case in point: a to-do list file that describes
+> what has to be done in all the branches; it can be convenient to put
+> all the things that have to be done in a single, shared file, while
+> keeping this to-do list in sync with the code (so that it lists what
+> has been done, and what remains to be done).  Committing in a branch
+> would in effect also commit the shared file in the other branches
+> (another possibility may be to have in effect many "trees" in a single
+> git directory, with a specific tree for the to-do list).
+> 
 > Is this something git can do?
 
-Not exactly.
+Look how it is done in git.git repository.  If I remember it
+correctly, Junio manages separate small repository inside
+non-versioned Meta/ directory inside git.git checkout, which contains
+TODO list and some scripts to help maintenance (e.g. to help generate
+"What's in..." and "What's cooking..." emails).  
 
-The way I'd do this is to put that kind of "meta" file in a branch of i=
-ts own.
+For distribution this repository is pushed into independent 'todo'
+branch in git.git repository.  It doesn't share commits with other
+"normal" branches, i.e. 'maint', 'master', 'next', 'pu'.
 
-Look at the git.git repo itself for an example of a repo with a few bra=
-nches (todo, html, and man) that are independent of the actual developm=
-ent branches (master, maint, next, pu).
+The 'todo' branch can be seen e.g. here:
+  http://git.kernel.org/?p=git/git.git;a=shortlog;h=refs/heads/todo
 
-Cheers,
-Wincent
+The history of TODO file can be viewed e.g. here:
+  http://git.kernel.org/?p=git/git.git;a=history;f=TODO;hb=refs/heads/todo
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
