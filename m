@@ -1,127 +1,116 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pretty: Initialize notes if %N is used
-Date: Mon, 12 Apr 2010 04:56:47 -0400
-Message-ID: <20100412085647.GA26840@coredump.intra.peff.net>
-References: <20100410220843.GA29987@coredump.intra.peff.net>
- <1270997662-25430-1-git-send-email-heipei@hackvalue.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Local unset override global options
+Date: Mon, 12 Apr 2010 01:53:01 -0700 (PDT)
+Message-ID: <m3pr25f3ye.fsf@localhost.localdomain>
+References: <z2kfbd9d3991004092354y21d3ac3fgf1f0675cdb5c51a8@mail.gmail.com>
+	<4BC2D61B.7050902@drmicha.warpmail.net>
+	<n2ifbd9d3991004120123p7b08a8a2wee380454e9fe9a1d@mail.gmail.com>
+	<4BC2D9B5.6070400@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git ML <git@vger.kernel.org>, Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Gilger <heipei@hackvalue.de>
-X-From: git-owner@vger.kernel.org Mon Apr 12 10:57:24 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 12 11:01:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1FSM-0001wT-Nj
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 10:57:23 +0200
+	id 1O1FWB-0003N3-VI
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 11:01:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753127Ab0DLI5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Apr 2010 04:57:16 -0400
-Received: from peff.net ([208.65.91.99]:42964 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753270Ab0DLI5P (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Apr 2010 04:57:15 -0400
-Received: (qmail 17362 invoked by uid 107); 12 Apr 2010 08:57:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 12 Apr 2010 04:57:16 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Apr 2010 04:56:47 -0400
-Content-Disposition: inline
-In-Reply-To: <1270997662-25430-1-git-send-email-heipei@hackvalue.de>
+	id S1753406Ab0DLJBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Apr 2010 05:01:14 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:60750 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753385Ab0DLJBN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Apr 2010 05:01:13 -0400
+Received: by bwz19 with SMTP id 19so2825bwz.21
+        for <git@vger.kernel.org>; Mon, 12 Apr 2010 02:01:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=d/8x7B0atSrO9S/7WIVNMSyDSmH4URuK64iJ79wALTY=;
+        b=t+Uv/y3dQBzv7WJ8JJmvGReIQVBJTMz07eSsX1r/F7hTgT1DehEJBwLTH0zNkvxifq
+         hirfQe8MsuRaMwCp9m/xGqRnLv8djxx3Vi0GwveRBOht1eLkIiPK98yHWywgdvSLWQ+l
+         aGUOSKx4AYBRNCB5M7DkHjOejoWUIEWxhgkwo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=Odt/JgE3OMc5nYh4b7vrp92TCKviOLKHT0vTCKaCBYGf1xezWtUyaCF5yJ8vEoH0H1
+         AV9AWNFke4DDSN9RFs4xnTKPttPgAVTqPPQj8NsFcRSHbtqT0fVYtL2vJRobz7iozW36
+         cW0JYCduuhu9zyCRfZWzk8cTLN5jpiJl0L00w=
+Received: by 10.204.25.145 with SMTP id z17mr4342924bkb.181.1271062382191;
+        Mon, 12 Apr 2010 01:53:02 -0700 (PDT)
+Received: from localhost.localdomain (abvy192.neoplus.adsl.tpnet.pl [83.8.222.192])
+        by mx.google.com with ESMTPS id 15sm1655288bwz.8.2010.04.12.01.53.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 12 Apr 2010 01:53:01 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o3C8qRu9022080;
+	Mon, 12 Apr 2010 10:52:37 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o3C8qBJs022075;
+	Mon, 12 Apr 2010 10:52:11 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4BC2D9B5.6070400@drmicha.warpmail.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144716>
 
-On Sun, Apr 11, 2010 at 04:54:22PM +0200, Johannes Gilger wrote:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
+> Stefan Hajnoczi venit, vidit, dixit 12.04.2010 16:23:
+>> On Mon, Apr 12, 2010 at 9:13 AM, Michael J Gruber
+>> <git@drmicha.warpmail.net> wrote:
+>>
+>>> have you tried setting it to an empty value?
+>> 
+>> Yes I have tried it.  An empty string causes the SMTP auth Perl module
+>> to choke.  It expects a non-empty username and exits with an error.
+>> 
+>> On my system I have patched git-send-email to perform this check:
+>> 
+>> if (defined $smtp_authuser and length $smtp_authuser) {
+>> 
+>> This works but feels like a hack.  I think unset override could be
+>> useful for any git config option, not just sendemail.smtpuser.
+>> 
+>> I'm not familiar with git internals; do you have other suggestions for
+>> solving this issue?
+> 
+> I don't think it's possible to ignore/unset a specific global config
+> value right now, you can only change the path where that is looked for.
+> I see two ways to go forward:
+> 
+> - Change users of the config (such as git-send-email) to treat empty
+> values as unset values.
+> 
+> - Introduce a special value "unset" for config options.
 
-> something like this? I didn't see why userformat_fill_want had to have an extra
-> argument for the format, since the user_format variable is static in pretty.c.
+How does special case of no value, i.e.
 
-Yes, this is getting closer.
+   [sendemail]
+        smtpuser
 
-The reason to take the format argument is that there are places which
-call format_commit_message() with an arbitrary string. We would want
-them to be able to call userformat_fill_want(), too (right now, I don't
-think any of them should need it, though).
+rather than using empty value
 
-Maybe it should take a format string, and use the user_format string if
-you pass NULL?
+   [sendemail]
+        smtpuser = ""
 
-> Sorry for the many very different patches to the bug, as you can see I'm not
-> really familiar with best-practices in git.git.
+work?
 
-Not at all. Sometimes seemingly simple bugs end up raising a whole host
-of other issues. I am glad you are sticking around to help come up with
-a good solution.
+Also if we assume that nobody needs to have support for
+sendemail.smtpuser = 0, the condition could be simplified to
 
-> diff --git a/builtin/log.c b/builtin/log.c
-> index b706a5f..f8f5d22 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -58,7 +58,11 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
->  		usage(builtin_log_usage);
->  	argc = setup_revisions(argc, argv, rev, opt);
->  
-> -	if (!rev->show_notes_given && !rev->pretty_given)
-> +	struct userformat_want w;
+  if ($smtp_authuser) {
 
-Don't declare variables in the middle of a function. It's a C99-ism that
-we avoid for older compilers.
-
-> +	if (rev->commit_format == CMIT_FMT_USERFORMAT)
-> +		userformat_fill_want(&w);
-> +
-> +	if (!rev->show_notes_given && (!rev->pretty_given || w.notes))
->  		rev->show_notes = 1;
-
-Hmm. If we didn't get a userformat, what will be in w? It will be random
-cruft from the stack, because we didn't call userformat_fill_want.
-
-You can just call it unconditionally, and it should do the right thing
-with a NULL user_format.
-
-> +void userformat_fill_want(struct userformat_want *w)
-> +{
-> +	if (!user_format)
-> +		return;
-> +	struct strbuf dummy = STRBUF_INIT;
-> +	memset(w, 0, sizeof(*w));
-> +	strbuf_expand(&dummy, user_format, userformat_want_item, w);
-> +	strbuf_release(&dummy);
-> +}
-
-This does nothing with a NULL user_format. It should probably still do
-the memset() to indicate that nothing is wanted (otherwise the caller
-has to be sure to initialize w themselves if they think user_format
-might be NULL).
-
-So combined with my above suggestion:
-
-  void userformat_fill_want(const char *s, struct userformat_want *w)
-  {
-          struct strbuf dummy = STRBUF_INIT;
-          memset(w, 0, sizeof(*w));
-          if (!s) {
-                  if (!user_format)
-                          return;
-                  s = user_format;
-          }
-          strbuf_expand(&dummy, user_format, userformat_want_item, w);
-          strbuf_release(&dummy);
-  }
-
-and then you can just call
-
-  userformat_fill_want(NULL, w);
-
-safely from log.c (you don't even need to check rev->commit_format).
-
-Also, even though I picked the name, userformat_fill_want is kind of a
-lousy name. It was the best I could come up with, but maybe somebody has
-a better suggestion.
-
--Peff
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
