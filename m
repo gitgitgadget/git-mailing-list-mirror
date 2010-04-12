@@ -1,113 +1,96 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Local unset override global options
-Date: Mon, 12 Apr 2010 23:07:21 +0200
-Message-ID: <201004122307.22836.jnareb@gmail.com>
-References: <z2kfbd9d3991004092354y21d3ac3fgf1f0675cdb5c51a8@mail.gmail.com> <201004121902.08345.jnareb@gmail.com> <7vvdbwk004.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git pull suggestion
+Date: Mon, 12 Apr 2010 14:35:23 -0700
+Message-ID: <7vpr24jqw4.fsf@alter.siamese.dyndns.org>
+References: <r2x3abd05a91004071617z9ffd6e02v83d825405bb6ef1@mail.gmail.com>
+ <201004081754.24954.trast@student.ethz.ch>
+ <p2x3abd05a91004081233j77b7177bm5928913a64de0e57@mail.gmail.com>
+ <20100408231154.GB13704@vidovic>
+ <v2r3abd05a91004082006v74e243f2x33b500f2f6dadc9f@mail.gmail.com>
+ <20100409034911.GA4020@coredump.intra.peff.net>
+ <i2y3abd05a91004091233nc11ee5f8m4f40e7451e02518a@mail.gmail.com>
+ <20100410043535.GA22481@coredump.intra.peff.net>
+ <m2v3abd05a91004102301i95bf7091ib2bd9da5e8a208c1@mail.gmail.com>
+ <7vaataphi7.fsf@alter.siamese.dyndns.org>
+ <s2m3abd05a91004121318x22b1f712tdd5600ad656c6b13@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Stefan Hajnoczi <stefanha@gmail.com>, git@vger.kernel.org,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 12 23:07:56 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Thomas Rast <trast@student.ethz.ch>,
+	git list <git@vger.kernel.org>
+To: Aghiles <aghilesk@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 12 23:35:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1QrK-0000oG-1S
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 23:07:54 +0200
+	id 1O1RIK-0004n3-Bp
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 23:35:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753846Ab0DLVHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Apr 2010 17:07:48 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:5506 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753633Ab0DLVHs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Apr 2010 17:07:48 -0400
-Received: by fg-out-1718.google.com with SMTP id 22so1166143fge.1
-        for <git@vger.kernel.org>; Mon, 12 Apr 2010 14:07:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=ZKFAnp/quuNWxVzdBKd4EU3+rGfB8VVVoVG53G86KfQ=;
-        b=Bzq+1vAAUHWHYtmeGeLmu+LIksOj+wTm9XvuQ+P6l880mQh8ywEbgN5OXXRTblGOfr
-         DOJaJVrgOua2goX4pwpfoYl0FyeCB6Wd9KITSyyGJ2HzRUAT0juevG7jCtzPRM9pf1BC
-         WP2iODJDMT+8ct4E6IC3MVUG/AnNIBW3a0vuU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=llAs80EG1u2vnbp3eNDiK5jdsLcCsk4SPxUOupWGxiUhUtK8OxtR6Dy4QxjPult1Vv
-         q2U2WxNBY4Uxc2vJNg/abtjkbJXoQkUwRZL+YfjJ8hX4sSksaO25XzAkth6GkzkBwrvm
-         FjqEphZZND91Ief9WPeRTyiDlOhBDZ0Yc3dUI=
-Received: by 10.223.68.13 with SMTP id t13mr2871067fai.69.1271106450214;
-        Mon, 12 Apr 2010 14:07:30 -0700 (PDT)
-Received: from [192.168.1.13] (abvy192.neoplus.adsl.tpnet.pl [83.8.222.192])
-        by mx.google.com with ESMTPS id 19sm565369fkr.9.2010.04.12.14.07.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 12 Apr 2010 14:07:28 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vvdbwk004.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1754035Ab0DLVfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Apr 2010 17:35:42 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44570 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753757Ab0DLVfl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Apr 2010 17:35:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BEBF3AA5A2;
+	Mon, 12 Apr 2010 17:35:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; s=sasl; bh=20UL5Vrda71/MuwhLuZo6JXlnxY=; b=rBH3WX
+	We+xsJ+hvA2Qc4z+aWT1gTXCEjmSerecyJ8IFAo5+6sO4HujNVVb3ijR/OcnRH2T
+	vqnoYQAjAJPkySifNK72Hx3JVscvJFk/T5Tlvw8kc57tohGja5/ScR4Zfk88AScR
+	i664WP455RhvOtMeSzwuFVN2o2gDDL7tTTaTQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NP9OXUdSb9IQrF6gLgZ/iQPUxabn+Ke+
+	Pb9Cd1H4M7AteUeGX3/FrF14iD+aDY2L9nCpD6Ry7jlirICQGSMLwzfVNeyNsS+e
+	obNiuyYSAdP1lEgdy3d5+g22QcHtjtWuW6MAyq/B3CwhIVi/g5dhxLQWO5EpeKi7
+	lXE3w8cd/YE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 44600AA59A;
+	Mon, 12 Apr 2010 17:35:33 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0F7E1AA590; Mon, 12 Apr
+ 2010 17:35:24 -0400 (EDT)
+In-Reply-To: <s2m3abd05a91004121318x22b1f712tdd5600ad656c6b13@mail.gmail.com>
+ (Aghiles's message of "Mon\, 12 Apr 2010 16\:18\:23 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 5306FDB0-467B-11DF-B74F-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144769>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > Junio C Hamano wrote:
-> >> Jakub Narebski <jnareb@gmail.com> writes:
-> >> 
-> >> > How does special case of no value, i.e.
-> >> >
-> >> >    [sendemail]
-> >> >         smtpuser
-> >> 
-> >> That is not a special case; that is "boolean true".
-> >
-> > Well, it is "boolean true" *if* git-config is used with '--bool'.
-> >
-> > If git-send-email.perl used "git config -l -z" to read all its config 
-> > variables at once into hash, like gitweb.perl does in the 
-> > git_parse_project_config() subroutine, it would be able to distinguish 
-> > between those the case of no value:
-> >
-> >     [sendemail]
-> >          smtpuser
-> 
-> If sendemail is ever re-written in C and use git_config() API, the above
-> will become boolean.
+Aghiles <aghilesk@gmail.com> writes:
 
-Isn't this only for git_config_bool and the like... oh, I see that
-git_config_string does not consider no value case proper string value,
-and warns that it is suitable only for boolean variables:
+> On Sun, Apr 11, Junio C Hamano <gitster@pobox.com> wrote:
+>> ...
+>>
+>> The other answer would initially appear a bit sad, but after you think
+>> about it, it would turn into an enlightenment, especially for people whose
+>> brains have rotten from years and years of CVS/SVN use.
+>
+> My brain was rotten even _before_ CVS/SVN use, so you can picture
+> the damage.
 
-   if (!value)
-                return config_error_nonbool(var);
+Please don't take that too seriously; it was just me imitating these:
 
-> Besides, even if you are sticking to sendemail.perl 
-> forever, you are still inventing another convention that "boolean true
-> means no I don't want it".  And it is clearly a lot less intuitive than
-> "empty means no I don't want it", isn't it?
+    http://www.youtube.com/watch?v=4XpnKHJAok8
+    https://git.wiki.kernel.org/index.php/LinusTalk200705Transcript
 
-True, after thinking a bit about this using no value to unset is 
-a horrible, horrible hack.  git-send-email should be corrected to not
-only check that there is value from config or command line option, but
-also that it is sane (i.e. non-empty, or simply true-ish if we say
-that smtpuser = "0" is not something we need to worry about supporting).
+;-)
 
+>> ... so I'll leave that as an exercise
+>> to the readers but will leave a pictorial hint.
+>
+> Before I start thinking I already have a question (which says a lot about
+> my thinking capacity): can't git detect this problematic case?
 
-About ORIGINAL problem: I think it can be done by setting different
-identities, and just switching them using sendemail.identity; for some
-of those identities sendemail.<identity>.smtpuser can be not set.
-
--- 
-Jakub Narebski
-Poland
+The pictorial hint is to illustrate that the case is not necessarily
+problematic.
