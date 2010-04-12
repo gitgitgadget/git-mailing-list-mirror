@@ -1,64 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tests: add some script lint checks
-Date: Mon, 12 Apr 2010 00:41:45 -0700
-Message-ID: <7vochpm81y.fsf@alter.siamese.dyndns.org>
-References: <20100412065234.GA12462@coredump.intra.peff.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Local unset override global options
+Date: Mon, 12 Apr 2010 16:13:15 +0800
+Message-ID: <4BC2D61B.7050902@drmicha.warpmail.net>
+References: <z2kfbd9d3991004092354y21d3ac3fgf1f0675cdb5c51a8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 12 09:42:04 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Stefan Hajnoczi <stefanha@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 12 10:13:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1EHT-0001Ip-Mb
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 09:42:04 +0200
+	id 1O1Eln-0002dh-QW
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 10:13:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752611Ab0DLHl5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Apr 2010 03:41:57 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42540 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751739Ab0DLHl4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Apr 2010 03:41:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 360DCA9B34;
-	Mon, 12 Apr 2010 03:41:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ag7Rh9vujqcrI7xyUF2OuqRNQBA=; b=KpA6bV
-	jgkP1dF+Vz+410MUsYCkYnR5tLIDZ5TluLF87t0A3G4GBDmQHazrwgr7wXCt0X53
-	aNaH9JDRGjmLyPhPky80LypXiBiVzwcfDf9upf2ly4UQNYQbRtqKKrJ1QhCXBcCa
-	/fm4QIddr/lsKeLV2cQ6Ba6cRNpPni97E1BC0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PmAj3FFq9bC+tRgYQ+K/9s64UB5UGGB+
-	l/x9mrNzvpuy0ijeTtSc3aeyY3kGQxjAyJBQPrDcx9ZsmqhLBXrL+hPS9Z1B1UOE
-	W1jPc+2MBV2AZV8v1NE6iWXjf8wmJoFPN4TmjfF23KfHch9fb+eUPIZQXBOFt53W
-	PPHVJFr2n0k=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 05D74A9B32;
-	Mon, 12 Apr 2010 03:41:51 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 29E3BA9B30; Mon, 12 Apr
- 2010 03:41:47 -0400 (EDT)
-In-Reply-To: <20100412065234.GA12462@coredump.intra.peff.net> (Jeff King's
- message of "Mon\, 12 Apr 2010 02\:52\:34 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: DB737F2C-4606-11DF-AA63-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752945Ab0DLINR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Apr 2010 04:13:17 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:42977 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752548Ab0DLINR (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Apr 2010 04:13:17 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id A64A1EA41E;
+	Mon, 12 Apr 2010 04:13:16 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Mon, 12 Apr 2010 04:13:16 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=B/NmUwvtNrKT1LkKw12jyCr755s=; b=K+pazmwiK1SaOckfmI4HQySV9Vl/uWdmzSSEdiA1SGyM2/+zS+JHGgs+L0MPIV6Lk+Y6ffUnurOj+REhuybhMxAoT2uwQgu1Kp1ypAbM6VHNTGcAFafGitrvqFYk93H+06cuQgi1VDI7jAy8vv6qxDWdabCwJeg0JtbfWiACdjk=
+X-Sasl-enc: pUr1Zssh7bwZo7pqJA1+o37uS47cW1kGy/X3mDkalfAB 1271059996
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 07656446E2;
+	Mon, 12 Apr 2010 04:13:15 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10pre) Gecko/20100319 Lightning/1.0b2pre Shredder/3.0.5pre
+In-Reply-To: <z2kfbd9d3991004092354y21d3ac3fgf1f0675cdb5c51a8@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144710>
 
-Jeff King <peff@peff.net> writes:
+Stefan Hajnoczi venit, vidit, dixit 10.04.2010 14:54:
+> I have default settings for sending email in the global git config.
+> However, for one repo different email settings are necessary.  That
+> specific SMTP server does not want authentication, therefore smtpuser
+> should be unset.
+> 
+> The issue is that global smtpuser is set for the default SMTP server
+> and unsetting local smtpuser results in the global smtpuser being
+> inherited.  What I'd like is smtpuser to be unset for this particular
+> repo.
+> 
+> Is there any way to "unset override" options locally?  If not, is this
+> something that could and should be implemented?
+> 
+> Stefan
 
-> As maintainer, Junio, you might want to run at
-> least with TEST_LINT = test-lint-duplicate, since you can then catch
-> duplicates introduced by merges and fix them up as part of the merge.
+have you tried setting it to an empty value?
 
-Thanks.  They are caught by pre-applypatch from 'todo' these days.  I
-should also perhaps check for the executable bit there.
+Michael
