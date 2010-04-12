@@ -1,173 +1,134 @@
 From: Debayan Banerjee <debayanin@gmail.com>
-Subject: Rename similarity scoring for file pair
-Date: Mon, 12 Apr 2010 23:42:59 +0530
-Message-ID: <t2ua2cc2dbc1004121112h64f5b61ela57f5fa83abf51f@mail.gmail.com>
+Subject: Re: Rename similarity scoring for file pair
+Date: Mon, 12 Apr 2010 23:44:57 +0530
+Message-ID: <m2sa2cc2dbc1004121114j5ac8e00amc4eb426e99e2a9cc@mail.gmail.com>
+References: <t2ua2cc2dbc1004121112h64f5b61ela57f5fa83abf51f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/mixed; boundary=000e0cd1134e8c744b04840e2022
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 12 20:13:29 2010
+X-From: git-owner@vger.kernel.org Mon Apr 12 20:15:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1O8V-0006Iw-7h
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 20:13:27 +0200
+	id 1O1OAO-00071q-Ef
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 20:15:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753154Ab0DLSNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Apr 2010 14:13:20 -0400
-Received: from mail-pz0-f204.google.com ([209.85.222.204]:33734 "EHLO
-	mail-pz0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753057Ab0DLSNT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Apr 2010 14:13:19 -0400
-Received: by pzk42 with SMTP id 42so4023485pzk.4
-        for <git@vger.kernel.org>; Mon, 12 Apr 2010 11:13:19 -0700 (PDT)
+	id S1753270Ab0DLSPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Apr 2010 14:15:19 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:64259 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753057Ab0DLSPS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Apr 2010 14:15:18 -0400
+Received: by pwj9 with SMTP id 9so4629896pwj.19
+        for <git@vger.kernel.org>; Mon, 12 Apr 2010 11:15:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:received
-         :message-id:subject:to:content-type;
-        bh=/SNgm/8g8Y6Vg2AwTXv2LNoz7QBYIXK8V86BIIwWx8w=;
-        b=ZZ2U6gtm+Sr7AIUYgqeRZmS20t/Sd/8s7H3m5XmGiX8IKOL7y98uXurCR072ukcDAC
-         E44/e66cSH5HFEgbOrBn1uGGz254Bo0tbPGhjILvjXqO7/obud3xjsm6u7IbvrVK0D4E
-         3mEKtUkoaDteL9Fwrq8bH/PoNro2h+qg+fVtU=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:content-type;
+        bh=JiMULAzCxakGUASCfFGZ48Oylo0fxVyqps6WkD4CzIg=;
+        b=QOG+X5YEfnJm+B4thWn5MtR6pC6jD0coKEvY4Ernsy17fjdJnGvkVKeHIWNxDpHE78
+         /LcZohXFm2tk26OBXND1BQ5+FzzfmATsCfSO30h4OStSX59nVTp9YhJRZOwoNFjEgh6o
+         0MeudBPRL9DAN2dPzuEOz/yizgvZ4uzF3nTeM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=G2YB+xRSonsYPY4Zfe70UoGsZD8j4YhX6eNdN78iyG6fv5S5w673y+nUfZTTxAwwUN
-         GwviXK99f2zuEbZGUQdEhL1HmjalbLHZO/ETqfOUN/Us7vDLmCwdfRiPkL4TCPqL4TqT
-         VYDrXrMvKUdMwwveET+4Mr781UJLMPfJBH1Q4=
-Received: by 10.141.37.12 with HTTP; Mon, 12 Apr 2010 11:12:59 -0700 (PDT)
-Received: by 10.140.58.10 with SMTP id g10mr4107286rva.85.1271095999464; Mon, 
-	12 Apr 2010 11:13:19 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        b=KIOKQL5iQzvRuvuwAXAf/OV/XkIwGeGq/XgBDZDYEvEU8cAgmxXuvRsYlDAtXp6jEh
+         6/zqRgWJ1M62P03Kn3bEhJ+deJeP8tuhpCFYr8nUU/q1iwmw2+/UnS2pXlGj7aUFYyF9
+         T838MwI1iEO63sJJBrMWXfdF80JvWh713D8X0=
+Received: by 10.141.37.12 with HTTP; Mon, 12 Apr 2010 11:14:57 -0700 (PDT)
+In-Reply-To: <t2ua2cc2dbc1004121112h64f5b61ela57f5fa83abf51f@mail.gmail.com>
+Received: by 10.141.3.14 with SMTP id f14mr3983566rvi.98.1271096117326; Mon, 
+	12 Apr 2010 11:15:17 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144762>
 
-I was going through this thread
-<http://markmail.org/message/mge2spy7uqle5ghy#query:diffcore-rename.c%20algorithm+page:1+mid:ji7jkzypzqpml2xn+state:results>
-trying to understand how the similarity scoring for modified files
-works. I see that the algorithm uses two hashes, one for each file,
-and proceeds to compare the 2 hashes to determine percentage
-similarity.
-I think I have an algorithm which uses only one hash and has a worst
-case space complexity of O(N) where N is the number of lines
-inserted/deleted/moved.
-The algorithm is as follows:
+--000e0cd1134e8c744b04840e2022
+Content-Type: text/plain; charset=ISO-8859-1
 
-def similarity(leftFileContent, rightFileContent)
-{
-	int lineCounter = 0;
-	struct HashElement  {
-	HashElement(): leftFileCount(0), rightFileCount(0) // One of these
-counters will remain 0 for its lifetime. The other will be >=0
-		int leftFileCount; // Increment if line is from leftFile
-		int rightFileCount; // Increment if line is from right file.
-	};
-	Hash<lineContent, HashElement> hash; //One hash for both files
-	int similartyCounter = 0;
-	while(true)  {
-		leftLline = leftFileContent[lineCounter];
-		rightLine = rightFileContent[lineCounter];
-		if (hash.contains(leftLine))  {
-			HashElement h = hash.value(leftLine);
-			if (h.leftFileCount > 0)   {//The previous occurence has come from
-the left file
-				h.leftFileCount++;  //This line is another occurence of the same
-line in the same file. So we increment the counter.
-			}
-			else  {
-				h.leftFileCount--;
-				similarityCounter++;  //Hey, this line matched an earlier
-occurence from the other file!
-			}
-			if (h.leftFileCount == 0 && h.rightFileCount == 0)
-				hash.remove(leftLine);			
-		}
-		else  { // this line is being encountered for the first time, so add
-it to the hash
-			HashElement h;
-			h.leftFileCount++;
-			hash.add(leftLine, h);
-		}
-		
-		if (hash.contains(rightLine))  {
-			HashElement h = hash.value(rightLine);
-			if (h.rightFileCount > 0)   {//The previous occurence has come from
-the right file
-				h.rightFileCount++;  //This line is another occurence of the same
-line in the same file. So we increment the counter.
-			}
-			else  {
-				h.rightFileCount--;
-				similarityCounter++;  //Hey, this line matched an earlier
-occurence from the other file!
-			}
-			if (h.leftFileCount == 0 && h.rightFileCount == 0)
-				hash.remove(line2);			
-		}
-		else  { // this line is being encountered for the first time, so add
-it to the hash
-			HashElement h;
-			h.rightFileCount++;
-			hash.add(line2, h);			
-		}
-		lineCounter++;
-		if (lineCounter == leftFileContent.size() || lineCounter ==
-rightFileContent.size())
-			break;
-	}
-	/* Upto this point we have processed an equal number of lines in both
-the files simultaneously. Now we may have a file which is
-	larger in size than the other. We need to process the remanant of this file*/
-	bool leftFileIsLonger;
-	FileContent fileContent;
-	int size;
-	if (leftFileContent.size() == rightFileContent.size())		
-		return ((similarityCounter*100) / rightFileContent.size());
-	if (leftFileContent.size() >rightFileContent.size())  {
-		leftFileIsLonger = true;
-	        fileContent = leftFileContent; //fileContent should really be
- a pointer to leftFileContent
-		size = leftFileContent.size();
-        }
-	else  {
-		leftFileIsLonger = false;
-		fileContent = rightFileContent; //fileContent should really be  a
-pointer to rightFileContent
-		size = rightFileContent.size();
-	}
-	for (i = lineCounter + 1;  i < size; i++ )  {
-		line = fileContent[i];
-		if (hash.contains(line))  {
-			Hash h = hash.value(line);
-			if (h.leftLineCount > 0)  { //Line in hash came from left file
-				if (leftFileIsLonger)
-					h.leftFileCount++; //Even this line came from the same file, so
-its just a repeated line.
-				else  {
-					h.leftFileCount--;
-					similarityCounter++;  //This line came from the right file, so
-increase similarityCounter and decrease the leftCounter.
-				}
-			}
-			else  { //Line in hash came from right file
-				if (leftFileIsLonger)  {
-					h.rightFileCount--;
-					similarityCounter++;
-				}
-				else
-					h.rightFileCount++;
-			}
-			if (h.leftFileCount == 0 && h.rightFileCount == 0)
-					hash.remove(line);
-		}
-	}
-    return ((similarityCounter*100) / size); //Formula for calculating
-similarity is same as git uses
-}
+On 12 April 2010 23:42, Debayan Banerjee <debayanin@gmail.com> wrote:
+> I was going through this thread
 
---
+Sorry about that. Sent it prematurely, and by mistake. Find the
+attached file for the algorithm.
+
+-- 
 Debayan Banerjee
 Software Engineer
+
+--000e0cd1134e8c744b04840e2022
+Content-Type: text/plain; charset=US-ASCII; name="similarity_algorithm.txt"
+Content-Disposition: attachment; filename="similarity_algorithm.txt"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_g7xlrxx70
+
+ZGVmIHNpbWlsYXJpdHkobGVmdEZpbGVDb250ZW50LCByaWdodEZpbGVDb250ZW50KQp7CglpbnQg
+bGluZUNvdW50ZXIgPSAwOwoJc3RydWN0IEhhc2hFbGVtZW50ICB7CgkJSGFzaEVsZW1lbnQoKTog
+bGVmdEZpbGVDb3VudCgwKSwgcmlnaHRGaWxlQ291bnQoMCkgLy8gT25lIG9mIHRoZXNlIGNvdW50
+ZXJzIHdpbGwgcmVtYWluIDAgZm9yIGl0cyBsaWZldGltZS4gVGhlIG90aGVyIHdpbGwgYmUgPj0w
+CgkJaW50IGxlZnRGaWxlQ291bnQ7IC8vIEluY3JlbWVudCBpZiBsaW5lIGlzIGZyb20gbGVmdEZp
+bGUKCQlpbnQgcmlnaHRGaWxlQ291bnQ7IC8vIEluY3JlbWVudCBpZiBsaW5lIGlzIGZyb20gcmln
+aHQgZmlsZS4KCX07CglIYXNoPGxpbmVDb250ZW50LCBIYXNoRWxlbWVudD4gaGFzaDsgLy9PbmUg
+aGFzaCBmb3IgYm90aCBmaWxlcyAgCglpbnQgc2ltaWxhcnR5Q291bnRlciA9IDA7Cgl3aGlsZSh0
+cnVlKSAgewoJCWxlZnRMbGluZSA9IGxlZnRGaWxlQ29udGVudFtsaW5lQ291bnRlcl07CgkJcmln
+aHRMaW5lID0gcmlnaHRGaWxlQ29udGVudFtsaW5lQ291bnRlcl07CgkJaWYgKGhhc2guY29udGFp
+bnMobGVmdExpbmUpKSAgewoJCQlIYXNoRWxlbWVudCBoID0gaGFzaC52YWx1ZShsZWZ0TGluZSk7
+CgkJCWlmIChoLmxlZnRGaWxlQ291bnQgPiAwKSAgIHsvL1RoZSBwcmV2aW91cyBvY2N1cmVuY2Ug
+aGFzIGNvbWUgZnJvbSB0aGUgbGVmdCBmaWxlCgkJCQloLmxlZnRGaWxlQ291bnQrKzsgIC8vVGhp
+cyBsaW5lIGlzIGFub3RoZXIgb2NjdXJlbmNlIG9mIHRoZSBzYW1lIGxpbmUgaW4gdGhlIHNhbWUg
+ZmlsZS4gU28gd2UgaW5jcmVtZW50IHRoZSBjb3VudGVyLgoJCQl9CgkJCWVsc2UgIHsKCQkJCWgu
+bGVmdEZpbGVDb3VudC0tOwoJCQkJc2ltaWxhcml0eUNvdW50ZXIrKzsgIC8vSGV5LCB0aGlzIGxp
+bmUgbWF0Y2hlZCBhbiBlYXJsaWVyIG9jY3VyZW5jZSBmcm9tIHRoZSBvdGhlciBmaWxlISAKCQkJ
+fQoJCQlpZiAoaC5sZWZ0RmlsZUNvdW50ID09IDAgJiYgaC5yaWdodEZpbGVDb3VudCA9PSAwKQoJ
+CQkJaGFzaC5yZW1vdmUobGVmdExpbmUpOwkJCQoJCX0KCQllbHNlICB7IC8vIHRoaXMgbGluZSBp
+cyBiZWluZyBlbmNvdW50ZXJlZCBmb3IgdGhlIGZpcnN0IHRpbWUsIHNvIGFkZCBpdCB0byB0aGUg
+aGFzaAoJCQlIYXNoRWxlbWVudCBoOwoJCQloLmxlZnRGaWxlQ291bnQrKzsKCQkJaGFzaC5hZGQo
+bGVmdExpbmUsIGgpOwoJCX0KCQkKCQlpZiAoaGFzaC5jb250YWlucyhyaWdodExpbmUpKSAgewoJ
+CQlIYXNoRWxlbWVudCBoID0gaGFzaC52YWx1ZShyaWdodExpbmUpOwoJCQlpZiAoaC5yaWdodEZp
+bGVDb3VudCA+IDApICAgey8vVGhlIHByZXZpb3VzIG9jY3VyZW5jZSBoYXMgY29tZSBmcm9tIHRo
+ZSByaWdodCBmaWxlCgkJCQloLnJpZ2h0RmlsZUNvdW50Kys7ICAvL1RoaXMgbGluZSBpcyBhbm90
+aGVyIG9jY3VyZW5jZSBvZiB0aGUgc2FtZSBsaW5lIGluIHRoZSBzYW1lIGZpbGUuIFNvIHdlIGlu
+Y3JlbWVudCB0aGUgY291bnRlci4KCQkJfQoJCQllbHNlICB7CgkJCQloLnJpZ2h0RmlsZUNvdW50
+LS07CgkJCQlzaW1pbGFyaXR5Q291bnRlcisrOyAgLy9IZXksIHRoaXMgbGluZSBtYXRjaGVkIGFu
+IGVhcmxpZXIgb2NjdXJlbmNlIGZyb20gdGhlIG90aGVyIGZpbGUhIAoJCQl9CgkJCWlmIChoLmxl
+ZnRGaWxlQ291bnQgPT0gMCAmJiBoLnJpZ2h0RmlsZUNvdW50ID09IDApCgkJCQloYXNoLnJlbW92
+ZShsaW5lMik7CQkJCgkJfQoJCWVsc2UgIHsgLy8gdGhpcyBsaW5lIGlzIGJlaW5nIGVuY291bnRl
+cmVkIGZvciB0aGUgZmlyc3QgdGltZSwgc28gYWRkIGl0IHRvIHRoZSBoYXNoCgkJCUhhc2hFbGVt
+ZW50IGg7CgkJCWgucmlnaHRGaWxlQ291bnQrKzsKCQkJaGFzaC5hZGQobGluZTIsIGgpOwkJCQoJ
+CX0KCQlsaW5lQ291bnRlcisrOwoJCWlmIChsaW5lQ291bnRlciA9PSBsZWZ0RmlsZUNvbnRlbnQu
+c2l6ZSgpIHx8IGxpbmVDb3VudGVyID09IHJpZ2h0RmlsZUNvbnRlbnQuc2l6ZSgpKQoJCQlicmVh
+azsKCX0KCS8qIFVwdG8gdGhpcyBwb2ludCB3ZSBoYXZlIHByb2Nlc3NlZCBhbiBlcXVhbCBudW1i
+ZXIgb2YgbGluZXMgaW4gYm90aCB0aGUgZmlsZXMgc2ltdWx0YW5lb3VzbHkuIE5vdyB3ZSBtYXkg
+aGF2ZSBhIGZpbGUgd2hpY2ggaXMKCWxhcmdlciBpbiBzaXplIHRoYW4gdGhlIG90aGVyLiBXZSBu
+ZWVkIHRvIHByb2Nlc3MgdGhlIHJlbWFuYW50IG9mIHRoaXMgZmlsZSovCglib29sIGxlZnRGaWxl
+SXNMb25nZXI7CglGaWxlQ29udGVudCBmaWxlQ29udGVudDsKCWludCBzaXplOwoJaWYgKGxlZnRG
+aWxlQ29udGVudC5zaXplKCkgPT0gcmlnaHRGaWxlQ29udGVudC5zaXplKCkpCQkKCQlyZXR1cm4g
+KChzaW1pbGFyaXR5Q291bnRlcioxMDApIC8gcmlnaHRGaWxlQ29udGVudC5zaXplKCkpOwoJaWYg
+KGxlZnRGaWxlQ29udGVudC5zaXplKCkgPnJpZ2h0RmlsZUNvbnRlbnQuc2l6ZSgpKSAgewoJCWxl
+ZnRGaWxlSXNMb25nZXIgPSB0cnVlOwoJICAgICAgICBmaWxlQ29udGVudCA9IGxlZnRGaWxlQ29u
+dGVudDsgLy9maWxlQ29udGVudCBzaG91bGQgcmVhbGx5IGJlICBhIHBvaW50ZXIgdG8gbGVmdEZp
+bGVDb250ZW50CgkJc2l6ZSA9IGxlZnRGaWxlQ29udGVudC5zaXplKCk7CiAgICAgICAgfQoJZWxz
+ZSAgewoJCWxlZnRGaWxlSXNMb25nZXIgPSBmYWxzZTsKCQlmaWxlQ29udGVudCA9IHJpZ2h0Rmls
+ZUNvbnRlbnQ7IC8vZmlsZUNvbnRlbnQgc2hvdWxkIHJlYWxseSBiZSAgYSBwb2ludGVyIHRvIHJp
+Z2h0RmlsZUNvbnRlbnQKCQlzaXplID0gcmlnaHRGaWxlQ29udGVudC5zaXplKCk7Cgl9Cglmb3Ig
+KGkgPSBsaW5lQ291bnRlciArIDE7ICBpIDwgc2l6ZTsgaSsrICkgIHsKCQlsaW5lID0gZmlsZUNv
+bnRlbnRbaV07CgkJaWYgKGhhc2guY29udGFpbnMobGluZSkpICB7CgkJCUhhc2ggaCA9IGhhc2gu
+dmFsdWUobGluZSk7CgkJCWlmIChoLmxlZnRMaW5lQ291bnQgPiAwKSAgeyAvL0xpbmUgaW4gaGFz
+aCBjYW1lIGZyb20gbGVmdCBmaWxlCgkJCQlpZiAobGVmdEZpbGVJc0xvbmdlcikKCQkJCQloLmxl
+ZnRGaWxlQ291bnQrKzsgLy9FdmVuIHRoaXMgbGluZSBjYW1lIGZyb20gdGhlIHNhbWUgZmlsZSwg
+c28gaXRzIGp1c3QgYSByZXBlYXRlZCBsaW5lLgoJCQkJZWxzZSAgewoJCQkJCWgubGVmdEZpbGVD
+b3VudC0tOwoJCQkJCXNpbWlsYXJpdHlDb3VudGVyKys7ICAvL1RoaXMgbGluZSBjYW1lIGZyb20g
+dGhlIHJpZ2h0IGZpbGUsIHNvIGluY3JlYXNlIHNpbWlsYXJpdHlDb3VudGVyIGFuZCBkZWNyZWFz
+ZSB0aGUgbGVmdENvdW50ZXIuCgkJCQl9CgkJCX0KCQkJZWxzZSAgeyAvL0xpbmUgaW4gaGFzaCBj
+YW1lIGZyb20gcmlnaHQgZmlsZQoJCQkJaWYgKGxlZnRGaWxlSXNMb25nZXIpICB7CgkJCQkJaC5y
+aWdodEZpbGVDb3VudC0tOwoJCQkJCXNpbWlsYXJpdHlDb3VudGVyKys7CgkJCQl9CgkJCQllbHNl
+ICAKCQkJCQloLnJpZ2h0RmlsZUNvdW50Kys7CgkJCX0KCQkJaWYgKGgubGVmdEZpbGVDb3VudCA9
+PSAwICYmIGgucmlnaHRGaWxlQ291bnQgPT0gMCkKCQkJCQloYXNoLnJlbW92ZShsaW5lKTsKCQl9
+Cgl9CiAgICByZXR1cm4gKChzaW1pbGFyaXR5Q291bnRlcioxMDApIC8gc2l6ZSk7IC8vRm9ybXVs
+YSBmb3IgY2FsY3VsYXRpbmcgc2ltaWxhcml0eSBpcyBzYW1lIGFzIGdpdCB1c2VzCn0K
+--000e0cd1134e8c744b04840e2022--
