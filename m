@@ -1,102 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Local unset override global options
-Date: Mon, 12 Apr 2010 19:02:07 +0200
-Message-ID: <201004121902.08345.jnareb@gmail.com>
-References: <z2kfbd9d3991004092354y21d3ac3fgf1f0675cdb5c51a8@mail.gmail.com> <m3pr25f3ye.fsf@localhost.localdomain> <7v1vekn05h.fsf@alter.siamese.dyndns.org>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH] Docs: Add -X option to git-merge's synopsis.
+Date: Mon, 12 Apr 2010 13:11:37 -0400
+Message-ID: <4BC35449.4020706@xiplink.com>
+References: <1271089693-21365-1-git-send-email-marcnarc@xiplink.com> <7v39z0livd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Stefan Hajnoczi <stefanha@gmail.com>, git@vger.kernel.org,
-	Michael J Gruber <git@drmicha.warpmail.net>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 12 19:02:33 2010
+X-From: git-owner@vger.kernel.org Mon Apr 12 19:13:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1N1t-0004a2-8T
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 19:02:33 +0200
+	id 1O1NCf-0001U0-Be
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 19:13:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752509Ab0DLRCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Apr 2010 13:02:18 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:46570 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751515Ab0DLRCR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Apr 2010 13:02:17 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1594671fgg.1
-        for <git@vger.kernel.org>; Mon, 12 Apr 2010 10:02:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=wAkOul9Pbow3kKBElJNBPVDzq+DAVNMcK4H6NwYmox0=;
-        b=ex4zwQZ2T9SvOSrjb5wl2bzpxYN4N7pCG3qyKp8j4Ma3/pQxZuHce/AEp/JYTYRw6z
-         FNb68+Y4busgA98XSG++iVS7+hTWVkDaZidN4Vxp0wjzj4PKU+2N3xU9nbv4CvGD/jDp
-         7AP8aNKGof+/LAK3RGZIFepgddvz5T+TuKc4I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=DpSoNEahcZ9qyOvr7NPPnFlhaBASSqyFyHQ+4K4DvJlm5ifIf4fRrT5puGDELwFEQj
-         llLBp0LSgySlOwtAV2XlLYGiT8TsGr7+4h1bkAh6iFrqXLlI+o9WfrKLaTYpmXaykyYN
-         Ea32e2P/EmfwnIPKVFuWSn5vA7e1pHhdix8D0=
-Received: by 10.87.76.7 with SMTP id d7mr4053882fgl.65.1271091735884;
-        Mon, 12 Apr 2010 10:02:15 -0700 (PDT)
-Received: from [192.168.1.13] (abvy192.neoplus.adsl.tpnet.pl [83.8.222.192])
-        by mx.google.com with ESMTPS id 26sm99356fks.22.2010.04.12.10.02.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 12 Apr 2010 10:02:14 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v1vekn05h.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753434Ab0DLRMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Apr 2010 13:12:10 -0400
+Received: from smtp142.dfw.emailsrvr.com ([67.192.241.142]:54216 "EHLO
+	smtp142.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753345Ab0DLRMH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Apr 2010 13:12:07 -0400
+Received: from relay24.relay.dfw.mlsrvr.com (localhost [127.0.0.1])
+	by relay24.relay.dfw.mlsrvr.com (SMTP Server) with ESMTP id 371FB34E825C;
+	Mon, 12 Apr 2010 13:12:04 -0400 (EDT)
+Received: by relay24.relay.dfw.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id EAA0134E8257;
+	Mon, 12 Apr 2010 13:12:03 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.24 (X11/20100317)
+In-Reply-To: <7v39z0livd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144757>
 
 Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
 > 
-> > How does special case of no value, i.e.
-> >
-> >    [sendemail]
-> >         smtpuser
+> This is somewhat imcomplete; the current merge-options.txt seems to be
+> organized more-or-less alphabetically (begins with "commit", ascends to
+> "ff", "log", "s-something", and ends with "X"), but it has acquired
+> additions at random places (e.g. "ff-only").
 > 
-> That is not a special case; that is "boolean true".
+> I do not think reorganizing the option descriptions in functional groups
+> is a bad idea, and if we make that an overall goal of our documentation
+> set, the patch is certainly going in the right direction.
+> 
+> I used to prefer alphabetical order slightly over functional grouping
+> because it would make things easier to find in printed pages, but these
+> days people read on paper a lot less often, so I am personally fine with
+> "do not list options in alphabetical order; group them with related
+> features, and do so consistently across all manual pages".
+> 
+> So I'll take the patch as is, but before going further I would like to
+> first see list concensus to such a reorganization.
 
-Well, it is "boolean true" *if* git-config is used with '--bool'.
+I noticed the alphabetical sorting when I made the patch, so I guess my
+opinion on functional grouping is pretty obvious.  FWIW, I find functional
+groupings make it easier to find unknown options.  An alphabetical sorting is
+really only helpful if you already know what you're looking for.  And in that
+case, like you say, these docs are usually read in an electronic form, where
+it's easy enough to just do a search for whatever's desired.
 
-If git-send-email.perl used "git config -l -z" to read all its config 
-variables at once into hash, like gitweb.perl does in the 
-git_parse_project_config() subroutine, it would be able to distinguish 
-between those the case of no value:
+In any case, regardless of the consensus on this issue, alphabetical sorting
+doesn't seem to make much sense for merge-options.txt given the way it's
+included in git-merge.txt and git-pull.txt.
 
-    [sendemail]
-         smtpuser
-
-(in which case "exists $config{'sendemail.smptuser'}" but "not defined 
-$config{'sendemail.smtpuser'}", and of empty value
-
-    [sendemail]
-         smtpuser = ""
-
-(in which case it is "defined $config{'sendemail.smtpuser'}" but not
-true "$config{'sendemail.smtpuser'}).
-
-
-But as git-send-email.perl uses Git::config to read config variables
-one by one (equivalent to "git config --get <variable>"), I think that
-also in the case of no value you would end up with $smtp_authuser
-defined but empty (and false).
-
-
-P.S. I wonder if 'sendemail.<identity>' section and 'sendemail.identity'
-could help with original problem...
--- 
-Jakub Narebski
-Poland
+		M.
