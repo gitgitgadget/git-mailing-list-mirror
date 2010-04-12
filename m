@@ -1,94 +1,99 @@
-From: Tim Visher <tim.visher@gmail.com>
-Subject: `git (submodule update|fetch|pull) --continue` similar to `curl -C 
-	-`?
-Date: Mon, 12 Apr 2010 11:00:52 -0400
-Message-ID: <u2lc115fd3c1004120800y54d09b8bt3e7aeda9509703c8@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [BUG] - git rebase -i performs rebase when it shouldn't?
+Date: Mon, 12 Apr 2010 17:13:32 +0200
+Message-ID: <4BC3389C.4090807@viscovery.net>
+References: <z2q76c5b8581004091235ucd9b2a52i223b3191b288c42a@mail.gmail.com>	 <20100410042609.GA24295@coredump.intra.peff.net>	 <h2x76c5b8581004101510hc1d15f42u7e48dafbc275c998@mail.gmail.com>	 <20100411102255.GB20484@coredump.intra.peff.net>	 <y2s76c5b8581004110706p7b63900aqf90f9c1462a1f637@mail.gmail.com> <q2z76c5b8581004120709t860ff112i5dd057327b94ad0e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 12 17:01:39 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 12 17:13:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1L8r-0003Qw-9d
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 17:01:37 +0200
+	id 1O1LKZ-00015e-PB
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 17:13:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751601Ab0DLPBW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Apr 2010 11:01:22 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:58329 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750776Ab0DLPBV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Apr 2010 11:01:21 -0400
-Received: by gwj19 with SMTP id 19so1001073gwj.19
-        for <git@vger.kernel.org>; Mon, 12 Apr 2010 08:01:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:received
-         :message-id:subject:to:content-type;
-        bh=M8YS4JP9EyAGM1H9ymXnGLpjrPRDLJzTH/MzkQ4vmoE=;
-        b=h2C8+kBNtuBYCzSVv7RrBbodspJnJR3IhFAkJAPyvV9cf7BbEdCWVxOhGn+/qf+npc
-         0S7OqhILddcYnc3em1H4Lk/WT5l3eII7eLlW8E+r5P2eGQxocO2KwGcT/AYn3Y9AaE1f
-         GDRGi3QkHCsT2977KWLYK2KSaAXwnRmsDf9r4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=O5RnPnYcvFkT+ToUarf5P3YcUyrNz+JGfN6CTbEPEqaLRfzQVz8hqMh1cWZqiFXesh
-         KbGYrW1iXDhigL17QGbrvEw41dlIisxVYzotYgQJBye/BaOVV6LDVwDERHO9w2LvQNyB
-         V+pPiRZFWYrnTHwLpbUNgwAoKEnDAjKSJDcN0=
-Received: by 10.100.109.4 with HTTP; Mon, 12 Apr 2010 08:00:52 -0700 (PDT)
-Received: by 10.101.6.37 with SMTP id j37mr3536783ani.182.1271084473242; Mon, 
-	12 Apr 2010 08:01:13 -0700 (PDT)
+	id S1751502Ab0DLPNh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Apr 2010 11:13:37 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:37811 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750827Ab0DLPNh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Apr 2010 11:13:37 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1O1LKP-0001dX-H2; Mon, 12 Apr 2010 17:13:33 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 44E9B1660F;
+	Mon, 12 Apr 2010 17:13:33 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <q2z76c5b8581004120709t860ff112i5dd057327b94ad0e@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144740>
 
-Hey All,
+Am 4/12/2010 16:09, schrieb Eugene Sajine:
+> esajine@ESAJINEWWW /c/git_repos/test2 (topic)
+> $ git rebase master
+> Current branch topic is up to date.
+> <=3D=3D=3D=3D=3D=3D=3D Really? Topic is actually based on next =E2=80=
+=93 what does this "up
+> to date" mean??
 
-I'm behind a very aggressive firewall/proxy at work and as far as I
-can tell it actually interrupts long connections on purpose.  Most
-programs seem to be able to deal with it, although the connection
-speed is slower.  Git, however, seems to not be able to deal with it
-every once and awhile.
+Why should rebase bother? The difference between master and topic are
+*two* commits. Since these two are already on top of master in linear
+history, you get no advantage by doing a rebase operation. Therefore, y=
+ou
+see "already up to date".
 
-For instance:
+The fact that the second commit from the tip of topic is also labeled
+"next" is absolutely irrelevant to rebase. rebase only looks at the ref=
+s
+that you tell it about: master and topic (implicitly pointed to by HEAD=
+),
+nothing else.
 
-    $ g sm update
-    Initialized empty Git repository in /home/tim/.emacs.d/site-lisp/ecb/.git/
-    error: Unable to get pack file
-http://github.com/emacsmirror/ecb.git/objects/pack/pack-364b879fac4ebed663f528dc3ddff99ddd6716e9.pack
-    ***emphasis***
-    transfer closed with 969832 bytes remaining to read
-    ***emphasis***
-    error: Unable to find 67861e756712c4e5917461e8b149089dceceec88
-under     http://github.com/emacsmirror/ecb.git
-    Cannot obtain needed object 67861e756712c4e5917461e8b149089dceceec88
-    while processing commit 8043b271a679c7faae65c0d75a73e63bb25d1620.
-    error: Fetch failed.
-    Clone of 'http://github.com/emacsmirror/ecb.git' into submodule
-path     'site-lisp/ecb' failed
+What you really want to do, obviously, is:
 
-It would seem like an interesting idea to be able to download a repo
-progressively with interruptions along the lines of `curl -C -` so
-that if an interruption happened you can still report the error but
-then offer a `--continue` or `--abort` option.  --continue would
-obviously attempt to pick up where it left off and --abort would
-delete the cache to save the disk space.
+   git rebase --onto master next topic
 
-Thoughts?
+No, there is no shorter form to spell this operation.
 
-This could also be a problem with GitHub.  I don't know enough about
-submodules to make an educated guess there.  I only guess  that it's
-the proxy's fault because I only experience this at work.
+> esajine@ESAJINEWWW /c/git_repos/test2 (topic)
+> $ git rebase -i --onto master topic
+> Successfully rebased and updated refs/heads/topic. <=3D=3D=3D BUG =E2=
+=80=93 here it
+> printed me =E2=80=9Cnoop=E2=80=9D in file to edit, when I exited it s=
+hould do nothing,
+> but it still did something and I double checked it.
 
--- 
+Not a bug.
 
-In Christ,
+Your command is the same as
 
-Timmy V.
+   git rebase -i --onto master topic topic
 
-http://burningones.com/
-http://five.sentenc.es/ - Spend less time on e-mail
+because you are already on branch topic. Since there are no commits in =
+the
+range topic..topic, rebase -i told you "noop". This word is perhaps poo=
+rly
+chosen, because it does not mean "no operation"[*], but "there are no
+commits to transfer". But branch 'topic' that you gave as the last
+argument (or implicitly by being at branch 'topic') is still transferre=
+d
+--onto master. This explains the result that you observed.
+
+Of course, if you do not 'reset --hard topic@{1}' at this point, you wi=
+ll
+ultimately lose the commits on branch topic.
+
+[*] You can get "no operation" by deleting the line "noop".
+
+-- Hannes
