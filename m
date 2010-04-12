@@ -1,110 +1,104 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: [PATCH] Warn the users when more than 3 '-C' given.
-Date: Mon, 12 Apr 2010 08:48:47 +0200
-Organization: Bertin Technologies
-Message-ID: <20100412084847.58ce8b8b@chalon.bertin.fr>
-References: <1270900308-20147-1-git-send-email-struggleyb.nku@gmail.com>
- <7vochrw285.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] tests: add some script lint checks
+Date: Mon, 12 Apr 2010 02:52:34 -0400
+Message-ID: <20100412065234.GA12462@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bo Yang <struggleyb.nku@gmail.com>, git@vger.kernel.org,
-	trast@student.ethz.ch
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 12 08:51:19 2010
+X-From: git-owner@vger.kernel.org Mon Apr 12 08:53:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1DUK-0003Rh-Pi
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 08:51:17 +0200
+	id 1O1DW7-0003uZ-SJ
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 08:53:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752976Ab0DLGvK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Apr 2010 02:51:10 -0400
-Received: from blois.bertin.fr ([212.234.8.70]:57971 "EHLO blois.bertin.fr"
+	id S1753152Ab0DLGxB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Apr 2010 02:53:01 -0400
+Received: from peff.net ([208.65.91.99]:34155 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752299Ab0DLGvI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Apr 2010 02:51:08 -0400
-Received: from blois.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id B8169543CB
-	for <git@vger.kernel.org>; Mon, 12 Apr 2010 08:51:06 +0200 (CEST)
-Received: from YPORT1 (unknown [192.168.1.13])
-	by blois.bertin.fr (Postfix) with ESMTP id 95082543A5
-	for <git@vger.kernel.org>; Mon, 12 Apr 2010 08:51:06 +0200 (CEST)
-Received: from chalon.bertin.fr ([172.16.3.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0L0R004EW4D5VG10@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Mon, 12 Apr 2010 08:51:05 +0200 (CEST)
-In-reply-to: <7vochrw285.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.7.5 (GTK+ 2.12.12; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8146-6.0.0.1038-17314.005
+	id S1751932Ab0DLGxA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Apr 2010 02:53:00 -0400
+Received: (qmail 15702 invoked by uid 107); 12 Apr 2010 06:53:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 12 Apr 2010 02:53:02 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Apr 2010 02:52:34 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144708>
 
-Le Sat, 10 Apr 2010 12:12:58 -0700,
-Junio C Hamano <gitster@pobox.com> a =C3=A9crit :
+There are some common but minor errors we tend to make in
+writing test scripts:
 
-> Bo Yang <struggleyb.nku@gmail.com> writes:
->=20
-> > Output a warning message to users when there are more than
-> > 3 '-C' options given. And ignore the numeric argument value
-> > provided by the additional '-C' options.
->=20
-> How were you bitten by the lack of this warning?  You gave four or
-> five to see how output would change, spent sleepless nights but
-> couldn't figure out what the differences between third and fourth
-> levels are, and wasted too much time?
+  1. Scripts are left non-executable. This is not usually
+     noticed immediately because "make test" does not need
+     the bit, but it is a matter of git policy to make them
+     executable (and is a slight convenience when running
+     individual scripts).
 
-That sounding a bit harsh, I guess it is my turn to take the blame for
-suggesting this in last week's thread :)
+  2. Two scripts are allocated the same number. Usually this
+     happens on separate branches, and the problem only
+     comes about during a merge. But since there is no
+     textual conflict, the merger would have to be very
+     observant to notice.
 
+     This is also a minor error, but can make GIT_SKIP_TESTS
+     ambiguous.
 
-> IOW, what does this fix?
+This patch introduces a "test-lint" target which checks
+both. It is not invoked by default. You can invoke it as
+"make test-lint", or you can make it a prerequisite of
+running the tests by specifying "TEST_LINT = test-lint" in
+your config.mak or on the command line.
 
-One practical advantage of this warning would be, in the very case of
-adding meaning to an additional -C, that a user trying to use it on an
-older version of git would get a warning that the program might not
-indeed to what the user requested.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+The dup half is based on Johannes' earlier patch.
 
-However, my first feeling was simply that, while it is usually harmless
-to let the user specify a flag several time, when it changes nothing,
-the situation is different when repetition of the flag is important -
-it is closer to an invalid flag combination.
+Obviously this can help submitters avoid dumb mistakes, so I plan to
+turn it on for myself.  As maintainer, Junio, you might want to run at
+least with TEST_LINT = test-lint-duplicate, since you can then catch
+duplicates introduced by merges and fix them up as part of the merge.
 
-In fact, I even dislike that use of repetitive -C.  One could argue
-that it is much like repetition of -v used in various programs to raise
-verbosity.  But well, in our case, it is much more than just increasing
-the level of details, it makes it use a different mechanism - even if
-each time it is a superset of the previous one.
+ t/Makefile |   14 +++++++++++++-
+ 1 files changed, 13 insertions(+), 1 deletions(-)
 
-And what if someone comes with an idea of a "level of -C" that indeed
-lays between two existing ones ?  Will we shift the meaning of the
-existing ones ?  And what about one "level" that would not strictly fit
-in the existing "superset" chain ?
-
-What about instead using a more descriptive flag ?  That would be more
-verbose typing, but then we can still keep the existing flags for
-backward compatibility, and we also have shell command-line completion.
-
-I'd think about something like:
--C -C     -> -Cunmodified (that one also for diff)
--C -C -C  -> -Chistory
-
-I could also argue that "blame -M" could also be better placed as a -C
-variant (it is also supposed to detect some copies), and could have as
-fullname something like "blame -Csamefile".
-
-
-> I personally do not see much value in this patch.  It would be just a
-> hindrance to remember to remove this hunk when somebody improves the
-> algorithm to add fourth level of detail to the inspection logic.
-
-Well, the warning should trigger the 1st time that somebody tests his
-fourth -C, right ?
-
---=20
-Yann
+diff --git a/t/Makefile b/t/Makefile
+index 25c559b..40ae67c 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -16,7 +16,7 @@ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
+ T = $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
+ TSVN = $(wildcard t91[0-9][0-9]-*.sh)
+ 
+-all: pre-clean
++all: pre-clean $(TEST_LINT)
+ 	$(MAKE) aggregate-results-and-cleanup
+ 
+ $(T):
+@@ -30,6 +30,18 @@ clean:
+ 	$(RM) t????/cvsroot/CVSROOT/?*
+ 	$(RM) -r valgrind/bin
+ 
++test-lint: test-lint-duplicates test-lint-executable
++
++test-lint-duplicates:
++	@dups=`echo $(T) | tr ' ' '\n' | sed 's/-.*//' | sort | uniq -d` && \
++		test -z "$$dups" || { \
++		echo >&2 "duplicate test numbers:" $$dups; exit 1; }
++
++test-lint-executable:
++	@bad=`for i in $(T); do test -x "$$i" || echo $$i; done` && \
++		test -z "$$bad" || { \
++		echo >&2 "non-executable tests:" $$bad; exit 1; }
++
+ aggregate-results-and-cleanup: $(T)
+ 	$(MAKE) aggregate-results
+ 	$(MAKE) clean
+-- 
+1.7.1.rc1.245.g808fe
