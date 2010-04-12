@@ -1,62 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] - git rebase -i performs rebase when it shouldn't?
-Date: Sun, 11 Apr 2010 21:01:23 -0400
-Message-ID: <20100412010123.GA11051@coredump.intra.peff.net>
-References: <z2q76c5b8581004091235ucd9b2a52i223b3191b288c42a@mail.gmail.com>
- <4BC0D87E.70001@kdbg.org>
- <20100411101526.GA20484@coredump.intra.peff.net>
- <201004111954.38156.j6t@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Apr 12 03:02:15 2010
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: [PATCH 1/2] index-pack: smarter memory usage when resolving deltas
+Date: Sun, 11 Apr 2010 22:57:26 -0400
+Message-ID: <1271041047-32563-1-git-send-email-nico@fluxnic.net>
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 12 04:57:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O182T-0005ME-7O
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 03:02:09 +0200
+	id 1O19qG-0005vy-Gk
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 04:57:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753290Ab0DLBBu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Apr 2010 21:01:50 -0400
-Received: from peff.net ([208.65.91.99]:35772 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753212Ab0DLBBt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Apr 2010 21:01:49 -0400
-Received: (qmail 11999 invoked by uid 107); 12 Apr 2010 01:01:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 11 Apr 2010 21:01:50 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 11 Apr 2010 21:01:23 -0400
-Content-Disposition: inline
-In-Reply-To: <201004111954.38156.j6t@kdbg.org>
+	id S1751809Ab0DLC5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Apr 2010 22:57:30 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:40763 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751391Ab0DLC53 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Apr 2010 22:57:29 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0L0Q00220TJR4XD0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 11 Apr 2010 22:57:28 -0400 (EDT)
+X-Mailer: git-send-email 1.7.1.rc1.237.ge1730.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144702>
 
-On Sun, Apr 11, 2010 at 07:54:37PM +0200, Johannes Sixt wrote:
+In the same spirit as commit 9892bebafe, let's avoid allocating the full
+buffer for the deflated data in get_data_from_pack() in order to inflate
+it.  Let's read and inflate the data in chunks instead to reduce memory
+usage.
 
-> On Sonntag, 11. April 2010, Jeff King wrote:
-> > Good point. Originally, we did the rebase directly on the branch, though
-> > I'm not sure if we did "checkout $branch && reset $onto" or "branch -f
-> > $branch $onto && checkout $branch". These days we operate on a detached
-> > HEAD, and we seem to "checkout $onto^0", which should do the
-> > optimization you mention.
-> 
-> But before this "checkout $onto^0" happens, some (all?) variants still 
-> do "checkout topic && rev-list upstream..HEAD" instead of just "rev-list 
-> upstream..topic".
+Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
+---
+ builtin/index-pack.c |   39 +++++++++++++++++++--------------------
+ 1 files changed, 19 insertions(+), 20 deletions(-)
 
-I don't think this is the case any longer for regular rebase, from my
-reading of the code and doing a rebase under GIT_TRACE. Grepping the
-history turns up 0cb0664 (rebase [--onto O] A B: omit needless checkout,
-2008-03-15).
-
-But doing an interactive rebase under GIT_TRACE, it looks like it still
-does the unnecessary checkout.
-
--Peff
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index b4cf8c5..c746d3b 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -359,34 +359,33 @@ static void *get_data_from_pack(struct object_entry *obj)
+ {
+ 	off_t from = obj[0].idx.offset + obj[0].hdr_size;
+ 	unsigned long len = obj[1].idx.offset - from;
+-	unsigned long rdy = 0;
+-	unsigned char *src, *data;
++	unsigned char *data, inbuf[4096];
+ 	z_stream stream;
+-	int st;
++	int status;
+ 
+-	src = xmalloc(len);
+-	data = src;
+-	do {
+-		ssize_t n = pread(pack_fd, data + rdy, len - rdy, from + rdy);
+-		if (n < 0)
+-			die_errno("cannot pread pack file");
+-		if (!n)
+-			die("premature end of pack file, %lu bytes missing",
+-			    len - rdy);
+-		rdy += n;
+-	} while (rdy < len);
+ 	data = xmalloc(obj->size);
+ 	memset(&stream, 0, sizeof(stream));
++	git_inflate_init(&stream);
+ 	stream.next_out = data;
+ 	stream.avail_out = obj->size;
+-	stream.next_in = src;
+-	stream.avail_in = len;
+-	git_inflate_init(&stream);
+-	while ((st = git_inflate(&stream, Z_FINISH)) == Z_OK);
++
++	do {
++		ssize_t n = (len < sizeof(inbuf)) ? len : sizeof(inbuf);
++		n = pread(pack_fd, inbuf, n, from);
++		if (n < 0)
++			die_errno("cannot pread pack file");
++		if (!n)
++			die("premature end of pack file, %lu bytes missing", len);
++		from += n;
++		len -= n;
++		stream.next_in = inbuf;
++		stream.avail_in = n;
++		status = git_inflate(&stream, 0);
++	} while (len && status == Z_OK && !stream.avail_in);
+ 	git_inflate_end(&stream);
+-	if (st != Z_STREAM_END || stream.total_out != obj->size)
++	/* This has been inflated OK when first encoumtered, so... */
++	if (status != Z_STREAM_END || stream.total_out != obj->size)
+ 		die("serious inflate inconsistency");
+-	free(src);
+ 	return data;
+ }
+ 
+-- 
+1.7.1.rc1.237.ge1730.dirty
