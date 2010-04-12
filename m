@@ -1,89 +1,83 @@
-From: Mihamina Rakotomandimby <mihamina@gulfsat.mg>
-Subject: simplest git deamon?
-Date: Mon, 12 Apr 2010 16:47:40 +0300
-Organization: Gulfsat
-Message-ID: <20100412164740.740050cb@pbmiha.malagasy.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: simplest git deamon?
+Date: Mon, 12 Apr 2010 07:22:03 -0700
+Message-ID: <20100412142203.GB6313@spearce.org>
+References: <20100412164740.740050cb@pbmiha.malagasy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 12 16:17:28 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mihamina Rakotomandimby <mihamina@gulfsat.mg>
+X-From: git-owner@vger.kernel.org Mon Apr 12 16:22:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1KS7-00056a-Pn
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 16:17:28 +0200
+	id 1O1KWn-0007hH-KQ
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 16:22:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751356Ab0DLORW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Apr 2010 10:17:22 -0400
-Received: from static-104-36.blueline.mg ([41.204.104.36]:58904 "EHLO
-	mail.blueline.mg" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751151Ab0DLORW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Apr 2010 10:17:22 -0400
-X-Greylist: delayed 1522 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Apr 2010 10:17:21 EDT
-Received: from localhost (static-104-53.blueline.mg [41.204.104.53])
-	by mail.blueline.mg (Postfix) with ESMTP id B58BBF92B
-	for <git@vger.kernel.org>; Mon, 12 Apr 2010 16:52:02 +0300 (EAT)
-X-Virus-Scanned: par antivirus2.malagasy.com
-X-Spam-Flag: NO
-X-Spam-Score: -2.778
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.778 required=7 tests=[AWL=-0.179, BAYES_00=-2.599]
-Received: from mail.blueline.mg ([41.204.104.38])
-	by localhost (antivirus2.malagasy.com [41.204.104.53]) (amavisd-new, port 10024)
-	with ESMTP id MBgqtwz2Mx39 for <git@vger.kernel.org>;
-	Mon, 12 Apr 2010 16:51:47 +0300 (EAT)
-Received: from pbmiha.malagasy.com (freedsl-1.blueline.mg [41.204.101.82])
-	by mail.blueline.mg (Postfix) with ESMTP id 52EBEF81F
-	for <git@vger.kernel.org>; Mon, 12 Apr 2010 16:47:51 +0300 (EAT)
-Received: from localhost ([127.0.0.1] helo=pbmiha.malagasy.com)
-	by pbmiha.malagasy.com with esmtp (Exim 4.69)
-	(envelope-from <mihamina@gulfsat.mg>)
-	id 1O1JzJ-0001kL-24
-	for git@vger.kernel.org; Mon, 12 Apr 2010 16:47:41 +0300
-X-Mailer: Claws Mail 3.7.2 (GTK+ 2.18.3; x86_64-pc-linux-gnu)
+	id S1751842Ab0DLOWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Apr 2010 10:22:11 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:47045 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751528Ab0DLOWK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Apr 2010 10:22:10 -0400
+Received: by bwz19 with SMTP id 19so12009bwz.21
+        for <git@vger.kernel.org>; Mon, 12 Apr 2010 07:22:09 -0700 (PDT)
+Received: by 10.204.21.20 with SMTP id h20mr4759168bkb.149.1271082129145;
+        Mon, 12 Apr 2010 07:22:09 -0700 (PDT)
+Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
+        by mx.google.com with ESMTPS id 15sm1810016bwz.12.2010.04.12.07.22.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 12 Apr 2010 07:22:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100412164740.740050cb@pbmiha.malagasy.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144731>
 
-Manao ahoana, Hello, Bonjour,
+Mihamina Rakotomandimby <mihamina@gulfsat.mg> wrote:
+> Manao ahoana, Hello, Bonjour,
+> 
+> I would like to setup a git repository, on a Debian machine.
+> I would like to access it only with git:// (no http://, no ssh://,...)
+> 
+> How to implement read/write restriction when just wanting to use
+> "git://" without dealing with SSH?
+> 
+> http://www.kernel.org/pub/software/scm/git/docs/everyday.html, at it's
+> bottom tlak about this but it requires SSH.
+> https://help.ubuntu.com/community/Git talks about gitosis, but it
+> requires keys.
+> 
+> I have the GIT repository setup, with the "git://"-only access scheme, 
+> but anyone may push into this.
+> 
+> I expected just a flat file the SVN way (But I dont want to use SVN):
 
-I would like to setup a git repository, on a Debian machine.
-I would like to access it only with git:// (no http://, no ssh://,...)
+Git isn't SVN.
 
-How to implement read/write restriction when just wanting to use
-"git://" without dealing with SSH?
+The git:// daemon is *anonymous*.  It has no authentication
+capability, nor will it probably ever learn how to authenticate
+users.  Consequently you can't do what you want with it.
 
-http://www.kernel.org/pub/software/scm/git/docs/everyday.html, at it's
-bottom tlak about this but it requires SSH.
-https://help.ubuntu.com/community/Git talks about gitosis, but it
-requires keys.
+Instead of reinventing the wheel poorly, Git relies on external
+servers to perform the authentication.  So if you want authenticated
+access, you will need to use either SSH or HTTP.
 
-I have the GIT repository setup, with the "git://"-only access scheme, 
-but anyone may push into this.
+If you use SSH, lots of people get by with Gitosis, as its fairly
+simple to configure.  Another option is to use something much more
+complex like Gerrit Code Review[1] that contains its own SSH server.
 
-I expected just a flat file the SVN way (But I dont want to use SVN):
+If you use HTTP, use the newer git-http-backend[2] that was
+introduced in Git 1.6.6 (or later), running behind an Apache
+HTTP server.
 
-  [users]
-  alice: al_pass
-  bob  : b_pass
-  
-  [groups]
-  senior:alice,bob
-  
-  [permissions]
-  @senior:all
-  @anonymous:clone
-
-How could I do that?
-
-Misaotra, Thanks, Merci.
-
+[1] http://code.google.com/p/gerrit/
+[2] http://www.kernel.org/pub/software/scm/git/docs/git-http-backend.html
+ 
 -- 
-       Architecte Informatique chez Blueline/Gulfsat:
-    Administration Systeme, Recherche & Developpement
-                +261 34 29 155 34 / +261 33 11 207 36
+Shawn.
