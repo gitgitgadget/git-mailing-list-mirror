@@ -1,87 +1,173 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] git-gui: Fast staging/unstaging of hunks/lines
-Date: Mon, 12 Apr 2010 19:55:08 +0200
-Message-ID: <j2s36ca99e91004121055x5cb37d3er423bdfda5aa70702@mail.gmail.com>
-References: <7ed246d74b2ea872a4af3b99d519590ab17ffefc.1270457921.git.bert.wesarg@googlemail.com>
-	 <201004112101.54908.j6t@kdbg.org>
-	 <q2m36ca99e91004112349l9e336fffl7e69bb75bce07a40@mail.gmail.com>
-	 <201004121945.16216.j6t@kdbg.org>
+From: Debayan Banerjee <debayanin@gmail.com>
+Subject: Rename similarity scoring for file pair
+Date: Mon, 12 Apr 2010 23:42:59 +0530
+Message-ID: <t2ua2cc2dbc1004121112h64f5b61ela57f5fa83abf51f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Apr 12 19:55:20 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 12 20:13:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1Nqx-0005kj-Vx
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 19:55:20 +0200
+	id 1O1O8V-0006Iw-7h
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 20:13:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753234Ab0DLRzM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Apr 2010 13:55:12 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:33954 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752757Ab0DLRzK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Apr 2010 13:55:10 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1617800fgg.1
-        for <git@vger.kernel.org>; Mon, 12 Apr 2010 10:55:08 -0700 (PDT)
+	id S1753154Ab0DLSNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Apr 2010 14:13:20 -0400
+Received: from mail-pz0-f204.google.com ([209.85.222.204]:33734 "EHLO
+	mail-pz0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753057Ab0DLSNT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Apr 2010 14:13:19 -0400
+Received: by pzk42 with SMTP id 42so4023485pzk.4
+        for <git@vger.kernel.org>; Mon, 12 Apr 2010 11:13:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/bQXcmcR7hKpFD0T7ZBtUD+0bbQ18VyrP+XdHE5WEbM=;
-        b=EIq3a7r2m5VLkKYaiRNN3vwL4fEOl4pJGfzFfYVBhVMKCdKp30dGAaSdfZKU2SGSgm
-         ZrlwfTthX18/J/d7MXdd/zrxFzdMfPZncK3NheWyrdb3Zpud3ai/wxB9CjpJ/FScZIP9
-         uznZ0zyZFrIfrjYwqevkFzDMg/9Q1iAkU7JNY=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:received
+         :message-id:subject:to:content-type;
+        bh=/SNgm/8g8Y6Vg2AwTXv2LNoz7QBYIXK8V86BIIwWx8w=;
+        b=ZZ2U6gtm+Sr7AIUYgqeRZmS20t/Sd/8s7H3m5XmGiX8IKOL7y98uXurCR072ukcDAC
+         E44/e66cSH5HFEgbOrBn1uGGz254Bo0tbPGhjILvjXqO7/obud3xjsm6u7IbvrVK0D4E
+         3mEKtUkoaDteL9Fwrq8bH/PoNro2h+qg+fVtU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=UXKJnw1ZA1mjNRlHvM8S5W20zflUgm+38UAtlZcsfX9svKFb3cdhwOwq4jt5SkSw1g
-         dOSs2PW8JBAXbD8wep7UU8P+j7XM83q/EKUyD5/Mb5nUmyK5EL6+LWhPtKkHbmg0R6U5
-         30Rh4pFATKl6AvJV53wcrp2l9DtA4A4j+cUSU=
-Received: by 10.223.111.7 with HTTP; Mon, 12 Apr 2010 10:55:08 -0700 (PDT)
-In-Reply-To: <201004121945.16216.j6t@kdbg.org>
-Received: by 10.223.5.5 with SMTP id 5mr2755764fat.80.1271094908449; Mon, 12 
-	Apr 2010 10:55:08 -0700 (PDT)
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=G2YB+xRSonsYPY4Zfe70UoGsZD8j4YhX6eNdN78iyG6fv5S5w673y+nUfZTTxAwwUN
+         GwviXK99f2zuEbZGUQdEhL1HmjalbLHZO/ETqfOUN/Us7vDLmCwdfRiPkL4TCPqL4TqT
+         VYDrXrMvKUdMwwveET+4Mr781UJLMPfJBH1Q4=
+Received: by 10.141.37.12 with HTTP; Mon, 12 Apr 2010 11:12:59 -0700 (PDT)
+Received: by 10.140.58.10 with SMTP id g10mr4107286rva.85.1271095999464; Mon, 
+	12 Apr 2010 11:13:19 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144761>
 
-On Mon, Apr 12, 2010 at 19:45, Johannes Sixt <j6t@kdbg.org> wrote:
-> On Montag, 12. April 2010, Bert Wesarg wrote:
->> I don't feel comfortable with this ambiguity myself. I see two ways =
-to
->> solve this:
->>
->> =C2=A0 =C2=A0 a) Use Shift-Button-1 for lines
->>
->> or
->>
->> =C2=A0 =C2=A0 b) Use Shift-Control-Button-1 for lines
->>
->> and make Control-Button-1 only stage hunks.
->
-> That's worse, because you need Shift-Button-1 to extend a selection.
->
-> The problem is that the X-Windowsy way to overload single-click opera=
-tions.
-> Personally, I prefer to get an operative response only on double-clic=
-k. It's
-> still unused, I think.
+I was going through this thread
+<http://markmail.org/message/mge2spy7uqle5ghy#query:diffcore-rename.c%20algorithm+page:1+mid:ji7jkzypzqpml2xn+state:results>
+trying to understand how the similarity scoring for modified files
+works. I see that the algorithm uses two hashes, one for each file,
+and proceeds to compare the 2 hashes to determine percentage
+similarity.
+I think I have an algorithm which uses only one hash and has a worst
+case space complexity of O(N) where N is the number of lines
+inserted/deleted/moved.
+The algorithm is as follows:
 
-Good idea. But I fear that you can loose your selection, if you move
-the pointer accidentally while double clicking. Its still worth to try
-this.
+def similarity(leftFileContent, rightFileContent)
+{
+	int lineCounter = 0;
+	struct HashElement  {
+	HashElement(): leftFileCount(0), rightFileCount(0) // One of these
+counters will remain 0 for its lifetime. The other will be >=0
+		int leftFileCount; // Increment if line is from leftFile
+		int rightFileCount; // Increment if line is from right file.
+	};
+	Hash<lineContent, HashElement> hash; //One hash for both files
+	int similartyCounter = 0;
+	while(true)  {
+		leftLline = leftFileContent[lineCounter];
+		rightLine = rightFileContent[lineCounter];
+		if (hash.contains(leftLine))  {
+			HashElement h = hash.value(leftLine);
+			if (h.leftFileCount > 0)   {//The previous occurence has come from
+the left file
+				h.leftFileCount++;  //This line is another occurence of the same
+line in the same file. So we increment the counter.
+			}
+			else  {
+				h.leftFileCount--;
+				similarityCounter++;  //Hey, this line matched an earlier
+occurence from the other file!
+			}
+			if (h.leftFileCount == 0 && h.rightFileCount == 0)
+				hash.remove(leftLine);			
+		}
+		else  { // this line is being encountered for the first time, so add
+it to the hash
+			HashElement h;
+			h.leftFileCount++;
+			hash.add(leftLine, h);
+		}
+		
+		if (hash.contains(rightLine))  {
+			HashElement h = hash.value(rightLine);
+			if (h.rightFileCount > 0)   {//The previous occurence has come from
+the right file
+				h.rightFileCount++;  //This line is another occurence of the same
+line in the same file. So we increment the counter.
+			}
+			else  {
+				h.rightFileCount--;
+				similarityCounter++;  //Hey, this line matched an earlier
+occurence from the other file!
+			}
+			if (h.leftFileCount == 0 && h.rightFileCount == 0)
+				hash.remove(line2);			
+		}
+		else  { // this line is being encountered for the first time, so add
+it to the hash
+			HashElement h;
+			h.rightFileCount++;
+			hash.add(line2, h);			
+		}
+		lineCounter++;
+		if (lineCounter == leftFileContent.size() || lineCounter ==
+rightFileContent.size())
+			break;
+	}
+	/* Upto this point we have processed an equal number of lines in both
+the files simultaneously. Now we may have a file which is
+	larger in size than the other. We need to process the remanant of this file*/
+	bool leftFileIsLonger;
+	FileContent fileContent;
+	int size;
+	if (leftFileContent.size() == rightFileContent.size())		
+		return ((similarityCounter*100) / rightFileContent.size());
+	if (leftFileContent.size() >rightFileContent.size())  {
+		leftFileIsLonger = true;
+	        fileContent = leftFileContent; //fileContent should really be
+ a pointer to leftFileContent
+		size = leftFileContent.size();
+        }
+	else  {
+		leftFileIsLonger = false;
+		fileContent = rightFileContent; //fileContent should really be  a
+pointer to rightFileContent
+		size = rightFileContent.size();
+	}
+	for (i = lineCounter + 1;  i < size; i++ )  {
+		line = fileContent[i];
+		if (hash.contains(line))  {
+			Hash h = hash.value(line);
+			if (h.leftLineCount > 0)  { //Line in hash came from left file
+				if (leftFileIsLonger)
+					h.leftFileCount++; //Even this line came from the same file, so
+its just a repeated line.
+				else  {
+					h.leftFileCount--;
+					similarityCounter++;  //This line came from the right file, so
+increase similarityCounter and decrease the leftCounter.
+				}
+			}
+			else  { //Line in hash came from right file
+				if (leftFileIsLonger)  {
+					h.rightFileCount--;
+					similarityCounter++;
+				}
+				else
+					h.rightFileCount++;
+			}
+			if (h.leftFileCount == 0 && h.rightFileCount == 0)
+					hash.remove(line);
+		}
+	}
+    return ((similarityCounter*100) / size); //Formula for calculating
+similarity is same as git uses
+}
 
-Bert
-
->
-> -- Hannes
->
+--
+Debayan Banerjee
+Software Engineer
