@@ -1,104 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] tests: add some script lint checks
-Date: Mon, 12 Apr 2010 02:52:34 -0400
-Message-ID: <20100412065234.GA12462@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] tests: add some script lint checks
+Date: Mon, 12 Apr 2010 00:41:45 -0700
+Message-ID: <7vochpm81y.fsf@alter.siamese.dyndns.org>
+References: <20100412065234.GA12462@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 12 08:53:09 2010
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 12 09:42:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1DW7-0003uZ-SJ
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 08:53:08 +0200
+	id 1O1EHT-0001Ip-Mb
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 09:42:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753152Ab0DLGxB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Apr 2010 02:53:01 -0400
-Received: from peff.net ([208.65.91.99]:34155 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751932Ab0DLGxA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Apr 2010 02:53:00 -0400
-Received: (qmail 15702 invoked by uid 107); 12 Apr 2010 06:53:02 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 12 Apr 2010 02:53:02 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Apr 2010 02:52:34 -0400
-Content-Disposition: inline
+	id S1752611Ab0DLHl5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Apr 2010 03:41:57 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42540 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751739Ab0DLHl4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Apr 2010 03:41:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 360DCA9B34;
+	Mon, 12 Apr 2010 03:41:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Ag7Rh9vujqcrI7xyUF2OuqRNQBA=; b=KpA6bV
+	jgkP1dF+Vz+410MUsYCkYnR5tLIDZ5TluLF87t0A3G4GBDmQHazrwgr7wXCt0X53
+	aNaH9JDRGjmLyPhPky80LypXiBiVzwcfDf9upf2ly4UQNYQbRtqKKrJ1QhCXBcCa
+	/fm4QIddr/lsKeLV2cQ6Ba6cRNpPni97E1BC0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PmAj3FFq9bC+tRgYQ+K/9s64UB5UGGB+
+	l/x9mrNzvpuy0ijeTtSc3aeyY3kGQxjAyJBQPrDcx9ZsmqhLBXrL+hPS9Z1B1UOE
+	W1jPc+2MBV2AZV8v1NE6iWXjf8wmJoFPN4TmjfF23KfHch9fb+eUPIZQXBOFt53W
+	PPHVJFr2n0k=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 05D74A9B32;
+	Mon, 12 Apr 2010 03:41:51 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 29E3BA9B30; Mon, 12 Apr
+ 2010 03:41:47 -0400 (EDT)
+In-Reply-To: <20100412065234.GA12462@coredump.intra.peff.net> (Jeff King's
+ message of "Mon\, 12 Apr 2010 02\:52\:34 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DB737F2C-4606-11DF-AA63-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144709>
 
-There are some common but minor errors we tend to make in
-writing test scripts:
+Jeff King <peff@peff.net> writes:
 
-  1. Scripts are left non-executable. This is not usually
-     noticed immediately because "make test" does not need
-     the bit, but it is a matter of git policy to make them
-     executable (and is a slight convenience when running
-     individual scripts).
+> As maintainer, Junio, you might want to run at
+> least with TEST_LINT = test-lint-duplicate, since you can then catch
+> duplicates introduced by merges and fix them up as part of the merge.
 
-  2. Two scripts are allocated the same number. Usually this
-     happens on separate branches, and the problem only
-     comes about during a merge. But since there is no
-     textual conflict, the merger would have to be very
-     observant to notice.
-
-     This is also a minor error, but can make GIT_SKIP_TESTS
-     ambiguous.
-
-This patch introduces a "test-lint" target which checks
-both. It is not invoked by default. You can invoke it as
-"make test-lint", or you can make it a prerequisite of
-running the tests by specifying "TEST_LINT = test-lint" in
-your config.mak or on the command line.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-The dup half is based on Johannes' earlier patch.
-
-Obviously this can help submitters avoid dumb mistakes, so I plan to
-turn it on for myself.  As maintainer, Junio, you might want to run at
-least with TEST_LINT = test-lint-duplicate, since you can then catch
-duplicates introduced by merges and fix them up as part of the merge.
-
- t/Makefile |   14 +++++++++++++-
- 1 files changed, 13 insertions(+), 1 deletions(-)
-
-diff --git a/t/Makefile b/t/Makefile
-index 25c559b..40ae67c 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -16,7 +16,7 @@ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
- T = $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
- TSVN = $(wildcard t91[0-9][0-9]-*.sh)
- 
--all: pre-clean
-+all: pre-clean $(TEST_LINT)
- 	$(MAKE) aggregate-results-and-cleanup
- 
- $(T):
-@@ -30,6 +30,18 @@ clean:
- 	$(RM) t????/cvsroot/CVSROOT/?*
- 	$(RM) -r valgrind/bin
- 
-+test-lint: test-lint-duplicates test-lint-executable
-+
-+test-lint-duplicates:
-+	@dups=`echo $(T) | tr ' ' '\n' | sed 's/-.*//' | sort | uniq -d` && \
-+		test -z "$$dups" || { \
-+		echo >&2 "duplicate test numbers:" $$dups; exit 1; }
-+
-+test-lint-executable:
-+	@bad=`for i in $(T); do test -x "$$i" || echo $$i; done` && \
-+		test -z "$$bad" || { \
-+		echo >&2 "non-executable tests:" $$bad; exit 1; }
-+
- aggregate-results-and-cleanup: $(T)
- 	$(MAKE) aggregate-results
- 	$(MAKE) clean
--- 
-1.7.1.rc1.245.g808fe
+Thanks.  They are caught by pre-applypatch from 'todo' these days.  I
+should also perhaps check for the executable bit there.
