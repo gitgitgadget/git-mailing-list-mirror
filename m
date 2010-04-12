@@ -1,66 +1,97 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 2/2] index-pack: rationalize unpack_entry_data()
-Date: Mon, 12 Apr 2010 08:36:25 +0200
-Message-ID: <4BC2BF69.8050100@viscovery.net>
-References: <1271041047-32563-1-git-send-email-nico@fluxnic.net> <1271041047-32563-2-git-send-email-nico@fluxnic.net>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] git-gui: Fast staging/unstaging of hunks/lines
+Date: Mon, 12 Apr 2010 08:49:01 +0200
+Message-ID: <q2m36ca99e91004112349l9e336fffl7e69bb75bce07a40@mail.gmail.com>
+References: <7ed246d74b2ea872a4af3b99d519590ab17ffefc.1270457921.git.bert.wesarg@googlemail.com>
+	 <x2o36ca99e91004110038oce1ffa15jc49244f228ce218@mail.gmail.com>
+	 <201004112101.54908.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Mon Apr 12 08:36:34 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Apr 12 08:49:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1DG5-00073j-KR
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 08:36:34 +0200
+	id 1O1DSO-0002Uj-62
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 08:49:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752752Ab0DLGg2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Apr 2010 02:36:28 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:23993 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752438Ab0DLGg1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Apr 2010 02:36:27 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1O1DFy-0001mr-Nc; Mon, 12 Apr 2010 08:36:26 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 77AC61660F;
-	Mon, 12 Apr 2010 08:36:26 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <1271041047-32563-2-git-send-email-nico@fluxnic.net>
-X-Spam-Score: -1.4 (-)
+	id S1752928Ab0DLGtH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Apr 2010 02:49:07 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:51444 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752438Ab0DLGtE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Apr 2010 02:49:04 -0400
+Received: by fg-out-1718.google.com with SMTP id 22so783897fge.1
+        for <git@vger.kernel.org>; Sun, 11 Apr 2010 23:49:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type;
+        bh=b0sOCoQtP38DhFXiuKUHCO+P/Xlp1VQa/yGNfNlx5dE=;
+        b=rrux16w64U5FtiamHZIW4H+8O+4WTYHYXx28CqP4fOlKCdiW1lpCh3q/G770/ED4sT
+         atJIufvPGhspupxMkL1PEVJmdbmsSYv15HMhAe4KfsdbYi6ywxu4vFFFyW9hTjtiB0Mi
+         48+qagFcGuMKmQaVngTwKRfor6gUSjmf1bKLA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=h78q5q8li6wfiIvowcQeVpLCTA+GmiGMZCVcJZLO6hWI7I/nXKnjrOjmYdniqBStzt
+         XDJ4udhdICtqyxLi4K7KHg3xr6ASx1MuvkAidk4JAWNHyEg/UkhEZ+FYeXR5MuTcSLX9
+         bb2U8vJKm/f72kMtJct4QV8f3pImVVTolO248=
+Received: by 10.223.111.7 with HTTP; Sun, 11 Apr 2010 23:49:01 -0700 (PDT)
+In-Reply-To: <201004112101.54908.j6t@kdbg.org>
+Received: by 10.223.62.202 with SMTP id y10mr481520fah.100.1271054941651; Sun, 
+	11 Apr 2010 23:49:01 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144706>
 
-Am 4/12/2010 4:57, schrieb Nicolas Pitre:
-> -	for (;;) {
-> -		int ret = git_inflate(&stream, 0);
-> -		use(input_len - stream.avail_in);
-> -		if (stream.total_out == size && ret == Z_STREAM_END)
-> -			break;
-> -		if (ret != Z_OK)
-> -			bad_object(offset, "inflate returned %d", ret);
-> +	do {
->  		stream.next_in = fill(1);
->  		stream.avail_in = input_len;
-> -	}
-> +		status = git_inflate(&stream, 0);
-> +		use(input_len - stream.avail_in);
-> +	} while (status == Z_OK);
->  	git_inflate_end(&stream);
-> +	if (stream.total_out != size || status != Z_STREAM_END)
-> +		bad_object(offset, "inflate returned %d", status);
->  	return buf;
+Hi,
 
-Is stream.total_out still valid after inflateEnd() (and I mean "valid by
-definition", not just "by accident")? To stay on the safe side, you should
-call git_inflate_end only after this last check.
+On Sun, Apr 11, 2010 at 21:01, Johannes Sixt <j6t@kdbg.org> wrote:
+> On Sonntag, 11. April 2010, Bert Wesarg wrote:
+>> On Mon, Apr 5, 2010 at 11:01, Bert Wesarg <bert.wesarg@googlemail.com>
+> wrote:
+>> > This adds a shortcut to stage/unstage hunks or a range of lines. Which is
+>> > done on a mouse button 1 release event and holding the control key in the
+>> > diff view. If there is currently a selection only the selected lines will
+>> > be staged/unstaged. Otherwise the hunk will be staged/unstaged.
+>>
+>> Ping.
+>
+> I gave the patch a quick try.
 
--- Hannes
+Thanks,
+
+>
+> I don't think that I would use it a lot because it is very easy to mess up a
+> staged change: The problem is that a click without anything selected will
+> stage an entire hunk. I frequently use "Stage Line(s)" to separate
+> neighboring changes that must go to separate commits, but with you feature it
+> is very easy to forget to select something and, hence, to stage the entire
+> hunk accidentally - which means that I would have to start over with the hunk
+> and all the "quick" aspects of the feature would be lost.
+
+I don't feel comfortable with this ambiguity myself. I see two ways to
+solve this:
+
+    a) Use Shift-Button-1 for lines
+
+or
+
+    b) Use Shift-Control-Button-1 for lines
+
+and make Control-Button-1 only stage hunks.
+
+May this interface be more usable?
+
+Regards,
+Bert
+
+> -- Hannes
+>
