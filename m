@@ -1,97 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Is it possible to have a file shared between branches?
-Date: Mon, 12 Apr 2010 03:07:49 -0700 (PDT)
-Message-ID: <m3ljctf0hs.fsf@localhost.localdomain>
-References: <alpine.OSX.2.01.1004121058390.52293@kroll.spectro.jussieu.fr>
+From: Michal Vitecek <fuf@mageo.cz>
+Subject: Re: [BUG] - git rebase -i performs rebase when it shouldn't?
+Date: Mon, 12 Apr 2010 12:50:34 +0200
+Message-ID: <20100412105034.GC30605@mageo.cz>
+References: <z2q76c5b8581004091235ucd9b2a52i223b3191b288c42a@mail.gmail.com>
+ <20100410042609.GA24295@coredump.intra.peff.net>
+ <7vsk73zzt1.fsf@alter.siamese.dyndns.org>
+ <4BC0D87E.70001@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eric LEBIGOT <Eric.Lebigot@normalesup.org>
-X-From: git-owner@vger.kernel.org Mon Apr 12 12:08:01 2010
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Apr 12 13:14:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1GYg-0007zt-8i
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 12:07:58 +0200
+	id 1O1Hai-00058M-U9
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Apr 2010 13:14:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753440Ab0DLKHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Apr 2010 06:07:53 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:61544 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752282Ab0DLKHw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Apr 2010 06:07:52 -0400
-Received: by bwz19 with SMTP id 19so2537bwz.21
-        for <git@vger.kernel.org>; Mon, 12 Apr 2010 03:07:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=ZMZ121oWdfmFyx8LUGzfjXTO8te3D5tpLLwD4N9omrs=;
-        b=lPHk4zxMP9atrOHNokcYqwuObGvyTCPAUEjE8n7+yTg+Ngk6UcEKbED++eH+/La6M3
-         r9wohtSusGJb8CifGjHbS9ot1RPhKkDO4F7EfZBg0uTN0/l8KNVUicr36Uyb1VgLFzDl
-         J/lHupePotO1JBvBZe5IssvHf5gyJHqoFGGNk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=AcFKLo7e1fIG9LkwTwTXxEK2+JH5rqPgpOe6apVxKejSO2v/OAcfHZObNqb0Zr6FRz
-         iOB397hDmOrE3b3Yxs/MquL6wGFFpPO8wrjxMhcf/PqBmtJ0HgQEn9ZD8oxXhU9Q1iKN
-         bIrDNKFRpJwAWFhMT00yxqki7xvIO3uNGV1Bo=
-Received: by 10.103.48.12 with SMTP id a12mr1879310muk.14.1271066870420;
-        Mon, 12 Apr 2010 03:07:50 -0700 (PDT)
-Received: from localhost.localdomain (abvy192.neoplus.adsl.tpnet.pl [83.8.222.192])
-        by mx.google.com with ESMTPS id s11sm16330947mue.41.2010.04.12.03.07.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 12 Apr 2010 03:07:49 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o3CA7BIn023128;
-	Mon, 12 Apr 2010 12:07:21 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o3CA6t0L023124;
-	Mon, 12 Apr 2010 12:06:55 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <alpine.OSX.2.01.1004121058390.52293@kroll.spectro.jussieu.fr>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752991Ab0DLLOA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Apr 2010 07:14:00 -0400
+Received: from interactive-1.com ([193.85.232.82]:33536 "EHLO
+	interactive-1.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752821Ab0DLLOA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Apr 2010 07:14:00 -0400
+X-Greylist: delayed 1404 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Apr 2010 07:13:59 EDT
+Received: from interactive-1.com (localhost.localdomain [127.0.0.1])
+	by interactive-1.com (Postfix) with ESMTP id A427B2E74A4;
+	Mon, 12 Apr 2010 12:50:34 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <4BC0D87E.70001@kdbg.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144721>
 
-Eric LEBIGOT <Eric.Lebigot@normalesup.org> writes:
+On 10.04.2010 21:58 CEST, Johannes Sixt wrote:
+>Am 10.04.2010 06:39, schrieb Junio C Hamano:
+>>I used to religiously rebase slushy topics that are not in any stable
+>>integration branches (we used to have only 'master' and 'pu'), and
+>>
+>>	git rebase master foo
+>>         git rebase master bar
+>>         git rebase master baz
+>>
+>>was far easier to type than
+>>
+>>	git checkout foo&&  git rebase master
+>>	git checkout bar&&  git rebase master
+>>	git checkout baz&&  git rebase master
+>
+>I'm actually very glad that the current interface is the way it is -
+>because it can do the rebase *without* the checkout. This way you can
+>save a lot of recompilation due to changed timestamps if the topic is
+>based on an old version.
+>
+>Only that some (all?) variants of rebase still unnecessarily do the
+>checkout...
 
-> Is it possible for git to track a single file that would be shared
-> accross branches?  Case in point: a to-do list file that describes
-> what has to be done in all the branches; it can be convenient to put
-> all the things that have to be done in a single, shared file, while
-> keeping this to-do list in sync with the code (so that it lists what
-> has been done, and what remains to be done).  Committing in a branch
-> would in effect also commit the shared file in the other branches
-> (another possibility may be to have in effect many "trees" in a single
-> git directory, with a specific tree for the to-do list).
-> 
-> Is this something git can do?
+ Is there any chance for merge to behave the same? I really like that I
+ don't have to do a checkout prior rebasing.
 
-Look how it is done in git.git repository.  If I remember it
-correctly, Junio manages separate small repository inside
-non-versioned Meta/ directory inside git.git checkout, which contains
-TODO list and some scripts to help maintenance (e.g. to help generate
-"What's in..." and "What's cooking..." emails).  
-
-For distribution this repository is pushed into independent 'todo'
-branch in git.git repository.  It doesn't share commits with other
-"normal" branches, i.e. 'maint', 'master', 'next', 'pu'.
-
-The 'todo' branch can be seen e.g. here:
-  http://git.kernel.org/?p=git/git.git;a=shortlog;h=refs/heads/todo
-
-The history of TODO file can be viewed e.g. here:
-  http://git.kernel.org/?p=git/git.git;a=history;f=TODO;hb=refs/heads/todo
-
+        Thanks,
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+		Michal Vitecek		(fuf@mageo.cz)
