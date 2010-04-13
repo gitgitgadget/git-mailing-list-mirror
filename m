@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 9/9] config: run setup before commiting pager choice
-Date: Mon, 12 Apr 2010 21:31:24 -0500
-Message-ID: <20100413023124.GI4118@progeny.tock>
+Subject: [RFC/PATCH 00/46] nd/setup remainder for convenient reference
+Date: Mon, 12 Apr 2010 22:08:53 -0500
+Message-ID: <20100413030853.GJ4118@progeny.tock>
 References: <20100413021153.GA3978@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -9,46 +9,46 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 13 04:31:35 2010
+X-From: git-owner@vger.kernel.org Tue Apr 13 05:09:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1VuV-0000S6-TK
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Apr 2010 04:31:32 +0200
+	id 1O1WUz-0004BS-HW
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Apr 2010 05:09:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754669Ab0DMCb0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Apr 2010 22:31:26 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:45992 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754559Ab0DMCbZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Apr 2010 22:31:25 -0400
-Received: by gyg13 with SMTP id 13so3220058gyg.19
-        for <git@vger.kernel.org>; Mon, 12 Apr 2010 19:31:24 -0700 (PDT)
+	id S1754686Ab0DMDIz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Apr 2010 23:08:55 -0400
+Received: from mail-gx0-f217.google.com ([209.85.217.217]:45765 "EHLO
+	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754676Ab0DMDIy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Apr 2010 23:08:54 -0400
+Received: by gxk9 with SMTP id 9so3835101gxk.8
+        for <git@vger.kernel.org>; Mon, 12 Apr 2010 20:08:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=V4hAcWlAM9vu5t89DaTCd3GfPDzLuzm7HGIf1yeF4Bg=;
-        b=P4RWnmh+WimtYkD7YaG+7FDvysJFYoKUikyqT8yoMSHwK1Eins7dMNm2pH+F6Jrp0H
-         J1uFKVT4JpiRDGbNnH1Ud1ZWnnEEYfL8Upl9AG9qXxkQ34sJjH8UjyHTZ7L0LHRsyUyD
-         q0x3erD3KKaIc31LsMurgn7f4pq70TyrnVeoA=
+        bh=vBW5u8HzIpbbuR6mG0YRVP6FTrcT5cVpe02t8bLK7oQ=;
+        b=JpS5vX3Og/INBl4Vaxu0xd+YC7JTnFzBFqbFtr239CeyGiNjSbUTrVUaTlT5YU0DF8
+         lQ++A3eqzspjSzA7kBXGhqmNjuke0xNoVWCs7RS8+GIhgxcanbGLnSZKqvjH0lsR/Axb
+         aa0b08E97MRryKYMnv9IQLUQBT44tBVq91scg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=NpanSg4ELoEUuQXqxLoFskILRRoujwfgVU+g4TAS01Dac9YXmKa7KNXJIrsvqdccKB
-         WIiJn00FvBxWNiUK0M15OIDpobcF6ssWhBTsY0ftDyvXUGBtycVEQtCwAlf4ryiMnGI5
-         YQnMyrTJeo10ArPx9PPtuGgwYutUugbTmcmQQ=
-Received: by 10.151.18.10 with SMTP id v10mr4448535ybi.51.1271125883909;
-        Mon, 12 Apr 2010 19:31:23 -0700 (PDT)
+        b=fJVxWt0DfnglayOMXbvW0hpwyGPLt7XpI9bsbpmr4loP2MSB9O5QPDXDZQCjPmKT5p
+         kFIicNSjoYB2n7BdbonArfxcKM620UDeurJxpjTi9dePQhiigCA+rfqzwhdrl7zJDHPk
+         HIoMx0l6fW+We7rdYPYXy7tdyO/4fS94FBV9w=
+Received: by 10.150.119.26 with SMTP id r26mr4797825ybc.60.1271128133884;
+        Mon, 12 Apr 2010 20:08:53 -0700 (PDT)
 Received: from progeny.tock (wireless-239-104.uchicago.edu [128.135.239.104])
-        by mx.google.com with ESMTPS id 21sm4514778iwn.7.2010.04.12.19.31.23
+        by mx.google.com with ESMTPS id 23sm309931iwn.2.2010.04.12.20.08.52
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 12 Apr 2010 19:31:23 -0700 (PDT)
+        Mon, 12 Apr 2010 20:08:53 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20100413021153.GA3978@progeny.tock>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -56,150 +56,137 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144789>
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+I was thinking of sending the remainder of nd/setup after this to save
+others the trouble of rebasing, but I fear the traffic would be too
+disruptive.  So I am putting it up by git.
 
-=46or the pager choice (and the choice to paginate in the first place)
-to reflect the current repository configuration, the repository
-needs to be searched for first.
+Caveats: maybe these patches make no sense.  After I last rebased
+them, I walked away without looking.  Still, maybe they can save
+you some time.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-That=E2=80=99s the end of the mini-series.  I hope you enjoyed reading =
-it as
-much as I did adapting it.
-
-Looking forward to your thoughts,
+Good night,
 Jonathan
 
- builtin/config.c |    6 ++----
- git.c            |    4 ++--
- t/t7006-pager.sh |   16 ++++++++++------
- 3 files changed, 14 insertions(+), 12 deletions(-)
+The following changes since commit e0cc2322c409c6cfa897f395f6feb058e2d5=
+3d4a:
+  Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
+        config: run setup before commiting pager choice
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 4bc46b1..ecc8f87 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -326,11 +326,9 @@ static int get_colorbool(int print)
- 		return get_colorbool_found ? 0 : 1;
- }
-=20
--int cmd_config(int argc, const char **argv, const char *unused_prefix)
-+int cmd_config(int argc, const char **argv, const char *prefix)
- {
--	int nongit;
- 	char *value;
--	const char *prefix =3D setup_git_directory_gently(&nongit);
-=20
- 	config_exclusive_filename =3D getenv(CONFIG_ENVIRONMENT);
-=20
-@@ -409,7 +407,7 @@ int cmd_config(int argc, const char **argv, const c=
-har *unused_prefix)
- 	}
- 	else if (actions =3D=3D ACTION_EDIT) {
- 		check_argc(argc, 0, 0);
--		if (!config_exclusive_filename && nongit)
-+		if (!config_exclusive_filename && !startup_info->have_repository)
- 			die("not in a git directory");
- 		git_config(git_default_config, NULL);
- 		launch_editor(config_exclusive_filename ?
-diff --git a/git.c b/git.c
-index 56e93cf..0a0d9eb 100644
---- a/git.c
-+++ b/git.c
-@@ -309,7 +309,7 @@ static void handle_internal_command(int argc, const=
- char **argv)
- 		{ "clean", cmd_clean, RUN_SETUP | NEED_WORK_TREE },
- 		{ "commit", cmd_commit, RUN_SETUP | NEED_WORK_TREE },
- 		{ "commit-tree", cmd_commit_tree, RUN_SETUP },
--		{ "config", cmd_config },
-+		{ "config", cmd_config, RUN_SETUP_GENTLY },
- 		{ "count-objects", cmd_count_objects, RUN_SETUP },
- 		{ "describe", cmd_describe, RUN_SETUP },
- 		{ "diff", cmd_diff },
-@@ -366,7 +366,7 @@ static void handle_internal_command(int argc, const=
- char **argv)
- 		{ "reflog", cmd_reflog, RUN_SETUP },
- 		{ "remote", cmd_remote, RUN_SETUP },
- 		{ "replace", cmd_replace, RUN_SETUP },
--		{ "repo-config", cmd_config },
-+		{ "repo-config", cmd_config, RUN_SETUP_GENTLY },
- 		{ "rerere", cmd_rerere, RUN_SETUP },
- 		{ "reset", cmd_reset, RUN_SETUP },
- 		{ "rev-list", cmd_rev_list, RUN_SETUP },
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index 237a689..e58b14d 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -80,7 +80,7 @@ test_expect_success TTY 'git rev-list uses a pager if=
- configured to' '
- git config --unset pager.rev-list
-=20
- rm -f paginated.out
--test_expect_failure TTY 'git config uses a pager if configured to' '
-+test_expect_success TTY 'git config uses a pager if configured to' '
- 	git config pager.config true &&
- 	test_terminal git config --list &&
- 	test -e paginated.out
-@@ -172,7 +172,7 @@ test_pager_choice() {
- 	fi
-=20
- 	unset PAGER GIT_PAGER
--	git config --unset core.pager
-+	git --no-pager config --unset core.pager
- 	rm -f default_pager_used
- 	test_expect_success SIMPLEPAGER "$cmd - default pager is used by defa=
-ult" "
- 		cat > $less <<-\EOF &&
-@@ -185,7 +185,7 @@ test_pager_choice() {
- 	"
-=20
- 	unset GIT_PAGER
--	git config --unset core.pager
-+	git --no-pager config --unset core.pager
- 	rm -f PAGER_used
- 	test_expect_success TTY "$cmd - PAGER overrides default pager" "
- 		PAGER=3D'wc > PAGER_used' &&
-@@ -199,7 +199,7 @@ test_pager_choice() {
- 	$test_expectation TTY "$cmd - core.pager ${used_if_wanted}" "
- 		PAGER=3Dwc &&
- 		export PAGER &&
--		git config core.pager 'wc > core.pager_used' &&
-+		git --no-pager config core.pager 'wc > core.pager_used' &&
- 		$full_cmd &&
- 		${if_want_local_config}test -e core.pager_used
- 	"
-@@ -211,7 +211,7 @@ test_pager_choice() {
- 		PAGER=3Dwc &&
- 		stampname=3D\$(pwd)/core.pager_used &&
- 		export PAGER stampname &&
--		git config core.pager 'wc > \"\$stampname\"' &&
-+		git --no-pager config core.pager 'wc > \"\$stampname\"' &&
- 		mkdir sub &&
- 		(
- 			cd sub &&
-@@ -222,7 +222,7 @@ test_pager_choice() {
-=20
- 	rm -f GIT_PAGER_used
- 	test_expect_success TTY "$cmd - GIT_PAGER overrides core.pager" "
--		git config core.pager wc &&
-+		git --no-pager config core.pager wc &&
- 		GIT_PAGER=3D'wc > GIT_PAGER_used' &&
- 		export GIT_PAGER &&
- 		$full_cmd &&
-@@ -259,4 +259,8 @@ doesnt_paginate 'git rev-list HEAD'
- git config pager.rev-list true
- test_pager_choice 'git rev-list HEAD'
-=20
-+doesnt_paginate 'git config -l'
-+git config pager.config true
-+test_pager_choice 'git config -l'
-+
- test_done
---=20
-1.7.0.4
+are available in the git repository at:
+
+  git://repo.or.cz/git/jrn.git/ nd/setup
+
+Jonathan Nieder (5):
+      t0001: test git init when run via an alias
+      t5512: test that ls-remote does not require a git repository
+      t7002: test git grep --no-index from a bare repository
+      t7006: expose test_terminal() for use by other tests
+      help: note why it is appropriate for this command not to use RUN_=
+SETUP_GENTLY
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (41):
+      t1300: test that scripted commands do not respect stray .git/conf=
+ig
+      setup: save prefix (original cwd relative to toplevel) in startup=
+_info
+      builtin: remove prefix variable from run_builtin()
+      run_builtin(): save "-h" detection result for later use
+      builtin: remember whether repository has been searched for
+      builtin: USE_PAGER should not be used without RUN_SETUP*
+      hash-object: use RUN_SETUP_GENTLY
+      shortlog: use RUN_SETUP_GENTLY
+      grep: use RUN_SETUP_GENTLY
+      archive: use RUN_SETUP_GENTLY
+      mailinfo: use RUN_SETUP_GENTLY
+      check-ref-format: use RUN_SETUP_GENTLY
+      verify-pack: use RUN_SETUP_GENTLY
+      apply: use RUN_SETUP_GENTLY
+      bundle: use RUN_SETUP_GENTLY
+      diff: use RUN_SETUP_GENTLY
+      ls-remote: use RUN_SETUP_GENTLY
+      var: use RUN_SETUP_GENTLY
+      merge-file: use RUN_SETUP_GENTLY
+      worktree setup: calculate prefix even if no worktree is found
+      index-pack: trust the prefix returned by setup_git_directory_gent=
+ly()
+      index-pack: use RUN_SETUP_GENTLY
+      Move enter_repo() to setup.c
+      enter_repo(): initialize other variables as setup_git_directory_g=
+ently() does
+      rev-parse --git-dir: print relative gitdir correctly
+      worktree setup: call set_git_dir explicitly
+      Add git_config_early()
+      Use git_config_early() instead of git_config() during repo setup
+      worktree setup: restore original state when things go wrong
+      init/clone: turn on startup->have_repository properly
+      git_config(): do not read .git/config if there is no repository
+      Do not read .git/info/exclude if there is no repository
+      Do not read .git/info/attributes if there is no repository
+      apply: do not check sha1 if there is no repository
+      config: do not read .git/config if there is no repository
+      builtins: utilize startup_info->help where possible
+      builtins: check for startup_info->help, print and exit early
+      Allow to undo setup_git_directory_gently() gracefully (and fix al=
+ias code)
+      alias: keep repository found while collecting aliases as long as =
+possible
+      Guard unallowed access to repository when it's not set up
+      builtins: setup repository before print unknown command error
+
+ attr.c                                    |    5 +-
+ builtin/apply.c                           |    9 +-
+ builtin/archive.c                         |    2 +-
+ builtin/branch.c                          |    3 +
+ builtin/bundle.c                          |    6 +-
+ builtin/check-ref-format.c                |    2 +-
+ builtin/checkout-index.c                  |    3 +
+ builtin/clone.c                           |    3 +-
+ builtin/commit.c                          |    6 +
+ builtin/config.c                          |    9 +-
+ builtin/diff.c                            |    6 +-
+ builtin/gc.c                              |    3 +
+ builtin/grep.c                            |   11 +-
+ builtin/hash-object.c                     |    9 +-
+ builtin/help.c                            |    5 +
+ builtin/index-pack.c                      |   21 +--
+ builtin/init-db.c                         |   10 +-
+ builtin/log.c                             |    6 +-
+ builtin/ls-files.c                        |    3 +
+ builtin/ls-remote.c                       |    3 -
+ builtin/mailinfo.c                        |    3 -
+ builtin/merge-file.c                      |    4 +-
+ builtin/merge-ours.c                      |    2 +-
+ builtin/merge.c                           |    3 +
+ builtin/pack-redundant.c                  |    2 +-
+ builtin/rev-parse.c                       |    8 +
+ builtin/shortlog.c                        |    4 +-
+ builtin/show-ref.c                        |    2 +-
+ builtin/update-index.c                    |    3 +
+ builtin/upload-archive.c                  |    7 +-
+ builtin/var.c                             |    2 -
+ cache.h                                   |    8 +-
+ config.c                                  |   22 +++-
+ dir.c                                     |    8 +-
+ environment.c                             |   31 ++++-
+ git.c                                     |   84 +++++++-----
+ help.c                                    |    4 +
+ path.c                                    |   91 ------------
+ setup.c                                   |  213 +++++++++++++++++++++=
++++++---
+ t/lib-pager.sh                            |   37 +++++
+ t/{t7006 =3D> lib-pager}/test-terminal.perl |    0
+ t/t0001-init.sh                           |   56 ++++++++
+ t/t1300-repo-config.sh                    |   15 ++
+ t/t1302-repo-version.sh                   |    2 +-
+ t/t1500-rev-parse.sh                      |    2 +-
+ t/t1501-worktree.sh                       |    5 +
+ t/t5512-ls-remote.sh                      |   14 ++
+ t/t7002-grep.sh                           |  116 ++++++++++++++++
+ t/t7006-pager.sh                          |   29 +----
+ t/t7020-help.sh                           |   18 +++
+ 50 files changed, 660 insertions(+), 260 deletions(-)
+ create mode 100644 t/lib-pager.sh
+ rename t/{t7006 =3D> lib-pager}/test-terminal.perl (100%)
+ create mode 100755 t/t7020-help.sh
