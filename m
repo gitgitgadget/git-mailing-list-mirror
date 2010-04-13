@@ -1,56 +1,74 @@
-From: Dave Abrahams <dave@boostpro.com>
-Subject: Re: [PATCH] Switch receive.denyCurrentBranch to &quot;refuse&quot;
-Date: Tue, 13 Apr 2010 16:42:45 +0000 (UTC)
-Message-ID: <loom.20100413T183858-696@post.gmane.org>
-References: <cover.1233275583u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0901300133070.3586@pacific.mpi-cbg.de> <alpine.DEB.2.00.0901291729540.22558@vellum.laroia.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH] Documentation/config.txt: default gc.aggressiveWindow is 250, not 10
+Date: Tue, 13 Apr 2010 12:52:55 -0400
+Message-ID: <1271177575-68894-1-git-send-email-jaysoffian@gmail.com>
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 13 18:43:04 2010
+X-From: git-owner@vger.kernel.org Tue Apr 13 18:53:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1jCW-00044f-Bp
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Apr 2010 18:43:00 +0200
+	id 1O1jMx-0000br-V2
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Apr 2010 18:53:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753410Ab0DMQmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Apr 2010 12:42:55 -0400
-Received: from lo.gmane.org ([80.91.229.12]:53430 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752995Ab0DMQmy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Apr 2010 12:42:54 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1O1jCO-0003zA-F0
-	for git@vger.kernel.org; Tue, 13 Apr 2010 18:42:52 +0200
-Received: from 207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com ([207.172.223.249])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 Apr 2010 18:42:52 +0200
-Received: from dave by 207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 Apr 2010 18:42:52 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 207.172.223.249 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; en-US) AppleWebKit/533.2 (KHTML, like Gecko) Chrome/5.0.342.9 Safari/533.2)
+	id S1753483Ab0DMQxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Apr 2010 12:53:10 -0400
+Received: from mail-qy0-f201.google.com ([209.85.221.201]:42229 "EHLO
+	mail-qy0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753477Ab0DMQxI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Apr 2010 12:53:08 -0400
+Received: by qyk39 with SMTP id 39so6460035qyk.24
+        for <git@vger.kernel.org>; Tue, 13 Apr 2010 09:53:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=u3JssPxrSJGHW8hathQ62ik91f2Y1vKB7ICqpR5NNx0=;
+        b=G7nLJoN+PPCW3xuQj230DDvRFQwrrC8pP3U7YqrF/AZcF2HFjuh+kj2H1eo+fYv/Xg
+         Ga8NftSIMjsLGQodCzuQDCvFB9QBdRq4MTRsCHwwzCtCwgB7SMMVfJsP281dAFhP6oWp
+         dhK0Ue6aRNl+4DpXQv2e4oGx/kOT4c+OSFW9c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=d14hNgCjXSpdWAxMQdUZBEg37HhePcDHa+UB2LFZhNM5EVp9voN7c08LLxrYqd3WbK
+         76IJEyKvJimOq0WApNdcOdpJvSbnfrHpdtzl1R02Zl+aNma9m1f2Ql1KqTYDnhbK57YI
+         DpKn+tRNiCvgG186vd9LJNrQ9bM9O3RLj1/18=
+Received: by 10.229.211.204 with SMTP id gp12mr8524503qcb.59.1271177588001;
+        Tue, 13 Apr 2010 09:53:08 -0700 (PDT)
+Received: from localhost (cpe-065-190-041-119.nc.res.rr.com [65.190.41.119])
+        by mx.google.com with ESMTPS id f5sm7746954qcg.14.2010.04.13.09.53.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 13 Apr 2010 09:53:07 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.3.436.g2b878
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144823>
 
-Asheesh Laroia <asheesh <at> asheesh.org> writes:
+The default for gc.aggressiveWindow has been 250 since 1c192f3
+(gc --aggressive: make it really aggressive, 2007-12-06).
 
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
+ Documentation/config.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> Being told how to do it right is even better than being told that you're 
-> doing it wrong. 
-
-I would prefer if Git would simply "not refuse," but barring that, a more
-verbose error would be helpful.  I knew what I was doing in
-http://github.com/jelmer/dulwich/issues/issue/17, but it took me a
-long time  to even notice git's message.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 06b2f82..aa5411e 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -914,7 +914,7 @@ format.signoff::
+ gc.aggressiveWindow::
+ 	The window size parameter used in the delta compression
+ 	algorithm used by 'git gc --aggressive'.  This defaults
+-	to 10.
++	to 250.
+ 
+ gc.auto::
+ 	When there are approximately more than this many loose
+-- 
+1.7.0.3.436.g2b878
