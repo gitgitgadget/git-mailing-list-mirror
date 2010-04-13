@@ -1,55 +1,74 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: git rebase -i slow for a reason ?
-Date: Tue, 13 Apr 2010 12:04:35 +0200
-Message-ID: <20100413100435.GA7441@glandium.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 8/9] builtin: check pager.<cmd> configuration if 
+	RUN_SETUP_GENTLY is used
+Date: Tue, 13 Apr 2010 12:12:43 +0200
+Message-ID: <y2yfcaeb9bf1004130312l197983cnf92371acc88464db@mail.gmail.com>
+References: <20100413021153.GA3978@progeny.tock> <20100413023003.GH4118@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 13 12:04:49 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 13 12:13:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1cz8-0006sr-6T
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Apr 2010 12:04:46 +0200
+	id 1O1d7J-00030a-RG
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Apr 2010 12:13:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752781Ab0DMKEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Apr 2010 06:04:40 -0400
-Received: from vuizook.err.no ([85.19.221.46]:59154 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752082Ab0DMKEk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Apr 2010 06:04:40 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=glandium.org)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1O1cyx-0005QS-V0
-	for git@vger.kernel.org; Tue, 13 Apr 2010 12:04:38 +0200
-Received: from mh by glandium.org with local (Exim 4.71)
-	(envelope-from <mh@glandium.org>)
-	id 1O1cyx-0002Mj-8L
-	for git@vger.kernel.org; Tue, 13 Apr 2010 12:04:35 +0200
-Content-Disposition: inline
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Spam-Status: (score 2.5): No, score=2.5 required=5.0 tests=DNS_FROM_OPENWHOIS,RDNS_DYNAMIC autolearn=disabled version=3.2.4
+	id S1752626Ab0DMKNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Apr 2010 06:13:07 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:6133 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752543Ab0DMKNE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Apr 2010 06:13:04 -0400
+Received: by ey-out-2122.google.com with SMTP id d26so539655eyd.19
+        for <git@vger.kernel.org>; Tue, 13 Apr 2010 03:13:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type;
+        bh=vQh5pljg/u8fCsnn1i14b2bEkpsgUAN832pToNs0BhY=;
+        b=OGHWdRCZlYMYthyIhCirNAP9LjkzP26EhKu2UO8e4/QFFoMRzIE/idY0ieI3y79lgg
+         h9jZs03DpraFFxMjRmNWzkXLccx/BU1L6s6oRQWTRIGmsMt5FkqQK0inbi0hxuZQPO+7
+         qlYszozOeXLnOfrt77zYwLsn8lNesPmnBByQI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=Cc6W2y/wUmH8u1FNm5n2lrT+9WcSSFkBqZ76+h0fNA5LO02iUNWk/7OjUbH2iA7CSF
+         mfYneIMdOP+tXalmRhTy8IFxcqSOYMiaINyzaEEYjz4N1K7ur8d7BVVM/nvVOEkzen7C
+         EjHcntCU0tCx8pFecOqjEW89EY4fiCv3KRWKg=
+Received: by 10.213.21.197 with HTTP; Tue, 13 Apr 2010 03:12:43 -0700 (PDT)
+In-Reply-To: <20100413023003.GH4118@progeny.tock>
+Received: by 10.213.58.203 with SMTP id i11mr2781246ebh.0.1271153583464; Tue, 
+	13 Apr 2010 03:13:03 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144806>
 
-Hi,
+2010/4/13 Jonathan Nieder <jrnieder@gmail.com>:
+> diff --git a/git.c b/git.c
+> index 20e9bfc..56e93cf 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -251,7 +251,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+>                        prefix = setup_git_directory_gently(&nongit_ok);
+>                }
+>
+> -               if (use_pager == -1 && p->option & RUN_SETUP)
+> +               if (use_pager == -1 && p->option & (RUN_SETUP | RUN_SETUP_GENTLY))
+>                        use_pager = check_pager_config(p->cmd);
+>                if (use_pager == -1 && p->option & USE_PAGER)
+>                        use_pager = 1;
 
-Most of the time, I run git rebase with -i, so while it is slow, I
-always assumed there was somehow a reason.
-
-For some reason, today, I was running some git rebase without -i, and
-then the same rebases with -i, but without changing the pick list. While
-the git rebase without -i were almost instant, git rebase -i was as slow
-as usual, which is very far from instant.
-
-Has anyone else seen such behaviour ?
-
-Mike
+On the second look, there's another case, when RUN_SETUP_GENTLY is
+set, but no repository is found. git_config() will pick
+$(cwd)/.git/config if it exists. I guess it's OK for this series
+because the true fix will require more changes.
+-- 
+Duy
