@@ -1,79 +1,79 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: TODO: git should be able to init a remote repo
-Date: Tue, 13 Apr 2010 17:42:25 -0400
-Message-ID: <q2j76718491004131442q5ec8588en75611f97af26fac@mail.gmail.com>
-References: <i2i76718491004131030sc2f8ffa3u97a91aa9a57923b5@mail.gmail.com>
-	 <20100413195826.GA11597@LK-Perkele-V2.elisa-laajakaista.fi>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/9] t7006: test pager configuration for several git
+ commands
+Date: Tue, 13 Apr 2010 17:07:37 -0500
+Message-ID: <20100413220737.GA1676@progeny.tock>
+References: <20100413021153.GA3978@progeny.tock>
+ <20100413021734.GB4118@progeny.tock>
+ <4BC4107E.20101@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Tue Apr 13 23:42:33 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Apr 14 00:08:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1nsO-0001qA-SP
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Apr 2010 23:42:33 +0200
+	id 1O1oGv-0005RA-SD
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 00:07:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754021Ab0DMVm2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Apr 2010 17:42:28 -0400
-Received: from mail-gx0-f217.google.com ([209.85.217.217]:63831 "EHLO
-	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753961Ab0DMVm1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Apr 2010 17:42:27 -0400
-Received: by gxk9 with SMTP id 9so4358884gxk.8
-        for <git@vger.kernel.org>; Tue, 13 Apr 2010 14:42:26 -0700 (PDT)
+	id S1753559Ab0DMWHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Apr 2010 18:07:48 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:61208 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753424Ab0DMWHr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Apr 2010 18:07:47 -0400
+Received: by gwaa18 with SMTP id a18so810084gwa.19
+        for <git@vger.kernel.org>; Tue, 13 Apr 2010 15:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type;
-        bh=tRWicAogDm2x2LCOvi7dGVMKrHwR/8RZ/USYRRcvXLg=;
-        b=IytTGR0DbtTIjF6nY91AIoivIbPbv+cmwT52xnSNZuEyz9WTiyqpp8SuilxDh1gijG
-         XTcrCmHsjjnM2hVBfDPTXs7P/9tHCIFe/Wyc4C0wCU2lTUnPdfQiZSbc/aHi4v4G6H9d
-         2wQItUH4XR+iIij3nsxWT2RXG82g9RZyyRH48=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=GsKF8RvSa0aZIcv66T/ypdjidiXYvWiw8uLw6ldUnhw=;
+        b=c+fsIZe4b8laqN8y/VMqh/MEXAVFoGfxf7YEEZdw6CgD2xWrsmLcW04/1uMo4kzEaK
+         OQ5Z1ujeLJkzRQv+4d31IPedvET/4qpI/9Bdht7eWdsW0QwbQ0PQlEI6XBo4m4CS2XaY
+         ivm8eztakbm/ZFgUG69V6YIClm2MvI4ecgu+g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=om0PSyjv+WvE2CUMaBKvFfoMlCGiF7BqV+07iqvDmpT5JyiuISqWDR03nBlWRgMkjf
-         tG53rwCoRD0QOBP2TVSE3V7Nkqq/rYONFKMBLipRp1vIryWJntU8E1/Vk6JiPZz4CK6q
-         dxU9lzCTkQzNYm6CcWKX9ODoTmRKa1i+hwG8o=
-Received: by 10.231.36.9 with HTTP; Tue, 13 Apr 2010 14:42:25 -0700 (PDT)
-In-Reply-To: <20100413195826.GA11597@LK-Perkele-V2.elisa-laajakaista.fi>
-Received: by 10.100.238.12 with SMTP id l12mr11092282anh.239.1271194945920; 
-	Tue, 13 Apr 2010 14:42:25 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=jUBtqxwqNDLyx1VHZiHudvcYEXYPIDu1EVlpFt+Hph9aN+MOLqNq9lHBBrZuuMHBke
+         M5BIuWLIRGEs60YSsf6Dr99252tEfocr8eniQ+0nFGFurU4xk4AWwS6coub7ILIMWhBg
+         j622+FPP+eIRpTT4YmFcB/p1xP9WOL3TTN7kg=
+Received: by 10.100.26.37 with SMTP id 37mr11183086anz.72.1271196463347;
+        Tue, 13 Apr 2010 15:07:43 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 22sm1510952yxe.37.2010.04.13.15.07.41
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 13 Apr 2010 15:07:42 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4BC4107E.20101@viscovery.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144834>
 
-On Tue, Apr 13, 2010 at 3:58 PM, Ilari Liusvaara
-<ilari.liusvaara@elisanet.fi> wrote:
-> Couple of concerns:
->
-> - That seems awfully ssh-specific[1]...
+Johannes Sixt wrote:
 
-Of course it is. It's not meant to cover every scenario, just what I
-feel is a common one.
+> The intents of the test cases would be much easier to follow and to review
+> if this were written as, for example:
+> 
+> test_default_pager        'git log'
+> test_PAGER_overrides      'git log'
+> test_core_pager_overrides 'git log'
+> test_core_pager_subdir    'git log'
+> test_GIT_PAGER_overrides  'git log'
+> test_default_pager        'git -p log'
+[...]
 
-> - How remote end could deny the operation, modify paths and/or
-> get post-creation notification?
+Good idea.  This would also make the expected result much easier to
+change test-by-test.  Will do, thanks.
 
-Huh? Obviously this only works if you've got remote shell access, and
-that's the only scenario it's intended to cover. As I said, it just
-simplifies 3 commands down to 1.
-
-> - How to handle systems that would autocreate the repository anyway
-> if push was attempted?
-
-Again, that is not the use case "git remote init" is for.
-
-> [1] Well, its not like one would want to do that with gits:// anyway,
-> since there's probably gitolite install on other end anyway...
-
-And this isn't for that scenario.
-
-j.
+Jonathan
