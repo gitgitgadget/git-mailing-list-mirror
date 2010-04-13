@@ -1,163 +1,79 @@
-From: Johannes Gilger <heipei@hackvalue.de>
-Subject: [PATCHv5] pretty: Initialize notes if %N is used
-Date: Tue, 13 Apr 2010 22:31:12 +0200
-Message-ID: <1271190672-23506-1-git-send-email-heipei@hackvalue.de>
-References: <7vzl17t944.fsf@alter.siamese.dyndns.org>
-Cc: Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Gilger <heipei@hackvalue.de>
-To: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 13 22:31:03 2010
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: TODO: git should be able to init a remote repo
+Date: Tue, 13 Apr 2010 17:42:25 -0400
+Message-ID: <q2j76718491004131442q5ec8588en75611f97af26fac@mail.gmail.com>
+References: <i2i76718491004131030sc2f8ffa3u97a91aa9a57923b5@mail.gmail.com>
+	 <20100413195826.GA11597@LK-Perkele-V2.elisa-laajakaista.fi>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Tue Apr 13 23:42:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1ml8-0001t6-PO
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Apr 2010 22:30:59 +0200
+	id 1O1nsO-0001qA-SP
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Apr 2010 23:42:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753575Ab0DMUat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Apr 2010 16:30:49 -0400
-Received: from avalon.gnuzifer.de ([78.46.211.2]:32955 "EHLO
-	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753143Ab0DMUaq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Apr 2010 16:30:46 -0400
-Received: from u-7-086.vpn.rwth-aachen.de ([137.226.103.86]:38051 helo=localhost)
-	by avalon.gnuzifer.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <heipei@hackvalue.de>)
-	id 1O1mkr-00024S-42; Tue, 13 Apr 2010 22:30:41 +0200
-X-Mailer: git-send-email 1.7.1.rc1
-In-Reply-To: <7vzl17t944.fsf@alter.siamese.dyndns.org>
-X-Verified-Sender: yes
-X-SA-Exim-Connect-IP: 137.226.103.86
-X-SA-Exim-Mail-From: heipei@hackvalue.de
+	id S1754021Ab0DMVm2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Apr 2010 17:42:28 -0400
+Received: from mail-gx0-f217.google.com ([209.85.217.217]:63831 "EHLO
+	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753961Ab0DMVm1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Apr 2010 17:42:27 -0400
+Received: by gxk9 with SMTP id 9so4358884gxk.8
+        for <git@vger.kernel.org>; Tue, 13 Apr 2010 14:42:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type;
+        bh=tRWicAogDm2x2LCOvi7dGVMKrHwR/8RZ/USYRRcvXLg=;
+        b=IytTGR0DbtTIjF6nY91AIoivIbPbv+cmwT52xnSNZuEyz9WTiyqpp8SuilxDh1gijG
+         XTcrCmHsjjnM2hVBfDPTXs7P/9tHCIFe/Wyc4C0wCU2lTUnPdfQiZSbc/aHi4v4G6H9d
+         2wQItUH4XR+iIij3nsxWT2RXG82g9RZyyRH48=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=om0PSyjv+WvE2CUMaBKvFfoMlCGiF7BqV+07iqvDmpT5JyiuISqWDR03nBlWRgMkjf
+         tG53rwCoRD0QOBP2TVSE3V7Nkqq/rYONFKMBLipRp1vIryWJntU8E1/Vk6JiPZz4CK6q
+         dxU9lzCTkQzNYm6CcWKX9ODoTmRKa1i+hwG8o=
+Received: by 10.231.36.9 with HTTP; Tue, 13 Apr 2010 14:42:25 -0700 (PDT)
+In-Reply-To: <20100413195826.GA11597@LK-Perkele-V2.elisa-laajakaista.fi>
+Received: by 10.100.238.12 with SMTP id l12mr11092282anh.239.1271194945920; 
+	Tue, 13 Apr 2010 14:42:25 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144833>
 
-When using git log --pretty='%N' without an explicit --show-notes, git
-would segfault. This patches fixes this behaviour by loading the needed
-notes datastructures if --pretty is used and the format contains %N.
-When --pretty='%N' is used together with --no-notes, %N won't be
-expanded.
+On Tue, Apr 13, 2010 at 3:58 PM, Ilari Liusvaara
+<ilari.liusvaara@elisanet.fi> wrote:
+> Couple of concerns:
+>
+> - That seems awfully ssh-specific[1]...
 
-This is an extension to a proposed patch by Jeff King.
+Of course it is. It's not meant to cover every scenario, just what I
+feel is a common one.
 
-Signed-off-by: Johannes Gilger <heipei@hackvalue.de>
----
-Shifted responsibility for zeroing the userformat_want struct to the caller
-after Junio recommended it.
+> - How remote end could deny the operation, modify paths and/or
+> get post-creation notification?
 
- builtin/log.c |    6 +++++-
- commit.h      |    5 +++++
- pretty.c      |   40 ++++++++++++++++++++++++++++++++++++----
- 3 files changed, 46 insertions(+), 5 deletions(-)
+Huh? Obviously this only works if you've got remote shell access, and
+that's the only scenario it's intended to cover. As I said, it just
+simplifies 3 commands down to 1.
 
-diff --git a/builtin/log.c b/builtin/log.c
-index b706a5f..6208703 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -36,6 +36,7 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
- {
- 	int i;
- 	int decoration_style = 0;
-+	struct userformat_want w;
- 
- 	rev->abbrev = DEFAULT_ABBREV;
- 	rev->commit_format = CMIT_FMT_DEFAULT;
-@@ -58,7 +59,10 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
- 		usage(builtin_log_usage);
- 	argc = setup_revisions(argc, argv, rev, opt);
- 
--	if (!rev->show_notes_given && !rev->pretty_given)
-+	memset(&w, 0, sizeof(w));
-+	userformat_find_requirements(NULL, &w);
-+
-+	if (!rev->show_notes_given && (!rev->pretty_given || w.notes))
- 		rev->show_notes = 1;
- 	if (rev->show_notes)
- 		init_display_notes(&rev->notes_opt);
-diff --git a/commit.h b/commit.h
-index 3cf5166..26ec8c0 100644
---- a/commit.h
-+++ b/commit.h
-@@ -74,11 +74,16 @@ struct pretty_print_context
- 	struct reflog_walk_info *reflog_info;
- };
- 
-+struct userformat_want {
-+	unsigned notes:1;
-+};
-+
- extern int has_non_ascii(const char *text);
- struct rev_info; /* in revision.h, it circularly uses enum cmit_fmt */
- extern char *reencode_commit_message(const struct commit *commit,
- 				     const char **encoding_p);
- extern void get_commit_format(const char *arg, struct rev_info *);
-+extern void userformat_find_requirements(const char *fmt, struct userformat_want *w);
- extern void format_commit_message(const struct commit *commit,
- 				  const char *format, struct strbuf *sb,
- 				  const struct pretty_print_context *context);
-diff --git a/pretty.c b/pretty.c
-index 6ba3da8..7cb3a2a 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -775,10 +775,13 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
- 		}
- 		return 0;	/* unknown %g placeholder */
- 	case 'N':
--		format_display_notes(commit->object.sha1, sb,
--			    git_log_output_encoding ? git_log_output_encoding
--						    : git_commit_encoding, 0);
--		return 1;
-+		if (c->pretty_ctx->show_notes) {
-+			format_display_notes(commit->object.sha1, sb,
-+				    git_log_output_encoding ? git_log_output_encoding
-+							    : git_commit_encoding, 0);
-+			return 1;
-+		}
-+		return 0;
- 	}
- 
- 	/* For the rest we have to parse the commit header. */
-@@ -855,6 +858,35 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 	return consumed + 1;
- }
- 
-+static size_t userformat_want_item(struct strbuf *sb, const char *placeholder,
-+				   void *context)
-+{
-+	struct userformat_want *w = context;
-+
-+	if (*placeholder == '+' || *placeholder == '-')
-+		placeholder++;
-+
-+	switch (*placeholder) {
-+	case 'N':
-+		w->notes = 1;
-+		break;
-+	}
-+	return 0;
-+}
-+
-+void userformat_find_requirements(const char *fmt, struct userformat_want *w)
-+{
-+	struct strbuf dummy = STRBUF_INIT;
-+
-+	if (!fmt) {
-+		if (!user_format)
-+			return;
-+		fmt = user_format;
-+	}
-+	strbuf_expand(&dummy, user_format, userformat_want_item, w);
-+	strbuf_release(&dummy);
-+}
-+
- void format_commit_message(const struct commit *commit,
- 			   const char *format, struct strbuf *sb,
- 			   const struct pretty_print_context *pretty_ctx)
--- 
-1.7.1.rc1
+> - How to handle systems that would autocreate the repository anyway
+> if push was attempted?
+
+Again, that is not the use case "git remote init" is for.
+
+> [1] Well, its not like one would want to do that with gits:// anyway,
+> since there's probably gitolite install on other end anyway...
+
+And this isn't for that scenario.
+
+j.
