@@ -1,90 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Replace hard-coded path with one from <paths.h>
-Date: Tue, 13 Apr 2010 13:01:43 -0700
-Message-ID: <7vsk6zt93s.fsf@alter.siamese.dyndns.org>
-References: <20100404222801.GB31315@arachsys.com>
- <20100406163525.GF15306@arachsys.com> <20100406163643.GG15306@arachsys.com>
- <n2u40aa078e1004070357m143cfaccvdc754a3bc5fe1ae1@mail.gmail.com>
- <20100408105850.GD2146@arachsys.com>
- <m2x40aa078e1004080426u98fbe6b2zfa9a2726172f725@mail.gmail.com>
- <20100408115706.GE2077@arachsys.com>
- <z2o40aa078e1004080508z17c5e71by371bbe6e1cdb8c50@mail.gmail.com>
- <20100409054536.GB2151@arachsys.com> <20100413090604.GB770@arachsys.com>
- <20100413090713.GC770@arachsys.com>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCHv5 2/6] Gitweb: add support for minifying gitweb.css
+Date: Tue, 13 Apr 2010 21:28:32 +0100
+Message-ID: <4BC4D3F0.5020107@hashpling.org>
+References: <4BB430C3.9030000@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: kusmabite@gmail.com, git@vger.kernel.org
-To: Chris Webb <chris@arachsys.com>
-X-From: git-owner@vger.kernel.org Tue Apr 13 22:02:07 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Mark Rada <marada@uwaterloo.ca>
+X-From: git-owner@vger.kernel.org Tue Apr 13 22:28:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1mJC-0003BJ-C9
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Apr 2010 22:02:06 +0200
+	id 1O1mj8-0000fe-Rr
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Apr 2010 22:28:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753020Ab0DMUBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Apr 2010 16:01:54 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64122 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752990Ab0DMUBx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Apr 2010 16:01:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 08893AAE0C;
-	Tue, 13 Apr 2010 16:01:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=YEzgywInMldtOiYsrAKaZ/AtkGg=; b=ky/OtjRJ9Pown9X96LjSpTJ
-	CqcU46TXNftYSqr/IDA+W0700gnp7KMBwNb0Yh1fQrVl4ppnQPEWxOUqlMaNd/wz
-	qPIY2tqx2/45AkAhgqjJMfO9aIsxtNTENXUF7xMHfpl19RdXZki+1Kw+Vmh0yNxr
-	HYGSlG9E61FPr8DKv3Q8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=xUS9k1nj0xy3BJkBe0jgAjHpQ1I3YahQCfk1wfvimyZKLK5Wv
-	coer49QtVRzAEEsj60vKKGJDZl5GXJkMy52QH+2KjS/IBznRLnM+aMezF0UFBq5g
-	CpeG6bt8vFzUlF16i0hAHKQG9Z5WrPlKGVryMU+s/CevSs9I+gtbTTvvBI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E0BF9AAE09;
-	Tue, 13 Apr 2010 16:01:48 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1AEF0AAE04; Tue, 13 Apr
- 2010 16:01:44 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 65117FB4-4737-11DF-97D0-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753762Ab0DMU2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Apr 2010 16:28:34 -0400
+Received: from relay.ptn-ipout01.plus.net ([212.159.7.35]:8074 "EHLO
+	relay.ptn-ipout01.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753615Ab0DMU2c (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Apr 2010 16:28:32 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvsEAPVwxEtUXebz/2dsb2JhbACbRXG+DYUNBINE
+Received: from relay02.plus.net ([84.93.230.243])
+  by relay.ptn-ipout01.plus.net with ESMTP; 13 Apr 2010 21:28:30 +0100
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by relay02.plus.net with esmtp (Exim) id 1O1mij-0003VI-Qs; Tue, 13 Apr 2010 21:28:29 +0100
+Received: from heisenberg2.hashpling.org ([192.168.76.29])
+	by hashpling.plus.com with esmtp (Exim 4.69)
+	(envelope-from <charles@hashpling.org>)
+	id 1O1mij-0006Z6-Km; Tue, 13 Apr 2010 21:28:29 +0100
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <4BB430C3.9030000@mailservices.uwaterloo.ca>
+X-Plusnet-Relay: 6989e1276e8ccdf59a577dc557e5c190
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144831>
 
-Chris Webb <chris@arachsys.com> writes:
-
-> In exec_cmd.c, git hard-codes a default path of
-> /usr/local/bin:/usr/bin:/bin.  Get an appropriate value for the system
-> from <paths.h> if possible instead. We only try to include <paths.h> on
-> Linux, FreeBSD, NetBSD, OpenBSD and GNU where it is known to exist.
+On 01/04/2010 06:36, Mark Rada wrote:
+> @@ -84,13 +92,14 @@ endif
 >
-> Signed-off-by: Chris Webb <chris@arachsys.com>
-> ---
->  Makefile          |   10 ++++++++++
->  exec_cmd.c        |    2 +-
->  git-compat-util.h |    6 ++++++
->  3 files changed, 17 insertions(+), 1 deletions(-)
+>   all:: gitweb.cgi
 >
-> diff --git a/Makefile b/Makefile
-> index 910f471..f4fe941 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -735,10 +735,12 @@ EXTLIBS =
->  ifeq ($(uname_S),Linux)
->  	NO_STRLCPY = YesPlease
->  	NO_MKSTEMPS = YesPlease
-> +	HAVE_PATHS_H = YesPlease
->  endif
+> +FILES = gitweb.cgi
+>   ifdef JSMIN
+> -FILES=gitweb.cgi gitweb.min.js
+> -gitweb.cgi: gitweb.perl gitweb.min.js
+> -else # !JSMIN
+> -FILES=gitweb.cgi
+> -gitweb.cgi: gitweb.perl
+> -endif # JSMIN
+> +FILES += gitweb.min.js
+> +endif
+> +ifdef CSSMIN
+> +FILES += gitweb.min.css
+> +endif
+> +gitweb.cgi: gitweb.perl $(GITWEB_JS) $(GITWEB_CSS)
+>
 
-Ok.  Somebody else may want to add an autoconf support on top of this, but
-this is good as-is, I think.
+I have a question about this last line of the patch. Are GITWEB_JS and 
+GITWEB_CSS supposed to be a source path or a URI?
 
-Thanks.
+The documentation for install (and my previous assumption) was that they 
+represented the path on the target web server. I'm used to overriding 
+them so that gitweb.cgi can live in my /cgi-bin directory, but the 
+static files are served from /gitweb which is readable but not executable.
+
+After this patch I had to removed $(GITWEB_JS) and $(GITWEB_CSS) from 
+the list of dependencies for gitweb.cgi otherwise make failed.
+
+Have I got the wrong end of the stick?
+
+Thanks,
+
+Charles.
