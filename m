@@ -1,32 +1,32 @@
-From: y@vger.kernel.org
+From: Johannes Gilger <heipei@hackvalue.de>
 Subject: [PATCHv3] pretty: Initialize notes if %N is used
-Date: Tue, 13 Apr 2010 12:57:54 +0200
-Message-ID: <27645.7987064079$1271156264@news.gmane.org>
+Date: Tue, 13 Apr 2010 13:01:05 +0200
+Message-ID: <1271156465-7302-1-git-send-email-heipei@hackvalue.de>
 References: <20100413103611.GA4181@dualtron.lan>
 Cc: Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	Johannes Gilger <heipei@hackvalue.de>
 To: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 13 12:57:42 2010
+X-From: git-owner@vger.kernel.org Tue Apr 13 13:00:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1doM-0006Gu-1q
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Apr 2010 12:57:42 +0200
+	id 1O1drL-0007Lm-RW
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Apr 2010 13:00:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751654Ab0DMK5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Apr 2010 06:57:36 -0400
-Received: from avalon.gnuzifer.de ([78.46.211.2]:54947 "EHLO
+	id S1752978Ab0DMLAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Apr 2010 07:00:43 -0400
+Received: from avalon.gnuzifer.de ([78.46.211.2]:55208 "EHLO
 	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751298Ab0DMK5f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Apr 2010 06:57:35 -0400
-Received: from u-7-037.vpn.rwth-aachen.de ([137.226.103.37]:59009 helo=localhost)
+	with ESMTP id S1752383Ab0DMLAm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Apr 2010 07:00:42 -0400
+Received: from u-7-037.vpn.rwth-aachen.de ([137.226.103.37]:41842 helo=localhost)
 	by avalon.gnuzifer.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <heipei@hackvalue.de>)
-	id 1O1do9-0003wv-SJ; Tue, 13 Apr 2010 12:57:30 +0200
+	id 1O1drA-00046D-J1; Tue, 13 Apr 2010 13:00:36 +0200
 X-Mailer: git-send-email 1.7.1.rc1
 In-Reply-To: <20100413103611.GA4181@dualtron.lan>
 X-Verified-Sender: yes
@@ -36,9 +36,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144810>
-
-From: Johannes Gilger <heipei@hackvalue.de>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144811>
 
 When using git log --pretty='%N' without an explicit --show-notes, git
 would segfault. This patches fixes this behaviour by loading the needed
