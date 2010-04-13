@@ -1,140 +1,100 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv5 2/6] Gitweb: add support for minifying gitweb.css
-Date: Wed, 14 Apr 2010 00:30:45 +0200
-Message-ID: <201004140030.47222.jnareb@gmail.com>
-References: <4BB430C3.9030000@mailservices.uwaterloo.ca> <4BC4D3F0.5020107@hashpling.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Mark Rada <marada@uwaterloo.ca>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Wed Apr 14 00:31:41 2010
+From: Will Palmer <wmpalmer@gmail.com>
+Subject: [PATCH] make description of "core.autocrlf" less ambiguous
+Date: Wed, 14 Apr 2010 00:23:23 +0100
+Message-ID: <1271201003-3413-1-git-send-email-wmpalmer@gmail.com>
+Cc: wmpalmer@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 14 01:23:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1odw-0008Qz-HD
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 00:31:40 +0200
+	id 1O1pSU-0004L4-N5
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 01:23:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751463Ab0DMWb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Apr 2010 18:31:28 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:44185 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750854Ab0DMWb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Apr 2010 18:31:27 -0400
-Received: by bwz19 with SMTP id 19so60040bwz.21
-        for <git@vger.kernel.org>; Tue, 13 Apr 2010 15:31:25 -0700 (PDT)
+	id S1753554Ab0DMXXt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Apr 2010 19:23:49 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:50730 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752952Ab0DMXXs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Apr 2010 19:23:48 -0400
+Received: by wwb34 with SMTP id 34so423799wwb.19
+        for <git@vger.kernel.org>; Tue, 13 Apr 2010 16:23:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=BSbmNKF3vMMv4lj8a19pyEYcM3wrE34ZpKMPGI5YwnA=;
-        b=V751QGDmtdEfTRnn4v+FJuieBNnSIYNKuh4ebyka70zMR0UNICvYlVnbBEWFC7HDU1
-         qbaK1DYiE10OMeWZgc5HgFQhNy04hgG8GQgBecv2MVnMb2cjQkEeOGVO40Cb21kUKfuQ
-         R+Bi+GWYFomcMkXJ+wJCuNdo1k/z9KmhitH5s=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=fSCjYVtd31KiauH4pTyGSjwNw9DvPCxOyzZFb6r4gB4=;
+        b=CGL40MLWq0TMF/gzwUtrq9I933TtbsnpgHNA3iQD7xjwV91a2F3wxn2L+uwuWjtTN2
+         ORTLBvesHzrEEQmSx4o5iNtj22RtnaEj/OUot0PZeGU7ngAReqR+ruBs2ZqBDtgKBE1e
+         ybV8AHL/4/qx25NoSGKCd4vGzIhhHbKK+F7V8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=FAggqcXkaI3L00d81XQtzZZfmtTvfgEol0uHSzQ4r8D7ZPIZRmxhTw2+zzSLIFxO9v
-         Lo1obKPmBDwTDI3IbTmtaM6HKZjFdUDY3fjlbDteGmE0QT6/FjCZsjsnj/GrHT11Ic62
-         xHabe647545jv6+oY2KPQYM16r60SBxqk4eXM=
-Received: by 10.102.16.19 with SMTP id 19mr3514681mup.111.1271197813787;
-        Tue, 13 Apr 2010 15:30:13 -0700 (PDT)
-Received: from [192.168.1.13] (abvr150.neoplus.adsl.tpnet.pl [83.8.215.150])
-        by mx.google.com with ESMTPS id n7sm616195mue.45.2010.04.13.15.30.12
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=jlBziE8HCuPe/WBJxoSsp75PR+u7dABYcWrNUt0eeEkzszuAFJV94n6jXwIi4PQbfA
+         duKN6NZea58BDz1R52cyr5T4v22sr8WkkcreDxQStpkn507EEhZcUKUnyS9WN1OO+dFA
+         YTUFCPqCafxnsJXHThDUSb6DBdJif0YJoRR4U=
+Received: by 10.216.157.142 with SMTP id o14mr3806259wek.183.1271201026639;
+        Tue, 13 Apr 2010 16:23:46 -0700 (PDT)
+Received: from localhost.localdomain (5acc34b2.bb.sky.com [90.204.52.178])
+        by mx.google.com with ESMTPS id z3sm4422673wbs.22.2010.04.13.16.23.45
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 13 Apr 2010 15:30:12 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4BC4D3F0.5020107@hashpling.org>
-Content-Disposition: inline
+        Tue, 13 Apr 2010 16:23:45 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.rc1.248.gcefbb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144836>
 
-On Tue, 13 April 2010, Charles Bailey wrote:
-> On 01/04/2010 06:36, Mark Rada wrote:
-> > @@ -84,13 +92,14 @@ endif
-> >
-> >   all:: gitweb.cgi
-> >
-> > +FILES = gitweb.cgi
-> >   ifdef JSMIN
-> > -FILES=gitweb.cgi gitweb.min.js
-> > -gitweb.cgi: gitweb.perl gitweb.min.js
-> > -else # !JSMIN
-> > -FILES=gitweb.cgi
-> > -gitweb.cgi: gitweb.perl
-> > -endif # JSMIN
-> > +FILES += gitweb.min.js
-> > +endif
-> > +ifdef CSSMIN
-> > +FILES += gitweb.min.css
-> > +endif
-> > +gitweb.cgi: gitweb.perl $(GITWEB_JS) $(GITWEB_CSS)
-> >
-> 
-> I have a question about this last line of the patch. Are GITWEB_JS and 
-> GITWEB_CSS supposed to be a source path or a URI?
-> 
-> The documentation for install (and my previous assumption) was that they 
-> represented the path on the target web server. I'm used to overriding 
-> them so that gitweb.cgi can live in my /cgi-bin directory, but the 
-> static files are served from /gitweb which is readable but not executable.
-> 
-> After this patch I had to removed $(GITWEB_JS) and $(GITWEB_CSS) from 
-> the list of dependencies for gitweb.cgi otherwise make failed.
-> 
-> Have I got the wrong end of the stick?
+The description for core.autocrlf refers to reads from / writes to the
+"filesystem". While the term is used elsewhere in the config
+documentation to refer to the filesystem git is hosted on, it is not
+only less clear from context in the case of core.autocrlf, but can also
+be plain inaccurate in many cases.
 
-Thanks a lot for noticing this bug.
+To make more clear the direction of removal / addition of CR when
+core.crlf is set, as well as to account for the usage of low-level
+commands such as hash-object or cat-file, we change "reading from the
+filesystem" to refer instead to "writing to the object database", and
+"writing to the filesystem" to "output or writing to the work tree"
 
+Signed-off-by: Will Palmer <wmpalmer@gmail.com>
+---
 
-GITWEB_JS and GITWEB_CSS were originally meant to be URI to file with
-gitweb JavaScript code and default gitweb stylesheet,... but during work
-on minification of JavaScript code and CSS file it somehow got confused
-to mean source path.
+While I did some simple checks to ensure that my basic assumptions about
+how the commands I use daily seem to interact with core.autocrlf, I'll
+easily admit that I don't actually know all the places autocrlf is
+referenced, so I could be completely wrong about what generalizations
+can actually be made in the documentation.
+I'm fine with this patch being included, but it's pretty much just me
+"being bold" in order to say that I think the way it's currently
+phrased is wrong and confusing.
 
-If I remember correctly the original patch, before adding required
-support for minified gitweb.js and gitweb.css to git-instaweb script,
-and before support for CSS minification had
+ Documentation/config.txt |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
 
-   ifdef JSMIN
-   gitweb.cgi: gitweb.perl gitweb.min.js
-   else
-   gitweb.cgi: gitweb.perl
-   endif
-
-which should probably be replaced in current situation by
-
-   ifdef JSMIN
-   gitweb.cgi : gitweb.min.js
-   endif
-   ifdef CSSMIN
-   gitweb.cgi : gitweb.min.css
-   endif
-
-just adding prerequisites to gitweb.css target in gitweb/Makefile
-
-
-I guess that support for adding minifiction support to git-instaweb
-would need to be more complicated.  Perhaps
-
-  $(notdir $(GITWEB_JS))   # Makefile function
-
-or
-
-  $(basename $GITWEB_JS)   # shell command
-
-But I guess that it wouldn't work for all cases...
-
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 626b19a..125e9d5 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -198,11 +198,11 @@ core.quotepath::
+ 
+ core.autocrlf::
+ 	If true, makes git convert `CRLF` at the end of lines in text files to
+-	`LF` when reading from the filesystem, and convert in reverse when
+-	writing to the filesystem.  The variable can be set to
+-	'input', in which case the conversion happens only while
+-	reading from the filesystem but files are written out with
+-	`LF` at the end of lines.  A file is considered
++	`LF` when writing into the object database, and convert in reverse when
++	outputting those files or writing them to the work tree.  The variable
++	can be set to 'input', in which case the conversion happens only while
++	writing into the object database, but files are output and written to the
++	work tree with `LF` at the end of lines.  A file is considered
+ 	"text" (i.e. be subjected to the autocrlf mechanism) based on
+ 	the file's `crlf` attribute, or if `crlf` is unspecified,
+ 	based on the file's contents.  See linkgit:gitattributes[5].
 -- 
-Jakub Narebski
-Poland
+1.7.1.rc1.248.gcefbb
