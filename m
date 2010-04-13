@@ -1,325 +1,170 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: **
-X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=2.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,MSGID_NOFQDN1,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-Received: (qmail 27516 invoked by uid 107); 2 Dec 2009 20:06:07 -0000
-Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Wed, 02 Dec 2009 15:06:05 -0500
+X-Spam-ASN: AS31976 209.132.180.0/23
+X-Spam-Status: No, score=2.3 required=3.0 tests=AWL,BAYES_00,INVALID_MSGID,
+	MSGID_NOFQDN1,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
+Received: (qmail 4469 invoked by uid 107); 13 Apr 2010 10:57:46 -0000
+Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
+    by peff.net (qpsmtpd/0.40) with ESMTP; Tue, 13 Apr 2010 06:57:43 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755014AbZLBUBP (ORCPT <rfc822;peff@peff.net>);
-	Wed, 2 Dec 2009 15:01:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754948AbZLBUBP
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Dec 2009 15:01:15 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:47191 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754895AbZLBUBI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2009 15:01:08 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id nB2Jx09s028017
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 2 Dec 2009 20:59:00 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	id S1751654Ab0DMK5g (ORCPT <rfc822;peff@peff.net>);
+	Tue, 13 Apr 2010 06:57:36 -0400
+Received: from avalon.gnuzifer.de ([78.46.211.2]:54947 "EHLO
+	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751298Ab0DMK5f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Apr 2010 06:57:35 -0400
+Received: from u-7-037.vpn.rwth-aachen.de ([137.226.103.37]:59009 helo=localhost)
+	by avalon.gnuzifer.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NFvNp-00036h-F2; Wed, 02 Dec 2009 21:01:05 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1NFvNp-0006YM-A9; Wed, 02 Dec 2009 21:01:05 +0100
-From:	y@imag.fr
-To:	git@vger.kernel.org, gitster@pobox.com
-Cc:	Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2] Detailed diagnosis when parsing an object name fails.
-Date:	Wed,  2 Dec 2009 21:01:01 +0100
-Message-Id: <1259784061-25143-1-git-send-email-y>
-X-Mailer: git-send-email 1.6.6.rc0.256.g6060
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 02 Dec 2009 20:59:00 +0100 (CET)
-X-IMAG-MailScanner-Information:	Please contact MI2S MIM  for more information
-X-MailScanner-ID: nB2Jx09s028017
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check:	1260388742.14744@PryVIcEi2E/Qai02vIhVeA
+	(envelope-from <heipei@hackvalue.de>)
+	id 1O1do9-0003wv-SJ; Tue, 13 Apr 2010 12:57:30 +0200
+From:	y@vger.kernel.org
+To:	Git ML <git@vger.kernel.org>
+Cc:	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Gilger <heipei@hackvalue.de>
+Subject: [PATCHv3] pretty: Initialize notes if %N is used
+Date:	Tue, 13 Apr 2010 12:57:54 +0200
+Message-Id: <1271156274-6984-1-git-send-email-y>
+X-Mailer: git-send-email 1.7.1.rc1
+In-Reply-To: <20100413103611.GA4181@dualtron.lan>
+References: <20100413103611.GA4181@dualtron.lan>
+X-Verified-Sender: yes
+X-SA-Exim-Connect-IP: 137.226.103.37
+X-SA-Exim-Mail-From: heipei@hackvalue.de
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+From: Johannes Gilger <heipei@hackvalue.de>
 
-The previous error message was the same in many situations (unknown
-revision or path not in the working tree). We try to help the user as
-much as possible to understand the error, especially with the
-sha1:filename notation. In this case, we say whether the sha1 or the
-filename is problematic, and diagnose the confusion between
-relative-to-root and relative-to-$PWD confusion precisely.
+When using git log --pretty='%N' without an explicit --show-notes, git
+would segfault. This patches fixes this behaviour by loading the needed
+notes datastructures if --pretty is used and the format contains %N.
+When --pretty='%N' is used together with --no-notes, %N won't be
+expanded.
 
-The 6 new error messages are tested.
+This is an extension to a proposed patch by Jeff King.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+Signed-off-by: Johannes Gilger <heipei@hackvalue.de>
 ---
-Changes since v1:
+Introduced space when calling userformat_find_requirements and dealt with %+N
+and %-N during the strbuf_expand phase. I hope strncmp is the right way to do
+it here. strbuf is NUL-terminated so there should not be a problem.
 
-* Fixed a segfault with
+Greetings,
+Jojo
 
-+	if (!prefix)
-+		prefix = "";
+ builtin/log.c |    5 ++++-
+ commit.h      |    5 +++++
+ pretty.c      |   40 ++++++++++++++++++++++++++++++++++++----
+ 3 files changed, 45 insertions(+), 5 deletions(-)
 
-* Added testcases.
-
- cache.h                        |    6 ++-
- setup.c                        |   15 +++++-
- sha1_name.c                    |   95 ++++++++++++++++++++++++++++++++++++++--
- t/t1506-rev-parse-diagnosis.sh |   67 ++++++++++++++++++++++++++++
- 4 files changed, 176 insertions(+), 7 deletions(-)
- create mode 100755 t/t1506-rev-parse-diagnosis.sh
-
-diff --git a/cache.h b/cache.h
-index 0e69384..5c8cb5f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -708,7 +708,11 @@ static inline unsigned int hexval(unsigned char c)
- #define DEFAULT_ABBREV 7
- 
- extern int get_sha1(const char *str, unsigned char *sha1);
--extern int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode);
-+static inline get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode)
-+{
-+	return get_sha1_with_mode_1(str, sha1, mode, 0, NULL);
-+}
-+extern int get_sha1_with_mode_1(const char *str, unsigned char *sha1, unsigned *mode, int fatal, const char *prefix);
- extern int get_sha1_hex(const char *hex, unsigned char *sha1);
- extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
- extern int read_ref(const char *filename, unsigned char *sha1);
-diff --git a/setup.c b/setup.c
-index f67250b..3094e8b 100644
---- a/setup.c
-+++ b/setup.c
-@@ -74,6 +74,18 @@ int check_filename(const char *prefix, const char *arg)
- 	die_errno("failed to stat '%s'", arg);
- }
- 
-+static void NORETURN die_verify_filename(const char *prefix, const char *arg)
-+{
-+	unsigned char sha1[20];
-+	unsigned mode;
-+	/* try a detailed diagnostic ... */
-+	get_sha1_with_mode_1(arg, sha1, &mode, 1, prefix);
-+	/* ... or fall back the most general message. */
-+	die("ambiguous argument '%s': unknown revision or path not in the working tree.\n"
-+	    "Use '--' to separate paths from revisions", arg);
-+
-+}
-+
- /*
-  * Verify a filename that we got as an argument for a pathspec
-  * entry. Note that a filename that begins with "-" never verifies
-@@ -87,8 +99,7 @@ void verify_filename(const char *prefix, const char *arg)
- 		die("bad flag '%s' used after filename", arg);
- 	if (check_filename(prefix, arg))
- 		return;
--	die("ambiguous argument '%s': unknown revision or path not in the working tree.\n"
--	    "Use '--' to separate paths from revisions", arg);
-+	die_verify_filename(prefix, arg);
- }
- 
- /*
-diff --git a/sha1_name.c b/sha1_name.c
-index 44bb62d..030e2ac 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -804,7 +804,77 @@ int get_sha1(const char *name, unsigned char *sha1)
- 	return get_sha1_with_mode(name, sha1, &unused);
- }
- 
--int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
-+static void diagnose_invalid_sha1_path(const char *prefix,
-+				       const char *filename,
-+				       const char *tree_sha1,
-+				       const char *object_name)
-+{
-+	struct stat st;
-+	unsigned char sha1[20];
-+	unsigned mode;
-+
-+	if (!prefix)
-+		prefix = "";
-+
-+	if (!lstat(filename, &st))
-+		die("Path '%s' exists on disk, but not in '%s'.",
-+		    filename, object_name);
-+	if (errno == ENOENT || errno == ENOTDIR) {
-+		char *fullname = malloc(strlen(filename)
-+					     + strlen(prefix) + 1);
-+		strcpy(fullname, prefix);
-+		strcat(fullname, filename);
-+
-+		if (!get_tree_entry(tree_sha1, fullname,
-+				    sha1, &mode)) {
-+			die("Path '%s' exists, but not '%s'.\n"
-+			    "Did you mean '%s:%s'?",
-+			    fullname,
-+			    filename,
-+			    object_name,
-+			    fullname);
-+		}
-+		die("Path '%s' does not exist in '%s'",
-+		    filename, object_name);
-+	}
-+}
-+
-+static void diagnose_invalid_index_path(int stage,
-+					const char *prefix,
-+					const char *filename)
-+{
-+	struct stat st;
-+
-+	if (!prefix)
-+		prefix = "";
-+
-+	if (!lstat(filename, &st))
-+		die("Path '%s' exists on disk, but not in the index.", filename);
-+	if (errno == ENOENT || errno == ENOTDIR) {
-+		struct cache_entry *ce;
-+		int pos;
-+		int namelen = strlen(filename) + strlen(prefix);
-+		char *fullname = malloc(namelen + 1);
-+		strcpy(fullname, prefix);
-+		strcat(fullname, filename);
-+		pos = cache_name_pos(fullname, namelen);
-+		if (pos < 0)
-+			pos = -pos - 1;
-+		ce = active_cache[pos];
-+		if (ce_namelen(ce) == namelen &&
-+		    !memcmp(ce->name, fullname, namelen))
-+			die("Path '%s' is in the index, but not '%s'.\n"
-+			    "Did you mean ':%d:%s'?",
-+			    fullname, filename,
-+			    stage, fullname);
-+
-+		die("Path '%s' does not exist (neither on disk nor in the index).",
-+		    filename);
-+	}
-+}
-+
-+
-+int get_sha1_with_mode_1(const char *name, unsigned char *sha1, unsigned *mode, int fatal, const char *prefix)
+diff --git a/builtin/log.c b/builtin/log.c
+index b706a5f..6e6bc09 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -36,6 +36,7 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
  {
- 	int ret, bracket_depth;
- 	int namelen = strlen(name);
-@@ -850,6 +920,8 @@ int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
- 			}
- 			pos++;
+ 	int i;
+ 	int decoration_style = 0;
++	struct userformat_want w;
+ 
+ 	rev->abbrev = DEFAULT_ABBREV;
+ 	rev->commit_format = CMIT_FMT_DEFAULT;
+@@ -58,7 +59,9 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 		usage(builtin_log_usage);
+ 	argc = setup_revisions(argc, argv, rev, opt);
+ 
+-	if (!rev->show_notes_given && !rev->pretty_given)
++	userformat_find_requirements(NULL, &w);
++
++	if (!rev->show_notes_given && (!rev->pretty_given || w.notes))
+ 		rev->show_notes = 1;
+ 	if (rev->show_notes)
+ 		init_display_notes(&rev->notes_opt);
+diff --git a/commit.h b/commit.h
+index 3cf5166..26ec8c0 100644
+--- a/commit.h
++++ b/commit.h
+@@ -74,11 +74,16 @@ struct pretty_print_context
+ 	struct reflog_walk_info *reflog_info;
+ };
+ 
++struct userformat_want {
++	unsigned notes:1;
++};
++
+ extern int has_non_ascii(const char *text);
+ struct rev_info; /* in revision.h, it circularly uses enum cmit_fmt */
+ extern char *reencode_commit_message(const struct commit *commit,
+ 				     const char **encoding_p);
+ extern void get_commit_format(const char *arg, struct rev_info *);
++extern void userformat_find_requirements(const char *fmt, struct userformat_want *w);
+ extern void format_commit_message(const struct commit *commit,
+ 				  const char *format, struct strbuf *sb,
+ 				  const struct pretty_print_context *context);
+diff --git a/pretty.c b/pretty.c
+index 6ba3da8..31cef5c 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -775,10 +775,13 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
  		}
-+		if (fatal)
-+			diagnose_invalid_index_path(stage, prefix, cp);
- 		return -1;
- 	}
- 	for (cp = name, bracket_depth = 0; *cp; cp++) {
-@@ -862,9 +934,24 @@ int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
- 	}
- 	if (*cp == ':') {
- 		unsigned char tree_sha1[20];
--		if (!get_sha1_1(name, cp-name, tree_sha1))
--			return get_tree_entry(tree_sha1, cp+1, sha1,
--					      mode);
-+		char *object_name;
-+		if (fatal) {
-+			object_name = malloc(cp-name+1);
-+			strncpy(object_name, name, cp-name);
-+			object_name[cp-name] = '\0';
+ 		return 0;	/* unknown %g placeholder */
+ 	case 'N':
+-		format_display_notes(commit->object.sha1, sb,
+-			    git_log_output_encoding ? git_log_output_encoding
+-						    : git_commit_encoding, 0);
+-		return 1;
++		if (c->pretty_ctx->show_notes) {
++			format_display_notes(commit->object.sha1, sb,
++				    git_log_output_encoding ? git_log_output_encoding
++							    : git_commit_encoding, 0);
++			return 1;
 +		}
-+		if (!get_sha1_1(name, cp-name, tree_sha1)) {
-+			const char *filename = cp+1;
-+			ret = get_tree_entry(tree_sha1, filename, sha1, mode);
-+			if (fatal)
-+				diagnose_invalid_sha1_path(prefix, filename,
-+							   tree_sha1, object_name);
-+
-+			return ret;
-+		} else {
-+			if (fatal)
-+				die("Invalid object name '%s'.", object_name);
-+		}
++		return 0;
  	}
- 	return ret;
+ 
+ 	/* For the rest we have to parse the commit header. */
+@@ -855,6 +858,35 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
+ 	return consumed + 1;
  }
-diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
-new file mode 100755
-index 0000000..8112d56
---- /dev/null
-+++ b/t/t1506-rev-parse-diagnosis.sh
-@@ -0,0 +1,67 @@
-+#!/bin/sh
+ 
++static size_t userformat_want_item(struct strbuf *sb, const char *placeholder,
++				   void *context)
++{
++	struct userformat_want *w = context;
 +
-+test_description='test git rev-parse diagnosis for invalid argument'
++	switch (*placeholder) {
++		case '-':
++		case '+':
++			if (!strncmp(placeholder+1, "N", 1))
++				w->notes = 1;
++		case 'N': w->notes = 1;
++	}
++	return 0;
++}
 +
-+exec </dev/null
++void userformat_find_requirements(const char *fmt, struct userformat_want *w)
++{
++	struct strbuf dummy = STRBUF_INIT;
 +
-+. ./test-lib.sh
++	memset(w, 0, sizeof(*w));
++	if (!fmt) {
++		if (!user_format)
++			return;
++		fmt = user_format;
++	}
++	strbuf_expand(&dummy, user_format, userformat_want_item, w);
++	strbuf_release(&dummy);
++}
 +
-+HASH_file=
-+
-+test_expect_success 'set up basic repo' '
-+	echo one > file.txt &&
-+	mkdir subdir &&
-+	echo two > subdir/file.txt &&
-+	echo three > subdir/file2.txt &&
-+	git add . &&
-+	git commit -m init &&
-+	echo four > index-only.txt &&
-+	git add index-only.txt &&
-+	echo five > disk-only.txt
-+'
-+
-+test_expect_success 'correct file objects' '
-+	HASH_file=$(git rev-parse HEAD:file.txt) &&
-+	git rev-parse HEAD:subdir/file.txt &&
-+	git rev-parse :index-only.txt &&
-+	cd subdir &&
-+	git rev-parse HEAD:file.txt &&
-+	git rev-parse HEAD:subdir/file2.txt &&
-+	test $HASH_file = $(git rev-parse HEAD:file.txt) &&
-+	test $HASH_file = $(git rev-parse :file.txt) &&
-+	test $HASH_file = $(git rev-parse :0:file.txt) &&
-+	cd ..
-+'
-+
-+test_expect_success 'incorrect revision id' '
-+	test_must_fail git rev-parse foobar:file.txt 2>&1 |
-+		grep "Invalid object name '"'"'foobar'"'"'." &&
-+	test_must_fail git rev-parse foobar 2>&1 |
-+		grep "unknown revision or path not in the working tree."
-+'
-+
-+test_expect_success 'incorrect file in sha1:path' '
-+	test_must_fail git rev-parse HEAD:nothing.txt 2>&1 |
-+		grep "fatal: Path '"'"'nothing.txt'"'"' does not exist in '"'"'HEAD'"'"'" &&
-+	test_must_fail git rev-parse HEAD:index-only.txt 2>&1 |
-+		grep "fatal: Path '"'"'index-only.txt'"'"' exists on disk, but not in '"'"'HEAD'"'"'." &&
-+	cd subdir &&
-+	test_must_fail git rev-parse HEAD:file2.txt 2>&1 |
-+		grep "Did you mean '"'"'HEAD:subdir/file2.txt'"'"'?" &&
-+	cd ..
-+'
-+
-+test_expect_success 'incorrect file in :path and :0:path' '
-+	test_must_fail git rev-parse :nothing.txt 2>&1 |
-+		grep "fatal: Path '"'"'nothing.txt'"'"' does not exist (neither on disk nor in the index)." &&
-+	test_must_fail git rev-parse :1:nothing.txt 2>&1 |
-+		grep "Path '"'"'nothing.txt'"'"' does not exist (neither on disk nor in the index)." &&
-+	cd subdir &&
-+	test_must_fail git rev-parse :file2.txt 2>&1 |
-+		grep "Did you mean '"'"':0:subdir/file2.txt'"'"'?" &&
-+	cd .. &&
-+	test_must_fail git rev-parse :disk-only.txt 2>&1 |
-+		grep "fatal: Path '"'"'disk-only.txt'"'"' exists on disk, but not in the index."
-+'
-+
-+test_done
+ void format_commit_message(const struct commit *commit,
+ 			   const char *format, struct strbuf *sb,
+ 			   const struct pretty_print_context *pretty_ctx)
 -- 
-1.6.6.rc0.256.g6060
+1.7.1.rc1
 
