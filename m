@@ -1,114 +1,74 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: Removing alternates -- but how?
-Date: Tue, 13 Apr 2010 17:58:19 +0200
-Message-ID: <20100413155819.GI19595@genesis.frugalware.org>
-References: <20100413125704.GA29552@dirichlet.schwinge.homeip.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Update on SoC proposal: git-remote-svn
+Date: Tue, 13 Apr 2010 18:01:55 +0200
+Message-ID: <l2yfabb9a1e1004130901z19db3392kbbd4d975a5d439f7@mail.gmail.com>
+References: <1271136573-sup-5613@kytes>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="9/eUdp+dLtKXvemk"
-Cc: git@vger.kernel.org
-To: Thomas Schwinge <thomas@schwinge.name>
-X-From: git-owner@vger.kernel.org Tue Apr 13 17:58:30 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Sam Vilain <sam@vilain.net>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 13 18:02:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1iVR-0006LI-Vt
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Apr 2010 17:58:30 +0200
+	id 1O1iZD-0008SK-ME
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Apr 2010 18:02:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751338Ab0DMP6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Apr 2010 11:58:22 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:54934 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750854Ab0DMP6V (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Apr 2010 11:58:21 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id C816958070;
-	Tue, 13 Apr 2010 17:58:19 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 8458C42F09;
-	Tue, 13 Apr 2010 17:58:19 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 717D41240005; Tue, 13 Apr 2010 17:58:19 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20100413125704.GA29552@dirichlet.schwinge.homeip.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753023Ab0DMQCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Apr 2010 12:02:16 -0400
+Received: from mail-qy0-f201.google.com ([209.85.221.201]:43226 "EHLO
+	mail-qy0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752949Ab0DMQCQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Apr 2010 12:02:16 -0400
+Received: by qyk39 with SMTP id 39so6380323qyk.24
+        for <git@vger.kernel.org>; Tue, 13 Apr 2010 09:02:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type;
+        bh=j+G9b1O8/Ja7RSamisQqUXXiK7zAOYQNSaut1nT9ZIE=;
+        b=Lg3hwtRI2egi1zIsnID68QnuWFj8K+tLXJF6kOrc3EbcYHcI7VpzSGDNG13QgoNkJA
+         2MyLiJc99zTLLkuuPSU2uY4pQN94vWgyeO7mDqpZLoONKkQmtSZ1S+2gkW7qRhIV7q89
+         B1HifReh/Y4u9PKOIMVhs762pl3LSdc2ip2PQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=mqHLd3CuhYlHhc3qt2JRUbDfmkzgg77zZoHoP7HunsVuy1fvNBiw46KpM303DXgGMq
+         cazFzdVwFaLAZXdEO+ACbYaldPLUd85KUWIf48pB32aYtyVnmO9xUKTkKbD+Iv/ktrFd
+         bugc3yq5XSjpctGCOqhr5wSZubXEpHGmVVEKc=
+Received: by 10.224.74.3 with HTTP; Tue, 13 Apr 2010 09:01:55 -0700 (PDT)
+In-Reply-To: <1271136573-sup-5613@kytes>
+Received: by 10.224.50.79 with SMTP id y15mr2130958qaf.7.1271174535119; Tue, 
+	13 Apr 2010 09:02:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144820>
 
+Heya,
 
---9/eUdp+dLtKXvemk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Tue, Apr 13, 2010 at 07:29, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+> Hm, this is something that I hadn't thought about earlier. Thanks for
+> the suggestion- I will not attempt to go into complicated cases,
+> atleast in my summer term.
 
-On Tue, Apr 13, 2010 at 02:57:04PM +0200, Thomas Schwinge <thomas@schwinge.name> wrote:
->     $ cat .git/objects/info/alternates
->     ../../../glibc/.git/objects
->     ../../../../O/work.new/.git/objects
->     $ git repack -a
->     Counting objects: 18670, done.
->     Compressing objects: 100% (7655/7655), done.
->     Writing objects: 100% (18670/18670), done.
->     Total 18670 (delta 10218), reused 18670 (delta 10218)
->     $ mv .git/objects/info/alternates{,.DEFUNCT}
->     $ git branch
->     error: refs/remotes/grubber/master does not point to a valid object!
->     error: refs/remotes/sourceware/cvs/fedora-2_3-branch does not point to a valid object!
->     error: refs/remotes/sourceware/cvs/fedora-2_5-branch does not point to a valid object!
->     [...]
->     error: refs/tags/cvs/sparc-980522-merge does not point to a valid object!
->     error: refs/tags/cvs/start does not point to a valid object!
->     error: refs/tags/master-2008-11-27 does not point to a valid object!
->     error: refs/tags/master-2009-02-10 does not point to a valid object!
->     error: refs/tags/master-2009-07-10 does not point to a valid object!
->     error: refs/top-bases/t/IOCTL_decode_argument does not point to a valid object!
->     error: refs/top-bases/t/IOCTL_types does not point to a valid object!
->     error: refs/top-bases/t/____longjmp_chk_cleanup_linux_x86_64 does not point to a valid object!
->     error: refs/top-bases/t/bits_posix_opt.h__POSIX_THREADS does not point to a valid object!
->     error: refs/top-bases/t/bits_pthreadtypes.h does not point to a valid object!
->       baseline
->       posix/regex_internal.c/MAX_undefined
->       t/IOCTL_decode_argument
->       t/IOCTL_types
->       t/____longjmp_chk
->       t/____longjmp_chk_cleanup_linux_x86_64
->       t/__rtld_lock_recursive_t
->     [...]
->       t/verify.h
->     * tschwinge/Roger_Whittaker
+I think we can safely say that "git clone svn://example.com/myrepo"
+only has to work for svn repositories that have a 'sane' layout. If
+you want a non-standard layout you can do 'git init && git configure
+.... && git fetch', where you configure everything the way you want
+before fetching. We could perhaps even provide a tool to aid with
+configuring things; or perhaps a mode to not do any rewriting (just
+import the data into git as-is) and then have a tool that examines the
+history and interactively helps you set up an appropriate rewrite
+config? Interesting times are ahead :).
 
-What git version are you using?
+-- 
+Cheers,
 
-It seems to work for me:
-
-$ mkdir s
-$ cd s
-$ git init
-$ echo a > a
-$ git add a
-$ git commit -m i
-$ cd ..
-$ git clone -s s c
-$ cd c
-$ git repack -a
-$ mv .git/objects/info/alternates .git/objects/info/alternates.orig
-$ git branch
-* master
-
---9/eUdp+dLtKXvemk
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkvElJsACgkQe81tAgORUJYWcQCeI3tFcwjgUaQMH8p9fFJGVSeC
-L14AnjYSdkbu8wwAMp1NgX1CGOCxBLwy
-=j9zN
------END PGP SIGNATURE-----
-
---9/eUdp+dLtKXvemk--
+Sverre Rabbelier
