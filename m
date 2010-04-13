@@ -1,79 +1,140 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/9] t7006: test pager configuration for several git
- commands
-Date: Tue, 13 Apr 2010 17:07:37 -0500
-Message-ID: <20100413220737.GA1676@progeny.tock>
-References: <20100413021153.GA3978@progeny.tock>
- <20100413021734.GB4118@progeny.tock>
- <4BC4107E.20101@viscovery.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv5 2/6] Gitweb: add support for minifying gitweb.css
+Date: Wed, 14 Apr 2010 00:30:45 +0200
+Message-ID: <201004140030.47222.jnareb@gmail.com>
+References: <4BB430C3.9030000@mailservices.uwaterloo.ca> <4BC4D3F0.5020107@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Apr 14 00:08:24 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Mark Rada <marada@uwaterloo.ca>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Wed Apr 14 00:31:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1oGv-0005RA-SD
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 00:07:54 +0200
+	id 1O1odw-0008Qz-HD
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 00:31:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753559Ab0DMWHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Apr 2010 18:07:48 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:61208 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753424Ab0DMWHr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Apr 2010 18:07:47 -0400
-Received: by gwaa18 with SMTP id a18so810084gwa.19
-        for <git@vger.kernel.org>; Tue, 13 Apr 2010 15:07:46 -0700 (PDT)
+	id S1751463Ab0DMWb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Apr 2010 18:31:28 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:44185 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750854Ab0DMWb1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Apr 2010 18:31:27 -0400
+Received: by bwz19 with SMTP id 19so60040bwz.21
+        for <git@vger.kernel.org>; Tue, 13 Apr 2010 15:31:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=GsKF8RvSa0aZIcv66T/ypdjidiXYvWiw8uLw6ldUnhw=;
-        b=c+fsIZe4b8laqN8y/VMqh/MEXAVFoGfxf7YEEZdw6CgD2xWrsmLcW04/1uMo4kzEaK
-         OQ5Z1ujeLJkzRQv+4d31IPedvET/4qpI/9Bdht7eWdsW0QwbQ0PQlEI6XBo4m4CS2XaY
-         ivm8eztakbm/ZFgUG69V6YIClm2MvI4ecgu+g=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=BSbmNKF3vMMv4lj8a19pyEYcM3wrE34ZpKMPGI5YwnA=;
+        b=V751QGDmtdEfTRnn4v+FJuieBNnSIYNKuh4ebyka70zMR0UNICvYlVnbBEWFC7HDU1
+         qbaK1DYiE10OMeWZgc5HgFQhNy04hgG8GQgBecv2MVnMb2cjQkEeOGVO40Cb21kUKfuQ
+         R+Bi+GWYFomcMkXJ+wJCuNdo1k/z9KmhitH5s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=jUBtqxwqNDLyx1VHZiHudvcYEXYPIDu1EVlpFt+Hph9aN+MOLqNq9lHBBrZuuMHBke
-         M5BIuWLIRGEs60YSsf6Dr99252tEfocr8eniQ+0nFGFurU4xk4AWwS6coub7ILIMWhBg
-         j622+FPP+eIRpTT4YmFcB/p1xP9WOL3TTN7kg=
-Received: by 10.100.26.37 with SMTP id 37mr11183086anz.72.1271196463347;
-        Tue, 13 Apr 2010 15:07:43 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm1510952yxe.37.2010.04.13.15.07.41
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 13 Apr 2010 15:07:42 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=FAggqcXkaI3L00d81XQtzZZfmtTvfgEol0uHSzQ4r8D7ZPIZRmxhTw2+zzSLIFxO9v
+         Lo1obKPmBDwTDI3IbTmtaM6HKZjFdUDY3fjlbDteGmE0QT6/FjCZsjsnj/GrHT11Ic62
+         xHabe647545jv6+oY2KPQYM16r60SBxqk4eXM=
+Received: by 10.102.16.19 with SMTP id 19mr3514681mup.111.1271197813787;
+        Tue, 13 Apr 2010 15:30:13 -0700 (PDT)
+Received: from [192.168.1.13] (abvr150.neoplus.adsl.tpnet.pl [83.8.215.150])
+        by mx.google.com with ESMTPS id n7sm616195mue.45.2010.04.13.15.30.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 13 Apr 2010 15:30:12 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4BC4D3F0.5020107@hashpling.org>
 Content-Disposition: inline
-In-Reply-To: <4BC4107E.20101@viscovery.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144835>
 
-Johannes Sixt wrote:
-
-> The intents of the test cases would be much easier to follow and to review
-> if this were written as, for example:
+On Tue, 13 April 2010, Charles Bailey wrote:
+> On 01/04/2010 06:36, Mark Rada wrote:
+> > @@ -84,13 +92,14 @@ endif
+> >
+> >   all:: gitweb.cgi
+> >
+> > +FILES = gitweb.cgi
+> >   ifdef JSMIN
+> > -FILES=gitweb.cgi gitweb.min.js
+> > -gitweb.cgi: gitweb.perl gitweb.min.js
+> > -else # !JSMIN
+> > -FILES=gitweb.cgi
+> > -gitweb.cgi: gitweb.perl
+> > -endif # JSMIN
+> > +FILES += gitweb.min.js
+> > +endif
+> > +ifdef CSSMIN
+> > +FILES += gitweb.min.css
+> > +endif
+> > +gitweb.cgi: gitweb.perl $(GITWEB_JS) $(GITWEB_CSS)
+> >
 > 
-> test_default_pager        'git log'
-> test_PAGER_overrides      'git log'
-> test_core_pager_overrides 'git log'
-> test_core_pager_subdir    'git log'
-> test_GIT_PAGER_overrides  'git log'
-> test_default_pager        'git -p log'
-[...]
+> I have a question about this last line of the patch. Are GITWEB_JS and 
+> GITWEB_CSS supposed to be a source path or a URI?
+> 
+> The documentation for install (and my previous assumption) was that they 
+> represented the path on the target web server. I'm used to overriding 
+> them so that gitweb.cgi can live in my /cgi-bin directory, but the 
+> static files are served from /gitweb which is readable but not executable.
+> 
+> After this patch I had to removed $(GITWEB_JS) and $(GITWEB_CSS) from 
+> the list of dependencies for gitweb.cgi otherwise make failed.
+> 
+> Have I got the wrong end of the stick?
 
-Good idea.  This would also make the expected result much easier to
-change test-by-test.  Will do, thanks.
+Thanks a lot for noticing this bug.
 
-Jonathan
+
+GITWEB_JS and GITWEB_CSS were originally meant to be URI to file with
+gitweb JavaScript code and default gitweb stylesheet,... but during work
+on minification of JavaScript code and CSS file it somehow got confused
+to mean source path.
+
+If I remember correctly the original patch, before adding required
+support for minified gitweb.js and gitweb.css to git-instaweb script,
+and before support for CSS minification had
+
+   ifdef JSMIN
+   gitweb.cgi: gitweb.perl gitweb.min.js
+   else
+   gitweb.cgi: gitweb.perl
+   endif
+
+which should probably be replaced in current situation by
+
+   ifdef JSMIN
+   gitweb.cgi : gitweb.min.js
+   endif
+   ifdef CSSMIN
+   gitweb.cgi : gitweb.min.css
+   endif
+
+just adding prerequisites to gitweb.css target in gitweb/Makefile
+
+
+I guess that support for adding minifiction support to git-instaweb
+would need to be more complicated.  Perhaps
+
+  $(notdir $(GITWEB_JS))   # Makefile function
+
+or
+
+  $(basename $GITWEB_JS)   # shell command
+
+But I guess that it wouldn't work for all cases...
+
+-- 
+Jakub Narebski
+Poland
