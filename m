@@ -1,117 +1,100 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 8/9] builtin: check pager.<cmd> configuration if
  RUN_SETUP_GENTLY is used
-Date: Tue, 13 Apr 2010 23:38:44 -0500
-Message-ID: <20100414043844.GA28864@progeny.tock>
+Date: Wed, 14 Apr 2010 00:06:44 -0500
+Message-ID: <20100414050643.GB28864@progeny.tock>
 References: <20100413021153.GA3978@progeny.tock>
  <20100413023003.GH4118@progeny.tock>
- <u2ufcaeb9bf1004122229l72de0e55i8dbd993d6cb16d2b@mail.gmail.com>
+ <y2yfcaeb9bf1004130312l197983cnf92371acc88464db@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	Johannes Sixt <j6t@kdbg.org>
 To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 14 06:38:54 2010
+X-From: git-owner@vger.kernel.org Wed Apr 14 07:06:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1uNJ-0003bP-LE
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 06:38:53 +0200
+	id 1O1uoQ-0002Pk-KX
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 07:06:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751781Ab0DNEis convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Apr 2010 00:38:48 -0400
-Received: from mail-yx0-f199.google.com ([209.85.210.199]:55498 "EHLO
-	mail-yx0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751162Ab0DNEir (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Apr 2010 00:38:47 -0400
-Received: by yxe37 with SMTP id 37so3926961yxe.21
-        for <git@vger.kernel.org>; Tue, 13 Apr 2010 21:38:47 -0700 (PDT)
+	id S1751787Ab0DNFGs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Apr 2010 01:06:48 -0400
+Received: from mail-yw0-f194.google.com ([209.85.211.194]:55045 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751097Ab0DNFGr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 01:06:47 -0400
+Received: by ywh32 with SMTP id 32so2673163ywh.33
+        for <git@vger.kernel.org>; Tue, 13 Apr 2010 22:06:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=yYv09Hz0bdsqABrqH9WwoP6yMVERK+gc+x43XwzdWOU=;
-        b=wcf6d41txLWBcLruFTo9kDE+3jU++4vJWQgiIhbo1GGDPxNE7AQnT5O+k+Y45JzuL/
-         9VIfGK5bIDT+PkeFWAX7PouH0I/mJdXVPouyzp5vNzKOSZhs9oLwfkNIj3Vn9BB43XYl
-         Wet/mFHM7+7s58Yyi/iLsLo3Niigk9izMFzsY=
+        bh=Vj7YM9m7S+lZ+41CVh1RT/6ppLfiQ3vsoQYpbuwm9cY=;
+        b=BFlaee1ZqEP8DdwEs2CF8qhYkWc6G4L2dNHPbcVzGuPCel6dkfb4SzWU4hfdIBf197
+         fA8uj+rLKzkfy4S6Kd3V94cAv2iV/74RL137OG6h6thSHgyl0pG5j5kzUCwzVzgsmPH5
+         +odFw98GUbMo1YmopRE2c/KuiwMBSNkCOxMwM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=mfftOpJ4O32Mx0y4rbtNgQqy72siQ7DuDjPs0rkw+Lxs35G79u4YmJ2HGnH2iParPq
-         alCIBEZF9nsnvILLdmVkQQyu0zz3GtN3QOOzC+WcG1vAI3AsFSXuFn4zxWwZVsETOjYo
-         EBJux/bUL1xKnDhhGTvSfJdStbosnxknHNHVI=
-Received: by 10.101.155.34 with SMTP id h34mr12482282ano.156.1271219926777;
-        Tue, 13 Apr 2010 21:38:46 -0700 (PDT)
+        b=hs+3BFkL8AWCvHo4yz55didF1BOVBA0acPC4tWqEdbO4r07h2r4QoESxqZxU3V46HT
+         EsYX8QJ2DCQhkF/jI0vqGqr9x2vFGSHA+JVoNGMguizhAUmNGidnSzICSbriyrIsC5z2
+         fvTDQW5/ZgwnsZzToMj9dDrL+XtbdALgstYpw=
+Received: by 10.101.167.19 with SMTP id u19mr12384856ano.26.1271221604750;
+        Tue, 13 Apr 2010 22:06:44 -0700 (PDT)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm5434023iwn.4.2010.04.13.21.38.45
+        by mx.google.com with ESMTPS id 20sm5440611iwn.5.2010.04.13.22.06.43
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 13 Apr 2010 21:38:46 -0700 (PDT)
+        Tue, 13 Apr 2010 22:06:44 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <u2ufcaeb9bf1004122229l72de0e55i8dbd993d6cb16d2b@mail.gmail.com>
+In-Reply-To: <y2yfcaeb9bf1004130312l197983cnf92371acc88464db@mail.gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144849>
 
 Nguyen Thai Ngoc Duy wrote:
-> 2010/4/13 Jonathan Nieder <jrnieder@gmail.com>:
 
->> @@ -251,7 +251,7 @@ static int run_builtin(struct cmd_struct *p, int=
- argc, const char **argv)
-[...]
->> -		if (use_pager =3D=3D -1 && p->option & RUN_SETUP)
->> +		if (use_pager =3D=3D -1 && p->option & (RUN_SETUP | RUN_SETUP_GEN=
-TLY))
->>			use_pager =3D check_pager_config(p->cmd);
->>		if (use_pager =3D=3D -1 && p->option & USE_PAGER)
->>			use_pager =3D 1;
->
-> This still leaves a chance of going wrong: when user explicitly gives
-> "--paginate", use_pager will be 1, but commands like "git init" does
-> not have RUN_SETUP*. So when setup_pager is called later on, it will
-> mess things up.
+> there's another case, when RUN_SETUP_GENTLY is
+> set, but no repository is found. git_config() will pick
+> $(cwd)/.git/config if it exists. I guess it's OK for this series
+> because the true fix will require more changes.
 
-I decided not to check_pager_config() unconditionally to avoid
-breaking =E2=80=98git diff=E2=80=99 (especially =E2=80=98git diff --exi=
-t-code=E2=80=99).  Maybe that
-is too conservative; not sure.  The commit message should be more
-explicit, something like:
+I have claimed before that it=E2=80=99s better to fix a few bugs now an=
+d
+provide a solid foundation to build on than to try to do everything
+right away.  Sounds good in principle, but in practice we have to look
+to the future to decide whether the foundation is strong enough.
 
-   Eventually, all git commands should check their configuration at
-   start-up.  For now, reading configuration before repository discover=
-y
-   is dangerous because it could cause a pager.<cmd> setting from the
-   current repository to be neglected.
+So here are some ideas for future work (not necessarily in order).
 
-   But for commands with RUN_SETUP or RUN_SETUP_GENTLY set, it is safe.
+ - Teach remaining commands that need to search for a repository to
+   use RUN_SETUP_GENTLY, with appropriate exceptions where needed
+   (for --no-index, for example).
 
-   This will not affect commands like "git init" that cannot have
-   RUN_SETUP* set; they will have to be helped separately later.  In
-   particular, commands such as "git diff" that use command-specific
-   options to decide whether to search for a repository and whether to
-   paginate output are outside the scope of this change.
+ - Introduce unset_git_directory and the RUN_UNSETUP option (yes,
+   this needs a better name).  Teach commands that work without a
+   git directory to use it (this should fix the init poisoned by
+   parent repository and aliased init problems).
 
-Guiding principle: better to leave some bugs for later than risk
-regressions.
+ - Teach git_config() to ignore the repository-specific configuration
+   if have_run_setup is true but have_repository is false.
 
-> This could be solved completely (indeed I have a patch
-> under testing), but it would require unset_git_directory(), making
-> this series a bit longer :(
+ - Teach git_attr() to ignore .git/info/attributes if have_run_setup
+   is true but have_repository is false.
 
-I agree; that=E2=80=99s the right way to do it.  run_builtin() ought to=
- be
-relatively sure about whether a repo is going to be searched for.  For
-commands like diff and grep, I think it should be okay to search for a
-repo unless --no-index is the first argument.
+ - Teach git_config() to optionally die if have_run_setup is not true
+   and the setup_git_dir* to optionally die if have_run_setup is true.
+   test-lib.sh would enable this option.
 
-Thanks for your thoughtfulness.
+Sane?
 Jonathan
