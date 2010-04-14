@@ -1,72 +1,52 @@
-From: Steven Michalske <smichalske@gmail.com>
-Subject: Re: SVN bridge for multiple SVN modules
-Date: Tue, 13 Apr 2010 23:08:05 -0700
-Message-ID: <236FD58B-CE33-4C06-A3AC-FD7DA7593EEB@gmail.com>
-References: <m2ue3041f5c1004130034h51eb196dke0ebb8b3634e7302@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1068)
-Content-Type: text/plain; charset=us-ascii; format=flowed; delsp=yes
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [BUG] - git rebase -i performs rebase when it shouldn't?
+Date: Wed, 14 Apr 2010 08:08:19 +0200
+Message-ID: <4BC55BD3.3050204@viscovery.net>
+References: <z2q76c5b8581004091235ucd9b2a52i223b3191b288c42a@mail.gmail.com>	 <20100410042609.GA24295@coredump.intra.peff.net>	 <h2x76c5b8581004101510hc1d15f42u7e48dafbc275c998@mail.gmail.com>	 <20100411102255.GB20484@coredump.intra.peff.net>	 <y2s76c5b8581004110706p7b63900aqf90f9c1462a1f637@mail.gmail.com>	 <q2z76c5b8581004120709t860ff112i5dd057327b94ad0e@mail.gmail.com>	 <4BC3389C.4090807@viscovery.net>	 <w2t76c5b8581004120828p8e1e5c49m7bcc53c8c3e68d06@mail.gmail.com>	 <4BC3407C.10701@viscovery.net> <p2l76c5b8581004130930rf5558655n4bb1f6d0c659498d@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Richard Dallaway <dallaway@gmail.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
 X-From: git-owner@vger.kernel.org Wed Apr 14 08:08:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1vm0-0002N3-JH
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 08:08:28 +0200
+	id 1O1vm1-0002N3-49
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 08:08:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753197Ab0DNGIL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Apr 2010 02:08:11 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:43110 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752666Ab0DNGIK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Apr 2010 02:08:10 -0400
-Received: by gyg13 with SMTP id 13so3948438gyg.19
-        for <git@vger.kernel.org>; Tue, 13 Apr 2010 23:08:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:references:in-reply-to
-         :mime-version:content-type:message-id:content-transfer-encoding:cc
-         :from:subject:date:to:x-mailer;
-        bh=rhRPvccnYMHPpB2Gjqp0Ul7436XQXpgbyHvEEELIG0c=;
-        b=bpUFHF0SPBL2xwLZ3LH1IsA/7T0x/kLEeVMeyevvEdqpHx7NxBhmLiPUKqWhBbYmGX
-         dptSnudFWftrT9CD5jCM8BiLx9QTAD3sMTGEyYyQ7ltUwBLYTeR/OTKxNsjVHe7GQqwS
-         sC9ydKlW3hMPoXAOBRLdCCxysDObR11VP1UkM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=references:in-reply-to:mime-version:content-type:message-id
-         :content-transfer-encoding:cc:from:subject:date:to:x-mailer;
-        b=TaZXXsIix98TYxRf4IuwzC/SoNy91vpV5AnPbSlBg0KsF1wrKATkJF8N77gjiXvDp4
-         hJMkuw11nblpHYrerCDOgX0GUGwaXc32Uljdgq53iPMpflBx0ueqVECh4/Rk5KHO+jWz
-         AjEOc91gPaQxYbDRFYhWETUnWJiOUnNy9T1cg=
-Received: by 10.90.141.20 with SMTP id o20mr3144984agd.97.1271225288861;
-        Tue, 13 Apr 2010 23:08:08 -0700 (PDT)
-Received: from [192.168.1.105] (c-98-234-104-87.hsd1.ca.comcast.net [98.234.104.87])
-        by mx.google.com with ESMTPS id 7sm1613556yxg.63.2010.04.13.23.08.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 13 Apr 2010 23:08:07 -0700 (PDT)
-In-Reply-To: <m2ue3041f5c1004130034h51eb196dke0ebb8b3634e7302@mail.gmail.com>
-X-Mailer: Apple Mail (2.1068)
+	id S1753299Ab0DNGIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 02:08:25 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:23209 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752666Ab0DNGIX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 02:08:23 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1O1vls-0004OG-Fl; Wed, 14 Apr 2010 08:08:20 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 201EF1660F;
+	Wed, 14 Apr 2010 08:08:20 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <p2l76c5b8581004130930rf5558655n4bb1f6d0c659498d@mail.gmail.com>
+X-Enigmail-Version: 1.0.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144852>
 
-On Apr 13, 2010, at 12:34 AM, Richard Dallaway wrote:
-> Hello
->
-> We've run into something we'd like to do with "git svn clone" that
-> looks like it should work, but doesn't appear to.
->
-> The task: we have an SVN repository with 38 modules in it (each with
-> their own branches, tags, and trunk) and we'd like to pull just two of
-> the modules into a single git repository -- but maintain the ability
-> to perform git svn rebase/fetch/dcommit as the SVN repository is
-> remaining active for some developers.
->
-Would setting up two git repositories cloning the SVN from the  
-module_a and module_b directories and then making them as a git  
-submodules is a git super project repository?
+Am 4/13/2010 18:30, schrieb Eugene Sajine:
+> IMHO this "noop" behavior seems to be identical to "git reset --hard
+> master" - the result is the same. Frankly, I don't understand what is
+> useful in such thing being HIDDEN in "incorrect call" of interactive
+> rebase...
+
+This thing is useful when you 'git rebase -i master topic' and all patches
+on topic are already in master.
+
+-- Hannes
