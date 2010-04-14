@@ -1,67 +1,88 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: failed to lock
-Date: Wed, 14 Apr 2010 16:49:09 -0400
-Message-ID: <j2o76718491004141349l53b53347v7f4c0edcab69e4c2@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/9] t7006: GIT_DIR/config should be honored in subdirs
+ of toplevel
+Date: Wed, 14 Apr 2010 13:50:39 -0700
+Message-ID: <7v4ojdpxls.fsf@alter.siamese.dyndns.org>
+References: <20100413021153.GA3978@progeny.tock>
+ <20100413021355.GA4118@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 14 22:49:21 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 14 22:50:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O29WO-00087B-L2
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 22:49:17 +0200
+	id 1O29Y2-0000ZV-2f
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 22:50:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756744Ab0DNUtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Apr 2010 16:49:11 -0400
-Received: from mail-pz0-f204.google.com ([209.85.222.204]:43266 "EHLO
-	mail-pz0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756621Ab0DNUtK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Apr 2010 16:49:10 -0400
-Received: by pzk42 with SMTP id 42so560225pzk.4
-        for <git@vger.kernel.org>; Wed, 14 Apr 2010 13:49:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:received:message-id
-         :subject:from:to:content-type;
-        bh=JwG1mnp0Z6Qyu+gPWhdT5BSF5qa2iXs27dKYlNTEm7w=;
-        b=ZkXevBDyKj+o7DpqJGrdEdX3Cm9v8MxeLWcvipvCU8BTk62gM3q/eH84e/4FqIlz58
-         ogt/mLsaijkDQsNae3coBPJ5DWbhgp860Ad/aFcybuWSYxfcqUjMhtAx1aIXRO/TbsQL
-         abZuWE6KJPVo24U+ou5W1J+Q3Z6ibOwYbgwqY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=NaSDmUgbV6CZrPwL2jkhzXlOkqpSFp7Ew1C09eYIhcTzUDfcSu8Ce2WgoDgJEtMiK9
-         QuyhEG7TWW50/eLTcnENhnmCdFVV+p4OD+S3zgPgoJd7CBq1xpFHuy4uKc+xmePOp81q
-         vyETZEpOD/N3iWWgnwvG4cvHAqLvRruaEw6QQ=
-Received: by 10.231.36.9 with HTTP; Wed, 14 Apr 2010 13:49:09 -0700 (PDT)
-Received: by 10.142.2.34 with SMTP id 34mr3896718wfb.9.1271278150030; Wed, 14 
-	Apr 2010 13:49:10 -0700 (PDT)
+	id S1756747Ab0DNUux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 16:50:53 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41007 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755749Ab0DNUuw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 16:50:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8312AAA66F;
+	Wed, 14 Apr 2010 16:50:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cFGTHRByqtMsfUG8uwM5VtT1S1g=; b=dot1lR
+	CyJgetal9s9VXnZLUBR1qRLRVKR4FXduVOYLMo88d6TCAa7wnoQmR/tZvl6OFlqc
+	ra1ihBZL4ymz/hU/chxFgbq0M0XQHJTRJTbp0Ad0d465U6JVkk9QHT4Sh0dpDcCi
+	ii6jeuItiExEU6hz5asKKOu0t94AA+O0GsQWM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KPHUuVpzNMDfTycaNDywDLLtyza13z+R
+	ZnZPfNwJyFkkuFQ+evS8ZUmw0h0ype+M8k+7yBXchXiEOIM3qJKCBdYTJVkICbhv
+	XRLq59Hkj+Y2co9eWqp9VbDJ+/H2gpZCE6cxwqQsfV7h3U6um3d4uB2NWoko2n6n
+	CeQQoNExsNU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2BB74AA665;
+	Wed, 14 Apr 2010 16:50:46 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2F8ECAA65B; Wed, 14 Apr
+ 2010 16:50:41 -0400 (EDT)
+In-Reply-To: <20100413021355.GA4118@progeny.tock> (Jonathan Nieder's message
+ of "Mon\, 12 Apr 2010 21\:13\:56 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 663AC14A-4807-11DF-B981-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144913>
 
-With git-1.7, I regularly get this when pushing to a non-bare repo:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-remote: error: failed to lock refs/remotes/origin/master
-...
- ! [remote rejected] origin/master -> origin/master (failed to lock)
-error: failed to push some refs to 'ssh://remote/repo'
+> +unset GIT_PAGER
+> +rm -f core.pager_used
+> +rm -fr sub
 
-I see this pushing from a Mac, to either a Mac or to Cygwin. I have
-seen it on various versions of the 1.7 series and possibly before. In
-the instance above:
+Why do you have these outside the test itself?
 
-local git version 1.7.0.3.436.g2b878
-remote git version 1.7.0.3
+> +test_expect_success TTY 'core.pager in subdir' '
+> +	PAGER=wc &&
+> +	stampname=$(pwd)/core.pager_used &&
+> +	export PAGER stampname &&
+> +	git config core.pager "wc > \"\$stampname\"" &&
+> +	mkdir sub &&
+> +	(
+> +		cd sub &&
+> +		test_terminal git log
+> +	) &&
+> +	test -e "$stampname"
+> +'
 
-In addition, the ref is (apparently) updated just fine. If I push a
-second time, no update occurs.
-
-The problem is reproducible. Any idea where I should start debugging it?
-
-j.
+They are reasonable clean-up steps to start the real test (starting from
+setting and exporting the pager) in a known good state, and as long as you
+write them not to fail I don't see any reason to have them outside the
+test.  You _might_ want to "unset GIT_PAGER" immediately after the test
+that does "export PAGER", so that it won't contaminate the environment the
+test script itself runs, but even for that purpose, it would probably be
+better to run the parts that depend on the exported value in a subshell.
