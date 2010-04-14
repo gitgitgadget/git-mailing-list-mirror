@@ -1,80 +1,83 @@
-From: Will Palmer <wmpalmer@gmail.com>
-Subject: Re: [PATCH] make description of "core.autocrlf" less ambiguous
-Date: Wed, 14 Apr 2010 15:49:34 +0100
-Message-ID: <m2p5b9751661004140749kf97d84f8ufee365390e1c57f5@mail.gmail.com>
-References: <1271201003-3413-1-git-send-email-wmpalmer@gmail.com> 
-	<7vk4saqguf.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] Document ls-files -t as obsolete.
+Date: Wed, 14 Apr 2010 16:55:51 +0200
+Message-ID: <vpq4oje2idk.fsf@bauges.imag.fr>
+References: <1271252704-21739-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7vaat6qesd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 14 16:50:37 2010
+X-From: git-owner@vger.kernel.org Wed Apr 14 16:56:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O23vI-0002po-R0
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 16:50:37 +0200
+	id 1O2413-0006SH-18
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 16:56:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755908Ab0DNOt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Apr 2010 10:49:57 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:22542 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755897Ab0DNOtz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Apr 2010 10:49:55 -0400
-Received: by ey-out-2122.google.com with SMTP id d26so51105eyd.19
-        for <git@vger.kernel.org>; Wed, 14 Apr 2010 07:49:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type;
-        bh=23OcVGvr7KBRSDwb55D9ESLH3EJ/rOMY73+4ENBv0UI=;
-        b=aJAjnEdnA1D7nHxGepv1ergu1LgWP+9fYY3ccKjMAqTDKNNxMuwPb3ZnaX+EozyKGj
-         c8Jty1gMxoBlLspDSgnoMZ0uCODZPljclqtst1sslwVvA/sW2mSIj6QOYaznDtsMJ0Qw
-         uv7uwCARaZpoKiyQjI9j/1knrKSlI2lHgVN6s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=tH96or5e5l+/S/nVlxJBD/R+Gft3Pqt7mhBXPWXuWG8xbqaewFPKNhWBNV4qEoHzk3
-         DVze506pWzuWf9ImEfYeJ5hgvQvQKSfPM2fU6sq+NlLCNnIN8LcqoBzoNb3v9x99aclK
-         LIWcxZaUFhslxRrLPy+Ihk3zOYQy/HaUyBjYM=
-Received: by 10.103.108.16 with HTTP; Wed, 14 Apr 2010 07:49:34 -0700 (PDT)
-In-Reply-To: <7vk4saqguf.fsf@alter.siamese.dyndns.org>
-Received: by 10.103.37.12 with SMTP id p12mr4229005muj.94.1271256594175; Wed, 
-	14 Apr 2010 07:49:54 -0700 (PDT)
+	id S1755907Ab0DNO4X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 10:56:23 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:52916 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755685Ab0DNO4W (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 10:56:22 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o3EEow6U009624
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 14 Apr 2010 16:50:58 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1O240O-0005FJ-3f; Wed, 14 Apr 2010 16:55:52 +0200
+In-Reply-To: <7vaat6qesd.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 14 Apr 2010 07\:39\:30 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 14 Apr 2010 16:50:58 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o3EEow6U009624
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1271861459.92862@54MNrPUgg5v+rz5ayfd2UA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144881>
 
-On Wed, Apr 14, 2010 at 2:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Very low level plumbing commands deliberately omit the conversion in order
-> to show the raw data (e.g. cat-file), so it is not correct to reword it to
-> "when output" as in your version.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Blame poor testing on my part, then. Yesterday, my tests showed
-"cat-file blob HEAD:a-crlf-file" outputting crlf lines, but
-today (with a script, rather than my typing commands in by-hand) that
-seems not to be the case.
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>
+>> The behavior of "git ls-files -t" is very misleading (see
+>> http://thread.gmane.org/gmane.comp.version-control.git/126516 and
+>> http://thread.gmane.org/gmane.comp.version-control.git/144394/focus=144397
+>> for examples of mislead users) and badly documented, hence we point the
+>> users to superior alternatives.
+>
+> I am no entirely happy with this patch.
+>
+> If all your scripted Porcelain wants to see is "what are the paths I might
+> want to run 'git add' on?", you do not want to run diff twice (which is
+> what "status" does); you would say "ls-files -t -m -o --exclude-standard",
+> instead. The alternative is not even superiour in this case.
+>
+> Having said that, I personally don't think of any other combination of
+> flags with which "ls-files -t" is useful.
+>
+> If there are parts of the documentation that are misleading, perhaps that
+> is what your patch should be fixing instead, no?
 
-I agree that verbose-and-anal is not the right way to go, but I still
-think the phrases reading from / writing to "the filesystem"
-sound very ambiguous, especially when related to a command which
-effects the way git stores things in its internal filesystem.
+After having tried to understand how "git ls-files -t" was supposed to
+work
+( http://thread.gmane.org/gmane.comp.version-control.git/126516/focus=126520 ),
+I admit that I have no idea how to document such weird behavior.
 
-Most other uses of the term "filesystem" in the manpage use wording
-such as: "...filesystems like NFS..",
- "..filesystems like FAT..", "traditional UNIX filesystems", etc. The
-only non-explicit uses of the term talk about
-"slow filesystems", which are clearly talking about something other
-than git. The autocrlf mention is the only use of the
-term "the filesystem".
+If power users want to use "git ls-files -t", let them do (I'm not
+saying the feature should be removed), but I don't see a point trying
+to help people to use it.
 
-Though at the time I thought I wasn't being anal enough, perhaps the
-correct move would be to go the opposite direction:
-technically not the-real-truth, but "good enough": maybe both
-references to "the filesystem" should just be replaced with
-"the work tree", which is the term used in the safecrlf section anyway?
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
