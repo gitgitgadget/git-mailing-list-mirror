@@ -1,102 +1,163 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH v2 0/4] A new library for plumbing output
-Date: Wed, 14 Apr 2010 21:10:35 +0200
-Message-ID: <201004142110.36453.jnareb@gmail.com>
-References: <20100411231824.67460.24844.julian@quantumfyre.co.uk> <l2jfabb9a1e1004111635v16e4dc86g405883ca12d316b9@mail.gmail.com>
+From: Mark Rada <marada@uwaterloo.ca>
+Subject: Re: [PATCHv5 2/6] Gitweb: add support for minifying gitweb.css
+Date: Wed, 14 Apr 2010 15:17:44 -0400
+Message-ID: <4BC614D8.2000208@mailservices.uwaterloo.ca>
+References: <4BB430C3.9030000@mailservices.uwaterloo.ca> <201004140030.47222.jnareb@gmail.com> <4BC55558.1060608@mailservices.uwaterloo.ca> <201004141922.20213.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Mark Rada <marada@uwaterloo.ca>,
+	Charles Bailey <charles@hashpling.org>, git@vger.kernel.org,
 	Junio C Hamano <gitster@pobox.com>,
-	Eric Raymond <esr@thyrsus.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 14 21:10:18 2010
+	Eric Wong <normalperson@yhbt.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 14 21:18:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O27ya-0004O0-NF
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 21:10:17 +0200
+	id 1O286X-0000Ju-Ve
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 21:18:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752703Ab0DNTKJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Apr 2010 15:10:09 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:18138 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752626Ab0DNTKH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Apr 2010 15:10:07 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so2348835fgg.1
-        for <git@vger.kernel.org>; Wed, 14 Apr 2010 12:10:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=xM/2jKzSBU5koiNuVzv25Yq7y6+/THJJ+KZ6sUDpp1w=;
-        b=C5kWgPv+S7QX2bsk/dsxGEaf4ILQCz+USx+zDAru8Ufl3xHbsQytAIx6NOaNkrimtf
-         50e/PX69OPTu0Kv6ajU0IMfe+S/qQSUx1DIZNP9yhlIWGqnzLPkni9AVQxtoyG13JkeG
-         x4Q6SWo/6Jf9Mx6pjG2923q9HDezHqyJ7Eleo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=P9zlsvdk5HSDA/GLyDjN46xccoSjZgpCXtHGjznGIJJXm8arJvHSZK06TN72zLFh28
-         oTMDbFhitJZXnD7uSv/YZAWmeRtZy9HcPbQUzRNAnMcwnK81o8YlIfZ/DnrI/N/flIMQ
-         SX3X/vfaAZFVg404OICwWZet2ZoY0psVauzpg=
-Received: by 10.87.71.7 with SMTP id y7mr6170883fgk.63.1271272205923;
-        Wed, 14 Apr 2010 12:10:05 -0700 (PDT)
-Received: from [192.168.1.13] (abvo40.neoplus.adsl.tpnet.pl [83.8.212.40])
-        by mx.google.com with ESMTPS id 18sm1313832fkq.34.2010.04.14.12.10.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 14 Apr 2010 12:10:02 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <l2jfabb9a1e1004111635v16e4dc86g405883ca12d316b9@mail.gmail.com>
-Content-Disposition: inline
+	id S1752369Ab0DNTSZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 15:18:25 -0400
+Received: from mailservices.uwaterloo.ca ([129.97.128.141]:52832 "EHLO
+	mailchk-m03.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751047Ab0DNTSY (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Apr 2010 15:18:24 -0400
+Received: from karakura.local (static-66-225-153-161.ptr.terago.net [66.225.153.161])
+	(authenticated bits=0)
+	by mailchk-m03.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id o3EJHik0009651
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 14 Apr 2010 15:17:45 -0400
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <201004141922.20213.jnareb@gmail.com>
+X-UUID: ef20c2d3-fd93-4d8a-856b-9e19d771766c
+X-Miltered: at mailchk-m03 with ID 4BC614D8.003 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: clamav-milter 0.95.3 at mailchk-m03
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m03.uwaterloo.ca [129.97.128.141]); Wed, 14 Apr 2010 15:17:48 -0400 (EDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144893>
 
-On Mon, 12 April 2010, Sverre Rabbelier wrote:
->=20
-> On Mon, Apr 12, 2010 at 01:21, Julian Phillips <julian@quantumfyre.co=
-=2Euk> wrote:
-> > Probably the biggest change from v1 is an expanded aim. =C2=A0Now t=
-he output library
-> > is aimed at controlling _all_ plubming output. =C2=A0This series in=
-cludes a patch for
-> > ls-tree that has all it's output going through the library, and a p=
-atch for
-> > status that has all the --porcelain output going through the librar=
-y.
->=20
-> I like where this is going, a lot, especially since we don't have to
-> convert everything in one go, but we can do it as desired, similar to
-> optparsification. I still think more commands than just these two
-> should be converted to validate the design though, perhaps something
-> like 'git blame', or 'git for-each-ref'?
+On 10-04-14 1:22 PM, Jakub Narebski wrote:
+> On Wed, 14 Apr 2010, Mark Rada wrote:
+>> On 10-04-13 6:30 PM, Jakub Narebski wrote:
+>>> On Tue, 13 April 2010, Charles Bailey wrote:
+>>>> On 01/04/2010 06:36, Mark Rada wrote:
+> 
+> [...]
+>>>>> +gitweb.cgi: gitweb.perl $(GITWEB_JS) $(GITWEB_CSS)
+>>>>>
+>>>>
+>>>> I have a question about this last line of the patch. Are GITWEB_JS and 
+>>>> GITWEB_CSS supposed to be a source path or a URI?
+>>>>
+>>>> The documentation for install (and my previous assumption) was that they 
+>>>> represented the path on the target web server. I'm used to overriding 
+>>>> them so that gitweb.cgi can live in my /cgi-bin directory, but the 
+>>>> static files are served from /gitweb which is readable but not executable.
+>>>>
+>>>> After this patch I had to removed $(GITWEB_JS) and $(GITWEB_CSS) from 
+>>>> the list of dependencies for gitweb.cgi otherwise make failed.
+>>>>
+>>>> Have I got the wrong end of the stick?
+>>>
+>>> Thanks a lot for noticing this bug.
+>>>
+>>>
+>>> GITWEB_JS and GITWEB_CSS were originally meant to be URI to file with
+>>> gitweb JavaScript code and default gitweb stylesheet,... but during work
+>>> on minification of JavaScript code and CSS file it somehow got confused
+>>> to mean source path.
+>>>
+>>> If I remember correctly the original patch, before adding required
+>>> support for minified gitweb.js and gitweb.css to git-instaweb script,
+>>> and before support for CSS minification had
+>>>
+>>>    ifdef JSMIN
+>>>    gitweb.cgi: gitweb.perl gitweb.min.js
+>>>    else
+>>>    gitweb.cgi: gitweb.perl
+>>>    endif
+>>>
+>>> which should probably be replaced in current situation by
+>>>
+>>>    ifdef JSMIN
+>>>    gitweb.cgi : gitweb.min.js
+>>>    endif
+>>>    ifdef CSSMIN
+>>>    gitweb.cgi : gitweb.min.css
+>>>    endif
+>>>
+>>> just adding prerequisites to gitweb.css target in gitweb/Makefile
+>>>
+>>>
+>>> I guess that support for adding minifiction support to git-instaweb
+>>> would need to be more complicated. [...]
+>>
+>> Aw, frig, never thought of using gitweb like that so I made some
+>> assumptions to make things cleaner looking.
+>>
+>> I think this can be fixed by just using different variable names? Or
+>> perhaps some nested ifdef's? I'm not sure which will be better.
+>>
+>> I wasn't at the computer today so I'm just getting to it now, I'll try
+>> to have something when in the next day, going to bed now. Good night.
+> 
+> I think the best solution for prerequisites would be to have multiple 
+> target-only (without commands) rules, which according to make 
+> documentation would get concatenated.  This means the following code
+> in gitweb/Makefile:
+> 
+>     ifdef JSMIN
+>     gitweb.cgi : gitweb.min.js
+>     endif
+>     ifdef CSSMIN
+>     gitweb.cgi : gitweb.min.css
+>     endif
+> 
+> in place of
+> 
+>    gitweb.cgi: gitweb.perl $(GITWEB_JS) $(GITWEB_CSS)
+> 
 
-I don't think it is needed for either command.
+Hmm, I like this because it is clear (if you know that dependancies
+can be joined like that), I was thinking of trying to make a smaller fix
+using pathsubst or subst, but that seems to not be as simple as I wanted it
+to be.
 
-'git blame' has --porcelain and --incremental output, which is line-bas=
-ed
-and pretty much self-describing (with "header-name value" syntax for mo=
-st
-of it), and well documented.  JSON output would only add unnecessary
-chatter and different quoting rules.
+> For git-instaweb I think that best solution would be to introduce new
+> variables holding _source_ of gitweb JavaScript code and CSS, e.g.
+> 
+>             -e '/@@GITWEB_CSS@@/r $(GITWEB_CSS)' \
+> 
+> in place of
+> 
+>             -e '/@@GITWEB_CSS@@/r $(GITWEB_CSS_SOURCE)' \
+> 
+> ...although GITWEB_CSS might mean something different for Makefile
+> and git-instaweb than for gitweb/Makefile and gitweb itself.
 
-'git for-each-ref' has both --format=3D<format> to allow to get data wh=
-at
-one needs, and in the format one wants (with e.g. %00 to reresent NUL),
-and [--shell|--perl|--python|--tcl] for placeholders in <format> to be
-quoted as string literals suitable for specified host language.  Althou=
-gh
-I am not sure if this option, meant to produce scriptlets, is used that
-much/ note that there is not support for --json quoting, nor --xml=20
-escaping.
+Did you get those lines mixed up? I might be not understanding something
+here.
 
---=20
-Jakub Narebski
-Poland
+I was actually planning something along the lines of 
+
+             -e '/@@GITWEB_CSS@@/r $(GITWEB_CSS_NAME)' \
+             -e 's|@@GITWEB_CSS_NAME@@|$(GITWEB_CSS_NAME)|' \
+
+where I introduce the GITWEB_CSS_NAME variable, to be consistent with the
+token in instaweb. This way we don't touch GITWEB_JS in the top level
+makefile.
+
+Also, I should update dependancies for instaweb, since those were
+forgotten last time around. Just creating a short list of what the fix will
+need for when I get home tonight.
+
+-- 
+Mark Rada
