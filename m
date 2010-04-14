@@ -1,54 +1,59 @@
-From: Dave Olszewski <cxreg@pobox.com>
-Subject: Re: Re: git log of remote repositories.
-Date: Tue, 13 Apr 2010 19:15:01 -0700 (PDT)
-Message-ID: <alpine.DEB.2.00.1004131903190.25327@narbuckle.genericorp.net>
-References: <u2n3abd05a91004131625k500e79bbsc8ffa6455a85332d@mail.gmail.com> <20100413232747.GD17484@spearce.org>
+From: Seb <seba.illingworth@gmail.com>
+Subject: My solution
+Date: Wed, 14 Apr 2010 02:16:07 +0000 (UTC)
+Message-ID: <loom.20100414T040717-222@post.gmane.org>
+References: <loom.20090804T204107-117@post.gmane.org> <200908042347.48705.trast@student.ethz.ch> <loom.20090804T224435-568@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Aghiles <aghilesk@gmail.com>, git list <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Apr 14 04:15:41 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 14 04:16:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1s8j-0000JH-Ar
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 04:15:41 +0200
+	id 1O1s9p-0000fh-HM
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 04:16:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754388Ab0DNCPH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Apr 2010 22:15:07 -0400
-Received: from 62.f9.1243.static.theplanet.com ([67.18.249.98]:36202 "EHLO
-	62.f9.1243.static.theplanet.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754339Ab0DNCPG (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Apr 2010 22:15:06 -0400
-X-Envelope-From: cxreg@pobox.com
-Received: from localhost (count@narbuckle [127.0.0.1])
-	(authenticated bits=0)
-	by 62.f9.1243.static.theplanet.com (8.13.8/8.13.8/Debian-3) with ESMTP id o3E2F166012636
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 13 Apr 2010 21:15:02 -0500
-X-X-Sender: count@narbuckle.genericorp.net
-In-Reply-To: <20100413232747.GD17484@spearce.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1754553Ab0DNCQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Apr 2010 22:16:24 -0400
+Received: from lo.gmane.org ([80.91.229.12]:41560 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754549Ab0DNCQX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Apr 2010 22:16:23 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1O1s9K-0000WI-Ln
+	for git@vger.kernel.org; Wed, 14 Apr 2010 04:16:18 +0200
+Received: from 125-239-38-41.jetstream.xtra.co.nz ([125.239.38.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Apr 2010 04:16:18 +0200
+Received: from seba.illingworth by 125-239-38-41.jetstream.xtra.co.nz with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Apr 2010 04:16:18 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 125.239.38.41 (Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.2 (KHTML, like Gecko) Chrome/5.0.342.9 Safari/533.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144842>
 
-On Tue, 13 Apr 2010, Shawn O. Pearce wrote:
+Seba Illingworth <seba.illingworth <at> gmail.com> writes:
 
-> Aghiles <aghilesk@gmail.com> wrote:
->> I have a local branch that is a tracking a remote branch. I want to see
->> what are the modifications upstream, _before_ I pull. I tried
->> 'git log origin' but that's only the point from where I pulled last.
->>
->> Is there a way to do that?
->
-> git fetch
-> git log ..origin
+> 
+> Thomas Rast <trast <at> student.ethz.ch> writes:
+> 
+> > 
+> > I posted the script below on IRC the other week[1] in reply to someone
+> > looking for a way to do this for 'meld'.
+> ...
 
-Or the more portable and concise, since 1.7.0:
-
-git log ..@{u}
+Just realised I never posted my solution. This works great for me, I wouldn't do 
+without it:
+http://blog.codefarm.co.nz/2009/08/git-diff-and-difftool-open-all-files.html
