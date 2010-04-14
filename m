@@ -1,84 +1,157 @@
-From: David Michael Barr <david.barr@cordelta.com>
-Subject: Re: Update on SoC proposal: git-remote-svn
-Date: Thu, 15 Apr 2010 03:15:58 +1000
-Message-ID: <21A95727-F438-48FB-9A16-132B4DE85B6E@cordelta.com>
-References: <1271136573-sup-5613@kytes> <F0CD5B83-2D28-47E1-A336-5C88E2803CBE@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=us-ascii
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv5 2/6] Gitweb: add support for minifying gitweb.css
+Date: Wed, 14 Apr 2010 19:22:18 +0200
+Message-ID: <201004141922.20213.jnareb@gmail.com>
+References: <4BB430C3.9030000@mailservices.uwaterloo.ca> <201004140030.47222.jnareb@gmail.com> <4BC55558.1060608@mailservices.uwaterloo.ca>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sam Vilain <sam@vilain.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steven Michalske <smichalske@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 14 19:16:13 2010
+Cc: Charles Bailey <charles@hashpling.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>
+To: Mark Rada <marada@uwaterloo.ca>
+X-From: git-owner@vger.kernel.org Wed Apr 14 19:22:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O26CB-0000HF-0x
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 19:16:11 +0200
+	id 1O26Hm-0003BY-FT
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 19:21:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756234Ab0DNRQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Apr 2010 13:16:04 -0400
-Received: from ironport1-mx.cbr1.mail-filtering.com.au ([203.88.115.241]:28813
-	"EHLO ironport1-mx.cbr1.mail-filtering.com.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756186Ab0DNRQD (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Apr 2010 13:16:03 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsEALeUxUvLWHsF/2dsb2JhbACbVXG0OIhGhQ0E
-X-IronPort-AV: E=Sophos;i="4.52,205,1270389600"; 
-   d="scan'208";a="166661031"
-Received: from node2.alpha.aussiehq.net.au ([203.88.123.5])
-  by ironport1-mta.cbr1.mail-filtering.com.au with ESMTP; 15 Apr 2010 03:16:00 +1000
-Received: (qmail 24255 invoked from network); 15 Apr 2010 03:16:00 +1000
-Received: from d122-109-106-179.mit3.act.optusnet.com.au (HELO ?192.168.1.8?) (122.109.106.179)
-  by node2.alpha.aussiehq.net.au with SMTP; 15 Apr 2010 03:15:59 +1000
-In-Reply-To: <F0CD5B83-2D28-47E1-A336-5C88E2803CBE@gmail.com>
-X-Mailer: Apple Mail (2.1078)
+	id S1756538Ab0DNRVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 13:21:53 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:2368 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756477Ab0DNRVw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 13:21:52 -0400
+Received: by fg-out-1718.google.com with SMTP id 22so123483fge.1
+        for <git@vger.kernel.org>; Wed, 14 Apr 2010 10:21:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=FLS0ISikzbZS1FG8SilnG47sqImi+5FMGhlpYLutBQI=;
+        b=vY+vO/ylKta69FdL5cbCLuPrnXygtmLP7XPmZiAk5sVCSShu+PZFze6Uj+xCbzz8J5
+         iZlIdYKGW2a0JkoTNLtcWDMER+V4oZER15WbDm1/k+IndClsCiaM73SJTNRY26m5TfhB
+         ghxhPcMzvVput3z50grpgLX1E8BvfBRZ6Ucuc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=JDVnAbUYqboOnnzP6pD8Z64ARiChUkPU4CCNIP4pgSYYX69Jivs9V6vIf5G8R3Qtnx
+         SoTbbY5KfqesOs5n3wozPuK9taXT0WnSN+Spo4kWHwu/NlckxfGwiHP5Ue/Dr81N7Y77
+         /6vxKmoJc1hccLsAs6Ox6gkLE5CpBzt5MKMJk=
+Received: by 10.86.6.15 with SMTP id 15mr83327fgf.42.1271265710606;
+        Wed, 14 Apr 2010 10:21:50 -0700 (PDT)
+Received: from [192.168.1.13] (abvr150.neoplus.adsl.tpnet.pl [83.8.215.150])
+        by mx.google.com with ESMTPS id 2sm1046445fks.12.2010.04.14.10.21.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 14 Apr 2010 10:21:48 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4BC55558.1060608@mailservices.uwaterloo.ca>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144890>
 
-Hi Steve,
+On Wed, 14 Apr 2010, Mark Rada wrote:
+> On 10-04-13 6:30 PM, Jakub Narebski wrote:
+>> On Tue, 13 April 2010, Charles Bailey wrote:
+>>> On 01/04/2010 06:36, Mark Rada wrote:
 
-> If I were to check out the svn root of that repository, I would use well
-> over 3TB of disk space to have that checked out ...
+[...]
+>>>> +gitweb.cgi: gitweb.perl $(GITWEB_JS) $(GITWEB_CSS)
+>>>>
+>>>
+>>> I have a question about this last line of the patch. Are GITWEB_JS and 
+>>> GITWEB_CSS supposed to be a source path or a URI?
+>>>
+>>> The documentation for install (and my previous assumption) was that they 
+>>> represented the path on the target web server. I'm used to overriding 
+>>> them so that gitweb.cgi can live in my /cgi-bin directory, but the 
+>>> static files are served from /gitweb which is readable but not executable.
+>>>
+>>> After this patch I had to removed $(GITWEB_JS) and $(GITWEB_CSS) from 
+>>> the list of dependencies for gitweb.cgi otherwise make failed.
+>>>
+>>> Have I got the wrong end of the stick?
+>> 
+>> Thanks a lot for noticing this bug.
+>> 
+>> 
+>> GITWEB_JS and GITWEB_CSS were originally meant to be URI to file with
+>> gitweb JavaScript code and default gitweb stylesheet,... but during work
+>> on minification of JavaScript code and CSS file it somehow got confused
+>> to mean source path.
+>> 
+>> If I remember correctly the original patch, before adding required
+>> support for minified gitweb.js and gitweb.css to git-instaweb script,
+>> and before support for CSS minification had
+>> 
+>>    ifdef JSMIN
+>>    gitweb.cgi: gitweb.perl gitweb.min.js
+>>    else
+>>    gitweb.cgi: gitweb.perl
+>>    endif
+>> 
+>> which should probably be replaced in current situation by
+>> 
+>>    ifdef JSMIN
+>>    gitweb.cgi : gitweb.min.js
+>>    endif
+>>    ifdef CSSMIN
+>>    gitweb.cgi : gitweb.min.css
+>>    endif
+>> 
+>> just adding prerequisites to gitweb.css target in gitweb/Makefile
+>> 
+>> 
+>> I guess that support for adding minifiction support to git-instaweb
+>> would need to be more complicated. [...]
+> 
+> Aw, frig, never thought of using gitweb like that so I made some
+> assumptions to make things cleaner looking.
+> 
+> I think this can be fixed by just using different variable names? Or
+> perhaps some nested ifdef's? I'm not sure which will be better.
+> 
+> I wasn't at the computer today so I'm just getting to it now, I'll try
+> to have something when in the next day, going to bed now. Good night.
 
-This stirred my thoughts and I whipped up a bash script that uses SVK,
-find, shasum and ln to build a filesystem view of the root of an svn
-repository that consumes moderate storage:
+I think the best solution for prerequisites would be to have multiple 
+target-only (without commands) rules, which according to make 
+documentation would get concatenated.  This means the following code
+in gitweb/Makefile:
 
-SVK_DEPOT=""
-MAX_REV=12345
+    ifdef JSMIN
+    gitweb.cgi : gitweb.min.js
+    endif
+    ifdef CSSMIN
+    gitweb.cgi : gitweb.min.css
+    endif
 
-CO_DIR=validation
-HASH_DIR=hashes
+in place of
 
-svk co -r1 /$SVK_DEPOT/ $CO_DIR
-mkdir -p $HASH_DIR
-for (( REV=1 ; REV<=MAX_REV ; ++REV )) do
-  svk up -r$REV $CO_DIR
-  # Hashify working copy
-  find $CO_DIR -type d -cmin -5 -prune -o \
-    -type f -links 1 -exec shasum '{}' + | (
-    while read HASH FILE ; do
-      [ -x "$FILE" ] && HASH="$HASH"x
-      ln "$FILE" $HASH_DIR/$HASH 2>/dev/null || \
-        ln -f $HASH_DIR/$HASH "$FILE"
-    done
-  )
-done
+   gitweb.cgi: gitweb.perl $(GITWEB_JS) $(GITWEB_CSS)
 
-Important assumptions are that each update will take less
-than 5 minutes and that SVK uses writes to a temporary file
-and then renames to perform a modification.
-I've used this to build a simple validation script for my project.
-I estimate it will use about 20GB to represent my 1GB repo
-and that it will take about 3 hours.
 
---
-David Barr
+For git-instaweb I think that best solution would be to introduce new
+variables holding _source_ of gitweb JavaScript code and CSS, e.g.
+
+            -e '/@@GITWEB_CSS@@/r $(GITWEB_CSS)' \
+
+in place of
+
+            -e '/@@GITWEB_CSS@@/r $(GITWEB_CSS_SOURCE)' \
+
+...although GITWEB_CSS might mean something different for Makefile
+and git-instaweb than for gitweb/Makefile and gitweb itself.
+-- 
+Jakub Narebski
+Poland
