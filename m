@@ -1,101 +1,68 @@
-From: Marc Bowes <marcbowes@gmail.com>
-Subject: git-svn against a monolithic repository
-Date: Wed, 14 Apr 2010 11:44:21 +0200
-Message-ID: <j2tcfa4e841004140244o1dfa51fdk9b435ff7c04c2a3b@mail.gmail.com>
-References: <h2jcfa4e841004140232y2137d43eg4be9bebdc2d29290@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] perf: Fix endianness argument compatibility
+Date: Wed, 14 Apr 2010 05:52:52 -0400
+Message-ID: <20100414095252.GA17884@coredump.intra.peff.net>
+References: <1271147857-11604-1-git-send-email-imunsie@au.ibm.com>
+ <20100413.014821.34906166.davem@davemloft.net>
+ <20100414092843.GD10537@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 14 11:44:32 2010
+Content-Type: text/plain; charset=utf-8
+Cc: David Miller <davem@davemloft.net>, git@vger.kernel.org,
+	imunsie@au1.ibm.com, linux-kernel@vger.kernel.org,
+	a.p.zijlstra@chello.nl, paulus@samba.org, acme@redhat.com,
+	kosaki.motohiro@jp.fujitsu.com, mitake@dcl.info.waseda.ac.jp,
+	rusty@rustcorp.com.au, fweisbec@gmail.com, ebmunson@us.ibm.com,
+	Valdis.Kletnieks@vt.edu, amwang@redhat.com, tfransosi@gmail.com,
+	mhiramat@redhat.com, xiaoguangrong@cn.fujitsu.com,
+	jaswinderrajput@gmail.com, arjan@linux.intel.com,
+	hirofumi@mail.parknet.co.jp, efault@gmx.de, tzanussi@gmail.com,
+	anton@samba.org, jkacur@redhat.com, lizf@cn.fujitsu.com,
+	rostedt@goodmis.org
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Wed Apr 14 11:53:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1z95-0000Ng-Va
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 11:44:32 +0200
+	id 1O1zHj-0004SR-Gh
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 11:53:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754826Ab0DNJoZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Apr 2010 05:44:25 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:33477 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754564Ab0DNJoY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Apr 2010 05:44:24 -0400
-Received: by gyg13 with SMTP id 13so4021444gyg.19
-        for <git@vger.kernel.org>; Wed, 14 Apr 2010 02:44:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=l63Pld0F6gpMYXll9RYELUyBwZ8MdYY+N7r+/XdKK8E=;
-        b=Z9/mhTn4hpi3GTxqaB2cKt5nvx8kVbfBTDZlfkjrdOoXAnSkzOZ3ktW4VDKll3gdbF
-         4vXcRKn+0pueVdN24PWs44DRHTKWTjHfr2IueoWvnNkBuWfbbj60s3wnbygna5qx0l9M
-         VDr60d/XWIKiRXFEdfREK2IE8vgsu04jSQ0qo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=AT2Iv78wkISGt2+LxSEhVm20MAOeCYYSWp/fjzSwpHJfswR0g3Czh6qAZbM5IORgmV
-         w1fQbFdEqCk7MQiHhRPSEXOJcKYB7S2xFAOsKErDhtxFS0zie18q0HM+HGiA2KaiyedW
-         BN1cOJ7cMD/HqfmPUPShyrWryLdPt43TBbnJA=
-Received: by 10.90.50.3 with HTTP; Wed, 14 Apr 2010 02:44:21 -0700 (PDT)
-In-Reply-To: <h2jcfa4e841004140232y2137d43eg4be9bebdc2d29290@mail.gmail.com>
-Received: by 10.90.141.20 with SMTP id o20mr3276038agd.97.1271238261102; Wed, 
-	14 Apr 2010 02:44:21 -0700 (PDT)
+	id S1754873Ab0DNJxW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 05:53:22 -0400
+Received: from peff.net ([208.65.91.99]:33866 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754869Ab0DNJxV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 05:53:21 -0400
+Received: (qmail 23723 invoked by uid 107); 14 Apr 2010 09:53:24 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 14 Apr 2010 05:53:24 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Apr 2010 05:52:52 -0400
+Content-Disposition: inline
+In-Reply-To: <20100414092843.GD10537@elte.hu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144863>
 
-Hiya,
+On Wed, Apr 14, 2010 at 11:28:43AM +0200, Ingo Molnar wrote:
 
-The subversion repository I need to work with is quite odd (by my
-standards, anyways).
+> > > Parsing an option from the command line with OPT_BOOLEAN on a bool data
+> > > type would not work on a big-endian machine due to the manner in which
+> > > the boolean was being cast into an int and incremented. For example,
+> > > running 'perf probe --list' on a PowerPC machine would fail to properly
+> > > set the list_events bool and would therefore print out the usage
+> > > information and terminate.
+> [...]
+>
+> Nice fix!
+> 
+> Btw., perf got the option parser from the Git project - i'm wondering how the 
+> Git folks solved this endianness problem?
 
-The structure looks something like:
+We didn't. We pass only actual ints for the value field in all cases. We
+don't use C99 bools at all. We do use bit-fields, but the compiler
+catches the error, since OPT_BOOLEAN tries to take its address.
 
-|-- patches
-|=A0=A0 `-- foobar
-|=A0=A0=A0=A0=A0=A0 `-- project-name
-`-- trunk-team-name
-=A0=A0=A0 `-- project-name
-
-That is, a single monolithic repository. Each team has their own trunk
-(as a folder). The patches folder is essentially a production branch
-for a specific region. Each developer tends to have a branch somewhere
-else which they use to hack on. When they are ready, the code goes
-through a review process and then is copied (svn copy) into trunk. It
-then goes through a build process and is finally merged (in this case,
-using meld) into the patches where other stuff happens to it.
-
-I would like to use a single git repository for each project. That is,
-my master branch should relate to the project folder in trunk and my
-production-foobar branch should relate to the project folder in
-patches. I could then use git to hack on a local branch and merge to
-master (and then dcommit back to trunk). When ready, I could then
-merge master into the production branch (and then dcommit back to
-patches).
-
-I guess what I'm looking for is something like:
-
-git svn clone https://svn/url -T trunk-team-name/project-name -b
-patches/foobar/project-name
-
-However, I'm pretty sure that is wrong. Not only does it take forever
-(I landed up canceling it), but I don't think the git-svn branches
-will understand the weirdo layout.
-
-I tried manually adding svn-remotes, running git-svn fetch against
-then and then branching off. However, I started seeing weird things
-happening when merging (sometimes git-svn became attached to the wrong
-remote, sometimes it wouldn't update properly, lots of obscure merge
-conflicts..).
-
-In the worst case, I could clone each project (that is, trunk and
-patches) separately and manually merge. But if I can get git to do
-this for me, it'd make a lot of sense.
-
-If anybody has any ideas, I'd be extremely grateful.
+-Peff
