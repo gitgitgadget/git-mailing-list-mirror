@@ -1,85 +1,68 @@
-From: David Michael Barr <david.barr@cordelta.com>
-Subject: Re: Update on SoC proposal: git-remote-svn
-Date: Wed, 14 Apr 2010 22:52:02 +1000
-Message-ID: <E7EBCCD4-418B-4573-A70A-B7E06D6C6D50@cordelta.com>
-References: <1271136573-sup-5613@kytes> <F0CD5B83-2D28-47E1-A336-5C88E2803CBE@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sam Vilain <sam@vilain.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steven Michalske <smichalske@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 14 14:52:16 2010
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Feature or a bug: git aliases are executed in git-root directory
+Date: Wed, 14 Apr 2010 15:10:42 +0200
+Message-ID: <g2hfabb9a1e1004140610mdd7b093arb15758ba40fd7956@mail.gmail.com>
+References: <4BC5A483.6060206@plusserver.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jens Otten <j.otten@plusserver.de>
+X-From: git-owner@vger.kernel.org Wed Apr 14 15:17:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O224k-0001Ew-To
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 14:52:15 +0200
+	id 1O22TB-0006Bh-0j
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 15:17:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754613Ab0DNMwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Apr 2010 08:52:09 -0400
-Received: from ironport1-mx.cbr1.mail-filtering.com.au ([203.88.115.241]:4486
-	"EHLO ironport1-mx.cbr1.mail-filtering.com.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754582Ab0DNMwI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Apr 2010 08:52:08 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsEANFXxUvLWHsF/2dsb2JhbACbWHG0S4hGhQ0E
-X-IronPort-AV: E=Sophos;i="4.52,204,1270389600"; 
-   d="scan'208";a="166542820"
-Received: from node2.alpha.aussiehq.net.au ([203.88.123.5])
-  by ironport1-mta.cbr1.mail-filtering.com.au with ESMTP; 14 Apr 2010 22:52:03 +1000
-Received: (qmail 29690 invoked from network); 14 Apr 2010 22:52:03 +1000
-Received: from d122-109-106-179.mit3.act.optusnet.com.au (HELO ?192.168.1.8?) (122.109.106.179)
-  by node2.alpha.aussiehq.net.au with SMTP; 14 Apr 2010 22:52:03 +1000
-In-Reply-To: <F0CD5B83-2D28-47E1-A336-5C88E2803CBE@gmail.com>
-X-Mailer: Apple Mail (2.1078)
+	id S1755352Ab0DNNRX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 09:17:23 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:43557 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750939Ab0DNNRW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 09:17:22 -0400
+Received: by gwaa18 with SMTP id a18so49827gwa.19
+        for <git@vger.kernel.org>; Wed, 14 Apr 2010 06:17:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type;
+        bh=nT+KqWBjLVbLwFwftoWf6e9vD2mvOXxICDtTm4uCTVU=;
+        b=k2UgF6XSiaPJ69QmVB2odVUNSf1D4cjxy7SLcWSy6nVFeivRok4uFmS3SKsArOOsMt
+         gxL9x1ZMpwDyCe7BHUDOH9nckSEQKi4iwovXVKkkRMPCyKPRqdy4T16zKyf3lNeo7g+G
+         BBDlT3huvmNQx222S1H7qcapo6GDZkxxDItuc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=WG0XDGcbcI2qhiF+/Ru2BENRFU0+1l/OEzyIEZRov50Pkt7fkqzI8KO51DMK8TGykZ
+         Upega+VBJYDwVMAxV82k079xk54jduK9GDKc0BRaX2C3ZNVQT+UQPoKsMcVbqpblV/DT
+         sXNxM2Xkq8PCRvkjNmj7iPxtVE+H2Pr3rhcCQ=
+Received: by 10.100.206.13 with HTTP; Wed, 14 Apr 2010 06:10:42 -0700 (PDT)
+In-Reply-To: <4BC5A483.6060206@plusserver.de>
+Received: by 10.101.9.21 with SMTP id m21mr13431980ani.119.1271251039483; Wed, 
+	14 Apr 2010 06:17:19 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144869>
 
-Hi Steve,
+Heya,
 
-> In reading this I wondered how a svn dump of one of the
-> repositories monitor would size.  If I were to check out the svn
-> root of that repository, I would use well over 3TB of disk space
-> to have that checked out, I filled my 750GB drive with about a
-> third of it checked out.  About 256MB of code with thousands
-> of tags and hundreds of branches.
+On Wed, Apr 14, 2010 at 13:18, Jens Otten <j.otten@plusserver.de> wrote:
+> is there a way to solve this problem?
 
-I encountered this issue with my first attempt to validate the output of 
-my dump conversion tool. My case wasn't as dire, 350GB would
-have sufficed but I was working in a 160GB partition.
-Checking out tags side by side is a sure way to fill your disk.
+Yes, put this script in your path (and make it executable):
 
-> It looks like svnadmin dump defaults to dumping all data.
-> Fortunately it has a delta option, which looks like it would be
-> needed to dump this repository I am speaking of without filling
-> up many hard drives.
+cat > git-meld << EOF
+#!/bin/sh
 
-The svn dump format is not quite that silly, even without deltification
-it doesn't output blobs that are just an unaltered copy from a
-previous revision.
-Handling deltified dumps will greatly increase the complexity of the
-import process. Blob content would have be computed from existing
-blobs rather than simply passed through.
+GIT_EXTERNAL_DIFF='git-diff-to-meld-redirect' git diff "$@"
+EOF
 
-> This might also be helped if the dumps are chunked into ranges
-> for many thousands of commits as well, this would keep the files
-> more manageable
+-- 
+Cheers,
 
-Being able to handle a dump stream reassembled from such
-piecewise dumps is an important feature which I haven't finished
-implementing yet.
-
-> Just food for thought.
-
-Thanks for the feed.
-
---
-David Barr
+Sverre Rabbelier
