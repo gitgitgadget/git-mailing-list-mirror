@@ -1,80 +1,111 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-0.3 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
-Received: (qmail 4120 invoked by uid 107); 18 Mar 2010 05:11:27 -0000
+Received: (qmail 27633 invoked by uid 107); 14 Apr 2010 15:13:28 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Thu, 18 Mar 2010 01:11:24 -0400
+    by peff.net (qpsmtpd/0.40) with ESMTP; Wed, 14 Apr 2010 11:13:27 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751633Ab0CRFKv (ORCPT <rfc822;peff@peff.net>);
-	Thu, 18 Mar 2010 01:10:51 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:54894 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751482Ab0CRFKu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Mar 2010 01:10:50 -0400
-Received: by gyg8 with SMTP id 8so828242gyg.19
-        for <git@vger.kernel.org>; Wed, 17 Mar 2010 22:10:49 -0700 (PDT)
+	id S1755947Ab0DNPMo (ORCPT <rfc822;peff@peff.net>);
+	Wed, 14 Apr 2010 11:12:44 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:35809 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755074Ab0DNPMm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Apr 2010 11:12:42 -0400
+Received: by ey-out-2122.google.com with SMTP id d26so55252eyd.19
+        for <multiple recipients>; Wed, 14 Apr 2010 08:12:40 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:to;
-        bh=KVSiRjN/uZD2MJRlDR8EbwGiOSskHALd5LKtEJq1BGo=;
-        b=FNPWaPIRayZ34DnsAeg+bgWgOiNL6bPKCUbRrvIgBF1XgiV4VzumUie/fo0FlW3hV8
-         /w5fAV3/Nc7Y7zoL0k/a81/Zv0W4r8FKtocIk/2zSmd2fc1KeGQOeqcoW20P8WW/e+/l
-         J/+it0aud7I4wAfFXV9FtPMIhhA4aldYRhNVE=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=1qBTt4vfllTdIprnp77jKTpFp67De6PQMcN0ZLxD5pc=;
+        b=iEuGB0z2hUpz9kxyYnAty9n/V3oedcMEfnMtU4WSjEBxTp9aeEbnb/ESsAKJd4sgOI
+         yZTeMT/stGKdYmzOm/mssQMw049X8Z8T0HmXfibYwFf3Z72hhY1oNLHMTAvzKTRY1C1+
+         /ASgLbM2Htd6x/06cf1qXidWWin6MbgPT/Ay0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=hrm4TOyYDnO5pmps94HkxYOjHFPpRne2bzu/8hJaq04jfKHvo3H9rte0H3Gg0iQFMe
-         dfudLDX6cD9M9W734xqzsoSL8cIQeqkL8PRyiQcfrKbtNgaDS5BBAkQM98te9cnjwjNZ
-         hbUkBnHHfCUjAi+9bkD/c2yJbnB/j+fAJKX4A=
-Received: by 10.101.29.9 with SMTP id g9mr2997276anj.234.1268889049047;
-        Wed, 17 Mar 2010 22:10:49 -0700 (PDT)
-Received: from localhost (user-0c9haca.cable.mindspring.com [24.152.169.138])
-        by mx.google.com with ESMTPS id 16sm4953295gxk.1.2010.03.17.22.10.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 17 Mar 2010 22:10:48 -0700 (PDT)
-From:	Stephen Boyd <bebarino@gmail.com>
-To:	git@vger.kernel.org
-Cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] pull: replace unnecessary sed invocation
-Date:	Wed, 17 Mar 2010 22:10:45 -0700
-Message-Id: <1268889045-21751-1-git-send-email-bebarino@gmail.com>
-X-Mailer: git-send-email 1.7.0.2.210.g5618b
-To:	git@vger.kernel.org
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=Z17dJCpzme5AVEoVWih7Sf4Lc0RvfWGXQRG22bv/sfyK38e+7GLFWRH9v1NwYe7c5O
+         2LtCU+Bt+IXJhqcgzyflg1wljqKstU+g/ISIG3xwBTd2L7RqbewgsK1mGO3S5D5z2Qje
+         0WOzF5we3X9+yntt7lievn0mN/H2pPLGEvKu4=
+MIME-Version: 1.0
+Received: by 10.216.73.8 with HTTP; Wed, 14 Apr 2010 08:12:40 -0700 (PDT)
+Reply-To: kusmabite@gmail.com
+In-Reply-To: <tip-c05556421742eb47f80301767653a4bcb19de9de@git.kernel.org>
+References: <1271147857-11604-1-git-send-email-imunsie@au.ibm.com>
+	 <tip-c05556421742eb47f80301767653a4bcb19de9de@git.kernel.org>
+Date:	Wed, 14 Apr 2010 17:12:40 +0200
+Received: by 10.216.88.143 with SMTP id a15mr5050059wef.6.1271257960737; Wed, 
+	14 Apr 2010 08:12:40 -0700 (PDT)
+Message-ID: <j2k40aa078e1004140812s3d9fab4auf559b1e87af60b5b@mail.gmail.com>
+Subject: Re: [tip:perf/core] perf: Fix endianness argument compatibility with 
+	OPT_BOOLEAN() and introduce OPT_INCR()
+From:	Erik Faye-Lund <kusmabite@googlemail.com>
+To:	mingo@redhat.com, acme@redhat.com, jkacur@redhat.com,
+	a.p.zijlstra@chello.nl, rusty@rustcorp.com.au, efault@gmx.de,
+	mitake@dcl.info.waseda.ac.jp, imunsie@au1.ibm.com,
+	fweisbec@gmail.com, rostedt@goodmis.org,
+	hirofumi@mail.parknet.co.jp, imunsie@au.ibm.com,
+	tglx@linutronix.de, mhiramat@redhat.com, paulus@samba.org,
+	hpa@zytor.com, linux-kernel@vger.kernel.org, anton@samba.org,
+	tzanussi@gmail.com, arjan@linux.intel.com, lizf@cn.fujitsu.com,
+	tfransosi@gmail.com, xiaoguangrong@cn.fujitsu.com,
+	git@vger.kernel.org, amwang@redhat.com, davem@davemloft.net,
+	jaswinderrajput@gmail.com, ebmunson@us.ibm.com,
+	kosaki.motohiro@jp.fujitsu.com, mingo@elte.hu
+Cc:	linux-tip-commits@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Getting the shortened branch name is as easy as using the shell's
-parameter expansion.
+I'd just like to point out that I'm commenting from the Git
+pont-of-view, since this patch was CC'ed to the Git mailing-list.
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
+On Wed, Apr 14, 2010 at 11:36 AM, tip-bot for Ian Munsie
+<imunsie@au.ibm.com> wrote:
+> Commit-ID:  c05556421742eb47f80301767653a4bcb19de9de
+> Gitweb:     http://git.kernel.org/tip/c05556421742eb47f80301767653a4bcb19de9de
+> Author:     Ian Munsie <imunsie@au.ibm.com>
+> AuthorDate: Tue, 13 Apr 2010 18:37:33 +1000
+> Committer:  Ingo Molnar <mingo@elte.hu>
+> CommitDate: Wed, 14 Apr 2010 11:26:44 +0200
+>
+> perf: Fix endianness argument compatibility with OPT_BOOLEAN() and introduce OPT_INCR()
+>
+> Parsing an option from the command line with OPT_BOOLEAN on a
+> bool data type would not work on a big-endian machine due to the
+> manner in which the boolean was being cast into an int and
+> incremented.
 
-Saw this while reading the code.
+We don't use C99 features like the "bool"-type in Git, so this
+shouldn't really be a problem in our end.
 
- git-pull.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> For example, running 'perf probe --list' on a
+> PowerPC machine would fail to properly set the list_events bool
+> and would therefore print out the usage information and
+> terminate.
+>
 
-diff --git a/git-pull.sh b/git-pull.sh
-index 38331a8..246a3a4 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -41,7 +41,7 @@ strategy_args= diffstat= no_commit= squash= no_ff= ff_only=
- log_arg= verbosity=
- merge_args=
- curr_branch=$(git symbolic-ref -q HEAD)
--curr_branch_short=$(echo "$curr_branch" | sed "s|refs/heads/||")
-+curr_branch_short="${curr_branch#refs/heads/}"
- rebase=$(git config --bool branch.$curr_branch_short.rebase)
- while :
- do
+I don't know what this 'perf'-thing is, but it sounds like it's some
+external client for the parse-options-API that uses OPT_BOOLEAN
+incorrectly.
+
+Looking at linux-next.git, it seems so. The code in tools/perf/ seems
+to use OPT_BOOLEAN with C99 bools, and it seems to have imported git's
+parse-options API (in commit 0780060124011b94af55830939c86cc0916be0f5,
+it seems).
+
+I'd suggest either fixing the call-sites to use int, or just keeping
+these changes in linux-next.git.
+
 -- 
-1.7.0.2.276.g60daf
-
+Erik "kusma" Faye-Lund
