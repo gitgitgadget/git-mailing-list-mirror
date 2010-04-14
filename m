@@ -1,113 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: TODO: git should be able to init a remote repo
-Date: Wed, 14 Apr 2010 09:46:46 -0400
-Message-ID: <20100414134645.GA12592@coredump.intra.peff.net>
-References: <i2i76718491004131030sc2f8ffa3u97a91aa9a57923b5@mail.gmail.com>
- <20100414094048.GA19344@coredump.intra.peff.net>
- <7viq7urwmh.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jay Soffian <jaysoffian@gmail.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 14 15:47:22 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] Document ls-files -t as obsolete.
+Date: Wed, 14 Apr 2010 15:45:04 +0200
+Message-ID: <1271252704-21739-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Apr 14 15:55:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O22w5-000854-Ht
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 15:47:21 +0200
+	id 1O233o-0004Ca-3s
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 15:55:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755630Ab0DNNrQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Apr 2010 09:47:16 -0400
-Received: from peff.net ([208.65.91.99]:43536 "EHLO peff.net"
+	id S1755370Ab0DNNzN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 09:55:13 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:38773 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755481Ab0DNNrP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Apr 2010 09:47:15 -0400
-Received: (qmail 27106 invoked by uid 107); 14 Apr 2010 13:47:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 14 Apr 2010 09:47:18 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Apr 2010 09:46:46 -0400
-Content-Disposition: inline
-In-Reply-To: <7viq7urwmh.fsf@alter.siamese.dyndns.org>
+	id S1751597Ab0DNNzM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 09:55:12 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o3EDeDOo022216
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 14 Apr 2010 15:40:13 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1O22tv-0003T7-BN; Wed, 14 Apr 2010 15:45:07 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1O22tv-0005fC-8t; Wed, 14 Apr 2010 15:45:07 +0200
+X-Mailer: git-send-email 1.7.0.3.299.gb22d9.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 14 Apr 2010 15:40:14 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o3EDeDOo022216
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1271857214.423@eWIuOAwSH2MJEt2xwtd96A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144874>
 
-On Wed, Apr 14, 2010 at 06:28:54AM -0700, Junio C Hamano wrote:
+The behavior of "git ls-files -t" is very misleading (see
+http://thread.gmane.org/gmane.comp.version-control.git/126516 and
+http://thread.gmane.org/gmane.comp.version-control.git/144394/focus=144397
+for examples of mislead users) and badly documented, hence we point the
+users to superior alternatives.
 
-> >   2. We talked about an "init-serve" program back then. These days, "git
-> >      init $dir" works, so I don't see the need for one.
-> 
-> I don't get this; the primary point of init-serve was _not_ about the lack
-> of an internal mkdir in "git init", but was about having an interface to
-> trigger "git init" in a transport agnostic way.  The implementation of the
-> remote side mechanism could use "git init $dir" instead of "mkdir $dir &&
-> cd $dir && git init" these days, but I think that is a very minor point.
+The feature is marked as "obsolete" but not "scheduled for removal" since
+it's a plumbing command, scripts might use it, and Git testsuite already
+uses it to test the state of the index.
 
-Yeah, my explanation was a bit confused. What I meant was that back
-then, we needed some wrapper, because you can't tell git-shell "mkdir x
-&& cd x && git init". But these days, "git init" could serve as that
-wrapper.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/git-ls-files.txt |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-Which leaves the question of whether we need a _separate_ git program to
-do init serving. I'm not sure we do. For regular shell users, there is
-no point in restricting them; they could just run "git init" themselves.
-And by using "git init" directly without any configuration from the
-remote site, things will just work for such users.
-
-For users of a restricted shell, the site administrator would have to
-configure git-shell to allow "git init". But I think it makes sense for
-git-shell to support redirecting "git init" to "git-my-custom-init"
-internally. So the client end knows it just needs to say "git init"
-whether it is a real shell or a restricted git shell. The lingua franca
-for "make me a new repository" is "git init $dir".
-
-> > Two questions/reservations looking at your prototype:
-> >
-> >   1. Should it push just master, or perhaps --all? Should it actually be
-> >      two separate options to "git remote add" (--push and --init?).
-> 
-> I would say "git remote add --create ..." shouldn't even have push option;
-> rather, don't put --create in "git remote".
-> 
-> "git push --create" would behave just like normal "push", and the above
-> question does not even come into the picture.  "push" will push whatever
-> it would normally push if the repository existed, period.
-
-Yeah, that is much more natural, I think, and resolves all of the "what
-should I push" questions. And it keeps remote's job to "manipulate
-config for remotes" which is the direction it has been going on (e.g.,
-the recent conversion of "git remote update" to "git fetch --all").
-
-> >   2. The "git init $dir" syntax is what makes it reasonably transport
-> >      agnostic.
-> 
-> I am not sure what you are getting at here.  Are you suggesting that $dir
-> could be a URL (i.e. "git init over.there.com:myproject.git")?  Or are you
-> still thinking in terms of how "init-serve" (or its equivalent that is
-> either run directly via ssh or from transports supported by git) is
-> implemented using "git init"?  It seems the latter judging from this,...
-
-The latter. Really, I was conflating two issues: how the ssh transport
-can handle both regular and restricted shells, and how other transports
-handle it. The first I discussed above in a hopefully more clear way.
-For the latter, on thinking more, it is really irrelevant. What the
-git-daemon refers to as the "init" service does not necessarily have to
-map to a command. So it is not really important.
-
-> >      ... But that syntax was not introduced until 1.6.5, so you
-> >      will run into problems with remotes running older versions of git.
-> 
-> ... but then I don't see what it has to do with the "transport agnostic"
-> part of your comment.
-
-Again, me conflating issues. What I meant to say was that for the blind
-run-this-command-over-ssh transport, this will not work with older
-versions of git on the remote side. But if you make it truly
-ssh-specific, you can do "mkdir $dir && cd $dir && git init" which would
-work with any version.
-
--Peff
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 3521637..7b86bb5 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -106,6 +106,11 @@ OPTIONS
+ 	with `-s` or `-u` options does not make any sense.
+ 
+ -t::
++	This feature is deprecated. Authors of scripts should use
++	linkgit:git-status[1] `--porcelain`, and users can look at
++	linkgit:git-status[1] `--short` or linkgit:git-diff[1]
++	`--name-status` for alternatives.
++
+ 	Identify the file status with the following tags (followed by
+ 	a space) at the start of each line:
+ 	H::	cached
+-- 
+1.7.0.3.299.gb22d9.dirty
