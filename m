@@ -1,117 +1,69 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [RFC/PATCH v2 0/4] A new library for plumbing output
-Date: Wed, 14 Apr 2010 21:57:27 +0100
-Message-ID: <80f140cdddc016f9b4608d79f1bc3722@212.159.54.234>
-References: <20100411231824.67460.24844.julian@quantumfyre.co.uk> <l2jfabb9a1e1004111635v16e4dc86g405883ca12d316b9@mail.gmail.com> <201004142110.36453.jnareb@gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: failed to lock
+Date: Wed, 14 Apr 2010 17:02:52 -0400
+Message-ID: <t2i76718491004141402h33bb2044g155ef1715c63904e@mail.gmail.com>
+References: <j2o76718491004141349l53b53347v7f4c0edcab69e4c2@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Raymond <esr@thyrsus.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 14 22:57:36 2010
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 14 23:10:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O29eR-0004fI-Q5
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 22:57:36 +0200
+	id 1O29r7-0002uZ-1V
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 23:10:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756695Ab0DNU5a convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Apr 2010 16:57:30 -0400
-Received: from positron.quantumfyre.co.uk ([213.165.84.138]:33228 "EHLO
-	positron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756655Ab0DNU5a (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Apr 2010 16:57:30 -0400
-Received: from reaper.quantumfyre.co.uk (reaper.quantumfyre.co.uk [212.159.54.234])
-	by positron.quantumfyre.co.uk (Postfix) with ESMTP id 00DC3819C3DD;
-	Wed, 14 Apr 2010 21:57:21 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 766A320CFB5;
-	Wed, 14 Apr 2010 21:57:28 +0100 (BST)
-X-Virus-Scanned: amavisd-new at reaper
-Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
-	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id WaVwQBekBJZW; Wed, 14 Apr 2010 21:57:28 +0100 (BST)
-Received: from webmail.quantumfyre.co.uk (reaper.quantumfyre.co.uk [192.168.0.2])
-	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id B8D5020CFAE;
-	Wed, 14 Apr 2010 21:57:27 +0100 (BST)
-In-Reply-To: <201004142110.36453.jnareb@gmail.com>
-X-Sender: julian@quantumfyre.co.uk
-User-Agent: RoundCube Webmail/0.1-rc1
+	id S1756814Ab0DNVKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 17:10:34 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:46694 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755749Ab0DNVKd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 17:10:33 -0400
+Received: by pwj9 with SMTP id 9so603746pwj.19
+        for <git@vger.kernel.org>; Wed, 14 Apr 2010 14:10:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:content-type;
+        bh=cUcdt2j7BSL9sxlUX7RtQuXBNjYF/tbA82lSZ86dYY8=;
+        b=AulF1fZhQufI3HfBLW4mFdPPfJUxtXT0XIZOqmeUJtXMCOAxJyAiZ7Ol9WvdPfiC75
+         DUY5+47rFJMpcpgNmKOR3fchHQCZ7u60gI+IOGWJMI2Y/dQZeyjvxb3yr9S/IwyQrbNN
+         NAWlDy3mqK7g/ppzJkClR7GwMNrVJXJcKSkiE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        b=M8Gxz0k/UPJEoKpqVOkMq8eSX+sZLVUMSQZeZRTnGmTmGVuwQ4zy+apGLlHXXaxuqH
+         7dF0cuU691HgHXhuBrnXXC7TWmY95s8ICCj+ekrD/lrNP4M4aSrLe5t1mDaZfZuoz1Nc
+         qnOPZ21GCvJf8NOQFAQyQREr3NL/LKEXIy4A0=
+Received: by 10.231.36.9 with HTTP; Wed, 14 Apr 2010 14:02:52 -0700 (PDT)
+In-Reply-To: <j2o76718491004141349l53b53347v7f4c0edcab69e4c2@mail.gmail.com>
+Received: by 10.142.249.16 with SMTP id w16mr3693637wfh.134.1271278972773; 
+	Wed, 14 Apr 2010 14:02:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144916>
 
-On Wed, 14 Apr 2010 21:10:35 +0200, Jakub Narebski <jnareb@gmail.com>
-wrote:
-> On Mon, 12 April 2010, Sverre Rabbelier wrote:
->>=20
->> On Mon, Apr 12, 2010 at 01:21, Julian Phillips
->> <julian@quantumfyre.co.uk> wrote:
->> > Probably the biggest change from v1 is an expanded aim. =C2=A0Now =
-the
->> > output library
->> > is aimed at controlling _all_ plubming output. =C2=A0This series i=
-ncludes
-a
->> > patch for
->> > ls-tree that has all it's output going through the library, and a
->> > patch for
->> > status that has all the --porcelain output going through the libra=
-ry.
->>=20
->> I like where this is going, a lot, especially since we don't have to
->> convert everything in one go, but we can do it as desired, similar t=
-o
->> optparsification. I still think more commands than just these two
->> should be converted to validate the design though, perhaps something
->> like 'git blame', or 'git for-each-ref'?
->=20
-> I don't think it is needed for either command.
+On Wed, Apr 14, 2010 at 4:49 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
+> The problem is reproducible. Any idea where I should start debugging it?
 
-I think that the ability to say that all plumbing output is available i=
-n a
-variety of standard outputs is potentially useful.  In particular the
-ability to be able to parse the output of all plumbing commands directl=
-y
-into whatever native language the high-level tool is in using an alread=
-y
-existing standard parser makes life easier for those writing the tool.
+Ah, this is the problem:
 
-> 'git blame' has --porcelain and --incremental output, which is
-line-based
-> and pretty much self-describing (with "header-name value" syntax for
-most
-> of it), and well documented.  JSON output would only add unnecessary
-> chatter and different quoting rules.
+$ git push mirror
+Total 0 (delta 0), reused 0 (delta 0)
+error: Ref refs/remotes/origin/master is at
+81358fbe72926d74bdeda85669d655e144572c48 but expected
+3c0a87afc2e9248890dd6de40b5039bcb48c8516
+remote: error: failed to lock refs/remotes/origin/master
+To ssh://mirror/repo
+   3c0a87a..81358fb  origin/HEAD -> origin/HEAD
+ ! [remote rejected] origin/master -> origin/master (failed to lock)
+error: failed to push some refs to 'ssh://mirror/repo'
 
-That depends really.  If you are writing something to parse the output,
-and you already have a JSON parser available then it's the current outp=
-ut
-that has different quoting rules. ;)
+The origin/HEAD symref and --mirror do not get along together. Hmm.
 
-Anyway, I have already converted blame to use the library for both
---porcelain and --incremental output, so it'll be in the next version o=
-f
-the patch series.  So you can try before you buy ...
-
-> 'git for-each-ref' has both --format=3D<format> to allow to get data =
-what
-> one needs, and in the format one wants (with e.g. %00 to reresent NUL=
-),
-> and [--shell|--perl|--python|--tcl] for placeholders in <format> to b=
-e
-> quoted as string literals suitable for specified host language.=20
-Although
-> I am not sure if this option, meant to produce scriptlets, is used th=
-at
-> much/ note that there is not support for --json quoting, nor --xml=20
-> escaping.
-
---=20
-Julian
+j.
