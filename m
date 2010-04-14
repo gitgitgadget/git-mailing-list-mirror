@@ -1,92 +1,64 @@
-From: Antony Stubbs <antony.stubbs@gmail.com>
-Subject: Re: Add repos but not as normal files, not submodule
-Date: Wed, 14 Apr 2010 23:02:42 +1200
-Message-ID: <7118B4DB-A95F-424F-87EF-035B36E578FB@gmail.com>
-References: <BFCA0C1E-FBE0-4CE6-8018-704BC5E0ACA6@gmail.com> <20100414093603.GA29065@progeny.tock>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, illegalargument@googlegroups.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 14 13:02:58 2010
+From: Johannes Gilger <heipei@hackvalue.de>
+Subject: Re: git log of remote repositories.
+Date: Wed, 14 Apr 2010 11:33:02 +0000 (UTC)
+Message-ID: <slrnhsba0k.h9q.heipei@dualtron.heipei.net>
+References: <u2n3abd05a91004131625k500e79bbsc8ffa6455a85332d@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 14 13:33:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O20Mx-0006Ua-0K
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 13:02:55 +0200
+	id 1O20qZ-0001C8-7U
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 13:33:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754771Ab0DNLCt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Apr 2010 07:02:49 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:60062 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754254Ab0DNLCs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Apr 2010 07:02:48 -0400
-Received: by pwj9 with SMTP id 9so6131643pwj.19
-        for <git@vger.kernel.org>; Wed, 14 Apr 2010 04:02:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:mime-version
-         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
-         :message-id:references:to:x-mailer;
-        bh=OjS1g4RyF2KDvB+yOkykb6YeVN1tLR37Gz4T3H0SDRM=;
-        b=ZnWLxjWBQwFgNKKZlsfaBi4zijvIT81aJps0LObdnqmc/cD0k5+lmZgM+KdXwG8nrP
-         rhQhGeOyVMp9sYb1y3qdlLXLUP1KxDZNTJnWRfh10z1IidrOuWP0T6kW5VQIKPkkkDPV
-         zwVlzV4lBKLstgmvlBoWqNfRz41KpdyBXgYO8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=OB5+NRlXbHbsZ0YNoE9n0n2IZz4cFlLXGtKUjTgduwwmH2pcF0nLuTHmzW81nmZzsR
-         LeT3Rkx5ZwlzZKGtUp85hzf8+fki4pDAzpsUNlidUyDpUbWt3cQZgKiEwlotFLA1g9T7
-         nJ0oHsVAyYx4BMf0TfFYA121OCrKSgVY3l6Zk=
-Received: by 10.115.38.6 with SMTP id q6mr1105102waj.207.1271242966855;
-        Wed, 14 Apr 2010 04:02:46 -0700 (PDT)
-Received: from [192.168.1.20] ([210.55.232.26])
-        by mx.google.com with ESMTPS id 21sm206949pzk.8.2010.04.14.04.02.44
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 14 Apr 2010 04:02:45 -0700 (PDT)
-In-Reply-To: <20100414093603.GA29065@progeny.tock>
-X-Mailer: Apple Mail (2.1078)
+	id S1754961Ab0DNLdW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 07:33:22 -0400
+Received: from lo.gmane.org ([80.91.229.12]:45834 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754967Ab0DNLdV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 07:33:21 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1O20qL-00013w-Cy
+	for git@vger.kernel.org; Wed, 14 Apr 2010 13:33:17 +0200
+Received: from u-7-245.vpn.rwth-aachen.de ([137.226.103.245])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Apr 2010 13:33:17 +0200
+Received: from heipei by u-7-245.vpn.rwth-aachen.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Apr 2010 13:33:17 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: u-7-245.vpn.rwth-aachen.de
+User-Agent: slrn/0.9.9p1 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144865>
 
-> In other words, if bar is itself a git repository with a valid HEAD,
-> then =91git add bar=92 will register it in the index as a submodule.
+On 2010-04-13, Aghiles <aghilesk@gmail.com> wrote:
+> I have a local branch that is a tracking a remote branch. I want to see
+> what are the modifications upstream, _before_ I pull. I tried
+> 'git log origin' but that's only the point from where I pulled last.
+>
+> Is there a way to do that?
+AFAIK no, the operations have to be local.
 
-That was the behavior I was seeing...
+In order to see if there are any new changes to be pulled you could do
+this: git fetch --dry-run
 
-> If you can rely on build systems to have git installed, I=92d suggest
-> writing a simple script to build the test repository from scratch.
+Greetings,
+Jojo
 
-Yup - will probably go down this route.
-
-> You can also try using repositories not named .git if you are careful=
-=2E
-> I don=92t really encourage this.
-
-Didn't realize this was possible. Any pointers? Links?
-
->> The reason I don't want to do submodules is that I don't want to
->> have the submodules as serperate projects as such, because they're
->> not. they're "test data" so to speak.
->=20
-> Yes, makes sense to me.
->=20
-> Hope that helps,
-> Jonathan
-
-
-Cheers for the deep dig! I started looking around the C code, but was f=
-ollowing the wrong trail (verify_path) - I like your demo - very nice.
-
-I suppose this problem only stems from them wanting git add to "nicely"=
- automatically recognize .git sub dirs as submodules, thinking no one w=
-ould ever in their right mind actually want to *track* a sub .git dir ;=
-)
-
-Cheers!
+-- 
+Johannes Gilger <heipei@hackvalue.de>
+http://heipei.net
+GPG-Key: 0xD47A7FFC
+GPG-Fingerprint: 5441 D425 6D4A BD33 B580  618C 3CDC C4D0 D47A 7FFC
