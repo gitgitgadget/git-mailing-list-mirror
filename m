@@ -1,76 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Daniel Grace <negativeview@gmail.com>
 Subject: Re: [PATCH] Document ls-files -t as obsolete.
-Date: Wed, 14 Apr 2010 07:39:30 -0700
-Message-ID: <7vaat6qesd.fsf@alter.siamese.dyndns.org>
+Date: Wed, 14 Apr 2010 09:47:49 -0500
+Message-ID: <t2r62a3a9cb1004140747s46c5ee50z3a063d8f2acf4e61@mail.gmail.com>
 References: <1271252704-21739-1-git-send-email-Matthieu.Moy@imag.fr>
+	 <7vaat6qesd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Apr 14 16:39:44 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 14 16:48:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O23kl-0005fp-S1
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 16:39:44 +0200
+	id 1O23sl-0001O9-1c
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 16:47:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755785Ab0DNOji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Apr 2010 10:39:38 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41801 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755706Ab0DNOjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Apr 2010 10:39:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 05454AA64E;
-	Wed, 14 Apr 2010 10:39:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bIGpMr+fhzWY+8ncAOx4agnSQZo=; b=FW25n3
-	DEee/gJxvAZ6AhTHduYeATHG2Kjsajq7KJ0Bm6+jCTzi7fhTixInGNKtquX0k+zH
-	oOoEBBSgAaV07cJXviq+tiu2TqZ0TkhMIPgIiMes1j7VTdrLUXa1tk4iCVe6qo5B
-	v7heGwTQ67MMqsFURtk4lw3JkKoxoS/kVTfeY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ukvezmt2XHt0Dc/+/dNnMRZ8Wl6jO+Qk
-	H7VLPMBLDSy8IC3fv0Er9DX9HIlXDgrQg/O0t0Y52j0k7une4Zehi8EjiM5SR+t9
-	Xng8JEWKOvgG7wDy15Pm42F4ODk7ofLT7qOLg/PYRuKTm3ohaCdBPHmZghuw+xzF
-	hnQedrmiqww=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C66C4AA64B;
-	Wed, 14 Apr 2010 10:39:34 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 28245AA649; Wed, 14 Apr
- 2010 10:39:31 -0400 (EDT)
-In-Reply-To: <1271252704-21739-1-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Wed\, 14 Apr 2010 15\:45\:04 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8B75D47E-47D3-11DF-9318-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755859Ab0DNOrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 10:47:51 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:12931 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755201Ab0DNOru (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 10:47:50 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so59159qwh.37
+        for <git@vger.kernel.org>; Wed, 14 Apr 2010 07:47:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type;
+        bh=5LTfDLT1izjBZabpiDGZD/wacXWkQ5mpt/8/MOi3LnU=;
+        b=efiVfnbLVmzhF6nd4Rgd/W3eDBViBoHbTYue7ou2gMoOCOqj3GQPXWjI72UGh1234S
+         h3u/oW/mLpL9FqXqyOm+WAapUivXYOVSsghZTfPWJPxLlToZPThr6DL+kkHUtJS6w4F/
+         r+r2VIOjyTDFC+g6xuZEd7bj5RGUFGVmCLsr0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=P/gkecxuYuxtNRdoN5EBWKNFIAloYG8jQfyDvdPeobolrluE8LFqZn0sLSJ8sGZV0g
+         TYB8UFN131VJRqK4wa5NIHyaSfV4YtS7uyPemgKK8XdpMsltx7E/dwWL1uX8nlxIAzH/
+         dOnplIWTNZEunrNCEkLy4eS+I7aoKn2KmUa0s=
+Received: by 10.229.86.140 with HTTP; Wed, 14 Apr 2010 07:47:49 -0700 (PDT)
+In-Reply-To: <7vaat6qesd.fsf@alter.siamese.dyndns.org>
+Received: by 10.229.224.79 with SMTP id in15mr4502041qcb.76.1271256469680; 
+	Wed, 14 Apr 2010 07:47:49 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144878>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+On Wed, Apr 14, 2010 at 9:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> The behavior of "git ls-files -t" is very misleading (see
-> http://thread.gmane.org/gmane.comp.version-control.git/126516 and
-> http://thread.gmane.org/gmane.comp.version-control.git/144394/focus=144397
-> for examples of mislead users) and badly documented, hence we point the
-> users to superior alternatives.
+> If all your scripted Porcelain wants to see is "what are the paths I might
+> want to run 'git add' on?", you do not want to run diff twice (which is
+> what "status" does); you would say "ls-files -t -m -o --exclude-standard",
+> instead. The alternative is not even superiour in this case.
 
-I am no entirely happy with this patch.
+Why -m? I have a script that attempts to ask just this question and I
+don't use -m. Reading the documentation, I'm not sure why I would. In
+what cases would I get wrong information without -m? For the record, I
+also don't use -t, though using -t in this case does make sense to me,
+I just apparently didn't notice that bit of the documentation when
+writing that feature.
 
-If all your scripted Porcelain wants to see is "what are the paths I might
-want to run 'git add' on?", you do not want to run diff twice (which is
-what "status" does); you would say "ls-files -t -m -o --exclude-standard",
-instead. The alternative is not even superiour in this case.
-
-Having said that, I personally don't think of any other combination of
-flags with which "ls-files -t" is useful.
-
-If there are parts of the documentation that are misleading, perhaps that
-is what your patch should be fixing instead, no?
+Daniel
+http://www.doomstick.com
