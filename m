@@ -1,255 +1,302 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH] contrib/diffall: Add script to perform directory diff using
- external diff tool
-Date: Tue, 13 Apr 2010 21:15:21 -0400
-Message-ID: <4BC51729.7090906@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 2/9 v2] t7006: test pager configuration for several git
+ commands
+Date: Tue, 13 Apr 2010 20:26:33 -0500
+Message-ID: <20100414012632.GA7121@progeny.tock>
+References: <20100413021153.GA3978@progeny.tock>
+ <20100413021734.GB4118@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Seba Illingworth <seba.illingworth@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 14 03:15:37 2010
+X-From: git-owner@vger.kernel.org Wed Apr 14 03:27:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O1rCa-0007EB-KR
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 03:15:37 +0200
+	id 1O1rNd-0001zr-Tg
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 03:27:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754301Ab0DNBPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Apr 2010 21:15:30 -0400
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:63326 "EHLO
-	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752920Ab0DNBP3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Apr 2010 21:15:29 -0400
-Received: by qyk9 with SMTP id 9so169772qyk.1
-        for <git@vger.kernel.org>; Tue, 13 Apr 2010 18:15:29 -0700 (PDT)
+	id S1754353Ab0DNB0k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Apr 2010 21:26:40 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:41303 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754042Ab0DNB0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Apr 2010 21:26:39 -0400
+Received: by gwaa18 with SMTP id a18so922099gwa.19
+        for <git@vger.kernel.org>; Tue, 13 Apr 2010 18:26:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=wVB6shehwA+W15bvJ2nOGMrcAX1eCuGm17+YtxFcFIg=;
-        b=JCRe6mQpugAnyHKEAl1yV6nPljy+PSGGsrhXDGU06ONON3xZvAVt8TZo3+LDiOfYZ5
-         hZGYGFE1w7GL0VRey72cU9/Tlf9szi9jXX0yGyaNquY8a028mLLtdEgVtIlJ0ZLByocY
-         qsSOK4VL3+9vvFXmx0bjEzMCw8gvfcASkc1aI=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=QEyxO/HPvy4f6tRLCVzetaeJBecPsF2/XmxDuKb52/U=;
+        b=m0XgfN7pgYIH4h5ICYBw76pc4jbvJyPE2hF/mI0hkDzUziFUWYwDj118NST6wIvDgV
+         ekhujW1vIimgRc/7MXyq8xo6bl0pSXtk5yHXpQd7AsSfKYO7ls5UevSGeNOgw7azE++w
+         YpKPRAMcxvPQ+KyfSSlwkhK3O97Mo4oZvSsH4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=YGlbnVvfFGpiDkgBFy+pXZkHXRo3ufyOFN4XjpR1Dnnx1cBIAbFggLLp2ypPTxH1aT
-         xFtege0LWj2trW754PSQ6wqH6x9ooRCfO/oPSfpjCuE1+vIbfOuw78qRdFxucXp2M8fh
-         +PYvHFz/5lJuDgJ80L1FE1zNH2dOMOfXn2TB4=
-Received: by 10.229.218.2 with SMTP id ho2mr4401784qcb.51.1271207728317;
-        Tue, 13 Apr 2010 18:15:28 -0700 (PDT)
-Received: from [192.168.1.70] ([75.38.216.51])
-        by mx.google.com with ESMTPS id x34sm8243951qce.15.2010.04.13.18.15.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 13 Apr 2010 18:15:27 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.24 (X11/20100317)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=oPJecnld+56UejLPQ3V+/Esf/BM8vHsIzS7FAaRMESR3n5a8jePpnH6needpGYiPNA
+         fOs1tBqUkc+jjcfjuHiVBVsppj6w/Mjof7RAGlIZlyJ8Wr1RzLVaxWzYu9m/A9aAllIv
+         XTLUlp4VLbJMYFAEiJzuZG6AD4l5KZzkyRBfo=
+Received: by 10.151.92.9 with SMTP id u9mr4581666ybl.336.1271208398339;
+        Tue, 13 Apr 2010 18:26:38 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 9sm1645041ywf.5.2010.04.13.18.26.36
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 13 Apr 2010 18:26:37 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100413021734.GB4118@progeny.tock>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144840>
 
-The existing 'git difftool' command allows the user to view git diffs
-using an external diff tool.  However, if multiple files contain
-differences, a separate instance of the diff tool is launched for
-each one.
+Test choice of pager at several stages of repository setup.  Some
+patches under consideration will produce different results for
+different commands, so it should be useful to have examples like this
+in mind to illustrate their effect.
 
-This script launches a single instance of the external diff tool
-and performs a directory diff between the specified revisions.
-The before/after files are copied to a tmp directory to do this.
-
-The 'diff.tool' configuration option must be set for this script
-to work.
-
-The user interface matches the standard 'git diff' command.
-
-Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Improved-by: Johannes Sixt <j6t@kdbg.org>
 ---
+Changes from v1:
+ - Use /bin/sh instead of $SHELL_PATH to simplify quoting issues
+ - Split the test_pager_choice function into single-test pieces to
+   make the test easier to understand.
 
-This script is based on an example provided by Thomas Rast on the Git list [1].
+I=E2=80=99ll resend the patches 3 and 9 with corresponding adjustments =
+in a
+moment.
 
-I tested with:
-  - msysgit and kdiff3 (the platform where I first needed this script)
-  - cygwin git and kdiff3
-  - git and meld
+Thanks to Hannes for the feedback.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/124807
+ t/t7006-pager.sh |  192 +++++++++++++++++++++++++++++++++++-----------=
+--------
+ 1 files changed, 124 insertions(+), 68 deletions(-)
 
-
- contrib/diffall/git-diffall |  159 +++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 159 insertions(+), 0 deletions(-)
- create mode 100755 contrib/diffall/git-diffall
-
-diff --git a/contrib/diffall/git-diffall b/contrib/diffall/git-diffall
-new file mode 100755
-index 0000000..c24fba9
---- /dev/null
-+++ b/contrib/diffall/git-diffall
-@@ -0,0 +1,159 @@
-+#!/bin/sh -e
-+# Copyright 2010, Tim Henigan <tim.henigan@gmail.com>
-+#
-+# Perform a directory diff between commits in the repository using
-+# the external diff tool specified in the 'diff.tool' configuration
-+# option.
-+
-+USAGE='<options> <commit>{0,2} -- <path>*
-+
-+--cached  Compare to the index rather than the working tree
-+commit    SHA1 of a commit
-+path      Limit the diff to the specified paths
-+'
-+
-+. git-sh-setup
-+
-+if [ -z $(git config --get diff.tool) ]; then
-+    echo "Error: The 'diff.tool' configuration option must be set."
-+    usage
-+fi
-+
-+start_dir=$(pwd)
-+cd_to_toplevel      # needed to access tar utility
-+
-+# mktemp is not available on all platforms (missing from msysgit)
-+# Use a hard-coded tmp dir if it is not available
-+if [ -z $(which mktemp) ]; then
-+    tmp=/tmp/git-diffall-tmp
-+else
-+    tmp="$(mktemp -d)"
-+fi
-+mkdir -p "$tmp" "$tmp"/a "$tmp"/b
-+
-+left=
-+right=
-+paths=
-+path_sep=
-+compare_staged=
-+common_anscestor=
-+
-+while test $# != 0; do
-+	case "$1" in
-+    -h|--h|--he|--hel|--help)
-+        usage
-+        ;;
-+    --cached)
-+        compare_staged=1
-+        ;;
-+    --)
-+        path_sep=1
-+        ;;
-+    -*)
-+        echo Invalid option: "$1"
-+        usage
-+        ;;
-+    *)
-+        # could be commit, commit range or path limiter
-+        case "$1" in
-+        *...*)
-+            left=${1%...*}
-+            right=${1#*...}
-+            common_anscestor=1
-+            ;;
-+        *..*)
-+            left=${1%..*}
-+            right=${1#*..}
-+            ;;
-+        *)
-+            if [ -n "$path_sep" ]; then
-+                if [ -z "$paths" ]; then
-+                    paths=$1
-+                else
-+                    paths="$paths $1"
-+                fi
-+            elif [ -z "$left" ]; then
-+                left=$1
-+            elif [ -z "$right" ]; then
-+                right=$1
-+            else
-+                if [ -z "$paths" ]; then
-+                    paths=$1
-+                else
-+                    paths="$paths $1"
-+                fi
-+            fi
-+            ;;
-+        esac
-+        ;;
-+    esac
-+    shift
-+done
-+
-+# Determine the set of files which changed
-+if [ -n "$left" ] && [ -n "$right" ]; then
-+    if [ -n "$compare_staged" ]; then
-+        usage
-+    elif [ -n "$common_anscestor" ]; then
-+        git diff --name-only "$left"..."$right" -- "$paths" > "$tmp"/filelist
-+    else
-+        git diff --name-only "$left" "$right" -- "$paths" > "$tmp"/filelist
-+    fi
-+elif [ -n "$left" ]; then
-+    if [ -n "$compare_staged" ]; then
-+        git diff --name-only --cached "$left" -- "$paths" > "$tmp"/filelist
-+    else
-+        git diff --name-only "$left" -- "$paths" > "$tmp"/filelist
-+    fi
-+else
-+    if [ -n "$compare_staged" ]; then
-+        git diff --name-only --cached -- "$paths" > "$tmp"/filelist
-+    else
-+        git diff --name-only -- "$paths" > "$tmp"/filelist
-+    fi
-+fi
-+
-+# Exit immediately if there are no diffs
-+if [ ! -s "$tmp"/filelist ]; then
-+    exit 0
-+fi
-+
-+# Populate the tmp/b directory with the files to be compared
-+if [ -n "$right" ]; then
-+	while read name; do
-+		mkdir -p "$tmp"/b/"$(dirname "$name")"
-+		git show "$right":"$name" > "$tmp"/b/"$name"
-+	done < "$tmp"/filelist
-+elif [ -n "$compare_staged" ]; then
-+	while read name; do
-+		mkdir -p "$tmp"/b/"$(dirname "$name")"
-+		git show :"$name" > "$tmp"/b/"$name"
-+	done < "$tmp"/filelist
-+else
-+    tar -c -T "$tmp"/filelist | (cd "$tmp"/b && tar -x)
-+fi
-+
-+# Populate the tmp/a directory with the files to be compared
-+while read name; do
-+	mkdir -p "$tmp"/a/"$(dirname "$name")"
-+    if [ -n "$left" ]; then
-+	    git show "$left":"$name" > "$tmp"/a/"$name"
-+    else
-+        if [ -n "$compare_staged" ]; then
-+            git show HEAD:"$name" > "$tmp"/a/"$name"
-+        else
-+            git show :"$name" > "$tmp"/a/"$name"
-+        fi
-+    fi
-+done < "$tmp"/filelist
-+
-+cd "$tmp"
-+$(git config --get diff.tool) a b
-+
-+# On exit, remove the tmp directory
-+cleanup () {
-+    cd "$start_dir"
-+	rm -rf "$tmp"
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index 4f804ed..d5f8a18 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -131,78 +131,134 @@ then
+ 	test_set_prereq SIMPLEPAGER
+ fi
+=20
+-unset PAGER GIT_PAGER
+-git config --unset core.pager
+-rm -f default_pager_used
+-test_expect_success SIMPLEPAGER 'default pager is used by default' '
+-	cat > $less <<-EOF &&
+-	#!$SHELL_PATH
+-	wc > default_pager_used
+-	EOF
+-	chmod +x $less &&
+-	PATH=3D.:$PATH test_terminal git log &&
+-	test -e default_pager_used
+-'
++# Tests for pager choice.
+=20
+-unset GIT_PAGER
+-git config --unset core.pager
+-rm -f PAGER_used
+-test_expect_success TTY 'PAGER overrides default pager' '
+-	PAGER=3D"wc > PAGER_used" &&
+-	export PAGER &&
+-	test_terminal git log &&
+-	test -e PAGER_used
+-'
++# Usage:
++#	parse_args expect_(success|failure) [test_must_fail] git whatever
++#	$test_expectation "$cmd - behaves well" "
++#		...
++#		$full_command &&
++#		...
++#	"
++parse_args() {
++	test_expectation=3D"test_$1"
++	shift
++	if test "$1" =3D test_must_fail
++	then
++		full_command=3D"test_must_fail test_terminal "
++		shift
++	else
++		full_command=3D"test_terminal "
++	fi
++	cmd=3D$1
++	full_command=3D"$full_command $1"
++}
+=20
+-unset GIT_PAGER
+-rm -f core.pager_used
+-test_expect_success TTY 'core.pager overrides PAGER' '
+-	PAGER=3Dwc &&
+-	export PAGER &&
+-	git config core.pager "wc > core.pager_used" &&
+-	test_terminal git log &&
+-	test -e core.pager_used
+-'
++# usage: test_default_pager expect_(success|failure) [test_must_fail] =
+command
++test_default_pager() {
++	parse_args "$@"
+=20
+-unset GIT_PAGER
+-rm -f core.pager_used
+-rm -fr sub
+-test_expect_success TTY 'core.pager in subdir' '
+-	PAGER=3Dwc &&
+-	stampname=3D$(pwd)/core.pager_used &&
+-	export PAGER stampname &&
+-	git config core.pager "wc > \"\$stampname\"" &&
+-	mkdir sub &&
+-	(
+-		cd sub &&
+-		test_terminal git log
+-	) &&
+-	test -e "$stampname"
+-'
++	unset PAGER GIT_PAGER
++	git config --unset core.pager
++	rm -f default_pager_used
++	$test_expectation SIMPLEPAGER "$cmd - default pager is used by defaul=
+t" "
++		cat >$less <<-\EOF &&
++			#!/bin/sh
++			wc > default_pager_used
++		EOF
++		chmod +x $less &&
++		(
++			PATH=3D.:$PATH &&
++			export PATH &&
++			$full_command
++		) &&
++		test -e default_pager_used
++	"
++}
+=20
+-unset GIT_PAGER
+-rm -f core.pager_used
+-rm -fr sub
+-test_expect_failure TTY 'core.pager in subdir with --paginate' '
+-	PAGER=3Dwc &&
+-	stampname=3D$(pwd)/core.pager_used &&
+-	export PAGER stampname &&
+-	git config core.pager "wc > \"\$stampname\"" &&
+-	mkdir sub &&
+-	(
+-		cd sub &&
+-		test_terminal git --paginate log
+-	) &&
+-	test -e "$stampname"
+-'
++test_PAGER_overrides() {
++	parse_args "$@"
+=20
+-rm -f GIT_PAGER_used
+-test_expect_success TTY 'GIT_PAGER overrides core.pager' '
+-	git config core.pager wc &&
+-	GIT_PAGER=3D"wc > GIT_PAGER_used" &&
+-	export GIT_PAGER &&
+-	test_terminal git log &&
+-	test -e GIT_PAGER_used
+-'
++	unset GIT_PAGER
++	git config --unset core.pager
++	rm -f PAGER_used
++	$test_expectation TTY "$cmd - PAGER overrides default pager" "
++		PAGER=3D'wc > PAGER_used' &&
++		export PAGER &&
++		$full_command &&
++		test -e PAGER_used
++	"
 +}
 +
-+trap cleanup EXIT
--- 
-1.7.0.3.291.g5e4f6.dirty
++test_core_pager_overrides() {
++	parse_args "$@"
++
++	unset GIT_PAGER
++	rm -f core.pager_used
++	$test_expectation TTY "$cmd - core.pager overrides PAGER" "
++		PAGER=3Dwc &&
++		export PAGER &&
++		git config core.pager 'wc > core.pager_used' &&
++		$full_command &&
++		test -e core.pager_used
++	"
++}
++
++test_core_pager_subdir() {
++	parse_args "$@"
++
++	unset GIT_PAGER
++	rm -f core.pager_used
++	rm -fr sub
++	$test_expectation TTY "$cmd - core.pager from subdirectory" "
++		stampname=3D\$(pwd)/core.pager_used &&
++		PAGER=3Dwc &&
++		export PAGER stampname &&
++		git config core.pager 'wc > \"\$stampname\"' &&
++		mkdir sub &&
++		(
++			cd sub &&
++			$full_command
++		) &&
++		test -e \"\$stampname\"
++	"
++}
++
++test_GIT_PAGER_overrides() {
++	parse_args "$@"
++
++	rm -f GIT_PAGER_used
++	$test_expectation TTY "$cmd - GIT_PAGER overrides core.pager" "
++		git config core.pager wc &&
++		GIT_PAGER=3D'wc > GIT_PAGER_used' &&
++		export GIT_PAGER &&
++		$full_command &&
++		test -e GIT_PAGER_used
++	"
++}
++
++test_default_pager        expect_success 'git log'
++test_PAGER_overrides      expect_success 'git log'
++test_core_pager_overrides expect_success 'git log'
++test_core_pager_subdir    expect_success 'git log'
++test_GIT_PAGER_overrides  expect_success 'git log'
++
++test_default_pager        expect_success 'git -p log'
++test_PAGER_overrides      expect_success 'git -p log'
++test_core_pager_overrides expect_success 'git -p log'
++test_core_pager_subdir    expect_failure 'git -p log'
++test_GIT_PAGER_overrides  expect_success 'git -p log'
++
++test_default_pager        expect_success test_must_fail 'git -p'
++test_PAGER_overrides      expect_success test_must_fail 'git -p'
++test_core_pager_overrides expect_success test_must_fail 'git -p'
++test_core_pager_subdir    expect_failure test_must_fail 'git -p'
++test_GIT_PAGER_overrides  expect_success test_must_fail 'git -p'
++
++test_default_pager        expect_success test_must_fail 'git -p nonsen=
+se'
++test_PAGER_overrides      expect_success test_must_fail 'git -p nonsen=
+se'
++test_core_pager_overrides expect_success test_must_fail 'git -p nonsen=
+se'
++test_core_pager_subdir    expect_failure test_must_fail 'git -p nonsen=
+se'
++test_GIT_PAGER_overrides  expect_success test_must_fail 'git -p nonsen=
+se'
+=20
+ test_done
+--=20
+1.7.0.4
