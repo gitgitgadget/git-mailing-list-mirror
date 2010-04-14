@@ -1,91 +1,84 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v4 2/3] gitk: do not parse "  >" context as submodule change
-Date: Wed, 14 Apr 2010 17:59:07 +0200
-Message-ID: <5531510bfb94997f729a894a0b5a3158177a9add.1271260308.git.trast@student.ethz.ch>
-References: <cover.1271260308.git.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eelis van der Weegen <eelis@eelis.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Paul Mackerras <paulus@samba.org>, Miles Bader <miles@gnu.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 14 17:59:31 2010
+From: David Michael Barr <david.barr@cordelta.com>
+Subject: Re: Update on SoC proposal: git-remote-svn
+Date: Thu, 15 Apr 2010 03:15:58 +1000
+Message-ID: <21A95727-F438-48FB-9A16-132B4DE85B6E@cordelta.com>
+References: <1271136573-sup-5613@kytes> <F0CD5B83-2D28-47E1-A336-5C88E2803CBE@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sam Vilain <sam@vilain.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Steven Michalske <smichalske@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 14 19:16:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O24zw-0008Qa-SQ
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 17:59:29 +0200
+	id 1O26CB-0000HF-0x
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 19:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756159Ab0DNP7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Apr 2010 11:59:23 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:16484 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755783Ab0DNP7S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Apr 2010 11:59:18 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Wed, 14 Apr
- 2010 17:59:15 +0200
-Received: from localhost.localdomain (129.132.247.68) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.247.2; Wed, 14 Apr
- 2010 17:59:09 +0200
-X-Mailer: git-send-email 1.7.1.rc1.265.g77471
-In-Reply-To: <cover.1271260308.git.trast@student.ethz.ch>
+	id S1756234Ab0DNRQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 13:16:04 -0400
+Received: from ironport1-mx.cbr1.mail-filtering.com.au ([203.88.115.241]:28813
+	"EHLO ironport1-mx.cbr1.mail-filtering.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756186Ab0DNRQD (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Apr 2010 13:16:03 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvsEALeUxUvLWHsF/2dsb2JhbACbVXG0OIhGhQ0E
+X-IronPort-AV: E=Sophos;i="4.52,205,1270389600"; 
+   d="scan'208";a="166661031"
+Received: from node2.alpha.aussiehq.net.au ([203.88.123.5])
+  by ironport1-mta.cbr1.mail-filtering.com.au with ESMTP; 15 Apr 2010 03:16:00 +1000
+Received: (qmail 24255 invoked from network); 15 Apr 2010 03:16:00 +1000
+Received: from d122-109-106-179.mit3.act.optusnet.com.au (HELO ?192.168.1.8?) (122.109.106.179)
+  by node2.alpha.aussiehq.net.au with SMTP; 15 Apr 2010 03:15:59 +1000
+In-Reply-To: <F0CD5B83-2D28-47E1-A336-5C88E2803CBE@gmail.com>
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144889>
 
-Since 5c838d2 (gitk: Use the --submodule option for displaying diffs
-when available, 2009-10-28) gitk erroneously matches "  >" and "  <"
-at the beginning of a line in the submodule code even if we're in the
-diff text section and the lines should be treated as context.
+Hi Steve,
 
-Fix by (ab)using the $diffinhdr variable also in the 'Submodule...'
-case, and move the "  >"/"  <" specific code inside the $diffinhdr
-test.  The existing code will set $diffinhdr to 0 when it hits a
-"+++", so that it is always 0 when we can hit a context line.
----
- gitk |   16 ++++++++++------
- 1 files changed, 10 insertions(+), 6 deletions(-)
+> If I were to check out the svn root of that repository, I would use well
+> over 3TB of disk space to have that checked out ...
 
-diff --git a/gitk b/gitk
-index 1f36a3e..7b8799e 100755
---- a/gitk
-+++ b/gitk
-@@ -7688,12 +7688,8 @@ proc getblobdiffline {bdf ids} {
- 	    lappend ctext_file_lines $fname
- 	    makediffhdr $fname $ids
- 	    $ctext insert end "\n$line\n" filesep
--	} elseif {![string compare -length 3 "  >" $line]} {
--	    set line [encoding convertfrom $diffencoding $line]
--	    $ctext insert end "$line\n" dresult
--	} elseif {![string compare -length 3 "  <" $line]} {
--	    set line [encoding convertfrom $diffencoding $line]
--	    $ctext insert end "$line\n" d0
-+	    # pretend we're in a file header to correctly parse "  [><]"
-+	    set diffinhdr 1
- 	} elseif {$diffinhdr} {
- 	    if {![string compare -length 12 "rename from " $line]} {
- 		set fname [string range $line [expr 6 + [string first " from " $line] ] end]
-@@ -7712,6 +7708,14 @@ proc getblobdiffline {bdf ids} {
- 		    set fname [lindex $fname 0]
- 		}
- 		makediffhdr $fname $ids
-+	    } elseif {![string compare -length 3 "  >" $line]} {
-+		set line [encoding convertfrom $diffencoding $line]
-+		$ctext insert end "$line\n" dresult
-+		continue
-+	    } elseif {![string compare -length 3 "  <" $line]} {
-+		set line [encoding convertfrom $diffencoding $line]
-+		$ctext insert end "$line\n" d0
-+		continue
- 	    } elseif {[string compare -length 3 $line "---"] == 0} {
- 		# do nothing
- 		continue
--- 
-1.7.1.rc1.260.g41ab89
+This stirred my thoughts and I whipped up a bash script that uses SVK,
+find, shasum and ln to build a filesystem view of the root of an svn
+repository that consumes moderate storage:
+
+SVK_DEPOT=""
+MAX_REV=12345
+
+CO_DIR=validation
+HASH_DIR=hashes
+
+svk co -r1 /$SVK_DEPOT/ $CO_DIR
+mkdir -p $HASH_DIR
+for (( REV=1 ; REV<=MAX_REV ; ++REV )) do
+  svk up -r$REV $CO_DIR
+  # Hashify working copy
+  find $CO_DIR -type d -cmin -5 -prune -o \
+    -type f -links 1 -exec shasum '{}' + | (
+    while read HASH FILE ; do
+      [ -x "$FILE" ] && HASH="$HASH"x
+      ln "$FILE" $HASH_DIR/$HASH 2>/dev/null || \
+        ln -f $HASH_DIR/$HASH "$FILE"
+    done
+  )
+done
+
+Important assumptions are that each update will take less
+than 5 minutes and that SVK uses writes to a temporary file
+and then renames to perform a modification.
+I've used this to build a simple validation script for my project.
+I estimate it will use about 20GB to represent my 1GB repo
+and that it will take about 3 hours.
+
+--
+David Barr
