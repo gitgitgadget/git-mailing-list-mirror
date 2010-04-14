@@ -1,69 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-cvsimport: strip question-mark characters in tags
-Date: Wed, 14 Apr 2010 12:27:43 -0700
-Message-ID: <7v1vehrg0g.fsf@alter.siamese.dyndns.org>
-References: <20100414133831.GA12135@f.santiago.vpn.redhat.com>
- <7vfx2yqf9s.fsf@alter.siamese.dyndns.org>
- <20100414154409.GA28268@f.santiago.vpn.redhat.com>
+Subject: Re: [RFC/PATCH v2 0/4] A new library for plumbing output
+Date: Wed, 14 Apr 2010 12:32:09 -0700
+Message-ID: <7vwrw9q18m.fsf@alter.siamese.dyndns.org>
+References: <20100411231824.67460.24844.julian@quantumfyre.co.uk>
+ <l2jfabb9a1e1004111635v16e4dc86g405883ca12d316b9@mail.gmail.com>
+ <201004142110.36453.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ed Santiago <santiago@redhat.com>
-X-From: git-owner@vger.kernel.org Wed Apr 14 21:28:00 2010
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	git@vger.kernel.org, Eric Raymond <esr@thyrsus.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 14 21:32:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O28Fi-0005Ng-2d
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 21:27:58 +0200
+	id 1O28K4-0007xW-9N
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 21:32:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751796Ab0DNT1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Apr 2010 15:27:53 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45426 "EHLO
+	id S1752983Ab0DNTcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 15:32:23 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49169 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751127Ab0DNT1w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Apr 2010 15:27:52 -0400
+	with ESMTP id S1751127Ab0DNTcW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 15:32:22 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 11745AB5A6;
-	Wed, 14 Apr 2010 15:27:50 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 43987AB683;
+	Wed, 14 Apr 2010 15:32:22 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dTcj8Nqjr+hHV/TkVEIrhUqYaAg=; b=XTS0+C
-	TW/+g3PO9DYlact6+n0T+cDQhczfCYyfurCjACru9QrS4ve/v1W/2NSOuYIznXce
-	2ShApKkT89uNwZLsFWbIJSRf8pCBehfrifSmezLUyq9z6YvkQpbZwQySxf5d9dF2
-	SCy2JyTmb4EZd6l2nwOmM2qjEkbj9q7c/oy9o=
+	:content-type; s=sasl; bh=GM8+iorVBWD6pRYrAqy5IZQJ+Fk=; b=Jeg+yu
+	aC88v/jncEj1sNdtL2maH1bLRoITdsAiDZlbUa1cUx4w5pWiBN+W+bof+za9gVwP
+	gx1t9dRUWbARiY6Yu6hMbttorMXmN+41dX2M1VvuU+MLWjqovlSEHgf8jNfFLZXO
+	UaHsIF7bcTmRs1d1uYZQrea6FpVkCRFNfymT8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DxZkTXlZ6VzRzsGPUQm8Lw87pZLOaXW4
-	sb/ZMAtx3z0BdTQlqonPd3LhBezBiALZHfVDDYg3b0MDzV17GUA6WLbuxnE73nYY
-	/pK4n3vV4NCW/MM/RrmVBpsSLryb5SVr9ai7PBLsMSDePij2kjSL2j/cP33j4pU8
-	MfwzK5jIAX8=
+	:content-type; q=dns; s=sasl; b=NQDhsuRNxvzNa5yENaj43fRefxJwAB70
+	MrzYy4FxosZVmoxt2rQMoUE00vUOiq4Qim6+T8hGX9JeiUmpURJ3oaE8E3wJXIwY
+	qQeMqHQ93JoR0RjlPR9XVnqVpwqwfFTosNdIgSdeZx/GTKbfQKR3ucuCwjOBi0/1
+	dRsxYnBXSd4=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E3057AB5A4;
-	Wed, 14 Apr 2010 15:27:47 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DB7E3AB67C;
+	Wed, 14 Apr 2010 15:32:16 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B33EAB5A0; Wed, 14 Apr
- 2010 15:27:45 -0400 (EDT)
-In-Reply-To: <20100414154409.GA28268@f.santiago.vpn.redhat.com> (Ed
- Santiago's message of "Wed\, 14 Apr 2010 09\:44\:10 -0600")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 12505AB67A; Wed, 14 Apr
+ 2010 15:32:10 -0400 (EDT)
+In-Reply-To: <201004142110.36453.jnareb@gmail.com> (Jakub Narebski's message
+ of "Wed\, 14 Apr 2010 21\:10\:35 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CEF63248-47FB-11DF-A941-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6F47916A-47FC-11DF-9223-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144896>
 
-Ed Santiago <santiago@redhat.com> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> On Wed, Apr 14, 2010 at 07:29:03AM -0700, Junio C Hamano wrote:
->> 
->> I agree that people may want to optionally replace them to avoid mapping
->> two originally different tags into the same one.
+> I don't think it is needed for either command.
 >
-> I considered that but decided that it was beyond the scope of
-> what I wanted to tackle.
+> 'git blame' has --porcelain and --incremental output, which is line-based
+> and pretty much self-describing (with "header-name value" syntax for most
+> of it), and well documented.  JSON output would only add unnecessary
+> chatter and different quoting rules.
 
-Oh, one step at a time is perfectly fine.
+Wouldn't the exact same argument apply equally well to the output format
+of "status --porcelain", by the way?  It is line-based and pretty much
+self-describing (once you know the mnemonic but you can make an educated
+guess from previous SCM experience).
