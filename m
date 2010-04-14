@@ -1,97 +1,114 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] am -3: recover the diagnostic messages for corrupt patches
-Date: Wed, 14 Apr 2010 13:33:30 -0700
-Message-ID: <7vpr21pyed.fsf@alter.siamese.dyndns.org>
+Subject: [PATCH 1/2] Document gc.<pattern>.reflogexpire variables
+Date: Wed, 14 Apr 2010 13:34:43 -0700
+Message-ID: <7vljcppycc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 14 22:33:49 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 14 22:34:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O29HO-0008Js-4s
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 22:33:46 +0200
+	id 1O29IT-0000RB-E2
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 22:34:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755695Ab0DNUdk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Apr 2010 16:33:40 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58060 "EHLO
+	id S1756653Ab0DNUes (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 16:34:48 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58740 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754582Ab0DNUdj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Apr 2010 16:33:39 -0400
+	with ESMTP id S1756537Ab0DNUer (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 16:34:47 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 95548AA268;
-	Wed, 14 Apr 2010 16:33:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=oEwm
-	AItFPeS2qEk+NRn+kIeIEd0=; b=vjCPzlk6qHoW5STQhuEni7H+xxS1FReb3Skt
-	xXnkWS4rLHYCxTNgOf16Zznql4Bhj+vB8Ye1CrVpW4R0woP07zmaw0QablbMF5nQ
-	BEMsvCTZegxX+Z0DIQMcdW5t/vbnXIPIWHpqgqHntfiMEnqEQjS2sDm550ATB/bG
-	9tEmCvI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:from:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
-	jcNx/s7DiZysERwaBp3c5jCis9dHBOh9nsSGce8DLRgOck/e6oiXM29MmWKwQ+vG
-	U89dyP4jiCZ74mGgFzcnt94Kv5kRem+5eXOAdPkIaklfDgnZOZ1OmTYizkQKcff6
-	KxsXsWdek/FtQCO86qZImjNZFR52nXKbBop3QLLd8QY=
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8EC1BAA2B1;
+	Wed, 14 Apr 2010 16:34:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=n4p0
+	tWBtPFuKMfL6bENYUn6e1vQ=; b=NgUyDfD0cTZfnbGpwidYXZcZTfTvmCiNkd8+
+	XTaV7YI/ZoJeYltCwxBUUfEI4+dCf8RM9HFAZT+Zxzk3io/ruEd+4JJJ9XFRn/hQ
+	o29voCewN3CaW22T0Pf62iY0jzfSzH5ppLetHdzx5aKzLryvvt+4yrXxDzBg5K0l
+	ellEU+E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=vdG
+	IL/h1Sf2vPdf26bqV2tA+sgjTiZWalm5tO3+t94PZVVYzvSdWpnWzx+9kNjI3k0q
+	cD5KFSNYh8pa7LZiIaMHHkS89MPFtSDgut020n1T7m8sbZnYnVIToTUXO0QOE0fo
+	BGKpoBW0OeqzNF41b2NNKxgOvpPz/0+2Sq+b4+/s=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 73C10AA263;
-	Wed, 14 Apr 2010 16:33:34 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 76EDCAA2AF;
+	Wed, 14 Apr 2010 16:34:46 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CE11CAA261; Wed, 14 Apr
- 2010 16:33:31 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E2956AA2AD; Wed, 14 Apr
+ 2010 16:34:44 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FF491420-4804-11DF-89BD-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2A356968-4805-11DF-BDD4-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144907>
 
-"git am -3" first tries to apply the patch without any extra trick, and
-applies it to a synthesized tree for 3-way merge after the first attempt
-fails.  "git apply" exits with status 1 for a patch that is well-formed
-but is not applicable (and it dies on other errors with non-zereo, non-1
-status) and has an optimization to fall back to the 3-way merge only in
-the case.
-
-An earlier patch 3ddd170 (am: suppress apply errors when using 3-way,
-2009-06-16) squelched diagnostic messages from the first attempt, not to
-be shown to the end user.  This worked reasonably well if the reason the
-first application failed was because the patch was made against a wrong
-version.
-
-When the patch is corrupt (e.g. line-wrapped or leading whitespaces got
-dropped), however, because the second patch application is not even
-attempted, the error message from the first application is never shown
-and is forever lost.  This message is necessary to locate where the patch
-is corrupt and fix it up.
-
-We could fix this issue by reverting 3dd170, or keeping the error message
-to somewhere and showing it, but because this is an error codepath, the
-easiest is to disable the optimization.  The second patch application is
-attempted even when the input is corrupt, and it will notice, diagnose,
-and stop with an error message.
+3cb22b8 (Per-ref reflog expiry configuration, 2008-06-15) added support
+for setting the expiry parameters differently for different reflog, but
+it was never documented.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- git-am.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/git-am.sh b/git-am.sh
-index e26c54a..4e0e406 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -534,7 +534,7 @@ do
- 		;;
- 	esac
+ * This comes on top of b4ca1db (reflog --expire-unreachable: avoid
+   merge-base computation, 2010-04-07).
+
+ Documentation/config.txt |   10 ++++++++--
+ Documentation/git-gc.txt |   10 ++++++++++
+ 2 files changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index a1e36d7..4e7dab6 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -885,13 +885,19 @@ gc.pruneexpire::
+ 	unreachable objects immediately.
  
--	if test $apply_status = 1 && test "$threeway" = t
-+	if test $apply_status != 0 && test "$threeway" = t
- 	then
- 		if (fall_back_3way)
- 		then
+ gc.reflogexpire::
++gc.<pattern>.reflogexpire::
+ 	'git-reflog expire' removes reflog entries older than
+-	this time; defaults to 90 days.
++	this time; defaults to 90 days.  With "<pattern>" (e.g.
++	"refs/stash") in the middle the setting applies only to
++	the refs that match the <pattern>.
+ 
+ gc.reflogexpireunreachable::
++gc.<ref>.reflogexpireunreachable::
+ 	'git-reflog expire' removes reflog entries older than
+ 	this time and are not reachable from the current tip;
+-	defaults to 30 days.
++	defaults to 30 days.  With "<pattern>" (e.g. "refs/stash")
++	in the middle, the setting applies only to the refs that
++	match the <pattern>.
+ 
+ gc.rerereresolved::
+ 	Records of conflicted merge you resolved earlier are
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index 4cd9cdf..85d7111 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -88,6 +88,16 @@ commits prior to the amend or rebase occurring.  Since these changes
+ are not part of the current project most users will want to expire
+ them sooner.  This option defaults to '30 days'.
+ 
++The above two configuration variables can be given to a pattern.  For
++example, this sets non-default expiry values only to remote tracking
++branches:
++
++------------
++[gc "refs/remotes/*"]
++	reflogExpire = never
++	reflogexpireUnreachable = 3 days
++------------
++
+ The optional configuration variable 'gc.rerereresolved' indicates
+ how long records of conflicted merge you resolved earlier are
+ kept.  This defaults to 60 days.
 -- 
 1.7.1.rc1.252.gce30c
