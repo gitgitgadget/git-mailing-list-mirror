@@ -1,99 +1,175 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH v2 0/4] A new library for plumbing output
-Date: Wed, 14 Apr 2010 22:12:32 +0200
-Message-ID: <201004142212.33162.jnareb@gmail.com>
-References: <20100411231824.67460.24844.julian@quantumfyre.co.uk> <201004142110.36453.jnareb@gmail.com> <7vwrw9q18m.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Add repos but not as normal files, not submodule
+Date: Wed, 14 Apr 2010 15:13:08 -0500
+Message-ID: <20100414201308.GA4118@progeny.tock>
+References: <BFCA0C1E-FBE0-4CE6-8018-704BC5E0ACA6@gmail.com>
+ <20100414093603.GA29065@progeny.tock>
+ <7118B4DB-A95F-424F-87EF-035B36E578FB@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Julian Phillips <julian@quantumfyre.co.uk>,
-	git@vger.kernel.org, Eric Raymond <esr@thyrsus.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 14 22:12:10 2010
+Cc: git@vger.kernel.org
+To: Antony Stubbs <antony.stubbs@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 14 22:13:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O28wT-0004xk-VX
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 22:12:10 +0200
+	id 1O28xd-0005d2-S6
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 22:13:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756507Ab0DNUMD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Apr 2010 16:12:03 -0400
-Received: from mail-bw0-f225.google.com ([209.85.218.225]:46092 "EHLO
-	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756423Ab0DNUMB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Apr 2010 16:12:01 -0400
-Received: by bwz25 with SMTP id 25so682368bwz.28
-        for <git@vger.kernel.org>; Wed, 14 Apr 2010 13:11:59 -0700 (PDT)
+	id S1756525Ab0DNUNR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Apr 2010 16:13:17 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:34469 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756289Ab0DNUNQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 16:13:16 -0400
+Received: by pva18 with SMTP id 18so380362pva.19
+        for <git@vger.kernel.org>; Wed, 14 Apr 2010 13:13:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=0QStTxiv1BcLMQbkFUKe4HpmDRw/jjbUWF33zlPTWC0=;
-        b=X03JvayfknzbiEywt8hnvaLmiwgrrlGGdRaPM8E50FcF0MVn50KHdlFb/JYMbpnFMY
-         BPGTdL3Vu8leUwXXdlEzNAiSBKdYpTrZCor4bYwOx1oT6+olqvKTxgqGF9tDgy6VkwLg
-         kUHy1bdfMrBZMYYd2kknSKE9WHF6C/urCaY/o=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=RI64XL2gsnxc7C9sUOvx+IyV/BG6ygDktJ0fheCLLPA=;
+        b=PU9vvX0VVRlQjhDzxHDYK/SDtNMgqNh/I+hgV7vshwS2ndEhNXWgRxbhf4YebtmF+C
+         K9ldV03Ga1SMl7oIZ2X0nRoChrC1L/iOXFM9TalPsQj6EX4WAVt+//E1xI00GLmbVIKo
+         i/r9w4xE/C/v+daeCdM9t+QIiOKO4SlCsV2QI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=uoLUfKiydbYPrNqNLjYpwP3H+H7Lo3sLKVkf+qDT+ItNyoA5GtzHtqhHLkMzIyapqD
-         g86Sgk4rjePxDFaPeCxmv3sGi7MNnucGcwxbTgaAX6apz5KLJl/SADF/UP80aB5blo4e
-         KD6b76obRWcValrXk6R0yr4nAxMU352gbQsAQ=
-Received: by 10.103.126.36 with SMTP id d36mr4507753mun.65.1271275919372;
-        Wed, 14 Apr 2010 13:11:59 -0700 (PDT)
-Received: from [192.168.1.13] (abvo40.neoplus.adsl.tpnet.pl [83.8.212.40])
-        by mx.google.com with ESMTPS id u26sm4067964mug.25.2010.04.14.13.11.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 14 Apr 2010 13:11:58 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vwrw9q18m.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=MatuRwE2gpceaamkn6sGHze2JwZUumQ5ZZg5z+5oa4BMDgSyshcGaD2k9lV666zZ9L
+         msXmhQKATn/I9gfTYZYjl1UZGpBVqZ2UpcD4R7iPun4UWnekfPl9eZTlGqGF9Pl0U3CD
+         R0hvKeNA1tmxHoZTxtMoCj3rH327oCT9FoCFU=
+Received: by 10.141.90.11 with SMTP id s11mr4274900rvl.152.1271275995549;
+        Wed, 14 Apr 2010 13:13:15 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id h11sm264868rvm.21.2010.04.14.13.13.11
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 14 Apr 2010 13:13:13 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <7118B4DB-A95F-424F-87EF-035B36E578FB@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144903>
 
-Dnia =B6roda 14. kwietnia 2010 21:32, Junio C Hamano napisa=B3:
-> Jakub Narebski <jnareb@gmail.com> writes:
->=20
-> > I don't think it is needed for either command.
-> >
-> > 'git blame' has --porcelain and --incremental output, which is line=
--based
-> > and pretty much self-describing (with "header-name value" syntax fo=
-r most
-> > of it), and well documented.  JSON output would only add unnecessar=
-y
-> > chatter and different quoting rules.
->=20
-> Wouldn't the exact same argument apply equally well to the output for=
-mat
-> of "status --porcelain", by the way?  It is line-based and pretty muc=
-h
-> self-describing (once you know the mnemonic but you can make an educa=
-ted
-> guess from previous SCM experience).
+Antony Stubbs wrote:
 
-No, current "git status --porcelain" output is record-based (tabular);
-the meaning is not described by header but depends on field in record,
-i.e. position in line.
+>> I=E2=80=99d suggest
+>> writing a simple script to build the test repository from scratch.
+>
+> Yup - will probably go down this route.
 
-Self describing output of "git status --porcelain" would be
+Ah, good.
 
-  filename <maybe-quoted filename>
-  renamed-from <maybe-quoted filename>
-  similarity 95%
-  worktree ...
-  index ...
+>> You can also try using repositories not named .git if you are carefu=
+l.
+>> I don=E2=80=99t really encourage this.
+>
+> Didn't realize this was possible.
 
-or something like that...
+ ; git init foo
+ ; git init --bare foo/bar.git
+ ; cd foo
+ ; git add bar.git
 
+or
+
+ ; git init foo
+ ; git init foo/bar
+ ; mv foo/bar/.git foo/bar.git
+ ; git add bar bar.git
+ ; cd bar
+ ; GIT_DIR=3D$(pwd)/../bar.git git status
+ ; (ln -s ../bar.git .git && git status && rm .git)
+
+Please, don=E2=80=99t do this.  For all I know, some git command will e=
+nd
+up chdir()ing into bar.git and getting confused.
+
+> Any pointers? Links?
+
+I=E2=80=99m not aware of the relevant rules being documented anywhere. =
+ How
+much of the current behavior do we want to commit to continuing to
+support?
+
+Here=E2=80=99s a (very rough) start.  Thoughts?
+
+-- 8< --
+Subject: Documentation/update-index: indicate what the index can contai=
+n
+
+Based on cache.h.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ Documentation/git-update-index.txt |   37 ++++++++++++++++++++++++++++=
+++++++++
+ 1 files changed, 37 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-upd=
+ate-index.txt
+index 68dc187..3f74938 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -29,6 +29,12 @@ Modifies the index or directory cache. Each file men=
+tioned is updated
+ into the index and any 'unmerged' or 'needs updating' state is
+ cleared.
+=20
++Paths that do not represent directories, regular files, or symlinks
++are ignored (though other file types may be supported in future
++versions of git).  Files and directories named .git are ignored except
++for the sake of detecting subrepositories.  See the "Content model"
++section below for more about what the index can track.
++
+ See also linkgit:git-add[1] for a more user-friendly way to do some of
+ the most common operations on the index.
+=20
+@@ -159,6 +165,37 @@ you will need to handle the situation manually.
+ 	cleaner names.
+ 	The same applies to directories ending '/' and paths with '//'
+=20
++Content model
++-------------
++Roughly speaking, the index represents the state of the working tree
++at some moment.  Each entry indicates the name of a file, its mode,
++the name of a blob or tree object representing its content (0 for a
++removed file or directory), a stage number, flags, and some lstat(2)
++information that can be used to check if the entry is up-to-date.
++
++Filenames are relative to the top level of the working tree and
++contain no empty path components or path components named ., ..,
++or .git, or symbolic link path components.
++
++Modes are based on the octal values as returned by lstat(2):
++
++. `100644` (regular file)
++. `100755` (executable)
++. `120000` (symbolic link)
++. `040000` (directory)
++. `160000` (git submodule)
++
++All other file types are either reduced to one of these five or
++ignored.
++
++See linkgit:git-read-tree(1) for a description of the stages in
++the index.  When a merge is not in progress, all entries have stage
++number 0.
++
++There are currently three boolean flags that can be set.  See
++the descriptions of the `--asumed-unchanged` and `--skip-worktree`
++options above and the `--intent-to-add` option to linkgit:git-add[1].
++
+ Using --refresh
+ ---------------
+ '--refresh' does not calculate a new sha1 file or bring the index
 --=20
-Jakub Narebski
-Poland
+1.7.1.rc1
