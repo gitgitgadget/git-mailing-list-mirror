@@ -1,68 +1,99 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: git log of remote repositories.
-Date: Wed, 14 Apr 2010 22:11:22 +0200
-Message-ID: <r2rfabb9a1e1004141311sa27dedf2h8bfff789a6ef1200@mail.gmail.com>
-References: <u2n3abd05a91004131625k500e79bbsc8ffa6455a85332d@mail.gmail.com> 
-	<slrnhsba0k.h9q.heipei@dualtron.heipei.net> <x2q3abd05a91004141208x6e154385l8b7ce6488d65f21b@mail.gmail.com> 
-	<20100414194552.GA5178@dualtron.lan> <w2s3abd05a91004141305h28d69d44g2fcb69abe578dbcc@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH v2 0/4] A new library for plumbing output
+Date: Wed, 14 Apr 2010 22:12:32 +0200
+Message-ID: <201004142212.33162.jnareb@gmail.com>
+References: <20100411231824.67460.24844.julian@quantumfyre.co.uk> <201004142110.36453.jnareb@gmail.com> <7vwrw9q18m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Gilger <heipei@hackvalue.de>, git@vger.kernel.org
-To: Aghiles <aghilesk@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 14 22:11:54 2010
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	git@vger.kernel.org, Eric Raymond <esr@thyrsus.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 14 22:12:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O28wA-0004lg-Lb
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 22:11:51 +0200
+	id 1O28wT-0004xk-VX
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Apr 2010 22:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756375Ab0DNULp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Apr 2010 16:11:45 -0400
-Received: from qw-out-2122.google.com ([74.125.92.24]:24683 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755795Ab0DNULo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Apr 2010 16:11:44 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so180229qwh.37
-        for <git@vger.kernel.org>; Wed, 14 Apr 2010 13:11:43 -0700 (PDT)
+	id S1756507Ab0DNUMD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Apr 2010 16:12:03 -0400
+Received: from mail-bw0-f225.google.com ([209.85.218.225]:46092 "EHLO
+	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756423Ab0DNUMB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 16:12:01 -0400
+Received: by bwz25 with SMTP id 25so682368bwz.28
+        for <git@vger.kernel.org>; Wed, 14 Apr 2010 13:11:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type;
-        bh=uPj7GP0dAyRoDK6xiiQ2EF+ZxkwSVFxqy+W/dMp4+b4=;
-        b=j0mscOgP3v92QMOzpAZeshWOweNX3qP+FsIexmR7QW8E6x0pnp69AyRD4/eqVMcsC6
-         utE5zway+XC5J6cHKFBQpf9hNhNJ8t6x+wTV+q8vWtZ54EthRcEykCVDfLTFMgsWiKWV
-         JbrbEaBhcW2C0MOozHh3n8XrGI3sITbmEp0DM=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=0QStTxiv1BcLMQbkFUKe4HpmDRw/jjbUWF33zlPTWC0=;
+        b=X03JvayfknzbiEywt8hnvaLmiwgrrlGGdRaPM8E50FcF0MVn50KHdlFb/JYMbpnFMY
+         BPGTdL3Vu8leUwXXdlEzNAiSBKdYpTrZCor4bYwOx1oT6+olqvKTxgqGF9tDgy6VkwLg
+         kUHy1bdfMrBZMYYd2kknSKE9WHF6C/urCaY/o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=R6hPoG2L2D3IQQgLYd5KKvcyKeDWrjDsP06aSVWgCsXn7hhvrIyHyYPI6VzYazSBkq
-         /NsieiKZWaH97yagoE5Ytd5+YxnWVIhWOyTV7Vq8i8IQgkXUWs/tUWxY7noYBNhKe0LS
-         lKRWjpSEbXZUeeXISFgVa3FWHvNoXlrCgB86k=
-Received: by 10.224.74.3 with HTTP; Wed, 14 Apr 2010 13:11:22 -0700 (PDT)
-In-Reply-To: <w2s3abd05a91004141305h28d69d44g2fcb69abe578dbcc@mail.gmail.com>
-Received: by 10.224.44.11 with SMTP id y11mr2801110qae.40.1271275902212; Wed, 
-	14 Apr 2010 13:11:42 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=uoLUfKiydbYPrNqNLjYpwP3H+H7Lo3sLKVkf+qDT+ItNyoA5GtzHtqhHLkMzIyapqD
+         g86Sgk4rjePxDFaPeCxmv3sGi7MNnucGcwxbTgaAX6apz5KLJl/SADF/UP80aB5blo4e
+         KD6b76obRWcValrXk6R0yr4nAxMU352gbQsAQ=
+Received: by 10.103.126.36 with SMTP id d36mr4507753mun.65.1271275919372;
+        Wed, 14 Apr 2010 13:11:59 -0700 (PDT)
+Received: from [192.168.1.13] (abvo40.neoplus.adsl.tpnet.pl [83.8.212.40])
+        by mx.google.com with ESMTPS id u26sm4067964mug.25.2010.04.14.13.11.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 14 Apr 2010 13:11:58 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vwrw9q18m.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144902>
 
-Heya,
+Dnia =B6roda 14. kwietnia 2010 21:32, Junio C Hamano napisa=B3:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>=20
+> > I don't think it is needed for either command.
+> >
+> > 'git blame' has --porcelain and --incremental output, which is line=
+-based
+> > and pretty much self-describing (with "header-name value" syntax fo=
+r most
+> > of it), and well documented.  JSON output would only add unnecessar=
+y
+> > chatter and different quoting rules.
+>=20
+> Wouldn't the exact same argument apply equally well to the output for=
+mat
+> of "status --porcelain", by the way?  It is line-based and pretty muc=
+h
+> self-describing (once you know the mnemonic but you can make an educa=
+ted
+> guess from previous SCM experience).
 
-On Wed, Apr 14, 2010 at 22:05, Aghiles <aghilesk@gmail.com> wrote:
-> Having a sneak peek on what's going upstream seems like a natural
-> thing to do, no ?
+No, current "git status --porcelain" output is record-based (tabular);
+the meaning is not described by header but depends on field in record,
+i.e. position in line.
 
-This can be done as said before, by fetching (which does not touch
-your working copy, it only adds some objects to your store). Can you
-explain what your hesitation to doing the fetch is? Are the objects
-stored on the server (potentially) very large?
+Self describing output of "git status --porcelain" would be
 
--- 
-Cheers,
+  filename <maybe-quoted filename>
+  renamed-from <maybe-quoted filename>
+  similarity 95%
+  worktree ...
+  index ...
 
-Sverre Rabbelier
+or something like that...
+
+--=20
+Jakub Narebski
+Poland
