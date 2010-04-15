@@ -1,97 +1,85 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] t7006: guard cleanup with test_expect_success
-Date: Wed, 14 Apr 2010 20:27:52 -0500
-Message-ID: <20100415012752.GA17132@progeny.tock>
-References: <20100413021153.GA3978@progeny.tock>
- <20100413021355.GA4118@progeny.tock>
- <7v4ojdpxls.fsf@alter.siamese.dyndns.org>
- <20100415003803.GB14151@progeny.tock>
- <7v7ho9mt3a.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] git-cvsimport: strip question-mark characters in tags
+Date: Thu, 15 Apr 2010 03:39:45 +0200
+Message-ID: <201004150339.45879.johan@herland.net>
+References: <20100414133831.GA12135@f.santiago.vpn.redhat.com>
+ <m27ho9sr0i.fsf@igel.home> <20100414214229.GA31757@f.santiago.vpn.redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 15 03:28:28 2010
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Ed Santiago <santiago@redhat.com>,
+	Andreas Schwab <schwab@linux-m68k.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 15 03:40:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2Dsa-0003ER-82
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 03:28:28 +0200
+	id 1O2E47-0006EM-PP
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 03:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756171Ab0DOB2S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Apr 2010 21:28:18 -0400
-Received: from mail-yw0-f194.google.com ([209.85.211.194]:43689 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756155Ab0DOB2H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Apr 2010 21:28:07 -0400
-Received: by ywh32 with SMTP id 32so407599ywh.33
-        for <git@vger.kernel.org>; Wed, 14 Apr 2010 18:28:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=IVHBM07EC+E55rqF1IHCU6NpZDhF643dDRP9v4QIwMk=;
-        b=WOZLbkbrXi4EZP/WHWYzwNWSc0fOv7qGtNrEuDRu9x+/w4Fvpzgz22lqU6PGME4GcD
-         T70ZqfaifnWjryD+9yfX56SyBf6isDIlmqCjoHjbIldxBzU1VjBbxxc4v3yiGumnnvhR
-         dOvvrzW87w2NWnVc8AYOvhraaXl67OupqWlEc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=QY3P0vQSAbe4MwwnxEC/fbGgcB7njHDuPKjMi4sCgfkBOBP2yYcYgpCBNZAHYTfpc4
-         iIYA7q5mBPuX3edd+LcU4EADyEoaE61khA07ExK9VheagdOm261Doq7YSSlWMzL1dE4E
-         VMh5rKvB7kMFFykjgXz56ptNkJxN1sjadhY9A=
-Received: by 10.150.194.13 with SMTP id r13mr5963136ybf.284.1271294886282;
-        Wed, 14 Apr 2010 18:28:06 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id a1sm540473ibs.18.2010.04.14.18.28.03
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 14 Apr 2010 18:28:04 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v7ho9mt3a.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756032Ab0DOBkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 21:40:16 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:50084 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755514Ab0DOBkP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 21:40:15 -0400
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L0W00B1H9YA7N80@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 15 Apr 2010 03:39:46 +0200 (MEST)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L0W00FF69YASO30@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 15 Apr 2010 03:39:46 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2010.4.15.12414
+User-Agent: KMail/1.13.2 (Linux/2.6.33-ARCH; KDE/4.4.2; x86_64; ; )
+In-reply-to: <20100414214229.GA31757@f.santiago.vpn.redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144940>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+On Wednesday 14 April 2010, Ed Santiago wrote:
+> On Wed, Apr 14, 2010 at 10:44:45PM +0200, Andreas Schwab wrote:
+> > Ed Santiago <santiago@redhat.com> writes:
+> > > Question mark character appears to be valid in a CVS tag,
+> > 
+> > According to the CVS docs only letters, digits, '-' and '_' are valid
+> > for tag names.
+> 
+> Poor choice of words on my part.  What I *should* have said is
+> something like:
+> 
+>    Although question marks and curly braces are not among the
+>    set of characters which CVS considers to be valid for a tag,
+>    real-world situations have been encontered in which a CVS
+>    comma-v file has a tag including all those characters.  This
+>    patch makes git-cvsimport accept and forgive that reality.
 
-[...]
->> +cleanup_fail() {
->> +	echo >&2 cleanup failed
->> +	exit 1
->> +}
->
-> I think you meant to say "false" or "(exit 1)" here.  To see why...
-[...]
-> ... try your patch with "rm -f stdout_is_tty" replaced with "(exit 1)=
-" to
-> see how your cleanup_fail behaves.
+Indeed. I have even seen CVS tag names containing carriage returns (aka. CR, 
+\r) in the wild...
 
-Good catch; thanks.  Here=E2=80=99s a patch for squashing in case you w=
-ould
-like one.
 
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index 62595ab..a3d0210 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -6,7 +6,7 @@ test_description=3D'Test automatic use of a pager.'
-=20
- cleanup_fail() {
- 	echo >&2 cleanup failed
--	exit 1
-+	return 1
- }
-=20
- test_expect_success 'set up terminal for tests' '
+...Johan
+
+
+> How that tag got created, I really don't know.  I can imagine
+> three ways it could've happened (rcs commands; broken/old version
+> of CVS; custom tool for mucking with comma-v files).  My goal
+> was to recognize that this sort of thing happens, and to make
+> it easier for the next person to find & fix this in the script.
+> With that goal in mind, removing $! and adding the comment is
+> the only important part of my patch.  The question mark itself
+> is not likely to be useful except in very rare and weird cases.
+> 
+> Ed
+
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
