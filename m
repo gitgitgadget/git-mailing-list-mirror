@@ -1,89 +1,121 @@
-From: Chris Webb <chris@arachsys.com>
-Subject: Re: [PATCH v3] Replace hard-coded path with one from <paths.h>
-Date: Thu, 15 Apr 2010 13:40:43 +0100
-Message-ID: <20100415124043.GH12365@arachsys.com>
-References: <20100406163643.GG15306@arachsys.com>
- <n2u40aa078e1004070357m143cfaccvdc754a3bc5fe1ae1@mail.gmail.com>
- <20100408105850.GD2146@arachsys.com>
- <m2x40aa078e1004080426u98fbe6b2zfa9a2726172f725@mail.gmail.com>
- <20100408115706.GE2077@arachsys.com>
- <z2o40aa078e1004080508z17c5e71by371bbe6e1cdb8c50@mail.gmail.com>
- <20100409054536.GB2151@arachsys.com>
- <20100413090604.GB770@arachsys.com>
- <20100413090713.GC770@arachsys.com>
- <m3hbncgaxu.fsf@localhost.localdomain>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] git-send-email.perl: add maildomain_sanitize()
+Date: Thu, 15 Apr 2010 05:47:45 -0700 (PDT)
+Message-ID: <m38w8og9w4.fsf@localhost.localdomain>
+References: <1270789906-23735-1-git-send-email-brian@gernhardtsoftware.com>
+	<1270789906-23735-2-git-send-email-brian@gernhardtsoftware.com>
+	<7v1vep427o.fsf@alter.siamese.dyndns.org>
+	<87ljcrwxni.fsf_-_@jondo.cante.net>
+	<87bpdnwpoh.fsf_-_@jondo.cante.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, kusmabite@gmail.com,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 15 14:41:10 2010
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Thu Apr 15 14:47:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2ONX-0004F0-Vk
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 14:41:08 +0200
+	id 1O2OU6-00083u-MD
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 14:47:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752897Ab0DOMku (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 08:40:50 -0400
-Received: from alpha.arachsys.com ([91.203.57.7]:46708 "EHLO
-	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752692Ab0DOMkt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 08:40:49 -0400
-Received: from [83.104.159.199] (helo=miranda.arachsys.com)
-	by alpha.arachsys.com with esmtpa (Exim 4.52)
-	id 1O2OND-00008V-KL; Thu, 15 Apr 2010 13:40:48 +0100
-Content-Disposition: inline
-In-Reply-To: <m3hbncgaxu.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753470Ab0DOMru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Apr 2010 08:47:50 -0400
+Received: from mail-bw0-f225.google.com ([209.85.218.225]:35026 "EHLO
+	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753046Ab0DOMrs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Apr 2010 08:47:48 -0400
+Received: by bwz25 with SMTP id 25so1532335bwz.28
+        for <git@vger.kernel.org>; Thu, 15 Apr 2010 05:47:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=yqTF+7ZokBF8d5eBGhD5Z0fCB1a3j7NjgBuGq/xPviI=;
+        b=jed1tmK5KvmVzd/wGxtyZXFB1UYl3iIFzYdAKgqktY7sZ37EfECfn8doBHAWOAQRyO
+         W4P+ywBPuLuDvlTlMETkO9S5YgZY8FBg9TMezMDUARjyY6gnkmo+PkUtYXDaBvLuOCrL
+         9qYq2x/NGWv7CRV1L0x4s2dqFm+NoJgdTYPoc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=Am+HEzq42HI9lwKC+hvB7fB0mz4RC7UudNiUtQSGdljI7pQah1/W9Wzara7zSm4dp9
+         6pv836c+o9EsoaW7P3Lxo1LRqYMx5UEqcX0nQUClZkp+VU4FiGYaj2hqea+CNgXVmatg
+         SyRkHf+qZin6q7zg+FhpUM8+UsMmsyi8mJ0NY=
+Received: by 10.102.246.2 with SMTP id t2mr56040muh.103.1271335666657;
+        Thu, 15 Apr 2010 05:47:46 -0700 (PDT)
+Received: from localhost.localdomain (abvo40.neoplus.adsl.tpnet.pl [83.8.212.40])
+        by mx.google.com with ESMTPS id g1sm7820357muf.0.2010.04.15.05.47.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 15 Apr 2010 05:47:45 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o3FClu4L027068;
+	Thu, 15 Apr 2010 14:48:06 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o3FCldjS027064;
+	Thu, 15 Apr 2010 14:47:39 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <87bpdnwpoh.fsf_-_@jondo.cante.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144978>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Jari Aalto <jari.aalto@cante.net> writes:
 
-> All other such variables are described at the top of main Makefile,
-> for example:
+> Move duplicate maildomain checks to a single subroutine.
+> Require that a FQDN contains at least one period.
 > 
->   #
->   # Define NO_LIBGEN_H if you don't have libgen.h.
-> 
-> I think that HAVE_PATHS_H should also have such one-line description.
-> By the way it the very first variable with HAVE_* rather than NEEDS_*
-> or NO_* name.
+> Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+> ---
 
-To be honest, I used the name suggested to me earlier in the thread without
-a great deal of checking to see how consistent it was with existing naming
-convention.
+Good idea.
 
-Blacklisting OSes with a NO_PATHS_H #define feels like a mistake, as unknown
-OSes will fail rather than assuming a safe (if slightly untidy) default. I
-got caught out assuming that Windows was sane in this regard, for instance.
+[...]
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index ce569a9..0e8f18c 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -863,14 +863,28 @@ sub sanitize_address
+>  # This maildomain*() code is based on ideas in Perl library Test::Reporter
+>  # /usr/share/perl5/Test/Reporter/Mail/Util.pm ==> sub _maildomain ()
+>  
+> +sub maildomain_sanitize
+> +{
+> +	local $_ = shift;
+> +
+> +	#  On Mac, the the domain name is not necessarily in FQDN format
+> +	#  Require a period in the string
+> +
+> +	if ( $^O eq 'darwin'  and  /\.local$/ ) {
+> +		# Nope, pass this one.
+> +	}
+> +	elsif ( /\./ ) {
+> +		$_;
+> +	}
+> +}
 
-To me, NEEDS_PATH_H hints that a system with paths.h would break if it
-weren't included, rather than that this is an extra feature available on
-this OS. But if NEEDS_* is used elsewhere to enable optional extras on
-systems which support them, I agree we should change to NEEDS_PATH_H to be
-consistent.
+Style:
 
-> Why not
-> 
->   +#ifdef HAVE_PATHS_H
->   +#include <paths.h>
->   +#endif
->   +#ifndef _PATH_DEFPATH
->   +#define _PATH_DEFPATH "/usr/local/bin:/usr/bin:/bin"
->   +#endif
-> 
-> This way you are covered if some other header provides _PATH_DEFPATH.
+  +sub maildomain_sanitize {
+  +	local $domain = shift;
+  +
+  +	#  On Mac, the the domain name is not necessarily in FQDN format
+  +	#  Require a period in the string
+  +
+  +	if ($^O eq 'darwin'  &&  $domain =~ /\.local$/) {
+  +		# Nope, pass this one.
+  +	} elsif ($domain =~ /\./) {
+  +		return $domain;
+  +	}
+  +}
 
-Yes, makes sense, although I think _PATH_DEFPATH is very unlikely to be
-provided outside of <paths.h>.
-
-Best wishes,
-
-Chris.
+(probably fixed in new version of this series).
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
