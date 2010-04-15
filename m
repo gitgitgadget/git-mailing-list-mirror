@@ -1,97 +1,76 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 8/9] builtin: check pager.<cmd> configuration if 
-	RUN_SETUP_GENTLY is used
-Date: Thu, 15 Apr 2010 10:33:55 +0200
-Message-ID: <m2yfcaeb9bf1004150133te8af6155n63d620fef2be98a2@mail.gmail.com>
-References: <20100413021153.GA3978@progeny.tock> <20100413023003.GH4118@progeny.tock> 
-	<y2yfcaeb9bf1004130312l197983cnf92371acc88464db@mail.gmail.com> 
-	<20100414050643.GB28864@progeny.tock>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 15 10:34:24 2010
+From: Bo Yang <struggleyb.nku@gmail.com>
+Subject: [PATCH] Make rev_compare_tree less confusing.
+Date: Thu, 15 Apr 2010 01:46:11 -0700
+Message-ID: <1271321171-12176-1-git-send-email-struggleyb.nku@gmail.com>
+Cc: gitster@pobox.com, trast@student.ethz.ch
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 15 10:46:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2KWk-00058f-RR
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 10:34:23 +0200
+	id 1O2Ki7-0001jg-1M
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 10:46:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757369Ab0DOIeR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 04:34:17 -0400
-Received: from qw-out-2122.google.com ([74.125.92.24]:36506 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757347Ab0DOIeP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 04:34:15 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so365851qwh.37
-        for <git@vger.kernel.org>; Thu, 15 Apr 2010 01:34:15 -0700 (PDT)
+	id S1757473Ab0DOIp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Apr 2010 04:45:59 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:51356 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757418Ab0DOIp6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Apr 2010 04:45:58 -0400
+Received: by pwj9 with SMTP id 9so907405pwj.19
+        for <git@vger.kernel.org>; Thu, 15 Apr 2010 01:45:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type;
-        bh=aqMBiBRild0Wbd2rHwaT8r0nwe7ZBPH2rT6q8NaqcKs=;
-        b=JvZt0eI5uwZe2ym2nHhC9IRcc0oSP6GgQIkXeQLSm4VvInmeHqv5o8VGaGKYNv4C/F
-         9Z7YhGqwrJJZOk4AtDAaE8fYV4PRvFEHPfEUo7MMD3tocoE7Yi9lBn8OlB5Cb+UglpTe
-         erFZNa9ewr2cVdVmb+mn8zNej0+4D6eZFs7c8=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=+PXvXgHDj0Hs0FzROsLhMCm7m+cWwKLQNBoDVfnr+6I=;
+        b=L5tpkYTlyYD6TmaHCPUpoHXFo7LgRYoMbEhrVldel4jG3wiilK035XERBqOeJqH1xt
+         glRTykPWKGCwDbXVVWMJWYllMfc8D8KIU/7V7dcCnXP+TzQlPl6vaA0NHFgbkLo5Tqza
+         Uh2Fv+KhbRHrReGY3OCTk0rTZ+Xhu8/hPYEyU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=vSM4/PoCP+lONtFkV3hTvD3S9zNkN3ZiTUWinJ4Psm6mpLdVRqLImcgOUyy+BmOlbp
-         gpyQV0pSU0AoHmZM0enrMesabu+/t5XJdy5Fpn4hL0Pazg5R+AP2fPBiqu0Wk/ms9tDR
-         JmCV1ml7fuS95igwgYGTzhERU2z9O8ZscOedI=
-Received: by 10.224.2.76 with HTTP; Thu, 15 Apr 2010 01:33:55 -0700 (PDT)
-In-Reply-To: <20100414050643.GB28864@progeny.tock>
-Received: by 10.224.72.34 with SMTP id k34mr3071234qaj.283.1271320455070; Thu, 
-	15 Apr 2010 01:34:15 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=YWUbfUGDfyHZnKyFzPDVy9AQq95nWgemgKPantpE1D/QpaoeawkkU3Ekt9K3Pr+e9n
+         fHPzncZ5/beQCSXDytAR0pEczbmwnorO0jzzFq/leBQEg6n1JIEbxzMsFFGdM3lQEGH5
+         dC0Kf0NQRReziMoBI02UK5Zl4r/IAOY2Pivrk=
+Received: by 10.115.87.32 with SMTP id p32mr8087924wal.86.1271321157852;
+        Thu, 15 Apr 2010 01:45:57 -0700 (PDT)
+Received: from localhost.localdomain ([222.30.37.37])
+        by mx.google.com with ESMTPS id 23sm1073289pzk.2.2010.04.15.01.45.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 15 Apr 2010 01:45:56 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144962>
 
-On Wed, Apr 14, 2010 at 7:06 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> So here are some ideas for future work (not necessarily in order).
->
->  - Teach remaining commands that need to search for a repository to
->   use RUN_SETUP_GENTLY, with appropriate exceptions where needed
->   (for --no-index, for example).
+diff_tree_sha1 always return 0, so comparing the return value
+of it make no sense. Just delete the comparison to make code
+reader clear.
 
- - Two patches "worktree setup: calculate prefix.." and "index-pack:
-trust the prefix" may form a separate series. That would unblock
-RUN_SETUP_GENTLY series.
+Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
+---
+ revision.c |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
 
->  - Introduce unset_git_directory and the RUN_UNSETUP option (yes,
->   this needs a better name).  Teach commands that work without a
->   git directory to use it (this should fix the init poisoned by
->   parent repository and aliased init problems).
-
- - Two patches that move enter_repo() to setup.c and fix it up can go
-first. They should have no impact on system.
-
->
->  - Teach git_config() to ignore the repository-specific configuration
->   if have_run_setup is true but have_repository is false.
->
->  - Teach git_attr() to ignore .git/info/attributes if have_run_setup
->   is true but have_repository is false.
->
->  - Teach git_config() to optionally die if have_run_setup is not true
->   and the setup_git_dir* to optionally die if have_run_setup is true.
->   test-lib.sh would enable this option.
->
-
- - Introduce startup_info->prefix. I think that's a good change, but
-it's independent to this series. The reason is, prefix can change
-after setup_git_dir is called (i.e. setup_work_tree()).
- - The fix for "git cmd -h" can make a separate series (4 patches)
- - Finally the soft guard patch and assorted fixups to avoid warnings.
-
-I'll reorder my tree and see if it looks good. Patches of this 9-patch
-series will be untouched.
+diff --git a/revision.c b/revision.c
+index f4b8b38..8caca99 100644
+--- a/revision.c
++++ b/revision.c
+@@ -329,9 +329,7 @@ static int rev_compare_tree(struct rev_info *revs, struct commit *parent, struct
+ 
+ 	tree_difference = REV_TREE_SAME;
+ 	DIFF_OPT_CLR(&revs->pruning, HAS_CHANGES);
+-	if (diff_tree_sha1(t1->object.sha1, t2->object.sha1, "",
+-			   &revs->pruning) < 0)
+-		return REV_TREE_DIFFERENT;
++	diff_tree_sha1(t1->object.sha1, t2->object.sha1, "", &revs->pruning);
+ 	return tree_difference;
+ }
+ 
 -- 
-Duy
+1.6.0.4
