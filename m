@@ -1,72 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: failed to lock
-Date: Thu, 15 Apr 2010 15:27:26 -0700
-Message-ID: <7vbpdkic6p.fsf@alter.siamese.dyndns.org>
-References: <j2o76718491004141349l53b53347v7f4c0edcab69e4c2@mail.gmail.com>
- <t2i76718491004141402h33bb2044g155ef1715c63904e@mail.gmail.com>
- <k2x76718491004142100v6e1ece6djc62aa540e51eed5@mail.gmail.com>
- <7vd3y0k0c6.fsf@alter.siamese.dyndns.org>
- <k2j76718491004151213xdb223ff8kd43f170eaf3a470a@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 16 00:27:46 2010
+From: Zefram <zefram@fysh.org>
+Subject: [PATCH] Support "git remote --quiet update"
+Date: Thu, 15 Apr 2010 23:11:16 +0100
+Message-ID: <E1O2XT7-00011E-RT@lake.fysh.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 16 00:39:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2XXF-00051d-5q
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 00:27:45 +0200
+	id 1O2Xip-0000cT-Ot
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 00:39:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756717Ab0DOW1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 18:27:35 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39090 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756523Ab0DOW1e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 18:27:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BB461ABA66;
-	Thu, 15 Apr 2010 18:27:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rU6ASTLDac+b/gJQExEQW6LbN2s=; b=Frk4gp
-	1KHjTWrfZzHcARk8qHoFm+7c2oQFCOxPzsBdNlhTJRNqIYNtJy23R4Vb+1wQBBFK
-	+nG8lWYxvYwKIvxvkJwMgTHxCWSQzo2YnVSPS+RNu58mYzC4N6jJHXkGDgwCYUC9
-	dso5umyp/bAAHqiQ1AyDwpcrpZ6+jcvCPlDl0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=U/b5peyPY8jUouYJ3YFvxXkedKE54YLO
-	RIt3ixrxNzAE7Lp+f90Hxv2atFu0TyyQ5f5P2pd4Svp8wRvXhApNy5jGBTcEZKE3
-	lgBj3UsQr5jUXkO1R8qroi3aEJYxQWcIqbAgB3E9hTJAUfnsMspnHnAAtHxDn+6v
-	H9dTcS38xJA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B9C1ABA65;
-	Thu, 15 Apr 2010 18:27:30 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1320CABA63; Thu, 15 Apr
- 2010 18:27:27 -0400 (EDT)
-In-Reply-To: <k2j76718491004151213xdb223ff8kd43f170eaf3a470a@mail.gmail.com>
- (Jay Soffian's message of "Thu\, 15 Apr 2010 15\:13\:12 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 145E9E64-48DE-11DF-A842-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757799Ab0DOWji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Apr 2010 18:39:38 -0400
+Received: from lake.fysh.org ([81.94.195.195]:32840 "EHLO lake.fysh.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757782Ab0DOWji (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Apr 2010 18:39:38 -0400
+X-Greylist: delayed 963 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Apr 2010 18:39:37 EDT
+Received: from zefram by lake.fysh.org with local (Exim 4.69 #1 (Debian))
+	id 1O2XT7-00011E-RT; Thu, 15 Apr 2010 23:23:29 +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145030>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+Add --quiet option for git-remote, which it will pass on to git-fetch.
+---
+ Documentation/git-remote.txt |    9 ++++++++-
+ builtin/remote.c             |   16 ++++++++--------
+ 2 files changed, 16 insertions(+), 9 deletions(-)
 
-> So it seems safer to me that the destination should ignore duplicates
-> in the received list.
-
-We probably need it on both ends.
-
-On the receiving end, it probably is a better idea to make verify_lock()
-succeed if the ref has already been updated to the value we are going to
-update with, as I suspect that the issue is not limited to receive-pack.
-It needs some restructuring of lock/verify/commit primitives, though.
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 3fc599c..25f6c05 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -19,7 +19,8 @@ SYNOPSIS
+ 'git remote set-url --delete' [--push] <name> <url>
+ 'git remote' [-v | --verbose] 'show' [-n] <name>
+ 'git remote prune' [-n | --dry-run] <name>
+-'git remote' [-v | --verbose] 'update' [-p | --prune] [group | remote]...
++'git remote' [-v | --verbose] [-q | --quiet] 'update'
++	     [-p | --prune] [group | remote]...
+ 
+ DESCRIPTION
+ -----------
+@@ -30,6 +31,12 @@ Manage the set of repositories ("remotes") whose branches you track.
+ OPTIONS
+ -------
+ 
++-q::
++--quiet::
++	Pass --quiet to git-fetch.  Progress is not reported to the
++	standard error stream.
++	NOTE: This must be placed between `remote` and `subcommand`.
++
+ -v::
+ --verbose::
+ 	Be a little more verbose and show remote url after name.
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 277765b..5447780 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -15,7 +15,7 @@ static const char * const builtin_remote_usage[] = {
+ 	"git remote set-head <name> (-a | -d | <branch>)",
+ 	"git remote [-v | --verbose] show [-n] <name>",
+ 	"git remote prune [-n | --dry-run] <name>",
+-	"git remote [-v | --verbose] update [-p | --prune] [group | remote]",
++	"git remote [-v | --verbose] [-q | --quiet] update [-p | --prune] [group | remote]",
+ 	"git remote set-url <name> <newurl> [<oldurl>]",
+ 	"git remote set-url --add <name> <newurl>",
+ 	"git remote set-url --delete <name> <url>",
+@@ -68,7 +68,7 @@ static const char * const builtin_remote_seturl_usage[] = {
+ #define GET_HEAD_NAMES (1<<1)
+ #define GET_PUSH_REF_STATES (1<<2)
+ 
+-static int verbose;
++static int verbosity;
+ 
+ static int show_all(void);
+ static int prune_remote(const char *remote, int dry_run);
+@@ -94,8 +94,8 @@ static int opt_parse_track(const struct option *opt, const char *arg, int not)
+ static int fetch_remote(const char *name)
+ {
+ 	const char *argv[] = { "fetch", name, NULL, NULL };
+-	if (verbose) {
+-		argv[1] = "-v";
++	if (verbosity != 0) {
++		argv[1] = verbosity > 0 ? "-v" : "-q";
+ 		argv[2] = name;
+ 	}
+ 	printf("Updating %s\n", name);
+@@ -1246,8 +1246,8 @@ static int update(int argc, const char **argv)
+ 
+ 	if (prune)
+ 		fetch_argv[fetch_argc++] = "--prune";
+-	if (verbose)
+-		fetch_argv[fetch_argc++] = "-v";
++	if (verbosity != 0)
++		fetch_argv[fetch_argc++] = verbosity > 0 ? "-v" : "-q";
+ 	fetch_argv[fetch_argc++] = "--multiple";
+ 	if (argc < 2)
+ 		fetch_argv[fetch_argc++] = "default";
+@@ -1395,7 +1395,7 @@ static int show_all(void)
+ 		sort_string_list(&list);
+ 		for (i = 0; i < list.nr; i++) {
+ 			struct string_list_item *item = list.items + i;
+-			if (verbose)
++			if (verbosity > 0)
+ 				printf("%s\t%s\n", item->string,
+ 					item->util ? (const char *)item->util : "");
+ 			else {
+@@ -1412,7 +1412,7 @@ static int show_all(void)
+ int cmd_remote(int argc, const char **argv, const char *prefix)
+ {
+ 	struct option options[] = {
+-		OPT_BOOLEAN('v', "verbose", &verbose, "be verbose; must be placed before a subcommand"),
++		OPT__VERBOSITY(&verbosity),
+ 		OPT_END()
+ 	};
+ 	int result;
+-- 
+1.7.1.rc1.12.ga601.dirty
