@@ -1,69 +1,67 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Building Git on Tru64
-Date: Thu, 15 Apr 2010 21:29:11 +0200
-Message-ID: <r2n81b0412b1004151229g6fe840a1v23a9d06f72e8d36a@mail.gmail.com>
-References: <1271358589.19032.1370170305@webmail.messagingengine.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 5/6] http-fetch: Use index-pack rather than verify-pack to check packs
+Date: Thu, 15 Apr 2010 21:34:09 +0200
+Message-ID: <201004152134.10555.j6t@kdbg.org>
+References: <20100415141504.GB17883@spearce.org> <1271358560-8946-6-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Daniel Richard G." <skunk@iskunk.org>
-X-From: git-owner@vger.kernel.org Thu Apr 15 21:29:33 2010
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Christian Halstrick <christian.halstrick@gmail.com>,
+	jan.sievers@sap.com, Matthias Sohn <matthias.sohn@sap.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Apr 15 21:36:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2Ukl-0006Vw-WE
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 21:29:32 +0200
+	id 1O2Urn-00021f-CF
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 21:36:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756265Ab0DOT3Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Apr 2010 15:29:24 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:60078 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756253Ab0DOT3O convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Apr 2010 15:29:14 -0400
-Received: by gyg13 with SMTP id 13so902300gyg.19
-        for <git@vger.kernel.org>; Thu, 15 Apr 2010 12:29:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=IcEo8m6cYe0v1QGe0LQKvyzYg2lzfgWFbZIBs7uEiUk=;
-        b=l7cwEvODC2szJCHmQt5SR1OAHersYle2D7gJTgEklZQOy4FdjJ4uJjR70E90OdXIA7
-         lH16JG4N0KA2+MzQvtRFRHNfxWdWIVLFwsuncbZUHL+VywN2nIW/dI18/r9p/fZqg3E/
-         NmOYoQS2J3/uxs97Qq0/F2mghQoxvoy9bAYIc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=a9co9iR2mTTF+xYrk1LHjt8vzTZCd0rWs4nm62TiIUyx9a7OvbB0KmN4ZoMopDBZ6h
-         Lb2ulhlMR1hTftvFCdqptTIBtvFUBBELdj52tv/7F4AaVqX61dGdoMFaPqJLH4kbCVRX
-         HPKcYVFljkmD6sa98+8PReBU47q4ZCEE0P13w=
-Received: by 10.100.212.9 with HTTP; Thu, 15 Apr 2010 12:29:11 -0700 (PDT)
-In-Reply-To: <1271358589.19032.1370170305@webmail.messagingengine.com>
-Received: by 10.100.24.39 with SMTP id 39mr1067287anx.20.1271359752023; Thu, 
-	15 Apr 2010 12:29:12 -0700 (PDT)
+	id S1756179Ab0DOTgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Apr 2010 15:36:42 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:10917 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756049Ab0DOTgl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Apr 2010 15:36:41 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 7A405CDF83;
+	Thu, 15 Apr 2010 21:36:28 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id A62C619F5C0;
+	Thu, 15 Apr 2010 21:34:10 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <1271358560-8946-6-git-send-email-spearce@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145014>
 
-On Thu, Apr 15, 2010 at 21:09, Daniel Richard G. <skunk@iskunk.org> wro=
-te:
-> * On Tru64, MAP_FAILED is #defined as (-1L), and the compiler chokes =
-if
-> =C2=A0you directly compare a pointer to an integer. So, need to cast
-> =C2=A0MAP_FAILED to (void *), redundant as that may seem.
+On Donnerstag, 15. April 2010, Shawn O. Pearce wrote:
+> +test_expect_success 'fetch notices corrupt pack' '
+> +	cp -R "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git
+> "$HTTPD_DOCUMENT_ROOT_PATH"/repo_bad1.git && +	(cd
+> "$HTTPD_DOCUMENT_ROOT_PATH"/repo_bad1.git &&
+> +	 p=`ls objects/pack/pack-*.pack` &&
+> +	 chmod u+w $p &&
+> +	 dd if=/dev/zero of=$p bs=256 count=1 seek=1
 
-That one may be better handled at one place (git-compat-util.h?) with
-something like:
+Since the particular byte that overwrites the pack is irrelevant, please make 
+this:
 
-  #ifdef Tru64
-  #define MAP_FAILED ((void *)MAP_FAILED)
-  #endif
+	printf %0256d 0 | dd of=$p bs=256 count=1 seek=1
 
-P.S. You may consider reading Documentation/SubmittingPatches.
-The way you did it is a little unconventional.
+for the benefit of us poor Windowsers who do not have /dev/zero.
+
+Perhaps you want to add conv=notrunc.
+
+Ditto in patch 6/6.
+
+Thanks,
+-- Hannes
