@@ -1,69 +1,85 @@
-From: Chris Webb <chris@arachsys.com>
-Subject: [PATCH] git-instaweb: pass through invoking user's path to gitweb
- CGI scripts
-Date: Thu, 15 Apr 2010 14:29:45 +0100
-Message-ID: <59ee8c7a3052ed747b5dbaa0a1d0e51aded9c413.1271337968.git.chris@arachsys.com>
+From: Daniel Grace <negativeview@gmail.com>
+Subject: Lost a week?
+Date: Thu, 15 Apr 2010 08:57:50 -0500
+Message-ID: <t2s62a3a9cb1004150657g5baabb42o512e0e103d1e9596@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 15 15:30:05 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 15 15:58:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2P8v-0005sw-Ej
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 15:30:05 +0200
+	id 1O2PZy-0006Mi-Ss
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 15:58:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753912Ab0DON3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 09:29:50 -0400
-Received: from alpha.arachsys.com ([91.203.57.7]:42699 "EHLO
-	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751403Ab0DON3t (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 09:29:49 -0400
-Received: from [83.104.159.199] (helo=miranda.arachsys.com)
-	by alpha.arachsys.com with esmtpa (Exim 4.52)
-	id 1O2P8c-0005YQ-G0; Thu, 15 Apr 2010 14:29:46 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753787Ab0DON55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Apr 2010 09:57:57 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:20004 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753698Ab0DON55 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Apr 2010 09:57:57 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so446501qwh.37
+        for <git@vger.kernel.org>; Thu, 15 Apr 2010 06:57:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:received:message-id
+         :subject:from:to:content-type;
+        bh=yp/hNWn8eGcEWHbke+qg1XYKWATrgGpTRaGZRypq+9M=;
+        b=BE5gB1FArD77qNZHUWh7FUV2LJra75VfV0WlNBfxpzrnuye3T5cq/aVcHRMuK/IPa7
+         ZdwjS2Rm+QBr59k0MGLgrHPBvrpBf79GVXyTJkAecNqpE7PDzn6zYVE3N4uXJ7IgTbEJ
+         XxvUSirU2AxT7/EMP60ItvUrIw0fOF5MAUxjY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=nuXM9lB0nRPWsJ6IbQKqNfThh/b2KptN8FMSCjhHMgped0TV9q3vB0v/7KTqwxE0ub
+         scV5WWwyEI1LjRUl7ovRRp6E4rNXUOtbuTbmACsI7kXjN2fVlYvka5CFjDnPGD426/Rt
+         PyrBYJNVftPUVbaT+1hcO1i8kWGeeOs8zGl+k=
+Received: by 10.229.86.140 with HTTP; Thu, 15 Apr 2010 06:57:50 -0700 (PDT)
+Received: by 10.229.35.80 with SMTP id o16mr6304744qcd.93.1271339870975; Thu, 
+	15 Apr 2010 06:57:50 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144986>
 
-When used with lighttpd or mongoose, git-instaweb previously passed a
-hard-coded, default value of PATH to the gitweb CGI script. Use the invoking
-user's value for PATH for this instead. (This is already implicitly the
-behaviour for other web servers supported by git-instaweb.)
+Appologies for not having more information. I usually use git as if
+it's just SVN with non-network checkins.
 
-Signed-off-by: Chris Webb <chris@arachsys.com>
----
- git-instaweb.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+A few days ago, I pushed my git repository to github:
 
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index d4941a9..f608014 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -212,7 +212,7 @@ server.errorlog = "$fqgitdir/gitweb/error.log"
- # variable above and uncomment this
- #accesslog.filename = "$fqgitdir/gitweb/access.log"
- 
--setenv.add-environment = ( "PATH" => "/usr/local/bin:/usr/bin:/bin" )
-+setenv.add-environment = ( "PATH" => env.PATH )
- 
- cgi.assign = ( ".cgi" => "" )
- 
-@@ -361,7 +361,7 @@ error_log	$fqgitdir/gitweb/error.log
- access_log	$fqgitdir/gitweb/access.log
- 
- #cgi setup
--cgi_env		PATH=/usr/local/bin:/usr/bin:/bin,GIT_DIR=$GIT_DIR,GIT_EXEC_PATH=$GIT_EXEC_PATH
-+cgi_env		PATH=$PATH,GIT_DIR=$GIT_DIR,GIT_EXEC_PATH=$GIT_EXEC_PATH
- cgi_interp	$PERL
- cgi_ext		cgi,pl
- 
--- 
-1.7.0.3
+127  git remote add github
+git@github.com:negativeview/Wherespresso.git [Note, this is a private
+repo]
+128  git push github master
+
+I then went about doing real-world business. I noticed at some point
+that when I did a `git status` it said that no branches were checked
+out. I don't remember doing anything between pushing to github and
+this state. If I did a git branch it shows something like * (no
+branch) then below that, master. I shrugged it off and did what I
+expected to fix that odd issue:
+
+515  git branch
+516  git checkout master
+
+Now, the next day, I noticed that I have no git history between the
+6th and something I did soon after the git checkout master:
+
+$ git log | grep Date | head -n 5
+Date:   Wed Apr 14 14:43:58 2010 -0500
+Date:   Tue Apr 6 00:42:20 2010 -0500
+Date:   Mon Apr 5 23:57:54 2010 -0500
+Date:   Mon Apr 5 07:01:26 2010 -0500
+Date:   Mon Apr 5 06:17:18 2010 -0500
+
+github shows the same. I KNOW that there were commits (representing a
+good bit of work) in that time. I'm sure that it's *somewhere* but I'm
+at a complete loss as to where it is. gitk shows no side branches (nor
+does git branch). I don't use branches really, as much as I know that
+I should.
+
+Daniel
+http://www.doomstick.com
