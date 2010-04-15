@@ -1,99 +1,79 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2] tag -v: use RUN_GIT_CMD to run verify-tag
-Date: Thu, 15 Apr 2010 04:36:25 -0500
-Message-ID: <20100415093625.GA18612@progeny.tock>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Deskin Miller <deskinm@umich.edu>, Johannes Sixt <j6t@kdbg.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] t1010-mktree: Adjust expected result to code and documentation
+Date: Thu, 15 Apr 2010 11:34:07 +0200
+Message-ID: <09645aa273ba1215c6c34a5727ef97261ac0a149.1271323912.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 15 11:36:35 2010
+X-From: git-owner@vger.kernel.org Thu Apr 15 11:37:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2LUo-00069V-Pw
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 11:36:27 +0200
+	id 1O2LVh-00079D-6y
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 11:37:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932108Ab0DOJgZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 05:36:25 -0400
-Received: from mail-yw0-f194.google.com ([209.85.211.194]:45243 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932099Ab0DOJgW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 05:36:22 -0400
-Received: by ywh32 with SMTP id 32so614350ywh.33
-        for <git@vger.kernel.org>; Thu, 15 Apr 2010 02:36:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=BFcCoPardxR14lG1UIlnR5BPmYA3gOYHkLDbL+wr9YQ=;
-        b=qw5Mg3N+MQRXVW5e+gnFeDeS5gmBBBEiaCJyDyKzms2/tYk+McINnRlqLcxz44iGZM
-         LsXLGa24zIrKnG1PFGTnBMKd6mT6OeZuLPALyoSRJK1pxQuRc7p61fDuBuJo9yW+aWGX
-         55K/AY7Ppau9lDdU0F6CBg6qtW+h4xIawHdpY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=t+TbJaecU1DxM/X2e78PQql5Ti01Osu/8As+pTri/kYJJnpizIpWrZZ4AiajeVBmiO
-         GNAMi5ltwxByg7kCzjdwFBCEOkISNk2Uv5xyscfRre3t/I86SB7Dq+v75fvcx7cY6OAH
-         m4Hnx1+EccdnVQq0GE5uUhzHoHenBeDND9f90=
-Received: by 10.100.222.12 with SMTP id u12mr11943444ang.113.1271324181000;
-        Thu, 15 Apr 2010 02:36:21 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 21sm899261iwn.15.2010.04.15.02.36.19
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 15 Apr 2010 02:36:20 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932075Ab0DOJhM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Apr 2010 05:37:12 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:39782 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932069Ab0DOJhK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Apr 2010 05:37:10 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 25B3DEB307;
+	Thu, 15 Apr 2010 05:37:09 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Thu, 15 Apr 2010 05:37:09 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=JtWcIifG+uWFhV0maAlqcOHL7CI=; b=qT4dgVVMNkRFIHXbpQS+eJ0wpiMbKbRcw+/wWVg5BJikx4FLo0Q8OQcMNCy6B/B3zR3pikx0ckXbPpvusOuJ45+1ZTGaOXx2XU0rnwuurm4H5hw1iUQGggCHuh9N6ea/i5FdF8+RkPIo+JGsSmUzsfxvVQo3p2xvX+zn9EjkG1M=
+X-Sasl-enc: GWGC1UW9bgX66dnn8ul8RuYF2vXisv0nywLmTXhk2XAK 1271324228
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 9162F4CF8E0;
+	Thu, 15 Apr 2010 05:37:08 -0400 (EDT)
+X-Mailer: git-send-email 1.7.1.rc1.248.gcefbb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144967>
 
-This is the preferred way to run a git command.
+The last two tests here were always supposed to fail in the sense
+that, according to code and documentation, mktree should read non-recursive
+ls-tree output, but not recursive one, and therefore explicitely refuses
+to deal with slashes.
 
-The only obvious observable effects I can think of are that the exec
-is properly reported in GIT_TRACE output and that verifying signed
-tags will still work if the git-verify-tag hard link in gitexecdir
-goes missing.
+Adjust the test (must_fail) so that it succeeds when mktree dies on
+slashes.
 
-Helped-by: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
-v1 was part of a longer series that replaced the run_command with a
-function call [1].
+CC'ed to you, Junio, as the original test author, according
+to the new guidelines :)
 
-Thanks to Hannes for the pointer.
+ t/t1010-mktree.sh |   10 ++++------
+ 1 files changed, 4 insertions(+), 6 deletions(-)
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/142681/focus=142682
-What about the rest of the series?  Without some facility [2] to
-verify tags without going out of the way to do it, it is hard to end
-up using tag -v often enough to notice the speed difference.
-[2] maybe a fetch-update hook.
-http://thread.gmane.org/gmane.comp.version-control.git/101585/focus=101590
-
- builtin/tag.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 4ef1c4f..d311491 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -147,11 +147,11 @@ static int delete_tag(const char *name, const char *ref,
- static int verify_tag(const char *name, const char *ref,
- 				const unsigned char *sha1)
- {
--	const char *argv_verify_tag[] = {"git-verify-tag",
-+	const char *argv_verify_tag[] = {"verify-tag",
- 					"-v", "SHA1_HEX", NULL};
- 	argv_verify_tag[2] = sha1_to_hex(sha1);
+diff --git a/t/t1010-mktree.sh b/t/t1010-mktree.sh
+index 9956e3a..b946f87 100755
+--- a/t/t1010-mktree.sh
++++ b/t/t1010-mktree.sh
+@@ -58,14 +58,12 @@ test_expect_success 'allow missing object with --missing' '
+ 	test_cmp tree.missing actual
+ '
  
--	if (run_command_v_opt(argv_verify_tag, 0))
-+	if (run_command_v_opt(argv_verify_tag, RUN_GIT_CMD))
- 		return error("could not verify the tag '%s'", name);
- 	return 0;
- }
+-test_expect_failure 'mktree reads ls-tree -r output (1)' '
+-	git mktree <all >actual &&
+-	test_cmp tree actual
++test_expect_success 'mktree refuses to read ls-tree -r output (1)' '
++	test_must_fail git mktree <all >actual
+ '
+ 
+-test_expect_failure 'mktree reads ls-tree -r output (2)' '
+-	git mktree <all.withsub >actual &&
+-	test_cmp tree.withsub actual
++test_expect_success 'mktree refuses to read ls-tree -r output (2)' '
++	test_must_fail git mktree <all.withsub >actual
+ '
+ 
+ test_done
 -- 
-1.7.1.rc1
+1.7.1.rc1.248.gcefbb
