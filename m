@@ -1,81 +1,68 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] Add .depend directories to .gitignore
-Date: Thu, 15 Apr 2010 02:35:20 -0500
-Message-ID: <20100415073519.GA13492@progeny.tock>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] (resend) stash: Don't overwrite files that have
+ gone from the index
+Date: Thu, 15 Apr 2010 03:38:56 -0400
+Message-ID: <20100415073856.GC27542@coredump.intra.peff.net>
+References: <1271291062-32154-1-git-send-email-charles@hashpling.org>
+ <1271291062-32154-2-git-send-email-charles@hashpling.org>
+ <201004150933.41330.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 15 09:35:29 2010
+Cc: Charles Bailey <charles@hashpling.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Apr 15 09:39:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2Jbi-0006Pi-5l
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 09:35:26 +0200
+	id 1O2Jff-00082q-0b
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 09:39:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757368Ab0DOHfU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Apr 2010 03:35:20 -0400
-Received: from mail-pz0-f204.google.com ([209.85.222.204]:65152 "EHLO
-	mail-pz0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757364Ab0DOHfQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 03:35:16 -0400
-Received: by pzk42 with SMTP id 42so858452pzk.4
-        for <git@vger.kernel.org>; Thu, 15 Apr 2010 00:35:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition
-         :content-transfer-encoding:user-agent;
-        bh=8apLgu9NkyxFD53pUsh8hIs0TBACcxh6VCUQy2OMNic=;
-        b=cGO70mLHCvbjSoz23wjU2dBJcDTRmy71dl9mVI8B1+LHKisU28t4ImY/RQBHk1sVlh
-         4Ryhm0cdBaw4suutXFYo8U2v8EkH9hSWF8yH7UV8iXig+qirkhfgZko1FiZxhyQNL3ka
-         dsAxf/woHAWcpWJf0pIDsU4cVfN29rmhlYMfg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        b=evutmoPu51lMFWsCHu1Vx1qx4Jcl2IokILaC/r0q44TRvEJiaHxhqb8L1DpG4Knu4k
-         ycsx4lPpx1pSY7zVDiq/jZryIW10mF3eueAvjHWR0WFPFfX88fzw/FqeTfDaPnaBGjwT
-         IrzADpRKU9GI8ApNOPcHXioJ2SPnwSSYZoYJ0=
-Received: by 10.114.237.21 with SMTP id k21mr2314377wah.141.1271316915253;
-        Thu, 15 Apr 2010 00:35:15 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm811046iwn.8.2010.04.15.00.35.14
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 15 Apr 2010 00:35:14 -0700 (PDT)
+	id S1757376Ab0DOHj0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Apr 2010 03:39:26 -0400
+Received: from peff.net ([208.65.91.99]:46758 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756704Ab0DOHjZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Apr 2010 03:39:25 -0400
+Received: (qmail 14687 invoked by uid 107); 15 Apr 2010 07:39:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 15 Apr 2010 03:39:28 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Apr 2010 03:38:56 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <201004150933.41330.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144959>
 
-The makefile snippets that would land in these directories are already
-being ignored.  Ignore the directories instead so they don=E2=80=99t sh=
-ow up
-in =E2=80=98git clean -n=E2=80=99 output.
+On Thu, Apr 15, 2010 at 09:33:40AM +0200, Thomas Rast wrote:
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- .gitignore |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Charles Bailey wrote:
+> > diff --git a/git-stash.sh b/git-stash.sh
+> > index 908aab2..9efc544 100755
+> > --- a/git-stash.sh
+> > +++ b/git-stash.sh
+> > @@ -87,6 +87,8 @@ create_stash () {
+> >  			export GIT_INDEX_FILE &&
+> >  			git read-tree -m $i_tree &&
+> >  			git add -u &&
+> > +			{ git diff --quiet --diff-filter=D --cached ||
+> > +				git diff -z --name-only --diff-filter=D --cached | xargs -0 git add --ignore-errors; } &&
+> 
+> I think you'll also have to turn it into an 'add -f' invocation since
+> the file in question could conceivably have been ignored-but-tracked,
+> and straight 'add' would refuse to re-track it.
+> 
+> (No, I don't have any good ideas on how to get rid of xargs short of
+> some shell loop...)
 
-diff --git a/.gitignore b/.gitignore
-index 4c24152..561401b 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -178,7 +178,7 @@
- *.exe
- *.[aos]
- *.py[co]
--*.o.d
-+.depend/
- *+
- /config.mak
- /autom4te.cache
---=20
-1.7.1.rc1
+It should probably use update-index, which has a --stdin mode, and which
+doesn't care about ignores.
+
+-Peff
+
+PS I have not looked carefully into this issue yet, so I don't know if
+   the patch actually does the right thing or not.
