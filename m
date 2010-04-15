@@ -1,78 +1,58 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCHv5 2/6] Gitweb: add support for minifying gitweb.css
-Date: Thu, 15 Apr 2010 01:18:30 +0100
-Message-ID: <20100415001830.GA26416@hashpling.org>
-References: <4BB430C3.9030000@mailservices.uwaterloo.ca>
- <4BC4D3F0.5020107@hashpling.org>
- <201004140030.47222.jnareb@gmail.com>
- <7viq7tmvsb.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
+From: Antony Stubbs <antony.stubbs@gmail.com>
+Subject: Release Anouncements
+Date: Thu, 15 Apr 2010 12:20:33 +1200
+Message-ID: <63F87D82-D83C-4A15-9D5C-AE19FFE4B471@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1078)
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, Mark Rada <marada@uwaterloo.ca>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 15 02:18:42 2010
+Content-Transfer-Encoding: 8BIT
+Cc: illegalargument@googlegroups.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 15 02:20:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2Cn1-0001ZO-Ja
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 02:18:39 +0200
+	id 1O2Cp3-0002B0-1s
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 02:20:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753030Ab0DOASd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Apr 2010 20:18:33 -0400
-Received: from relay.ptn-ipout02.plus.net ([212.159.7.36]:19036 "EHLO
-	relay.ptn-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751849Ab0DOASc (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Apr 2010 20:18:32 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsEANr3xUvUnw4R/2dsb2JhbACbW3G+BIUNBA
-Received: from pih-relay04.plus.net ([212.159.14.17])
-  by relay.ptn-ipout02.plus.net with ESMTP; 15 Apr 2010 01:18:31 +0100
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by pih-relay04.plus.net with esmtp (Exim) id 1O2Cmt-0000eZ-36; Thu, 15 Apr 2010 01:18:31 +0100
-Received: from charles by hashpling.plus.com with local (Exim 4.69)
-	(envelope-from <charles@hashpling.org>)
-	id 1O2Cms-0008Hk-RR; Thu, 15 Apr 2010 01:18:30 +0100
-Content-Disposition: inline
-In-Reply-To: <7viq7tmvsb.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-08-17)
-X-Plusnet-Relay: 3f513b5200f78ecae88511328c945b64
+	id S1755584Ab0DOAUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 20:20:39 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:34271 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755488Ab0DOAUj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Apr 2010 20:20:39 -0400
+Received: by gwaa18 with SMTP id a18so386756gwa.19
+        for <git@vger.kernel.org>; Wed, 14 Apr 2010 17:20:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:content-type
+         :content-transfer-encoding:subject:date:message-id:cc:to
+         :mime-version:x-mailer;
+        bh=zjFnKmJbrWp79LpMgDbOJAnrAceenJngB6IGf6OJdPA=;
+        b=k5bKlQJgpS7w+CEuZtUSqPK7Ce0Hr2+UrT8lR2hgA4Dvkleo3DGEQ49zJMmGYI8EOA
+         cVCAAr9JBQcIxz1WdsMXWByb6IDU9kd/hP3jn3lDGW16kUNcwMWMda0FUsDiD3xZF41s
+         /FCWa4tPxdxOyMCmweGrIoLqnGXOWkspKnRyE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:content-type:content-transfer-encoding:subject:date:message-id
+         :cc:to:mime-version:x-mailer;
+        b=vPPCm3fa9DlM3E2Y6Y7Id++1k3Fog5jAd8u+txk971FUiznJJX1Rk/NAFKOS3QhLWM
+         khdpQlKEoDNDwrXbxIGIOZdns19Lj+kXQ+lhlnF35uF2PWgbg98frBt8LCfMsjrPK9RB
+         rBsAllZG8cCT0hDF1zwmb+pdtbWrfGTrECvkE=
+Received: by 10.150.172.7 with SMTP id u7mr7348966ybe.248.1271290838370;
+        Wed, 14 Apr 2010 17:20:38 -0700 (PDT)
+Received: from [192.168.1.20] ([210.55.232.26])
+        by mx.google.com with ESMTPS id ha13sm450066ibb.21.2010.04.14.17.20.35
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 14 Apr 2010 17:20:37 -0700 (PDT)
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144928>
 
-On Wed, Apr 14, 2010 at 04:58:12PM -0700, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > On Tue, 13 April 2010, Charles Bailey wrote:
-> >> On 01/04/2010 06:36, Mark Rada wrote:
-> >> > @@ -84,13 +92,14 @@ endif
-> >> >
-> >> >   all:: gitweb.cgi
-> >> >
-> >> > +FILES = gitweb.cgi
-> >> >   ifdef JSMIN
-> >> > +FILES += gitweb.min.js
-> >> > +endif
-> >> > +ifdef CSSMIN
-> >> > +FILES += gitweb.min.css
-> >> > +endif
-> >> > +gitweb.cgi: gitweb.perl $(GITWEB_JS) $(GITWEB_CSS)
-> >
-> > GITWEB_JS and GITWEB_CSS were originally meant to be URI to file with
-> > gitweb JavaScript code and default gitweb stylesheet,... but during work
-> > on minification of JavaScript code and CSS file it somehow got confused
-> > to mean source path.
-> 
-> I am not touching instaweb part, but this would fix the build/clean side
-> of the things, no?
-> 
+Shouldn't Git release announcements _at least_ go on the git mailing list as well as the linux-kerel list?
 
-Yes, this certainly fixes make and make clean for me with overridden
-GITWEB_JS and GITWEB_CSS paths.
-
-Charles.
+Cheers.
