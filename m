@@ -1,66 +1,127 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: Re: GSoC project proposal: Integrated Web client for git
-Date: Thu, 15 Apr 2010 10:43:56 +0530
-Message-ID: <x2he72faaa81004142213u2e084467q6855ebb7d625ad3@mail.gmail.com>
-References: <j2le72faaa81004111000t7bbbc028l8fa973a5f07809df@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: simplify gitweb.min.* generation and clean-up rules
+Date: Thu, 15 Apr 2010 08:11:53 +0200
+Message-ID: <201004150811.55627.jnareb@gmail.com>
+References: <4BC689FF.9080308@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 15 07:14:05 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Charles Bailey <charles@hashpling.org>
+To: Mark Rada <marada@uwaterloo.ca>
+X-From: git-owner@vger.kernel.org Thu Apr 15 08:11:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2HOu-00034U-7V
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 07:14:04 +0200
+	id 1O2IIj-00075u-C0
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 08:11:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753349Ab0DOFN6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 01:13:58 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:56937 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751307Ab0DOFN5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 01:13:57 -0400
-Received: by gwaa18 with SMTP id a18so543230gwa.19
-        for <git@vger.kernel.org>; Wed, 14 Apr 2010 22:13:56 -0700 (PDT)
+	id S1755114Ab0DOGL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Apr 2010 02:11:27 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:53160 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754837Ab0DOGL0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Apr 2010 02:11:26 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2609323fgg.1
+        for <git@vger.kernel.org>; Wed, 14 Apr 2010 23:11:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:content-type;
-        bh=tZt/AERzQSaQtpikquFrfLrHV0TeO9IeTx3cWSLQDuU=;
-        b=K2WUgfSKzm8iobE7uqcsxwAwOEtGb3klU4SEpBYxkC7JrvCho7Uau2BRb38Z9ZEn6s
-         lQ3xWwIa/7xbaMqzwtbgJdMHPe6+WeTktx1uzgu2Lfn+qmj+Zk0X07eBe+oeuqMgmrJC
-         B8TjwzcQQfGgUsrLwiKKb6/pvdu6vti+V3TYM=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=TOcQA6ajdjk9XeJSz6GUEuoj71HwUoEoNXA424trTTc=;
+        b=Z18/iuJnkus6BL59t5Zo/cjRFMlyzHXZFzbZiFndQAoZRBxAyqMVaelWkq8Om8RKHl
+         DBfYfZZn5RNPD10hiMvkJYAKDOnlF3Bmhjkh0Obl+g5zH55bAuAAA2zV9WLL4FkJ5d2u
+         IQyXedEEF95vZOhYtodT/5dFcdeD9nuQ0K1Jg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=OKuYQ76vnVbg5ki+tnf5uyLSLd9sJRqpccw3caM9IHZfDx2pFpU+lhx7sxmR+/Lj9Q
-         hcJksp5pBtmZDLEYrwAuLCSXRSOfZPfOmy2XlV5VjpRrvuD/uphqIv3G2ntsdm8wRuht
-         vkyZ2U8GZC41SGvUdItnwGqnaaQx+7ufz1STo=
-Received: by 10.90.118.4 with HTTP; Wed, 14 Apr 2010 22:13:56 -0700 (PDT)
-In-Reply-To: <j2le72faaa81004111000t7bbbc028l8fa973a5f07809df@mail.gmail.com>
-Received: by 10.90.38.13 with SMTP id l13mr3829419agl.119.1271308436187; Wed, 
-	14 Apr 2010 22:13:56 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=SRA4kYsAnmy/p0FKDRWj4bAt8gmFI4zGK8kMZhTPYPmIBB4LIAgQ+4SfJYxcRfufZN
+         +kYo6k7sfjv5vqKYwoYWSSIB49+LrDIkRcxfNWfxK/pBQd1wJOr/Zk15Z6QIUcqh1YF5
+         EEKHW3hWU1J0eASK0gNsSBTp+RR8XflE++VPc=
+Received: by 10.86.221.34 with SMTP id t34mr2760000fgg.36.1271311884858;
+        Wed, 14 Apr 2010 23:11:24 -0700 (PDT)
+Received: from [192.168.1.13] (abvo40.neoplus.adsl.tpnet.pl [83.8.212.40])
+        by mx.google.com with ESMTPS id d8sm1550719fga.26.2010.04.14.23.11.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 14 Apr 2010 23:11:24 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4BC689FF.9080308@mailservices.uwaterloo.ca>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144951>
 
-On Sun, Apr 11, 2010 at 10:30 PM, Pavan Kumar Sunkara
-<pavan.sss1991@gmail.com> wrote:
->
-> Hi,
-> I am Pavan Kumar Sunkara.
->
-> I have submitted my GSoC project proposal. It can seen here
-> http://socghop.appspot.com/gsoc/student_proposal/private/google/gsoc2010/pavansss91/t127045182893
->
-> Please read it and give me feedback. Any feedback is helpful.
->
-> -pavan
+Mark Rada wrote:
 
-Sorry there's a small change in the url.
+> GITWEB_CSS and GITWEB_JS are meant to be "what URI should the installed
+> cgi script use to refer to the stylesheet and JavaScript", never "this
+> is the name of the file we are building".
+> 
+> Lose incorrect assignment to them.
+> 
+> While we are at it, lose FILES that is used only for "clean" target in a
+> misguided way.  "make clean" should try to remove all the potential
+> build artifacts regardless of a minor configuration change.  Instead of
+> trying to remove only the build product "make clean" would have created
+> if it were run without "clean", explicitly list the three potential build
+> products for removal.
+> 
+> In addition, this patch tries to make sure that the scripts are
+> regenerated whenever the replacement variables are modified.  For a good
+> measure, if you used different JSMIN/CSSMIN since the last time you
+> produced minified version of these files, they are regenerated.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Tested-by: Mark Rada <marada@uwaterloo.ca>
+> 
+> 
+> ---
+> 
+> I gave this a test run:
+> 	With just jsmin enabled
+> 	With just cssmin enabled
+> 	With neither enabled
+> 	With both enabled
+> 	Overriding GITWEB_JS
+> 	Overriding GITWEB_JS and jsmin enabled
 
-http://socghop.appspot.com/gsoc/student_proposal/show/google/gsoc2010/pavansss91/t127045182893
+Thank you very much.
+ 
+> Instaweb will still generate what it needs to the first time around,
+> but if you change GITWEB_JS or the JSMIN (or css equivalents) then you
+> have to regenerate gitweb first manually before instaweb. I'm not sure
+> if it would be best to swallow up instaweb into this same patch or to
+> fix it separately (also, I still don't quite understand how this patch
+> works).
+
+Instaweb would need to check if gitweb was run with its GITWEB_JS and
+with curent JSMIN... and this should be I think a separate patch.
+
+>  config.mak.in   |    2 +
+>  gitweb/Makefile |   75 ++++++++++++++++++++++++++++---------------------------
+>  2 files changed, 40 insertions(+), 37 deletions(-)
+> 
+> diff --git a/config.mak.in b/config.mak.in
+> index 6008ac9..bb828fe 100644
+> --- a/config.mak.in
+> +++ b/config.mak.in
+> @@ -57,3 +57,5 @@ FREAD_READS_DIRECTORIES=@FREAD_READS_DIRECTORIES@
+>  SNPRINTF_RETURNS_BOGUS=@SNPRINTF_RETURNS_BOGUS@
+>  NO_PTHREADS=@NO_PTHREADS@
+>  PTHREAD_LIBS=@PTHREAD_LIBS@
+> +GITWEB_JS=/home/ferrous/gitweb.js
+> +
+
+I think that you have committed this by accident...
+
+-- 
+Jakub Narebski
+Poland
