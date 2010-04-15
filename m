@@ -1,68 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] (resend) stash: Don't overwrite files that have
- gone from the index
-Date: Thu, 15 Apr 2010 03:38:56 -0400
-Message-ID: <20100415073856.GC27542@coredump.intra.peff.net>
-References: <1271291062-32154-1-git-send-email-charles@hashpling.org>
- <1271291062-32154-2-git-send-email-charles@hashpling.org>
- <201004150933.41330.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] reflog: ignore expire-unreachable for "HEAD" reflog
+Date: Thu, 15 Apr 2010 00:40:27 -0700
+Message-ID: <7vochlkvtg.fsf@alter.siamese.dyndns.org>
+References: <7vljcppycc.fsf@alter.siamese.dyndns.org>
+ <7vfx2xpyam.fsf@alter.siamese.dyndns.org> <4BC6B5FF.6030406@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Charles Bailey <charles@hashpling.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Apr 15 09:39:31 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Apr 15 09:40:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2Jff-00082q-0b
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 09:39:31 +0200
+	id 1O2Jgm-0008Qi-5p
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 09:40:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757376Ab0DOHj0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 03:39:26 -0400
-Received: from peff.net ([208.65.91.99]:46758 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756704Ab0DOHjZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 03:39:25 -0400
-Received: (qmail 14687 invoked by uid 107); 15 Apr 2010 07:39:28 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 15 Apr 2010 03:39:28 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Apr 2010 03:38:56 -0400
-Content-Disposition: inline
-In-Reply-To: <201004150933.41330.trast@student.ethz.ch>
+	id S1757387Ab0DOHkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Apr 2010 03:40:35 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54533 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757287Ab0DOHke (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Apr 2010 03:40:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1711AAB8DB;
+	Thu, 15 Apr 2010 03:40:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1WgykNJYUcJK+iA3afOfcLEAmhs=; b=Z7urzc
+	8w9cMEddx3Au+5jFxuMiwApBz/7h5own7RjaDTr4Y19SIEq/2xZKIUoTlLgbMSaf
+	NiMbhdbXP0sB2D/6sv5XzUkrWnYlx6kbg3+2tz1vQStAsdKkMTYeEck3KMo2xCFV
+	VRY5DXdBMIdOrsuhG92v2YunvJz5dh1bHoS0A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PBMvsdYIxVkvcFIgBGoZD0iEKdKfDydi
+	vi45sazUMtuWrCgFSNV0Asq6Yl3xPl/B6cAoJ+/DHEQRh1OMcF6G6KuZX6R6gHqC
+	8Usf97Iworq7+k9gD5p5W+4jh0BOd7vzDtNHqOgdtX92rJAEeN5znpM9m81vAlDw
+	AgDni5d+DQo=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E4523AB8DA;
+	Thu, 15 Apr 2010 03:40:30 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5979BAB8D9; Thu, 15 Apr
+ 2010 03:40:28 -0400 (EDT)
+In-Reply-To: <4BC6B5FF.6030406@viscovery.net> (Johannes Sixt's message of
+ "Thu\, 15 Apr 2010 08\:45\:19 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 2AF47A76-4862-11DF-AB5A-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144960>
 
-On Thu, Apr 15, 2010 at 09:33:40AM +0200, Thomas Rast wrote:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> Charles Bailey wrote:
-> > diff --git a/git-stash.sh b/git-stash.sh
-> > index 908aab2..9efc544 100755
-> > --- a/git-stash.sh
-> > +++ b/git-stash.sh
-> > @@ -87,6 +87,8 @@ create_stash () {
-> >  			export GIT_INDEX_FILE &&
-> >  			git read-tree -m $i_tree &&
-> >  			git add -u &&
-> > +			{ git diff --quiet --diff-filter=D --cached ||
-> > +				git diff -z --name-only --diff-filter=D --cached | xargs -0 git add --ignore-errors; } &&
-> 
-> I think you'll also have to turn it into an 'add -f' invocation since
-> the file in question could conceivably have been ignored-but-tracked,
-> and straight 'add' would refuse to re-track it.
-> 
-> (No, I don't have any good ideas on how to get rid of xargs short of
-> some shell loop...)
+> Does not help what? What is the problem?
 
-It should probably use update-index, which has a --stdin mode, and which
-doesn't care about ignores.
+You will lose the record from HEAD reflog that records the fact that you
+were at the tip of "next" less than "reflogexpire" but more than
+"reflogexpireunreachable" time ago, if you run "gc" while on "master".
 
--Peff
-
-PS I have not looked carefully into this issue yet, so I don't know if
-   the patch actually does the right thing or not.
+Such a pruning does not have much to do with the real reason why
+expireunreachable would be a useful thing (namely, to prune failed
+histories that have been rewound away faster than the history that
+survived from reflog of individual branches).
