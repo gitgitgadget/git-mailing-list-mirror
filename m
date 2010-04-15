@@ -1,86 +1,97 @@
-From: Mark Rada <marada@uwaterloo.ca>
-Subject: Re: [PATCHv5 2/6] Gitweb: add support for minifying gitweb.css
-Date: Wed, 14 Apr 2010 21:21:52 -0400
-Message-ID: <4BC66A30.7030107@mailservices.uwaterloo.ca>
-References: <4BB430C3.9030000@mailservices.uwaterloo.ca> <201004150225.42101.jnareb@gmail.com> <7veiihmtjw.fsf@alter.siamese.dyndns.org> <201004150302.51242.jnareb@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] t7006: guard cleanup with test_expect_success
+Date: Wed, 14 Apr 2010 20:27:52 -0500
+Message-ID: <20100415012752.GA17132@progeny.tock>
+References: <20100413021153.GA3978@progeny.tock>
+ <20100413021355.GA4118@progeny.tock>
+ <7v4ojdpxls.fsf@alter.siamese.dyndns.org>
+ <20100415003803.GB14151@progeny.tock>
+ <7v7ho9mt3a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Charles Bailey <charles@hashpling.org>,
-	Mark Rada <marada@uwaterloo.ca>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 15 03:22:18 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 15 03:28:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2Dma-0001gF-2s
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 03:22:16 +0200
+	id 1O2Dsa-0003ER-82
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 03:28:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755900Ab0DOBWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Apr 2010 21:22:11 -0400
-Received: from mailservices.uwaterloo.ca ([129.97.128.141]:36813 "EHLO
-	mailchk-m04.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753410Ab0DOBWK (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Apr 2010 21:22:10 -0400
-Received: from karakura.local ([74.198.12.14])
-	(authenticated bits=0)
-	by mailchk-m04.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id o3F1Ltuq005917
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 14 Apr 2010 21:21:57 -0400
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <201004150302.51242.jnareb@gmail.com>
-X-UUID: 356b3564-63d1-401f-afce-1c1bd520c165
-X-Miltered: at mailchk-m04 with ID 4BC66A33.001 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
-X-Virus-Scanned: clamav-milter 0.95.2 at mailchk-m04
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m04.uwaterloo.ca [129.97.128.141]); Wed, 14 Apr 2010 21:22:00 -0400 (EDT)
+	id S1756171Ab0DOB2S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Apr 2010 21:28:18 -0400
+Received: from mail-yw0-f194.google.com ([209.85.211.194]:43689 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756155Ab0DOB2H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 21:28:07 -0400
+Received: by ywh32 with SMTP id 32so407599ywh.33
+        for <git@vger.kernel.org>; Wed, 14 Apr 2010 18:28:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=IVHBM07EC+E55rqF1IHCU6NpZDhF643dDRP9v4QIwMk=;
+        b=WOZLbkbrXi4EZP/WHWYzwNWSc0fOv7qGtNrEuDRu9x+/w4Fvpzgz22lqU6PGME4GcD
+         T70ZqfaifnWjryD+9yfX56SyBf6isDIlmqCjoHjbIldxBzU1VjBbxxc4v3yiGumnnvhR
+         dOvvrzW87w2NWnVc8AYOvhraaXl67OupqWlEc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=QY3P0vQSAbe4MwwnxEC/fbGgcB7njHDuPKjMi4sCgfkBOBP2yYcYgpCBNZAHYTfpc4
+         iIYA7q5mBPuX3edd+LcU4EADyEoaE61khA07ExK9VheagdOm261Doq7YSSlWMzL1dE4E
+         VMh5rKvB7kMFFykjgXz56ptNkJxN1sjadhY9A=
+Received: by 10.150.194.13 with SMTP id r13mr5963136ybf.284.1271294886282;
+        Wed, 14 Apr 2010 18:28:06 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id a1sm540473ibs.18.2010.04.14.18.28.03
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 14 Apr 2010 18:28:04 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v7ho9mt3a.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144939>
 
-On 10-04-14 9:02 PM, Jakub Narebski wrote:
-> Junio C Hamano wrote:
->> Jakub Narebski <jnareb@gmail.com> writes:
->>
->>>> -gitweb.cgi: gitweb.perl $(GITWEB_JS) $(GITWEB_CSS)
->>>> +gitweb.cgi: gitweb.perl
->>> ...
->>> That makes gitweb.cgi not depend on gitweb.min.js, not gitweb.min.css.
->>
->> That is what I inteded to do.
->>
->> Unless you are including gitweb.cgi (iow, the contents of the generated
->> file depends on the _contents_ of gitweb.min.js (or gitweb.js), gitweb.cgi
->> does _not_ depend on these files.  Of course if you generate gitweb.cgi
->> out of gitweb.perl with one setting of GITWEB_JS and then change your
->> mind, then you need to regenerate it, but that is not something you can do
->> by comparing file timestamp of gitweb.cgi and the file timestamp of
->> $(GITWEB_JS) anyway.  You would need to imitate something like how
->> GIT-BUILD-OPTIONS is used by the primary Makefile.
-> 
-> Right.  I agree.
-> 
-> P.S. This is nt the case with git-instaweb, which literally include 
-> gitweb.js or gitweb.min.js...
-> 
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-I believe we can just change the variable names as planned before as well
-as the dependancies, and that should fix up instaweb as far as will need
-to be fixed, the rest has to happen at gitweb.cgi generation time.
+[...]
+>> +cleanup_fail() {
+>> +	echo >&2 cleanup failed
+>> +	exit 1
+>> +}
+>
+> I think you meant to say "false" or "(exit 1)" here.  To see why...
+[...]
+> ... try your patch with "rm -f stdout_is_tty" replaced with "(exit 1)=
+" to
+> see how your cleanup_fail behaves.
 
-My understanding (please correct me if I am wrong) is that comparing the
-mtimes of the files is not reliable. So can't we just make gitweb.cgi
-depend on source .js and .css files, since any modifications there will
-also cause the minified versions to be regenerated? Can Junio's patch just
-be updated to subst the suffix of GITWEB_JS and GITWEB_CSS, which makes sure
-the correct version is being used?
+Good catch; thanks.  Here=E2=80=99s a patch for squashing in case you w=
+ould
+like one.
 
-
-
--- 
-Mark Rada
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index 62595ab..a3d0210 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -6,7 +6,7 @@ test_description=3D'Test automatic use of a pager.'
+=20
+ cleanup_fail() {
+ 	echo >&2 cleanup failed
+-	exit 1
++	return 1
+ }
+=20
+ test_expect_success 'set up terminal for tests' '
