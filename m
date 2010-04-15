@@ -1,66 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
-From: Kynn Jones <kynnjo@gmail.com>
-Subject: Re: Are "private blobs/trees" possible?
-Date: Tue, 26 Oct 2010 12:56:07 -0400
-Message-ID: <AANLkTinVcHK_qwqcPCecHuWXGsVdGhmy+6+eLOW1bLWQ@mail.gmail.com>
-References: <AANLkTimQ7Z9Cd2yKw5jFD6UBzFRBZk_-SpC7jc6+JACw@mail.gmail.com>
-	<1288037406.819.93.camel@drew-northup.unet.maine.edu>
-	<201010252043.o9PKhN6I024622@no.baka.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] reflog: ignore expire-unreachable for "HEAD" reflog
+Date: Thu, 15 Apr 2010 09:57:23 -0700
+Message-ID: <7vhbnck618.fsf@alter.siamese.dyndns.org>
+References: <7vljcppycc.fsf@alter.siamese.dyndns.org>
+ <7vfx2xpyam.fsf@alter.siamese.dyndns.org> <4BC6B5FF.6030406@viscovery.net>
+ <7vochlkvtg.fsf@alter.siamese.dyndns.org> <4BC6D30F.5020004@viscovery.net>
+ <7v4ojclwyu.fsf@alter.siamese.dyndns.org> <4BC70D75.70801@viscovery.net>
+ <20100415163607.GA4279@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-NNTP-Posting-Date: Tue, 26 Oct 2010 16:56:18 +0000 (UTC)
-To: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 15 Apr 2010 16:57:46 +0000 (UTC)
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type;
-        bh=kBPvilgIx5O4Jl+yh1VscrpsaLBA0hpRSHeV32LmrdQ=;
-        b=pEbgwRSL4iScEz/1GaDqQ6ZoHHUvMDZtHXMFDhfSwB3621nbGOolRnno98d8jtVbjT
-         hgZjUVy5yY8uOuUt3nWBva80rGhGAqQUIQv6LT4QU70A4Hfd5WaRSk8Ei8KAw5Wi4y0V
-         L+A27qy55ofvRy/mwxMdMo7V+HxMvdkg8IGFg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=Um7uM65FTCC/BmKZg9amzAhOUot797vOyDYFJtOf4OsM1WeKboDCk0egpsZRvq1QLW
-         5+KROaX3meWxPVghdE4HHwgj1G1HIMm6sooy6PVVw9hoTskKbGKg20CZQNw1HLQhO4ie
-         2Rzw4SCQigzs+i+rE78Klek0nPPWfziMydAwU=
-In-Reply-To: <201010252043.o9PKhN6I024622@no.baka.org>
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M4H0I4/EBJNCN7Vt5InGkfMMWy8=; b=Ur3FM9
+	6iidoMdF/wfvUBANEOBa/WDYzjkdsdKAnDpY6npN4XCVfQYXYz/Bu4ptKzIU2iHv
+	3VPXJ/2wgcmXp0afb7UdDkGYYKLJR9b6f7AIrj5PiSkfEYZWxZ/PKzXPZLIqVXxO
+	wyEjl3TKpZjioo7qZDKEV3AmR6BLkr0TBEN1k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qtX8km9ts0v1sGbt2EvNKFOmOLG1kzM7
+	w+vw99SejdVfLLZCu47F+LFRUGteKm2Mi9VJJEtweas9qdX/5GccJ+gyHVZh8i9u
+	tWD2Mg7B6qI0m+3FPph4UbRD50mGPpak4MTrSPD5UWy/yIE8NUi4zdM6hIz8YpjG
+	LPV6mirQzQw=
+In-Reply-To: <20100415163607.GA4279@coredump.intra.peff.net> (Jeff King's
+ message of "Thu\, 15 Apr 2010 12\:36\:07 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F9A5DB4C-48AF-11DF-A685-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145000>
 Received: from vger.kernel.org ([209.132.180.67]) by lo.gmane.org with esmtp
- (Exim 4.69) (envelope-from <git-owner@vger.kernel.org>) id 1PAmop-0004JV-V5
- for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 18:56:16 +0200
+ (Exim 4.69) (envelope-from <git-owner@vger.kernel.org>) id 1O2SNm-00013I-Pz
+ for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 18:57:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760065Ab0JZQ4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Oct 2010
- 12:56:10 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:52835 "EHLO
- mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1759628Ab0JZQ4J (ORCPT <rfc822;git@vger.kernel.org>); Tue, 26 Oct
- 2010 12:56:09 -0400
-Received: by qwk3 with SMTP id 3so2724266qwk.19 for <git@vger.kernel.org>;
- Tue, 26 Oct 2010 09:56:08 -0700 (PDT)
-Received: by 10.42.76.73 with SMTP id d9mr6413225ick.454.1288112168504; Tue,
- 26 Oct 2010 09:56:08 -0700 (PDT)
-Received: by 10.229.232.83 with HTTP; Tue, 26 Oct 2010 09:56:07 -0700 (PDT)
+ S1754850Ab0DOQ5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Apr 2010
+ 12:57:33 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38092 "EHLO
+ sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1754776Ab0DOQ5c (ORCPT <rfc822;git@vger.kernel.org>); Thu, 15 Apr 2010
+ 12:57:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1]) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B92EAB786; Thu, 15 Apr
+ 2010 12:57:32 -0400 (EDT)
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1]) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E9692AB781; Thu, 15 Apr
+ 2010 12:57:28 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4E0AFAB780; Thu, 15 Apr
+ 2010 12:57:25 -0400 (EDT)
 Sender: git-owner@vger.kernel.org
 
-Actually, it occurred to me after posting that the symlinking is not
-necessary.  As long as the private directory is ignored, then it can
-have its own independent (and purely local) git repository.
+Jeff King <peff@peff.net> writes:
 
-But I'll look into the multi-repo management system that Seth mentioned.
+> I think another way of addressing the same problem would be to redefine
+> "reachable" in this context as "reachable from any current ref".
 
-Thanks!
-
+I tend to agree, but I haven't thought through the case for entries that
+point at commits on detached HEAD.  My gut feeling is that unless they are
+connected to a real ref by now after all these expireunreachable days,
+they are "failed experiments" and deserve to get pruned, so "from any ref"
