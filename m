@@ -1,67 +1,170 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 5/6] http-fetch: Use index-pack rather than verify-pack to check packs
-Date: Thu, 15 Apr 2010 21:34:09 +0200
-Message-ID: <201004152134.10555.j6t@kdbg.org>
-References: <20100415141504.GB17883@spearce.org> <1271358560-8946-6-git-send-email-spearce@spearce.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH] git-gui: use textconv filter
+Date: Thu, 15 Apr 2010 21:39:44 +0200
+Message-ID: <20100415193944.GA5848@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Christian Halstrick <christian.halstrick@gmail.com>,
-	jan.sievers@sap.com, Matthias Sohn <matthias.sohn@sap.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Apr 15 21:36:48 2010
+X-From: git-owner@vger.kernel.org Thu Apr 15 21:40:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2Urn-00021f-CF
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 21:36:47 +0200
+	id 1O2UvE-0003mE-B6
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 21:40:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756179Ab0DOTgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 15:36:42 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:10917 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756049Ab0DOTgl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 15:36:41 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 7A405CDF83;
-	Thu, 15 Apr 2010 21:36:28 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id A62C619F5C0;
-	Thu, 15 Apr 2010 21:34:10 +0200 (CEST)
-User-Agent: KMail/1.9.10
-In-Reply-To: <1271358560-8946-6-git-send-email-spearce@spearce.org>
+	id S1755841Ab0DOTkO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Apr 2010 15:40:14 -0400
+Received: from mail-ew0-f220.google.com ([209.85.219.220]:44864 "EHLO
+	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755677Ab0DOTkL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Apr 2010 15:40:11 -0400
+Received: by ewy20 with SMTP id 20so680799ewy.1
+        for <git@vger.kernel.org>; Thu, 15 Apr 2010 12:40:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:mime-version:content-type:content-disposition
+         :user-agent;
+        bh=sqThiMhUjTt3kjC8r0pKw2ivnKL9MiTzijFbV/TimoI=;
+        b=VpLEqCSqy8AkiLvLDGCjl+jJ54FGREh26Q+GETW3CQ1L0OtRjNOLtGH2ePvgSbfmw1
+         P26pHKqGSCHVl91Cf8Sj8d3PBcfernU+vDDI1ivtiOgHYjZl6ef9spDmkWG5fi6nbBOM
+         Ijded0gLdSi2xeb1czuzjsznT4+x26kVGtPYQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        b=pC+Nmy3e1VLE+DRdWD2IKfcxgE6KplASR7NuLqJvce94Mw1zhvCE8Ocp0+DZmLV1aU
+         QzAvpl0DBGgcTBBNobprQ+lkV6EJbhqlGhv7JZzsPdSXlXqjKrsE7TtjMXdllARIbPt7
+         3Yz9s98MnhLKfdscPlrveDnenh0ao8dHqiAOA=
+Received: by 10.213.1.215 with SMTP id 23mr4950951ebg.88.1271360409018;
+        Thu, 15 Apr 2010 12:40:09 -0700 (PDT)
+Received: from darc.lan ([80.123.242.182])
+        by mx.google.com with ESMTPS id 14sm1239276ewy.2.2010.04.15.12.40.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 15 Apr 2010 12:40:07 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1O2Uue-0001Yz-NZ; Thu, 15 Apr 2010 21:39:44 +0200
 Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145015>
 
-On Donnerstag, 15. April 2010, Shawn O. Pearce wrote:
-> +test_expect_success 'fetch notices corrupt pack' '
-> +	cp -R "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git
-> "$HTTPD_DOCUMENT_ROOT_PATH"/repo_bad1.git && +	(cd
-> "$HTTPD_DOCUMENT_ROOT_PATH"/repo_bad1.git &&
-> +	 p=`ls objects/pack/pack-*.pack` &&
-> +	 chmod u+w $p &&
-> +	 dd if=/dev/zero of=$p bs=256 count=1 seek=1
+Use of the textconv filter in git-gui can be disabled by setting
+gui.textconv to false.
 
-Since the particular byte that overwrites the pack is irrelevant, please make 
-this:
+Staging hunks is disabled for converted diffs.
 
-	printf %0256d 0 | dd of=$p bs=256 count=1 seek=1
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
 
-for the benefit of us poor Windowsers who do not have /dev/zero.
+This patch applies to git://repo.or.cz/git-gui.
 
-Perhaps you want to add conv=notrunc.
+ git-gui.sh     |   28 +++++++++++++++++++++++++++-
+ lib/diff.tcl   |    5 ++++-
+ lib/option.tcl |    1 +
+ 3 files changed, 32 insertions(+), 2 deletions(-)
 
-Ditto in patch 6/6.
-
-Thanks,
--- Hannes
+diff --git a/git-gui.sh b/git-gui.sh
+index 8996d2d..204bfea 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -269,6 +269,17 @@ proc is_config_true {name} {
+ 	}
+ }
+ 
++proc is_config_false {name} {
++	global repo_config
++	if {[catch {set v $repo_config($name)}]} {
++		return 0
++	} elseif {$v eq {false} || $v eq {0} || $v eq {no}} {
++		return 1
++	} else {
++		return 0
++	}
++}
++
+ proc get_config {name} {
+ 	global repo_config
+ 	if {[catch {set v $repo_config($name)}]} {
+@@ -785,6 +796,7 @@ set default_config(user.email) {}
+ 
+ set default_config(gui.encoding) [encoding system]
+ set default_config(gui.matchtrackingbranch) false
++set default_config(gui.textconv) true
+ set default_config(gui.pruneduringfetch) false
+ set default_config(gui.trustmtime) false
+ set default_config(gui.fastcopyblame) false
+@@ -3408,6 +3420,19 @@ lappend diff_actions [list $ctxmsm entryconf [$ctxmsm index last] -state]
+ $ctxmsm add separator
+ create_common_diff_popup $ctxmsm
+ 
++proc has_textconv {path} {
++	if {[is_config_false gui.textconv]} {
++		return 0
++	}
++	set filter [gitattr $path diff set]
++	set textconv [get_config [join [list diff $filter textconv] .]]
++	if {$filter ne {set} && $textconv ne {}} {
++		return 1
++	} else {
++		return 0
++	}
++}
++
+ proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y} {
+ 	global current_diff_path file_states
+ 	set ::cursorX $x
+@@ -3443,7 +3468,8 @@ proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y} {
+ 			|| {__} eq $state
+ 			|| {_O} eq $state
+ 			|| {_T} eq $state
+-			|| {T_} eq $state} {
++			|| {T_} eq $state
++			|| [has_textconv $current_diff_path]} {
+ 			set s disabled
+ 		} else {
+ 			set s normal
+diff --git a/lib/diff.tcl b/lib/diff.tcl
+index ec8c11e..c628750 100644
+--- a/lib/diff.tcl
++++ b/lib/diff.tcl
+@@ -55,7 +55,7 @@ proc handle_empty_diff {} {
+ 
+ 	set path $current_diff_path
+ 	set s $file_states($path)
+-	if {[lindex $s 0] ne {_M}} return
++	if {[lindex $s 0] ne {_M} || [has_textconv $path]} return
+ 
+ 	# Prevent infinite rescan loops
+ 	incr diff_empty_count
+@@ -280,6 +280,9 @@ proc start_show_diff {cont_info {add_opts {}}} {
+ 			lappend cmd diff-files
+ 		}
+ 	}
++	if {![is_config_false gui.textconv] && [git-version >= 1.6.1]} {
++		lappend cmd --textconv
++	}
+ 
+ 	if {[string match {160000 *} [lindex $s 2]]
+ 	 || [string match {160000 *} [lindex $s 3]]} {
+diff --git a/lib/option.tcl b/lib/option.tcl
+index d4c5e45..fe9d484 100644
+--- a/lib/option.tcl
++++ b/lib/option.tcl
+@@ -148,6 +148,7 @@ proc do_options {} {
+ 		{b gui.trustmtime  {mc "Trust File Modification Timestamps"}}
+ 		{b gui.pruneduringfetch {mc "Prune Tracking Branches During Fetch"}}
+ 		{b gui.matchtrackingbranch {mc "Match Tracking Branches"}}
++		{b gui.textconv {mc "Use Textconv For Diffs"}}
+ 		{b gui.fastcopyblame {mc "Blame Copy Only On Changed Files"}}
+ 		{i-20..200 gui.copyblamethreshold {mc "Minimum Letters To Blame Copy On"}}
+ 		{i-0..300 gui.blamehistoryctx {mc "Blame History Context Radius (days)"}}
+-- 
+1.7.1.rc0.27.g3b0c
