@@ -1,196 +1,66 @@
-From: Mark Rada <marada@uwaterloo.ca>
-Subject: [PATCH] gitweb: simplify gitweb.min.* generation and clean-up rules
-Date: Wed, 14 Apr 2010 23:37:35 -0400
-Message-ID: <4BC689FF.9080308@mailservices.uwaterloo.ca>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2010, #05; Wed, 14)
+Date: Thu, 15 Apr 2010 09:09:00 +0530
+Message-ID: <k2pf3271551004142039g495f4337n94bf3094d6f255fe@mail.gmail.com>
+References: <7vy6gpmwr4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Charles Bailey <charles@hashpling.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 15 05:38:16 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 15 05:39:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2FuB-00006g-Ea
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 05:38:15 +0200
+	id 1O2FvL-0000LB-Dv
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 05:39:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756778Ab0DODiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Apr 2010 23:38:07 -0400
-Received: from mailservices.uwaterloo.ca ([129.97.128.141]:37498 "EHLO
-	mailchk-m05.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1756730Ab0DODiF (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Apr 2010 23:38:05 -0400
-Received: from [192.168.26.20] (bas1-toronto01-1177657813.dsl.bell.ca [70.49.161.213])
-	(authenticated bits=0)
-	by mailchk-m05.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id o3F3bZpM016393
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 14 Apr 2010 23:37:37 -0400
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-X-UUID: d1cac5ae-1e89-4c62-9561-564f27ef4fd9
-X-Miltered: at mailchk-m05 with ID 4BC689FF.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
-X-Virus-Scanned: clamav-milter 0.95.2 at mailchk-m05
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m05.uwaterloo.ca [129.97.128.141]); Wed, 14 Apr 2010 23:37:38 -0400 (EDT)
+	id S1756827Ab0DODjW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Apr 2010 23:39:22 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:46036 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756730Ab0DODjV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Apr 2010 23:39:21 -0400
+Received: by gyg13 with SMTP id 13so507847gyg.19
+        for <git@vger.kernel.org>; Wed, 14 Apr 2010 20:39:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=DOu32S3KffuR5TQDDngoUfOhg8mS+I4rRCvdiA9YFRw=;
+        b=KMPIPHDAyWQcmwh224Bxd7WhmzWEcsG4YYr0OAQZ56AeO2p4ob1q88vr9dGE48qKcC
+         NbyLFXNNM8p/SZjz7ZNNVxxStqb2HFfYN8JCC+p+IQQPWCDBmUeQujI9eSg7h/GI4rfm
+         iaesPnDDAQg1P5CCsraH8VsAmLah+ebp5pKzk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=mGXFgLv3cv6pyjAM/opJsYMNzGseKSc0CKa+/x/SF2c4U3hTrLgf+g8Z/kdPcs9NVj
+         GwaT8BiL24Ixhgw5STALyzA5pMJUh+obfCb89+npDzaOyREAqulrPWiE18vFrOAWfxfP
+         lTMHgveCHIE0WutJkZIgv1OiTiyiNcEEuQp3w=
+Received: by 10.90.69.14 with HTTP; Wed, 14 Apr 2010 20:39:00 -0700 (PDT)
+In-Reply-To: <7vy6gpmwr4.fsf@alter.siamese.dyndns.org>
+Received: by 10.91.161.39 with SMTP id n39mr3945386ago.48.1271302760143; Wed, 
+	14 Apr 2010 20:39:20 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144944>
 
-GITWEB_CSS and GITWEB_JS are meant to be "what URI should the installed
-cgi script use to refer to the stylesheet and JavaScript", never "this
-is the name of the file we are building".
+HI,
 
-Lose incorrect assignment to them.
+> * rr/remote-helper-doc (2010-04-07) 3 commits
+> =C2=A0- Documentation/remote-helpers: Add invocation section
+> =C2=A0- Documentation/urls: Rewrite to accomodate <transport>::<addre=
+ss>
+> =C2=A0- Documentation/remote-helpers: Rewrite description
+>
+> I'd like acks or rewrites from transport people on this topic.
 
-While we are at it, lose FILES that is used only for "clean" target in a
-misguided way.  "make clean" should try to remove all the potential
-build artifacts regardless of a minor configuration change.  Instead of
-trying to remove only the build product "make clean" would have created
-if it were run without "clean", explicitly list the three potential build
-products for removal.
+Can I do something to help?
 
-In addition, this patch tries to make sure that the scripts are
-regenerated whenever the replacement variables are modified.  For a good
-measure, if you used different JSMIN/CSSMIN since the last time you
-produced minified version of these files, they are regenerated.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Tested-by: Mark Rada <marada@uwaterloo.ca>
-
-
----
-
-I gave this a test run:
-	With just jsmin enabled
-	With just cssmin enabled
-	With neither enabled
-	With both enabled
-	Overriding GITWEB_JS
-	Overriding GITWEB_JS and jsmin enabled
-
-Instaweb will still generate what it needs to the first time around,
-but if you change GITWEB_JS or the JSMIN (or css equivalents) then you
-have to regenerate gitweb first manually before instaweb. I'm not sure
-if it would be best to swallow up instaweb into this same patch or to
-fix it separately (also, I still don't quite understand how this patch
-works).
-
-
- config.mak.in   |    2 +
- gitweb/Makefile |   75 ++++++++++++++++++++++++++++---------------------------
- 2 files changed, 40 insertions(+), 37 deletions(-)
-
-diff --git a/config.mak.in b/config.mak.in
-index 6008ac9..bb828fe 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -57,3 +57,5 @@ FREAD_READS_DIRECTORIES=@FREAD_READS_DIRECTORIES@
- SNPRINTF_RETURNS_BOGUS=@SNPRINTF_RETURNS_BOGUS@
- NO_PTHREADS=@NO_PTHREADS@
- PTHREAD_LIBS=@PTHREAD_LIBS@
-+GITWEB_JS=/home/ferrous/gitweb.js
-+
-diff --git a/gitweb/Makefile b/gitweb/Makefile
-index ffee4bd..f2e1d92 100644
---- a/gitweb/Makefile
-+++ b/gitweb/Makefile
-@@ -80,54 +80,55 @@ endif
- 
- all:: gitweb.cgi
- 
--FILES = gitweb.cgi
- ifdef JSMIN
--FILES += gitweb.min.js
- GITWEB_JS = gitweb.min.js
-+all:: gitweb.min.js
-+gitweb.min.js: gitweb.js GITWEB-BUILD-OPTIONS
-+	$(QUIET_GEN)$(JSMIN) <$< >$@
- endif
-+
- ifdef CSSMIN
--FILES += gitweb.min.css
- GITWEB_CSS = gitweb.min.css
-+all:: gitweb.min.css
-+gitweb.min.css: gitweb.css GITWEB-BUILD-OPTIONS
-+	$(QUIET_GEN)$(CSSMIN) <$ >$@
- endif
--gitweb.cgi: gitweb.perl $(GITWEB_JS) $(GITWEB_CSS)
- 
--gitweb.cgi:
-+GITWEB_REPLACE = \
-+	-e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
-+	-e 's|++GIT_BINDIR++|$(bindir)|g' \
-+	-e 's|++GITWEB_CONFIG++|$(GITWEB_CONFIG)|g' \
-+	-e 's|++GITWEB_CONFIG_SYSTEM++|$(GITWEB_CONFIG_SYSTEM)|g' \
-+	-e 's|++GITWEB_HOME_LINK_STR++|$(GITWEB_HOME_LINK_STR)|g' \
-+	-e 's|++GITWEB_SITENAME++|$(GITWEB_SITENAME)|g' \
-+	-e 's|++GITWEB_PROJECTROOT++|$(GITWEB_PROJECTROOT)|g' \
-+	-e 's|"++GITWEB_PROJECT_MAXDEPTH++"|$(GITWEB_PROJECT_MAXDEPTH)|g' \
-+	-e 's|++GITWEB_EXPORT_OK++|$(GITWEB_EXPORT_OK)|g' \
-+	-e 's|++GITWEB_STRICT_EXPORT++|$(GITWEB_STRICT_EXPORT)|g' \
-+	-e 's|++GITWEB_BASE_URL++|$(GITWEB_BASE_URL)|g' \
-+	-e 's|++GITWEB_LIST++|$(GITWEB_LIST)|g' \
-+	-e 's|++GITWEB_HOMETEXT++|$(GITWEB_HOMETEXT)|g' \
-+	-e 's|++GITWEB_CSS++|$(GITWEB_CSS)|g' \
-+	-e 's|++GITWEB_LOGO++|$(GITWEB_LOGO)|g' \
-+	-e 's|++GITWEB_FAVICON++|$(GITWEB_FAVICON)|g' \
-+	-e 's|++GITWEB_JS++|$(GITWEB_JS)|g' \
-+	-e 's|++GITWEB_SITE_HEADER++|$(GITWEB_SITE_HEADER)|g' \
-+	-e 's|++GITWEB_SITE_FOOTER++|$(GITWEB_SITE_FOOTER)|g'
-+
-+GITWEB-BUILD-OPTIONS: FORCE
-+	@rm -f $@+
-+	@echo "x" '$(PERL_PATH_SQ)' $(GITWEB_REPLACE) "$(JSMIN)|$(CSSMIN)" >$@+
-+	@cmp -s $@+ $@ && rm -f $@+ || mv -f $@+ $@
-+
-+gitweb.cgi: gitweb.perl GITWEB-BUILD-OPTIONS
- 	$(QUIET_GEN)$(RM) $@ $@+ && \
- 	sed -e '1s|#!.*perl|#!$(PERL_PATH_SQ)|' \
--	    -e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
--	    -e 's|++GIT_BINDIR++|$(bindir)|g' \
--	    -e 's|++GITWEB_CONFIG++|$(GITWEB_CONFIG)|g' \
--	    -e 's|++GITWEB_CONFIG_SYSTEM++|$(GITWEB_CONFIG_SYSTEM)|g' \
--	    -e 's|++GITWEB_HOME_LINK_STR++|$(GITWEB_HOME_LINK_STR)|g' \
--	    -e 's|++GITWEB_SITENAME++|$(GITWEB_SITENAME)|g' \
--	    -e 's|++GITWEB_PROJECTROOT++|$(GITWEB_PROJECTROOT)|g' \
--	    -e 's|"++GITWEB_PROJECT_MAXDEPTH++"|$(GITWEB_PROJECT_MAXDEPTH)|g' \
--	    -e 's|++GITWEB_EXPORT_OK++|$(GITWEB_EXPORT_OK)|g' \
--	    -e 's|++GITWEB_STRICT_EXPORT++|$(GITWEB_STRICT_EXPORT)|g' \
--	    -e 's|++GITWEB_BASE_URL++|$(GITWEB_BASE_URL)|g' \
--	    -e 's|++GITWEB_LIST++|$(GITWEB_LIST)|g' \
--	    -e 's|++GITWEB_HOMETEXT++|$(GITWEB_HOMETEXT)|g' \
--	    -e 's|++GITWEB_CSS++|$(GITWEB_CSS)|g' \
--	    -e 's|++GITWEB_LOGO++|$(GITWEB_LOGO)|g' \
--	    -e 's|++GITWEB_FAVICON++|$(GITWEB_FAVICON)|g' \
--	    -e 's|++GITWEB_JS++|$(GITWEB_JS)|g' \
--	    -e 's|++GITWEB_SITE_HEADER++|$(GITWEB_SITE_HEADER)|g' \
--	    -e 's|++GITWEB_SITE_FOOTER++|$(GITWEB_SITE_FOOTER)|g' \
--	    $< >$@+ && \
-+		$(GITWEB_REPLACE) $< >$@+ && \
- 	chmod +x $@+ && \
- 	mv $@+ $@
- 
--ifdef JSMIN
--gitweb.min.js: gitweb.js
--	$(QUIET_GEN)$(JSMIN) <$< >$@
--endif # JSMIN
--
--ifdef CSSMIN
--gitweb.min.css: gitweb.css
--	$(QUIET_GEN)$(CSSMIN) <$ >$@
--endif
--
- clean:
--	$(RM) $(FILES)
-+	$(RM) gitweb.cgi gitweb.min.js gitweb.min.css GITWEB-BUILD-OPTIONS
-+
-+.PHONY: all clean .FORCE-GIT-VERSION-FILE FORCE
- 
--.PHONY: all clean .FORCE-GIT-VERSION-FILE
--- 
-1.7.1.rc1.237.ge1730
+-- Ram
