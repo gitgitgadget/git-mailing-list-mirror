@@ -1,103 +1,102 @@
-From: Joachim Breitner <mail@joachim-breitner.de>
-Subject: Storing commits in trees
-Date: Thu, 15 Apr 2010 22:32:12 +0200
-Message-ID: <1271363532.18164.47.camel@localhost>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Building Git on Tru64
+Date: Thu, 15 Apr 2010 14:24:58 -0700 (PDT)
+Message-ID: <m34ojcfly1.fsf@localhost.localdomain>
+References: <1271358589.19032.1370170305@webmail.messagingengine.com>
+	<r2n81b0412b1004151229g6fe840a1v23a9d06f72e8d36a@mail.gmail.com>
+	<1271360809.25304.1370186353@webmail.messagingengine.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-qM4+TLQEJ/Jo/IgSJCuI"
-Cc: "Bernhard R . Link" <brlink@debian.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 15 22:55:35 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: "Alex Riesen" <raa.lkml@gmail.com>, git@vger.kernel.org
+To: "Daniel Richard G." <skunk@iSKUNK.ORG>
+X-From: git-owner@vger.kernel.org Thu Apr 15 23:25:16 2010
+connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2W62-0005qS-Ci
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 22:55:34 +0200
+	id 1O2WYl-0002ck-OZ
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 23:25:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756878Ab0DOUz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 16:55:28 -0400
-Received: from nomeata.de ([80.86.81.20]:37701 "EHLO quimby.ehbuehl.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756793Ab0DOUz2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 16:55:28 -0400
-X-Greylist: delayed 1389 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Apr 2010 16:55:27 EDT
-Received: from kirk.vpn.ehbuehl.net ([10.254.1.12] helo=localhost)
-	by quimby.ehbuehl.net with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <msg@joachim-breitner.de>)
-	id 1O2VjS-0000gq-Ua; Thu, 15 Apr 2010 22:32:15 +0200
-Received: from jojo by localhost with local (Exim 4.71)
-	(envelope-from <msg@joachim-breitner.de>)
-	id 1O2VjR-0005f1-3C; Thu, 15 Apr 2010 22:32:13 +0200
-X-Mailer: Evolution 2.29.92.1 
-X-Spam-Score: -6.6 (------)
-X-Spam-Report: Status No, score=-6.6 required=5.0 bayes=0.0000 tests=BAYES_00=-6.599 autolearn=ham version=3.2.5
+	id S1757126Ab0DOVZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Apr 2010 17:25:05 -0400
+Received: from mail-bw0-f225.google.com ([209.85.218.225]:58152 "EHLO
+	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757107Ab0DOVZC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Apr 2010 17:25:02 -0400
+Received: by bwz25 with SMTP id 25so2201380bwz.28
+        for <git@vger.kernel.org>; Thu, 15 Apr 2010 14:25:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=YZ2VWMdbkWQZr2NReydRQ73lWcl8sH5938fXrJ4W8HA=;
+        b=ALdKTYhykpxPrRgpvE1uGcNb6v14AChwyj+EPsfCjRIxv4tY10weBaHuZKvdq2eLF2
+         OO5wi0+7sHwEi/+RtRmq5vMz+tfquM8VIC9YUH5kcFZ8xDShL/6U22ZvgBEyqDJLxBfv
+         u7jyfVuvtYrFQ86yWL3X3do/ItdbkgTGM6f6s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=osZxcoBObTlG/YmKHLbjECXx2E2fS6MAuBsqwtxk0TymwI4k/qggAOwtpJxmpEmOeY
+         RephLAR/bWl4aD76o0iRnZagNV/ADum8s+pKt+6vESCq1m6G0YKZq7O1niZNxzeInBkx
+         YpxWtUsiieRy5VqYXlrUT/9yZ53m8A/vpxhzI=
+Received: by 10.103.64.25 with SMTP id r25mr442298muk.68.1271366699064;
+        Thu, 15 Apr 2010 14:24:59 -0700 (PDT)
+Received: from localhost.localdomain (abvv243.neoplus.adsl.tpnet.pl [83.8.219.243])
+        by mx.google.com with ESMTPS id i7sm10294724mue.34.2010.04.15.14.24.57
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 15 Apr 2010 14:24:58 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o3FLP749000996;
+	Thu, 15 Apr 2010 23:25:12 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o3FLOtJL000983;
+	Thu, 15 Apr 2010 23:24:55 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1271360809.25304.1370186353@webmail.messagingengine.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145026>
 
+"Daniel Richard G." <skunk@iSKUNK.ORG> writes:
 
---=-qM4+TLQEJ/Jo/IgSJCuI
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> On Thu, 2010 Apr 15 21:29+0200, Alex Riesen wrote:
+> >
+> > That one may be better handled at one place (git-compat-util.h?) with
+> > something like:
+> >
+> >   #ifdef Tru64
+> >   #define MAP_FAILED ((void *)MAP_FAILED)
+> >   #endif
+> 
+> I agree with the sentiment, but you can't have a macro refer to itself
 
-[Please CC me on reply, as I=E2=80=99m not subscribed. Thanks!]
+It can.  From (cpp.info)
 
-Hi,
+  3.10.5 Self-Referential Macros
+  ------------------------------
 
-for a variation of the workflow implemented by git-dpm[1], a tool to
-manage the development of Debian packages in git, I wanted to refer to a
-specific commit P from a regular commit D on my master branch, without P
-being a parent of D, as I don=E2=80=99t want it to show up in the history.
+  A "self-referential" macro is one whose name appears in its definition.
+  Recall that all macro definitions are rescanned for more macros to
+  replace.  If the self-reference were considered a use of the macro, it
+  would produce an infinitely large expansion.  To prevent this, the
+  self-reference is not considered a macro call.  It is passed into the
+  preprocessor output unchanged.
 
-I found out that I can store commit objects in a tree object, using git=20
-$ git update-index --add --cacheinfo 160000 0ac1855f1681c05d195f219c3003a05=
-dc8d3ac20 stored-commits/some-commit
-and refer to it via HEAD:stored-commits/some-commit. I was happy, until
-I noticed that git prune will happily delete the stored commit as soon
-as it is not referred somewhere else, and git push/pull won=E2=80=99t trans=
-fer
-the stored commit along the tree it is contained in.
+  [...]
 
-I then found out that storing commit objects in the tree is implemented
-for git-submodules, where you in fact do not want to store the commit in
-the main repo.
+     One common, useful use of self-reference is to create a macro which
+  expands to itself.  If you write
 
-Now I=E2=80=99m wondering if it would be feasible to offer this feature: A
-proper =E2=80=9Ccommit=E2=80=9D object within a tree that is walked by fsck=
-_walk_tree
-and the other tree walkers?
+       #define EPERM EPERM
 
-Or is there yet another way of telling git that commit D =E2=80=9Cdepends o=
-n=E2=80=9D
-commit P?
-
-Thanks,
-Joachim
-
-[1] http://git-dpm.alioth.debian.org/
-
-
-
---=20
-Joachim "nomeata" Breitner
-  mail: mail@joachim-breitner.de | ICQ# 74513189 | GPG-Key: 4743206C
-  JID: nomeata@joachim-breitner.de | http://www.joachim-breitner.de/
-  Debian Developer: nomeata@debian.org
-
---=-qM4+TLQEJ/Jo/IgSJCuI
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEABECAAYFAkvHd8wACgkQ9ijrk0dDIGy+CQCdHsvigfSD9dITC4oKn44NvYWb
-ipwAn3od9jHNnXJuHiClPN/U+JaBfpuL
-=LDrW
------END PGP SIGNATURE-----
-
---=-qM4+TLQEJ/Jo/IgSJCuI--
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
