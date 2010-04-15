@@ -1,127 +1,73 @@
-From: Zefram <zefram@fysh.org>
-Subject: [PATCH] Support "git remote --quiet update"
-Date: Thu, 15 Apr 2010 23:11:16 +0100
-Message-ID: <E1O2XT7-00011E-RT@lake.fysh.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 16 00:39:44 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] reflog: ignore expire-unreachable for "HEAD" reflog
+Date: Thu, 15 Apr 2010 15:42:12 -0700
+Message-ID: <7v7ho8ibi3.fsf@alter.siamese.dyndns.org>
+References: <7vljcppycc.fsf@alter.siamese.dyndns.org>
+ <7vfx2xpyam.fsf@alter.siamese.dyndns.org> <4BC6B5FF.6030406@viscovery.net>
+ <7vochlkvtg.fsf@alter.siamese.dyndns.org> <4BC6D30F.5020004@viscovery.net>
+ <7v4ojclwyu.fsf@alter.siamese.dyndns.org> <4BC70D75.70801@viscovery.net>
+ <20100415163607.GA4279@coredump.intra.peff.net>
+ <7vhbnck618.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1004151545240.7232@xanadu.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Fri Apr 16 00:42:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2Xip-0000cT-Ot
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 00:39:44 +0200
+	id 1O2XlW-0001jw-8q
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 00:42:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757799Ab0DOWji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 18:39:38 -0400
-Received: from lake.fysh.org ([81.94.195.195]:32840 "EHLO lake.fysh.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757782Ab0DOWji (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 18:39:38 -0400
-X-Greylist: delayed 963 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Apr 2010 18:39:37 EDT
-Received: from zefram by lake.fysh.org with local (Exim 4.69 #1 (Debian))
-	id 1O2XT7-00011E-RT; Thu, 15 Apr 2010 23:23:29 +0100
+	id S1757858Ab0DOWmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Apr 2010 18:42:25 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51310 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757820Ab0DOWmZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Apr 2010 18:42:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BD97ABCA6;
+	Thu, 15 Apr 2010 18:42:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zC1H+V3hX/tZo0yL/Kah+d1vUjc=; b=uGgJd8
+	UDOpS3j7wTSrf9hmk148FXACqv5gl7Ur8+5pckY6IDD5xOUn3XCQ0Qb88WIbxjVP
+	9m6ER5YfK31KiqagO8CiqJCVcaq3r4n1KGTBEEI0HUwNkOXWLCVQ9cJ3k7luUcS+
+	ColzWtieMkFwpNs8ngTweNsVtSyKq2jgBUzSg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=e6wB77SHV7r2YorkGvwqriloYRfwgzMV
+	hmGii6Bqnbz99OjVZFzkXW4jVkiVcT336+LLYGYeZyldNFF1TgqIzvvm/VZDStlH
+	pGH53zuhNjUe5WqfPPKojc6WDrMDSztB2RAKn3KbLuPWL/FviJS+Brr2HMRHgh2t
+	2T1MKdgjpKY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BE86ABCA2;
+	Thu, 15 Apr 2010 18:42:18 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D6FAABC9E; Thu, 15 Apr
+ 2010 18:42:13 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.00.1004151545240.7232@xanadu.home> (Nicolas
+ Pitre's message of "Thu\, 15 Apr 2010 15\:48\:23 -0400 \(EDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 25769952-48E0-11DF-91D9-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145031>
 
-Add --quiet option for git-remote, which it will pass on to git-fetch.
----
- Documentation/git-remote.txt |    9 ++++++++-
- builtin/remote.c             |   16 ++++++++--------
- 2 files changed, 16 insertions(+), 9 deletions(-)
+Nicolas Pitre <nico@fluxnic.net> writes:
 
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index 3fc599c..25f6c05 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -19,7 +19,8 @@ SYNOPSIS
- 'git remote set-url --delete' [--push] <name> <url>
- 'git remote' [-v | --verbose] 'show' [-n] <name>
- 'git remote prune' [-n | --dry-run] <name>
--'git remote' [-v | --verbose] 'update' [-p | --prune] [group | remote]...
-+'git remote' [-v | --verbose] [-q | --quiet] 'update'
-+	     [-p | --prune] [group | remote]...
- 
- DESCRIPTION
- -----------
-@@ -30,6 +31,12 @@ Manage the set of repositories ("remotes") whose branches you track.
- OPTIONS
- -------
- 
-+-q::
-+--quiet::
-+	Pass --quiet to git-fetch.  Progress is not reported to the
-+	standard error stream.
-+	NOTE: This must be placed between `remote` and `subcommand`.
-+
- -v::
- --verbose::
- 	Be a little more verbose and show remote url after name.
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 277765b..5447780 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -15,7 +15,7 @@ static const char * const builtin_remote_usage[] = {
- 	"git remote set-head <name> (-a | -d | <branch>)",
- 	"git remote [-v | --verbose] show [-n] <name>",
- 	"git remote prune [-n | --dry-run] <name>",
--	"git remote [-v | --verbose] update [-p | --prune] [group | remote]",
-+	"git remote [-v | --verbose] [-q | --quiet] update [-p | --prune] [group | remote]",
- 	"git remote set-url <name> <newurl> [<oldurl>]",
- 	"git remote set-url --add <name> <newurl>",
- 	"git remote set-url --delete <name> <url>",
-@@ -68,7 +68,7 @@ static const char * const builtin_remote_seturl_usage[] = {
- #define GET_HEAD_NAMES (1<<1)
- #define GET_PUSH_REF_STATES (1<<2)
- 
--static int verbose;
-+static int verbosity;
- 
- static int show_all(void);
- static int prune_remote(const char *remote, int dry_run);
-@@ -94,8 +94,8 @@ static int opt_parse_track(const struct option *opt, const char *arg, int not)
- static int fetch_remote(const char *name)
- {
- 	const char *argv[] = { "fetch", name, NULL, NULL };
--	if (verbose) {
--		argv[1] = "-v";
-+	if (verbosity != 0) {
-+		argv[1] = verbosity > 0 ? "-v" : "-q";
- 		argv[2] = name;
- 	}
- 	printf("Updating %s\n", name);
-@@ -1246,8 +1246,8 @@ static int update(int argc, const char **argv)
- 
- 	if (prune)
- 		fetch_argv[fetch_argc++] = "--prune";
--	if (verbose)
--		fetch_argv[fetch_argc++] = "-v";
-+	if (verbosity != 0)
-+		fetch_argv[fetch_argc++] = verbosity > 0 ? "-v" : "-q";
- 	fetch_argv[fetch_argc++] = "--multiple";
- 	if (argc < 2)
- 		fetch_argv[fetch_argc++] = "default";
-@@ -1395,7 +1395,7 @@ static int show_all(void)
- 		sort_string_list(&list);
- 		for (i = 0; i < list.nr; i++) {
- 			struct string_list_item *item = list.items + i;
--			if (verbose)
-+			if (verbosity > 0)
- 				printf("%s\t%s\n", item->string,
- 					item->util ? (const char *)item->util : "");
- 			else {
-@@ -1412,7 +1412,7 @@ static int show_all(void)
- int cmd_remote(int argc, const char **argv, const char *prefix)
- {
- 	struct option options[] = {
--		OPT_BOOLEAN('v', "verbose", &verbose, "be verbose; must be placed before a subcommand"),
-+		OPT__VERBOSITY(&verbosity),
- 		OPT_END()
- 	};
- 	int result;
--- 
-1.7.1.rc1.12.ga601.dirty
+> I'm a bit worried about this discussion.
+>
+> What's the point of having a reflog for unreachable stuff if it is to be 
+> pruned faster than stuff that is already reachable without any reflog?
+
+To keep recently failed experiments alive for some time (30 days), but not
+overly long (90 days)?
