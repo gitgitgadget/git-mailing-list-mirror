@@ -1,76 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Replace hard-coded path with one from <paths.h>
-Date: Thu, 15 Apr 2010 12:15:04 -0700
-Message-ID: <7v633sjznr.fsf@alter.siamese.dyndns.org>
-References: <20100404222801.GB31315@arachsys.com>
- <20100406163525.GF15306@arachsys.com> <20100406163643.GG15306@arachsys.com>
- <n2u40aa078e1004070357m143cfaccvdc754a3bc5fe1ae1@mail.gmail.com>
- <20100408105850.GD2146@arachsys.com>
- <m2x40aa078e1004080426u98fbe6b2zfa9a2726172f725@mail.gmail.com>
- <20100408115706.GE2077@arachsys.com>
- <z2o40aa078e1004080508z17c5e71by371bbe6e1cdb8c50@mail.gmail.com>
- <20100409054536.GB2151@arachsys.com> <20100413090604.GB770@arachsys.com>
- <20100413090713.GC770@arachsys.com> <7vsk6zt93s.fsf@alter.siamese.dyndns.org>
- <m3d3y0gath.fsf@localhost.localdomain>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Building Git on Tru64
+Date: Thu, 15 Apr 2010 21:29:11 +0200
+Message-ID: <r2n81b0412b1004151229g6fe840a1v23a9d06f72e8d36a@mail.gmail.com>
+References: <1271358589.19032.1370170305@webmail.messagingengine.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chris Webb <chris@arachsys.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 15 21:15:24 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Daniel Richard G." <skunk@iskunk.org>
+X-From: git-owner@vger.kernel.org Thu Apr 15 21:29:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2UX5-0007YF-L7
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 21:15:24 +0200
+	id 1O2Ukl-0006Vw-WE
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 21:29:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756117Ab0DOTPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 15:15:18 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64197 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755664Ab0DOTPQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 15:15:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 43E04AB58B;
-	Thu, 15 Apr 2010 15:15:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XAA/SCT7NtBwHR4FU6+Z6FxMeqY=; b=kUfY0T
-	Ox9mEgtoUKxcqn41M66vXWSVBjfO2wX51A5lhcCABfMstAEDpBYjShfeJzXtjEhi
-	J7cO1edgPPYba5/6/AY3MeTP5fFfjlQ5bf4UB8s0YeftuEmjafQZuJFliD1ROrSy
-	20X4wvEeQMCOTho2QWXH5gdHO2qKp+2+Ourn0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Af14Pe1AiJ1dp+1BkcG9IIM/JGTA/7vi
-	Z0Is/dThPBw+9xMSdvxH/UBzi/zYUgHYEFzmmePtJylH2JfHlm5mXDaE8nPIi0c+
-	XwW8jMesD2V0yo1JlhOC3o4O49XeplU3g6PMu7WeijkTOZ4ItxXPsSTFlP2s1KZ6
-	CdtzBIDPOgE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 00500AB589;
-	Thu, 15 Apr 2010 15:15:10 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 310BEAB588; Thu, 15 Apr
- 2010 15:15:06 -0400 (EDT)
-In-Reply-To: <m3d3y0gath.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Thu\, 15 Apr 2010 05\:27\:49 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3635076E-48C3-11DF-8F43-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756265Ab0DOT3Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Apr 2010 15:29:24 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:60078 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756253Ab0DOT3O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Apr 2010 15:29:14 -0400
+Received: by gyg13 with SMTP id 13so902300gyg.19
+        for <git@vger.kernel.org>; Thu, 15 Apr 2010 12:29:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=IcEo8m6cYe0v1QGe0LQKvyzYg2lzfgWFbZIBs7uEiUk=;
+        b=l7cwEvODC2szJCHmQt5SR1OAHersYle2D7gJTgEklZQOy4FdjJ4uJjR70E90OdXIA7
+         lH16JG4N0KA2+MzQvtRFRHNfxWdWIVLFwsuncbZUHL+VywN2nIW/dI18/r9p/fZqg3E/
+         NmOYoQS2J3/uxs97Qq0/F2mghQoxvoy9bAYIc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=a9co9iR2mTTF+xYrk1LHjt8vzTZCd0rWs4nm62TiIUyx9a7OvbB0KmN4ZoMopDBZ6h
+         Lb2ulhlMR1hTftvFCdqptTIBtvFUBBELdj52tv/7F4AaVqX61dGdoMFaPqJLH4kbCVRX
+         HPKcYVFljkmD6sa98+8PReBU47q4ZCEE0P13w=
+Received: by 10.100.212.9 with HTTP; Thu, 15 Apr 2010 12:29:11 -0700 (PDT)
+In-Reply-To: <1271358589.19032.1370170305@webmail.messagingengine.com>
+Received: by 10.100.24.39 with SMTP id 39mr1067287anx.20.1271359752023; Thu, 
+	15 Apr 2010 12:29:12 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145013>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Thu, Apr 15, 2010 at 21:09, Daniel Richard G. <skunk@iskunk.org> wro=
+te:
+> * On Tru64, MAP_FAILED is #defined as (-1L), and the compiler chokes =
+if
+> =C2=A0you directly compare a pointer to an integer. So, need to cast
+> =C2=A0MAP_FAILED to (void *), redundant as that may seem.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->> 
->> Ok.  Somebody else may want to add an autoconf support on top of this, but
->> this is good as-is, I think.
->
-> Something like that?
+That one may be better handled at one place (git-compat-util.h?) with
+something like:
 
-Looks good.
+  #ifdef Tru64
+  #define MAP_FAILED ((void *)MAP_FAILED)
+  #endif
+
+P.S. You may consider reading Documentation/SubmittingPatches.
+The way you did it is a little unconventional.
