@@ -1,92 +1,99 @@
-From: Thomas Adam <thomas@xteddy.org>
-Subject: Certain git commands fail with "returned error: 128" running via 
-	Git.pm under mod_perl
-Date: Thu, 15 Apr 2010 10:22:41 +0100
-Message-ID: <x2k18071eea1004150222x2980feb5ub9b15ec0522dd5ff@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2] tag -v: use RUN_GIT_CMD to run verify-tag
+Date: Thu, 15 Apr 2010 04:36:25 -0500
+Message-ID: <20100415093625.GA18612@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 15 11:23:05 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Deskin Miller <deskinm@umich.edu>, Johannes Sixt <j6t@kdbg.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 15 11:36:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2LHr-0000hn-Pv
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 11:23:04 +0200
+	id 1O2LUo-00069V-Pw
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 11:36:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757597Ab0DOJW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 05:22:58 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:63700 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757393Ab0DOJW5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 05:22:57 -0400
-Received: by wwb24 with SMTP id 24so336706wwb.19
-        for <git@vger.kernel.org>; Thu, 15 Apr 2010 02:22:56 -0700 (PDT)
+	id S932108Ab0DOJgZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Apr 2010 05:36:25 -0400
+Received: from mail-yw0-f194.google.com ([209.85.211.194]:45243 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932099Ab0DOJgW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Apr 2010 05:36:22 -0400
+Received: by ywh32 with SMTP id 32so614350ywh.33
+        for <git@vger.kernel.org>; Thu, 15 Apr 2010 02:36:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:from:date
-         :x-google-sender-auth:received:message-id:subject:to:content-type;
-        bh=tVoQ+wNhg1OZRMCn+CxTMG/CEEogiPeRs3uuFRKenbk=;
-        b=cTz3hzukM6d1T3PGHasOu+dVK2OpfQU5VGvuzKJy0YH3tacwZyer6st2+jWJnp5MeQ
-         CpfLn7MzbpC5E+b1IxdFjiNQQflOhlJmnuWdJ2FSFWz2ANJmlXbS/Zt4pui4EXRfvAtx
-         tgBuXvLNQa4lWWzuF50G5OtjSR1rLgkqh3gqY=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=BFcCoPardxR14lG1UIlnR5BPmYA3gOYHkLDbL+wr9YQ=;
+        b=qw5Mg3N+MQRXVW5e+gnFeDeS5gmBBBEiaCJyDyKzms2/tYk+McINnRlqLcxz44iGZM
+         LsXLGa24zIrKnG1PFGTnBMKd6mT6OeZuLPALyoSRJK1pxQuRc7p61fDuBuJo9yW+aWGX
+         55K/AY7Ppau9lDdU0F6CBg6qtW+h4xIawHdpY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:from:date:x-google-sender-auth:message-id
-         :subject:to:content-type;
-        b=aVMdc5UsaHfS6ImaZvRVIIJ0KD6uHriE4A3ieJ1ejcHaQGTtSNgQccI62FmslX5s1H
-         W6+YqRWT3PVlLWoooloq7zqOT4jGIjBgt++lAYrXi6EGfpku3neZgZPl8wsFVH2Gndv5
-         6WhUofYB++y0p0fMHjaCEQNdSV7I5NVwqjTtw=
-Received: by 10.216.3.15 with HTTP; Thu, 15 Apr 2010 02:22:41 -0700 (PDT)
-X-Google-Sender-Auth: 80715f2eb85fd60b
-Received: by 10.216.172.202 with SMTP id t52mr6427272wel.21.1271323376342; 
-	Thu, 15 Apr 2010 02:22:56 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=t+TbJaecU1DxM/X2e78PQql5Ti01Osu/8As+pTri/kYJJnpizIpWrZZ4AiajeVBmiO
+         GNAMi5ltwxByg7kCzjdwFBCEOkISNk2Uv5xyscfRre3t/I86SB7Dq+v75fvcx7cY6OAH
+         m4Hnx1+EccdnVQq0GE5uUhzHoHenBeDND9f90=
+Received: by 10.100.222.12 with SMTP id u12mr11943444ang.113.1271324181000;
+        Thu, 15 Apr 2010 02:36:21 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 21sm899261iwn.15.2010.04.15.02.36.19
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 15 Apr 2010 02:36:20 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144966>
 
-Hello all,
+This is the preferred way to run a git command.
 
-I've got a problem running certain git commands via Git.pm under
-mod_perl.  Specifically so far, these commands are "push" and "fetch"
-(by way of "git pull").  Running the same command set without mod_perl
-works as expected, including running these commands manually.
+The only obvious observable effects I can think of are that the exec
+is properly reported in GIT_TRACE output and that verifying signed
+tags will still work if the git-verify-tag hard link in gitexecdir
+goes missing.
 
-I won't bother to describe the application, but most web pages within
-it will "git pull" and "git push" various bits of information once
-they're entered.  When I initially try this out, these commands work
-fine, until a point in time when they stop and error with the
-following:
+Helped-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+v1 was part of a longer series that replaced the run_command with a
+function call [1].
 
-trace: built-in: git 'push'
-trace: run_command: 'git-receive-pack '\''/var/repository'\'''
-trace: exec: 'sh' '-c' 'git-receive-pack '\''/var/repository'\'''
-'git-receive-pack '\''/var/repository'\'''
-trace: built-in: git 'receive-pack' '/var/repository'
-fatal: read error: Bad file descriptor
-fatal: write error: Broken pipe
-Git command failure:  push: command returned error: 128
+Thanks to Hannes for the pointer.
 
-Note that in the environment, I have enabled "GIT_TRACE=1", so that I
-could at least make some sense of what's going on.  When this happens
--- git will remain failing on this command until I restart Apache.
+[1] http://thread.gmane.org/gmane.comp.version-control.git/142681/focus=142682
+What about the rest of the series?  Without some facility [2] to
+verify tags without going out of the way to do it, it is hard to end
+up using tag -v often enough to notice the speed difference.
+[2] maybe a fetch-update hook.
+http://thread.gmane.org/gmane.comp.version-control.git/101585/focus=101590
 
-I said I am using Git.pm -- I am doing nothing fancy other than calling:
+ builtin/tag.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Git::command()
-
-What do people think is happening?  The fact that it's intermittent
-would suggest to me there's either some global state running these
-commands under mod_perl -- and perhaps the reason push returns error
-128 with a broken pipe is that it's trying to write to a file handle
-that's since closed (STDOUT or STDERR)?  It's a little tricky knowing
-where/how to diagnose this.
-
-So any help/pointers would be greatly appreciated.
-
-Kindly,
-
--- Thomas Adam
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 4ef1c4f..d311491 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -147,11 +147,11 @@ static int delete_tag(const char *name, const char *ref,
+ static int verify_tag(const char *name, const char *ref,
+ 				const unsigned char *sha1)
+ {
+-	const char *argv_verify_tag[] = {"git-verify-tag",
++	const char *argv_verify_tag[] = {"verify-tag",
+ 					"-v", "SHA1_HEX", NULL};
+ 	argv_verify_tag[2] = sha1_to_hex(sha1);
+ 
+-	if (run_command_v_opt(argv_verify_tag, 0))
++	if (run_command_v_opt(argv_verify_tag, RUN_GIT_CMD))
+ 		return error("could not verify the tag '%s'", name);
+ 	return 0;
+ }
+-- 
+1.7.1.rc1
