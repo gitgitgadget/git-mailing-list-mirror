@@ -1,101 +1,190 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] reflog: ignore expire-unreachable for "HEAD" reflog
-Date: Thu, 15 Apr 2010 09:49:51 -0700
-Message-ID: <7vljcok6ds.fsf@alter.siamese.dyndns.org>
-References: <7vljcppycc.fsf@alter.siamese.dyndns.org>
- <7vfx2xpyam.fsf@alter.siamese.dyndns.org> <4BC6B5FF.6030406@viscovery.net>
- <7vochlkvtg.fsf@alter.siamese.dyndns.org> <4BC6D30F.5020004@viscovery.net>
- <7v4ojclwyu.fsf@alter.siamese.dyndns.org> <4BC70D75.70801@viscovery.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 8/9] builtin: check pager.<cmd> configuration if 
+	RUN_SETUP_GENTLY is used
+Date: Thu, 15 Apr 2010 19:43:49 +0200
+Message-ID: <q2rfcaeb9bf1004151043v5a8e5634z159b6fa01f859f7e@mail.gmail.com>
+References: <20100413021153.GA3978@progeny.tock>
+	 <20100413023003.GH4118@progeny.tock>
+	 <y2yfcaeb9bf1004130312l197983cnf92371acc88464db@mail.gmail.com>
+	 <20100414050643.GB28864@progeny.tock>
+	 <m2yfcaeb9bf1004150133te8af6155n63d620fef2be98a2@mail.gmail.com>
+	 <20100415084925.GA14660@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Apr 15 18:50:14 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 15 19:43:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2SGZ-0005DA-6L
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 18:50:11 +0200
+	id 1O2T6a-0007dT-RY
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 19:43:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754292Ab0DOQt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 12:49:59 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59480 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752801Ab0DOQt6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 12:49:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C09FAB684;
-	Thu, 15 Apr 2010 12:49:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=66xpfMPzs38Q/2M7VMotmUoIVN4=; b=GZCxx5
-	689XnMCjMuswnf3ZaDbEcr8L0PqHYka8wNzNIKn+XscyG3uhTaGcfgQKX10GMhvb
-	C8YnVQqBKMhkR+GPK4VKUHxSUUSXDK3Y9muqb1goYNhzhi6haaGCuLO27T/q8z0y
-	NqqxqpV48kr5cw8NAgTbx+alfn/Z+HDXqy55w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qseeZDuobA+SIIQCQwF7ZEDBd4apl/zM
-	vovaqPfuMINg8A4CHazqFE+BqfNk5wUhdEMxKiLiUEHlUFBMk74hnO2HLzlpD07u
-	zRo58hYRnE7MdZVDf3KkgtCWclZUQmRa9IdtVnIg34ldcS8Xojt6d2409dQjNwmv
-	VyYj1u2DdxI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 424E4AB683;
-	Thu, 15 Apr 2010 12:49:55 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78710AB682; Thu, 15 Apr
- 2010 12:49:52 -0400 (EDT)
-In-Reply-To: <4BC70D75.70801@viscovery.net> (Johannes Sixt's message of
- "Thu\, 15 Apr 2010 14\:58\:29 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EB3855AE-48AE-11DF-9287-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752523Ab0DORnv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Apr 2010 13:43:51 -0400
+Received: from mail-qy0-f189.google.com ([209.85.221.189]:34774 "EHLO
+	mail-qy0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751478Ab0DORnu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Apr 2010 13:43:50 -0400
+Received: by qyk27 with SMTP id 27so1962036qyk.23
+        for <git@vger.kernel.org>; Thu, 15 Apr 2010 10:43:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Ovv8tRxyeg+GVkNb7BFiPhQ+1ocJypEbqAEqg1DLCnE=;
+        b=bn3ayYVZj4ZJIbVj0sq+d0AaiiE+n8CbA2o0DOtEm2an/UGdNnzQlKw/J1BJmjmy+g
+         PdRXqoW1TY/GXID1t6NvUGCef81VSjW1SL09pSIFbGus6gbRPMxBDIcPcwDETEKcUA9L
+         +ONmSCBUwH8Fklqrr92S19PPFxxuuZp3dfqAU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=leJWG2ss1wjmQwRw3s0v1cqL2sL/CLLI9e/d3ZrJ192P5nZGiQmOsJ8zqK5aInwqfl
+         6XlqshO4CVymfj2/khryHCHfBQsv20CmHQFUHGv4TLdlxTMOmm0YapL3ZsYgd9aHaP/u
+         t2Of1SakxUM3+qxo6k4p3hRc33xxRLirbVm+o=
+Received: by 10.224.2.76 with HTTP; Thu, 15 Apr 2010 10:43:49 -0700 (PDT)
+In-Reply-To: <20100415084925.GA14660@progeny.tock>
+Received: by 10.224.113.151 with SMTP id a23mr91014qaq.386.1271353429381; Thu, 
+	15 Apr 2010 10:43:49 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145001>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+On Thu, Apr 15, 2010 at 10:49 AM, Jonathan Nieder <jrnieder@gmail.com> =
+wrote:
+> FWIW, my latest is at
+>
+> =C2=A0git://repo.or.cz/git/jrn nd/setup/chapter-one
+>
+> Changes since the last series I sent to the list:
+>
+> =C2=A0- test cleanups, after Junio=E2=80=99s feedback
+> =C2=A0- clarified commit messages, I hope
+>
+> If you=E2=80=99ve already started cleaning up or if something in the =
+diff looks
+> iffy, feel free to carry on with what you have. =C2=A0I don=E2=80=99t=
+ want the test
+> changes to interfere with more productive work.
+>
+> Looking forward to watching this evolve,
 
-> But I don't see yet, why an entry pointing to a dead-end experiment is
-> less important when it is an entry in a branch reflog than when it is an
-> entry in the HEAD reflog. Care to explain?
+OK. Here is the topic breakdown into 11 sub-topics, after rebasing on
+setup/chapter-one. Patches 1, 2-3, 4-5, 8-9, 10-12, 13-18 can go as
+separate independent sub-topics, given that chapter-one is accepted.
+The rest must go in sequence because they will need some of previous
+groups. Commit messages aren't cleaned up yet, just the idea of
+grouping.
 
-You can set both expiry criteria to the same timestamp, unless you feel
-"dead-end experiment is _more_ important", so I frankly don't see a strong
-need to explain.  The two expiry setting came from the discussion in:
+Patches available at git://repo.or.cz/git/pclouds.git tp/setup
 
-  http://thread.gmane.org/gmane.comp.version-control.git/34653/focus=34734
+     1	rev-parse --git-dir: print relative gitdir correctly
 
-I can understand the "Oh, I made a commit that adds a huge garbage blob by
-mistake---I want to get rid of it from my odb" use case.  It may go like
-this:
+This will become a problem when patches 37-43 (let's name it
+"unset_git_directory") is merged. Other than that, it's can go alone.
 
-    # starting from master
-    git checkout maint ; did something
-    git checkout next ; did something
-    git checkout master
-    git add huge-gunk ; git commit ; oops
-    git reset --hard HEAD^
+     2	worktree setup: calculate prefix even if no worktree is found
+     3	index-pack: trust the prefix returned by setup_git_directory_gen=
+tly()
 
-    git gc --expire-unreachable=now
+This is debatable, as you pointed out, because it changes "git
+rev-parse --show-prefix" behavior. This is a prerequisite for 19-36
+(run-setup-gently)
 
-In the current behaviour, HEAD reflog loses everything that is not
-reachable from the current tip, just like the reflog for ordinary
-branches.  You would lose the last pointer to the commit made by mistake
-and the huge blob will immediately be kicked out from the odb.
+     4	Move enter_repo() to setup.c
+     5	enter_repo(): initialize other variables as
+setup_git_directory_gently() does
 
-But then I have to lose the record that I was working on 'next' before
-coming to master, while I still have the record that says I was on
-'maint'.  That is what "git checkout -" (and git log -g HEAD) will give us
-after the above sequence.  I cannot explain how that could possibly be a
-sane behaviour to the users.
+Good thing. Quite simple. Prerequisite for 6-7 (have_run_setup)
 
-It would be nicer to lose entries that talk about commits that do not
-appear in history of any ref, and we can have the best of both worlds.
-The patch does not do that, but it should be easy to implement.  Instead
-of marking from the tip of the ref that the reflog we are expiring is for,
-when expiring HEAD reflog, you would mark from the tips of _all_ the refs
-(and you would need to clean up afterwards the same way).
+     6	builtin: remember whether repository has been searched for
+     7	builtins: setup repository before print unknown command error
+
+Introduce startup_info->have_run_setup_gitdir, and a guard in command
+error printing.
+
+     8	setup: save prefix (original cwd relative to toplevel) in startu=
+p_info
+     9	builtin: remove prefix variable from run_builtin()
+
+Introduce startup_info->prefix. Will be needed for 47-48 (alias fix)
+because setup_git_dir may be called in one place, and unset_git_dir is
+called in another place.
+
+    10	run_builtin(): save "-h" detection result for later use
+    11	builtins: utilize startup_info->help where possible
+    12	builtins: check for startup_info->help, print and exit early
+
+=46ix "git cmd -h" shortcut. There will be warnings from git_config()
+once the old "guard unallowed access" patch is in. It will be fixed in
+patch 45.
+
+    13	init/clone: turn on startup->have_repository properly
+    14	t7002: test git grep --no-index from a bare repository
+    15	Do not read .git/info/exclude if there is no repository
+    16	Do not read .git/info/attributes if there is no repository
+    17	apply: do not check sha1 if there is no repository
+    18	config: do not read .git/config if there is no repository
+
+Assorted fixes wrt unconditional access to .git/. All these patches
+simple add "if (have_repository)" or so.
+
+    19	t0001: test git init when run via an alias
+    20	t5512: test that ls-remote does not require a git repository
+    21	t7006: expose test_terminal() for use by other tests
+    22	help: note why it is appropriate for this command not to use
+RUN_SETUP_GENTLY
+    23	hash-object: use RUN_SETUP_GENTLY
+    24	shortlog: use RUN_SETUP_GENTLY
+    25	grep: use RUN_SETUP_GENTLY
+    26	archive: use RUN_SETUP_GENTLY
+    27	mailinfo: use RUN_SETUP_GENTLY
+    28	check-ref-format: use RUN_SETUP_GENTLY
+    29	verify-pack: use RUN_SETUP_GENTLY
+    30	apply: use RUN_SETUP_GENTLY
+    31	bundle: use RUN_SETUP_GENTLY
+    32	diff: use RUN_SETUP_GENTLY
+    33	ls-remote: use RUN_SETUP_GENTLY
+    34	var: use RUN_SETUP_GENTLY
+    35	merge-file: use RUN_SETUP_GENTLY
+    36	index-pack: use RUN_SETUP_GENTLY
+
+The RUN_SETUP_GENTLY series. Of course these will need to be reviewed,
+some commands might need finer-grain setup.
+
+    37	Add git_config_early()
+    38	t1300: test that scripted commands do not respect stray .git/con=
+fig
+    39	git_config(): do not read .git/config if there is no repository
+    40	Use git_config_early() instead of git_config() during repo setup
+    41	worktree setup: call set_git_dir explicitly
+    42	worktree setup: restore original state when things go wrong
+    43	Allow to undo setup_git_directory_gently() gracefully (and fix
+alias code)
+
+The unset_git_directory series. Make setup_git_directory() work right.
+
+    44	Guard unallowed access to repository when it's not set up
+    45	run_builtin: do now raise alarms
+    46	setup_work_tree: do not raise alarm
+
+Put unallowed access warnings in place. Also fixes false alarms.
+
+    47	alias: keep repository found while collecting aliases as long as=
+ possible
+    48	run_builtin: respect have_run_setup_gitdir
+
+=46ix alias related setup problem.
+
+Insane?
+--=20
+Duy
