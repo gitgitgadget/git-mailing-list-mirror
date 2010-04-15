@@ -1,69 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] reflog: ignore expire-unreachable for "HEAD" reflog
-Date: Thu, 15 Apr 2010 00:40:27 -0700
-Message-ID: <7vochlkvtg.fsf@alter.siamese.dyndns.org>
-References: <7vljcppycc.fsf@alter.siamese.dyndns.org>
- <7vfx2xpyam.fsf@alter.siamese.dyndns.org> <4BC6B5FF.6030406@viscovery.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 8/9] builtin: check pager.<cmd> configuration if 
+	RUN_SETUP_GENTLY is used
+Date: Thu, 15 Apr 2010 10:33:55 +0200
+Message-ID: <m2yfcaeb9bf1004150133te8af6155n63d620fef2be98a2@mail.gmail.com>
+References: <20100413021153.GA3978@progeny.tock> <20100413023003.GH4118@progeny.tock> 
+	<y2yfcaeb9bf1004130312l197983cnf92371acc88464db@mail.gmail.com> 
+	<20100414050643.GB28864@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Apr 15 09:40:40 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 15 10:34:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2Jgm-0008Qi-5p
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 09:40:40 +0200
+	id 1O2KWk-00058f-RR
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 10:34:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757387Ab0DOHkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 03:40:35 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54533 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757287Ab0DOHke (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 03:40:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1711AAB8DB;
-	Thu, 15 Apr 2010 03:40:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1WgykNJYUcJK+iA3afOfcLEAmhs=; b=Z7urzc
-	8w9cMEddx3Au+5jFxuMiwApBz/7h5own7RjaDTr4Y19SIEq/2xZKIUoTlLgbMSaf
-	NiMbhdbXP0sB2D/6sv5XzUkrWnYlx6kbg3+2tz1vQStAsdKkMTYeEck3KMo2xCFV
-	VRY5DXdBMIdOrsuhG92v2YunvJz5dh1bHoS0A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PBMvsdYIxVkvcFIgBGoZD0iEKdKfDydi
-	vi45sazUMtuWrCgFSNV0Asq6Yl3xPl/B6cAoJ+/DHEQRh1OMcF6G6KuZX6R6gHqC
-	8Usf97Iworq7+k9gD5p5W+4jh0BOd7vzDtNHqOgdtX92rJAEeN5znpM9m81vAlDw
-	AgDni5d+DQo=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E4523AB8DA;
-	Thu, 15 Apr 2010 03:40:30 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5979BAB8D9; Thu, 15 Apr
- 2010 03:40:28 -0400 (EDT)
-In-Reply-To: <4BC6B5FF.6030406@viscovery.net> (Johannes Sixt's message of
- "Thu\, 15 Apr 2010 08\:45\:19 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2AF47A76-4862-11DF-AB5A-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757369Ab0DOIeR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Apr 2010 04:34:17 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:36506 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757347Ab0DOIeP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Apr 2010 04:34:15 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so365851qwh.37
+        for <git@vger.kernel.org>; Thu, 15 Apr 2010 01:34:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type;
+        bh=aqMBiBRild0Wbd2rHwaT8r0nwe7ZBPH2rT6q8NaqcKs=;
+        b=JvZt0eI5uwZe2ym2nHhC9IRcc0oSP6GgQIkXeQLSm4VvInmeHqv5o8VGaGKYNv4C/F
+         9Z7YhGqwrJJZOk4AtDAaE8fYV4PRvFEHPfEUo7MMD3tocoE7Yi9lBn8OlB5Cb+UglpTe
+         erFZNa9ewr2cVdVmb+mn8zNej0+4D6eZFs7c8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=vSM4/PoCP+lONtFkV3hTvD3S9zNkN3ZiTUWinJ4Psm6mpLdVRqLImcgOUyy+BmOlbp
+         gpyQV0pSU0AoHmZM0enrMesabu+/t5XJdy5Fpn4hL0Pazg5R+AP2fPBiqu0Wk/ms9tDR
+         JmCV1ml7fuS95igwgYGTzhERU2z9O8ZscOedI=
+Received: by 10.224.2.76 with HTTP; Thu, 15 Apr 2010 01:33:55 -0700 (PDT)
+In-Reply-To: <20100414050643.GB28864@progeny.tock>
+Received: by 10.224.72.34 with SMTP id k34mr3071234qaj.283.1271320455070; Thu, 
+	15 Apr 2010 01:34:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144961>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+On Wed, Apr 14, 2010 at 7:06 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> So here are some ideas for future work (not necessarily in order).
+>
+>  - Teach remaining commands that need to search for a repository to
+>   use RUN_SETUP_GENTLY, with appropriate exceptions where needed
+>   (for --no-index, for example).
 
-> Does not help what? What is the problem?
+ - Two patches "worktree setup: calculate prefix.." and "index-pack:
+trust the prefix" may form a separate series. That would unblock
+RUN_SETUP_GENTLY series.
 
-You will lose the record from HEAD reflog that records the fact that you
-were at the tip of "next" less than "reflogexpire" but more than
-"reflogexpireunreachable" time ago, if you run "gc" while on "master".
+>  - Introduce unset_git_directory and the RUN_UNSETUP option (yes,
+>   this needs a better name).  Teach commands that work without a
+>   git directory to use it (this should fix the init poisoned by
+>   parent repository and aliased init problems).
 
-Such a pruning does not have much to do with the real reason why
-expireunreachable would be a useful thing (namely, to prune failed
-histories that have been rewound away faster than the history that
-survived from reflog of individual branches).
+ - Two patches that move enter_repo() to setup.c and fix it up can go
+first. They should have no impact on system.
+
+>
+>  - Teach git_config() to ignore the repository-specific configuration
+>   if have_run_setup is true but have_repository is false.
+>
+>  - Teach git_attr() to ignore .git/info/attributes if have_run_setup
+>   is true but have_repository is false.
+>
+>  - Teach git_config() to optionally die if have_run_setup is not true
+>   and the setup_git_dir* to optionally die if have_run_setup is true.
+>   test-lib.sh would enable this option.
+>
+
+ - Introduce startup_info->prefix. I think that's a good change, but
+it's independent to this series. The reason is, prefix can change
+after setup_git_dir is called (i.e. setup_work_tree()).
+ - The fix for "git cmd -h" can make a separate series (4 patches)
+ - Finally the soft guard patch and assorted fixups to avoid warnings.
+
+I'll reorder my tree and see if it looks good. Patches of this 9-patch
+series will be untouched.
+-- 
+Duy
