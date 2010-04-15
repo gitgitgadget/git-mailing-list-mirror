@@ -1,65 +1,178 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: [PATCH 2/2] (resend) stash: Don't overwrite files that have gone from the index
-Date: Thu, 15 Apr 2010 01:24:22 +0100
-Message-ID: <1271291062-32154-2-git-send-email-charles@hashpling.org>
-References: <1271291062-32154-1-git-send-email-charles@hashpling.org>
-Cc: Charles Bailey <charles@hashpling.org>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 15 02:24:53 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv5 2/6] Gitweb: add support for minifying gitweb.css
+Date: Thu, 15 Apr 2010 02:25:41 +0200
+Message-ID: <201004150225.42101.jnareb@gmail.com>
+References: <4BB430C3.9030000@mailservices.uwaterloo.ca> <201004140030.47222.jnareb@gmail.com> <7viq7tmvsb.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Charles Bailey <charles@hashpling.org>,
+	Mark Rada <marada@uwaterloo.ca>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 15 02:25:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2Ct0-0003aL-AG
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 02:24:50 +0200
+	id 1O2CtL-0003g5-BK
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Apr 2010 02:25:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755521Ab0DOAYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Apr 2010 20:24:42 -0400
-Received: from relay.pcl-ipout02.plus.net ([212.159.7.100]:57420 "EHLO
-	relay.pcl-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755426Ab0DOAYl (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Apr 2010 20:24:41 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsEAPf5xUvUnw4U/2dsb2JhbACbW3G9cYUNBA
-Received: from pih-relay08.plus.net ([212.159.14.20])
-  by relay.pcl-ipout02.plus.net with ESMTP; 15 Apr 2010 01:24:40 +0100
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by pih-relay08.plus.net with esmtp (Exim) id 1O2Csq-0004Qs-9q; Thu, 15 Apr 2010 01:24:40 +0100
-Received: from charles by hashpling.plus.com with local (Exim 4.69)
-	(envelope-from <charles@hashpling.org>)
-	id 1O2Csp-0008OK-O9; Thu, 15 Apr 2010 01:24:39 +0100
-X-Mailer: git-send-email 1.7.1.rc1.241.g4e72f
-In-Reply-To: <1271291062-32154-1-git-send-email-charles@hashpling.org>
-X-Plusnet-Relay: 35fc0a7d3ae5ce9dfff2242c8ef7c129
+	id S1755615Ab0DOAZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Apr 2010 20:25:05 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:25616 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755426Ab0DOAZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Apr 2010 20:25:03 -0400
+Received: by fg-out-1718.google.com with SMTP id 22so298119fge.1
+        for <git@vger.kernel.org>; Wed, 14 Apr 2010 17:25:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=cVy8dxT6853YagA42Uw80HjdZF2Pn6XqrbHOUnvjh7c=;
+        b=PAFy3sx509tJkI1PuTjou1kDcPD4SRZU+jeqvq0+R6/ZhT8uay1rYMYPe6+Xpi3EKf
+         Nn7RzbyI1PaJ9Blbch8Wiy6OSfuTVdTEy05SI01PDkJa9hUIBFeauyVoQ/gMHQjAtfGC
+         kuluCn+eITBBBKHpAoVBIvDr53DASlbQ/cOgw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=ECgQi038kxp2P0LWSp/1anuxCFAvJAIL2NXljSdTnIu2uPX/mVh7UQjxdRiAyayc1m
+         GOeHcAjvh6rJrS1e/cTTOT5Do7BGUJdQGhDYN7RpG0BhsiKiyhDJnvt/OhvWDlPX5dS3
+         /G/cB7FhUvM8qfV1tu59dcqlO/rge8NLxb8qk=
+Received: by 10.102.165.40 with SMTP id n40mr4783388mue.71.1271291101647;
+        Wed, 14 Apr 2010 17:25:01 -0700 (PDT)
+Received: from [192.168.1.13] (abvo40.neoplus.adsl.tpnet.pl [83.8.212.40])
+        by mx.google.com with ESMTPS id s11sm5141899mue.41.2010.04.14.17.25.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 14 Apr 2010 17:25:01 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7viq7tmvsb.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/144931>
 
----
+On Thu, 15 Apr 2010, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>> On Tue, 13 April 2010, Charles Bailey wrote:
+>>> On 01/04/2010 06:36, Mark Rada wrote:
+>>>> @@ -84,13 +92,14 @@ endif
+>>>>
+>>>>   all:: gitweb.cgi
+>>>>
+>>>> +FILES = gitweb.cgi
+>>>>   ifdef JSMIN
+>>>> +FILES += gitweb.min.js
+>>>> +endif
+>>>> +ifdef CSSMIN
+>>>> +FILES += gitweb.min.css
+>>>> +endif
+>>>> +gitweb.cgi: gitweb.perl $(GITWEB_JS) $(GITWEB_CSS)
+>>
+>> GITWEB_JS and GITWEB_CSS were originally meant to be URI to file with
+>> gitweb JavaScript code and default gitweb stylesheet,... but during work
+>> on minification of JavaScript code and CSS file it somehow got confused
+>> to mean source path.
+> 
+> I am not touching instaweb part, but this would fix the build/clean side
+> of the things, no?
 
-This patch is deliberately not signed off. It feels kludgy and uses a
-non-portable xargs invocation.
+Close, see below.
 
-It is designed as a starting point for discussion, that is all.
+> 
+> -->8 --
+> gitweb: simplify gitweb.min.* generation and clean-up rules
+> 
+> GITWEB_CSS and GITWEB_JS are meant to be "what URI should the installed
+> cgi script use to refer to the stylesheet and JavaScript", never "this is
+> the name of the file we are building".
+> 
+> Lose incorrect assignment to them.
 
- git-stash.sh |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+Actually the assignment was intended to provide correct *default* values
+for GITWEB_CSS and GITWEB_JS, so that if e.g. JSMIN is defined gitweb,
+in absence of build time configuration, would link gitweb.min.js instead
+of gitweb.js.
 
-diff --git a/git-stash.sh b/git-stash.sh
-index 908aab2..9efc544 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -87,6 +87,8 @@ create_stash () {
- 			export GIT_INDEX_FILE &&
- 			git read-tree -m $i_tree &&
- 			git add -u &&
-+			{ git diff --quiet --diff-filter=D --cached ||
-+				git diff -z --name-only --diff-filter=D --cached | xargs -0 git add --ignore-errors; } &&
- 			git write-tree &&
- 			rm -f "$TMP-index"
- 		) ) ||
+> 
+> While we are at it, lose FILES that is used only for "clean" target in a
+> misguided way.  "make clean" should try to remove all the potential build
+> artifacts regardless of a minor configuration change.  Instead of trying
+> to remove only the build product "make clean" would have created if it
+> were run without "clean", explicitly list the three potential build
+> products for removal.
+
+Good.
+
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  gitweb/Makefile |   15 ++++-----------
+>  1 files changed, 4 insertions(+), 11 deletions(-)
+> 
+> diff --git a/gitweb/Makefile b/gitweb/Makefile
+> index ffee4bd..1787633 100644
+> --- a/gitweb/Makefile
+> +++ b/gitweb/Makefile
+> @@ -80,16 +80,7 @@ endif
+>  
+>  all:: gitweb.cgi
+>  
+> -FILES = gitweb.cgi
+> -ifdef JSMIN
+> -FILES += gitweb.min.js
+> -GITWEB_JS = gitweb.min.js
+> -endif
+> -ifdef CSSMIN
+> -FILES += gitweb.min.css
+> -GITWEB_CSS = gitweb.min.css
+> -endif
+
+I wonder about removing assigmnet to GITWEB_JS and GITWEB_CSS.  Without
+it "make gitweb" (in top dir) would create gitweb/gitweb.cgi and 
+gitweb/gitweb.min.js etc.... but generated gitweb/gitweb.cgi would
+refer to gitweb.js, not gitweb.min.js.  Unless of course one provides
+values for GITWEB_JS during build time.
+
+> -gitweb.cgi: gitweb.perl $(GITWEB_JS) $(GITWEB_CSS)
+> +gitweb.cgi: gitweb.perl
+>  
+>  gitweb.cgi:
+>  	$(QUIET_GEN)$(RM) $@ $@+ && \
+> @@ -118,16 +109,18 @@ gitweb.cgi:
+>  	mv $@+ $@
+>  
+>  ifdef JSMIN
+> +all:: gitweb.min.js
+>  gitweb.min.js: gitweb.js
+>  	$(QUIET_GEN)$(JSMIN) <$<>$@
+>  endif # JSMIN
+>  
+>  ifdef CSSMIN
+> +all:: gitweb.min.css
+>  gitweb.min.css: gitweb.css
+>  	$(QUIET_GEN)$(CSSMIN) <$>$@
+>  endif
+
+That makes gitweb.cgi not depend on gitweb.min.js, not gitweb.min.css.
+It might be right... and I think the rightness or wrongness might be
+tied with values of GITWEB>JS and GITWEB_CSS.
+
+>  
+>  clean:
+> -	$(RM) $(FILES)
+> +	$(RM) gitweb.cgi gitweb.min.css gitweb.min.js
+>  
+>  .PHONY: all clean .FORCE-GIT-VERSION-FILE
+> 
+
 -- 
-1.7.1.rc1.241.g4e72f
+Jakub Narebski
+Poland
