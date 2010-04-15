@@ -1,151 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] receive-pack: ignore duplicated commands which can
- occur with symrefs
-Date: Thu, 15 Apr 2010 15:57:06 -0700
-Message-ID: <7v39ywiat9.fsf@alter.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH 2/2] receive-pack: ignore duplicated commands which can 
+	occur with symrefs
+Date: Thu, 15 Apr 2010 19:07:52 -0400
+Message-ID: <y2g76718491004151607u58021df8naab23b6daf06513d@mail.gmail.com>
 References: <1271364848-32805-1-git-send-email-jaysoffian@gmail.com>
- <1271364848-32805-2-git-send-email-jaysoffian@gmail.com>
+	 <1271364848-32805-2-git-send-email-jaysoffian@gmail.com>
+	 <7v39ywiat9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, "Shawn O . Pearce" <spearce@spearce.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 16 00:57:30 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 16 01:09:23 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2Xzu-0006vY-0v
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 00:57:22 +0200
+	id 1O2YB8-0003AN-1E
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 01:08:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757889Ab0DOW5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 18:57:17 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61977 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757820Ab0DOW5Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 18:57:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C3CF2ABEF3;
-	Thu, 15 Apr 2010 18:57:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kXnkurAC4SWlPGxtXpWa7urru8Y=; b=bh65dN
-	+/HjwP4yGOSNjEuAbE6RsTXDJEqoC9eAJwduTTT9lGpauLaPvj2iR9sTgCbDPzYn
-	wYm/crFz925RKMQQtOPnkmq6pr42ZnWbLogugNrOYq22XB7ByWRErn3f1SwNKaa0
-	s/Wq/FhBVi2uVVXXu0c6LqL+Ao2bjW8mxpx0o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p1xqzeR2BBgYPfHqkL6tjgkWSug05sQB
-	WG1yTM1+2NqGFy/mb7oPCcmx8MFK/TkIMR++F8PNA5xT9h1Qlz6ntcw4A87gCONr
-	h/sqSNbBGWWDPEuCygo38ReGSrvgrD++IvdCK88REPYKjyJnHE3bPCAUrXQi2fnD
-	Fh7KWEoHl4o=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 91A0AABEF1;
-	Thu, 15 Apr 2010 18:57:11 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A692EABEF0; Thu, 15 Apr
- 2010 18:57:07 -0400 (EDT)
-In-Reply-To: <1271364848-32805-2-git-send-email-jaysoffian@gmail.com> (Jay
- Soffian's message of "Thu\, 15 Apr 2010 16\:54\:08 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 39E75E92-48E2-11DF-BF94-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758046Ab0DOXH4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Apr 2010 19:07:56 -0400
+Received: from mail-iw0-f197.google.com ([209.85.223.197]:57590 "EHLO
+	mail-iw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758033Ab0DOXHx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Apr 2010 19:07:53 -0400
+Received: by iwn35 with SMTP id 35so934208iwn.21
+        for <git@vger.kernel.org>; Thu, 15 Apr 2010 16:07:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NY4iOjsCrtomnifx4uM1zESKogkNVIFqEA/PzbJuX1Y=;
+        b=WBGFmVz8meB3wc39+rUkpwBw9Jr622mShssxMxVHl2Z9ZLcqLGNRoQ7U02vOUExWv8
+         h4iOBRPyM7v01splXXU0AjKNTJPT7imdH2QZzjgV9foNje1lEHZw/M0omSpOPcWO4zrn
+         BW0si7yVfUZgRv5UU5XX5zssaM/MGuc16sQ0M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=U4OaUL/6MJMLcw4n1EC/gRlr5IWHzIaqVq022Wl0PoMVFj7drwsUROXsoJ5+s1DKz3
+         V4mgjjnNGdbrg0yEoo3q1um4nbPt8cxg8nIK+IxDMT6MNExpxsYw+w5PYfxbYTsMUFRT
+         W4nRV1N3SlYDr8pX0uBRi8zSngHo6jb7VZiVA=
+Received: by 10.231.36.9 with HTTP; Thu, 15 Apr 2010 16:07:52 -0700 (PDT)
+In-Reply-To: <7v39ywiat9.fsf@alter.siamese.dyndns.org>
+Received: by 10.231.156.65 with SMTP id v1mr284430ibw.67.1271372873060; Thu, 
+	15 Apr 2010 16:07:53 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145033>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
-
-> When pushing to a remote repo, normally the sending side tries to
-> filter out any aliased updates (e.g, foo:baz bar:baz). However, it
-> is impossible for the sender to know if two refs are aliased on the
-> receiving side via symrefs. Here is one such scenario:
+On Thu, Apr 15, 2010 at 6:57 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Jay Soffian <jaysoffian@gmail.com> writes:
 >
-> $ git init origin
+>> When pushing to a remote repo, normally the sending side tries to
+>> filter out any aliased updates (e.g, foo:baz bar:baz). However, it
+>> is impossible for the sender to know if two refs are aliased on the
+>> receiving side via symrefs. Here is one such scenario:
+>>
 
-Indent this line a bit.
+> [... lots of good feedback ...]
 
-> (cd origin && touch file && git add file && git commit -a -m intial)
-> git clone --bare origin origin.git
-> rm -rf origin
+Will incorporate and re-roll.
+
+> This will also catch two symrefs that point at the same underlying re=
+f.
+> If all three are updated consistently then all will be fine. =C2=A0If=
+ even one
+> of them is inconsistent, we will try the update() and give an error
+> message.
 >
-> git clone origin.git client
->
-> git clone --mirror client backup.git &&
-> (cd backup.git && git remote set-head origin --auto)
->
-> (cd client &&
-> 	git remote add --mirror backup ../backup.git &&
-> 	echo change1 > file && git commit -a -m change1 &&
-> 	git push origin &&
-> 	git push backup
-> )
+> We _could_ give even stronger error message to help diagnosing the
+> situation if we wanted to.
 
-Consistently use prompt and indent these to match the first "init".
+Okay, I'll see what I can figure out.
 
->
-> The push to backup fails with:
->
-> Counting objects: 5, done.
-> Writing objects: 100% (3/3), 244 bytes, done.
-> Total 3 (delta 0), reused 0 (delta 0)
-> Unpacking objects: 100% (3/3), done.
-> error: Ref refs/remotes/origin/master is at ef307ff6d0026900f84bae7bfe2f5d695238ca66 but expected 262cd5762e76e0aca2c185a3995095318772e2f2
+> Very nice.
 
-Indent this as well, and trim the object names as the exact values do not
-matter.
+I appreciate the compliment, but it is unexpected after reading your
+reply to "failed to lock". I think your suggestion there (fix
+verify_lock()) probably addresses the real problem in which case this
+is just a band-aid.
 
-> remote: error: failed to lock refs/remotes/origin/master
-> To ../backup.git
->    262cd57..ef307ff  master -> master
->    262cd57..ef307ff  origin/HEAD -> origin/HEAD
->  ! [remote rejected] origin/master -> origin/master (failed to lock)
-> error: failed to push some refs to '../backup.git'
-
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index 3fc73cf..a2e3bc8 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -9,6 +9,7 @@
->  #include "object.h"
->  #include "remote.h"
->  #include "transport.h"
-> +#include "string-list.h"
->  
->  static const char receive_pack_usage[] = "git receive-pack <git-dir>";
->  
-> @@ -486,10 +487,30 @@ static void run_update_post_hook(struct command *commands)
->  	}
->  }
->  
-> +static int aliased_ref(struct command *cmd, struct string_list *list)
-> +{
-
-Nit; what this does sounds more like "aliased update" to me.
-
-> +	struct string_list_item *item;
-> +	unsigned char sha1[20];
-> +	int flag;
-> +
-> +	const char *dst_name = resolve_ref(cmd->ref_name, sha1, 0, &flag);
-> +
-> +	if (!(flag & REF_ISSYMREF))
-> +		return 0;
-> +
-> +	if ((item = string_list_lookup(dst_name, list)) != NULL) {
-> +		struct command *other_cmd = (struct command *) item->util;
-> +		return (!(hashcmp(cmd->old_sha1, other_cmd->old_sha1) &&
-> +			hashcmp(cmd->new_sha1, other_cmd->new_sha1)));
-
-This will also catch two symrefs that point at the same underlying ref.
-If all three are updated consistently then all will be fine.  If even one
-of them is inconsistent, we will try the update() and give an error
-message.
-
-We _could_ give even stronger error message to help diagnosing the
-situation if we wanted to.
-
-Very nice.
+j.
