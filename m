@@ -1,111 +1,108 @@
-From: David Michael Barr <david.barr@cordelta.com>
-Subject: Replay subversion into git via filesystem
-Date: Fri, 16 Apr 2010 18:29:03 +1000
-Message-ID: <BF711404-63BB-4212-A0F9-0025D1D6F7C5@cordelta.com>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 16 10:29:18 2010
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: Feature or a bug: git aliases are executed in git-root
+	directory
+Date: Fri, 16 Apr 2010 01:34:21 -0700
+Message-ID: <20100416083419.GA30372@gmail.com>
+References: <4BC5A483.6060206@plusserver.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jens Otten <j.otten@plusserver.de>
+X-From: git-owner@vger.kernel.org Fri Apr 16 10:34:38 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2gvN-0007xc-6B
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 10:29:17 +0200
+	id 1O2h0W-00028s-S6
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 10:34:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756446Ab0DPI3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Apr 2010 04:29:10 -0400
-Received: from ironport1-mx.cbr1.mail-filtering.com.au ([203.88.115.241]:32107
-	"EHLO ironport1-mx.cbr1.mail-filtering.com.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756402Ab0DPI3I (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Apr 2010 04:29:08 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsEALq8x0vLWHsF/2dsb2JhbACbcXG1ZohGhQ4Eij8
-X-IronPort-AV: E=Sophos;i="4.52,218,1270389600"; 
-   d="scan'208";a="167567499"
-Received: from node2.alpha.aussiehq.net.au ([203.88.123.5])
-  by ironport1-mta.cbr1.mail-filtering.com.au with ESMTP; 16 Apr 2010 18:29:04 +1000
-Received: (qmail 16488 invoked from network); 16 Apr 2010 18:29:04 +1000
-Received: from d122-109-106-179.mit3.act.optusnet.com.au (HELO ?192.168.1.8?) (122.109.106.179)
-  by node2.alpha.aussiehq.net.au with SMTP; 16 Apr 2010 18:29:03 +1000
-X-Mailer: Apple Mail (2.1078)
+	id S1753516Ab0DPIec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Apr 2010 04:34:32 -0400
+Received: from mail-yx0-f199.google.com ([209.85.210.199]:55187 "EHLO
+	mail-yx0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752347Ab0DPIea (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Apr 2010 04:34:30 -0400
+Received: by yxe37 with SMTP id 37so1332110yxe.21
+        for <git@vger.kernel.org>; Fri, 16 Apr 2010 01:34:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=eXsK8a37A7tdmfmsC6gpuAV3w+poIP33Rn0FZowpCyQ=;
+        b=mzLR/lDmkYpdXrOmTQU/DRw6TQNuaRg0lmlDkkSAQBg7lEkdIB5cmnbZf89WJlXa1O
+         EpBhCeg5HPrhEU2uRwFoK25Y9y3zgSxBYOUT5Cq91dsEfiqFbwovfOc/Io4dmaSgJkC9
+         fmUhGpTgcbdcrJcc8iZqj8frAhitXK2Vn4tjY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=vxqojQT60VQVCuu5oAZ2aYP7Xu7Cqq8PDMyuokAKH7Z7MwhusZdzbwEjkKKb15eeTF
+         b1tdaSmODVQ0uJ/MCoK+ECrQkpARkf9/WdI4EE8Xh8ouwfAoJaQMLmmyM0CJRa+950Cf
+         PDrEGRF4G/IMiqFdV4DR749v8kjOy0IK0Fteg=
+Received: by 10.91.152.5 with SMTP id e5mr807330ago.78.1271406868346;
+        Fri, 16 Apr 2010 01:34:28 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id 7sm710102ywf.55.2010.04.16.01.34.26
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 16 Apr 2010 01:34:27 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4BC5A483.6060206@plusserver.de>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145058>
 
-Hi all,
+On Wed, Apr 14, 2010 at 01:18:27PM +0200, Jens Otten wrote:
+> Hi,
+>
+> i started to use git (version is 1.6.3.3 (ubuntu)) and it is really great!
+>
+> but i have one problem when using aliases. maybe i made a mistake, but  
+> here is my problem.
+>
+> i set up my ~/.gitconfig as follows:
+> ----------
+> ...
+> [alias]
+>    meld = !GIT_EXTERNAL_DIFF='git-diff-to-meld-redirect' git diff
+> ...
+> ----------
+>
+> now when i work in a subdirectory of my git-root dir and want to make a  
+> diff, this works perfectly:
+> $ cd ~/git-root/subdir
+> $ git diff some_file
+>
+> but when doing the same using the alias i get an error:
+> $ cd ~/git-root/subdir
+> $ git meld some_file
+> fatal: ambiguous argument 'some_file': unknown revision or path not in  
+> the working tree.
+> Use '--' to separate paths from revisions
+>
+> whereas using the relative path starting from the git-root directory works
+> $ cd ~/git-root/subdir
+> $ git meld subdir/some_file
+>
+> is there a way to solve this problem?
 
-In response to some recent questions about big imports of svn history
-into git and as a part of my svn-dump-fast export project, I have
-created a simple bash script to replay the root of a svn repository
-into a git repository.
-The assumption is that svnsync is used to pull the remote repository
-and that svk is used to manage the working copy.
+Yes.  Use git-difftool =)
 
-The mirror might be set up like so:
-svnadmin create /path/to/mirror
-svnsync init file:///path/to/mirror http://remote.com/svn
-svnsync sync file:///path/to/mirror
-svk depot depot_name /path/to/mirror
+http://www.kernel.org/pub/software/scm/git/docs/git-difftool.html
 
-I'd appreciate any comments on the correctness of the script.
+git difftool -t meld -- <path>
 
---
-David Barr
---
 
-#!/bin/bash
-SVK_DEPOT=""
-CO_DIR=validation
-HASH_DIR=.git/wc
 
-SVN_UUID=`svk pg --revprop -r0 svn:sync-from-uuid /$SVK_DEPOT/`
-SVN_URL=`svk pg --revprop -r0 svn:sync-from-url /$SVK_DEPOT/`
-MAX_REV=`svk pg --revprop -r0 svn:sync-last-merged-rev /$SVK_DEPOT/`
+> thanks for your help
+> jens
 
-echo SVN_UUID: $SVN_UUID
-echo SVN_URL: $SVN_URL
-echo MAX_REV: $MAX_REV
+HTH,
 
-svk co -r1 /$SVK_DEPOT/ $CO_DIR
-cd $CO_DIR
-git init
-mkdir -p $HASH_DIR/{0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f}\
-{0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f}
-for (( REV=1 ; REV<=MAX_REV ; ++REV )) do
-  svk up -r$REV
-  # Hashify working copy
-  git update-index --refresh 2>/dev/null
-  git ls-files -modz | tee .git/filelist \
-   | git update-index -z --add --replace --remove --stdin
-  xargs -0 git ls-files -s < .git/filelist | (
-    while read MODE HASH STAGE FILE ; do
-      HASH_FILE="$HASH_DIR/${HASH:0:2}/$HASH$MODE"
-      ln "$FILE" "$HASH_FILE" 2>/dev/null || \
-        ln -f "$HASH_FILE" "$FILE"
-    done
-  )
-  SVN_AUTHOR=`svk pg --revprop -r$REV svn:author`
-  SVN_DATE=`svk pg --revprop -r$REV svn:date`
-  export GIT_COMMITTER_NAME=$SVN_AUTHOR
-  export GIT_COMMITTER_EMAIL=$SVN_AUTHOR"@"$SVN_UUID
-  export GIT_COMMITTER_DATE="`date -juf '%FT%T' $SVN_DATE \
-    '+%F %T %z' 2>/dev/null`"
-  export GIT_AUTHOR_NAME="$GIT_COMMITTER_NAME"
-  export GIT_AUTHOR_EMAIL="$GIT_COMMITTER_EMAIL"
-  export GIT_AUTHOR_DATE="$GIT_COMMITTER_DATE"
-  GIT_PARENT=""
-  [ $REV -gt 1 ] && GIT_PARENT="-p `git show-ref --head -s HEAD`"
-  GIT_TREE=`git write-tree`
-  echo git commit-tree $GIT_TREE $GIT_PARENT
-  GIT_COMMIT=`svk pg --revprop -r$REV svn:log \
-   | git commit-tree $GIT_TREE $GIT_PARENT`
-  git update-ref HEAD $GIT_COMMIT
-  git tag $REV
-  git gc --auto
-done
+-- 
+		David
