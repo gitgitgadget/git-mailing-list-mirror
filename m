@@ -1,78 +1,90 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [PATCH 2/2] Fix t4013 with commit date in mbox 'From COMMIT DATE' 
-	header lines
-Date: Fri, 16 Apr 2010 19:59:32 +0200
-Message-ID: <o2jadf1fd3d1004161059z5b85989br9984fac87ac7e92b@mail.gmail.com>
-References: <20100416075251.GA25147@arachsys.com>
-	 <2b1d2ec748f3a28e7210f235df29703fd425e08a.1271436192.git.chris@arachsys.com>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH RFC 0/5] Patches to avoid reporting conversion changes.
+Date: Fri, 16 Apr 2010 21:02:09 +0300
+Organization: Private
+Message-ID: <874ojbqnry.fsf@jondo.cante.net>
+References: <cover.1271432034.git.grubba@grubba.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Chris Webb <chris@arachsys.com>
-X-From: git-owner@vger.kernel.org Fri Apr 16 19:59:42 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 16 20:02:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2ppN-000769-IR
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 19:59:41 +0200
+	id 1O2ps3-0000LG-Dg
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 20:02:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757306Ab0DPR7g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Apr 2010 13:59:36 -0400
-Received: from mail-bw0-f225.google.com ([209.85.218.225]:53800 "EHLO
-	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753871Ab0DPR7f convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Apr 2010 13:59:35 -0400
-Received: by bwz25 with SMTP id 25so3445942bwz.28
-        for <git@vger.kernel.org>; Fri, 16 Apr 2010 10:59:33 -0700 (PDT)
-Received: by 10.103.11.8 with HTTP; Fri, 16 Apr 2010 10:59:32 -0700 (PDT)
-In-Reply-To: <2b1d2ec748f3a28e7210f235df29703fd425e08a.1271436192.git.chris@arachsys.com>
-Received: by 10.102.243.26 with SMTP id q26mr1306203muh.34.1271440772981; Fri, 
-	16 Apr 2010 10:59:32 -0700 (PDT)
+	id S1757921Ab0DPSCW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Apr 2010 14:02:22 -0400
+Received: from lo.gmane.org ([80.91.229.12]:41054 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757785Ab0DPSCV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Apr 2010 14:02:21 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1O2prv-0000HW-VP
+	for git@vger.kernel.org; Fri, 16 Apr 2010 20:02:19 +0200
+Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 16 Apr 2010 20:02:19 +0200
+Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 16 Apr 2010 20:02:19 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
+Cancel-Lock: sha1:7ru2FlM1O5G1fRK3NBZ54fURFYo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145089>
 
-It is better if you squash this patch into the earlier one, then the
-tests always pass.
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-Santi
+>>>>>> "Jari" == Jari Aalto <jari.aalto@cante.net> writes:
+>
+> Jari> It would be interesting to know why not. These magic variables are hard
+> Jari> to read and remember without consulting the manual pages.
+>
+> Because it was observed over time that the aliases were *also* hard to
+> remember without consulting the manpages. :)
+>
+> So you were merely trading one problem for another, and since far more
+> code is out there that does *not* use English than does, we agreed that
+> use English was an interesting but failed experiment.
 
-On Fri, Apr 16, 2010 at 6:42 PM, Chris Webb <chris@arachsys.com> wrote:
-> Signed-off-by: Chris Webb <chris@arachsys.com>
-> ---
-> =A0t/t4013-diff-various.sh | =A0 =A03 ++-
-> =A01 files changed, 2 insertions(+), 1 deletions(-)
->
-> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-> index dae6358..ce42d3f 100755
-> --- a/t/t4013-diff-various.sh
-> +++ b/t/t4013-diff-various.sh
-> @@ -110,7 +110,8 @@ do
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0echo "\$ git $cmd"
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0git $cmd |
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0sed -e "s/^\\(-*\\)$V\=
-\(-*\\)\$/\\1g-i-t--v-e-r-s-i-o-n\2/" \
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 -e "s/^\\(.*mix=
-ed; boundary=3D\"-*\\)$V\\(-*\\)\"\$/\\1g-i-t--v-e-r-s-i-o-n\2\"/"
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 -e "s/^\\(.*mix=
-ed; boundary=3D\"-*\\)$V\\(-*\\)\"\$/\\1g-i-t--v-e-r-s-i-o-n\2\"/" \
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 -e "s/^\\(From =
-[0-9a-f][0-9a-f]*\\) .*/\\1 Mon Sep 17 00:00:00 2001/"
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0echo "\$"
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0} >"$actual" &&
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if test -f "$expect"
-> --
-> 1.7.0.3
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+Who found out? In what study?
+
+Honestly, that's not believable. There is no way reading the most common
+alphabetic variables would not be readable over puctuation:
+
+    $OUTPUT_AUTOFLUSH = 1;
+    if ( $OS_ERROR ) ...
+    if ( $EVAL_ERROR ) ...
+    open(...)   or die "$ERRNO"
+
+Versus:
+
+    $| = 1;
+    if ($?) ...
+    if ($@) ...
+    open(...) or die $!
+
+It *may* be the case with exotic (seldomly used) ones, but they are even
+more exotic in they short form:
+
+     print $^V;
+
+Eh?
+
+    print $PERL_VERSION;
+
+I compute sir,
+Jari
