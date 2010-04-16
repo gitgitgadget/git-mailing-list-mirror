@@ -1,122 +1,165 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v2] git-send-email.perl: Add sub maildomain_sanitize
-Date: Fri, 16 Apr 2010 18:11:11 +0200
-Message-ID: <201004161811.14259.jnareb@gmail.com>
-References: <1270789906-23735-1-git-send-email-brian@gernhardtsoftware.com> <m38w8og9w4.fsf@localhost.localdomain> <87wrw7qtx8.fsf_-_@jondo.cante.net>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Fri Apr 16 18:11:27 2010
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: [PATCH] patch-id: Add support for mbox format
+Date: Fri, 16 Apr 2010 18:22:28 +0200
+Message-ID: <1271434948-14134-1-git-send-email-bonzini@gnu.org>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 16 18:22:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2o8c-0001Oi-RH
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 18:11:27 +0200
+	id 1O2oJW-00087z-CG
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 18:22:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758103Ab0DPQLV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Apr 2010 12:11:21 -0400
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:53817 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756283Ab0DPQLU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Apr 2010 12:11:20 -0400
-Received: by ewy20 with SMTP id 20so940217ewy.1
-        for <git@vger.kernel.org>; Fri, 16 Apr 2010 09:11:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=GfrK3Ul6k/a817GpI9cASdxvWDu1B/hbCCD4VFyfOAU=;
-        b=h3HWFX8kdBRZa3YifgL2mdBBnx4sXX4ChK27URei5jVn0KoMebY3P1h3olcp7rNyxn
-         YHXG7raGX9h+OwGcSyfA4c6HdUfe40ruTYWu7b/yV3MitQAro8kCroqPN9fa+na7F90E
-         getr+G/jmoLRANeEZCdoqcoXdeWhZ/ZmRn05Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=mvVvEtRiIvBRVKlZOdCra/L48538TZzo7PRHxCRWrdEdYxwssSKDTar7qWxWr4a9UK
-         IrdpdTEeIZ/QFiGXRaEnSgGXzIf1BTNDTOCPCtAFCFvQ+vh1Ac5n34UdwOHcKDxylNg7
-         vpyEukM2xIXAXsBCGdpFYZlRaR+F0BLtVt/ZE=
-Received: by 10.103.80.8 with SMTP id h8mr1218037mul.90.1271434278482;
-        Fri, 16 Apr 2010 09:11:18 -0700 (PDT)
-Received: from [192.168.1.13] (abwa84.neoplus.adsl.tpnet.pl [83.8.224.84])
-        by mx.google.com with ESMTPS id j9sm14615933mue.17.2010.04.16.09.11.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 16 Apr 2010 09:11:17 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <87wrw7qtx8.fsf_-_@jondo.cante.net>
-Content-Disposition: inline
+	id S1758539Ab0DPQWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Apr 2010 12:22:34 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:41078 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758530Ab0DPQWd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Apr 2010 12:22:33 -0400
+Received: from bonzini by fencepost.gnu.org with local (Exim 4.69)
+	(envelope-from <bonzini@gnu.org>)
+	id 1O2oJM-0007tu-Om
+	for git@vger.kernel.org; Fri, 16 Apr 2010 12:22:32 -0400
+X-Mailer: git-send-email 1.6.6.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145070>
 
-Jari Aalto wrote:
+I have an alias that takes two arguments and compares their patch IDs.
+I would like to use to make sure I've tested exactly what I submit
+(patch by patch), like
 
->     Jakub Narebski <jnareb@gmail.com> writes:
->     >   +sub maildomain_sanitize {
->     >   +	local $domain = shift;
->     >   +
->     >   +	#  On Mac, the the domain name is not necessarily in FQDN format
->     >   +	#  Require a period in the string
->     >   +
->     >   +	if ($^O eq 'darwin'  &&  $domain =~ /\.local$/) {
->     >   +		# Nope, pass this one.
->     >   +	} elsif ($domain =~ /\./) {
->     >   +		return $domain;
->     >   +	}
->     >   +}
-> 
->     Thanks for 2nd eye. Changed these in above:
-> 
->     * Starting brace placement at function start
->     * Placement of else
->     * Maybe: use or "return" (debatable).
-> 
->     But not these. Motivation:
-> 
->     * The "$_" simplifies usage everywhere in the function. XP: less is more.
->     * The "and" is more readable than "&&". The "and" is also safer
->       due to its lower precedence.
+   git patch-cmp origin/master.. file-being-sent
 
-O.K.
+However, I cannot do that because git patch-id is fooled by the
+"-- " trailer that git format-patch puts.
 
+This patch adds a bit of lookahead to git patch-id in order to detect
+the trailer and split the patch when it comes.  In addition, commit
+ids in the "From " lines are considered and printed in the output.
 
-Note however that while setting $_ ($ARG with English) simplifies regexp
-matching, you have to take care to use
+Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
+---
+	I couldn't resist testing it right away:
 
-   local $_ = shift;
+	$ git format-patch -1
+	0001-patch-id-Add-support-for-mbox-format.patch
 
-and not
+	### With the git I have installed:
+	$ git patch-cmp HEAD^! 0001-patch-id-Add-support-for-mbox-format.patch
+	HEAD^! and 0001-patch-id-Add-support-for-mbox-format.patch differ
 
-   my $_ = shift; 
+	### With this patch:
+	$ PATH=.:$PATH !!
+	HEAD^! and 0001-patch-id-Add-support-for-mbox-format.patch are the same
 
-And to use 'local'.
+ builtin/patch-id.c  |   23 ++++++++++++++++++++++-
+ t/t4204-patch-id.sh |   32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+), 1 deletions(-)
 
-A bit of "difficulty conservation" at work.
-
-[...]
-> +sub maildomain_sanitize {
-> +	local $_ = shift;
-> +
-> +	#  On Mac, the the domain name is not necessarily in FQDN format.
-> +	#  Require a period in the string.
-> +
-> +	if ( $^O eq 'darwin'  and  /\.local$/ ) {
-> +		# Nope, pass this one.
-> +	} elsif ( /\./ ) {
-> +		return $_;
-> +	}
-> +}
-
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index af0911e..895c526 100644
+--- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -34,17 +34,22 @@ static void generate_id_list(void)
+ 	static char line[1000];
+ 	git_SHA_CTX ctx;
+ 	int patchlen = 0;
++	int have_line = 0;
+ 
+ 	git_SHA1_Init(&ctx);
+-	while (fgets(line, sizeof(line), stdin) != NULL) {
++	while (!feof (stdin) &&
++	       (have_line || fgets(line, sizeof(line), stdin) != NULL)) {
+ 		unsigned char n[20];
+ 		char *p = line;
+ 		int len;
+ 
++		have_line = 0;
+ 		if (!memcmp(line, "diff-tree ", 10))
+ 			p += 10;
+ 		else if (!memcmp(line, "commit ", 7))
+ 			p += 7;
++		else if (!memcmp(line, "From ", 5))
++			p += 5;
+ 
+ 		if (!get_sha1_hex(p, n)) {
+ 			flush_current_id(patchlen, sha1, &ctx);
+@@ -67,6 +72,22 @@ static void generate_id_list(void)
+ 
+ 		/* Compute the sha without whitespace */
+ 		len = remove_space(line);
++
++		/* Split at -- followed by version number.  */
++		if (len == 2 && line[0] == '-' && line[1] == '-') {
++			if (fgets(line, sizeof(line), stdin) != NULL &&
++			    isdigit (*line)) {
++				flush_current_id(patchlen, sha1, &ctx);
++				patchlen = 0;
++			} else {
++				/* Just a normal unified diff line.  */
++				patchlen += 2;
++				git_SHA1_Update(&ctx, "--", 2);
++				have_line = 1;
++			}
++			continue;
++		}
++
+ 		patchlen += len;
+ 		git_SHA1_Update(&ctx, line, len);
+ 	}
+diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
+index 04f7bae..2110eac 100755
+--- a/t/t4204-patch-id.sh
++++ b/t/t4204-patch-id.sh
+@@ -18,6 +18,11 @@ test_expect_success 'patch-id output is well-formed' '
+ 	grep "^[a-f0-9]\{40\} $(git rev-parse HEAD)$" output
+ '
+ 
++get_text_patch_id () {
++	tr % '\n' | git patch-id |
++		sed "s# .*##" > patch-id_"$1"
++}
++
+ get_patch_id () {
+ 	git log -p -1 "$1" | git patch-id |
+ 		sed "s# .*##" > patch-id_"$1"
+@@ -35,4 +40,31 @@ test_expect_success 'patch-id detects inequality' '
+ 	! test_cmp patch-id_master patch-id_notsame
+ '
+ 
++test_expect_success 'patch-id does not discard meaningful -- line' '
++	echo "diff a b%--%-ab%-cd" | get_text_patch_id first &&
++	echo "diff a b%-ab%-cd" | get_text_patch_id second &&
++	! test_cmp patch-id_first patch-id_second
++'
++
++test_expect_success 'patch-id does not discard meaningful final -- line' '
++	echo "diff a b%-ab%-cd%--" | get_text_patch_id first &&
++	echo "diff a b%-ab%-cd" | get_text_patch_id second &&
++	! test_cmp patch-id_first patch-id_second
++'
++
++test_expect_success 'whitespace is irrelevant in footer' '
++	echo "diff a b%--%-ab%-cd%-- %1.2" | get_text_patch_id first &&
++	echo "diff a b%--%-ab%-cd%--%1.2" | get_text_patch_id second &&
++	test_cmp patch-id_first patch-id_second
++'
++
++test_expect_success 'patch-id supports git-format-patch output' '
++	get_patch_id master &&
++	git checkout same &&
++	git format-patch -1 --stdout | get_text_patch_id same &&
++	test_cmp patch-id_master patch-id_same &&
++	set `git format-patch -1 --stdout | git patch-id` &&
++	test "$2" = `git rev-parse HEAD`
++'
++
+ test_done
 -- 
-Jakub Narebski
-Poland
+1.6.6.1
