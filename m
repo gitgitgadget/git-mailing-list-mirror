@@ -1,76 +1,113 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] Make rev_compare_tree less confusing.
-Date: Fri, 16 Apr 2010 11:31:06 +0200
-Message-ID: <201004161131.06880.trast@student.ethz.ch>
-References: <1271321171-12176-1-git-send-email-struggleyb.nku@gmail.com>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH] git-send-email.txt: Add EXAMPLES section. Write 1st level sections in uppercase
+Date: Fri, 16 Apr 2010 14:46:16 +0300
+Organization: Private
+Message-ID: <8739yvsjqv.fsf@jondo.cante.net>
+References: <1271345823-19685-1-git-send-email-jari.aalto@cante.net>
+	<4BC81975.9000907@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, <gitster@pobox.com>
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 16 11:31:25 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Apr 16 13:46:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2htU-0007RQ-S4
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 11:31:25 +0200
+	id 1O2k0J-0004wL-JF
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 13:46:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756427Ab0DPJbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Apr 2010 05:31:18 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:21750 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752847Ab0DPJbR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Apr 2010 05:31:17 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Fri, 16 Apr
- 2010 11:31:15 +0200
-Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Fri, 16 Apr
- 2010 11:31:07 +0200
-User-Agent: KMail/1.13.2 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.2; x86_64; ; )
-In-Reply-To: <1271321171-12176-1-git-send-email-struggleyb.nku@gmail.com>
+	id S1758170Ab0DPLqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Apr 2010 07:46:22 -0400
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:34886 "EHLO
+	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757929Ab0DPLqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Apr 2010 07:46:21 -0400
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id 3E76D8C8AC;
+	Fri, 16 Apr 2010 14:46:19 +0300 (EEST)
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A043B839C64; Fri, 16 Apr 2010 14:46:19 +0300
+Received: from jondo.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id 938B1404C;
+	Fri, 16 Apr 2010 14:46:16 +0300 (EEST)
+In-Reply-To: <4BC81975.9000907@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Fri, 16 Apr 2010 10:01:57 +0200")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145061>
 
-Bo Yang wrote:
-> -	if (diff_tree_sha1(t1->object.sha1, t2->object.sha1, "",
-> -			   &revs->pruning) < 0)
-> -		return REV_TREE_DIFFERENT;
-> +	diff_tree_sha1(t1->object.sha1, t2->object.sha1, "", &revs->pruning);
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Ack on the patch contents (though we could also make the function
-'void' to reduce further confusion), but I'd word the commit message
-differently:
+> jari.aalto@cante.net venit, vidit, dixit 15.04.2010 17:37:
+>
+>> From: Jari Aalto <jari.aalto@cante.net>
+>> 
+>> 
+>> Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+>> ---
+>>  Documentation/git-send-email.txt |   36 ++++++++++++++++++++++++++++++++++--
+>>  1 files changed, 34 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+>> index ced35b2..8b33eb0 100644
+>> --- a/Documentation/git-send-email.txt
+>> +++ b/Documentation/git-send-email.txt
+>> @@ -299,8 +299,40 @@ sendemail.confirm::
+>>  	one of 'always', 'never', 'cc', 'compose', or 'auto'. See '--confirm'
+>>  	in the previous section for the meaning of these values.
+>>  
+>> +EXAMPLES
+>> +--------
+>>  
+>> -Author
+>> +To batch send all patches to a mailig list, no copies to oneself,
+>> +messages in a relaxed single thread format (no nesting) and don't ask
+>> +any confirmations:
+>
+> That sentence is linguistically screwed, but...
 
-> Make rev_compare_tree less confusing.
-> 
-> diff_tree_sha1 always return 0, so comparing the return value
-> of it make no sense. Just delete the comparison to make code
-> reader clear.
+Please improve. How would you explain the options and their explanations
+one-by-one as presented below?
 
-Something like
+>> +
+>> +	git send-email \
+>> +		--from $EMAIL \
+>> +		--to address@list.example.com \
+>> +		--suppress-cc=author \
+>> +		--suppress-from \
+>> +		--no-chain-reply-to \
+>> +		--confirm=never \
+>> +		outgoing/
+>> +
+>
+> ... I don't think this is a good example at all. All options are
+> explained in the man page, so what is the point in listing and
+> explaining some of them here?
 
-  rev_compare_tree: do not check return value of diff_tree_sha1
+Right, all the 31 options.
 
-  diff_tree_sha1() unconditionally inherits its return value from
-  diff_tree(), which always returns 0.  Hence, pretending that its
-  return value carries any information about the tree difference is
-  extremely misleading.
+> If we really want an introductory example,
+> we want one with few options, where the default behaviour is explained.
 
-  The point of the call is in the side effects on revs->pruning, so
-  simply drop the dead 'return'.
+I don't agree.
 
-Interestingly enough, this call survived with slight changes here and
-there from all the way back in cf48454 (Teach git-rev-list to follow
-just a specified set of files, 2005-10-20), where it was added in
-rev-list.c.  Even back then diff_tree() would always return 0.
+We need examples that use most of the options in combination so that the
+examples can practically "copy pasted / sliced off". The user can eaily
+reduce options he may not find useful from the examples.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+    With too few options presented, he needs to skim through the whole
+    of 31 option explanations above and pray he finds what he needs.
+
+Please suggest another example to be accompanied with this one. How do
+you use the git-send-email? What options? What you have configured in
+~/.gitconfig?
+
+Jari
