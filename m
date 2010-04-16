@@ -1,128 +1,111 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] git-send-email.txt: Add EXAMPLES section. Write 1st level
- sections in uppercase
-Date: Fri, 16 Apr 2010 10:01:57 +0200
-Message-ID: <4BC81975.9000907@drmicha.warpmail.net>
-References: <1271345823-19685-1-git-send-email-jari.aalto@cante.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: David Michael Barr <david.barr@cordelta.com>
+Subject: Replay subversion into git via filesystem
+Date: Fri, 16 Apr 2010 18:29:03 +1000
+Message-ID: <BF711404-63BB-4212-A0F9-0025D1D6F7C5@cordelta.com>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: jari.aalto@cante.net
-X-From: git-owner@vger.kernel.org Fri Apr 16 10:05:16 2010
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 16 10:29:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2gY7-0000Jr-9N
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 10:05:15 +0200
+	id 1O2gvN-0007xc-6B
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 10:29:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757258Ab0DPIFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Apr 2010 04:05:04 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:55920 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757109Ab0DPIE7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Apr 2010 04:04:59 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id B1BFFEB01B;
-	Fri, 16 Apr 2010 04:04:58 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Fri, 16 Apr 2010 04:04:58 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=3SRHCQ6cjWc8gquyKQU8SZqOaws=; b=Iu1UNDcN6JHFEbWWzyqNHXYugEg2Q8F7SCbE+X8Y8ylprirnXubCQ39zBVmmXswRkBVCq1PIeAy0zCxAi1ZDJaHP+dB1anPaePuhRZ7P1o7+ooxwY3mqAjCfI8VRxTffg1BD+jAJWTX5AbnmpB3SIz895lsl1IDR5HlldilKlvI=
-X-Sasl-enc: ZK9zkRHjeu9msHgrBqEWaFDoxmYqGxkgd9PYEQP//Y47 1271405098
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2C3674D36C;
-	Fri, 16 Apr 2010 04:04:57 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100414 Lightning/1.0b2pre Lanikai/3.1b2pre
-In-Reply-To: <1271345823-19685-1-git-send-email-jari.aalto@cante.net>
+	id S1756446Ab0DPI3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Apr 2010 04:29:10 -0400
+Received: from ironport1-mx.cbr1.mail-filtering.com.au ([203.88.115.241]:32107
+	"EHLO ironport1-mx.cbr1.mail-filtering.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756402Ab0DPI3I (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Apr 2010 04:29:08 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvsEALq8x0vLWHsF/2dsb2JhbACbcXG1ZohGhQ4Eij8
+X-IronPort-AV: E=Sophos;i="4.52,218,1270389600"; 
+   d="scan'208";a="167567499"
+Received: from node2.alpha.aussiehq.net.au ([203.88.123.5])
+  by ironport1-mta.cbr1.mail-filtering.com.au with ESMTP; 16 Apr 2010 18:29:04 +1000
+Received: (qmail 16488 invoked from network); 16 Apr 2010 18:29:04 +1000
+Received: from d122-109-106-179.mit3.act.optusnet.com.au (HELO ?192.168.1.8?) (122.109.106.179)
+  by node2.alpha.aussiehq.net.au with SMTP; 16 Apr 2010 18:29:03 +1000
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145057>
 
-jari.aalto@cante.net venit, vidit, dixit 15.04.2010 17:37:
-> From: Jari Aalto <jari.aalto@cante.net>
-> 
-> 
-> Signed-off-by: Jari Aalto <jari.aalto@cante.net>
-> ---
->  Documentation/git-send-email.txt |   36 ++++++++++++++++++++++++++++++++++--
->  1 files changed, 34 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index ced35b2..8b33eb0 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -299,8 +299,40 @@ sendemail.confirm::
->  	one of 'always', 'never', 'cc', 'compose', or 'auto'. See '--confirm'
->  	in the previous section for the meaning of these values.
->  
-> +EXAMPLES
-> +--------
->  
-> -Author
-> +To batch send all patches to a mailig list, no copies to oneself,
-> +messages in a relaxed single thread format (no nesting) and don't ask
-> +any confirmations:
+Hi all,
 
-That sentence is linguistically screwed, but...
+In response to some recent questions about big imports of svn history
+into git and as a part of my svn-dump-fast export project, I have
+created a simple bash script to replay the root of a svn repository
+into a git repository.
+The assumption is that svnsync is used to pull the remote repository
+and that svk is used to manage the working copy.
 
-> +
-> +	git send-email \
-> +		--from $EMAIL \
-> +		--to address@list.example.com \
-> +		--suppress-cc=author \
-> +		--suppress-from \
-> +		--no-chain-reply-to \
-> +		--confirm=never \
-> +		outgoing/
-> +
+The mirror might be set up like so:
+svnadmin create /path/to/mirror
+svnsync init file:///path/to/mirror http://remote.com/svn
+svnsync sync file:///path/to/mirror
+svk depot depot_name /path/to/mirror
 
-... I don't think this is a good example at all. All options are
-explained in the man page, so what is the point in listing and
-explaining some of them here? If we really want an introductory example,
-we want one with few options, where the default behaviour is explained.
+I'd appreciate any comments on the correctness of the script.
 
-> +Tip: in case the patches in a branch need rework, you might consider
-> +adjusting the subjects of each patch to "[PATCH v<number>]" with
-> +options '--subject-prefix'. 
+--
+David Barr
+--
 
-That is a git.git convention, and it applies to format-patch, not
-send-email.
+#!/bin/bash
+SVK_DEPOT=""
+CO_DIR=validation
+HASH_DIR=.git/wc
 
-> The 'merge-base' inside command
-> +substitution is there to find out the initial commit of the branch:
-> +
-> +	git checkout BRANCH
-> +
-> +	git format-patch \
-> +		--subject-prefix="PATCH v2" \
-> +		--signoff \
-> +		-M \
-> +		--output-directory outgoing/
-> +		$(git merge-base HEAD master)..
-> +
+SVN_UUID=`svk pg --revprop -r0 svn:sync-from-uuid /$SVK_DEPOT/`
+SVN_URL=`svk pg --revprop -r0 svn:sync-from-url /$SVK_DEPOT/`
+MAX_REV=`svk pg --revprop -r0 svn:sync-last-merged-rev /$SVK_DEPOT/`
 
-This is a useful example (although it mixes several issues), but one for
-format-patch, not send-email. You assume you branched off master. Using
-@{upstream} might be a more general option.
+echo SVN_UUID: $SVN_UUID
+echo SVN_URL: $SVN_URL
+echo MAX_REV: $MAX_REV
 
-> +Then proceed as in in the first example the send the patches out
-> +again.
-> +
-> +AUTHOR
->  ------
->  Written by Ryan Anderson <ryan@michonline.com>
->  
-> @@ -308,7 +340,7 @@ git-send-email is originally based upon
->  send_lots_of_email.pl by Greg Kroah-Hartman.
->  
->  
-> -Documentation
-> +DOCUMENTATION
->  --------------
->  Documentation by Ryan Anderson
->  
+svk co -r1 /$SVK_DEPOT/ $CO_DIR
+cd $CO_DIR
+git init
+mkdir -p $HASH_DIR/{0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f}\
+{0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f}
+for (( REV=1 ; REV<=MAX_REV ; ++REV )) do
+  svk up -r$REV
+  # Hashify working copy
+  git update-index --refresh 2>/dev/null
+  git ls-files -modz | tee .git/filelist \
+   | git update-index -z --add --replace --remove --stdin
+  xargs -0 git ls-files -s < .git/filelist | (
+    while read MODE HASH STAGE FILE ; do
+      HASH_FILE="$HASH_DIR/${HASH:0:2}/$HASH$MODE"
+      ln "$FILE" "$HASH_FILE" 2>/dev/null || \
+        ln -f "$HASH_FILE" "$FILE"
+    done
+  )
+  SVN_AUTHOR=`svk pg --revprop -r$REV svn:author`
+  SVN_DATE=`svk pg --revprop -r$REV svn:date`
+  export GIT_COMMITTER_NAME=$SVN_AUTHOR
+  export GIT_COMMITTER_EMAIL=$SVN_AUTHOR"@"$SVN_UUID
+  export GIT_COMMITTER_DATE="`date -juf '%FT%T' $SVN_DATE \
+    '+%F %T %z' 2>/dev/null`"
+  export GIT_AUTHOR_NAME="$GIT_COMMITTER_NAME"
+  export GIT_AUTHOR_EMAIL="$GIT_COMMITTER_EMAIL"
+  export GIT_AUTHOR_DATE="$GIT_COMMITTER_DATE"
+  GIT_PARENT=""
+  [ $REV -gt 1 ] && GIT_PARENT="-p `git show-ref --head -s HEAD`"
+  GIT_TREE=`git write-tree`
+  echo git commit-tree $GIT_TREE $GIT_PARENT
+  GIT_COMMIT=`svk pg --revprop -r$REV svn:log \
+   | git commit-tree $GIT_TREE $GIT_PARENT`
+  git update-ref HEAD $GIT_COMMIT
+  git tag $REV
+  git gc --auto
+done
