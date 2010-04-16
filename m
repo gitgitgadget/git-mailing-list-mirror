@@ -1,90 +1,55 @@
-From: Jari Aalto <jari.aalto@cante.net>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
 Subject: Re: [PATCH RFC 0/5] Patches to avoid reporting conversion changes.
-Date: Fri, 16 Apr 2010 21:02:09 +0300
-Organization: Private
-Message-ID: <874ojbqnry.fsf@jondo.cante.net>
+Date: Fri, 16 Apr 2010 11:06:45 -0700
+Message-ID: <86ljcnclvu.fsf@red.stonehenge.com>
 References: <cover.1271432034.git.grubba@grubba.org>
+	<874ojbqnry.fsf@jondo.cante.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 16 20:02:30 2010
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Fri Apr 16 20:06:53 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2ps3-0000LG-Dg
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 20:02:27 +0200
+	id 1O2pwK-0003Gm-NY
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 20:06:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757921Ab0DPSCW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Apr 2010 14:02:22 -0400
-Received: from lo.gmane.org ([80.91.229.12]:41054 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757785Ab0DPSCV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Apr 2010 14:02:21 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1O2prv-0000HW-VP
-	for git@vger.kernel.org; Fri, 16 Apr 2010 20:02:19 +0200
-Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 16 Apr 2010 20:02:19 +0200
-Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 16 Apr 2010 20:02:19 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
-Cancel-Lock: sha1:7ru2FlM1O5G1fRK3NBZ54fURFYo=
+	id S1758152Ab0DPSGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Apr 2010 14:06:46 -0400
+Received: from red.stonehenge.com ([208.79.95.2]:34358 "EHLO
+	red.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757742Ab0DPSGq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Apr 2010 14:06:46 -0400
+Received: by red.stonehenge.com (Postfix, from userid 1001)
+	id F3F84CF5F; Fri, 16 Apr 2010 11:06:45 -0700 (PDT)
+x-mayan-date: Long count = 12.19.17.5.0; tzolkin = 12 Ahau; haab = 13 Pop
+In-Reply-To: <874ojbqnry.fsf@jondo.cante.net> (Jari Aalto's message of "Fri,
+	16 Apr 2010 21:02:09 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145090>
 
-merlyn@stonehenge.com (Randal L. Schwartz) writes:
+>>>>> "Jari" == Jari Aalto <jari.aalto@cante.net> writes:
 
->>>>>> "Jari" == Jari Aalto <jari.aalto@cante.net> writes:
->
-> Jari> It would be interesting to know why not. These magic variables are hard
-> Jari> to read and remember without consulting the manual pages.
->
-> Because it was observed over time that the aliases were *also* hard to
-> remember without consulting the manpages. :)
->
-> So you were merely trading one problem for another, and since far more
-> code is out there that does *not* use English than does, we agreed that
-> use English was an interesting but failed experiment.
+Jari>     if ( $OS_ERROR ) ...
 
-Who found out? In what study?
+Right, but without looking, is it $OS_ERROR or $OSERROR?
 
-Honestly, that's not believable. There is no way reading the most common
-alphabetic variables would not be readable over puctuation:
+That's the problem.
 
-    $OUTPUT_AUTOFLUSH = 1;
-    if ( $OS_ERROR ) ...
-    if ( $EVAL_ERROR ) ...
-    open(...)   or die "$ERRNO"
+You're trading a list of single punctuation characters, pretty
+unambiguous, for things that could have been named a dozen different
+ways each.
 
-Versus:
-
-    $| = 1;
-    if ($?) ...
-    if ($@) ...
-    open(...) or die $!
-
-It *may* be the case with exotic (seldomly used) ones, but they are even
-more exotic in they short form:
-
-     print $^V;
-
-Eh?
-
-    print $PERL_VERSION;
-
-I compute sir,
-Jari
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
+See http://methodsandmessages.vox.com/ for Smalltalk and Seaside discussion
