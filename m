@@ -1,99 +1,122 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Possible bug in Git
-Date: Fri, 16 Apr 2010 08:53:00 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.1004160845350.15116@i5.linux-foundation.org>
-References: <4BC6EECE.6060408@gestiweb.com> <k2u32541b131004151645i78733507rc50724548036ef36@mail.gmail.com>  <7vr5mggt9a.fsf@alter.siamese.dyndns.org> <o2m32541b131004151706hb48a0d04yf7fa4238d423a4e3@mail.gmail.com>
- <k2n32541b131004151713s51498b01s34c5a95c0f360901@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2] git-send-email.perl: Add sub maildomain_sanitize
+Date: Fri, 16 Apr 2010 18:11:11 +0200
+Message-ID: <201004161811.14259.jnareb@gmail.com>
+References: <1270789906-23735-1-git-send-email-brian@gernhardtsoftware.com> <m38w8og9w4.fsf@localhost.localdomain> <87wrw7qtx8.fsf_-_@jondo.cante.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-15?Q?David_Mart=EDnez_Mart=ED?= 
-	<desarrollo@gestiweb.com>, git@vger.kernel.org,
-	deavidsedice@gmail.com
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 16 17:56:32 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Fri Apr 16 18:11:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2nu6-0007rN-1p
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 17:56:26 +0200
+	id 1O2o8c-0001Oi-RH
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 18:11:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932273Ab0DPP4U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Apr 2010 11:56:20 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:40196 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756615Ab0DPP4T (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Apr 2010 11:56:19 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o3GFtXRn005766
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 16 Apr 2010 08:55:34 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o3GFtWRH013896;
-	Fri, 16 Apr 2010 08:55:32 -0700
-In-Reply-To: <k2n32541b131004151713s51498b01s34c5a95c0f360901@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.447 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1758103Ab0DPQLV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Apr 2010 12:11:21 -0400
+Received: from mail-ew0-f220.google.com ([209.85.219.220]:53817 "EHLO
+	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756283Ab0DPQLU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Apr 2010 12:11:20 -0400
+Received: by ewy20 with SMTP id 20so940217ewy.1
+        for <git@vger.kernel.org>; Fri, 16 Apr 2010 09:11:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=GfrK3Ul6k/a817GpI9cASdxvWDu1B/hbCCD4VFyfOAU=;
+        b=h3HWFX8kdBRZa3YifgL2mdBBnx4sXX4ChK27URei5jVn0KoMebY3P1h3olcp7rNyxn
+         YHXG7raGX9h+OwGcSyfA4c6HdUfe40ruTYWu7b/yV3MitQAro8kCroqPN9fa+na7F90E
+         getr+G/jmoLRANeEZCdoqcoXdeWhZ/ZmRn05Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=mvVvEtRiIvBRVKlZOdCra/L48538TZzo7PRHxCRWrdEdYxwssSKDTar7qWxWr4a9UK
+         IrdpdTEeIZ/QFiGXRaEnSgGXzIf1BTNDTOCPCtAFCFvQ+vh1Ac5n34UdwOHcKDxylNg7
+         vpyEukM2xIXAXsBCGdpFYZlRaR+F0BLtVt/ZE=
+Received: by 10.103.80.8 with SMTP id h8mr1218037mul.90.1271434278482;
+        Fri, 16 Apr 2010 09:11:18 -0700 (PDT)
+Received: from [192.168.1.13] (abwa84.neoplus.adsl.tpnet.pl [83.8.224.84])
+        by mx.google.com with ESMTPS id j9sm14615933mue.17.2010.04.16.09.11.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 16 Apr 2010 09:11:17 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <87wrw7qtx8.fsf_-_@jondo.cante.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145069>
+
+Jari Aalto wrote:
+
+>     Jakub Narebski <jnareb@gmail.com> writes:
+>     >   +sub maildomain_sanitize {
+>     >   +	local $domain = shift;
+>     >   +
+>     >   +	#  On Mac, the the domain name is not necessarily in FQDN format
+>     >   +	#  Require a period in the string
+>     >   +
+>     >   +	if ($^O eq 'darwin'  &&  $domain =~ /\.local$/) {
+>     >   +		# Nope, pass this one.
+>     >   +	} elsif ($domain =~ /\./) {
+>     >   +		return $domain;
+>     >   +	}
+>     >   +}
+> 
+>     Thanks for 2nd eye. Changed these in above:
+> 
+>     * Starting brace placement at function start
+>     * Placement of else
+>     * Maybe: use or "return" (debatable).
+> 
+>     But not these. Motivation:
+> 
+>     * The "$_" simplifies usage everywhere in the function. XP: less is more.
+>     * The "and" is more readable than "&&". The "and" is also safer
+>       due to its lower precedence.
+
+O.K.
 
 
+Note however that while setting $_ ($ARG with English) simplifies regexp
+matching, you have to take care to use
 
-On Thu, 15 Apr 2010, Avery Pennarun wrote:
-> >
-> > The output seems to match neither parent in any way, and yet the
-> > simplification has resulted in no diff at all. =A0Strange, no?
->=20
->  mkdir testy
->  cd testy
->  git init
->  cp /etc/profile .
->  git add profile
->  git commit -m root
->  git checkout -b a master
->  cat /etc/profile >>profile
->  git commit -a -m test1
->  git checkout -b b master
->  cat /etc/profile | tr A-Za-z a-zA-Z >profile
->  git commit -a -m test1b
->  git merge a
->    # produces a conflict
->  true >profile   # blank the file
->  git commit -a -m resolved
->  git show HEAD:profile
->    # no output
->=20
-> Note that if you instead replace the file with a nonempty (but
-> different) file, you get something appropriate as the output.
+   local $_ = shift;
 
-Hmm. That does seem to be a bug. It's clearly an evil merge that doesn'=
-t=20
-match either side, and we should show it as such.
+and not
 
-And yes, changing the
+   my $_ = shift; 
 
-	true >profile
+And to use 'local'.
 
-to
+A bit of "difficulty conservation" at work.
 
-	echo 1 >profile
+[...]
+> +sub maildomain_sanitize {
+> +	local $_ = shift;
+> +
+> +	#  On Mac, the the domain name is not necessarily in FQDN format.
+> +	#  Require a period in the string.
+> +
+> +	if ( $^O eq 'darwin'  and  /\.local$/ ) {
+> +		# Nope, pass this one.
+> +	} elsif ( /\./ ) {
+> +		return $_;
+> +	}
+> +}
 
-changes it to suddenly show it as such.
-
-I guess the issue is that combine-diff decides that there is nothing in=
-=20
-the result that isn't in either of the sources (because there is nothin=
-g=20
-at all in the result), and as such it's not "interesting" after all.
-
-		Linus
+-- 
+Jakub Narebski
+Poland
