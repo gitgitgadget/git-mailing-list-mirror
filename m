@@ -1,83 +1,131 @@
-From: =?iso-8859-1?Q?Henrik_Grubbstr=F6m?= <grubba@roxen.com>
-Subject: Re: [PATCH v4 4/8] diff: Filter files that have changed only due to
- conversion changes.
-Date: Fri, 16 Apr 2010 17:30:16 +0200 (CEST)
-Organization: Roxen Internet Software AB
-Message-ID: <Pine.GSO.4.63.1004161723430.4423@shipon.roxen.com>
-References: <cover.1270554878.git.grubba@grubba.org>
- <3daab2593b3f83971c6da6cfcd3d56046c84477a.1270554878.git.grubba@grubba.org>
- <7vvdbzszmi.fsf@alter.siamese.dyndns.org>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH v2] git-send-email.perl: Add sub maildomain_sanitize
+Date: Fri, 16 Apr 2010 18:49:23 +0300
+Organization: Private
+Message-ID: <87wrw7qtx8.fsf_-_@jondo.cante.net>
+References: <1270789906-23735-1-git-send-email-brian@gernhardtsoftware.com>
+	<1270789906-23735-2-git-send-email-brian@gernhardtsoftware.com>
+	<7v1vep427o.fsf@alter.siamese.dyndns.org>
+	<87ljcrwxni.fsf_-_@jondo.cante.net>
+	<87bpdnwpoh.fsf_-_@jondo.cante.net>
+	<m38w8og9w4.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-959030623-1271431816=:4423"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 16 17:30:43 2010
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 16 17:49:39 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2nVC-0007NF-DH
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 17:30:42 +0200
+	id 1O2nnX-0003ay-5q
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 17:49:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758065Ab0DPPac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Apr 2010 11:30:32 -0400
-Received: from mail.roxen.com ([212.247.29.220]:39006 "EHLO mail.roxen.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751710Ab0DPPab (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Apr 2010 11:30:31 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.roxen.com (Postfix) with ESMTP id C780962827B;
-	Fri, 16 Apr 2010 17:30:25 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at roxen.com
-Received: from mail.roxen.com ([212.247.29.220])
-	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gxYDFm28b0V3; Fri, 16 Apr 2010 17:30:16 +0200 (CEST)
-Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
-	by mail.roxen.com (Postfix) with ESMTP id E02D262825E;
-	Fri, 16 Apr 2010 17:30:16 +0200 (CEST)
-In-Reply-To: <7vvdbzszmi.fsf@alter.siamese.dyndns.org>
+	id S1758123Ab0DPPte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Apr 2010 11:49:34 -0400
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:58990 "EHLO
+	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757433Ab0DPPtd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Apr 2010 11:49:33 -0400
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 009BE8C46E;
+	Fri, 16 Apr 2010 18:49:31 +0300 (EEST)
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A06037F2A35; Fri, 16 Apr 2010 18:49:30 +0300
+Received: from jondo.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id CBB8F2BD4B;
+	Fri, 16 Apr 2010 18:49:25 +0300 (EEST)
+In-Reply-To: <m38w8og9w4.fsf@localhost.localdomain> (Jakub Narebski's message
+	of "Thu, 15 Apr 2010 05:47:45 -0700 (PDT)")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145067>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Move duplicate maildomain checks to a single subroutine.
+Require that a FQDN contains at least one period.
 
----559023410-959030623-1271431816=:4423
-Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ git-send-email.perl |   19 +++++++++++++++----
+ 1 files changed, 15 insertions(+), 4 deletions(-)
 
-On Sat, 10 Apr 2010, Junio C Hamano wrote:
+    Jakub Narebski <jnareb@gmail.com> writes:
+    >   +sub maildomain_sanitize {
+    >   +	local $domain = shift;
+    >   +
+    >   +	#  On Mac, the the domain name is not necessarily in FQDN format
+    >   +	#  Require a period in the string
+    >   +
+    >   +	if ($^O eq 'darwin'  &&  $domain =~ /\.local$/) {
+    >   +		# Nope, pass this one.
+    >   +	} elsif ($domain =~ /\./) {
+    >   +		return $domain;
+    >   +	}
+    >   +}
 
-> "Henrik Grubbström (Grubba)"  <grubba@grubba.org> writes:
->
->> When the conversion filter for a file is changed, files may get listed
->> as modified even though the user has not made any changes to them.
->> This patch adds a configuration option 'core.refilterOnDiff', which
->> performs an extra renormalization pass to filter out such files.
->>
->> Signed-off-by: Henrik Grubbström <grubba@grubba.org>
->
-> Does this really have to be done for every invocation of diff?
->
-> But the problem feels very similar to the issue that touching the inode
-> information would make the cached stat information in the index invalid
-> and plumbing commands such as "diff-files" would report phantom changes.
+    Thanks for 2nd eye. Changed these in above:
 
-True, storing this information in the index is a much better approach.
+    * Starting brace placement at function start
+    * Placement of else
+    * Maybe: use or "return" (debatable).
 
-> Of course you do not want to re-commit.  If however these files that are
-> unchanged from the end-user's point of view can be re-checked out safely,
-> then that would be similar to what "update-index --refresh" does for paths
-> that are stat-dirty.
+    But not these. Motivation:
 
-I now have a tentative set of patches implementing this.
+    * The "$_" simplifies ussage everywhere in the function. XP: less is more.
+    * The "and" is more readable than "&&". The "and" is also safer
+      due to its lower precedence.
 
---
-Henrik Grubbström					grubba@grubba.org
-Roxen Internet Software AB				grubba@roxen.com
----559023410-959030623-1271431816=:4423--
+    Jari
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index ce569a9..d52a8c3 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -863,14 +863,26 @@ sub sanitize_address
+ # This maildomain*() code is based on ideas in Perl library Test::Reporter
+ # /usr/share/perl5/Test/Reporter/Mail/Util.pm ==> sub _maildomain ()
+ 
++sub maildomain_sanitize {
++	local $_ = shift;
++
++	#  On Mac, the the domain name is not necessarily in FQDN format.
++	#  Require a period in the string.
++
++	if ( $^O eq 'darwin'  and  /\.local$/ ) {
++		# Nope, pass this one.
++	} elsif ( /\./ ) {
++		return $_;
++	}
++}
++
+ sub maildomain_net
+ {
+ 	my $maildomain;
+ 
+ 	if (eval { require Net::Domain; 1 }) {
+ 		my $domain = Net::Domain::domainname();
+-		$maildomain = $domain
+-			unless $^O eq 'darwin' && $domain =~ /\.local$/;
++		$maildomain = maildomain_sanitize($domain);
+ 	}
+ 
+ 	return $maildomain;
+@@ -887,8 +899,7 @@ sub maildomain_mta
+ 				my $domain = $smtp->domain;
+ 				$smtp->quit;
+ 
+-				$maildomain = $domain
+-					unless $^O eq 'darwin' && $domain =~ /\.local$/;
++				$maildomain = maildomain_sanitize($domain);
+ 
+ 				last if $maildomain;
+ 			}
+-- 
+1.7.0
