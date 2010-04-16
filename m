@@ -1,81 +1,78 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: preventing destructive operations to central repository
-Date: Thu, 15 Apr 2010 18:03:44 -0700
-Message-ID: <20100416010344.GB6181@spearce.org>
-References: <j2yef38762f1004151739x497106eeo190b97f3eecc153f@mail.gmail.com> <t2q76718491004151758p8862970bua5e7d60ccda8cdae@mail.gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH 2/2] reflog: ignore expire-unreachable for "HEAD" reflog
+Date: Thu, 15 Apr 2010 21:11:02 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1004152059100.7232@xanadu.home>
+References: <7vljcppycc.fsf@alter.siamese.dyndns.org>
+ <7vfx2xpyam.fsf@alter.siamese.dyndns.org> <4BC6B5FF.6030406@viscovery.net>
+ <7vochlkvtg.fsf@alter.siamese.dyndns.org> <4BC6D30F.5020004@viscovery.net>
+ <7v4ojclwyu.fsf@alter.siamese.dyndns.org> <4BC70D75.70801@viscovery.net>
+ <20100415163607.GA4279@coredump.intra.peff.net>
+ <7vhbnck618.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1004151545240.7232@xanadu.home>
+ <7v7ho8ibi3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brendan Miller <catphive@catphive.net>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 16 03:04:06 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 16 03:13:28 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2ZyX-00022v-WF
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 03:04:06 +0200
+	id 1O2a7c-0004MZ-Ai
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Apr 2010 03:13:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756254Ab0DPBDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Apr 2010 21:03:49 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:34146 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755647Ab0DPBDs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Apr 2010 21:03:48 -0400
-Received: by gwaa18 with SMTP id a18so1060450gwa.19
-        for <git@vger.kernel.org>; Thu, 15 Apr 2010 18:03:47 -0700 (PDT)
-Received: by 10.101.137.3 with SMTP id p3mr1805049ann.178.1271379827294;
-        Thu, 15 Apr 2010 18:03:47 -0700 (PDT)
-Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
-        by mx.google.com with ESMTPS id b10sm6765267ana.16.2010.04.15.18.03.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 15 Apr 2010 18:03:46 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <t2q76718491004151758p8862970bua5e7d60ccda8cdae@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1756299Ab0DPBNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Apr 2010 21:13:07 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:48125 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756259Ab0DPBNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Apr 2010 21:13:06 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0L0Y002IM3AFECN0@VL-MR-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 15 Apr 2010 21:11:03 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7v7ho8ibi3.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145044>
 
-Jay Soffian <jaysoffian@gmail.com> wrote:
-> On Thu, Apr 15, 2010 at 8:39 PM, Brendan Miller <catphive@catphive.net> wrote:
-> > Let's say you have a bare git repository writeable by a number of
-> > different people. How do you prevent them from borking the central
-> > repository?
-> 
-> Depends what you mean by borking, but you might consider starting with
-> reading the "git config" man page for the following entries:
-> 
-> - receive.denyDeletes
-> - receive.denyNonFastForwards
-> 
-> > Also, is there an automated mechanism to ensure that the timeline
-> > stays clean? Say, force people to rebase their repositories before
-> > merging into the shared repository?
-> 
-> In order to prevent merges, you will need to use a a receive-pack hook such as:
-> 
-> http://lists.gnu.org/archive/html/bug-gnulib/2008-10/msg00221.html
-> 
-> You might also consider something like gitosis/gitolite/gerrit
-> depending upon how formal you want to be.
+On Thu, 15 Apr 2010, Junio C Hamano wrote:
 
-I think his only choice is to install a gitosis/gitolite/gerrit
-solution.  Basically he needs to completely remove write access
-to the repository, so developers can't muck with it directly.
-That requires one of those 3 tools to provide secured proxy access.
+> Nicolas Pitre <nico@fluxnic.net> writes:
+> 
+> > I'm a bit worried about this discussion.
+> >
+> > What's the point of having a reflog for unreachable stuff if it is to be 
+> > pruned faster than stuff that is already reachable without any reflog?
+> 
+> To keep recently failed experiments alive for some time (30 days), but not
+> overly long (90 days)?
 
-On top of those, yea, you would then also want to configure the
-receive.denyDeletes and denyNonFastForwards you mentioned above,
-as well as maybe also write a custom update or pre-receive hook to
-prevent merges from entering the repository.
+What is a "failed" experiment is still subjective.  It might be possible 
+to realize that part of it was not that bad after all and some pieces 
+could be worth cherry-picking.
 
-Though preventing merges is a bit pedantic.  Eventually you'll want
-to use a merge rather than a rebase (e.g. merge in a maintenance
-branch to pick up its bug fixes into the main development trunk).
+Again, keeping reflogs 90 days for stuff that is _already_ reachable 
+through existing refs is much less useful than keeping otherwise 
+unreachable stuff 90 days.  So I still don't see the point of this 
+eagerness to prune deleted stuff faster.
 
--- 
-Shawn.
+If you explicitly want to get rid of failed experiments then it should 
+be done through an explicit prune command.  Otherwise I'd argue that 
+reflogs should take care not to lose track of unreachable stuff, even 
+more so than stuff already reachable.
+
+Some people even tried to convince me that reflogs should never expire 
+by default, and that the 3 month grace period was already too short.
+
+
+Nicolas
