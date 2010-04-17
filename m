@@ -1,110 +1,107 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Makefile: Check for perl script errors with perl -c
-Date: Sat, 17 Apr 2010 03:27:21 -0400
-Message-ID: <20100417072721.GD10365@coredump.intra.peff.net>
-References: <1271471380-17701-1-git-send-email-mmogilvi_git@miniinfo.net>
+From: Sebastian Bober <sbober@servercare.de>
+Subject: Re: [spf:guess] Re: [spf:guess] Re: Git import of the recent full
+	enwiki dump
+Date: Sat, 17 Apr 2010 09:48:53 +0200
+Message-ID: <20100417074853.GE32053@post.servercare.de>
+References: <w2x2d460de71004161647z41492baav3685249fa05145d6@mail.gmail.com> <m2ofabb9a1e1004161719h977b53b7oc2c452c2a2b0025e@mail.gmail.com> <20100417004852.GA32053@post.servercare.de> <20100417005342.GA8475@spearce.org> <20100417010147.GB32053@post.servercare.de> <1271468696.3302.35.camel@denix> <20100417015857.GD32053@post.servercare.de> <1271475292.3506.53.camel@denix>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-X-From: git-owner@vger.kernel.org Sat Apr 17 09:28:00 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Richard Hartmann <richih.mailinglist@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Sat Apr 17 09:49:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O32Ra-0006dX-4i
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 09:27:58 +0200
+	id 1O32mG-0006Va-Bu
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 09:49:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753981Ab0DQH1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 03:27:53 -0400
-Received: from peff.net ([208.65.91.99]:53565 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753826Ab0DQH1w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 03:27:52 -0400
-Received: (qmail 15184 invoked by uid 107); 17 Apr 2010 07:27:56 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 17 Apr 2010 03:27:56 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 17 Apr 2010 03:27:21 -0400
+	id S1754110Ab0DQHtA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 03:49:00 -0400
+Received: from tix64.net ([81.169.172.224]:35176 "EHLO
+	h4945.serverkompetenz.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753990Ab0DQHs7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 03:48:59 -0400
+Received: from bob by h4945.serverkompetenz.net with local (Exim 4.69)
+	(envelope-from <sbober@servercare.de>)
+	id 1O32lp-0007rs-IM; Sat, 17 Apr 2010 09:48:53 +0200
+Mail-Followup-To: Sebastian Bober <sbober@servercare.de>,
+	Sam Vilain <sam@vilain.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Richard Hartmann <richih.mailinglist@gmail.com>,
+	Git List <git@vger.kernel.org>, Avery Pennarun <apenwarr@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
 Content-Disposition: inline
-In-Reply-To: <1271471380-17701-1-git-send-email-mmogilvi_git@miniinfo.net>
+In-Reply-To: <1271475292.3506.53.camel@denix>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-bounce-key: tix64.net-1;sbober@servercare.de;1271490539;08179fb5;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145121>
 
-On Fri, Apr 16, 2010 at 08:29:40PM -0600, Matthew Ogilvie wrote:
+On Sat, Apr 17, 2010 at 03:34:52PM +1200, Sam Vilain wrote:
+> On Sat, 2010-04-17 at 03:58 +0200, Sebastian Bober wrote:
+> > > Without good data set partitioning I don't think I see the above
+> > > workflow being as possible.  I was approaching the problem by first
+> > > trying to back a SQL RDBMS to git, eg MySQL or SQLite (postgres would be
+> > > nice, but probably much harder) - so I first set out by designing a
+> > > table store.  But the representation of the data is not important, just
+> > > the distributed version of it.
+> > 
+> > Yep, we had many ideas how to partition the data. All that was not tried
+> > up to now, because we had the hope to get it done the "straight" way.
+> > But that may not be possible.
+> 
+> I just don't think it's a practical aim or even useful.  Who really
+> wants the complete history of all wikipedia pages?  Only a very few -
+> libraries, national archives, and some collectors.
 
-> I'm not sure anyone will think this is worth including, but I'm
-> used to "make" (and the compiler) detecting trivial errors
-> in compiled langauges, and was getting annoyed that it wasn't
-> doing something similar for perl scripts (especially since in git you
-> are really expected to "make" the scripts anyway).
+Heh, exactly. And I just want to see, if it can be done.
 
-I usually do the same thing in my perl makefiles, so I would find it
-useful.
+> > We have tried checkpointing (even stopping/starting fast-import) every
+> > 10,000 - 100,000 commits. That does mitigate some speed and memory
+> > issues of fast-import. But in the end fast-import lost time at every
+> > restart / checkpoint.
+> 
+> One more thought - fast-import really does work better if you send it
+> all the versions of a blob in sequence so that it can write out deltas
+> the first time around.
 
-> The whole tradeoff between noise ("{script} syntax OK"), portability
-> (PIPESTATUS is a bashism), or really ugly contortions with redirecting
-> extra file descriptors (to avoid PIPESTATUS) seems to be the biggest
-> downside of the idea behind this patch.
+This is already done thah way.
 
-Why do you need to run it through grep? Doesn't:
+> Another advantage of the per-page partitioning is that they can
+> checkpoint/gc independently, allowing for more parallelization of the
+> job.
+> 
+> > > Actually this raises the question - what is it that you are trying to
+> > > achieve with this wikipedia import?
+> > 
+> > Ultimately, having a distributed Wikipedia. Having the possibility to
+> > fork or branch Wikipedia, to have an inclusionist and exclusionist
+> > Wikipedia all in one.
+> 
+> This sounds like far too much fun for me to miss out on, now downloading
+> enwiki-20100312-pages-meta-history.xml.7z :-) and I will give this a
+> crack!
 
-  echo 'use strict; bogosity' >foo.pl
-  perl -wc foo.pl
 
-properly set the exit code? I get:
+Please have a look at a smaller wiki for testing, and the project at
 
-  $ perl -wc foo.pl
-  Bareword "bogosity" not allowed while "strict subs" in use at foo.pl line 1.
-  foo.pl had compilation errors.
-  $ echo $?
-  255
+  git://github.com/sbober/levitation-perl.git
 
-> @@ -1553,6 +1557,14 @@ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
->  	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
->  	    $@.perl >$@+ && \
->  	chmod +x $@+ && \
-> +	if test x"$(USE_PERL_CHECK)" != x"" ; then \
-> +	    '$(PERL_PATH_SQ)' -cw $@+ 2>&1 | grep -v '^$@+ syntax OK$$' 1>&2 ; \
-> +	    perlStat="$${PIPESTATUS[0]}" && \
-> +	    if test x"$$perlStat" != x"0" ; then \
-> +	        echo '"$(PERL_PATH_SQ) -c $@+" failed' 1>&2 ; \
-> +	        exit "$$perlStat" ; \
-> +	    fi ; \
-> +	fi && \
->  	mv $@+ $@
+provides several ways to parse the XML and to generate the fast-import
+input in its branches.
 
-So something like:
 
-diff --git a/Makefile b/Makefile
-index 87c90d6..d9b6613 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1545,6 +1545,10 @@ $(SCRIPT_LIB) : % : %.sh
- ifndef NO_PERL
- $(patsubst %.perl,%,$(SCRIPT_PERL)): perl/perl.mak
- 
-+ifdef USE_PERL_CHECK
-+PERL_CHECK = perl -wc $@+ &&
-+endif
-+
- perl/perl.mak: GIT-CFLAGS perl/Makefile perl/Makefile.PL
- 	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' $(@F)
- 
-@@ -1562,6 +1566,7 @@ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
- 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
- 	    $@.perl >$@+ && \
- 	chmod +x $@+ && \
-+	$(PERL_CHECK) \
- 	mv $@+ $@
- 
- 
-
-You could even just make it unconditional. I don't know that we have an
-official policy, but we usually strive for strict, warnings-free perl.
-
--Peff
+bye,
+  Sebastian
