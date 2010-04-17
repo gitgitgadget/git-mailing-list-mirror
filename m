@@ -1,98 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RESEND] Teach gitk to display dirty submodules correctly
-Date: Sat, 17 Apr 2010 09:53:55 -0700
-Message-ID: <7vzl122f6k.fsf@alter.siamese.dyndns.org>
-References: <4BBF8B2A.5090208@web.de>
- <20100417085600.GD6681@brick.ozlabs.ibm.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, Mark Hills <mark@pogo.org.uk>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sat Apr 17 18:54:33 2010
+From: Will Palmer <wmpalmer@gmail.com>
+Subject: [PATCH v2] documentation: clarify direction of core.autocrlf
+Date: Sat, 17 Apr 2010 17:55:26 +0100
+Message-ID: <1271523326-6860-1-git-send-email-wmpalmer@gmail.com>
+Cc: wmpalmer@gmail.com, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 17 18:57:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3BHt-0003o6-5v
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 18:54:33 +0200
+	id 1O3BKS-0005HT-TK
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 18:57:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751658Ab0DQQyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 12:54:16 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58117 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751103Ab0DQQyP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 12:54:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 039D3AAEE1;
-	Sat, 17 Apr 2010 12:54:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pr+f2YCfwP0qZ84gqThXzsmZj78=; b=tKfCqc
-	fHhkEEfqWuM/tTXWHNeo/oT2mZI4c+t0nADqQli7hHkgWc1747CLoz1f26EfPVUh
-	+f6//50nV8myWoYsYZMwF8cmeVXrWquuGFVc2IJuuKaVBvmJwtPPv6xp6cYK3A2u
-	8pGKtVACA+2txA6BRS/5vBPviMQSiHOF1rzVk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=scd36TWA01EIjJ5vBf9WdxTb7U4OIGuQ
-	OnfqPeXb/QT4eRF74uzsQB8AdRQcrVR2Y0KXduoCombIe5rrsapR/pnR8cnfGbjd
-	qUC+JL6GylYV1ays72Q/80Y9nU6w4fhKNgzikIAHsGcoaAZL0XEVZjXoysT3Sl12
-	M5uYy56dh/E=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9411EAAEE0;
-	Sat, 17 Apr 2010 12:54:06 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 99557AAEDC; Sat, 17 Apr
- 2010 12:53:59 -0400 (EDT)
-In-Reply-To: <20100417085600.GD6681@brick.ozlabs.ibm.com> (Paul Mackerras's
- message of "Sat\, 17 Apr 2010 18\:56\:00 +1000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D5DD2830-4A41-11DF-A7CC-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752116Ab0DQQ5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 12:57:08 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:61442 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751794Ab0DQQ5G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 12:57:06 -0400
+Received: by wyb39 with SMTP id 39so1739169wyb.19
+        for <git@vger.kernel.org>; Sat, 17 Apr 2010 09:57:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=pECCrY7C5Uq3LPOwTXYnJpvk0oH9H76V95fu6N23jgs=;
+        b=TRDUMyZ/S2Ppuc+tl8lBArgv/u4DaDWLgOXUMLT0PLTMt3KLQilJ0fbCS6MIKbQ3I/
+         dSkVHQIe7Bu1/caihOeWUoZygn3Mwx8MaHuOxvUBosHdyaHjhpLmIHnq4xSvaXs9U5Mf
+         tg+TiftgN2gXUtg6WPAojWcQIoGQMR92eiUwk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ov4hkfLh8q0zMm5fUA5RD4YJxs8iKq075SC0PuwG0MEpZcr/HnDIWVw2i38iddRwK3
+         lVMvgpb1s+K/Mcmc7JwFFG41eiBwXpfiuNf8Qzn0qJMABgpwtwOXhixSIiNZVwmsD3KS
+         KELcJQyDF+g3lpm5AJVic/QcSyDXo9RwGbZIU=
+Received: by 10.216.176.212 with SMTP id b62mr1482952wem.179.1271523425135;
+        Sat, 17 Apr 2010 09:57:05 -0700 (PDT)
+Received: from localhost.localdomain (5acc34b2.bb.sky.com [90.204.52.178])
+        by mx.google.com with ESMTPS id x14sm31582486wbs.12.2010.04.17.09.57.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 17 Apr 2010 09:57:04 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.rc1.13.g2f822
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145156>
 
-Paul Mackerras <paulus@samba.org> writes:
+The description for core.autocrlf refers to reads from / writes to
+"the filesystem", the only use of this rather ambiguous term, which
+technically could be referring to the git object database. (All other
+mentions are part of phrases such as "..filesystems (like NFS)..").
 
-> Thanks, applied.
+Other sections, including the section on core.safecrlf, use the term
+"work tree" for the same purpose as the term "the filesystem" is used in
+the core.autocrlf section, so that seems like a good alternative, which
+makes it clearer what direction the addition/removal of CR characters
+occurs in.
 
-Thanks.  Is it a good time to pull?
+Signed-off-by: Will Palmer <wmpalmer@gmail.com>
+---
+ Documentation/config.txt |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-Here are the list of things that I would be getting if I did so:
-
-Jens Lehmann (2):
-      gitk: Add Ctrl-W shortcut for closing the active window
-      gitk: Display dirty submodules correctly
-
-Jonathan Nieder (2):
-      gitk: Add comments to explain encode_view_opts and decode_view_opts
-      gitk: Don't clobber "Remember this view" setting
-
-Mark Hills (4):
-      gitk: Remove forced use of sans-serif font
-      gitk: Set the font for all spinbox widgets
-      gitk: Set the font for all listbox widgets
-      gitk: Use consistent font for all text input fields
-
-Pat Thoyts (3):
-      gitk: Avoid calling tk_setPalette on Windows
-      gitk: Add emacs editor variable block
-      gitk: Fix display of copyright symbol
-
- gitk-git/gitk     |   72 ++++++++++++++++++++++++++++++++--------------------
- gitk-git/po/de.po |    4 +-
- gitk-git/po/es.po |    4 +-
- gitk-git/po/fr.po |    4 +-
- gitk-git/po/hu.po |    4 +-
- gitk-git/po/it.po |    4 +-
- gitk-git/po/ja.po |    4 +-
- gitk-git/po/ru.po |    4 +-
- gitk-git/po/sv.po |    4 +-
- 9 files changed, 60 insertions(+), 44 deletions(-)
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 626b19a..b2a4a92 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -198,11 +198,11 @@ core.quotepath::
+ 
+ core.autocrlf::
+ 	If true, makes git convert `CRLF` at the end of lines in text files to
+-	`LF` when reading from the filesystem, and convert in reverse when
+-	writing to the filesystem.  The variable can be set to
++	`LF` when reading from the work tree, and convert in reverse when
++	writing to the work tree.  The variable can be set to
+ 	'input', in which case the conversion happens only while
+-	reading from the filesystem but files are written out with
+-	`LF` at the end of lines.  A file is considered
++	reading from the work tree but files are written out to the work
++	tree with `LF` at the end of lines.  A file is considered
+ 	"text" (i.e. be subjected to the autocrlf mechanism) based on
+ 	the file's `crlf` attribute, or if `crlf` is unspecified,
+ 	based on the file's contents.  See linkgit:gitattributes[5].
+-- 
+1.7.1.rc1.13.g2f822
