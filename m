@@ -1,138 +1,110 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: Fwd: Re: "Integrated Web Client for git" GSoC proposal
-Date: Sat, 17 Apr 2010 12:52:52 +0530
-Message-ID: <p2ue72faaa81004170022q2fc3a490u83ad6e325b91e139@mail.gmail.com>
-References: <201004130403.42179.chriscool@tuxfamily.org>
-	 <201004150204.42813.jnareb@gmail.com>
-	 <1271293123.6248.147.camel@denix>
-	 <201004161118.32163.jnareb@gmail.com> <1271473792.3506.30.camel@denix>
-	 <loom.20100417T081957-371@post.gmane.org>
-	 <r2we72faaa81004170021z9920e6e9k4c3aa06fe46431b0@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Makefile: Check for perl script errors with perl -c
+Date: Sat, 17 Apr 2010 03:27:21 -0400
+Message-ID: <20100417072721.GD10365@coredump.intra.peff.net>
+References: <1271471380-17701-1-git-send-email-mmogilvi_git@miniinfo.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 17 09:23:14 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+X-From: git-owner@vger.kernel.org Sat Apr 17 09:28:00 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O32N0-0004NE-DG
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 09:23:14 +0200
+	id 1O32Ra-0006dX-4i
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 09:27:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753973Ab0DQHWy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Apr 2010 03:22:54 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:43792 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753826Ab0DQHWy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Apr 2010 03:22:54 -0400
-Received: by gwaa18 with SMTP id a18so1747528gwa.19
-        for <git@vger.kernel.org>; Sat, 17 Apr 2010 00:22:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=S5PGDElO6xU4y3PLBF3MBRLhSm3TJiM+E8oda3c+OTE=;
-        b=h0qLbQp8ztZ3Y3HMH2oXK8a8H0duSNs6dSsru9XE3XPCoK2SLWDdN2upRpkSVSo5vh
-         rWbsn/BSpW4aQl3YbcmiTXZ4hhuGd+RKrkrXI4NrdJWn194Puj9mJgvh/qv/LUDTZNPP
-         8lpedK5B0IgP+3oumGUqYsaQiA3dT9tJMbw5w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=gOvLDd80nr5phdawp/DU+RZ7MyVC1wv5CQh997AUcHL4uFmYn/FR+zRYKwe+Q3DzyO
-         ifLeSDZBkxiFU12ALt19SXfHKCaupXpnEOukInlFWzQ/6zg2CXYrkXNBgOjGzdrph4Cr
-         dKvv3Xyr3Kmu2QexZBgF4pHdTeVinGmEiFuhM=
-Received: by 10.90.118.4 with HTTP; Sat, 17 Apr 2010 00:22:52 -0700 (PDT)
-In-Reply-To: <r2we72faaa81004170021z9920e6e9k4c3aa06fe46431b0@mail.gmail.com>
-Received: by 10.91.51.2 with SMTP id d2mr1547328agk.31.1271488972303; Sat, 17 
-	Apr 2010 00:22:52 -0700 (PDT)
+	id S1753981Ab0DQH1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 03:27:53 -0400
+Received: from peff.net ([208.65.91.99]:53565 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753826Ab0DQH1w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 03:27:52 -0400
+Received: (qmail 15184 invoked by uid 107); 17 Apr 2010 07:27:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 17 Apr 2010 03:27:56 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 17 Apr 2010 03:27:21 -0400
+Content-Disposition: inline
+In-Reply-To: <1271471380-17701-1-git-send-email-mmogilvi_git@miniinfo.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145120>
 
-On Sat, Apr 17, 2010 at 11:57 AM, Tatsuhiko Miyagawa
-<miyagawa@bulknews.net> wrote:
->
-> Sam Vilain <sam <at> vilain.net> writes:
->
-> > > of CGI.pm, perhaps also using one of URI dispatchers[5][6]. =A0Pl=
-ack/PSGI
-> > > looks like the future of Perl web scripting... but is currently q=
-uite new,
-> > > at version 0.9930.
->
-> I admit that it's quite new - not old anyway, but don't get fooled by=
- its
-> version number. It's already adapted by almost all perl frameworks an=
-d
-> used by lots of companies on production.
->
-> > Ok so PSGI is the port of Python's WSGI to Perl. =A0Plack is the re=
-ference
-> > implementation, and also quite heavy at 2.5MB tarball.
->
-> No, the tarball just contains 2.4MB of .jpeg file for large-file down=
-load
-> and upload testing. Its =A0dependencies are kept minimal - only requi=
-res
-> LWP, URI and some pure perl modules.
->
-> > required. =A0Dancer however seems to stand out at only 94kB tarball=
-, minimal
-> > non-core dependencies and support for PSGI. =A0The HTTP::Server::Si=
-mple::PSGI
-> > dependency should let it support the 'instaweb' case with pure perl=
-=2E
->
-> You can already use CGI::Emulate::PSGI (via Plack::App::CGIBin) to ru=
-n
-> gitweb.cgi on Plack, or whatever web server that supports PSGI - like
-> HTTP::Server::Simple::PSGI you just mentioned.
-> http://gist.github.com/346068
->
-> > It should be possible for the script to figure out what filesystem =
-path it
-> > is being run from, perhaps find a local lib/ dir and then add that =
-to @INC.
-> > In shell scripts you just use FindBin, I don't know whether that is=
- still
-> > expected to work from eg mod_perl but there's bound to be a solutio=
-n for
-> > that. =A0So yeah I'd say just aim to ship lots of .pm files in a ne=
-arby dir
-> > alongside the script...
->
-> Or use App::FatPacker.
->
-> --
-> Tatsuhiko Miyagawa
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+On Fri, Apr 16, 2010 at 08:29:40PM -0600, Matthew Ogilvie wrote:
 
-We need to keep gitweb dependancies as less as possible. So, using
-frameworks will be a bad idea, as everybody might don't want to use
-them.
+> I'm not sure anyone will think this is worth including, but I'm
+> used to "make" (and the compiler) detecting trivial errors
+> in compiled langauges, and was getting annoyed that it wasn't
+> doing something similar for perl scripts (especially since in git you
+> are really expected to "make" the scripts anyway).
 
-Coming to splitting of gitweb, as Jakub said installing a split web
-script would be a problem, but we can have a solution the problem by
-using proper algorithms. First, we parse the URL and get to know which
-function to be implemented and then we include the necessary file and
-call the function which will then execute and return the proper HTML
-output.
+I usually do the same thing in my perl makefiles, so I would find it
+useful.
 
-This way, we can no longer worry about installing the split webscript.
-All we need is to install the basic gitweb.pl file which does all this
-basic parsing and calling other perl files. The other files just
-needed to be in the path.
+> The whole tradeoff between noise ("{script} syntax OK"), portability
+> (PIPESTATUS is a bashism), or really ugly contortions with redirecting
+> extra file descriptors (to avoid PIPESTATUS) seems to be the biggest
+> downside of the idea behind this patch.
 
--pavan
+Why do you need to run it through grep? Doesn't:
+
+  echo 'use strict; bogosity' >foo.pl
+  perl -wc foo.pl
+
+properly set the exit code? I get:
+
+  $ perl -wc foo.pl
+  Bareword "bogosity" not allowed while "strict subs" in use at foo.pl line 1.
+  foo.pl had compilation errors.
+  $ echo $?
+  255
+
+> @@ -1553,6 +1557,14 @@ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
+>  	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+>  	    $@.perl >$@+ && \
+>  	chmod +x $@+ && \
+> +	if test x"$(USE_PERL_CHECK)" != x"" ; then \
+> +	    '$(PERL_PATH_SQ)' -cw $@+ 2>&1 | grep -v '^$@+ syntax OK$$' 1>&2 ; \
+> +	    perlStat="$${PIPESTATUS[0]}" && \
+> +	    if test x"$$perlStat" != x"0" ; then \
+> +	        echo '"$(PERL_PATH_SQ) -c $@+" failed' 1>&2 ; \
+> +	        exit "$$perlStat" ; \
+> +	    fi ; \
+> +	fi && \
+>  	mv $@+ $@
+
+So something like:
+
+diff --git a/Makefile b/Makefile
+index 87c90d6..d9b6613 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1545,6 +1545,10 @@ $(SCRIPT_LIB) : % : %.sh
+ ifndef NO_PERL
+ $(patsubst %.perl,%,$(SCRIPT_PERL)): perl/perl.mak
+ 
++ifdef USE_PERL_CHECK
++PERL_CHECK = perl -wc $@+ &&
++endif
++
+ perl/perl.mak: GIT-CFLAGS perl/Makefile perl/Makefile.PL
+ 	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' $(@F)
+ 
+@@ -1562,6 +1566,7 @@ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
+ 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+ 	    $@.perl >$@+ && \
+ 	chmod +x $@+ && \
++	$(PERL_CHECK) \
+ 	mv $@+ $@
+ 
+ 
+
+You could even just make it unconditional. I don't know that we have an
+official policy, but we usually strive for strict, warnings-free perl.
+
+-Peff
