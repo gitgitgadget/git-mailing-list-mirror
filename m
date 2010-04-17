@@ -1,121 +1,75 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v5] gitk: Use git-difftool for external diffs when git
-	>= 1.7.0
-Date: Sat, 17 Apr 2010 15:45:58 -0700
-Message-ID: <20100417224556.GB9366@gmail.com>
-References: <20100408090211.GA31594@gmail.com> <1270717690-32133-1-git-send-email-davvid@gmail.com> <20100417085230.GC6681@brick.ozlabs.ibm.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH RFC 0/5] Patches to avoid reporting conversion changes.
+Date: Sun, 18 Apr 2010 00:47:34 +0200
+Message-ID: <g2xfabb9a1e1004171547we6a74176v4a697ded96e9f115@mail.gmail.com>
+References: <cover.1271432034.git.grubba@grubba.org> <874ojbqnry.fsf@jondo.cante.net> 
+	<86ljcnclvu.fsf@red.stonehenge.com> <87eiid6fjc.fsf@jondo.cante.net> 
+	<86eiidan59.fsf@red.stonehenge.com> <n2kfabb9a1e1004171507r3f51d18bq3ff60831370f9b10@mail.gmail.com> 
+	<m3iq7pemnw.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Markus Heidelberg <markus.heidelberg@web.de>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>,
-	Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 18 00:46:15 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 18 00:48:02 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3GmE-000195-9n
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 00:46:14 +0200
+	id 1O3Gnx-0001fa-Ct
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 00:48:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755510Ab0DQWqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 18:46:08 -0400
-Received: from mail-yw0-f194.google.com ([209.85.211.194]:57023 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755460Ab0DQWqH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 18:46:07 -0400
-Received: by ywh32 with SMTP id 32so2002723ywh.33
-        for <git@vger.kernel.org>; Sat, 17 Apr 2010 15:46:03 -0700 (PDT)
+	id S1755540Ab0DQWr4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 18:47:56 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:65032 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755460Ab0DQWr4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 18:47:56 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1096610fga.1
+        for <git@vger.kernel.org>; Sat, 17 Apr 2010 15:47:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=afHHLmp5TkwMiAoLR7VPgYXreaM5NR8+64zhmTJu+3E=;
-        b=yDQQilDoXbWbF3SoNs4UXFbYeHhDdxp69CkJOwxMcjNWM5TOdaJPlUVkM6FOhrwoMJ
-         +X3eu9fANLPQmeQCISnRPiJqQ9uhmyIlR4Ro48RhTweHinIbmTVlpcjYpdhEyl/izYm5
-         Eg4xt6qzbjgZx6CxJzZroquhATNxFLptSvixM=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type;
+        bh=Bwbpj4w5A7SbJDv1doEXAQ3R4xvFtBNFNPtQPloELQg=;
+        b=JJ2NcY2k2o99gkPS5qVHAjj3uBaZinlNxS292x+WmxqqdYOCNHKwBdJRFycob+QfBj
+         Q7LiPRaa1r9gFOHCa25wkoaGg76IaWew/ZPGCeY/mTrui71e9H0EKwFtMBRWsUvJz5tH
+         zcrddpj7K7p5JT5/KbEaYPHb1ItFWYsngHbP0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=briFibBiWXKYmLMus6ekGPja1E5VFlpMmGuJ6CxaY9df+ggN4bWk+aDHO8hxqmGs+o
-         WZ1HRdjqkL8aF/pDAyxK1I4B4aiD55d3of2Rd84xNi/axJGWCcuNyxkk5zSxUyKQZdpG
-         RW5/YrStlL7wpwg32m1t0v1vfhuyztSAx48Zw=
-Received: by 10.151.130.18 with SMTP id h18mr3719928ybn.186.1271544363216;
-        Sat, 17 Apr 2010 15:46:03 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 21sm1169678ywh.47.2010.04.17.15.46.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 17 Apr 2010 15:46:02 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100417085230.GC6681@brick.ozlabs.ibm.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=P+iViFucQYsNtNpdgne2n0014W34fX5nyrtIk23YWgL8EbyzRnLHWIqsWYuWDKo7Nf
+         crt1gT40gx/CW10sM6HCQbd2g24DbIMG3qi1H3AaAsXDpq+EwnyENEyPDBa9diWZNeT0
+         JzcmGsaOhvvz4WHeTVgOBrfrDMyUkKH+5KxEQ=
+Received: by 10.103.168.14 with HTTP; Sat, 17 Apr 2010 15:47:34 -0700 (PDT)
+In-Reply-To: <m3iq7pemnw.fsf@localhost.localdomain>
+Received: by 10.103.126.36 with SMTP id d36mr2249382mun.65.1271544474080; Sat, 
+	17 Apr 2010 15:47:54 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145189>
 
-On Sat, Apr 17, 2010 at 06:52:30PM +1000, Paul Mackerras wrote:
-> On Thu, Apr 08, 2010 at 02:08:10AM -0700, David Aguilar wrote:
-> 
-> > git-difftool is used instead of the built-in external diff
-> > code when git is >= 1.7.0.  git-difftool's '--extcmd=frotz'
-> > feature was first introduced in 1.7.0 and is the mechanism
-> > through which we launch the configured difftool.
-> > 
-> > A benefit of this change is that gitk's external diff feature
-> > no longer needs write-access to the current directory.
-> 
-> I applied this one, and in testing it I noticed that if the git
-> difftool invocation fails, for example because the user doesn't have
-> meld installed, there is no notification via the GUI.  Instead an
-> error message is printed to stderr.  We need to do something more like
-> what we do in the old-git case -- use open rather than exec -- and pop
-> up an error dialog with error_popup on error so that the user knows
-> what the problem is.
-> 
-> Another minor problem is that the file names that meld (or other diff
-> tool) displays are less informative now.  For example I see
-> "KyaZ5d_gitk : 8iucke_gitk" as the tab label in meld instead of the
-> "[87d24ec87abc...e236e0833ff] gitk" label that we got before, which
-> was a little more informative, though the e236e0833ff is the end of
-> the second SHA1 rather than the beginning.
-> 
-> So I backed it out.  The error handling needs to be fixed using
-> something like what delete_at_eof does (except that obviously we don't
-> have any files to delete).
-> 
-> Paul.
+Heya,
 
-I'll fix the error handling and add a few more notes to the
-final commit message.
+On Sun, Apr 18, 2010 at 00:32, Jakub Narebski <jnareb@gmail.com> wrote:
+> We use idiomatic C, e.g.
 
-The title display is tool-specific so there's something we can
-do about it on a tool-by-tool basis.  This'll have to wait until
-we can break out the tool-dependent parts of git-mergetool--lib
-as was discussed in the past:
+Agreed.
 
-http://lists-archives.org/git/707440-mergetool-lib-add-diffmerge-as-a-pre-configured-mergetool-option.html
-(sorry, couldn't find it on gmane... :-/)
+> We use idiomatic Perl, e.g.
 
-Jay, you mentioned wanting to give Junio's approach a try as
-well as looking into what mercurial did with mergetools.
-Do you have any thoughts about it since then?  I can help
-factor out the backends if you don't think you'll have time to
-get to it soon.
-
-Once we factor out the backends we'll should have an easier
-time working in additional variables for doing user-friendly
-things like passing the --label= flag to meld.
-git-difftool should be able to do it since its GIT_EXTERNAL_DIFF
-helper is passed the sha1s.
-
-Thanks all,
+Ah, I thought that the discussion was about whether the "$_" syntax
+was idiomatic or not. It got the impression that the "$ARG etc. is a
+failed experiment" was Randal's personal opinion, but if that's how
+the perl community has decided that things should be done than that's
+of course how we should do it :).
 
 -- 
-		David
+Cheers,
+
+Sverre Rabbelier
