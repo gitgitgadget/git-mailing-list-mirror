@@ -1,84 +1,89 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH v2 5/6] http-fetch: Use index-pack rather than
-	verify-pack to check packs
-Date: Sat, 17 Apr 2010 12:30:10 -0700
-Message-ID: <20100417193010.GB15911@spearce.org>
-References: <201004152134.10555.j6t@kdbg.org> <1271366704-25262-1-git-send-email-spearce@spearce.org> <g2sbe6fef0d1004151955g6fa785c0id852c91c78584b06@mail.gmail.com>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH RFC 0/5] Patches to avoid reporting conversion changes.
+Date: Sat, 17 Apr 2010 22:32:39 +0300
+Message-ID: <87eiid6fjc.fsf@jondo.cante.net>
+References: <cover.1271432034.git.grubba@grubba.org>
+	<874ojbqnry.fsf@jondo.cante.net> <86ljcnclvu.fsf@red.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Christian Halstrick <christian.halstrick@gmail.com>,
-	jan.sievers@sap.com, Matthias Sohn <matthias.sohn@sap.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 17 21:30:44 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+X-From: git-owner@vger.kernel.org Sat Apr 17 21:32:51 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3Dj0-0002en-Ar
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 21:30:42 +0200
+	id 1O3Dl3-0003wH-VK
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 21:32:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752150Ab0DQTaQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Apr 2010 15:30:16 -0400
-Received: from mail-gx0-f217.google.com ([209.85.217.217]:50072 "EHLO
-	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751357Ab0DQTaP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 15:30:15 -0400
-Received: by gxk9 with SMTP id 9so2204261gxk.8
-        for <git@vger.kernel.org>; Sat, 17 Apr 2010 12:30:13 -0700 (PDT)
-Received: by 10.150.131.9 with SMTP id e9mr3588263ybd.15.1271532612905;
-        Sat, 17 Apr 2010 12:30:12 -0700 (PDT)
-Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
-        by mx.google.com with ESMTPS id 21sm1130994ywh.32.2010.04.17.12.30.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 17 Apr 2010 12:30:11 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <g2sbe6fef0d1004151955g6fa785c0id852c91c78584b06@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753556Ab0DQTcp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 15:32:45 -0400
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:43712 "EHLO
+	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753312Ab0DQTco (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 15:32:44 -0400
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id 1489918D380;
+	Sat, 17 Apr 2010 22:32:43 +0300 (EEST)
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A02F2F11D74; Sat, 17 Apr 2010 22:32:43 +0300
+Received: from jondo.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id E692B403C;
+	Sat, 17 Apr 2010 22:32:39 +0300 (EEST)
+In-Reply-To: <86ljcnclvu.fsf@red.stonehenge.com> (Randal L. Schwartz's message
+	of "Fri, 16 Apr 2010 11:06:45 -0700")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145173>
 
-Tay Ray Chuan <rctay89@gmail.com> wrote:
-> > @@ -152,7 +152,6 @@ struct http_pack_request
-> > =A0 =A0 =A0 =A0struct packed_git *target;
-> > =A0 =A0 =A0 =A0struct packed_git **lst;
-> > =A0 =A0 =A0 =A0FILE *packfile;
-> > - =A0 =A0 =A0 char filename[PATH_MAX];
->=20
-> Why this change? Just curious, nothing strong against it.
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-Split into a new patch.  I'll share my reasons in the commit message.
-:-)
-=20
-> > + =A0 =A0 =A0 tmp_idx =3D xstrdup(preq->tmpfile);
-> > + =A0 =A0 =A0 strcpy(tmp_idx + strlen(tmp_idx) - strlen(".pack.temp=
-"),
-> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0".idx.temp");
->=20
-> Could we use a strbuf here?
+>>>>>> "Jari" == Jari Aalto <jari.aalto@cante.net> writes:
+>
+> Jari>     if ( $OS_ERROR ) ...
+>
+> Right, but without looking, is it $OS_ERROR or $OSERROR?
 
-Doesn't seem worth it.  I just started trying to rework this with a
-strbuf and I just don't see any benefit here.  We know the tmpfile
-ends with ".pack.temp" when we created this request structure.  So
-a strdup and overwrite of the tail just works.
-=20
-> > + =A0 =A0 =A0 if (move_temp_to_file(preq->tmpfile, sha1_pack_name(p=
-->sha1))
-> > + =A0 =A0 =A0 =A0|| move_temp_to_file(tmp_idx, sha1_pack_index_name=
-(p->sha1))) {
->=20
-> Hmm, when moving the pack index file, should we unlink() the old,
-> downloaded one first?
+I don't see any difference, because that variable is always within the
+close context of previous statements. The reader would consult the lines
+above.
 
-Yup, good point, thanks.
+And if that's the only problem, which I don't believe it is for a Perl
+programmer, there is also $ERRNO.
 
---=20
-Shawn.
+> You're trading a list of single punctuation characters, pretty
+> unambiguous, for things that could have been named a dozen different
+> ways each.
+
+A typical Perl program used those "single puctuation variables" and they
+are not immediately understandable; unless you know them by heart.
+
+They are cute for one-liners, but not suitable for maintainable
+programs, edited by N developers, with different backgrounds and skills.
+
+To make the code actually readable by anyone, not just by a Perl coder
+breathing the language 24/7, is what software, any software would be
+better off.
+
+It's akin to the opening "magic values" in a program:
+
+    100
+    130
+    140
+
+Good programmers write instead (pseudo code):
+
+    ERROR_MINOR = 100
+    ...
+
+
+    return ERROR_MINOR
+
+Jari
