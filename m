@@ -1,60 +1,70 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: [PATCH RFC 0/5] Patches to avoid reporting conversion changes.
-Date: Sat, 17 Apr 2010 12:34:42 -0700
-Message-ID: <86eiidan59.fsf@red.stonehenge.com>
-References: <cover.1271432034.git.grubba@grubba.org>
-	<874ojbqnry.fsf@jondo.cante.net> <86ljcnclvu.fsf@red.stonehenge.com>
-	<87eiid6fjc.fsf@jondo.cante.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Sat Apr 17 21:34:53 2010
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH v3 01/11] http.c: Remove bad free of static block
+Date: Sat, 17 Apr 2010 13:07:34 -0700
+Message-ID: <1271534864-31944-1-git-send-email-spearce@spearce.org>
+References: <20100416100307.0000423f@unknown>
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Christian Halstrick <christian.halstrick@gmail.com>,
+	jan.sievers@sap.com, Matthias Sohn <matthias.sohn@sap.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 17 22:08:09 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3Dmy-0004ig-CH
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 21:34:48 +0200
+	id 1O3EJD-0005X6-3Z
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 22:08:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753594Ab0DQTeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 15:34:44 -0400
-Received: from red.stonehenge.com ([208.79.95.2]:24765 "EHLO
-	red.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753585Ab0DQTen (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 15:34:43 -0400
-Received: by red.stonehenge.com (Postfix, from userid 1001)
-	id 0079DD0F3; Sat, 17 Apr 2010 12:34:42 -0700 (PDT)
-x-mayan-date: Long count = 12.19.17.5.1; tzolkin = 13 Imix; haab = 14 Pop
-In-Reply-To: <87eiid6fjc.fsf@jondo.cante.net> (Jari Aalto's message of "Sat,
-	17 Apr 2010 22:32:39 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (berkeley-unix)
+	id S1753831Ab0DQUHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 16:07:48 -0400
+Received: from mail-yx0-f199.google.com ([209.85.210.199]:43704 "EHLO
+	mail-yx0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752545Ab0DQUHr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 16:07:47 -0400
+Received: by yxe37 with SMTP id 37so2119918yxe.21
+        for <git@vger.kernel.org>; Sat, 17 Apr 2010 13:07:47 -0700 (PDT)
+Received: by 10.101.126.10 with SMTP id d10mr8709823ann.196.1271534866892;
+        Sat, 17 Apr 2010 13:07:46 -0700 (PDT)
+Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
+        by mx.google.com with ESMTPS id 7sm1080387yxg.27.2010.04.17.13.07.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 17 Apr 2010 13:07:46 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.rc1.269.ga27c7
+In-Reply-To: <20100416100307.0000423f@unknown>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145175>
 
->>>>> "Jari" == Jari Aalto <jari.aalto@cante.net> writes:
+The filename variable here is pointing to a block of memory that
+was allocated by sha1_file.c and is also held in a static variable
+scoped within the sha1_pack_name() function.  Doing a free() here is
+returning that memory to the allocator while we might still try to
+reuse it on a subsequent sha1_pack_name() invocation.  That's not
+acceptable, so don't free it.
 
->> Right, but without looking, is it $OS_ERROR or $OSERROR?
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ http.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
 
-Jari> I don't see any difference, because that variable is always within the
-Jari> close context of previous statements. The reader would consult the lines
-Jari> above.
-
-Yes, once it's already *in* the program.  But I bet you had to *look
-them up* to add them.
-
-And if you weren't familiar with Perl, you'd still have to *look them
-up* to get the punctuation variables.
-
-You're just trading one problem for another.
-
+diff --git a/http.c b/http.c
+index 4814217..f26625e 100644
+--- a/http.c
++++ b/http.c
+@@ -1082,7 +1082,6 @@ struct http_pack_request *new_http_pack_request(
+ 	return preq;
+ 
+ abort:
+-	free(filename);
+ 	free(preq->url);
+ 	free(preq);
+ 	return NULL;
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
-See http://methodsandmessages.vox.com/ for Smalltalk and Seaside discussion
+1.7.1.rc1.269.ga27c7
