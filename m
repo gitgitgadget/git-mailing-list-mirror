@@ -1,94 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-send-email.txt: Add EXAMPLES section. Write 1st
- level sections in uppercase
-Date: Sat, 17 Apr 2010 11:46:24 -0700
-Message-ID: <7viq7pzzlr.fsf@alter.siamese.dyndns.org>
-References: <1271345823-19685-1-git-send-email-jari.aalto@cante.net>
- <4BC81975.9000907@drmicha.warpmail.net> <8739yvsjqv.fsf@jondo.cante.net>
- <4BC8605F.5070306@drmicha.warpmail.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 0/6] detect dumb HTTP pack file corruption
+Date: Sat, 17 Apr 2010 12:11:07 -0700
+Message-ID: <20100417191107.GA15911@spearce.org>
+References: <20100415141504.GB17883@spearce.org> <1271358560-8946-1-git-send-email-spearce@spearce.org> <7v8w8m2c9r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sat Apr 17 20:46:40 2010
+Cc: git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Christian Halstrick <christian.halstrick@gmail.com>,
+	jan.sievers@sap.com, Matthias Sohn <matthias.sohn@sap.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 17 21:11:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3D2N-00008K-Bo
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 20:46:39 +0200
+	id 1O3DQD-0002VZ-PK
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 21:11:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753446Ab0DQSqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 14:46:34 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63625 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751946Ab0DQSqd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 14:46:33 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DC71FABE24;
-	Sat, 17 Apr 2010 14:46:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M3yi0kzUG62IMvcO6G46sh4eSUY=; b=wp1SU4
-	qN89yBiBXj3HuN6xBkW0W9Akb2gbuQcq5/O18YQujNBJLrK0aNtpAFUzN/nkuyB2
-	vjndLDFg92A4j+FTru8NeJ+MpMkCrgZ2rEU0mXWf/hb134hcuD+Q1Ed6/1CZ7YLv
-	L9Q3GBg/O4hw9UwYX2HSoGTz28UWZ7PVOesDA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ySb8MtF8lBuH4WBq9G0j0FYCUXTbhfYY
-	d0eXdL9NuowDrloVcfePLmO5rcpb2OF5lmyxqcloPhkcpgcFysmCM5Twg7FiVEKx
-	yDOkfXV870EIbDFJ6pIcXPgBqhXZJZNQrQL2l6NXfuUJdW7fS1j1cuOoHbZZHPqA
-	/WWzv9DvQOg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AC4B0ABE22;
-	Sat, 17 Apr 2010 14:46:29 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E20C8ABE1F; Sat, 17 Apr
- 2010 14:46:25 -0400 (EDT)
-In-Reply-To: <4BC8605F.5070306@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Fri\, 16 Apr 2010 15\:04\:31 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 89108096-4A51-11DF-A06F-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754443Ab0DQTLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 15:11:12 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:61882 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754293Ab0DQTLL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 15:11:11 -0400
+Received: by gwaa18 with SMTP id a18so1931465gwa.19
+        for <git@vger.kernel.org>; Sat, 17 Apr 2010 12:11:10 -0700 (PDT)
+Received: by 10.150.188.13 with SMTP id l13mr3517599ybf.181.1271531469870;
+        Sat, 17 Apr 2010 12:11:09 -0700 (PDT)
+Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
+        by mx.google.com with ESMTPS id 5sm1072325yxd.53.2010.04.17.12.11.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 17 Apr 2010 12:11:09 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v8w8m2c9r.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145171>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Hmph, I am getting failures from "[index v2] 6 verify-pack detects CRC
+> mismatch" in t5302 when this is applied to 'maint' (or when the result is
+> merged to 'master').
 
-> I don't use any options besides --dry-run and --cc, which is the point
-> of the config options ;) In config I have to, smtpserver (pointing to an
-> msmtp-script), bcc, suppresscc, aliasesfile, aliastype, but that depends
-> on the project, of course (git.git here).
->
-> I just think that using all these options on the command line is very
-> atypical.
+Oops.  Well, I need to respin the series anyway to address Tay
+Ray Chuan's comments.  Clearly I failed to run the full test suite
+before sending this series.  I promise to run the full suite before
+resending.  :-)
 
-Having to give too many options from the command line all the time is a
-sure sign that the defaults for unconfigured case are bad (which may well
-be true but is is hard to change without a good plan) and that it is not
-clearly explained how to configure the defaults for the repository.
-
-I do not think it is productive to give an overwhelming list that you
-would rarely use (i.e. until you figure out a good set of defaults for the
-project).
-
-> "Without any options, send-email will send patches (using
-> /usr/sbin/sendmail or /usr/lib/sendmail or localhost) using any from, cc
-> and subject lines contained in the patch files; you have to specify at
-> least --to, or else you will be prompted for it.
->
-> All defaults pertaining to composing and sending of the patch mails and
-> to automating this process can be changed with config options, see the
-> corresponding sections below."
-
-Yes, I think we should proceed in this direction.
-
-> I liked your format-patch example with merge-base, I just liked it
-> better in format-patch's man page ;)
-
-Likewise.
+-- 
+Shawn.
