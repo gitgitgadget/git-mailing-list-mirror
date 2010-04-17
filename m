@@ -1,102 +1,89 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: Sebastian Bober <sbober@servercare.de>
 Subject: Re: Git import of the recent full enwiki dump
-Date: Sat, 17 Apr 2010 02:19:40 +0200
-Message-ID: <m2ofabb9a1e1004161719h977b53b7oc2c452c2a2b0025e@mail.gmail.com>
-References: <w2x2d460de71004161647z41492baav3685249fa05145d6@mail.gmail.com>
+Date: Sat, 17 Apr 2010 03:01:47 +0200
+Message-ID: <20100417010147.GB32053@post.servercare.de>
+References: <w2x2d460de71004161647z41492baav3685249fa05145d6@mail.gmail.com> <m2ofabb9a1e1004161719h977b53b7oc2c452c2a2b0025e@mail.gmail.com> <20100417004852.GA32053@post.servercare.de> <20100417005342.GA8475@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Richard Hartmann <richih.mailinglist@gmail.com>,
+	Git List <git@vger.kernel.org>,
 	Avery Pennarun <apenwarr@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Sam Vilain <sam@vilain.net>
-To: Richard Hartmann <richih.mailinglist@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 17 02:20:12 2010
+	Nicolas Pitre <nico@fluxnic.net>, Sam Vilain <sam@vilain.net>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Apr 17 03:01:57 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2vlb-00084T-9Q
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 02:20:11 +0200
+	id 1O2wPz-0001eZ-A0
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 03:01:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932801Ab0DQAUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Apr 2010 20:20:04 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:37305 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932497Ab0DQAUB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Apr 2010 20:20:01 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so569604fga.1
-        for <git@vger.kernel.org>; Fri, 16 Apr 2010 17:20:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type;
-        bh=vjUZHMj1PH7Ig5ZQTeVRvUow4MiS9+5CRR2lnFCT7aA=;
-        b=dlqgnrTn1sKYin/1vVLpc9cti6CTDMwzjGIDNquc9ftsmUC1mOX3t/xdPzlLMLwfOM
-         TgTSGQxCdgtenGKdlGecc03I4PV4Ga7r7bRnq1TcRSeRUCih1N5IZQvh+fgsACbKdXzI
-         O1w94i/06eWc6GNkiwwG3a1EeWIiEbsrQAh38=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=w1qdEYjR0RFzfU9c+J21FGSPl1WHBvNNUSzFEo9lAFZT8VVrAELNI/ZAGc+1cYcfFU
-         GXglY8uDcXBi4tLcgelK2J+5vbSXo4+51ZVhKjPVLlOi3T4nHLvXmOQC7jjbX5GVGK0b
-         2DCTaS0MVIL6QLQ4u7erEbYSqGm+dZrfOkAng=
-Received: by 10.103.168.14 with HTTP; Fri, 16 Apr 2010 17:19:40 -0700 (PDT)
-In-Reply-To: <w2x2d460de71004161647z41492baav3685249fa05145d6@mail.gmail.com>
-Received: by 10.102.15.13 with SMTP id 13mr1511950muo.91.1271463600083; Fri, 
-	16 Apr 2010 17:20:00 -0700 (PDT)
+	id S1758682Ab0DQBBt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Apr 2010 21:01:49 -0400
+Received: from tix64.net ([81.169.172.224]:34178 "EHLO
+	h4945.serverkompetenz.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758595Ab0DQBBs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Apr 2010 21:01:48 -0400
+X-Greylist: delayed 771 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Apr 2010 21:01:48 EDT
+Received: from bob by h4945.serverkompetenz.net with local (Exim 4.69)
+	(envelope-from <sbober@servercare.de>)
+	id 1O2wPr-0007a3-Cj; Sat, 17 Apr 2010 03:01:47 +0200
+Mail-Followup-To: Sebastian Bober <sbober@servercare.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Richard Hartmann <richih.mailinglist@gmail.com>,
+	Git List <git@vger.kernel.org>, Avery Pennarun <apenwarr@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>, Sam Vilain <sam@vilain.net>
+Content-Disposition: inline
+In-Reply-To: <20100417005342.GA8475@spearce.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-bounce-key: tix64.net-1;sbober@servercare.de;1271466108;a216844c;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145101>
 
-Heya,
+On Fri, Apr 16, 2010 at 05:53:42PM -0700, Shawn O. Pearce wrote:
+> Sebastian Bober <sbober@servercare.de> wrote:
+> > The question would be, how the commits and the trees are laid out.
+> > If every wiki revision shall be a git commit, then we'd need to handle
+> > 300M commits. And we have 19M wiki pages (that would be files). The tree
+> > objects would be very large and git-fast-import would crawl.
+> > 
+> > Some tests with the german wikipedia have shown that importing the blobs
+> > is doable on normal hardware. Getting the trees and commits into git
+> > was not possible up to now, as fast-import was just to slow (and getting
+> > slower after 1M commits).
+> 
+> Well, to be fair to fast-import, its tree handling code is linear
+> scan based, because that's how any other part of Git handles trees.
+> 
+> If you just toss all 19M wiki pages into a single top level tree,
+> that's going to take a very long time to locate the wiki page
+> talking about Zoos.
+> 
 
-[-wikitech-l, if they should be kept on the cc please re-add, I assume
-that the discussion of the git aspects are not relevant to that list]
+I'm not dissing fast-import, it's fantastic. We tried with 2-10 level
+deep trees (the best depth being 3), but after some million commits it
+just got unbearably slow, with the ETA constantly rising.
 
-On Sat, Apr 17, 2010 at 01:47, Richard Hartmann
-<richih.mailinglist@gmail.com> wrote:
-> This data set is probably the largest set of changes on earth, so
-> it's highly interesting to see what git will make of it.
+That was because of tree creation, and SHA1 computing of these tree
+objects.
 
-I think that git might actually be able to handle it. Git's been known
-not to handle _large files_ very well, but a lot of history/a lot of
-files is something different. Assuming you do the import incrementally
-using something like git-fast-import (feeding it with a custom
-exporter that uses the dump as it's input) you shouldn't even need an
-extraordinary machine to do it (although you'd need a lot of storage).
-
-> As of right now, I am trying to import on my local machine, but
-> my first, rough, projections tell me my machine will melt down at
-> some point ;)
-
-How are you importing? Did you script the process that does something
-like 'move next revision of file in place && git add . && git commit'?
-I don't know how well that would work since I reckon the worktree will
-be huge. Speaking of which, it might make sense to separate the
-worktree by prefix, so articles starting with "aa" go under the "aa"
-directory, etc?
-
-Anyway, other gits might have more interesting things to say, cc-ed is
-Avery, who has been working on a tool to back-up entire harddrives in
-git. Also cc-ed are Nico and Shawn who both have a lot of experience
-with the object backend and the pack implementation. Also, Sam, who
-has worked on importing the entire Perl history into git, not sure how
-big that is though, but they have a lot of changesets too I think.
-There's a bunch of people that have worked on importing stuff like KDE
-into git, who might have interesting things to add, but I don't know
-who those are.
-
-Hope that helps, and if you do convert it (and it turns out to be
-usable, and you decide to keep it up to date somehow), put it up
-somewhere! :)
-
--- 
-Cheers,
-
-Sverre Rabbelier
+> > I had the idea of having an importer that would just handle this special
+> > case (1 file change per commit), but didn't get around to try that yet.
+> 
+> Really, fast-import should be able to handle this well, assuming you
+> aren't just tossing all 19M files into a single massive directory
+> and hoping for the best.  Because *any* program working on that
+> sort of layout will need to spit out the 19M entry tree object on
+> each and every commit, just so it can compute the SHA-1 checksum
+> to get the tree name for the commit.
+> 
+> -- 
+> Shawn.
+> 
