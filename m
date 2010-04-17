@@ -1,106 +1,121 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH RFC 0/5] Patches to avoid reporting conversion changes.
-Date: Sat, 17 Apr 2010 15:32:28 -0700 (PDT)
-Message-ID: <m3iq7pemnw.fsf@localhost.localdomain>
-References: <cover.1271432034.git.grubba@grubba.org>
-	<874ojbqnry.fsf@jondo.cante.net> <86ljcnclvu.fsf@red.stonehenge.com>
-	<87eiid6fjc.fsf@jondo.cante.net> <86eiidan59.fsf@red.stonehenge.com>
-	<n2kfabb9a1e1004171507r3f51d18bq3ff60831370f9b10@mail.gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v5] gitk: Use git-difftool for external diffs when git
+	>= 1.7.0
+Date: Sat, 17 Apr 2010 15:45:58 -0700
+Message-ID: <20100417224556.GB9366@gmail.com>
+References: <20100408090211.GA31594@gmail.com> <1270717690-32133-1-git-send-email-davvid@gmail.com> <20100417085230.GC6681@brick.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 18 00:32:51 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Markus Heidelberg <markus.heidelberg@web.de>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>,
+	Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 18 00:46:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3GZF-0004t1-5g
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 00:32:49 +0200
+	id 1O3GmE-000195-9n
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 00:46:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755454Ab0DQWcb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Apr 2010 18:32:31 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:58619 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755447Ab0DQWca convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Apr 2010 18:32:30 -0400
-Received: by wyb39 with SMTP id 39so1828348wyb.19
-        for <git@vger.kernel.org>; Sat, 17 Apr 2010 15:32:29 -0700 (PDT)
+	id S1755510Ab0DQWqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 18:46:08 -0400
+Received: from mail-yw0-f194.google.com ([209.85.211.194]:57023 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755460Ab0DQWqH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 18:46:07 -0400
+Received: by ywh32 with SMTP id 32so2002723ywh.33
+        for <git@vger.kernel.org>; Sat, 17 Apr 2010 15:46:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=Ju11WGetD/G77ZTaum4B3knRhAzXOLP2ZekZu0QJ7nA=;
-        b=piEpZmzkDy3/04HOcm5d3rhhl83mx7lYj933fMh5OLxUTNLSBs/Y6x28+15VMaV/MO
-         HJNZFcmQ2+3ajV5kH0cbsR6ZZoN6m/XCdF8gY/plTGkbQprzD8Euvjj34V4AO5vmveg0
-         SUF8JSg7bm1ZIBuzlCHL4DQEmfzv13i0pv6NY=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=afHHLmp5TkwMiAoLR7VPgYXreaM5NR8+64zhmTJu+3E=;
+        b=yDQQilDoXbWbF3SoNs4UXFbYeHhDdxp69CkJOwxMcjNWM5TOdaJPlUVkM6FOhrwoMJ
+         +X3eu9fANLPQmeQCISnRPiJqQ9uhmyIlR4Ro48RhTweHinIbmTVlpcjYpdhEyl/izYm5
+         Eg4xt6qzbjgZx6CxJzZroquhATNxFLptSvixM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=fI682N/Fh6TiypIhkMYZwmAIqIWdxbyb+M1dDmqeU4n9Fpp/Q3f2+ZY6fNJUnAmaFr
-         z6uKuA6ovDsbJVf+QUtF3eICJFxGQWzZHSp6jSnWM+pa5AB3VQS+9+YN1uHI06ZVp4MM
-         DD2GqdDKXThZAnLaUhRsZzZQCIrrWeQeZvNHY=
-Received: by 10.216.160.213 with SMTP id u63mr4333339wek.128.1271543549482;
-        Sat, 17 Apr 2010 15:32:29 -0700 (PDT)
-Received: from localhost.localdomain (abvc197.neoplus.adsl.tpnet.pl [83.8.200.197])
-        by mx.google.com with ESMTPS id z34sm33766667wbv.14.2010.04.17.15.32.28
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=briFibBiWXKYmLMus6ekGPja1E5VFlpMmGuJ6CxaY9df+ggN4bWk+aDHO8hxqmGs+o
+         WZ1HRdjqkL8aF/pDAyxK1I4B4aiD55d3of2Rd84xNi/axJGWCcuNyxkk5zSxUyKQZdpG
+         RW5/YrStlL7wpwg32m1t0v1vfhuyztSAx48Zw=
+Received: by 10.151.130.18 with SMTP id h18mr3719928ybn.186.1271544363216;
+        Sat, 17 Apr 2010 15:46:03 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id 21sm1169678ywh.47.2010.04.17.15.46.01
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 17 Apr 2010 15:32:28 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o3HMVsxT005931;
-	Sun, 18 Apr 2010 00:32:05 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o3HMVWjv005926;
-	Sun, 18 Apr 2010 00:31:32 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <n2kfabb9a1e1004171507r3f51d18bq3ff60831370f9b10@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Sat, 17 Apr 2010 15:46:02 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100417085230.GC6681@brick.ozlabs.ibm.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145188>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
-> On Sat, Apr 17, 2010 at 21:34, Randal L. Schwartz <merlyn@stonehenge.=
-com> wrote:
+On Sat, Apr 17, 2010 at 06:52:30PM +1000, Paul Mackerras wrote:
+> On Thu, Apr 08, 2010 at 02:08:10AM -0700, David Aguilar wrote:
+> 
+> > git-difftool is used instead of the built-in external diff
+> > code when git is >= 1.7.0.  git-difftool's '--extcmd=frotz'
+> > feature was first introduced in 1.7.0 and is the mechanism
+> > through which we launch the configured difftool.
+> > 
+> > A benefit of this change is that gitk's external diff feature
+> > no longer needs write-access to the current directory.
+> 
+> I applied this one, and in testing it I noticed that if the git
+> difftool invocation fails, for example because the user doesn't have
+> meld installed, there is no notification via the GUI.  Instead an
+> error message is printed to stderr.  We need to do something more like
+> what we do in the old-git case -- use open rather than exec -- and pop
+> up an error dialog with error_popup on error so that the user knows
+> what the problem is.
+> 
+> Another minor problem is that the file names that meld (or other diff
+> tool) displays are less informative now.  For example I see
+> "KyaZ5d_gitk : 8iucke_gitk" as the tab label in meld instead of the
+> "[87d24ec87abc...e236e0833ff] gitk" label that we got before, which
+> was a little more informative, though the e236e0833ff is the end of
+> the second SHA1 rather than the beginning.
+> 
+> So I backed it out.  The error handling needs to be fixed using
+> something like what delete_at_eof does (except that obviously we don't
+> have any files to delete).
+> 
+> Paul.
 
-> > Yes, once it's already *in* the program. =A0But I bet you had to *l=
-ook
-> > them up* to add them.
->=20
-> Yes, but once they're there nobody has to look them up. It's moving
-> the problem from having to look up what it means on _and_ write, to
-> just write.
+I'll fix the error handling and add a few more notes to the
+final commit message.
 
-We use idiomatic C, e.g.
+The title display is tool-specific so there's something we can
+do about it on a tool-by-tool basis.  This'll have to wait until
+we can break out the tool-dependent parts of git-mergetool--lib
+as was discussed in the past:
 
-  if (!strcmp(option, "warn")) {
+http://lists-archives.org/git/707440-mergetool-lib-add-diffmerge-as-a-pre-configured-mergetool-option.html
+(sorry, couldn't find it on gmane... :-/)
 
-not
+Jay, you mentioned wanting to give Junio's approach a try as
+well as looking into what mercurial did with mergetools.
+Do you have any thoughts about it since then?  I can help
+factor out the backends if you don't think you'll have time to
+get to it soon.
 
-  if (strcmp(option, "warn") =3D=3D 0) {
+Once we factor out the backends we'll should have an easier
+time working in additional variables for doing user-friendly
+things like passing the --label= flag to meld.
+git-difftool should be able to do it since its GIT_EXTERNAL_DIFF
+helper is passed the sha1s.
 
+Thanks all,
 
-We use idiomatic Perl, e.g.
-
-  %hash =3D map { $_ =3D> 1 } @list;
-
-not
-
-  use English qw(-no_match_vars);
-
-  %hash =3D map { $ARG =3D> 1 } @list;
-
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+-- 
+		David
