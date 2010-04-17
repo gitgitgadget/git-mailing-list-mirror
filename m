@@ -1,78 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] format-patch: use current date in mbox 'From COMMIT
- DATE' header line
-Date: Sat, 17 Apr 2010 11:16:37 -0700
-Message-ID: <7v1vee0wsa.fsf@alter.siamese.dyndns.org>
-References: <9946ffbdf26e7b08b9b00b87d4b575fea774be4c.1271342450.git.chris@arachsys.com>
- <20100415151619.GK12365@arachsys.com>
- <201004151735.31415.trast@student.ethz.ch>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [BUG] Git add <device file> silently fails
+Date: Sat, 17 Apr 2010 20:23:26 +0200
+Message-ID: <v2o81b0412b1004171123z20c2c042qabb2b76143390a36@mail.gmail.com>
+References: <201004171624.17797.agruen@suse.de>
+	 <u2s81b0412b1004170744u4cc3c0e1z6d7019fe405a67ec@mail.gmail.com>
+	 <7v4oja3uh7.fsf@alter.siamese.dyndns.org>
+	 <n2i81b0412b1004171032v713f156ase295cbe7bbedf1f6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chris Webb <chris@arachsys.com>, <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Apr 17 20:16:57 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Andreas Gruenbacher <agruen@suse.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 17 20:23:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3CZa-0002Cz-0F
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 20:16:54 +0200
+	id 1O3Cg7-00076g-IO
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 20:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753060Ab0DQSQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 14:16:49 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44210 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751475Ab0DQSQs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 14:16:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B2351ABA65;
-	Sat, 17 Apr 2010 14:16:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=g2cCbBsgfCE1WPxYX50gc1EScf0=; b=LiuP1U
-	EN5eA6FBzT+NBmdxWe2U60wS9XylIqw6HTXB69cSYPRzUCWEPehYWfwvr9mux6rn
-	e+v3WkqVIsQTkNyOULIJSdJEwNC0Csb8XVcJ240lN7bv3aevGNcxpFpyNIMsZTtj
-	EJpVkSKFtgKCvU7rZLCauYtM6MGjTvdl7ytWM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WViaaT8PCjf+EoOiqXFGifof3jCNXFiC
-	oS2pro0yDvEV9ftJZdG3GRmjP9pApD41HVpDPNhmcMPGWnrpa5T53J0nuEvJoTnT
-	UhuG0c0KYIVZUFePHzn2bPHXsHAi+P5wJbYQvGH0lt2MrUhi6mf9B5VANj4kmIwJ
-	DQZN4fxwrD0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 79BCDABA63;
-	Sat, 17 Apr 2010 14:16:43 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 732BFABA62; Sat, 17 Apr
- 2010 14:16:39 -0400 (EDT)
-In-Reply-To: <201004151735.31415.trast@student.ethz.ch> (Thomas Rast's
- message of "Thu\, 15 Apr 2010 17\:35\:31 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6066F110-4A4D-11DF-8576-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752765Ab0DQSXb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 14:23:31 -0400
+Received: from mail-yw0-f194.google.com ([209.85.211.194]:48477 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751946Ab0DQSXb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 14:23:31 -0400
+Received: by ywh32 with SMTP id 32so1927129ywh.33
+        for <git@vger.kernel.org>; Sat, 17 Apr 2010 11:23:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type;
+        bh=SG4XOJoqBOxJWfEoqOlRgM0tTcuwhi1C/HybChpODOA=;
+        b=Cc5BO7op4fdadsMz7ccQ4EgZZYj3ylc6eRcOaweFUshkjUgJLpnhhn2UJsyXaIppYo
+         ovlPZWS5/8fGIXkdjWg9EllkNvsC/L8NahQ5m+E08F1gQj/MoIDLNx3PVSkJnRnDV3vi
+         eE+iwYZemArPrtGBhrMJTN7Uucr6dO3e8bjYI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=rPpAZnmiXGkw3uSw0vtKPMj0LCPK5PK95AxAGKmMKXwEexQNhiKRnv2lM1chIJve/w
+         p8Iu7G9lQwf11o/qkeY0SVUZLVb6t6lkC4UKPix8Vz7OtIeH/9S4y9dEK1bei7rCTmvo
+         gNAdvYBG9IiCDVYPZdiNAq4fZk42r8b+0/6Vs=
+Received: by 10.100.212.9 with HTTP; Sat, 17 Apr 2010 11:23:26 -0700 (PDT)
+In-Reply-To: <n2i81b0412b1004171032v713f156ase295cbe7bbedf1f6@mail.gmail.com>
+Received: by 10.101.160.24 with SMTP id m24mr7509030ano.222.1271528608462; 
+	Sat, 17 Apr 2010 11:23:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145168>
 
-Thomas Rast <trast@student.ethz.ch> writes:
-
-> Chris Webb wrote:
->> Chris Webb <chris@arachsys.com> writes:
->> 
->> > Put the current date in the 'From COMMIT DATE' header line instead of using
->> > the fixed date 'Mon Sep 17 00:00:00 2001'. A DATE_UTC mode for show_date() is
->> > introduced so we can easily generate this line in the correct format.
->> 
->> ...but this will break t4013-diff-various which expects the exact date
->> string 'Mon Sep 17 00:00:00 2001' in the mbox header. Patch to fix this test
->> to follow!
+On Sat, Apr 17, 2010 at 19:32, Alex Riesen <raa.lkml@gmail.com> wrote:
+> On Sat, Apr 17, 2010 at 18:38, Junio C Hamano <gitster@pobox.com> wrote:
+>> Alex Riesen <raa.lkml@gmail.com> writes:
+>>
+>>> I think something like this should make the accident more
+>>> noticable:
+>>
+>> The early skippage done in dir.c (read-directory-recursive) should treat
+>> these as ignored just like paths that are ignored with .gitignore
+>> mechanism, and if we do so, we shouldn't need this patch to add another
+>> codepath to give notification to the user (we would however still need
+>> to reword "'add -f' if you really want to add it", though).
+>>
 >
-> Have you read
+> I see. Special files are not treated as ignored yet (and there will be
+> no way to un-ignore them). I have to read the code for a while,
+> ignored pathnames are sometimes stored for later use too.
 >
->   http://thread.gmane.org/gmane.comp.version-control.git/124082/focus=124092
 
-Thanks for a sanity.
+I am tempted to add a mode_t or DT_something to struct dir_entry.
+Users of read_directory are likely to do an lstat anyway (well,
+builtin/add.c does), and sometimes there is something to fill it with
+(get_dtype for DT_UNKNOWN). The only problem is that the structure
+is allocated a lot...
