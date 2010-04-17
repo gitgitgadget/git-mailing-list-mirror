@@ -1,85 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] diff: use 64-bit integers for diffstat calculations
-Date: Sat, 17 Apr 2010 10:00:44 -0700
-Message-ID: <7vvdbq2ev7.fsf@alter.siamese.dyndns.org>
-References: <20100416135948.GA26918@zakalwe.fi>
- <4BC87BE9.9040704@dbservice.com>
- <20100417102543.GB23110@coredump.intra.peff.net>
+From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+Subject: Re: [PATCH] Makefile: Check for perl script errors with perl -c
+Date: Sat, 17 Apr 2010 11:05:00 -0600
+Message-ID: <20100417170500.GA4587@comcast.net>
+References: <1271471380-17701-1-git-send-email-mmogilvi_git@miniinfo.net>
+ <20100417072721.GD10365@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tomas Carnecky <tom@dbservice.com>,
-	Heikki Orsila <shdl@zakalwe.fi>, git@vger.kernel.org
+Cc: git@vger.kernel.org, gitster@pobox.com
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 17 19:01:01 2010
+X-From: git-owner@vger.kernel.org Sat Apr 17 19:05:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3BO9-0007AX-Ci
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 19:01:01 +0200
+	id 1O3BSB-00018l-3R
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 19:05:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752347Ab0DQRA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 13:00:56 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61944 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751512Ab0DQRA4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 13:00:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F725AAFA4;
-	Sat, 17 Apr 2010 13:00:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+5i822iifuZ08j5RQ6rmDNhMx+8=; b=OumnCs
-	0qXxa9t0dnW2sJi1HFPfBT+88iLnxym6RnbggnfYBoSUJlIayqJUq6YDJeVi9m9L
-	rCW/zphDpMNodAFxMQDFW1dJN4Ds0r6OirlxhiIBdUua3I3aqpBj3koDfv4K0NRX
-	dpoZJHEKqDJ7wLXuxIW4dT9t7qY5C1WPh51e0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=U8Y9FFbTa+MKPFQcWqrXByHEg7exwThT
-	a7behdzRZpna3RAkZ0ULMCWF6dgRQBXDvnMLbrlY0ihR1Ojd1+SYEQ0bTx2ZK/Fi
-	ThxpJMTC9TlSw6e92PyhfiQXKRSqmGADZS64V5f8LY/UZKXksxo667Zo4DMBBl/T
-	BHRB/HIZfCU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 245EBAAFA3;
-	Sat, 17 Apr 2010 13:00:51 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A8FEAAF9F; Sat, 17 Apr
- 2010 13:00:46 -0400 (EDT)
-In-Reply-To: <20100417102543.GB23110@coredump.intra.peff.net> (Jeff King's
- message of "Sat\, 17 Apr 2010 06\:25\:43 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C6FC098E-4A42-11DF-85B3-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752676Ab0DQRFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 13:05:05 -0400
+Received: from qmta03.emeryville.ca.mail.comcast.net ([76.96.30.32]:52183 "EHLO
+	qmta03.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752260Ab0DQRFD (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Apr 2010 13:05:03 -0400
+Received: from omta14.emeryville.ca.mail.comcast.net ([76.96.30.60])
+	by qmta03.emeryville.ca.mail.comcast.net with comcast
+	id 6eXY1e0021HpZEsA3h53Jx; Sat, 17 Apr 2010 17:05:03 +0000
+Received: from mmogilvi.homeip.net ([67.190.99.184])
+	by omta14.emeryville.ca.mail.comcast.net with comcast
+	id 6h511e0093yhxvF8ah52p2; Sat, 17 Apr 2010 17:05:02 +0000
+Received: by mmogilvi.homeip.net (Postfix, from userid 501)
+	id 47DEE1E9625D; Sat, 17 Apr 2010 11:05:00 -0600 (MDT)
+Content-Disposition: inline
+In-Reply-To: <20100417072721.GD10365@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145159>
 
-Jeff King <peff@peff.net> writes:
+On Sat, Apr 17, 2010 at 03:27:21AM -0400, Jeff King wrote:
+> On Fri, Apr 16, 2010 at 08:29:40PM -0600, Matthew Ogilvie wrote:
+> > The whole tradeoff between noise ("{script} syntax OK"), portability
+> > (PIPESTATUS is a bashism), or really ugly contortions with redirecting
+> > extra file descriptors (to avoid PIPESTATUS) seems to be the biggest
+> > downside of the idea behind this patch.
+> 
+> Why do you need to run it through grep? Doesn't:
+> 
+>   echo 'use strict; bogosity' >foo.pl
+>   perl -wc foo.pl
+> 
+> properly set the exit code? I get:
+> 
+>   $ perl -wc foo.pl
+>   Bareword "bogosity" not allowed while "strict subs" in use at foo.pl line 1.
+>   foo.pl had compilation errors.
+>   $ echo $?
+>   255
 
-> Yuck, we use "unsigned int" for the actual storage, and then convert to
-> a regular "int" in some other places. I think we should just do this:
->
-> -- >8 --
-> Subject: [PATCH] diff: use 64-bit integers for diffstat calculations
->
-> The diffstat "added" and "changed" fields generally store
-> line counts; however, for binary files, they store file
-> sizes. Since we store and print these values as ints, a
-> diffstat on a file larger than 2G can show a negative size.
-> Instead, let's explicitly use 64-bit integers.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
+Yes, "perl -cw"'s exit code is always good, but the standard error is
+needlessly noisy in the success case:
 
-Yes, but we would probably be better off using using uintmax_t for things
-like this if the quantity a variable represents is not closely tied to
-external file format (e.g. the offset field of pack idx file), nor the
-code is only for a particular platform (e.g. compat/win32mmap.c), don't
-you think?
+  $ perl -cw -e 'print "hi\n"'
+  -e syntax OK
+  $ echo $?
+  0
 
-That is the impression I am getting on the discipline expressed in the
-current codebase, from browsing the output from "git grep uint64_t".
+Which then leaves a choice among not-great options:
+
+1. Accept the noise output from make and perl.  If we are willing to
+   accept this, then a simpler and/or uncoditional patch would be fine.
+
+2. Filter out the "{scriptName} syntax OK" noise with grep (or sed),
+   but then $? is grep's status (not perl's), and you have to go
+   through contortions to properly test perl's status:
+
+    2a. Use PIPESTATUS, but this is a non-portable bashism.
+        My current version of the patch elects to do this, but
+        leaves the check disabled to (hopefully) avoid portability
+        issues.  (A second advantage of leaving it disabled [or at
+        least disablable] is if someone is in a cross-compile
+        environment and the target perl path is different 
+        from the build perl path.)
+
+    2b. Use a portable technique that involves echoing the status
+        redirected to file descriptor 3, then pulling the status out
+        of file descriptor 3 outside the pipeline.  This is frankly
+        kind of complicated and hard to read.
+
+So, I take it you would be happy with the noisy output?
+Anyone else have an opinion?  If someone knows a cleaner
+way to resolve this, or if the group consensus is that we like the
+patch's concept but would rather resolve the noisy output some
+other way (perhaps just accept it), I could change the patch.
+
+--
+Matthew Ogilvie   [mmogilvi_git@miniinfo.net]
