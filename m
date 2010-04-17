@@ -1,79 +1,102 @@
-From: Richard Hartmann <richih.mailinglist@gmail.com>
-Subject: Git import of the recent full enwiki dump
-Date: Sat, 17 Apr 2010 01:47:21 +0200
-Message-ID: <w2x2d460de71004161647z41492baav3685249fa05145d6@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Git import of the recent full enwiki dump
+Date: Sat, 17 Apr 2010 02:19:40 +0200
+Message-ID: <m2ofabb9a1e1004161719h977b53b7oc2c452c2a2b0025e@mail.gmail.com>
+References: <w2x2d460de71004161647z41492baav3685249fa05145d6@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: wikitech-l@lists.wikimedia.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 17 01:47:42 2010
+Cc: Git List <git@vger.kernel.org>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Sam Vilain <sam@vilain.net>
+To: Richard Hartmann <richih.mailinglist@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 17 02:20:12 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2vG7-0003zt-TI
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 01:47:40 +0200
+	id 1O2vlb-00084T-9Q
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 02:20:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932787Ab0DPXrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Apr 2010 19:47:24 -0400
-Received: from mail-bw0-f225.google.com ([209.85.218.225]:44484 "EHLO
-	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932783Ab0DPXrX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Apr 2010 19:47:23 -0400
-Received: by bwz25 with SMTP id 25so3728448bwz.28
-        for <git@vger.kernel.org>; Fri, 16 Apr 2010 16:47:22 -0700 (PDT)
+	id S932801Ab0DQAUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Apr 2010 20:20:04 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:37305 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932497Ab0DQAUB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Apr 2010 20:20:01 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so569604fga.1
+        for <git@vger.kernel.org>; Fri, 16 Apr 2010 17:20:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:received:message-id
-         :subject:from:to:content-type;
-        bh=+grSNzURFivBdzF9TXjj7m8TlMlM7n915MFqTKH+OP8=;
-        b=c2vOJYfFJfJHW2tGIit+kRmKM/2a6QOtNB26beTZys3wJY8o5lEVvQWasQVYdWj8Jc
-         l67O0wnwur7dY0Np+M7XBm8Vvzk30lAuBi1APyYU/gg/6xaq8PHWPcODbXHkEhSnfvfT
-         ChFte22Tco5GVoaafHCK4w4p1L4uB19s+9q+U=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type;
+        bh=vjUZHMj1PH7Ig5ZQTeVRvUow4MiS9+5CRR2lnFCT7aA=;
+        b=dlqgnrTn1sKYin/1vVLpc9cti6CTDMwzjGIDNquc9ftsmUC1mOX3t/xdPzlLMLwfOM
+         TgTSGQxCdgtenGKdlGecc03I4PV4Ga7r7bRnq1TcRSeRUCih1N5IZQvh+fgsACbKdXzI
+         O1w94i/06eWc6GNkiwwG3a1EeWIiEbsrQAh38=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=JAGjUlPrnGPAJtFsuVYJFLznGNLyVrJ0VQhf6rpg25LorZ5UleugRyuusuvsiCuoUt
-         Lcv3syx1OwaCjMMS6S/g9+ecVZP52KJKco1D67jxRO6dNVjqgEu7KHHtX6e/dvjWYDYx
-         aNZauBTvuJrX3GkvowlyAS5Za0ITrIXjUntdo=
-Received: by 10.204.73.77 with HTTP; Fri, 16 Apr 2010 16:47:21 -0700 (PDT)
-Received: by 10.204.153.205 with SMTP id l13mr2185778bkw.95.1271461641638; 
-	Fri, 16 Apr 2010 16:47:21 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=w1qdEYjR0RFzfU9c+J21FGSPl1WHBvNNUSzFEo9lAFZT8VVrAELNI/ZAGc+1cYcfFU
+         GXglY8uDcXBi4tLcgelK2J+5vbSXo4+51ZVhKjPVLlOi3T4nHLvXmOQC7jjbX5GVGK0b
+         2DCTaS0MVIL6QLQ4u7erEbYSqGm+dZrfOkAng=
+Received: by 10.103.168.14 with HTTP; Fri, 16 Apr 2010 17:19:40 -0700 (PDT)
+In-Reply-To: <w2x2d460de71004161647z41492baav3685249fa05145d6@mail.gmail.com>
+Received: by 10.102.15.13 with SMTP id 13mr1511950muo.91.1271463600083; Fri, 
+	16 Apr 2010 17:20:00 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145100>
 
--- This email has been sent to two lists --
+Heya,
 
-Hi all,
+[-wikitech-l, if they should be kept on the cc please re-add, I assume
+that the discussion of the git aspects are not relevant to that list]
 
-I would be interested to import the whole enwiki dump [1] into git[2].
+On Sat, Apr 17, 2010 at 01:47, Richard Hartmann
+<richih.mailinglist@gmail.com> wrote:
+> This data set is probably the largest set of changes on earth, so
+> it's highly interesting to see what git will make of it.
 
-This data set is probably the largest set of changes on earth, so
-it's highly interesting to see what git will make of it.
+I think that git might actually be able to handle it. Git's been known
+not to handle _large files_ very well, but a lot of history/a lot of
+files is something different. Assuming you do the import incrementally
+using something like git-fast-import (feeding it with a custom
+exporter that uses the dump as it's input) you shouldn't even need an
+extraordinary machine to do it (although you'd need a lot of storage).
 
-As of right now, I am trying to import on my local machine, but
-my first, rough, projections tell me my machine will melt down at
-some point ;)
+> As of right now, I am trying to import on my local machine, but
+> my first, rough, projections tell me my machine will melt down at
+> some point ;)
 
-Assuming my local import fails, I would appreciate it if this could
-be added to wikitech's longer-term todo list.
-If anyone has access to a system with several TiB of free disk
-space which they can spare for a week or three, it would be
-awesome. If given shell access, I can take care of this task,
-but I would be happy to assist anyone attempting it, as well.
+How are you importing? Did you script the process that does something
+like 'move next revision of file in place && git add . && git commit'?
+I don't know how well that would work since I reckon the worktree will
+be huge. Speaking of which, it might make sense to separate the
+worktree by prefix, so articles starting with "aa" go under the "aa"
+directory, etc?
 
-If need be, I can get various people from various communities
-to vouch for me, my character & that I Do Not Break Stuff.
+Anyway, other gits might have more interesting things to say, cc-ed is
+Avery, who has been working on a tool to back-up entire harddrives in
+git. Also cc-ed are Nico and Shawn who both have a lot of experience
+with the object backend and the pack implementation. Also, Sam, who
+has worked on importing the entire Perl history into git, not sure how
+big that is though, but they have a lot of changesets too I think.
+There's a bunch of people that have worked on importing stuff like KDE
+into git, who might have interesting things to add, but I don't know
+who those are.
 
+Hope that helps, and if you do convert it (and it turns out to be
+usable, and you decide to keep it up to date somehow), put it up
+somewhere! :)
 
-Richard Hartmann
+-- 
+Cheers,
 
-PS: If anyone attempts to do this, please poke me. Either
-via email or RichiH on freenode, OFTC and IRCnet.
-
-[1] http://download.wikimedia.org/enwiki/20100130/
-[2] http://git-scm.com/
+Sverre Rabbelier
