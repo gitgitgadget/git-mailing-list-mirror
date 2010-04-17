@@ -1,90 +1,97 @@
-From: david@lang.hm
-Subject: Re: Using a git repository on the root directory
-Date: Sat, 17 Apr 2010 05:55:35 -0700 (PDT)
-Message-ID: <alpine.DEB.2.01.1004170548440.16996@asgard.lang.hm>
-References: <q2k3e2876431004161344vfff638a7ncfa74aa0e3b979dc@mail.gmail.com>  <4BC9364D.7020204@gmail.com>  <alpine.DEB.2.01.1004162120490.16996@asgard.lang.hm>  <t2g3e2876431004170415r71d5f834z3bfdedfaec076c6c@mail.gmail.com>  <alpine.DEB.2.01.1004170439170.16996@asgard.lang.hm>
- <v2l3e2876431004170458ib2d40b28he1fb56906f94a7ed@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH v2 0/4] A new library for plumbing output
+Date: Sat, 17 Apr 2010 15:02:39 +0200
+Message-ID: <201004171502.42044.jnareb@gmail.com>
+References: <20100411231824.67460.24844.julian@quantumfyre.co.uk> <201004151107.33892.jnareb@gmail.com> <20100417095259.GA23110@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Gabriel Filion <lelutin@gmail.com>, git@vger.kernel.org
-To: Miguel Ramos <mail@miguel.ramos.name>
-X-From: git-owner@vger.kernel.org Sat Apr 17 14:55:53 2010
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	git@vger.kernel.org, Eric Raymond <esr@thyrsus.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Apr 17 15:02:59 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O37Yq-0002wo-HU
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 14:55:48 +0200
+	id 1O37fn-0006oq-DH
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 15:02:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753542Ab0DQMzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 08:55:43 -0400
-Received: from mail.lang.hm ([64.81.33.126]:36465 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752446Ab0DQMzm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 08:55:42 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id o3HCtZ5M004635;
-	Sat, 17 Apr 2010 05:55:36 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <v2l3e2876431004170458ib2d40b28he1fb56906f94a7ed@mail.gmail.com>
-User-Agent: Alpine 2.01 (DEB 1266 2009-07-14)
+	id S1752454Ab0DQNCx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 09:02:53 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:2862 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751703Ab0DQNCw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 09:02:52 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so887753fgg.1
+        for <git@vger.kernel.org>; Sat, 17 Apr 2010 06:02:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=vDB3LgtnpBXT+sZlbrNuddcfmb07djAsvsuQRxiu8rY=;
+        b=B8rxte/zbhxm9bRRh0tihubtCKx6VrJF1NgEeyCOzpzP2ZoMLz3qwiNS58Lr+2dzUV
+         PthsUfPFrtSAWhOaPg1U+6xeob8HI8xDXsoHFbrMJqPw9tWUg6welcs4f3+EDwIGFeUO
+         kdgX3+9L2oocdMsbRtqRiRZrIt7fQnMs81cx8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=CUmweETkL4sQRR/p1ByEXYjeqMgwjGg203gqFLXFEWmcxQojmLV/zJMeqETP2JKedH
+         uVJ+u2lPcLQwYa3YYFDNdAo7IRbqhO0lth9jRw9JX24LFqTFvqS9uAQ2i3FIBVP2HQCQ
+         zp3KI/Yk3jb5ShfyNDYQ+GeVsQHAiEKALAVgA=
+Received: by 10.223.92.155 with SMTP id r27mr1366917fam.7.1271509370810;
+        Sat, 17 Apr 2010 06:02:50 -0700 (PDT)
+Received: from [192.168.1.13] (abvc197.neoplus.adsl.tpnet.pl [83.8.200.197])
+        by mx.google.com with ESMTPS id 35sm6126375fkt.37.2010.04.17.06.02.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 17 Apr 2010 06:02:50 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20100417095259.GA23110@coredump.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145146>
 
-On Sat, 17 Apr 2010, Miguel Ramos wrote:
+On Sat, 17 Apr 2010, Jeff King wrote:
+> On Thu, Apr 15, 2010 at 11:07:32AM +0200, Jakub Narebski wrote:
 
-> 2010/4/17  <david@lang.hm>:
->> On Sat, 17 Apr 2010, Miguel Ramos wrote:
->>
->>> Well, David, you certainly made a good case defending using a VCS for
->>> filesystems.
->>> However, a versioned filesystem should be more adequate for that.
->>
->> a versioned filesystem will not let you easily clone or backup your system.
->> a versioned filesystem could be a nice UI to access a DVCS that would give
->> you this sort of ability
->>
->>> Why would one want diffs, patches, branches, merges for the entire
->>> filesystem?
->>
->> these all seem like very useful things to me
->>
->> diffs to find out what changed when a system gets broken, or after something
->> new is installed.
->>
->> patches could be a way to either install software, or to propogate updates
->> between systems.
->>
->> branches could easily be different systems
->>
->> merges are for when you have two systems each doing one job and you want to
->> combine them onto one piece of hardware (could could do it with
->> virtualization, if you are willing to pay the overhead). you wouldn't want
->> to merge the binary files, but you would want to merge the branches that
->> contain binary files.
->>
->> there are many reasons why you don't just use your linux distro tools to
->> manage large numbers of machines and configurations.
->>
->> David Lang
->
-> Yes, you certainly are right.
-> It does open up a set of new possibilities.
-> Even better if it was based on a binary diff, because otherwise you
-> either had to be very conservative updating software or run out of
-> space.
+> > [1] A question: we have working area version, index version, and HEAD
+> >     version of file.  Isn't it possible for *each* of them to have 
+> >     different filename?  What about the case of rename/rename merge
+> >     conflict?
 
-git works just fine on doing diffs of binary files.
+[cut]
 
-shallow clones on individual systems would avoid the need to have 
-huge amounts of storage on an individual system for history, and with a 
-separate branch for each system you only have to have the files for your 
-system locally, but on systems where you keep all the branches disk space 
-is usually not that big a problem.
+Thanks for detailed explanation.
 
-David Lang
+> > Although if possible I'd like to have it wrapped in utility macros,
+> > like parseopt, so one does not need to write output_str / output_int
+> > etc.... but currently it is very, very vague sketch of an idea, rather
+> > than realized concept.
+> 
+> I'm not sure I understand what utility macros you would want.
+
+Something like that (please remember that it is still in vague beginnings
+of an idea stage:
+
+  OUT_OBJECT(
+     OUT_FIELD("mode",   OUT_MODE, tree.mode), SP,
+     OUT_FIELD("type",   "%s", tree.object.type), SP,
+     OUT_FIELD("object", OUT_SHA1, tree.object.sha1), TAB,
+     OUT_FIELD("file", OUT_FILE(sep), tree.filename), 
+     sep
+  );
+
+-- 
+Jakub Narebski
+Poland
