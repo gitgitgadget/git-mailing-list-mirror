@@ -1,66 +1,107 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v4 2/3] gitk: do not parse "  >" context as submodule change
-Date: Sat, 17 Apr 2010 14:20:55 +0200
-Message-ID: <201004171420.55737.trast@student.ethz.ch>
-References: <cover.1271260308.git.trast@student.ethz.ch> <5531510bfb94997f729a894a0b5a3158177a9add.1271260308.git.trast@student.ethz.ch> <20100417063320.GA6681@brick.ozlabs.ibm.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [spf:guess,iffy] Re: "Integrated Web Client for git" GSoC proposal
+Date: Sat, 17 Apr 2010 05:50:57 -0700 (PDT)
+Message-ID: <m3vdbqdz1b.fsf@localhost.localdomain>
+References: <201004130403.42179.chriscool@tuxfamily.org>
+	<201004150204.42813.jnareb@gmail.com>
+	<1271293123.6248.147.camel@denix>
+	<201004161118.32163.jnareb@gmail.com> <1271473792.3506.30.camel@denix>
+	<loom.20100417T081957-371@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eelis van der Weegen <eelis@eelis.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Miles Bader <miles@gnu.org>, Jens Lehmann <Jens.Lehmann@web.de>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sat Apr 17 14:21:09 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	Petr Baudis <pasky@ucw.cz>,
+	John Hawley <warthog9@eaglescrag.net>
+To: Tatsuhiko Miyagawa <miyagawa@bulknews.net>
+X-From: git-owner@vger.kernel.org Sat Apr 17 14:51:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O371I-0002eV-2i
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 14:21:08 +0200
+	id 1O37UT-0000iZ-BD
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 14:51:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752486Ab0DQMVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 08:21:00 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:17317 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751872Ab0DQMU7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 08:20:59 -0400
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sat, 17 Apr
- 2010 14:20:57 +0200
-Received: from thomas.localnet (217.162.250.31) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sat, 17 Apr
- 2010 14:20:56 +0200
-User-Agent: KMail/1.13.2 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.2; x86_64; ; )
-In-Reply-To: <20100417063320.GA6681@brick.ozlabs.ibm.com>
+	id S1751314Ab0DQMvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 08:51:00 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:35881 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750826Ab0DQMu7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 08:50:59 -0400
+Received: by wwb24 with SMTP id 24so1677668wwb.19
+        for <git@vger.kernel.org>; Sat, 17 Apr 2010 05:50:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=7o+kPDXKhWduLwFehZsHLWst0TZMXBsbdIhVc3eSU4Q=;
+        b=igWshngiXWLEcFPiLSEbJm0PruaNF9VLQWErGdkYxUrvxyqbWfVUXB7yLQwhQYLj+U
+         K8rK/9Yy7bRgl+GHk2eRiZvF3VVm9GWTShXiJ8G1rMJqUsqezEAS1l/FpwPkVoaYAzxM
+         NAdQNMJAFtg9farV8kPb2iFWSTuUkvfB7UXb0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=hYHvIHr4n38vgymm+nVtnmY8BLjwNC9H5kwofOJOwZQ91jc7HmHbSsA5rnwyhMMYQF
+         FRG8JUQsjCosOSbz4bRTgArAxy1SgZPcyJ0rZxIxJgobhaocCflbZR9erYiCw67Cb4Vs
+         6zUtXJgXcwYaymbMuhAPWjyBxOBCqONmP2OdA=
+Received: by 10.216.85.198 with SMTP id u48mr3539086wee.225.1271508658101;
+        Sat, 17 Apr 2010 05:50:58 -0700 (PDT)
+Received: from localhost.localdomain (abvc197.neoplus.adsl.tpnet.pl [83.8.200.197])
+        by mx.google.com with ESMTPS id t27sm30009668wbc.5.2010.04.17.05.50.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 17 Apr 2010 05:50:57 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o3HCo91L030550;
+	Sat, 17 Apr 2010 14:50:19 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o3HCnbvJ030536;
+	Sat, 17 Apr 2010 14:49:37 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <loom.20100417T081957-371@post.gmane.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145143>
 
-Paul Mackerras wrote:
-> On Wed, Apr 14, 2010 at 05:59:07PM +0200, Thomas Rast wrote:
+Restored some of Cc list...
+
+Tatsuhiko Miyagawa <miyagawa@bulknews.net> writes:
+
+> Sam Vilain <sam <at> vilain.net> writes:
+
+> > It should be possible for the script to figure out what filesystem path it
+> > is being run from, perhaps find a local lib/ dir and then add that to @INC.
+
+FindBin, Dir::Self (or just relevant code from it), and then "use lib <dir>".
+
+> > In shell scripts you just use FindBin, I don't know whether that is still
+> > expected to work from eg mod_perl but there's bound to be a solution for
+> > that.  So yeah I'd say just aim to ship lots of .pm files in a nearby dir
+> > alongside the script...
 > 
-> > Since 5c838d2 (gitk: Use the --submodule option for displaying diffs
-> > when available, 2009-10-28) gitk erroneously matches "  >" and "  <"
-> > at the beginning of a line in the submodule code even if we're in the
-> > diff text section and the lines should be treated as context.
-> > 
-> > Fix by (ab)using the $diffinhdr variable also in the 'Submodule...'
-> > case, and move the "  >"/"  <" specific code inside the $diffinhdr
-> > test.  The existing code will set $diffinhdr to 0 when it hits a
-> > "+++", so that it is always 0 when we can hit a context line.
-> 
-> Looks good, but there's no Signed-off-by?
+> Or use App::FatPacker.
 
-Whoops, sorry:
+But try to make this build-time dependency optional.  I wonder also
+what is performance cost of using App::FatPacker trick.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+
+It is a bit pity that PAR is not in core.  We could use 
+
+  $ git archive --format=zip --output=gitweb.par --prefix=lib/ \
+    HEAD -- gitweb/lib
+
+to generate packfile, and then
+
+  use PAR 'gitweb.par';
+
+in gitweb.
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Jakub Narebski
+Poland
+ShadeHawk on #git
