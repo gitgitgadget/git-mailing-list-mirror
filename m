@@ -1,107 +1,130 @@
-From: Sebastian Bober <sbober@servercare.de>
-Subject: Re: [spf:guess] Re: [spf:guess] Re: Git import of the recent full
-	enwiki dump
-Date: Sat, 17 Apr 2010 09:48:53 +0200
-Message-ID: <20100417074853.GE32053@post.servercare.de>
-References: <w2x2d460de71004161647z41492baav3685249fa05145d6@mail.gmail.com> <m2ofabb9a1e1004161719h977b53b7oc2c452c2a2b0025e@mail.gmail.com> <20100417004852.GA32053@post.servercare.de> <20100417005342.GA8475@spearce.org> <20100417010147.GB32053@post.servercare.de> <1271468696.3302.35.camel@denix> <20100417015857.GD32053@post.servercare.de> <1271475292.3506.53.camel@denix>
+From: Chris Webb <chris@arachsys.com>
+Subject: [PATCH v3] format-patch: use commit date in mbox 'From COMMIT
+ DATE' header line
+Date: Sat, 17 Apr 2010 09:01:58 +0100
+Message-ID: <f71d42d6949caffa6f79278888c59fb4232bb277.1271490953.git.chris@arachsys.com>
+References: <o2jadf1fd3d1004161059z5b85989br9984fac87ac7e92b@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Richard Hartmann <richih.mailinglist@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Sat Apr 17 09:49:20 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Sat Apr 17 10:04:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O32mG-0006Va-Bu
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 09:49:20 +0200
+	id 1O3316-0004zT-Mc
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 10:04:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754110Ab0DQHtA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 03:49:00 -0400
-Received: from tix64.net ([81.169.172.224]:35176 "EHLO
-	h4945.serverkompetenz.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753990Ab0DQHs7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 03:48:59 -0400
-Received: from bob by h4945.serverkompetenz.net with local (Exim 4.69)
-	(envelope-from <sbober@servercare.de>)
-	id 1O32lp-0007rs-IM; Sat, 17 Apr 2010 09:48:53 +0200
-Mail-Followup-To: Sebastian Bober <sbober@servercare.de>,
-	Sam Vilain <sam@vilain.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Richard Hartmann <richih.mailinglist@gmail.com>,
-	Git List <git@vger.kernel.org>, Avery Pennarun <apenwarr@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
+	id S1754299Ab0DQIEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 04:04:12 -0400
+Received: from alpha.arachsys.com ([91.203.57.7]:42774 "EHLO
+	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753226Ab0DQIEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 04:04:08 -0400
+Received: from [94.172.195.14] (helo=miranda.arachsys.com)
+	by alpha.arachsys.com with esmtpa (Exim 4.52)
+	id 1O330W-0003nv-ID; Sat, 17 Apr 2010 09:04:04 +0100
 Content-Disposition: inline
-In-Reply-To: <1271475292.3506.53.camel@denix>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-bounce-key: tix64.net-1;sbober@servercare.de;1271490539;08179fb5;
+In-Reply-To: <o2jadf1fd3d1004161059z5b85989br9984fac87ac7e92b@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145122>
 
-On Sat, Apr 17, 2010 at 03:34:52PM +1200, Sam Vilain wrote:
-> On Sat, 2010-04-17 at 03:58 +0200, Sebastian Bober wrote:
-> > > Without good data set partitioning I don't think I see the above
-> > > workflow being as possible.  I was approaching the problem by first
-> > > trying to back a SQL RDBMS to git, eg MySQL or SQLite (postgres would be
-> > > nice, but probably much harder) - so I first set out by designing a
-> > > table store.  But the representation of the data is not important, just
-> > > the distributed version of it.
-> > 
-> > Yep, we had many ideas how to partition the data. All that was not tried
-> > up to now, because we had the hope to get it done the "straight" way.
-> > But that may not be possible.
-> 
-> I just don't think it's a practical aim or even useful.  Who really
-> wants the complete history of all wikipedia pages?  Only a very few -
-> libraries, national archives, and some collectors.
+Put the commit date in the 'From COMMIT DATE' header line instead of using
+the fixed date 'Mon Sep 17 00:00:00 2001'. A DATE_UTC mode for show_date() is
+introduced so we can easily generate this line in the correct format, and
+t4013 is fixed not to expect a constant From line.
 
-Heh, exactly. And I just want to see, if it can be done.
+Signed-off-by: Chris Webb <chris@arachsys.com>
+---
+ builtin/blame.c         |    1 +
+ cache.h                 |    3 ++-
+ date.c                  |    4 +++-
+ log-tree.c              |    2 +-
+ t/t4013-diff-various.sh |    3 ++-
+ 5 files changed, 9 insertions(+), 4 deletions(-)
 
-> > We have tried checkpointing (even stopping/starting fast-import) every
-> > 10,000 - 100,000 commits. That does mitigate some speed and memory
-> > issues of fast-import. But in the end fast-import lost time at every
-> > restart / checkpoint.
-> 
-> One more thought - fast-import really does work better if you send it
-> all the versions of a blob in sequence so that it can write out deltas
-> the first time around.
-
-This is already done thah way.
-
-> Another advantage of the per-page partitioning is that they can
-> checkpoint/gc independently, allowing for more parallelization of the
-> job.
-> 
-> > > Actually this raises the question - what is it that you are trying to
-> > > achieve with this wikipedia import?
-> > 
-> > Ultimately, having a distributed Wikipedia. Having the possibility to
-> > fork or branch Wikipedia, to have an inclusionist and exclusionist
-> > Wikipedia all in one.
-> 
-> This sounds like far too much fun for me to miss out on, now downloading
-> enwiki-20100312-pages-meta-history.xml.7z :-) and I will give this a
-> crack!
-
-
-Please have a look at a smaller wiki for testing, and the project at
-
-  git://github.com/sbober/levitation-perl.git
-
-provides several ways to parse the XML and to generate the fast-import
-input in its branches.
-
-
-bye,
-  Sebastian
+diff --git a/builtin/blame.c b/builtin/blame.c
+index fc15863..42fb1bd 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2301,6 +2301,7 @@ parse_done:
+ 		/* "normal" is used as the fallback for "relative" */
+ 	case DATE_LOCAL:
+ 	case DATE_NORMAL:
++	case DATE_UTC:
+ 		blame_date_width = sizeof("Thu Oct 19 16:00:04 2006 -0700");
+ 		break;
+ 	}
+diff --git a/cache.h b/cache.h
+index 5eb0573..fdb0643 100644
+--- a/cache.h
++++ b/cache.h
+@@ -769,7 +769,8 @@ enum date_mode {
+ 	DATE_LOCAL,
+ 	DATE_ISO8601,
+ 	DATE_RFC2822,
+-	DATE_RAW
++	DATE_RAW,
++	DATE_UTC
+ };
+ 
+ const char *show_date(unsigned long time, int timezone, enum date_mode mode);
+diff --git a/date.c b/date.c
+index 002aa3c..88b1b58 100644
+--- a/date.c
++++ b/date.c
+@@ -166,6 +166,8 @@ const char *show_date(unsigned long time, int tz, enum date_mode mode)
+ 
+ 	if (mode == DATE_LOCAL)
+ 		tz = local_tzoffset(time);
++	else if (mode == DATE_UTC)
++		tz = 0;
+ 
+ 	tm = time_to_tm(time, tz);
+ 	if (!tm)
+@@ -192,7 +194,7 @@ const char *show_date(unsigned long time, int tz, enum date_mode mode)
+ 				tm->tm_mday,
+ 				tm->tm_hour, tm->tm_min, tm->tm_sec,
+ 				tm->tm_year + 1900,
+-				(mode == DATE_LOCAL) ? 0 : ' ',
++				(mode != DATE_NORMAL) ? 0 : ' ',
+ 				tz);
+ 	return timebuf;
+ }
+diff --git a/log-tree.c b/log-tree.c
+index d3ae969..90262f9 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -217,7 +217,7 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 		subject = "Subject: ";
+ 	}
+ 
+-	printf("From %s Mon Sep 17 00:00:00 2001\n", name);
++	printf("From %s %s\n", name, show_date(commit->date, 0, DATE_UTC));
+ 	graph_show_oneline(opt->graph);
+ 	if (opt->message_id) {
+ 		printf("Message-Id: <%s>\n", opt->message_id);
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index dae6358..ce42d3f 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -110,7 +110,8 @@ do
+ 			echo "\$ git $cmd"
+ 			git $cmd |
+ 			sed -e "s/^\\(-*\\)$V\\(-*\\)\$/\\1g-i-t--v-e-r-s-i-o-n\2/" \
+-			    -e "s/^\\(.*mixed; boundary=\"-*\\)$V\\(-*\\)\"\$/\\1g-i-t--v-e-r-s-i-o-n\2\"/"
++			    -e "s/^\\(.*mixed; boundary=\"-*\\)$V\\(-*\\)\"\$/\\1g-i-t--v-e-r-s-i-o-n\2\"/" \
++			    -e "s/^\\(From [0-9a-f][0-9a-f]*\\) .*/\\1 Mon Sep 17 00:00:00 2001/"
+ 			echo "\$"
+ 		} >"$actual" &&
+ 		if test -f "$expect"
+-- 
+1.7.0.3
