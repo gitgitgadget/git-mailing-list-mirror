@@ -1,285 +1,159 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: git diff too slow for a file
-Date: Sat, 17 Apr 2010 17:52:08 +0200
-Message-ID: <4BC9D928.50909@lsrfire.ath.cx>
-References: <4BB00573.6040005@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: ghost refs
+Date: Sat, 17 Apr 2010 09:32:36 -0700
+Message-ID: <7v8w8m3uqj.fsf@alter.siamese.dyndns.org>
+References: <20100407210010.GB27012@coredump.intra.peff.net>
+ <89030B4A18ECCD45978A3A6B639D1F24032A0750BE@FL01EXMB01.trad.tradestation.com>
+ <k2p32541b131004071503g4ce66e5bjac8270b10790a2af@mail.gmail.com>
+ <89030B4A18ECCD45978A3A6B639D1F24032A0750CC@FL01EXMB01.trad.tradestation.com>
+ <k2x32541b131004071511i9bbe883az504547d6133aef@mail.gmail.com>
+ <20100408043059.GA28768@coredump.intra.peff.net>
+ <89030B4A18ECCD45978A3A6B639D1F24032A075390@FL01EXMB01.trad.tradestation.com>
+ <7vwrwh6fz8.fsf@alter.siamese.dyndns.org>
+ <20100408194908.GB4222@sigill.intra.peff.net>
+ <7vbpdt65ie.fsf@alter.siamese.dyndns.org>
+ <20100417115111.GB28623@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: SungHyun Nam <goweol@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 17 17:52:39 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: John Dlugosz <JDlugosz@TradeStation.com>, git@vger.kernel.org,
+	Avery Pennarun <apenwarr@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Apr 17 18:33:50 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3AJy-0004uu-2y
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 17:52:38 +0200
+	id 1O3AxB-0000QN-FF
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 18:33:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752691Ab0DQPw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 11:52:27 -0400
-Received: from india601.server4you.de ([85.25.151.105]:55318 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751863Ab0DQPw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 11:52:26 -0400
-Received: from [10.0.1.100] (p57B7EB9F.dip.t-dialin.net [87.183.235.159])
-	by india601.server4you.de (Postfix) with ESMTPSA id 196362F80B3;
-	Sat, 17 Apr 2010 17:52:24 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <4BB00573.6040005@gmail.com>
+	id S1751030Ab0DQQcv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 12:32:51 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44677 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750934Ab0DQQcu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 12:32:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E8E63AAB90;
+	Sat, 17 Apr 2010 12:32:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KvF08ldr8JFU6EELls5REL9+Evo=; b=xKkv7e
+	4kQ5dWdv9QedgjHHzjX6UFIhsE1qYzigtL2M0f3zicMqPCfL335E2do51TynnpIP
+	5uK0sdRn0ytCr+Z3R6UXwbiSsIhwaniAw5QVkXdJGX34KddTab/ynY0OI2LuEuyx
+	d14wUZTqa/ZNWtK/yv0C4erKxygSE/zKNsoxg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jJrxJNphTiZvSN5tYOCx/nLmll2UYxOl
+	VYlJ8aWcglzu7l2F/GYrG1eX6LQOs3ySTZHSX+ilyNP8jqgTiRV9Mkj5ymn/qnUl
+	9TP4xy7+voKky4jT5N3KNHhLis4lhNAwhEvNwE+FOsgna4SQSlkNkyMs2ePdQjfe
+	G4twSUHeAbY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 44708AAB8A;
+	Sat, 17 Apr 2010 12:32:44 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 34FA2AAB88; Sat, 17 Apr
+ 2010 12:32:39 -0400 (EDT)
+In-Reply-To: <20100417115111.GB28623@coredump.intra.peff.net> (Jeff King's
+ message of "Sat\, 17 Apr 2010 07\:51\:11 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D989531C-4A3E-11DF-80EC-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145153>
 
-Am 29.03.2010 03:42, schrieb SungHyun Nam:
-> Hello,
-> 
-> If I run a attached script for bunzipped attached files, I get:
-> (To reduce size, I removed many lines and bzipped.)
-> 
->     $ ./mk.sh
->     time diff -u x3 x4 >/dev/null 2>&1
-> 
->     real    0m0.011s
->     user    0m0.000s
->     sys    0m0.010s
-> 
->     time git diff >/dev/null 2>&1
-> 
->     real    0m0.193s
->     user    0m0.190s
->     sys    0m0.000s
-> 
->     $ git version
->     git version 1.7.0.2.273.gc2413
-> 
->     $ diff --version
->     diff (GNU diffutils) 2.8.1
->     ...
-> 
-> Well, though the files are ascii file, they includes a random
-> hexa-decimal datas, so that I don't interest the diff result at
-> all.  But the real problem is 'rebasing took so long if the file
-> was changed'.  Because the git tree includes several such a file,
-> if they changed, rebase took some miniutes for every branch.
-> Such a branch includes a few lines of changes for a C source file,
-> though.  Now I'm waiting an hour to finish rebasing all the
-> branches and yet a rebasing script is running... :-(
+Jeff King <peff@peff.net> writes:
 
-I can reproduce it; I concatenated your example files five times to get
-meaningful timings (x1 = five times x3, x2 = five times x4).
+> I would also like to have consensus on this, too. But it seems like it
+> gets bikeshedded to death every time it comes up.  But hey, why not try
+> it one more time? :)
+>
+>> I'll list my preference off the top of my head as a firestarter.
+>> 
+>> NAME::
+>> 
+>> The name followed by what it is used for
+>
+> Yep, makes sense.
+>
+>> SYNOPSIS::
+> ...
+> As another example, for git-branch, I would suggest:
+>
+>   git branch [<options>]
+>   git branch [<options>] <branchname> <start-point>
+>   git branch -m [<oldbranch>] <newbranch>
+>   git branch -d [<options>] <branchname>
+>
+> From that I can quickly see that there are four major modes: listing,
+> creating a new branch, moving a branch, and deleting a branch. I would
+> also be happy if each mode was explicitly described. Some of my favorite
+> synopses are those of perl modules, which tend to give you a very short
+> and readable code snippet of how you might use the module, along with
+> comments showing anything non-obvious.
 
-The difference between GNU diff and git diff is that the latter is trying
-hard to minimize the size of the diff.  Each user of the xdiff library in
-git turns on the XDF_NEED_MINIMAL flag, which makes it very expensive
-(specifically the function xdl_split()).
+Yes, that makes a lot more sense than "list every possible option".
 
-The following patch is not meant for inclusion, but rather to start a
-dicussion.  Is XDF_NEED_MINIMAL a good default to have?
+>> Detailed discussion of concepts::
+>> 
+>> Some manual pages need to have discussion of basic concepts that would not
+>> be a good fit for the DESCRIPTION section (e.g. "Detached HEAD" section in
+>> "checkout" manual).  I am not sure if this kind of material is better
+>> given in OPTIONS section close to the functional group (e.g. "History
+>> Siimplification" heading in "log" manual).
+>
+> I would really prefer most of this material to be pushed out into its
+> own manual pages, and referred to by name (e.g., say "see
+> githistory(7) for a discussion of history simplification" or "history
+> is simplified as described in githistory(7)").
+>
+> Here's my reasoning.  [jc: good summary of possible solutions skipped] 
+> ...
+>   3. factor it into githistory(7), and reference it by name
+>
+>      Obviously this is my favorite. :) It does have one downside,
+>      though. If we convert pretty-formats.txt into gitpretty(7), then
+>      searching for "oneline" in git-log may not turn up what you want.
+>      I wonder if we can summarize with something like:
+>
+>        --format=:
+>        --pretty=<oneline|full|raw>:
+>        --oneline:
+>          Format the output. See gitpretty(7).
+>
+>     in git-log(1).
 
-The patch removes XDF_NEED_MINIMAL and replaces it with XDF_QUICK, with
-reversed meaning.  XDF_QUICK is only set if the new option --quick is
-given, so without it the old behaviour is retained.  Some numbers:
+I like the suggested outcome.
 
-$ time diff ../x1 ../x2 | diffstat
- unknown |34208 ++++++++++++++++++++++++++++++++--------------------------------
- 1 file changed, 17104 insertions(+), 17104 deletions(-)
+One way of doing this is to strip the description from pretty-format.txt
+and move the description to gitpretty.txt (and anything that supports
+pretty format will continue to include pretty-format.txt).
 
-real	0m0.043s
-user	0m0.030s
-sys	0m0.010s
+But we will need to list _all_ the options twice if we go this route;
+pretty-format.txt for the heading, and the descriptions in gitpretty.txt.
+Perhaps pretty-format.txt can be autogenerated from gitpretty.txt to keep
+them in sync.
 
-$ time git diff --stat
- x |32082 ++++++++++++++++++++++++++++++++++----------------------------------
- 1 files changed, 16041 insertions(+), 16041 deletions(-)
+> You didn't mention configuration variables.
 
-real	0m2.176s
-user	0m2.170s
-sys	0m0.010s
+Yeah, I forgot.
 
-$ time git diff --quick --stat
- x |34208 ++++++++++++++++++++++++++++++++++----------------------------------
- 1 files changed, 17104 insertions(+), 17104 deletions(-)
+> git-config (or perhaps even gitconfig(7)) should have a list of all
+> variables and where they are described, like:
+>
+>   apply.ignorewhitespace        git-apply(1)
+>   apply.whitespace              git-apply(1)
+>   branch.autosetupmerge         git-branch(1)
+>   [etc]
+>
+> There is not much point in having full descriptions in one giant list.
+> Instead, you can peruse the whole list, and then go to the configuration
+> section of the relevant manpage to see a bunch of related options. Such
+> a list should be pretty easy to generate automatically from the other
+> documentation.
 
-real	0m0.064s
-user	0m0.060s
-sys	0m0.010s
-
----
- builtin/blame.c      |    2 +-
- builtin/merge-file.c |    2 +-
- builtin/merge-tree.c |    2 +-
- builtin/rerere.c     |    2 +-
- combine-diff.c       |    2 +-
- diff.c               |   12 +++++++-----
- merge-file.c         |    2 +-
- xdiff/xdiff.h        |    2 +-
- xdiff/xdiffi.c       |    2 +-
- 9 files changed, 15 insertions(+), 13 deletions(-)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index fc15863..8deeee1 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -39,7 +39,7 @@ static int show_root;
- static int reverse;
- static int blank_boundary;
- static int incremental;
--static int xdl_opts = XDF_NEED_MINIMAL;
-+static int xdl_opts;
- 
- static enum date_mode blame_date_mode = DATE_ISO8601;
- static size_t blame_date_width;
-diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-index 610849a..b8e9e5b 100644
---- a/builtin/merge-file.c
-+++ b/builtin/merge-file.c
-@@ -25,7 +25,7 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 	const char *names[3] = { NULL, NULL, NULL };
- 	mmfile_t mmfs[3];
- 	mmbuffer_t result = {NULL, 0};
--	xmparam_t xmp = {{XDF_NEED_MINIMAL}};
-+	xmparam_t xmp = {{0}};
- 	int ret = 0, i = 0, to_stdout = 0;
- 	int quiet = 0;
- 	int nongit;
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index a4a4f2c..fc00d79 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -106,7 +106,7 @@ static void show_diff(struct merge_list *entry)
- 	xdemitconf_t xecfg;
- 	xdemitcb_t ecb;
- 
--	xpp.flags = XDF_NEED_MINIMAL;
-+	xpp.flags = 0;
- 	memset(&xecfg, 0, sizeof(xecfg));
- 	xecfg.ctxlen = 3;
- 	ecb.outf = show_outf;
-diff --git a/builtin/rerere.c b/builtin/rerere.c
-index 34f9ace..0048f9e 100644
---- a/builtin/rerere.c
-+++ b/builtin/rerere.c
-@@ -89,7 +89,7 @@ static int diff_two(const char *file1, const char *label1,
- 	printf("--- a/%s\n+++ b/%s\n", label1, label2);
- 	fflush(stdout);
- 	memset(&xpp, 0, sizeof(xpp));
--	xpp.flags = XDF_NEED_MINIMAL;
-+	xpp.flags = 0;
- 	memset(&xecfg, 0, sizeof(xecfg));
- 	xecfg.ctxlen = 3;
- 	ecb.outf = outf;
-diff --git a/combine-diff.c b/combine-diff.c
-index 6162691..29779be 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -221,7 +221,7 @@ static void combine_diff(const unsigned char *parent, unsigned int mode,
- 	parent_file.ptr = grab_blob(parent, mode, &sz);
- 	parent_file.size = sz;
- 	memset(&xpp, 0, sizeof(xpp));
--	xpp.flags = XDF_NEED_MINIMAL;
-+	xpp.flags = 0;
- 	memset(&xecfg, 0, sizeof(xecfg));
- 	memset(&state, 0, sizeof(state));
- 	state.nmask = nmask;
-diff --git a/diff.c b/diff.c
-index a1bf1e9..e32b47b 100644
---- a/diff.c
-+++ b/diff.c
-@@ -718,7 +718,7 @@ static void diff_words_show(struct diff_words_data *diff_words)
- 	memset(&xecfg, 0, sizeof(xecfg));
- 	diff_words_fill(&diff_words->minus, &minus, diff_words->word_regex);
- 	diff_words_fill(&diff_words->plus, &plus, diff_words->word_regex);
--	xpp.flags = XDF_NEED_MINIMAL;
-+	xpp.flags = 0;
- 	/* as only the hunk header will be parsed, we need a 0-context */
- 	xecfg.ctxlen = 0;
- 	xdi_diff_outf(&minus, &plus, fn_out_diff_words_aux, diff_words,
-@@ -1744,7 +1744,7 @@ static void builtin_diff(const char *name_a,
- 			check_blank_at_eof(&mf1, &mf2, &ecbdata);
- 		ecbdata.file = o->file;
- 		ecbdata.header = header.len ? &header : NULL;
--		xpp.flags = XDF_NEED_MINIMAL | o->xdl_opts;
-+		xpp.flags = o->xdl_opts;
- 		xecfg.ctxlen = o->context;
- 		xecfg.interhunkctxlen = o->interhunkcontext;
- 		xecfg.flags = XDL_EMIT_FUNCNAMES;
-@@ -1834,7 +1834,7 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
- 
- 		memset(&xpp, 0, sizeof(xpp));
- 		memset(&xecfg, 0, sizeof(xecfg));
--		xpp.flags = XDF_NEED_MINIMAL | o->xdl_opts;
-+		xpp.flags = o->xdl_opts;
- 		xdi_diff_outf(&mf1, &mf2, diffstat_consume, diffstat,
- 			      &xpp, &xecfg, &ecb);
- 	}
-@@ -1883,7 +1883,7 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
- 		memset(&xpp, 0, sizeof(xpp));
- 		memset(&xecfg, 0, sizeof(xecfg));
- 		xecfg.ctxlen = 1; /* at least one context line */
--		xpp.flags = XDF_NEED_MINIMAL;
-+		xpp.flags = 0;
- 		xdi_diff_outf(&mf1, &mf2, checkdiff_consume, &data,
- 			      &xpp, &xecfg, &ecb);
- 
-@@ -2816,6 +2816,8 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		DIFF_XDL_SET(options, IGNORE_WHITESPACE_AT_EOL);
- 	else if (!strcmp(arg, "--patience"))
- 		DIFF_XDL_SET(options, PATIENCE_DIFF);
-+	else if (!strcmp(arg, "--quick"))
-+		DIFF_XDL_SET(options, QUICK);
- 
- 	/* flags options */
- 	else if (!strcmp(arg, "--binary")) {
-@@ -3438,7 +3440,7 @@ static int diff_get_patch_id(struct diff_options *options, unsigned char *sha1)
- 					len2, p->two->path);
- 		git_SHA1_Update(&ctx, buffer, len1);
- 
--		xpp.flags = XDF_NEED_MINIMAL;
-+		xpp.flags = 0;
- 		xecfg.ctxlen = 3;
- 		xecfg.flags = XDL_EMIT_FUNCNAMES;
- 		xdi_diff_outf(&mf1, &mf2, patch_id_consume, &data,
-diff --git a/merge-file.c b/merge-file.c
-index c336c93..db4d0d5 100644
---- a/merge-file.c
-+++ b/merge-file.c
-@@ -66,7 +66,7 @@ static int generate_common_file(mmfile_t *res, mmfile_t *f1, mmfile_t *f2)
- 	xdemitcb_t ecb;
- 
- 	memset(&xpp, 0, sizeof(xpp));
--	xpp.flags = XDF_NEED_MINIMAL;
-+	xpp.flags = 0;
- 	memset(&xecfg, 0, sizeof(xecfg));
- 	xecfg.ctxlen = 3;
- 	xecfg.flags = XDL_EMIT_COMMON;
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index 711048e..3b8a962 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -28,7 +28,7 @@ extern "C" {
- #endif /* #ifdef __cplusplus */
- 
- 
--#define XDF_NEED_MINIMAL (1 << 1)
-+#define XDF_QUICK (1 << 1)
- #define XDF_IGNORE_WHITESPACE (1 << 2)
- #define XDF_IGNORE_WHITESPACE_CHANGE (1 << 3)
- #define XDF_IGNORE_WHITESPACE_AT_EOL (1 << 4)
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index da67c04..1f688cf 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -367,7 +367,7 @@ int xdl_do_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	dd2.rindex = xe->xdf2.rindex;
- 
- 	if (xdl_recs_cmp(&dd1, 0, dd1.nrec, &dd2, 0, dd2.nrec,
--			 kvdf, kvdb, (xpp->flags & XDF_NEED_MINIMAL) != 0, &xenv) < 0) {
-+			 kvdf, kvdb, (xpp->flags & XDF_QUICK) == 0, &xenv) < 0) {
- 
- 		xdl_free(kvd);
- 		xdl_free_env(xe);
+Yes, I like it.
