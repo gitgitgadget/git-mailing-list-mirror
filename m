@@ -1,99 +1,72 @@
-From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-Subject: [PATCH] Makefile: Check for perl script errors with perl -c
-Date: Fri, 16 Apr 2010 20:29:40 -0600
-Message-ID: <1271471380-17701-1-git-send-email-mmogilvi_git@miniinfo.net>
-Cc: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Apr 17 04:35:51 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] patch-id: Add support for mbox format
+Date: Fri, 16 Apr 2010 19:43:14 -0700
+Message-ID: <7vfx2ubxz1.fsf@alter.siamese.dyndns.org>
+References: <1271434948-14134-1-git-send-email-bonzini@gnu.org>
+ <7vk4s7cks4.fsf@alter.siamese.dyndns.org> <4BC8CEC7.40003@gnu.org>
+ <7vochjay8a.fsf@alter.siamese.dyndns.org> <4BC8DC0F.5010007@gnu.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Apr 17 04:43:38 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2xsr-0005SU-6K
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 04:35:49 +0200
+	id 1O2y0O-0007ml-4J
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 04:43:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758348Ab0DQCfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Apr 2010 22:35:43 -0400
-Received: from qmta13.emeryville.ca.mail.comcast.net ([76.96.27.243]:58865
-	"EHLO qmta13.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758096Ab0DQCfm (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Apr 2010 22:35:42 -0400
-X-Greylist: delayed 349 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Apr 2010 22:35:42 EDT
-Received: from omta05.emeryville.ca.mail.comcast.net ([76.96.30.43])
-	by qmta13.emeryville.ca.mail.comcast.net with comcast
-	id 6QMz1e0040vp7WLADSVu5U; Sat, 17 Apr 2010 02:29:54 +0000
-Received: from mmogilvi.homeip.net ([67.190.99.184])
-	by omta05.emeryville.ca.mail.comcast.net with comcast
-	id 6SVs1e00M3yhxvF8RSVtvo; Sat, 17 Apr 2010 02:29:53 +0000
-Received: from localhost.localdomain (rand.mmogilvi.local [192.168.30.68])
-	by mmogilvi.homeip.net (Postfix) with ESMTP id A1BE51E9625C;
-	Fri, 16 Apr 2010 20:29:51 -0600 (MDT)
-X-Mailer: git-send-email 1.7.0.GIT
+	id S1758574Ab0DQCnW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Apr 2010 22:43:22 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50071 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758078Ab0DQCnV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Apr 2010 22:43:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E7A6AB8FC;
+	Fri, 16 Apr 2010 22:43:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6DMkDgZUZw2ldEAmgdASo2IM3l4=; b=eKuSSR
+	z29796DhxazqhSDECaXgc/PcAU1x6/rMgzuFTQ2sSMbLH3DKAn4mbuRbbi1xw+IJ
+	v8dZKxMIxaExZJq43VK2FDLnbGbXzOv+OB5qQIJhqfdsxWR/nbbCW6Un6LUsh2WI
+	U+80bb09BuU93dX/n//5Gkvv22JudOOVD8lAg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=urZCkE/fGIUDXeHkQ1DPIxbIz9oKH5JQ
+	tvVWvIr8s2FkljuQ1NiC3j93lF2FDXdonGNYPtPvxtNVhe3U4XNg2TJLd+nOSsnm
+	xOZH7wqsdoVlLcEIXedpm2cN9G0fNtSpMpu5xxcz8pi3tZPyTxlPm7BXc3wlbmrf
+	K+APA+jhHd8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C54FAB8FB;
+	Fri, 16 Apr 2010 22:43:18 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9EAC5AB8EE; Fri, 16 Apr
+ 2010 22:43:15 -0400 (EDT)
+In-Reply-To: <4BC8DC0F.5010007@gnu.org> (Paolo Bonzini's message of "Fri\, 16
+ Apr 2010 23\:52\:15 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: FAA681EC-49CA-11DF-A506-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145110>
 
-This allows you to notice trivial syntax errors in perl scripts earlier,
-for example before running t/* tests that generate a lot of
-separate errors.
+Paolo Bonzini <bonzini@gnu.org> writes:
 
-You have to set USE_PERL_CHECK to enable this, because it uses
-the non-standard PIPESTATUS bashism to grep out "{script} syntax OK"
-useless noise.
+> I use this when I had to edit the file-being-sent, e.g. to add cover
+> letters or an introduction to a patch series.  Since some time passes
+> between format-patch and send-email, I want to test that the file I'm
+> sending is exactly what I have in the repository, and that I'm not
+> submitting the wrong series.
 
-Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
----
-
-I'm not sure anyone will think this is worth including, but I'm
-used to "make" (and the compiler) detecting trivial errors
-in compiled langauges, and was getting annoyed that it wasn't
-doing something similar for perl scripts (especially since in git you
-are really expected to "make" the scripts anyway).
-
-The whole tradeoff between noise ("{script} syntax OK"), portability
-(PIPESTATUS is a bashism), or really ugly contortions with redirecting
-extra file descriptors (to avoid PIPESTATUS) seems to be the biggest
-downside of the idea behind this patch.
-
---
-Matthew Ogilvie   [mmogilvi_git@miniinfo.net]
-
- Makefile |   12 ++++++++++++
- 1 files changed, 12 insertions(+), 0 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 910f471..1e827bb 100644
---- a/Makefile
-+++ b/Makefile
-@@ -168,6 +168,10 @@ all::
- #
- # Define NO_PERL if you do not want Perl scripts or libraries at all.
- #
-+# Define USE_PERL_CHECK if you want the makefile to run "perl -cw" to
-+# check perl scripts for basic errors.  This requires that your
-+# $SHELL_PATH supports the ${PIPESTATUS[0]} variable, like bash.
-+#
- # Define NO_PYTHON if you do not want Python scripts or libraries at all.
- #
- # Define NO_TCLTK if you do not want Tcl/Tk GUI.
-@@ -1553,6 +1557,14 @@ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
- 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
- 	    $@.perl >$@+ && \
- 	chmod +x $@+ && \
-+	if test x"$(USE_PERL_CHECK)" != x"" ; then \
-+	    '$(PERL_PATH_SQ)' -cw $@+ 2>&1 | grep -v '^$@+ syntax OK$$' 1>&2 ; \
-+	    perlStat="$${PIPESTATUS[0]}" && \
-+	    if test x"$$perlStat" != x"0" ; then \
-+	        echo '"$(PERL_PATH_SQ) -c $@+" failed' 1>&2 ; \
-+	        exit "$$perlStat" ; \
-+	    fi ; \
-+	fi && \
- 	mv $@+ $@
- 
- 
--- 
-1.7.0.GIT
+Ok, that is what I missed when I mentioned ignore-if-in-upstream, iow, I
+thought "patch-cmp" were merely to check for failed detection of
+duplicates by format-patch.  If you are editing the mbox file and let the
+patches sit there while origin/master may be progressing, then that is an
+entirely different story.
