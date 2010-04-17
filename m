@@ -1,68 +1,138 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 3/3] gitk: add the equivalent of diff --color-words
-Date: Fri, 16 Apr 2010 23:55:10 -0700
-Message-ID: <7vhbna601d.fsf@alter.siamese.dyndns.org>
-References: <cover.1271260308.git.trast@student.ethz.ch>
- <bc720738f918f0523842b3839b7e611c453b5241.1271260308.git.trast@student.ethz.ch> <20100417063557.GB6681@brick.ozlabs.ibm.com>
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: Fwd: Re: "Integrated Web Client for git" GSoC proposal
+Date: Sat, 17 Apr 2010 12:52:52 +0530
+Message-ID: <p2ue72faaa81004170022q2fc3a490u83ad6e325b91e139@mail.gmail.com>
+References: <201004130403.42179.chriscool@tuxfamily.org>
+	 <201004150204.42813.jnareb@gmail.com>
+	 <1271293123.6248.147.camel@denix>
+	 <201004161118.32163.jnareb@gmail.com> <1271473792.3506.30.camel@denix>
+	 <loom.20100417T081957-371@post.gmane.org>
+	 <r2we72faaa81004170021z9920e6e9k4c3aa06fe46431b0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eelis van der Weegen <eelis@eelis.net>,
-	Miles Bader <miles@gnu.org>, Jens Lehmann <Jens.Lehmann@web.de>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sat Apr 17 08:55:49 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 17 09:23:14 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O31wR-0001w5-Q4
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 08:55:48 +0200
+	id 1O32N0-0004NE-DG
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 09:23:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753917Ab0DQGza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 02:55:30 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40119 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753826Ab0DQGz3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 02:55:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 79DADAB4BF;
-	Sat, 17 Apr 2010 02:55:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Xmysr396GCxHUiu5Gr1WTqfJ0Oc=; b=p+hxv0
-	VletCGu2DrfkDlngHiHSxCWMZvlMuUhdn10zoCHKe9s4mbIVNufrpJz9/QjQTs33
-	pl4ePwjsVLrtep/GjJSGtj6aoiHG+UYQIxKXqTS6tVzfphbht+RdEgNqZOXXDrZF
-	08in94ObuMK+IvhnkkZRMUlj2O3OIY4DdSePw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OUG3csOjpB1VOEudLyGBbjdafECRGOXU
-	IXNCaXDPtGcZRuQczyVKijgr6buI+M+fPugo4Mdh2VlY841+nKJRXDmVBGBOLTXP
-	bI3aY+al9wy4nLGguFDTDM2W8ZRBtD7DsLby7QSv+WfKseZVR+R4pIVcpNrfbNPt
-	Cb3wNzccZvs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E8139AB4B8;
-	Sat, 17 Apr 2010 02:55:19 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B3944AB4B0; Sat, 17 Apr
- 2010 02:55:11 -0400 (EDT)
-In-Reply-To: <20100417063557.GB6681@brick.ozlabs.ibm.com> (Paul Mackerras's
- message of "Sat\, 17 Apr 2010 16\:35\:57 +1000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2FE3DED6-49EE-11DF-BBA7-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753973Ab0DQHWy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Apr 2010 03:22:54 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:43792 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753826Ab0DQHWy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Apr 2010 03:22:54 -0400
+Received: by gwaa18 with SMTP id a18so1747528gwa.19
+        for <git@vger.kernel.org>; Sat, 17 Apr 2010 00:22:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=S5PGDElO6xU4y3PLBF3MBRLhSm3TJiM+E8oda3c+OTE=;
+        b=h0qLbQp8ztZ3Y3HMH2oXK8a8H0duSNs6dSsru9XE3XPCoK2SLWDdN2upRpkSVSo5vh
+         rWbsn/BSpW4aQl3YbcmiTXZ4hhuGd+RKrkrXI4NrdJWn194Puj9mJgvh/qv/LUDTZNPP
+         8lpedK5B0IgP+3oumGUqYsaQiA3dT9tJMbw5w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=gOvLDd80nr5phdawp/DU+RZ7MyVC1wv5CQh997AUcHL4uFmYn/FR+zRYKwe+Q3DzyO
+         ifLeSDZBkxiFU12ALt19SXfHKCaupXpnEOukInlFWzQ/6zg2CXYrkXNBgOjGzdrph4Cr
+         dKvv3Xyr3Kmu2QexZBgF4pHdTeVinGmEiFuhM=
+Received: by 10.90.118.4 with HTTP; Sat, 17 Apr 2010 00:22:52 -0700 (PDT)
+In-Reply-To: <r2we72faaa81004170021z9920e6e9k4c3aa06fe46431b0@mail.gmail.com>
+Received: by 10.91.51.2 with SMTP id d2mr1547328agk.31.1271488972303; Sat, 17 
+	Apr 2010 00:22:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145119>
 
-Paul Mackerras <paulus@samba.org> writes:
+On Sat, Apr 17, 2010 at 11:57 AM, Tatsuhiko Miyagawa
+<miyagawa@bulknews.net> wrote:
+>
+> Sam Vilain <sam <at> vilain.net> writes:
+>
+> > > of CGI.pm, perhaps also using one of URI dispatchers[5][6]. =A0Pl=
+ack/PSGI
+> > > looks like the future of Perl web scripting... but is currently q=
+uite new,
+> > > at version 0.9930.
+>
+> I admit that it's quite new - not old anyway, but don't get fooled by=
+ its
+> version number. It's already adapted by almost all perl frameworks an=
+d
+> used by lots of companies on production.
+>
+> > Ok so PSGI is the port of Python's WSGI to Perl. =A0Plack is the re=
+ference
+> > implementation, and also quite heavy at 2.5MB tarball.
+>
+> No, the tarball just contains 2.4MB of .jpeg file for large-file down=
+load
+> and upload testing. Its =A0dependencies are kept minimal - only requi=
+res
+> LWP, URI and some pure perl modules.
+>
+> > required. =A0Dancer however seems to stand out at only 94kB tarball=
+, minimal
+> > non-core dependencies and support for PSGI. =A0The HTTP::Server::Si=
+mple::PSGI
+> > dependency should let it support the 'instaweb' case with pure perl=
+=2E
+>
+> You can already use CGI::Emulate::PSGI (via Plack::App::CGIBin) to ru=
+n
+> gitweb.cgi on Plack, or whatever web server that supports PSGI - like
+> HTTP::Server::Simple::PSGI you just mentioned.
+> http://gist.github.com/346068
+>
+> > It should be possible for the script to figure out what filesystem =
+path it
+> > is being run from, perhaps find a local lib/ dir and then add that =
+to @INC.
+> > In shell scripts you just use FindBin, I don't know whether that is=
+ still
+> > expected to work from eg mod_perl but there's bound to be a solutio=
+n for
+> > that. =A0So yeah I'd say just aim to ship lots of .pm files in a ne=
+arby dir
+> > alongside the script...
+>
+> Or use App::FatPacker.
+>
+> --
+> Tatsuhiko Miyagawa
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
 
-> When does this need to go in, i.e. when is the git patch likely to go
-> in?
+We need to keep gitweb dependancies as less as possible. So, using
+frameworks will be a bad idea, as everybody might don't want to use
+them.
 
-I am expecting that this will be in soon after the current 1.7.1 cycle,
-sometime around early-to-mid May timeframe.
+Coming to splitting of gitweb, as Jakub said installing a split web
+script would be a problem, but we can have a solution the problem by
+using proper algorithms. First, we parse the URL and get to know which
+function to be implemented and then we include the necessary file and
+call the function which will then execute and return the proper HTML
+output.
+
+This way, we can no longer worry about installing the split webscript.
+All we need is to install the basic gitweb.pl file which does all this
+basic parsing and calling other perl files. The other files just
+needed to be in the path.
+
+-pavan
