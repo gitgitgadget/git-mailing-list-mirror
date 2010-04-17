@@ -1,109 +1,58 @@
-From: Sebastian Bober <sbober@servercare.de>
-Subject: Re: [spf:guess] Re: Git import of the recent full enwiki dump
-Date: Sat, 17 Apr 2010 03:58:57 +0200
-Message-ID: <20100417015857.GD32053@post.servercare.de>
-References: <w2x2d460de71004161647z41492baav3685249fa05145d6@mail.gmail.com> <m2ofabb9a1e1004161719h977b53b7oc2c452c2a2b0025e@mail.gmail.com> <20100417004852.GA32053@post.servercare.de> <20100417005342.GA8475@spearce.org> <20100417010147.GB32053@post.servercare.de> <1271468696.3302.35.camel@denix>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Richard Hartmann <richih.mailinglist@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Sat Apr 17 03:59:10 2010
+From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+Subject: [PATCH] t6006: do not write to /tmp
+Date: Fri, 16 Apr 2010 20:29:18 -0600
+Message-ID: <1271471358-17663-1-git-send-email-mmogilvi_git@miniinfo.net>
+Cc: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Apr 17 04:29:48 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2xJN-0003qO-Nd
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 03:59:10 +0200
+	id 1O2xmz-0003eU-Gf
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 04:29:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757816Ab0DQB7B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Apr 2010 21:59:01 -0400
-Received: from tix64.net ([81.169.172.224]:33935 "EHLO
-	h4945.serverkompetenz.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757359Ab0DQB7A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Apr 2010 21:59:00 -0400
-Received: from bob by h4945.serverkompetenz.net with local (Exim 4.69)
-	(envelope-from <sbober@servercare.de>)
-	id 1O2xJB-0007dR-Rx; Sat, 17 Apr 2010 03:58:57 +0200
-Mail-Followup-To: Sebastian Bober <sbober@servercare.de>,
-	Sam Vilain <sam@vilain.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Richard Hartmann <richih.mailinglist@gmail.com>,
-	Git List <git@vger.kernel.org>, Avery Pennarun <apenwarr@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-Content-Disposition: inline
-In-Reply-To: <1271468696.3302.35.camel@denix>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-bounce-key: tix64.net-1;sbober@servercare.de;1271469540;5557a6da;
+	id S1758698Ab0DQC3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Apr 2010 22:29:25 -0400
+Received: from qmta02.emeryville.ca.mail.comcast.net ([76.96.30.24]:59993 "EHLO
+	qmta02.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758634Ab0DQC3Z (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Apr 2010 22:29:25 -0400
+Received: from omta23.emeryville.ca.mail.comcast.net ([76.96.30.90])
+	by qmta02.emeryville.ca.mail.comcast.net with comcast
+	id 6QN01e00C1wfjNsA2SVRax; Sat, 17 Apr 2010 02:29:25 +0000
+Received: from mmogilvi.homeip.net ([67.190.99.184])
+	by omta23.emeryville.ca.mail.comcast.net with comcast
+	id 6SVQ1e0013yhxvF8jSVQqN; Sat, 17 Apr 2010 02:29:24 +0000
+Received: from localhost.localdomain (rand.mmogilvi.local [192.168.30.68])
+	by mmogilvi.homeip.net (Postfix) with ESMTP id D14AB1E9625C;
+	Fri, 16 Apr 2010 20:29:22 -0600 (MDT)
+X-Mailer: git-send-email 1.7.0.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145108>
 
-On Sat, Apr 17, 2010 at 01:44:56PM +1200, Sam Vilain wrote:
-> On Sat, 2010-04-17 at 03:01 +0200, Sebastian Bober wrote:
-> > I'm not dissing fast-import, it's fantastic. We tried with 2-10 level
-> > deep trees (the best depth being 3), but after some million commits it
-> > just got unbearably slow, with the ETA constantly rising.
-> 
-> How often are you checkpointing?  Like any data import IME, you can't
-> leave transactions going indefinitely and expect good performance!
+Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+---
+ t/t6006-rev-list-format.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-We have tried checkpointing (even stopping/starting fast-import) every
-10,000 - 100,000 commits. That does mitigate some speed and memory
-issues of fast-import. But in the end fast-import lost time at every
-restart / checkpoint.
-
-> Would it be at all possible to consider using a submodule for each page?
-> With a super-project commit which is updated for every day of updates or
-> so.
-> 
-> This will create a natural partitioning of the data set in a way which
-> is likely to be more useful and efficient to work with.  Hand-held
-> devices can be shipped with a "shallow" clone of the main repository,
-> with shallow clones of the sub-repositories too (in such a setup, the
-> device would not really use a checkout of course to save space).  Then,
-> history for individual pages could be extended as required.  The device
-> could "update" the master history, so it would know in summary form
-> which pages have changed.  It would then go on to fetch updates for
-> individual pages that the user is watching, or potentially even get them
-> all.  There's an interesting next idea here: device-to-device update
-> bundles.  And another one: distributed update; if, instead of writing to
-> a "master" version - the action of editing a wiki page becomes to create
-> a fork and the editorial process promotes these forks to be the master
-> version in the superproject.  Users which have pulled the full
-> repository for a page will be able to see other peoples' forks, to get
-> "latest" versions or for editing purposes.  This adds not only a
-> distributed update action, but the ability to have decent peer
-> review/editorial process without it being arduous.
-> 
-> Without good data set partitioning I don't think I see the above
-> workflow being as possible.  I was approaching the problem by first
-> trying to back a SQL RDBMS to git, eg MySQL or SQLite (postgres would be
-> nice, but probably much harder) - so I first set out by designing a
-> table store.  But the representation of the data is not important, just
-> the distributed version of it.
-
-Yep, we had many ideas how to partition the data. All that was not tried
-up to now, because we had the hope to get it done the "straight" way.
-But that may not be possible.
-
-> Actually this raises the question - what is it that you are trying to
-> achieve with this wikipedia import?
-
-Ultimately, having a distributed Wikipedia. Having the possibility to
-fork or branch Wikipedia, to have an inclusionist and exclusionist
-Wikipedia all in one.
-
-
-
-bye,
-  Sebastian
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index d24ca5c..53bf8f4 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -213,7 +213,7 @@ test_expect_success 'oneline with empty message' '
+ 	git commit -m "dummy" --allow-empty &&
+ 	git commit -m "dummy" --allow-empty &&
+ 	git filter-branch --msg-filter "sed -e s/dummy//" HEAD^^.. &&
+-	git rev-list --oneline HEAD > /tmp/test.txt &&
++	git rev-list --oneline HEAD > test.txt &&
+ 	test $(git rev-list --oneline HEAD | wc -l) -eq 5 &&
+ 	test $(git rev-list --oneline --graph HEAD | wc -l) -eq 5
+ '
+-- 
+1.7.0.GIT
