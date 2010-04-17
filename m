@@ -1,77 +1,90 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Richard Hartmann <richih.mailinglist@gmail.com>
 Subject: Re: Git import of the recent full enwiki dump
-Date: Fri, 16 Apr 2010 17:53:42 -0700
-Message-ID: <20100417005342.GA8475@spearce.org>
-References: <w2x2d460de71004161647z41492baav3685249fa05145d6@mail.gmail.com> <m2ofabb9a1e1004161719h977b53b7oc2c452c2a2b0025e@mail.gmail.com> <20100417004852.GA32053@post.servercare.de>
+Date: Sat, 17 Apr 2010 03:10:56 +0200
+Message-ID: <y2h2d460de71004161810p2c331099q4b2d7dabd01e5f8@mail.gmail.com>
+References: <w2x2d460de71004161647z41492baav3685249fa05145d6@mail.gmail.com>
+	 <m2ofabb9a1e1004161719h977b53b7oc2c452c2a2b0025e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Richard Hartmann <richih.mailinglist@gmail.com>,
-	Git List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
 	Avery Pennarun <apenwarr@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>, Sam Vilain <sam@vilain.net>
-To: Sebastian Bober <sbober@servercare.de>
-X-From: git-owner@vger.kernel.org Sat Apr 17 03:02:08 2010
+	Nicolas Pitre <nico@fluxnic.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Sam Vilain <sam@vilain.net>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 17 03:11:23 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2wQC-0001ll-4s
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 03:02:08 +0200
+	id 1O2wZ7-0005CY-UA
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 03:11:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758694Ab0DQBCA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Apr 2010 21:02:00 -0400
-Received: from mail-yx0-f195.google.com ([209.85.210.195]:45147 "EHLO
-	mail-yx0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758595Ab0DQBB7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Apr 2010 21:01:59 -0400
-X-Greylist: delayed 493 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Apr 2010 21:01:59 EDT
-Received: by yxe33 with SMTP id 33so1640519yxe.15
-        for <git@vger.kernel.org>; Fri, 16 Apr 2010 18:01:59 -0700 (PDT)
-Received: by 10.101.136.33 with SMTP id o33mr4714225ann.63.1271465624742;
-        Fri, 16 Apr 2010 17:53:44 -0700 (PDT)
-Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
-        by mx.google.com with ESMTPS id 34sm886629yxf.18.2010.04.16.17.53.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 16 Apr 2010 17:53:43 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100417004852.GA32053@post.servercare.de>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1758687Ab0DQBLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Apr 2010 21:11:00 -0400
+Received: from mail-bw0-f225.google.com ([209.85.218.225]:42868 "EHLO
+	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756722Ab0DQBK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Apr 2010 21:10:59 -0400
+Received: by bwz25 with SMTP id 25so3753700bwz.28
+        for <git@vger.kernel.org>; Fri, 16 Apr 2010 18:10:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type;
+        bh=nwtmY1SXM+p9UeVZBzoV4aQyDRyauiJ6rRMjXDWfWJY=;
+        b=fIcBGaYyEAGp7FFPjDK/Q6tyK0jlP71CywXA74hpHZp9op8T0IHsAWgQXHBcvozEOr
+         99FqHEhZ+w1mkklrXs33w5nziOdrKsH7uLiXtSyhsRnsUWCG7G0VNITXoxHKANxGiKFW
+         zPH7nPBLu8hPt8khoFSoInirmpnTCeHYdxf5Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=wIvNo7HbJxQ7gS0wZiqDZgw/KwlKR3Pd9Y14OasnkyAr3XSFxbSnIWg6l5zzMuK1yo
+         ux5OF1IOxdmRDlroGTSe9og2Z3CJ36K02iEQcyuQSH1/YD7dhiGSaKROFxQXwNxEzlHr
+         /rjrA8CoLSwvbxnY0lpENu+1DFMWi2PDmkuxg=
+Received: by 10.204.73.77 with HTTP; Fri, 16 Apr 2010 18:10:56 -0700 (PDT)
+In-Reply-To: <m2ofabb9a1e1004161719h977b53b7oc2c452c2a2b0025e@mail.gmail.com>
+Received: by 10.204.137.81 with SMTP id v17mr2385151bkt.93.1271466656216; Fri, 
+	16 Apr 2010 18:10:56 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145103>
 
-Sebastian Bober <sbober@servercare.de> wrote:
-> The question would be, how the commits and the trees are laid out.
-> If every wiki revision shall be a git commit, then we'd need to handle
-> 300M commits. And we have 19M wiki pages (that would be files). The tree
-> objects would be very large and git-fast-import would crawl.
-> 
-> Some tests with the german wikipedia have shown that importing the blobs
-> is doable on normal hardware. Getting the trees and commits into git
-> was not possible up to now, as fast-import was just to slow (and getting
-> slower after 1M commits).
+On Sat, Apr 17, 2010 at 02:19, Sverre Rabbelier <srabbelier@gmail.com> wrote:
 
-Well, to be fair to fast-import, its tree handling code is linear
-scan based, because that's how any other part of Git handles trees.
+> Assuming you do the import incrementally
+> using something like git-fast-import (feeding it with a custom
+> exporter that uses the dump as it's input) you shouldn't even need an
+> extraordinary machine to do it (although you'd need a lot of storage).
 
-If you just toss all 19M wiki pages into a single top level tree,
-that's going to take a very long time to locate the wiki page
-talking about Zoos.
+I am using a Python script [1] to import the XML dump.
 
-> I had the idea of having an importer that would just handle this special
-> case (1 file change per commit), but didn't get around to try that yet.
 
-Really, fast-import should be able to handle this well, assuming you
-aren't just tossing all 19M files into a single massive directory
-and hoping for the best.  Because *any* program working on that
-sort of layout will need to spit out the 19M entry tree object on
-each and every commit, just so it can compute the SHA-1 checksum
-to get the tree name for the commit.
+> Speaking of which, it might make sense to separate the
+> worktree by prefix, so articles starting with "aa" go under the "aa"
+> directory, etc?
 
--- 
-Shawn.
+Very good idea. What command would I need to send to
+git-fast-import to do that?
+
+
+> Hope that helps, and if you do convert it (and it turns out to be
+> usable, and you decide to keep it up to date somehow), put it up
+> somewhere! :)
+
+It did.
+I will make it available if it turns out to be useful. Keeping it up to
+date might be harder unless they keep on releasing new
+(incremental) snapshots.
+
+
+Thanks,
+Richard
+
+
+[1] http://github.com/scy/levitation/blob/master/import.py
