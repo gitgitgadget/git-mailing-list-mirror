@@ -1,174 +1,94 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [RFC/PATCH] blind rebase --onto
-Date: Sat, 17 Apr 2010 20:44:33 +0200
-Message-ID: <20100417184433.GA14864@localhost>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-send-email.txt: Add EXAMPLES section. Write 1st
+ level sections in uppercase
+Date: Sat, 17 Apr 2010 11:46:24 -0700
+Message-ID: <7viq7pzzlr.fsf@alter.siamese.dyndns.org>
+References: <1271345823-19685-1-git-send-email-jari.aalto@cante.net>
+ <4BC81975.9000907@drmicha.warpmail.net> <8739yvsjqv.fsf@jondo.cante.net>
+ <4BC8605F.5070306@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 17 20:45:04 2010
+Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Sat Apr 17 20:46:40 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3D0p-0007pq-DI
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 20:45:03 +0200
+	id 1O3D2N-00008K-Bo
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 20:46:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753400Ab0DQSoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 14:44:55 -0400
-Received: from mail-bw0-f225.google.com ([209.85.218.225]:42413 "EHLO
-	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751946Ab0DQSoy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 14:44:54 -0400
-Received: by bwz25 with SMTP id 25so4171623bwz.28
-        for <git@vger.kernel.org>; Sat, 17 Apr 2010 11:44:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :subject:message-id:mime-version:content-type:content-disposition
-         :user-agent;
-        bh=0TSqrkoXoz+L3AdXUqE7X4zAestcdVlYAaqbOX1eE9I=;
-        b=JwPtYzw7/e0EPG10uBsepX6W69FH3jWmAXbnYrdSZy5d3XLWjFnUvVHIlGTaXGtBdE
-         VhLh3S5RWaxn0Utway3JcYNvhPzNByA2lnJpP57B/1gzBaeB/v8L2gkEGxeHRglxjeSR
-         Do1TOYCMPJ/EuLuEhnfnGOra7odOCGt54nnWI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:bcc:subject:message-id:mime-version
-         :content-type:content-disposition:user-agent;
-        b=WoL9qsDOd7brq+2FXT/GYwSwjyQA8neQoPz0E7wPnRjeQbGEncYTCTQ2tn+VGgUUM6
-         WpkNskUKI7hiZWMV+f4ILySnCKwImXdZSODOvpDKgIiX/EmHtAHekHJQ4m2VJiv2UbBl
-         KvkfLcUuYP7HSY3/Ic1FjmFFnuqRUhjOB/Yt0=
-Received: by 10.103.64.13 with SMTP id r13mr2106097muk.135.1271529892325;
-        Sat, 17 Apr 2010 11:44:52 -0700 (PDT)
-Received: from darc.lan (p549A7BC9.dip.t-dialin.net [84.154.123.201])
-        by mx.google.com with ESMTPS id j6sm19881775mue.44.2010.04.17.11.44.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 17 Apr 2010 11:44:52 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1O3D0L-0003BU-Sj; Sat, 17 Apr 2010 20:44:33 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753446Ab0DQSqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 14:46:34 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63625 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751946Ab0DQSqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 14:46:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DC71FABE24;
+	Sat, 17 Apr 2010 14:46:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M3yi0kzUG62IMvcO6G46sh4eSUY=; b=wp1SU4
+	qN89yBiBXj3HuN6xBkW0W9Akb2gbuQcq5/O18YQujNBJLrK0aNtpAFUzN/nkuyB2
+	vjndLDFg92A4j+FTru8NeJ+MpMkCrgZ2rEU0mXWf/hb134hcuD+Q1Ed6/1CZ7YLv
+	L9Q3GBg/O4hw9UwYX2HSoGTz28UWZ7PVOesDA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ySb8MtF8lBuH4WBq9G0j0FYCUXTbhfYY
+	d0eXdL9NuowDrloVcfePLmO5rcpb2OF5lmyxqcloPhkcpgcFysmCM5Twg7FiVEKx
+	yDOkfXV870EIbDFJ6pIcXPgBqhXZJZNQrQL2l6NXfuUJdW7fS1j1cuOoHbZZHPqA
+	/WWzv9DvQOg=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AC4B0ABE22;
+	Sat, 17 Apr 2010 14:46:29 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E20C8ABE1F; Sat, 17 Apr
+ 2010 14:46:25 -0400 (EDT)
+In-Reply-To: <4BC8605F.5070306@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Fri\, 16 Apr 2010 15\:04\:31 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 89108096-4A51-11DF-A06F-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145170>
 
-Hi,
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-I know that there have been several discussions about rebase tracking in the
-past and I admit that I was not following them too closely. So please feel
-free to flame me if this idea is nothing new or even known to be bad. I
-appreciate your comments and I will try to get up to speed on this topic as
-soon as possible.
+> I don't use any options besides --dry-run and --cc, which is the point
+> of the config options ;) In config I have to, smtpserver (pointing to an
+> msmtp-script), bcc, suppresscc, aliasesfile, aliastype, but that depends
+> on the project, of course (git.git here).
+>
+> I just think that using all these options on the command line is very
+> atypical.
 
-Clemens
+Having to give too many options from the command line all the time is a
+sure sign that the defaults for unconfigured case are bad (which may well
+be true but is is hard to change without a good plan) and that it is not
+clearly explained how to configure the defaults for the repository.
 
---8<--
-We start out with a history like this.
+I do not think it is productive to give an overwhelming list that you
+would rarely use (i.e. until you figure out a good set of defaults for the
+project).
 
-         G subtopic
-        /
-       E---F topic
-      /
- A---B---C---D upstream
+> "Without any options, send-email will send patches (using
+> /usr/sbin/sendmail or /usr/lib/sendmail or localhost) using any from, cc
+> and subject lines contained in the patch files; you have to specify at
+> least --to, or else you will be prompted for it.
+>
+> All defaults pertaining to composing and sending of the patch mails and
+> to automating this process can be changed with config options, see the
+> corresponding sections below."
 
-After rebasing topic to upstream, subtopic is still based on the old
-history of topic.
+Yes, I think we should proceed in this direction.
 
-         G subtopic
-        /
-       E       E'---F' topic
-      /       /
- A---B---C---D upstream
+> I liked your format-patch example with merge-base, I just liked it
+> better in format-patch's man page ;)
 
-If the changes introduced by E' differ from the ones introduced by E
-in any way, rebase will try to re-apply E on top of F'. This is not
-useful at all and will almost certainly result in needless conflicts.
-
-This situation is described more verbosely in Section "RECOVERING FROM
-UPSTREAM REBASE, The hard case" of the git-rebase(1) man page. The
-suggested solution is to use as upstream the branch subtopic was
-originally based on, i.e. in this case "rebase --onto topic
-topic@{1}".
-
-Since the "right" upstream to use could have been any other reflog
-entry, this approach may require a significant amount of manual
-digging through the reflog.
-
-This patch introduces an algorithm to search the reflog automatically.
-It searches the reflog for possible merge bases and chooses the one
-with the "largest amount of common history".
-
-In the example above, B is the merge base of subtopic and topic, but E
-is the merge base of subtopic and topic@{1} and is a strict descendant
-of B, which is why E has more common history with subtopic than B
-does. Therefore, "rebase --onto topic" does the right thing in this
-case, and it would still do the right thing if topic had been
-rewritten multiple times in between.
-
-Note 1: This patch requires some cleanup. The branch to be rebased
-($branch) is evaluated only later in the code, which is why I am using
-HEAD directly.
-
-Note 2: The syntax should probably be something more noisy than
-"rebase --onto <branch>", at least until this should prove to be
-useful in many cases.
-
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
- git-rebase.sh |   37 ++++++++++++++++++++++++++++++++-----
- 1 files changed, 32 insertions(+), 5 deletions(-)
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index fb4fef7..e1d4cbf 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -404,11 +404,38 @@ esac
- 
- if test -z "$rebase_root"
- then
--	# The upstream head must be given.  Make sure it is valid.
--	upstream_name="$1"
--	shift
--	upstream=`git rev-parse --verify "${upstream_name}^0"` ||
--	die "invalid upstream $upstream_name"
-+	if test $# -ge 1
-+	then
-+		# The upstream head must be given.  Make sure it is valid.
-+		upstream_name="$1"
-+		shift
-+		upstream=`git rev-parse --verify "${upstream_name}^0"` ||
-+		die "invalid upstream $upstream_name"
-+	else
-+		test -n "$newbase" || usage
-+		git rev-parse -q --verify "refs/heads/$newbase" >/dev/null ||
-+		git rev-parse -q --verify "refs/remotes/$newbase" >/dev/null ||
-+		die "not a branch: $newbase"
-+		# Search newbase reflog for commit with the largest common
-+		# history. In case of nonlinear history only the first branch
-+		# found is followed while any parallel ones are discarded.
-+		maxbase=
-+		for tip in `git rev-list -g "$newbase"`
-+		do
-+			if base=$(git merge-base "$tip" HEAD) &&
-+				(test -z "$maxbase" ||
-+				(test -n "`git rev-list $maxbase..$base`" &&
-+				 test -z "`git rev-list $base..$maxbase`"))
-+			then
-+				maxbase="$base"
-+			fi
-+		done
-+		test -n "$maxbase" ||
-+		die "Could not find a merge base for $newbase."
-+		say "Using merge base $maxbase."
-+		upstream_name="$maxbase"
-+		upstream="$maxbase"
-+	fi
- 	unset root_flag
- 	upstream_arg="$upstream_name"
- else
--- 
-1.7.0.5.3.ga76e
+Likewise.
