@@ -1,101 +1,94 @@
-From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-Subject: Re: [PATCH] Makefile: Check for perl script errors with perl -c
-Date: Sat, 17 Apr 2010 11:05:00 -0600
-Message-ID: <20100417170500.GA4587@comcast.net>
-References: <1271471380-17701-1-git-send-email-mmogilvi_git@miniinfo.net>
- <20100417072721.GD10365@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git diff too slow for a file
+Date: Sat, 17 Apr 2010 10:10:32 -0700
+Message-ID: <7vpr1y2eev.fsf@alter.siamese.dyndns.org>
+References: <4BB00573.6040005@gmail.com> <4BC9D928.50909@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 17 19:05:18 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: SungHyun Nam <goweol@gmail.com>, git@vger.kernel.org
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sat Apr 17 19:10:52 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3BSB-00018l-3R
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 19:05:11 +0200
+	id 1O3BXe-0004ZF-TC
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 19:10:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752676Ab0DQRFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 13:05:05 -0400
-Received: from qmta03.emeryville.ca.mail.comcast.net ([76.96.30.32]:52183 "EHLO
-	qmta03.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752260Ab0DQRFD (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Apr 2010 13:05:03 -0400
-Received: from omta14.emeryville.ca.mail.comcast.net ([76.96.30.60])
-	by qmta03.emeryville.ca.mail.comcast.net with comcast
-	id 6eXY1e0021HpZEsA3h53Jx; Sat, 17 Apr 2010 17:05:03 +0000
-Received: from mmogilvi.homeip.net ([67.190.99.184])
-	by omta14.emeryville.ca.mail.comcast.net with comcast
-	id 6h511e0093yhxvF8ah52p2; Sat, 17 Apr 2010 17:05:02 +0000
-Received: by mmogilvi.homeip.net (Postfix, from userid 501)
-	id 47DEE1E9625D; Sat, 17 Apr 2010 11:05:00 -0600 (MDT)
-Content-Disposition: inline
-In-Reply-To: <20100417072721.GD10365@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752848Ab0DQRKq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Apr 2010 13:10:46 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34934 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752185Ab0DQRKp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Apr 2010 13:10:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E9F1CAB13D;
+	Sat, 17 Apr 2010 13:10:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=x6bClvAoWtCb
+	NLJT5wUFOC+Wa7I=; b=WLaMoILtIeLWC3PcbvQfzBbB5nJNSw4hxq6NQGauU+G1
+	VTGqHpoWZ83InPEqr3Q/wQbIedOsYtKV+CdfxhVR7NjfxRFUYOBTdm5AINVZdoBF
+	STrBt6J8OgcDq0+gj241/P9ayLM9vXchh21q26AngDjUjogOnpf0KZ/qt62spu4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=daAvVe
+	SUzqEURZPdYe1sGO6dx+0X1WBywdS87F3q3zg2qhABnvpPAG17ZqZIYmjSMQJ1xE
+	5k45M3A0r5nI0sEHiikZMJW316+XGZG4b74lE2zlMWfYW3naey87UVFT6TAcAg66
+	2SoTZ99JNmF6/e8dUp1rHAypqhgzlPeyPsbLE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B7DCFAB13C;
+	Sat, 17 Apr 2010 13:10:38 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9F2E0AB138; Sat, 17 Apr
+ 2010 13:10:34 -0400 (EDT)
+In-Reply-To: <4BC9D928.50909@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of "Sat\, 17 Apr 2010 17\:52\:08 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 253A62B0-4A44-11DF-85B3-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145160>
 
-On Sat, Apr 17, 2010 at 03:27:21AM -0400, Jeff King wrote:
-> On Fri, Apr 16, 2010 at 08:29:40PM -0600, Matthew Ogilvie wrote:
-> > The whole tradeoff between noise ("{script} syntax OK"), portability
-> > (PIPESTATUS is a bashism), or really ugly contortions with redirecting
-> > extra file descriptors (to avoid PIPESTATUS) seems to be the biggest
-> > downside of the idea behind this patch.
-> 
-> Why do you need to run it through grep? Doesn't:
-> 
->   echo 'use strict; bogosity' >foo.pl
->   perl -wc foo.pl
-> 
-> properly set the exit code? I get:
-> 
->   $ perl -wc foo.pl
->   Bareword "bogosity" not allowed while "strict subs" in use at foo.pl line 1.
->   foo.pl had compilation errors.
->   $ echo $?
->   255
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-Yes, "perl -cw"'s exit code is always good, but the standard error is
-needlessly noisy in the success case:
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-  $ perl -cw -e 'print "hi\n"'
-  -e syntax OK
-  $ echo $?
-  0
+> Am 29.03.2010 03:42, schrieb SungHyun Nam:
+>>  ...
+>> Well, though the files are ascii file, they includes a random
+>> hexa-decimal datas, so that I don't interest the diff result at
+>> all.
+> ...
+> The following patch is not meant for inclusion, but rather to start a
+> dicussion.  Is XDF_NEED_MINIMAL a good default to have?
 
-Which then leaves a choice among not-great options:
+This is a very valid question to ask.  The choice of the default was do=
+ne
+without any benchmarking nor analysis on performance impact at all.
 
-1. Accept the noise output from make and perl.  If we are willing to
-   accept this, then a simpler and/or uncoditional patch would be fine.
+What we should do next would be to:
 
-2. Filter out the "{scriptName} syntax OK" noise with grep (or sed),
-   but then $? is grep's status (not perl's), and you have to go
-   through contortions to properly test perl's status:
+ - see how much performance impact we have been getting from more norma=
+l
+   set of files (say, "git log -p" in the kernel archive) by our use of
+   MINIMAL;  I suspect that git.git itself is too small to observe any
+   meaningful difference.  We already _know_ that MINIMAL is more
+   expensive, so this is not very important, but it would be good to
+   know.
 
-    2a. Use PIPESTATUS, but this is a non-portable bashism.
-        My current version of the patch elects to do this, but
-        leaves the check disabled to (hopefully) avoid portability
-        issues.  (A second advantage of leaving it disabled [or at
-        least disablable] is if someone is in a cross-compile
-        environment and the target perl path is different 
-        from the build perl path.)
+ - inspect the difference of the quality of output for not using MINIMA=
+L,
+   again for more normal set of files.  We know that the quality does n=
+ot
+   matter for pathological cases like the one in this thread --- the us=
+er
+   is not even "interested in the diff result at all".
 
-    2b. Use a portable technique that involves echoing the status
-        redirected to file descriptor 3, then pulling the status out
-        of file descriptor 3 outside the pipeline.  This is frankly
-        kind of complicated and hard to read.
-
-So, I take it you would be happy with the noisy output?
-Anyone else have an opinion?  If someone knows a cleaner
-way to resolve this, or if the group consensus is that we like the
-patch's concept but would rather resolve the noisy output some
-other way (perhaps just accept it), I could change the patch.
-
---
-Matthew Ogilvie   [mmogilvi_git@miniinfo.net]
+Thanks for starting this.
