@@ -1,59 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase-interactive: silence warning when no commits
- rewritten
-Date: Sun, 18 Apr 2010 11:42:59 -0700
-Message-ID: <7vfx2swqj0.fsf@alter.siamese.dyndns.org>
-References: <20100418120145.GA14872@coredump.intra.peff.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Multiple user.name and user.email (possible feature request)
+Date: Sun, 18 Apr 2010 20:43:11 +0200
+Message-ID: <r2wfabb9a1e1004181143o7ebe2cf1t883ee4a12ba29a24@mail.gmail.com>
+References: <19402.52486.274010.66636@winooski.ccs.neu.edu> 
+	<F5BFE3BD-7416-4F13-AF7F-0775E3234C92@gmail.com> <20100418183759.GA11366@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Steven Michalske <smichalske@gmail.com>,
+	Eli Barzilay <eli@barzilay.org>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Apr 18 20:43:19 2010
+X-From: git-owner@vger.kernel.org Sun Apr 18 20:43:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3ZSe-000649-Kp
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 20:43:17 +0200
+	id 1O3ZT3-0006Ef-17
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 20:43:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757439Ab0DRSnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Apr 2010 14:43:11 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57690 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752011Ab0DRSnK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Apr 2010 14:43:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D3911AC7E7;
-	Sun, 18 Apr 2010 14:43:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vFmnlsTn3zJ3SzxLw+YXd/Y85yc=; b=tYCZxs
-	e0pc8pJ0CyVgwfcAMJChDBlCk0x6xXOKZg0R+9bhesZdKTsGXX12kxREDMi6T94z
-	srE5rp0vV5ot0G7WTDoHRonQ5XPOK4/a4Tgp3ZBOAZfYyNXbG7RyBHYUUgm6M8oy
-	q9L32IT6S/oWjPfT9UsplygUYC0KQx0/00JIo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CEXl0E0hFxLErtCr/QVHWl5TAT8oObvu
-	xfLIvOC7aLiXrNLy6eN1x9TNXA1Bb3Eyj/LQPgXoC6GPUvrYudC7SU2hRmaDjMHk
-	//h88LB36sVXv8fNEv8iKUTlc6Y3pN7I2MK6gId9jstp50soRCaZoXDP0bqtyorV
-	LBgKJVWUQA8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 54187AC7E4;
-	Sun, 18 Apr 2010 14:43:04 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A80FFAC7E1; Sun, 18 Apr
- 2010 14:43:00 -0400 (EDT)
-In-Reply-To: <20100418120145.GA14872@coredump.intra.peff.net> (Jeff King's
- message of "Sun\, 18 Apr 2010 08\:01\:45 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 391295CE-4B1A-11DF-BC31-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757459Ab0DRSne (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Apr 2010 14:43:34 -0400
+Received: from mail-bw0-f225.google.com ([209.85.218.225]:58727 "EHLO
+	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752011Ab0DRSne (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Apr 2010 14:43:34 -0400
+Received: by bwz25 with SMTP id 25so4736158bwz.28
+        for <git@vger.kernel.org>; Sun, 18 Apr 2010 11:43:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type;
+        bh=1fO2+9CuYrBaDbaswQICrPsmrO8YrQzwEsdwjPzPTzg=;
+        b=AfqDa8G8QBQDoGn1lC88IkK5yxjDHCuFMDfR8eJ/IvhyRm/fcpgEo0V972llQw5AkG
+         cbE2vC/iL4KBbXUGZacoBvhkHSECll3XvL4ti9TlOlmTgS+iFl3quEPJi/oaJPMi7IGx
+         UeCIH7nFZoE64VPSzmelKsbTloEZZs1nRNDJ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=ghn45CKQYp8Tt3S26CVgw0JjZBsZp5S2XV1QduODADh+d1orKBb5HeeR1DdJ8vLrSY
+         BW7MwAF1OngZQsGcWyAhsF6Yl0hdrYc7/UOo8YZlGCv/yrvhxT2cjDfhAbkqah44mkx5
+         jrz7zN41TzZuJ2b1SQiDD1y6SHDuwQ3Xd3K5k=
+Received: by 10.103.168.14 with HTTP; Sun, 18 Apr 2010 11:43:11 -0700 (PDT)
+In-Reply-To: <20100418183759.GA11366@coredump.intra.peff.net>
+Received: by 10.103.78.10 with SMTP id f10mr2809628mul.126.1271616211111; Sun, 
+	18 Apr 2010 11:43:31 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145235>
 
-Thanks; I stumbled upon this the other day and was annoyed myself.
+Heya,
+
+On Sun, Apr 18, 2010 at 20:37, Jeff King <peff@peff.net> wrote:
+> So I expect that will serve Eli's purpose.
+
+If it does not, would a pre-commit hook work? If he sets some
+recognizable string (such as not setting it) as email and install a
+hook that barfs if it sees that?
+
+-- 
+Cheers,
+
+Sverre Rabbelier
