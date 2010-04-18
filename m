@@ -1,110 +1,77 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: GSoC 2010: "Integrated Web Client for git" proposal
-Date: Sun, 18 Apr 2010 04:12:23 +0200
-Message-ID: <20100418021223.GP10939@machine.or.cz>
-References: <201004150630.44300.chriscool@tuxfamily.org>
- <201004180246.18263.jnareb@gmail.com>
- <20100418005917.GO10939@machine.or.cz>
- <201004180324.54722.jnareb@gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH v5] gitk: Use git-difftool for external diffs when git >= 
+	1.7.0
+Date: Sat, 17 Apr 2010 22:20:19 -0400
+Message-ID: <l2t76718491004171920y80eba2d7lbeed0add15e6ffed@mail.gmail.com>
+References: <20100408090211.GA31594@gmail.com>
+	 <1270717690-32133-1-git-send-email-davvid@gmail.com>
+	 <20100417085230.GC6681@brick.ozlabs.ibm.com>
+	 <20100417224556.GB9366@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Shawn O Pearce <spearce@spearce.org>,
-	Scott Chacon <schacon@gmail.com>,
-	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
-	Sam Vilain <sam@vilain.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 18 04:12:36 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Paul Mackerras <paulus@samba.org>,
+	Markus Heidelberg <markus.heidelberg@web.de>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 18 04:20:34 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3Jzt-0005Ld-IC
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 04:12:33 +0200
+	id 1O3K7d-0007eV-Dl
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 04:20:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756626Ab0DRCM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 22:12:27 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:35713 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756574Ab0DRCM1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 22:12:27 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id D3C8F86208F; Sun, 18 Apr 2010 04:12:23 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <201004180324.54722.jnareb@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756720Ab0DRCUW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Apr 2010 22:20:22 -0400
+Received: from mail-gx0-f217.google.com ([209.85.217.217]:51561 "EHLO
+	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756660Ab0DRCUU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Apr 2010 22:20:20 -0400
+Received: by gxk9 with SMTP id 9so2337077gxk.8
+        for <git@vger.kernel.org>; Sat, 17 Apr 2010 19:20:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=8y3/9jCGPW8fnITa/7KNRWnlbJH1ytuG+416KvKZaAg=;
+        b=ssNPXpJdGVd43ZUuW1wLTA8avnMYv4w39tyIdN1/eSUeewbK6u/JNZ3kVmPqmywUBj
+         YGW2z6aS2QlE5cTYBI45BctiUbCgbXKsWUhht3/RlTS2UIm4Ov5nWVity6udW+ZPVFlo
+         UMBhPmd6FDmsR6XIvNi4eLRpPz1qc8GUSxA88=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=STgXIrWVxuJsRKqGjqCm8abndWaKFruGdiggqOL3D0xAOEOGkKCmgHnrRNHwdjWB5T
+         sFW6AGmmaBgLawY9BZVQbKXZLqj2XCTNpjebm/qw7ul/3VjI+UKI3vAHsoDpI2azd5oS
+         DE5mPE9SOdybY8DpYOj/CloZCpgk6bmMAEjkE=
+Received: by 10.231.36.9 with HTTP; Sat, 17 Apr 2010 19:20:19 -0700 (PDT)
+In-Reply-To: <20100417224556.GB9366@gmail.com>
+Received: by 10.100.233.36 with SMTP id f36mr8970993anh.143.1271557219497; 
+	Sat, 17 Apr 2010 19:20:19 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145203>
 
-On Sun, Apr 18, 2010 at 03:24:53AM +0200, Jakub Narebski wrote:
-> On Sun, Apr 18, Petr Baudis wrote:
-> > On Sun, Apr 18, 2010 at 02:46:16AM +0200, Jakub Narebski wrote:
-> 
-> > > Or is it
-> > > meant as web analogue of git-gui: a committool, with ability to create
-> > > new commits, perhaps to edit files (and add them, delete them, move them
-> > > around), a bit like ikiwiki with Git backend, or other Git based wikis
-> > > and blogs?
-> > 
-> > Yes. Though it is probably supposed to be real Git frontend with Git
-> > semantics, not something more abstract with Git under the hood.
-> 
-> Hmmm... doesn't look so easy.  What to do about simultaneous access
-> (what webmin does?), and working directory (what ikiwiki does?)?
+On Sat, Apr 17, 2010 at 6:45 PM, David Aguilar <davvid@gmail.com> wrote=
+:
+> Jay, you mentioned wanting to give Junio's approach a try as
+> well as looking into what mercurial did with mergetools.
+> Do you have any thoughts about it since then? =C2=A0I can help
+> factor out the backends if you don't think you'll have time to
+> get to it soon.
 
-  I would expect it to work the same as if you work in single working
-copy from multiple shells. If multiple people want to collaborate, each
-should have their own clone to begin with.
+Wow, I need to stop starting new patches and start finishing some of
+the ones on my todo list.
 
-> Well, you can always add some of "Web Client" functionality directly
-> to gitweb (for example dispatch must be, I think, in gitweb).
+But sorry, no, I haven't had a chance to look at this and I'm not
+likely to soon. So if you've got the time and inclination, I'm happy
+for you to do the work. :-)
 
-But I don't think you can reasonably separate a major portion of web
-client that would not depend on gitweb functions like href(), format*()
-etc. all over the map.
-
-> Or you
-> can (ab)use "do $gitwebgui_pm;" instead of "require $gitwebgui_pm;",
-> like in http://repo.or.cz/w/git/jnareb-git.git/commitdiff/261b99e3#patch3
-> (second chunk).
-
-This already occured to me, yes. It's tempting to have this as the
-emergency way out, shall other things fail. But .
-
-> OTOH we can always make gitweb "use Git;" and move some of its routines,
-> to it after generalization (e.g. config management using single run of
-> "git config -l -z", unquoting paths, parsing commit/tag/ls-tree/difftree
-> etc., date parsing and conversion).
-
-Yes, but not things like href(), git_header_html() and other absolutely
-essential routines.
-
-> > > 3. Split Gitweb, add "Web Client" as one of modules.  Might be best
-> > >    from the purity point of view, but is practical only if it is
-> > >    integrated in gitweb.  That would require getting gitweb maintainer
-> > >    out of GSoC.   Also I am not sure how feaible this approach would be.
-> > 
-> > Would it be really required to get gitweb maintainer out of GSoC in
-> > order to go this way? Why?
-> 
-> Well, at least someone who would be able to manage integrating split
-> gitweb.  I think that splitting gitweb, and doing it well, is quite
-> outside this GSoC 2010 proposal: it would be too much. 
-
-This was my hesitation at the beginning, but I'm not really sure if
-it's really so hard, _if_ we resist the temptation to snowball unrelated
-cleanups on top of it. Conceptually, it isn't really hard to do, is it?
-The only tricky thing would be making sure instaweb still works and
-installation is still easy, but I don't see anything really difficult in
-this area either...?
-
--- 
-				Petr "Pasky" Baudis
-http://pasky.or.cz/ | "Ars longa, vita brevis." -- Hippocrates
+j.
