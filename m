@@ -1,189 +1,139 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: GSoC 2010: "Integrated Web Client for git" proposal
-Date: Sun, 18 Apr 2010 19:50:17 +0200
-Message-ID: <201004181950.19610.jnareb@gmail.com>
-References: <201004150630.44300.chriscool@tuxfamily.org> <201004180324.54722.jnareb@gmail.com> <20100418021223.GP10939@machine.or.cz>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: git diff too slow for a file
+Date: Sun, 18 Apr 2010 20:01:09 +0200
+Message-ID: <4BCB48E5.9090303@lsrfire.ath.cx>
+References: <4BB00573.6040005@gmail.com> <4BC9D928.50909@lsrfire.ath.cx> <7vpr1y2eev.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Shawn O Pearce <spearce@spearce.org>,
-	Scott Chacon <schacon@gmail.com>,
-	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
-	Sam Vilain <sam@vilain.net>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sun Apr 18 19:50:54 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: SungHyun Nam <goweol@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 18 20:01:48 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3Ydx-0008Ee-6Q
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 19:50:53 +0200
+	id 1O3YoW-00049x-Ej
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 20:01:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757243Ab0DRRug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Apr 2010 13:50:36 -0400
-Received: from mail-bw0-f225.google.com ([209.85.218.225]:64307 "EHLO
-	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757162Ab0DRRuf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Apr 2010 13:50:35 -0400
-Received: by bwz25 with SMTP id 25so4697344bwz.28
-        for <git@vger.kernel.org>; Sun, 18 Apr 2010 10:50:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version
-         :content-disposition:content-type:content-transfer-encoding
-         :message-id;
-        bh=H7MWXYuDB3S7jd3bcjKz71cJyV5W+lX+Fgp3BSxcetA=;
-        b=YwKEAVdYyvZfjQEKQ+wA4aOggQsBLELLEnF6oTb0mAp8Zk2hVFXJeCv3M3gBLwrgba
-         PI2O3gWI8w0Iq2KL+Gxf62m3Oo1udUsVGs+OY85l3u0l4t36T7XYiEoixUJafBZxlq6c
-         FXF2yGPJTNnnAgEex8ngWA1W8PgmHHl+WCsXg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-disposition:content-type
-         :content-transfer-encoding:message-id;
-        b=Wd2v7XYC82s3VeIpgaXffxX+hN+J9L06YDTS1RD7u+c0nLROZZA+suQFgLpzq4dmsO
-         fTWdhiauzcNrX3SxrgskVzm1+2djd2fuPH/y7RHUok+3vOHZUdjLdjifmXQ9GHsdpmht
-         +Ag+DyueJzNWKSnFkzfuzuPjcqVEz4hHKkNFs=
-Received: by 10.102.237.3 with SMTP id k3mr2757507muh.125.1271613032573;
-        Sun, 18 Apr 2010 10:50:32 -0700 (PDT)
-Received: from [192.168.1.13] (abwr2.neoplus.adsl.tpnet.pl [83.8.241.2])
-        by mx.google.com with ESMTPS id 12sm23868167muq.1.2010.04.18.10.50.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 18 Apr 2010 10:50:30 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20100418021223.GP10939@machine.or.cz>
-Content-Disposition: inline
+	id S1757267Ab0DRSBk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Apr 2010 14:01:40 -0400
+Received: from india601.server4you.de ([85.25.151.105]:51879 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757165Ab0DRSB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Apr 2010 14:01:29 -0400
+Received: from [10.0.1.100] (p57B7D1E8.dip.t-dialin.net [87.183.209.232])
+	by india601.server4you.de (Postfix) with ESMTPSA id 6A6732F805A;
+	Sun, 18 Apr 2010 20:01:27 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <7vpr1y2eev.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145224>
 
-On Sun, Apr 18, 2010, Petr Baudis wrote:
-> On Sun, Apr 18, 2010 at 03:24:53AM +0200, Jakub Narebski wrote:
->> On Sun, Apr 18, Petr Baudis wrote:
->>> On Sun, Apr 18, 2010 at 02:46:16AM +0200, Jakub Narebski wrote:
- 
->>>> Or is it
->>>> meant as web analogue of git-gui: a committool, with ability to create
->>>> new commits, perhaps to edit files (and add them, delete them, move them
->>>> around), a bit like ikiwiki with Git backend, or other Git based wikis
->>>> and blogs?
->>> 
->>> Yes. Though it is probably supposed to be real Git frontend with Git
->>> semantics, not something more abstract with Git under the hood.
->> 
->> Hmmm... doesn't look so easy.  What to do about simultaneous access
->> (what webmin does?), and working directory (what ikiwiki does?)?
-> 
->   I would expect it to work the same as if you work in single working
-> copy from multiple shells. If multiple people want to collaborate, each
-> should have their own clone to begin with.
+Am 17.04.2010 19:10, schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>=20
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>=20
+>> Am 29.03.2010 03:42, schrieb SungHyun Nam:
+>>>  ...
+>>> Well, though the files are ascii file, they includes a random
+>>> hexa-decimal datas, so that I don't interest the diff result at
+>>> all.
+>> ...
+>> The following patch is not meant for inclusion, but rather to start =
+a
+>> dicussion.  Is XDF_NEED_MINIMAL a good default to have?
+>=20
+> This is a very valid question to ask.  The choice of the default was =
+done
+> without any benchmarking nor analysis on performance impact at all.
+>=20
+> What we should do next would be to:
+>=20
+>  - see how much performance impact we have been getting from more nor=
+mal
+>    set of files (say, "git log -p" in the kernel archive) by our use =
+of
+>    MINIMAL;  I suspect that git.git itself is too small to observe an=
+y
+>    meaningful difference.  We already _know_ that MINIMAL is more
+>    expensive, so this is not very important, but it would be good to
+>    know.
+>=20
+>  - inspect the difference of the quality of output for not using MINI=
+MAL,
+>    again for more normal set of files.  We know that the quality does=
+ not
+>    matter for pathological cases like the one in this thread --- the =
+user
+>    is not even "interested in the diff result at all".
 
-So it is intended, I guess, more like git-instaweb or webmin, not like
-administrative parts of Girocco (or repo.or.cz), GitHub, Gitorious or
-InDefero.  Probably authentication and authorization would not be needed
-then, if it is to be run as web interface but locally...
- 
->> Well, you can always add some of "Web Client" functionality directly
->> to gitweb (for example dispatch must be, I think, in gitweb).
-> 
-> But I don't think you can reasonably separate a major portion of web
-> client that would not depend on gitweb functions like href(), format*()
-> etc. all over the map.
+To see the what difference it makes to the output, I did the following:
 
-Well, there is also copy'n'paste of code as a last resort.  
+	git rev-list --no-merges HEAD |
+	while read commit
+	do
+		a=3D$(git show $commit | md5sum)
+		b=3D$(git show --quick $commit | md5sum)
+		test "$a" =3D "$b" || echo $commit
+	done
 
-I guess that git-gui and gitk duplicate some of their functionality
-(and only git-gui is split; gitk is monolitic single file, even larger
-than gitweb: 320KB vs 220KB).
+=46or git, it reports those 2 out of 18095 total commits as being
+different with and without XDF_NEED_MINIMAL:
 
->> Or you
->> can (ab)use "do $gitwebgui_pm;" instead of "require $gitwebgui_pm;",
->> like in http://repo.or.cz/w/git/jnareb-git.git/commitdiff/261b99e3#patch3
->> (second chunk).
-> 
-> This already occured to me, yes. It's tempting to have this as the
-> emergency way out, shall other things fail. But .
-                                              ^^^^^^^^^^-- ???
-But what?
+  f522c9b5  717b8311
 
-Yes, it is not as elegant as "require", and you have to catch errors
-in "do"-ed file yourself (as described at the end of `perldoc -f do`).
+=46or Linux, these 161 out of 178107 commits are affected:
 
->> OTOH we can always make gitweb "use Git;" and move some of its routines,
->> to it after generalization (e.g. config management using single run of
->> "git config -l -z", unquoting paths, parsing commit/tag/ls-tree/difftree
->> etc., date parsing and conversion).
-> 
-> Yes, but not things like href(), git_header_html() and other absolutely
-> essential routines.
+  90d49b4f  83f3c715  3b5dd52a  e97bd974  4e092d11  96b3c83d  4c96e893
+  1210db95  ca97b838  52bbe3c7  a3a4f7e1  de0710aa  8e730c15  b54f78a8
+  71034ba8  120a5d0d  1532ecea  0a18d7b5  3d0f8bc7  35c1b462  0f29f587
+  2cf71d2e  4d295db0  4953550a  c0a5962f  5176fae4  51f94a7b  5d4f98a2
+  cb6492e4  4f774513  da0436e9  3772a991  20b09c29  dd4969a8  b4a4d568
+  a7fefd10  d93f87c8  9b7895ef  a72bdb1c  96b8e145  b960074f  56bec294
+  f74df6fb  89cb7e7f  e8324357  5ef3041e  833dfbe7  65f9f619  02227c28
+  56afef56  5db8dcc9  6261ab3a  deee7c81  e7594072  2b82032c  f1dc5600
+  060ae855  5503ac56  54168ed7  e2d1d6c0  1a40e23b  d1310b2e  9c6bd790
+  8feceb67  9ac19a90  60f8b39c  ef1a628d  95b86a9a  0391c828  a7707adf
+  3f038d80  f5b728a1  5915eb53  287ac01a  c41f8cbd  b497549a  6802e340
+  f8d79e79  34f80b04  c18487ee  c9df406f  03718234  d10c2e46  584fffc8
+  624d5c51  6446a860  f1410647  1c45607a  b21a15f6  0e078e2f  8e09f215
+  99ca4e58  8bf5e5ca  402aa76a  195a4ef6  a9de9248  20510f2f  ae0b78d0
+  51219358  1a4f550a  b2c258fb  e2ebc74d  27c868c2  c3a2f0df  8e18257d
+  05ffdd7b  328d5752  92d7f7b0  39279cc3  4b19fcc3  f23a06f0  7699acd1
+  a1005012  eea221ce  dcd0538f  48b4554a  56b6aeb0  e05d723f  3cee5a60
+  4d0b4af9  9e89dde2  483dfdb6  02f1175c  a8dea4ec  28a6d671  933a27d3
+  572d3138  1450e6be  4ac4360b  9c7f852e  16a53ecc  5bb0b55a  2722971c
+  6a2900b6  c752666c  5c04a7b8  c92f222e  a966f3e7  3ebc284d  a1a5ea70
+  df694daa  7a88488b  afbf30a2  b095c381  ea2b26e0  12d30d89  09af7b44
+  5e83d430  37448f7d  544393fe  d203a7ec  73a25462  bd4c625c  330a115a
+  22e2c507  e9edcee0  303b86d9  47b5d69c  2d7edb92  cb624029  f4f051eb
 
-True.
-
->>>> 3. Split Gitweb, add "Web Client" as one of modules.  Might be best
->>>>    from the purity point of view, but is practical only if it is
->>>>    integrated in gitweb.  That would require getting gitweb maintainer
->>>>    out of GSoC.   Also I am not sure how feaible this approach would be.
->>> 
->>> Would it be really required to get gitweb maintainer out of GSoC in
->>> order to go this way? Why?
->> 
->> Well, at least someone who would be able to manage integrating split
->> gitweb.  I think that splitting gitweb, and doing it well, is quite
->> outside this GSoC 2010 proposal: it would be too much. 
-> 
-> This was my hesitation at the beginning, but I'm not really sure if
-> it's really so hard, _if_ we resist the temptation to snowball unrelated
-> cleanups on top of it. Conceptually, it isn't really hard to do, is it?
-> The only tricky thing would be making sure instaweb still works and
-> installation is still easy, but I don't see anything really difficult in
-> this area either...?
-
-Currently to install gitweb you have to copy *one* script, and a few
-static files (2 x image, CSS, JavaScript).  You can configure it using
-"make gitweb" with appropriate options, you can simply edit gitweb script,
-or you can leave this to the gitweb config file.
-
-There are quite a few requirements that gitweb should fulfill:
-* It must be able to install without admin rights, and requirng to
-  install Perl modules system wide.  We can rely on core Perl modules,
-  on git core and possibly on perl-Git being installed.
-* It must be able to install without editing web server config file,
-  nor setting environment variables for the user account that is used
-  by the web server (e.g. 'apache', or 'web', or 'nobody').
-* Possibly also it should be easy to install gitweb "by hand", without
-  requirng to use build system.
-* Any automatic installation target must take into account that gitweb
-  must run on many web servers (Apache as CGI, Apache as mod_perl, nginx,
-  lighttpd, IIS, Moongose, Webrick,...) and on many distributions and
-  operating systems (where location of server, and server configuration
-  might differ).  But I guess we can borrow some code from git-instaweb.sh
+I have briefly looked at a few of them.  They were big and not obvious
+with or without XDF_NEED_MINIMAL, but the flag clearly helped to cut
+them down a bit.
 
 
-Also there is a question _how_ to split gitweb into modules, 
-e.g. whether to follow SVN::Web example on how gitweb (Git::Web?) should
-be split.  But I guess any splitting would suffice; we need to provide
-a way to build and install split gitweb.  
+XDF_NEED_MINIMAL doesn't seem to affect the overall runtime for the
+Linux repo:
 
-Split can be as simple as:
+	time git log --stat HEAD >/dev/null
 
-  Makefile, or Makefile.PL, or Build.PL
-  gitweb.perl
-  static/git-logo.png
-  static/git-favicon.png
-  static/gitweb.css
-  static/gitweb.js
-  lib/Gitweb/Utils.pm   (Gitweb::Utils)
-  lib/Gitweb/Editor.pm  (Gitweb::Editor, for GSoC2010, if it gets accepted)
+	real	4m37.378s
+	user	4m28.070s
+	sys	0m9.310s
 
--- 
-Jakub Narebski
-Poland
+	time ../git/git log --stat --quick >/dev/null
+
+	real	4m37.239s
+	user	4m26.590s
+	sys	0m10.620s
+
+The difference between the times for git's own repo are in the noise, t=
+oo.
