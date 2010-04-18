@@ -1,71 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/3] stash: Don't overwrite files that have gone from
- the index
-Date: Sun, 18 Apr 2010 16:11:21 -0700
-Message-ID: <7vpr1wtkyu.fsf@alter.siamese.dyndns.org>
-References: <9eaa7a4672f2010c9e6e3b3f473f1c09abcfcc45.1271614677.git.charles@hashpling.org> <20100418182805.GB29329@hashpling.org>
+From: Nick Edelen <sirnot@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2010, #05; Wed, 14)
+Date: Mon, 19 Apr 2010 00:12:06 +0100
+Message-ID: <w2ic77435a81004181612u53c5bfbdzd0a138f35a3d81f9@mail.gmail.com>
+References: <7vy6gpmwr4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Jeff King <peff@peff.net>
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Mon Apr 19 01:11:53 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 19 01:12:16 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3deY-0000y2-7E
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 01:11:50 +0200
+	id 1O3dex-0001Ae-Jl
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 01:12:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757298Ab0DRXLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Apr 2010 19:11:35 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34250 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755718Ab0DRXLb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Apr 2010 19:11:31 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 57A7EAC9F3;
-	Sun, 18 Apr 2010 19:11:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=0YV0OW0RYk4Sfe0a4FWEUsHzYQE=; b=oEMolmBuwOGVMnhlaAQkU6u
-	Xk3wfJlydNs/hBkK2KAghfeToatGpdfp7FmrfhlW9P1Y+vJ4Bhf5DgWIHI5JUY24
-	+QShtgfxFn8IG3C/cwQ6BPRnLb8G78bpeNacyBDteuGGCIxvaMe4beXV0AULi1bR
-	/Fpei4qdHdCo4KxSESM0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=JdFrzFJsNmypeG4Uw7N0bP8hoyQ8DWauHMfd2CeuZZlUuG6Ml
-	UpSRs0YgKSKuKyf5Y2GCwtJp9LuYWRkHqlYzIXPzVVmUCIFbWh9sIOVYPCEzyIXq
-	Q2LkRh029bZ/k31Z+yo2Y7RZ0O3lVhIK36/y2R0ytxnR0wiDZ5aqurxPHs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 10324AC9F1;
-	Sun, 18 Apr 2010 19:11:27 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 44C4DAC9EF; Sun, 18 Apr
- 2010 19:11:22 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B70AD6E2-4B3F-11DF-BF2B-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752609Ab0DRXMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Apr 2010 19:12:10 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:59301 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751437Ab0DRXMJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Apr 2010 19:12:09 -0400
+Received: by wwb24 with SMTP id 24so2196843wwb.19
+        for <git@vger.kernel.org>; Sun, 18 Apr 2010 16:12:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type;
+        bh=AvOSCfhJZneH/c1iBgBAiO1PSarRXqPYwj/2Y5qaFko=;
+        b=pZOHp/068MmSfbLXPsMwIVmNxrOysgXfm2Fb0XIQmfcaXZxaeiYuPhco/CX14LpBQG
+         hYY3QAp0z7y3cMbCKrGePyZ3aRKZXRFdSqi0hVWWt9LMgVOCLgqodxzSBEorulfHi0zR
+         UVyxQzAi/51kVGtk3tZBnEnBbufq/MpFsBOCs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=nJ0qcfJiBIp3khhWcQj2OdvD307OP6AuHTuyfn1o7UGav4ohovtQYmzICu/c/6vB9a
+         q/+qvgeQMEvw5pWtxF79444n3lv1gF4ZGNtfMp9Z6jEeDRqbXx4xg80y3Abd0pNfvwBq
+         BVbFFieq4wjqQfB4XF4zbFhUq7/n1lb+W0eZY=
+Received: by 10.216.177.212 with HTTP; Sun, 18 Apr 2010 16:12:06 -0700 (PDT)
+In-Reply-To: <7vy6gpmwr4.fsf@alter.siamese.dyndns.org>
+Received: by 10.216.172.194 with SMTP id t44mr5875076wel.207.1271632326340; 
+	Sun, 18 Apr 2010 16:12:06 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145258>
 
-Charles Bailey <charles@hashpling.org> writes:
+>* ne/rev-cache (2010-04-05) 7 commits
+> . graft awareness
+> . object name support
+> . integration into revision walker
+> . administrative api and tools
+> . support for non-commit objects
+> . basic api and porcelain
+> . man page and technical docs
+>
+>For some reason this was extremely hard to read, partly because it had too
+>many distracting style violations and too many long lines.
 
-> To be complete, any work tree file which differs from HEAD needs to be
-> saved, regardless of whether it still appears in the index or not.
+What sort of style violations?  I tried to be quite careful about
+that, but evidently I wasn't successful :-/
 
-Sounds quite sane.
+I'm sorry about the long lines -- all but a handful should fit on a
+standard xga resolution screen, which I figured was something of a
+minimum for screen width now?
 
-> -			git add -u &&
-> +			git diff --name-only -z HEAD | git update-index -z --add --remove --stdin &&
+>This duplicates quite a similar traversal logic and hijacks the control
+>from sideways in a very core part of the revision walker, making it a
+>maintenance nightmare.
 
-Paths that exist in HEAD but not in the index will be caught with this;
-what about paths that do not exist in HEAD but is in the index---they will
-be kept in the index so they are fine as well.  Good.
+I realize that might be a problem, but it seems to be sorta
+unavoidable.  The goal is to allow highly-efficient retrieval of
+metadata in revision walking, and in order to figure out what metadata
+is required (preferably with minimum redundancy), at least some
+portion of the revision walker is going to be duplicated.
 
-Thanks.
+It was intended to something of an alternative walker in its own
+right, which could supplement standard revision traversal by passing
+control back and forth based on what was available in the caches.  In
+this way the API was to additionally provide a possible doorway for
+third-parties to have ready, fast access to the commit tree, without
+trudging through individual object files.
+
+I don't think maintenance would really be that nightmarish.  First,
+rev-cache is quite distinct from git's core, and is only (tentatively)
+integrated by a few lines of code.  It keeps its own cache-slice
+format independent from git's objects, and is transparent to almost
+every git function (so, e.g., completely changing git's daemon would
+have no influence on the rev-cache's effectiveness, as long as
+revision walking is not significantly altered).
+
+Second, the key logic is does duplicate (= mainly the interestingness)
+is so fundamental that any large change would require a huge rewrite
+of most of gits internals anyway, let alone rev-cache.  Other
+duplication (e.g. max/min dates) is no harder to alter than in
+revision.c; indeed, most of the time it'd be simpler.  Additionally,
+for anything more complicated than simple traversal (e.g. pruning)
+revision caching is disabled.
+
+Care is taken to make it as unobtrusive as possible: if it can provide
+extra help, it will, but as far as git's concerned it dosn't exist.
+
+>After I noticed that it still writes/reads
+>structures with bitfields directly on-disk, which I pointed out number of
+>times is a no-no during the initial review
+
+Unless I missed something, I had thought I specifically addressed this
+issue.  I even went so far as to prevent direct structure writes of
+any kind (contrary to the read-cache.c functions, my initial guide for
+such strictness), explicitly converting structures to/from char
+arrays.
+
+ - Nick
