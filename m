@@ -1,205 +1,140 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 5/5] Documentation/remote-helpers: Fix typos and improve language
-Date: Sun, 18 Apr 2010 06:27:37 +0530
-Message-ID: <1271552246-sup-817@kytes>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Gabriel Filion <lelutin@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: GSoC 2010: "Integrated Web Client for git" proposal
+Date: Sun, 18 Apr 2010 03:24:53 +0200
+Message-ID: <201004180324.54722.jnareb@gmail.com>
+References: <201004150630.44300.chriscool@tuxfamily.org> <201004180246.18263.jnareb@gmail.com> <20100418005917.GO10939@machine.or.cz>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
 	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 18 02:59:50 2010
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Shawn O Pearce <spearce@spearce.org>,
+	Scott Chacon <schacon@gmail.com>,
+	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
+	Sam Vilain <sam@vilain.net>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sun Apr 18 03:25:22 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3IrV-0005QT-5E
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 02:59:49 +0200
+	id 1O3JGE-0005Nq-2u
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 03:25:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756260Ab0DRA7o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 20:59:44 -0400
-Received: from mail-yx0-f191.google.com ([209.85.210.191]:36402 "EHLO
-	mail-yx0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754451Ab0DRA7n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 20:59:43 -0400
-Received: by yxe29 with SMTP id 29so1859814yxe.4
-        for <git@vger.kernel.org>; Sat, 17 Apr 2010 17:59:42 -0700 (PDT)
+	id S1756322Ab0DRBY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Apr 2010 21:24:56 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:31643 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756017Ab0DRBYz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 21:24:55 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1148315fga.1
+        for <git@vger.kernel.org>; Sat, 17 Apr 2010 18:24:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:content-type:cc:subject:from
-         :to:date:message-id:user-agent:content-transfer-encoding;
-        bh=96XTou35qRU5BHO7wCbzcLQ444dEAdel/FGIElPBk4U=;
-        b=pR7lLhXrdgwPiNYln4NhHQZ5GcfWzGoGVnuyycgprDxIjcpvczW/CaNqnA3thC1DUM
-         wtWDxkLUk9fPsypMH7qdDHydV839apE8wcDsDQp5/ZycYHMMV4OswIJ5ad25AgfSOmsq
-         L4dDow/xMopza7YP/0JTRY9XTGqcEOf9PylM0=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=leKxgb/kDOm40DPUlSfGisFvMleiqoj2dScUFef9ANQ=;
+        b=neLMkpJRk0AZ72Da800fn/yAOpkg5ziLwI2eaTBnLb2WoU29DDdl/h0AcphbM5vH7e
+         e7Pj3pNaiPR3UfV9h0JrP8hs+47L6EMJTvr2+AjWBpObm5L8+qSNSH/TrVz1bKFD1kdR
+         nbjbYEf7a0eCSQeDrrJdgPQVMXjUoxr5oWzvg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=content-type:cc:subject:from:to:date:message-id:user-agent
-         :content-transfer-encoding;
-        b=unczrlF7o5lB2vYKPIfo1DdM9mhO82b/WGzLUBQNaBi8GN4qwotjolJnJYauuh6Iks
-         jAzSX0jI31v88n0MdgOcU4dlQsQjOHJFMu1vV5gBUmNYt5WYJnICfT+YSgbP14kllJjx
-         DieMzNMGJ2sehrQvq1/GS2LwodWtguZbkFOl8=
-Received: by 10.150.14.2 with SMTP id 2mr3954233ybn.12.1271552382478;
-        Sat, 17 Apr 2010 17:59:42 -0700 (PDT)
-Received: from localhost ([203.110.240.41])
-        by mx.google.com with ESMTPS id 21sm3333695iwn.11.2010.04.17.17.59.40
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=grFZKeq2nfkf+dpRpfJuAXpL0kIIGocc3lSzW00RootAhGP+ohBAFFNDpghNUh1o2V
+         6olbNWH1dKqa8XRybVChEvO2zxvchQ0pFPu6+Ig/A7tLGMyfNozhDznpc7AkY5JRx6Ew
+         nZKiE44WNV2ghaKe9AJUfi4RCIGzH5A3EIGns=
+Received: by 10.87.48.34 with SMTP id a34mr2755867fgk.2.1271553893308;
+        Sat, 17 Apr 2010 18:24:53 -0700 (PDT)
+Received: from [192.168.1.13] (abvc197.neoplus.adsl.tpnet.pl [83.8.200.197])
+        by mx.google.com with ESMTPS id d4sm6143980fga.15.2010.04.17.18.24.51
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 17 Apr 2010 17:59:41 -0700 (PDT)
-User-Agent: Sup/git
+        Sat, 17 Apr 2010 18:24:52 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20100418005917.GO10939@machine.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145201>
 
-Fix some typos and errors in grammar and tense.
+On Sun, Apr 18, Petr Baudis wrote:
+> On Sun, Apr 18, 2010 at 02:46:16AM +0200, Jakub Narebski wrote:
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- Documentation/git-remote-helpers.txt |   51 +++++++++++++++------------------
- 1 files changed, 23 insertions(+), 28 deletions(-)
+> > Or is it
+> > meant as web analogue of git-gui: a committool, with ability to create
+> > new commits, perhaps to edit files (and add them, delete them, move them
+> > around), a bit like ikiwiki with Git backend, or other Git based wikis
+> > and blogs?
+> 
+> Yes. Though it is probably supposed to be real Git frontend with Git
+> semantics, not something more abstract with Git under the hood.
 
-diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-index 1d0de7f..6ffc0da 100644
---- a/Documentation/git-remote-helpers.txt
-+++ b/Documentation/git-remote-helpers.txt
-@@ -73,8 +73,8 @@ Commands are given by the caller on the helper's standard input, one per line.
+Hmmm... doesn't look so easy.  What to do about simultaneous access
+(what webmin does?), and working directory (what ikiwiki does?)?
  
- 'capabilities'::
- 	Lists the capabilities of the helper, one per line, ending
--	with a blank line. Each capability may be preceded with '*'.
--	This marks them mandatory for git version using the remote
-+	with a blank line. Each capability may be preceded with '*',
-+	which marks them mandatory for git version using the remote
- 	helper to understand (unknown mandatory capability is fatal
- 	error).
- 
-@@ -83,27 +83,27 @@ Commands are given by the caller on the helper's standard input, one per line.
- 	[<attr> ...]". The value may be a hex sha1 hash, "@<dest>" for
- 	a symref, or "?" to indicate that the helper could not get the
- 	value of the ref. A space-separated list of attributes follows
--	the name; unrecognized attributes are ignored. After the
--	complete list, outputs a blank line.
-+	the name; unrecognized attributes are ignored. The list ends
-+	with a blank line.
- +
- If 'push' is supported this may be called as 'list for-push'
- to obtain the current refs prior to sending one or more 'push'
- commands to the helper.
- 
- 'option' <name> <value>::
--	Set the transport helper option <name> to <value>.  Outputs a
-+	Sets the transport helper option <name> to <value>.  Outputs a
- 	single line containing one of 'ok' (option successfully set),
- 	'unsupported' (option not recognized) or 'error <msg>'
--	(option <name> is supported but <value> is not correct
-+	(option <name> is supported but <value> is not valid
- 	for it).  Options should be set before other commands,
--	and may how those commands behave.
-+	and may influence the behavior of those commands.
- +
- Supported if the helper has the "option" capability.
- 
- 'fetch' <sha1> <name>::
- 	Fetches the given object, writing the necessary objects
- 	to the database.  Fetch commands are sent in a batch, one
--	per line, and the batch is terminated with a blank line.
-+	per line, terminated with a blank line.
- 	Outputs a single blank line when all fetch commands in the
- 	same batch are complete. Only objects which were reported
- 	in the ref list with a sha1 may be fetched this way.
-@@ -115,7 +115,7 @@ suitably updated.
- Supported if the helper has the "fetch" capability.
- 
- 'push' +<src>:<dst>::
--	Pushes the given <src> commit or branch locally to the
-+	Pushes the given local <src> commit or branch to the
- 	remote branch described by <dst>.  A batch sequence of
- 	one or more push commands is terminated with a blank line.
- +
-@@ -139,6 +139,9 @@ Supported if the helper has the "push" capability.
- 	by applying the refspecs from the "refspec" capability to the
- 	name of the ref.
- +
-+Especially useful for interoperability with a foreign versioning
-+system.
-++
- Supported if the helper has the "import" capability.
- 
- 'connect' <service>::
-@@ -167,16 +170,11 @@ CAPABILITIES
- ------------
- 
- 'fetch'::
--	This helper supports the 'fetch' command.
--
- 'option'::
--	This helper supports the option command.
--
- 'push'::
--	This helper supports the 'push' command.
--
- 'import'::
--	This helper supports the 'import' command.
-+'connect'::
-+	This helper supports the corresponding command with the same name.
- 
- 'refspec' 'spec'::
- 	When using the import command, expect the source ref to have
-@@ -188,9 +186,6 @@ CAPABILITIES
- 	all, it must cover all refs reported by the list command; if
- 	it is not used, it is effectively "*:*"
- 
--'connect'::
--	This helper supports the 'connect' command.
--
- REF LIST ATTRIBUTES
- -------------------
- 
-@@ -206,19 +201,19 @@ REF LIST ATTRIBUTES
- OPTIONS
- -------
- 'option verbosity' <N>::
--	Change the level of messages displayed by the helper.
--	When N is 0 the end-user has asked the process to be
--	quiet, and the helper should produce only error output.
--	N of 1 is the default level of verbosity, higher values
-+	Changes the verbosity of messages displayed by the helper.
-+	A value of 0 for N means that processes operate
-+	quietly, and the helper produces only error output.
-+	1 is the default level of verbosity, and higher values
- 	of N correspond to the number of -v flags passed on the
- 	command line.
- 
- 'option progress' \{'true'|'false'\}::
--	Enable (or disable) progress messages displayed by the
-+	Enables (or disables) progress messages displayed by the
- 	transport helper during a command.
- 
- 'option depth' <depth>::
--	Deepen the history of a shallow repository.
-+	Deepens the history of a shallow repository.
- 
- 'option followtags' \{'true'|'false'\}::
- 	If enabled the helper should automatically fetch annotated
-@@ -234,9 +229,9 @@ OPTIONS
- 	helpers this only applies to the 'push', if supported.
- 
- 'option servpath <c-style-quoted-path>'::
--	Set service path (--upload-pack, --receive-pack etc.) for
--	next connect. Remote helper MAY support this option. Remote
--	helper MUST NOT rely on this option being set before
-+	Sets service path (--upload-pack, --receive-pack etc.) for
-+	next connect. Remote helper may support this option, but
-+	must not rely on this option being set before
- 	connect request occurs.
- 
- SEE ALSO
+> > 1. Keep "Web Client" separate for gitweb, and make use of gitweb 
+> >    hooks/plugin system like $feature{'actions'}.  This might require
+> >    adding new "hooks" to gitweb.
+> > 
+> >    The advantage is that "Web Client" can be written in any language,
+> >    not necessary Perl.  The disadvantage that if it is written in Perl,
+> >    some code might be duplicated.  It might be hard to write generic
+> >    hooks - the "Web Client" could be not as well integrated with gitweb.
+> > 
+> > 2. Write "Web Client" as a Perl module, like 'gitweb/cache.pm' in the
+> >    http://repo.or.cz/w/git/jnareb-git.git/log/refs/heads/gitweb/cache-kernel-pu
+> >    and 'require' this file as needed, guarded by global variable or
+> >    %feature.
+> > 
+> >    The advantage is possible tighter integration.  I am not sure about
+> >    being able to use code from gitweb in "Web Client".  It also requires
+> >    using Perl, and might require using some contortions if the problem
+> >    would be naturally split into multiple modules: there can be multiple
+> >    modules, but it could be better to have them in one file.
+> 
+> I think (2) is only infinitesimally better than (1) if you can't call
+> all the gitweb methods from your module anyway. For me, the main worry
+> is maintaining some consistent UI for the user (graphical and URI-wise)
+> and (2) can accomplish this really only in a limited way unless you go
+> much further with the modularization first.
+
+Well, you can always add some of "Web Client" functionality directly
+to gitweb (for example dispatch must be, I think, in gitweb).  Or you
+can (ab)use "do $gitwebgui_pm;" instead of "require $gitwebgui_pm;",
+like in http://repo.or.cz/w/git/jnareb-git.git/commitdiff/261b99e3#patch3
+(second chunk).
+
+OTOH we can always make gitweb "use Git;" and move some of its routines,
+to it after generalization (e.g. config management using single run of
+"git config -l -z", unquoting paths, parsing commit/tag/ls-tree/difftree
+etc., date parsing and conversion).
+
+
+BTW. the major thing that prevented me from using Git.pm was the few
+places that gitweb uses pipeline, or needs to redirect STDERR to 
+/dev/null.  Also t9700-perl-git.sh test doesn't test command_output_pipe
+and the like. 
+
+> > 3. Split Gitweb, add "Web Client" as one of modules.  Might be best
+> >    from the purity point of view, but is practical only if it is
+> >    integrated in gitweb.  That would require getting gitweb maintainer
+> >    out of GSoC.   Also I am not sure how feaible this approach would be.
+> 
+> Would it be really required to get gitweb maintainer out of GSoC in
+> order to go this way? Why?
+
+Well, at least someone who would be able to manage integrating split
+gitweb.  I think that splitting gitweb, and doing it well, is quite
+outside this GSoC 2010 proposal: it would be too much. 
+
 -- 
-1.7.0.4
+Jakub Narebski
+Poland
