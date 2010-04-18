@@ -1,12 +1,12 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/5] Documentation/remote-helpers: Rewrite description
-Date: Mon, 19 Apr 2010 00:09:17 +0530
-Message-ID: <y2qf3271551004181139le9bc067l9caaeaa9b86a737b@mail.gmail.com>
-References: <1271551934-sup-1118@kytes> <20100418022900.GA1669@progeny.tock> 
-	<7vochgwr1v.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/5] Documentation/urls: Rewrite to accomodate
+ <transport>::<address>
+Date: Sun, 18 Apr 2010 11:39:54 -0700
+Message-ID: <7vk4s4wqo5.fsf@alter.siamese.dyndns.org>
+References: <1271552047-sup-9523@kytes> <20100418025940.GA2249@progeny.tock>
+ <1271566767-sup-7167@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
@@ -14,56 +14,57 @@ Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Gabriel Filion <lelutin@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 18 20:39:44 2010
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 18 20:40:22 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3ZPD-0004Eb-8G
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 20:39:43 +0200
+	id 1O3ZPp-0004cC-OE
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 20:40:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757407Ab0DRSji convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Apr 2010 14:39:38 -0400
-Received: from mail-yx0-f191.google.com ([209.85.210.191]:52522 "EHLO
-	mail-yx0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752144Ab0DRSjh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Apr 2010 14:39:37 -0400
-Received: by yxe29 with SMTP id 29so2107543yxe.4
-        for <git@vger.kernel.org>; Sun, 18 Apr 2010 11:39:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:received:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=aMn015tPly1kDfo5LUyKdv8ZSw143/IS5HpBLzOo2RE=;
-        b=nqafhZX+HGGqRsnITf3WeSuoz/God/RzXunS6qiBZaLptggUa4qK8YGlubeGVRQsN7
-         E6bKNs0OeSbVwXhTdWJQQXEJdRS8Clq6T7blZKOlxaWvga0wIbEZo/ewlaM0z1bLlEaC
-         w8UwWGQzcZzg0kYEPKRo/UYsnNIAbsdFbKbAc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=VlbVex1tmOTDQOS6sXA8tJJ5fltxypvKvHI73dNelKQL8/OdojPL/8ZpOG9dxxw+yV
-         Ye9RAeSv69NZ//CxyEqFEmKwF63q8A7FzDJtY+LNwgKjcs04MJUIkaMtMmk+8vT/4vzh
-         Ghqk3Yk6tqM8bI4iKrBLfPC4zoJR4t0WPYzDE=
-Received: by 10.90.69.14 with HTTP; Sun, 18 Apr 2010 11:39:17 -0700 (PDT)
-In-Reply-To: <7vochgwr1v.fsf@alter.siamese.dyndns.org>
-Received: by 10.91.97.7 with SMTP id z7mr2472471agl.89.1271615977139; Sun, 18 
-	Apr 2010 11:39:37 -0700 (PDT)
+	id S1757421Ab0DRSkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Apr 2010 14:40:15 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56293 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752144Ab0DRSkN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Apr 2010 14:40:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D0A0AC789;
+	Sun, 18 Apr 2010 14:40:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=g9bMCGoaty15pGWgDwLKo7/toH0=; b=cbp5O4
+	oMZDFcTuJV4EZDBniy+GEiX5z2oPyLm4PTBtI4UvtFIOjhCO39htwRMJgN9KeMtx
+	XKZ3nD7/CjsX+/Ya9F5uteBCu+g8vPNVojB9m460pQCmA7uLK3zgWl+GipQK2/QM
+	7RbxVbDwXAraNK/CXRxGX5SK/tJ2+F5MBd30g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aeIXM3yPFJDZ63FcysycddIxVdfYDwYe
+	TP4QvNBtraPy3efUEG6Z+ZB0brk+9VEEN6Ge/RKbWEOAT2b4w4MCj0zr/OZRRP3W
+	mbsLC6jsko9d37Iyz1LJHVgNOa1gP0WLaR553Nvy7Tj4g1v9k8Yg5n5jOORJq2tT
+	5oK9Rs/H7Rc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 16872AC783;
+	Sun, 18 Apr 2010 14:40:05 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 04A90AC780; Sun, 18 Apr
+ 2010 14:39:55 -0400 (EDT)
+In-Reply-To: <1271566767-sup-7167@kytes> (Ramkumar Ramachandra's message of
+ "Sun\, 18 Apr 2010 10\:33\:16 +0530")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CE3ACEF6-4B19-11DF-A243-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145233>
 
-Hi,
+Thanks, both.  Will squash into the second patch.
 
-> I think this is much easier to read. =C2=A0If it is Ok with
-> Ramkumar, I'd squash this into the first one in the series.
-
-Okay, sounds good.
-
--- Ram
+Except that I'll further move rsync:// lower so that the curl family can
+stay together, both in the list (that appeared in your "fixup") and in the
+introductory text.
