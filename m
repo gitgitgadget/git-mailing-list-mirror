@@ -1,111 +1,194 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git documentation writing guidelines
-Date: Sat, 17 Apr 2010 17:28:27 -0700
-Message-ID: <7vtyr9y578.fsf@alter.siamese.dyndns.org>
-References: <20100407210010.GB27012@coredump.intra.peff.net>
- <89030B4A18ECCD45978A3A6B639D1F24032A0750BE@FL01EXMB01.trad.tradestation.com>
- <k2p32541b131004071503g4ce66e5bjac8270b10790a2af@mail.gmail.com>
- <89030B4A18ECCD45978A3A6B639D1F24032A0750CC@FL01EXMB01.trad.tradestation.com>
- <k2x32541b131004071511i9bbe883az504547d6133aef@mail.gmail.com>
- <20100408043059.GA28768@coredump.intra.peff.net>
- <89030B4A18ECCD45978A3A6B639D1F24032A075390@FL01EXMB01.trad.tradestation.com>
- <7vwrwh6fz8.fsf@alter.siamese.dyndns.org>
- <20100408194908.GB4222@sigill.intra.peff.net>
- <7vbpdt65ie.fsf@alter.siamese.dyndns.org>
- <20100417115111.GB28623@coredump.intra.peff.net>
- <7v8w8m3uqj.fsf@alter.siamese.dyndns.org>
- <m3mxx2dnlu.fsf_-_@localhost.localdomain>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: GSoC 2010: "Integrated Web Client for git" proposal
+Date: Sun, 18 Apr 2010 02:46:16 +0200
+Message-ID: <201004180246.18263.jnareb@gmail.com>
+References: <201004150630.44300.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	John Dlugosz <JDlugosz@TradeStation.com>, git@vger.kernel.org,
-	Avery Pennarun <apenwarr@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 18 02:29:02 2010
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Petr Baudis <pasky@ucw.cz>,
+	Shawn O Pearce <spearce@spearce.org>,
+	Scott Chacon <schacon@gmail.com>,
+	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
+	Sam Vilain <sam@vilain.net>, catalyst@lists.scsys.co.uk
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sun Apr 18 02:46:45 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3INi-0002kR-6Y
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 02:29:02 +0200
+	id 1O3Ieq-0000s5-5p
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 02:46:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755948Ab0DRA2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Apr 2010 20:28:44 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42047 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755872Ab0DRA2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Apr 2010 20:28:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CDFBABB04;
-	Sat, 17 Apr 2010 20:28:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U1C4ISKpuCkHrZHP3I5UXFgc4tc=; b=Eplc1e
-	XiPSUBWr1Z1NY2N9eRcG2aQwkeJ1SAiozw5uQuuf+eNrOEoTSUL7rPTKEibgWcR7
-	+wR+wDRGp+8OQJabehZa5pYfp/f2t3gokQXDXV1FjDaWks/gRt4uJCq9PscrLQWI
-	eqhb8usinO49OO1TYe9libKCdKNLA96Ti3Mfs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=c8ZL6kmrWY+xOVVeuMe296BYFoaPjbJn
-	5cZTZ+zYVlokKU3nwIG0h2ivXWKfl65CDMcBWZ/8aXSSODLmi5GCSWmWfk7jb+iR
-	spfsH5blRVL60dWY+3flp1BHE8K/01smQ2eqyeLZIoR3180tbmK6eBVN0/x0wrlh
-	YNDBqkbu0zY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F2C6ABB03;
-	Sat, 17 Apr 2010 20:28:36 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3260BABB00; Sat, 17 Apr
- 2010 20:28:29 -0400 (EDT)
-In-Reply-To: <m3mxx2dnlu.fsf_-_@localhost.localdomain> (Jakub Narebski's
- message of "Sat\, 17 Apr 2010 09\:57\:40 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 53D7E236-4A81-11DF-956E-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755980Ab0DRAq0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Apr 2010 20:46:26 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:31357 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754393Ab0DRAqZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Apr 2010 20:46:25 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1136694fga.1
+        for <git@vger.kernel.org>; Sat, 17 Apr 2010 17:46:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=dMv0s3bIhWGa+xOEuTsUBYmpDfRm7iJ2G/oQeD3ajzg=;
+        b=XnyTcnKGOSsfP6fXn/1I49j+PwgI/f78LpBzoxxXjZzOxLvRApdA6s3EDm8mSRE0hn
+         kMzaa5EnGTOzS7ehKVKsBDihcdR76AaW+CCsoE19Qqm8Oyh1JZo8rHf027YN4Ar3HFQe
+         7lF3BkwuRcJfCmBvtcOgrqrAPY3SpZHE9066Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=bwkSDBn6fzSR2QBhQbodtKb+9Qgu1evkirNs+scloH+CC5mw8tHSdQtsR5wsiXH/D9
+         VtVvZ57O3LIsyiBZr//ORjgiWPR5n3rswLPAiZNSfOBPMXCupyWsXobYHyIGkmaBzlVA
+         A35+wu+vT+4dSZowdiRAPZofHRRkgsw8gIHjc=
+Received: by 10.86.124.8 with SMTP id w8mr2727656fgc.8.1271551582819;
+        Sat, 17 Apr 2010 17:46:22 -0700 (PDT)
+Received: from [192.168.1.13] (abvc197.neoplus.adsl.tpnet.pl [83.8.200.197])
+        by mx.google.com with ESMTPS id 3sm2561748fge.0.2010.04.17.17.46.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 17 Apr 2010 17:46:21 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201004150630.44300.chriscool@tuxfamily.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145193>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Dnia czwartek 15. kwietnia 2010 06:30, Christian Couder napisa=B3:
+> Hi!
+>=20
+> Pavan Kumar Sunkara sent an email on the git mailing list a few days =
+ago about=20
+> his GSoC proposal:
+>=20
+> http://thread.gmane.org/gmane.comp.version-control.git/144658/
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Jeff King <peff@peff.net> writes:
->
->> > git-config (or perhaps even gitconfig(7)) should have a list of all
->> > variables and where they are described, like:
->> >
->> >   apply.ignorewhitespace        git-apply(1)
->> >   apply.whitespace              git-apply(1)
->> >   branch.autosetupmerge         git-branch(1)
->> >   [etc]
->> >
->> > There is not much point in having full descriptions in one giant list.
->> > Instead, you can peruse the whole list, and then go to the configuration
->> > section of the relevant manpage to see a bunch of related options. Such
->> > a list should be pretty easy to generate automatically from the other
->> > documentation.
->> 
->> Yes, I like it.
->
-> Well, there are some variables, like advice.*, or core.*, or alias.*, or
-> color.*, or browser.<tool>.path, or i18n.*, or interactive.singlekey,
-> or notes.*, or user.* that do not really belong to single git command
-> (well, perhaps they could be put in git(1) manpage), or belong to more
-> than one command.
+I would really prefer if Pavan just *wrote* the text of his "Integrated
+Web Client for git" proposal for GSoC 2010 in email, instead of providi=
+ng
+link to it; link that requires signing-in.
 
-So?
+  This proposal aims at creating a multi-purpose HTML based GUI client
+  for git. This client intends in reducing the work needed to be done
+  by a developer while working on a git repository. This is not another
+  gitweb or gitorious but it also contains their functionalities as
+  submodules.
+=20
+  The project goal is to try and implement a integrated multi-purpose
+  HTML based GUI client for git. It contains two parts which are
+  crucial while working on a git repository, Read and Write.
 
-Naturally they will be listed like:
+    * Read means browse through the code and repository
+    * Write means working on the code and repository
 
-    alias.*		git(1)
-    color.diff.*	git-diff(1)
-    browser.*.path      git(1)
-    ...
+  Also, in the future others will be able to develop more functionaliti=
+es
+  for this client with the help of the framework like structure of this
+  project.
 
-and I don't see a problem in the general structure Jeff suggested.
+It is not entirely sure what this "Web Client" is meant to do.  Is it
+mainly meant as web interface to managing repositories (webmin for git)=
+,
+something that GitHub, Gitorious, InDefero, Girocco all include?  This
+could mean web interface to configuring gitosis / gitolite.  Or is it
+meant as web analogue of git-gui: a committool, with ability to create
+new commits, perhaps to edit files (and add them, delete them, move the=
+m
+around), a bit like ikiwiki with Git backend, or other Git based wikis
+and blogs?  Or is it something else?
 
-    
+> His proposal is based on the project he already started:
+>=20
+> http://github.com/pkumar/gittor
+>=20
+> There have been discussions about it on the GSoC web app and in some =
+private=20
+> emails.
+>=20
+> Possible GSoC mentors for this proposal don't want yet another web in=
+terface,=20
+> they want an existing interface to be improved on. As the obvious cho=
+ice is to=20
+> improve gitweb, the current result from the discussions is that the p=
+roposal=20
+> should be changed so that the integrated web client is developed in P=
+erl into=20
+> or alongside gitweb.
+
+It could be a waste to duplicate functionality that is already present
+in gitweb, at least for GSoC (having yet another web interface for git,
+this time in Python, could be a good thing... if the web interface woul=
+d
+be developed further).=20
+
+As to integrating "Web Client for Git" with gitweb, there exists at lea=
+st
+a few possible ways to do this:
+
+1. Keep "Web Client" separate for gitweb, and make use of gitweb=20
+   hooks/plugin system like $feature{'actions'}.  This might require
+   adding new "hooks" to gitweb.
+
+   The advantage is that "Web Client" can be written in any language,
+   not necessary Perl.  The disadvantage that if it is written in Perl,
+   some code might be duplicated.  It might be hard to write generic
+   hooks - the "Web Client" could be not as well integrated with gitweb=
+=2E
+
+2. Write "Web Client" as a Perl module, like 'gitweb/cache.pm' in the
+   http://repo.or.cz/w/git/jnareb-git.git/log/refs/heads/gitweb/cache-k=
+ernel-pu
+   and 'require' this file as needed, guarded by global variable or
+   %feature.
+
+   The advantage is possible tighter integration.  I am not sure about
+   being able to use code from gitweb in "Web Client".  It also require=
+s
+   using Perl, and might require using some contortions if the problem
+   would be naturally split into multiple modules: there can be multipl=
+e
+   modules, but it could be better to have them in one file.
+
+3. Split Gitweb, add "Web Client" as one of modules.  Might be best
+   from the purity point of view, but is practical only if it is
+   integrated in gitweb.  That would require getting gitweb maintainer
+   out of GSoC.   Also I am not sure how feaible this approach would be=
+=2E
+
+>=20
+> Pavan agreed to rewrite his proposal according to that and Petr and m=
+yself=20
+> volunteered to co-mentor him.
+>=20
+> It was suggested that improving Gitalist=20
+> (http://wiki.catalystframework.org/wiki/gitalist) would be a better c=
+hoice.=20
+> But this was rejected because Gitalist is too much different from git=
+web so it=20
+> could not replace it for many people now using gitweb.
+
+True, I don't think that e.g. git.kernel.org or repo.or.cz could instal=
+l
+Catalyst and Git::PurePerl and use Gitalist instead of gitweb...
+
+P.S. If I remember correctly Gitalist was based out of last gitweb vers=
+ion
+     before it got bundled with git.  I wonder if they caught up to the
+     modern gitweb features (snapshots, Atom/RSS feeds, basic submodule
+     support, handling images, incremental blame, grep and pickaxe sear=
+ch,
+     etc.).
+
+--=20
+Jakub Narebski
+Poland
