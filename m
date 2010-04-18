@@ -1,8 +1,8 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/5] Documentation/remote-helpers: Rewrite description
-Date: Sun, 18 Apr 2010 10:28:57 +0530
-Message-ID: <1271566331-sup-9608@kytes>
-References: <1271551934-sup-1118@kytes> <20100418022900.GA1669@progeny.tock>
+Subject: Re: [PATCH 2/5] Documentation/urls: Rewrite to accomodate <transport>::<address>
+Date: Sun, 18 Apr 2010 10:33:16 +0530
+Message-ID: <1271566767-sup-7167@kytes>
+References: <1271552047-sup-9523@kytes> <20100418025940.GA2249@progeny.tock>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Cc: Git Mailing List <git@vger.kernel.org>,
@@ -13,100 +13,79 @@ Cc: Git Mailing List <git@vger.kernel.org>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Junio C Hamano <gitster@pobox.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 18 07:01:17 2010
+X-From: git-owner@vger.kernel.org Sun Apr 18 07:05:33 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3Md8-00063m-8b
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 07:01:14 +0200
+	id 1O3MhJ-0007Pq-7m
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 07:05:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751392Ab0DRFBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Apr 2010 01:01:06 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:38490 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751016Ab0DRFBF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Apr 2010 01:01:05 -0400
-Received: by pwj9 with SMTP id 9so2764752pwj.19
-        for <git@vger.kernel.org>; Sat, 17 Apr 2010 22:01:04 -0700 (PDT)
+	id S1751434Ab0DRFF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Apr 2010 01:05:28 -0400
+Received: from mail-pz0-f204.google.com ([209.85.222.204]:39675 "EHLO
+	mail-pz0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751119Ab0DRFF1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Apr 2010 01:05:27 -0400
+Received: by pzk42 with SMTP id 42so2764801pzk.4
+        for <git@vger.kernel.org>; Sat, 17 Apr 2010 22:05:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:content-type:cc:subject:from
          :to:in-reply-to:references:date:message-id:user-agent
          :content-transfer-encoding;
-        bh=cPbt/PwrCVU6rSIpi/EEfNfcjmPOmC3gRBm1wzfQ4Qg=;
-        b=chpiEcN6v74rI0iOF0HWo89En8d6MaPArnjaYTHuIc0o/ihnSuHpMiNT8258H0Tnaj
-         RzxLjo5llUW6uSQvCbGm6GRmQqQT3wGmsB+dRcm+U9PbcAVtqZafsHDnrm7bHnv5Tngp
-         xKnOD0WSJtvezg8vQWiBGrzaV3cJumSJm3Ajg=
+        bh=G3SiaEL2r1vzInURgyf+aarAlRVSbLWOLTY7t/VcKvY=;
+        b=So/59kTzeVzP2+xHEOf+kY/VuXZ7CyjHQpUTGB9gxBE20sxtgE5e0dnMEKQsppcwKZ
+         k7zUbh/c4LrXgNGl4ecGCdymadyFa2WtROKpRIWurDSZvu5z63sCeqtMjVU8ktvq6Rc2
+         3KslsPXN0+NxAxjQ5an9k43a+beXGl1Gm/2vI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=content-type:cc:subject:from:to:in-reply-to:references:date
          :message-id:user-agent:content-transfer-encoding;
-        b=SKVCInwcDvx+79MeCpy7hw1DMdO3IlDYIYFLHc+hr+tydevwQZu3XkZ2M2uXdibnir
-         5Vgq8G4tACbiYpKugb36CgRh0j54O2/t4TpQyimfx/NS55kEi36YfBE8P3rZhn6naFf4
-         n5sa568lzhQmzxFIiRTMMYk+1Ow3yXnuy1bD4=
-Received: by 10.115.112.22 with SMTP id p22mr2958101wam.53.1271566864618;
-        Sat, 17 Apr 2010 22:01:04 -0700 (PDT)
+        b=hkzztLpMU0hPs8Y0LGTtiAwXbQi8ddhhj+kgJdPzQ482M9zfliBj7FaSaXf74AvzIz
+         ypDRkWJpMVw8GLLkUh4Kyg4JjcDS2FAicmHKbqboc3T8rtYcehJJD3rJ32LU3XyXmdXR
+         2k6F0kfgcQ40YDGK1LLDV/hW0nYn7r+UMe/vY=
+Received: by 10.141.90.19 with SMTP id s19mr3104507rvl.80.1271567127273;
+        Sat, 17 Apr 2010 22:05:27 -0700 (PDT)
 Received: from localhost ([203.110.240.41])
-        by mx.google.com with ESMTPS id 23sm4018103pzk.10.2010.04.17.22.01.01
+        by mx.google.com with ESMTPS id 22sm4027785pzk.1.2010.04.17.22.05.24
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 17 Apr 2010 22:01:03 -0700 (PDT)
-In-reply-to: <20100418022900.GA1669@progeny.tock>
+        Sat, 17 Apr 2010 22:05:26 -0700 (PDT)
+In-reply-to: <20100418025940.GA2249@progeny.tock>
 User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145212>
 
-Hi Jonathan,
+Here's the fixup.
 
-Since patch has already been reviewed many times, and signed off by
-Junio before going into pu, I've tried to minimize changes and prepare
-a fixup patch while addressing all your concerns. Do tell me if it's
-alright.
-
-diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-index 6ffc0da..52332ed 100644
---- a/Documentation/git-remote-helpers.txt
-+++ b/Documentation/git-remote-helpers.txt
-@@ -12,26 +12,27 @@ SYNOPSIS
- DESCRIPTION
- -----------
+diff --git a/Documentation/urls.txt b/Documentation/urls.txt
+index a473da6..8f442ba 100644
+--- a/Documentation/urls.txt
++++ b/Documentation/urls.txt
+@@ -11,8 +11,8 @@ protocols. The following syntaxes may be used with them:
  
--Remote helper programs are normally not used directly by end users,
-+Remote helper programs are normally not used directly by end users
- but are invoked by git when it needs to interact with remote
- repositories. They implement a subset of the capabilities documented
--here, and conform to the "remote helper protocol". When git needs
-+here and conform to the "remote helper protocol". When git needs
- needs to interact with a repository served by a remote helper, it
--spawns the helper as an independent process and interacts with it over
--the specified protocol. git sends commands to the helper
--over standard input, and receives the result written to standard
-+spawns the helper as an independent process, sends it commands
-+over standard input, and receives the results written to standard
- output by the helper over a pipe. Because a remote helper runs as
- an independent process to interact with remote repositories, there
- is no need to re-link git when adding a new helper nor need to link
- the helper with the implementation of git.
+ - ssh://{startsb}user@{endsb}host.xz{startsb}:port{endsb}/path/to/repo.git/
+ - git://host.xz{startsb}:port{endsb}/path/to/repo.git/
+-- rsync://host.xz/path/to/repo.git/
+ - http{startsb}s{endsb}://host.xz{startsb}:port{endsb}/path/to/repo.git/
++- rsync://host.xz/path/to/repo.git/
+ - ftp{startsb}s{endsb}://host.xz{startsb}:port{endsb}/path/to/repo.git/
  
--All the capabilities of remote helpers have to do with discovering and
-+Every helper must support the "capabilities" command, which lists a
-+set of commands corresponding to the capabilities of the helper.
-+The capabilities have to do with discovering and
- updating remote refs, transporting objects between local and remote,
--and updating the local object store. Using the 'fetch' capability,
--they can discover refs on the remote, transfer objects from the remote
--reachable via those refs to local, and update the local object
-+and updating the local object store. Helpers supporting the 'fetch'
-+capability can discover refs on the remote, transfer objects from the
-+remote reachable via those refs to local, and update the local object
- store. Using the 'push' capability, they can transfer objects from
--local to remote, and update the corresponding refs as necessary.
-+local to remote, and update remote refs.
+ An alternative scp-like syntax may also be used with the ssh protocol:
+@@ -37,6 +37,11 @@ the former implies --local option. See linkgit:git-clone[1] for
+ details.
+ endif::git-clone[]
  
- Git comes with a "curl" family of remote helpers, that handle various
- transport protocols, such as 'git-remote-http', 'git-remote-https',
++ifdef::git-clone[]
++These two syntaxes are mostly equivalent, except the former implies
++--local option.
++endif::git-clone[]
++
+ When git doesn't know how to handle a certain transport protocol, it
+ attempts to use the 'remote-<transport>' remote helper, if one
+ exists. To explicitly request a remote helper, the following syntax
