@@ -1,97 +1,107 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [spf:guess] Re: Git import of the recent full enwiki dump
-Date: Sat, 17 Apr 2010 13:44:56 +1200
-Message-ID: <1271468696.3302.35.camel@denix>
-References: <w2x2d460de71004161647z41492baav3685249fa05145d6@mail.gmail.com>
-	 <m2ofabb9a1e1004161719h977b53b7oc2c452c2a2b0025e@mail.gmail.com>
-	 <20100417004852.GA32053@post.servercare.de>
-	 <20100417005342.GA8475@spearce.org>
-	 <20100417010147.GB32053@post.servercare.de>
+From: Peter Collingbourne <peter@pcc.me.uk>
+Subject: Re: Storing commits in trees
+Date: Sun, 18 Apr 2010 18:48:54 +0100
+Message-ID: <20100418174854.GA10132@pcc.me.uk>
+References: <1271363532.18164.47.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Richard Hartmann <richih.mailinglist@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Sebastian Bober <sbober@servercare.de>
-X-From: git-owner@vger.kernel.org Sat Apr 17 03:45:53 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Bernhard R . Link" <brlink@debian.org>
+To: Joachim Breitner <mail@joachim-breitner.de>
+X-From: git-owner@vger.kernel.org Sun Apr 18 19:49:17 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O2x6E-0007Wp-A8
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Apr 2010 03:45:34 +0200
+	id 1O3YcO-0007bj-V5
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 19:49:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753321Ab0DQBpG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Apr 2010 21:45:06 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:55730 "EHLO mail.utsl.gen.nz"
+	id S1751752Ab0DRRs4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Apr 2010 13:48:56 -0400
+Received: from master.pcc.me.uk ([207.192.74.179]:36743 "EHLO master.pcc.me.uk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751109Ab0DQBpF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Apr 2010 21:45:05 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 4251921C406; Sat, 17 Apr 2010 13:45:02 +1200 (NZST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
-	FH_DATE_PAST_20XX autolearn=no version=3.2.5
-Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 86AE421C381;
-	Sat, 17 Apr 2010 13:44:57 +1200 (NZST)
-In-Reply-To: <20100417010147.GB32053@post.servercare.de>
-X-Mailer: Evolution 2.28.1 
+	id S1751131Ab0DRRsz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Apr 2010 13:48:55 -0400
+Received: from peter by master.pcc.me.uk with local (Exim 4.69)
+	(envelope-from <peter@pcc.me.uk>)
+	id 1O3Yc2-00034M-GB; Sun, 18 Apr 2010 18:48:54 +0100
+Content-Disposition: inline
+In-Reply-To: <1271363532.18164.47.camel@localhost>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145222>
 
-On Sat, 2010-04-17 at 03:01 +0200, Sebastian Bober wrote:
-> I'm not dissing fast-import, it's fantastic. We tried with 2-10 level
-> deep trees (the best depth being 3), but after some million commits it
-> just got unbearably slow, with the ETA constantly rising.
+On Thu, Apr 15, 2010 at 10:32:12PM +0200, Joachim Breitner wrote:
+> [Please CC me on reply, as I=E2=80=99m not subscribed. Thanks!]
+>=20
+> Hi,
+>=20
+> for a variation of the workflow implemented by git-dpm[1], a tool to
+> manage the development of Debian packages in git, I wanted to refer t=
+o a
+> specific commit P from a regular commit D on my master branch, withou=
+t P
+> being a parent of D, as I don=E2=80=99t want it to show up in the his=
+tory.
+>=20
+> I found out that I can store commit objects in a tree object, using g=
+it=20
+> $ git update-index --add --cacheinfo 160000 0ac1855f1681c05d195f219c3=
+003a05dc8d3ac20 stored-commits/some-commit
+> and refer to it via HEAD:stored-commits/some-commit. I was happy, unt=
+il
+> I noticed that git prune will happily delete the stored commit as soo=
+n
+> as it is not referred somewhere else, and git push/pull won=E2=80=99t=
+ transfer
+> the stored commit along the tree it is contained in.
+>=20
+> I then found out that storing commit objects in the tree is implement=
+ed
+> for git-submodules, where you in fact do not want to store the commit=
+ in
+> the main repo.
+>=20
+> Now I=E2=80=99m wondering if it would be feasible to offer this featu=
+re: A
+> proper =E2=80=9Ccommit=E2=80=9D object within a tree that is walked b=
+y fsck_walk_tree
+> and the other tree walkers?
+>=20
+> Or is there yet another way of telling git that commit D =E2=80=9Cdep=
+ends on=E2=80=9D
+> commit P?
 
-How often are you checkpointing?  Like any data import IME, you can't
-leave transactions going indefinitely and expect good performance!
+Hi Joachim,
 
-Would it be at all possible to consider using a submodule for each page?
-With a super-project commit which is updated for every day of updates or
-so.
+I encountered this problem while developing silt [1], another workflow
+tool for Debian packaging, which uses a similar technique to refer to
+commits from a tree (in this case, from the packaging tree to patch
+commits derived from upstream).
 
-This will create a natural partitioning of the data set in a way which
-is likely to be more useful and efficient to work with.  Hand-held
-devices can be shipped with a "shallow" clone of the main repository,
-with shallow clones of the sub-repositories too (in such a setup, the
-device would not really use a checkout of course to save space).  Then,
-history for individual pages could be extended as required.  The device
-could "update" the master history, so it would know in summary form
-which pages have changed.  It would then go on to fetch updates for
-individual pages that the user is watching, or potentially even get them
-all.  There's an interesting next idea here: device-to-device update
-bundles.  And another one: distributed update; if, instead of writing to
-a "master" version - the action of editing a wiki page becomes to create
-a fork and the editorial process promotes these forks to be the master
-version in the superproject.  Users which have pulled the full
-repository for a page will be able to see other peoples' forks, to get
-"latest" versions or for editing purposes.  This adds not only a
-distributed update action, but the ability to have decent peer
-review/editorial process without it being arduous.
+I solved the problem by automatically creating a ref for each such
+reference.  The name of the ref contains a reference to the earliest
+unique commit on the branch ("earliest" is determined using the
+commit date), to avoid cluttering the ref namespace every time the
+ref changes.
 
-Without good data set partitioning I don't think I see the above
-workflow being as possible.  I was approaching the problem by first
-trying to back a SQL RDBMS to git, eg MySQL or SQLite (postgres would be
-nice, but probably much harder) - so I first set out by designing a
-table store.  But the representation of the data is not important, just
-the distributed version of it.
+Not only does one need to remember to push the patch refs along with
+the main branch ref, the code that determines the earliest unique
+commit is error prone and I agree that what would be beneficial would
+be a "hard link" to a commit.
 
-Actually this raises the question - what is it that you are trying to
-achieve with this wikipedia import?
+In terms of implementation, perhaps we can store a value in the lower
+order bits of the mode which indicates whether this is a hard link?
+This would ensure compatibility with older versions of git (S_ISGITLINK
+would still hold for hard links).
 
-Sam
+[1] http://git.debian.org/?p=3Dusers/pcc-guest/silt.git;a=3Dsummary
+
+Thanks,
+--=20
+Peter
