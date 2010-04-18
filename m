@@ -1,91 +1,77 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/5] Documentation/urls: Rewrite to accomodate <transport>::<address>
-Date: Sun, 18 Apr 2010 10:33:16 +0530
-Message-ID: <1271566767-sup-7167@kytes>
-References: <1271552047-sup-9523@kytes> <20100418025940.GA2249@progeny.tock>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Git Mailing List <git@vger.kernel.org>,
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH 1/5] Documentation/remote-helpers: Rewrite description
+Date: Sun, 18 Apr 2010 13:23:22 +0800
+Message-ID: <w2jbe6fef0d1004172223kd0d5de2hccf67badf817bd97@mail.gmail.com>
+References: <1271551934-sup-1118@kytes> <20100418022900.GA1669@progeny.tock>
+	 <1271566331-sup-9608@kytes>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
 	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Gabriel Filion <lelutin@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 18 07:05:33 2010
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 18 07:23:46 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3MhJ-0007Pq-7m
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 07:05:33 +0200
+	id 1O3Mys-0004rz-6k
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 07:23:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751434Ab0DRFF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Apr 2010 01:05:28 -0400
-Received: from mail-pz0-f204.google.com ([209.85.222.204]:39675 "EHLO
-	mail-pz0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751119Ab0DRFF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Apr 2010 01:05:27 -0400
-Received: by pzk42 with SMTP id 42so2764801pzk.4
-        for <git@vger.kernel.org>; Sat, 17 Apr 2010 22:05:27 -0700 (PDT)
+	id S1751722Ab0DRFXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Apr 2010 01:23:25 -0400
+Received: from mail-yw0-f194.google.com ([209.85.211.194]:53242 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751497Ab0DRFXY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Apr 2010 01:23:24 -0400
+Received: by ywh32 with SMTP id 32so2105496ywh.33
+        for <git@vger.kernel.org>; Sat, 17 Apr 2010 22:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:content-type:cc:subject:from
-         :to:in-reply-to:references:date:message-id:user-agent
-         :content-transfer-encoding;
-        bh=G3SiaEL2r1vzInURgyf+aarAlRVSbLWOLTY7t/VcKvY=;
-        b=So/59kTzeVzP2+xHEOf+kY/VuXZ7CyjHQpUTGB9gxBE20sxtgE5e0dnMEKQsppcwKZ
-         k7zUbh/c4LrXgNGl4ecGCdymadyFa2WtROKpRIWurDSZvu5z63sCeqtMjVU8ktvq6Rc2
-         3KslsPXN0+NxAxjQ5an9k43a+beXGl1Gm/2vI=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type;
+        bh=KYST3h6GAPuxQL/jx0DonrJC45yuNJtOdEVMKvS2lPY=;
+        b=hxxO4PDbiqYf9Cc7NhCgLWn/5H+VuVar+78swggNefpulxIkEdqROwLlHSGgxt7UPQ
+         EjQBkS2s/UBXtBNkP4UtaGQ2esmnPBpiAIDZE+NSmNciqNNRwWordPKEFqlnFR86Yzt1
+         MMem6gJ9pMf0RTTo6Bi9lxXzC5a47dR671Nqg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=content-type:cc:subject:from:to:in-reply-to:references:date
-         :message-id:user-agent:content-transfer-encoding;
-        b=hkzztLpMU0hPs8Y0LGTtiAwXbQi8ddhhj+kgJdPzQ482M9zfliBj7FaSaXf74AvzIz
-         ypDRkWJpMVw8GLLkUh4Kyg4JjcDS2FAicmHKbqboc3T8rtYcehJJD3rJ32LU3XyXmdXR
-         2k6F0kfgcQ40YDGK1LLDV/hW0nYn7r+UMe/vY=
-Received: by 10.141.90.19 with SMTP id s19mr3104507rvl.80.1271567127273;
-        Sat, 17 Apr 2010 22:05:27 -0700 (PDT)
-Received: from localhost ([203.110.240.41])
-        by mx.google.com with ESMTPS id 22sm4027785pzk.1.2010.04.17.22.05.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 17 Apr 2010 22:05:26 -0700 (PDT)
-In-reply-to: <20100418025940.GA2249@progeny.tock>
-User-Agent: Sup/git
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=SMIhHSPQPVcYWDZWMI/X+twaNNZtfcymhjCegoHY0xn/09I/j7YlsFi4OzWQKUSIEj
+         wduWss6KMqLKhdmdREsY9o60BL+yR799vvWfPc/AuqObA1Oj0MsVzZA6ZoKCfwugZ7Um
+         aPjVFC6AnWqgG0dQfeZ55mEnbDfxQNGYnARwQ=
+Received: by 10.231.10.65 with HTTP; Sat, 17 Apr 2010 22:23:22 -0700 (PDT)
+In-Reply-To: <1271566331-sup-9608@kytes>
+Received: by 10.101.178.20 with SMTP id f20mr8942672anp.229.1271568203144; 
+	Sat, 17 Apr 2010 22:23:23 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145213>
 
-Here's the fixup.
+Hi,
 
-diff --git a/Documentation/urls.txt b/Documentation/urls.txt
-index a473da6..8f442ba 100644
---- a/Documentation/urls.txt
-+++ b/Documentation/urls.txt
-@@ -11,8 +11,8 @@ protocols. The following syntaxes may be used with them:
- 
- - ssh://{startsb}user@{endsb}host.xz{startsb}:port{endsb}/path/to/repo.git/
- - git://host.xz{startsb}:port{endsb}/path/to/repo.git/
--- rsync://host.xz/path/to/repo.git/
- - http{startsb}s{endsb}://host.xz{startsb}:port{endsb}/path/to/repo.git/
-+- rsync://host.xz/path/to/repo.git/
- - ftp{startsb}s{endsb}://host.xz{startsb}:port{endsb}/path/to/repo.git/
- 
- An alternative scp-like syntax may also be used with the ssh protocol:
-@@ -37,6 +37,11 @@ the former implies --local option. See linkgit:git-clone[1] for
- details.
- endif::git-clone[]
- 
-+ifdef::git-clone[]
-+These two syntaxes are mostly equivalent, except the former implies
-+--local option.
-+endif::git-clone[]
-+
- When git doesn't know how to handle a certain transport protocol, it
- attempts to use the 'remote-<transport>' remote helper, if one
- exists. To explicitly request a remote helper, the following syntax
+On Sun, Apr 18, 2010 at 12:58 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Since patch has already been reviewed many times, and signed off by
+> Junio before going into pu, I've tried to minimize changes and prepare
+> a fixup patch while addressing all your concerns. Do tell me if it's
+> alright.
+
+barring any comment from Junio, I think a fixup is probably more
+onerous than a resend with the fixup squashed in; that is, assuming
+the old iteration is already git-am'ed in, and the fixup applies onto
+a new iteration.
+
+-- 
+Cheers,
+Ray Chuan
