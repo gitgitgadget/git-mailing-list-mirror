@@ -1,9 +1,9 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/3] stash bug: stash can lose data in a file removed
- from the index
-Date: Sun, 18 Apr 2010 16:11:15 -0700
-Message-ID: <7vvdbotkz0.fsf@alter.siamese.dyndns.org>
-References: <20100418182749.GA29329@hashpling.org>
+Subject: Re: [PATCH v2 2/3] stash: Don't overwrite files that have gone from
+ the index
+Date: Sun, 18 Apr 2010 16:11:21 -0700
+Message-ID: <7vpr1wtkyu.fsf@alter.siamese.dyndns.org>
+References: <9eaa7a4672f2010c9e6e3b3f473f1c09abcfcc45.1271614677.git.charles@hashpling.org> <20100418182805.GB29329@hashpling.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
@@ -16,88 +16,56 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3deX-0000y2-KV
+	id 1O3deY-0000y2-7E
 	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 01:11:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757287Ab0DRXLc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Apr 2010 19:11:32 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34209 "EHLO
+	id S1757298Ab0DRXLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Apr 2010 19:11:35 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34250 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751662Ab0DRXLZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Apr 2010 19:11:25 -0400
+	with ESMTP id S1755718Ab0DRXLb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Apr 2010 19:11:31 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FE03AC9F0;
-	Sun, 18 Apr 2010 19:11:25 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 57A7EAC9F3;
+	Sun, 18 Apr 2010 19:11:31 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=NYGpL5vpNKyqNoRLoT2ifi61IQ4=; b=lwEY8hYXVDdpm9ruueZXspO
-	zhfMf3sIxq+KBVDjpKSPckNSep9MS0JGet5S9CgT5qlws8nJ4p46Ttp843j95K4M
-	RUXGQpY7aF1Yij9IKz0qGplfF9fLr1uAD7EYSHbV5n3vwGzYNiz8DK45dHRq1RBT
-	kNox96mN5Bnw7ajcAgms=
+	sasl; bh=0YV0OW0RYk4Sfe0a4FWEUsHzYQE=; b=oEMolmBuwOGVMnhlaAQkU6u
+	Xk3wfJlydNs/hBkK2KAghfeToatGpdfp7FmrfhlW9P1Y+vJ4Bhf5DgWIHI5JUY24
+	+QShtgfxFn8IG3C/cwQ6BPRnLb8G78bpeNacyBDteuGGCIxvaMe4beXV0AULi1bR
+	/Fpei4qdHdCo4KxSESM0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=BQeH93tr1xu4lT1AkvAIYMyDcLZUvvgzSG5//sQZFLrHy5Rd6
-	cRGGsWf7+yuNip2tVMrkQwVfDs/LOJ/fHTy+bPTbFt6lA6vWwiZN6D3ltz/UYpvO
-	fJqJ1C8duzKio11XU2hFFVWbMylhMQsW5p0/SG22XrclDUzLjFVAkjmuXM=
+	dns; s=sasl; b=JdFrzFJsNmypeG4Uw7N0bP8hoyQ8DWauHMfd2CeuZZlUuG6Ml
+	UpSRs0YgKSKuKyf5Y2GCwtJp9LuYWRkHqlYzIXPzVVmUCIFbWh9sIOVYPCEzyIXq
+	Q2LkRh029bZ/k31Z+yo2Y7RZ0O3lVhIK36/y2R0ytxnR0wiDZ5aqurxPHs=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D36EAC9EE;
-	Sun, 18 Apr 2010 19:11:21 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 10324AC9F1;
+	Sun, 18 Apr 2010 19:11:27 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4843CAC9EC; Sun, 18 Apr
- 2010 19:11:16 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 44C4DAC9EF; Sun, 18 Apr
+ 2010 19:11:22 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B37F5584-4B3F-11DF-8BB9-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B70AD6E2-4B3F-11DF-BF2B-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145257>
 
 Charles Bailey <charles@hashpling.org> writes:
 
-> +test_expect_success 'stash file to symlink' '
-> +	git reset --hard &&
-> +	rm file &&
-> +	ln -s file2 file &&
-> +	git stash save "file to symlink" &&
-> +	test -f file &&
-> +	test bar = "$(cat file)" &&
-> +	git stash apply &&
-> +	test -f file &&
-> +	test file2 = "$(readlink file)"
-> +'
+> To be complete, any work tree file which differs from HEAD needs to be
+> saved, regardless of whether it still appears in the index or not.
 
-It is likely that this needs to be protected with SYMLINKS prerequisite.
-Also I am a bit unhappy about the use of "readlink" which is not even in
-POSIX.1 here.  We already have one use of it in the tests but that only
-happens while doing valgrind.  Traditionally this has been more portably
-done by reading from "ls -l file", like so:
+Sounds quite sane.
 
-	case "$(ls -l file)" in *" file -> file2") :;; *) false;; esac
+> -			git add -u &&
+> +			git diff --name-only -z HEAD | git update-index -z --add --remove --stdin &&
 
-Also, whether "readlink file" or "ls -l file" is used to check the result,
-the "test -f file" is redundant.
+Paths that exist in HEAD but not in the index will be caught with this;
+what about paths that do not exist in HEAD but is in the index---they will
+be kept in the index so they are fine as well.  Good.
 
-> +test_expect_failure 'stash directory to file' '
-> +	git reset --hard &&
-> +	mkdir dir &&
-> +	echo foo >dir/file &&
-> +	git add dir/file &&
-> +	git commit -m "Add file in dir" &&
-> +	rm dir/file &&
-> +	rmdir dir &&
-> +	echo bar >dir &&
-> +	git stash save "directory to file" &&
-> +	test -d dir &&
-> +	test foo = "$(cat dir/file)" &&
-> +	test_must_fail git stash apply &&
-> +	test bar = "$(cat dir)" &&
-> +	git reset --soft HEAD^
-> +'
-
-I have a feeling that this test is being a bit unfair.
-
-What should a successful invocation of "stash apply" leave in the working
-tree in this case, especially when you consider that in a real life use
-case you may have other files in "dir" directory or changes to "dir/file"?
+Thanks.
