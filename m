@@ -1,137 +1,118 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [RFC PATCH 1/2] SubmittingPatches: Add new section about what to base work on
-Date: Mon, 19 Apr 2010 01:24:20 +0530
-Message-ID: <1271620400-sup-4850@kytes>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 18 21:56:30 2010
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: GSoC 2010: "Integrated Web Client for git" proposal
+Date: Sun, 18 Apr 2010 21:56:23 +0200
+Message-ID: <20100418195623.GA3563@machine.or.cz>
+References: <201004150630.44300.chriscool@tuxfamily.org>
+ <201004180324.54722.jnareb@gmail.com>
+ <20100418021223.GP10939@machine.or.cz>
+ <201004181950.19610.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Shawn O Pearce <spearce@spearce.org>,
+	Scott Chacon <schacon@gmail.com>,
+	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
+	Sam Vilain <sam@vilain.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 18 21:56:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3abW-0008Iq-BL
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 21:56:30 +0200
+	id 1O3abe-0008O7-5R
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 21:56:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752587Ab0DRT4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Apr 2010 15:56:25 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:59498 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752173Ab0DRT4Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Apr 2010 15:56:24 -0400
-Received: by gyg13 with SMTP id 13so2265239gyg.19
-        for <git@vger.kernel.org>; Sun, 18 Apr 2010 12:56:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:content-type:cc:subject:from
-         :to:date:message-id:user-agent:content-transfer-encoding;
-        bh=HkcNwph2UVyTOe1tB4Cd5IOlddBYjpqKFWZHZ28SfyM=;
-        b=euTRHLiGWQJFDmT5MdzwEd3drNEVy21wrKSRo/lXKrY/p0ISjE6m3nxmZR6/T/Jjoz
-         /hETLo04LtkUnKGl+V2SgMVCDAdaUcBOwicMgFLj+5pHKA9zmwF6YsV6k8lSEnNo0VW1
-         ueoX8m/XT+oH9MqmQQP2wedZZpj9Cg9cDprFQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=content-type:cc:subject:from:to:date:message-id:user-agent
-         :content-transfer-encoding;
-        b=pxgvVnmxUf2ngfNmh5cAZYGaOSE9QdZuuWCxepxVkaQ7IkWmIeyF/AM6XSA6oI3VBZ
-         iGL1TsTHchFJ9qBdrvh8tkFFH1K3o0KL5YF3Ghfihxw2GudZI/9FdcLgdKVc6gsZscqg
-         cO2wk05SrlPmFJpHC3/aWJtbbqhAL48VozjoY=
-Received: by 10.150.209.2 with SMTP id h2mr336042ybg.36.1271620582926;
-        Sun, 18 Apr 2010 12:56:22 -0700 (PDT)
-Received: from localhost ([203.110.240.41])
-        by mx.google.com with ESMTPS id 20sm4228296iwn.9.2010.04.18.12.56.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 18 Apr 2010 12:56:22 -0700 (PDT)
-User-Agent: Sup/git
+	id S1752706Ab0DRT4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Apr 2010 15:56:30 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:36767 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752173Ab0DRT41 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Apr 2010 15:56:27 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 69A63125A0EA; Sun, 18 Apr 2010 21:56:23 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <201004181950.19610.jnareb@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145241>
 
-Add a section 0 explaining which commit to base patches on. Rewrite a
-couple of paragraphs about signing off patches to reflect Junio's
-updated preferences.
+On Sun, Apr 18, 2010 at 07:50:17PM +0200, Jakub Narebski wrote:
+> So it is intended, I guess, more like git-instaweb or webmin, not like
+> administrative parts of Girocco (or repo.or.cz), GitHub, Gitorious or
+> InDefero.  Probably authentication and authorization would not be needed
+> then, if it is to be run as web interface but locally...
 
-From: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- Documentation/SubmittingPatches |   52 ++++++++++++++++++++++++++++++--------
- 1 files changed, 41 insertions(+), 11 deletions(-)
+If the project is a success, I wanted to use it for mob branch editing
+on repo.or.cz. It could also be used as open-source Gist alternative.
+But it needs to be coded so that it does not require an actual checked
+out copy (which shouldn't be too much hassle).
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index abc65de..a90155c 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -53,6 +53,37 @@ But the patch submission requirements are a lot more relaxed
- here on the technical/contents front, because the core GIT is
- thousand times smaller ;-).  So here is only the relevant bits.
- 
-+(0) Decide what to base your work on.
-+
-+The general principle is always to base your work on the oldest branch
-+that your change is relevant to.
-+
-+ - A fix for a bug that has been with git from older releases should be
-+   included in both the upcoming feature release and the current
-+   maintenance release.  Try to base your work on the 'maint' branch.  A
-+   work to kill a bug that is in 'master' but not in 'maint' should be
-+   based on 'master'.
-+
-+ - A fix for a bug that is not yet in 'master' is the best bug to kill.
-+   If you can find the topic that introduces the regression, base your
-+   work on the tip of the topic.  "log --first-parent master..pu" would be
-+   a good way to find the tips of topic branches.
-+
-+ - A new feature should be based on the 'master' branch in general.
-+
-+ - If your new feature depends on some other topics that are not in
-+   'master' yet, and if it relies only on one topic, base your work on the
-+   tip of that topic.  If it depends on too many topics that are not in
-+   'master', you can privately start working on 'next' or even 'pu' and
-+   send out your patches for discussion, but it is possible that your
-+   maintainer may ask you to wait and rebase your changes on 'master'
-+   after some of the larger topics your topic depends on graduate to
-+   'master'.
-+
-+ - Base corrections and enhancements on a topic that are not in 'master'
-+   yet but already merged to 'next' on the tip of the topic.  If the topic
-+   has not been merged to 'next', it is Ok to add a note that the patch is
-+   a trivial fix and can be squashed into the series.
- 
- (1) Make separate commits for logically separate changes.
- 
-@@ -170,17 +201,16 @@ patch, format it as "multipart/signed", not a text/plain message
- that starts with '-----BEGIN PGP SIGNED MESSAGE-----'.  That is
- not a text/plain, it's something else.
- 
--Note that your maintainer does not necessarily read everything
--on the git mailing list.  If your patch is for discussion first,
--send it "To:" the mailing list, and optionally "cc:" him.  If it
--is trivially correct or after the list reached a consensus, send
--it "To:" the maintainer and optionally "cc:" the list for
--inclusion.
--
--Also note that your maintainer does not actively involve himself in
--maintaining what are in contrib/ hierarchy.  When you send fixes and
--enhancements to them, do not forget to "cc: " the person who primarily
--worked on that hierarchy in contrib/.
-+Unless your patch is a very trivial and an obviously correct one,
-+first send it with "To:" set to the mailing list, with "cc:" listing
-+people who are involved in the area you are touching (the output from
-+"git blame $path" and "git shortlog --no-merges $path" would help to
-+identify them), to solicit comments and reviews.  After the list
-+reached a consensus that it is a good idea to apply the patch, re-send
-+it with "To:" set to the maintainer and optionally "cc:" the list for
-+inclusion.  Do not forget to add trailers such as "Acked-by:",
-+"Reviewed-by:" and "Tested-by:" after your "Signed-off-by:" line as
-+necessary.
- 
- 
- (4) Sign your work
+> >> Well, you can always add some of "Web Client" functionality directly
+> >> to gitweb (for example dispatch must be, I think, in gitweb).
+> > 
+> > But I don't think you can reasonably separate a major portion of web
+> > client that would not depend on gitweb functions like href(), format*()
+> > etc. all over the map.
+> 
+> Well, there is also copy'n'paste of code as a last resort.  
+
+I would prefer the do. :-)
+
+> >> Or you
+> >> can (ab)use "do $gitwebgui_pm;" instead of "require $gitwebgui_pm;",
+> >> like in http://repo.or.cz/w/git/jnareb-git.git/commitdiff/261b99e3#patch3
+> >> (second chunk).
+> > 
+> > This already occured to me, yes. It's tempting to have this as the
+> > emergency way out, shall other things fail. But .
+>                                               ^^^^^^^^^^-- ???
+> But what?
+> 
+> Yes, it is not as elegant as "require", and you have to catch errors
+> in "do"-ed file yourself (as described at the end of `perldoc -f do`).
+
+Oops, sorry. I meant that it should be really only last result if we try
+to split things and for some reason it keeps not working out.
+
+> Currently to install gitweb you have to copy *one* script, and a few
+> static files (2 x image, CSS, JavaScript).  You can configure it using
+> "make gitweb" with appropriate options, you can simply edit gitweb script,
+> or you can leave this to the gitweb config file.
+
+I don't really think things can get *any* more complicated than "also
+copy over this directory recursively", do they?
+
+> Also there is a question _how_ to split gitweb into modules, 
+> e.g. whether to follow SVN::Web example on how gitweb (Git::Web?) should
+> be split.  But I guess any splitting would suffice; we need to provide
+> a way to build and install split gitweb.  
+> 
+> Split can be as simple as:
+> 
+>   Makefile, or Makefile.PL, or Build.PL
+>   gitweb.perl
+>   static/git-logo.png
+>   static/git-favicon.png
+>   static/gitweb.css
+>   static/gitweb.js
+>   lib/Gitweb/Utils.pm   (Gitweb::Utils)
+>   lib/Gitweb/Editor.pm  (Gitweb::Editor, for GSoC2010, if it gets accepted)
+
+Exactly! I think we can do this reasonably incrementally; if something
+is not working out, we can move it again later. Let's not overengineer
+stuff. I think it would make sense to just split out something like
+Gitweb::Git (for Git invocations), Gitweb::CGI (for CGI parsing and
+HTML output toolkit) and perhaps Gitweb::Util for misc. stuff. Then,
+if we feel like it, maybe we can start splitting out things more, like
+Gitweb::CGI::Blame, but I don't think that's even neccessary for now.
+
 -- 
-1.7.0.4
+				Petr "Pasky" Baudis
+http://pasky.or.cz/ | "Ars longa, vita brevis." -- Hippocrates
