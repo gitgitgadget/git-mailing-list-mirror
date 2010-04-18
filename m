@@ -1,60 +1,57 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Multiple user.name and user.email (possible feature request)
-Date: Sun, 18 Apr 2010 14:55:19 -0400
-Message-ID: <20100418185519.GA14331@coredump.intra.peff.net>
-References: <19402.52486.274010.66636@winooski.ccs.neu.edu>
- <F5BFE3BD-7416-4F13-AF7F-0775E3234C92@gmail.com>
- <20100418183759.GA11366@coredump.intra.peff.net>
- <r2wfabb9a1e1004181143o7ebe2cf1t883ee4a12ba29a24@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2010, #06; Sat, 17)
+Date: Sun, 18 Apr 2010 14:57:53 -0400
+Message-ID: <20100418185753.GB11366@coredump.intra.peff.net>
+References: <7v7ho5xp3z.fsf@alter.siamese.dyndns.org>
+ <20100418083641.GA17717@coredump.intra.peff.net>
+ <7vvdbowrkq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Steven Michalske <smichalske@gmail.com>,
-	Eli Barzilay <eli@barzilay.org>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 18 20:56:07 2010
+Cc: Johannes Gilger <heipei@hackvalue.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 18 20:58:31 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3Zf4-0003cx-OC
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 20:56:07 +0200
+	id 1O3ZhO-0004j3-8z
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Apr 2010 20:58:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757482Ab0DRSzz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Apr 2010 14:55:55 -0400
-Received: from peff.net ([208.65.91.99]:35021 "EHLO peff.net"
+	id S1753432Ab0DRS6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Apr 2010 14:58:25 -0400
+Received: from peff.net ([208.65.91.99]:48892 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752838Ab0DRSzy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Apr 2010 14:55:54 -0400
-Received: (qmail 5740 invoked by uid 107); 18 Apr 2010 18:55:56 -0000
+	id S1751808Ab0DRS6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Apr 2010 14:58:25 -0400
+Received: (qmail 5772 invoked by uid 107); 18 Apr 2010 18:58:30 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 18 Apr 2010 14:55:56 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Apr 2010 14:55:19 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 18 Apr 2010 14:58:30 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Apr 2010 14:57:53 -0400
 Content-Disposition: inline
-In-Reply-To: <r2wfabb9a1e1004181143o7ebe2cf1t883ee4a12ba29a24@mail.gmail.com>
+In-Reply-To: <7vvdbowrkq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145238>
 
-On Sun, Apr 18, 2010 at 08:43:11PM +0200, Sverre Rabbelier wrote:
+On Sun, Apr 18, 2010 at 11:20:21AM -0700, Junio C Hamano wrote:
 
-> On Sun, Apr 18, 2010 at 20:37, Jeff King <peff@peff.net> wrote:
-> > So I expect that will serve Eli's purpose.
+> >> * jg/auto-initialize-notes-with-percent-n-in-format (2010-04-13) 1 commit
+> >>  - pretty: Initialize notes if %N is used
+> [...]
 > 
-> If it does not, would a pre-commit hook work? If he sets some
-> recognizable string (such as not setting it) as email and install a
-> hook that barfs if it sees that?
+> It is an assertion failure but the fix is low-impact enough to appear in
+> the coming release.
 
-Yeah, that could work. It would do what he wants, but he would have to
-have the hook set up. Which means he either needs to remember to
-configure it in each repository (at which point he could just remember
-to configure his identity), or he needs to point to a special init
-template directory with the hook.
+Yeah, I forgot it was an assertion and not a segfault, but I think both
+are things we would rather not see in a release.
 
-I think setting init.templatedir or GIT_TEMPLATE_DIR in the environment
-would accomplish the latter.
+>  t/t3301-notes.sh |   18 ++++++++++++++++++
+>  1 files changed, 18 insertions(+), 0 deletions(-)
+
+Your tests look sane to me.
 
 -Peff
