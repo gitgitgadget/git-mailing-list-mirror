@@ -1,75 +1,104 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH v4 00/11] Resend sp/maint-dumb-http-pack-reidx
-Date: Mon, 19 Apr 2010 07:23:04 -0700
-Message-ID: <1271686990-16363-1-git-send-email-spearce@spearce.org>
+Subject: [PATCH v4 07/11] Introduce close_pack_index to permit replacement
+Date: Mon, 19 Apr 2010 07:23:06 -0700
+Message-ID: <1271686990-16363-3-git-send-email-spearce@spearce.org>
 References: <20100418115744.0000238b@unknown>
 Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
 	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Christian Halstrick <christian.halstrick@gmail.com>,
-	jan.sievers@sap.com, Matthias Sohn <matthias.sohn@sap.com>
+	jan.sievers@sap.com, Matthias Sohn <matthias.sohn@sap.com>,
+	Junio C Hamano <gitster@pobox.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 19 16:23:26 2010
+X-From: git-owner@vger.kernel.org Mon Apr 19 16:23:37 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3rsh-0000bW-VC
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 16:23:24 +0200
+	id 1O3rsu-0000jt-Jn
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 16:23:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754789Ab0DSOXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Apr 2010 10:23:18 -0400
+	id S1754492Ab0DSOX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Apr 2010 10:23:27 -0400
 Received: from mail-bw0-f225.google.com ([209.85.218.225]:48685 "EHLO
 	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754325Ab0DSOXR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Apr 2010 10:23:17 -0400
-Received: by bwz25 with SMTP id 25so5648036bwz.28
-        for <git@vger.kernel.org>; Mon, 19 Apr 2010 07:23:16 -0700 (PDT)
-Received: by 10.204.162.209 with SMTP id w17mr807547bkx.67.1271686996175;
-        Mon, 19 Apr 2010 07:23:16 -0700 (PDT)
+	with ESMTP id S1753811Ab0DSOX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Apr 2010 10:23:26 -0400
+Received: by mail-bw0-f225.google.com with SMTP id 25so5648036bwz.28
+        for <git@vger.kernel.org>; Mon, 19 Apr 2010 07:23:25 -0700 (PDT)
+Received: by 10.86.126.4 with SMTP id y4mr2661604fgc.47.1271687005433;
+        Mon, 19 Apr 2010 07:23:25 -0700 (PDT)
 Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
-        by mx.google.com with ESMTPS id 14sm3154186bwz.10.2010.04.19.07.23.13
+        by mx.google.com with ESMTPS id 1sm10701778fkt.41.2010.04.19.07.23.23
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 19 Apr 2010 07:23:15 -0700 (PDT)
+        Mon, 19 Apr 2010 07:23:24 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.rc1.279.g22727
 In-Reply-To: <20100418115744.0000238b@unknown>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145299>
 
-This is a resend of the last half of the series, from patch 6/11
-to the end, to address some minor review comments.
+By closing the pack index, a caller can later overwrite the index
+with an updated index file, possibly after converting from v1 to
+the v2 format.  Because p->index_data is NULL after close, on the
+next access the index will be opened again and the other members
+will be updated with new data.
 
-Junio, I think you need to reset my branch to 0da8b2e7c80a6d
-("http.c: Don't store destination name in structures"), and
-then apply this group.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Total series diff since v3 is this shocking one line change, most
-of the edits were to commit messages:
+ No change from v3.
 
-diff --git a/http.c b/http.c
-index 83f6047..0813c9e 100644
---- a/http.c
-+++ b/http.c
-@@ -1028,7 +1028,6 @@ int finish_http_pack_request(struct http_pack_request *preq)
- 	const char *ip_argv[8];
+ cache.h     |    1 +
+ sha1_file.c |   11 +++++++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index 6e54993..0eba039 100644
+--- a/cache.h
++++ b/cache.h
+@@ -911,6 +911,7 @@ extern struct packed_git *find_sha1_pack(const unsigned char *sha1,
  
- 	close_pack_index(p);
--	unlink(sha1_pack_index_name(p->sha1));
- 
- 	fclose(preq->packfile);
- 	preq->packfile = NULL;
-@@ -1062,6 +1061,8 @@ int finish_http_pack_request(struct http_pack_request *preq)
- 		return -1;
+ extern void pack_report(void);
+ extern int open_pack_index(struct packed_git *);
++extern void close_pack_index(struct packed_git *);
+ extern unsigned char *use_pack(struct packed_git *, struct pack_window **, off_t, unsigned int *);
+ extern void close_pack_windows(struct packed_git *);
+ extern void unuse_pack(struct pack_window **);
+diff --git a/sha1_file.c b/sha1_file.c
+index c23cc5e..4e82654 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -606,6 +606,14 @@ void unuse_pack(struct pack_window **w_cursor)
  	}
+ }
  
-+	unlink(sha1_pack_index_name(p->sha1));
++void close_pack_index(struct packed_git *p)
++{
++	if (p->index_data) {
++		munmap((void *)p->index_data, p->index_size);
++		p->index_data = NULL;
++	}
++}
 +
- 	if (move_temp_to_file(preq->tmpfile, sha1_pack_name(p->sha1))
- 	 || move_temp_to_file(tmp_idx, sha1_pack_index_name(p->sha1))) {
- 		free(tmp_idx);
+ /*
+  * This is used by git-repack in case a newly created pack happens to
+  * contain the same set of objects as an existing one.  In that case
+@@ -627,8 +635,7 @@ void free_pack_by_name(const char *pack_name)
+ 			close_pack_windows(p);
+ 			if (p->pack_fd != -1)
+ 				close(p->pack_fd);
+-			if (p->index_data)
+-				munmap((void *)p->index_data, p->index_size);
++			close_pack_index(p);
+ 			free(p->bad_object_sha1);
+ 			*pp = p->next;
+ 			free(p);
+-- 
+1.7.1.rc1.279.g22727
