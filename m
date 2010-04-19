@@ -1,92 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: GSoC 2010: "Integrated Web Client for git" proposal
-Date: Mon, 19 Apr 2010 00:23:17 -0700
-Message-ID: <7vfx2rsy6y.fsf@alter.siamese.dyndns.org>
-References: <201004150630.44300.chriscool@tuxfamily.org>
- <201004180246.18263.jnareb@gmail.com> <20100418005917.GO10939@machine.or.cz>
- <201004180324.54722.jnareb@gmail.com> <20100418021223.GP10939@machine.or.cz>
- <n2le72faaa81004180152pb84cef2cn2a7eb95da64420b1@mail.gmail.com>
- <20100418223120.GB3563@machine.or.cz>
- <u2ve72faaa81004182346zdf4bd0b3m3341717b1555c0a9@mail.gmail.com>
- <vpqeiicey0d.fsf@bauges.imag.fr>
+From: Yves Caniou <yves.caniou@ens-lyon.fr>
+Subject: Re: Compilation pb of git-1.7.0.5
+Date: Mon, 19 Apr 2010 09:32:26 +0200
+Organization: ENS-LIP
+Message-ID: <201004190932.26445.yves.caniou@ens-lyon.fr>
+References: <201004190759.15032.yves.caniou@ens-lyon.fr> <i2kfabb9a1e1004182326w32b1ce9ak2ada640ce30cc945@mail.gmail.com>
+Reply-To: yves.caniou@ens-lyon.fr
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
-	Petr Baudis <pasky@suse.cz>, Jakub Narebski <jnareb@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	Shawn O Pearce <spearce@spearce.org>,
-	Scott Chacon <schacon@gmail.com>, Sam Vilain <sam@vilain.net>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 19 09:23:52 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 19 09:34:45 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3lKh-0005SE-DF
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 09:23:51 +0200
+	id 1O3lVE-0001sD-Mw
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 09:34:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752289Ab0DSHXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Apr 2010 03:23:44 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43012 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750756Ab0DSHXn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Apr 2010 03:23:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CE7EABE89;
-	Mon, 19 Apr 2010 03:23:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Uc4C5U2aNcxAdbizFfJhXZCJ2Zg=; b=N9pDvA
-	4liwjURoEgbqBrWo1zW6+3j5ceOifpgb5q8hNhrBaRPJvkAkEkYhLsOjRpk7D3qR
-	NxhnmDOGkERMVsCWAaWqRHiLA740OEWZY3bWuAk0smFt9GIIug6LopUk7gNLPAE/
-	qia7PxXlv1Fv0NpZ5XcpRtZ9+k4Dn57QCBX10=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pVWIgUd0N9y5UZff2Lj2JyLEu6fEksrz
-	ZvWfOpALVzhOTHIfroloT+k0MfRUxyqlKoqXL96Ez/syk720g+RvPeteFW/9AJyB
-	9/P6pvt3HL+cYDyaUWpdQyaAx1M1OLv0Nkvd46nJf2Vto7tyHEqt0sDhOSc1fgxA
-	h+L/zLLbs2g=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B4094ABE82;
-	Mon, 19 Apr 2010 03:23:30 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 591D5ABE7B; Mon, 19 Apr
- 2010 03:23:19 -0400 (EDT)
-In-Reply-To: <vpqeiicey0d.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Mon\, 19 Apr 2010 08\:50\:58 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 74857D8C-4B84-11DF-84A2-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751398Ab0DSHee convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Apr 2010 03:34:34 -0400
+Received: from jabiru.ens-lyon.fr ([140.77.51.2]:60919 "EHLO
+	jabiru.ens-lyon.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751055Ab0DSHed convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Apr 2010 03:34:33 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jabiru.ens-lyon.fr (Postfix) with ESMTP id 8B900AFAA3;
+	Mon, 19 Apr 2010 09:34:32 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new-2.6.1 (20080629) (Debian) at ens-lyon.fr
+Received: from jabiru.ens-lyon.fr ([127.0.0.1])
+	by localhost (jabiru.ens-lyon.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ZKav86QRlNgb; Mon, 19 Apr 2010 09:34:30 +0200 (CEST)
+Received: from [133.11.204.119] (unknown [133.11.204.119])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by jabiru.ens-lyon.fr (Postfix) with ESMTPSA id 5883BAFA9F;
+	Mon, 19 Apr 2010 09:34:30 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <i2kfabb9a1e1004182326w32b1ce9ak2ada640ce30cc945@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145271>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-
-> Pavan Kumar Sunkara <pavan.sss1991@gmail.com> writes:
+Le Monday 19 April 2010 08:26:59 Sverre Rabbelier, vous avez =C3=A9crit=
+=C2=A0:
+> Heya,
 >
->> Session management reduces the length of URL
+> On Mon, Apr 19, 2010 at 07:59, Yves Caniou <yves.caniou@ens-lyon.fr> =
+wrote:
+> > After the ./configure --prefix=3D$HOME/git, the make all gives me
 >
-> ... but OTOH, GET parameters allow painlessly cut-and-paste-able URLs,
-> which is in my opinion a must-have for gitweb.
+> Which revision are you trying to compile?
 
-These self-contained URL are used in bookmarks and e-mails to the mailing
-list.  I think "the length of URL" is a red herring at best, and shortened
-URL that is not self-contained is not an advantage at all.
+I should have recall this in the mail, instead of just let it in the su=
+bject: 1.7.0.5
 
-On the other hand, a proposal about giving multiple clients access to
-their own individual server-side checkouts (ala "workspace" in DELTA-V)
-would require some mechanism to maintain the state on the server end, and
-session management would be one ingredient necessary to achieve that.
+> Also, it's probably more=20
+> helpful to just post the result of 'make all' verbatim, rather than
+> snippets.
 
-When I heard that somebody wants to do a "write support" in gitweb, I
-naturally thought the proposal was about implementing RFC3253 using git as
-a backend.  I think it would be a reasonable thing to do (as opposed to
-coming up with an ad-hoc "write support" mechanism that is not compatible
-with anybody else), but on the other hand it might be a bit too ambitious
-for a one-student summer project.
+Ok. Thanks to wereHamster on IRC, it appears that the compiler that was=
+ used for compilation is the Hitachi Cc version 6.2 and not gcc,=20
+because ./configure detects cc and uses cc instead of gcc.
+
+Here is the output of the make all, made after the ./configure [...]
+
+--------
+$>make all
+    * new build flags or prefix
+    CC fast-import.o
+cc: Warning: 100, Unknown option, "-g" option is ignored.
+fast-import.c: 2622: Warning: 2570, Value assigned to enumeration objec=
+t "type" is different type.
+fast-import.c: 1776: Warning: 2570, Value assigned to enumeration objec=
+t "type" is different type.
+fast-import.c: 2213: Warning: 2570, Value assigned to enumeration objec=
+t "type" is different type.
+fast-import.c: 2346: Warning: 2570, Value assigned to enumeration objec=
+t "type" is different type.
+    CC abspath.o
+cc: Warning: 100, Unknown option, "-g" option is ignored.
+    CC advice.o
+cc: Warning: 100, Unknown option, "-g" option is ignored.
+    CC alias.o
+cc: Warning: 100, Unknown option, "-g" option is ignored.
+    CC alloc.o
+cc: Warning: 100, Unknown option, "-g" option is ignored.
+    CC archive.o
+cc: Warning: 100, Unknown option, "-g" option is ignored.
+archive.c: 223: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 309: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 311: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 313: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 315: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 316: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 317: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 318: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 319: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 320: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 321: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 322: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 323: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 324: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 325: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 326: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 329: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 332: Serious: 4470, Initialization value must be address con=
+stant expression.
+archive.c: 334: Serious: 4470, Initialization value must be address con=
+stant expression.
+make: *** [archive.o] Error 1
+------------
+
+Note that the direct compilation with the following command calls gcc, =
+worked and the installation was successful.
+$>make prefix=3D$HOME/git install
+
+Thank you.
+
+=2EYves.
