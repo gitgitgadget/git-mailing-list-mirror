@@ -1,122 +1,119 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: Re: GSoC 2010: "Integrated Web Client for git" proposal
-Date: Mon, 19 Apr 2010 13:08:26 +0530
-Message-ID: <v2me72faaa81004190038y4aeefa80g9f60bb3b1e795e4b@mail.gmail.com>
-References: <201004150630.44300.chriscool@tuxfamily.org>
-	 <201004180246.18263.jnareb@gmail.com>
-	 <20100418005917.GO10939@machine.or.cz>
-	 <201004180324.54722.jnareb@gmail.com>
-	 <20100418021223.GP10939@machine.or.cz>
-	 <n2le72faaa81004180152pb84cef2cn2a7eb95da64420b1@mail.gmail.com>
-	 <20100418223120.GB3563@machine.or.cz>
-	 <u2ve72faaa81004182346zdf4bd0b3m3341717b1555c0a9@mail.gmail.com>
-	 <vpqeiicey0d.fsf@bauges.imag.fr>
-	 <7vfx2rsy6y.fsf@alter.siamese.dyndns.org>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH v2 1/3] stash bug: stash can lose data in a file removed
+ from the index
+Date: Mon, 19 Apr 2010 08:45:20 +0100
+Message-ID: <20100419074520.GA5513@hashpling.org>
+References: <20100418182749.GA29329@hashpling.org>
+ <7vvdbotkz0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Petr Baudis <pasky@suse.cz>, Jakub Narebski <jnareb@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	Shawn O Pearce <spearce@spearce.org>,
-	Scott Chacon <schacon@gmail.com>, Sam Vilain <sam@vilain.net>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
+	Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 19 09:38:36 2010
+X-From: git-owner@vger.kernel.org Mon Apr 19 09:45:29 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3lYv-0003hb-0N
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 09:38:33 +0200
+	id 1O3lfc-0006iE-TG
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 09:45:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751529Ab0DSHi2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Apr 2010 03:38:28 -0400
-Received: from mail-yw0-f194.google.com ([209.85.211.194]:36665 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751075Ab0DSHi1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Apr 2010 03:38:27 -0400
-Received: by ywh32 with SMTP id 32so2594198ywh.33
-        for <git@vger.kernel.org>; Mon, 19 Apr 2010 00:38:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KtH5dStyhL8cg0RwwC+1/KbliLQINiP1JXoy/cYWSJw=;
-        b=OvEoaMYA0Nga4zJwKKcGamaZ2Y5q5XqQJ+KRK+mh+eUYweHumpl7y6bhijpGNf0x/E
-         c9eUm8CMbV04j8Op5yFjWqTP9XpwifZ1O5Yqhw5oIkiTjjJJ0hi3ussb2QmUPrEbvGQv
-         IINYTmgPTyULtDOuSJHBovCbb9FrVtndAG5nI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FdsniVNBNcKrpf68dve3cIcD7cW3Jv5Yjg3tNrZZDZguxnUDMD7LizZwPSytMo1vhN
-         Lk2xli6lyJD30wfpZR040Sf6PUPhZwOPt7batwGSkXbxcFFgitTJcfbR2mu57AaVnt2e
-         4DXRy9+3VTdZeYeN7sxtvOj/m118XhnfvwohM=
-Received: by 10.90.118.4 with HTTP; Mon, 19 Apr 2010 00:38:26 -0700 (PDT)
-In-Reply-To: <7vfx2rsy6y.fsf@alter.siamese.dyndns.org>
-Received: by 10.91.163.17 with SMTP id q17mr2939483ago.36.1271662706666; Mon, 
-	19 Apr 2010 00:38:26 -0700 (PDT)
+	id S1752067Ab0DSHpX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Apr 2010 03:45:23 -0400
+Received: from relay.pcl-ipout01.plus.net ([212.159.7.99]:52119 "EHLO
+	relay.pcl-ipout01.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751926Ab0DSHpX (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Apr 2010 03:45:23 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvsEABeny0vUnw4T/2dsb2JhbACbdXG5eYUQBA
+Received: from pih-relay06.plus.net ([212.159.14.19])
+  by relay.pcl-ipout01.plus.net with ESMTP; 19 Apr 2010 08:45:21 +0100
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by pih-relay06.plus.net with esmtp (Exim) id 1O3lfU-0007Tr-UP; Mon, 19 Apr 2010 08:45:21 +0100
+Received: from charles by hashpling.plus.com with local (Exim 4.69)
+	(envelope-from <charles@hashpling.org>)
+	id 1O3lfU-0001sh-Nf; Mon, 19 Apr 2010 08:45:20 +0100
+Content-Disposition: inline
+In-Reply-To: <7vvdbotkz0.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-08-17)
+X-Plusnet-Relay: 1e42d7a0e8f55489f7895d83b9d26491
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145274>
 
-On Mon, Apr 19, 2010 at 12:53 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Pavan Kumar Sunkara <pavan.sss1991@gmail.com> writes:
->>
->>> Session management reduces the length of URL
->>
->> ... but OTOH, GET parameters allow painlessly cut-and-paste-able URL=
-s,
->> which is in my opinion a must-have for gitweb.
->
-> These self-contained URL are used in bookmarks and e-mails to the mai=
-ling
-> list. =A0I think "the length of URL" is a red herring at best, and sh=
-ortened
-> URL that is not self-contained is not an advantage at all.
+On Sun, Apr 18, 2010 at 04:11:15PM -0700, Junio C Hamano wrote:
+> Charles Bailey <charles@hashpling.org> writes:
+> 
+> It is likely that this needs to be protected with SYMLINKS prerequisite.
+> Also I am a bit unhappy about the use of "readlink" which is not even in
+> POSIX.1 here.  We already have one use of it in the tests but that only
+> happens while doing valgrind.  Traditionally this has been more portably
+> done by reading from "ls -l file", like so:
+> 
+> 	case "$(ls -l file)" in *" file -> file2") :;; *) false;; esac
 
-Yeah, I agree to that.
+I don't have access to many flavours of unix at the moment and I
+failed to look up the POSIXness of readlink. I'll re-roll with greater
+portability.
 
-> On the other hand, a proposal about giving multiple clients access to
-> their own individual server-side checkouts (ala "workspace" in DELTA-=
-V)
-> would require some mechanism to maintain the state on the server end,=
- and
-> session management would be one ingredient necessary to achieve that.
+> Also, whether "readlink file" or "ls -l file" is used to check the result,
+> the "test -f file" is redundant.
 
-So, why don't we do like this,
-There will be no need of session management when gitweb is installed
-in some site like repo.or.cz which needs copy'n'paste URLs
-but there will be session management when the write modules are
-enabled and when gitweb is installed locally or on intranet (basically
-when it is used to work on a repo).
+Yes, of course. Not sure what I was thinking.
 
-What do you say ?
+What about "test -h"? Is this sufficiently portable
+for use in our tests? I understand that it's supposed to be POSIX and
+available on Solaris sh.
 
-> When I heard that somebody wants to do a "write support" in gitweb, I
-> naturally thought the proposal was about implementing RFC3253 using g=
-it as
-> a backend. =A0I think it would be a reasonable thing to do (as oppose=
-d to
-> coming up with an ad-hoc "write support" mechanism that is not compat=
-ible
-> with anybody else), but on the other hand it might be a bit too ambit=
-ious
-> for a one-student summer project.
->
+> 
+> > +test_expect_failure 'stash directory to file' '
+> > +	git reset --hard &&
+> > +	mkdir dir &&
+> > +	echo foo >dir/file &&
+> > +	git add dir/file &&
+> > +	git commit -m "Add file in dir" &&
+> > +	rm dir/file &&
+> > +	rmdir dir &&
+> > +	echo bar >dir &&
+> > +	git stash save "directory to file" &&
+> > +	test -d dir &&
+> > +	test foo = "$(cat dir/file)" &&
+> > +	test_must_fail git stash apply &&
+> > +	test bar = "$(cat dir)" &&
+> > +	git reset --soft HEAD^
+> > +'
+> 
+> I have a feeling that this test is being a bit unfair.
+> 
+> What should a successful invocation of "stash apply" leave in the working
+> tree in this case, especially when you consider that in a real life use
+> case you may have other files in "dir" directory or changes to "dir/file"?
 
-Sorry but I don't know what it is.
-The current average git used are in need of a git client and git-gui
-is not doing a good job of it. So, this proposal solves it by
-providing client features inside gitweb itself. :-)
+Actually I now think that this is completely wrong. There's no reason
+that stash apply shouldn't succeed. If we managed to save the new file
+where the directory was in the stash then why shouldn't apply be able
+to at least attempt to remove the tracked files in the directory that
+were originally removed and replace them with the stashed file?
 
--pavan
+Even if we decide that it can't or shouldn't, we should expect a
+failing stash apply to leave the tree as it currently is. That does
+leave the question of how the user is supposed to get stuff out of his
+stash. After all, he's trying to apply the stash on exactly the state
+that stash left him in.
+
+Is it sensible to be guided by these two principles: git stash should
+be safe, i.e. it should never remove content that it doesn't save in
+the database. git stash && git stash apply should leave the working
+tree exactly as it was before the git stash invocation (if the stash
+succeeds it may be equivalent to a git reset)?
+
+If so we definitely need to fix the behaviour where git stash
+vaporizes local changes when there's a file <-> directory change
+in the working tree. Even if we cop out and make git stash fail if it
+determines that it wouldn't restore the changes.
+
+Charles.
