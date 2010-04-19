@@ -1,56 +1,86 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH v4 2/3] gitk: do not parse "  >" context as submodule
- change
-Date: Mon, 19 Apr 2010 11:08:19 +1000
-Message-ID: <20100419010819.GA4386@brick.ozlabs.ibm.com>
-References: <cover.1271260308.git.trast@student.ethz.ch>
- <5531510bfb94997f729a894a0b5a3158177a9add.1271260308.git.trast@student.ethz.ch>
- <20100417063320.GA6681@brick.ozlabs.ibm.com>
- <201004171420.55737.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] Git add <device file> silently fails
+Date: Sun, 18 Apr 2010 22:15:31 -0700
+Message-ID: <7vbpdgt43w.fsf@alter.siamese.dyndns.org>
+References: <201004171624.17797.agruen@suse.de>
+ <u2s81b0412b1004170744u4cc3c0e1z6d7019fe405a67ec@mail.gmail.com>
+ <7v4oja3uh7.fsf@alter.siamese.dyndns.org> <201004171957.00944.agruen@suse.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eelis van der Weegen <eelis@eelis.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Miles Bader <miles@gnu.org>, Jens Lehmann <Jens.Lehmann@web.de>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Apr 19 03:10:52 2010
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Andreas Gruenbacher <agruen@suse.de>
+X-From: git-owner@vger.kernel.org Mon Apr 19 07:16:07 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3fVg-0003OO-Ae
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 03:10:48 +0200
+	id 1O3jKx-00072D-0t
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 07:15:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754197Ab0DSBKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Apr 2010 21:10:42 -0400
-Received: from ozlabs.org ([203.10.76.45]:54287 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754150Ab0DSBKk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Apr 2010 21:10:40 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id A90F9B7D0F; Mon, 19 Apr 2010 11:10:39 +1000 (EST)
-Content-Disposition: inline
-In-Reply-To: <201004171420.55737.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751484Ab0DSFPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Apr 2010 01:15:41 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39833 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750919Ab0DSFPl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Apr 2010 01:15:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C83F8AAD67;
+	Mon, 19 Apr 2010 01:15:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3PhDfxJtI/VrPqecap0C+qRklf4=; b=DFzvip
+	qXfMc1zW1KLp05fLhVxQkUdYGrKmguQnd18hot3TkyWh0I55gwG/IULFNksnUueB
+	LCLfQbFv9aN4ich7XZ3ZlpOIBCNopGOMJFeKPx4f1TiP2sZ6h14R/6eVf0wy5J+P
+	CSVBsSA4Idc0aNyO8F5Q5881b2XHl1L+S5MHQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=datsHhkG7Xp7e/Q5/IM/bdvMya3HbZdK
+	FeDUGOxTwjEhelXkY3Uv8HnvBQazaG9nfeNdMS2rePs3ZnFN70oHwnZtDkA0qUJm
+	I1RNF4T6OPY1SrTf745txCqNHRpYRXCRkn6BjbEeWwh5KnVtEustAcEEWiAA0jPo
+	fWEEKEvex4Y=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 96544AAD65;
+	Mon, 19 Apr 2010 01:15:36 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB998AAD5C; Mon, 19 Apr
+ 2010 01:15:32 -0400 (EDT)
+In-Reply-To: <201004171957.00944.agruen@suse.de> (Andreas Gruenbacher's
+ message of "Sat\, 17 Apr 2010 19\:57\:00 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9663A116-4B72-11DF-A967-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145263>
 
-On Sat, Apr 17, 2010 at 02:20:55PM +0200, Thomas Rast wrote:
+Andreas Gruenbacher <agruen@suse.de> writes:
 
-> Whoops, sorry:
-> 
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> @@ -720,7 +723,8 @@ static enum path_treatment treat_one_path(struct dir_struct *dir,
+>  
+>  	switch (dtype) {
+>  	default:
+> -		return path_ignored;
+> +		dir_add_ignored(dir, path, *len, DIR_IGNORED_FILETYPE);
+> +		break;
 
-Thanks, but now that I have applied Jens Lehmann's patch that also
-touches this area, your patch doesn't apply.  Could you rebase it and
-send it again?
+Hmm, do we want to break and return path_handled here, to cause
+the calling read_directory_recursive() to call dir_add_name()?
 
-Thanks,
-Paul.
+Also I suspect that (dir->flags & DIR_COLLECT_IGNORED) needs to be checked
+before making this call.
+
+> +struct dir_vector {
+> +	int nr, alloc;
+> +	struct dir_entry **entries;
+> +};
+
+We would probably call a structure of this shape "dir_array", as I haven't
+seen us calling anything "vector" for naming consistency.
+
+Instead of introducing two dir-arrays for different kinds of ignoredness,
+it may be cleaner to add one bit (or more for later expansion) to dir_entry
+and mark the ones in ignored dir-array with the ignore reason.
