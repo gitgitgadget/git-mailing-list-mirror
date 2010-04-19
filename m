@@ -1,58 +1,56 @@
 From: Jay Soffian <jaysoffian@gmail.com>
 Subject: [PATCH v3 3/3] receive-pack: detect aliased updates which can occur with symrefs
-Date: Mon, 19 Apr 2010 18:08:32 -0400
-Message-ID: <1271714912-56659-4-git-send-email-jaysoffian@gmail.com>
-References: <1271714912-56659-1-git-send-email-jaysoffian@gmail.com>
+Date: Mon, 19 Apr 2010 18:19:18 -0400
+Message-ID: <1271715558-56781-1-git-send-email-jaysoffian@gmail.com>
+References: <1271694343-31876-2-git-send-email-jaysoffian@gmail.com>
 Cc: Jay Soffian <jaysoffian@gmail.com>,
 	"Shawn O . Pearce" <spearce@spearce.org>, git@vger.kernel.org
 To: Junio C Hamano <junio@kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 20 00:09:26 2010
+X-From: git-owner@vger.kernel.org Tue Apr 20 00:19:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3z9h-0005uP-KJ
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 00:09:25 +0200
+	id 1O3zJZ-0001cB-W1
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 00:19:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752698Ab0DSWJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Apr 2010 18:09:20 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:53241 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752423Ab0DSWJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Apr 2010 18:09:18 -0400
-Received: by mail-gw0-f46.google.com with SMTP id 19so429991gwj.19
-        for <git@vger.kernel.org>; Mon, 19 Apr 2010 15:09:18 -0700 (PDT)
+	id S1752764Ab0DSWTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Apr 2010 18:19:32 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:45748 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752716Ab0DSWTb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Apr 2010 18:19:31 -0400
+Received: by gyg13 with SMTP id 13so2827610gyg.19
+        for <git@vger.kernel.org>; Mon, 19 Apr 2010 15:19:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:in-reply-to:references;
+         :message-id:x-mailer:in-reply-to:references;
         bh=owkD3st7iguVOt8cW8CkAq8jAgXDu6JCMlYRXW4GBeE=;
-        b=GWyZHmARgzlnHbJ1Euz4YgOce/I2g6bUwRMRTjGsmdsJ8lO2OEFoA13dCgCaEkF85R
-         bg8gs6PzLfGjUYrIXV6LTEDJFZAxwmylsQX8cBM17K6MOwZDBkwRf39epYjon9CnsDrx
-         Q/QQ+X4Q/jDHDE/AABAaFGomdgj4OL3oeNoNc=
+        b=waw9mZykWgU6d9IHmr/y0Ci21cAV5kjOx4FDVSijlTlAuEehOS7vTH7lHE4J2q7aJh
+         5Dp6NZcA5o9xyLnsCmaH+prD5+YbaS4dLam4ZndlPHohE6R4qylp98f2pK335r121EmG
+         Tn4YTpUtCrUSVBeKYlpEP4j7krYKDL1LH0nTc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=I86GTXGPUe24Hxq5nEICAKFGpIhF8SvV0XraEeYXt7VoJEBvM2KIDkCR7Ou9z6lAh2
-         /WlGoRPN6+vhiBUNUJGjVCCB3f3gFVjFbXDOeva91HC4h8H34gDJNeRBL2yKX6edvb6R
-         Vxn7+SZDY+Mmxc2wan2pJ6xM/jbtZYmEO0Ttc=
-Received: by 10.101.149.17 with SMTP id b17mr15097688ano.80.1271714954413;
-        Mon, 19 Apr 2010 15:09:14 -0700 (PDT)
+        b=NODN6tYpwKHGN0SZ/rmFWCLXEDS0R+D0Gb/ZSOPRARrD6PJFju1qLeO5kysRhQHdi8
+         GYpz20UFUffdzvSTPkYzLIT1Ay8/C1f0g+PONH5MHoQ/uczcZAmIVqwug6iKn3QE9rtg
+         c7MPHDYeXTbeXh97UlSvl7RHXceoMZZwm5mSo=
+Received: by 10.100.222.12 with SMTP id u12mr10380650ang.113.1271715565293;
+        Mon, 19 Apr 2010 15:19:25 -0700 (PDT)
 Received: from localhost (cpe-065-190-041-119.nc.res.rr.com [65.190.41.119])
-        by mx.google.com with ESMTPS id y2sm49670116ani.14.2010.04.19.15.09.12
+        by mx.google.com with ESMTPS id 30sm50270850anp.1.2010.04.19.15.19.23
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 19 Apr 2010 15:09:13 -0700 (PDT)
+        Mon, 19 Apr 2010 15:19:24 -0700 (PDT)
 X-Mailer: git-send-email 1.7.0.3.436.g2b878
-In-Reply-To: <1271714912-56659-1-git-send-email-jaysoffian@gmail.com>
 In-Reply-To: <1271694343-31876-2-git-send-email-jaysoffian@gmail.com>
-References: <1271694343-31876-2-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145338>
 
 When pushing to a remote repo the sending side filters out aliased
 updates (e.g., foo:baz bar:baz). However, it is not possible for the
