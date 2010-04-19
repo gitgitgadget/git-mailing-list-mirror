@@ -1,274 +1,225 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH v2 2/2] receive-pack: detect aliased updates which can occur with symrefs
-Date: Mon, 19 Apr 2010 12:25:43 -0400
-Message-ID: <1271694343-31876-2-git-send-email-jaysoffian@gmail.com>
-References: <1271694343-31876-1-git-send-email-jaysoffian@gmail.com>
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	"Shawn O . Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junio@kernel.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 19 18:26:21 2010
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH v4' 2/2] gitk: add the equivalent of diff --color-words
+Date: Mon, 19 Apr 2010 18:27:27 +0200
+Message-ID: <34692bfb072d02aaa0dea01515fa89d4a1f175b8.1271694102.git.trast@student.ethz.ch>
+References: <671110fcac73c5fc8a935b82d88f8553c510c50c.1271694102.git.trast@student.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Apr 19 18:27:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3tnf-0003en-Ka
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 18:26:19 +0200
+	id 1O3tp1-0004To-AE
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 18:27:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755358Ab0DSQ0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Apr 2010 12:26:09 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:64243 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755180Ab0DSQ0G (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Apr 2010 12:26:06 -0400
-Received: by gyg13 with SMTP id 13so2682708gyg.19
-        for <git@vger.kernel.org>; Mon, 19 Apr 2010 09:26:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=BnKyP9vHio2iirUyLAThtjXE97hatJO8plGaCyOg2+M=;
-        b=wobVOqpLs1AhqQm4IAqUD5Z8evmeiZGey9atHEwLCfO8AiEw6kcpxuKB1Fuw6PXObt
-         Zz5re8cFPX1yLuT79eC3OhhnM5DwjmehnMkZkD+7L2fIX5/+bRr7rUl5Ht92AsD3OjCD
-         LQOn/0gDfnzHuWlgLp4f2B09v7aSb5CBIJB5M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=uFI2pRk9E5di5V6zlaNVi++sFJrm8YgVeY5pko7pbC/OiOZuPNfFQgSylqEYU001dT
-         g0TgZBtTbEkcYtrGWpKNQVYmxxkJtKvTZpC/NwYs8pSwbpdg08+mjtmcEmNhuvSo3FEk
-         tGpC/bpPK1HmhqzuIoAwZK7XWqL/VWK+RNF18=
-Received: by 10.101.144.39 with SMTP id w39mr14375550ann.19.1271694359693;
-        Mon, 19 Apr 2010 09:25:59 -0700 (PDT)
-Received: from localhost (cpe-065-190-041-119.nc.res.rr.com [65.190.41.119])
-        by mx.google.com with ESMTPS id i8sm47633043ana.9.2010.04.19.09.25.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 19 Apr 2010 09:25:58 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.3.436.g2b878
-In-Reply-To: <1271694343-31876-1-git-send-email-jaysoffian@gmail.com>
+	id S1755595Ab0DSQ1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Apr 2010 12:27:31 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:22872 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755215Ab0DSQ13 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Apr 2010 12:27:29 -0400
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 19 Apr
+ 2010 18:27:27 +0200
+Received: from localhost.localdomain (217.162.250.31) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 19 Apr
+ 2010 18:27:26 +0200
+X-Mailer: git-send-email 1.7.1.rc1.284.g4b2e3
+In-Reply-To: <671110fcac73c5fc8a935b82d88f8553c510c50c.1271694102.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145313>
 
-When pushing to a remote repo the sending side filters out aliased
-updates (e.g., foo:baz bar:baz). However, it is not possible for the
-sender to know if two refs are aliased on the receiving side via
-symrefs. Here is one such scenario:
+Use the newly added 'diff --word-diff=porcelain' to teach gitk a
+color-words mode, with two different modes analogous to the
+--word-diff=plain and --word-diff=color settings.  These are selected
+by a dropdown box.
 
-  $ git init origin
-  $ (cd origin && touch file && git add file && git commit -a -m intial)
-  $ git clone --bare origin origin.git
-  $ rm -rf origin
+As an extra twist, automatically enable this word-diff support when
+the user mentions a word-diff related option on the command line.
+These options were previously ignored because they would break diff
+parsing.
 
-  $ git clone origin.git client
+Both of these features are only enabled if we have a version of git
+that supports --word-diff=porcelain, tentatively set to 1.7.2.
 
-  $ git clone --mirror client backup.git &&
-  $ (cd backup.git && git remote set-head origin --auto)
-
-  $ (cd client &&
-	git remote add --mirror backup ../backup.git &&
-	echo change1 > file && git commit -a -m change1 &&
-	git push origin &&
-	git push backup
-	)
-
-The push to backup fails with:
-
-  Counting objects: 5, done.
-  Writing objects: 100% (3/3), 244 bytes, done.
-  Total 3 (delta 0), reused 0 (delta 0)
-  Unpacking objects: 100% (3/3), done.
-  error: Ref refs/remotes/origin/master is at ef3... but expected 262...
-  remote: error: failed to lock refs/remotes/origin/master
-  To ../backup.git
-     262cd57..ef307ff  master -> master
-     262cd57..ef307ff  origin/HEAD -> origin/HEAD
-   ! [remote rejected] origin/master -> origin/master (failed to lock)
-  error: failed to push some refs to '../backup.git'
-
-The reason is that refs/remotes/origin/HEAD is a symref to
-refs/remotes/origin/master, but it is not possible for the sending side
-to unambiguously know this.
-
-This commit fixes the issue by having receive-pack ignore any update to
-a symref whose target is being identically updated. If a symref and its
-target are being updated inconsistently, then the update for both fails
-with an error message ("refusing inconsistent update...") to help
-diagnose the situation.
-
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- builtin/receive-pack.c |   62 +++++++++++++++++++++++++++++++++++++++++++++++-
- t/t5516-fetch-push.sh  |   45 ++++++++++++++++++++++++++++++++++
- 2 files changed, 106 insertions(+), 1 deletions(-)
+ gitk |   64 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 61 insertions(+), 3 deletions(-)
 
-Changes from v1 (incorporating Junio's feedback):
-- Reformatted commit message; minor rewording.
-- Detect situation where there is an inconsistent aliased update and
-  give a better diagnostic than "failed to lock"
-- Add additional test case for inconsistent update situation
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index fffb6ea..414446b 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -9,6 +9,7 @@
- #include "object.h"
- #include "remote.h"
- #include "transport.h"
-+#include "string-list.h"
+diff --git a/gitk b/gitk
+index 6513ef8..46d1b0e 100755
+--- a/gitk
++++ b/gitk
+@@ -131,6 +131,7 @@ proc unmerged_files {files} {
  
- static const char receive_pack_usage[] = "git receive-pack <git-dir>";
+ proc parseviewargs {n arglist} {
+     global vdatemode vmergeonly vflags vdflags vrevs vfiltered vorigargs env
++    global worddiff git_version
  
-@@ -129,6 +130,7 @@ static void write_head_info(void)
- struct command {
- 	struct command *next;
- 	const char *error_string;
-+	unsigned int skip_update;
- 	unsigned char old_sha1[20];
- 	unsigned char new_sha1[20];
- 	char ref_name[FLEX_ARRAY]; /* more */
-@@ -486,6 +488,61 @@ static void run_update_post_hook(struct command *commands)
- 	}
+     set vdatemode($n) 0
+     set vmergeonly($n) 0
+@@ -168,7 +169,7 @@ proc parseviewargs {n arglist} {
+ 		lappend diffargs $arg
+ 	    }
+ 	    "--raw" - "--patch-with-raw" - "--patch-with-stat" -
+-	    "--name-only" - "--name-status" - "--color" - "--color-words" -
++	    "--name-only" - "--name-status" - "--color" -
+ 	    "--log-size" - "--pretty=*" - "--decorate" - "--abbrev-commit" -
+ 	    "--cc" - "-z" - "--header" - "--parents" - "--boundary" -
+ 	    "--no-color" - "-g" - "--walk-reflogs" - "--no-walk" -
+@@ -177,6 +178,18 @@ proc parseviewargs {n arglist} {
+ 		# These cause our parsing of git log's output to fail, or else
+ 		# they're options we want to set ourselves, so ignore them.
+ 	    }
++	    "--color-words*" - "--word-diff=color" {
++		# These trigger a word diff in the console interface,
++		# so help the user by enabling our own support
++		if {[package vcompare $git_version "1.7.2"] >= 0} {
++		    set worddiff [mc "Color words"]
++		}
++	    }
++	    "--word-diff*" {
++		if {[package vcompare $git_version "1.7.2"] >= 0} {
++		    set worddiff [mc "Markup words"]
++		}
++	    }
+ 	    "--stat=*" - "--numstat" - "--shortstat" - "--summary" -
+ 	    "--check" - "--exit-code" - "--quiet" - "--topo-order" -
+ 	    "--full-history" - "--dense" - "--sparse" -
+@@ -1970,6 +1983,8 @@ proc makewindow {} {
+     global fprogitem fprogcoord lastprogupdate progupdatepending
+     global rprogitem rprogcoord rownumsel numcommits
+     global have_tk85 use_ttk NS
++    global git_version
++    global worddiff
+ 
+     # The "mc" arguments here are purely so that xgettext
+     # sees the following string as needing to be translated
+@@ -2243,6 +2258,15 @@ proc makewindow {} {
+     ${NS}::checkbutton .bleft.mid.ignspace -text [mc "Ignore space change"] \
+ 	-command changeignorespace -variable ignorespace
+     pack .bleft.mid.ignspace -side left -padx 5
++
++    set worddiff [mc "Line diff"]
++    if {[package vcompare $git_version "1.7.2"] >= 0} {
++	makedroplist .bleft.mid.worddiff worddiff [mc "Line diff"] \
++	    [mc "Markup words"] [mc "Color words"]
++	trace add variable worddiff write changeworddiff
++	pack .bleft.mid.worddiff -side left -padx 5
++    }
++
+     set ctext .bleft.bottom.ctext
+     text $ctext -background $bgcolor -foreground $fgcolor \
+ 	-state disabled -font textfont \
+@@ -7502,11 +7526,16 @@ proc changeignorespace {} {
+     reselectline
  }
  
-+static void check_aliased_update(struct command *cmd, struct string_list *list)
-+{
-+	struct string_list_item *item;
-+	struct command *dst_cmd;
-+	unsigned char sha1[20];
-+	char cmd_oldh[41], cmd_newh[41], dst_oldh[41], dst_newh[41];
-+	int flag;
-+
-+	const char *dst_name = resolve_ref(cmd->ref_name, sha1, 0, &flag);
-+
-+	if (!(flag & REF_ISSYMREF))
-+		return;
-+
-+	if ((item = string_list_lookup(dst_name, list)) == NULL)
-+		return;
-+
-+	cmd->skip_update = 1;
-+
-+	dst_cmd = (struct command *) item->util;
-+
-+	if (!hashcmp(cmd->old_sha1, dst_cmd->old_sha1) &&
-+	    !hashcmp(cmd->new_sha1, dst_cmd->new_sha1))
-+		return;
-+
-+	strcpy(cmd_oldh, find_unique_abbrev(cmd->old_sha1, DEFAULT_ABBREV));
-+	strcat(cmd_newh, find_unique_abbrev(cmd->new_sha1, DEFAULT_ABBREV));
-+	strcpy(dst_oldh, find_unique_abbrev(dst_cmd->old_sha1, DEFAULT_ABBREV));
-+	strcat(dst_newh, find_unique_abbrev(dst_cmd->new_sha1, DEFAULT_ABBREV));
-+	rp_error("refusing inconsistent update between symref '%s' (%s..%s) and"
-+		 " its target '%s' (%s..%s)",
-+		 cmd->ref_name, cmd_oldh, cmd_newh,
-+		 dst_cmd->ref_name, dst_oldh, dst_newh);
-+
-+	cmd->error_string = dst_cmd->error_string =
-+		"inconsistent aliased update";
++proc changeworddiff {name ix op} {
++    reselectline
 +}
 +
-+static void check_aliased_updates(struct command *commands)
-+{
-+	struct command *cmd;
-+	struct string_list ref_list = { NULL, 0, 0, 0 };
-+
-+	for (cmd = commands; cmd; cmd = cmd->next) {
-+		struct string_list_item *item =
-+			string_list_append(cmd->ref_name, &ref_list);
-+		item->util = (void *)cmd;
-+	}
-+	sort_string_list(&ref_list);
-+
-+	for (cmd = commands; cmd; cmd = cmd->next)
-+		check_aliased_update(cmd, &ref_list);
-+
-+	string_list_clear(&ref_list, 0);
-+}
-+
- static void execute_commands(struct command *commands, const char *unpacker_error)
- {
- 	struct command *cmd;
-@@ -503,9 +560,11 @@ static void execute_commands(struct command *commands, const char *unpacker_erro
- 		return;
- 	}
+ proc getblobdiffs {ids} {
+     global blobdifffd diffids env
+     global diffinhdr treediffs
+     global diffcontext
+     global ignorespace
++    global worddiff
+     global limitdiffs vfilelimit curview
+     global diffencoding targetline diffnparents
+     global git_version currdiffsubmod
+@@ -7523,6 +7552,9 @@ proc getblobdiffs {ids} {
+     if {$ignorespace} {
+ 	append cmd " -w"
+     }
++    if {$worddiff ne [mc "Line diff"]} {
++	append cmd " --word-diff=porcelain"
++    }
+     if {$limitdiffs && $vfilelimit($curview) ne {}} {
+ 	set cmd [concat $cmd -- $vfilelimit($curview)]
+     }
+@@ -7608,6 +7640,7 @@ proc getblobdiffline {bdf ids} {
+     global ctext_file_names ctext_file_lines
+     global diffinhdr treediffs mergemax diffnparents
+     global diffencoding jump_to_here targetline diffline currdiffsubmod
++    global worddiff
  
-+	check_aliased_updates(commands);
-+
- 	head_name = resolve_ref("HEAD", sha1, 0, NULL);
+     set nr 0
+     $ctext conf -state normal
+@@ -7749,15 +7782,28 @@ proc getblobdiffline {bdf ids} {
+ 	    # parse the prefix - one ' ', '-' or '+' for each parent
+ 	    set prefix [string range $line 0 [expr {$diffnparents - 1}]]
+ 	    set tag [expr {$diffnparents > 1? "m": "d"}]
++	    set dowords [expr {$worddiff ne [mc "Line diff"] && $diffnparents == 1}]
++	    set words_pre_markup ""
++	    set words_post_markup ""
+ 	    if {[string trim $prefix " -+"] eq {}} {
+ 		# prefix only has " ", "-" and "+" in it: normal diff line
+ 		set num [string first "-" $prefix]
++		if {$dowords} {
++		    set line [string range $line 1 end]
++		}
+ 		if {$num >= 0} {
+ 		    # removed line, first parent with line is $num
+ 		    if {$num >= $mergemax} {
+ 			set num "max"
+ 		    }
+-		    $ctext insert end "$line\n" $tag$num
++		    if {$dowords && $worddiff eq [mc "Markup words"]} {
++			$ctext insert end "\[-$line-\]" $tag$num
++		    } else {
++			$ctext insert end "$line" $tag$num
++		    }
++		    if {!$dowords} {
++			$ctext insert end "\n" $tag$num
++		    }
+ 		} else {
+ 		    set tags {}
+ 		    if {[string first "+" $prefix] >= 0} {
+@@ -7772,6 +7818,8 @@ proc getblobdiffline {bdf ids} {
+ 				lappend tags m$num
+ 			    }
+ 			}
++			set words_pre_markup "{+"
++			set words_post_markup "+}"
+ 		    }
+ 		    if {$targetline ne {}} {
+ 			if {$diffline == $targetline} {
+@@ -7781,8 +7829,17 @@ proc getblobdiffline {bdf ids} {
+ 			    incr diffline
+ 			}
+ 		    }
+-		    $ctext insert end "$line\n" $tags
++		    if {$dowords && $worddiff eq [mc "Markup words"]} {
++			$ctext insert end "$words_pre_markup$line$words_post_markup" $tags
++		    } else {
++			$ctext insert end "$line" $tags
++		    }
++		    if {!$dowords} {
++			$ctext insert end "\n" $tags
++		    }
+ 		}
++	    } elseif {$dowords && $prefix eq "~"} {
++		$ctext insert end "\n" {}
+ 	    } else {
+ 		# "\ No newline at end of file",
+ 		# or something else we don't recognize
+@@ -11393,6 +11450,7 @@ if {[tk windowingsystem] eq "win32"} {
+ set diffcolors {red "#00a000" blue}
+ set diffcontext 3
+ set ignorespace 0
++set worddiff ""
+ set markbgcolor "#e0e0ff"
  
--	for (cmd = commands; cmd; cmd = cmd->next)
-+	for (cmd = commands; cmd && !cmd->skip_update; cmd = cmd->next)
- 		cmd->error_string = update(cmd);
- }
- 
-@@ -545,6 +604,7 @@ static struct command *read_head_info(void)
- 		hashcpy(cmd->old_sha1, old_sha1);
- 		hashcpy(cmd->new_sha1, new_sha1);
- 		memcpy(cmd->ref_name, line + 82, len - 81);
-+		cmd->skip_update = 0;
- 		cmd->error_string = NULL;
- 		cmd->next = NULL;
- 		*p = cmd;
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 2de98e6..bc3f24f 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -660,6 +660,51 @@ test_expect_success 'push with branches containing #' '
- 	git checkout master
- '
- 
-+test_expect_success 'push into aliased refs (consistent)' '
-+	mk_test heads/master &&
-+	mk_child child1 &&
-+	mk_child child2 &&
-+	(cd child1 &&
-+		git branch foo &&
-+		git symbolic-ref refs/heads/bar refs/heads/foo
-+		git config receive.denyCurrentBranch false
-+	) &&
-+	(cd child2 &&
-+		: >path2 &&
-+		git add path2 &&
-+		test_tick &&
-+		git commit -a -m child2 &&
-+		git branch foo &&
-+		git branch bar &&
-+		git push ../child1 foo bar
-+	)
-+'
-+
-+test_expect_success 'push into aliased refs (inconsistent)' '
-+	mk_test heads/master &&
-+	mk_child child1 &&
-+	mk_child child2 &&
-+	(cd child1 &&
-+		git branch foo &&
-+		git symbolic-ref refs/heads/bar refs/heads/foo
-+		git config receive.denyCurrentBranch false
-+	) &&
-+	(cd child2 &&
-+		: >path2 &&
-+		git add path2 &&
-+		test_tick &&
-+		git commit -a -m child2 &&
-+		git branch foo &&
-+		: >path3 &&
-+		git add path3 &&
-+		test_tick &&
-+		git commit -a -m child2 &&
-+		git branch bar &&
-+		test_must_fail git push ../child1 foo bar 2>stderr &&
-+		grep "refusing inconsistent update" stderr
-+	)
-+'
-+
- test_expect_success 'push --porcelain' '
- 	mk_empty &&
- 	echo >.git/foo  "To testrepo" &&
+ set circlecolors {white blue gray blue blue}
 -- 
-1.7.0.3.436.g2b878
+1.7.1.rc1.284.g4b2e3
