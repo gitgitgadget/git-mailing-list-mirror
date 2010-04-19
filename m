@@ -1,66 +1,196 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH v2 0/4] A new library for plumbing output (inc.
- current status)
-Date: Mon, 19 Apr 2010 15:40:20 -0400
-Message-ID: <20100419194020.GA25883@coredump.intra.peff.net>
-References: <20100411231824.67460.24844.julian@quantumfyre.co.uk>
- <201004151107.33892.jnareb@gmail.com>
- <20100417095259.GA23110@coredump.intra.peff.net>
- <201004171502.42044.jnareb@gmail.com>
- <20100417140053.GA10997@coredump.intra.peff.net>
- <203d6cefd3cd1020eb94fbd3d5e25eae@212.159.54.234>
+From: Samuel Tardieu <sam@rfc1149.net>
+Subject: Re: [PATCH] remote add: add a --no-tags (-n) option
+Date: Mon, 19 Apr 2010 22:19:10 +0200
+Organization: RFC 1149 (see http://www.rfc1149.net/)
+Message-ID: <2010-04-19-22-19-11+trackit+sam@rfc1149.net>
+References: <20100419135014.1077.28627.stgit@localhost.localdomain>
+	<7vvdbnqpis.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
-	Eric Raymond <esr@thyrsus.com>
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Mon Apr 19 21:40:58 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 19 22:19:23 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3wq2-0004I4-4B
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 21:40:58 +0200
+	id 1O3xRB-0002RE-UE
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 22:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752542Ab0DSTkv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Apr 2010 15:40:51 -0400
-Received: from peff.net ([208.65.91.99]:48683 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751853Ab0DSTkv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Apr 2010 15:40:51 -0400
-Received: (qmail 23637 invoked by uid 107); 19 Apr 2010 19:40:56 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 19 Apr 2010 15:40:56 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Apr 2010 15:40:20 -0400
-Content-Disposition: inline
-In-Reply-To: <203d6cefd3cd1020eb94fbd3d5e25eae@212.159.54.234>
+	id S1751138Ab0DSUTQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Apr 2010 16:19:16 -0400
+Received: from zoidberg.rfc1149.net ([91.121.19.179]:33901 "EHLO
+	zoidberg.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750752Ab0DSUTP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Apr 2010 16:19:15 -0400
+Received: from localhost (unknown [IPv6:2001:6f8:37a:2:211:2fff:fe8a:af74])
+	by zoidberg.rfc1149.net (Postfix) with ESMTP id 679FE70B4;
+	Mon, 19 Apr 2010 22:19:11 +0200 (CEST)
+In-Reply-To: <7vvdbnqpis.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 19 Apr 2010 11:13:31 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-WWW: http://www.rfc1149.net/sam
+X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
+X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145324>
 
-On Sun, Apr 18, 2010 at 10:46:18PM +0100, Julian Phillips wrote:
+Add a '--no-tags' option to 'git remote add' which adds a
+'remote.REMOTE.tagopt = --no-tags' to the configuration file.
 
-> It might help standardise the output between commands if there were helper
-> functions for some of the larger structures - e.g. commits.  Though I don't
-> think that those functions would be able to do legacy output, due to the
-> current lack of cross-command output compatibility.  I'm starting to see
-> this with blame and diff-tree (and family), where they both want to output
-> information about commits.
+'git remote add -f -n REMOTE' will create a new remote and fetch
+from it without importing the tags. Subsequent 'git fetch REMOTE'
+will also not import the tags.
 
-Yeah, that was what I saw on looking at the code. And we have to support
-those old formats, obviously. For the most part, I found the level of
-verbosity in the patches you posted (and I just peeked at your repo) to
-be fine. Sure, it's more lines, but they're IMHO very easy to read.
+Signed-off-by: Samuel Tardieu <sam@rfc1149.net>
 
-If we have to tradeoff between either duplicating output entirely (for
-both the output form and traditional form) or having a more flexible but
-slightly more verbose output library, I think I would rather go with the
-latter. It will be more maintainable in the long run.
+---
+ Documentation/git-remote.txt |    5 ++++-
+ builtin/remote.c             |   12 +++++++++++-
+ t/t5505-remote.sh            |   41 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 56 insertions(+), 2 deletions(-)
 
--Peff
+>>>>> "Junio" == Junio C Hamano <gitster@pobox.com> writes:
+
+Junio> Any long-opt that begins with "no-" looks wrong, especially that
+Junio> will allow people to say "--no-no-tags".  Perhaps something like
+Junio> this is necessary.
+
+Junio>     { OPTION_BOOLEAN, 0, "tags", &tags, NULL, "fetch tags",
+Junio> PARSE_OPT_NOARG }
+
+In this version I've used "PARSE_OPT_NOARG | PARSE_OPT_NONEG" to forbid
+"--no-no-tags" and added a test for it.
+
+Junio> Or imitate whatever we do in builtin-fetch.c; although I suspect
+Junio> the default would be different in this command and "git fetch",
+Junio> so you may need to adjust for the difference a bit.
+
+I don't think we need to add "--tags" to "git remote add", do you? If
+you do, this is not difficult to add using the "git fetch" logic you
+describe.
+
+  Sam
+-- 
+Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
+
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 3fc599c..9db3c35 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git remote' [-v | --verbose]
+-'git remote add' [-t <branch>] [-m <master>] [-f] [--mirror] <name> <url>
++'git remote add' [-t <branch>] [-m <master>] [-f] [-n] [--mirror] <name> <url>
+ 'git remote rename' <old> <new>
+ 'git remote rm' <name>
+ 'git remote set-head' <name> (-a | -d | <branch>)
+@@ -51,6 +51,9 @@ update remote-tracking branches <name>/<branch>.
+ With `-f` option, `git fetch <name>` is run immediately after
+ the remote information is set up.
+ +
++With `-n` option, `git fetch <name>` does not import tags from
++the remote repository.
+++
+ With `-t <branch>` option, instead of the default glob
+ refspec for the remote to track all branches under
+ `$GIT_DIR/remotes/<name>/`, a refspec to track only `<branch>`
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 277765b..ff16487 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -106,7 +106,7 @@ static int fetch_remote(const char *name)
+ 
+ static int add(int argc, const char **argv)
+ {
+-	int fetch = 0, mirror = 0;
++	int fetch = 0, mirror = 0, notags = 0;
+ 	struct string_list track = { NULL, 0, 0 };
+ 	const char *master = NULL;
+ 	struct remote *remote;
+@@ -116,6 +116,9 @@ static int add(int argc, const char **argv)
+ 
+ 	struct option options[] = {
+ 		OPT_BOOLEAN('f', "fetch", &fetch, "fetch the remote branches"),
++		{ OPTION_BOOLEAN, 'n', "no-tags", &notags, NULL,
++		  "do not import remote tags when fetching",
++		  PARSE_OPT_NOARG | PARSE_OPT_NONEG },
+ 		OPT_CALLBACK('t', "track", &track, "branch",
+ 			"branch(es) to track", opt_parse_track),
+ 		OPT_STRING('m', "master", &master, "branch", "master branch"),
+@@ -172,6 +175,13 @@ static int add(int argc, const char **argv)
+ 			return 1;
+ 	}
+ 
++	if (notags) {
++		strbuf_reset(&buf);
++		strbuf_addf(&buf, "remote.%s.tagopt", name);
++		if (git_config_set(buf.buf, "--no-tags"))
++			return 1;
++	}
++
+ 	if (fetch && fetch_remote(name))
+ 		return 1;
+ 
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 230c0cd..47e9e67 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -320,6 +320,47 @@ test_expect_success 'add alt && prune' '
+ 	 git rev-parse --verify refs/remotes/origin/side2)
+ '
+ 
++cat > test/expect << EOF
++some-tag
++EOF
++
++test_expect_success 'add with tags (default)' '
++	(cd one &&
++	 git tag -a -m "Some tag" some-tag) &&
++	(mkdir add-tags &&
++	 cd add-tags &&
++	 git init &&
++	 git remote add -f origin ../one &&
++	 git tag -l some-tag > ../test/output &&
++	 test_must_fail git config remote.origin.tagopt) &&
++	(cd one &&
++	 git tag -d some-tag) &&
++	test_cmp test/expect test/output
++'
++
++cat > test/expect << EOF
++--no-tags
++EOF
++
++test_expect_success 'add --no-tags' '
++	(cd one &&
++	 git tag -a -m "Some tag" some-tag) &&
++	(mkdir add-no-tags &&
++	 cd add-no-tags &&
++	 git init &&
++	 git remote add -f -n origin ../one &&
++	 git tag -l some-tag > ../test/output &&
++	 git config remote.origin.tagopt >> ../test/output) &&
++	(cd one &&
++	 git tag -d some-tag) &&
++	test_cmp test/expect test/output
++'
++
++test_expect_success 'reject --no-no-tags' '
++	(cd add-no-tags &&
++	 test_must_fail git remote add -f --no-no-tags neworigin ../one)
++'
++
+ cat > one/expect << EOF
+   apis/master
+   apis/side
+-- 
+tg: (af02b6d..) t/no-tags (depends on: origin/next)
