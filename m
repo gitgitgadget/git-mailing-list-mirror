@@ -1,313 +1,175 @@
-From: John Dlugosz <JDlugosz@TradeStation.com>
-Subject: RE: ghost refs
-Date: Mon, 19 Apr 2010 11:33:17 -0400
-Message-ID: <89030B4A18ECCD45978A3A6B639D1F24032A523E62@FL01EXMB01.trad.tradestation.com>
-References: <20100407210010.GB27012@coredump.intra.peff.net>
- <89030B4A18ECCD45978A3A6B639D1F24032A0750BE@FL01EXMB01.trad.tradestation.com>
- <k2p32541b131004071503g4ce66e5bjac8270b10790a2af@mail.gmail.com>
- <89030B4A18ECCD45978A3A6B639D1F24032A0750CC@FL01EXMB01.trad.tradestation.com>
- <k2x32541b131004071511i9bbe883az504547d6133aef@mail.gmail.com>
- <20100408043059.GA28768@coredump.intra.peff.net>
- <89030B4A18ECCD45978A3A6B639D1F24032A075390@FL01EXMB01.trad.tradestation.com>
- <7vwrwh6fz8.fsf@alter.siamese.dyndns.org>
- <20100408194908.GB4222@sigill.intra.peff.net>
- <7vbpdt65ie.fsf@alter.siamese.dyndns.org>
- <20100417115111.GB28623@coredump.intra.peff.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] remote add: add a --no-tags (-n) option
+Date: Mon, 19 Apr 2010 18:10:27 +0200
+Message-ID: <4BCC8073.80109@drmicha.warpmail.net>
+References: <20100419135014.1077.28627.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Avery Pennarun <apenwarr@gmail.com>
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 19 17:53:04 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Samuel Tardieu <sam@rfc1149.net>
+X-From: git-owner@vger.kernel.org Mon Apr 19 18:13:38 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3tHT-0000wC-3o
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 17:53:03 +0200
+	id 1O3tbN-0004oT-Kl
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 18:13:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753771Ab0DSPw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Apr 2010 11:52:56 -0400
-Received: from mail2.tradestation.com ([63.99.207.80]:47455 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753027Ab0DSPwy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Apr 2010 11:52:54 -0400
-X-Greylist: delayed 1173 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Apr 2010 11:52:54 EDT
-X-ASG-Debug-ID: 1271691199-2d4a8cca0001-QuoKaX
-Received: from FL01EXCAHT02.trad.tradestation.com (fl01excaht02.trad.tradestation.com [10.4.0.167]) by mail2.tradestation.com with ESMTP id jH73SKcKJZA0kaLw (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Mon, 19 Apr 2010 11:33:19 -0400 (EDT)
-X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
-X-ASG-Whitelist: Client
-Received: from FL01EXMB01.trad.tradestation.com ([::1]) by
- FL01EXCAHT02.trad.tradestation.com ([::1]) with mapi; Mon, 19 Apr 2010
- 11:33:19 -0400
-X-Barracuda-BBL-IP: ::1
-X-Barracuda-RBL-IP: ::1
-X-ASG-Orig-Subj: RE: ghost refs
-Thread-Topic: ghost refs
-Thread-Index: AcreJFpMvBASD5RCR/qoivLlzxhNaQBsKkdw
-In-Reply-To: <20100417115111.GB28623@coredump.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-Barracuda-Connect: fl01excaht02.trad.tradestation.com[10.4.0.167]
-X-Barracuda-Start-Time: 1271691199
-X-Barracuda-Encrypted: AES128-SHA
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at tradestation.com
+	id S1754847Ab0DSQNc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Apr 2010 12:13:32 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:34678 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754948Ab0DSQNb (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Apr 2010 12:13:31 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id ACED4E9F05;
+	Mon, 19 Apr 2010 12:13:30 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Mon, 19 Apr 2010 12:13:30 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=6jCrrKiCIRzKYiUoglZb8dYPALM=; b=nKFBnKaNed9zuHaHzu1vEFcsqrdhMjk/oQCb7/7QBZdptGXoU+GgWPVoq4Ri+YTLt9h8PCaNk1iLbg0cx6nmfoFBAL/Zvq3Nks/vMOeLcMSS8ptG2eRsi/OYco2pM5/kXVyThTT2BxGfzImbKwOBY4UcTgHHBgNt0okb4HdCqnQ=
+X-Sasl-enc: X3vmUnCSDLb0Z1sCoeRR4vM7H7FHXDGt6aozf9D/o40X 1271693610
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id C4CBE37DE4;
+	Mon, 19 Apr 2010 12:13:29 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100414 Lightning/1.0b2pre Lanikai/3.1b2pre
+In-Reply-To: <20100419135014.1077.28627.stgit@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145309>
 
-SWYgYWxsIHRoZSBwYWdlcyB3ZXJlIHBvdXJlZCBpbnRvIGEgd2lraSwgdGhl
-biBpdCB3b3VsZCBiZSBlYXN5IGZvciBhbnlvbmUgdG8gZnVzcyB3aXRoIHRo
-ZW0gd2hlbiB0aGUgbW9vZCBoaXQuICBJdCB3b3VsZCBhbHNvIG1ha2UgaXQg
-cG9zc2libGUgdG8gY29uc29saWRhdGUgdGhlIHNoYXJlZCBjb25jZXB0dWFs
-IHBhZ2VzIHdpdGggaHlwZXJsaW5rcy4NCg0KSWRlYWxseSwgdGhlIHdpa2kg
-ZW5naW5lIHNob3VsZCBiZSBhYmxlIHRvIHNwaXQgb3V0IGEgc2V0IG9mIHN0
-YXRpYyBodG1sL2NzcyBmaWxlcyBmb3IgaW5jbHVzaW9uIG9uIHRoZSBsb2Nh
-bCBtYWNoaW5lIHdpdGhvdXQgYSBzZXJ2ZXIuICBBIGJ1dHRvbiBvbiBlYWNo
-IHBhZ2Ugd291bGQgc3dpdGNoIHRvIHRoZSBsaXZlIHZlcnNpb24gb2YgdGhl
-IHBhZ2Ugb24gdGhlIEludGVybmV0LCB3aGljaCB3b3VsZCBzaG93IGN1cnJl
-bnQgdXBkYXRlcyBhbmQgb2ZmZXIgZWRpdGluZyBjYXBhYmlsaXR5LCBoaXN0
-b3J5LCBhbmQgZGlzY3Vzc2lvbi4NCg0KUGVyaGFwcyB0aGUgZG9jdW1lbnRh
-dGlvbiBvbiB0aGUgb3B0aW9ucyBjb3VsZCBiZSBlbnRlcmVkIGFic3RyYWN0
-bHksIGFuZCB0aGUgZW5naW5lIHdvdWxkIGF1dG9tYXRpY2FsbHkgZm9ybWF0
-IHRoZSBkZXRhaWxlZCBsaXN0IGFuZCBhbnkgdHlwZSBvZiBkZXNpcmVkIHN5
-bm9wc2lzIChhbHBoYSwgY2F0ZWdvcmljYWwsIGxvbmcsIHNob3J0LC4uLiku
-DQoNCi0tSm9obg0KDQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+
-IEZyb206IEplZmYgS2luZyBbbWFpbHRvOnBlZmZAcGVmZi5uZXRdDQo+IFNl
-bnQ6IFNhdHVyZGF5LCBBcHJpbCAxNywgMjAxMCA2OjUxIEFNDQo+IFRvOiBK
-dW5pbyBDIEhhbWFubw0KPiBDYzogSm9obiBEbHVnb3N6OyBnaXRAdmdlci5r
-ZXJuZWwub3JnOyBBdmVyeSBQZW5uYXJ1bg0KPiBTdWJqZWN0OiBSZTogZ2hv
-c3QgcmVmcw0KPiANCj4gT24gVGh1LCBBcHIgMDgsIDIwMTAgYXQgMDE6NDI6
-MDFQTSAtMDcwMCwgSnVuaW8gQyBIYW1hbm8gd3JvdGU6DQo+IA0KPiA+IFdl
-IG1pZ2h0IHdhbnQgdG8gaGF2ZSBhIGdlbmVyYWwgY29uY2Vuc3VzIG9uIHdo
-YXQgd2Ugd2FudCB0byBoYXZlIGluDQo+IHRoZQ0KPiA+IGRvY3VtZW50YXRp
-b24uICBBcyB5b3Ugbm90ZWQsIHNvbWUgaGF2ZSB0b28gc3BhcnNlIFNZTk9Q
-U0lTLCB3aGlsZQ0KPiBvdGhlcnMNCj4gPiBoYXZlIGZ1bGwgbGlzdCBvZiBv
-cHRpb25zLiAgU29tZSBtZW50aW9uIGNvbmZpZ3VyYXRpb24gdmFyaWFibGVz
-LA0KPiB3aGlsZQ0KPiA+IG90aGVycyBkb24ndC4gIFNvbWUgaGF2ZSBleHRl
-bnNpdmUgZXhhbXBsZXMsIHdoaWxlIG90aGVycyBsYWNrIGFueS4NCj4gPiBP
-bmNlIHdlIGtub3cgdGhlIGdlbmVyYWwgZGlyZWN0aW9uIGluIHdoaWNoIHdl
-IGFyZSBnb2luZywgd2UgY2FuIGhhbmQNCj4gb2ZmDQo+ID4gdGhlIGFjdHVh
-bCBkb2N1bWVudGF0aW9uIHVwZGF0ZXMgdG8gdGhlIGNyb3dkIDstKQ0KPiAN
-Cj4gSSB3b3VsZCBhbHNvIGxpa2UgdG8gaGF2ZSBjb25zZW5zdXMgb24gdGhp
-cywgdG9vLiBCdXQgaXQgc2VlbXMgbGlrZSBpdA0KPiBnZXRzIGJpa2VzaGVk
-ZGVkIHRvIGRlYXRoIGV2ZXJ5IHRpbWUgaXQgY29tZXMgdXAuICBCdXQgaGV5
-LCB3aHkgbm90IHRyeQ0KPiBpdCBvbmUgbW9yZSB0aW1lPyA6KQ0KPiANCj4g
-PiBJJ2xsIGxpc3QgbXkgcHJlZmVyZW5jZSBvZmYgdGhlIHRvcCBvZiBteSBo
-ZWFkIGFzIGEgZmlyZXN0YXJ0ZXIuDQo+ID4NCj4gPiBOQU1FOjoNCj4gPg0K
-PiA+IFRoZSBuYW1lIGZvbGxvd2VkIGJ5IHdoYXQgaXQgaXMgdXNlZCBmb3IN
-Cj4gDQo+IFllcCwgbWFrZXMgc2Vuc2UuDQo+IA0KPiA+IFNZTk9QU0lTOjoN
-Cj4gPg0KPiA+IEkgcHJlZmVyIHRvIGhhdmUgKGFsbW9zdCkgY29tcGxldGUg
-c2V0IG9mIG9wdGlvbnMgaW4gU1lOT1BTSVMsIHJhdGhlcg0KPiB0aGFuDQo+
-ID4gImNvbW1hbmQgWzxvcHRpb25zPl0gPGFyZ3M+Li4uIiB3aGljaCBpcyBu
-ZXh0IHRvIHVzZWxlc3MuICBUaGlzIGlzDQo+ID4gZXNwZWNpYWxseSB0cnVl
-IGZvciBjb21tYW5kcyB3aG9zZSBvbmUgc2V0IG9mIG9wdGlvbnMgaXMgaW5j
-b21wYXRpYmxlDQo+IHdpdGgNCj4gPiBvdGhlciBzZXQgb2Ygb3B0aW9ucyBh
-bmQgYXJndW1lbnRzIChlLmcuIHRoZXJlIGlzIG5vIHBsYWNlIGZvciAiLWIi
-DQo+IHRvDQo+ID4gImNoZWNrb3V0IiB0aGF0IGNoZWNrcyBvdXQgcGF0aHMg
-b3V0IG9mIHRoZSBpbmRleCBvciBhIHRyZWUtaXNoKS4NCj4gDQo+IEkgbXVj
-aCBwcmVmZXIgdG8gaGF2ZSB0aGUgIm1ham9yIG1vZGVzIG9mIG9wZXJhdGlv
-biIuIFNvIHllcywgImNvbW1hbmQNCj4gWzxvcHRpb25zPl0gPGFyZ3M+IiBp
-cyB1c2VsZXNzLiBCdXQNCj4gDQo+ICAgZ2l0IGxvZyBbPG9wdGlvbj5dIFs8
-c2luY2U+Li48dW50aWw+XSBbWy0tXSA8cGF0aD4uLi5dDQo+IA0KPiBpcyBz
-cGFyc2UgYnV0IHVzZWZ1bC4gWW91IGltbWVkaWF0ZWx5IGdldCBhIHNlbnNl
-IG9mIGhvdyB0byBpbnZva2UgdGhlDQo+IGNvbW1hbmQsIGFuZCBpdCBpcyB2
-ZXJ5IHJlYWRhYmxlLiBJZiB5b3Ugd2VyZSB0byBwdXQgaW4gdGhlIGRvemVu
-cyBvZg0KPiBwb3NzaWJsZSBvcHRpb25zLCBpdCB3b3VsZCBiZWNvbWUgaGFy
-ZCB0byBzZWUgd2hhdCBpdCBpcyBzYXlpbmcuIElmIHlvdQ0KPiB3YW50IGEg
-Y29tcGxldGUgbGlzdCBvZiBvcHRpb25zIChJTUhPKSwgdGhleSBzaG91bGQg
-YmUgaW4gbGlzdCBmb3JtLg0KPiANCj4gQXMgYW5vdGhlciBleGFtcGxlLCBm
-b3IgZ2l0LWJyYW5jaCwgSSB3b3VsZCBzdWdnZXN0Og0KPiANCj4gICBnaXQg
-YnJhbmNoIFs8b3B0aW9ucz5dDQo+ICAgZ2l0IGJyYW5jaCBbPG9wdGlvbnM+
-XSA8YnJhbmNobmFtZT4gPHN0YXJ0LXBvaW50Pg0KPiAgIGdpdCBicmFuY2gg
-LW0gWzxvbGRicmFuY2g+XSA8bmV3YnJhbmNoPg0KPiAgIGdpdCBicmFuY2gg
-LWQgWzxvcHRpb25zPl0gPGJyYW5jaG5hbWU+DQo+IA0KPiBGcm9tIHRoYXQg
-SSBjYW4gcXVpY2tseSBzZWUgdGhhdCB0aGVyZSBhcmUgZm91ciBtYWpvciBt
-b2RlczogbGlzdGluZywNCj4gY3JlYXRpbmcgYSBuZXcgYnJhbmNoLCBtb3Zp
-bmcgYSBicmFuY2gsIGFuZCBkZWxldGluZyBhIGJyYW5jaC4gSSB3b3VsZA0K
-PiBhbHNvIGJlIGhhcHB5IGlmIGVhY2ggbW9kZSB3YXMgZXhwbGljaXRseSBk
-ZXNjcmliZWQuIFNvbWUgb2YgbXkNCj4gZmF2b3JpdGUNCj4gc3lub3BzZXMg
-YXJlIHRob3NlIG9mIHBlcmwgbW9kdWxlcywgd2hpY2ggdGVuZCB0byBnaXZl
-IHlvdSBhIHZlcnkgc2hvcnQNCj4gYW5kIHJlYWRhYmxlIGNvZGUgc25pcHBl
-dCBvZiBob3cgeW91IG1pZ2h0IHVzZSB0aGUgbW9kdWxlLCBhbG9uZyB3aXRo
-DQo+IGNvbW1lbnRzIHNob3dpbmcgYW55dGhpbmcgbm9uLW9idmlvdXMuDQo+
-IA0KPiBJbiB0aGUgY2FzZSBvZiBicmFuY2gsIGVudW1lcmF0aW5nIHRoZSBv
-cHRpb25zIGluIHRoZSBzeW5vcHNpcyBkb2Vzbid0DQo+IGJvdGhlciBtZSBt
-dWNoLCBiZWNhdXNlIHRoZXJlIGFyZSBmZXcgZW5vdWdoIHRoYXQgaXQgcmVt
-YWlucyBmYWlybHkNCj4gcmVhZGFibGUuIEJ1dCBzb21ldGhpbmcgc29tZXRo
-aW5nIGxpa2UgImdpdCBmb3JtYXQtcGF0Y2giIG9yICJnaXQNCj4gYXBwbHki
-DQo+IGFyZSBnZXR0aW5nIHByZXR0eSBsb25nLg0KPiANCj4gSSBrbm93IHRo
-YXQgb3RoZXJzIGRpc2FncmVlLCB0aG91Z2guIFdoZW4gdGhpcyBjYW1lIHVw
-IGxhc3QgdGltZSwgc29tZQ0KPiBwZW9wbGUgc2FpZCB0aGV5IHJlYWxseSBs
-aWtlIGhhdmluZyB0aGF0IGdpYW50IGNsdW1wIG9mIG9wdGlvbnMuIE91cg0K
-PiBtYW5wYWdlcyBjdXJyZW50bHkgc2VlbSB0byBiZSBzcGxpdCBiZXR3ZWVu
-IHRoZSB0d28gdHlwZXMuDQo+IA0KPiA+IEkgYWxzbyBwcmVmZXIgbm90IHRv
-IGxpc3QgInB1cmVseSBmb3IgYmFja3dhcmQgY29tcGF0aWJpbGl0eSIgb3B0
-aW9ucw0KPiBpbg0KPiA+IFNZTk9QU0lTIHNlY3Rpb24uDQo+IA0KPiBEZWZp
-bml0ZWx5Lg0KPiANCj4gPiBERVNDUklQVElPTjo6DQo+ID4NCj4gPiBUaGUg
-ZGVzY3JpcHRpb24gc2VjdGlvbiBzaG91bGQgZmlyc3Qgc3RhdGUgd2hhdCB0
-aGUgY29tbWFuZCBpcyB1c2VkDQo+IGZvciwNCj4gPiBpb3csIGluIHdoaWNo
-IHNpdHVhdGlvbiB0aGUgdXNlciBtaWdodCB3YW50IHRvIHVzZSB0aGF0IGNv
-bW1hbmQuDQo+IA0KPiBZZXMuIEFsc28sIGl0IHNob3VsZCBwcm9iYWJseSBk
-aXNjdXNzIHRoZSBkaWZmZXJlbnQgbW9kZXMgb2Ygb3BlcmF0aW9uDQo+IGlm
-IHRoZXJlIGlzIG1vcmUgdGhhbiBvbmUuDQo+IA0KPiA+IE9QVElPTlM6Og0K
-PiA+DQo+ID4gTGlzdCBvZiBmdWxsIG9wdGlvbnMuICBTb21lIGV4aXN0aW5n
-IHBhZ2VzIGxpc3QgdGhlbSBhbHBoYWJldGljYWxseSwNCj4gd2hpbGUNCj4g
-PiBvdGhlcnMgbGlzdCB0aGVtIGluIGZ1bmN0aW9uYWwgZ3JvdXBzLiAgSSBw
-cmVmZXIgdGhlIGxhdHRlciB3aGljaA0KPiB0ZW5kcyB0bw0KPiA+IG1ha2Ug
-dGhlIHBhZ2UgbW9yZSBjb25jaXNlLCBhbmQgaXMgbW9yZSBzdWl0ZWQgZm9y
-IHBlb3BsZSB3aG8gZ290DQo+IHVzZWQgdG8NCj4gPiB0aGUgc3lzdGVtIChh
-bmQgcmVtZW1iZXIsIG5vYm9keSBzdGF5cyB0byBiZSBhIG5ld2JpZSBmb3Jl
-dmVyLCBhbmQNCj4gcGVvcGxlDQo+ID4gd2hvIHN0YXkgdG8gYmUgbmV3Ymll
-cyBmb3JldmVyIGFyZSBub3Qgb3VyIHByaW1hcnkgYXVkaWVuY2UpLg0KPiAN
-Cj4gSSBhbHNvIHByZWZlciBzb3J0aW5nIGJ5IGZ1bmN0aW9uYWxpdHkuIFRo
-ZSBvbmx5IHJlYXNvbiB0byBwcmVmZXINCj4gYWxwaGFiZXRpY2FsIGlzIGZv
-ciBwZW9wbGUgZmluZGluZyBhIHNwZWNpZmljIG9wdGlvbi4gUHJlc3VtYWJs
-eSB0aGVpcg0KPiBwYWdlciBoYXMgYSBzZWFyY2ggZnVuY3Rpb24gKHdoZXJl
-YXMgZm9yIGdyb3VwaW5nIGJ5IGZ1bmN0aW9uYWxpdHksIEkNCj4gYWdyZWUg
-d2l0aCB5b3VyIGNvbmNpc2VuZXNzIGFyZ3VtZW50LCBhbmQgaXQgbWVhbnMg
-eW91IGFyZSBtb3JlIGxpa2VseQ0KPiB0byBmaW5kIHJlbGF0ZWQgb3B0aW9u
-cyB0aGF0IG1pZ2h0IGhlbHAgeW91KS4NCj4gDQo+ID4gRGV0YWlsZWQgZGlz
-Y3Vzc2lvbiBvZiBjb25jZXB0czo6DQo+ID4NCj4gPiBTb21lIG1hbnVhbCBw
-YWdlcyBuZWVkIHRvIGhhdmUgZGlzY3Vzc2lvbiBvZiBiYXNpYyBjb25jZXB0
-cyB0aGF0DQo+IHdvdWxkIG5vdA0KPiA+IGJlIGEgZ29vZCBmaXQgZm9yIHRo
-ZSBERVNDUklQVElPTiBzZWN0aW9uIChlLmcuICJEZXRhY2hlZCBIRUFEIg0K
-PiBzZWN0aW9uIGluDQo+ID4gImNoZWNrb3V0IiBtYW51YWwpLiAgSSBhbSBu
-b3Qgc3VyZSBpZiB0aGlzIGtpbmQgb2YgbWF0ZXJpYWwgaXMgYmV0dGVyDQo+
-ID4gZ2l2ZW4gaW4gT1BUSU9OUyBzZWN0aW9uIGNsb3NlIHRvIHRoZSBmdW5j
-dGlvbmFsIGdyb3VwIChlLmcuICJIaXN0b3J5DQo+ID4gU2lpbXBsaWZpY2F0
-aW9uIiBoZWFkaW5nIGluICJsb2ciIG1hbnVhbCkuDQo+IA0KPiBJIHdvdWxk
-IHJlYWxseSBwcmVmZXIgbW9zdCBvZiB0aGlzIG1hdGVyaWFsIHRvIGJlIHB1
-c2hlZCBvdXQgaW50byBpdHMNCj4gb3duIG1hbnVhbCBwYWdlcywgYW5kIHJl
-ZmVycmVkIHRvIGJ5IG5hbWUgKGUuZy4sIHNheSAic2VlDQo+IGdpdGhpc3Rv
-cnkoNykgZm9yIGEgZGlzY3Vzc2lvbiBvZiBoaXN0b3J5IHNpbXBsaWZpY2F0
-aW9uIiBvciAiaGlzdG9yeQ0KPiBpcyBzaW1wbGlmaWVkIGFzIGRlc2NyaWJl
-ZCBpbiBnaXRoaXN0b3J5KDcpIikuDQo+IA0KPiBIZXJlJ3MgbXkgcmVhc29u
-aW5nLiAgVGhlcmUgaXMgYSBsb3Qgb2Ygb3ZlcmxhcCBpbiBnaXQgY29tbWFu
-ZHMuIFRoZQ0KPiBzYW1lIGNvbmNlcHRzIGNvbWUgdXAgaW4gbWFueSBwbGFj
-ZXMgKGUuZy4sIHJldmlzaW9uIHRyYXZlcnNhbCwNCj4gZm9ybWF0dGluZywg
-YW5kIGRpZmYgb3B0aW9ucyBpbiBsb2csIHNob3csIHdoYXRjaGFuZ2VkLCBk
-aWZmLCBkaWZmLSosDQo+IGV0YykuIEhpc3Rvcnkgc2ltcGxpZmljYXRpb24g
-d2lsbCBjb21lIHVwIGluIGF0IGxlYXN0IHJldi1saXN0IGFuZCBsb2cuDQo+
-IFNvIG91ciBvcHRpb25zIGFyZToNCj4gDQo+ICAgMS4gY2hvb3NlIG9uZSBw
-bGFjZSBhcyB0aGUgY2Fub25pY2FsIGxvY2F0aW9uLCBhbmQgc2F5ICJzZWUg
-aGlzdG9yeQ0KPiAgICAgIHNpbXBsaWZpY2F0aW9uIGluIGdpdC1sb2coMSki
-IGV2ZXJ5d2hlcmUgZWxzZS4NCj4gDQo+ICAgICAgVGhpcyBpcyBhbm5veWlu
-ZyBiZWNhdXNlIHRoZSB1c2VyIGhhcyB0byBmaW5kIHRoZSByaWdodCBzZWN0
-aW9uIGluDQo+ICAgICAgZ2l0LWxvZy4gRm9yIG1hbnBhZ2VzLCBpdCB3b3Vs
-ZCBiZSBuaWNlciB0byBqdXN0IGRvICJtYW4NCj4gICAgICBnaXRoaXN0b3J5
-IiwgYW5kIGZvciBmb3JtYXRzIHdpdGggaHlwZXJsaW5rcywgaXQgc2hvdWxk
-IGJlIGENCj4gICAgICBoeXBlcmxpbmsuDQo+IA0KPiAgIDIuIGZhY3RvciBp
-dCBvdXQgaW50byBoaXN0b3J5LnR4dCwgYW5kIGluY2x1ZGUgaXQgaW4gZWFj
-aCByZWxldmFudA0KPiAgICAgIHBhZ2UuIFRoaXMgaXMgd2hhdCB3ZSBkbyB3
-aXRoIHByZXR0eS1mb3JtYXRzLnR4dCwgZGlmZi1vcHRpb25zLA0KPiBhbmQN
-Cj4gICAgICBzb21lIG90aGVycy4NCj4gDQo+ICAgICAgTXkgcHJvYmxlbSB3
-aXRoIHRoaXMgYXBwcm9hY2ggaXMgdHdvLWZvbGQ6DQo+IA0KPiAgICAgICAg
-YS4gVGhlcmUgaXMgc29tZSB2YWx1ZSB0byBuYW1pbmcgdGhlIGNvbmNlcHQg
-dG8gdGhlIHVzZXIuIElmIEkNCj4gICAgICAgICAgIHJlYWQgdGhlICJnaXQg
-c2hvdyIgcGFnZSBhbmQgdGhlbiB0aGUgImdpdCBsb2ciIHBhZ2UsIEkgbWF5
-DQo+ICAgICAgICAgICBzZWUgdGhhdCB0aGV5IGJvdGggaGF2ZSBwcmV0dHkg
-b3B0aW9ucy4gQnV0IGl0IHRha2VzIHNvbWUNCj4gICAgICAgICAgIG1lbnRh
-bCBlZmZvcnQgdG8gc2VlIHRoYXQgdGhleSBhcmUgaWRlbnRpY2FsIGFuZCB0
-aGVuIHJlZHVjZQ0KPiAgICAgICAgICAgaXQgdG8gImJvdGggY29tbWFuZHMg
-dGFrZSB0aGUgc2FtZSBwcmV0dHkgb3B0aW9ucyIgaW4gbXkNCj4gbWluZC4N
-Cj4gICAgICAgICAgIEJ1dCBpZiB3ZSBleHBsaWNpdGx5IGxpbmssIHRoZW4g
-d2UgYXJlIHNheWluZyAidGhlcmUgaXMgYQ0KPiAgICAgICAgICAgY29uY2Vw
-dCBjYWxsZWQgcHJldHR5IG9wdGlvbnMuIFlvdSBjYW4gdXNlIGl0IGhlcmUs
-IGFuZCB3aGVuDQo+ICAgICAgICAgICB5b3Ugc2VlIG90aGVyIHBsYWNlcyBt
-ZW50aW9uIHRoYXQgY29uY2VwdCwgaXQgaXMgdGhlIHNhbWUNCj4gICAgICAg
-ICAgIHRoaW5nLiIgV2hpY2ggSU1ITyBtYWtlcyBnaXQgZWFzaWVyIHRvIGxl
-YXJuIGZvciBuZXcgdXNlcnM7DQo+ICAgICAgICAgICB0aGV5IGxlYXJuIGVh
-c2lseSBkaWdlc3RhYmxlIGNvbmNlcHRzIGFuZCBidWlsZCBvbiB0aGVtDQo+
-ICAgICAgICAgICBpbnN0ZWFkIG9mIGJlaW5nIG92ZXJ3aGVsbWVkIHdpdGgg
-Y29tbWFuZHMgYW5kIG9wdGlvbnMuDQo+IA0KPiAgICAgICAgIGIuIEFzIGFu
-IGV4cGVyaWVuY2VkIHVzZXIgd2hvIGFscmVhZHkga25vd3MgdGhhdCAicHJl
-dHR5DQo+ICAgICAgICAgICAgZm9ybWF0cyIgaXMgYSBjb25jZXB0LCBJIGZp
-bmQgaXQgYW5ub3lpbmcgdG8gaGF2ZSB0byBmaW5kDQo+ICAgICAgICAgICAg
-dGhlbSBpbnNpZGUgb2YgZ2l0LWxvZygxKSB3aGVuIEkgd2FudCB0byBzZWUg
-dGhlbS4gSSB3b3VsZA0KPiAgICAgICAgICAgIG11Y2ggcHJlZmVyIHRvIGRv
-ICJtYW4gZ2l0cHJldHR5Ii4NCj4gDQo+ICAgICAgICAgYy4gVGhlc2Ugc3Vi
-c2VnbWVudHMgY2FuIGdldCBsb25nLiBwcmV0dHktZm9ybWF0cy50eHQgaXMg
-MTg2DQo+ICAgICAgICAgICAgbGluZXMuIFRoYXQgaXMgYSBiaWcgY2h1bmsg
-dG8gYmUgaW4gbXkgd2F5IGlmIEkgYW0gcmVhZGluZw0KPiAgICAgICAgICAg
-IGdpdC1sb2coMSkuIEkgZ2V0IHRvIHRoZSAicHJldHR5IGZvcm1hdHMiIHNl
-Y3Rpb24gYW5kIHNheQ0KPiAgICAgICAgICAgICJ0aGF0IGlzIG5vdCBpbnRl
-cmVzdGluZyB0byBtZS4gV2hhdCBpcyB0aGUgbmV4dCBzZWN0aW9uPyINCj4g
-ICAgICAgICAgICBhbmQgdGhlbiBoYXZlIHRvIHNjcm9sbCBkb3duIHRocm91
-Z2ggMTg2IGxpbmVzLg0KPiANCj4gICAzLiBmYWN0b3IgaXQgaW50byBnaXRo
-aXN0b3J5KDcpLCBhbmQgcmVmZXJlbmNlIGl0IGJ5IG5hbWUNCj4gDQo+ICAg
-ICAgT2J2aW91c2x5IHRoaXMgaXMgbXkgZmF2b3JpdGUuIDopIEl0IGRvZXMg
-aGF2ZSBvbmUgZG93bnNpZGUsDQo+ICAgICAgdGhvdWdoLiBJZiB3ZSBjb252
-ZXJ0IHByZXR0eS1mb3JtYXRzLnR4dCBpbnRvIGdpdHByZXR0eSg3KSwgdGhl
-bg0KPiAgICAgIHNlYXJjaGluZyBmb3IgIm9uZWxpbmUiIGluIGdpdC1sb2cg
-bWF5IG5vdCB0dXJuIHVwIHdoYXQgeW91IHdhbnQuDQo+ICAgICAgSSB3b25k
-ZXIgaWYgd2UgY2FuIHN1bW1hcml6ZSB3aXRoIHNvbWV0aGluZyBsaWtlOg0K
-PiANCj4gICAgICAgIC0tZm9ybWF0PToNCj4gICAgICAgIC0tcHJldHR5PTxv
-bmVsaW5lfGZ1bGx8cmF3PjoNCj4gICAgICAgIC0tb25lbGluZToNCj4gICAg
-ICAgICAgRm9ybWF0IHRoZSBvdXRwdXQuIFNlZSBnaXRwcmV0dHkoNykuDQo+
-IA0KPiAgICAgaW4gZ2l0LWxvZygxKS4NCj4gDQo+ID4gRVhBTVBMRVM6Og0K
-PiA+DQo+ID4gSSBwcmVmZXIgdG8gbWFrZSBpdCBtYW5kYXRvcnkgZm9yIFBv
-cmNlbGFpbiBjb21tYW5kIG1hbnVhbCBwYWdlcyB0bw0KPiBoYXZlIGENCj4g
-PiBsaXN0IG9mIG9mdGVuIHVzZWQgcGF0dGVybnMgdGhhdCBhIHJlYXNvbmFi
-bHkgaW50ZWxsaWdlbnQgcGVyc29uIGNhbg0KPiBndWVzcw0KPiA+IGhvdyB0
-byB0d2VhayB0byBtYXRjaCB0aGUgcGFydGljdWxhciBzaXR1YXRpb24gcy9o
-ZSBpcyBpbi4NCj4gDQo+IFllcywgZXhhbXBsZXMgYXJlIGdvb2QuDQo+IA0K
-PiA+IEFVVEhPUi9ET0NVTUVOVEFJVE9OOjoNCj4gPg0KPiA+IFRoZXNlIHNl
-Y3Rpb25zIGluIG1vc3QgcGFnZXMgYXJlIG5vdCBrZXB0IHVwIHRvIGRhdGUs
-IGFuZCBJIHByZWZlciB0bw0KPiA+IHJlbW92ZSB0aGVtIGFsdG9nZXRoZXIu
-ICBUaGV5IGRvIG5vdCBoZWxwIGVuZCB1c2VycyB3aG8gbmV2ZXIgY2xvbmUN
-Cj4gPiBnaXQuZ2l0LCBhbmQgdGhvc2Ugd2hvIGNsb25lIGdpdC5naXQgd2ls
-bCBoYXZlIHNob3J0bG9nIHRvIGdpdmUgdGhlbQ0KPiBtb3JlDQo+ID4gYWNj
-dXJhdGUgaW5mb3JtYXRpb24uDQo+IA0KPiBBZ3JlZWQuIEkgZmluZCB0aGVt
-IHVzZWxlc3MgYXQgYmVzdCwgY2x1dHRlciBhdCB3b3JzdC4NCj4gDQo+IA0K
-PiBZb3UgZGlkbid0IG1lbnRpb24gY29uZmlndXJhdGlvbiB2YXJpYWJsZXMu
-IEkgZG8gdGhpbmsgaXQgd291bGQgYmUNCj4gYmV0dGVyIHRvIGhhdmUgdGhl
-IHZhcmlhYmxlcyBmb3IgYSBzcGVjaWZpYyBjb21tYW5kIGluIHRoYXQgY29t
-bWFuZCdzDQo+IG1hbnBhZ2UgKGluIGFuIEVOVklST05NRU5UIHNlY3Rpb24g
-dGhhdCBhbHNvIG1lbnRpb25zIGVudmlyb25tZW50DQo+IHZhcmlhYmxlcyku
-IEZvciB2YXJpYWJsZXMgdGhhdCBhZmZlY3QgbWFueSBjb21tYW5kcywgSSB3
-b3VsZCBzdWdnZXN0DQo+IGZhY3RvcmluZyB0aGVtIG91dCBhcyBkZXNjcmli
-ZWQgYWJvdmUuDQo+IA0KPiBnaXQtY29uZmlnIChvciBwZXJoYXBzIGV2ZW4g
-Z2l0Y29uZmlnKDcpKSBzaG91bGQgaGF2ZSBhIGxpc3Qgb2YgYWxsDQo+IHZh
-cmlhYmxlcyBhbmQgd2hlcmUgdGhleSBhcmUgZGVzY3JpYmVkLCBsaWtlOg0K
-PiANCj4gICBhcHBseS5pZ25vcmV3aGl0ZXNwYWNlICAgICAgICBnaXQtYXBw
-bHkoMSkNCj4gICBhcHBseS53aGl0ZXNwYWNlICAgICAgICAgICAgICBnaXQt
-YXBwbHkoMSkNCj4gICBicmFuY2guYXV0b3NldHVwbWVyZ2UgICAgICAgICBn
-aXQtYnJhbmNoKDEpDQo+ICAgW2V0Y10NCj4gDQo+IFRoZXJlIGlzIG5vdCBt
-dWNoIHBvaW50IGluIGhhdmluZyBmdWxsIGRlc2NyaXB0aW9ucyBpbiBvbmUg
-Z2lhbnQgbGlzdC4NCj4gSW5zdGVhZCwgeW91IGNhbiBwZXJ1c2UgdGhlIHdo
-b2xlIGxpc3QsIGFuZCB0aGVuIGdvIHRvIHRoZQ0KPiBjb25maWd1cmF0aW9u
-DQo+IHNlY3Rpb24gb2YgdGhlIHJlbGV2YW50IG1hbnBhZ2UgdG8gc2VlIGEg
-YnVuY2ggb2YgcmVsYXRlZCBvcHRpb25zLiBTdWNoDQo+IGEgbGlzdCBzaG91
-bGQgYmUgcHJldHR5IGVhc3kgdG8gZ2VuZXJhdGUgYXV0b21hdGljYWxseSBm
-cm9tIHRoZSBvdGhlcg0KPiBkb2N1bWVudGF0aW9uLg0KPiANCj4gLVBlZmYN
-CgpUcmFkZVN0YXRpb24gR3JvdXAsIEluYy4gaXMgYSBwdWJsaWNseS10cmFk
-ZWQgaG9sZGluZyBjb21wYW55IChOQVNEQVEgR1M6IFRSQUQpIG9mIHRocmVl
-IG9wZXJhdGluZyBzdWJzaWRpYXJpZXMsIFRyYWRlU3RhdGlvbiBTZWN1cml0
-aWVzLCBJbmMuIChNZW1iZXIgTllTRSwgRklOUkEsIFNJUEMgYW5kIE5GQSks
-IFRyYWRlU3RhdGlvbiBUZWNobm9sb2dpZXMsIEluYy4sIGEgdHJhZGluZyBz
-b2Z0d2FyZSBhbmQgc3Vic2NyaXB0aW9uIGNvbXBhbnksIGFuZCBUcmFkZVN0
-YXRpb24gRXVyb3BlIExpbWl0ZWQsIGEgVW5pdGVkIEtpbmdkb20sIEZTQS1h
-dXRob3JpemVkIGludHJvZHVjaW5nIGJyb2tlcmFnZSBmaXJtLiBOb25lIG9m
-IHRoZXNlIGNvbXBhbmllcyBwcm92aWRlcyB0cmFkaW5nIG9yIGludmVzdG1l
-bnQgYWR2aWNlLCByZWNvbW1lbmRhdGlvbnMgb3IgZW5kb3JzZW1lbnRzIG9m
-IGFueSBraW5kLiBUaGUgaW5mb3JtYXRpb24gdHJhbnNtaXR0ZWQgaXMgaW50
-ZW5kZWQgb25seSBmb3IgdGhlIHBlcnNvbiBvciBlbnRpdHkgdG8gd2hpY2gg
-aXQgaXMgYWRkcmVzc2VkIGFuZCBtYXkgY29udGFpbiBjb25maWRlbnRpYWwg
-YW5kL29yIHByaXZpbGVnZWQgbWF0ZXJpYWwuIEFueSByZXZpZXcsIHJldHJh
-bnNtaXNzaW9uLCBkaXNzZW1pbmF0aW9uIG9yIG90aGVyIHVzZSBvZiwgb3Ig
-dGFraW5nIG9mIGFueSBhY3Rpb24gaW4gcmVsaWFuY2UgdXBvbiwgdGhpcyBp
-bmZvcm1hdGlvbiBieSBwZXJzb25zIG9yIGVudGl0aWVzIG90aGVyIHRoYW4g
-dGhlIGludGVuZGVkIHJlY2lwaWVudCBpcyBwcm9oaWJpdGVkLiBJZiB5b3Ug
-cmVjZWl2ZWQgdGhpcyBpbiBlcnJvciwgcGxlYXNlIGNvbnRhY3QgdGhlIHNl
-bmRlciBhbmQgZGVsZXRlIHRoZSBtYXRlcmlhbCBmcm9tIGFueSBjb21wdXRl
-ci4K
+Samuel Tardieu venit, vidit, dixit 19.04.2010 15:50:
+> Add a '--no-tags' option to 'git remote add' which adds a
+> 'remote.REMOTE.tagopt = --no-tags' to the configuration file.
+> 
+> 'git add -f -n REMOTE' will create a new remote and fetch from it
+
+I guess you mean 'git remote add' here.
+
+The general directions for this is nice. Just don't expect much response
+now in rc-phase.
+
+> without importing the tags. Subsequent 'git fetch REMOTE' will also
+> not import the tags.
+> 
+> Signed-off-by: Samuel Tardieu <sam@rfc1149.net>
+> ---
+>  Documentation/git-remote.txt |    5 ++++-
+>  builtin/remote.c             |   11 ++++++++++-
+>  t/t5505-remote.sh            |   36 ++++++++++++++++++++++++++++++++++++
+>  3 files changed, 50 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+> index 3fc599c..9db3c35 100644
+> --- a/Documentation/git-remote.txt
+> +++ b/Documentation/git-remote.txt
+> @@ -10,7 +10,7 @@ SYNOPSIS
+>  --------
+>  [verse]
+>  'git remote' [-v | --verbose]
+> -'git remote add' [-t <branch>] [-m <master>] [-f] [--mirror] <name> <url>
+> +'git remote add' [-t <branch>] [-m <master>] [-f] [-n] [--mirror] <name> <url>
+>  'git remote rename' <old> <new>
+>  'git remote rm' <name>
+>  'git remote set-head' <name> (-a | -d | <branch>)
+> @@ -51,6 +51,9 @@ update remote-tracking branches <name>/<branch>.
+>  With `-f` option, `git fetch <name>` is run immediately after
+>  the remote information is set up.
+>  +
+> +With `-n` option, `git fetch <name>` does not import tags from
+> +the remote repository.
+> ++
+>  With `-t <branch>` option, instead of the default glob
+>  refspec for the remote to track all branches under
+>  `$GIT_DIR/remotes/<name>/`, a refspec to track only `<branch>`
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index 277765b..bb5606b 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -106,7 +106,7 @@ static int fetch_remote(const char *name)
+>  
+>  static int add(int argc, const char **argv)
+>  {
+> -	int fetch = 0, mirror = 0;
+> +	int fetch = 0, mirror = 0, notags = 0;
+>  	struct string_list track = { NULL, 0, 0 };
+>  	const char *master = NULL;
+>  	struct remote *remote;
+> @@ -116,6 +116,8 @@ static int add(int argc, const char **argv)
+>  
+>  	struct option options[] = {
+>  		OPT_BOOLEAN('f', "fetch", &fetch, "fetch the remote branches"),
+> +		OPT_BOOLEAN('n', "no-tags", &notags,
+> +			"do not import remote tags when fetching"),
+>  		OPT_CALLBACK('t', "track", &track, "branch",
+>  			"branch(es) to track", opt_parse_track),
+>  		OPT_STRING('m', "master", &master, "branch", "master branch"),
+> @@ -172,6 +174,13 @@ static int add(int argc, const char **argv)
+>  			return 1;
+>  	}
+>  
+> +	if (notags) {
+> +		strbuf_reset(&buf);
+> +		strbuf_addf(&buf, "remote.%s.tagopt", name);
+> +		if (git_config_set(buf.buf, "--no-tags"))
+> +			return 1;
+
+Is this buf freed again?
+
+> +	}
+> +
+>  	if (fetch && fetch_remote(name))
+>  		return 1;
+>  
+> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+> index 230c0cd..d4ed7ea 100755
+> --- a/t/t5505-remote.sh
+> +++ b/t/t5505-remote.sh
+> @@ -320,6 +320,42 @@ test_expect_success 'add alt && prune' '
+>  	 git rev-parse --verify refs/remotes/origin/side2)
+>  '
+>  
+> +cat > test/expect << EOF
+> +some-tag
+> +EOF
+> +
+> +test_expect_success 'add with tags (default)' '
+> +	(cd one &&
+> +	 git tag -a -m "Some tag" some-tag) &&
+> +	(mkdir add-tags &&
+> +	 cd add-tags &&
+> +	 git init &&
+> +	 git remote add -f origin ../one &&
+> +	 git tag -l some-tag > ../test/output &&
+> +	 test_must_fail git config remote.origin.tagopt) &&
+> +	(cd one &&
+> +	 git tag -d some-tag) &&
+> +	test_cmp test/expect test/output
+> +'
+> +
+> +cat > test/expect << EOF
+> +--no-tags
+> +EOF
+> +
+> +test_expect_success 'add --no-tags' '
+> +	(cd one &&
+> +	 git tag -a -m "Some tag" some-tag) &&
+> +	(mkdir add-no-tags &&
+> +	 cd add-no-tags &&
+> +	 git init &&
+> +	 git remote add -f -n origin ../one &&
+> +	 git tag -l some-tag > ../test/output &&
+> +	 git config remote.origin.tagopt >> ../test/output) &&
+> +	(cd one &&
+> +	 git tag -d some-tag) &&
+> +	test_cmp test/expect test/output
+> +'
+> +
+>  cat > one/expect << EOF
+>    apis/master
+>    apis/side
+> 
