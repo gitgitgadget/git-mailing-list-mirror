@@ -1,115 +1,77 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH v2 2/2] receive-pack: detect aliased updates which can 
-	occur with symrefs
-Date: Mon, 19 Apr 2010 16:57:06 -0400
-Message-ID: <z2s76718491004191357gf4783770i84308e930d9adb22@mail.gmail.com>
-References: <1271694343-31876-2-git-send-email-jaysoffian@gmail.com>
-	 <1271695179-32131-1-git-send-email-jaysoffian@gmail.com>
-	 <7veiibqirf.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] t0001: check syntax of sample hooks
+Date: Mon, 19 Apr 2010 16:09:50 -0500
+Message-ID: <20100419210950.GA30284@progeny.tock>
+References: <20100419084132.GA25901@progeny.tock>
+ <7v633nqi6i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Shawn O . Pearce" <spearce@spearce.org>
+Cc: git@vger.kernel.org, Ben Walton <bwalton@artsci.utoronto.ca>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 19 22:57:16 2010
+X-From: git-owner@vger.kernel.org Mon Apr 19 23:10:13 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3y1s-000539-2W
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 22:57:16 +0200
+	id 1O3yEP-0002p8-FY
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 23:10:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581Ab0DSU5K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Apr 2010 16:57:10 -0400
-Received: from mail-iw0-f197.google.com ([209.85.223.197]:53849 "EHLO
-	mail-iw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751201Ab0DSU5I convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Apr 2010 16:57:08 -0400
-Received: by iwn35 with SMTP id 35so2522940iwn.21
-        for <git@vger.kernel.org>; Mon, 19 Apr 2010 13:57:06 -0700 (PDT)
+	id S1752157Ab0DSVJl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Apr 2010 17:09:41 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:59075 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752134Ab0DSVJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Apr 2010 17:09:39 -0400
+Received: by vws5 with SMTP id 5so2452915vws.19
+        for <git@vger.kernel.org>; Mon, 19 Apr 2010 14:09:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=PQfNuMAjfkUUgvoqLR07N0vRfjOnRz5UU+2eGdODj/Y=;
-        b=p+gfSDtkiPEUIUpSR4suox01ydIy1LknAIiqeEzuy0d1mYVUSVZkMJugq5vclBHxpV
-         YCC+PoZ8w65fJZsWAyO6SZq6dTtcA680CoKGpEDUiOOKNN8OSkRTsqCGCVMlGpWF6f+y
-         smjQKsZT3oGMDbOJiVO/J3n9zi92/Yi3SQ9Ho=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=Jg4NLD9nCgsGOKw+7yBo6RBt++6pLUyQHS3kgZ7b6DU=;
+        b=Q+9GjyV8424NPq8ZKdUXAeagsWcsGzkXpCTkl4hnkybFu5SSIaskJdOzTJmOcPIVW6
+         C/SB2O3KDxJftuVbrTJ1GzC7uxWwX0Is7BnAnBSqV6AIspr2YiUEOyCbC+XGavlvwCsn
+         8vQ+6WMumnqAu5PWXT2OTzl/zK/uUsXUHFJNo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=YYlS7Ey96ixBXQiflxu5bKKKWhNITLJGC9M34qCZu1HccABkfgl88mJLI7j59sdksS
-         9IzihdRxoMAWPYyLH6bCaxc2Kc/hyvMGlVJOYIVI8yaScWFX1+n2dag4drb3mqIltAEf
-         crS81ZJRb2JJYGUa+zEVC5HfS20+V2uomy1Ps=
-Received: by 10.231.36.9 with HTTP; Mon, 19 Apr 2010 13:57:06 -0700 (PDT)
-In-Reply-To: <7veiibqirf.fsf@alter.siamese.dyndns.org>
-Received: by 10.231.152.79 with SMTP id f15mr1352328ibw.19.1271710626141; Mon, 
-	19 Apr 2010 13:57:06 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=CAUyTNGibQLk+DIW5kejHS1iKJuTdG/9IeFmG6YZNq3A1Z5jUmfoysj8HfPa2kdBcZ
+         bM2RR8La3n/Kxf2mQzbSdBVK/eh4JDc/wrlNILVySAB+ytz8/nKam4qNDUY0ZGdJ1qz7
+         FPOp6orie2SdZkIA/WINQvNaGj5ptdxfEFITY=
+Received: by 10.220.108.228 with SMTP id g36mr3945803vcp.146.1271711378388;
+        Mon, 19 Apr 2010 14:09:38 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 7sm1688164ywc.49.2010.04.19.14.09.36
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 19 Apr 2010 14:09:37 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v633nqi6i.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145330>
 
-On Mon, Apr 19, 2010 at 4:39 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->> - =C2=A0 =C2=A0 for (cmd =3D commands; cmd; cmd =3D cmd->next)
->> + =C2=A0 =C2=A0 for (cmd =3D commands; cmd && !cmd->skip_update; cmd=
- =3D cmd->next)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cmd->error_string =3D=
- update(cmd);
->> =C2=A0}
+Junio C Hamano wrote:
+
+> "#!/Program  Files/bin/shell"???
+
+=E2=80=9C#!/usr/bin/env sh=E2=80=9D?
+
+I will think a little more about this and look at what msysgit does.
+
+>> +cat <<\EOF
 >
-> Do you really mean to have "skip-update" check as the loop terminatio=
-n
-> condition like this (i.e. "upon seeing any skip-update, abandon the r=
-est
-> of the update queue"), or is this a typo of "skip this entry but keep
-> going, processing the rest" that should have been a separate "if" in =
-the
-> body of the loop?
+> No need to meow here; just say ":" instead.
 
-Oh wow, the perils of coding before coffee. I wish I could call it a
-typo, it's a thinko which is much worse.
+Makes sense.
 
->> @@ -545,6 +606,7 @@ static struct command *read_head_info(void)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hashcpy(cmd->old_sh=
-a1, old_sha1);
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hashcpy(cmd->new_sh=
-a1, new_sha1);
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memcpy(cmd->ref_nam=
-e, line + 82, len - 81);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cmd->skip_update =3D 0;
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cmd->error_string =3D=
- NULL;
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cmd->next =3D NULL;
->
-> It would make sense to do xcalloc(nmemb, size) of one member of that
-> length to allocate cmd at this point, instead of adding yet another
-> assignment like this.
-
-Okay.
-
-> It also would help me a slight bit if you compared what has been queu=
-ed
-> with what you sent to catch minor differences between my expectation =
-from
-> this series and what you have (e.g. I'd like to keep this as a fix th=
-at is
-> back-mergeable to 'maint' and also I have already done some style fix=
-es to
-> the test).
-
-I didn't realize you'd queued it before I sent out v2. But I'm not
-sure what you're asking for beyond what I already said in the email:
-
-- Reformatted commit message; minor rewording.
-- Detect situation where there is an inconsistent aliased update and
- give a better diagnostic than "failed to lock"
-- Add additional test case for inconsistent update situation
-
-j.
+Thanks,
+Jonathan
