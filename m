@@ -1,143 +1,63 @@
-From: Yves Caniou <yves.caniou@ens-lyon.fr>
-Subject: Re: Compilation pb of git-1.7.0.5
-Date: Mon, 19 Apr 2010 09:32:26 +0200
-Organization: ENS-LIP
-Message-ID: <201004190932.26445.yves.caniou@ens-lyon.fr>
-References: <201004190759.15032.yves.caniou@ens-lyon.fr> <i2kfabb9a1e1004182326w32b1ce9ak2ada640ce30cc945@mail.gmail.com>
-Reply-To: yves.caniou@ens-lyon.fr
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] MSVC: Fix build by adding missing termios.h dummy
+Date: Mon, 19 Apr 2010 09:37:20 +0200
+Message-ID: <4BCC0830.9050207@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 19 09:34:45 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Marius Storm-Olsen <mstormo@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 19 09:37:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3lVE-0001sD-Mw
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 09:34:45 +0200
+	id 1O3lXu-0003Dv-UG
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 09:37:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751398Ab0DSHee convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Apr 2010 03:34:34 -0400
-Received: from jabiru.ens-lyon.fr ([140.77.51.2]:60919 "EHLO
-	jabiru.ens-lyon.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751055Ab0DSHed convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Apr 2010 03:34:33 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jabiru.ens-lyon.fr (Postfix) with ESMTP id 8B900AFAA3;
-	Mon, 19 Apr 2010 09:34:32 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new-2.6.1 (20080629) (Debian) at ens-lyon.fr
-Received: from jabiru.ens-lyon.fr ([127.0.0.1])
-	by localhost (jabiru.ens-lyon.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZKav86QRlNgb; Mon, 19 Apr 2010 09:34:30 +0200 (CEST)
-Received: from [133.11.204.119] (unknown [133.11.204.119])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by jabiru.ens-lyon.fr (Postfix) with ESMTPSA id 5883BAFA9F;
-	Mon, 19 Apr 2010 09:34:30 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <i2kfabb9a1e1004182326w32b1ce9ak2ada640ce30cc945@mail.gmail.com>
-Content-Disposition: inline
+	id S1751162Ab0DSHh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Apr 2010 03:37:26 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:49174 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751055Ab0DSHhZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Apr 2010 03:37:25 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1O3lXl-00040z-Ig; Mon, 19 Apr 2010 09:37:21 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 39D7E1660F;
+	Mon, 19 Apr 2010 09:37:21 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+X-Enigmail-Version: 1.0.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145272>
 
-Le Monday 19 April 2010 08:26:59 Sverre Rabbelier, vous avez =C3=A9crit=
-=C2=A0:
-> Heya,
->
-> On Mon, Apr 19, 2010 at 07:59, Yves Caniou <yves.caniou@ens-lyon.fr> =
-wrote:
-> > After the ./configure --prefix=3D$HOME/git, the make all gives me
->
-> Which revision are you trying to compile?
+From: Johannes Sixt <j6t@kdbg.org>
 
-I should have recall this in the mail, instead of just let it in the su=
-bject: 1.7.0.5
+A use of this header file was introduced in eb80042 (Add missing #include
+to support TIOCGWINSZ on Solaris, 2010-01-11).
 
-> Also, it's probably more=20
-> helpful to just post the result of 'make all' verbatim, rather than
-> snippets.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ compat/vcbuild/include/termios.h |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 compat/vcbuild/include/termios.h
 
-Ok. Thanks to wereHamster on IRC, it appears that the compiler that was=
- used for compilation is the Hitachi Cc version 6.2 and not gcc,=20
-because ./configure detects cc and uses cc instead of gcc.
-
-Here is the output of the make all, made after the ./configure [...]
-
---------
-$>make all
-    * new build flags or prefix
-    CC fast-import.o
-cc: Warning: 100, Unknown option, "-g" option is ignored.
-fast-import.c: 2622: Warning: 2570, Value assigned to enumeration objec=
-t "type" is different type.
-fast-import.c: 1776: Warning: 2570, Value assigned to enumeration objec=
-t "type" is different type.
-fast-import.c: 2213: Warning: 2570, Value assigned to enumeration objec=
-t "type" is different type.
-fast-import.c: 2346: Warning: 2570, Value assigned to enumeration objec=
-t "type" is different type.
-    CC abspath.o
-cc: Warning: 100, Unknown option, "-g" option is ignored.
-    CC advice.o
-cc: Warning: 100, Unknown option, "-g" option is ignored.
-    CC alias.o
-cc: Warning: 100, Unknown option, "-g" option is ignored.
-    CC alloc.o
-cc: Warning: 100, Unknown option, "-g" option is ignored.
-    CC archive.o
-cc: Warning: 100, Unknown option, "-g" option is ignored.
-archive.c: 223: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 309: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 311: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 313: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 315: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 316: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 317: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 318: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 319: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 320: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 321: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 322: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 323: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 324: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 325: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 326: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 329: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 332: Serious: 4470, Initialization value must be address con=
-stant expression.
-archive.c: 334: Serious: 4470, Initialization value must be address con=
-stant expression.
-make: *** [archive.o] Error 1
-------------
-
-Note that the direct compilation with the following command calls gcc, =
-worked and the installation was successful.
-$>make prefix=3D$HOME/git install
-
-Thank you.
-
-=2EYves.
+diff --git a/compat/vcbuild/include/termios.h
+b/compat/vcbuild/include/termios.h
+new file mode 100644
+index 0000000..0d8552a
+--- /dev/null
++++ b/compat/vcbuild/include/termios.h
+@@ -0,0 +1 @@
++/* Intentionally empty file to support building git with MSVC */
+-- 
+1.7.1.rc1.1114.g601ca
