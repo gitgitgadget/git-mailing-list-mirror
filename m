@@ -1,100 +1,65 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v4' 1/2] gitk: do not parse "  >" context as submodule change
-Date: Mon, 19 Apr 2010 18:27:26 +0200
-Message-ID: <671110fcac73c5fc8a935b82d88f8553c510c50c.1271694102.git.trast@student.ethz.ch>
-References: <20100419010819.GA4386@brick.ozlabs.ibm.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH v2 2/2] receive-pack: detect aliased updates which can 
+	occur with symrefs
+Date: Mon, 19 Apr 2010 12:31:44 -0400
+Message-ID: <v2r76718491004190931rb9813deex2797a440d09b50a5@mail.gmail.com>
+References: <1271694343-31876-1-git-send-email-jaysoffian@gmail.com>
+	 <1271694343-31876-2-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon Apr 19 18:27:47 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	"Shawn O . Pearce" <spearce@spearce.org>,
+	Junio C Hamano <junio@kernel.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 19 18:31:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3tp0-0004To-PM
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 18:27:43 +0200
+	id 1O3tt5-0006mn-29
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 18:31:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755582Ab0DSQ1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Apr 2010 12:27:30 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:9424 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755180Ab0DSQ13 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Apr 2010 12:27:29 -0400
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 19 Apr
- 2010 18:27:27 +0200
-Received: from localhost.localdomain (217.162.250.31) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 19 Apr
- 2010 18:27:26 +0200
-X-Mailer: git-send-email 1.7.1.rc1.284.g4b2e3
-In-Reply-To: <20100419010819.GA4386@brick.ozlabs.ibm.com>
+	id S1755699Ab0DSQbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Apr 2010 12:31:47 -0400
+Received: from mail-iw0-f199.google.com ([209.85.223.199]:50256 "EHLO
+	mail-iw0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755542Ab0DSQbp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Apr 2010 12:31:45 -0400
+Received: by iwn37 with SMTP id 37so580628iwn.15
+        for <git@vger.kernel.org>; Mon, 19 Apr 2010 09:31:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type;
+        bh=+Y/ovn0cpdChIjkVFl1cEIZAHJdMsHMaZAyukyVZXus=;
+        b=fIC5QEdOfhWmgu2N7npjzrAxlQXfF2ctSgC3H+Zh+oomf18bO0Ypy88Dgp2ZDPSFIH
+         lZ92BZcp2be1CIBXNQRXruhLL5GQo1d0UactXVTKwBHPYnE143BtezVLJXUIjVnnhZKo
+         efioJAPnkLe2/ZSOTKfj8q7AsGby6qpXxnFZk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=EXBJ9DjLp2L6O8fLvu+IGCC+4YCjm/ziyn/f7yGJPAM+jFvr78aPeLo8yw9jeVPQOk
+         tazSEZJm47zQb4sV/OcHV4merN1KFTfi3ki5+hDgz12GSE7jpGqVgs1cDU2EmkSoOI3L
+         Y26QfymhSMGkTLc5dYQGccQRSgBR/rB8OgYTM=
+Received: by 10.231.36.9 with HTTP; Mon, 19 Apr 2010 09:31:44 -0700 (PDT)
+In-Reply-To: <1271694343-31876-2-git-send-email-jaysoffian@gmail.com>
+Received: by 10.231.154.68 with SMTP id n4mr1990982ibw.72.1271694704888; Mon, 
+	19 Apr 2010 09:31:44 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145315>
 
-Since 5c838d2 (gitk: Use the --submodule option for displaying diffs
-when available, 2009-10-28) gitk erroneously matches "  >" and "  <"
-at the beginning of a line in the submodule code even if we're in the
-diff text section and the lines should be treated as context.
+On Mon, Apr 19, 2010 at 12:25 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
+> When pushing to a remote repo the sending side filters out aliased
+> updates (e.g., foo:baz bar:baz). However, it is not possible for the
+> sender to know if two refs are aliased on the receiving side via
+> symrefs. Here is one such scenario:
 
-Fix by (ab)using the $diffinhdr variable also in the 'Submodule...'
-case, and move the "  >"/"  <" specific code inside the $diffinhdr
-test.  The existing code will set $diffinhdr to 0 when it hits a
-"+++", so that it is always 0 when we can hit a context line.
+Don't receive this. There's a logic error in it. I'll send a follow up shortly.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
-
-> Thanks, but now that I have applied Jens Lehmann's patch that also
-> touches this area, your patch doesn't apply.  Could you rebase it and
-> send it again?
-
-Sure.
-
-
- gitk |   18 ++++++++++--------
- 1 files changed, 10 insertions(+), 8 deletions(-)
-
-diff --git a/gitk b/gitk
-index 1b0e09a..6513ef8 100755
---- a/gitk
-+++ b/gitk
-@@ -7706,14 +7706,8 @@ proc getblobdiffline {bdf ids} {
- 	    } else {
- 		$ctext insert end "$line\n" filesep
- 	    }
--	} elseif {![string compare -length 3 "  >" $line]} {
--	    set $currdiffsubmod ""
--	    set line [encoding convertfrom $diffencoding $line]
--	    $ctext insert end "$line\n" dresult
--	} elseif {![string compare -length 3 "  <" $line]} {
--	    set $currdiffsubmod ""
--	    set line [encoding convertfrom $diffencoding $line]
--	    $ctext insert end "$line\n" d0
-+	    # pretend we're in a file header to correctly parse "  [><]"
-+	    set diffinhdr 1
- 	} elseif {$diffinhdr} {
- 	    if {![string compare -length 12 "rename from " $line]} {
- 		set fname [string range $line [expr 6 + [string first " from " $line] ] end]
-@@ -7732,6 +7726,14 @@ proc getblobdiffline {bdf ids} {
- 		    set fname [lindex $fname 0]
- 		}
- 		makediffhdr $fname $ids
-+	    } elseif {![string compare -length 3 "  >" $line]} {
-+		set line [encoding convertfrom $diffencoding $line]
-+		$ctext insert end "$line\n" dresult
-+		continue
-+	    } elseif {![string compare -length 3 "  <" $line]} {
-+		set line [encoding convertfrom $diffencoding $line]
-+		$ctext insert end "$line\n" d0
-+		continue
- 	    } elseif {[string compare -length 3 $line "---"] == 0} {
- 		# do nothing
- 		continue
--- 
-1.7.1.rc1.284.g4b2e3
+j.
