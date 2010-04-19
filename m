@@ -1,154 +1,75 @@
-From: Samuel Tardieu <sam@rfc1149.net>
-Subject: [PATCH] remote add: add a --no-tags (-n) option
-Date: Mon, 19 Apr 2010 15:50:14 +0200
-Message-ID: <20100419135014.1077.28627.stgit@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 19 15:50:26 2010
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH v4 00/11] Resend sp/maint-dumb-http-pack-reidx
+Date: Mon, 19 Apr 2010 07:23:04 -0700
+Message-ID: <1271686990-16363-1-git-send-email-spearce@spearce.org>
+References: <20100418115744.0000238b@unknown>
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Christian Halstrick <christian.halstrick@gmail.com>,
+	jan.sievers@sap.com, Matthias Sohn <matthias.sohn@sap.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 19 16:23:26 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3rMn-0003d7-J4
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 15:50:25 +0200
+	id 1O3rsh-0000bW-VC
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 16:23:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753208Ab0DSNuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Apr 2010 09:50:18 -0400
-Received: from zoidberg.rfc1149.net ([91.121.19.179]:44580 "EHLO
-	zoidberg.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752677Ab0DSNuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Apr 2010 09:50:17 -0400
-Received: from localhost.localdomain (unknown [192.168.9.2])
-	by zoidberg.rfc1149.net (Postfix) with ESMTP id B8FAE653A
-	for <git@vger.kernel.org>; Mon, 19 Apr 2010 15:50:14 +0200 (CEST)
-User-Agent: StGit/0.15
+	id S1754789Ab0DSOXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Apr 2010 10:23:18 -0400
+Received: from mail-bw0-f225.google.com ([209.85.218.225]:48685 "EHLO
+	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754325Ab0DSOXR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Apr 2010 10:23:17 -0400
+Received: by bwz25 with SMTP id 25so5648036bwz.28
+        for <git@vger.kernel.org>; Mon, 19 Apr 2010 07:23:16 -0700 (PDT)
+Received: by 10.204.162.209 with SMTP id w17mr807547bkx.67.1271686996175;
+        Mon, 19 Apr 2010 07:23:16 -0700 (PDT)
+Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
+        by mx.google.com with ESMTPS id 14sm3154186bwz.10.2010.04.19.07.23.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 19 Apr 2010 07:23:15 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.rc1.279.g22727
+In-Reply-To: <20100418115744.0000238b@unknown>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145298>
 
-Add a '--no-tags' option to 'git remote add' which adds a
-'remote.REMOTE.tagopt = --no-tags' to the configuration file.
+This is a resend of the last half of the series, from patch 6/11
+to the end, to address some minor review comments.
 
-'git add -f -n REMOTE' will create a new remote and fetch from it
-without importing the tags. Subsequent 'git fetch REMOTE' will also
-not import the tags.
+Junio, I think you need to reset my branch to 0da8b2e7c80a6d
+("http.c: Don't store destination name in structures"), and
+then apply this group.
 
-Signed-off-by: Samuel Tardieu <sam@rfc1149.net>
----
- Documentation/git-remote.txt |    5 ++++-
- builtin/remote.c             |   11 ++++++++++-
- t/t5505-remote.sh            |   36 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 50 insertions(+), 2 deletions(-)
+Total series diff since v3 is this shocking one line change, most
+of the edits were to commit messages:
 
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index 3fc599c..9db3c35 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git remote' [-v | --verbose]
--'git remote add' [-t <branch>] [-m <master>] [-f] [--mirror] <name> <url>
-+'git remote add' [-t <branch>] [-m <master>] [-f] [-n] [--mirror] <name> <url>
- 'git remote rename' <old> <new>
- 'git remote rm' <name>
- 'git remote set-head' <name> (-a | -d | <branch>)
-@@ -51,6 +51,9 @@ update remote-tracking branches <name>/<branch>.
- With `-f` option, `git fetch <name>` is run immediately after
- the remote information is set up.
- +
-+With `-n` option, `git fetch <name>` does not import tags from
-+the remote repository.
-++
- With `-t <branch>` option, instead of the default glob
- refspec for the remote to track all branches under
- `$GIT_DIR/remotes/<name>/`, a refspec to track only `<branch>`
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 277765b..bb5606b 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -106,7 +106,7 @@ static int fetch_remote(const char *name)
+diff --git a/http.c b/http.c
+index 83f6047..0813c9e 100644
+--- a/http.c
++++ b/http.c
+@@ -1028,7 +1028,6 @@ int finish_http_pack_request(struct http_pack_request *preq)
+ 	const char *ip_argv[8];
  
- static int add(int argc, const char **argv)
- {
--	int fetch = 0, mirror = 0;
-+	int fetch = 0, mirror = 0, notags = 0;
- 	struct string_list track = { NULL, 0, 0 };
- 	const char *master = NULL;
- 	struct remote *remote;
-@@ -116,6 +116,8 @@ static int add(int argc, const char **argv)
+ 	close_pack_index(p);
+-	unlink(sha1_pack_index_name(p->sha1));
  
- 	struct option options[] = {
- 		OPT_BOOLEAN('f', "fetch", &fetch, "fetch the remote branches"),
-+		OPT_BOOLEAN('n', "no-tags", &notags,
-+			"do not import remote tags when fetching"),
- 		OPT_CALLBACK('t', "track", &track, "branch",
- 			"branch(es) to track", opt_parse_track),
- 		OPT_STRING('m', "master", &master, "branch", "master branch"),
-@@ -172,6 +174,13 @@ static int add(int argc, const char **argv)
- 			return 1;
+ 	fclose(preq->packfile);
+ 	preq->packfile = NULL;
+@@ -1062,6 +1061,8 @@ int finish_http_pack_request(struct http_pack_request *preq)
+ 		return -1;
  	}
  
-+	if (notags) {
-+		strbuf_reset(&buf);
-+		strbuf_addf(&buf, "remote.%s.tagopt", name);
-+		if (git_config_set(buf.buf, "--no-tags"))
-+			return 1;
-+	}
++	unlink(sha1_pack_index_name(p->sha1));
 +
- 	if (fetch && fetch_remote(name))
- 		return 1;
- 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 230c0cd..d4ed7ea 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -320,6 +320,42 @@ test_expect_success 'add alt && prune' '
- 	 git rev-parse --verify refs/remotes/origin/side2)
- '
- 
-+cat > test/expect << EOF
-+some-tag
-+EOF
-+
-+test_expect_success 'add with tags (default)' '
-+	(cd one &&
-+	 git tag -a -m "Some tag" some-tag) &&
-+	(mkdir add-tags &&
-+	 cd add-tags &&
-+	 git init &&
-+	 git remote add -f origin ../one &&
-+	 git tag -l some-tag > ../test/output &&
-+	 test_must_fail git config remote.origin.tagopt) &&
-+	(cd one &&
-+	 git tag -d some-tag) &&
-+	test_cmp test/expect test/output
-+'
-+
-+cat > test/expect << EOF
-+--no-tags
-+EOF
-+
-+test_expect_success 'add --no-tags' '
-+	(cd one &&
-+	 git tag -a -m "Some tag" some-tag) &&
-+	(mkdir add-no-tags &&
-+	 cd add-no-tags &&
-+	 git init &&
-+	 git remote add -f -n origin ../one &&
-+	 git tag -l some-tag > ../test/output &&
-+	 git config remote.origin.tagopt >> ../test/output) &&
-+	(cd one &&
-+	 git tag -d some-tag) &&
-+	test_cmp test/expect test/output
-+'
-+
- cat > one/expect << EOF
-   apis/master
-   apis/side
+ 	if (move_temp_to_file(preq->tmpfile, sha1_pack_name(p->sha1))
+ 	 || move_temp_to_file(tmp_idx, sha1_pack_index_name(p->sha1))) {
+ 		free(tmp_idx);
