@@ -1,121 +1,128 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] t0001: check syntax of sample hooks
-Date: Mon, 19 Apr 2010 03:41:33 -0500
-Message-ID: <20100419084132.GA25901@progeny.tock>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ben Walton <bwalton@artsci.utoronto.ca>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 19 10:41:34 2010
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: [PATCH 1/2] patch-id: extract parsing one diff out of generate_id_list
+Date: Mon, 19 Apr 2010 10:46:13 +0200
+Message-ID: <1271666774-11619-1-git-send-email-bonzini@gnu.org>
+References: <7vfx2ubxz1.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 19 10:46:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3mXt-0002WO-V3
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 10:41:34 +0200
+	id 1O3mca-0004rg-Qk
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 10:46:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752648Ab0DSIl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Apr 2010 04:41:28 -0400
-Received: from mail-pz0-f185.google.com ([209.85.222.185]:53149 "EHLO
-	mail-pz0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752633Ab0DSIl2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Apr 2010 04:41:28 -0400
-Received: by pzk15 with SMTP id 15so2276942pzk.15
-        for <git@vger.kernel.org>; Mon, 19 Apr 2010 01:41:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=xMTfhxE1Mj6G/Cg2wTCVmv7KxX2cKLyYilKcu9Idm3c=;
-        b=OvAflT+hdJw8TQStiKJ3VOdXdeMTpt0T/dmL8g3tGgjtdHJpzSJAxUIhpxLgnNoZKl
-         4VGUFbAbjfx9xr5ib8vZmmVRrwNfgAgjkE0wd9MNwK7o1Srk8yzzmP0XdksSS44qgbfA
-         3e9u3PG/kzdMbQfEzB8hlqN9TsxQkJKMsxeAI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=lrOyimSYfY/JccHEc7bMWeGoKR3uUUDdn0iq4H3/jfEcHj2znXG1NuyAlv7w4wmeIS
-         UqMPnmnZus2SiLmT3GIuncK/QxOLvD9ZasgAMozEnPolmaKnOWWa58Cz3+LQYV1Tda6C
-         0Q5fjqCnLMbd7a340RDKrHKVBgttdAM0pd5G4=
-Received: by 10.140.251.19 with SMTP id y19mr3598917rvh.161.1271666485358;
-        Mon, 19 Apr 2010 01:41:25 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm4800069iwn.6.2010.04.19.01.41.23
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 19 Apr 2010 01:41:24 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752855Ab0DSIqS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Apr 2010 04:46:18 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:38110 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752747Ab0DSIqR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Apr 2010 04:46:17 -0400
+Received: from bonzini by fencepost.gnu.org with local (Exim 4.69)
+	(envelope-from <bonzini@gnu.org>)
+	id 1O3mcS-00021a-LB; Mon, 19 Apr 2010 04:46:16 -0400
+X-Mailer: git-send-email 1.6.6.1
+In-Reply-To: <7vfx2ubxz1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145282>
 
-Make sure that the sample hooks do not use any shell features
-that the shell used to execute them does not support.
+This simplifies a bit the next patch, since it will have more than one
+condition to exit the loop.
 
-The documentation at the end of the sample pre-rebase script will
-never be executed, but "sh -n" does not know that.  Convert it to
-a HERE document to avoid spurious failures.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
 ---
-I guess this serves as a test for 502be95 (Make templates honour
-SHELL_PATH and PERL_PATH, 2010-03-20).
+        On 04/17/2010 04:43 AM, Junio C Hamano wrote:
+        > Paolo Bonzini<bonzini@gnu.org>  writes:
+        > 
+        >> I use this when I had to edit the file-being-sent, e.g. to add cover
+        >> letters or an introduction to a patch series.  Since some time passes
+        >> between format-patch and send-email, I want to test that the file I'm
+        >> sending is exactly what I have in the repository, and that I'm not
+        >> submitting the wrong series.
+        > 
+        > Ok, that is what I missed when I mentioned ignore-if-in-upstream, iow,
+        > I thought "patch-cmp" were merely to check for failed detection of
+        > duplicates by format-patch.  If you are editing the mbox file and let
+        > the patches sit there while origin/master may be progressing, then
+        > that is an entirely different story.
 
-Actually, my motivation is the second part, since I already run a test
-like this locally.  But I thought, while fixing it, why not make it
-easy for others to suffer the same problem, too?
+        Yes, that is exactly the point.  I sometimes have to edit the mbox file
+        so I cannot use "git send-email origin/master..", and I want a double
+        check that I'm not doing something stupid.
 
- t/t0001-init.sh                    |   15 +++++++++++++++
- templates/hooks--pre-rebase.sample |    3 +++
- 2 files changed, 18 insertions(+), 0 deletions(-)
+ builtin/patch-id.c |   35 +++++++++++++++++++++--------------
+ 1 files changed, 21 insertions(+), 14 deletions(-)
 
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 6757734..3e6e1ed 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -141,6 +141,21 @@ test_expect_success 'reinit' '
- 	test_cmp again/empty again/err2
- '
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index af0911e..78d24dc 100644
+--- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -28,16 +28,11 @@ static int remove_space(char *line)
+ 	return dst - line;
+ }
  
-+test_expect_success 'sample hooks use acceptable syntax' '
-+	mkdir boring &&
-+	git init boring &&
-+	test -d boring/.git/hooks &&
-+	fail=f &&
-+	for i in boring/.git/hooks/*.sample
-+	do
-+		read shebang <"$i" &&
-+		shell=${shebang#"#!"} &&
-+		$shell -n "$i" ||
-+		fail=t
-+	done &&
-+	test "$fail" = f
-+'
+-static void generate_id_list(void)
++int get_one_patchid (unsigned char *next_sha1, git_SHA_CTX *ctx)
+ {
+-	static unsigned char sha1[20];
+ 	static char line[1000];
+-	git_SHA_CTX ctx;
+ 	int patchlen = 0;
+-
+-	git_SHA1_Init(&ctx);
+ 	while (fgets(line, sizeof(line), stdin) != NULL) {
+-		unsigned char n[20];
+ 		char *p = line;
+ 		int len;
+ 
+@@ -46,12 +41,8 @@ static void generate_id_list(void)
+ 		else if (!memcmp(line, "commit ", 7))
+ 			p += 7;
+ 
+-		if (!get_sha1_hex(p, n)) {
+-			flush_current_id(patchlen, sha1, &ctx);
+-			hashcpy(sha1, n);
+-			patchlen = 0;
+-			continue;
+-		}
++		if (!get_sha1_hex(p, next_sha1))
++			break;
+ 
+ 		/* Ignore commit comments */
+ 		if (!patchlen && memcmp(line, "diff ", 5))
+@@ -68,9 +59,25 @@ static void generate_id_list(void)
+ 		/* Compute the sha without whitespace */
+ 		len = remove_space(line);
+ 		patchlen += len;
+-		git_SHA1_Update(&ctx, line, len);
++		git_SHA1_Update(ctx, line, len);
++	}
++	return patchlen;
++}
 +
- test_expect_success 'init with --template' '
- 	mkdir template-source &&
- 	echo content >template-source/file &&
-diff --git a/templates/hooks--pre-rebase.sample b/templates/hooks--pre-rebase.sample
-index 053f111..22a9f07 100755
---- a/templates/hooks--pre-rebase.sample
-+++ b/templates/hooks--pre-rebase.sample
-@@ -91,6 +91,7 @@ fi
- exit 0
- 
- ################################################################
-+cat <<\EOF
- 
- This sample hook safeguards topic branches that have been
- published from being rewound.
-@@ -167,3 +168,5 @@ To compute (2):
- 	git rev-list master..topic
- 
- 	if this is empty, it is fully merged to "master".
 +
-+EOF
++static void generate_id_list(void)
++{
++	unsigned char sha1[20], n[20];
++	git_SHA_CTX ctx;
++	int patchlen;
++
++	git_SHA1_Init(&ctx);
++	while (!feof (stdin)) {
++		memset (n, 0, 20);
++		patchlen = get_one_patchid (n, &ctx);
++		flush_current_id(patchlen, sha1, &ctx);
++		hashcpy (sha1, n);
+ 	}
+-	flush_current_id(patchlen, sha1, &ctx);
+ }
+ 
+ static const char patch_id_usage[] = "git patch-id < patch";
 -- 
-1.7.1.rc1
+1.6.6.1
