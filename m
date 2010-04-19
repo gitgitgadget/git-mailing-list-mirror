@@ -1,88 +1,103 @@
-From: Yves Caniou <yves.caniou@ens-lyon.fr>
-Subject: Re: Compilation pb of git-1.7.0.5
-Date: Mon, 19 Apr 2010 10:50:33 +0200
-Organization: ENS-LIP
-Message-ID: <201004191050.33790.yves.caniou@ens-lyon.fr>
-References: <201004190759.15032.yves.caniou@ens-lyon.fr> <i2kfabb9a1e1004182326w32b1ce9ak2ada640ce30cc945@mail.gmail.com> <4BCC163E.3050808@drmicha.warpmail.net>
-Reply-To: yves.caniou@ens-lyon.fr
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: GSoC 2010: "Integrated Web Client for git" proposal
+Date: Mon, 19 Apr 2010 11:07:34 +0200
+Message-ID: <20100419090734.GA10939@machine.or.cz>
+References: <201004180246.18263.jnareb@gmail.com>
+ <20100418005917.GO10939@machine.or.cz>
+ <201004180324.54722.jnareb@gmail.com>
+ <20100418021223.GP10939@machine.or.cz>
+ <n2le72faaa81004180152pb84cef2cn2a7eb95da64420b1@mail.gmail.com>
+ <20100418223120.GB3563@machine.or.cz>
+ <u2ve72faaa81004182346zdf4bd0b3m3341717b1555c0a9@mail.gmail.com>
+ <vpqeiicey0d.fsf@bauges.imag.fr>
+ <7vfx2rsy6y.fsf@alter.siamese.dyndns.org>
+ <v2me72faaa81004190038y4aeefa80g9f60bb3b1e795e4b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Apr 19 10:52:51 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Shawn O Pearce <spearce@spearce.org>,
+	Scott Chacon <schacon@gmail.com>, Sam Vilain <sam@vilain.net>
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 19 11:07:48 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3mio-0008Fn-Bx
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 10:52:50 +0200
+	id 1O3mxH-0007e6-KD
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 11:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753273Ab0DSIwp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Apr 2010 04:52:45 -0400
-Received: from jabiru.ens-lyon.fr ([140.77.51.2]:38885 "EHLO
-	jabiru.ens-lyon.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750851Ab0DSIwo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Apr 2010 04:52:44 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jabiru.ens-lyon.fr (Postfix) with ESMTP id 35C96AFAA5;
-	Mon, 19 Apr 2010 10:52:43 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new-2.6.1 (20080629) (Debian) at ens-lyon.fr
-Received: from jabiru.ens-lyon.fr ([127.0.0.1])
-	by localhost (jabiru.ens-lyon.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wCDXYKINB+dA; Mon, 19 Apr 2010 10:52:38 +0200 (CEST)
-Received: from [133.11.204.119] (unknown [133.11.204.119])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by jabiru.ens-lyon.fr (Postfix) with ESMTPSA id 1B7EEAFAA7;
-	Mon, 19 Apr 2010 10:52:37 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <4BCC163E.3050808@drmicha.warpmail.net>
+	id S1753731Ab0DSJHk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Apr 2010 05:07:40 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:45978 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751863Ab0DSJHj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Apr 2010 05:07:39 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 974DD86208E; Mon, 19 Apr 2010 11:07:34 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <v2me72faaa81004190038y4aeefa80g9f60bb3b1e795e4b@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145285>
 
-Le Monday 19 April 2010 10:37:18 Michael J Gruber, vous avez =C3=A9crit=
-=C2=A0:
-> Sverre Rabbelier venit, vidit, dixit 19.04.2010 08:26:
-> > Heya,
-> >
-> > On Mon, Apr 19, 2010 at 07:59, Yves Caniou <yves.caniou@ens-lyon.fr=
->=20
+On Mon, Apr 19, 2010 at 01:08:26PM +0530, Pavan Kumar Sunkara wrote:
+> On Mon, Apr 19, 2010 at 12:53 PM, Junio C Hamano <gitster@pobox.com> =
 wrote:
-> >> After the ./configure --prefix=3D$HOME/git, the make all gives me
-> >
-> > Which revision are you trying to compile? Also, it's probably more
-> > helpful to just post the result of 'make all' verbatim, rather than
-> > snippets.
->
-> ...and try to use make directly rather than configure, which isn't
-> maintained that well.
+> > On the other hand, a proposal about giving multiple clients access =
+to
+> > their own individual server-side checkouts (ala "workspace" in DELT=
+A-V)
+> > would require some mechanism to maintain the state on the server en=
+d, and
+> > session management would be one ingredient necessary to achieve tha=
+t.
 
-That's what I did, but maybe you didn't saw my mail. It works fine, bec=
-ause Cc=20
-doesn't overide gcc. So I can install. I don't know if you want to look=
- at=20
-the errors or not, but if not, maybe adding some info in known issues?
+But what if I will want to give a link to my "workspace" to someone
+else? You can embed workspace id in the URL, in fact you would probably
+just use it instead of project name completely naturally. I still don't
+see any need for sessions.
 
-> I wonder whether we should hide configure somehow. If you see a Makef=
-ile
-> and configure and don't know the project, the natural impulse is to u=
-se
-> configure before make.
->
-> Michael
+> So, why don't we do like this,
+> There will be no need of session management when gitweb is installed
+> in some site like repo.or.cz which needs copy'n'paste URLs
+> but there will be session management when the write modules are
+> enabled and when gitweb is installed locally or on intranet (basicall=
+y
+> when it is used to work on a repo).
+>=20
+> What do you say ?
 
-Indeed, the natural reflex is to make a ./configure --help to have the=20
-options, and use ./configure. I saw the first lines in the INSTALL file=
-,=20
-describing "make prefix=3D" but just made like I'm used to.
+I think it will be best to discuss session support (and work on
+implementing it) when actual features where it is essential will
+come up. So far, I'm unable to foresee them, but if we discuss it
+later in conjunction with some concrete features, perhaps it will
+be clearer.
 
-Thx.
+> > When I heard that somebody wants to do a "write support" in gitweb,=
+ I
+> > naturally thought the proposal was about implementing RFC3253 using=
+ git as
+> > a backend. =A0I think it would be a reasonable thing to do (as oppo=
+sed to
+> > coming up with an ad-hoc "write support" mechanism that is not comp=
+atible
+> > with anybody else), but on the other hand it might be a bit too amb=
+itious
+> > for a one-student summer project.
 
-=2EYves.
+I think that would be something entirely different, and IMO even
+much less interesting. ;-)
+
+--=20
+				Petr "Pasky" Baudis
+http://pasky.or.cz/ | "Ars longa, vita brevis." -- Hippocrates
