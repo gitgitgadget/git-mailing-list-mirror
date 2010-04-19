@@ -1,63 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix checkout of large files to network shares under
- Windows XP
-Date: Mon, 19 Apr 2010 13:41:54 -0700
-Message-ID: <7vaaszqinh.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] Fix checkout of large files to network shares under Windows
+ XP
+Date: Mon, 19 Apr 2010 22:43:10 +0200
+Message-ID: <4BCCC05E.4030206@lsrfire.ath.cx>
 References: <4BCC5083.30801@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Apr 19 22:42:13 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 19 22:43:34 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3xnI-0005oy-GU
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 22:42:12 +0200
+	id 1O3xob-0006Tk-Sp
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 22:43:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751129Ab0DSUmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Apr 2010 16:42:06 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60399 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751030Ab0DSUmD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Apr 2010 16:42:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 229B2ACE13;
-	Mon, 19 Apr 2010 16:42:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/ULZ9E7KYvICmSCLelfV1Ra2hd8=; b=Eewvhh
-	P8IhSo7NceuiIDQlrmSMvDHLg/PP0amY6F7I6lpsbcwfOhZro01crQ9dYjUjD2pj
-	dIbXDroru2oxRs20bDbWVWkCXpEQJq/tOl8Fxe4juJwzo8Lo/8bNoftavrRyE4Mk
-	1NOZRPaszh7GxwyvUNQXGa52jx4IMAhHMXYIs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gDL/uxB9xnckFXfrUVniOykdecelW61V
-	At7Tf9CSw1pqDQtLYAt/b81PI15OMw9aib97daFu8vSPSKo098tc4rzL0ijYD5Cx
-	tnReHgugCQNFv5ks/HwXZ7Vk0UMoPqDHJuVVdRE2+ZScLXj2rCGqp2QWIw43c+db
-	kXwYTtyQzMY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E37BAACE11;
-	Mon, 19 Apr 2010 16:41:59 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3D434ACE10; Mon, 19 Apr
- 2010 16:41:56 -0400 (EDT)
-In-Reply-To: <4BCC5083.30801@gmail.com> (Sebastian Schuberth's message of
- "Mon\, 19 Apr 2010 14\:45\:55 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 00A074EC-4BF4-11DF-88F8-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751178Ab0DSUn3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Apr 2010 16:43:29 -0400
+Received: from india601.server4you.de ([85.25.151.105]:33998 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751030Ab0DSUn2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Apr 2010 16:43:28 -0400
+Received: from [10.0.1.100] (p57B7D9FE.dip.t-dialin.net [87.183.217.254])
+	by india601.server4you.de (Postfix) with ESMTPSA id 39BFD2F805A;
+	Mon, 19 Apr 2010 22:43:16 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <4BCC5083.30801@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145327>
 
-Dscho, I saw that you are planning to queue this to your tree; would it
-make your job easier if I queue this myself now, or if I refrain from
-queueing this myself and instead wait for you to tell me to pull or apply?
+Am 19.04.2010 14:45, schrieb Sebastian Schuberth:
+> This fixes msysGit issue 409, see
+> http://code.google.com/p/msysgit/issues/detail?id=409
+> 
+> Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+> ---
+>  compat/mingw.c |   24 ++++++++++++++++++++++++
+>  compat/mingw.h |    3 +++
+>  2 files changed, 27 insertions(+), 0 deletions(-)
+> 
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 7ec615c..672d074 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -293,6 +293,30 @@ int mingw_open (const char *filename, int oflags, ...)
+>  	return fd;
+>  }
+>  
+> +#undef write
+> +ssize_t mingw_write(int fd, const void *buf, size_t count)
+> +{
+> +	ssize_t written = 0;
+> +	size_t total = 0, size = count;
+> +
+> +	while (total < count && size > 0) {
+> +		written = write(fd, buf, size);
+> +		if (written < 0 && errno == EINVAL) {
+> +			// There seems to be a bug in the Windows XP network stack that
+> +			// causes writes with sizes > 64 MB to fail, so we halve the size
+> +			// until we succeed or ultimately fail.
 
-I can go either way.
+C style comments (/*...*/) are preferred over C++ style comments (//...)
+for git.
+
+Is there a known-good size, or at least a mostly-working one?  Would it
+make sense to start with that size instead of halving and trying until
+that size is reached?
+
+> +			size /= 2;
+> +		} else {
+> +			buf += written;
+> +			total += written;
+
+What about other errors?  You need to break out of the loop instead of
+adding -1 to buf and total, right?
+
+> +			if (total + size > count)
+> +				size = count - total;
+> +		}
+> +	}
+
+Shouldn't the loop be left in the successful case, too?  write(2) is
+allowed to write less than requested, so the caller already needs to
+deal with that case anyway.
+
+> +
+> +	return written < 0 ? written : total;
+> +}
+> +
+>  #undef fopen
+>  FILE *mingw_fopen (const char *filename, const char *otype)
+>  {
+> diff --git a/compat/mingw.h b/compat/mingw.h
+> index 756f3ab..751bb4c 100644
+> --- a/compat/mingw.h
+> +++ b/compat/mingw.h
+> @@ -178,6 +178,9 @@ int mingw_rmdir(const char *path);
+>  int mingw_open (const char *filename, int oflags, ...);
+>  #define open mingw_open
+>  
+> +ssize_t mingw_write(int fd, const void *buf, size_t count);
+> +#define write mingw_write
+> +
+>  FILE *mingw_fopen (const char *filename, const char *otype);
+>  #define fopen mingw_fopen
+>  
