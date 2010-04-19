@@ -1,83 +1,154 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: GSoC 2010: "Integrated Web Client for git" proposal
-Date: Mon, 19 Apr 2010 15:14:49 +0200
-Message-ID: <vpqsk6rmvna.fsf@bauges.imag.fr>
-References: <201004180246.18263.jnareb@gmail.com>
-	<20100418021223.GP10939@machine.or.cz>
-	<n2le72faaa81004180152pb84cef2cn2a7eb95da64420b1@mail.gmail.com>
-	<20100418223120.GB3563@machine.or.cz>
-	<u2ve72faaa81004182346zdf4bd0b3m3341717b1555c0a9@mail.gmail.com>
-	<vpqeiicey0d.fsf@bauges.imag.fr>
-	<7vfx2rsy6y.fsf@alter.siamese.dyndns.org>
-	<v2me72faaa81004190038y4aeefa80g9f60bb3b1e795e4b@mail.gmail.com>
-	<20100419090734.GA10939@machine.or.cz>
-	<vpq8w8j1vb7.fsf@bauges.imag.fr>
-	<p2we72faaa81004190557t240823bcu63f95b0f8a885cbb@mail.gmail.com>
+From: Samuel Tardieu <sam@rfc1149.net>
+Subject: [PATCH] remote add: add a --no-tags (-n) option
+Date: Mon, 19 Apr 2010 15:50:14 +0200
+Message-ID: <20100419135014.1077.28627.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	Shawn O Pearce <spearce@spearce.org>,
-	Scott Chacon <schacon@gmail.com>, Sam Vilain <sam@vilain.net>
-To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 19 15:15:30 2010
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 19 15:50:26 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3qow-0006Qx-7J
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 15:15:26 +0200
+	id 1O3rMn-0003d7-J4
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 15:50:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754948Ab0DSNPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Apr 2010 09:15:20 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:33593 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754858Ab0DSNPT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Apr 2010 09:15:19 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o3JD9eMK012191
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 19 Apr 2010 15:09:40 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1O3qoL-0002pv-IN; Mon, 19 Apr 2010 15:14:49 +0200
-In-Reply-To: <p2we72faaa81004190557t240823bcu63f95b0f8a885cbb@mail.gmail.com> (Pavan Kumar Sunkara's message of "Mon\, 19 Apr 2010 05\:57\:33 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 19 Apr 2010 15:09:41 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o3JD9eMK012191
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1272287382.33469@gMurL83Off099D1DazR1vQ
+	id S1753208Ab0DSNuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Apr 2010 09:50:18 -0400
+Received: from zoidberg.rfc1149.net ([91.121.19.179]:44580 "EHLO
+	zoidberg.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752677Ab0DSNuR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Apr 2010 09:50:17 -0400
+Received: from localhost.localdomain (unknown [192.168.9.2])
+	by zoidberg.rfc1149.net (Postfix) with ESMTP id B8FAE653A
+	for <git@vger.kernel.org>; Mon, 19 Apr 2010 15:50:14 +0200 (CEST)
+User-Agent: StGit/0.15
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145297>
 
-Pavan Kumar Sunkara <pavan.sss1991@gmail.com> writes:
+Add a '--no-tags' option to 'git remote add' which adds a
+'remote.REMOTE.tagopt = --no-tags' to the configuration file.
 
-> All of us are supporting using GET parameters rather than sessions for
-> project name and others which is fine for me as the reasons are valid.
-> But I would like to develop sessions manager incase they want to use
-> authentication support.
->
-> What do you say ?
+'git add -f -n REMOTE' will create a new remote and fetch from it
+without importing the tags. Subsequent 'git fetch REMOTE' will also
+not import the tags.
 
-That doesn't seem contradictory. You can have login/password as
-cookies or session variables, and other parameters within the URL.
+Signed-off-by: Samuel Tardieu <sam@rfc1149.net>
+---
+ Documentation/git-remote.txt |    5 ++++-
+ builtin/remote.c             |   11 ++++++++++-
+ t/t5505-remote.sh            |   36 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 50 insertions(+), 2 deletions(-)
 
-Then, if I send you a URL pointing to a write-enabled page which
-requires authentication, and you click it, you'll be prompted for your
-login/password before you can proceed, but after that, you'll still be
-redirected to the right page.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 3fc599c..9db3c35 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git remote' [-v | --verbose]
+-'git remote add' [-t <branch>] [-m <master>] [-f] [--mirror] <name> <url>
++'git remote add' [-t <branch>] [-m <master>] [-f] [-n] [--mirror] <name> <url>
+ 'git remote rename' <old> <new>
+ 'git remote rm' <name>
+ 'git remote set-head' <name> (-a | -d | <branch>)
+@@ -51,6 +51,9 @@ update remote-tracking branches <name>/<branch>.
+ With `-f` option, `git fetch <name>` is run immediately after
+ the remote information is set up.
+ +
++With `-n` option, `git fetch <name>` does not import tags from
++the remote repository.
+++
+ With `-t <branch>` option, instead of the default glob
+ refspec for the remote to track all branches under
+ `$GIT_DIR/remotes/<name>/`, a refspec to track only `<branch>`
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 277765b..bb5606b 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -106,7 +106,7 @@ static int fetch_remote(const char *name)
+ 
+ static int add(int argc, const char **argv)
+ {
+-	int fetch = 0, mirror = 0;
++	int fetch = 0, mirror = 0, notags = 0;
+ 	struct string_list track = { NULL, 0, 0 };
+ 	const char *master = NULL;
+ 	struct remote *remote;
+@@ -116,6 +116,8 @@ static int add(int argc, const char **argv)
+ 
+ 	struct option options[] = {
+ 		OPT_BOOLEAN('f', "fetch", &fetch, "fetch the remote branches"),
++		OPT_BOOLEAN('n', "no-tags", &notags,
++			"do not import remote tags when fetching"),
+ 		OPT_CALLBACK('t', "track", &track, "branch",
+ 			"branch(es) to track", opt_parse_track),
+ 		OPT_STRING('m', "master", &master, "branch", "master branch"),
+@@ -172,6 +174,13 @@ static int add(int argc, const char **argv)
+ 			return 1;
+ 	}
+ 
++	if (notags) {
++		strbuf_reset(&buf);
++		strbuf_addf(&buf, "remote.%s.tagopt", name);
++		if (git_config_set(buf.buf, "--no-tags"))
++			return 1;
++	}
++
+ 	if (fetch && fetch_remote(name))
+ 		return 1;
+ 
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 230c0cd..d4ed7ea 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -320,6 +320,42 @@ test_expect_success 'add alt && prune' '
+ 	 git rev-parse --verify refs/remotes/origin/side2)
+ '
+ 
++cat > test/expect << EOF
++some-tag
++EOF
++
++test_expect_success 'add with tags (default)' '
++	(cd one &&
++	 git tag -a -m "Some tag" some-tag) &&
++	(mkdir add-tags &&
++	 cd add-tags &&
++	 git init &&
++	 git remote add -f origin ../one &&
++	 git tag -l some-tag > ../test/output &&
++	 test_must_fail git config remote.origin.tagopt) &&
++	(cd one &&
++	 git tag -d some-tag) &&
++	test_cmp test/expect test/output
++'
++
++cat > test/expect << EOF
++--no-tags
++EOF
++
++test_expect_success 'add --no-tags' '
++	(cd one &&
++	 git tag -a -m "Some tag" some-tag) &&
++	(mkdir add-no-tags &&
++	 cd add-no-tags &&
++	 git init &&
++	 git remote add -f -n origin ../one &&
++	 git tag -l some-tag > ../test/output &&
++	 git config remote.origin.tagopt >> ../test/output) &&
++	(cd one &&
++	 git tag -d some-tag) &&
++	test_cmp test/expect test/output
++'
++
+ cat > one/expect << EOF
+   apis/master
+   apis/side
