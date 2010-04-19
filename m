@@ -1,75 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote add: add a --no-tags (-n) option
-Date: Mon, 19 Apr 2010 11:13:31 -0700
-Message-ID: <7vvdbnqpis.fsf@alter.siamese.dyndns.org>
-References: <20100419135014.1077.28627.stgit@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH v2 0/4] A new library for plumbing output (inc.
+ current status)
+Date: Mon, 19 Apr 2010 15:40:20 -0400
+Message-ID: <20100419194020.GA25883@coredump.intra.peff.net>
+References: <20100411231824.67460.24844.julian@quantumfyre.co.uk>
+ <201004151107.33892.jnareb@gmail.com>
+ <20100417095259.GA23110@coredump.intra.peff.net>
+ <201004171502.42044.jnareb@gmail.com>
+ <20100417140053.GA10997@coredump.intra.peff.net>
+ <203d6cefd3cd1020eb94fbd3d5e25eae@212.159.54.234>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Samuel Tardieu <sam@rfc1149.net>
-X-From: git-owner@vger.kernel.org Mon Apr 19 20:13:47 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
+	Eric Raymond <esr@thyrsus.com>
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Mon Apr 19 21:40:58 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O3vTd-0002BU-UZ
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 20:13:46 +0200
+	id 1O3wq2-0004I4-4B
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Apr 2010 21:40:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753419Ab0DSSNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Apr 2010 14:13:41 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41343 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751034Ab0DSSNk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Apr 2010 14:13:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B2A3ACFEC;
-	Mon, 19 Apr 2010 14:13:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aVWYZcqtcFuaCDhsaosbXMQOsxg=; b=xVqXfL
-	j+FxdKM8dqMEbczAOvs39SmckqxECzF39pUL4m6pPmRB2GMe/82lFCxqmlEqibUN
-	1RFFuiffYTNhE8/OU5K0KQ7QCjym30Xk43sb09i+ym+ZxfscUZYyT0OT1LwnmLam
-	KphqAfgw+5jAYIp0DUkjEYugcwn+a9e1r+XW0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NqhZNlEH1xIF9op2K4s/mwq2NhFBNNuC
-	UqazCBUCRR4v3fEPsjq24TNeczWDQRbfneoroSNk1behOuuPOMPkHUGnQzVOvvSM
-	J3B03YrR34QZBYPMkZtK+tzMN4ESs/YAa3OG61O4Pc1v5mv4VigdsJvtX6DF/U0B
-	Ck28XcpmNOM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EBD76ACFE6;
-	Mon, 19 Apr 2010 14:13:36 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F959ACFE0; Mon, 19 Apr
- 2010 14:13:33 -0400 (EDT)
-In-Reply-To: <20100419135014.1077.28627.stgit@localhost.localdomain> (Samuel
- Tardieu's message of "Mon\, 19 Apr 2010 15\:50\:14 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 460BCDF2-4BDF-11DF-88C0-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752542Ab0DSTkv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Apr 2010 15:40:51 -0400
+Received: from peff.net ([208.65.91.99]:48683 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751853Ab0DSTkv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Apr 2010 15:40:51 -0400
+Received: (qmail 23637 invoked by uid 107); 19 Apr 2010 19:40:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 19 Apr 2010 15:40:56 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Apr 2010 15:40:20 -0400
+Content-Disposition: inline
+In-Reply-To: <203d6cefd3cd1020eb94fbd3d5e25eae@212.159.54.234>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145323>
 
-Samuel Tardieu <sam@rfc1149.net> writes:
+On Sun, Apr 18, 2010 at 10:46:18PM +0100, Julian Phillips wrote:
 
-> @@ -116,6 +116,8 @@ static int add(int argc, const char **argv)
->  
->  	struct option options[] = {
->  		OPT_BOOLEAN('f', "fetch", &fetch, "fetch the remote branches"),
-> +		OPT_BOOLEAN('n', "no-tags", &notags,
-> +			"do not import remote tags when fetching"),
+> It might help standardise the output between commands if there were helper
+> functions for some of the larger structures - e.g. commits.  Though I don't
+> think that those functions would be able to do legacy output, due to the
+> current lack of cross-command output compatibility.  I'm starting to see
+> this with blame and diff-tree (and family), where they both want to output
+> information about commits.
 
-Any long-opt that begins with "no-" looks wrong, especially that will
-allow people to say "--no-no-tags".  Perhaps something like this is
-necessary.
+Yeah, that was what I saw on looking at the code. And we have to support
+those old formats, obviously. For the most part, I found the level of
+verbosity in the patches you posted (and I just peeked at your repo) to
+be fine. Sure, it's more lines, but they're IMHO very easy to read.
 
-    { OPTION_BOOLEAN, 0, "tags", &tags, NULL, "fetch tags", PARSE_OPT_NOARG }
+If we have to tradeoff between either duplicating output entirely (for
+both the output form and traditional form) or having a more flexible but
+slightly more verbose output library, I think I would rather go with the
+latter. It will be more maintainable in the long run.
 
-Or imitate whatever we do in builtin-fetch.c; although I suspect the
-default would be different in this command and "git fetch", so you may
-need to adjust for the difference a bit.
+-Peff
