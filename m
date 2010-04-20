@@ -1,72 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Getting 'git log' (or something else) to show me the relevant
- sub-graph?
-Date: Tue, 20 Apr 2010 13:45:21 -0700
-Message-ID: <7viq7lg8f2.fsf@alter.siamese.dyndns.org>
-References: <201004201649.31084.johan@herland.net>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] Fix checkout of large files to network shares under 
+ Windows XP
+Date: Tue, 20 Apr 2010 22:49:16 +0200
+Message-ID: <4BCE134C.8090802@lsrfire.ath.cx>
+References: <4BCC5083.30801@gmail.com> <4BCCC05E.4030206@lsrfire.ath.cx> <t2xbdca99241004200542ud4e8ea5azcad918c37bcacf1a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Apr 20 22:45:39 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, msysgit@googlegroups.com,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 20 22:49:39 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4KK9-00067d-3X
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 22:45:37 +0200
+	id 1O4KO1-0000GV-Em
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 22:49:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755195Ab0DTUpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Apr 2010 16:45:31 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51087 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755193Ab0DTUpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Apr 2010 16:45:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F1EA6AAD43;
-	Tue, 20 Apr 2010 16:45:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ixxcN7MlLqwIDdDfHlFZEdQGwFo=; b=lEwSFp
-	hshyRTvNotCDIAcK7/+WSZKszKDuh33CEe4a2KQeJteacK4zIvJNxyLdsfM1OpY4
-	Pz61aHV0NBk3sTnaUc4ZLa7E/X3newMZa2mGBW868akEVR8Alz6X4tGBIX7mL5Xo
-	udgqbT12bp4p/4uwGuQNmmEPSoLCFe39VZCAc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dD0DUW/U1WsLT2h8+DyzqZmSG8LcGdPV
-	cBFBmIzUc4ci00DS8AaHmXTr3Mosgx0pDPigQDnmTResQk8pWNpN1p2YoLODU2aL
-	xn5AYeXYLrZgeX9SELFyUyg0LFnbQ4dlYH6ewgmVnIGTyeVZZ+C5rGcTTnw7WuoO
-	rIjCK0O3BVA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CAF9BAAD42;
-	Tue, 20 Apr 2010 16:45:25 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB3A0AAD3B; Tue, 20 Apr
- 2010 16:45:22 -0400 (EDT)
-In-Reply-To: <201004201649.31084.johan@herland.net> (Johan Herland's message
- of "Tue\, 20 Apr 2010 16\:49\:30 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A5C34D54-4CBD-11DF-B57E-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755267Ab0DTUt2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Apr 2010 16:49:28 -0400
+Received: from india601.server4you.de ([85.25.151.105]:49668 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754666Ab0DTUt1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Apr 2010 16:49:27 -0400
+Received: from [10.0.1.100] (p57B7F4C7.dip.t-dialin.net [87.183.244.199])
+	by india601.server4you.de (Postfix) with ESMTPSA id 712E62F805A;
+	Tue, 20 Apr 2010 22:49:25 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <t2xbdca99241004200542ud4e8ea5azcad918c37bcacf1a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145396>
 
-Johan Herland <johan@herland.net> writes:
+Am 20.04.2010 14:42, schrieb Sebastian Schuberth:
+>> Shouldn't the loop be left in the successful case, too?  write(2) is
+>> allowed to write less than requested, so the caller already needs to
+>> deal with that case anyway.
+>=20
+> I prefer to make the wrapper as transparent as possible. If a direct
+> call to write would not write less than requested, the wrapper should
+> not either.
 
-> Now, assume that I have bisected my way through to 'A', and found that 
-> it introduces some bug. Now, I'm interested in visualizing the path 
-> that this bug "travelled" to get into "mainline", i.e. the following 
-> sub-graph:
->
->                           --M2--H  <-- mainline
->                            /
->         --M1--D---E---F---G  <-- dev-branch
->          /
-> A---B---C  <-- topic-branch
+After the call failed, we don't know how many bytes would have been
+written had it succeeded.
 
-Interesting.  I am looking into it ;-)
+But I agree with Albert's reasoning to use the knowledge of a working
+chunk size in order to minimize the number of write(2) calls.  Otherwis=
+e
+we'd have to search for a working size again and again, generating lots
+of failing calls.
+
+> I've updated work/issue-409 in 4msysgit.git accordingly.
+
+This patch doesn't help in the test case I cobbled together quickly.
+It's a Windows XP SP3 client on VMWare mapping a file share exported by
+a Netapps filer, over a VPN.  It's very slow, and I admit that it's a
+weird setup.  I wouldn't actually use it that way, but couldn't find
+another file share momentarily.
+
+I can check out a 1MB file, but checking out a 32MB file fails.  I've
+added a fprintf() to the loop and I can see that it's halving the size
+and retries, as intended, until it eventually hits zero.
+
+The file is created using the correct file size (32MB), though.The firs=
+t
+failed write(2) call needs to be undone somehow before we can try again=
+,
+it seems.  Do we have to seek back or truncate the file?
+
+Replacing the body of mingw_write() with the following line allows me t=
+o
+check out the 32MB file, by the way:
+
+	return write(fd, buf, min(count, 1024 * 1024));
+
+Ren=C3=A9
