@@ -1,132 +1,236 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: GSoC 2010: "Integrated Web Client for git" proposal
-Date: Tue, 20 Apr 2010 20:14:15 +0200
-Message-ID: <201004202014.19477.jnareb@gmail.com>
-References: <201004150630.44300.chriscool@tuxfamily.org> <201004191243.24209.jnareb@gmail.com> <20100419115113.GC3563@machine.or.cz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH RFC 5/5] cache: Use ce_norm_sha1().
+Date: Tue, 20 Apr 2010 12:12:48 -0700
+Message-ID: <7v7ho2gcpb.fsf@alter.siamese.dyndns.org>
+References: <cover.1271432034.git.grubba@grubba.org>
+ <c68d98b384086925da0194e560ae01d83a29f80c.1271432034.git.grubba@grubba.org>
+ <7vsk6qio1f.fsf@alter.siamese.dyndns.org>
+ <Pine.GSO.4.63.1004201622050.4296@shipon.roxen.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Shawn O Pearce <spearce@spearce.org>,
-	Scott Chacon <schacon@gmail.com>,
-	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
-	Sam Vilain <sam@vilain.net>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Apr 20 20:14:42 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Henrik =?utf-8?Q?Grubbstr=C3=B6m?= <grubba@roxen.com>
+X-From: git-owner@vger.kernel.org Tue Apr 20 21:13:06 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4Hy5-0001wL-81
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 20:14:41 +0200
+	id 1O4Isa-0005hQ-On
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 21:13:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753462Ab0DTSOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Apr 2010 14:14:35 -0400
-Received: from mail-bw0-f225.google.com ([209.85.218.225]:35474 "EHLO
-	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752746Ab0DTSOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Apr 2010 14:14:34 -0400
-Received: by bwz25 with SMTP id 25so7098848bwz.28
-        for <git@vger.kernel.org>; Tue, 20 Apr 2010 11:14:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=q5PeFSgGTk5WrdSf2W+4kRNgHqowKo9ej/YI1rULD9E=;
-        b=RhOp4I8sKNSuBIfOiyRFoLfEVgJ5W8WJ/j/3//rrnjtyv/UP8Q6ecuOre7uzmlb6zy
-         6DBhgHLgv2L6N0kyni3HO5QiquVJa889VOPR9734DyUI8g8X8o26N/w1f85Fa59NY3Kv
-         3RXRO2gb5PMzHK9RXAtuACYWUsvsavOzCKyaI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=qjtrH87VgZiOdnr6o1g5jm/5P6qhnrhbMWgxnUQEtTUcRTvqj02MiJ9Xlj512sE66c
-         cgko9QyLHPctBXlwQDBtjCSBDieKIn359OZkKWDDtLdBD0I2HG/i46eYKwemi4wLUvPW
-         qUbOpyzc8h5sRpoKC0ZfX/9wNfPoUaH4Is1t4=
-Received: by 10.87.67.13 with SMTP id u13mr5915429fgk.66.1271787272656;
-        Tue, 20 Apr 2010 11:14:32 -0700 (PDT)
-Received: from [192.168.1.13] (abvf202.neoplus.adsl.tpnet.pl [83.8.203.202])
-        by mx.google.com with ESMTPS id 4sm2500749fgg.12.2010.04.20.11.14.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 20 Apr 2010 11:14:27 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20100419115113.GC3563@machine.or.cz>
-Content-Disposition: inline
+	id S1754071Ab0DTTM4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Apr 2010 15:12:56 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60241 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753513Ab0DTTMz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Apr 2010 15:12:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AEEF7ACA09;
+	Tue, 20 Apr 2010 15:12:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=WhIMD/odFgJ3
+	vVG1AGqQnE92Oxs=; b=oaw6DUNNxNEWLRAHgz6m1fbwnqzKhU397FK1MwvPAEML
+	IPXmt2KwojzbiJf0seDT1owMbM1zDpi+XS7xDm/ANaQyIA+JMJyPw9c+1qXXZ5U8
+	YJDsY5QWT0bjOofojHSDFc2NZACggDHaZ4HTsHi/1tMPeZP3ORI5NWlmwk5mSIA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pmivGp
+	t2vKFCz1al375IooZOxTlDe4VTNPCnDpRfDkhOlprviSoBSiYy5pdI3dxP28agXP
+	0jDxi9bmOyJV1P165LN9kyguv4RGhBZ3sfmOKWxMH58I4geCK/MgW/F5AtkUMQOf
+	MeGVfU5eoYCM0b8V/sVH4WVQXWR7+d8a32d1I=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B946ACA08;
+	Tue, 20 Apr 2010 15:12:52 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C64BACA07; Tue, 20 Apr
+ 2010 15:12:49 -0400 (EDT)
+In-Reply-To: <Pine.GSO.4.63.1004201622050.4296@shipon.roxen.com> ("Henrik
+ =?utf-8?Q?Grubbstr=C3=B6m=22's?= message of "Tue\, 20 Apr 2010 17\:39\:15
+ +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B7C30F92-4CB0-11DF-A2B4-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145392>
 
-On Mon, Apr 19, 2010, Petr Baudis wrote:
-> On Mon, Apr 19, 2010 at 12:43:22PM +0200, Jakub Narebski wrote:
->> On Sun, Apr 18, 2010 at 21:56 +0200, Petr Baudis wrote:
+Henrik Grubbstr=C3=B6m <grubba@roxen.com> writes:
 
->>> If the project is a success, I wanted to use it for mob branch editing
->>> on repo.or.cz. It could also be used as open-source Gist alternative.
->> 
->> For that you would need editing file / editing contents action, but
->> this is explicitely excluded in current version of Pavan's proposal :-(
-> 
-> Is it? I see it only being omitted.
+>> 3. "git update-index --refresh" does not improve the situation, as i=
+t
+>>    (thinks) it knows the blob and the working tree file are differen=
+t.
+>
+> False. "git update-index --refresh" uses
+> read-cache.c:ce_compare_data() to compare the content of the blob wit=
+h
+> the normalized content of the working tree,...
 
-At the end, in the section which describes what would be not included
-in the project, there was editing files excluded from project.
+I don't think you tried it yourself.  Here is what should happen with t=
+he
+current code.
 
-Which is a bit strange because you need some kind of web editor (even
-if it is simply textarea) for the commit message if this "Web Client"
-is to implement [git commit]...
- 
->>> But it needs to be coded so that it does not require an actual checked
->>> out copy (which shouldn't be too much hassle).
->> 
->> It would require using 'git hash-object -t blob -w --stdin' (from body
->> submitted via POST from textarea) plus 'git update-index --cacheinfo'.
-> 
-> Yes. Not a whole lot of effort, seems to me. A downside is that you
-> cannot use the working tree - index dichotomy, but life isn't perfect.
+	# step 0 & 1. a project with LF ending
+	$ git init two && cd two
+        $ echo a quick brown fox >kuzu
+        $ git add kuzu && git commit -m kuzu
 
-What do you mean here by "working tree - index dichotomy"?
- 
->> There is however complication that you would need to do open2/open3
->> because git-hash-object would require bidirectional communication unless
->> you would use temporary file (command_bidi_pipe in Git.pm, untested).
-> 
-> I think even just going through a temporary file is fine for initial
-> implementation.
+        # step 2. you want CRLF in your work area
+        $ echo -e "a quick brown fox\015" >kuzu
+        $ git config core.autocrlf true
+	$ git diff
+        diff --git a/kuzu b/kuzu
 
-It is not that difficult.  You can use IPC::Open2 (which is in core)
-and IO::Handle (for easier coding; using IO::Handle is not strictly
-necessary), like that:
+        # step 3. oops, refresh
+        $ git update-index --refresh
+        kuzu: needs update
 
-  use IPC::Open2 qw(open2);
-  use IO::Handle;
+And it is a common thing people wish to do.  Admittedly, this is an one=
+-off
+event, so it is not _that_ urgent to fix.  You can for example do:
 
-  ...
+	# step 4. you haven't changed anything really, so you can add
+        $ git add kuzu
+        $ git diff
+        $ git diff --cached ;# empty!
 
-  my $pid = open2($out, $in, git_cmd(), 'hash-object', '-w', '--stdin');
-  $in->printflush($cgi->param('textarea'))
-     or die...;
-  my $sha1 = $out->getline();
-  chomp $sha1;
+to force re-index.
 
-  close $out;
-  waitpid $pid, 0;
+> Let's take the reverse case instead:
+>
+>  0. For some reason a file using CRLF line endings has entered the
+>     repository.
 
-Then you would need:
+	# step 0. a blob with CRLF
+        $ git init one && cd one
+        $ echo -e "a quick brown fox\015" >kuzu
+        $ git add kuzu && git commit -m kuzu
 
-  system(git_cmd(), 'update-index', '--cacheinfo',
-         '100644', $sha1, $pretend_path)
-    or die...;
+>  1. The user notices the mistake, and sets crlf. The index is still
+>     clean, but the user wants the file with LF line endings, so the
+>     user does a "git checkout -- the_file".
 
-Not tested!
--- 
-Jakub Narebski
-Poland
+	# step 1. you want CRLF in work area, LF in repository
+        $ git config core.autocrlf true
+        $ git diff ;# clean!
+        $ git checkout -- kuzu
+        $ git diff ;# clean!
+        $ cat -v kuzu
+        a quick brown fox^M
+
+One glitch is that this "checkout" becomes a no-op because the file is
+stat-clean.  This is something your "record in the index entry what
+normalization was used when we checked it out (or when we read and
+hashed)" approach should be able to fix.  It however does not need the
+re-indexed object name.
+
+	Side note: if you want to have LF in both work tree and in
+        repository, then you wouldn't use core.autocrlf.  Instead you
+        would do:
+
+	# step 1 (irrelevant alternative). you want LF in both
+        $ dos2unix kuzu
+        $ git diff ;# clean!
+
+>  2. The index is now dirty, so the user performs a "git update-index
+>     --refresh".
+
+I think you see exactly the same behaviour in the example sequence I ga=
+ve
+you (blobs with LF with working files with CRLF, core.autocrlf set) and=
+ in
+your example sequence (blobs with CRLF with working files with LF,
+core.autocrlf set) in this case.  What happens to my example are alread=
+y
+shown above.  Continuing your example, because in reality the index is =
+not
+dirty, we would need to make it stat-dirty first.
+
+	# step 2. you try to refresh
+        $ touch kuzu
+        $ git update-index --refresh
+        kuzu: needs update
+        $ git checkout -- kuzu
+        $ cat -v kuzu
+        a quick brown fox^M
+        $ git diff ;# shows changes!
+        diff --git a/kuzu b/kuzu
+        index ....
+
+If you are trying to somehow make this last "git diff" silent, then I
+think you are solving a _wrong_ problem.  By setting retroactively the
+CRLF setting, you are saying that you do not want to have CRLF in the
+blobs recorded in the repository, and it is a _good thing_ that there a=
+re
+differences (tons of them) between what is recorded currently and what =
+you
+are going to commit to fix the earlier mistake.
+
+>> I was hoping to see a solution where you will add a stronger version=
+ of
+>> "refresh" without having to do anything else other than recording "h=
+ow did
+>> I munge the file in the working tree to produce the blob".  The thir=
+d step
+>> would change to:
+>>
+>> 3. "git update-index --refresh" notices that the conversion paramete=
+rs
+>>    are different since the last time the files in the working tree w=
+ere
+>>    looked at (i.e. immediately after a "clone", working tree files a=
+re
+>>    what git wrote out using convert_to_working_tree() and you know w=
+hat
+>>    conversion you used; after the user modified files in the working=
+ tree
+>>    and said "git add", you know you what conversion parameters you r=
+an
+>>    convert_to_git() with to produce blobs).  The paths that has diff=
+erent
+>>    conversion parameters are re-indexed to see if they hash to the s=
+ame
+>>    sha1 as recorded in the index.  If they have changed, their index
+>>    entries are left intact (i.e. you will still show the differences=
+);
+>>    otherwise you update the cached stat information for their index
+>>    entries.
+>
+> I believe that most people that have edited a file that has changed
+> CRLF convention aren't interested in that all lines have changed, but
+> in only the lines that have actually been edited.
+
+I think that is not just solving a wrong problem but also is encouragin=
+g a
+bad workflow at the same time, which is even worse.  If you recorded CR=
+LF
+blobs in a project that you do not want to have CRLF blob, fixing that
+mistake is one logical change that people who later browse the history
+would not want to see intermixed with the "lines that actually have bee=
+n
+edited".
+
+> Storing the normalized sha1 is needed to reduce the amount of double
+> work (eg having "git update-index --refresh" reperform
+> convert_to_git() for
+> the repository blob every time a file is dirty, instead of (as now)
+> just comparing the sha1 values).
+
+As I already said, I agree that it would be beneficial to store what
+normalization settings were used and comparing that with what settings =
+are
+in effect to detect the possible phamtom difference caused by the chang=
+e
+of the settings.  But once we know that the result of a re-normalizatio=
+n
+is different from what is recorded in the index (or tree), then the
+difference should be shown.  The actual difference would change every t=
+ime
+the work tree file is edited, so I don't see the benefit of contaminate
+the object database with intermediate "blobs" that is not "added".
