@@ -1,124 +1,107 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v6] gitk: Use git-difftool for external diffs when available
-Date: Tue, 20 Apr 2010 01:11:19 -0700
-Message-ID: <1271751079-18884-1-git-send-email-davvid@gmail.com>
-References: <20100417085230.GC6681@brick.ozlabs.ibm.com>
-Cc: git@vger.kernel.org, Thomas Arcila <thomas.arcila@gmail.com>,
-	Markus Heidelberg <markus.heidelberg@web.de>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Apr 20 10:11:56 2010
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Fix checkout of large files to network shares under Windows
+ XP
+Date: Tue, 20 Apr 2010 10:18:25 +0200
+Message-ID: <4BCD6351.1050706@viscovery.net>
+References: <4BCC5083.30801@gmail.com> <4BCCC05E.4030206@lsrfire.ath.cx>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org,
+	msysgit@googlegroups.com
+To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Apr 20 10:18:47 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O48Ym-0002ps-9R
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 10:11:56 +0200
+	id 1O48fK-00067s-IZ
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 10:18:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753875Ab0DTILh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Apr 2010 04:11:37 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:46161 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751566Ab0DTILf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Apr 2010 04:11:35 -0400
-Received: by gyg13 with SMTP id 13so3094639gyg.19
-        for <git@vger.kernel.org>; Tue, 20 Apr 2010 01:11:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=GVslW3DuaZXtIR5rFgirDkWfzCMlpD7lXnEnLOXQf6k=;
-        b=EXi2CyIDlB8gYtZzEBRH4HxPMb/+a7pPdPuvmctq7xWzxJ2wHwXgba76VPxcS2h8Il
-         4KN+UFauHjaypeaveDmco/9XdyluyyBs1do0USc5q++Cqy8rhji82VhsY/aStR0FiT6f
-         AAJAQg/B9Adl09jCZK/5iHgxOVcWICpVYu1pw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=aiFvMl+aX2lsmHh8zntTk6crFpCaUwNsNKiwXWBjC61+LyT8G6HeY09GJ7Kr9jXj0m
-         Ie+YJ6E6I25S5eokiuGFR2sj/nQXIf2ZhTVPo9wLbuHjmSVCnX8+mPrctZilorYD8Th3
-         Z3MNOD8UVmBylyLri5wh9Ijr2xD3dty1i9sC8=
-Received: by 10.100.224.10 with SMTP id w10mr11473694ang.183.1271751087869;
-        Tue, 20 Apr 2010 01:11:27 -0700 (PDT)
-Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 6sm1859321ywd.23.2010.04.20.01.11.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 20 Apr 2010 01:11:26 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.rc2.5.gddd02
-In-Reply-To: <20100417085230.GC6681@brick.ozlabs.ibm.com>
+	id S1753946Ab0DTISf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Apr 2010 04:18:35 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:47781 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753912Ab0DTIS3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Apr 2010 04:18:29 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1O48f4-0004nS-95; Tue, 20 Apr 2010 10:18:26 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id C5C2F1660F;
+	Tue, 20 Apr 2010 10:18:25 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <4BCCC05E.4030206@lsrfire.ath.cx>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145356>
 
-git-difftool's '--extcmd=frotz' was added in 1.7.0 and
-is the mechanism through which gitk launches the
-configured 'extdifftool'.  When 'extdifftool' is
-misconfigured an error dialog is used to display
-git-difftool's stdout and stderr.
+Am 4/19/2010 22:43, schrieb Ren=E9 Scharfe:
+> Am 19.04.2010 14:45, schrieb Sebastian Schuberth:
+>> +#undef write
+>> +ssize_t mingw_write(int fd, const void *buf, size_t count)
+>> +{
+>> +	ssize_t written =3D 0;
+>> +	size_t total =3D 0, size =3D count;
+>> +
+>> +	while (total < count && size > 0) {
+>> +		written =3D write(fd, buf, size);
+>> +		if (written < 0 && errno =3D=3D EINVAL) {
+>> +			// There seems to be a bug in the Windows XP network stack that
+>> +			// causes writes with sizes > 64 MB to fail, so we halve the siz=
+e
+>> +			// until we succeed or ultimately fail.
+>=20
+> C style comments (/*...*/) are preferred over C++ style comments (//.=
+=2E.)
+> for git.
+>=20
+> Is there a known-good size, or at least a mostly-working one?  Would =
+it
+> make sense to start with that size instead of halving and trying unti=
+l
+> that size is reached?
+>=20
+>> +			size /=3D 2;
+>> +		} else {
+>> +			buf +=3D written;
+>> +			total +=3D written;
+>=20
+> What about other errors?  You need to break out of the loop instead o=
+f
+> adding -1 to buf and total, right?
 
-The existing implementation moved into 'proc gitkextdiff'
-for use with git < 1.7.0.
+Thanks for a thorough review. I had the gut feeling that something's wr=
+ong
+with the code due to its structure, but didn't stare at the code long
+enough to notice this.
 
-One benefit of this change is that gitk's external diff
-no longer requires write-access to the current directory.
+I suggest to have this structure
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
+	write
+	if success or failure is not EINVAL
+		return
 
-Changes since last time:
+	do
+		reduce size
+		if larger than known (presumed?) maximum
+			reduce to that maximum
+		write
+	while not success and failure is EINVAL
 
-* Errors are shown using 'proc error_popup'
-* The existing code moved into a tidy function
+	while not failure and exactly reduced size written
+		write more
 
- gitk |   25 +++++++++++++++++++++++++
- 1 files changed, 25 insertions(+), 0 deletions(-)
+I don't think that we will observe any short writes *after* the size wa=
+s
+reduced, which Albert is concerned about. Somebody who observes the
+failure that this works around could instrument the function to see
+whether short writes are really a problem.
 
-diff --git a/gitk b/gitk
-index 1b0e09a..0533baf 100755
---- a/gitk
-+++ b/gitk
-@@ -3361,6 +3361,7 @@ proc external_diff {} {
-     global flist_menu_file
-     global diffids
-     global extdifftool
-+    global git_version
- 
-     if {[llength $diffids] == 1} {
-         # no reference commit given
-@@ -3380,6 +3381,30 @@ proc external_diff {} {
-         set diffidfrom [lindex $diffids 0]
-         set diffidto [lindex $diffids 1]
-     }
-+    if {[package vcompare $git_version "1.7.0"] < 0} {
-+        gitkextdiff $diffidfrom $diffidto
-+        return
-+    }
-+
-+    set cmd [list "git" "difftool" "--no-prompt" "--extcmd=$extdifftool"]
-+    if {$diffidfrom ne $nullid && $diffidfrom ne $nullid2} {
-+        lappend cmd $diffidfrom
-+    }
-+    if {$diffidto ne $nullid && $diffidto ne $nullid2} {
-+        lappend cmd $diffidto
-+    }
-+    lappend cmd "--" $flist_menu_file
-+
-+    set pipe [open |$cmd r]
-+    set stdout [read $pipe]
-+    if {[catch {close $pipe} stderr] != 0} {
-+        error_popup "git-difftool: $stdout $stderr"
-+    }
-+}
-+
-+proc gitkextdiff {diffidfrom diffidto} {
-+    global flist_menu_file
-+    global extdifftool
- 
-     # make sure that several diffs wont collide
-     set diffdir [gitknewtmpdir]
--- 
-1.7.1.rc2.5.gddd02
+-- Hannes
