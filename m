@@ -1,98 +1,144 @@
 From: Michael Olson <mwolson@gnu.org>
-Subject: [PATCH/RFC 0/2] git-svn: Allow certain refs to be ignored
-Date: Tue, 20 Apr 2010 14:30:09 -0700
-Message-ID: <o2xc8b3bef91004201430m10bbe060q7d8ebd3a1ac4c3bd@mail.gmail.com>
+Subject: [PATCH/RFC 1/2] git-svn: Allow certain refs to be ignored
+Date: Tue, 20 Apr 2010 14:30:14 -0700
+Message-ID: <w2nc8b3bef91004201430n4d02e390pa2023d6401a1cb43@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Eric Wong <normalperson@yhbt.net>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Tim Stoakes <tim@stoakes.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 20 23:30:42 2010
+X-From: git-owner@vger.kernel.org Tue Apr 20 23:30:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4L1j-0008Vb-7I
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 23:30:39 +0200
+	id 1O4L1y-0000Fv-Qn
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 23:30:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755413Ab0DTVad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Apr 2010 17:30:33 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:50984 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755260Ab0DTVad (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Apr 2010 17:30:33 -0400
-Received: by pvg13 with SMTP id 13so356874pvg.19
-        for <git@vger.kernel.org>; Tue, 20 Apr 2010 14:30:32 -0700 (PDT)
-Received: by 10.220.81.20 with HTTP; Tue, 20 Apr 2010 14:30:09 -0700 (PDT)
+	id S1755417Ab0DTVas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Apr 2010 17:30:48 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:57959 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755360Ab0DTVar (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Apr 2010 17:30:47 -0400
+Received: by pwj9 with SMTP id 9so4669825pwj.19
+        for <git@vger.kernel.org>; Tue, 20 Apr 2010 14:30:47 -0700 (PDT)
+Received: by 10.220.81.20 with HTTP; Tue, 20 Apr 2010 14:30:14 -0700 (PDT)
 X-Originating-IP: [209.104.55.5]
-X-Google-Sender-Auth: 1ab67611a822175b
-Received: by 10.140.58.11 with SMTP id g11mr5664637rva.240.1271799030822; Tue, 
-	20 Apr 2010 14:30:30 -0700 (PDT)
+X-Google-Sender-Auth: c6bb72182e179eee
+Received: by 10.141.13.3 with SMTP id q3mr806566rvi.174.1271799046937; Tue, 20 
+	Apr 2010 14:30:46 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145399>
 
-This change allows certain refs to be ignored while importing svn
-history.  This is useful for:
+Implement a new --ignore-refs option which specifies a regex of refs
+to ignore while importing svn history.
 
- - Performing overlapping transforms from svn's branch namespace into
-   git's namespace.  The overlapping refs can be ignored.  It might
-   potentially be a better idea in this case to make git-svn assign
-   precedence according to the order in which the branch patterns are
-   specified, perhaps with an option to trigger that behavior (which
-   is out of scope for this patch series).
+This is a useful supplement to the --ignore-paths option, as that
+option only operates on the contents of branches and tags, not the
+branches and tags themselves.
 
- - Avoiding some refs that represent bad svn operations which cause
-   git-svn to take a very long time.  Example: copying one module
-   accidentally into another module's branch namespace.
+Signed-off-by: Michael W. Olson <mwolson@gnu.org>
+---
+ git-svn.perl |   38 +++++++++++++++++++++++++++++++++-----
+ 1 files changed, 33 insertions(+), 5 deletions(-)
 
-A new config directive called "ignore-refs" implements this feature by
-means of a regex of refs to ignore.  I haven't written the necessary
-git-svn documentation updates for it yet.
+diff --git a/git-svn.perl b/git-svn.perl
+index 2c86ea2..0e1feb3 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -89,7 +89,8 @@ $_q ||= 0;
+ my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
+                     'config-dir=s' => \$Git::SVN::Ra::config_dir,
+                     'no-auth-cache' => \$Git::SVN::Prompt::_no_auth_cache,
+-                    'ignore-paths=s' => \$SVN::Git::Fetcher::_ignore_regex );
++                    'ignore-paths=s' => \$SVN::Git::Fetcher::_ignore_regex,
++                    'ignore-refs=s' => \$Git::SVN::Ra::_ignore_refs_regex );
+ my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
+ 		'authors-file|A=s' => \$_authors,
+ 		'authors-prog=s' => \$_authors_prog,
+@@ -378,9 +379,12 @@ sub do_git_init_db {
+ 		command_noisy('config', "$pfx.$i", $icv{$i});
+ 		$set = $i;
+ 	}
+-	my $ignore_regex = \$SVN::Git::Fetcher::_ignore_regex;
+-	command_noisy('config', "$pfx.ignore-paths", $$ignore_regex)
+-		if defined $$ignore_regex;
++	my $ignore_paths_regex = \$SVN::Git::Fetcher::_ignore_regex;
++	command_noisy('config', "$pfx.ignore-paths", $$ignore_paths_regex)
++		if defined $$ignore_paths_regex;
++	my $ignore_refs_regex = \$Git::SVN::Ra::_ignore_refs_regex;
++	command_noisy('config', "$pfx.ignore-refs", $$ignore_refs_regex)
++		if defined $$ignore_refs_regex;
+ }
 
-In addition, I ran across a problem where git-svn would die if a
-parent ref did not exist.  This might possibly have been exposed as a
-result of the first patch.  I threw an eval around the offending code,
-and that seems to work, though some review would be appreciated.
+ sub init_subdir {
+@@ -1823,6 +1827,8 @@ sub read_all_remotes {
+ 			$r->{$1}->{svm} = {};
+ 		} elsif (m!^(.+)\.url=\s*(.*)\s*$!) {
+ 			$r->{$1}->{url} = $2;
++		} elsif (m!^(.+)\.ignore-refs=\s*(.*)\s*$!) {
++			$r->{$1}->{ignore_refs_regex} = $2;
+ 		} elsif (m!^(.+)\.(branches|tags)=$svn_refspec$!) {
+ 			my ($remote, $t, $local_ref, $remote_ref) =
+ 			                                     ($1, $2, $3, $4);
+@@ -1858,6 +1864,16 @@ sub read_all_remotes {
+ 		}
+ 	} keys %$r;
 
-Here is an example ~/.git/config file which works with these changes.
-The example upstream svn repository has branches in tags in 2
-different namespaces.  Originally all tags/branches were directly
-under /root/mod/branches and /root/mod/tags.  Later on, they created
-new branches and tags in subdirectories such as
-/root/mod/branches/myorg/bugs/BUGID.  This config file forces
-old-style branches and tags into the "old/" namespace in git, and puts
-new-style branches and tags into (for example) "myorg/bugs/BUGID".
-The "ignore-refs" directive prevents the first level of the new
-namespace ("myorg", in particular) from being replicated underneath
-"old/" in git.
++	foreach my $remote (keys %$r) {
++		foreach ( grep { defined $_ }
++			  map { $r->{$remote}->{$_} } qw(branches tags) ) {
++			foreach my $rs ( @$_ ) {
++				$rs->{ignore_refs_regex} =
++				    $r->{$remote}->{ignore_refs_regex};
++			}
++		}
++	}
++
+ 	$r;
+ }
 
-[core]
-       repositoryformatversion = 0
-       filemode = true
-       bare = false
-       logallrefupdates = true
-[svn-remote "svn"]
-       url = https://svn.my.org/svn/root
-       fetch = mod/trunk:refs/remotes/trunk
-       branches = mod/branches/*:refs/remotes/old/*
-       tags = mod/tags/*:refs/remotes/tags/old/*
-       branches = mod/branches/myorg/bugs/*:refs/remotes/myorg/bugs/*
-       tags = mod/tags/myorg/bugs/*:refs/remotes/tags/myorg/bugs/*
-       branches = mod/branches/myorg/projects/*:refs/remotes/myorg/projects/*
-       tags = mod/tags/myorg/projects/*:refs/remotes/tags/myorg/projects/*
-       branches = mod/branches/myorg/releases/*:refs/remotes/myorg/releases/*
-       tags = mod/tags/myorg/releases/*:refs/remotes/tags/myorg/releases/*
-       ignore-refs = ^refs/remotes/(tags/)?old/myorg
+@@ -4806,7 +4822,7 @@ sub apply_diff {
+ }
 
-Michael Olson (2):
-  git-svn: Allow certain refs to be ignored
-  git-svn: Don't allow missing commit parent to stop git-svn
+ package Git::SVN::Ra;
+-use vars qw/@ISA $config_dir $_log_window_size/;
++use vars qw/@ISA $config_dir $_ignore_refs_regex $_log_window_size/;
+ use strict;
+ use warnings;
+ my ($ra_invalid, $can_do_switch, %ignored_err, $RA);
+@@ -5264,6 +5280,17 @@ sub get_dir_globbed {
+ 	@finalents;
+ }
 
- git-svn.perl |   40 ++++++++++++++++++++++++++++++++++------
- 1 files changed, 34 insertions(+), 6 deletions(-)
++# return value: 0 -- don't ignore, 1 -- ignore
++sub is_ref_ignored {
++	my ($g, $p) = @_;
++	my $refname = $g->{ref}->full_path($p);
++	return 1 if defined($g->{ignore_refs_regex}) &&
++	            $refname =~ m!$g->{ignore_refs_regex}!;
++	return 0 unless defined($_ignore_refs_regex);
++	return 1 if $refname =~ m!$_ignore_refs_regex!o;
++	return 0;
++}
++
+ sub match_globs {
+ 	my ($self, $exists, $paths, $globs, $r) = @_;
+
+@@ -5300,6 +5327,7 @@ sub match_globs {
+ 			next unless /$g->{path}->{regex}/;
+ 			my $p = $1;
+ 			my $pathname = $g->{path}->full_path($p);
++			next if is_ref_ignored($g, $p);
+ 			next if $exists->{$pathname};
+ 			next if ($self->check_path($pathname, $r) !=
+ 			         $SVN::Node::dir);
+-- 
+1.7.1.rc0
