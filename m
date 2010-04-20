@@ -1,83 +1,78 @@
 From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] Fix checkout of large files to network shares under 
- Windows XP
-Date: Tue, 20 Apr 2010 22:49:16 +0200
-Message-ID: <4BCE134C.8090802@lsrfire.ath.cx>
-References: <4BCC5083.30801@gmail.com> <4BCCC05E.4030206@lsrfire.ath.cx> <t2xbdca99241004200542ud4e8ea5azcad918c37bcacf1a@mail.gmail.com>
+Subject: Re: git diff too slow for a file
+Date: Tue, 20 Apr 2010 23:15:47 +0200
+Message-ID: <4BCE1983.4020009@lsrfire.ath.cx>
+References: <4BB00573.6040005@gmail.com> <4BC9D928.50909@lsrfire.ath.cx> <7vpr1y2eev.fsf@alter.siamese.dyndns.org> <4BCB48E5.9090303@lsrfire.ath.cx> <7vd3xuinbe.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, msysgit@googlegroups.com,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 20 22:49:39 2010
+Cc: SungHyun Nam <goweol@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 20 23:16:01 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4KO1-0000GV-Em
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 22:49:37 +0200
+	id 1O4KnX-0007tv-TB
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 23:16:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755267Ab0DTUt2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Apr 2010 16:49:28 -0400
-Received: from india601.server4you.de ([85.25.151.105]:49668 "EHLO
+	id S1755308Ab0DTVPz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Apr 2010 17:15:55 -0400
+Received: from india601.server4you.de ([85.25.151.105]:55321 "EHLO
 	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754666Ab0DTUt1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Apr 2010 16:49:27 -0400
+	with ESMTP id S1755260Ab0DTVPy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Apr 2010 17:15:54 -0400
 Received: from [10.0.1.100] (p57B7F4C7.dip.t-dialin.net [87.183.244.199])
-	by india601.server4you.de (Postfix) with ESMTPSA id 712E62F805A;
-	Tue, 20 Apr 2010 22:49:25 +0200 (CEST)
+	by india601.server4you.de (Postfix) with ESMTPSA id 8D9F52F805A;
+	Tue, 20 Apr 2010 23:15:52 +0200 (CEST)
 User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <t2xbdca99241004200542ud4e8ea5azcad918c37bcacf1a@mail.gmail.com>
+In-Reply-To: <7vd3xuinbe.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145397>
 
-Am 20.04.2010 14:42, schrieb Sebastian Schuberth:
->> Shouldn't the loop be left in the successful case, too?  write(2) is
->> allowed to write less than requested, so the caller already needs to
->> deal with that case anyway.
+Am 20.04.2010 09:40, schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 >=20
-> I prefer to make the wrapper as transparent as possible. If a direct
-> call to write would not write less than requested, the wrapper should
-> not either.
+>> For Linux, these 161 out of 178107 commits are affected:
+>>
+>>   90d49b4f  83f3c715  3b5dd52a  e97bd974  4e092d11  96b3c83d  4c96e8=
+93
+>>   ...
+>>   22e2c507  e9edcee0  303b86d9  47b5d69c  2d7edb92  cb624029  f4f051=
+eb
+>>
+>> I have briefly looked at a few of them.  They were big and not obvio=
+us
+>> with or without XDF_NEED_MINIMAL, but the flag clearly helped to cut
+>> them down a bit.
+>=20
+> Thanks.
+>=20
+> I am getting the same impression after staring some output.
+>=20
+> Probably we should at least try to get rid of the use of MINIMAL
+> immediately after 1.7.1 and if nobody finds large discrepancies, aim =
+to
+> ship 1.7.2 (and possibly 1.7.1.1) without even --quick/--slow options=
+=2E
 
-After the call failed, we don't know how many bytes would have been
-written had it succeeded.
+Turning XDF_NEED_MINIMAL off by default looks like the sane thing to do
+in order to help the fringe cases without hurting the normal ones.
 
-But I agree with Albert's reasoning to use the knowledge of a working
-chunk size in order to minimize the number of write(2) calls.  Otherwis=
-e
-we'd have to search for a working size again and again, generating lots
-of failing calls.
+A --slow/--minimal/--try-harder option for git diff could come in handy
+for longer patches, though.  GNU diff has it, too (-d/--minimal).
 
-> I've updated work/issue-409 in 4msysgit.git accordingly.
+> I expect that there will also be some differences in the blame output=
+=2E
 
-This patch doesn't help in the test case I cobbled together quickly.
-It's a Windows XP SP3 client on VMWare mapping a file share exported by
-a Netapps filer, over a VPN.  It's very slow, and I admit that it's a
-weird setup.  I wouldn't actually use it that way, but couldn't find
-another file share momentarily.
-
-I can check out a 1MB file, but checking out a 32MB file fails.  I've
-added a fprintf() to the loop and I can see that it's halving the size
-and retries, as intended, until it eventually hits zero.
-
-The file is created using the correct file size (32MB), though.The firs=
-t
-failed write(2) call needs to be undone somehow before we can try again=
-,
-it seems.  Do we have to seek back or truncate the file?
-
-Replacing the body of mingw_write() with the following line allows me t=
-o
-check out the 32MB file, by the way:
-
-	return write(fd, buf, min(count, 1024 * 1024));
+I haven't looked at the impact on blame, but additionally patch IDs are
+going to change (for those patches where XDF_NEED_MINIMAL makes a
+difference).  Are they stored somewhere?  Do we need to worry about the=
+m?
 
 Ren=C3=A9
