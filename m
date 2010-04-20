@@ -1,70 +1,100 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Fix checkout of large files to network shares under 
- Windows XP
-Date: Tue, 20 Apr 2010 14:57:00 +0200
-Message-ID: <4BCDA49C.4090405@viscovery.net>
-References: <4BCC5083.30801@gmail.com> <4BCCC05E.4030206@lsrfire.ath.cx> <t2xbdca99241004200542ud4e8ea5azcad918c37bcacf1a@mail.gmail.com>
+From: Yann Dirson <dirson@bertin.fr>
+Subject: Re: ghost refs
+Date: Tue, 20 Apr 2010 15:00:15 +0200
+Organization: Bertin Technologies
+Message-ID: <20100420150015.4bd80387@chalon.bertin.fr>
+References: <89030B4A18ECCD45978A3A6B639D1F24032A074E1C@FL01EXMB01.trad.tradestation.com>
+ <r2h32541b131004070958pa66bb7a3g6a1ecfaea0419965@mail.gmail.com>
+ <20100407210010.GB27012@coredump.intra.peff.net>
+ <loom.20100420T085842-887@post.gmane.org>
+ <20100420115124.GB22907@coredump.intra.peff.net>
+ <20100420120228.GM17930@lake.fysh.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org, msysgit@googlegroups.com,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 20 14:57:14 2010
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Zefram <zefram@fysh.org>
+X-From: git-owner@vger.kernel.org Tue Apr 20 15:09:42 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4D0s-0002j8-Am
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 14:57:14 +0200
+	id 1O4DCq-00087Q-RP
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 15:09:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754240Ab0DTM5I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Apr 2010 08:57:08 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:36782 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753995Ab0DTM5H convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Apr 2010 08:57:07 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1O4D0e-00062o-QZ; Tue, 20 Apr 2010 14:57:00 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 7F6E21660F;
-	Tue, 20 Apr 2010 14:57:00 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <t2xbdca99241004200542ud4e8ea5azcad918c37bcacf1a@mail.gmail.com>
-X-Enigmail-Version: 1.0.1
-X-Spam-Score: -1.4 (-)
+	id S1754624Ab0DTNJZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Apr 2010 09:09:25 -0400
+Received: from blois.bertin.fr ([195.68.26.9]:32812 "EHLO blois.bertin.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754444Ab0DTNJY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Apr 2010 09:09:24 -0400
+X-Greylist: delayed 395 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Apr 2010 09:09:24 EDT
+Received: from blois.bertin.fr (localhost [127.0.0.1])
+	by postfix.imss70 (Postfix) with ESMTP id 96CDF545D5
+	for <git@vger.kernel.org>; Tue, 20 Apr 2010 15:02:47 +0200 (CEST)
+Received: from YPORT1 (yport1.bertin.fr [192.168.1.13])
+	by blois.bertin.fr (Postfix) with ESMTP id 727AD545D1
+	for <git@vger.kernel.org>; Tue, 20 Apr 2010 15:02:47 +0200 (CEST)
+Received: from chalon.bertin.fr ([172.16.3.1]) by yport1.innovation.bertin.fr
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPPA id <0L16009CQEWNSV80@yport1.innovation.bertin.fr> for
+ git@vger.kernel.org; Tue, 20 Apr 2010 15:02:47 +0200 (CEST)
+In-reply-to: <20100420120228.GM17930@lake.fysh.org>
+X-Mailer: Claws Mail 3.7.5 (GTK+ 2.12.12; i486-pc-linux-gnu)
+X-TM-AS-Product-Ver: IMSS-7.0.0.8146-6.0.0.1038-17330.007
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145373>
 
-Am 4/20/2010 14:42, schrieb Sebastian Schuberth:
-> On Mon, Apr 19, 2010 at 22:43, Ren=C3=A9 Scharfe <rene.scharfe@lsrfir=
-e.ath.cx> wrote:
->> Shouldn't the loop be left in the successful case, too?  write(2) is
->> allowed to write less than requested, so the caller already needs to
->> deal with that case anyway.
+Le Tue, 20 Apr 2010 13:02:28 +0100,
+Zefram <zefram@fysh.org> a =C3=A9crit :
+
+> Jeff King wrote:
+> >  2. Make a refs/dead hierarchy so that the reflogs don't interfere
+> > with new branches. This just pushes off the problem, though, for
+> > when you try to delete "foo/bar" and see that "refs/dead/foo" is
+> > already blocking its spot in the reflog graveyard.
 >=20
-> I prefer to make the wrapper as transparent as possible. If a direct
-> call to write would not write less than requested, the wrapper should
-> not either.
+> This is easily solved by tweaking the name for dead reflogs.
+> logs/dead_refs/foo~ doesn't clash with logs/dead_refs/foo/bar~.
+>
+> You might also want to stick a sequence number into the filename, for
+> when you delete more than one foo/bar branch.
 
-Sure, but Ren=C3=A9 meant the opposite case: When fewer bytes than requ=
-ested
-were written, then you shouldn't retry to write more! That is, you shou=
-ld
-exit the loop when write(fd, buf, n) does not return n.
+That sounds cool.  A logs/dead_refs/ namespace of some sort seems to be
+unavoidable, to avoid the clash between old "logs/refs/foo/bar~"
+and new "logs/refs/foo".
 
-I still find your code unnecessarily hard to read. In particular, you
-should extract the non-problematic case out of the loop. If you followe=
-d
-my suggestion elsewhere in the thread, you wouldn't have to write any
-conditionals that 'break' out of a loop.
+We would also need a syntax for accessing those.  Maybe something
+reminiscent of Debian "epochs" in version number.  That would
+give a syntax like "foo@{1:1}" and "foo@{2:1}" to access the dead and
+long-dead refs' logs, respectively looking into foo~<largest> and
+foo~<largest-1>.
 
--- Hannes
+Going that way, we would probably want to add a "delete" entries in the
+reflog when deleting a ref - but that would make "foo@{1:0}" a
+non-sense, we could just reject it.
+
+
+Another option than adding a sequence number would be to move back the
+dead_refs/ log back to refs/ when the branch is creating again.  That
+way just after resurection we have:
+
+	foo@{0}	: now
+	foo@{1} : invalid (deleted state)
+	foo@{2} : the ref as it was 2 operations before
+
+That would kinda make sense too, but then if the new "foo" is something
+completely unrelated, we may rather want to refer to foo{1:1}
+(which is stable until next deletion of foo) rather than foo@{2}, which
+varies with current foo.  But the 1st solution could give us that too,
+by considering logs/dead_refs/foo~ the logical continuation of
+logs/refs/foo.
+
+Would that make sense ?
+--=20
+Yann
