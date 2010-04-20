@@ -1,48 +1,63 @@
-From: Zefram <zefram@fysh.org>
-Subject: Re: ghost refs
-Date: Tue, 20 Apr 2010 13:02:28 +0100
-Message-ID: <20100420120228.GM17930@lake.fysh.org>
-References: <89030B4A18ECCD45978A3A6B639D1F24032A074E1C@FL01EXMB01.trad.tradestation.com> <r2h32541b131004070958pa66bb7a3g6a1ecfaea0419965@mail.gmail.com> <20100407210010.GB27012@coredump.intra.peff.net> <loom.20100420T085842-887@post.gmane.org> <20100420115124.GB22907@coredump.intra.peff.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: GSoC 2010: "Integrated Web Client for git" proposal
+Date: Tue, 20 Apr 2010 14:07:31 +0200
+Message-ID: <20100420120731.GP10939@machine.or.cz>
+References: <201004150630.44300.chriscool@tuxfamily.org>
+ <201004181950.19610.jnareb@gmail.com>
+ <20100418195623.GA3563@machine.or.cz>
+ <201004191243.24209.jnareb@gmail.com>
+ <20100419115113.GC3563@machine.or.cz>
+ <j2ke72faaa81004191103qabe0c3ddj959d8804e873ed04@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Yann Dirson <yann.dirson@bertin.fr>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 20 14:02:40 2010
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Shawn O Pearce <spearce@spearce.org>,
+	Scott Chacon <schacon@gmail.com>, Sam Vilain <sam@vilain.net>
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 20 14:07:40 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4CA4-0003bt-Bo
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 14:02:40 +0200
+	id 1O4CEs-0005dV-So
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 14:07:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754244Ab0DTMCe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Apr 2010 08:02:34 -0400
-Received: from lake.fysh.org ([81.94.195.195]:46063 "EHLO lake.fysh.org"
+	id S1754316Ab0DTMHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Apr 2010 08:07:34 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:45772 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754223Ab0DTMCd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Apr 2010 08:02:33 -0400
-Received: from zefram by lake.fysh.org with local (Exim 4.69 #1 (Debian))
-	id 1O4C9s-0001Pn-8E; Tue, 20 Apr 2010 13:02:28 +0100
+	id S1754228Ab0DTMHd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Apr 2010 08:07:33 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id E4826125A15C; Tue, 20 Apr 2010 14:07:31 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20100420115124.GB22907@coredump.intra.peff.net>
+In-Reply-To: <j2ke72faaa81004191103qabe0c3ddj959d8804e873ed04@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145368>
 
-Jeff King wrote:
->  2. Make a refs/dead hierarchy so that the reflogs don't interfere with
->     new branches. This just pushes off the problem, though, for when
->     you try to delete "foo/bar" and see that "refs/dead/foo" is already
->     blocking its spot in the reflog graveyard.
+On Mon, Apr 19, 2010 at 11:33:49PM +0530, Pavan Kumar Sunkara wrote:
+> Implementing a proper and perfect file editor will be a tough job. So,
+> I removed it from GSoC and listed in that section.
+> But we can always have a simple textarea to implement it and I think I
+> will have time to do this simple textarea during my GSoC.
 
-This is easily solved by tweaking the name for dead reflogs.
-logs/dead_refs/foo~ doesn't clash with logs/dead_refs/foo/bar~.
+Of course we meant just plain textarea, I think that's more than enough.
+I think this would be rather important part of the project.
 
-You might also want to stick a sequence number into the filename, for
-when you delete more than one foo/bar branch.
+For later, there's also plenty of javascript editors available that can
+be used as drop-ins, though I'm not sure if any of them is programming
+oriented. At any rate, I don't see why text editor like this would be
+gitweb-specific.
 
--zefram
+-- 
+				Petr "Pasky" Baudis
+http://pasky.or.cz/ | "Ars longa, vita brevis." -- Hippocrates
