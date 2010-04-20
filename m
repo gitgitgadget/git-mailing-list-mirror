@@ -1,78 +1,107 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: ghost refs
-Date: Tue, 20 Apr 2010 16:42:25 +0200
-Organization: Bertin Technologies
-Message-ID: <20100420164225.1400c280@chalon.bertin.fr>
-References: <89030B4A18ECCD45978A3A6B639D1F24032A074E1C@FL01EXMB01.trad.tradestation.com>
- <r2h32541b131004070958pa66bb7a3g6a1ecfaea0419965@mail.gmail.com>
- <20100407210010.GB27012@coredump.intra.peff.net>
- <loom.20100420T085842-887@post.gmane.org>
- <20100420115124.GB22907@coredump.intra.peff.net>
- <s2m76718491004200633la1cb07a6n8bc0d8d8e71b4e92@mail.gmail.com>
- <20100420142444.GA8851@coredump.intra.peff.net>
+From: Johan Herland <johan@herland.net>
+Subject: Getting 'git log' (or something else) to show me the relevant sub-graph?
+Date: Tue, 20 Apr 2010 16:49:30 +0200
+Message-ID: <201004201649.31084.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 20 16:45:07 2010
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 20 16:49:46 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4EhF-0005GK-71
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 16:45:05 +0200
+	id 1O4Ell-0007qG-2X
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Apr 2010 16:49:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754889Ab0DTOo7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Apr 2010 10:44:59 -0400
-Received: from blois.bertin.fr ([195.68.26.9]:36880 "EHLO blois.bertin.fr"
+	id S1754923Ab0DTOtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Apr 2010 10:49:40 -0400
+Received: from smtp.opera.com ([213.236.208.81]:47864 "EHLO smtp.opera.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754812Ab0DTOo6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Apr 2010 10:44:58 -0400
-Received: from blois.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id D123B545EB
-	for <git@vger.kernel.org>; Tue, 20 Apr 2010 16:44:56 +0200 (CEST)
-Received: from YPORT1 (yport1.bertin.fr [192.168.1.13])
-	by blois.bertin.fr (Postfix) with ESMTP id 9E854545D9
-	for <git@vger.kernel.org>; Tue, 20 Apr 2010 16:44:56 +0200 (CEST)
-Received: from chalon.bertin.fr ([172.16.3.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0L16009RSJMWSVA0@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Tue, 20 Apr 2010 16:44:56 +0200 (CEST)
-In-reply-to: <20100420142444.GA8851@coredump.intra.peff.net>
-X-Mailer: Claws Mail 3.7.5 (GTK+ 2.12.12; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8146-6.0.0.1038-17330.007
+	id S1754892Ab0DTOtj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Apr 2010 10:49:39 -0400
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o3KEnVhi006952
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Tue, 20 Apr 2010 14:49:37 GMT
+User-Agent: KMail/1.9.9
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145380>
 
-Le Tue, 20 Apr 2010 10:24:44 -0400,
-Jeff King <peff@peff.net> a =C3=A9crit :
+Hi,
 
-> On Tue, Apr 20, 2010 at 09:33:42AM -0400, Jay Soffian wrote:
->=20
-> > 4. Just append to the existing reflog? Given:
-> >=20
-> > $ git checkout -b topic origin/master # 1
-> > $ git add; git commit ...
-> > $ git checkout master
-> > $ git merge topic
-> > $ git branch -d topic
-> > $ git checkout -b topic origin/master # 2
->=20
-> I like how the user would interact with that, but what happens with:
->=20
->   git checkout -b topic/subtopic
->=20
-> The reflog of the deleted branch is in the way.
+Consider the following (simplified) history:
 
-That would be addressed by considering logs/dead_refs/* contents
-*logical* continuations of logs/refs/* (bottom-most suggestion in my
-other email)
+---O---O---O---O---O---O---O---O---O---O---O---O---M2--H  <-- mainline
+    \                                             /
+     O---O---O---O---O---O---O---M1--D---E---F---G  <-- dev-branch
+              \                 /
+               O---O---A---B---C  <-- topic-branch
 
---=20
-Yann
+Now, assume that I have bisected my way through to 'A', and found that 
+it introduces some bug. Now, I'm interested in visualizing the path 
+that this bug "travelled" to get into "mainline", i.e. the following 
+sub-graph:
+
+                          --M2--H  <-- mainline
+                           /
+        --M1--D---E---F---G  <-- dev-branch
+         /
+A---B---C  <-- topic-branch
+
+In other words, I'm interested in the following log (with decorations):
+
+H (mainline)
+M2
+G (dev-branch)
+F
+E
+D
+M1
+C (topic-branch)
+B
+A
+
+I have unsuccessfully dug through the 'git log' documentation to figure 
+out if it can produce this log, so I'm now throwing the question to the 
+almighty knowledge of the mailing list...
+
+Here are some of my closest attempts, so far:
+
+- git branch --contains A
+	gives me "topic-branch", "dev-branch" and "mainline", which is
+	relevant, but incomplete.
+
+- git log --oneline --decorate --graph A^..mainline
+	gives me a log/graph where I can search for A and then use the graph
+	to trace the way back up to "mainline", but it still displays a lot of
+	uninteresting commits (ancestors of M1 and M2) that I have to
+	disregard. Although this is ok once in a while, the problem is common
+	enough (and the real-world graphs complicated enough), that I'd like a
+	better solution, if possible.
+
+I guess what I'm looking for is something similar to --first-parent, 
+except instead of the _first_ parent, it should follow the _relevant_ 
+parent, as far as the relationship between A and "mainline" is 
+concerned.
+
+In set-theory terms I guess what I want is "that which is both an 
+ancestor of H, and a descendant of A (inclusive)", but I don't know how 
+to explain this to 'git log'.
+
+
+Thanks for any help,
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
