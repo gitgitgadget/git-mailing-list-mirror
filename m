@@ -1,103 +1,73 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: 'git notes merge' implementation questions
-Date: Wed, 21 Apr 2010 12:12:27 -0500
-Message-ID: <20100421171227.GA23794@progeny.tock>
-References: <201004210957.48138.johan@herland.net>
+From: Alexander Iljin <ajsoft@yandex.ru>
+Subject: Re: Git 1.7 rebase problems
+Date: Thu, 22 Apr 2010 01:41:20 +0700
+Message-ID: <178224036.20100422014120@yandex.ru>
+References: <4BCF2E27.1010906@gmx.de>
+Reply-To: =?utf-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCY0LvRjNC40L0=?= 
+	  <ajsoft@yandex.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Apr 21 19:12:31 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Eric Wong <normalperson@yhbt.net>
+To: Matthias Andree <matthias.andree@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 21 20:41:37 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4dTS-0008OQ-QT
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 19:12:31 +0200
+	id 1O4erg-0005MO-Dl
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 20:41:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753019Ab0DURM0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Apr 2010 13:12:26 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:62795 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751267Ab0DURMZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Apr 2010 13:12:25 -0400
-Received: by pvg13 with SMTP id 13so974534pvg.19
-        for <git@vger.kernel.org>; Wed, 21 Apr 2010 10:12:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=7RYwZY9TRufepz9bQ0TpHK3WV7ooiMLHKm50Tp+9ID4=;
-        b=apgUxry0uKPdob4OzBQmH0WUCwnkj6d3kcd9af4tNj74SATskcWfngHKAqNhpD7xqW
-         z/UnUPza8I2SVwjaiq2PVqt7qM8F/Va7mZKQ5gqGpx9bPgVHmsoDc74Red/XPrQD/Trp
-         n5d0HJQx1/mw9ysFVDgAJsqTZxuOa30TJ/bUg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=VEL3wQOvumlBXJXQEErRiVev/A0jL3fA96q0QHaDJwVsKh+EW0IhCGE4LCFB2fLMxM
-         qFgGCt3TsxtjIqRxYR9VrV0oIjUKcADba5nHz93ysplphhhP8qZPjcVr4I9CEWO83szr
-         G05D4BMCdFX1DSxc6SYBqcdh/87D0oMAkUzPI=
-Received: by 10.141.188.33 with SMTP id q33mr399127rvp.8.1271869944473;
-        Wed, 21 Apr 2010 10:12:24 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm6718578iwn.4.2010.04.21.10.12.23
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 21 Apr 2010 10:12:23 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <201004210957.48138.johan@herland.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756165Ab0DUSla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Apr 2010 14:41:30 -0400
+Received: from forward3.mail.yandex.net ([77.88.46.8]:40962 "EHLO
+	forward3.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756149Ab0DUSl3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Apr 2010 14:41:29 -0400
+Received: from smtp3.mail.yandex.net (smtp3.mail.yandex.net [77.88.46.103])
+	by forward3.mail.yandex.net (Yandex) with ESMTP id DBB6856D9FB1;
+	Wed, 21 Apr 2010 22:41:27 +0400 (MSD)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1271875287; bh=PdBPLMg2H326BLpIQvl6lgN6n0qcejMcIPRJtW/r23s=;
+	h=Date:From:Reply-To:Message-ID:To:CC:Subject:In-Reply-To:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=e57vFbcJiFxzddmydUXjD0TubmxYTAcVBXQfAzytoUkZUy4uVvyFf0Sr2xI0dpZyZ
+	 xxQyeBIy1EDOE6I6LT3EX2R2CMaNRa/rrpCtE3K5dv7C2pp1M0oTR87yaZnG3mJ4z6
+	 2xM6FCWL6YO9yfuAYy9fBqFWNgCaRRocicYJHEtE=
+Received: from h88-115-252.sibinet.com (unknown [88.204.115.252])
+	by smtp3.mail.yandex.net (Yandex) with ESMTPA id 7B50927807E;
+	Wed, 21 Apr 2010 22:41:27 +0400 (MSD)
+X-Priority: 3 (Normal)
+In-Reply-To: <4BCF2E27.1010906@gmx.de>
+X-Yandex-TimeMark: 1271875287
+X-Yandex-Spam: 1
+X-Yandex-Front: smtp3.mail.yandex.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145447>
 
-Johan Herland wrote:
+Hello!
 
-> 2. Merging without a worktree
+MA> Looking for help - I have some issues with git-svn as of git version
+MA> 1.7.1.rc1.12.ga601 on Cygwin 1.7.5 w/ Windows 7 32-bit professional German, but
+MA> this has been going on for a while now, but I hadn't figured how to reproduce.
 
-Eh, I am not a fan.  I am thinking it might be better to use something
-like contrib/workdir to make a temporary worktree with its own index
-and HEAD in .git/tmp-merge-notes and let the conflict resolvers work
-there.
+MA> === Symptoms ===
 
-Advantages:
+MA> When I run "git svn rebase" (trace below) *from a working directory somewhere
+MA> deep in the checkout,* the index gets dirty.
 
- - easy to debug when something goes wrong
- - merge driver can take other unmerged entries into account
- - (if merging manually) the user is not at the mercy of the program.
-   Instead of being forced to consider the conflicts in the order git
-   wants, she can skip some and go back to them, look at how many
-   there are before deciding to start work, resolve some, reboot to
-   test a new kernel, resolve some more later, and visualize the
-   result.
- - if the unmerged notes are very long, you might need a temporary
-   file anyway
- - maybe some day a kind of rename detection could help cope with
-   situations like propagation of notes after a rebase
+  Wow! I just filed a very similar issue at msysGit discussion group,
+  with steps to reproduce, etc. See here:
+  http://groups.google.com/group/msysgit/browse_thread/thread/c7218c7d1ba8949b
+  I could not make interactive rebase work, it just hanged there.
 
-Disadvantages:
+  Going to the root of the repository fixed the problem.
 
- - setting up a new git dir takes some time
- - a checkout with all notes would be insanely huge.  So somehow one
-   has to find an appropriate subset to check out.
-
->     Possible solution: Conflict resolvers:
-
-I think you can do an entirely in-index merge with =E2=80=98git read-tr=
-ee=E2=80=99 and
-=E2=80=98git merge-index=E2=80=99.  If you forbid the per-file merge dr=
-iver to fail
-then this sounds like exactly what you=E2=80=99re talking about.
-
-In my opinion in the case of popping up an editor this is a cruel
-thing to do, but in the other cases it=E2=80=99s a good place to start.
-
-Hope that helps,
-Jonathan
+---=====---
+ Alexander
