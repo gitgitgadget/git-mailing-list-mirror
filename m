@@ -1,159 +1,138 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 3/3] Permit tests to be run as a (fake) root user
-Date: Wed, 21 Apr 2010 09:20:59 -0500
-Message-ID: <20100421142058.GC5595@progeny.tock>
-References: <20100421131255.GA2750@progeny.tock>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sylvain Rabot <sylvain@abstraction.fr>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	"Fernando J. Pereda" <ferdy@ferdyx.org>,
-	Lea Wiemann <lewiemann@gmail.com>,
-	Panagiotis Issaris <takis@issaris.org>,
-	Mike Hommey <mh@glandium.org>,
-	Marco Nelissen <marcone@xs4all.nl>
+From: Bo Yang <struggleyb.nku@gmail.com>
+Subject: [PATCH] Make git log --follow support --find-copies-harder.
+Date: Wed, 21 Apr 2010 22:37:21 +0800
+Message-ID: <1271860641-29305-1-git-send-email-struggleyb.nku@gmail.com>
+Cc: gitster@pobox.com, trast@student.ethz.ch
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 21 16:21:12 2010
+X-From: git-owner@vger.kernel.org Wed Apr 21 16:37:56 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4ane-0006H1-Kt
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 16:21:10 +0200
+	id 1O4b3q-0001tB-K4
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 16:37:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754844Ab0DUOVE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Apr 2010 10:21:04 -0400
-Received: from mail-pz0-f186.google.com ([209.85.222.186]:36851 "EHLO
-	mail-pz0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754440Ab0DUOVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Apr 2010 10:21:00 -0400
-Received: by pzk16 with SMTP id 16so3550847pzk.22
-        for <git@vger.kernel.org>; Wed, 21 Apr 2010 07:21:00 -0700 (PDT)
+	id S1755373Ab0DUOht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Apr 2010 10:37:49 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:40517 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755276Ab0DUOhs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Apr 2010 10:37:48 -0400
+Received: by pvg13 with SMTP id 13so811047pvg.19
+        for <git@vger.kernel.org>; Wed, 21 Apr 2010 07:37:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=BqP3DUVjT+gts6xcFrcqpX3T8s1c6D8ig7BdxJ0eyOc=;
-        b=v9qbT8/erHAU4ps/zNdYyqBHE0KjSovzo++fvG902EKi8TnOERyeGljnleMampPK8R
-         4gCBy4ZFYy9U0xEh66cDU8Lpf1NoQO1C6NMz+WsqKGP9w4wRJok4HAMNkN9xtOyqt63Q
-         M+MPz7pCQA4d8I7xPtIsqBxDDMqVXvAY3hfuo=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=jaDxP8Jhx7hHY2bvS9Vq4n15Rl9Gih0nJKAXGqsKvuk=;
+        b=ai7YlHQCe8x04VUcRWxEYgCz0/ClnchYs0wxdiTY//5D1l3lfJpaMGWOtL/slaUjmw
+         cQmPccXu36CA+cUMjrILjOYy1QArgQVec2QfkcPDoGK53B0TlYvF3vExcIKc4eCvQBd1
+         RlWNNU9G9LrtMlIWcajb1fD4lZ8waZ7zfgMgY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=oxBWnj05zB4F0FIXH2tf3+5ZKrsB4G3b5UsHvQKx5Wj1obe16w4/1hMJBKn+ACscc8
-         mvDpuudJUEyF/0NQzj3TfYmvJFQ3IKAZTocBbOVXbfCqUozUfC7RCRMM2W//qxfWhQVk
-         FZrJy5jNIw441dsgza8Ijrqvx0O/nwRBb6rc0=
-Received: by 10.142.74.1 with SMTP id w1mr3798507wfa.258.1271859660145;
-        Wed, 21 Apr 2010 07:21:00 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id e40sm259739wfj.23.2010.04.21.07.20.57
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 21 Apr 2010 07:20:59 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100421131255.GA2750@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=STVA3D2O9iIfNeR0LfT+KncrePlwkBLorsZkscsv9ACegUHEr3aF9aYk+zp9Jfg9To
+         75nvHea8roPdsx3y6WCzmguygrLSNfKRIkG6d5VwBKR+W2Sd8Eq8SP987dOO3pBx/1GB
+         VmDOs3fm9RkDBcLvNCFmch5lqe+3sJAm7bwiw=
+Received: by 10.140.58.18 with SMTP id g18mr1435460rva.46.1271860666257;
+        Wed, 21 Apr 2010 07:37:46 -0700 (PDT)
+Received: from localhost.localdomain ([122.70.43.135])
+        by mx.google.com with ESMTPS id k17sm9755990rvh.16.2010.04.21.07.37.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 21 Apr 2010 07:37:45 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.2.273.gc2413.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145433>
 
-Skip tests that require sane behavior wrt permissions if the current
-uid is 0.
+'git log --follow --find-copies-harder <path>' don't track copies
+from unmodified files, and this patch fix it.
 
-So now if you run
-
-  fakeroot sh -c '
-	make all test install install-doc prefix=3D/usr/local \
-		DESTDIR=3Dwherever >packaged-git.log 2>&1 &&
-	cd wherever &&
-	tar -cf - . |
-	gzip
-  ' >packaged-git.tar.gz
-
-then this should successfully build a binary tarball for git, running
-some tests while at it.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 ---
- Goals
- -----
- Before the POSIXPERM mechanism existed (which makes this change too
- easy to avoid considering), I think many people wanted to discourage
- running tests as root to avoid hosing people=E2=80=99s machines.  Whic=
-h makes
- some sense.
-=20
- But it is possible and may even be valuable to run tests in a
- sandbox. [1] [8] If that were the only reason to run tests as root, I
- would suggest requiring some particular environment variable to be
- set as a safety.
-=20
- In Debian, I think it might be policy to allow building as =E2=80=9Cro=
-ot=E2=80=9D.  In
- this context, that almost always happens through some sort of ptrace o=
-r
- LD_PRELOAD hack like fakeroot.  If a user knows to, it is easy to fall
- back to building as an unprivileged user, but really I think a user
- should not have to know to. [2] [3]  If some non-POSIXPERM test fails
- when run as (fake) root, that is something that would be nice to
- know. [4]
-=20
- Which prerequisite?
- -------------------
- It is possible to use autoconf-style tests to check for each
- capability we would like to lack. [5]  Certainly, POSIXPERM does not
- actually describe the exact set of abilities one gains by running as
- an unprivileged user. [6]  But unsetting POSIXPERM does successfully
- convey a simple truth: if you run tests as root, you have lost the abi=
-lity
- to pay attention to permissions and keep your sanity. [7]
-=20
- [1] http://thread.gmane.org/gmane.comp.version-control.git/86885/focus=
-=3D87664
- [2] http://thread.gmane.org/gmane.comp.version-control.git/140128
- [3] http://thread.gmane.org/gmane.comp.version-control.git/17904/focus=
-=3D17910
- [4] http://thread.gmane.org/gmane.comp.version-control.git/75561/focus=
-=3D75568
- [5] http://thread.gmane.org/gmane.comp.version-control.git/18667
- [6] http://thread.gmane.org/gmane.comp.version-control.git/121502/focu=
-s=3D121531
- [7] http://thread.gmane.org/gmane.comp.version-control.git/116729/focu=
-s=3D118385
- [8] http://thread.gmane.org/gmane.comp.version-control.git/52654/focus=
-=3D52689
-     Holy cow, that Solaris bug is still not fixed [9].  Maybe it
-     would be worthwhile to make an unlink() wrapper in compat/ to
-     avoid new uses leaving users on such operating systems in danger.
- [9] http://bugs.opensolaris.org/view_bug.do?bug_id=3D6581318
+ t/t4205-log-follow-harder-copies.sh |   56 +++++++++++++++++++++++++++++++++++
+ tree-diff.c                         |    2 +
+ 2 files changed, 58 insertions(+), 0 deletions(-)
+ create mode 100755 t/t4205-log-follow-harder-copies.sh
 
-Thanks for reading.  I hope the story was not too dull.
-
- t/test-lib.sh |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index a53b6cf..0f51757 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -782,7 +782,10 @@ case $(uname -s) in
- 	# exec does not inherit the PID
- 	;;
- *)
--	test_set_prereq POSIXPERM
-+	if test $(id -u) !=3D 0
-+	then
-+		test_set_prereq POSIXPERM
-+	fi
- 	test_set_prereq BSLASHPSPEC
- 	test_set_prereq EXECKEEPSPID
- 	;;
---=20
-1.7.1.rc1
+diff --git a/t/t4205-log-follow-harder-copies.sh b/t/t4205-log-follow-harder-copies.sh
+new file mode 100755
+index 0000000..11e85f4
+--- /dev/null
++++ b/t/t4205-log-follow-harder-copies.sh
+@@ -0,0 +1,56 @@
++#!/bin/sh
++#
++# Copyright (c) 2010 Bo Yang
++#
++
++test_description='Test --follow with --find-copies-harder in git log.
++
++'
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/diff-lib.sh
++
++echo >path0 'Line 1
++Line 2
++Line 3
++'
++
++test_expect_success \
++    'add a file path0 and commit.' \
++    'git add path0 &&
++     git commit -m "Add path0"'
++
++echo >path0 'New line 1
++New line 2
++New line 3
++'
++test_expect_success \
++    'Change path0.' \
++    'git add path0 &&
++     git commit -m "Change path0"'
++
++cat <path0 >path1
++test_expect_success \
++    'copy path0 to path1.' \
++    'git add path1 &&
++     git commit -m "Copy path1 from path0"'
++
++test_expect_success \
++    'find the copy path0 -> path1 harder' \
++    'git log --follow --find-copies-harder --name-status --pretty="format:%s"  path1 > current'
++
++cat >expected <<\EOF
++Copy path1 from path0
++C100	path0	path1
++
++Change path0
++M	path0
++
++Add path0
++A	path0
++EOF
++
++test_expect_success \
++    'validate the output.' \
++    'compare_diff_patch current expected'
++
++test_done
+diff --git a/tree-diff.c b/tree-diff.c
+index fe9f52c..0dea53e 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -346,6 +346,8 @@ static void try_to_follow_renames(struct tree_desc *t1, struct tree_desc *t2, co
+ 
+ 	diff_setup(&diff_opts);
+ 	DIFF_OPT_SET(&diff_opts, RECURSIVE);
++	if (DIFF_OPT_TST(opt, FIND_COPIES_HARDER))
++		DIFF_OPT_SET(&diff_opts, FIND_COPIES_HARDER);
+ 	diff_opts.detect_rename = DIFF_DETECT_RENAME;
+ 	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 	diff_opts.single_follow = opt->paths[0];
+-- 
+1.7.0.2.273.gc2413.dirty
