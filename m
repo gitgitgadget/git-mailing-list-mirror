@@ -1,94 +1,374 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] revision: --ancestry-path
-Date: Wed, 21 Apr 2010 01:01:34 -0700
-Message-ID: <7vochdcjz5.fsf@alter.siamese.dyndns.org>
+Subject: [PATCH v2] revision: --ancestry-path
+Date: Wed, 21 Apr 2010 01:19:05 -0700
+Message-ID: <7vhbn5cj5y.fsf_-_@alter.siamese.dyndns.org>
 References: <201004201649.31084.johan@herland.net>
  <7viq7lg8f2.fsf@alter.siamese.dyndns.org>
  <7v39ypg4gm.fsf_-_@alter.siamese.dyndns.org>
  <201004210934.30226.johan@herland.net> <4BCEADA3.7090504@viscovery.net>
+ <7vochdcjz5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johan Herland <johan@herland.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Apr 21 10:02:06 2010
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
+To: Johannes Sixt <j.sixt@viscovery.net>,
+	Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Apr 21 10:19:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4Usn-0003qS-Pw
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 10:02:06 +0200
+	id 1O4V9e-0005Xf-LO
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 10:19:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752527Ab0DUIBt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Apr 2010 04:01:49 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59129 "EHLO
+	id S1752644Ab0DUITX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Apr 2010 04:19:23 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37835 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752014Ab0DUIBs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Apr 2010 04:01:48 -0400
+	with ESMTP id S1752326Ab0DUITU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Apr 2010 04:19:20 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7370BA9694;
-	Wed, 21 Apr 2010 04:01:46 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ED75FA98C7;
+	Wed, 21 Apr 2010 04:19:16 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PcRfytm8Jo49wDD9MAocDc5Qp+o=; b=FtYsjF
-	fwaK4kIXIGYnxfSSD53dCRg6z+4eOJl6xAqKJcJUi6fNPLNNyWN+LmFIXzZLxofv
-	S7dME3zPXV9hvlUhvRvYzd5E6FloISV80XLcLHtHV6gAjQjylPkrq/qWrI1l9ipY
-	1LJtq94/g7vnZ1trO4whwqqy9VDe/7tydJidc=
+	:content-type; s=sasl; bh=mSu+n9h0Vfz3y4lFpUmGOmbaPTA=; b=C4nP+p
+	1jZ1B+fVrXRpArPj9/+STd9r4JmZG8GetV4D9f2teoOJQ2HRkyc5W3VAxie7WTgq
+	YpNfVe1SL3nfVp2AzLoWZ207And7feXfAL01s0W6vjR1nXbjF2Zerre9EKLGmzJl
+	iyigODmSKZdTg56vGEAvOWyglY/ZWNHv3zzRE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ww5IQhlqmpXgoCbN1zqRCmtZD87SGubC
-	96oy5MV43/6Aj3fHuTDTI477i65XPrveINabr8lktSX5M+JtFRkst61NQ4f80Oo6
-	ZWzpiXdPy/jnXjZhkSdAyRbd1tadIqUk3D3SoQsDhL0nDOagortdVgkG2T81Ie03
-	YClRoLyp35o=
+	:content-type; q=dns; s=sasl; b=XyzDQGnXRaTQVn59Mk4tM9C116JK0/Ce
+	xW3ZT64eWUuWj/z/Hk354FODmXhx000dGPS5n5VCwZ5S9M08gygoouv2l1WEyQEO
+	HZTrdl6Puivc1dKFlWaPtOoMBSvWjR39gvM2L5xh/aOCZABnfuHCmlnN79DeGO+0
+	IsZ/yPlCDdI=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 10B42A968F;
-	Wed, 21 Apr 2010 04:01:42 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E50FA98C5;
+	Wed, 21 Apr 2010 04:19:12 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2071FA968D; Wed, 21 Apr
- 2010 04:01:35 -0400 (EDT)
-In-Reply-To: <4BCEADA3.7090504@viscovery.net> (Johannes Sixt's message of
- "Wed\, 21 Apr 2010 09\:47\:47 +0200")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7340BA98C0; Wed, 21 Apr
+ 2010 04:19:07 -0400 (EDT)
+In-Reply-To: <7vochdcjz5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed\, 21 Apr 2010 01\:01\:34 -0700")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1F164A0E-4D1C-11DF-944D-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 91480980-4D1E-11DF-8726-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145417>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+"rev-list A..H" computes the set of commits that are ancestors of H, but
+excludes the ones that are ancestors of A.  This is useful to see what
+happened to the history leading to H since A, in the sense that "what does
+H have that did not exist in A" (e.g. when you have a choice to update to
+H from A).
 
-> Am 4/21/2010 9:34, schrieb Johan Herland:
->> I can confirm that this patch works with my original (more complicated) 
->> scenario. I've also played around with combinations of --ancestry-path, --
->> graph and --parents (and even --boundary), and AFAICS, the new option does 
->> not clobber the other options, and (IMHO) it all behaves correctly in the 
->> scenarios I've tested.
->
-> How about possible interactions with --reverse; --date-order/--topo-order,
-> --parents (important for gitk); --simplify-by-decoration (useful for your
-> problem that triggered this); --full-history and --simplify-merges with
-> path limiting?
+	       x---x---A---B---C  <-- topic
+	      /			\
+     x---x---x---o---o---o---o---M---D---E---F---G  <-- dev
+    /						  \
+   x---o---o---o---o---o---o---o---o---o---o---o---N---H  <-- master
 
-These are all good points.
+The result in the above example would be the commits marked with caps
+letters (except for A itself, of course), and the ones marked with 'o'.
 
-I am reasonably sure that parents (specifically, "rewrite_parents") is
-broken.  The new function should cull parents that do not appear on the
-ancestry path from merges (that is what "NEEDSWORK" is about).  It may or
-may not break gitk, though---these off-path parents are shown as parents
-of an on-path merge but will be marked as UNINTERESTING.
+When you want to find out what commits in H are contaminated with the bug
+introduced by A and need fixing, however, you might want to view only the
+subset of "A..B" that are actually descendants of A, i.e. excluding the
+ones marked with 'o'.  Introduce a new option --ancestry-path to compute
+this set with "rev-list --ancestry-path A..B".
 
-I do not think reverse/date-order/topo-order would be affected by this
-change, as they only change the presentation order of what limit_list()
-returns;
+Note that in practice, you would build a fix immediately on top of A and
+"git branch --contains A" will give the names of branches that you would
+need to merge the fix into (i.e. topic, dev and master), so this may not
+be worth paying the extra cost of postprocessing.
 
-Also simplify-merges and full-history should be Ok, as they control what
-is done in the current logic in limit_list(), which is an input to the new
-logic, meaning that the new logic will work on already simplified history.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * This simplifies the handling of TMP_MARK (the contract among the
+   functions is that this is used only locally and the user is responsible
+   for cleaning them up after use, so there is no need to clear the mark
+   upfront), and also makes it responsibility of the caller to free the
+   "bottom" list.
 
-This is not a new problem, but I strongly suspect that cherry-pick is
-broken the same way wrt "rewrite_parents".
+   Interdiff since v1 looks like this.
+
+    diff -u b/revision.c b/revision.c
+    --- b/revision.c
+    +++ b/revision.c
+    @@ -660,13 +660,11 @@
+     	int made_progress;
+     
+     	/*
+    -	 * Clear TMP_MARK and reverse the list so that it will be likely
+    -	 * that we would process parents before children.
+    +	 * Reverse the list so that it will be likely that we would
+    +	 * process parents before children.
+     	 */
+    -	for (p = list; p; p = p->next) {
+    -		p->item->object.flags &= ~TMP_MARK;
+    +	for (p = list; p; p = p->next)
+     		commit_list_insert(p->item, &rlist);
+    -	}
+     
+     	for (p = bottom; p; p = p->next)
+     		p->item->object.flags |= TMP_MARK;
+    @@ -705,20 +703,16 @@
+     	 */
+     	for (p = list; p; p = p->next) {
+     		struct commit *c = p->item;
+    -		if (c->object.flags & TMP_MARK) {
+    -			c->object.flags &= ~TMP_MARK;
+    +		if (c->object.flags & TMP_MARK)
+     			continue;
+    -		}
+     		c->object.flags |= UNINTERESTING;
+     	}
+     
+    -	/* Release the bottom list */
+    -	while (bottom) {
+    -		p = bottom->next;
+    -		bottom->item->object.flags &= ~TMP_MARK;
+    -		free(bottom);
+    -		bottom = p;
+    -	}
+    +	/* We are done with the TMP_MARK */
+    +	for (p = list; p; p = p->next)
+    +		p->item->object.flags &= ~TMP_MARK;
+    +	for (p = bottom; p; p = p->next)
+    +		p->item->object.flags &= ~TMP_MARK;
+     	free_commit_list(rlist);
+     }
+     
+    @@ -794,8 +788,10 @@
+     	if (revs->cherry_pick)
+     		cherry_pick_list(newlist, revs);
+     
+    -	if (bottom)
+    +	if (bottom) {
+     		limit_to_ancestry(bottom, newlist);
+    +		free_commit_list(bottom);
+    +	}
+     
+     	revs->commits = newlist;
+     	return 0;
+
+ revision.c                        |  102 +++++++++++++++++++++++++++++++++++++
+ revision.h                        |    1 +
+ t/t6019-rev-list-ancestry-path.sh |   56 ++++++++++++++++++++
+ 3 files changed, 159 insertions(+), 0 deletions(-)
+ create mode 100755 t/t6019-rev-list-ancestry-path.sh
+
+diff --git a/revision.c b/revision.c
+index f4b8b38..71fec3c 100644
+--- a/revision.c
++++ b/revision.c
+@@ -646,6 +646,93 @@ static int still_interesting(struct commit_list *src, unsigned long date, int sl
+ 	return slop-1;
+ }
+ 
++/*
++ * "rev-list --ancestry-path A..B" computes commits that are ancestors
++ * of B but not ancestors of A but further limits the result to those
++ * that are descendants of A.  This takes the list of bottom commits and
++ * the result of "A..B" without --ancestry-path, and limits the latter
++ * further to the ones that can reach one of the commits in "bottom".
++ */
++static void limit_to_ancestry(struct commit_list *bottom, struct commit_list *list)
++{
++	struct commit_list *p;
++	struct commit_list *rlist = NULL;
++	int made_progress;
++
++	/*
++	 * Reverse the list so that it will be likely that we would
++	 * process parents before children.
++	 */
++	for (p = list; p; p = p->next)
++		commit_list_insert(p->item, &rlist);
++
++	for (p = bottom; p; p = p->next)
++		p->item->object.flags |= TMP_MARK;
++
++	/*
++	 * Mark the ones that can reach bottom commits in "list",
++	 * in a bottom-up fashion.
++	 */
++	do {
++		made_progress = 0;
++		for (p = rlist; p; p = p->next) {
++			struct commit *c = p->item;
++			struct commit_list *parents;
++			if (c->object.flags & (TMP_MARK | UNINTERESTING))
++				continue;
++			for (parents = c->parents;
++			     parents;
++			     parents = parents->next) {
++				if (!(parents->item->object.flags & TMP_MARK))
++					continue;
++				c->object.flags |= TMP_MARK;
++				made_progress = 1;
++				break;
++			}
++		}
++	} while (made_progress);
++
++	/*
++	 * NEEDSWORK: decide if we want to remove parents that are
++	 * not marked with TMP_MARK from commit->parents for commits
++	 * in the resulting list.  We may not want to do that, though.
++	 */
++
++	/*
++	 * The ones that are not marked with TMP_MARK are uninteresting
++	 */
++	for (p = list; p; p = p->next) {
++		struct commit *c = p->item;
++		if (c->object.flags & TMP_MARK)
++			continue;
++		c->object.flags |= UNINTERESTING;
++	}
++
++	/* We are done with the TMP_MARK */
++	for (p = list; p; p = p->next)
++		p->item->object.flags &= ~TMP_MARK;
++	for (p = bottom; p; p = p->next)
++		p->item->object.flags &= ~TMP_MARK;
++	free_commit_list(rlist);
++}
++
++/*
++ * Before walking the history, keep the set of "negative" refs the
++ * caller has asked to exclude.
++ *
++ * This is used to compute "rev-list --ancestry-path A..B", as we need
++ * to filter the result of "A..B" further to the ones that can actually
++ * reach A.
++ */
++static struct commit_list *collect_bottom_commits(struct commit_list *list)
++{
++	struct commit_list *elem, *bottom = NULL;
++	for (elem = list; elem; elem = elem->next)
++		if (elem->item->object.flags & UNINTERESTING)
++			commit_list_insert(elem->item, &bottom);
++	return bottom;
++}
++
+ static int limit_list(struct rev_info *revs)
+ {
+ 	int slop = SLOP;
+@@ -653,6 +740,13 @@ static int limit_list(struct rev_info *revs)
+ 	struct commit_list *list = revs->commits;
+ 	struct commit_list *newlist = NULL;
+ 	struct commit_list **p = &newlist;
++	struct commit_list *bottom = NULL;
++
++	if (revs->ancestry_path) {
++		bottom = collect_bottom_commits(list);
++		if (!bottom)
++			die("--ancestry-path given but there is no bottom commits");
++	}
+ 
+ 	while (list) {
+ 		struct commit_list *entry = list;
+@@ -694,6 +788,11 @@ static int limit_list(struct rev_info *revs)
+ 	if (revs->cherry_pick)
+ 		cherry_pick_list(newlist, revs);
+ 
++	if (bottom) {
++		limit_to_ancestry(bottom, newlist);
++		free_commit_list(bottom);
++	}
++
+ 	revs->commits = newlist;
+ 	return 0;
+ }
+@@ -1089,6 +1188,9 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->min_age = approxidate(arg + 8);
+ 	} else if (!strcmp(arg, "--first-parent")) {
+ 		revs->first_parent_only = 1;
++	} else if (!strcmp(arg, "--ancestry-path")) {
++		revs->ancestry_path = 1;
++		revs->limited = 1;
+ 	} else if (!strcmp(arg, "-g") || !strcmp(arg, "--walk-reflogs")) {
+ 		init_reflog_walk(&revs->reflog_info);
+ 	} else if (!strcmp(arg, "--default")) {
+diff --git a/revision.h b/revision.h
+index 568f1c9..855464f 100644
+--- a/revision.h
++++ b/revision.h
+@@ -66,6 +66,7 @@ struct rev_info {
+ 			reverse_output_stage:1,
+ 			cherry_pick:1,
+ 			bisect:1,
++			ancestry_path:1,
+ 			first_parent_only:1;
+ 
+ 	/* Diff flags */
+diff --git a/t/t6019-rev-list-ancestry-path.sh b/t/t6019-rev-list-ancestry-path.sh
+new file mode 100755
+index 0000000..0230724
+--- /dev/null
++++ b/t/t6019-rev-list-ancestry-path.sh
+@@ -0,0 +1,56 @@
++#!/bin/sh
++
++test_description='--ancestry-path'
++
++#          D---E-------F
++#         /     \       \
++#    B---C---G---H---I---J
++#   /                     \
++#  A-------K---------------L--M
++#
++#  D..M                 == E F G H I J K L M
++#  --ancestry-path D..M == E F H I J L M
++
++. ./test-lib.sh
++
++test_merge () {
++	test_tick &&
++	git merge -s ours -m "$2" "$1" &&
++	git tag "$2"
++}
++
++test_expect_success setup '
++	test_commit A &&
++	test_commit B &&
++	test_commit C &&
++	test_commit D &&
++	test_commit E &&
++	test_commit F &&
++	git reset --hard C &&
++	test_commit G &&
++	test_merge E H &&
++	test_commit I &&
++	test_merge F J &&
++	git reset --hard A &&
++	test_commit K &&
++	test_merge J L &&
++	test_commit M
++'
++
++test_expect_success 'rev-list D..M' '
++	for c in E F G H I J K L M; do echo $c; done >expect &&
++	git rev-list --format=%s D..M |
++	sed -e "/^commit /d" |
++	sort >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rev-list --ancestry-path D..M' '
++	for c in E F H I J L M; do echo $c; done >expect &&
++	git rev-list --ancestry-path --format=%s D..M |
++	sed -e "/^commit /d" |
++	sort >actual &&
++	test_cmp expect actual
++'
++
++test_done
+-- 
+1.7.1.rc2.265.g8743f
