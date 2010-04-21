@@ -1,62 +1,78 @@
-From: Michael Olson <mwolson@gnu.org>
-Subject: Re: [PATCH/RFC 0/2] git-svn: Allow certain refs to be ignored
-Date: Wed, 21 Apr 2010 10:02:50 -0700
-Message-ID: <k2oc8b3bef91004211002t8bf17be9w4bee4e76093c8eb6@mail.gmail.com>
-References: <o2xc8b3bef91004201430m10bbe060q7d8ebd3a1ac4c3bd@mail.gmail.com> 
-	<7vbpddekwk.fsf@alter.siamese.dyndns.org> <m2wc8b3bef91004210931xc0a7ec58ycbf18dd37d5e98f0@mail.gmail.com> 
-	<20100421165451.GA14004@dcvr.yhbt.net>
+From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
+Subject: No way to have global diff settings? (global .gitattributes feature request)
+Date: Wed, 21 Apr 2010 19:05:53 +0200
+Message-ID: <87zl0wd9ce.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Tim Stoakes <tim@stoakes.net>, Sam Vilain <sam@vilain.net>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Apr 21 19:03:21 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 21 19:05:47 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4dKb-00038E-DS
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 19:03:21 +0200
+	id 1O4dMw-0004Ru-Qz
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 19:05:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753552Ab0DURDP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Apr 2010 13:03:15 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:38102 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753147Ab0DURDP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Apr 2010 13:03:15 -0400
-Received: by vws18 with SMTP id 18so141521vws.19
-        for <git@vger.kernel.org>; Wed, 21 Apr 2010 10:03:14 -0700 (PDT)
-Received: by 10.220.81.20 with HTTP; Wed, 21 Apr 2010 10:02:50 -0700 (PDT)
-X-Originating-IP: [209.104.55.5]
-In-Reply-To: <20100421165451.GA14004@dcvr.yhbt.net>
-X-Google-Sender-Auth: d60bb92ffb08fc1e
-Received: by 10.220.123.68 with SMTP id o4mr5936686vcr.8.1271869392698; Wed, 
-	21 Apr 2010 10:03:12 -0700 (PDT)
+	id S1753699Ab0DURFl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Apr 2010 13:05:41 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:24984 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753118Ab0DURFl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Apr 2010 13:05:41 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so3217347fgg.1
+        for <git@vger.kernel.org>; Wed, 21 Apr 2010 10:05:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:user-agent
+         :date:message-id:mime-version:content-type:content-transfer-encoding;
+        bh=lZGE5VsN5QVoQFN2L1yOrKzDilK4lXADB8U2vzIMsww=;
+        b=Op4jrRF3sMmeJ+OeTT4mQL8HlhFsrtz0ZC1H04cd+9V++TGR0D1f7j8EvCSHz4bbGT
+         gaXKZO3Y95VSJna7NxbnYq2xKulPZ61k5qPjvVaXD6lYL41F9nI7OB6Ls1hk+39Qi6kE
+         WXQTtcnfzk0SIeap+9t4+mffR1oWVRcUUiYA4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:user-agent:date:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        b=sh8DAy9pdUGxAY4vPSBskTEJKuy5o2/t8xrRJWeQ6B7aYVv63s43SBUTBxjLi42zqq
+         Nj6Jhiia3yTuegqDn157n1KBWmXesv40B4HgHv/5VFh/IVHIOvvQ57fnro/EZ2jajRrh
+         gubYTagZ9ypmd0MrvDMRpakX7Oc8xBfA7eBXc=
+Received: by 10.87.19.37 with SMTP id w37mr2923206fgi.25.1271869539148;
+        Wed, 21 Apr 2010 10:05:39 -0700 (PDT)
+Received: from localhost ([88.103.132.186])
+        by mx.google.com with ESMTPS id e11sm2318430fga.23.2010.04.21.10.05.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 21 Apr 2010 10:05:37 -0700 (PDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145445>
 
-On Wed, Apr 21, 2010 at 9:54 AM, Eric Wong <normalperson@yhbt.net> wrot=
-e:
-> Michael Olson <mwolson@gnu.org> wrote:
->> ^refs/remotes/((tags/)?old/myorg|old/bad_branch|old/unlabeled[^/]*|t=
-ags/(old/bad_tag|releases/another_tag))$
->
-> I wonder if both would be better as a series of globs would be
-> easier to read (maybe more verbose to write):
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0ignoreRefs =3D refs/remotes/tags/old/myorg
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0ignoreRefs =3D refs/remotes/old/myorg
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0ignoreRefs =3D refs/remotes/old/unlabeled/=
-*
 
-That does look cleaner, and kind of reminiscent of .gitignore.
+Hello,
 
---=20
-Michael Olson  |  http://mwolson.org/
+it seems there is no global .gitattribute equivalent to .gitignore or
+=2Egitconfig. Wouldn't it make much sense to have one? Failing that, th=
+ere
+really should be a way to specify some global diff options at least.
+
+My use case:
+
+I wanted to specify something like -F "^(" to git diff for lisp files.
+But well, git diff has no -F option! So shruggar from #git pointed me t=
+o
+gitattributes. OK, that's great and works, but now I have to put
+=2Egitattributes or info/attributes to all repos with lisp files in the=
+m?
+That rather sucks, if you ask me.
+
+So I would like to ask if there is a way, and if not, if it could be
+considered a useful feature addition.
+
+Thanks,
+
+  =C5=A0t=C4=9Bp=C3=A1n
