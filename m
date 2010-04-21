@@ -1,58 +1,66 @@
-From: Eric Raymond <esr@thyrsus.com>
-Subject: Re: CIA hook for contrib/
-Date: Wed, 21 Apr 2010 17:55:10 -0400
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20100421215510.GB16643@thyrsus.com>
-References: <20100327102632.GA5043@thyrsus.com>
- <20100421101002.GD3563@machine.or.cz>
- <20100421155149.GA11223@thyrsus.com>
- <20100421210427.GF3563@machine.or.cz>
-Reply-To: esr@thyrsus.com
+From: Aghiles <aghilesk@gmail.com>
+Subject: Re: git pull behavior changed?
+Date: Wed, 21 Apr 2010 17:55:49 -0400
+Message-ID: <y2p3abd05a91004211455r30d13932t92dfbedff581b9a1@mail.gmail.com>
+References: <u2z3abd05a91004211413rcd2440fdq7946ef4764b24362@mail.gmail.com> 
+	<v2hfabb9a1e1004211422ybbf47ef0gd5dfd1791eb03c16@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Apr 21 23:55:20 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git list <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 21 23:56:23 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4ht9-0001xw-Ad
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 23:55:19 +0200
+	id 1O4hu5-0002UY-Hy
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 23:56:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756791Ab0DUVzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Apr 2010 17:55:12 -0400
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:60232
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753323Ab0DUVzL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Apr 2010 17:55:11 -0400
-Received: by snark.thyrsus.com (Postfix, from userid 23)
-	id 41961475FF1; Wed, 21 Apr 2010 17:55:10 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20100421210427.GF3563@machine.or.cz>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756807Ab0DUV4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Apr 2010 17:56:12 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:48168 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753323Ab0DUV4L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Apr 2010 17:56:11 -0400
+Received: by wwb24 with SMTP id 24so4400453wwb.19
+        for <git@vger.kernel.org>; Wed, 21 Apr 2010 14:56:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type;
+        bh=wBsLqLFnB+htLDCbtB1sUQ1eUA5F6LafYi7xERAsgJM=;
+        b=fM4vq5ijQliBWZ6M2aCkWocKn21ZyKfKL1dP1PQaypMmvpNAy4JL8U9EDCXbBJ6+oC
+         cDDsY/zeTJA9nwwqbDi3L1aTZUtIlDHaXpRkSQQYiFrP2hH79igZgpdAwEoCmfEdVhrZ
+         pvJG2LFoQ53IrZWPa1XaLYW/iLzkDS/zdIr30=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=c3AsfqkW2HXTPCHKR/HPms0oZGcntP93kAFtYg2/DOjP3ZEQseGz+YZ9XaCL9f8Qmo
+         BRuszP8DfIQlUsxHLNXCN0OQyDNSpUsT8xhpn1Oi7OcVsC1khIqckr55iyJstcjHe39t
+         Zibv/KcaZrVFNbfDvwfRmooNI4sIaxTevQZBw=
+Received: by 10.216.157.212 with HTTP; Wed, 21 Apr 2010 14:55:49 -0700 (PDT)
+In-Reply-To: <v2hfabb9a1e1004211422ybbf47ef0gd5dfd1791eb03c16@mail.gmail.com>
+Received: by 10.216.86.19 with SMTP id v19mr3299255wee.218.1271886969136; Wed, 
+	21 Apr 2010 14:56:09 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145465>
 
-Petr Baudis <pasky@suse.cz>:
-> Thanks for doing all the changes!
+> When you do this you're telling git "I want a new branch from where I
+> am right now". If you want to be able to pull in a similar way to how
+> master works, use the '--track' option.
 
-Thanks for the review.  You pushed me into doing two things I was
-naggingly aware I ought to do but hadn't gotten around to: (1) XML-RPC
-support from the Python version (alas, it's too hard from shell), and
-(2) fixing the scripts so that they can be entirely informed by config
-variables, no modifications or command-line switches required.
+Actually, the '--track' option is exactly what I don't want ! :) It tells me:
 
-You can read about the current state of play at 
+"Branch test set up to track local branch refs/heads/master."
 
-    <http://www.catb.org/esr/ciabot/>.
+Without the '--track' option it seems to work as expected: when I pull
+it downloads data form the remote but then stops before merging.
+This used to work! What happened ? :(
 
-I've spent the last couple of hours testing
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+  -- aghiles
