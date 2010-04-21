@@ -1,84 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] revision: --ancestry-path
-Date: Wed, 21 Apr 2010 01:49:08 -0700
-Message-ID: <7v8w8hchrv.fsf@alter.siamese.dyndns.org>
-References: <201004201649.31084.johan@herland.net>
- <7viq7lg8f2.fsf@alter.siamese.dyndns.org>
- <7v39ypg4gm.fsf_-_@alter.siamese.dyndns.org>
- <201004210934.30226.johan@herland.net> <4BCEADA3.7090504@viscovery.net>
- <7vochdcjz5.fsf@alter.siamese.dyndns.org>
+From: Bo Yang <struggleyb.nku@gmail.com>
+Subject: Re: [PATCH] Make --follow support --find-copies-harder.
+Date: Wed, 21 Apr 2010 17:02:24 +0800
+Message-ID: <i2r41f08ee11004210202r642aa25dy32b06c33ed98ba4c@mail.gmail.com>
+References: <1271762875-16548-1-git-send-email-struggleyb.nku@gmail.com>
+	 <7vtyr5cxnz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
-To: Johannes Sixt <j.sixt@viscovery.net>,
-	Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Apr 21 10:49:49 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, torvalds@linux-foundation.org,
+	trast@student.ethz.ch
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 21 11:02:33 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4Vcx-00019e-Pu
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 10:49:48 +0200
+	id 1O4VpJ-000142-6I
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 11:02:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753335Ab0DUItW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Apr 2010 04:49:22 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58791 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753139Ab0DUItU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Apr 2010 04:49:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A6594A9D7D;
-	Wed, 21 Apr 2010 04:49:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xSGdtNTnf8pv+LwaIup127dMYLk=; b=UOplUT
-	stMuwyCdTltrdDK2M/kUSB5SA8ZvVAMXk/jSFmw4zXXETHdyyONdUevYXxj9E2Ey
-	IDcCdgJoXkqa1aLIK7ni2yTZp2nBNhLocTo20O3Ao56lXmzWb7r/mmm1mMT/+EsP
-	S6k3tYHxjq5S5rduXb5LI95y7ngkWETs1ymPY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AWHemkKmeW5G8e1Aeb75eLdydYWrezsD
-	5+8xHbyjIo0afuv1kxlt3bGrIbQZkQQE8EhLhKsAsaPhFfQXy7oFcKvhmRw4C+Hf
-	pA9NVAp0Mwx7Ldxsa2AXdJcXnBqlvu0a0mT5fn5WxKlCUTPm5rJGw40Ae4IHNb3K
-	VYgfOtgEqK0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 649F2A9D78;
-	Wed, 21 Apr 2010 04:49:14 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 989C2A9D73; Wed, 21 Apr
- 2010 04:49:09 -0400 (EDT)
-In-Reply-To: <7vochdcjz5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed\, 21 Apr 2010 01\:01\:34 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C337A80C-4D22-11DF-A503-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752326Ab0DUJC1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Apr 2010 05:02:27 -0400
+Received: from mail-qy0-f179.google.com ([209.85.221.179]:51640 "EHLO
+	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751387Ab0DUJCZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Apr 2010 05:02:25 -0400
+Received: by qyk9 with SMTP id 9so8945435qyk.1
+        for <git@vger.kernel.org>; Wed, 21 Apr 2010 02:02:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xRoLkaNtS/dHiNj4T9xz+3qbrqFYERVEZQy7dxTeYog=;
+        b=Kj2Ss4eg9UHnEGcEglyB2f5pKE676o8dtsEbDdwOqLtnxfecQohFnnMG4N/7GK467A
+         wddmanJZ480ikmZEWM5EkfO2zsetGdbtB+gygYweqrFaJlL3Tk+Iu1fOtKpLIgQc0pdA
+         N5qWp6p+uWgY3h0ZXZaohu93lRubNelu+NNdY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=JbgkmAi9/jwGdr8BTfHEdTSnu5FQv9XAFwe5f88n/H6t2icMvRCzh/Sg/DMF9Abuet
+         sIZkTHlzQO4/aCSkJ4NnIXMOJcye+1qD+Qd6nT4UJW7LGyMGCL22SX5HveS6Y7jkSeKt
+         F+RXEosqhi00Gw44kCFL8Sq1oUdOb8vI7H7hY=
+Received: by 10.229.98.196 with HTTP; Wed, 21 Apr 2010 02:02:24 -0700 (PDT)
+In-Reply-To: <7vtyr5cxnz.fsf@alter.siamese.dyndns.org>
+Received: by 10.229.217.206 with SMTP id hn14mr4715099qcb.70.1271840544848; 
+	Wed, 21 Apr 2010 02:02:24 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145421>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Apr 21, 2010 at 11:05 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+>
+> Because the "--follow" hack was done primarily as a "checkbox" item, =
+and
+> also because it is not an option for the "diff" family (it is an opti=
+on
+> for the "log" family), I would personally think that it is actually a=
+ bug
+> that "git diff" accepts "--follow" and pretends as if it is doing use=
+ful
+> work, but does so only some of the time.
+>
+> =A0 =A0$ git diff --follow --name-status maint master -- builtin/log.=
+c
+> =A0 =A0R089 =A0 =A0 =A0 =A0builtin-log.c =A0 builtin/log.c
+> =A0 =A0$ git diff --follow --name-status -R maint master -- builtin/l=
+og.c
+> =A0 =A0D =A0 builtin/log.c
+> =A0 =A0$ git diff --follow --name-status master maint -- builtin/log.=
+c
+> =A0 =A0D =A0 builtin/log.c
 
-> I am reasonably sure that parents (specifically, "rewrite_parents") is
-> broken.  The new function should cull parents that do not appear on the
-> ancestry path from merges (that is what "NEEDSWORK" is about).  It may or
-> may not break gitk, though---these off-path parents are shown as parents
-> of an on-path merge but will be marked as UNINTERESTING.
+I am really wondering, when -R is used, how the file rename/copy
+should defined? Now, I can make -R works with --follow, and it produce
+something like:
 
-Thinking about it a bit more, I think this is Ok, as all the ancestors on
-a side branch that is off-path are marked uninteresting, and we do show
-uninteresting parents in the output of an interesting commit.  In fact, if
-you do "rev-list --parents HEAD^..HEAD -- .", on a non-merge non-empty
-commit, you will see uninteresting HEAD^ shown as the parent of HEAD.
+byang@byang-laptop:~/git/git$ ./git diff --follow --name-status maint
+master -- builtin/log.c
+R089    builtin-log.c   builtin/log.c
+byang@byang-laptop:~/git/git$ ./git diff --follow --name-status -R
+maint master -- builtin/log.c
+R089    builtin/log.c   builtin-log.c
+byang@byang-laptop:~/git/git$ ./git diff --follow --name-status
+master maint -- builtin/log.c
+D       builtin/log.c
+byang@byang-laptop:~/git/git$ ./git diff --follow --name-status -R
+master maint -- builtin/log.c
+A       builtin/log.c
 
-> This is not a new problem, but I strongly suspect that cherry-pick is
-> broken the same way wrt "rewrite_parents".
 
-This is a different and a real issue.  By marking ones that are duplicate
-of commits from the other side as SHOWN, we will spit out a disconnected
-history.  It should rewrite the parent list so that children of a commit
-that is removed due to being a duplicate from the other side point at an
-ancestor of that removed commit to keep the history connected.
+The problem is whether it make sense to say 'builtin/log.c renamed to
+builtin-log.c' when -R is given?
+
+Regards!
+Bo
