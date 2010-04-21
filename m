@@ -1,94 +1,178 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH/RFC 0/2] git-svn: Allow certain refs to be ignored
-Date: Wed, 21 Apr 2010 09:54:52 -0700
-Message-ID: <20100421165451.GA14004@dcvr.yhbt.net>
-References: <o2xc8b3bef91004201430m10bbe060q7d8ebd3a1ac4c3bd@mail.gmail.com> <7vbpddekwk.fsf@alter.siamese.dyndns.org> <m2wc8b3bef91004210931xc0a7ec58ycbf18dd37d5e98f0@mail.gmail.com>
+From: Matthias Andree <matthias.andree@gmx.de>
+Subject: Git-SVN on Cygwin 1.7: git svn rebase b0rks index if not run from
+ top-level directory
+Date: Wed, 21 Apr 2010 18:56:07 +0200
+Message-ID: <4BCF2E27.1010906@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Tim Stoakes <tim@stoakes.net>, Sam Vilain <sam@vilain.net>
-To: Michael Olson <mwolson@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Apr 21 18:55:00 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: "Eric Wong" <normalperson@yhbt.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 21 18:56:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4dCV-000618-Ku
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 18:55:00 +0200
+	id 1O4dDl-0006wZ-PQ
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 18:56:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752590Ab0DUQyy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Apr 2010 12:54:54 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:33205 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752035Ab0DUQyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Apr 2010 12:54:53 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 491B81F500;
-	Wed, 21 Apr 2010 16:54:52 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <m2wc8b3bef91004210931xc0a7ec58ycbf18dd37d5e98f0@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752902Ab0DUQ4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Apr 2010 12:56:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43736 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752692Ab0DUQ4L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Apr 2010 12:56:11 -0400
+Received: (qmail invoked by alias); 21 Apr 2010 16:56:09 -0000
+Received: from baloo.cs.uni-paderborn.de (EHLO baloo.cs.uni-paderborn.de) [131.234.21.116]
+  by mail.gmx.net (mp011) with SMTP; 21 Apr 2010 18:56:09 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX19qMNY/3OZqcDARvCDafLYQ6UV9laNM+8f8vcZXbZ
+	hKZRR2Cksi/wZb
+Received: from [127.0.0.1]
+	by baloo.cs.uni-paderborn.de with esmtp (Exim 4.70)
+	(envelope-from <matthias.andree@gmx.de>)
+	id L18KDK-0005QC-8W; Wed, 21 Apr 2010 18:56:08 +0200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.1.9) Gecko/20100317 Lightning/1.0b1 Thunderbird/3.0.4
+X-Enigmail-Version: 1.0.1
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.52000000000000002
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145442>
 
-Michael Olson <mwolson@gnu.org> wrote:
-> On Tue, Apr 20, 2010 at 4:58 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
-> > Michael Olson <mwolson@gnu.org> writes:
-> >
-> >> [svn-remote "svn"]
-> >> =A0 =A0 =A0 =A0url =3D https://svn.my.org/svn/root
-> >> ...
-> >> =A0 =A0 =A0 =A0ignore-refs =3D ^refs/remotes/(tags/)?old/myorg
-> >
-> > Traditionally configuration variable names are spelled camelCase wi=
-thout
-> > dashes. =A0You probably would want to be consistent.
->=20
-> I was looking at the existing syntax for "ignore-paths", which uses
-> dashes.  Should that be changed as well?
+Greetings,
 
-Yes, I missed that the first time around :x
+Looking for help - I have some issues with git-svn as of git version
+1.7.1.rc1.12.ga601 on Cygwin 1.7.5 w/ Windows 7 32-bit professional German, but
+this has been going on for a while now, but I hadn't figured how to reproduce.
 
-I suppose that should be changed to work both ways.
+=== Symptoms ===
 
-> > Also "refs" and any pathname-like things are traditionally matched =
-using
-> > globs and not regexes. =A0It is Ok to deviate if you have a strong =
-reason to
-> > (and I suspect it would make it easier to write "exclude" patterns =
-like
-> > the above example to allow a regex here), but that needs to be prom=
-inently
-> > documented (e.g. "Unlike any other ref-matching configuration varia=
-ble,
-> > this alone uses regex, not glob") to avoid end user confusion.
->=20
-> ignore-paths also uses a regex.  I'm concerned that using globs will
-> not be expressive enough to represent a regex like (a combination of
-> the 2 use cases I posted initially):
+When I run "git svn rebase" (trace below) *from a working directory somewhere
+deep in the checkout,* the index gets dirty.
 
-I also missed that (I never used that feature :x)
+git diff-index HEAD then shows a massive amount of files that were to be updated:
 
-> ^refs/remotes/((tags/)?old/myorg|old/bad_branch|old/unlabeled[^/]*|ta=
-gs/(old/bad_tag|releases/another_tag))$
+$ git diff-index HEAD
+:100644 100644 faba562f37df8f4a308594b9b867470507229292
+0000000000000000000000000000000000000000 M      .project
+:100644 100644 0184158eda0e3787d5d29e1f23a6809ed3e4b54c
+0000000000000000000000000000000000000000 M      README.txt
+:100644 100644 d00be041aecaf00e2c3e7358911a6e5d493e9e7f
+0000000000000000000000000000000000000000 M      docs/.gitignore
+:100644 100644 bed116f07ba5742e6ed344553008c262656020c7
+0000000000000000000000000000000000000000 M      docs/d3.3/.gitignore
+[...]
 
-I wonder if both would be better as a series of globs would be
-easier to read (maybe more verbose to write):
+This is always 100644 100644 SHA1 000...000 M filename.
 
-	ignoreRefs =3D refs/remotes/tags/old/myorg
-	ignoreRefs =3D refs/remotes/old/myorg
-	ignoreRefs =3D refs/remotes/old/unlabeled/*
+=== Impact ===
 
-But I suppose the regexp route is fine.  I'll ack and push them
-out with Sam's Ack on 2/2
+- Several parts of git then show bogus local changes, for instance, gitk.
 
---=20
-Eric Wong
+- git svn dcommit aborts because it believes the index were dirty
+
+
+=== Workarounds ===
+
+Either is sufficient:
+
+1. cd to top-level directory before running git-svn
+
+2. git update-index --refresh
+
+
+=== Reproduce ===
+
+1. Use a git-svn checkout that has at least one subdirectory
+
+2. cd to that subdirectory
+
+3. run git svn rebase. It concludes successfully, then:
+
+4. git diff-index HEAD -> output like the one shown above.
+
+
+
+=== Trace ===
+
+trace: exec: 'git-svn' 'rebase'
+trace: run_command: 'git-svn' 'rebase'
+trace: built-in: git 'rev-parse' '--show-cdup'
+trace: built-in: git 'config' '--bool' '--get' 'svn.fetchall'
+trace: built-in: git 'config' '--bool' '--get' 'svn.noauthcache'
+trace: built-in: git 'config' '--bool' '--get' 'svn.nocheckout'
+trace: built-in: git 'config' '--get' 'svn.authorsprog'
+trace: built-in: git 'config' '--bool' '--get' 'svn.dryrun'
+trace: built-in: git 'config' '--bool' '--get' 'svn.followparent'
+trace: built-in: git 'config' '--bool' '--get' 'svn.useSvmProps'
+trace: built-in: git 'config' '--get' 'svn.authorsfile'
+trace: built-in: git 'config' '--get' 'svn.repackflags'
+trace: built-in: git 'config' '--bool' '--get' 'svn.localtime'
+trace: built-in: git 'config' '--get' 'svn.username'
+trace: built-in: git 'config' '--int' '--get' 'svn.repack'
+trace: built-in: git 'config' '--get' 'svn.ignorepaths'
+trace: built-in: git 'config' '--bool' '--get' 'svn.quiet'
+trace: built-in: git 'config' '--bool' '--get' 'svn.verbose'
+trace: built-in: git 'config' '--int' '--get' 'svn.logwindowsize'
+trace: built-in: git 'config' '--get' 'svn.configdir'
+trace: built-in: git 'config' '--bool' '--get' 'svn.merge'
+trace: built-in: git 'config' '--bool' '--get' 'svn.addauthorfrom'
+trace: built-in: git 'config' '--bool' '--get' 'svn.useSvnsyncProps'
+trace: built-in: git 'config' '--bool' '--get' 'svn.noMetadata'
+trace: built-in: git 'config' '--bool' '--get' 'svn.local'
+trace: built-in: git 'config' '--get' 'svn.strategy'
+trace: built-in: git 'config' '--bool' '--get' 'svn.uselogauthor'
+trace: built-in: git 'rev-parse' '--symbolic' '--all'
+trace: built-in: git 'config' '-l'
+trace: built-in: git 'config' '-l'
+trace: built-in: git 'update-index' '--refresh'
+trace: built-in: git 'log' '--no-color' '--first-parent' '--pretty=medium' 'HEAD'
+trace: built-in: git 'config' '--bool' 'svn.useSvmProps'
+trace: built-in: git 'config' '-l'
+trace: built-in: git 'for-each-ref' '--format=%(refname)' 'refs/'
+trace: built-in: git 'for-each-ref' '--format=%(refname)' 'refs/'
+trace: built-in: git 'config' '--get' 'svn-remote.svn.rewriteRoot'
+trace: built-in: git 'config' '--get' 'svn-remote.svn.url'
+trace: built-in: git 'config' '--get' 'svn-remote.svn.uuid'
+trace: built-in: git 'rev-list' '--pretty=raw' '--no-color' '--reverse'
+'thesamehashthatwasreplacedforprivacy..refs/remotes/trunk' '--'
+trace: built-in: git 'config' '--get' 'svn-remote.svn.rewriteRoot'
+trace: built-in: git 'config' '--get' 'svn-remote.svn.rewriteUUID'
+trace: built-in: git 'diff-index' 'HEAD' '--'
+trace: built-in: git 'config' '--get' 'svn-remote.svn.usesvmprops'
+trace: built-in: git 'config' '--get' 'svn-remote.svn.nometadata'
+trace: built-in: git 'cat-file' 'commit' 'thesamehashthatwasreplacedforprivacy'
+trace: built-in: git 'config' 'svn-remote.svn.reposRoot'
+'svn+ssh://scm.gforge.inria.fr/svn/PROJECT'
+trace: built-in: git 'rev-list' '--pretty=raw' '--no-color' '--reverse'
+'thesamehashthatwasreplacedforprivacy..refs/remotes/trunk' '--'
+trace: built-in: git 'config' 'svn-remote.svn.reposRoot'
+'svn+ssh://scm.gforge.inria.fr/svn/PROJECT'
+trace: exec: 'git-rebase' 'refs/remotes/trunk'
+trace: run_command: 'git-rebase' 'refs/remotes/trunk'
+trace: built-in: git 'rev-parse' '--git-dir'
+trace: built-in: git 'rev-parse' '--show-toplevel'
+trace: built-in: git 'config' '--bool' 'rebase.stat'
+trace: built-in: git 'update-index' '--ignore-submodules' '--refresh'
+trace: built-in: git 'diff-index' '--cached' '--name-status' '-r'
+'--ignore-submodules' 'HEAD' '--'
+trace: built-in: git 'rev-parse' '--verify' 'refs/remotes/trunk^0'
+trace: built-in: git 'rev-parse' '--verify' 'refs/remotes/trunk^0'
+trace: built-in: git 'symbolic-ref' 'HEAD'
+trace: built-in: git 'symbolic-ref' '-q' 'HEAD'
+trace: built-in: git 'rev-parse' '--verify' 'master^0'
+trace: built-in: git 'merge-base' 'thesamehashthatwasreplacedforprivacy'
+'thesamehashthatwasreplacedforprivacy'
+trace: built-in: git 'rev-list' '--parents'
+'thesamehashthatwasreplacedforprivacy..thesamehashthatwasreplacedforprivacy'
+Current branch master is up to date.
+
+
+
+-- 
+Matthias Andree
