@@ -1,73 +1,69 @@
-From: Alexander Iljin <ajsoft@yandex.ru>
-Subject: Re: Git 1.7 rebase problems
-Date: Thu, 22 Apr 2010 01:41:20 +0700
-Message-ID: <178224036.20100422014120@yandex.ru>
-References: <4BCF2E27.1010906@gmx.de>
-Reply-To: =?utf-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCY0LvRjNC40L0=?= 
-	  <ajsoft@yandex.ru>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Eric Wong <normalperson@yhbt.net>
-To: Matthias Andree <matthias.andree@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Apr 21 20:41:37 2010
+From: Blair Zajac <Blair@orcaware.com>
+Subject: git svn clone of subversion's own code failing
+Date: Wed, 21 Apr 2010 11:55:46 -0700
+Message-ID: <B3F7BC3A-9606-48BF-A0C8-093CA42B3720@orcaware.com>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 21 21:07:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4erg-0005MO-Dl
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 20:41:36 +0200
+	id 1O4fH8-0001XO-40
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 21:07:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756165Ab0DUSla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Apr 2010 14:41:30 -0400
-Received: from forward3.mail.yandex.net ([77.88.46.8]:40962 "EHLO
-	forward3.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756149Ab0DUSl3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Apr 2010 14:41:29 -0400
-Received: from smtp3.mail.yandex.net (smtp3.mail.yandex.net [77.88.46.103])
-	by forward3.mail.yandex.net (Yandex) with ESMTP id DBB6856D9FB1;
-	Wed, 21 Apr 2010 22:41:27 +0400 (MSD)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1271875287; bh=PdBPLMg2H326BLpIQvl6lgN6n0qcejMcIPRJtW/r23s=;
-	h=Date:From:Reply-To:Message-ID:To:CC:Subject:In-Reply-To:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=e57vFbcJiFxzddmydUXjD0TubmxYTAcVBXQfAzytoUkZUy4uVvyFf0Sr2xI0dpZyZ
-	 xxQyeBIy1EDOE6I6LT3EX2R2CMaNRa/rrpCtE3K5dv7C2pp1M0oTR87yaZnG3mJ4z6
-	 2xM6FCWL6YO9yfuAYy9fBqFWNgCaRRocicYJHEtE=
-Received: from h88-115-252.sibinet.com (unknown [88.204.115.252])
-	by smtp3.mail.yandex.net (Yandex) with ESMTPA id 7B50927807E;
-	Wed, 21 Apr 2010 22:41:27 +0400 (MSD)
-X-Priority: 3 (Normal)
-In-Reply-To: <4BCF2E27.1010906@gmx.de>
-X-Yandex-TimeMark: 1271875287
-X-Yandex-Spam: 1
-X-Yandex-Front: smtp3.mail.yandex.net
+	id S1754023Ab0DUTHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Apr 2010 15:07:48 -0400
+Received: from orca3.orcaware.com ([12.11.234.124]:59476 "EHLO
+	orca3.orcaware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753594Ab0DUTHr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Apr 2010 15:07:47 -0400
+X-Greylist: delayed 719 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 Apr 2010 15:07:47 EDT
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by orca3.orcaware.com (8.14.3/8.14.3/Debian-9ubuntu1) with ESMTP id o3LItkNZ030115;
+	Wed, 21 Apr 2010 11:55:46 -0700
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145448>
 
-Hello!
+Using MacPorts with git 1.7.0.4 and Subversion 1.6.11, ironically, cloning Subversion's own source code is failing.  I'm using a larger log window size to make the scan to svn's first commit in the repository much faster:
 
-MA> Looking for help - I have some issues with git-svn as of git version
-MA> 1.7.1.rc1.12.ga601 on Cygwin 1.7.5 w/ Windows 7 32-bit professional German, but
-MA> this has been going on for a while now, but I hadn't figured how to reproduce.
+$ git svn clone --log-window-size 5000 -s https://svn.apache.org/repos/asf/subversion
 
-MA> === Symptoms ===
+It ends up failing with:
 
-MA> When I run "git svn rebase" (trace below) *from a working directory somewhere
-MA> deep in the checkout,* the index gets dirty.
+r855619 = c93a05b8f94c53b8748ffe9352445209fe648e87 (refs/remotes/trunk)
+	M	contrib/client-side/svn-clean
+r855620 = a6b138d3112b1ea0b51b112c6598aae5644369ae (refs/remotes/trunk)
+	M	subversion/bindings/swig/core.i
+	M	subversion/bindings/swig/python/libsvn_swig_py/swigutil_py.c
+	A	subversion/bindings/swig/python/libsvn_swig_py/svn_old_swig.h
+	M	subversion/bindings/swig/python/libsvn_swig_py/swigutil_py.h
+	M	subversion/bindings/swig/include/svn_global.swg
+	M	subversion/bindings/swig/include/svn_types.swg
+r855621 = 41bbc61c035218937f1032381f02c481c8653a22 (refs/remotes/python-bindings-improvements)
+W:svn cherry-pick ignored (subversion/trunk:855604) - missing 79 commit(s) (eg 462871a2ededa70304eeb99affe550fd029557b5)
+r855622 = 2c62a0cca702ffe59dabee92220cf28aedfe1c84 (refs/remotes/python-bindings-improvements)
+fatal: ambiguous argument '3b290983fbd7b401e4d1d20256378ba3657cf7d6^..862ea856c2acad5035ce14758fb928c07d7b7f6b': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions
+rev-list 3b290983fbd7b401e4d1d20256378ba3657cf7d6^..862ea856c2acad5035ce14758fb928c07d7b7f6b: command returned error: 128
 
-  Wow! I just filed a very similar issue at msysGit discussion group,
-  with steps to reproduce, etc. See here:
-  http://groups.google.com/group/msysgit/browse_thread/thread/c7218c7d1ba8949b
-  I could not make interactive rebase work, it just hanged there.
+I've tried two separate clones with the exact same error.
 
-  Going to the root of the repository fixed the problem.
+Trying to finish the clone then gets this:
 
----=====---
- Alexander
+$ cd subversion
+$ git svn fetch && git svn rebase
+fatal: ambiguous argument '3b290983fbd7b401e4d1d20256378ba3657cf7d6^..862ea856c2acad5035ce14758fb928c07d7b7f6b': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions
+rev-list 3b290983fbd7b401e4d1d20256378ba3657cf7d6^..862ea856c2acad5035ce14758fb928c07d7b7f6b: command returned error: 128
+
+Regards,
+Blair
