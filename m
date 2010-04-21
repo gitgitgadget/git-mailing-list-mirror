@@ -1,82 +1,112 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] t1304,t2007: quell output to stdout and stderr
-Date: Wed, 21 Apr 2010 10:12:36 -0500
-Message-ID: <20100421151236.GB8726@progeny.tock>
-References: <00e68c9727f8dd3426db6f78d6b583a0dcec4d13.1271858119.git.git@drmicha.warpmail.net>
- <20100421144535.GA8481@progeny.tock>
- <4BCF1160.6020304@drmicha.warpmail.net>
+From: Eric Raymond <esr@thyrsus.com>
+Subject: Re: CIA hook for contrib/
+Date: Wed, 21 Apr 2010 11:51:49 -0400
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20100421155149.GA11223@thyrsus.com>
+References: <20100327102632.GA5043@thyrsus.com>
+ <20100421101002.GD3563@machine.or.cz>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Apr 21 17:12:44 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed Apr 21 17:52:01 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4bbU-0004Up-EZ
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 17:12:40 +0200
+	id 1O4cDW-0006v6-Jj
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 17:51:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755508Ab0DUPMe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Apr 2010 11:12:34 -0400
-Received: from mail-pz0-f186.google.com ([209.85.222.186]:45275 "EHLO
-	mail-pz0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754843Ab0DUPMd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Apr 2010 11:12:33 -0400
-Received: by pzk16 with SMTP id 16so3605292pzk.22
-        for <git@vger.kernel.org>; Wed, 21 Apr 2010 08:12:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=rrFqJJoudn2bZNMxzbL2dlmdEdKgRUYlly7yha6ih+g=;
-        b=NF8Ac4U08HUNv8JPI9YMm28cKWnVxB/Y7EXZ+5nCiX9x5Dfj4dNLGBle/raeTTxCfg
-         /x6Z265/5tzZaioZWRcxGBoG8kkeEHMjAcA7hFNVwCKQ7azEOzTKYjoZuRj/pnhwFoZH
-         E4h/hN+rSo0RCqjPKoonl2idTb9l/XTFGdghQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=t5fKWyslBLvRj7+S/RFD26+rsc10q8utNBvdFmhRrWLvH49EsD8papGgdqaM4VWVeu
-         JbjAxMZ8PzZqPoG0d6sheO9NcnbKCJ3LgGga4o3bx7zrCS2CiXcNRsOEsY/LTPlDkRic
-         cRRnslv3ekqgD9ZyiP0xe8DjCllN8aF8l+k/I=
-Received: by 10.142.209.6 with SMTP id h6mr485310wfg.265.1271862752976;
-        Wed, 21 Apr 2010 08:12:32 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm6679192iwn.2.2010.04.21.08.12.31
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 21 Apr 2010 08:12:32 -0700 (PDT)
+	id S1755786Ab0DUPvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Apr 2010 11:51:51 -0400
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:53709
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755753Ab0DUPvu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Apr 2010 11:51:50 -0400
+Received: by snark.thyrsus.com (Postfix, from userid 23)
+	id 29A7A475FF1; Wed, 21 Apr 2010 11:51:49 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <4BCF1160.6020304@drmicha.warpmail.net>
+In-Reply-To: <20100421101002.GD3563@machine.or.cz>
+X-Eric-Conspiracy: There is no conspiracy
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145439>
 
-Michael J Gruber wrote:
+Petr Baudis <pasky@suse.cz>:
+> On Sat, Mar 27, 2010 at 06:26:32AM -0400, Eric Raymond wrote:
+> > Upon investigating further, I find that ciabot.sh seems to be a
+> > derivative of ciabot.pl, which is a dangling bit of the moribund
+> > Cogito project.  I have been unable to get responses from the authors
+> > of either ciabot.sh or ciabot.pl.
+> 
+>   Strange, I received no mail from you. When did you send it?
 
-> I don't think it's OK to exit or test_done
-> from within test_expect_something, is it?
+About three weeks ago now.  Sorry, it appears I fat-fingered your
+address.  I did eventually hear from the author of the 2008 sh
+version; he passed me the maintainer's baton on that one.
+ 
+>   I'm happy that someone resurrected the hook script, thanks for that!
+> By the way, you seem to drop support for XML::RPC altogether while the
+> original ciabot.pl could use both. While XML::RPC requires another
+> dependency (not sure if plain Python installation can do it) and it can
+> time out in case of CIA server trouble (not sure how common these are
+> nowadays), the distinct advantage is that the commits will always end up
+> in correct order, while it seemed to be common that by mail, push of
+> multiple commits would reorder them randomly.
 
-exit: the consequences are the same whether you=E2=80=99re in a test or=
- not.
-Either way, it=E2=80=99s bad.  I think the intent of that =E2=80=98exit=
-=E2=80=99 was to make a
-good effort to set up for the next test and skip the test if that
-didn=E2=80=99t work, which is a bit old-fashioned.  Emptying the index =
-before
-the checkout would make it like that the setup should not fail even if
-some related bug resurfaces.
+Ah, I did not know of that advantage, it wasn't documented anywhere.
+It's a sufficient reason to bring back XML-RPC support...and I
+have just done so in the Python version.
 
-test_done: not sure what would happen.  Indeed, it doesn=E2=80=99t soun=
-d like
-a very sane thing to do. :)
+> > # update: You have to call it once per merged commit:
+> > #
+> > #       refname=$1
+> > #       oldhead=$2
+> > #       newhead=$3
+> > #       for merged in $(git rev-list ${oldhead}..${newhead} | tac) ; do
+> > #               /path/to/ciabot.bash ${refname} ${merged}
+>                   ^^^^^^^^^^^^^^^^^^^^
+> 
+> Obsolete .bash reference.
 
-Jonathan
+Fixed, thanks.
+
+> I personally find git-describe'd revspecs extremely ugly, unreadable and
+> less practical than plain hex ids (maybe I'm weird?), it would be really
+> nice to get a configuration choice between git describe and just:
+> 
+> 	rev=$(echo "$merged" | cut -c 1-12)
+> 
+> (Not sure about the bashism rant since you can trivially just replace it
+> with the cut.)
+
+Good point about use of cut; I'll do that.  
+
+I've implemented a revformat variable, but defaulted it to 'describe'.
+ 
+> I would personally prefer to have this configurable; I consider trying
+> to protect your e-mail address against harvesters is a lost fight anyway
+> and you'd be much better off just getting a good spam filter, rather
+> than making yours and others' life harder by trying to fight in vain.
+> But it's not too important for me since I can just disable this easily.
+
+But email name collisions within projects are vanishingly rare, so I
+don't see a lot of benefit in publishing the FQDN.
+ 
+> Your life would be much easier in both the shell and python script if
+> you used something like:
+> 
+> 	git log -1 '--pretty=format:%an <%ae>%n%at%n%s'
+> 
+> You would also get <ts> in the correct format, incl. timezone correction.
+
+Good point.  I inherited that nasty code; perhaps this facility did not
+exist when it was written.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
