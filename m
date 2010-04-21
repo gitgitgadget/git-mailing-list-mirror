@@ -1,112 +1,81 @@
-From: Eric Raymond <esr@thyrsus.com>
-Subject: Re: CIA hook for contrib/
-Date: Wed, 21 Apr 2010 11:51:49 -0400
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20100421155149.GA11223@thyrsus.com>
-References: <20100327102632.GA5043@thyrsus.com>
- <20100421101002.GD3563@machine.or.cz>
-Reply-To: esr@thyrsus.com
+From: Michael Olson <mwolson@gnu.org>
+Subject: Re: [PATCH/RFC 0/2] git-svn: Allow certain refs to be ignored
+Date: Wed, 21 Apr 2010 09:31:09 -0700
+Message-ID: <m2wc8b3bef91004210931xc0a7ec58ycbf18dd37d5e98f0@mail.gmail.com>
+References: <o2xc8b3bef91004201430m10bbe060q7d8ebd3a1ac4c3bd@mail.gmail.com> 
+	<7vbpddekwk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Apr 21 17:52:01 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Tim Stoakes <tim@stoakes.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 21 18:31:39 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4cDW-0006v6-Jj
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 17:51:58 +0200
+	id 1O4cps-0008J9-IC
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 18:31:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755786Ab0DUPvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Apr 2010 11:51:51 -0400
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:53709
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755753Ab0DUPvu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Apr 2010 11:51:50 -0400
-Received: by snark.thyrsus.com (Postfix, from userid 23)
-	id 29A7A475FF1; Wed, 21 Apr 2010 11:51:49 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20100421101002.GD3563@machine.or.cz>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755966Ab0DUQbb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Apr 2010 12:31:31 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:41134 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755878Ab0DUQba convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Apr 2010 12:31:30 -0400
+Received: by vws18 with SMTP id 18so111681vws.19
+        for <git@vger.kernel.org>; Wed, 21 Apr 2010 09:31:29 -0700 (PDT)
+Received: by 10.220.81.20 with HTTP; Wed, 21 Apr 2010 09:31:09 -0700 (PDT)
+X-Originating-IP: [209.104.55.5]
+In-Reply-To: <7vbpddekwk.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: 5cd3acdd2aa29fb2
+Received: by 10.220.108.7 with SMTP id d7mr5914895vcp.41.1271867489137; Wed, 
+	21 Apr 2010 09:31:29 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145440>
 
-Petr Baudis <pasky@suse.cz>:
-> On Sat, Mar 27, 2010 at 06:26:32AM -0400, Eric Raymond wrote:
-> > Upon investigating further, I find that ciabot.sh seems to be a
-> > derivative of ciabot.pl, which is a dangling bit of the moribund
-> > Cogito project.  I have been unable to get responses from the authors
-> > of either ciabot.sh or ciabot.pl.
-> 
->   Strange, I received no mail from you. When did you send it?
+On Tue, Apr 20, 2010 at 4:58 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Michael Olson <mwolson@gnu.org> writes:
+>
+>> [svn-remote "svn"]
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0url =3D https://svn.my.org/svn/root
+>> ...
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0ignore-refs =3D ^refs/remotes/(tags/)?old=
+/myorg
+>
+> Traditionally configuration variable names are spelled camelCase with=
+out
+> dashes. =C2=A0You probably would want to be consistent.
 
-About three weeks ago now.  Sorry, it appears I fat-fingered your
-address.  I did eventually hear from the author of the 2008 sh
-version; he passed me the maintainer's baton on that one.
- 
->   I'm happy that someone resurrected the hook script, thanks for that!
-> By the way, you seem to drop support for XML::RPC altogether while the
-> original ciabot.pl could use both. While XML::RPC requires another
-> dependency (not sure if plain Python installation can do it) and it can
-> time out in case of CIA server trouble (not sure how common these are
-> nowadays), the distinct advantage is that the commits will always end up
-> in correct order, while it seemed to be common that by mail, push of
-> multiple commits would reorder them randomly.
+I was looking at the existing syntax for "ignore-paths", which uses
+dashes.  Should that be changed as well?
 
-Ah, I did not know of that advantage, it wasn't documented anywhere.
-It's a sufficient reason to bring back XML-RPC support...and I
-have just done so in the Python version.
+> Also "refs" and any pathname-like things are traditionally matched us=
+ing
+> globs and not regexes. =C2=A0It is Ok to deviate if you have a strong=
+ reason to
+> (and I suspect it would make it easier to write "exclude" patterns li=
+ke
+> the above example to allow a regex here), but that needs to be promin=
+ently
+> documented (e.g. "Unlike any other ref-matching configuration variabl=
+e,
+> this alone uses regex, not glob") to avoid end user confusion.
 
-> > # update: You have to call it once per merged commit:
-> > #
-> > #       refname=$1
-> > #       oldhead=$2
-> > #       newhead=$3
-> > #       for merged in $(git rev-list ${oldhead}..${newhead} | tac) ; do
-> > #               /path/to/ciabot.bash ${refname} ${merged}
->                   ^^^^^^^^^^^^^^^^^^^^
-> 
-> Obsolete .bash reference.
+ignore-paths also uses a regex.  I'm concerned that using globs will
+not be expressive enough to represent a regex like (a combination of
+the 2 use cases I posted initially):
 
-Fixed, thanks.
+^refs/remotes/((tags/)?old/myorg|old/bad_branch|old/unlabeled[^/]*|tags=
+/(old/bad_tag|releases/another_tag))$
 
-> I personally find git-describe'd revspecs extremely ugly, unreadable and
-> less practical than plain hex ids (maybe I'm weird?), it would be really
-> nice to get a configuration choice between git describe and just:
-> 
-> 	rev=$(echo "$merged" | cut -c 1-12)
-> 
-> (Not sure about the bashism rant since you can trivially just replace it
-> with the cut.)
-
-Good point about use of cut; I'll do that.  
-
-I've implemented a revformat variable, but defaulted it to 'describe'.
- 
-> I would personally prefer to have this configurable; I consider trying
-> to protect your e-mail address against harvesters is a lost fight anyway
-> and you'd be much better off just getting a good spam filter, rather
-> than making yours and others' life harder by trying to fight in vain.
-> But it's not too important for me since I can just disable this easily.
-
-But email name collisions within projects are vanishingly rare, so I
-don't see a lot of benefit in publishing the FQDN.
- 
-> Your life would be much easier in both the shell and python script if
-> you used something like:
-> 
-> 	git log -1 '--pretty=format:%an <%ae>%n%at%n%s'
-> 
-> You would also get <ts> in the correct format, incl. timezone correction.
-
-Good point.  I inherited that nasty code; perhaps this facility did not
-exist when it was written.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+--=20
+Michael Olson  |  http://mwolson.org/
