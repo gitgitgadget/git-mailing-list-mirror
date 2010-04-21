@@ -1,87 +1,97 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: I need a `git format-patch --attach-complete' for RT
-Date: Wed, 21 Apr 2010 12:22:24 +0000
-Message-ID: <q2j51dd1af81004210522ze6062110j2033788601e17ce8@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 0/3] running tests as fakeroot
+Date: Wed, 21 Apr 2010 08:12:55 -0500
+Message-ID: <20100421131255.GA2750@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 21 14:22:41 2010
+Cc: Sylvain Rabot <sylvain@abstraction.fr>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	"Fernando J. Pereda" <ferdy@ferdyx.org>,
+	Lea Wiemann <lewiemann@gmail.com>,
+	Panagiotis Issaris <takis@issaris.org>,
+	Mike Hommey <mh@glandium.org>,
+	Marco Nelissen <marcone@xs4all.nl>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 21 15:13:04 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4Ywu-0000aa-6i
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 14:22:36 +0200
+	id 1O4Zjh-00034w-87
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 15:13:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753928Ab0DUMW1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Apr 2010 08:22:27 -0400
-Received: from mail-bw0-f210.google.com ([209.85.218.210]:51560 "EHLO
-	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753623Ab0DUMW1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Apr 2010 08:22:27 -0400
-Received: by bwz2 with SMTP id 2so2782534bwz.10
-        for <git@vger.kernel.org>; Wed, 21 Apr 2010 05:22:25 -0700 (PDT)
+	id S1754079Ab0DUNMz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Apr 2010 09:12:55 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:52849 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753197Ab0DUNMy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Apr 2010 09:12:54 -0400
+Received: by pwj9 with SMTP id 9so5043632pwj.19
+        for <git@vger.kernel.org>; Wed, 21 Apr 2010 06:12:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:received:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        bh=YlYJEsUSelFEzl/PUJINWZd3G7o+7Ta4OWb5Bsi2DtE=;
-        b=EH06XrRYYCkjgIc5j3iVypI33f0ypneOH1s/6hE+dq5qM3CCjfZV9usTsyGDkrvLnF
-         OxNCorZlx+jgsaha8Et1oLy2PEpMXWuKBzwfiiSRbgENANqQ+WV8s3P1K3KsayXTMkoL
-         JHYm4883Aw2HRxp5E5psZltUOJQtASLd1pKM0=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=voaXLkB+T2rr4Niu0/EHcNK5eP6TyEPSLSm7axJATqc=;
+        b=Z6Z1SOVJs7dq8zt8mT+LeTByUCVkLwwdOD8K6MphB2XrOWHbGokp+N5RNdB6rXUUiV
+         nlu0G+3w5G+UDK2UO/hLtntJ9gSPSjgWzjHAIRshul7UTu3ef+dAJjmHNwY2ywqWjo4j
+         +QKz8k+HMjjOcucaa7Kg8DA5YpgEqQHtDrgAQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=TXsIz//KAQzaojMCo+N/SC4g6edtPAKvaP2l0uYNa90+VoPx6bgDda5OLNRcLX51qx
-         YI7svrZiOUiFgZ2GZwYi0TWEtW0HqpHni8uvE1XienrDqoKbgKOlNqFbCQtW/Cca4WQm
-         mATIjJXq0tQ/SPiaGXoaf8TB0WQ0oaMyZTrdw=
-Received: by 10.204.121.195 with HTTP; Wed, 21 Apr 2010 05:22:24 -0700 (PDT)
-Received: by 10.204.132.214 with SMTP id c22mr1176667bkt.60.1271852544859; 
-	Wed, 21 Apr 2010 05:22:24 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        b=jlR3eGeZDo0pSbcEHCrX/pf8wrev6MPbe14+zFMQXBDLWeFlif2RFOlDnrT/kGFot1
+         1TPiX4Ux5tQJDusQEmbuk3PX4kz1+0VxIm6ZzsxARMdnCsotVxU7pxknfLCK09hncC9D
+         yY4IyNXGnjLV5/TKOcj6IEuyF8GHfBuwQpxfY=
+Received: by 10.114.187.29 with SMTP id k29mr7114528waf.208.1271855574125;
+        Wed, 21 Apr 2010 06:12:54 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 22sm6595920iwn.8.2010.04.21.06.12.52
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 21 Apr 2010 06:12:53 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145427>
 
-I'm working with a system that doesn't play nice with git-format-patch
-/ git-send-email. When you send mail to RT (e.g. http://rt.perl.org/)
-it'll always munge the original E-Mail, so inline patches won't
-work. Here's an example of this gone wrong:
+Hi,
 
-    commit f9bcfeacc119e37fd70816a2cb4678fded53e8d1
-    Author: =C3=83var Arnfj=C3=83=C2=B6r=C3=83=C2=B0 Bjarmason) (via RT=
- <perlbug-followup@perl.org>
-    Date:   Tue Apr 20 10:58:37 2010 -0700
+The Debian build system makes it very tempting to build as
+fakeroot: basically, one has a choice of
 
-        GitHub's mirror is now at mirrors/perl, not github/perl
+  debian/rules build
+  fakeroot debian/rules binary
 
-        # New Ticket Created by  (=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmaso=
-n)
-        # Please include the string:  [perl #74532]
-        # in the subject line of all future correspondence about this i=
-ssue.
-        # <URL: http://rt.perl.org/rt3/Ticket/Display.html?id=3D74532 >
-        From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar@cpan.org>
+or just
 
-The workaround is to:
+  fakeroot debian/rules binary
 
-    git format-patch --stdout origin.. > my-patches.patch
-    *open your mail client*
-    *attach patch as attachment*
-    *send to RT*
+to build a .deb from the current sources.  I hadn=E2=80=99t succumbed
+to temptation until today; but now that I have, I want to fix it.
+I=E2=80=99ll discuss whether this is a good idea more in patch 3.
 
-It would be nicer if I could instead:
+Patches 1 and 2 are a bit simpler.  Patch 1 allows tests to have
+multiple prerequisites, which seems like a good idea generally;
+patch 2 adds a missing POSIXPERM prerequisite to an existing test.
 
-    git format-patch --attach-complete origin..
-    git send-email *.patch
+I hope you like the patches.  Sorry for the huge cc list; I did a
+quick search to find people interested one way or another, and
+aparently there are many.  I am sending patches 1 and 2 only to the
+git list to avoid making the problem worse.
 
-The --attach option doesn't work with RT because `git am' will take
-the commit message from the Subject/body of the message. RT messes
-with that.
+Thoughts?
+Jonathan Nieder (3):
+  test-lib: tests can have multiple prerequisites
+  t1004 (read-tree): the unremovable symlink test requires POSIXPERM
+  Permit tests to be run as a (fake) root user
 
-Is there some existing workaround for this that I've missed?
+ t/t1004-read-tree-m-u-wf.sh |    2 +-
+ t/test-lib.sh               |   22 ++++++++++++++--------
+ 2 files changed, 15 insertions(+), 9 deletions(-)
