@@ -1,123 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] t1304,t2007: quell output to stdout and stderr
-Date: Wed, 21 Apr 2010 09:45:35 -0500
-Message-ID: <20100421144535.GA8481@progeny.tock>
-References: <00e68c9727f8dd3426db6f78d6b583a0dcec4d13.1271858119.git.git@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Apr 21 16:45:40 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [RFC/RFD] wt-status: take advice.statusHints seriously
+Date: Wed, 21 Apr 2010 16:47:51 +0200
+Message-ID: <b3168027365b78d47f5b95fc02f7853749075a33.1271861247.git.git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 21 16:51:09 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4bBL-0007QC-EV
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 16:45:39 +0200
+	id 1O4bGb-0002yb-Od
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 16:51:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755302Ab0DUOpe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Apr 2010 10:45:34 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:45441 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753315Ab0DUOpd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Apr 2010 10:45:33 -0400
-Received: by pwj9 with SMTP id 9so5136685pwj.19
-        for <git@vger.kernel.org>; Wed, 21 Apr 2010 07:45:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=mzaK+ZkH0UfCMKSfE/YFdbGwSEXzgZkh01QkKsr/Ym8=;
-        b=QGDltLliwyz3QhOynwchwx6rXDhf0cgCrgaJpu93s7Lqr6La9wMqrhiuti6BNdpeFI
-         98VUdAC0NhRrQP0mFCZFnzXMW3cF5U0h2bUdT8ncXNsJmLN7bHi25jHcgHFJYnMMxwm8
-         LVA1hpZTEeUs0HC5hY4BL1RHFoW9h0oFDT5EA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=FJJYoP05JtZsdRfOBLi/UKf1iF1vHbeTjZlxUrAN/gNKeJ0ux82shfpxJWNR8W7iEJ
-         M3hEu03i6MdZ/bV3TnP/h2uLF82elgc6aqULLcz/fErYMA2E4su/a1IuAmYP8zMN5ObB
-         kVR4QGLaqA5CaQ9JZrEjCsRgSFrQgnkxw1mnQ=
-Received: by 10.142.3.35 with SMTP id 35mr3779491wfc.74.1271861132829;
-        Wed, 21 Apr 2010 07:45:32 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 21sm1024256iwn.7.2010.04.21.07.45.31
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 21 Apr 2010 07:45:32 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <00e68c9727f8dd3426db6f78d6b583a0dcec4d13.1271858119.git.git@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753540Ab0DUOu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Apr 2010 10:50:58 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:56151 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752794Ab0DUOu5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Apr 2010 10:50:57 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id ED57BEC02A
+	for <git@vger.kernel.org>; Wed, 21 Apr 2010 10:50:56 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 21 Apr 2010 10:50:56 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:subject:date:message-id; s=smtpout; bh=q3jrObhCc4SQCBUnl6SJxtCpVoI=; b=bshEN4ul6C24cFmQTp9d3P0dU+DK2C01BQRDU8Se2JS16280hL2mpPkjDfb6+t1rjYVbrcxZhhpJuHyWOi7KrU0knIZQiLskDp3low76YwQh8R2WuNkNyxjr+Ny+Rs+w6Sj4hF/wiGPXSXXN+c2tHYfHg/UEqAOk8rh1AywzuUk=
+X-Sasl-enc: A2RFS8d5Z9pGYak6COmhcUQRmSrzH2QUN+qvn518oCB8 1271861456
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 2D1774AB99B;
+	Wed, 21 Apr 2010 10:50:56 -0400 (EDT)
+X-Mailer: git-send-email 1.7.1.rc1.248.gcefbb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145435>
 
-Hi Michael,
+Currently, status gives a lot of hints even when advice.statusHints is
+false. Change this so that all hints depend on the config varaible.
 
-Michael J Gruber wrote:
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ wt-status.c |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
-> --- a/t/t1304-default-acl.sh
-> +++ b/t/t1304-default-acl.sh
-> @@ -15,7 +15,7 @@ umask 077
->  # is a good candidate: exists on all unices, and it has permission
->  # anyway, so we don't create a security hole running the testsuite.
-> =20
-> -if ! setfacl -m u:root:rwx .; then
-> +if ! setfacl -m u:root:rwx . 2>/dev/null; then
->      say "Skipping ACL tests: unable to use setfacl"
->      test_done
->  fi
-[and a similar suppression of =E2=80=98git checkout=E2=80=99 output]
-
-In the spirit of commit 4a45f7d (Use test_expect_success for test
-setups, 2010-03-20), might it make sense to turn these into tests?
-
-I am imagining something like this.
-
-diff --git a/t/t1304-default-acl.sh b/t/t1304-default-acl.sh
-index b26d2e8..8b3ff7a 100755
---- a/t/t1304-default-acl.sh
-+++ b/t/t1304-default-acl.sh
-@@ -15,7 +15,15 @@ umask 077
- # is a good candidate: exists on all unices, and it has permission
- # anyway, so we don't create a security hole running the testsuite.
-=20
--if ! setfacl -m u:root:rwx . 2>/dev/null; then
-+test_expect_success 'Setup: try to set an ACL' '
-+	if setfacl -m u:root:rwx .
-+	then
-+		test_set_prereq ACL
-+	fi
-+'
-+
-+if ! test_have_prereq ACL
-+then
-     say "Skipping ACL tests: unable to use setfacl"
-     test_done
- fi
-diff --git a/t/t2007-checkout-symlink.sh b/t/t2007-checkout-symlink.sh
-index fc5db05..f8f40e5 100755
---- a/t/t2007-checkout-symlink.sh
-+++ b/t/t2007-checkout-symlink.sh
-@@ -44,11 +44,12 @@ test_expect_success 'switch from symlink to dir' '
-=20
- '
-=20
--rm -fr frotz xyzzy nitfol &&
--git checkout -q -f master || exit
--
- test_expect_success 'switch from dir to symlink' '
-=20
-+	rm -fr frotz xyzzy nitfol &&
-+	git rm -fr . &&
-+	git checkout -f master &&
-+
- 	git checkout side
-=20
- '
+diff --git a/wt-status.c b/wt-status.c
+index 8ca59a2..38076ee 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -625,7 +625,7 @@ void wt_status_print(struct wt_status *s)
+ 	if (s->show_untracked_files)
+ 		wt_status_print_untracked(s);
+ 	else if (s->commitable)
+-		 fprintf(s->fp, "# Untracked files not listed (use -u option to show untracked files)\n");
++		 fprintf(s->fp, "# Untracked files not listed%s\n", advice_status_hints ? " (use -u option to show untracked files)" : "");
+ 
+ 	if (s->verbose)
+ 		wt_status_print_verbose(s);
+@@ -635,15 +635,15 @@ void wt_status_print(struct wt_status *s)
+ 		else if (s->nowarn)
+ 			; /* nothing */
+ 		else if (s->workdir_dirty)
+-			printf("no changes added to commit (use \"git add\" and/or \"git commit -a\")\n");
++			printf("no changes added to commit%s\n", advice_status_hints ? " (use \"git add\" and/or \"git commit -a\")" : "");
+ 		else if (s->untracked.nr)
+-			printf("nothing added to commit but untracked files present (use \"git add\" to track)\n");
++			printf("nothing added to commit but untracked files present%s\n", advice_status_hints ? " (use \"git add\" to track)" : "");
+ 		else if (s->is_initial)
+-			printf("nothing to commit (create/copy files and use \"git add\" to track)\n");
++			printf("nothing to commit%s\n", advice_status_hints ? " (create/copy files and use \"git add\" to track)" : "");
+ 		else if (!s->show_untracked_files)
+-			printf("nothing to commit (use -u to show untracked files)\n");
++			printf("nothing to commit%s\n", advice_status_hints ? " (use -u to show untracked files)" : "");
+ 		else
+-			printf("nothing to commit (working directory clean)\n");
++			printf("nothing to commit%s\n", advice_status_hints ? " (working directory clean)" : "");
+ 	}
+ }
+ 
+-- 
+1.7.1.rc1.248.gcefbb
