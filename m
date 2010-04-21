@@ -1,122 +1,105 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] revision: --ancestry-path
-Date: Wed, 21 Apr 2010 10:46:22 +0200
-Message-ID: <201004211046.22643.johan@herland.net>
-References: <201004201649.31084.johan@herland.net>
- <4BCEADA3.7090504@viscovery.net> <7vochdcjz5.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: weird fatal on push when post-receive hook exists but is empty
+Date: Wed, 21 Apr 2010 10:46:08 +0200
+Message-ID: <4BCEBB50.7020003@drmicha.warpmail.net>
+References: <g2x2e24e5b91004200921mc5b0ffoc1c1ec2af25f71c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 21 10:46:36 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 21 10:49:22 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4VZq-0007i1-2r
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 10:46:34 +0200
+	id 1O4VcV-0000sF-59
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Apr 2010 10:49:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753278Ab0DUIq0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Apr 2010 04:46:26 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:59419 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753106Ab0DUIqY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Apr 2010 04:46:24 -0400
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L170084FXPBTS60@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Wed, 21 Apr 2010 10:46:23 +0200 (MEST)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L1700GPPXPAOP00@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Wed, 21 Apr 2010 10:46:23 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2010.4.21.83615
-User-Agent: KMail/1.13.2 (Linux/2.6.33-ARCH; KDE/4.4.2; x86_64; ; )
-In-reply-to: <7vochdcjz5.fsf@alter.siamese.dyndns.org>
+	id S1753233Ab0DUItO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Apr 2010 04:49:14 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:37521 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752983Ab0DUItM (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Apr 2010 04:49:12 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 731C7EB303;
+	Wed, 21 Apr 2010 04:49:12 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 21 Apr 2010 04:49:12 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=nCOVQd4kK5xCDUZXeisgC/gkS/0=; b=UesSmYLCpsAqKRG+F5IZ4xbXS+2c8bSOjcuoMdCQyd1JmXr1f4ZgbTYAJTDM5KXvAGRj1cZqVfnhiBS31felsfJlCST2JYUJxz22ypm5GYfZXjyX4D0vsPtkAw5M4noBdA5X/TrrXCfJrvxh07dHY+FK5TSOSa/pCmfqvMiJcFg=
+X-Sasl-enc: UeqUFk5iI7WQGcu/H9TqecGDc6AZYGYAH38wp7Fb/eQc 1271839752
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id E0EDF4C525A;
+	Wed, 21 Apr 2010 04:49:11 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100414 Lightning/1.0b2pre Lanikai/3.1b2pre
+In-Reply-To: <g2x2e24e5b91004200921mc5b0ffoc1c1ec2af25f71c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145419>
 
-On Wednesday 21 April 2010, Junio C Hamano wrote:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
-> > Am 4/21/2010 9:34, schrieb Johan Herland:
-> >> I can confirm that this patch works with my original (more
-> >> complicated) scenario. I've also played around with combinations of
-> >> --ancestry-path, -- graph and --parents (and even --boundary), and
-> >> AFAICS, the new option does not clobber the other options, and (IMHO)
-> >> it all behaves correctly in the scenarios I've tested.
-> > 
-> > How about possible interactions with --reverse;
-> > --date-order/--topo-order, --parents (important for gitk);
-> > --simplify-by-decoration (useful for your problem that triggered
-> > this); --full-history and --simplify-merges with path limiting?
-> 
-> These are all good points.
-> 
-> I am reasonably sure that parents (specifically, "rewrite_parents") is
-> broken.  The new function should cull parents that do not appear on the
-> ancestry path from merges (that is what "NEEDSWORK" is about).  It may or
-> may not break gitk, though---these off-path parents are shown as parents
-> of an on-path merge but will be marked as UNINTERESTING.
+Sitaram Chamarty venit, vidit, dixit 20.04.2010 18:21:
+> 21:47:05 sita-lt:t $ rm -rf a b c
+>     21:47:10 sita-lt:t $ git init --bare b
+>     Initialized empty Git repository in /home/sitaram/t/b/
+>     21:47:23 sita-lt:t $ git clone b a
+>     Initialized empty Git repository in /home/sitaram/t/a/.git/
+>     warning: You appear to have cloned an empty repository.
+>     21:47:29 sita-lt:t $ cat > b/hooks/post-receive
+>     #!/bin/bash
+>     # dummy
+>     21:47:55 sita-lt:t $ chmod +x b/hooks/post-receive
+>     21:48:00 sita-lt:t $ cd a
+>     21:48:02 sita-lt:a (master) $ date > foo;git add foo; git commit
+> -m foo; git push origin master
+>     [master (root-commit) f55bd25] foo
+>      1 files changed, 1 insertions(+), 0 deletions(-)
+>      create mode 100644 foo
+>     Counting objects: 3, done.
+>     Writing objects: 100% (3/3), 232 bytes, done.
+>     Total 3 (delta 0), reused 0 (delta 0)
+>     Unpacking objects: 100% (3/3), done.
+>     fatal: The remote end hung up unexpectedly
+>     error: error in sideband demultiplexer
+>     error: .git/objects/f5/5bd251325ad1647a29869e75a8080fee1a5d97 died
+> of signal 13
+>     To /home/sitaram/t/b
+>      * [new branch]      master -> master
+>     error: failed to push some refs to '/home/sitaram/t/b'
+>     (rc=1)21:48:23 sita-lt:a $
 
-FWIW, I added the following patch to 'gitk', and then ran it against the 
-t6019 test repo as follows:
+With git version 1.7.1.rc1.248.gcefbb and this script:
 
-	gitk --ancestry-path D..M
+#!/bin/bash
+rm -rf a b c
+git init --bare b
+git clone b a
+cat > b/hooks/post-receive <<EOF
+#!/bin/bash
+# dummy
+EOF
+chmod +x b/hooks/post-receive
+cd a
+date > foo;git add foo; git commit -m foo; git push origin master
 
-...and the resulting graph is exactly what I'd expect; showing the 
-uninteresting parents (D, G and K) as "hollow" nodes.
+I get this output:
+Initialized empty Git repository in /tmp/t/b/
+Initialized empty Git repository in /tmp/t/a/.git/
+warning: You appear to have cloned an empty repository.
+[master (root-commit) 020a1fb] foo
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 foo
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 241 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+To /tmp/t/b
+ * [new branch]      master -> master
 
+What are we doing differently?
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 1b0e09a..7749d2a 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -190,7 +190,7 @@ proc parseviewargs {n arglist} {
-            "--author=*" - "--committer=*" - "--grep=*" - "-[iE]" -
-            "--remove-empty" - "--first-parent" - "--cherry-pick" -
-            "-S*" - "--pickaxe-all" - "--pickaxe-regex" -
--           "--simplify-by-decoration" {
-+           "--simplify-by-decoration" - "--ancestry-path" {
-                # These mean that we get a subset of the commits
-                set filtered 1
-                lappend glflags $arg
-
-
-> I do not think reverse/date-order/topo-order would be affected by this
-> change, as they only change the presentation order of what limit_list()
-> returns;
-> 
-> Also simplify-merges and full-history should be Ok, as they control what
-> is done in the current logic in limit_list(), which is an input to the
-> new logic, meaning that the new logic will work on already simplified
-> history.
-> 
-> This is not a new problem, but I strongly suspect that cherry-pick is
-> broken the same way wrt "rewrite_parents".
-
-I'm not very familiar with "rewrite_parents", nor do I know exactly how it 
-should affect/interoperate with --ancestry-path in all cases, but running
-
-	git rev-list D..M -- M.t
-
-produces one commit (M), whereas
-
-	git rev-list --ancestry-path D..M -- M.t
-
-produces nothing, so I suspect there is something not quite right here.
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Michael
