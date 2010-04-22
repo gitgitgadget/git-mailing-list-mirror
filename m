@@ -1,121 +1,221 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 1/2] reflog: make the 'show' subcommand really the default
-Date: Thu, 22 Apr 2010 15:57:31 +0200
-Message-ID: <20100422135731.GS4440@neumann>
-References: <1271670750-30297-1-git-send-email-szeder@ira.uka.de>
-	<7veiiblzn9.fsf@alter.siamese.dyndns.org>
-	<20100420113736.GA22907@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 22 15:58:02 2010
+From: Bo Yang <struggleyb.nku@gmail.com>
+Subject: [PATCH 1/2 v3] Make diffcore_std only can run once before a diff_flush.
+Date: Thu, 22 Apr 2010 22:05:41 +0800
+Message-ID: <1271945142-27015-2-git-send-email-struggleyb.nku@gmail.com>
+References: <1271945142-27015-1-git-send-email-struggleyb.nku@gmail.com>
+Cc: gitster@pobox.com, trast@student.ethz.ch
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 22 16:06:01 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4wul-00074q-L8
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 15:58:00 +0200
+	id 1O4x2V-0003I9-RD
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 16:06:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755126Ab0DVN5i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Apr 2010 09:57:38 -0400
-Received: from francis.fzi.de ([141.21.7.5]:59205 "EHLO exchange.fzi.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755105Ab0DVN5h (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Apr 2010 09:57:37 -0400
-Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 22 Apr 2010 15:57:32 +0200
-Content-Disposition: inline
-In-Reply-To: <20100420113736.GA22907@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 22 Apr 2010 13:57:32.0451 (UTC) FILETIME=[C113BF30:01CAE223]
+	id S1754944Ab0DVOF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Apr 2010 10:05:56 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:56186 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754772Ab0DVOFy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Apr 2010 10:05:54 -0400
+Received: by mail-pw0-f46.google.com with SMTP id 9so5971057pwj.19
+        for <git@vger.kernel.org>; Thu, 22 Apr 2010 07:05:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=OfYpfdqwwS/XLPGb2ruPwCyw+1bkdrfiHkHpYh83C1c=;
+        b=cjxnhmErRdGI7Ic+rNvCuedvSF3zePMuulsu0Nq/tCT3iY6OhtdJV5GbCZ9STM0/dk
+         ODToUwNy1Nh/sJ8IvkJZjp7fnF550fcTfwA+AdKotwyJmA3IG7nsGLEywBPC6YyM5Lme
+         DSt8nq99wAIdr+n9wvR/gUiy9tqbDJhthlJuY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=uWqT9zUR8pHTXVcpAXhHCgZR1hGXOQP9cdwhbbDR74vL2VMVidy6EyDTLqXGpseZHA
+         xzQd227J7oOTHAe1FYA8KamPPCY/jK/yQz2X31geJAQ86pkbujzKhxsfRLqA56fxfpo6
+         gjMOgLDg7JT4HVPKuvDeySrZD3Re8QnJLaVak=
+Received: by 10.114.11.9 with SMTP id 9mr9132582wak.178.1271945154248;
+        Thu, 22 Apr 2010 07:05:54 -0700 (PDT)
+Received: from localhost.localdomain ([222.35.130.216])
+        by mx.google.com with ESMTPS id b17sm4487756wam.22.2010.04.22.07.05.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 22 Apr 2010 07:05:53 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.2.273.gc2413.dirty
+In-Reply-To: <1271945142-27015-1-git-send-email-struggleyb.nku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145530>
 
-Hi,
+When file renames/copies detection is turned on, the
+second diffcore_std will degrade a 'C' pair to a 'R' pair.
 
-On Tue, Apr 20, 2010 at 07:37:36AM -0400, Jeff King wrote:
-> On Mon, Apr 19, 2010 at 05:46:02PM -0700, Junio C Hamano wrote:
->=20
-> > I am not convinced that this is a good change.
-> >=20
-> > It may be that show/expire/delete happens to be the _only_ subcomma=
-nds
-> > today, but if we had this patch, the command will change the behavi=
-our
-> > when we add a new subcommand (the name of that subcommand may happe=
-n to be
-> > also a refname).
->=20
-> I don't think it is that big a deal. Scripts should always use the
-> explicit "git reflog show <ref>" form, which will remain safe. "git
-> reflog <ref>" is handy for humans.
->=20
-> That being said, we tried this same experiment with "git stash [show]
-> <msg>" and ended up rejecting it. However, the main complaint with th=
-at
-> was the failure mode for typos. Typing "git stash sohw" would make a =
-new
-> stash.
+And this may happen when we run 'git log --follow' with
+hard copies finding. That is, the try_to_follow_renames()
+will run diffcore_std to find the copies, and then
+'git log' will issue another diffcore_std, which will reduce
+'src->rename_used' and recognize this copy as a rename.
+This is not what we want.
 
-I think you meant "git stash [save] <msg>" here, right?
+So, I think we really don't need to run diffcore_std more
+than one time.
 
-http://thread.gmane.org/gmane.comp.version-control.git/63566/focus=3D63=
-645
+Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
+---
+ diff.c             |   21 +++++++++++++--------
+ diffcore-break.c   |    6 ++----
+ diffcore-pickaxe.c |    3 +--
+ diffcore-rename.c  |    3 +--
+ diffcore.h         |    6 ++++++
+ 5 files changed, 23 insertions(+), 16 deletions(-)
 
-> In this case, typing "git reflog exipre" would get you:
->=20
->   fatal: ambiguous argument 'exipre': unknown revision or path not in
->   the working tree.
->   Use '--' to separate paths from revisions
->=20
-> and you would repeat the command with the typo fixed, which is perhap=
-s
-> not as bad. And unlike stash, "show" is really the dominant command (=
-I
-> don't think I have ever manually used 'delete' or 'expire'), so it is
-> more likely to be right than not.
-
-If I understood Junio correctly, he is concerned about a different
-case.
-
-With my patch "git reflog foo" would show foo's reflog, assuming there
-is a branch named "foo".  This is what people would expect according
-to the documentation.  However, once we implement the subcommand
-"foo", "git reflog foo" will no longer print foo's reflog but instead
-will perform whatever the subcommand "foo" is supposed to do by
-default, which might be difficult to recover from.
-
-> The current behavior is also weirdly inconsistent:
->=20
->   git reflog ;# works, shows HEAD
->   git reflog -p ;# works, shows HEAD with -p
->   git reflog -p foo ;# works, shows foo with -p
->   git reflog foo ;# does not work
->=20
-> I can see allowing the first two, but the fact that the third works a=
-nd
-> the fourth doesn't seems odd to me.
-
-Indeed.  I tried to whip up a patch to fix the documentation to match
-the current behaviour, but my first attempt failed because of these
-inconsistencies.
-
-> However, I personally "git log -g [--oneline]" to be
-> much easier to remember to use and to type.
-
-Just as sidenote:  I rarely use reflog, but then for me it's easier to
-remember to "reflog" than "-g".  But even then I never remember "show"
-for the first time, that's why I wrote this patch.
-
-
-Best,
-G=E1bor
+diff --git a/diff.c b/diff.c
+index d0ecbc3..d32fc68 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2544,6 +2544,7 @@ static void run_checkdiff(struct diff_filepair *p, struct diff_options *o)
+ void diff_setup(struct diff_options *options)
+ {
+ 	memset(options, 0, sizeof(*options));
++	memset(&diff_queued_diff, 0, sizeof(diff_queued_diff));
+ 
+ 	options->file = stdout;
+ 
+@@ -3462,8 +3463,7 @@ int diff_flush_patch_id(struct diff_options *options, unsigned char *sha1)
+ 		diff_free_filepair(q->queue[i]);
+ 
+ 	free(q->queue);
+-	q->queue = NULL;
+-	q->nr = q->alloc = 0;
++	DIFF_QUEUE_CLEAR(q);
+ 
+ 	return result;
+ }
+@@ -3591,8 +3591,7 @@ void diff_flush(struct diff_options *options)
+ 		diff_free_filepair(q->queue[i]);
+ free_queue:
+ 	free(q->queue);
+-	q->queue = NULL;
+-	q->nr = q->alloc = 0;
++	DIFF_QUEUE_CLEAR(q);
+ 	if (options->close_file)
+ 		fclose(options->file);
+ 
+@@ -3614,8 +3613,7 @@ static void diffcore_apply_filter(const char *filter)
+ 	int i;
+ 	struct diff_queue_struct *q = &diff_queued_diff;
+ 	struct diff_queue_struct outq;
+-	outq.queue = NULL;
+-	outq.nr = outq.alloc = 0;
++	DIFF_QUEUE_CLEAR(&outq);
+ 
+ 	if (!filter)
+ 		return;
+@@ -3683,8 +3681,7 @@ static void diffcore_skip_stat_unmatch(struct diff_options *diffopt)
+ 	int i;
+ 	struct diff_queue_struct *q = &diff_queued_diff;
+ 	struct diff_queue_struct outq;
+-	outq.queue = NULL;
+-	outq.nr = outq.alloc = 0;
++	DIFF_QUEUE_CLEAR(&outq);
+ 
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filepair *p = q->queue[i];
+@@ -3745,6 +3742,12 @@ void diffcore_fix_diff_index(struct diff_options *options)
+ 
+ void diffcore_std(struct diff_options *options)
+ {
++	/* We never run this function more than one time, because the
++	 * rename/copy detection logic can only run once.
++	 */
++	if (diff_queued_diff.run)
++		return;
++
+ 	if (options->skip_stat_unmatch)
+ 		diffcore_skip_stat_unmatch(options);
+ 	if (options->break_opt != -1)
+@@ -3764,6 +3767,8 @@ void diffcore_std(struct diff_options *options)
+ 		DIFF_OPT_SET(options, HAS_CHANGES);
+ 	else
+ 		DIFF_OPT_CLR(options, HAS_CHANGES);
++
++	diff_queued_diff.run = 1;
+ }
+ 
+ int diff_result_code(struct diff_options *opt, int status)
+diff --git a/diffcore-break.c b/diffcore-break.c
+index 3a7b60a..44f8678 100644
+--- a/diffcore-break.c
++++ b/diffcore-break.c
+@@ -162,8 +162,7 @@ void diffcore_break(int break_score)
+ 	if (!merge_score)
+ 		merge_score = DEFAULT_MERGE_SCORE;
+ 
+-	outq.nr = outq.alloc = 0;
+-	outq.queue = NULL;
++	DIFF_QUEUE_CLEAR(&outq);
+ 
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filepair *p = q->queue[i];
+@@ -256,8 +255,7 @@ void diffcore_merge_broken(void)
+ 	struct diff_queue_struct outq;
+ 	int i, j;
+ 
+-	outq.nr = outq.alloc = 0;
+-	outq.queue = NULL;
++	DIFF_QUEUE_CLEAR(&outq);
+ 
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filepair *p = q->queue[i];
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index d0ef839..929de15 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -55,8 +55,7 @@ void diffcore_pickaxe(const char *needle, int opts)
+ 	int i, has_changes;
+ 	regex_t regex, *regexp = NULL;
+ 	struct diff_queue_struct outq;
+-	outq.queue = NULL;
+-	outq.nr = outq.alloc = 0;
++	DIFF_QUEUE_CLEAR(&outq);
+ 
+ 	if (opts & DIFF_PICKAXE_REGEX) {
+ 		int err;
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index d6fd3ca..df41be5 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -569,8 +569,7 @@ void diffcore_rename(struct diff_options *options)
+ 	/* At this point, we have found some renames and copies and they
+ 	 * are recorded in rename_dst.  The original list is still in *q.
+ 	 */
+-	outq.queue = NULL;
+-	outq.nr = outq.alloc = 0;
++	DIFF_QUEUE_CLEAR(&outq);
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filepair *p = q->queue[i];
+ 		struct diff_filepair *pair_to_free = NULL;
+diff --git a/diffcore.h b/diffcore.h
+index fcd00bf..e77db31 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -91,7 +91,13 @@ struct diff_queue_struct {
+ 	struct diff_filepair **queue;
+ 	int alloc;
+ 	int nr;
++	int run;
+ };
++#define DIFF_QUEUE_CLEAR(q) \
++	do { \
++		(q)->queue = NULL; \
++		(q)->nr = (q)->alloc = (q)->run = 0; \
++	} while(0);
+ 
+ extern struct diff_queue_struct diff_queued_diff;
+ extern struct diff_filepair *diff_queue(struct diff_queue_struct *,
+-- 
+1.7.0.2.273.gc2413.dirty
