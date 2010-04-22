@@ -1,13 +1,13 @@
-From: Tomas Carnecky <tom@dbservice.com>
-Subject: Re: GIT counterpart to "svn list"
-Date: Thu, 22 Apr 2010 05:24:48 +0200
-Message-ID: <4BCFC180.5020009@dbservice.com>
-References: <20100421222237.1758ca66@pennie-farthing>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] Update based on suggestions by Petr Baudis
+Date: Wed, 21 Apr 2010 23:20:10 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1004212304510.7232@xanadu.home>
+References: <20100422020746.5205B475FF1@snark.thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Jack Desert <jackdesert556@gmail.com>
+To: Eric Raymond <esr@snark.thyrsus.com>
 X-From: git-owner@vger.kernel.org Thu Apr 22 05:24:59 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
@@ -15,35 +15,58 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4n2A-0003D6-34
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 05:24:58 +0200
+	id 1O4n29-0003D6-Hk
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 05:24:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753106Ab0DVDYx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Apr 2010 23:24:53 -0400
-Received: from office.neopsis.com ([78.46.209.98]:36040 "EHLO
-	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752692Ab0DVDYv (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752942Ab0DVDYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Wed, 21 Apr 2010 23:24:51 -0400
-Received: from calvin.caurea.org ([62.65.141.13])
-	(authenticated user tom@dbservice.com)
-	by office.neopsis.com
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
-	Thu, 22 Apr 2010 05:24:49 +0200
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <20100421222237.1758ca66@pennie-farthing>
+Received: from relais.videotron.ca ([24.201.245.36]:18495 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752431Ab0DVDYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Apr 2010 23:24:50 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0L1900883D9M2FB1@VL-MR-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 21 Apr 2010 23:20:11 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20100422020746.5205B475FF1@snark.thyrsus.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145497>
 
-On 4/22/10 5:22 AM, Jack Desert wrote:
->
-> I'm new to GIT, and the one command I can't live without is:
->    svn list
-> Is ther a GIT couterpart to svn list?
+On Wed, 21 Apr 2010, Eric Raymond wrote:
 
-We're all clueless about how svn works, or what svn list does. Can you 
-enlighten us please?
+> ---
+>  contrib/ciabot/ciabot.py |  130 +++++++++++++++++++++++++---------------------
+>  contrib/ciabot/ciabot.sh |  106 +++++++++++++++++++++----------------
+>  2 files changed, 130 insertions(+), 106 deletions(-)
+[...]
 
-tom
+That would be better if you improve your patch message a bit.
+
+First, the email subject is used by tools to provide a summary line for 
+the changes.  Example:
+
+[PATCH] improvements to the ciabot scripts
+
+Then, in the email body you may add more information, such as a more 
+elaborate explanation of the change.  It is also where such credits as 
+"Update based on suggestions by Petr Baudis" should go.
+
+If you want to add further comments that should not be part of the 
+commit log, then just place them after the three-dash line.
+
+When making a commit with Git, the convention is to use the very first 
+line of the commit message for the summary line (without the [PATCH] 
+prefix), then a blank line separating it from the rest of the commit 
+message.  This way tools such as 'git format-patch' or 'git send-email' 
+will do the right thing automatically.
+
+Finally, your patch description message should also include a 
+Signed-off-by tag as explained in Documentation/SubmittingPatches.
+
+
+Nicolas
