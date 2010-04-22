@@ -1,88 +1,108 @@
-From: Adam Brewster <adambrewster@gmail.com>
-Subject: Re: Please default to 'commit -a' when no changes were added
-Date: Thu, 22 Apr 2010 17:48:34 -0400
-Message-ID: <x2qc376da901004221448i373a342p1d7b763383e80472@mail.gmail.com>
-References: <20100422151037.2310.2429.reportbug@frosties.localdomain>
-	 <20100422155806.GC4801@progeny.tock>
-	 <87wrvzs590.fsf@frosties.localdomain>
-	 <alpine.LFD.2.00.1004221445310.7232@xanadu.home>
-	 <87sk6n4426.fsf@frosties.localdomain>
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: Re: GSoC 2010: "Integrated Web Client for git" proposal
+Date: Fri, 23 Apr 2010 03:23:42 +0530
+Message-ID: <x2xe72faaa81004221453t373c1d2atcea9e0119302b2f6@mail.gmail.com>
+References: <201004150630.44300.chriscool@tuxfamily.org>
+	 <201004191243.24209.jnareb@gmail.com>
+	 <20100419115113.GC3563@machine.or.cz>
+	 <201004202014.19477.jnareb@gmail.com>
+	 <k2le72faaa81004211349o1628ed42s4fa0aa412006128@mail.gmail.com>
+	 <20100422202501.GJ10939@machine.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, 578764@bugs.debian.org,
-	git@vger.kernel.org
-To: Goswin von Brederlow <goswin-v-b@web.de>
-X-From: git-owner@vger.kernel.org Thu Apr 22 23:48:43 2010
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Shawn O Pearce <spearce@spearce.org>,
+	Scott Chacon <schacon@gmail.com>, Sam Vilain <sam@vilain.net>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Apr 22 23:53:52 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O54GJ-00053y-1I
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 23:48:43 +0200
+	id 1O54LH-0007Wo-Vd
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 23:53:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751925Ab0DVVsh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Apr 2010 17:48:37 -0400
-Received: from mail-bw0-f225.google.com ([209.85.218.225]:43149 "EHLO
-	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751671Ab0DVVsf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Apr 2010 17:48:35 -0400
-Received: by bwz25 with SMTP id 25so10237071bwz.28
-        for <git@vger.kernel.org>; Thu, 22 Apr 2010 14:48:34 -0700 (PDT)
+	id S1751967Ab0DVVxo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Apr 2010 17:53:44 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:51016 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751671Ab0DVVxn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Apr 2010 17:53:43 -0400
+Received: by gyg13 with SMTP id 13so4712084gyg.19
+        for <git@vger.kernel.org>; Thu, 22 Apr 2010 14:53:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=e4BM8w3xccq6JChrG6W0yQq/AxafaR8TpDJodf2vMeM=;
-        b=xgbVQs6J50jC43uGTO7sTfJRAsSwtCs0/4jmX5juw549F0dP1miKDiCbP+b4VIGsd+
-         eRAPT2vaJXswIf6iAtZyiHju4dbrgtstCKrUSIS1qRXc3ENPuLpoU99yCun3XgH7K+w5
-         ofvHCy8Zxt2K4V//eEweh34TqA4o5j2kY9zOo=
+         :date:received:message-id:subject:from:to:cc:content-type;
+        bh=SFrzOp+UFR3acY4XXfX43291elYXxO2UkGqISio/w5M=;
+        b=Cba8JdtlKOzkV9h5zx3piGEgiqec8mmoaehpn6HzPZmH2xNve7r4F6DKsBXPxcZX6k
+         RyVsJG7UHTXZV2a5do5eHXCdJIjs1lwG1RbAyxr02fGL4zam1bvLa4UAWOOFzQA3FCB0
+         RNcmLyXdfSFuDi+1gItpLVSskd6ycZOrO/3Jw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QTyeMT02XiybsNBH+pOh1nAC9XiAtUwTGR+wqwD/XcjjXEzcFFKiaqPdD1qjkihFri
-         44it87KvUlgQbJwNrBdzGKylTBtRvuOkK+1KPuOXAyrtlvjfIFd4fOr/I+o9nqjqLRdz
-         JRNkMZl39XJRlZUHUnvnG+3U020YyoTM5/COg=
-Received: by 10.204.71.20 with HTTP; Thu, 22 Apr 2010 14:48:34 -0700 (PDT)
-In-Reply-To: <87sk6n4426.fsf@frosties.localdomain>
-Received: by 10.204.134.70 with SMTP id i6mr1467311bkt.74.1271972914091; Thu, 
-	22 Apr 2010 14:48:34 -0700 (PDT)
+         :cc:content-type;
+        b=xBR4Yrcx6IIVfVEvPouj/4fKJ9TMCjwOQePuErIqNW28umqnbUKWk/ZSdK6S1VxfaC
+         2ODEFf6YK06miDicI0k9ELrp2lT+WILm3nucQpQhmz5xMgo6gm/aXchvr2kOoYn2xgAa
+         oQC7KptIdVAJHqUvddaVm2xFUEkwnetB8zDp8=
+Received: by 10.90.51.18 with HTTP; Thu, 22 Apr 2010 14:53:42 -0700 (PDT)
+In-Reply-To: <20100422202501.GJ10939@machine.or.cz>
+Received: by 10.91.95.15 with SMTP id x15mr5406233agl.104.1271973222639; Thu, 
+	22 Apr 2010 14:53:42 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145569>
 
->> What _you_ can do though, is this:
+>> The lib directory will also contain
+>> some basic modules like Gitweb::Repo, Gitweb::Commit which will make
+>> developing further functionalities easier.
+>
+> Beware, this might be an awful can of worms. The previous gitweb SoC
+> project failed to get merged in part due to trying to do something like
+> this.
+>
+> I recommend to avoid any large architectural changes and just shuffle
+> around all the utility routines to lib/Gitweb.pm or so.
+
+Yeah sure.
+
+>> d) Usage of the client:
 >>
->> =A0 =A0 =A0 git config --global alias.ci "commit -a"
+>> This client can be used in 2 ways.
+>>
+>> * Install a local version using instaweb - The gitweb will be only
+>> accessible by you. You can browse through the git repository using
+>> read modules and simultaneously work on them using write modules.
+>> * Install on intranet - A company when installs this gitweb along with
+>> some other login and account managing scripts will be able to order
+>> their employees to login and ask them to work on the code with out the
+>> security risk of providing ssh access to the git repository host. The
+>> authentication support can be implemented as an optional part of my
+>> proposal.
+>> * Install on web - Just like normal gitweb, or enable write modules to
+>> look like gist.github.com
 >
-> But then when I accidentally use 'git ci' while having an index the
-> index gets ignored and all changed files get commited in one big mess=
-=2E
-> Given how seldom I need an index (so far never) the risk of using 'gi=
-t
-> ci' accidentally is way to high. Same with typing -a. I do it so ofte=
-n
-> that when I actualy don't want it I will probably type it anyway out =
-of
-> habbit.
->
-> My way would be safe in that it will never ignore an index if there i=
-s
-> one. And if it is a new option then it would not alter the existing
-> semantic, just add to it. Call the option --smart-a or --a-if-empty.
->
+> Note that for the latter two, operation mode without working copy is
+> essential; I have not seen you address it anywhere.
 
-Consider
+I am not planning to write the "operation mode without working copy"
+during GSoC due to reasons I mentioned earlier. But I would like to
+add it as an optional part for GSoC along with the authentication
+wrapper.
 
-$ echo -e '#!/bin/bash\nif git diff-tree --quiet HEAD; then git commit
--a; else git commit; fi' > `git --exec-path`/git-ci
-$ chmod 555 `git --exec-path`/git-ci
+So, When I complete the main parts of my GSoC proposal, you will be
+able to use it in your localhost working on your local repos. If I
+have time during GSoC I will complete the auth wrapper and "without
+working copy" mode. Otherwise I will develop them after GSoC. Then you
+can use the write functionalities in repo.or.cz without actual working
+copies. :-)
 
-Adam
+Thanks
+-pavan
