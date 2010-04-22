@@ -1,73 +1,154 @@
 From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [PATCH 0/2 v3] Make git log --follow find copies among unmodified files.
-Date: Thu, 22 Apr 2010 22:05:40 +0800
-Message-ID: <1271945142-27015-1-git-send-email-struggleyb.nku@gmail.com>
+Subject: [PATCH 2/2 v3]  Make git log --follow find copies among unmodified files.
+Date: Thu, 22 Apr 2010 22:05:42 +0800
+Message-ID: <1271945142-27015-3-git-send-email-struggleyb.nku@gmail.com>
+References: <1271945142-27015-1-git-send-email-struggleyb.nku@gmail.com>
 Cc: gitster@pobox.com, trast@student.ethz.ch
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 22 16:06:00 2010
+X-From: git-owner@vger.kernel.org Thu Apr 22 16:06:24 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4x2V-0003I9-9R
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 16:05:59 +0200
+	id 1O4x2o-0003YL-V1
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 16:06:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754846Ab0DVOFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Apr 2010 10:05:52 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:56186 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754772Ab0DVOFv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Apr 2010 10:05:51 -0400
-Received: by pwj9 with SMTP id 9so5971057pwj.19
-        for <git@vger.kernel.org>; Thu, 22 Apr 2010 07:05:51 -0700 (PDT)
+	id S1755058Ab0DVOGB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Apr 2010 10:06:01 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:43586 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754974Ab0DVOF7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Apr 2010 10:05:59 -0400
+Received: by pvh1 with SMTP id 1so366706pvh.19
+        for <git@vger.kernel.org>; Thu, 22 Apr 2010 07:05:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=Nc5JOZvJiWJ+ychgilz689kWgVSor8RisCYVgiud9Cw=;
-        b=iNziHZTBPdBg1mOTQMDbj36KkQKgyj9Ql7Np/VXnQe1wxhJLJRzK1s2zd9xUc44USt
-         yG6uw54oK8/SynT4Et9XtmPvl7Qmk70lp39hhBpkTEX/LX9oShGVGfe7/1eBAY55kLdQ
-         7fWAFZDWGSnOlGcvFn/W4lmAIGMfRJlT/zJIQ=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=+mjdiGJEGElbemBTHuYX+xN8x5E5EUYSQzSl6yJo7q8=;
+        b=ZSQmmjlhzpenr52mMLbzQKmg1uuME1HtWl2QYbJIPF6v00AXinvMWG3Ua4o8fsZWE5
+         eM7Ir5gK9V9wZIXk8tWIG2TaUreUOkpSumwND3UGf2YXMYcWVIegAfK9YE2elTMgCDwz
+         3rL+uRiAuYhtNcmj8Q4YBwxnDwM+hOHxcBRgs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=UnePj/5w+c9l7acfEJgxrvy0DotfqiKrUz0EphzDCioIXkdBbHoS17ISnjGAAFd/Ro
-         nr/WjVSs6a53aRZTD0NM7U4ytvkVm2PNw9Ft1wCO/jDPr3iurqeqKJKiF8elJglH0ASP
-         URIpAQixq8VXZgID7Ts8qQ4DgEu3i9niaMhKE=
-Received: by 10.114.54.28 with SMTP id c28mr3504545waa.169.1271945150627;
-        Thu, 22 Apr 2010 07:05:50 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=BEayx1VRlSjtPEa3xWQ53PR5+HRpDrHY+C1dO6OuGc3bHvi/bmDnmbD0oKJIM3gC27
+         IKW8o97VnwJC0jy3E8VLF5TOT/D5Uj00UKfCDrHaN5JqQglKJAGBXBvnOfifW/hZOt7q
+         FsdNJBTGtidDS7tQMarB9zc3KGMj54icntz7M=
+Received: by 10.114.237.20 with SMTP id k20mr4743602wah.185.1271945157966;
+        Thu, 22 Apr 2010 07:05:57 -0700 (PDT)
 Received: from localhost.localdomain ([222.35.130.216])
-        by mx.google.com with ESMTPS id b17sm4487756wam.22.2010.04.22.07.05.46
+        by mx.google.com with ESMTPS id b17sm4487756wam.22.2010.04.22.07.05.54
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 22 Apr 2010 07:05:49 -0700 (PDT)
+        Thu, 22 Apr 2010 07:05:57 -0700 (PDT)
 X-Mailer: git-send-email 1.7.0.2.273.gc2413.dirty
+In-Reply-To: <1271945142-27015-1-git-send-email-struggleyb.nku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145532>
 
-I have tried to make --follow to support finding copies among unmodified files. And the first patch is to fix a bug introduced by '--follow' and 'git log' combination.
-We use the code:
+'git log --follow <path>' don't track copies from unmodified
+files, and this patch fix it.
 
-    else if (--p->one->rename_used > 0)
-        p->status = DIFF_STATUS_COPIED;
-
-to detect copies and renames. So, if diffcore_std run more than one time, p->one->rename_used will be reduced to a 'R' from 'C'. And this patch will fix this by allowing diffcore_std can only run once before a diff_flush, which seems rationale for our code.
-
-Bo Yang (2):
-  Make diffcore_std only can run once before a diff_flush.
-  Make git log --follow find copies among unmodified files.
-
+Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
+---
  Documentation/git-log.txt           |    2 +-
- diff.c                              |   21 ++++++++-----
- diffcore-break.c                    |    6 +--
- diffcore-pickaxe.c                  |    3 +-
- diffcore-rename.c                   |    3 +-
- diffcore.h                          |    6 ++++
  t/t4205-log-follow-harder-copies.sh |   56 +++++++++++++++++++++++++++++++++++
  tree-diff.c                         |    2 +-
- 8 files changed, 81 insertions(+), 18 deletions(-)
+ 3 files changed, 58 insertions(+), 2 deletions(-)
  create mode 100755 t/t4205-log-follow-harder-copies.sh
+
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index fb184ba..0727818 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -56,7 +56,7 @@ include::diff-options.txt[]
+ 	commits, and doesn't limit diff for those commits.
+ 
+ --follow::
+-	Continue listing the history of a file beyond renames.
++	Continue listing the history of a file beyond renames/copies.
+ 
+ --log-size::
+ 	Before the log message print out its size in bytes. Intended
+diff --git a/t/t4205-log-follow-harder-copies.sh b/t/t4205-log-follow-harder-copies.sh
+new file mode 100755
+index 0000000..ad29e65
+--- /dev/null
++++ b/t/t4205-log-follow-harder-copies.sh
+@@ -0,0 +1,56 @@
++#!/bin/sh
++#
++# Copyright (c) 2010 Bo Yang
++#
++
++test_description='Test --follow should always find copies hard in git log.
++
++'
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/diff-lib.sh
++
++echo >path0 'Line 1
++Line 2
++Line 3
++'
++
++test_expect_success \
++    'add a file path0 and commit.' \
++    'git add path0 &&
++     git commit -m "Add path0"'
++
++echo >path0 'New line 1
++New line 2
++New line 3
++'
++test_expect_success \
++    'Change path0.' \
++    'git add path0 &&
++     git commit -m "Change path0"'
++
++cat <path0 >path1
++test_expect_success \
++    'copy path0 to path1.' \
++    'git add path1 &&
++     git commit -m "Copy path1 from path0"'
++
++test_expect_success \
++    'find the copy path0 -> path1 harder' \
++    'git log --follow --name-status --pretty="format:%s"  path1 > current'
++
++cat >expected <<\EOF
++Copy path1 from path0
++C100	path0	path1
++
++Change path0
++M	path0
++
++Add path0
++A	path0
++EOF
++
++test_expect_success \
++    'validate the output.' \
++    'compare_diff_patch current expected'
++
++test_done
+diff --git a/tree-diff.c b/tree-diff.c
+index fe9f52c..1fb3e94 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -346,7 +346,7 @@ static void try_to_follow_renames(struct tree_desc *t1, struct tree_desc *t2, co
+ 
+ 	diff_setup(&diff_opts);
+ 	DIFF_OPT_SET(&diff_opts, RECURSIVE);
+-	diff_opts.detect_rename = DIFF_DETECT_RENAME;
++	DIFF_OPT_SET(&diff_opts, FIND_COPIES_HARDER);
+ 	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 	diff_opts.single_follow = opt->paths[0];
+ 	diff_opts.break_opt = opt->break_opt;
+-- 
+1.7.0.2.273.gc2413.dirty
