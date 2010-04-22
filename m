@@ -1,101 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2 v3] Make diffcore_std only can run once before a
- diff_flush.
-Date: Thu, 22 Apr 2010 13:41:12 -0700
-Message-ID: <7v1ve743vb.fsf@alter.siamese.dyndns.org>
-References: <1271945142-27015-1-git-send-email-struggleyb.nku@gmail.com>
- <1271945142-27015-2-git-send-email-struggleyb.nku@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trast@student.ethz.ch
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 22 22:43:18 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH v2] t1304,t2007: quell output to stdout and stderr
+Date: Thu, 22 Apr 2010 22:45:23 +0200
+Message-ID: <5ef48a01f29730a24b74d599bb9b89e77591decf.1271969046.git.git@drmicha.warpmail.net>
+References: <20100421151236.GB8726@progeny.tock>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 22 22:45:58 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O53Ez-0005Ji-AF
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 22:43:17 +0200
+	id 1O53HY-0006ze-NJ
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 22:45:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757883Ab0DVUlZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Apr 2010 16:41:25 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55280 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758582Ab0DVUlW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Apr 2010 16:41:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 92F67ADEEE;
-	Thu, 22 Apr 2010 16:41:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YJeIypAnT3zqjHda4uztrIj1cEw=; b=LwZ9R2
-	G/ZdM2MYfMFGGSl7vBibCKmBxpdLu8GRsxKD8fda98zAIIlkFt+7lfWJCkUnblxY
-	VzMUWvVPN4j/RYioIihBvp2ZZEsChWB349vDFgM3QoL5sa3ZdBIemmS2rKv1RR/E
-	yEeZvPqMLJzzj+XJXdIdKHBmCtVIsmN20sGwk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=R3CfKg0yPMf4/Eq1makAjCp9RvQ2ZDoB
-	ChZnDKr4aVyQE5FlIF/gH1YCViYiLCB/+oe29CbbiJl3jubTsC3sDuOMdBWiA9Jt
-	0IIJ9Q/Kfif9a+XIJP2j5TVsl0tpVkYuFsMUBg6EaKJZy2rXiRNGClqrehvRspbF
-	6Es/o2IjUxY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 52AF3ADEEA;
-	Thu, 22 Apr 2010 16:41:17 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7DF16ADEE4; Thu, 22 Apr
- 2010 16:41:13 -0400 (EDT)
-In-Reply-To: <1271945142-27015-2-git-send-email-struggleyb.nku@gmail.com> (Bo
- Yang's message of "Thu\, 22 Apr 2010 22\:05\:41 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 66792752-4E4F-11DF-A9D4-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758649Ab0DVUpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Apr 2010 16:45:46 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:36112 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756050Ab0DVUp1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Apr 2010 16:45:27 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id BB123EB4D5;
+	Thu, 22 Apr 2010 16:45:26 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 22 Apr 2010 16:45:26 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=PAurDkllBVeRJEFPsZNvu+NBxh4=; b=VnZctV29kihLA8Jlj+40BxzE7qywX5IjbEfsuXUvFQtbV+o9G14pXBbPHpKAH2iBlg8jF9cytCjzwenA4+eDhou1ejKgAY+S8FCnwz/TaN5a6FDWXDC5WLFWmpTlPZHHoa4kKWun40qtM+K3SCimZ8YUquAeyrY0b/3vK1JjJ1g=
+X-Sasl-enc: FGk2GVHG9YUdshgh25Paho48oGxwV8MEDiUbM1cU5t6Y 1271969125
+Received: from localhost (p5DCC0786.dip0.t-ipconnect.de [93.204.7.134])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 9E8C84B9A39;
+	Thu, 22 Apr 2010 16:45:25 -0400 (EDT)
+X-Mailer: git-send-email 1.7.1.rc1.248.gcefbb
+In-Reply-To: <20100421151236.GB8726@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145560>
 
-Bo Yang <struggleyb.nku@gmail.com> writes:
+These tests send output to stdout or stderr even without -v. This is
+distracting because unexpected output flashing by during make test
+usually indicates problems.
 
-> So, I think we really don't need to run diffcore_std more
-> than one time.
+Shut them up unconditionally by integrating them in test code: In both
+cases, the output was due to intermediate commands in between the actual
+test cases.
 
-It actually is stronger than that; we should never run it more than once,
-and it would be a bug if we did so.  Which codepath tries to call *_std()
-twice?
+Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ t/t1304-default-acl.sh      |   10 +++++++++-
+ t/t2007-checkout-symlink.sh |    5 ++---
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-The standard calling sequence is:
-
- - start from an empty queue.
-
- - use diff_change() and diff_addremove() to populate the queue.
-
- - call diffcore_std(). if you need to use a non-standard chain of
-   diffcore transformations, you _could_ call the diffcore_* routines that
-   diffcore_std() calls, if you choose to, but as you found out, some of
-   them are not idempotent operations, and shouldn't be called twice.
-
- - and finally call diffcore_flush().
-
-> @@ -3745,6 +3742,12 @@ void diffcore_fix_diff_index(struct diff_options *options)
->  
->  void diffcore_std(struct diff_options *options)
->  {
-> +	/* We never run this function more than one time, because the
-> +	 * rename/copy detection logic can only run once.
-> +	 */
-> +	if (diff_queued_diff.run)
-> +		return;
-
-Shouldn't this be a BUG() instead?
-
-The trivial rewrite to use this macro is a good idea, but it probably
-should be a separate patch.
-
-> +#define DIFF_QUEUE_CLEAR(q) \
-> +	do { \
-> +		(q)->queue = NULL; \
-> +		(q)->nr = (q)->alloc = (q)->run = 0; \
-> +	} while(0);
+diff --git a/t/t1304-default-acl.sh b/t/t1304-default-acl.sh
+index 055ad00..8b3ff7a 100755
+--- a/t/t1304-default-acl.sh
++++ b/t/t1304-default-acl.sh
+@@ -15,7 +15,15 @@ umask 077
+ # is a good candidate: exists on all unices, and it has permission
+ # anyway, so we don't create a security hole running the testsuite.
+ 
+-if ! setfacl -m u:root:rwx .; then
++test_expect_success 'Setup: try to set an ACL' '
++	if setfacl -m u:root:rwx .
++	then
++		test_set_prereq ACL
++	fi
++'
++
++if ! test_have_prereq ACL
++then
+     say "Skipping ACL tests: unable to use setfacl"
+     test_done
+ fi
+diff --git a/t/t2007-checkout-symlink.sh b/t/t2007-checkout-symlink.sh
+index 20f3343..e98ec4c 100755
+--- a/t/t2007-checkout-symlink.sh
++++ b/t/t2007-checkout-symlink.sh
+@@ -44,11 +44,10 @@ test_expect_success 'switch from symlink to dir' '
+ 
+ '
+ 
+-rm -fr frotz xyzzy nitfol &&
+-git checkout -f master || exit
+-
+ test_expect_success 'switch from dir to symlink' '
+ 
++	rm -fr frotz xyzzy nitfol &&
++	git checkout -f master &&
+ 	git checkout side
+ 
+ '
+-- 
+1.7.1.rc1.248.gcefbb
