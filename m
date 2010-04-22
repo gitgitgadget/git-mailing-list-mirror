@@ -1,154 +1,76 @@
-From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [PATCH 2/2 v3]  Make git log --follow find copies among unmodified files.
-Date: Thu, 22 Apr 2010 22:05:42 +0800
-Message-ID: <1271945142-27015-3-git-send-email-struggleyb.nku@gmail.com>
-References: <1271945142-27015-1-git-send-email-struggleyb.nku@gmail.com>
-Cc: gitster@pobox.com, trast@student.ethz.ch
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 22 16:06:24 2010
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Creating tracked branches
+Date: Thu, 22 Apr 2010 16:17:21 +0200
+Message-ID: <20100422141721.GK3563@machine.or.cz>
+References: <v2hfabb9a1e1004211422ybbf47ef0gd5dfd1791eb03c16@mail.gmail.com>
+ <y2p3abd05a91004211455r30d13932t92dfbedff581b9a1@mail.gmail.com>
+ <vpqsk6omppf.fsf@bauges.imag.fr>
+ <h2o3abd05a91004211504pfc2de8b7sa37c9c0a4dd14f57@mail.gmail.com>
+ <86tyr4v12n.fsf@red.stonehenge.com>
+ <u2n3abd05a91004211657v3dcdaf40j3608f3d8f59c4c1b@mail.gmail.com>
+ <20100422081055.GG3563@machine.or.cz>
+ <7vy6gf52d1.fsf@alter.siamese.dyndns.org>
+ <20100422114924.GH3563@machine.or.cz>
+ <m2sk6n7g68.fsf@igel.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Aghiles <aghilesk@gmail.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	git list <git@vger.kernel.org>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Thu Apr 22 16:17:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4x2o-0003YL-V1
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 16:06:19 +0200
+	id 1O4xDi-00016V-Lw
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 16:17:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755058Ab0DVOGB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Apr 2010 10:06:01 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:43586 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754974Ab0DVOF7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Apr 2010 10:05:59 -0400
-Received: by pvh1 with SMTP id 1so366706pvh.19
-        for <git@vger.kernel.org>; Thu, 22 Apr 2010 07:05:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=+mjdiGJEGElbemBTHuYX+xN8x5E5EUYSQzSl6yJo7q8=;
-        b=ZSQmmjlhzpenr52mMLbzQKmg1uuME1HtWl2QYbJIPF6v00AXinvMWG3Ua4o8fsZWE5
-         eM7Ir5gK9V9wZIXk8tWIG2TaUreUOkpSumwND3UGf2YXMYcWVIegAfK9YE2elTMgCDwz
-         3rL+uRiAuYhtNcmj8Q4YBwxnDwM+hOHxcBRgs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=BEayx1VRlSjtPEa3xWQ53PR5+HRpDrHY+C1dO6OuGc3bHvi/bmDnmbD0oKJIM3gC27
-         IKW8o97VnwJC0jy3E8VLF5TOT/D5Uj00UKfCDrHaN5JqQglKJAGBXBvnOfifW/hZOt7q
-         FsdNJBTGtidDS7tQMarB9zc3KGMj54icntz7M=
-Received: by 10.114.237.20 with SMTP id k20mr4743602wah.185.1271945157966;
-        Thu, 22 Apr 2010 07:05:57 -0700 (PDT)
-Received: from localhost.localdomain ([222.35.130.216])
-        by mx.google.com with ESMTPS id b17sm4487756wam.22.2010.04.22.07.05.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 22 Apr 2010 07:05:57 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.2.273.gc2413.dirty
-In-Reply-To: <1271945142-27015-1-git-send-email-struggleyb.nku@gmail.com>
+	id S1754859Ab0DVOR0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Apr 2010 10:17:26 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:42511 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754831Ab0DVORY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Apr 2010 10:17:24 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 4713286208E; Thu, 22 Apr 2010 16:17:21 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <m2sk6n7g68.fsf@igel.home>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145533>
 
-'git log --follow <path>' don't track copies from unmodified
-files, and this patch fix it.
+On Thu, Apr 22, 2010 at 03:47:11PM +0200, Andreas Schwab wrote:
+> Petr Baudis <pasky@suse.cz> writes:
+> 
+> > P.S.: The "--track without -b implies branch creation" sentence in
+> > git-checkout(1) seems to be plain wrong?
+> 
+> $ git checkout -t origin/maint
+> Branch maint set up to track remote branch maint from origin.
+> Switched to a new branch 'maint'
 
-Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
----
- Documentation/git-log.txt           |    2 +-
- t/t4205-log-follow-harder-copies.sh |   56 +++++++++++++++++++++++++++++++++++
- tree-diff.c                         |    2 +-
- 3 files changed, 58 insertions(+), 2 deletions(-)
- create mode 100755 t/t4205-log-follow-harder-copies.sh
+Ah! I have not read all the gory details carefully enough. Wonderful,
+so this would be:
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index fb184ba..0727818 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -56,7 +56,7 @@ include::diff-options.txt[]
- 	commits, and doesn't limit diff for those commits.
- 
- --follow::
--	Continue listing the history of a file beyond renames.
-+	Continue listing the history of a file beyond renames/copies.
- 
- --log-size::
- 	Before the log message print out its size in bytes. Intended
-diff --git a/t/t4205-log-follow-harder-copies.sh b/t/t4205-log-follow-harder-copies.sh
-new file mode 100755
-index 0000000..ad29e65
---- /dev/null
-+++ b/t/t4205-log-follow-harder-copies.sh
-@@ -0,0 +1,56 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2010 Bo Yang
-+#
-+
-+test_description='Test --follow should always find copies hard in git log.
-+
-+'
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/diff-lib.sh
-+
-+echo >path0 'Line 1
-+Line 2
-+Line 3
-+'
-+
-+test_expect_success \
-+    'add a file path0 and commit.' \
-+    'git add path0 &&
-+     git commit -m "Add path0"'
-+
-+echo >path0 'New line 1
-+New line 2
-+New line 3
-+'
-+test_expect_success \
-+    'Change path0.' \
-+    'git add path0 &&
-+     git commit -m "Change path0"'
-+
-+cat <path0 >path1
-+test_expect_success \
-+    'copy path0 to path1.' \
-+    'git add path1 &&
-+     git commit -m "Copy path1 from path0"'
-+
-+test_expect_success \
-+    'find the copy path0 -> path1 harder' \
-+    'git log --follow --name-status --pretty="format:%s"  path1 > current'
-+
-+cat >expected <<\EOF
-+Copy path1 from path0
-+C100	path0	path1
-+
-+Change path0
-+M	path0
-+
-+Add path0
-+A	path0
-+EOF
-+
-+test_expect_success \
-+    'validate the output.' \
-+    'compare_diff_patch current expected'
-+
-+test_done
-diff --git a/tree-diff.c b/tree-diff.c
-index fe9f52c..1fb3e94 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -346,7 +346,7 @@ static void try_to_follow_renames(struct tree_desc *t1, struct tree_desc *t2, co
- 
- 	diff_setup(&diff_opts);
- 	DIFF_OPT_SET(&diff_opts, RECURSIVE);
--	diff_opts.detect_rename = DIFF_DETECT_RENAME;
-+	DIFF_OPT_SET(&diff_opts, FIND_COPIES_HARDER);
- 	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
- 	diff_opts.single_follow = opt->paths[0];
- 	diff_opts.break_opt = opt->break_opt;
+>   (i) If you do `checkout B`, it will track remote branch B if it
+> exists.
+> 
+>   (ii) If you do `checkout -b B`, it will never auto-track anything.
+> 
+>   (iii) If you do `git checkout -t -b B`, it will auto-track your
+> current _local_ branch.
+
+  (iv) If you do `git checkout -t R`, it will track branch R, deriving
+local branch name B from it.
+
 -- 
-1.7.0.2.273.gc2413.dirty
+				Petr "Pasky" Baudis
+http://pasky.or.cz/ | "Ars longa, vita brevis." -- Hippocrates
