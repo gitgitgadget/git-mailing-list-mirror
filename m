@@ -1,85 +1,82 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: Please default to 'commit -a' when no changes were added
-Date: Fri, 23 Apr 2010 08:38:21 +1000
-Message-ID: <x2l2cfc40321004221538qade3dd4dkc149f2748b94ef81@mail.gmail.com>
-References: <20100422151037.2310.2429.reportbug@frosties.localdomain>
-	 <20100422155806.GC4801@progeny.tock>
-	 <87wrvzs590.fsf@frosties.localdomain>
-	 <alpine.LFD.2.00.1004221445310.7232@xanadu.home>
-	 <87sk6n4426.fsf@frosties.localdomain>
-	 <x2qc376da901004221448i373a342p1d7b763383e80472@mail.gmail.com>
+From: Matthias Andree <matthias.andree@gmx.de>
+Subject: Re: [PATCH] Update based on suggestions by Petr Baudis
+Date: Fri, 23 Apr 2010 00:58:07 +0200
+Message-ID: <4BD0D47F.9020709@gmx.de>
+References: <20100422205710.9C50220CD80@snark.thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Goswin von Brederlow <goswin-v-b@web.de>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, 578764@bugs.debian.org,
-	git@vger.kernel.org
-To: Adam Brewster <adambrewster@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 23 00:38:36 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigF90668BBE0FDDEE04BB27926"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Eric Raymond <esr@snark.thyrsus.com>
+X-From: git-owner@vger.kernel.org Fri Apr 23 00:58:21 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O552T-00025u-JX
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 00:38:29 +0200
+	id 1O55Le-0004JC-Ku
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 00:58:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753066Ab0DVWiX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Apr 2010 18:38:23 -0400
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:33764 "EHLO
-	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752940Ab0DVWiW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Apr 2010 18:38:22 -0400
-Received: by qyk9 with SMTP id 9so12031648qyk.1
-        for <git@vger.kernel.org>; Thu, 22 Apr 2010 15:38:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RK0DmgkZMc4Y8A8ujfryvvtGaeV9BoIaS77gk9/En5M=;
-        b=sAigeS7imuGTVUHzApEzy3jTPAdEnRgNwhqa5UymWN9Tha+8xkTaeZhzz8z4Yk8WCK
-         DQHbDPvSvJzNOuw9yCHVOij6HeW2zpghaG5nEsYBYnpP9HXSXnNm++5+O383tglaw1d/
-         iRsttFA5f5ql2pmjKxwgj5w70YfqFdOY8L+QM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=beXCoAj0enPkHApRgPpkU4O2WQtc3jZRtncOQ3DjesJFqBX9DbyrwX7jobFo4E3BFZ
-         sdA75cVncGHkWzjeN62BGfohwmhoUTmJ/+xfI9MgpFxtg2yCrf3BbUz99QAkDeneRNFa
-         tO/6xV9BF3e4F7pfM4S1oGqfrXaKQRl9L6Y+U=
-Received: by 10.229.251.66 with HTTP; Thu, 22 Apr 2010 15:38:21 -0700 (PDT)
-In-Reply-To: <x2qc376da901004221448i373a342p1d7b763383e80472@mail.gmail.com>
-Received: by 10.229.218.2 with SMTP id ho2mr1471302qcb.51.1271975901634; Thu, 
-	22 Apr 2010 15:38:21 -0700 (PDT)
+	id S1753602Ab0DVW6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Apr 2010 18:58:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45089 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753583Ab0DVW6L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Apr 2010 18:58:11 -0400
+Received: (qmail invoked by alias); 22 Apr 2010 22:58:08 -0000
+Received: from f055017143.adsl.alicedsl.de (EHLO apollo.emma.line.org) [78.55.17.143]
+  by mail.gmx.net (mp061) with SMTP; 23 Apr 2010 00:58:08 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX184YJU6X2Y4YKyiybqe/FuqqeBn7hnH3DiMfqsZz2
+	gbtYHxLeLeTEXV
+Received: from localhost ([127.0.0.1] helo=apollo.emma.line.org)
+	by apollo.emma.line.org with esmtp (Exim 4.71 (FreeBSD))
+	(envelope-from <matthias.andree@gmx.de>)
+	id 1O55LT-000AUm-9k; Fri, 23 Apr 2010 00:58:07 +0200
+User-Agent: Mozilla/5.0 (X11; U; FreeBSD amd64; de-DE; rv:1.9.1.9) Gecko/20100406 Thunderbird/3.0.4
+In-Reply-To: <20100422205710.9C50220CD80@snark.thyrsus.com>
+X-Enigmail-Version: 1.0.1
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68000000000000005
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145576>
 
-On Fri, Apr 23, 2010 at 7:48 AM, Adam Brewster <adambrewster@gmail.com>=
- wrote:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigF90668BBE0FDDEE04BB27926
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: quoted-printable
 
-> Consider
->
-> $ echo -e '#!/bin/bash\nif git diff-tree --quiet HEAD; then git commi=
-t
-> -a; else git commit; fi' > `git --exec-path`/git-ci
-> $ chmod 555 `git --exec-path`/git-ci
->
-> Adam
+Am 22.04.2010 22:57, schrieb Eric Raymond:
 
-Perhaps I am missing something, but I would have thought git
-diff-files --quiet would be more useful in this context...
+> Something seems to be randomly eating my patch sends.
 
-jon.
+No, it's not. Your earlier version arrived, but triggered a response by
+Nicolas Pitre.  You need to read and heed relevant messages that follow
+up your patches.
 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+See <http://article.gmane.org/gmane.comp.version-control.git/145497> for
+a copy of the followup you've missed and follow the instructions.
+
+HTH
+Matthias
+
+
+--------------enigF90668BBE0FDDEE04BB27926
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (FreeBSD)
+
+iEYEARECAAYFAkvQ1H8ACgkQvmGDOQUufZXLcQCg0mmT4/vSqCISl3WWYOxcxL+H
+LNQAoOgqK2PDAPeM+sIRjE04+XUhP7B3
+=j3qW
+-----END PGP SIGNATURE-----
+
+--------------enigF90668BBE0FDDEE04BB27926--
