@@ -1,91 +1,115 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: bug in name-rev on linux-2.6 repo?
-Date: Thu, 22 Apr 2010 07:40:43 -0500
-Message-ID: <20100422124042.GA1433@progeny.tock>
-References: <20100421195822.GX10984@baikonur.stro.at>
- <r2sbe6fef0d1004220354g6443218ezbd0452428ad9e4b5@mail.gmail.com>
- <20100422121408.GI3211@stro.at>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: Useless error message?
+Date: Thu, 22 Apr 2010 15:44:53 +0300
+Message-ID: <20100422124453.GA30328@LK-Perkele-V2.elisa-laajakaista.fi>
+References: <z2o3abd05a91004211417v263d5a0eg497341ddf7bd79a5@mail.gmail.com>
+ <20100421221953.GA25348@progeny.tock>
+ <7vwrw0573t.fsf@alter.siamese.dyndns.org>
+ <20100422094153.GA504@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
-To: maximilian attems <max@stro.at>
-X-From: git-owner@vger.kernel.org Thu Apr 22 14:40:44 2010
+Cc: Junio C Hamano <gitster@pobox.com>, Aghiles <aghilesk@gmail.com>,
+	git list <git@vger.kernel.org>, Kim Ebert <kd7ike@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 22 14:46:58 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4vhx-0004AN-0q
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 14:40:41 +0200
+	id 1O4vo0-0007T5-FV
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 14:46:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753565Ab0DVMke convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Apr 2010 08:40:34 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:59442 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752256Ab0DVMkd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Apr 2010 08:40:33 -0400
-Received: by pvh1 with SMTP id 1so285876pvh.19
-        for <git@vger.kernel.org>; Thu, 22 Apr 2010 05:40:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=vBotIRtlZ39GDlSmmxoM0rRZzbvv7PBVGygMBRHff7c=;
-        b=I8yZlZaIAG8hE+d0IBuQT9ltGJdzYUOHYLfqY4NjrEXNrmhy2eA0PJoWoMRR+oV9mw
-         QEwF/7bWaLZF5uub/IgQLHNCwdHlLuaKdCF2ZYC+p2ZYNvI15GzNOSOG20VKxNc32RHn
-         CyPvnHqZjL3FD0yNduf0RWo0GrBt2iI3CVo7U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=ssD6TO0A2qtDL6YIz3xwrq4GmpT1WFIE2M9u8l5O8eyJmZ5ZeBYCTqRvo/l/EM6FVV
-         0cnBuFTI0X+/l17yKes1Y+sgEgwdEcK9ILn1tH+SavmoEePIITw+CBfOVHtYx6wraGRW
-         RjckhA5UkhT9mOMHLEeT+1oV2ZUQa3z3216po=
-Received: by 10.140.248.10 with SMTP id v10mr1405901rvh.245.1271940033309;
-        Thu, 22 Apr 2010 05:40:33 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm2943276iwn.9.2010.04.22.05.40.31
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 22 Apr 2010 05:40:32 -0700 (PDT)
+	id S1754511Ab0DVMqm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Apr 2010 08:46:42 -0400
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:50308 "EHLO
+	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754499Ab0DVMql convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Apr 2010 08:46:41 -0400
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 79990C82DE;
+	Thu, 22 Apr 2010 15:46:39 +0300 (EEST)
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A033A273598; Thu, 22 Apr 2010 15:46:39 +0300
+Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
+	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id 3DCC61C6389;
+	Thu, 22 Apr 2010 15:46:33 +0300 (EEST)
 Content-Disposition: inline
-In-Reply-To: <20100422121408.GI3211@stro.at>
+In-Reply-To: <20100422094153.GA504@progeny.tock>
 User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145527>
 
-Hi maks,
+On Thu, Apr 22, 2010 at 04:42:16AM -0500, Jonathan Nieder wrote:
+>=20
+> Thanks for the clarification.  As I see it, these are two different
+> classes of problem:
+>=20
+> 1. The git daemon is very quiet, usually for good reason, as you
+>    mentioned [1] [2].
+>=20
+> 2. The git daemon and protocol helpers do not always send the datum =E2=
+=80=9Ca
+>    controlled fatal error occured=E2=80=9D by writing some message (a=
+ny
+>    message) to side band 3.
+>=20
+> Fixing the daemon=E2=80=99s share in both might require setting up a =
+side band
+> very early.  If an RFC patch appears setting up the side band (or an
+> explanation for why that=E2=80=99s not possible), I would be happy to=
+ start
+> work building from there.
 
-maximilian attems wrote:
+There are few subcases of daemon-level errors:
 
-> ~/src/linux-2.6$ git name-rev a1de02dccf906faba2ee2d99cac56799bda3b96=
-a
-> =C2=A0a1de02dccf906faba2ee2d99cac56799bda3b96a undefined
+1A) Invalid request
 
-Thanks for pointing it out.  This is weird.
+No feedback is needed. These are protocol violations and well-behaved
+clients don't send these.
 
-The commit doesn=E2=80=99t seem to be part of any tagged release, nor l=
-inus=E2=80=99s
-master:
+1B) Request for invalid repository
 
-| $ git log ^v2.6.34-rc5 ^origin/master a1de02dccf --oneline
-| a1de02d ext4: fix async i/o writes beyond 4GB to a sparse file
+These should have one error. That error can be sent using ERR response
+(already supported).
 
-So maybe it was rewritten; searching for a commit with the same subject=
-:
+1C) Request for disabled service
 
-| $ git log v2.6.33..origin/master --grep=3D'ext4: fix async' --oneline
-| a1de02d ext4: fix async i/o writes beyond 4GB to a sparse file
+These too can be reported via ERR. One has to be careful not to create
+information leak using these.
 
-Huh?  Is it included in origin/master or not?
+1D) Catastrophic network error
 
-| $ git version
-| git version 1.7.1.rc1
+One can't do anything about these.
 
-Jonathan
+1E) Relay error
+
+Really shouldn't happen. Due to service state being unknown at time
+of things going wrong, one can't do much about these (what if
+relay error occurs in middle of packet? pad packet with zeroes?)
+
+
+So, pretty much the only daemon-level errors with feedback required
+would be one for invalid repository and disabled service. How about:
+
+"foo/example: unreadable or anonymous fetching not allowed."
+"foo/example: unreadable or anonymous pushing not allowed."
+"foo/example: unreadable or anonymous snapshotting not allowed."
+"fooserv: requested service unknown."
+
+And all of these can be sent over ERR. I don't see need for using
+sidebands.
+
+> That has been the big obstacle for me experimenting with it, more tha=
+n
+> the information disclosure.  But this is easy to say.  The doing is
+> more important.
+
+-Ilari
