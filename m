@@ -1,120 +1,101 @@
-From: Goswin von Brederlow <goswin-v-b@web.de>
-Subject: Re: Please default to 'commit -a' when no changes were added
-Date: Thu, 22 Apr 2010 22:37:05 +0200
-Message-ID: <87sk6n4426.fsf@frosties.localdomain>
-References: <20100422151037.2310.2429.reportbug@frosties.localdomain>
-	<20100422155806.GC4801@progeny.tock>
-	<87wrvzs590.fsf@frosties.localdomain>
-	<alpine.LFD.2.00.1004221445310.7232@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2 v3] Make diffcore_std only can run once before a
+ diff_flush.
+Date: Thu, 22 Apr 2010 13:41:12 -0700
+Message-ID: <7v1ve743vb.fsf@alter.siamese.dyndns.org>
+References: <1271945142-27015-1-git-send-email-struggleyb.nku@gmail.com>
+ <1271945142-27015-2-git-send-email-struggleyb.nku@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, 578764@bugs.debian.org,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Apr 22 22:38:37 2010
+Cc: git@vger.kernel.org, trast@student.ethz.ch
+To: Bo Yang <struggleyb.nku@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 22 22:43:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O53AR-00011k-6d
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 22:38:35 +0200
+	id 1O53Ez-0005Ji-AF
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 22:43:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758500Ab0DVUhU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Apr 2010 16:37:20 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:58258 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756250Ab0DVUhN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Apr 2010 16:37:13 -0400
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate02.web.de (Postfix) with ESMTP id F137B15E6FDAD;
-	Thu, 22 Apr 2010 22:37:10 +0200 (CEST)
-Received: from [78.43.204.177] (helo=frosties.localdomain)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #4)
-	id 1O5394-0003be-00; Thu, 22 Apr 2010 22:37:10 +0200
-Received: from mrvn by frosties.localdomain with local (Exim 4.71)
-	(envelope-from <goswin-v-b@web.de>)
-	id 1O538z-0001Qn-Eq; Thu, 22 Apr 2010 22:37:05 +0200
-In-Reply-To: <alpine.LFD.2.00.1004221445310.7232@xanadu.home> (Nicolas Pitre's
-	message of "Thu, 22 Apr 2010 15:03:07 -0400 (EDT)")
-User-Agent: Gnus/5.110009 (No Gnus v0.9) XEmacs/21.4.22 (linux, no MULE)
-X-Sender: goswin-v-b@web.de
-X-Provags-ID: V01U2FsdGVkX19F8A/5v96kopKdulTr+iR+V98fLsMGR6NNBj18
-	bfx5jrK2fKtdghMqgeoKvr2DDcLnkN0ozxBAO8uMP72rHv6ySs
-	Azmjd0w1g=
+	id S1757883Ab0DVUlZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Apr 2010 16:41:25 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55280 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758582Ab0DVUlW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Apr 2010 16:41:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 92F67ADEEE;
+	Thu, 22 Apr 2010 16:41:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YJeIypAnT3zqjHda4uztrIj1cEw=; b=LwZ9R2
+	G/ZdM2MYfMFGGSl7vBibCKmBxpdLu8GRsxKD8fda98zAIIlkFt+7lfWJCkUnblxY
+	VzMUWvVPN4j/RYioIihBvp2ZZEsChWB349vDFgM3QoL5sa3ZdBIemmS2rKv1RR/E
+	yEeZvPqMLJzzj+XJXdIdKHBmCtVIsmN20sGwk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=R3CfKg0yPMf4/Eq1makAjCp9RvQ2ZDoB
+	ChZnDKr4aVyQE5FlIF/gH1YCViYiLCB/+oe29CbbiJl3jubTsC3sDuOMdBWiA9Jt
+	0IIJ9Q/Kfif9a+XIJP2j5TVsl0tpVkYuFsMUBg6EaKJZy2rXiRNGClqrehvRspbF
+	6Es/o2IjUxY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 52AF3ADEEA;
+	Thu, 22 Apr 2010 16:41:17 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7DF16ADEE4; Thu, 22 Apr
+ 2010 16:41:13 -0400 (EDT)
+In-Reply-To: <1271945142-27015-2-git-send-email-struggleyb.nku@gmail.com> (Bo
+ Yang's message of "Thu\, 22 Apr 2010 22\:05\:41 +0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 66792752-4E4F-11DF-A9D4-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145559>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
+Bo Yang <struggleyb.nku@gmail.com> writes:
 
-> On Thu, 22 Apr 2010, Goswin von Brederlow wrote:
->
->> I have never ever needed anything but
->> 
->> git commit -a
->> git commit <file> <file> ...
->
-> When I was using CVS/SVN that's what I thought too.
->
->> I do commit often and commit early and I start and finish one thing
->> before I start another. Also I keep my files small so they do one thing
->> and do it well. Overall that means I don't end up with multiple changes
->> in a single file so I never need to cherry pick changes for a commit.
->
-> Good for you.  I'm not that disciplined. Hence I often end up working on 
-> more than one thing in parallel.  The index is just so incredibly useful 
-> in that case.  I'm also a big fan of 'git add -e'.
+> So, I think we really don't need to run diffcore_std more
+> than one time.
 
-As soon as you do 'git add -e' then you have an index. In that case a
-'git commit' would use the index. There would be no change in worflow or
-behaviour for you.
+It actually is stronger than that; we should never run it more than once,
+and it would be a bug if we did so.  Which codepath tries to call *_std()
+twice?
 
->> So I don't think people should be forced to utilize the index. Imho that
->> is a matter of the workflow people use. Some people work better with the
->> index and some people (or projects) don't need it.
->
-> Exact.  It is therefore not progress to impose some inconvenience to one 
-> work flow in order to make another one easier.  And in this case we're 
-> talking about the difference between having to type an additional -a vs 
-> the risk of creating a commit with unexpected content.
+The standard calling sequence is:
 
-Is there a risk? You do get an editor with all the files affected listed
-giving you a big fat warning what you are about to commit. Yes I
-sometimes do start to commit wrongly too (no matter what RCS used) but
-then I just close the editor to abort and commit the things seperately.
+ - start from an empty queue.
 
->> Alternatively an option to take all changes but only if the index is
->> empty would be helpfull. Then people could define an alias for that or
->> set the option in the config. Other than setting -a that would allow
->> using an index when needed and commit everything in the normal case
->> without having to change the command used to commit.
->
-> But you're proposing to change the semantics for that command.  And I 
-> also suspect that you're trying to make the index more hidden while what 
-> we're actually trying to do is to promote it.
+ - use diff_change() and diff_addremove() to populate the queue.
 
-Yes, it would hide the index. But you are not just promoting it. You are
-forcing people to always use it, even if only through the -a option.
+ - call diffcore_std(). if you need to use a non-standard chain of
+   diffcore transformations, you _could_ call the diffcore_* routines that
+   diffcore_std() calls, if you choose to, but as you found out, some of
+   them are not idempotent operations, and shouldn't be called twice.
 
-> What _you_ can do though, is this:
->
-> 	git config --global alias.ci "commit -a"
+ - and finally call diffcore_flush().
 
-But then when I accidentally use 'git ci' while having an index the
-index gets ignored and all changed files get commited in one big mess.
-Given how seldom I need an index (so far never) the risk of using 'git
-ci' accidentally is way to high. Same with typing -a. I do it so often
-that when I actualy don't want it I will probably type it anyway out of
-habbit.
+> @@ -3745,6 +3742,12 @@ void diffcore_fix_diff_index(struct diff_options *options)
+>  
+>  void diffcore_std(struct diff_options *options)
+>  {
+> +	/* We never run this function more than one time, because the
+> +	 * rename/copy detection logic can only run once.
+> +	 */
+> +	if (diff_queued_diff.run)
+> +		return;
 
-My way would be safe in that it will never ignore an index if there is
-one. And if it is a new option then it would not alter the existing
-semantic, just add to it. Call the option --smart-a or --a-if-empty.
+Shouldn't this be a BUG() instead?
 
-MfG
-        Goswin
+The trivial rewrite to use this macro is a good idea, but it probably
+should be a separate patch.
+
+> +#define DIFF_QUEUE_CLEAR(q) \
+> +	do { \
+> +		(q)->queue = NULL; \
+> +		(q)->nr = (q)->alloc = (q)->run = 0; \
+> +	} while(0);
