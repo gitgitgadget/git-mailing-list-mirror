@@ -1,59 +1,63 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Git - SVN Crash Course
-Date: Thu, 22 Apr 2010 13:51:09 +0200
-Message-ID: <20100422115109.GI3563@machine.or.cz>
-References: <20100421222237.1758ca66@pennie-farthing>
- <w2yadf1fd3d1004220156z7d382275tad5a8839a4c7c087@mail.gmail.com>
+Subject: Re: Useless error message?
+Date: Thu, 22 Apr 2010 13:56:25 +0200
+Message-ID: <20100422115625.GJ3563@machine.or.cz>
+References: <z2o3abd05a91004211417v263d5a0eg497341ddf7bd79a5@mail.gmail.com>
+ <20100421221953.GA25348@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Santi =?iso-8859-2?Q?B=E9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Thu Apr 22 13:51:17 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Aghiles <aghilesk@gmail.com>, git list <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 22 13:56:35 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4uw9-0007c9-Hy
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 13:51:17 +0200
+	id 1O4v1F-0001TI-Uf
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 13:56:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754287Ab0DVLvM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Apr 2010 07:51:12 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:45979 "EHLO machine.or.cz"
+	id S1754397Ab0DVL41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Apr 2010 07:56:27 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:40382 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754234Ab0DVLvL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Apr 2010 07:51:11 -0400
+	id S1754320Ab0DVL40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Apr 2010 07:56:26 -0400
 Received: by machine.or.cz (Postfix, from userid 2001)
-	id 0D411125A114; Thu, 22 Apr 2010 13:51:10 +0200 (CEST)
+	id 3492A125A114; Thu, 22 Apr 2010 13:56:25 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <w2yadf1fd3d1004220156z7d382275tad5a8839a4c7c087@mail.gmail.com>
+In-Reply-To: <20100421221953.GA25348@progeny.tock>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145523>
 
-On Thu, Apr 22, 2010 at 10:56:46AM +0200, Santi B=E9jar wrote:
-> On Thu, Apr 22, 2010 at 5:22 AM, Jack Desert <jackdesert556@gmail.com=
-> wrote:
-> >
-> > I'm new to GIT, and the one command I can't live without is:
-> > =A0svn list
-> > Is ther a GIT couterpart to svn list?
->=20
-> You could check the Git - SVN Crash Course:
->=20
-> http://git.or.cz/course/svn.html
+On Wed, Apr 21, 2010 at 05:19:54PM -0500, Jonathan Nieder wrote:
+> Aghiles wrote:
+> 
+> > "fatal: The remote end hung up unexpectedly"
+> > 
+> > Is that really meaningful ? Or maybe it is a configuration problem
+> > on my side ?
+> 
+> Please, fix it. :)
 
-By the way, it would be nice if someone transferred this to the Git Wik=
-i
-and went through the text, it was written quite a long while ago.
-I would then replace the link with a redirect to the wiki, but I don't
-have the time to edit the course itself personally.
+I have seen a lot of users who plainly had a lot of trouble even
+_understanding_ the error message - it is phrased in super-dense
+networking jargon. I think something like
 
---=20
+	"fatal: Server terminated the connection for unknown reason"
+
+might come a long way (though of course specific error messages would
+still be far more helpful).
+
+(I assume that the remote end is the server since (i) it is most often
+the case (ii) it is if you look at it through the client-server optics,
+which may not always be the best one, but see (i).)
+
+-- 
 				Petr "Pasky" Baudis
 http://pasky.or.cz/ | "Ars longa, vita brevis." -- Hippocrates
