@@ -1,122 +1,70 @@
-From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: Re: [PATCH] Make git log --follow support --find-copies-harder.
-Date: Thu, 22 Apr 2010 10:27:55 +0800
-Message-ID: <m2p41f08ee11004211927w88506198sfd740da672b5c6f7@mail.gmail.com>
-References: <1271860641-29305-1-git-send-email-struggleyb.nku@gmail.com>
-	 <7v8w8gbv75.fsf@alter.siamese.dyndns.org>
+From: Jack Desert <jackdesert556@gmail.com>
+Subject: GIT counterpart to "svn list"
+Date: Wed, 21 Apr 2010 22:22:37 -0500
+Message-ID: <20100421222237.1758ca66@pennie-farthing>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, trast@student.ethz.ch
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 22 04:28:21 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 22 05:22:50 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O4m9M-0003s4-8T
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 04:28:20 +0200
+	id 1O4n05-0002iI-8n
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Apr 2010 05:22:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754133Ab0DVC16 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Apr 2010 22:27:58 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:55527 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754106Ab0DVC15 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Apr 2010 22:27:57 -0400
-Received: by vws18 with SMTP id 18so505599vws.19
-        for <git@vger.kernel.org>; Wed, 21 Apr 2010 19:27:56 -0700 (PDT)
+	id S1752205Ab0DVDWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Apr 2010 23:22:42 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:46819 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752068Ab0DVDWl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Apr 2010 23:22:41 -0400
+Received: by gyg13 with SMTP id 13so4196081gyg.19
+        for <git@vger.kernel.org>; Wed, 21 Apr 2010 20:22:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:received:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=1O7zU+srjrnT23S6rigydh+xTLWOvy4wswd2vsIYxqk=;
-        b=M0ikZNZP+DxUOhRNKx2OB5eyuOkInj3Peg8Zq8vESOfYRFX+KUAMGSmipFo6KCrHUt
-         NrqjvZ41fDkkM5DXbzLZwqp3VAB3BFUvAtrX6KWQgg2rGcUY76m570XbJF4fLijFZwPd
-         NyDVrQZypWCYNWAlnkDzPiU3HYcR7kJ9uN5PY=
+        bh=/hpJqJXy9d5VFKXPStBsLgwqkoAg9vMIPiXC0qiysfk=;
+        b=k7sgpWzcXThWAX+Ilv+M1CQzgJJgkT1cu/lt380VmfCWd/1YWCq5ZmhTWDDen9bXeL
+         urA7FpbPdP2Iri6qZ6QHHj8Rl683J4DjPYun7DZHmHUA6HhPOFuasR6+MHwgR9wCs8PH
+         8Wtfw9+mQqyjvnwjTI9g3uPBxsoZdID6o/mfw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=mR2jB1O06OY86YoGDrNcGAFQj4cQteuIkk8MJ6d4lFY2rqwOHPqjAvqrCWVB9vj1Z9
-         3y+Fhb+PqxUr3Ehl4MpGbaTPprIUqRGeFBDv+Gw1rvtcRe+l0T0l4U+6nKWeUU6y4NAt
-         IPbOF1IVKJXJEP52rAHB8wK2lObh8W/nUwFpE=
-Received: by 10.229.98.196 with HTTP; Wed, 21 Apr 2010 19:27:55 -0700 (PDT)
-In-Reply-To: <7v8w8gbv75.fsf@alter.siamese.dyndns.org>
-Received: by 10.229.38.69 with SMTP id a5mr2856147qce.15.1271903275697; Wed, 
-	21 Apr 2010 19:27:55 -0700 (PDT)
+        h=date:from:to:subject:message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        b=ugUBWmb47dhKZBvdGt3vx1ydGKWVmiexHHPRIpc9ldD6omWfxQFvn1F4HJ9xsMCFU+
+         jEYjti32G/I9G1Op1wQeqoOcOig87p2CNgVeL7ZMO69DpgaUCC71YuR2kuf6tUSklgFt
+         efM3hfhO2wUKi4TTeRkmfcmtGXYXKphuL3xWI=
+Received: by 10.101.139.6 with SMTP id r6mr22762882ann.14.1271906560913;
+        Wed, 21 Apr 2010 20:22:40 -0700 (PDT)
+Received: from pennie-farthing (oh-76-1-213-69.dhcp.embarqhsd.net [76.1.213.69])
+        by mx.google.com with ESMTPS id 20sm809095iwn.1.2010.04.21.20.22.39
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 21 Apr 2010 20:22:40 -0700 (PDT)
+X-Mailer: Claws Mail 3.7.5 (GTK+ 2.18.3; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145495>
 
-On Thu, Apr 22, 2010 at 12:56 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> What does the command do when given a single -C instead of --f-c-h, w=
-ith
-> or without your patch? =A0What should it do?
 
-I have found that two days ago, all '-M/-C/-C -C' with some <path>
-specified will fail.
-byang@byang-laptop:~/git/git$ git diff --name-status -M  maint master
-builtin/add.c
-A       builtin/add.c
+I'm new to GIT, and the one command I can't live without is:
+  svn list
+Is ther a GIT couterpart to svn list?
 
-byang@byang-laptop:~/git/git$ git log -M -C -C --name-status
---pretty=3Doneline t/t4013/diff.show_--first-parent_master
-2bf6587349e31b582dae47954b1a334052230e28 show --first-parent/-m: do
-not default to --cc
-A       t/t4013/diff.show_--first-parent_master
+-Jack
 
-without <path>
-byang@byang-laptop:~/git/git$ git diff --name-status -M  maint master
-| grep  'builtin/add.c'
-R100	builtin-add.c	builtin/add.c
 
-byang@byang-laptop:~/git/git$ git log -M -C -C --name-status
---pretty=3Doneline | grep -- 't/t4013/diff.show_--first-parent_master'
-C050	t/t4013/diff.show_master	t/t4013/diff.show_--first-parent_master
-
-Both of above files are copied/renamed.
-
-This because in diff_tree,
-
-              if (opt->nr_paths) {
-                        skip_uninteresting(t1, base, baselen, opt);
-                        skip_uninteresting(t2, base, baselen, opt);
-                }
-
-And this give no chance for later rename/copy detection. I have been
-trying to figure out a patch for this, but the logic is complex and it
-will take more time...
-
-> Because try_to_follow_renames() is supposed to be a rare-event (it on=
-ly
-> happens when a path we have been following disappears), I am having t=
-his
-> feeling that it would make more sense to do this change unconditional=
-ly.
->
-> Two possible outcomes that this patch allows the users to have by giv=
-ing
-> them a choice to give (or not to give) --f-c-h are:
->
-> =A0(1) the path is judged to be new in a commit and traversal finishe=
-s
-> =A0 =A0 there; or
->
-> =A0(2) the path is found to be a copy from another path from one of t=
-he
-> =A0 =A0 parents and traversal continues.
->
-> But I think using --follow is a sure sign of the user wanting the lat=
-ter
-> and never the former, no?
-
-Hmm, that makes sense. So, --follow always means --f-c-h.
-
-Regards!
-Bo
+-- 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Jack Desert     --    Writer, Entrepeneur
+Author and Spokesman: www.LetsEATalready.com
+Software Developer:   http://GrooveTask.org
+Email: JackDesert556@gmail.com
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
