@@ -1,95 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Miles Bader <miles@gnu.org>
 Subject: Re: Please default to 'commit -a' when no changes were added
-Date: Fri, 23 Apr 2010 11:27:47 +0200
-Message-ID: <vpqvdbi7c30.fsf@bauges.imag.fr>
+Date: Fri, 23 Apr 2010 18:31:17 +0900
+Message-ID: <buosk6m347u.fsf@dhlpc061.dev.necel.com>
 References: <20100422151037.2310.2429.reportbug@frosties.localdomain>
 	<20100422155806.GC4801@progeny.tock>
 	<87wrvzs590.fsf@frosties.localdomain>
 	<alpine.LFD.2.00.1004221445310.7232@xanadu.home>
 	<87sk6n4426.fsf@frosties.localdomain>
-	<7vsk6n2n48.fsf@alter.siamese.dyndns.org>
-	<vpq7hnzcgjq.fsf@bauges.imag.fr> <87r5m6tu0l.fsf@frosties.localdomain>
+	<alpine.LFD.2.00.1004221651590.7232@xanadu.home>
+	<87vdbitu9v.fsf@frosties.localdomain>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
+Cc: Nicolas Pitre <nico@fluxnic.net>,
 	Jonathan Nieder <jrnieder@gmail.com>, 578764@bugs.debian.org,
 	git@vger.kernel.org
 To: Goswin von Brederlow <goswin-v-b@web.de>
-X-From: git-owner@vger.kernel.org Fri Apr 23 11:28:31 2010
+X-From: git-owner@vger.kernel.org Fri Apr 23 11:31:47 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5FBX-0007SX-7l
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 11:28:31 +0200
+	id 1O5FEb-0001V8-Lv
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 11:31:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756467Ab0DWJ2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Apr 2010 05:28:18 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52381 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756829Ab0DWJ2Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Apr 2010 05:28:16 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o3N9MREh027450
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 23 Apr 2010 11:22:27 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1O5FAp-0005sm-Q7; Fri, 23 Apr 2010 11:27:47 +0200
-In-Reply-To: <87r5m6tu0l.fsf@frosties.localdomain> (Goswin von Brederlow's message of "Fri\, 23 Apr 2010 11\:09\:30 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 23 Apr 2010 11:22:28 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o3N9MREh027450
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1272619348.126@PBi4PPslmldIJqG2vra/bw
+	id S1756830Ab0DWJbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Apr 2010 05:31:36 -0400
+Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:34958 "EHLO
+	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756812Ab0DWJbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Apr 2010 05:31:34 -0400
+Received: from mailgate3.nec.co.jp ([10.7.69.160])
+	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id o3N9VJOj027599;
+	Fri, 23 Apr 2010 18:31:19 +0900 (JST)
+Received: (from root@localhost) by mailgate3.nec.co.jp (8.11.7/3.7W-MAILGATE-NEC)
+	id o3N9VJk21906; Fri, 23 Apr 2010 18:31:19 +0900 (JST)
+Received: from relay41.aps.necel.com ([10.29.19.9]) by vgate01.nec.co.jp (8.11.7/3.7W-MAILSV-NEC) with ESMTP
+	id o3N9VIB08768; Fri, 23 Apr 2010 18:31:18 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay41.aps.necel.com with ESMTP; Fri, 23 Apr 2010 18:31:18 +0900
+Received: from dhlpc061 ([10.114.112.64] [10.114.112.64]) by relay31.aps.necel.com with ESMTP; Fri, 23 Apr 2010 18:31:18 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id D87EC124006; Fri, 23 Apr 2010 18:31:17 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <87vdbitu9v.fsf@frosties.localdomain> (Goswin von Brederlow's
+	message of "Fri, 23 Apr 2010 11:03:56 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145604>
 
 Goswin von Brederlow <goswin-v-b@web.de> writes:
+> You all say the index is such a great thing. So I might use it
+> eventually. Other people might use it 1 out of 10 times. Yet other
+> people use it 9 out of 10 times. Can you at least accept that the use of
+> the index feature is different for each person?
 
-> For SVN users it gets much worse:
->
-> vi existing-file.c # do some changes
-> vi new-file.c      # create the file
-> git add new-file.c
-> vi new-file.c      # do some more changes
-> git commit
->
-> A SVN user would expect the current working copies of existing-file.c
-> and new-file.c to be commited. Instead only new-file.c is commited and
-> only the fist modification.
->
-> While this case is still highly confusing to non git users I do see that
-> it can't be easily changed. And my suggestion doesn't change it. The
-> call to "git add" creates an index so the commit would only act on the
-> index.
+In my case, I use the index extremely often, for complex commits that I
+want to split up -- but I _also_ use "-a" maybe 30-40% of the time, for
+simple commits that don't need splitting.
 
-But then, you'd still have the confusion for people expecting the SVN
-semantics. They'd use "git commit-without-dash-a" happily untill they
-have to add a new file, and the day the do a "git add" on a new file,
-commit doesn't add their changes to existing files, and ... WTF!?
+I think the "default to -a if index is empty and there are no args"
+behavior sounds perfect.  It would have no real adverse effects as far
+as I can see, and would make git a little more convenient for everybody.
 
-Don't get me wrong: I do agree that not everybody have a use for the
-index. Typically, I teach Git to students, who are light-years away
-from understanding what "clean commit, small and related changes"
-means. They have no use for the index, they just use Git as a way to
-share code, and possibly as a backup mechanism. I just teach them
-"always use the -a option of 'git commit' for now, you'll learn about
-the power of 'git commit-without-dash-a' later". Unless when they
-forget to say "-a", it just works. And it even works when they add new
-files, when they resolve conflicts after a merge, ... which your
-proposal does not solve.
+-miles
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I'm beginning to think that life is just one long Yoko Ono album; no rhyme
+or reason, just a lot of incoherent shrieks and then it's over.  --Ian Wolff
