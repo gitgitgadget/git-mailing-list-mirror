@@ -1,70 +1,65 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: Please default to 'commit -a' when no changes were added
-Date: Fri, 23 Apr 2010 17:01:41 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1004231639180.7232@xanadu.home>
-References: <20100422151037.2310.2429.reportbug@frosties.localdomain>
- <20100422155806.GC4801@progeny.tock> <87wrvzs590.fsf@frosties.localdomain>
- <alpine.LFD.2.00.1004221445310.7232@xanadu.home>
- <87sk6n4426.fsf@frosties.localdomain>
- <alpine.LFD.2.00.1004221651590.7232@xanadu.home>
- <87vdbitu9v.fsf@frosties.localdomain>
- <25441792-181D-456D-8182-F33B49209EFF@wincent.com>
- <87aastx6sa.fsf@frosties.localdomain>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, 578764@bugs.debian.org,
-	git@vger.kernel.org
-To: Goswin von Brederlow <goswin-v-b@web.de>
-X-From: git-owner@vger.kernel.org Fri Apr 23 23:01:57 2010
+From: Eric Raymond <esr@snark.thyrsus.com>
+Subject: Recent documentation patches, and an RFC on terminology
+Date: Fri, 23 Apr 2010 17:54:48 -0400 (EDT)
+Message-ID: <20100423215448.1EF5B479E92@snark.thyrsus.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 23 23:55:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5Q0Y-0007OU-NW
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 23:01:55 +0200
+	id 1O5Qq7-00029A-Hj
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 23:55:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754687Ab0DWVBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Apr 2010 17:01:44 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:36527 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752831Ab0DWVBn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Apr 2010 17:01:43 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0L1C00J4ZL2TME40@VL-MH-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 23 Apr 2010 17:01:42 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <87aastx6sa.fsf@frosties.localdomain>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1757547Ab0DWVyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Apr 2010 17:54:49 -0400
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:57829
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757425Ab0DWVyt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Apr 2010 17:54:49 -0400
+Received: by snark.thyrsus.com (Postfix, from userid 23)
+	id 1EF5B479E92; Fri, 23 Apr 2010 17:54:48 -0400 (EDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145642>
 
-On Fri, 23 Apr 2010, Goswin von Brederlow wrote:
+I just sent two documentation patches to the list in quick succession.
+In case they arrive out of order: the first, smaller one - modifying
+only the git-status documentation - should be applied before the 
+second one (distinguishing between "staging area" and "index"
+throughout the documentation).
 
-> I personaly have to work with different SCMs every day and every time I
-> have to switch minds to work with each specific one. Making git commit
-> work less surprising would be one less thing to keep in mind.
+We may have an opportunity to improve on the term "staging area".  As
+I reflect on it, I think replacing that with the term "depot" might
+not be a bad idea.  In English this word has the general sense of
+"warehouse", and the more specialized connotation of a place where
+freight is temporarily held for transshipment, or where military
+supplies and recruits are mustered before field deployment.  That is,
+a depot is a particular kind of staging area.
 
-Please make yourself some git aliases and your problem will be solved.  
-After all, the alias mechanism was created for a reason.
+Since these terms are so similar, why change?
 
-> You like that Git is different so don't use the --a-if-empty option. You
-> will have lost nothing by allowing that option in. So far I have read
-> arguments from people saying they don't want to USE the option. But no
-> arguments why there could not be such an option. And I'm not the only
-> one that would welcome such an option. Is there no room for a compromise?
+One reason is that --depot would be a shorter and more graceful choice 
+than --staging-area as a long-form option.  It has the same letter
+count as "index", so changing command and option names to use it 
+wouldn't add more typing.
 
-I suggest you have a look at all the examples (some are simple, some are 
-complex) here: https://git.wiki.kernel.org/index.php/Aliases. It should 
-be simple to make an alias with all the safety valves you might think 
-of, and then it could even be contributed to section 7 of that page.
+Another reason is that "depot" is slightly more distant from normal
+English vocabulary than "staging area" is.  When you need a word to 
+co-opt as a technical term of art, thast's an advantage; it reduces 
+the chances of collisions between term-of-art and normal usages.
 
+If this proposal is accepted, I can very easly generate a patch to
+implement it.  Teasing apart "index" from "staging area" was actual 
+work, but now that the distinction has been made replacing the latter
+would be trivial.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
 
-Nicolas
+The politician attempts to remedy the evil by increasing the very thing
+that caused the evil in the first place: legal plunder.
+	-- Frederick Bastiat
