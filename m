@@ -1,91 +1,67 @@
-From: Sergei Organov <osv@javad.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
 Subject: Re: Please default to 'commit -a' when no changes were added
-Date: Fri, 23 Apr 2010 15:44:14 +0400
-Message-ID: <87zl0u5r75.fsf@osv.gnss.ru>
-References: <20100422151037.2310.2429.reportbug@frosties.localdomain>
-	<20100422155806.GC4801@progeny.tock>
-	<87wrvzs590.fsf@frosties.localdomain>
-	<alpine.LFD.2.00.1004221445310.7232@xanadu.home>
-	<87sk6n4426.fsf@frosties.localdomain>
-	<20100423093943.GB30346@atjola.homenet>
+Date: Fri, 23 Apr 2010 13:57:35 +0200
+Message-ID: <t2zfabb9a1e1004230457pae290977w730e1f0adf32017f@mail.gmail.com>
+References: <20100422151037.2310.2429.reportbug@frosties.localdomain> 
+	<20100422155806.GC4801@progeny.tock> <87wrvzs590.fsf@frosties.localdomain> 
+	<alpine.LFD.2.00.1004221445310.7232@xanadu.home> <87sk6n4426.fsf@frosties.localdomain> 
+	<20100423093943.GB30346@atjola.homenet> <87zl0u5r75.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 23 13:51:18 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org,
+	=?UTF-8?Q?Bj=C3=B6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+To: Sergei Organov <osv@javad.com>
+X-From: git-owner@vger.kernel.org Fri Apr 23 13:58:07 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5HPe-0006DL-Nw
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 13:51:15 +0200
+	id 1O5HWG-0001vo-C4
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 13:58:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757263Ab0DWLvA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Apr 2010 07:51:00 -0400
-Received: from javad.com ([205.178.136.214]:46568 "EHLO 02aef2d.netsolvps.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757221Ab0DWLu7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Apr 2010 07:50:59 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Apr 2010 07:50:59 EDT
-Received: (qmail 9701 invoked from network); 23 Apr 2010 11:44:16 +0000
-Received: from unknown (HELO osv.gnss.ru) (89.175.180.246)
-  by javad.com with (AES256-SHA encrypted) SMTP; 23 Apr 2010 11:44:16 +0000
-Received: from osv by osv.gnss.ru with local (Exim 4.71)
-	(envelope-from <osv@osv.gnss.ru>)
-	id 1O5HIt-0003RQ-0H; Fri, 23 Apr 2010 15:44:15 +0400
-In-Reply-To: <20100423093943.GB30346@atjola.homenet> (=?utf-8?Q?=22Bj?=
- =?utf-8?Q?=C3=B6rn?= Steinbrink"'s
-	message of "Fri, 23 Apr 2010 11:39:43 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+	id S1757285Ab0DWL57 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Apr 2010 07:57:59 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:62001 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754713Ab0DWL56 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Apr 2010 07:57:58 -0400
+Received: by bwz19 with SMTP id 19so1649bwz.1
+        for <git@vger.kernel.org>; Fri, 23 Apr 2010 04:57:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:received:message-id:subject:to:cc:content-type;
+        bh=I2B6lYrsOv/haOwvGWthLCNae4BgKjECxNgYc3sSAI8=;
+        b=hK2TT3gkiSMotFYpvdxqTzBU/ZtcwDAn2/vQLEeXLt475OsY/Ud91dA9NHwXmxcTBu
+         5T5RX9kDA/Z3zKVWh4d3/sbQqlY0XZUP0qBxjIXsR4riLaiCOmjRm2FvgvqLKQA8VVf+
+         0BLzxV92tsYVOXCkRou8ntXk54O9PY8O6JovM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=CESOeMXuaBcLfG9wtqZuZgo2DmQgsrG+YCxje0UGePQxz09j+HWZcAL4PIl2vZigwh
+         FIIIUoayC8hxbbwtJ6hxzihf+Jlyg4oJZBsaulxPJpPmhQD2KKSdlnYoKOrGsHUrzP+N
+         X8ZR4jY1EwHcz7MG4geF/r8UdUmKVmB4Wm/mA=
+Received: by 10.103.168.14 with HTTP; Fri, 23 Apr 2010 04:57:35 -0700 (PDT)
+In-Reply-To: <87zl0u5r75.fsf@osv.gnss.ru>
+Received: by 10.103.78.10 with SMTP id f10mr3298058mul.126.1272023875139; Fri, 
+	23 Apr 2010 04:57:55 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145610>
 
-Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
+Heya,
 
-> On 2010.04.22 22:37:05 +0200, Goswin von Brederlow wrote:
->> Is there a risk? You do get an editor with all the files affected li=
-sted
->> giving you a big fat warning what you are about to commit.
->
-> And if I happen to have two unrelated changes in a single file that's
-> worth nothing at all. For example, I might have changed the condition
-> that causes some message to be shown, and discovered a typo in the
-> message itself and fixed it along the way. That needs two commits, bu=
-t
-> the list of modified files doesn't tell that.
->
-> Only "commit -v" would help there, showing the diff in the editor. Bu=
-t
-> reviewing the diff in the editor is a PITA and I lose the whole revie=
-w
-> progress if I find something I don't want to commit and have to abort=
-=2E
-> Using "git add [-i|-p|-e]", git helps me to keep track of the changes=
- I
-> already reviewed and decided to commit.
+2010/4/23 Sergei Organov <osv@javad.com>:
+> And how do you check your changes for correctness before committing?
 
-And how do you check your changes for correctness before committing? I
-have a habit to only commit the exact tree I've compiled, and I can
-compile only the working tree, not the index, right? So for me,
-committing the index sounds to be a wrong idea (unless it matches the
-work-tree).
+git stash save -k && make all test && git stash pop
 
-I think I'd like to have an ability to temporarily undo some of changes
-putting them on shelf for later re-application (sounds like extension t=
-o
-stash?). This way, when preparing perfect commit, I'd undo everything
-unrelated, check (build/run) the result, then commit. Then I'd re-do
-everything that was undone using single command that would take all the
-changes from the shelf back to working tree. Repeat as appropriate.
-Multiple shelves would be the next improvement that will allow to
-immediately sort the changes into different changesets during undoing.
-Just dreaming... At least that's roughly how I actually managed this
-with CVS using patch and emacs, -- far from being pretty, but works.
+-- 
+Cheers,
 
--- Sergei.
+Sverre Rabbelier
