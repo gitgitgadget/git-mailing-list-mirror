@@ -1,61 +1,62 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: Please default to 'commit -a' when no changes were added
-Date: Fri, 23 Apr 2010 14:34:50 -0500
-Message-ID: <k2ub4087cc51004231234z29228ac8ia0f62a4e16cedae4@mail.gmail.com>
-References: <20100422151037.2310.2429.reportbug@frosties.localdomain> 
-	<20100422155806.GC4801@progeny.tock> <4BD1EE10.4010009@gmx.de>
+From: Eli Barzilay <eli@barzilay.org>
+Subject: Re: diff without num-stat
+Date: Fri, 23 Apr 2010 15:45:23 -0400
+Message-ID: <19409.63699.647720.327239@winooski.ccs.neu.edu>
+References: <19408.40250.102191.314496@winooski.ccs.neu.edu>
+	<4BD156F8.5090307@drmicha.warpmail.net>
+	<7vwrvyzfr3.fsf@alter.siamese.dyndns.org>
+	<19409.54647.62163.893635@winooski.ccs.neu.edu>
+	<7vaasuvz6r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Matthias Andree <matthias.andree@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Apr 23 21:35:20 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 23 21:45:52 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5Oel-0005CR-Lc
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 21:35:20 +0200
+	id 1O5Oov-0003He-Ke
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 21:45:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754263Ab0DWTfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Apr 2010 15:35:13 -0400
-Received: from mail-bw0-f225.google.com ([209.85.218.225]:56281 "EHLO
-	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754064Ab0DWTfM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Apr 2010 15:35:12 -0400
-Received: by bwz25 with SMTP id 25so11640517bwz.28
-        for <git@vger.kernel.org>; Fri, 23 Apr 2010 12:35:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=/UYu6VDDsgiSlTOXR1APwEcxTloW17B9Xc2vkVEg7xQ=;
-        b=ECNdfMmJMJVS85UstZudnzjOS43e+8nbs/r16UIdSvvS46Zxnj8UVmpc5T7cW7u0hm
-         dwitVuplYwgnPG99lA+QOQ1KjVb3XojpG0Rbco4fH8Ly92C0XLvKd6eG9NOBXUMtyAw0
-         JnsyyuyM9MSRE5iRKPv9DqB8iMtLkofCrugB0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=kUh0VL30lVRvaNtvbTN4V7WZ23X25M8A8jzJ7fHZin65L0K5sNzyiR0AxSc1n8eS7X
-         OrfSBQjGDVY5/SSQCeFCz1LWyAxWkDHkUsuzUZIj/Qdkuj6m28MbMhRVxZJB8TZkX0aA
-         KzZtobjBf0mjEMLaz2pg1Uw1mtQZ6bJuO95Qc=
-Received: by 10.239.190.141 with SMTP id x13mr44380hbh.153.1272051310201; Fri, 
-	23 Apr 2010 12:35:10 -0700 (PDT)
-Received: by 10.239.189.143 with HTTP; Fri, 23 Apr 2010 12:34:50 -0700 (PDT)
-In-Reply-To: <4BD1EE10.4010009@gmx.de>
+	id S1756251Ab0DWTpa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Apr 2010 15:45:30 -0400
+Received: from winooski.ccs.neu.edu ([129.10.115.117]:38128 "EHLO barzilay.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756053Ab0DWTp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Apr 2010 15:45:28 -0400
+Received: from eli by barzilay.org with local (Exim 4.66)
+	(envelope-from <eli@barzilay.org>)
+	id 1O5OoV-0008U1-LP; Fri, 23 Apr 2010 15:45:23 -0400
+In-Reply-To: <7vaasuvz6r.fsf@alter.siamese.dyndns.org>
+X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145636>
 
-On Fri, Apr 23, 2010 at 13:59, Matthias Andree <matthias.andree@gmx.de> wrote:
-> I'd also concur that "default to commit -a" would be a most undesireable
+On Apr 23, Junio C Hamano wrote:
+> Eli Barzilay <eli@barzilay.org> writes:
+> 
+> > Well, the reason is to have an easy-to-glance-over summary of
+> > changes for push notification emails.  I didn't realize that the
+> > intention of --stat was to be completely compatible with
+> > `diffstat'.
+> 
+> I think you have it somewhat backwards.
+> 
+> Being the same as normal diffstat output that people are familiar with,
+> the output makes it "an easy-to-glance-over summary of changes" whereever
+> it is used, be it in a notification e-mail or from interactive command
+> output.
 
-The proposal was not "default to commit -a" but rather "default to
-commit -a when the index has not been explicitly updated with
-something like git add".
+(That's true only if the intended audience of these notifications are
+people who are familiar with diffstat output.)
 
-Just sayin'.
+-- 
+          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
+                    http://barzilay.org/                   Maze is Life!
