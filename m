@@ -1,54 +1,61 @@
-From: Matthias Andree <matthias.andree@gmx.de>
+From: Michael Witten <mfwitten@gmail.com>
 Subject: Re: Please default to 'commit -a' when no changes were added
-Date: Fri, 23 Apr 2010 20:59:28 +0200
-Message-ID: <4BD1EE10.4010009@gmx.de>
-References: <20100422151037.2310.2429.reportbug@frosties.localdomain> <20100422155806.GC4801@progeny.tock>
+Date: Fri, 23 Apr 2010 14:34:50 -0500
+Message-ID: <k2ub4087cc51004231234z29228ac8ia0f62a4e16cedae4@mail.gmail.com>
+References: <20100422151037.2310.2429.reportbug@frosties.localdomain> 
+	<20100422155806.GC4801@progeny.tock> <4BD1EE10.4010009@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: 578764@bugs.debian.org, git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Fri Apr 23 20:59:41 2010
+Cc: git@vger.kernel.org
+To: Matthias Andree <matthias.andree@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Apr 23 21:35:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5O6G-0001j7-QO
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 20:59:41 +0200
+	id 1O5Oel-0005CR-Lc
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 21:35:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754811Ab0DWS7e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Apr 2010 14:59:34 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41377 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752902Ab0DWS7d (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Apr 2010 14:59:33 -0400
-Received: (qmail invoked by alias); 23 Apr 2010 18:59:32 -0000
-Received: from baloo.cs.uni-paderborn.de (EHLO baloo.cs.uni-paderborn.de) [131.234.21.116]
-  by mail.gmx.net (mp036) with SMTP; 23 Apr 2010 20:59:32 +0200
-X-Authenticated: #428038
-X-Provags-ID: V01U2FsdGVkX18MWUtmAywMrf6NGZoVsiVc/FWSCj7sL0/Zuetwaw
-	+ArVWj2s5oCSiG
-Received: from [127.0.0.1]
-	by baloo.cs.uni-paderborn.de with esmtp (Exim 4.70)
-	(envelope-from <matthias.andree@gmx.de>)
-	id L1CFF5-0002U8-R4; Fri, 23 Apr 2010 20:59:29 +0200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.1.9) Gecko/20100317 Lightning/1.0b1 Thunderbird/3.0.4
-In-Reply-To: <20100422155806.GC4801@progeny.tock>
-X-Enigmail-Version: 1.0.1
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.78000000000000003
+	id S1754263Ab0DWTfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Apr 2010 15:35:13 -0400
+Received: from mail-bw0-f225.google.com ([209.85.218.225]:56281 "EHLO
+	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754064Ab0DWTfM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Apr 2010 15:35:12 -0400
+Received: by bwz25 with SMTP id 25so11640517bwz.28
+        for <git@vger.kernel.org>; Fri, 23 Apr 2010 12:35:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=/UYu6VDDsgiSlTOXR1APwEcxTloW17B9Xc2vkVEg7xQ=;
+        b=ECNdfMmJMJVS85UstZudnzjOS43e+8nbs/r16UIdSvvS46Zxnj8UVmpc5T7cW7u0hm
+         dwitVuplYwgnPG99lA+QOQ1KjVb3XojpG0Rbco4fH8Ly92C0XLvKd6eG9NOBXUMtyAw0
+         JnsyyuyM9MSRE5iRKPv9DqB8iMtLkofCrugB0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=kUh0VL30lVRvaNtvbTN4V7WZ23X25M8A8jzJ7fHZin65L0K5sNzyiR0AxSc1n8eS7X
+         OrfSBQjGDVY5/SSQCeFCz1LWyAxWkDHkUsuzUZIj/Qdkuj6m28MbMhRVxZJB8TZkX0aA
+         KzZtobjBf0mjEMLaz2pg1Uw1mtQZ6bJuO95Qc=
+Received: by 10.239.190.141 with SMTP id x13mr44380hbh.153.1272051310201; Fri, 
+	23 Apr 2010 12:35:10 -0700 (PDT)
+Received: by 10.239.189.143 with HTTP; Fri, 23 Apr 2010 12:34:50 -0700 (PDT)
+In-Reply-To: <4BD1EE10.4010009@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145635>
 
-I'd also concur that "default to commit -a" would be a most undesireable
-astonishment for me.  Please don't go that way.  Thanks.
-(Not that I believe it stands a chance of upstream integration, but to avoid
-downstream distro-specific shipwrecks.)
+On Fri, Apr 23, 2010 at 13:59, Matthias Andree <matthias.andree@gmx.de> wrote:
+> I'd also concur that "default to commit -a" would be a most undesireable
 
--- 
-Matthias Andree
+The proposal was not "default to commit -a" but rather "default to
+commit -a when the index has not been explicitly updated with
+something like git add".
+
+Just sayin'.
