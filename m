@@ -1,74 +1,124 @@
-From: Miles Bader <miles@gnu.org>
+From: Tor Arntsen <tor@spacetec.no>
 Subject: Re: Please default to 'commit -a' when no changes were added
-Date: Fri, 23 Apr 2010 18:31:17 +0900
-Message-ID: <buosk6m347u.fsf@dhlpc061.dev.necel.com>
+Date: Fri, 23 Apr 2010 11:35:02 +0200
+Message-ID: <p2qd2d39d861004230235tacb970bftc96f2c1473843b1c@mail.gmail.com>
 References: <20100422151037.2310.2429.reportbug@frosties.localdomain>
-	<20100422155806.GC4801@progeny.tock>
-	<87wrvzs590.fsf@frosties.localdomain>
-	<alpine.LFD.2.00.1004221445310.7232@xanadu.home>
-	<87sk6n4426.fsf@frosties.localdomain>
-	<alpine.LFD.2.00.1004221651590.7232@xanadu.home>
-	<87vdbitu9v.fsf@frosties.localdomain>
-Reply-To: Miles Bader <miles@gnu.org>
+	 <20100422155806.GC4801@progeny.tock>
+	 <87wrvzs590.fsf@frosties.localdomain>
+	 <alpine.LFD.2.00.1004221445310.7232@xanadu.home>
+	 <87sk6n4426.fsf@frosties.localdomain>
+	 <7vsk6n2n48.fsf@alter.siamese.dyndns.org>
+	 <vpq7hnzcgjq.fsf@bauges.imag.fr> <87r5m6tu0l.fsf@frosties.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@fluxnic.net>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
 	Jonathan Nieder <jrnieder@gmail.com>, 578764@bugs.debian.org,
 	git@vger.kernel.org
 To: Goswin von Brederlow <goswin-v-b@web.de>
-X-From: git-owner@vger.kernel.org Fri Apr 23 11:31:47 2010
+X-From: git-owner@vger.kernel.org Fri Apr 23 11:35:26 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5FEb-0001V8-Lv
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 11:31:42 +0200
+	id 1O5FID-0003o9-Ky
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 11:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756830Ab0DWJbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Apr 2010 05:31:36 -0400
-Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:34958 "EHLO
-	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756812Ab0DWJbe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Apr 2010 05:31:34 -0400
-Received: from mailgate3.nec.co.jp ([10.7.69.160])
-	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id o3N9VJOj027599;
-	Fri, 23 Apr 2010 18:31:19 +0900 (JST)
-Received: (from root@localhost) by mailgate3.nec.co.jp (8.11.7/3.7W-MAILGATE-NEC)
-	id o3N9VJk21906; Fri, 23 Apr 2010 18:31:19 +0900 (JST)
-Received: from relay41.aps.necel.com ([10.29.19.9]) by vgate01.nec.co.jp (8.11.7/3.7W-MAILSV-NEC) with ESMTP
-	id o3N9VIB08768; Fri, 23 Apr 2010 18:31:18 +0900 (JST)
-Received: from relay31.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay41.aps.necel.com with ESMTP; Fri, 23 Apr 2010 18:31:18 +0900
-Received: from dhlpc061 ([10.114.112.64] [10.114.112.64]) by relay31.aps.necel.com with ESMTP; Fri, 23 Apr 2010 18:31:18 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)
-	id D87EC124006; Fri, 23 Apr 2010 18:31:17 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-Reply-To: <87vdbitu9v.fsf@frosties.localdomain> (Goswin von Brederlow's
-	message of "Fri, 23 Apr 2010 11:03:56 +0200")
+	id S1756875Ab0DWJfJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Apr 2010 05:35:09 -0400
+Received: from mail-bw0-f225.google.com ([209.85.218.225]:57856 "EHLO
+	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756871Ab0DWJfE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Apr 2010 05:35:04 -0400
+Received: by bwz25 with SMTP id 25so10927669bwz.28
+        for <git@vger.kernel.org>; Fri, 23 Apr 2010 02:35:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:received:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=7hoEnkl62WfrjKsDfGeEO6Ew5v0frOl6Rq1m0cSmnY4=;
+        b=S/m39qmj7+vxyvrTk3hqc2FxryHVlqkv5AjqdNAS4Z9OtO+8Mvd65gbqRe9m4+REM9
+         3dITEqj3f5dFU2ivdNwnBz5nLDBFuUtTCC1Ski9lutMhNVj9A0y5C7+p7tw7fNPiT2zp
+         bc+80xCBH5Se5we5j5gCrYhoA1VVD0vmWWhBo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=gdo6e75KuHUMB1STkEBgge36B+dfmWH0v62SILJ02mBsJtDoNb/8zY/t3MTK7uIrmi
+         wKpmRnr3FmsnX8HYNlGQgZ0ADqFKRVK9BEVw/ZaFCG4P0D3toGRsK3s5pExjhfIplTYE
+         ++q7P4YkZrAM7a9hK1XVwZ/xudOjBd6AcftWM=
+Received: by 10.239.179.197 with HTTP; Fri, 23 Apr 2010 02:35:02 -0700 (PDT)
+In-Reply-To: <87r5m6tu0l.fsf@frosties.localdomain>
+X-Google-Sender-Auth: 966890cc8b1d4bdc
+Received: by 10.239.184.80 with SMTP id x16mr1025821hbg.88.1272015302384; Fri, 
+	23 Apr 2010 02:35:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145605>
 
-Goswin von Brederlow <goswin-v-b@web.de> writes:
-> You all say the index is such a great thing. So I might use it
-> eventually. Other people might use it 1 out of 10 times. Yet other
-> people use it 9 out of 10 times. Can you at least accept that the use of
-> the index feature is different for each person?
+On Fri, Apr 23, 2010 at 11:09, Goswin von Brederlow <goswin-v-b@web.de>=
+ wrote:
 
-In my case, I use the index extremely often, for complex commits that I
-want to split up -- but I _also_ use "-a" maybe 30-40% of the time, for
-simple commits that don't need splitting.
+> For SVN users it gets much worse:
+>
+> vi existing-file.c # do some changes
+> vi new-file.c =A0 =A0 =A0# create the file
+> git add new-file.c
+> vi new-file.c =A0 =A0 =A0# do some more changes
+> git commit
+>
+> A SVN user would expect the current working copies of existing-file.c
+> and new-file.c to be commited. Instead only new-file.c is commited an=
+d
+> only the fist modification.
 
-I think the "default to -a if index is empty and there are no args"
-behavior sounds perfect.  It would have no real adverse effects as far
-as I can see, and would make git a little more convenient for everybody.
+I come from CVS, i.e. a similar background.
 
--miles
+> While this case is still highly confusing to non git users I do see t=
+hat
+> it can't be easily changed. And my suggestion doesn't change it. The
+> call to "git add" creates an index so the commit would only act on th=
+e
+> index.
 
--- 
-I'm beginning to think that life is just one long Yoko Ono album; no rhyme
-or reason, just a lot of incoherent shrieks and then it's over.  --Ian Wolff
+I wouldn't agree it's highly confusing. As soon as you understand why
+(and it shouldn't take long), it's a relief. With CVS I would
+constantly make copies of my working tree so that I could sort out all
+the different things I was working on at the same time (which is a
+necessity when you work with development and bugfixing and customer
+reports with different priorities are dropping in). It's much easier
+now (with Git) to do a couple of different things at the same time.
+
+Besides, I would argue that the SVN/CVS behaviour is creating problems
+also for SVN/CVS users. Where I work it's not unusual that developers
+accidentally commit different changes in the same commit, making it
+hard to extract the one you want when you later wish to e.g. push a
+specific change to a maintenance branch or hotfix tree.
+
+And git add --patch is also wonderful sometimes. (Unfortunately that
+won't work on systems with pre-5.8 versions of Perl, which I just
+found out - but that's another story.)
+
+I plan to create a short course for my fellow co-workers when we move
+more stuff over from CVS to Git. Just an hour should do I think. I'll
+clarify how the index works very early on and I believe they'll all
+"get it" very quickly. I'll probably also take some parts from 'Git
+from the bottom up' by John Wiegley, at least I found (after having
+used Git for some time) that knowing how it works from blobs and up
+actually helps a lot.
+
+I won't join in on the discussion of any actual changes to Git, for
+that I'm too fresh as Git user. I would only like to stress that I
+wouldn't want the current flexibility to get limited or changed to be
+more like SVN/CVS -- I come from there, remember, and I don't see why
+I would wish to go back.
+
+-Tor
