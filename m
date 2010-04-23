@@ -1,70 +1,100 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: multiple .gitignore and friends in same workdir possible?
-Date: Fri, 23 Apr 2010 17:51:18 +0200
-Message-ID: <4BD1C1F6.9070908@drmicha.warpmail.net>
-References: <4526533254752708319@unknownmsgid> <y2kfabb9a1e1004230601zcede9e2ah2db8cb0f082bcbb4@mail.gmail.com> <7537.06050240925$1272033186@news.gmane.org> <4BD1B3AD.50407@drmicha.warpmail.net> <16960.9152632349$1272035032@news.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-To: Konrad Karl <kk_konrad@gmx.at>
-X-From: git-owner@vger.kernel.org Fri Apr 23 17:54:37 2010
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: Please default to 'commit -a' when no changes were added
+Date: Fri, 23 Apr 2010 18:01:57 +0200
+Message-ID: <25441792-181D-456D-8182-F33B49209EFF@wincent.com>
+References: <20100422151037.2310.2429.reportbug@frosties.localdomain> <20100422155806.GC4801@progeny.tock> <87wrvzs590.fsf@frosties.localdomain> <alpine.LFD.2.00.1004221445310.7232@xanadu.home> <87sk6n4426.fsf@frosties.localdomain> <alpine.LFD.2.00.1004221651590.7232@xanadu.home> <87vdbitu9v.fsf@frosties.localdomain>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+	Jonathan Nieder <jrnieder@gmail.com>, 578764@bugs.debian.org,
+	git@vger.kernel.org
+To: Goswin von Brederlow <goswin-v-b@web.de>
+X-From: git-owner@vger.kernel.org Fri Apr 23 18:33:14 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5LD8-0003AD-RC
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 17:54:35 +0200
+	id 1O5LoX-0001YQ-SI
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 18:33:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757773Ab0DWPy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Apr 2010 11:54:29 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:55078 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757622Ab0DWPy2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Apr 2010 11:54:28 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id D16B7EE063;
-	Fri, 23 Apr 2010 11:54:27 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Fri, 23 Apr 2010 11:54:27 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=tzc29b9XsQKmLnI+odKzZUsLa8Q=; b=th8MpibtkG3d0HQi/VyltkQeknsP1CbsnUK17P0lwHaENt5ArnxjZwaJWG6lBq+KHXE4PpqWRcKlFvxd98BEU+5uYoqWbcB8DrWaMy7MxCVWxL0hMR9izN0PT/98Xh6mHF8QKkredMKMgmgMeWYXIivlWolNVv20UR3WAZPUQ5M=
-X-Sasl-enc: qr6ocWD7qCc8MSbiyWYHmAEl0sLVrtry97iqSiN7szQn 1272038067
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 3340513B31;
-	Fri, 23 Apr 2010 11:54:27 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100414 Lightning/1.0b2pre Lanikai/3.1b2pre
-In-Reply-To: <16960.9152632349$1272035032@news.gmane.org>
+	id S1758012Ab0DWQcx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Apr 2010 12:32:53 -0400
+Received: from outmail148106.authsmtp.co.uk ([62.13.148.106]:62910 "EHLO
+	outmail148106.authsmtp.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750732Ab0DWQcw convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Apr 2010 12:32:52 -0400
+X-Greylist: delayed 1836 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Apr 2010 12:32:51 EDT
+Received: from mail-c193.authsmtp.com (mail-c193.authsmtp.com [62.13.128.118])
+	by punt3.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id o3NG27M5086751;
+	Fri, 23 Apr 2010 17:02:07 +0100 (BST)
+Received: from zenyatta.unixhosts.net (ec2-184-73-234-210.compute-1.amazonaws.com [184.73.234.210])
+	(authenticated bits=128)
+	by mail.authsmtp.com (8.14.2/8.14.2) with ESMTP id o3NG21ux033862
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 23 Apr 2010 17:02:02 +0100 (BST)
+Received: from [192.168.1.6] (175.Red-88-3-72.dynamicIP.rima-tde.net [88.3.72.175])
+	(authenticated bits=0)
+	by zenyatta.unixhosts.net (8.14.2/8.14.2) with ESMTP id o3NG1vxu016543
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Fri, 23 Apr 2010 12:01:59 -0400
+In-Reply-To: <87vdbitu9v.fsf@frosties.localdomain>
+X-Mailer: Apple Mail (2.1078)
+X-Server-Quench: 8e6eefc7-4ef1-11df-97bb-002264978518
+X-AuthReport-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
+X-AuthRoute: OCd3ZggRAFZKTQIy FSICByJGVUMuIRha BAIHMQpCJFdJCEVH aB0dB0JJdwdEHAkR AmEBW1ZeUF8/WGtx dQ1ScwdeZlRMXgV1 Uk1WQxwNF3sfAx1E Th4dURF0dUtHcHdx bQhqC3YOCRIpclt5 FxhVCGwHMTF9YWdN Al1YdwFWdgdDeRdA a1gxNiYHcQVbMysj Ekc/Mj44IDFDYDhS Ck4GKlcXQFpDWzdz Dw8CEDNnG0pNTCU6 KRMrMRYDEVwcekw+ PVYtMQAA
+X-Authentic-SMTP: 61633436303433.1014:706/Kp
+X-AuthFastPath: 255
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145626>
 
-Konrad Karl venit, vidit, dixit 23.04.2010 17:03:
-> On Fri, Apr 23, 2010 at 04:50:21PM +0200, Michael J Gruber wrote:
->> Konrad Karl venit, vidit, dixit 23.04.2010 16:32:
->>> Hi
->>>
->>> On Fri, Apr 23, 2010 at 03:01:42PM +0200, Sverre Rabbelier wrote:
->>>> Heya,
->>>>
-> [ ...... ]
->>> so if there was some way to _not_ consider the standard .gitignore &friends
->>> I would be happy to live with.
->>
->> If you control the creation of the repos, why don't you simply leave the
->> standard .gitignore empty and use the config as suggested by Sverre?
-> 
-> Because this information does not getting transfered with git clone.
-> 
-> People have the chance to forget to set this variable after cloning the
-> source repo and they will. 
+El 23/04/2010, a las 11:03, Goswin von Brederlow escribi=F3:
+>=20
+> You all say the index is such a great thing. So I might use it
+> eventually. Other people might use it 1 out of 10 times. Yet other
+> people use it 9 out of 10 times. Can you at least accept that the use=
+ of
+> the index feature is different for each person?
+>=20
+> My suggested change, with the --a-if-empty option, would not impose
+> anything on existing usage. But it would benefit those that rarely us=
+e
+> an index and would like git to be smart enough to know when to use th=
+e
+> index and when not. Yes, it would mean the use of the index ideology =
+is
+> not force upon people anymore. But isn't that a good thing? Free
+> software is about freedom. That should include the freedom not to use
+> the index method.
 
-...and the same is true for setting GIT_DIR appropriately for each repo
-- people will commit to the wrong repo, which is even worse. That's why
-it's a fragile approach to begin with. Is there no chance you could put
-those libs in subdirs and use git modules?
+Not really. Git is free in the sense that: (1) it costs nothing; and (2=
+) you can modify the code to do anything you want.
 
-Michael
+But you've also got to recognize that along with your freedom to make m=
+odifications, the maintainers are free to either accept or reject them =
+too.=20
+
+And in the event that the changes you want aren't accepted, you're free=
+ to either fork the tool or pick another one which does conform better =
+to your expectations.
+
+In the present case experience has shown that the index and the way it =
+can be exploited are an incredibly useful thing. Not only that, it's a =
+differentiating feature of Git and it sets it apart from other SCMs, in=
+ a good way. We could mindlessly homogenize to be more like other syste=
+ms, or less "surprising" for users coming from other systems, but we'd =
+be throwing away something valuable in the process.
+
+I personally don't see the point in having a bunch of SCMs that are all=
+ exactly alike. I _like_ that Git's different, and over the years have =
+become so used to the benefits that working with the index "the Git way=
+" bring, that it's hard to imagine how I ever lived without it.
+
+Cheers,
+Wincent
