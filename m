@@ -1,141 +1,83 @@
-From: Michal Sojka <sojkam1@fel.cvut.cz>
-Subject: [PATCH] test-lib.sh: Add explicit license detail, with change from GPLv2 to GPLv2+.
-Date: Fri, 16 Apr 2010 15:53:59 +0200
-Message-ID: <87vdbi37yp.fsf@steelpick.2x.cz>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 2/2] wt-status: take advice.statusHints seriously
+Date: Fri, 23 Apr 2010 10:09:52 +0200
+Message-ID: <4BD155D0.5080402@drmicha.warpmail.net>
+References: <c7003ec93f4ea01be80fbba08d2ed5544fa0df4d.1271968072.git.git@drmicha.warpmail.net>	 <7v39yo53mt.fsf@alter.siamese.dyndns.org>	 <86a4d8e5df80008c5c2b3ff4f2a5842ad1f58dc4.1271968072.git.git@drmicha.warpmail.net> <q2ibe6fef0d1004222115gcdd8fd81xce8993508bfa9f5d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 23 10:10:46 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 23 10:13:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5DyF-0006Ce-4E
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 10:10:43 +0200
+	id 1O5E0s-0007Qw-Mt
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 10:13:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756478Ab0DWIKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Apr 2010 04:10:34 -0400
-Received: from max.feld.cvut.cz ([147.32.192.36]:42559 "EHLO max.feld.cvut.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756291Ab0DWIK3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Apr 2010 04:10:29 -0400
-Received: from localhost (unknown [192.168.200.4])
-	by max.feld.cvut.cz (Postfix) with ESMTP id D639319F33A4;
-	Fri, 23 Apr 2010 10:10:27 +0200 (CEST)
-X-Virus-Scanned: IMAP AMAVIS
-Received: from max.feld.cvut.cz ([192.168.200.1])
-	by localhost (styx.feld.cvut.cz [192.168.200.4]) (amavisd-new, port 10044)
-	with ESMTP id 5HT3WYN4xrZO; Fri, 23 Apr 2010 10:10:26 +0200 (CEST)
-Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
-	by max.feld.cvut.cz (Postfix) with ESMTP id 474CF19F337E;
-	Fri, 23 Apr 2010 10:10:26 +0200 (CEST)
-Received: from steelpick.2x.cz (k335-30.felk.cvut.cz [147.32.86.30])
-	(Authenticated sender: sojkam1)
-	by imap.feld.cvut.cz (Postfix) with ESMTPSA id A0305FA003;
-	Fri, 23 Apr 2010 10:10:22 +0200 (CEST)
-Received: from wsh by steelpick.2x.cz with local (Exim 4.71)
-	(envelope-from <sojkam1@fel.cvut.cz>)
-	id 1O5Dxu-0007W5-6O; Fri, 23 Apr 2010 10:10:22 +0200
+	id S1756666Ab0DWINH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Apr 2010 04:13:07 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:34423 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752688Ab0DWIND (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Apr 2010 04:13:03 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id B1D9AEB254;
+	Fri, 23 Apr 2010 04:13:01 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 23 Apr 2010 04:13:01 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=Lys4OY6g1lCIwB+SupuO2FibMxg=; b=CTIxiasa7h/g2Yq5nKNuF3VS0C73myrhEOvJVfxOWTa61kOnN06YFoYyr063rGoq7eO75QaibzFHNjoCpeS15DRhd1FQpmNF+YaqovIiFfJiq9kVXaBMnvnSsTQnp2/Tx96R5W/qsH1xps8iaxbxwX1Q/BLO0ii/DL7Yp/nnJLY=
+X-Sasl-enc: 0XC0hVFAZmREL28WMrTw9mmfwpm+YKZ++8E5IgkPNCyf 1272010381
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id D95DF485B2;
+	Fri, 23 Apr 2010 04:13:00 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100414 Lightning/1.0b2pre Lanikai/3.1b2pre
+In-Reply-To: <q2ibe6fef0d1004222115gcdd8fd81xce8993508bfa9f5d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145594>
 
-Dear Junio,
+Tay Ray Chuan venit, vidit, dixit 23.04.2010 06:15:
+> Hi,
+> 
+> On Fri, Apr 23, 2010 at 4:30 AM, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+>>                else if (s->untracked.nr)
+>> -                       printf("nothing added to commit but untracked files present (use \"git add\" to track)\n");
+>> +                       printf("nothing added to commit but untracked files present%s\n",
+>> +                               advice_status_hints
+>> +                               ? " (use \"git add\" to track)" : "");
+> 
+> while we're at it, perhaps we could put the hints on its own line,
 
-this is a resend of relicensing patch for test suite library, which
-was initially sent by Carl Worth. Since the time you sent me acks for
-this patch collected by you, I collected 8 additional acks as is
-documented at
-https://git.wiki.kernel.org/index.php/Test-lib_reclicensing. There are
-still three contributors missing: Bert Wesarg, Stephan Beyer and Bryan
-Donlan. The contributions of first two are clearly not copyrightable.
-I'm not sure about the copyrightability of Bryan Donlan's
-contributions (git log -p --author='Bryan Donlan' t/test-lib.sh).
+I don't think I'm the only one to turn sour at every encounter with the
+phrase "while we're at it". I did fix one extraneous space in code
+"while I was at it", yes, but:
 
-Carl told me that in your ack collection process you missed only three
-acks. So I wonder whether you already did some analysis of which
-contributions are copyrightable. If so, are the missing acks in the
-list bellow?
+> with a "hint: " prefix:
+> 
+>   nothing added to commit but untracked files present
+>   hint: use "git add" to track
+> 
+> This way, we give future git usability hackers the space to elaborate
+> further on why a certain flag or command was recommended.
+> 
 
-Thanks
-Michal
+I'm suggesting a change in (output) behaviour (hint vs. no hint), which
+one may even consider to be a bug fix in terms of matching the obvious
+expections related to advice.statusHints false.
 
-8<--------8<--------8<--------
-This file has had no explicit license information noted in it, but
-has clearly been created and modified according to the terms of GPLv2
-as with the rest of the git code base.
+You're suggesting a different presentation of the output. In fact, I
+noticed inconsistent capitalisation in the hints which should be
+adjusted, maybe together with the presentation.
 
-The purpose of relicensing is to allow other GPLv3+ projects (in
-particular, the notmuch project: http://notmuchmail.org) to use this
-same test-suite structure and to contribute changes back as well.
+But I deem both changes (overlapping though) unrelated.
 
-Signed-off-by: Carl Worth <cworth@cworth.org>
-Signed-off-by: Michal Sojka <sojkam1@fel.cvut.cz>
-Acked-by: Alex Riesen <raa.lkml@gmail.com>
-Acked-by: Brandon Casey <drafnel@gmail.com>
-Acked-by: Clemens Buchacher <drizzd@aon.at>
-Acked-by: David Reiss <dreiss@facebook.com>
-Acked-by: Emil Sit <sit@emilsit.net>
-Acked-by: Eric Wong <normalperson@yhbt.net>
-Acked-by: Fredrik Kuivinen <frekui@gmail.com>
-Acked-by: Gerrit Pape <pape@smarden.org>
-Acked-by: Christian Couder <chriscool@tuxfamily.org>
-Acked-by: Jakub Narebski <jnareb@gmail.com>
-Acked-by: Jeff King <peff@peff.net>
-Acked-by: Johan Herland <johan@herland.net>
-Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Acked-by: Johannes Sixt <j6t@kdbg.org>
-Acked-by: Jonathan Nieder <jrnieder@gmail.com>
-Acked-by: Josh Triplett <josh@joshtriplett.org>
-Acked-by: Junio C Hamano <gitster@pobox.com>
-Acked-by: Lea Wiemann <lewiemann@gmail.com>
-Acked-by: Markus Heidelberg <markus.heidelberg@web.de>
-Acked-by: Martin Waitz <tali@admingilde.org>
-Acked-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-Acked-by: Matthias Lederhofer <matled@gmx.net>
-Acked-by: Michael J Gruber <git@drmicha.warpmail.net>
-Acked-by: Michele Ballabio <barra_cuda@katamail.com>
-Acked-by: Miklos Vajna <vmiklos@frugalware.org>
-Acked-by: Nicolas Pitre <nico@fluxnic.net>
-Acked-by: Pavel Roskin <proski@gnu.org>
-Acked-by: Petr Baudis <pasky@ucw.cz>
-Acked-by: Pierre Habouzit <madcoder@debian.org>
-Acked-by: Robin Rosenberg <robin.rosenberg@dewire.com>
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
-Acked-by: Stephen Boyd <bebarino@gmail.com>
-Acked-by: Sverre Rabbelier <srabbelier@gmail.com>
-Acked-by: Thomas Rast <trast@student.ethz.ch>
----
- t/test-lib.sh |   12 ++++++++++++
- 1 files changed, 12 insertions(+), 0 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index c582964..9234eb7 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -2,6 +2,18 @@
- #
- # Copyright (c) 2005 Junio C Hamano
- #
-+# This program is free software: you can redistribute it and/or modify
-+# it under the terms of the GNU General Public License as published by
-+# the Free Software Foundation, either version 2 of the License, or
-+# (at your option) any later version.
-+#
-+# This program is distributed in the hope that it will be useful,
-+# but WITHOUT ANY WARRANTY; without even the implied warranty of
-+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+# GNU General Public License for more details.
-+#
-+# You should have received a copy of the GNU General Public License
-+# along with this program.  If not, see http://www.gnu.org/licenses/ .
- 
- # if --tee was passed, write the output not only to the terminal, but
- # additionally to the file test-results/$BASENAME.out, too.
--- 
-1.7.0.4
+Cheers,
+Michael
