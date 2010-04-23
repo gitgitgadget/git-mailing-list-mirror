@@ -1,124 +1,91 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: The index (Re: Please default to 'commit -a' when no changes were
- added)
-Date: Fri, 23 Apr 2010 05:39:19 -0500
-Message-ID: <20100423103919.GA19811@progeny.tock>
+From: Sergei Organov <osv@javad.com>
+Subject: Re: Please default to 'commit -a' when no changes were added
+Date: Fri, 23 Apr 2010 15:44:14 +0400
+Message-ID: <87zl0u5r75.fsf@osv.gnss.ru>
 References: <20100422151037.2310.2429.reportbug@frosties.localdomain>
- <20100422155806.GC4801@progeny.tock>
- <87wrvzs590.fsf@frosties.localdomain>
- <alpine.LFD.2.00.1004221445310.7232@xanadu.home>
- <87sk6n4426.fsf@frosties.localdomain>
- <x2qc376da901004221448i373a342p1d7b763383e80472@mail.gmail.com>
- <20100422222723.GB12000@progeny.tock>
- <87iq7ittq6.fsf@frosties.localdomain>
+	<20100422155806.GC4801@progeny.tock>
+	<87wrvzs590.fsf@frosties.localdomain>
+	<alpine.LFD.2.00.1004221445310.7232@xanadu.home>
+	<87sk6n4426.fsf@frosties.localdomain>
+	<20100423093943.GB30346@atjola.homenet>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Adam Brewster <adambrewster@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>, git@vger.kernel.org,
-	Tor Arntsen <tor@spacetec.no>,
-	Tomas Carnecky <tom@dbservice.com>,
-	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-To: Goswin von Brederlow <goswin-v-b@web.de>
-X-From: git-owner@vger.kernel.org Fri Apr 23 12:41:35 2010
+Cc: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 23 13:51:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with smtp (Exim 4.69)
+	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5GKC-0003ku-1V
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 12:41:32 +0200
+	id 1O5HPe-0006DL-Nw
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 13:51:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545Ab0DWKjO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Apr 2010 06:39:14 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:49372 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752789Ab0DWKjN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Apr 2010 06:39:13 -0400
-Received: by gwj19 with SMTP id 19so2660462gwj.19
-        for <git@vger.kernel.org>; Fri, 23 Apr 2010 03:39:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=zJ/GF/KgHOE3AlEdnEjBYgWV/RJ4bgIcmTtTtpGnTTg=;
-        b=hfYqIBq8Ho8Hww+xHFnGp/vuoqVGO7nvxb6HXvCfK0R+jj80y6EMZI7noRm84Kmwuh
-         kdlaoulFuWCj2cGSz5YEk2hgQWu4jBuKf8hCpzc0Rl7FXxE7VNLH8xON/oCn2q0LMwvc
-         F3yEXcX9dAYDzUNQ9R73suFq0w8nJX6tZnAvI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=OPzKJGKZBHsGBvoR6bq6rS+sF0SwZVkAfeRxb5UPUqN/jrsqgr4oNHep8Ee5lA4DLF
-         j7lfWICepzg9KHbEoY9IMfjHFz7klsLkameRJEt/SnLIAFWv9Nq25as0WHIUGWu3k8PL
-         B/jNNf/cARq7hdHXNZIAXOX9wO7VLAqO7t8IM=
-Received: by 10.101.207.34 with SMTP id j34mr1444135anq.74.1272019145083;
-        Fri, 23 Apr 2010 03:39:05 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm662588iwn.13.2010.04.23.03.39.04
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 23 Apr 2010 03:39:04 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <87iq7ittq6.fsf@frosties.localdomain>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757263Ab0DWLvA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Apr 2010 07:51:00 -0400
+Received: from javad.com ([205.178.136.214]:46568 "EHLO 02aef2d.netsolvps.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757221Ab0DWLu7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Apr 2010 07:50:59 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Apr 2010 07:50:59 EDT
+Received: (qmail 9701 invoked from network); 23 Apr 2010 11:44:16 +0000
+Received: from unknown (HELO osv.gnss.ru) (89.175.180.246)
+  by javad.com with (AES256-SHA encrypted) SMTP; 23 Apr 2010 11:44:16 +0000
+Received: from osv by osv.gnss.ru with local (Exim 4.71)
+	(envelope-from <osv@osv.gnss.ru>)
+	id 1O5HIt-0003RQ-0H; Fri, 23 Apr 2010 15:44:15 +0400
+In-Reply-To: <20100423093943.GB30346@atjola.homenet> (=?utf-8?Q?=22Bj?=
+ =?utf-8?Q?=C3=B6rn?= Steinbrink"'s
+	message of "Fri, 23 Apr 2010 11:39:43 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145609>
 
-Goswin von Brederlow wrote:
+Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
 
-> Other RCS use an index of files they track. Git uses an index of patc=
-h
-> chunks to commit. Same name, totaly different concept.
+> On 2010.04.22 22:37:05 +0200, Goswin von Brederlow wrote:
+>> Is there a risk? You do get an editor with all the files affected li=
+sted
+>> giving you a big fat warning what you are about to commit.
+>
+> And if I happen to have two unrelated changes in a single file that's
+> worth nothing at all. For example, I might have changed the condition
+> that causes some message to be shown, and discovered a typo in the
+> message itself and fixed it along the way. That needs two commits, bu=
+t
+> the list of modified files doesn't tell that.
+>
+> Only "commit -v" would help there, showing the diff in the editor. Bu=
+t
+> reviewing the diff in the editor is a PITA and I lose the whole revie=
+w
+> progress if I find something I don't want to commit and have to abort=
+=2E
+> Using "git add [-i|-p|-e]", git helps me to keep track of the changes=
+ I
+> already reviewed and decided to commit.
 
-What you say is correct in terms of how some people use the tools.
-But underneath, the index is a cache that tracks the content of all
-files.  To make the index not match the work tree is to deliberately
-let it go stale (or to cheat and poison it, or whatever).
+And how do you check your changes for correctness before committing? I
+have a habit to only commit the exact tree I've compiled, and I can
+compile only the working tree, not the index, right? So for me,
+committing the index sounds to be a wrong idea (unless it matches the
+work-tree).
 
-I am making an assumption about other version control systems and it
-is probably wrong for some.  Here is the logic: suppose I
+I think I'd like to have an ability to temporarily undo some of changes
+putting them on shelf for later re-application (sounds like extension t=
+o
+stash?). This way, when preparing perfect commit, I'd undo everything
+unrelated, check (build/run) the result, then commit. Then I'd re-do
+everything that was undone using single command that would take all the
+changes from the shelf back to working tree. Repeat as appropriate.
+Multiple shelves would be the next improvement that will allow to
+immediately sort the changes into different changesets during undoing.
+Just dreaming... At least that's roughly how I actually managed this
+with CVS using patch and emacs, -- far from being pretty, but works.
 
- 1. Make some changes to files.
- 2. Invoke =E2=80=9Cvcs commit=E2=80=9D
- 3. Pull out the power plug.
-
-What happens?  If the version control system is sane, then either the
-entire commit takes place or nothing visible happens; because
-otherwise, the result is that I screwed everyone over.  The easiest
-way to implement this is to make =E2=80=9Cvcs commit=E2=80=9D two steps=
-:
-
- 1. Prepare the proposed changes in a staging area.
- 2. Atomically commit them.
-
-Traditionally, =E2=80=9Catomically=E2=80=9D means =E2=80=9Cwith a lock,=
- on the remote server
-which has a steady power supply=E2=80=9D.
-
-In particular, the index I am talking about tends to be on the _remote_
-machine.  Making it local leads to a lot of improvements.
-
-Early in the design of git=E2=80=99s user interface, it took some time =
-to
-figure out how visible to make the index [1].  Personally I am happier
-with the modern approach of letting people dirty the index if they
-want to, but if you believe that is wrong, maybe you would like to
-look at the Cogito scripts for inspiration [2].  There are still many
-lessons to learn from them, I suspect.  More importantly, it might be
-fun or interesting.
-
-Hopefully that is a little clearer.
-Jonathan
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/780/focus=3D=
-918
-As you can see, cogito, the most widely used front-end in early
-history, did hide the index from the user.
-[2] http://git.or.cz/cogito/
-(warning: they have not been maintained for a while)
+-- Sergei.
