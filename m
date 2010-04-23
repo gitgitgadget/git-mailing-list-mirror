@@ -1,62 +1,66 @@
-From: Eli Barzilay <eli@barzilay.org>
-Subject: Re: diff without num-stat
-Date: Fri, 23 Apr 2010 15:45:23 -0400
-Message-ID: <19409.63699.647720.327239@winooski.ccs.neu.edu>
-References: <19408.40250.102191.314496@winooski.ccs.neu.edu>
-	<4BD156F8.5090307@drmicha.warpmail.net>
-	<7vwrvyzfr3.fsf@alter.siamese.dyndns.org>
-	<19409.54647.62163.893635@winooski.ccs.neu.edu>
-	<7vaasuvz6r.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: Case sensitivity on Windows for absolute paths.
+Date: Fri, 23 Apr 2010 21:46:56 +0200
+Message-ID: <201004232146.56424.j6t@kdbg.org>
+References: <o2v7eeb06461004230712i2c8c1e61l4c50a73a4f6c83d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 23 21:45:52 2010
+Cc: git@vger.kernel.org
+To: Ricky Clarkson <ricky.clarkson@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 23 21:49:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5Oov-0003He-Ke
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 21:45:49 +0200
+	id 1O5Osf-0005fz-PF
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 21:49:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756251Ab0DWTpa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Apr 2010 15:45:30 -0400
-Received: from winooski.ccs.neu.edu ([129.10.115.117]:38128 "EHLO barzilay.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756053Ab0DWTp2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Apr 2010 15:45:28 -0400
-Received: from eli by barzilay.org with local (Exim 4.66)
-	(envelope-from <eli@barzilay.org>)
-	id 1O5OoV-0008U1-LP; Fri, 23 Apr 2010 15:45:23 -0400
-In-Reply-To: <7vaasuvz6r.fsf@alter.siamese.dyndns.org>
-X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
+	id S1756228Ab0DWTtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Apr 2010 15:49:25 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:41894 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754924Ab0DWTtY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Apr 2010 15:49:24 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 69CD3CDF83;
+	Fri, 23 Apr 2010 21:49:21 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 8115819F611;
+	Fri, 23 Apr 2010 21:46:56 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <o2v7eeb06461004230712i2c8c1e61l4c50a73a4f6c83d@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145637>
 
-On Apr 23, Junio C Hamano wrote:
-> Eli Barzilay <eli@barzilay.org> writes:
-> 
-> > Well, the reason is to have an easy-to-glance-over summary of
-> > changes for push notification emails.  I didn't realize that the
-> > intention of --stat was to be completely compatible with
-> > `diffstat'.
-> 
-> I think you have it somewhat backwards.
-> 
-> Being the same as normal diffstat output that people are familiar with,
-> the output makes it "an easy-to-glance-over summary of changes" whereever
-> it is used, be it in a notification e-mail or from interactive command
-> output.
+On Freitag, 23. April 2010, Ricky Clarkson wrote:
+> I noticed that if I have a git repository at C:\foo, and there is a
+> file in there named bar, git add bar works fine, git add C:\foo/bar
+> works fine but git add c:\foo/bar does not.  git reports that the file
+> 'is outside repository'.  Looking at setup.c it seems that string
+> comparisons are being used to determine whether a file is within the
+> repository.
 
-(That's true only if the intended audience of these notifications are
-people who are familiar with diffstat output.)
+Yes, we should be a bit more liberal when drive letters are compared; they 
+should be treated in a case-insensitive manner, but currently we are strict.
 
--- 
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
-                    http://barzilay.org/                   Maze is Life!
+> For my purposes I can probably make a Windows build that does it while
+> ignoring the case, but is there a more proper way that git should do
+> it?  I'm not familiar enough with the POSIX file routines to know.
+
+My guess is that it is sufficient that
+
+1. the internal version of GIT_DIR is recorded with an uppercase drive letter;
+
+2. normalize_path_copy() upper-cases the drive letter.
+
+Then the comparison in prefix_path() should do the right thing.
+
+-- Hannes
