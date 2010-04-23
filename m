@@ -1,58 +1,99 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Re: Please default to 'commit -a' when no changes were added
-Date: Fri, 23 Apr 2010 16:20:28 +0400
-Message-ID: <87ocha5pir.fsf@osv.gnss.ru>
-References: <20100422151037.2310.2429.reportbug@frosties.localdomain>
-	<20100422155806.GC4801@progeny.tock>
-	<87wrvzs590.fsf@frosties.localdomain>
-	<alpine.LFD.2.00.1004221445310.7232@xanadu.home>
-	<87sk6n4426.fsf@frosties.localdomain>
-	<20100423093943.GB30346@atjola.homenet> <87zl0u5r75.fsf@osv.gnss.ru>
-	<t2zfabb9a1e1004230457pae290977w730e1f0adf32017f@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 23 14:20:42 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] clone: quell the progress report from init and report on clone
+Date: Fri, 23 Apr 2010 14:37:22 +0200
+Message-ID: <35f1aab26b685ab5f124cfe1bf99b2d3a9fbaaa5.1272025319.git.git@drmicha.warpmail.net>
+References: <1270386135.1675.1368217929@webmail.messagingengine.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 23 14:40:42 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5Hs7-0006ML-Ac
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 14:20:39 +0200
+	id 1O5IBS-0002CW-BM
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Apr 2010 14:40:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752879Ab0DWMUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Apr 2010 08:20:34 -0400
-Received: from javad.com ([205.178.136.214]:54284 "EHLO 02aef2d.netsolvps.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751599Ab0DWMUd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Apr 2010 08:20:33 -0400
-Received: (qmail 22048 invoked from network); 23 Apr 2010 12:20:30 +0000
-Received: from unknown (HELO osv.gnss.ru) (89.175.180.246)
-  by javad.com with (AES256-SHA encrypted) SMTP; 23 Apr 2010 12:20:30 +0000
-Received: from osv by osv.gnss.ru with local (Exim 4.71)
-	(envelope-from <osv@osv.gnss.ru>)
-	id 1O5Hrw-0003XQ-Tb; Fri, 23 Apr 2010 16:20:28 +0400
-In-Reply-To: <t2zfabb9a1e1004230457pae290977w730e1f0adf32017f@mail.gmail.com>
-	(Sverre Rabbelier's message of "Fri, 23 Apr 2010 13:57:35 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+	id S1757015Ab0DWMkc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Apr 2010 08:40:32 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:48775 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756741Ab0DWMkc (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Apr 2010 08:40:32 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 44BE6EB407;
+	Fri, 23 Apr 2010 08:40:31 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Fri, 23 Apr 2010 08:40:31 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=rqh+d6mGTOqUFlQFf2gfkPtpYqs=; b=miuiicSAnZtQh0bmgaMK2A3a13PCG1fW/hj+ZJTgXUDhUEDzOC6ZXhvzSbXrfe6b32gvydNXCUfIOdoYfbMAkIg9M29L6X9nSkm4hWlppORA7EMTcFXn/Tr+hL1GVpp6zD+vKQ1tGP3t5tTY8QMg2llZ2VhnM30iZWQquv61H/Q=
+X-Sasl-enc: 6jGPXLBuf9wPHD/XExq71wXewebIWz/mTiQuup8oW0+3 1272026430
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id ACEBD2C097;
+	Fri, 23 Apr 2010 08:40:30 -0400 (EDT)
+X-Mailer: git-send-email 1.7.1.rc1.248.gcefbb
+In-Reply-To: <1270386135.1675.1368217929@webmail.messagingengine.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145613>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
-> Heya,
->
-> 2010/4/23 Sergei Organov <osv@javad.com>:
->> And how do you check your changes for correctness before committing?
->
-> git stash save -k && make all test && git stash pop
+From: Junio C Hamano <gitster@pobox.com>
 
-Perfect, thanks!
+Currently, a local git clone reports only initializing an empty
+git dir, which is potentially confusing.
 
--- Sergei.
+Instead, report that cloning is in progress and when it is done
+(unless -q) is given, and suppress the init report.
+
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+Basically this is your patch now, Junio, which is why it disappeared from my
+radar. But I don't think you applied it, so I'm resubmitting.
+
+v2 shuts up init unconditionally (even with -v), as you preferred.
+
+ builtin/clone.c  |    6 +++++-
+ t/t5601-clone.sh |    2 +-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 05f8fb4..0bedde4 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -302,6 +302,8 @@ static const struct ref *clone_local(const char *src_repo,
+ 	transport = transport_get(remote, src_repo);
+ 	ret = transport_get_remote_refs(transport);
+ 	transport_disconnect(transport);
++	if (0 <= option_verbosity)
++		printf("done.\n");
+ 	return ret;
+ }
+ 
+@@ -461,7 +463,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		die("could not create leading directories of '%s'", git_dir);
+ 	set_git_dir(make_absolute_path(git_dir));
+ 
+-	init_db(option_template, (option_verbosity < 0) ? INIT_DB_QUIET : 0);
++	if (0 <= option_verbosity)
++		printf("Cloning into %s...\n", get_git_dir());
++	init_db(option_template, INIT_DB_QUIET);
+ 
+ 	/*
+ 	 * At this point, the config exists, so we do not need the
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 2147567..678cee5 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -34,7 +34,7 @@ test_expect_success 'clone with excess parameters (2)' '
+ test_expect_success 'output from clone' '
+ 	rm -fr dst &&
+ 	git clone -n "file://$(pwd)/src" dst >output &&
+-	test $(grep Initialized output | wc -l) = 1
++	test $(grep Clon output | wc -l) = 1
+ '
+ 
+ test_expect_success 'clone does not keep pack' '
+-- 
+1.7.1.rc1.248.gcefbb
