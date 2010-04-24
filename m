@@ -1,215 +1,81 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: [PATCH] Typo fixes and minor cleanups for the big "index"/"staging area patch
-Date: Sat, 24 Apr 2010 01:59:59 -0400
-Message-ID: <1272088799-22618-1-git-send-email-esr@thyrsus.com>
-Cc: "Eric S. Raymond" <esr@thyrsus.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 24 08:00:19 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Recent documentation patches, and an RFC on terminology
+Date: Sat, 24 Apr 2010 00:23:13 -0700
+Message-ID: <7vd3xpqppa.fsf@alter.siamese.dyndns.org>
+References: <20100423215448.1EF5B479E92@snark.thyrsus.com>
+ <20100423221433.GB29661@atjola.homenet> <20100423222956.GB21224@thyrsus.com>
+ <alpine.LFD.2.00.1004231920580.7232@xanadu.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Raymond <esr@thyrsus.com>,
+	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Eric Raymond <esr@snark.thyrsus.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sat Apr 24 09:23:37 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5YPZ-0003uY-Gu
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Apr 2010 08:00:18 +0200
+	id 1O5ZiC-0008FH-IA
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Apr 2010 09:23:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751085Ab0DXGAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Apr 2010 02:00:09 -0400
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:54901
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750862Ab0DXGAI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Apr 2010 02:00:08 -0400
-Received: by snark.thyrsus.com (Postfix, from userid 23)
-	id 33004479E92; Sat, 24 Apr 2010 02:00:07 -0400 (EDT)
-X-Mailer: git-send-email 1.7.1.rc2.12.gf7bd8
+	id S1752760Ab0DXHXa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Apr 2010 03:23:30 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42939 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752567Ab0DXHX3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Apr 2010 03:23:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D39AAD828;
+	Sat, 24 Apr 2010 03:23:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=J13AmN1QSSVqsVGuG+euZTwr7
+	c0=; b=jL50mPIHGXaGdiixQf7o6SI+xu5w3o1QsmUlN6c2bl+gpp04INC2fHfSr
+	uTEIpsT2kZp6rdkrs0pJ+2xb41JuNCFxy49/2l2UX7/yO447KXWi/Eim1fwrKxRX
+	gl6LMNwDFzSvxksDrs2dcpVxdTZoNtrdCbMvzNq4Y0x74vyFiU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=pRYZZYjUiHJUXIVcYqt
+	b9g/LVlBjOi73oAfr7xTJwbNYrqnM2j2SIpSkcEbeLqS2NpWkRk7qJ2W9s53PEhP
+	zsN1YA4R1U1n+IIp6QTo/z2OcmsLga2DW4QZyYQ2GYjYWuksyfWhGOGi+kTORO4/
+	APu3LIrxLz5qqflHcjY+awCk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 51F79AD824;
+	Sat, 24 Apr 2010 03:23:20 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 776B4AD81D; Sat, 24 Apr
+ 2010 03:23:14 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 42632920-4F72-11DF-A865-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145658>
 
-Should probably be merged with my last for commit purposes.
+Nicolas Pitre <nico@fluxnic.net> writes:
 
-Signed-off-by: Eric S. Raymond <esr@thyrsus.com>
----
- Documentation/config.txt               |    4 ++--
- Documentation/git-add.txt              |    4 ++--
- Documentation/git-checkout-index.txt   |    3 ++-
- Documentation/git-diff-index.txt       |    4 ++++
- Documentation/git-grep.txt             |    2 +-
- Documentation/git-merge.txt            |    4 ++--
- Documentation/git-read-tree.txt        |    4 ++--
- Documentation/gitcore-tutorial.txt     |   12 ++++++------
- Documentation/gitrepository-layout.txt |    2 +-
- 9 files changed, 22 insertions(+), 17 deletions(-)
+> On Fri, 23 Apr 2010, Eric Raymond wrote:
+>
+>> Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>:
+>> >                   (your other mail didn't make it to me yet, so I
+>> > couldn't quickly look up how you differentiate between the "stagin=
+g
+>> > area" and the index).
+>>=20
+>> *Groan*...is the Great Galactic Ghoul randomly eating my patch submi=
+ssions
+>> again? I'll check the archives...
+>>=20
+>> Basically, I changed the docs to use "staging area" when talking abo=
+ut=20
+>> workflow and "index" only when describing implementation.
+>
+> If so that should be a good thing.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 6abd34b..0b59592 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -283,7 +283,7 @@ proxy use, while defaulting to a common proxy for external domains.
- 
- core.ignoreStat::
- 	If true, commands which modify both the working tree and
--	thestaging area will mark the updated paths with the "assume
-+	the staging area will mark the updated paths with the "assume
- 	unchanged" bit in the staging area. These marked files are
- 	then assumed to stay unchanged in the working copy, until you
- 	mark them otherwise manually - Git will not detect the file
-@@ -1437,7 +1437,7 @@ pack.threads::
- 
- pack.indexVersion::
- 	Specify the default pack index version (the "index" is the data
--        structure representing the staging area).  Valid values are 1 for
-+	structure representing the staging area).  Valid values are 1 for
- 	legacy pack index used by Git versions prior to 1.5.2, and 2 for
- 	the new pack index with capabilities for packs larger than 4 GB
- 	as well as proper protection against the repacking of corrupted
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index db0c9d9..2d150aa 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -28,7 +28,7 @@ the commit command, you must use the `add` command to add any new or
- modified files to the staging area.
- 
- (Some git command names and options refer to the staging area as "the
--index", which is actually the way the staging are is implemented in
-+index", which is actually the way the staging area is implemented in
- git plumbing.)
- 
- This command can be performed multiple times before a commit.  It only
-@@ -214,7 +214,7 @@ status::
- +
- It shows that foo.png has differences from HEAD (but that is
- binary so line count cannot be shown) and there is no
--difference between the staged0 copy and the working tree
-+difference between the staged copy and the working tree
- version (if the working tree version were also different,
- 'binary' would have been shown in place of 'nothing').  The
- other file, git-add--interactive.perl, has 403 lines added
-diff --git a/Documentation/git-checkout-index.txt b/Documentation/git-checkout-index.txt
-index 24e70ff..2583c8a 100644
---- a/Documentation/git-checkout-index.txt
-+++ b/Documentation/git-checkout-index.txt
-@@ -21,7 +21,8 @@ Will copy all files listed from the staging area to the working directory
- (not overwriting existing files).
- 
- The name of this command reflects the older terminology "index" for
--what is now called the staging area.
-+what is now called the staging area. The "index file" is where the
-+staging-area content is actually stored.
- 
- OPTIONS
- -------
-diff --git a/Documentation/git-diff-index.txt b/Documentation/git-diff-index.txt
-index 37ed959..53c3947 100644
---- a/Documentation/git-diff-index.txt
-+++ b/Documentation/git-diff-index.txt
-@@ -18,6 +18,10 @@ ignoring the stat state of the file on disk.  When paths are
- specified, compares only those named paths.  Otherwise all
- entries in the staging area are compared.
- 
-+The name of this command reflects the older terminology "index" for
-+what is now called the staging area. The "index file" is where the
-+staging-area content is actually stored.
-+
- OPTIONS
- -------
- include::diff-options.txt[]
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 0d2d688..e5d05e2 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -36,7 +36,7 @@ OPTIONS
- 	Instead of searching tracked files in the working tree, search
- 	blobs registered in the staging area.  (This option name
- 	reflects the fact that in the far past the staging area was
--        known as the "cache".)
-+	known as the "cache".)
- 
- --no-index::
- 	Search files in the current directory, not just those tracked by git.
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 85a87ad..d1c1173 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -123,9 +123,9 @@ happens:
- 
- 1. The `HEAD` pointer stays the same.
- 2. The `MERGE_HEAD` ref is set to point to the other branch head.
--3. Paths that merged cleanly are updated both in the staging area file and
-+3. Paths that merged cleanly are updated both in the staging area and
-    in your working tree.
--4. For conflicting paths, the undex file representing the staging area 
-+4. For conflicting paths, the index file representing the staging area 
-    records up to three versions: stage 1 stores the version from the 
-    common ancestor, stage 2 from `HEAD`, and stage 3 from `MERGE_HEAD` (you
-    can inspect the stages with `git ls-files -u`).  The working
-diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
-index debc97b..9fdb6f9 100644
---- a/Documentation/git-read-tree.txt
-+++ b/Documentation/git-read-tree.txt
-@@ -17,7 +17,7 @@ SYNOPSIS
- DESCRIPTION
- -----------
- Reads the tree information given by <tree-ish> into the staging area,
--but does not actually *update* any of the files it "caches". (see:
-+but does not actually *update* any of the files it stages. (see:
- linkgit:git-checkout-index[1])
- 
- Optionally, it can merge a tree into the staging area, perform a
-@@ -65,7 +65,7 @@ OPTIONS
- --aggressive::
- 	Usually a three-way merge by 'git read-tree' resolves
- 	the merge for really trivial cases and leaves other
--	cases unresolved in the staging area, so that Porcelains can
-+	cases unresolved in the staging area, so that porcelains can
- 	implement different merge policies.  This flag makes the
- 	command to resolve a few more cases internally:
- +
-diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitcore-tutorial.txt
-index 2485a2c..2ba714c 100644
---- a/Documentation/gitcore-tutorial.txt
-+++ b/Documentation/gitcore-tutorial.txt
-@@ -371,8 +371,8 @@ have committed something, we can also learn to use a new command:
- 'git diff-index'.
- 
- Unlike 'git diff-files', which showed the difference between the
--staging area file and the working tree, 'git diff-index' shows the differences
--between a committed *tree* and either the staging area file or the working
-+staging area and the working tree, 'git diff-index' shows the differences
-+between a committed *tree* and either the staging area or the working
- tree. In other words, 'git diff-index' wants a tree to be diffed
- against, and before we did the commit, we couldn't do that, because we
- didn't have anything to diff against.
-@@ -513,10 +513,10 @@ various diff-\* commands compare things.
-                       |    |  diff-index --cached
-                       |    |
-           diff-index  |    V
--                      |  +--------------+
--                      |  | Staging area |
--                      |  |    "cache"   |
--                      |  +--------------+
-+                      |  +---------+
-+                      |  | Staging |
-+                      |  |   Area  |
-+                      |  +---------+  
-                       |    ^
-                       |    |
-                       |    |  diff-files
-diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
-index a511e2c..abfca02 100644
---- a/Documentation/gitrepository-layout.txt
-+++ b/Documentation/gitrepository-layout.txt
-@@ -167,7 +167,7 @@ info/grafts::
- 	by a space and terminated by a newline.
- 
- info/exclude::
--	This file, by convention among Porcelains, stores the
-+	This file, by convention among porcelains, stores the
- 	exclude pattern list. `.gitignore` is the per-directory
- 	ignore file.  'git status', 'git add', 'git rm' and
- 	'git clean' look at it but the core git commands do not look
--- 
-1.7.1.rc2.12.gf7bd8
+Do you mean that Ghoul did a good thing to eat such a change?
