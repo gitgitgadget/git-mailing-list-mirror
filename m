@@ -1,84 +1,67 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Please default to 'commit -a' when no changes were added
-Date: Sat, 24 Apr 2010 17:42:42 -0500
-Message-ID: <20100424224242.GA8325@progeny.tock>
-References: <alpine.LFD.2.00.1004221445310.7232@xanadu.home>
- <87sk6n4426.fsf@frosties.localdomain>
- <alpine.LFD.2.00.1004221651590.7232@xanadu.home>
- <87vdbitu9v.fsf@frosties.localdomain>
- <25441792-181D-456D-8182-F33B49209EFF@wincent.com>
- <87aastx6sa.fsf@frosties.localdomain>
- <alpine.LFD.2.00.1004231639180.7232@xanadu.home>
- <8739yktuvs.fsf@frosties.localdomain>
- <20100424214024.GA8044@progeny.tock>
- <87tyr0sdv8.fsf@frosties.localdomain>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] Documentation/git-send-email: Add "Use gmail as the smtp 
+	server"
+Date: Sun, 25 Apr 2010 01:03:27 +0200
+Message-ID: <h2vfabb9a1e1004241603pc1371c18h84c012a51a085837@mail.gmail.com>
+References: <1272094442-26485-1-git-send-email-pkufranky@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-To: Goswin von Brederlow <goswin-v-b@web.de>
-X-From: git-owner@vger.kernel.org Sun Apr 25 00:42:18 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 25 01:03:54 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5o3F-0005jh-Uu
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 00:42:18 +0200
+	id 1O5oOA-0005DK-4j
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 01:03:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753214Ab0DXWmL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Apr 2010 18:42:11 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:50189 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752993Ab0DXWmJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Apr 2010 18:42:09 -0400
-Received: by gwj19 with SMTP id 19so3324653gwj.19
-        for <git@vger.kernel.org>; Sat, 24 Apr 2010 15:42:06 -0700 (PDT)
+	id S1754105Ab0DXXDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Apr 2010 19:03:49 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:39256 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753634Ab0DXXDs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Apr 2010 19:03:48 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1612324fga.1
+        for <git@vger.kernel.org>; Sat, 24 Apr 2010 16:03:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=PswCva/FKmrAHxoI9eOmoHsUHvwS+gVGHgLDYT6fCSg=;
-        b=yDhnOkxOPPN061TUNlFFv4Z7Womut94mL2Rd3ieA1VCLvQmzSOeDl8LSnhMmE8Nz4Q
-         9lncA4zfuT+G2RMcsuWyblG3KmPO3ZEtUsPCUP/bdsOOGG4tcQ223wtWzUsWs/ehCdYU
-         esuhwqYk56q5kjAySUVFB3AHCJ/C3CnF2z8Nc=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=287gfWB65Vk5c1leetmV0DjZwC7xl4WDNV9ngOeqPHU=;
+        b=ej5lQbLTEGihyTw6iD5kG+5LroAAP+wkYw5zI1wPvwgQjtNxXJ6BiFZTpdOZJX0UmR
+         uZy0DyyKVpGE9m9mIf5pOfAnOIXFRvMlIOX7XbFyF72NYuifwHBuyQmVG1zwOoMHw1cd
+         CITgyoFAA0+cDKGC09PCylIMQcTnRUrqlZUEY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=PaH9RsA6JSJQXOisl9I4FocXWIui44yJkN5EC8NxcY/kiuvqg4drgmyLu0y97N2Y9W
-         AdqkBLJHWt2L1T5gz3oTJG4Bx385AJG7w2VCUQo2wPaRhwqJazQGCFEh3kxSeZx1xw8M
-         qsurlqFzEA0xiRw5j4OfGgCDd3yXAuuBsGTgo=
-Received: by 10.151.59.19 with SMTP id m19mr2209856ybk.56.1272148926363;
-        Sat, 24 Apr 2010 15:42:06 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm1831746iwn.9.2010.04.24.15.42.05
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 24 Apr 2010 15:42:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <87tyr0sdv8.fsf@frosties.localdomain>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=p0u2BoQJgW366ip9x8umKT5cQ2Sw/10tRTPSruxxCocj2Yoh9PQVJFWw/m469CwLpT
+         YqXMAvN96tvFzFSbDpDH6ESfELJCC9E1woRMP+EszLRKl4hnlbrgnnbZp/C9KGDR6fpk
+         nO9GfQab7rngirP0fc30JA7TYplB13ZjZogrY=
+Received: by 10.102.243.26 with SMTP id q26mr1102828muh.34.1272150227084; Sat, 
+	24 Apr 2010 16:03:47 -0700 (PDT)
+Received: by 10.103.168.14 with HTTP; Sat, 24 Apr 2010 16:03:27 -0700 (PDT)
+In-Reply-To: <1272094442-26485-1-git-send-email-pkufranky@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145709>
 
-Goswin von Brederlow wrote:
+Heya,
 
-> Must have overlooked that mail, sorry.
+On Sat, Apr 24, 2010 at 09:34, Ping Yin <pkufranky@gmail.com> wrote:
+> +Use gmail as the smtp server
 
-No problem.  Sorry for my impatience with the long thread.  Out of
-this discussion there have already emerged two ideas I like a lot:
+I use this setup myself, and I think it's very convenient to have this
+in there, so fwiw:
 
- 1. a more noticeable safety for =E2=80=98git commit=E2=80=99 with no s=
-taged changes
- 2. Jakub=E2=80=99s safety for =E2=80=98git commit -a=E2=80=99 with sta=
-ged changes
+Acked by: Sverre Rabbelier <srabbelier@gmail.com>
 
-Thanks.
+-- 
+Cheers,
+
+Sverre Rabbelier
