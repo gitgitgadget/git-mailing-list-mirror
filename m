@@ -1,127 +1,92 @@
-From: Eric Raymond <esr@thyrsus.com>
-Subject: Re: ciabot scripts and merge flood prevention
-Date: Sat, 24 Apr 2010 12:05:44 -0400
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20100424160544.GB24165@thyrsus.com>
-References: <20100424150511.GA7318@gnu.kitenet.net>
-Reply-To: esr@thyrsus.com
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] fast-import docs: LT is valid in email, GT is not
+Date: Sat, 24 Apr 2010 11:12:36 -0500
+Message-ID: <20100424161236.GB14690@progeny.tock>
+References: <1272069944-20626-1-git-send-email-lodatom@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="8t9RHnE3ZwKMSgU+"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Sat Apr 24 18:05:59 2010
+To: Mark Lodato <lodatom@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 24 18:12:37 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5hri-0001bv-Dt
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Apr 2010 18:05:58 +0200
+	id 1O5hy8-00052x-J9
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Apr 2010 18:12:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753683Ab0DXQFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Apr 2010 12:05:46 -0400
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:59381
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753591Ab0DXQFp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Apr 2010 12:05:45 -0400
-Received: by snark.thyrsus.com (Postfix, from userid 23)
-	id 6CBEF20CBC5; Sat, 24 Apr 2010 12:05:44 -0400 (EDT)
+	id S1753679Ab0DXQMG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Apr 2010 12:12:06 -0400
+Received: from mail-qy0-f179.google.com ([209.85.221.179]:48203 "EHLO
+	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752001Ab0DXQME (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Apr 2010 12:12:04 -0400
+Received: by qyk9 with SMTP id 9so14832587qyk.1
+        for <git@vger.kernel.org>; Sat, 24 Apr 2010 09:12:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=WRQQ/mcc9R1sqKZ5N6UBWJZ4nJxwuUwhANyCV+7WDEg=;
+        b=BHMhbLQSKZTgR+ojf34crd+LNHoighEZkazLE+zf6e+JvNgrRIOv2sGsnIXxeeWJNh
+         e1w8JckqjJ0LeIa5Pv/zYP1wgM9Kakl3qSv0FR+X7L4RtrXQWFYgoKLaUKmbkCdHKpbc
+         yGWiH5x93ZerfEbrBmUeG8wLdyEUx7t9fbTKo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=ZNM6pzeU69IcKNLy70DUasZ5vq+QtIlkQ4DViSvPPyeoTi1qUI1MBGQUffKsyi/cJK
+         u5qrOEP3/wz0otNjGAkwekH/0bvX0x2SsJGmTqSxbSQgy+NitZ4wbwERqRE3cT6yFz8u
+         MhgAvkQHWMX3+mpw1U1x9Ox1Dwgv/KPpngvKo=
+Received: by 10.229.232.198 with SMTP id jv6mr1943117qcb.11.1272125520739;
+        Sat, 24 Apr 2010 09:12:00 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 20sm1591516iwn.13.2010.04.24.09.12.00
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 24 Apr 2010 09:12:00 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100424150511.GA7318@gnu.kitenet.net>
-X-Eric-Conspiracy: There is no conspiracy
+In-Reply-To: <1272069944-20626-1-git-send-email-lodatom@gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145686>
 
+Hi Mark,
 
---8t9RHnE3ZwKMSgU+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Mark Lodato wrote:
 
-Joey Hess <joey@kitenet.net>:
-> There's a problem with the old ciabot scripts, and I think also the v3
-> versions, when two published branches are merged. In this case, ciabot
-> reports all the changes twice, once when they're first committed to the
-> first branch, and a second time when the first branch is merged into the
-> second. This can unleash a flood of redundant commit messages that wipes
-> out conversation in any poor irc channel that has CIA in it. I've
-> generated floods that lasted up to 15 minutes.
->=20
-> I document the problem and one solution here. There's also a link to=20
-> the hook script Gnome is using, based on the same method.
-> http://kitenet.net/~joey/blog/entry/lazyweb:_git_cia_hooks/
-> Maybe this could be built into the ciabot scripts?
+> +++ b/Documentation/git-fast-import.txt
+> @@ -394,7 +394,7 @@ Here `<name>` is the person's display name (for e=
+xample
+>  and greater-than (\x3e) symbols.  These are required to delimit
+>  the email address from the other fields in the line.  Note that
+>  `<name>` is free-form and may contain any sequence of bytes, except
+> -`LT` and `LF`.  It is typically UTF-8 encoded.
+> +`GT` and `LF`.  It is typically UTF-8 encoded.
 
-For the record, Joey suggests this:
+	Here <name> is the person=E2=80=99s display name (for example
+	=E2=80=9CCom M Itter=E2=80=9D)
 
-while read oldrev newrev refname; do
-    branchname=3D${refname#refs/heads/}
-    [ "$branchname" =3D "master" ] && branchname=3D
-    for merged in $(git rev-parse --symbolic-full-name --not --branches | e=
-grep -v "^\^$refname$" | git rev-list --reverse --stdin $oldrev..$newrev); =
-do
-        ciabot_git.pl $merged $branchname
-    done
-done
+So the original text is correct --- a <name> cannot contain LT because
+a less-than sign marks the boundary between a name and email address.
 
-with discussion that is short enough to reproduce here.
+Maybe you were wondering what characters are valid in an e-mail address=
+?
+The comments in fast-import.c and code in ident.c are consistent about
+this: the forbidden characters are <, >, and LF, though no one seems to
+check (see also my other reply).  A patch to explain this (including a
+reference to git-commit-tree(1), I guess) might be useful.
 
-buxy writes:
->Dear Joey, we also had this problem for dpkg, that=E2=80=99s why I hacked =
-the
->/usr/local/bin/git-commit-notice script that we=E2=80=99re using on Alioth=
- to
->do something like this instead: [gives the above script]
->
->It will stop git rev-list each time that it encounters a commit that
->is available in any of the other branches present in the repository
->and thus when you merge a branch, you only see the merge commit in
->CIA.
->
->You should also note that the script is smarter as it calls CIA only
->for branch updates, not for tag creation (and other kinds of updates)
->where it only leads to strange errors IIRC.
+git won=E2=80=99t understand an email with embedded > or LF.  I=E2=80=99=
+m not sure a <
+would cause problems, but I don=E2=80=99t mind that it is disallowed.
 
-I had noticed the strange errors on tag creation and was planning to
-do something about it.  What I see happening is that the existing=20
-git rev-list call generates a list beginning with a commit ID consisting
-of all zeros when the hook is called as the result of a tag push.
-
-He also links to this:=20
-
-http://git.gnome.org/cgit/gitadmin-bin/tree/post-receive-notify-cia
-
-> (BTW, in both scripts, the example of git-rev-list ... | tac
-> could perhaps more efficiently be written as git-rev-list --reverse ...)
-
-I had noticed this. I didn't change it because (a) I wasn't sure how far
-back the --reverse argument went, and (b) I've been thinking about implment=
-ing
-some switches to change the calling interface so that the rev list=20
-expansion is dome internally. It needs to be smarter to banish the
-tag-push problem.
-
-I expect to be able to tackle this within the next four days.
---=20
-		<a href=3D"http://www.catb.org/~esr/">Eric S. Raymond</a>
-
---8t9RHnE3ZwKMSgU+
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iD8DBQFL0xbYrfUW04Qh8RwRAuG/AKD+HPcuSeDMavifln3kGclRIkZcdACguWip
-yz1PYmTIdFem5HkWu/r9KqE=
-=kWY2
------END PGP SIGNATURE-----
-
---8t9RHnE3ZwKMSgU+--
+Hope that helps,
+Jonathan
