@@ -1,71 +1,70 @@
-From: Miles Bader <miles@gnu.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
 Subject: Re: 'commit -a' safety
-Date: Sat, 24 Apr 2010 18:56:49 +0900
-Message-ID: <87fx2li36m.fsf@catnip.gol.com>
+Date: Sat, 24 Apr 2010 12:05:36 +0200
+Message-ID: <m2vdbhxj0v.fsf@igel.home>
 References: <20100422151037.2310.2429.reportbug@frosties.localdomain>
 	<20100422155806.GC4801@progeny.tock>
 	<m3633hdw9u.fsf_-_@localhost.localdomain>
-Reply-To: Miles Bader <miles@gnu.org>
+	<87fx2li36m.fsf@catnip.gol.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
 	Goswin von Brederlow <goswin-v-b@web.de>,
 	578764@bugs.debian.org, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 24 11:57:14 2010
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Apr 24 12:05:59 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5c6p-0000G7-EF
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Apr 2010 11:57:11 +0200
+	id 1O5cFK-0004SX-FP
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Apr 2010 12:05:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751323Ab0DXJ45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Apr 2010 05:56:57 -0400
-Received: from smtp11.dentaku.gol.com ([203.216.5.73]:57583 "EHLO
-	smtp11.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750837Ab0DXJ44 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Apr 2010 05:56:56 -0400
-Received: from 218.231.253.147.eo.eaccess.ne.jp ([218.231.253.147] helo=catnip.gol.com)
-	by smtp11.dentaku.gol.com with esmtpa (Dentaku)
-	id 1O5c6U-0006gv-Dh; Sat, 24 Apr 2010 18:56:50 +0900
-Received: by catnip.gol.com (Postfix, from userid 1000)
-	id D64C7DF93; Sat, 24 Apr 2010 18:56:49 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-In-Reply-To: <m3633hdw9u.fsf_-_@localhost.localdomain> (Jakub Narebski's
-	message of "Sat, 24 Apr 2010 02:40:39 -0700 (PDT)")
-X-Virus-Scanned: ClamAV GOL (outbound)
-X-Abuse-Complaints: abuse@gol.com
+	id S1751624Ab0DXKFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Apr 2010 06:05:41 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:52148 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751406Ab0DXKFk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Apr 2010 06:05:40 -0400
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id AA0241C15693;
+	Sat, 24 Apr 2010 12:05:37 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id 8C63F90E66;
+	Sat, 24 Apr 2010 12:05:37 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan1.mnet-online.de [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id oDuflOBAJTfd; Sat, 24 Apr 2010 12:05:36 +0200 (CEST)
+Received: from igel.home (ppp-88-217-124-203.dynamic.mnet-online.de [88.217.124.203])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Sat, 24 Apr 2010 12:05:36 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 5A509CA297; Sat, 24 Apr 2010 12:05:36 +0200 (CEST)
+X-Yow: I put aside my copy of ``BOWLING WORLD'' and think
+ about GUN CONTROL legislation..
+In-Reply-To: <87fx2li36m.fsf@catnip.gol.com> (Miles Bader's message of "Sat,
+	24 Apr 2010 18:56:49 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.96 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145664>
 
-Jakub Narebski <jnareb@gmail.com> writes:
-> I'd like for 'git commit -a' to *fail* if there are staged changes for
-> tracked files, excluding added, removed and renamed files.  If you
-> have some staged changes you would get an error message:
->
->   $ git add tracked-file
->   $ git commit -a
->   fatal: There are staged changes to tracked files
->   hint: To commit staged changes, use 'git commit'
->   hint: To commit all changes, use 'git commit -f -a' 
+Miles Bader <miles@gnu.org> writes:
 
-That's bad because of the dual nature of "git add" -- someone may
-normally use "-a" most of the time to commit changes, but has really no
-choice other than git add to add a new file, So with this change, their
-normal (and reasonable) habits would suddenly result in failure.
+> I think it's sort of annoying that "git add" has such a dual meaning
+> (instead of, for instance, having separate "add" and "stage" commands)
 
-I think it's sort of annoying that "git add" has such a dual meaning
-(instead of, for instance, having separate "add" and "stage" commands)
--- it's one of the more confusing things about learning about git
--- but oh well, it's unlikely to get changed at this point....
+"git add -N" could be regarded as such a non-staging add command.
 
--Miles
+Andreas.
 
 -- 
-Defenceless, adj. Unable to attack.
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
