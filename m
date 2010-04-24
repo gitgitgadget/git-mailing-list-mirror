@@ -1,98 +1,99 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] fsck: check ident lines in commit objects
-Date: Sat, 24 Apr 2010 11:59:00 -0500
-Message-ID: <20100424165900.GC14690@progeny.tock>
-References: <1272069944-20626-1-git-send-email-lodatom@gmail.com>
- <20100424160608.GA14690@progeny.tock>
+From: Mark Lodato <lodatom@gmail.com>
+Subject: Re: [PATCH] fast-import docs: LT is valid in email, GT is not
+Date: Sat, 24 Apr 2010 12:59:01 -0400
+Message-ID: <i2hca433831004240959s227a96as2caf523da94dff51@mail.gmail.com>
+References: <1272069944-20626-1-git-send-email-lodatom@gmail.com> 
+	<20100424161236.GB14690@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 24 18:58:32 2010
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 24 18:59:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5igZ-0002b5-DU
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Apr 2010 18:58:31 +0200
+	id 1O5ihU-0002yV-Bn
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Apr 2010 18:59:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753586Ab0DXQ61 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Apr 2010 12:58:27 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:41032 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751186Ab0DXQ6Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Apr 2010 12:58:25 -0400
-Received: by pwj9 with SMTP id 9so7575888pwj.19
-        for <git@vger.kernel.org>; Sat, 24 Apr 2010 09:58:25 -0700 (PDT)
+	id S1753456Ab0DXQ7X convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Apr 2010 12:59:23 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:49981 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751406Ab0DXQ7X convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Apr 2010 12:59:23 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1453274fga.1
+        for <git@vger.kernel.org>; Sat, 24 Apr 2010 09:59:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=AWrTtrJbLF1fWGTSx1VesmaLAGqyol4J0TQ0rORQ50E=;
-        b=hXkvPDYPFlH51S28oDYORAECPSE4DZt0IBKYoGYgfNYdUNtsloGWMLFi0rFYIzjiyg
-         uOS4HyIHNfKDEHpXXqZPXIJbJ1oqcmL6PhN84UOSMps3Z4Iq/QgiilFP3KPdzXuAvjlq
-         /DvzNHYFGRG1FU+sq/GGIuUbfUxfPE674xVG0=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=LosiH5P8lhBsiM5wIJ2TX+UBT6cq1lV2t14nFVjO9i4=;
+        b=apJXe+qgkCJo/auNVoV16vUdNo3H+QRYGrQ/+HJZ+UqLrSqmPE8JyVb9oK/RAKCNoy
+         sFOyDpz4/9P6j56i2Cn2GWQg2gCEqw1XKG9l4IyxPd8xzjBKhCjvnabLXp+0vH5KNe6G
+         Ycwed+DcDT74MU2BLtwEpwurDLv3NjbNWGRN8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=knjm+2Nve7Ca9fJNMySC8vsH2S9unzd4zdzczjhHBCm4SwkIpTr5layTH3L9K1cOgl
-         e2nJ9LZdHH5WTSh3Q6Dcii8db6UKXX7IrD9Ig3vwCqttBX6SDp5ke3xB1AHmoz5pcos9
-         z48K7C25gprMUTKFz5o4WJRzacuf5jpRVN2Co=
-Received: by 10.143.86.3 with SMTP id o3mr834956wfl.182.1272128304969;
-        Sat, 24 Apr 2010 09:58:24 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm1619694iwn.0.2010.04.24.09.58.24
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 24 Apr 2010 09:58:24 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100424160608.GA14690@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=S9IBY7/fxSQviP9JiTfgb9PelDJ8L2Bj9++Y4GokhVxmQKPY1nyn2Hxf2emA7SFLw3
+         PSwIbPDVpUE/nAcRtve23Z+zJXvqA3fCR/zui+WLhLHPEo5ZqFunaXpWfAvNMfUvJIuF
+         Ic4DyHmYiD3vMY96AYkAmiBMqwAAn6ZDSitkY=
+Received: by 10.239.159.208 with SMTP id z16mr133026hbc.125.1272128361090; 
+	Sat, 24 Apr 2010 09:59:21 -0700 (PDT)
+Received: by 10.239.179.20 with HTTP; Sat, 24 Apr 2010 09:59:01 -0700 (PDT)
+In-Reply-To: <20100424161236.GB14690@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145690>
 
-Jonathan Nieder wrote:
+On Sat, Apr 24, 2010 at 12:12 PM, Jonathan Nieder <jrnieder@gmail.com> =
+wrote:
+> Mark Lodato wrote:
+>> +++ b/Documentation/git-fast-import.txt
+>> @@ -394,7 +394,7 @@ Here `<name>` is the person's display name (for =
+example
+>> =C2=A0and greater-than (\x3e) symbols. =C2=A0These are required to d=
+elimit
+>> =C2=A0the email address from the other fields in the line. =C2=A0Not=
+e that
+>> =C2=A0`<name>` is free-form and may contain any sequence of bytes, e=
+xcept
+>> -`LT` and `LF`. =C2=A0It is typically UTF-8 encoded.
+>> +`GT` and `LF`. =C2=A0It is typically UTF-8 encoded.
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Here <name> is the person=E2=80=99s displa=
+y name (for example
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0=E2=80=9CCom M Itter=E2=80=9D)
+>
+> So the original text is correct --- a <name> cannot contain LT becaus=
+e
+> a less-than sign marks the boundary between a name and email address.
 
-> Check that email addresses do not contain <, >, or newline so they ca=
-n
-> be quickly scanned without trouble.
+Ah, you're right, sorry.  I thought it was <email>, not <name>.
 
-Test was bogus: the object format tests in fsck do not affect its exit
-code.  Here=E2=80=99s a fixup.
+> Maybe you were wondering what characters are valid in an e-mail addre=
+ss?
+> The comments in fast-import.c and code in ident.c are consistent abou=
+t
+> this: the forbidden characters are <, >, and LF, though no one seems =
+to
+> check (see also my other reply). =C2=A0A patch to explain this (inclu=
+ding a
+> reference to git-commit-tree(1), I guess) might be useful.
+>
+> git won=E2=80=99t understand an email with embedded > or LF. =C2=A0I=E2=
+=80=99m not sure a <
+> would cause problems, but I don=E2=80=99t mind that it is disallowed.
 
-Sorry for the trouble,
-Jonathan
+It seems like it would be good to disallow <, >, and LF in both name
+and email.  With your other patch, > is allowed in the name.
 
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index d8eed9b..22a80c8 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -64,7 +64,9 @@ test_expect_success 'email without @ is okay' '
- 	new=3D$(git hash-object -t commit -w --stdin <okay) &&
- 	echo "$new" &&
- 	git update-ref refs/heads/bogus "$new" &&
--	git fsck
-+	git fsck 2>out &&
-+	cat out &&
-+	! grep "error in commit $new" out
- '
- git update-ref -d refs/heads/bogus
- rm -f ".git/objects/$new"
-@@ -77,6 +79,7 @@ test_expect_success 'email with embedded > is not oka=
-y' '
- 	echo "$new" &&
- 	git update-ref refs/heads/bogus "$new" &&
- 	git fsck 2>out &&
-+	cat out &&
- 	grep "error in commit $new" out
- '
- git update-ref -d refs/heads/bogus
+Thanks for the clarification,
+Mark
