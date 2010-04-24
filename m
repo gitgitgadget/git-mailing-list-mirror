@@ -1,186 +1,127 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] fsck: check ident lines in commit objects
-Date: Sat, 24 Apr 2010 11:06:08 -0500
-Message-ID: <20100424160608.GA14690@progeny.tock>
-References: <1272069944-20626-1-git-send-email-lodatom@gmail.com>
+From: Eric Raymond <esr@thyrsus.com>
+Subject: Re: ciabot scripts and merge flood prevention
+Date: Sat, 24 Apr 2010 12:05:44 -0400
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20100424160544.GB24165@thyrsus.com>
+References: <20100424150511.GA7318@gnu.kitenet.net>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 24 18:05:45 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="8t9RHnE3ZwKMSgU+"
+Cc: git@vger.kernel.org
+To: Joey Hess <joey@kitenet.net>
+X-From: git-owner@vger.kernel.org Sat Apr 24 18:05:59 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5hrU-0001SE-0U
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Apr 2010 18:05:44 +0200
+	id 1O5hri-0001bv-Dt
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Apr 2010 18:05:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753573Ab0DXQFh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Apr 2010 12:05:37 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:34688 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753208Ab0DXQFf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Apr 2010 12:05:35 -0400
-Received: by pxi17 with SMTP id 17so1185953pxi.19
-        for <git@vger.kernel.org>; Sat, 24 Apr 2010 09:05:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=qbwIWROaZ4+/EuUJmNo9TXdpk/MrOzCGTZVxTIcTpvs=;
-        b=LE0A/NknqPY3qBunfTSeDctN9z8QbEZipl8JfkdYsqwnriQ8Hu/1f1mcG8WLgcIyiO
-         /Ufn8Emu2x4Yeu0wUFwMgzSXz3+6GwTZJT9RzHB7WlLEXJ7f+rhkT5aF3YcL7j/yRZvT
-         +Ma4mcovwJSMUkeaWx0fO8XhLJUMpqlDkxG9E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=HABPrJSakj6mRg25gF8gVu6NeQALoVsaqbiitxhABC0RlPEjZM0lExUxgKFws4VF31
-         M/8arOYObQyrTYWWqr4w0Zu36AH4d1uK0lA1VWTbqoJcRVrJ5Fb3J5L6m+tD3GABt/gW
-         KnPuijE7BmySzVcz4snyIl6u3YWR6PKL9S2Dw=
-Received: by 10.115.65.19 with SMTP id s19mr1795258wak.203.1272125135328;
-        Sat, 24 Apr 2010 09:05:35 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm1587977iwn.4.2010.04.24.09.05.34
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 24 Apr 2010 09:05:34 -0700 (PDT)
+	id S1753683Ab0DXQFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Apr 2010 12:05:46 -0400
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:59381
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753591Ab0DXQFp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Apr 2010 12:05:45 -0400
+Received: by snark.thyrsus.com (Postfix, from userid 23)
+	id 6CBEF20CBC5; Sat, 24 Apr 2010 12:05:44 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <1272069944-20626-1-git-send-email-lodatom@gmail.com>
+In-Reply-To: <20100424150511.GA7318@gnu.kitenet.net>
+X-Eric-Conspiracy: There is no conspiracy
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145685>
 
-Check that email addresses do not contain <, >, or newline so they can
-be quickly scanned without trouble.  The copy() function in ident.c
-already ensures that ordinary git commands will not write email
-addresses without this property.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Thoughts?  Should some of these errors be warnings?
+--8t9RHnE3ZwKMSgU+
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-git fast-import is capable of producing commits with some of these
-problems: for example, it is fine with
+Joey Hess <joey@kitenet.net>:
+> There's a problem with the old ciabot scripts, and I think also the v3
+> versions, when two published branches are merged. In this case, ciabot
+> reports all the changes twice, once when they're first committed to the
+> first branch, and a second time when the first branch is merged into the
+> second. This can unleash a flood of redundant commit messages that wipes
+> out conversation in any poor irc channel that has CIA in it. I've
+> generated floods that lasted up to 15 minutes.
+>=20
+> I document the problem and one solution here. There's also a link to=20
+> the hook script Gnome is using, based on the same method.
+> http://kitenet.net/~joey/blog/entry/lazyweb:_git_cia_hooks/
+> Maybe this could be built into the ciabot scripts?
 
-	committer C O Mitter <foo@b>ar.net> 005 -    +5
+For the record, Joey suggests this:
 
- fsck.c          |   47 +++++++++++++++++++++++++++++++++++++++++++++++
- t/t1450-fsck.sh |   25 +++++++++++++++++++++++++
- 2 files changed, 72 insertions(+), 0 deletions(-)
+while read oldrev newrev refname; do
+    branchname=3D${refname#refs/heads/}
+    [ "$branchname" =3D "master" ] && branchname=3D
+    for merged in $(git rev-parse --symbolic-full-name --not --branches | e=
+grep -v "^\^$refname$" | git rev-list --reverse --stdin $oldrev..$newrev); =
+do
+        ciabot_git.pl $merged $branchname
+    done
+done
 
-diff --git a/fsck.c b/fsck.c
-index 89278c1..ae9ae1a 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -222,12 +222,47 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
- 	return retval;
- }
- 
-+static int fsck_ident(char **ident, struct object *obj, fsck_error error_func)
-+{
-+	if (**ident == '<' || **ident == '\n')
-+		return error_func(obj, FSCK_ERROR, "invalid author/committer line - missing space before email");
-+	*ident += strcspn(*ident, "<\n");
-+	if ((*ident)[-1] != ' ')
-+		return error_func(obj, FSCK_ERROR, "invalid author/committer line - missing space before email");
-+	if (**ident != '<')
-+		return error_func(obj, FSCK_ERROR, "invalid author/committer line - missing email");
-+	(*ident)++;
-+	*ident += strcspn(*ident, "<>\n");
-+	if (**ident != '>')
-+		return error_func(obj, FSCK_ERROR, "invalid author/committer line - bad email");
-+	(*ident)++;
-+	if (**ident != ' ')
-+		return error_func(obj, FSCK_ERROR, "invalid author/committer line - missing space before date");
-+	(*ident)++;
-+	if (**ident == '0' && (*ident)[1] != ' ')
-+		return error_func(obj, FSCK_ERROR, "invalid author/committer line - zero-padded date");
-+	*ident += strspn(*ident, "0123456789");
-+	if (**ident != ' ')
-+		return error_func(obj, FSCK_ERROR, "invalid author/committer line - bad date");
-+	(*ident)++;
-+	if ((**ident != '+' && **ident != '-') ||
-+	    !isdigit((*ident)[1]) ||
-+	    !isdigit((*ident)[2]) ||
-+	    !isdigit((*ident)[3]) ||
-+	    !isdigit((*ident)[4]) ||
-+	    ((*ident)[5] != '\n'))
-+		return error_func(obj, FSCK_ERROR, "invalid author/committer line - bad time zone");
-+	(*ident) += 6;
-+	return 0;
-+}
-+
- static int fsck_commit(struct commit *commit, fsck_error error_func)
- {
- 	char *buffer = commit->buffer;
- 	unsigned char tree_sha1[20], sha1[20];
- 	struct commit_graft *graft;
- 	int parents = 0;
-+	int err;
- 
- 	if (commit->date == ULONG_MAX)
- 		return error_func(&commit->object, FSCK_ERROR, "invalid author/committer line");
-@@ -266,6 +301,18 @@ static int fsck_commit(struct commit *commit, fsck_error error_func)
- 	}
- 	if (memcmp(buffer, "author ", 7))
- 		return error_func(&commit->object, FSCK_ERROR, "invalid format - expected 'author' line");
-+	buffer += 7;
-+	err = fsck_ident(&buffer, &commit->object, error_func);
-+	if (err)
-+		return err;
-+	if (memcmp(buffer, "committer ", strlen("committer ")))
-+		return error_func(&commit->object, FSCK_ERROR, "invalid format - expected 'committer' line");
-+	buffer += strlen("committer ");
-+	err = fsck_ident(&buffer, &commit->object, error_func);
-+	if (err)
-+		return err;
-+	if (*buffer != '\n')
-+		return error_func(&commit->object, FSCK_ERROR, "invalid format - expected blank line");
- 	if (!commit->tree)
- 		return error_func(&commit->object, FSCK_ERROR, "could not load commit's tree %s", sha1_to_hex(tree_sha1));
- 
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 49cae3e..d8eed9b 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -57,6 +57,31 @@ test_expect_success 'branch pointing to non-commit' '
- 	git update-ref -d refs/heads/invalid
- '
- 
-+new=nothing
-+test_expect_success 'email without @ is okay' '
-+	git cat-file commit HEAD >basis &&
-+	sed "s/@/AT/" basis >okay &&
-+	new=$(git hash-object -t commit -w --stdin <okay) &&
-+	echo "$new" &&
-+	git update-ref refs/heads/bogus "$new" &&
-+	git fsck
-+'
-+git update-ref -d refs/heads/bogus
-+rm -f ".git/objects/$new"
-+
-+new=nothing
-+test_expect_success 'email with embedded > is not okay' '
-+	git cat-file commit HEAD >basis &&
-+	sed "s/@[a-z]/&>/" basis >bad-email &&
-+	new=$(git hash-object -t commit -w --stdin <bad-email) &&
-+	echo "$new" &&
-+	git update-ref refs/heads/bogus "$new" &&
-+	git fsck 2>out &&
-+	grep "error in commit $new" out
-+'
-+git update-ref -d refs/heads/bogus
-+rm -f ".git/objects/$new"
-+
- cat > invalid-tag <<EOF
- object ffffffffffffffffffffffffffffffffffffffff
- type commit
--- 
-1.7.0.6.2.g02f3f0.dirty
+with discussion that is short enough to reproduce here.
+
+buxy writes:
+>Dear Joey, we also had this problem for dpkg, that=E2=80=99s why I hacked =
+the
+>/usr/local/bin/git-commit-notice script that we=E2=80=99re using on Alioth=
+ to
+>do something like this instead: [gives the above script]
+>
+>It will stop git rev-list each time that it encounters a commit that
+>is available in any of the other branches present in the repository
+>and thus when you merge a branch, you only see the merge commit in
+>CIA.
+>
+>You should also note that the script is smarter as it calls CIA only
+>for branch updates, not for tag creation (and other kinds of updates)
+>where it only leads to strange errors IIRC.
+
+I had noticed the strange errors on tag creation and was planning to
+do something about it.  What I see happening is that the existing=20
+git rev-list call generates a list beginning with a commit ID consisting
+of all zeros when the hook is called as the result of a tag push.
+
+He also links to this:=20
+
+http://git.gnome.org/cgit/gitadmin-bin/tree/post-receive-notify-cia
+
+> (BTW, in both scripts, the example of git-rev-list ... | tac
+> could perhaps more efficiently be written as git-rev-list --reverse ...)
+
+I had noticed this. I didn't change it because (a) I wasn't sure how far
+back the --reverse argument went, and (b) I've been thinking about implment=
+ing
+some switches to change the calling interface so that the rev list=20
+expansion is dome internally. It needs to be smarter to banish the
+tag-push problem.
+
+I expect to be able to tackle this within the next four days.
+--=20
+		<a href=3D"http://www.catb.org/~esr/">Eric S. Raymond</a>
+
+--8t9RHnE3ZwKMSgU+
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iD8DBQFL0xbYrfUW04Qh8RwRAuG/AKD+HPcuSeDMavifln3kGclRIkZcdACguWip
+yz1PYmTIdFem5HkWu/r9KqE=
+=kWY2
+-----END PGP SIGNATURE-----
+
+--8t9RHnE3ZwKMSgU+--
