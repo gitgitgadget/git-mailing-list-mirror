@@ -1,67 +1,96 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: Jack Desert <jackdesert556@gmail.com>
 Subject: Re: Bugreport: Git responds with stderr instead of stdout
-Date: Sun, 25 Apr 2010 18:24:43 +0000
-Message-ID: <y2g51dd1af81004251124zc4da759dka2ceebe1d9735fd7@mail.gmail.com>
+Date: Sun, 25 Apr 2010 13:34:53 -0500
+Message-ID: <20100425133453.3da77af9@pennie-farthing>
 References: <20100425130607.2c92740f@pennie-farthing>
-	 <v2m8c9a061004251110paf7ba4e5r1997bc6262afcb1d@mail.gmail.com>
+	<v2m8c9a061004251110paf7ba4e5r1997bc6262afcb1d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jack Desert <jackdesert556@gmail.com>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Jacob Helwig <jacob.helwig@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 25 20:24:54 2010
+X-From: git-owner@vger.kernel.org Sun Apr 25 20:35:14 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O66Vh-00028H-ES
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 20:24:53 +0200
+	id 1O66fi-0007Ks-0W
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 20:35:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753791Ab0DYSYq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Apr 2010 14:24:46 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:58605 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753727Ab0DYSYp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Apr 2010 14:24:45 -0400
-Received: by bwz19 with SMTP id 19so13186bwz.21
-        for <git@vger.kernel.org>; Sun, 25 Apr 2010 11:24:44 -0700 (PDT)
+	id S1753192Ab0DYSe6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Apr 2010 14:34:58 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:41150 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752342Ab0DYSe5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Apr 2010 14:34:57 -0400
+Received: by pwj9 with SMTP id 9so7875152pwj.19
+        for <git@vger.kernel.org>; Sun, 25 Apr 2010 11:34:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lAge4xzTHB9inngdnw0lXzkYTVEZOssxA1ZfjxKXUCY=;
-        b=fBgSkUCBtQDqWVhq0kbhzqAaCzBxys0LLrW27a+zQJ9SDt2Af10L5jCYdPYgL/ykfO
-         TkNJFy/XfBBE7xZIjd6Vfbv1XCg2Xkrza7nNNihQOhG2Lk+zYWA3BmUB7eMQ+13mLhbi
-         bPJmQV9GMCG57xWAttvNU4kEbcEdT7cT858fA=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:in-reply-to:references:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=HjrxEiuSRAUqQDFfswyb3bOCOSk636RPvPNP2+dQUW0=;
+        b=uSqZvTRM/R8T2+IjRU8XTRLMUyjpZcUYn3aj9j9U2yXsJXqLrmJTD9tfgzyLuRuJFb
+         avKKzewyqXMmR/md+IXFqpwE1qe0oMstIRNx/s4DQPYsLaLq9hpNs8KoA8tmL7VPrWi7
+         9QxC21jPHKMnWfNtZN6qhVCT/Fuslfk7VgPcw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=NIV7bvQGfrMll34D3nvtAGZ2au8qApU4Fx4UnE1/4/S/pbg8mQlLqGWA7AcXIj48f7
-         z5ZOFA+/MJGIDN432PGgBzN2ziSpjCTQxtTZBe0G/RfEZ4pSEZrvWd14XZbjekvjtSe4
-         gxAfbdoG0nOTk8EHdqUVLZJuvF+xAgb2KPla8=
-Received: by 10.204.24.134 with SMTP id v6mr1832825bkb.204.1272219883865; Sun, 
-	25 Apr 2010 11:24:43 -0700 (PDT)
-Received: by 10.204.121.195 with HTTP; Sun, 25 Apr 2010 11:24:43 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        b=ssOveMGADuE7ziSEqtSs3pViHDjGDA0fzJMp1ubsiWGd0w/xT9BIQSxxkQfRTADI10
+         EReqoImrB/LzSVAggK4gllf3FGrSu0HeaIvt4iY6WB/dQuwUY5BJ8AS0Mygw5C3+EGWL
+         1o4dhbEuUzfxD1B/boTRS5GYakWfncDnLC1LQ=
+Received: by 10.142.151.9 with SMTP id y9mr1323369wfd.123.1272220496982;
+        Sun, 25 Apr 2010 11:34:56 -0700 (PDT)
+Received: from pennie-farthing (oh-76-1-213-69.dhcp.embarqhsd.net [76.1.213.69])
+        by mx.google.com with ESMTPS id 22sm2454121iwn.12.2010.04.25.11.34.55
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 25 Apr 2010 11:34:56 -0700 (PDT)
 In-Reply-To: <v2m8c9a061004251110paf7ba4e5r1997bc6262afcb1d@mail.gmail.com>
+X-Mailer: Claws Mail 3.7.5 (GTK+ 2.18.3; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145757>
 
-On Sun, Apr 25, 2010 at 18:10, Jacob Helwig <jacob.helwig@gmail.com> wr=
-ote:
+El Sun, 25 Apr 2010 11:10:47 -0700
+Jacob Helwig <jacob.helwig@gmail.com> escribi=C3=B3:
+> On Sun, Apr 25, 2010 at 11:06, Jack Desert <jackdesert556@gmail.com> =
+wrote:
+> > I think I found a bug in Git. When I run the command
+> >
+> > =C2=A0git checkout -b new_branch
+> >
+> > Git does exactly what I've asked, except that Git's response:
+> >
+> > =C2=A0Switched to a new branch 'new_branch'
+> >
+> > comes through the stderr pipe instead of through the stdout pipe. W=
+here do I file a bug report for this?
+> >
+> > I am using Git 1.6.3.3, Ubuntu 9.10
+> >
+> > -Jack
+> >
+> >
+>=20
 > I can't really say if it's actually a bug, or not, but as to your
-> question about where to file a bug report: You just did. =C2=A0This m=
-ailing
+> question about where to file a bug report: You just did.  This mailin=
+g
 > list is the correct place.
 
-I've had some issues scripting `git fetch` because on error it'll
-print to stdout and not stderr.
+I just finished testing with the latest development version and it has =
+the same issue that 1.6.3.3 has in this regard.=20
 
-Are there some general guidelines for git's utilities that they follow
-in this regard or does each tool just do its own thing?
+
+--=20
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Jack Desert     --    Writer, Entrepeneur
+Author and Spokesman: www.LetsEATalready.com
+Software Developer:   http://GrooveTask.org
+Email: JackDesert556@gmail.com
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
