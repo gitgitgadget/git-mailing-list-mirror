@@ -1,307 +1,188 @@
 From: Will Palmer <wmpalmer@gmail.com>
-Subject: [PATCH v2 1/3] pretty: add conditional %C?colorname placeholders
-Date: Sun, 25 Apr 2010 22:56:17 +0100
-Message-ID: <1272232579-18895-2-git-send-email-wmpalmer@gmail.com>
+Subject: [PATCH v2 2/3] pretty: make %H/%h dependent on --abbrev[-commit]
+Date: Sun, 25 Apr 2010 22:56:18 +0100
+Message-ID: <1272232579-18895-3-git-send-email-wmpalmer@gmail.com>
 References: <1272232579-18895-1-git-send-email-wmpalmer@gmail.com>
+ <1272232579-18895-2-git-send-email-wmpalmer@gmail.com>
 Cc: wmpalmer@gmail.com, gitster@pobox.com, peff@peff.net
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 25 23:57:54 2010
+X-From: git-owner@vger.kernel.org Sun Apr 25 23:57:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O69pq-0002Dg-2c
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 23:57:54 +0200
+	id 1O69pq-0002Dg-R9
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 23:57:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754090Ab0DYV5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Apr 2010 17:57:37 -0400
+	id S1754095Ab0DYV5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Apr 2010 17:57:38 -0400
 Received: from mail-ww0-f46.google.com ([74.125.82.46]:56096 "EHLO
 	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754060Ab0DYV5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Apr 2010 17:57:24 -0400
-Received: by wwb22 with SMTP id 22so56835wwb.19
-        for <git@vger.kernel.org>; Sun, 25 Apr 2010 14:57:23 -0700 (PDT)
+	with ESMTP id S1754063Ab0DYV5Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Apr 2010 17:57:25 -0400
+Received: by mail-ww0-f46.google.com with SMTP id 22so56835wwb.19
+        for <git@vger.kernel.org>; Sun, 25 Apr 2010 14:57:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=vJwpXDtX1XRXh8BoN+SB81+T1oZxgfnCskh81OGm3iw=;
-        b=nllJ1RfYbqmQsSPMQVLxP61ueD7fp6g6E/nx3KxiBB9hInLc3vJGXIqWxpGMLLWy2p
-         ETh4jVekB9nj34OqmjXlIOpAONgMUqM+V7ls/L3yox12R+EG/M0dHVl1QO3VMtmgtgzp
-         Uw93pW3TiejbbU0pSlbw5LNGdY4DMPe1Z5pII=
+        bh=rVF2NvAUVnhQtiDmIuLcNJbbI8aoxOKIGd76JosLeS0=;
+        b=kALfknmhN0imJEEd+yBwv/c9/f5rXl+GPcSZ/DGMI3MU27Q6z4UZJYYjASppAA3j4Z
+         hqnOXr7nm5veCVP6PopL8agvZZwCBdXvWpmX+jlBGHxkHzDZtZJZMXq33k2RQl60+Q2T
+         vDByRgiYAM91HYjrRCcPt29JODRtB6AFctJ6g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=kCAbdF6AmwDDc0bVk933pVzc8WdGLgE/M8kg4bUXYcsxwsizgem0yeErqpH/LLTQHp
-         JdVZJDC/hs9/XlDE1uMYKtwb2h0rY/SeT9FDNehMgTiQ1rRljCqazSxdukI7G42gu2+S
-         uhUsjzixnnM4pH9An81Xeiw7DqrwUOQKo2hWI=
-Received: by 10.216.88.139 with SMTP id a11mr3811863wef.74.1272232643051;
-        Sun, 25 Apr 2010 14:57:23 -0700 (PDT)
+        b=EOm6963uR3B4qOE9h7E8yGPeCdpW3A61ZG5LfqfDysSxJgid1FmPIxpG/P8Ci7xJSl
+         lEMyvWBa/Iu3mjvfqEzyPvGr5Uvyhun5xAYoez9mOEMlDA7nXu/M9RI9bAaPdsB3s7OO
+         r5zGqQi9xFH6REDDwWNDXq28SLjroR13M37iY=
+Received: by 10.216.91.12 with SMTP id g12mr4181474wef.77.1272232645207;
+        Sun, 25 Apr 2010 14:57:25 -0700 (PDT)
 Received: from localhost.localdomain (5acc34b2.bb.sky.com [90.204.52.178])
-        by mx.google.com with ESMTPS id r29sm16328252wbv.9.2010.04.25.14.57.21
+        by mx.google.com with ESMTPS id r29sm16328252wbv.9.2010.04.25.14.57.24
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 25 Apr 2010 14:57:22 -0700 (PDT)
+        Sun, 25 Apr 2010 14:57:24 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.rc1.13.gbb0a0a.dirty
-In-Reply-To: <1272232579-18895-1-git-send-email-wmpalmer@gmail.com>
+In-Reply-To: <1272232579-18895-2-git-send-email-wmpalmer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145771>
 
-Many commands are able to colorize, or not, depending on a user's
-configuration and whether output is being sent to a terminal. However,
-if a user explicitly specifies a --pretty format, color will always be
-output, regardless of the destination. This would generally be okay, in
-a "do what I tell you, whether or not I should tell you to" sense, but
-the assumption fell apart when an alias was defined which may be run in
-various contexts: there was no way to specify "use this color, but only
-if you normally would display color at all"
+Prior to this, the output of %H was always 40 characters long, and the
+output of %h always DEFAULT_ABBREV characters long, without regard to
+whether --abbrev-commit or --abbrev had been passed.
 
-Here we add the %C?colorname placeholders which act just as the
-%Ccolorname placeholders, with the exception that the pretty_context is
-checked to see if color should be used according to configuration
+Here we make "git log --pretty=%H --abbrev-commit" synonymous with
+"git log --pretty=%h", and make %h/abbreviated-%H respect the length
+specified for --abbrev.
+
+The same is applied to other commit-placeholders %P and %p, and
+--abbrev is respected for %t, though %T is not changed.
 
 Signed-off-by: Will Palmer <wmpalmer@gmail.com>
 ---
- Documentation/pretty-formats.txt |    1 +
- builtin/log.c                    |    2 +-
- builtin/rev-list.c               |    1 +
- builtin/shortlog.c               |    5 ++-
- commit.h                         |    1 +
- log-tree.c                       |    1 +
- pretty.c                         |   49 ++++++++++++++++++++++++-------------
- shortlog.h                       |    2 +-
- t/t4205-log-pretty-formats.sh    |   44 ++++++++++++++++++++++++++++++++++
- 9 files changed, 85 insertions(+), 21 deletions(-)
- create mode 100755 t/t4205-log-pretty-formats.sh
+ builtin/rev-list.c |    1 +
+ builtin/shortlog.c |    2 ++
+ commit.h           |    1 +
+ log-tree.c         |    2 ++
+ pretty.c           |   30 +++++++++++++++++++-----------
+ 5 files changed, 25 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 1686a54..53eb903 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -132,6 +132,7 @@ The placeholders are:
- - '%Cblue': switch color to blue
- - '%Creset': reset color
- - '%C(...)': color specification, as described in color.branch.* config option
-+- '%C?...: switch to specified color, if relevant color.* config option specifies that color is ok
- - '%m': left, right or boundary mark
- - '%n': newline
- - '%%': a raw '%'
-diff --git a/builtin/log.c b/builtin/log.c
-index 6208703..a9fc6ea 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -740,7 +740,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 	log.in1 = 2;
- 	log.in2 = 4;
- 	for (i = 0; i < nr; i++)
--		shortlog_add_commit(&log, list[i]);
-+		shortlog_add_commit(&log, list[i], rev);
- 
- 	shortlog_output(&log);
- 
 diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 51ceb19..5a53862 100644
+index 5a53862..1d1e59c 100644
 --- a/builtin/rev-list.c
 +++ b/builtin/rev-list.c
-@@ -99,6 +99,7 @@ static void show_commit(struct commit *commit, void *data)
+@@ -98,6 +98,7 @@ static void show_commit(struct commit *commit, void *data)
+ 		struct strbuf buf = STRBUF_INIT;
  		struct pretty_print_context ctx = {0};
  		ctx.abbrev = revs->abbrev;
++		ctx.abbrev_commit = revs->abbrev_commit;
  		ctx.date_mode = revs->date_mode;
-+		ctx.use_color = DIFF_OPT_TST(&revs->diffopt, COLOR_DIFF);
+ 		ctx.use_color = DIFF_OPT_TST(&revs->diffopt, COLOR_DIFF);
  		pretty_print_commit(revs->commit_format, commit, &buf, &ctx);
- 		if (revs->graph) {
- 			if (buf.len) {
 diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index 06320f5..7aee491 100644
+index 7aee491..5c0721c 100644
 --- a/builtin/shortlog.c
 +++ b/builtin/shortlog.c
-@@ -136,13 +136,14 @@ static void read_from_stdin(struct shortlog *log)
- 	}
- }
- 
--void shortlog_add_commit(struct shortlog *log, struct commit *commit)
-+void shortlog_add_commit(struct shortlog *log, struct commit *commit, struct rev_info *rev)
- {
- 	const char *author = NULL, *buffer;
- 	struct strbuf buf = STRBUF_INIT;
+@@ -143,6 +143,8 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit, struct rev
  	struct strbuf ufbuf = STRBUF_INIT;
  	struct pretty_print_context ctx = {0};
  
-+	ctx.use_color = DIFF_OPT_TST(&rev->diffopt, COLOR_DIFF);
++	ctx.abbrev = rev->abbrev;
++	ctx.abbrev_commit = rev->abbrev_commit;
+ 	ctx.use_color = DIFF_OPT_TST(&rev->diffopt, COLOR_DIFF);
  	pretty_print_commit(CMIT_FMT_RAW, commit, &buf, &ctx);
  	buffer = buf.buf;
- 	while (*buffer && *buffer != '\n') {
-@@ -183,7 +184,7 @@ static void get_from_rev(struct rev_info *rev, struct shortlog *log)
- 	if (prepare_revision_walk(rev))
- 		die("revision walk setup failed");
- 	while ((commit = get_revision(rev)) != NULL)
--		shortlog_add_commit(log, commit);
-+		shortlog_add_commit(log, commit, rev);
- }
- 
- static int parse_uint(char const **arg, int comma, int defval)
 diff --git a/commit.h b/commit.h
-index 26ec8c0..b6caf91 100644
+index b6caf91..7a476a0 100644
 --- a/commit.h
 +++ b/commit.h
-@@ -71,6 +71,7 @@ struct pretty_print_context
- 	enum date_mode date_mode;
+@@ -72,6 +72,7 @@ struct pretty_print_context
  	int need_8bit_cte;
  	int show_notes;
-+	int use_color;
+ 	int use_color;
++	int abbrev_commit;
  	struct reflog_walk_info *reflog_info;
  };
  
 diff --git a/log-tree.c b/log-tree.c
-index d3ae969..6bb4748 100644
+index 6bb4748..0a2309c 100644
 --- a/log-tree.c
 +++ b/log-tree.c
-@@ -282,6 +282,7 @@ void show_log(struct rev_info *opt)
+@@ -282,6 +282,8 @@ void show_log(struct rev_info *opt)
  	int abbrev_commit = opt->abbrev_commit ? opt->abbrev : 40;
  	const char *extra_headers = opt->extra_headers;
  	struct pretty_print_context ctx = {0};
-+	ctx.use_color = DIFF_OPT_TST(&opt->diffopt, COLOR_DIFF);
++	ctx.abbrev = opt->abbrev;
++	ctx.abbrev_commit = opt->abbrev_commit;
+ 	ctx.use_color = DIFF_OPT_TST(&opt->diffopt, COLOR_DIFF);
  
  	opt->loginfo = NULL;
- 	ctx.show_notes = opt->show_notes;
 diff --git a/pretty.c b/pretty.c
-index 7cb3a2a..fdb5e16 100644
+index fdb5e16..f884f48 100644
 --- a/pretty.c
 +++ b/pretty.c
-@@ -634,35 +634,50 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
- 	struct format_commit_context *c = context;
- 	const struct commit *commit = c->commit;
- 	const char *msg = commit->buffer;
-+	const char *color_start;
- 	struct commit_list *p;
-+	int use_color = c->pretty_ctx->use_color;
-+	int conditional_color = 0;
- 	int h1, h2;
+@@ -725,13 +725,16 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
  
- 	/* these are independent of the commit */
  	switch (placeholder[0]) {
- 	case 'C':
--		if (placeholder[1] == '(') {
-+		color_start = placeholder;
-+		if (placeholder[1] == '?') {
-+			color_start++;
-+			conditional_color = 1;
+ 	case 'H':		/* commit hash */
+-		strbuf_addstr(sb, sha1_to_hex(commit->object.sha1));
+-		return 1;
+ 	case 'h':		/* abbreviated commit hash */
++		if (placeholder[0] != 'h' && !c->pretty_ctx->abbrev_commit) {
++			strbuf_addstr(sb, sha1_to_hex(commit->object.sha1));
++			return 1;
 +		}
-+		if (color_start[1] == '(') {
- 			const char *end = strchr(placeholder + 2, ')');
- 			char color[COLOR_MAXLEN];
- 			if (!end)
- 				return 0;
--			color_parse_mem(placeholder + 2,
--					end - (placeholder + 2),
--					"--pretty format", color);
--			strbuf_addstr(sb, color);
-+			if ( !conditional_color || use_color ) {
-+				color_parse_mem(color_start + 2,
-+						end - (color_start + 2),
-+						"--pretty format", color);
-+				strbuf_addstr(sb, color);
++
+ 		if (add_again(sb, &c->abbrev_commit_hash))
+ 			return 1;
+ 		strbuf_addstr(sb, find_unique_abbrev(commit->object.sha1,
+-		                                     DEFAULT_ABBREV));
++						     c->pretty_ctx->abbrev));
+ 		c->abbrev_commit_hash.len = sb->len - c->abbrev_commit_hash.off;
+ 		return 1;
+ 	case 'T':		/* tree hash */
+@@ -741,24 +744,29 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
+ 		if (add_again(sb, &c->abbrev_tree_hash))
+ 			return 1;
+ 		strbuf_addstr(sb, find_unique_abbrev(commit->tree->object.sha1,
+-		                                     DEFAULT_ABBREV));
++						     c->pretty_ctx->abbrev));
+ 		c->abbrev_tree_hash.len = sb->len - c->abbrev_tree_hash.off;
+ 		return 1;
+ 	case 'P':		/* parent hashes */
+-		for (p = commit->parents; p; p = p->next) {
+-			if (p != commit->parents)
+-				strbuf_addch(sb, ' ');
+-			strbuf_addstr(sb, sha1_to_hex(p->item->object.sha1));
+-		}
+-		return 1;
+ 	case 'p':		/* abbreviated parent hashes */
++		if (placeholder[0] != 'p' && !c->pretty_ctx->abbrev_commit) {
++			for (p = commit->parents; p; p = p->next) {
++				if (p != commit->parents)
++					strbuf_addch(sb, ' ');
++				strbuf_addstr(sb,
++					      sha1_to_hex(p->item->object.sha1));
 +			}
- 			return end - placeholder + 1;
++			return 1;
++		}
++
+ 		if (add_again(sb, &c->abbrev_parent_hashes))
+ 			return 1;
+ 		for (p = commit->parents; p; p = p->next) {
+ 			if (p != commit->parents)
+ 				strbuf_addch(sb, ' ');
+ 			strbuf_addstr(sb, find_unique_abbrev(
+-					p->item->object.sha1, DEFAULT_ABBREV));
++				      p->item->object.sha1,
++				      c->pretty_ctx->abbrev));
  		}
--		if (!prefixcmp(placeholder + 1, "red")) {
--			strbuf_addstr(sb, GIT_COLOR_RED);
--			return 4;
--		} else if (!prefixcmp(placeholder + 1, "green")) {
--			strbuf_addstr(sb, GIT_COLOR_GREEN);
--			return 6;
--		} else if (!prefixcmp(placeholder + 1, "blue")) {
--			strbuf_addstr(sb, GIT_COLOR_BLUE);
--			return 5;
--		} else if (!prefixcmp(placeholder + 1, "reset")) {
--			strbuf_addstr(sb, GIT_COLOR_RESET);
--			return 6;
-+
-+		if (!prefixcmp(color_start + 1, "red")) {
-+			if ( !conditional_color || use_color )
-+				strbuf_addstr(sb, GIT_COLOR_RED);
-+			return 4 + (conditional_color ? 1 : 0);
-+		} else if (!prefixcmp(color_start + 1, "green")) {
-+			if ( !conditional_color || use_color )
-+				strbuf_addstr(sb, GIT_COLOR_GREEN);
-+			return 6 + (conditional_color ? 1 : 0);
-+		} else if (!prefixcmp(color_start + 1, "blue")) {
-+			if ( !conditional_color || use_color )
-+				strbuf_addstr(sb, GIT_COLOR_BLUE);
-+			return 5 + (conditional_color ? 1 : 0);
-+		} else if (!prefixcmp(color_start + 1, "reset")) {
-+			if ( !conditional_color || use_color )
-+				strbuf_addstr(sb, GIT_COLOR_RESET);
-+			return 6 + (conditional_color ? 1 : 0);
- 		} else
- 			return 0;
- 	case 'n':		/* newline */
-diff --git a/shortlog.h b/shortlog.h
-index bc02cc2..43498a0 100644
---- a/shortlog.h
-+++ b/shortlog.h
-@@ -20,7 +20,7 @@ struct shortlog {
- 
- void shortlog_init(struct shortlog *log);
- 
--void shortlog_add_commit(struct shortlog *log, struct commit *commit);
-+void shortlog_add_commit(struct shortlog *log, struct commit *commit, struct rev_info *rev);
- 
- void shortlog_output(struct shortlog *log);
- 
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-new file mode 100755
-index 0000000..28d2948
---- /dev/null
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -0,0 +1,44 @@
-+#!/bin/sh
-+#
-+# Released into Public Domain by Will Palmer 2010
-+#
-+
-+test_description='Test pretty formats'
-+. ./test-lib.sh
-+
-+test_expect_success "set up basic repos" ">foo && git add foo && git commit -m initial"
-+
-+for flag in false true always; do
-+for color in red green blue reset; do
-+
-+	make_expected="git config --get-color no.such.slot $color >expected"
-+	test_expect_success "%C$color with color.ui $flag" \
-+		"$make_expected &&
-+		git config color.ui $flag &&
-+		git log -1 --pretty=format:'%C$color' > actual &&
-+		cmp expected actual"
-+
-+
-+	test_expect_success "%C($color) with color.ui $flag" \
-+		"$make_expected &&
-+		git config color.ui $flag &&
-+		git log -1 --pretty=format:'%C($color)' > actual &&
-+		cmp expected actual"
-+
-+	[ ! "$flag" = "always" ] && make_expected=">expected"
-+	test_expect_success "%C?$color with color.ui $flag" \
-+		"$make_expected &&
-+		git config color.ui $flag &&
-+		git log -1 --pretty=format:'%C?$color' > actual &&
-+		cmp expected actual"
-+
-+	test_expect_success "%C?($color) with color.ui $flag" \
-+		"$make_expected &&
-+		git config color.ui $flag &&
-+		git log -1 --pretty=format:'%C?($color)' > actual &&
-+		cmp expected actual"
-+
-+done
-+done
-+
-+test_done
+ 		c->abbrev_parent_hashes.len = sb->len -
+ 		                              c->abbrev_parent_hashes.off;
 -- 
 1.7.1.rc1.13.gbb0a0a.dirty
