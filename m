@@ -1,77 +1,53 @@
-From: Jack Desert <jackdesert556@gmail.com>
-Subject: Bugreport: Git responds with stderr instead of stdout
-Date: Sun, 25 Apr 2010 13:06:07 -0500
-Message-ID: <20100425130607.2c92740f@pennie-farthing>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: Case sensitivity on Windows for absolute paths.
+Date: Sun, 25 Apr 2010 20:08:27 +0200
+Message-ID: <201004252008.27823.j6t@kdbg.org>
+References: <o2v7eeb06461004230712i2c8c1e61l4c50a73a4f6c83d@mail.gmail.com> <201004232146.56424.j6t@kdbg.org> <j2y7eeb06461004250033ue4434a41j7b9a752dea1f5fe1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 25 20:06:24 2010
+Cc: git@vger.kernel.org
+To: Ricky Clarkson <ricky.clarkson@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 25 20:11:14 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O66Dm-00013s-D4
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 20:06:22 +0200
+	id 1O66IO-0003Zv-IN
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 20:11:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753672Ab0DYSGR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Apr 2010 14:06:17 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:41378 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753617Ab0DYSGQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Apr 2010 14:06:16 -0400
-Received: by vws17 with SMTP id 17so961386vws.19
-        for <git@vger.kernel.org>; Sun, 25 Apr 2010 11:06:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=ABXTrEuj1QoLIKgUsOdbBS8qCmcS6fVurOo2DpG81mU=;
-        b=A9IfWcf17x96Kg5KNx3/fWYzCj/KRJ2gy3DXL61uzdKl/MTGFUHoapiq3qjc8q71Im
-         5zP9Bc/0aIC3BTdI2eEtE+GggBy2xgEfk86OLIlhV9752xyLcTIufMIc128qDK/8IUlj
-         CONNb+Ra876xZOtq1LXri9gW7bqgMpsG2M+Tc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        b=Uh74Fgjxw/qNF8NXSx1Hrjs0o1T8NFY5wWrfYyTNJNdw+pfUPPvkuMPMZxc4W25qkh
-         /xonAP59qEEmwdkTd/TD4ja0nMcur26FAUE4t4j9RuwzbwPdknpyCJhNqSgMA6CSfEa9
-         1BA42JtzBzIfHAwRHR1a1XoEvCFAkwqy729WI=
-Received: by 10.220.61.201 with SMTP id u9mr1870233vch.160.1272218775554;
-        Sun, 25 Apr 2010 11:06:15 -0700 (PDT)
-Received: from pennie-farthing (oh-76-1-213-69.dhcp.embarqhsd.net [76.1.213.69])
-        by mx.google.com with ESMTPS id b22sm15838088vcp.8.2010.04.25.11.06.14
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 25 Apr 2010 11:06:15 -0700 (PDT)
-X-Mailer: Claws Mail 3.7.5 (GTK+ 2.18.3; i686-pc-linux-gnu)
+	id S1753678Ab0DYSLB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Apr 2010 14:11:01 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:19896 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753652Ab0DYSLA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Apr 2010 14:11:00 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id D9C6B10011;
+	Sun, 25 Apr 2010 20:10:53 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id E2CCC19F70C;
+	Sun, 25 Apr 2010 20:08:27 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <j2y7eeb06461004250033ue4434a41j7b9a752dea1f5fe1@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145754>
 
-I think I found a bug in Git. When I run the command 
+On Sonntag, 25. April 2010, Ricky Clarkson wrote:
+> It would be good if git automatically uppercased the drive letter,
+> yes.  However, I found the real root of my problem.  Git Bash
+> (msysgit) sets the working directory to c:\foo for programs launched
+> if the working directory within it is /c/foo.
 
-  git checkout -b new_branch
+I don't understand what you mean. Git Bash cannot influence whether git sees 
+the drive letter in the working directory in uppercase or lowercase. Unless 
+by "working directory" you mean something else than what getcwd() returns.
 
-Git does exactly what I've asked, except that Git's response:
-  
-  Switched to a new branch 'new_branch'
-
-comes through the stderr pipe instead of through the stdout pipe. Where do I file a bug report for this? 
-
-I am using Git 1.6.3.3, Ubuntu 9.10
-
--Jack
-
-
--- 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Jack Desert     --    Writer, Entrepeneur
-Author and Spokesman: www.LetsEATalready.com
-Software Developer:   http://GrooveTask.org
-Email: JackDesert556@gmail.com
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Hannes
