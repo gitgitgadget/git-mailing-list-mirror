@@ -1,45 +1,42 @@
 From: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-Subject: Re: [PATCH] daemon.c: avoid accessing ss_family member of struct
- sockaddr_storage
-Date: Sun, 25 Apr 2010 03:37:03 -0500 (CDT)
-Message-ID: <20100316065127.GA26370@thor.il.thewrittenword.com>
-References: <alpine.DEB.2.00.1003120922040.29993@cone.home.martin.st>
- <XI3O9HirgFwPkEqC3RdYR4j56mg_uuJQZk1YFST6ukqbKXjgxaqJdNDHwlLXg5R_FVXWmWQSGmg@cipher.nrlssc.navy.mil>
- <20100315212915.GB25342@coredump.intra.peff.net>
- <s0MQZSOEsdBJUhITxC3jwfFJk5PnIEo0WR5z_GEnSOw@cipher.nrlssc.navy.mil>
+Subject: Re: [patch 02/15] const-expr.patch
+Date: Sun, 25 Apr 2010 03:38:13 -0500 (CDT)
+Message-ID: <20100317060108.GB27121@thor.il.thewrittenword.com>
+References: <20100316054220.075676000@mlists.thewrittenword.com>
+ <20100316054306.167331000@mlists.thewrittenword.com>
+ <4B9F33DC.3030309@viscovery.net>
+ <32541b131003161643g1a1cbf6ck3089ae5fb016a985@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	kusmabite@gmail.com, martin@martin.st,
-	Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Sun Apr 25 10:37:13 2010
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 25 10:38:22 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5xKy-0006Dx-M7
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 10:37:13 +0200
+	id 1O5xM4-0006dG-M5
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 10:38:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751573Ab0DYIhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Apr 2010 04:37:05 -0400
-Received: from mail1.thewrittenword.com ([69.67.212.77]:58247 "EHLO
+	id S1751871Ab0DYIiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Apr 2010 04:38:15 -0400
+Received: from mail1.thewrittenword.com ([69.67.212.77]:61374 "EHLO
 	mail1.thewrittenword.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751447Ab0DYIhE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Apr 2010 04:37:04 -0400
+	with ESMTP id S1751085Ab0DYIiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Apr 2010 04:38:14 -0400
 Received: from mail1.il.thewrittenword.com (emma-internal-gw.il.thewrittenword.com [192.168.13.25])
-	by mail1.thewrittenword.com (Postfix) with ESMTP id A809D5CED
-	for <git@vger.kernel.org>; Sun, 25 Apr 2010 08:58:05 +0000 (UTC)
-X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com A809D5CED
+	by mail1.thewrittenword.com (Postfix) with ESMTP id 84E7A5CC0
+	for <git@vger.kernel.org>; Sun, 25 Apr 2010 08:59:16 +0000 (UTC)
+X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com 84E7A5CC0
 Received: from localhost.localdomain (unknown [192.168.1.254])
-	by mail1.il.thewrittenword.com (Postfix) with ESMTP id 4FF019A4
-	for <git@vger.kernel.org>; Sun, 25 Apr 2010 08:37:03 +0000 (UTC)
+	by mail1.il.thewrittenword.com (Postfix) with ESMTP id 35B2F9A4
+	for <git@vger.kernel.org>; Sun, 25 Apr 2010 08:38:14 +0000 (UTC)
 Received: by localhost.localdomain (Postfix, from userid 1000)
-	id 0F12457C; Sun, 25 Apr 2010 03:37:03 -0500 (CDT)
+	id EAD5F57C; Sun, 25 Apr 2010 03:38:13 -0500 (CDT)
 Content-Disposition: inline
-In-Reply-To: <s0MQZSOEsdBJUhITxC3jwfFJk5PnIEo0WR5z_GEnSOw@cipher.nrlssc.navy.mil>
+In-Reply-To: <32541b131003161643g1a1cbf6ck3089ae5fb016a985@mail.gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 X-Virus-Scanned: clamav-milter 0.96 at maetel.il.thewrittenword.com
 X-Virus-Status: Clean
@@ -47,62 +44,38 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145725>
 
-The git@mlists... address is the one subscribed to this list, to make
-it easy for us to filter list messages into shared folders.  Because
-we manage so many packages, one or other of us will drop in and out of
-contact on the relevant lists depending what package we happen to be
-working on.
+[It seems like all my replies to this list don't make it through, even
+though I'm able to post a new thread.  Please forward on my behalf.]
 
-Anyway, you can always put a post directly in my INBOX by Cc:ing
-gary@thewrittenword.com and/or gary@gnu.org if you'd like to be sure
-that I will read something. :)
-
-On Mon, Mar 15, 2010 at 04:42:57PM -0500, Brandon Casey wrote:
-> I expect that the layout of the sockaddr_* family of structures will
-> follow the layout of struct sockaddr, otherwise they wouldn't be
-> compatible.
+On Tue, Mar 16, 2010 at 07:43:54PM -0400, Avery Pennarun wrote:
+> On Tue, Mar 16, 2010 at 3:31 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> > Gary V. Vaughan schrieb:
+> >> Unfortunately, there are still plenty of production systems with
+> >> vendor compilers that choke unless all compound declarations can be
+> >> determined statically at compile time, for example hpux10.20 (I can
+> >> provide a comprehensive list of our supported platforms that exhibit
+> >> this problem if necessary).
+> >
+> > Yes, a comprehensive list would be appreciated. This change is an
+> > uglification that I personally would prefer to stay out of the code base
+> > unless many consumers of git are hurt.
+> >
+> > The problem with this non-feature is that it is all too easy that new code
+> > introduces new incompatibilities.
 > 
-> In other words, I think that if struct sockaddr looks like this:
-> 
->   struct sockaddr {
->         uchar_t         sa_len;         /* total length */
->         sa_family_t     sa_family;      /* address family */
->         char            sa_data[14];    /* actually longer; address value */
->   };
-> 
-> then somewhere else, struct sockaddr_in looks like this:
-> 
->   struct sockaddr_in {
->         uchar_t         sin_len;
->         sin_family_t    sin_family;
->         sin_port;
->         sin_addr;
->         ...
->   };
+> This is probably a stupid question, but why not just build it using
+> gcc on systems with a broken vendor compiler?  You don't have to
+> distribute gcc just to distribute binaries built with it, so it seems
+> like there's no downside... and less suffering for the build
+> maintainer.
 
-> On 03/15/2010 04:29 PM, Jeff King wrote:
-> > Or am I wrong in assuming that, and on AIX sockaddr_in actually has
-> > sa_len at the front, so casting to sockaddr does the right thing (and my
-> > recommendation above would actually be broken)? The AIX boxen I have
-> > access to are all down at the moment.
-> 
-> Maybe Gary can check for us... Gary, what does the declaration for
-> struct sockaddr_in look like in your AIX header file?
-
-/usr/include/netinet/in.h excerpt:
-
-/*
- * Socket address, internet style.
- */
-struct sockaddr_in {
-        uchar_t        sin_len;
-        sa_family_t    sin_family;
-        in_port_t      sin_port;
-        struct in_addr sin_addr;
-        uchar_t        sin_zero[8];
-};
+More often than not the vendor compiler produces better code than gcc
+on any given architecture, and one of the features of the TWW package
+builds is that in the vast majority of cases we port the upstream code
+to build using the vendor compiler, because this is what our customers
+want.
 
 Cheers,
 -- 
