@@ -1,57 +1,77 @@
 From: Miles Bader <miles@gnu.org>
-Subject: Re: 'commit -a' safety
-Date: Sun, 25 Apr 2010 11:43:24 +0900
-Message-ID: <87y6gcgskz.fsf@catnip.gol.com>
-References: <20100422151037.2310.2429.reportbug@frosties.localdomain>
-	<201004241226.34884.jnareb@gmail.com>
-	<alpine.LFD.2.00.1004241413030.7232@xanadu.home>
-	<201004250216.18660.jnareb@gmail.com>
+Subject: Re: Please default to 'commit -a' when no changes were added
+Date: Sun, 25 Apr 2010 11:47:08 +0900
+Message-ID: <87mxwsgser.fsf@catnip.gol.com>
+References: <20100422155806.GC4801@progeny.tock>
+	<87wrvzs590.fsf@frosties.localdomain>
+	<alpine.LFD.2.00.1004221445310.7232@xanadu.home>
+	<87sk6n4426.fsf@frosties.localdomain>
+	<alpine.LFD.2.00.1004221651590.7232@xanadu.home>
+	<87vdbitu9v.fsf@frosties.localdomain>
+	<25441792-181D-456D-8182-F33B49209EFF@wincent.com>
+	<87aastx6sa.fsf@frosties.localdomain>
+	<alpine.LFD.2.00.1004231639180.7232@xanadu.home>
+	<8739yktuvs.fsf@frosties.localdomain>
+	<20100424214024.GA8044@progeny.tock>
 Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Goswin von Brederlow <goswin-v-b@web.de>,
-	git@vger.kernel.org, Andreas Schwab <schwab@linux-m68k.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 25 04:43:42 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Goswin von Brederlow <goswin-v-b@web.de>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	Wincent Colaiuta <win@wincent.com>, 578764@bugs.debian.org,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 25 04:47:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5roq-0007G0-Pg
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 04:43:41 +0200
+	id 1O5rsN-0008TA-MJ
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 04:47:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751829Ab0DYCnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Apr 2010 22:43:35 -0400
-Received: from smtp11.dentaku.gol.com ([203.216.5.73]:59435 "EHLO
+	id S1752045Ab0DYCrO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Apr 2010 22:47:14 -0400
+Received: from smtp11.dentaku.gol.com ([203.216.5.73]:54305 "EHLO
 	smtp11.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750940Ab0DYCne (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Apr 2010 22:43:34 -0400
+	with ESMTP id S1750940Ab0DYCrO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Apr 2010 22:47:14 -0400
 Received: from 218.231.253.147.eo.eaccess.ne.jp ([218.231.253.147] helo=catnip.gol.com)
 	by smtp11.dentaku.gol.com with esmtpa (Dentaku)
-	id 1O5roa-00075H-Ob; Sun, 25 Apr 2010 11:43:24 +0900
+	id 1O5rsC-0007EE-CK; Sun, 25 Apr 2010 11:47:08 +0900
 Received: by catnip.gol.com (Postfix, from userid 1000)
-	id 278CEDF93; Sun, 25 Apr 2010 11:43:24 +0900 (JST)
+	id 3928FDF93; Sun, 25 Apr 2010 11:47:08 +0900 (JST)
 System-Type: x86_64-unknown-linux-gnu
-In-Reply-To: <201004250216.18660.jnareb@gmail.com> (Jakub Narebski's message
-	of "Sun, 25 Apr 2010 02:16:18 +0200")
+In-Reply-To: <20100424214024.GA8044@progeny.tock> (Jonathan Nieder's message
+	of "Sat, 24 Apr 2010 16:40:25 -0500")
 X-Virus-Scanned: ClamAV GOL (outbound)
 X-Abuse-Complaints: abuse@gol.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145716>
 
-Jakub Narebski <jnareb@gmail.com> writes:
-> More seriously, it could be made default if it is not too annoying.
+Jonathan Nieder <jrnieder@gmail.com> writes:
+> But dense as I am, I still can=E2=80=99t imagine why
+>
+> echo '[alias] ci =3D commit -a' >>$HOME/.gitconfig
+>
+> wouldn=E2=80=99t be better in every way (especially if Jakub=E2=80=99=
+s
+> commit.preserveindex is enabled).
 
-But the problem is that it _does_ sound annoying...
+If the latter is enabled, you can't use "git add" to add new files,
+you'll have to remember to use "add -N" (or add some alias for that
+too).
 
 -Miles
 
--- 
-Politeness, n. The most acceptable hypocrisy.
+--=20
+/\ /\
+(^.^)
+(")")
+*This is the cute kitty virus, please copy this into your sig so it can=
+ spread.
