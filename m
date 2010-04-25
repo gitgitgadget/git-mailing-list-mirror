@@ -1,121 +1,74 @@
-From: =?iso-8859-1?Q?Henrik_Grubbstr=F6m?= <grubba@roxen.com>
-Subject: Re: [PATCH RFC 5/5] cache: Use ce_norm_sha1().
-Date: Sun, 25 Apr 2010 13:25:11 +0200 (CEST)
-Organization: Roxen Internet Software AB
-Message-ID: <Pine.GSO.4.63.1004251252250.4423@shipon.roxen.com>
-References: <cover.1271432034.git.grubba@grubba.org>
- <c68d98b384086925da0194e560ae01d83a29f80c.1271432034.git.grubba@grubba.org>
- <7vsk6qio1f.fsf@alter.siamese.dyndns.org> <Pine.GSO.4.63.1004201622050.4296@shipon.roxen.com>
- <7v7ho2gcpb.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/5] Export more test-related variables when running external tests
+Date: Sun, 25 Apr 2010 13:47:10 +0200
+Message-ID: <201004251347.11102.jnareb@gmail.com>
+References: <20100424132255.30511.98829.stgit@localhost.localdomain> <20100424134640.30511.37449.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-1841205112-1272194711=:4423"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 25 13:25:36 2010
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 25 13:47:24 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5zxv-0005zq-OQ
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 13:25:36 +0200
+	id 1O60J1-0007GM-CC
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 13:47:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752894Ab0DYLZR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Apr 2010 07:25:17 -0400
-Received: from mail.roxen.com ([212.247.29.220]:51559 "EHLO mail.roxen.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752653Ab0DYLZQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Apr 2010 07:25:16 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.roxen.com (Postfix) with ESMTP id D40026282F4;
-	Sun, 25 Apr 2010 13:25:11 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at roxen.com
-Received: from mail.roxen.com ([212.247.29.220])
-	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id CEEpwC+k2-Vd; Sun, 25 Apr 2010 13:25:11 +0200 (CEST)
-Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
-	by mail.roxen.com (Postfix) with ESMTP id 142876282EF;
-	Sun, 25 Apr 2010 13:25:11 +0200 (CEST)
-In-Reply-To: <7v7ho2gcpb.fsf@alter.siamese.dyndns.org>
+	id S1752973Ab0DYLrS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Apr 2010 07:47:18 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:52747 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751918Ab0DYLrR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Apr 2010 07:47:17 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so1362194fgg.1
+        for <git@vger.kernel.org>; Sun, 25 Apr 2010 04:47:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=tb6fRlb4rMMI1NV/RyskjttSqdu07cSfFdCLjkjmicY=;
+        b=Hni42sprqbzWnfm7YMWGGcfa5ZzH0lKez69q337Ymf5Q3N8mF9X500NaKWeEq9kyUv
+         Ytof+2FIOh0uufdsSChsdKJfevU5iOLcPyzwOrVmrCYP/9nctTrAm8ByQ4VqAJGDSGo6
+         8ce2215oYQRaFk0/6vgmunieosHQ3I1Sc3Dp0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:references:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id;
+        b=rJOkwsdOt/1xHS71JXjUVBRlzBIsPCBiHMFra3EEEpBl6QFX7MQqs4wo9UHP6TcUId
+         xDhO5ZCQPi00stK4L4hKcglXiEdjAzonZ70MK8sVu26/GjuPqUnUi3YLeTE/BFmVG/QR
+         gtiwzs53EfbfoxRJqaNdbdOAWC6jLVWylPTHM=
+Received: by 10.86.126.33 with SMTP id y33mr4457955fgc.51.1272196032341;
+        Sun, 25 Apr 2010 04:47:12 -0700 (PDT)
+Received: from [192.168.1.13] (abvs189.neoplus.adsl.tpnet.pl [83.8.216.189])
+        by mx.google.com with ESMTPS id 28sm666371fkx.6.2010.04.25.04.47.11
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 25 Apr 2010 04:47:11 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20100424134640.30511.37449.stgit@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145736>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
----559023410-1841205112-1272194711=:4423
-Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: 8BIT
+>  t/test-lib.sh |    3 +++
+>  1 files changed, 3 insertions(+), 0 deletions(-)
+>  mode change 100644 => 100755 t/test-lib.sh
+> 
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> old mode 100644
+> new mode 100755
 
-On Tue, 20 Apr 2010, Junio C Hamano wrote:
+Ooops, I'm sorry, the mode change is accidental.
 
-> Henrik Grubbström <grubba@roxen.com> writes:
->
->>> 3. "git update-index --refresh" does not improve the situation, as it
->>>    (thinks) it knows the blob and the working tree file are different.
->>
->> False. "git update-index --refresh" uses
->> read-cache.c:ce_compare_data() to compare the content of the blob with
->> the normalized content of the working tree,...
->
-> I don't think you tried it yourself.  Here is what should happen with the
-> current code.
->
-> 	# step 0 & 1. a project with LF ending
-> 	$ git init two && cd two
->        $ echo a quick brown fox >kuzu
->        $ git add kuzu && git commit -m kuzu
->
->        # step 2. you want CRLF in your work area
->        $ echo -e "a quick brown fox\015" >kuzu
->        $ git config core.autocrlf true
-
-Ok, right. I thought step 2 was
-
- 	$ git config core.autocrlf true
- 	$ rm kuzu
- 	$ git checkout -- kuzu
-
-In which case the index will be clean.
-
-> And it is a common thing people wish to do.  Admittedly, this is an one-off
-> event, so it is not _that_ urgent to fix.  You can for example do:
-
-I've fixed this case in my current version of the patches.
-
->> Let's take the reverse case instead:
-[...]
-
-Seems to depend on whether is_racy_timestamp is true or not. As you've 
-noted, adding a touch forces the issue.
-
-[...]
-> If you are trying to somehow make this last "git diff" silent, then I
-> think you are solving a _wrong_ problem.  By setting retroactively the
-> CRLF setting, you are saying that you do not want to have CRLF in the
-> blobs recorded in the repository, and it is a _good thing_ that there are
-> differences (tons of them) between what is recorded currently and what you
-> are going to commit to fix the earlier mistake.
-
-Ok, I've removed the diff-related changes from the current set of patches.
-
-> As I already said, I agree that it would be beneficial to store what
-> normalization settings were used and comparing that with what settings are
-> in effect to detect the possible phamtom difference caused by the change
-> of the settings.  But once we know that the result of a re-normalization
-> is different from what is recorded in the index (or tree), then the
-> difference should be shown.  The actual difference would change every time
-> the work tree file is edited, so I don't see the benefit of contaminate
-> the object database with intermediate "blobs" that is not "added".
-
-Ok. With the diff patches gone, there's no need to store the normalized 
-blob data.
-
---
-Henrik Grubbström					grubba@grubba.org
-Roxen Internet Software AB				grubba@roxen.com
----559023410-1841205112-1272194711=:4423--
+-- 
+Jakub Narebski
+Poland
