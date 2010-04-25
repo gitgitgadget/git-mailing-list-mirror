@@ -1,90 +1,51 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 0/5] gitweb: Miscellaneous improvements, in preparation for caching support
-Date: Sun, 25 Apr 2010 13:45:57 +0200
-Message-ID: <201004251346.01183.jnareb@gmail.com>
-References: <20100424132255.30511.98829.stgit@localhost.localdomain> <20100425092035.GO3563@machine.or.cz>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 2/2] request-pull: protect against OPTIONS_KEEPDASHDASH from environment
+Date: Sun, 25 Apr 2010 14:34:28 +0200
+Message-ID: <201004251434.29296.trast@student.ethz.ch>
+References: <20100424120437.GA12237@progeny.tock> <20100424121537.GB12312@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sun Apr 25 13:52:15 2010
+Cc: <git@vger.kernel.org>, Miklos Vajna <vmiklos@frugalware.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 25 14:34:50 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O60Ni-0000nu-Kd
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 13:52:15 +0200
+	id 1O612u-0002ew-U7
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 14:34:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753240Ab0DYLwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Apr 2010 07:52:09 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:29151 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753146Ab0DYLwF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Apr 2010 07:52:05 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so1901608fga.1
-        for <git@vger.kernel.org>; Sun, 25 Apr 2010 04:52:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=9MTnC6THL9dZlfXtC7E/fgEohiTontVWpugnAHV+9+I=;
-        b=D8AHWramfooGuqYD+HWFAubEncCIU3j6FLsNfuL6snhsKAbyChnewI3nHHT3CxRkY2
-         6LkqJx3HuP7WKk+kjLEl8C9u9aBCI3YiCd63jhMRv/nPFJ/vOLgA7QEM+eKFKv8T63Vq
-         vHoaa8LJkk5LJRhD+uUJKjszk3WLn5pftBt08=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=tlzfxOBiARw9G/kUL8xGjIB1segUy9YfCZrnWoPGpTEP9Hyd8e1H197FvfwwtpKAEb
-         1VDMf9A1H9bTNGWi7P1l6Awk74VRsuBrm4PrGBUPA/MQ4venCnCJF/T9evEBsmqUPxFl
-         Jg66twWnQ1+69RGSR8B9AMIzsG7JuhpRwBOsY=
-Received: by 10.103.76.21 with SMTP id d21mr1406617mul.17.1272195971203;
-        Sun, 25 Apr 2010 04:46:11 -0700 (PDT)
-Received: from [192.168.1.13] (abvs189.neoplus.adsl.tpnet.pl [83.8.216.189])
-        by mx.google.com with ESMTPS id e10sm12124690muf.38.2010.04.25.04.46.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 25 Apr 2010 04:46:10 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20100425092035.GO3563@machine.or.cz>
-Content-Disposition: inline
+	id S1753630Ab0DYMen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Apr 2010 08:34:43 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:40770 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753564Ab0DYMem (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Apr 2010 08:34:42 -0400
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sun, 25 Apr
+ 2010 14:34:40 +0200
+Received: from thomas.localnet (84.74.100.59) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sun, 25 Apr
+ 2010 14:34:30 +0200
+User-Agent: KMail/1.13.2 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.2; x86_64; ; )
+In-Reply-To: <20100424121537.GB12312@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145738>
 
-Petr Baudis wrote:
-> On Sat, Apr 24, 2010 at 03:46:25PM +0200, Jakub Narebski wrote:
-> > Jakub Narebski (5):
-> >       gitweb: Move generating page title to separate subroutine
-> >       gitweb: Add custom error handler using die_error
-> >       gitweb: Use nonlocal jump instead of 'exit' in die_error
-> >       gitweb: href(..., -path_info => 0|1)
-> >       Export more test-related variables when running external tests
-> > 
-> >  gitweb/gitweb.perl |   69 ++++++++++++++++++++++++++++++++++++++--------------
-> >  t/test-lib.sh      |    3 ++
-> >  2 files changed, 53 insertions(+), 19 deletions(-)
+Jonathan Nieder wrote:
+> Empty it explicitly to guard against this.  While at it, make the
+> corresponding fix to git-resurrect, too (all other scripts in git.git
+> already protect themselves).
 
-> >  mode change 100644 => 100755 t/test-lib.sh
-
-Ooops, the mode change was accidental.
-
-> 
-> Except the last one, I don't think the patches bring something useful
-> in on their own so ordinarily they would probably have to be a part of
-> some series that makes use of them, but there's no harm done either.
-
-Actually "gitweb: Use nonlocal jump instead of 'exit' in die_error"
-could in theory improve performance of gitweb on mod_perl, but I have
-not benchmarked it...
+Ack.  Thanks for thinking of contrib :-)
 
 -- 
-Jakub Narebski
-Poland
+Thomas Rast
+trast@{inf,student}.ethz.ch
