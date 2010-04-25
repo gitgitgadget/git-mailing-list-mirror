@@ -1,142 +1,121 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: [ANNOUNCE] gitolite now has github-like "forking"
-Date: Sun, 25 Apr 2010 15:03:10 +0530
-Message-ID: <h2x2e24e5b91004250233i22d4b66ew5efabb6ef6492e74@mail.gmail.com>
+From: =?iso-8859-1?Q?Henrik_Grubbstr=F6m?= <grubba@roxen.com>
+Subject: Re: [PATCH RFC 5/5] cache: Use ce_norm_sha1().
+Date: Sun, 25 Apr 2010 13:25:11 +0200 (CEST)
+Organization: Roxen Internet Software AB
+Message-ID: <Pine.GSO.4.63.1004251252250.4423@shipon.roxen.com>
+References: <cover.1271432034.git.grubba@grubba.org>
+ <c68d98b384086925da0194e560ae01d83a29f80c.1271432034.git.grubba@grubba.org>
+ <7vsk6qio1f.fsf@alter.siamese.dyndns.org> <Pine.GSO.4.63.1004201622050.4296@shipon.roxen.com>
+ <7v7ho2gcpb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: gitolite <gitolite@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 25 11:33:34 2010
+Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-1841205112-1272194711=:4423"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 25 13:25:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O5yDQ-0006qF-Uo
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 11:33:29 +0200
+	id 1O5zxv-0005zq-OQ
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 13:25:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752726Ab0DYJdM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Apr 2010 05:33:12 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:44373 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752186Ab0DYJdL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Apr 2010 05:33:11 -0400
-Received: by vws17 with SMTP id 17so837799vws.19
-        for <git@vger.kernel.org>; Sun, 25 Apr 2010 02:33:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=xNj5UIEiK2NlcqDI8gSCjM6hKdjH+4SyAOoYiZGps9M=;
-        b=m4yBovyagYhR4HlCPZkl7LBGCP8IJgDhr/BniUGEM8s5QWhlgRb4RIf2eMMUV7ET0V
-         Je8ltVLzZmlDGnRXsYOeSsi3QQ5nB0X2I4pprhIoq7HoPa/zJPTHS1/PH/P2N+74JUbh
-         AwRzZ8Gathtw0hImXMjS2H2TJFs/7OLb3/nbA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=Y8MYtZmi3BAEzxVo6Rg12VfscTT1XLETMtGly/8MEAwK/5cNoQcQaZC8e2PDBsGGJR
-         MhnzEmVqhXEHjMI8ah96hdCQH2tKgX02VpKtJO/Jkq5rD/kmmtnCU5z4Cn5FvtZGrU5D
-         LwLUF3oQxCC7QkSeO8dRb+yxRpiSyVIJuHY8Q=
-Received: by 10.220.158.72 with SMTP id e8mr1582659vcx.47.1272187990158; Sun, 
-	25 Apr 2010 02:33:10 -0700 (PDT)
-Received: by 10.220.76.196 with HTTP; Sun, 25 Apr 2010 02:33:10 -0700 (PDT)
+	id S1752894Ab0DYLZR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Apr 2010 07:25:17 -0400
+Received: from mail.roxen.com ([212.247.29.220]:51559 "EHLO mail.roxen.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752653Ab0DYLZQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Apr 2010 07:25:16 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.roxen.com (Postfix) with ESMTP id D40026282F4;
+	Sun, 25 Apr 2010 13:25:11 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at roxen.com
+Received: from mail.roxen.com ([212.247.29.220])
+	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id CEEpwC+k2-Vd; Sun, 25 Apr 2010 13:25:11 +0200 (CEST)
+Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
+	by mail.roxen.com (Postfix) with ESMTP id 142876282EF;
+	Sun, 25 Apr 2010 13:25:11 +0200 (CEST)
+In-Reply-To: <7v7ho2gcpb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145735>
 
-Hello,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-[I'm sending this to the larger git community because I'd like to hear
-from people interested in this sort of functionality and willing to help
-me test it].
+---559023410-1841205112-1272194711=:4423
+Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Gitolite's current "pu" branch has acquired some features by which it
-can now be used to do things like the "fork" operation of github (and
-presumably other similar services).  Gitolite will never be web-based,
-or GUI, etc., so it's not even remotely in the same class as github but
-for some urgent, simple, needs this can be used to emulate forking
-repositories a la github.
+On Tue, 20 Apr 2010, Junio C Hamano wrote:
 
-What follows is a very short howto, for the curious.  It assumes some
-knowledge of basic gitolite usage only because I didn't want to make
-this too lengthy; feel free to ask if needed.
+> Henrik Grubbström <grubba@roxen.com> writes:
+>
+>>> 3. "git update-index --refresh" does not improve the situation, as it
+>>>    (thinks) it knows the blob and the working tree file are different.
+>>
+>> False. "git update-index --refresh" uses
+>> read-cache.c:ce_compare_data() to compare the content of the blob with
+>> the normalized content of the working tree,...
+>
+> I don't think you tried it yourself.  Here is what should happen with the
+> current code.
+>
+> 	# step 0 & 1. a project with LF ending
+> 	$ git init two && cd two
+>        $ echo a quick brown fox >kuzu
+>        $ git add kuzu && git commit -m kuzu
+>
+>        # step 2. you want CRLF in your work area
+>        $ echo -e "a quick brown fox\015" >kuzu
+>        $ git config core.autocrlf true
 
-Admin tasks (one time):
+Ok, right. I thought step 2 was
 
-  * use the "pu" branch; the current tip is the commit called "(adc)
-    documentation".  "adc" stands for "admin-defined commands"
+ 	$ git config core.autocrlf true
+ 	$ rm kuzu
+ 	$ git checkout -- kuzu
 
-  * install it, then edit `~/.gitolite.rc` on the server to
-    uncomment/update the following lines as shown (or similar):
+In which case the index will be clean.
 
-        $GL_WILDREPOS = 1;
-        $GL_ADC_PATH = "/home/git/adc"; # or any convenient directory
+> And it is a common thing people wish to do.  Admittedly, this is an one-off
+> event, so it is not _that_ urgent to fix.  You can for example do:
 
-  * copy the files from contrib/adc in the gitolite source to the above
-    path on the server.
+I've fixed this case in my current version of the patches.
 
-  * add the following lines to the default gitolite.conf that the
-    install gives you:
+>> Let's take the reverse case instead:
+[...]
 
-        repo CREATER/.+
-            C       =   @all
-            RW+     =   CREATER
-            RW      =   WRITERS
-            R       =   @all
+Seems to depend on whether is_racy_timestamp is true or not. As you've 
+noted, adding a touch forces the issue.
 
-    All repos created now are public-readable by default.  Replace the
-    "@all" in the last line with "READERS" if you want the repos to be
-    private by default.
+[...]
+> If you are trying to somehow make this last "git diff" silent, then I
+> think you are solving a _wrong_ problem.  By setting retroactively the
+> CRLF setting, you are saying that you do not want to have CRLF in the
+> blobs recorded in the repository, and it is a _good thing_ that there are
+> differences (tons of them) between what is recorded currently and what you
+> are going to commit to fix the earlier mistake.
 
-User tasks:
+Ok, I've removed the diff-related changes from the current set of patches.
 
-This is how users would use it, once their pubkeys have been added to
-the keydir/ and pushed as usual.  We assume this is being done from
-user "alice"'s account.
+> As I already said, I agree that it would be beneficial to store what
+> normalization settings were used and comparing that with what settings are
+> in effect to detect the possible phamtom difference caused by the change
+> of the settings.  But once we know that the result of a re-normalization
+> is different from what is recorded in the index (or tree), then the
+> difference should be shown.  The actual difference would change every time
+> the work tree file is edited, so I don't see the benefit of contaminate
+> the object database with intermediate "blobs" that is not "added".
 
-Creating a new repo on the server:
+Ok. With the diff patches gone, there's no need to store the normalized 
+blob data.
 
-    git clone git@server:alice/foo
-        # create and clone an empty repo to start working
-    git push [--all] git@server:alice/foo [refspec]
-        # or, create and push from an existing repo in one shot
-
-Removing an existing repo that you no longer need (be careful!):
-
-    ssh git@server rmrepo alice/foo
-
-Listing all repos you have access to (will show yours as well as others'
-repos that you have been given access to):
-
-    ssh git@server expand [optional-pattern]
-
-Forking user "bob"'s "bar" repo (assuming you have at least read access):
-
-    ssh git@server fork bob/bar alice/bar
-
-Setting permissions for a repo you own:
-
-    ssh git@server setperms alice/bar
-    RW bob
-    R eve mallory
-    <ctrl-d>
-
-Getting permissions for a repo you own:
-
-    ssh git@server getperms alice/bar
-    # prints:
-    RW bob
-    R eve mallory
-
-I'm rather pleased that, after a refactoring of the "query rights" code
-that was useful by itself anyway, this feature only added about 25 lines
-to the core code.  Many thanks to Eli for sparking this whole thing off.
-
-If anyone else wants to help me test it, I'd very grateful.  Details at
-http://github.com/sitaramc/gitolite/blob/pu/doc/admin-defined-commands.mkd
-
--- 
-Sitaram
+--
+Henrik Grubbström					grubba@grubba.org
+Roxen Internet Software AB				grubba@roxen.com
+---559023410-1841205112-1272194711=:4423--
