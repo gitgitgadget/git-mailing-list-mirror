@@ -1,406 +1,386 @@
 From: Will Palmer <wmpalmer@gmail.com>
-Subject: [PATCH 1/3] pretty: add conditional %C?colorname placeholders
-Date: Sun, 25 Apr 2010 16:42:53 +0100
-Message-ID: <1272210175-20484-2-git-send-email-wmpalmer@gmail.com>
+Subject: [PATCH 3/3] pretty: add aliases for pretty formats
+Date: Sun, 25 Apr 2010 16:42:55 +0100
+Message-ID: <1272210175-20484-4-git-send-email-wmpalmer@gmail.com>
 References: <1272210175-20484-1-git-send-email-wmpalmer@gmail.com>
 Cc: wmpalmer@gmail.com, gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 25 17:44:34 2010
+X-From: git-owner@vger.kernel.org Sun Apr 25 17:44:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O640X-0000hW-L1
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 17:44:34 +0200
+	id 1O640Z-0000hW-2Z
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Apr 2010 17:44:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752603Ab0DYPoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Apr 2010 11:44:16 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:37866 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751590Ab0DYPoC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Apr 2010 11:44:02 -0400
-Received: by mail-wy0-f174.google.com with SMTP id 36so752496wyg.19
-        for <git@vger.kernel.org>; Sun, 25 Apr 2010 08:44:01 -0700 (PDT)
+	id S1752766Ab0DYPoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Apr 2010 11:44:19 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:65428 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752424Ab0DYPoH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Apr 2010 11:44:07 -0400
+Received: by wwg30 with SMTP id 30so845905wwg.19
+        for <git@vger.kernel.org>; Sun, 25 Apr 2010 08:44:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=I2AUl/ioEYVy9TNltp4/DHynk/+tup4W4vUpPL0OpWw=;
-        b=S1Kni/Z+BhVOzeqtAUe7Uhpn0xFQS76FgycxP8vkwSRTNC0rrKjX4+/UCFzugaa4y2
-         M/eIQ1r3GTyuyDYT1ONBpX38E5jlaDz9SnApLocD6/p0xvJuvGH+Rw3QKFI+ASO90f8a
-         ncu/YUGSw+T1otc5hvnZtK5SXec1BgCf/fCX8=
+        bh=pcI0a6EkbHfES/CBhDWIQ0oKZyheEVqOfGF0c4fzQcI=;
+        b=fSHo5/b5T5CVTGjN/ebA7my1Wfs6DFl7EZmBXt3ymiUU/eJbqnEAe9EJvuOe0dlYmZ
+         CSEh2WH1oxrEStNDHdhKrinJzpA7qeF4rvHoyDD47xIVSGm+uirYR9AtruHHjWDQ5X7G
+         apM4AjPvn1DRtY4T43/jpj2OTPU0eVC58Zf0Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ZFAzF7xYRgiKXdyx/cMlGgdl3rs7es9FEnO+jLeerMqd1xYL8Iheyt57DXEqsGSdPm
-         5r6CDU62HGACm4jvgs4Pd8gLBliGyA6juef5AbCbY3zM4raqQK3dg9kUu4FiK0vi1pyC
-         ANwG2yWqy/inD3F7VgpWC/XH5H5bfiNAzE2zg=
-Received: by 10.216.188.14 with SMTP id z14mr3378225wem.38.1272210241638;
-        Sun, 25 Apr 2010 08:44:01 -0700 (PDT)
+        b=xZ7hPnDb0G4BAfkFS8BFq0qTZhT49PCeHbKxT7jTQZkm1JmLKpXtsosGp4Gy0/cKUX
+         pK58R2a1kx/CTpeeVnwgci0pqzSzSx4UpyBQvVT952L3x8H/0xgldzwqKiUPr4gz3mXa
+         LkOlqKsCp28WD+d+61zSrxa0nKW17xtMbUFV8=
+Received: by 10.216.162.198 with SMTP id y48mr3360502wek.49.1272210245599;
+        Sun, 25 Apr 2010 08:44:05 -0700 (PDT)
 Received: from localhost.localdomain (5acc34b2.bb.sky.com [90.204.52.178])
-        by mx.google.com with ESMTPS id x1sm16755457wbx.19.2010.04.25.08.44.00
+        by mx.google.com with ESMTPS id x1sm16755457wbx.19.2010.04.25.08.44.04
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 25 Apr 2010 08:44:01 -0700 (PDT)
+        Sun, 25 Apr 2010 08:44:05 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.rc1.13.gbb0a0a.dirty
 In-Reply-To: <1272210175-20484-1-git-send-email-wmpalmer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145743>
 
-Many commands are able to colorize, or not, depending on a user's
-configuration and whether output is being sent to a terminal. However,
-if a user explicitly specifies a --pretty format, color will always be
-output, regardless of the destination. This would generally be okay, in
-a "do what I tell you, whether or not I should tell you to" sense, but
-the assumption fell apart when an alias was defined which may be run in
-various contexts: there was no way to specify "use this color, but only
-if you normally would display color at all"
+previously the only ways to alias a --pretty format within git were
+either to set the format as your default format (via the format.pretty
+configuration variable), or by using a regular git alias. This left the
+definition of more complicated formats to the realm of "builtin or
+nothing", with user-defined formats usually being reserved for quick
+one-offs.
 
-Here we add the %C?colorname placeholders which act just as the
-%Ccolorname placeholders, with the exception that the pretty_context is
-checked to see if color should be used according to configuration
+Here we allow user-defined formats to enjoy more or less the same
+benefits of builtins. By defining format.pretty.myalias, "myalias" can
+be used in place of whatever would normally come after --pretty=. This
+can be a format:, tformat:, raw (ie, defaulting to tformat), or the name
+of another builtin or user-defined pretty format.
 
 Signed-off-by: Will Palmer <wmpalmer@gmail.com>
 ---
- Documentation/pretty-formats.txt |    1 +
- builtin/log.c                    |    2 +-
- builtin/rev-list.c               |    1 +
- builtin/shortlog.c               |    5 ++-
- builtin/show-branch.c            |    1 +
- combine-diff.c                   |   11 +++++---
- commit.h                         |    1 +
- log-tree.c                       |    9 ++++--
- log-tree.h                       |    2 +-
- pretty.c                         |   49 ++++++++++++++++++++++++-------------
- shortlog.h                       |    2 +-
- t/t4205-log-pretty-formats.sh    |   44 ++++++++++++++++++++++++++++++++++
- 12 files changed, 99 insertions(+), 29 deletions(-)
- create mode 100755 t/t4205-log-pretty-formats.sh
+ Documentation/config.txt      |    8 ++
+ pretty.c                      |  169 +++++++++++++++++++++++++++++++++++------
+ t/t4205-log-pretty-formats.sh |   53 ++++++++++++-
+ 3 files changed, 202 insertions(+), 28 deletions(-)
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 1686a54..53eb903 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -132,6 +132,7 @@ The placeholders are:
- - '%Cblue': switch color to blue
- - '%Creset': reset color
- - '%C(...)': color specification, as described in color.branch.* config option
-+- '%C?...: switch to specified color, if relevant color.* config option specifies that color is ok
- - '%m': left, right or boundary mark
- - '%n': newline
- - '%%': a raw '%'
-diff --git a/builtin/log.c b/builtin/log.c
-index 6208703..a9fc6ea 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -740,7 +740,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 	log.in1 = 2;
- 	log.in2 = 4;
- 	for (i = 0; i < nr; i++)
--		shortlog_add_commit(&log, list[i]);
-+		shortlog_add_commit(&log, list[i], rev);
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 92f851e..6573d18 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -894,6 +894,14 @@ format.pretty::
+ 	See linkgit:git-log[1], linkgit:git-show[1],
+ 	linkgit:git-whatchanged[1].
  
- 	shortlog_output(&log);
- 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 51ceb19..5a53862 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -99,6 +99,7 @@ static void show_commit(struct commit *commit, void *data)
- 		struct pretty_print_context ctx = {0};
- 		ctx.abbrev = revs->abbrev;
- 		ctx.date_mode = revs->date_mode;
-+		ctx.use_color = DIFF_OPT_TST(&revs->diffopt, COLOR_DIFF);
- 		pretty_print_commit(revs->commit_format, commit, &buf, &ctx);
- 		if (revs->graph) {
- 			if (buf.len) {
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index 06320f5..7aee491 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -136,13 +136,14 @@ static void read_from_stdin(struct shortlog *log)
- 	}
- }
- 
--void shortlog_add_commit(struct shortlog *log, struct commit *commit)
-+void shortlog_add_commit(struct shortlog *log, struct commit *commit, struct rev_info *rev)
- {
- 	const char *author = NULL, *buffer;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct strbuf ufbuf = STRBUF_INIT;
- 	struct pretty_print_context ctx = {0};
- 
-+	ctx.use_color = DIFF_OPT_TST(&rev->diffopt, COLOR_DIFF);
- 	pretty_print_commit(CMIT_FMT_RAW, commit, &buf, &ctx);
- 	buffer = buf.buf;
- 	while (*buffer && *buffer != '\n') {
-@@ -183,7 +184,7 @@ static void get_from_rev(struct rev_info *rev, struct shortlog *log)
- 	if (prepare_revision_walk(rev))
- 		die("revision walk setup failed");
- 	while ((commit = get_revision(rev)) != NULL)
--		shortlog_add_commit(log, commit);
-+		shortlog_add_commit(log, commit, rev);
- }
- 
- static int parse_uint(char const **arg, int comma, int defval)
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index e20fcf3..e324336 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -294,6 +294,7 @@ static void show_one_commit(struct commit *commit, int no_name)
- 
- 	if (commit->object.parsed) {
- 		struct pretty_print_context ctx = {0};
-+		ctx.use_color = showbranch_use_color;
- 		pretty_print_commit(CMIT_FMT_ONELINE, commit, &pretty, &ctx);
- 		pretty_str = pretty.buf;
- 	}
-diff --git a/combine-diff.c b/combine-diff.c
-index 3480dae..5157c62 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -841,7 +841,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 		int deleted = 0;
- 
- 		if (rev->loginfo && !rev->no_commit_id)
--			show_log(rev);
-+			show_log(rev, use_color);
- 		dump_quoted_path(dense ? "diff --cc " : "diff --combined ",
- 				 "", elem->path, c_meta, c_reset);
- 		printf("%sindex ", c_meta);
-@@ -923,8 +923,10 @@ static void show_raw_diff(struct combine_diff_path *p, int num_parent, struct re
- 	if (!line_termination)
- 		inter_name_termination = 0;
- 
--	if (rev->loginfo && !rev->no_commit_id)
--		show_log(rev);
-+	if (rev->loginfo && !rev->no_commit_id) {
-+		int use_color = DIFF_OPT_TST(opt, COLOR_DIFF);
-+		show_log(rev, use_color);
-+	}
- 
- 	if (opt->output_format & DIFF_FORMAT_RAW) {
- 		offset = strlen(COLONS) - num_parent;
-@@ -1005,7 +1007,8 @@ void diff_tree_combined(const unsigned char *sha1,
- 		paths = intersect_paths(paths, i, num_parent);
- 
- 		if (show_log_first && i == 0) {
--			show_log(rev);
-+			int use_color = DIFF_OPT_TST(opt, COLOR_DIFF);
-+			show_log(rev, use_color);
- 			if (rev->verbose_header && opt->output_format)
- 				putchar(opt->line_termination);
- 		}
-diff --git a/commit.h b/commit.h
-index 26ec8c0..b6caf91 100644
---- a/commit.h
-+++ b/commit.h
-@@ -71,6 +71,7 @@ struct pretty_print_context
- 	enum date_mode date_mode;
- 	int need_8bit_cte;
- 	int show_notes;
-+	int use_color;
- 	struct reflog_walk_info *reflog_info;
- };
- 
-diff --git a/log-tree.c b/log-tree.c
-index d3ae969..b743c43 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -274,7 +274,7 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
- 	*extra_headers_p = extra_headers;
- }
- 
--void show_log(struct rev_info *opt)
-+void show_log(struct rev_info *opt, int use_color)
- {
- 	struct strbuf msgbuf = STRBUF_INIT;
- 	struct log_info *log = opt->loginfo;
-@@ -282,6 +282,7 @@ void show_log(struct rev_info *opt)
- 	int abbrev_commit = opt->abbrev_commit ? opt->abbrev : 40;
- 	const char *extra_headers = opt->extra_headers;
- 	struct pretty_print_context ctx = {0};
-+	ctx.use_color = use_color;
- 
- 	opt->loginfo = NULL;
- 	ctx.show_notes = opt->show_notes;
-@@ -457,12 +458,13 @@ int log_tree_diff_flush(struct rev_info *opt)
- 	}
- 
- 	if (opt->loginfo && !opt->no_commit_id) {
-+		int use_color = DIFF_OPT_TST(&opt->diffopt, COLOR_DIFF);
- 		/* When showing a verbose header (i.e. log message),
- 		 * and not in --pretty=oneline format, we would want
- 		 * an extra newline between the end of log and the
- 		 * output for readability.
- 		 */
--		show_log(opt);
-+		show_log(opt, use_color);
- 		if ((opt->diffopt.output_format & ~DIFF_FORMAT_NO_OUTPUT) &&
- 		    opt->verbose_header &&
- 		    opt->commit_format != CMIT_FMT_ONELINE) {
-@@ -559,8 +561,9 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
- 
- 	shown = log_tree_diff(opt, commit, &log);
- 	if (!shown && opt->loginfo && opt->always_show_header) {
-+		int use_color = DIFF_OPT_TST(&opt->diffopt, COLOR_DIFF);
- 		log.parent = NULL;
--		show_log(opt);
-+		show_log(opt, use_color);
- 		shown = 1;
- 	}
- 	opt->loginfo = NULL;
-diff --git a/log-tree.h b/log-tree.h
-index 3f7b400..09f970e 100644
---- a/log-tree.h
-+++ b/log-tree.h
-@@ -11,7 +11,7 @@ void init_log_tree_opt(struct rev_info *);
- int log_tree_diff_flush(struct rev_info *);
- int log_tree_commit(struct rev_info *, struct commit *);
- int log_tree_opt_parse(struct rev_info *, const char **, int);
--void show_log(struct rev_info *opt);
-+void show_log(struct rev_info *opt, int use_color);
- void show_decorations(struct rev_info *opt, struct commit *commit);
- void log_write_email_headers(struct rev_info *opt, struct commit *commit,
- 			     const char **subject_p,
++format.pretty.<name>::
++	Alias for a --pretty= format string, as specified in
++	linkgit:git-log[1]. Any aliases defined here can be used just
++	as the builtin pretty formats could. For example, defining
++	"format.pretty.hash = format:%H" would cause the invocation
++	"git log --pretty=hash" to be equivalent to running
++	"git log --pretty=format:%H".
++
+ format.thread::
+ 	The default threading style for 'git format-patch'.  Can be
+ 	a boolean value, or `shallow` or `deep`.  `shallow` threading
 diff --git a/pretty.c b/pretty.c
-index 7cb3a2a..fdb5e16 100644
+index f884f48..d49fec7 100644
 --- a/pretty.c
 +++ b/pretty.c
-@@ -634,35 +634,50 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
- 	struct format_commit_context *c = context;
- 	const struct commit *commit = c->commit;
- 	const char *msg = commit->buffer;
-+	const char *color_start;
- 	struct commit_list *p;
-+	int use_color = c->pretty_ctx->use_color;
-+	int conditional_color = 0;
- 	int h1, h2;
+@@ -11,6 +11,16 @@
+ #include "reflog-walk.h"
  
- 	/* these are independent of the commit */
- 	switch (placeholder[0]) {
- 	case 'C':
--		if (placeholder[1] == '(') {
-+		color_start = placeholder;
-+		if (placeholder[1] == '?') {
-+			color_start++;
-+			conditional_color = 1;
-+		}
-+		if (color_start[1] == '(') {
- 			const char *end = strchr(placeholder + 2, ')');
- 			char color[COLOR_MAXLEN];
- 			if (!end)
- 				return 0;
--			color_parse_mem(placeholder + 2,
--					end - (placeholder + 2),
--					"--pretty format", color);
--			strbuf_addstr(sb, color);
-+			if ( !conditional_color || use_color ) {
-+				color_parse_mem(color_start + 2,
-+						end - (color_start + 2),
-+						"--pretty format", color);
-+				strbuf_addstr(sb, color);
+ static char *user_format;
++static struct cmt_fmt_map {
++	const char *name;
++	enum cmit_fmt format;
++	const char *user_format;
++	int is_tformat;
++	int is_alias;
++} *commit_formats = NULL;
++static size_t commit_formats_len = 0;
++static size_t commit_formats_alloc = 0;
++static struct cmt_fmt_map *find_commit_format(const char *sought);
+ 
+ static void save_user_format(struct rev_info *rev, const char *cp, int is_tformat)
+ {
+@@ -21,22 +31,134 @@ static void save_user_format(struct rev_info *rev, const char *cp, int is_tforma
+ 	rev->commit_format = CMIT_FMT_USERFORMAT;
+ }
+ 
+-void get_commit_format(const char *arg, struct rev_info *rev)
++static int git_pretty_formats_config(const char *var, const char *value, void *cb)
++{
++	if (!prefixcmp(var, "format.pretty.")) {
++		struct cmt_fmt_map user_format = {0};
++		const char *fmt;
++
++		user_format.name = xstrdup(&var[14]);
++		user_format.format = CMIT_FMT_USERFORMAT;
++		git_config_string(&fmt, var, value);
++		if (!prefixcmp(fmt, "format:") || !prefixcmp(fmt, "tformat:")) {
++			user_format.is_tformat = fmt[0] == 't';
++			fmt = strchr(fmt, ':') + 1;
++		} else if (strchr(fmt, '%'))
++			user_format.is_tformat = 1;
++		else
++			user_format.is_alias = 1;
++		user_format.user_format = fmt;
++
++		ALLOC_GROW(commit_formats, commit_formats_len+1,
++			   commit_formats_alloc);
++		memcpy(&commit_formats[ commit_formats_len ], &user_format,
++		       sizeof(user_format));
++		commit_formats_len++;
++	}
++	return 0;
++}
++
++static void setup_commit_formats(void)
+ {
+ 	int i;
+-	static struct cmt_fmt_map {
+-		const char *n;
+-		size_t cmp_len;
+-		enum cmit_fmt v;
+-	} cmt_fmts[] = {
+-		{ "raw",	1,	CMIT_FMT_RAW },
+-		{ "medium",	1,	CMIT_FMT_MEDIUM },
+-		{ "short",	1,	CMIT_FMT_SHORT },
+-		{ "email",	1,	CMIT_FMT_EMAIL },
+-		{ "full",	5,	CMIT_FMT_FULL },
+-		{ "fuller",	5,	CMIT_FMT_FULLER },
+-		{ "oneline",	1,	CMIT_FMT_ONELINE },
++	const char **attempted_aliases = NULL;
++	size_t attempted_aliases_alloc = 0;
++	size_t attempted_aliases_len;
++	struct cmt_fmt_map builtin_formats[] = {
++		{ "raw",	CMIT_FMT_RAW,		NULL,	0 },
++		{ "medium",	CMIT_FMT_MEDIUM,	NULL,	0 },
++		{ "short",	CMIT_FMT_SHORT,		NULL,	0 },
++		{ "email",	CMIT_FMT_EMAIL,		NULL,	0 },
++		{ "full",	CMIT_FMT_FULL,		NULL,	0 },
++		{ "fuller",	CMIT_FMT_FULLER,	NULL,	0 },
++		{ "oneline",	CMIT_FMT_ONELINE,	NULL,	1 }
+ 	};
++	commit_formats_len = ARRAY_SIZE(builtin_formats);
++	ALLOC_GROW(commit_formats, commit_formats_len, commit_formats_alloc);
++	memcpy(commit_formats, builtin_formats,
++	       sizeof(*builtin_formats)*ARRAY_SIZE(builtin_formats));
++
++	git_config(git_pretty_formats_config, NULL);
++
++	for (i = ARRAY_SIZE(builtin_formats); i < commit_formats_len; i++) {
++		attempted_aliases_len = 0;
++		struct cmt_fmt_map *aliased_format = &commit_formats[i];
++		const char *fmt = commit_formats[i].user_format;
++		int j;
++
++		if (!commit_formats[i].is_alias)
++			continue;
++
++		while ((aliased_format = find_commit_format(fmt))) {
++			if (!aliased_format->is_alias)
++				break;
++
++			fmt = aliased_format->user_format;
++			for (j=0; j<attempted_aliases_len; j++) {
++				if (!strcmp(fmt, attempted_aliases[j])) {
++					aliased_format = NULL;
++					break;
++				}
 +			}
- 			return end - placeholder + 1;
- 		}
--		if (!prefixcmp(placeholder + 1, "red")) {
--			strbuf_addstr(sb, GIT_COLOR_RED);
--			return 4;
--		} else if (!prefixcmp(placeholder + 1, "green")) {
--			strbuf_addstr(sb, GIT_COLOR_GREEN);
--			return 6;
--		} else if (!prefixcmp(placeholder + 1, "blue")) {
--			strbuf_addstr(sb, GIT_COLOR_BLUE);
--			return 5;
--		} else if (!prefixcmp(placeholder + 1, "reset")) {
--			strbuf_addstr(sb, GIT_COLOR_RESET);
--			return 6;
++			if (!aliased_format)
++				break;
 +
-+		if (!prefixcmp(color_start + 1, "red")) {
-+			if ( !conditional_color || use_color )
-+				strbuf_addstr(sb, GIT_COLOR_RED);
-+			return 4 + (conditional_color ? 1 : 0);
-+		} else if (!prefixcmp(color_start + 1, "green")) {
-+			if ( !conditional_color || use_color )
-+				strbuf_addstr(sb, GIT_COLOR_GREEN);
-+			return 6 + (conditional_color ? 1 : 0);
-+		} else if (!prefixcmp(color_start + 1, "blue")) {
-+			if ( !conditional_color || use_color )
-+				strbuf_addstr(sb, GIT_COLOR_BLUE);
-+			return 5 + (conditional_color ? 1 : 0);
-+		} else if (!prefixcmp(color_start + 1, "reset")) {
-+			if ( !conditional_color || use_color )
-+				strbuf_addstr(sb, GIT_COLOR_RESET);
-+			return 6 + (conditional_color ? 1 : 0);
- 		} else
- 			return 0;
- 	case 'n':		/* newline */
-diff --git a/shortlog.h b/shortlog.h
-index bc02cc2..43498a0 100644
---- a/shortlog.h
-+++ b/shortlog.h
-@@ -20,7 +20,7 @@ struct shortlog {
++			ALLOC_GROW(attempted_aliases, attempted_aliases_len+1,
++				   attempted_aliases_alloc);
++			attempted_aliases[attempted_aliases_len] = fmt;
++			attempted_aliases_len++;
++		}
++		if (aliased_format) {
++			commit_formats[i].format = aliased_format->format;
++			commit_formats[i].user_format = aliased_format->user_format;
++			commit_formats[i].is_tformat = aliased_format->is_tformat;
++			commit_formats[i].is_alias = 0;
++		} else
++			commit_formats[i].format = CMIT_FMT_UNSPECIFIED;
++	}
++}
++
++static struct cmt_fmt_map *find_commit_format(const char *sought)
++{
++	struct cmt_fmt_map *found = NULL;
++	size_t found_match_len = 0;
++
++	if (!commit_formats)
++		setup_commit_formats();
++
++	int i;
++	for (i = 0; i < commit_formats_len; i++) {
++		const char *candidate = commit_formats[i].name;
++		const char *s = sought;
++		size_t match_len = 0;
++
++		if (commit_formats[i].format == CMIT_FMT_UNSPECIFIED)
++			continue;
++
++		for (; s++, candidate++;) {
++			if (!*candidate && *s) {
++				match_len = 0;
++				break;
++			}
++			if (!*candidate || !*s) {
++				match_len = s - sought;
++				break;
++			}
++			if (*s != *candidate) {
++				match_len = 0;
++				break;
++			}
++		}
++		if (match_len > found_match_len) {
++			found = &commit_formats[i];
++		}
++	}
++	return found;
++}
++
++void get_commit_format(const char *arg, struct rev_info *rev)
++{
++	struct cmt_fmt_map *commit_format;
  
- void shortlog_init(struct shortlog *log);
+ 	rev->use_terminator = 0;
+ 	if (!arg || !*arg) {
+@@ -47,21 +169,22 @@ void get_commit_format(const char *arg, struct rev_info *rev)
+ 		save_user_format(rev, strchr(arg, ':') + 1, arg[0] == 't');
+ 		return;
+ 	}
+-	for (i = 0; i < ARRAY_SIZE(cmt_fmts); i++) {
+-		if (!strncmp(arg, cmt_fmts[i].n, cmt_fmts[i].cmp_len) &&
+-		    !strncmp(arg, cmt_fmts[i].n, strlen(arg))) {
+-			if (cmt_fmts[i].v == CMIT_FMT_ONELINE)
+-				rev->use_terminator = 1;
+-			rev->commit_format = cmt_fmts[i].v;
+-			return;
+-		}
+-	}
++
+ 	if (strchr(arg, '%')) {
+ 		save_user_format(rev, arg, 1);
+ 		return;
+ 	}
  
--void shortlog_add_commit(struct shortlog *log, struct commit *commit);
-+void shortlog_add_commit(struct shortlog *log, struct commit *commit, struct rev_info *rev);
+-	die("invalid --pretty format: %s", arg);
++	commit_format = find_commit_format(arg);
++	if( !commit_format )
++		die("invalid --pretty format: %s", arg);
++
++	rev->commit_format = commit_format->format;
++	rev->use_terminator = commit_format->is_tformat;
++	if( commit_format->format == CMIT_FMT_USERFORMAT ){
++		save_user_format(rev, commit_format->user_format,
++				 commit_format->is_tformat);
++	}
+ }
  
- void shortlog_output(struct shortlog *log);
- 
+ /*
 diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-new file mode 100755
-index 0000000..28d2948
---- /dev/null
+index 28d2948..ee3e934 100755
+--- a/t/t4205-log-pretty-formats.sh
 +++ b/t/t4205-log-pretty-formats.sh
-@@ -0,0 +1,44 @@
-+#!/bin/sh
-+#
-+# Released into Public Domain by Will Palmer 2010
-+#
+@@ -6,7 +6,15 @@
+ test_description='Test pretty formats'
+ . ./test-lib.sh
+ 
+-test_expect_success "set up basic repos" ">foo && git add foo && git commit -m initial"
++test_expect_success "set up basic repos" \
++	">foo &&
++	>bar &&
++	git add foo &&
++	test_tick &&
++	git commit -m initial &&
++	git add bar &&
++	test_tick &&
++	git commit -m 'add bar'"
+ 
+ for flag in false true always; do
+ for color in red green blue reset; do
+@@ -16,29 +24,64 @@ for color in red green blue reset; do
+ 		"$make_expected &&
+ 		git config color.ui $flag &&
+ 		git log -1 --pretty=format:'%C$color' > actual &&
+-		cmp expected actual"
++		test_cmp expected actual"
+ 
+ 
+ 	test_expect_success "%C($color) with color.ui $flag" \
+ 		"$make_expected &&
+ 		git config color.ui $flag &&
+ 		git log -1 --pretty=format:'%C($color)' > actual &&
+-		cmp expected actual"
++		test_cmp expected actual"
+ 
+ 	[ ! "$flag" = "always" ] && make_expected=">expected"
+ 	test_expect_success "%C?$color with color.ui $flag" \
+ 		"$make_expected &&
+ 		git config color.ui $flag &&
+ 		git log -1 --pretty=format:'%C?$color' > actual &&
+-		cmp expected actual"
++		test_cmp expected actual"
+ 
+ 	test_expect_success "%C?($color) with color.ui $flag" \
+ 		"$make_expected &&
+ 		git config color.ui $flag &&
+ 		git log -1 --pretty=format:'%C?($color)' > actual &&
+-		cmp expected actual"
++		test_cmp expected actual"
+ 
+ done
+ done
++test_expect_success "reset color flags" "git config --unset color.ui"
 +
-+test_description='Test pretty formats'
-+. ./test-lib.sh
++test_expect_success "alias builtin format" \
++	"git log --pretty=oneline >expected &&
++	git config format.pretty.test-alias oneline &&
++	git log --pretty=test-alias >actual &&
++	test_cmp expected actual"
 +
-+test_expect_success "set up basic repos" ">foo && git add foo && git commit -m initial"
++test_expect_success "alias user-defined format" \
++	"git log --pretty='format:%h' >expected &&
++	git config format.pretty.test-alias 'format:%h' &&
++	git log --pretty=test-alias >actual &&
++	test_cmp expected actual"
 +
-+for flag in false true always; do
-+for color in red green blue reset; do
++test_expect_success "alias user-defined tformat" \
++	"git log --pretty='tformat:%h' >expected &&
++	git config format.pretty.test-alias 'tformat:%h' &&
++	git log --pretty=test-alias >actual &&
++	test_cmp expected actual"
 +
-+	make_expected="git config --get-color no.such.slot $color >expected"
-+	test_expect_success "%C$color with color.ui $flag" \
-+		"$make_expected &&
-+		git config color.ui $flag &&
-+		git log -1 --pretty=format:'%C$color' > actual &&
-+		cmp expected actual"
++test_expect_code 128 "alias non-existant format" \
++	"git config format.pretty.test-alias format-that-will-never-exist &&
++	git log --pretty=test-alias"
 +
++test_expect_success "alias of an alias" \
++	"git log --pretty='tformat:%h' >expected &&
++	git config format.pretty.test-foo 'tformat:%h' &&
++	git config format.pretty.test-bar test-foo &&
++	git log --pretty=test-bar >actual &&
++	test_cmp expected actual"
 +
-+	test_expect_success "%C($color) with color.ui $flag" \
-+		"$make_expected &&
-+		git config color.ui $flag &&
-+		git log -1 --pretty=format:'%C($color)' > actual &&
-+		cmp expected actual"
-+
-+	[ ! "$flag" = "always" ] && make_expected=">expected"
-+	test_expect_success "%C?$color with color.ui $flag" \
-+		"$make_expected &&
-+		git config color.ui $flag &&
-+		git log -1 --pretty=format:'%C?$color' > actual &&
-+		cmp expected actual"
-+
-+	test_expect_success "%C?($color) with color.ui $flag" \
-+		"$make_expected &&
-+		git config color.ui $flag &&
-+		git log -1 --pretty=format:'%C?($color)' > actual &&
-+		cmp expected actual"
-+
-+done
-+done
-+
-+test_done
++test_expect_code 128 "alias loop" \
++	"git config format.pretty.test-foo test-bar &&
++	git config format.pretty.test-bar test-foo &&
++	git log --pretty=test-foo"
+ 
+ test_done
 -- 
 1.7.1.rc1.13.gbb0a0a.dirty
