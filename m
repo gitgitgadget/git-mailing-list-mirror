@@ -1,57 +1,75 @@
-From: Ian Stevens <iancstevens@gmail.com>
-Subject: Re: Can I recover lost commits in a SVN repository using a local 
-	tracking git-svn branch?
-Date: Mon, 26 Apr 2010 08:21:00 -0700 (PDT)
-Message-ID: <f01c5562-3cb1-4307-a5ab-f51e5157eba9@c21g2000yqk.googlegroups.com>
-References: <904c3ddb-a565-4514-9f5e-83b3706b9fec@t36g2000yqt.googlegroups.com>
+From: Tor Arntsen <tor@spacetec.no>
+Subject: Systems with non-posix TAR implementations: How to handle
+Date: Mon, 26 Apr 2010 17:55:44 +0200
+Message-ID: <s2sd2d39d861004260855l2ca5799fj7dfa70799ff1f307@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 26 17:21:41 2010
+X-From: git-owner@vger.kernel.org Mon Apr 26 17:55:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6Q7t-0003Rh-6Q
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 17:21:37 +0200
+	id 1O6Qf3-0005rt-DJ
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 17:55:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753521Ab0DZPVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Apr 2010 11:21:04 -0400
-Received: from mail-yw0-f160.google.com ([209.85.211.160]:49276 "EHLO
-	mail-yw0-f160.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753407Ab0DZPVB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Apr 2010 11:21:01 -0400
-Received: by ywh32 with SMTP id 32so10444455ywh.33
-        for <git@vger.kernel.org>; Mon, 26 Apr 2010 08:21:00 -0700 (PDT)
-Received: by 10.151.115.16 with SMTP id s16mr813700ybm.8.1272295260390; Mon, 
-	26 Apr 2010 08:21:00 -0700 (PDT)
-Received: by c21g2000yqk.googlegroups.com with HTTP; Mon, 26 Apr 2010 08:21:00 
-	-0700 (PDT)
-In-Reply-To: <904c3ddb-a565-4514-9f5e-83b3706b9fec@t36g2000yqt.googlegroups.com>
-X-IP: 174.137.225.177
-User-Agent: G2/1.0
-X-HTTP-UserAgent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; en-us) 
-	AppleWebKit/531.22.7 (KHTML, like Gecko) Version/4.0.5 Safari/531.22.7,gzip(gfe)
+	id S1752726Ab0DZPzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Apr 2010 11:55:46 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:64345 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752486Ab0DZPzq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Apr 2010 11:55:46 -0400
+Received: by bwz19 with SMTP id 19so282859bwz.21
+        for <git@vger.kernel.org>; Mon, 26 Apr 2010 08:55:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type;
+        bh=/QhNd7LGYK9v94uGTxMB70yV8pLGgPQEU633dhjmf1g=;
+        b=qzp+79gb0p8kGf2zvMRWKgeHzPh2kpeGMf7JR1PsqqaP87v7A73bDFCybaQzgePrEo
+         pfGUfTVO5KfFC7lVQYQVzGOuz8Mu5qAzG2khxIkAYKSVVR/ELPrlpfBMqDh3HixbQ4cm
+         g9N9lv12/inCIAoF4QT/HNLJZilD3D/qiMR5I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=ewdwtEnMISkCzxQevJ0zlhBq5QZlDBU1jZFSNxe86LXWexoQj5I6Jh5LKZjk0ZrhPD
+         sfTB255PWyrwlBWS+gbu/73ZDV8xYDl+oz0yaqHvxXay8ZV1GHgcMOYoNw4nY0ZMmTeZ
+         CDTAFuBNmRK/v9kzoq2TafOL7R++o+r0geiO4=
+Received: by 10.204.11.18 with SMTP id r18mr2776549bkr.55.1272297344366; Mon, 
+	26 Apr 2010 08:55:44 -0700 (PDT)
+Received: by 10.204.132.5 with HTTP; Mon, 26 Apr 2010 08:55:44 -0700 (PDT)
+X-Google-Sender-Auth: 8b39bb3f2277e110
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145824>
 
-Here is how I achieved what I wanted:
+Ref. the testlog that I posted in the thread "[PATCH] Add Tru64/OSF1
+support in Makefile"
 
-1. Re-cloned http://tracked-svn/trunk in a fresh git-svn repo.
-2. Added my old git-svn repo as a remote to the fresh repo. (eg. git
-remote add -f up-to-date /path/to/repo)
-3. git merge remotes/up-to-date/master
-4. git svn dcommit
+*** t0024-crlf-archive.sh ***
+*   ok 1: setup
+* FAIL 2: tar archive
 
-Rebasing on my old repo gives no errors, and dcommit works as
-expected.
 
-This might not be the best way to recover commits, but it got me what
-I wanted.
+               git archive --format=tar HEAD |
+               ( mkdir untarred && cd untarred && "$TAR" -xf - )
 
-Ian.
+               test_cmp sample untarred/sample
+
+
+ *   ok 3: zip archive.
+
+The problem with that test is that the Tru64 V5.1 'tar' says 'This
+doesn't look like a tar archive' on the generated file. However, it
+turns out that the tar file generated by 'git archive --format=tar' is
+fine, it's just that it's a POSIX tar archive and the Tru64 'tar'
+program isn't POSIX tar format compatible.
+How should we handle this? Just ignore errors in this test on Tru64,
+or is there some other way that I missed?
+
+-Tor
