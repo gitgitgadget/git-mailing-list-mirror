@@ -1,92 +1,66 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/2] fast-import: validate entire ident string
-Date: Mon, 26 Apr 2010 11:30:33 -0500
-Message-ID: <20100426163032.GB10859@progeny.tock>
-References: <1272069944-20626-1-git-send-email-lodatom@gmail.com>
- <20100424160608.GA14690@progeny.tock>
- <20100424190419.GA7502@spearce.org>
- <20100424203827.GA24948@progeny.tock>
- <20100424211042.GC24948@progeny.tock>
- <20100426160247.GD7502@spearce.org>
- <20100426162422.GA10859@progeny.tock>
+From: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
+Subject: Re: [PATCH 2/5] Not all vendor diffs support GNUisms (resend)
+Date: Mon, 26 Apr 2010 16:50:10 +0000
+Message-ID: <20100426165010.GB28004@thor.il.thewrittenword.com>
+References: <20100311163039.GB7877@thor.il.thewrittenword.com>
+ <4B994324.9060400@lsrfire.ath.cx>
+ <20100315050943.GA22128@thor.il.thewrittenword.com>
+ <4BD45874.9010700@lsrfire.ath.cx>
+ <20100425152130.GA27695@thor.il.thewrittenword.com>
+ <4BD46BCA.3010308@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org,
-	Nicolas Pitre <nico@fluxnic.net>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Apr 26 18:30:01 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ren? Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Apr 26 18:50:29 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6RBq-0001xa-9M
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 18:29:46 +0200
+	id 1O6RVt-0006dh-CZ
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 18:50:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753090Ab0DZQ3k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Apr 2010 12:29:40 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:55257 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751597Ab0DZQ3j (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Apr 2010 12:29:39 -0400
-Received: by pvg2 with SMTP id 2so406051pvg.19
-        for <git@vger.kernel.org>; Mon, 26 Apr 2010 09:29:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=Py+aO/NDaTGeKM8XjS+usyx0NpXZdvYXFswyJa5PFHo=;
-        b=HYsRbwmiJHUkMhjoAP9nIl1XP8qFOgGwEo7kiju7ILXv7hTIrl5EsfsDIsk5Hy0Kyx
-         Av/ZZe3LhOPAcm220mFtXYAN1v3UZzPYn+RKhdjLRoajj3A8ufFWFBiBTvWuilXVaF2K
-         GYEeJELuAKdHDIShCcGGAvR/MLdII+Ky2ImL4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=VPozAid1cAJ4nhVdMG8RxP7gmVtPZ1Fm0T1o8LlxbMZ++bpXZ0FF4JfjKMxVJKYveV
-         YlpghizTzk+B0W7yocNAIQ1jOHv75QkTD+59EM2IAeVhHqp7DeuZcnGkTpLiGOdNRqP2
-         3zUKOXHyCsg4mdkR0S/OUgscyDfjuFw2Z8zTY=
-Received: by 10.142.2.28 with SMTP id 28mr2042449wfb.207.1272299378829;
-        Mon, 26 Apr 2010 09:29:38 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm3232869iwn.13.2010.04.26.09.29.36
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 26 Apr 2010 09:29:37 -0700 (PDT)
+	id S1752989Ab0DZQuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Apr 2010 12:50:12 -0400
+Received: from mail1.thewrittenword.com ([69.67.212.77]:59667 "EHLO
+	mail1.thewrittenword.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752213Ab0DZQuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Apr 2010 12:50:11 -0400
+Received: from mail1.il.thewrittenword.com (emma-internal-gw.il.thewrittenword.com [192.168.13.25])
+	by mail1.thewrittenword.com (Postfix) with ESMTP id 45BFF5CC7;
+	Mon, 26 Apr 2010 17:11:16 +0000 (UTC)
+X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com 45BFF5CC7
+Received: from thor.il.thewrittenword.com (thor.il.thewrittenword.com [10.191.57.1])
+	by mail1.il.thewrittenword.com (Postfix) with ESMTP id ACD71AB4;
+	Mon, 26 Apr 2010 16:50:10 +0000 (UTC)
+Received: by thor.il.thewrittenword.com (Postfix, from userid 1048)
+	id 9DCEFBAB6; Mon, 26 Apr 2010 16:50:10 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <20100426162422.GA10859@progeny.tock>
+In-Reply-To: <4BD46BCA.3010308@lsrfire.ath.cx>
 User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.96 at maetel.il.thewrittenword.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145828>
 
-Jonathan Nieder wrote:
+On Sun, Apr 25, 2010 at 06:20:26PM +0200, Ren? Scharfe wrote:
+> Am 25.04.2010 18:03, schrieb Gary V. Vaughan:
+> > ETA on a release from that branch so that I can finish any
+> > necessary changes to my outstanding changesets?
+> 
+> Junio released git 1.7.1 just yesterday.
 
-> -		lb =3D strstr(a + 8, " <");
-> -		rb =3D strstr(a + 8, "> ");
-> -		eol =3D strchr(a + 8, '\n');
-> +		n =3D a + strlen("\nauthor");
-> +		lb =3D strstr(n, " <");
-> +		rb =3D strstr(lb + 2, "> ");
-> +		eol =3D strchr(rb + 2, '\n');
->  		if (!lb || !rb || !eol)
->  			die("invalid commit: %s", use_message);
+http://git-scm.com/download still shows 1.7.0.6 as the latest release,
+or is 1.7.1 not considered stable?
 
-Err, this will segv when it fails; better to use
+In any case, I'll rebase my outstanding changesets and resubmit to the
+list presently.
 
-	lb =3D a + strlen("\nauthor ");
-	lb =3D strchrnul(lb, '<');
-	rb =3D strchrnul(lb, '>');
-	eol =3D strchrnul(rb, '\n');
-	if (!*lb || !*rb || !*eol)
-		die("invalid commit: %s", use_message);
-
-This is even more permissive, but I think that=E2=80=99s okay.
-
-Sorry for the noise.
-Jonathan
+Cheers,
+-- 
+Gary V. Vaughan (gary@thewrittenword.com)
