@@ -1,129 +1,104 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: MIME problem when using git format-patch / git am
-Date: Sun, 25 Apr 2010 20:49:41 -0500
-Message-ID: <20100426014941.GA29220@progeny.tock>
-References: <20100425233549.GA8737@triton>
+Subject: Re: [PATCH v2 1/3] pretty: add conditional %C?colorname
+ placeholders
+Date: Sun, 25 Apr 2010 21:13:47 -0500
+Message-ID: <20100426021347.GA29669@progeny.tock>
+References: <1272232579-18895-1-git-send-email-wmpalmer@gmail.com>
+ <1272232579-18895-2-git-send-email-wmpalmer@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?iso-8859-1?B?2Hl2aW5kIEEu?= Holm <sunny@sunbase.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 26 03:49:16 2010
+Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 26 04:13:12 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6DRV-0000TJ-2z
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 03:49:01 +0200
+	id 1O6Dos-0001yS-1F
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 04:13:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754250Ab0DZBsz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Apr 2010 21:48:55 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:36614 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753536Ab0DZBsz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Apr 2010 21:48:55 -0400
-Received: by gyg13 with SMTP id 13so6087465gyg.19
-        for <git@vger.kernel.org>; Sun, 25 Apr 2010 18:48:54 -0700 (PDT)
+	id S1754358Ab0DZCNB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Apr 2010 22:13:01 -0400
+Received: from mail-qy0-f179.google.com ([209.85.221.179]:64235 "EHLO
+	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753536Ab0DZCNA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Apr 2010 22:13:00 -0400
+Received: by qyk9 with SMTP id 9so16516037qyk.1
+        for <git@vger.kernel.org>; Sun, 25 Apr 2010 19:13:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
+        h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=uXNa4GGbC06n2lgvVBKkI4ZAijvv2D7EiRA1pyETtLw=;
-        b=FAA0Fd8XmfIXdtI5LLVwb9T/Ka8jPAzexxslN15vRhIfsVV5a9HuLsklM5SgxlM/yc
-         fXmcwRyT47pIdEWw4UdT/mBevoShd03fiC1GDomcFnGNxtBsDtQaQm+pWsNQ2zkTbvsl
-         K3MghocefQFDQx+Joi+OiRCEQAH8SEmyOJx7E=
+        bh=LhXEj1PwVt98Ofo/VBns9eX6ODLB6ml9ehm3HlLxqY4=;
+        b=KAcvZgS/UcnGtNJZ3SPUwMQA6GV466HF2+zVqq3X3P1bG85yjne+UmLPdWFvJ4xOQS
+         qygvbPcPbBpu8NklkvM6qythv4ZWbCRIase+hBFV99bbNszNnL47Sk7p9/k+FvNr9uGw
+         ymR2y6jaNf/3/5IrsRlPL2B+kLA2jwxB7arFk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=Xs5Hb09+z7tVF1QydKazWxXZ7+Lo/suYt/zMNn6/vu6yI+lgqx1eUWBRXB/dTXv62b
-         jJbhjVqiIvepzLZf55dFKu5oqWULpmdLjM4ka5ig3ghOfXfg3toNvPbZcWkmG+nbELcu
-         p68N+FLHO6mS9EiGaV0k6346KlvLOxA1EC8wU=
-Received: by 10.90.236.8 with SMTP id j8mr1737710agh.5.1272246534020;
-        Sun, 25 Apr 2010 18:48:54 -0700 (PDT)
+        b=J6xGyw2epDr4VBQ+OwOYUue8AD/UUaTMxRBKjrq7ULo1xavXUNfFRc/qHxu0XSQ95T
+         VT1Cl8AKi01ATszrFU082h2/+7tpNiegWl51gSP5UJ+Ux/E5mBJFqKrSUoaqf7KAsv5K
+         gVk9z2pnukkp9ihmZiZj1pFj/mGj+guzLMCGg=
+Received: by 10.229.228.3 with SMTP id jc3mr3955240qcb.83.1272247979917;
+        Sun, 25 Apr 2010 19:12:59 -0700 (PDT)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm2679766iwn.9.2010.04.25.18.48.53
+        by mx.google.com with ESMTPS id 23sm2677135iwn.14.2010.04.25.19.12.59
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 25 Apr 2010 18:48:53 -0700 (PDT)
+        Sun, 25 Apr 2010 19:12:59 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100425233549.GA8737@triton>
+In-Reply-To: <1272232579-18895-2-git-send-email-wmpalmer@gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145779>
 
-Hi,
+Hi Will,
 
-=C3=98yvind A. Holm wrote:
+Will Palmer wrote:
 
-| git commit -m "Initial commit" --allow-empty
-| git tag firstrev
-| echo First line >foo.txt
-| git add foo.txt
-| git commit -m "First commit without 8-bit chars"
-| echo Second line >>foo.txt
-| git commit -m "Second commit with =C2=A9 in first line of logmsg" -a
-| echo Third line >>foo.txt
-| git commit -m "Third commit with no 8-bit in first line`echo; echo bu=
-t =E2=82=ACuro further down`" -a
-| echo Fourth line >>foo.txt
-| git commit -m "Fourth commit with =C2=A9 in first line again" -a
-| git format-patch firstrev
-| git checkout -b patches firstrev
-| git am 0*
-| git log
-[...]
-|    Applying: =3D?UTF-8?q?Third=3D20commit=3D20with=3D20no=3D208-bit=3D=
-20in=3D20first=3D20line
-|    Applying: Fourth commit with =C2=A9 in first line again
+> Here we add the %C?colorname placeholders which act just as the
+> %Ccolorname placeholders, with the exception that the pretty_context =
+is
+> checked to see if color should be used according to configuration
 
-On this machine, it=E2=80=99s even worse:
+Thanks for tackling this.
 
-    =3D?UTF-8?q?Third=3D20commit=3D20with=3D20no=3D208-bit=3D20in=3D20f=
-irst=3D20line
-   =20
-    =3D20but=3D20=3DE2=3D82=3DACuro=3D20further=3D20down?=3D
-    MIME-Version: 1.0
-    Content-Type: text/plain; charset=3DUTF-8
-    Content-Transfer-Encoding: 8bit
+I have thought a little about a related problem: some commands have
+configuration for the colors they use, like:
 
-An encoded-word [1] is defined to be at most 75 characters long and not
-to contain whitespace.  On the other hand, multiple encoded-words
-within a field are required to be separated by whitespace.
+    color.grep.<slot>
+        Use customized color for grep colorization.  <slot> specifies w=
+hich
+        part of the line to use the specified color, and is one of
 
-[1] http://tools.ietf.org/html/rfc2047
+        context
+            non-matching text in context lines (when using -A, -B, or -=
+C)
 
-This leads to a question: what if one wants to include a word that
-quotes to more than 75 characters?  How about more than 997 ASCII
-characters without whitespace?  No can do.
+        filename
+            filename prefix (when not using -h)
 
-Ideally, I would like to see git quoting single words, though I admit
-I have not seen how well various user agents cope with this.
+This is nice because in certain situations (e.g. different background
+colors), the default colors might not be suitable.  As an example of
+this, the =E2=80=98commit =E2=80=99 line of =E2=80=98git log=E2=80=99 o=
+utput uses color.diff.commit.
 
-Maybe this patch would give you some joy until then.  Feel free to pick
-it up and take it somewhere more useful.
+So it would be nice to be able to use %C(diff.commit) and
+automatically use the right color, if color is enabled.
 
-Thanks,
+Why not make %C always check?  I can understand that it would be
+annoying when first trying to use %C.  On the other hand, it would be
+more convenient for writing format.pretty configuration that should be
+shared with old git, and I assume anyone using %C for the first time
+would be looking at the manual, which could warn her.
+
+Cheers,
 Jonathan
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-
-diff --git a/pretty.c b/pretty.c
-index d493cad..b822e24 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -131,7 +131,7 @@ needquote:
- 		 * many programs do not understand this and just
- 		 * leave the underscore in place.
- 		 */
--		if (is_rfc2047_special(ch) || ch =3D=3D ' ') {
-+		if (is_rfc2047_special(ch) || ch =3D=3D ' ' || ch =3D=3D '\n') {
- 			strbuf_add(sb, line + last, i - last);
- 			strbuf_addf(sb, "=3D%02X", ch);
- 			last =3D i + 1;
