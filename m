@@ -1,89 +1,89 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: "git log -- SHA-1" - how to get/simulate this functionality?
-Date: Mon, 26 Apr 2010 20:57:38 +0200
-Message-ID: <p2v81b0412b1004261157pf26db339t7d27b1b317a99b5e@mail.gmail.com>
-References: <i2o76c5b8581004261054h591c266fre1a0dd87cd8511e1@mail.gmail.com>
-	 <x2z76c5b8581004261056lcdb153a5j825db166916069e9@mail.gmail.com>
-	 <z2m81b0412b1004261108n5453b5d2h179a944fa8db9b49@mail.gmail.com>
-	 <p2y76c5b8581004261122g8e2950fci507cc9090a865843@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Git merge using patience diff?
+Date: Mon, 26 Apr 2010 13:59:34 -0500
+Message-ID: <20100426185933.GA11518@progeny.tock>
+References: <20100426180923.GC18122@debxo>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 26 20:57:47 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: chombee <chombee@lavabit.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 26 20:58:51 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6TV4-0001kn-EP
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 20:57:46 +0200
+	id 1O6TW0-00029m-QG
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 20:58:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751961Ab0DZS5k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Apr 2010 14:57:40 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:65298 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751755Ab0DZS5j (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Apr 2010 14:57:39 -0400
-Received: by gwj19 with SMTP id 19so3990839gwj.19
-        for <git@vger.kernel.org>; Mon, 26 Apr 2010 11:57:38 -0700 (PDT)
+	id S1753269Ab0DZS6m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Apr 2010 14:58:42 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:41165 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753229Ab0DZS6l (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Apr 2010 14:58:41 -0400
+Received: by pvg2 with SMTP id 2so575099pvg.19
+        for <git@vger.kernel.org>; Mon, 26 Apr 2010 11:58:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=W3V3Ly2Qyf3x2VAMF5fJPMflnCkqfgB3oBYxnnArb9E=;
-        b=C3PDqnw85Ld5cHgluNcTiM7wqVAIxmBnkrVrYzIBn12ckZ8A6Hwmru4EPv6WJtNPxz
-         vUeQuOONkFxoLkGXB5hxjMVGLDUPJJ71vg8Lj0I5houfxgdBt+mjQBmWvmOc0ysDf4+u
-         jBNBfJI+tlZUb/HOXx725USJaBwFIFoDuQRQk=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=ZR12TD2oqBgtMus09/sabNMuQrHIv6A1jXlP0E4oaw8=;
+        b=qDBfuhrcqPqiD7nRZHTjGdMvAA8G3wmD65yqAZ24Vtk4avELsJnNhVd5e3UQL440L8
+         01+QQSDFkTnaB5Z6sa6Wp+7zlN/iDM3oqSKbNUed5Rf/+g6My2ti60cRftBPVAbod19j
+         19B9BLLEfdbXQZqg9BU7LkBzdBupQZSuSaCRM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Mk3EmRyZ96xAiDQDxmnItvFt9vp7DStTpAS4Ff6CTr6JtkIibhEnzp2rAgFp0I7Q2n
-         UPzMtF1ApcKjWDgXKfQQ7u4W5uhGMK0RqhgwP+mu7nwFSI+Z5X7c1RXKvXaURA53II+l
-         kDcIS/TexyzIHH3NFuNZEqr+05rN2ek3/gAVw=
-Received: by 10.101.18.6 with SMTP id v6mr38468ani.42.1272308258548; Mon, 26 
-	Apr 2010 11:57:38 -0700 (PDT)
-Received: by 10.100.120.9 with HTTP; Mon, 26 Apr 2010 11:57:38 -0700 (PDT)
-In-Reply-To: <p2y76c5b8581004261122g8e2950fci507cc9090a865843@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=UvKsAzHdKPKoJSBhbM545RRUMje/eT8tRANMgqaKQSDWSLLfvwflzP4NHat6SXldxj
+         mQyyZVgIpQg3sg6ZAfnpZnmkHYuRlX38VO2ZoZKFZKiC7cYYzsb2ezKskmzbaWHG3oEl
+         iXbrLdtvbbOimBB1rxGEW43bPL0ed3G96jS64=
+Received: by 10.140.255.10 with SMTP id c10mr4283707rvi.289.1272308320643;
+        Mon, 26 Apr 2010 11:58:40 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 20sm3313897iwn.13.2010.04.26.11.58.38
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 26 Apr 2010 11:58:39 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100426180923.GC18122@debxo>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145847>
 
-On Mon, Apr 26, 2010 at 20:22, Eugene Sajine <euguess@gmail.com> wrote:
-> On Mon, Apr 26, 2010 at 2:08 PM, Alex Riesen <raa.lkml@gmail.com> wrote:
->> On Mon, Apr 26, 2010 at 19:56, Eugene Sajine <euguess@gmail.com> wrote:
->>> On Mon, Apr 26, 2010 at 1:54 PM, Eugene Sajine <euguess@gmail.com> wrote:
->>>> Hi,
->>>>
->>>> I'm wondering if there is a way to get some repo information if the
->>>> only thing i know is SHA-1 (no full path to the file)
->>>
->>> I mean of course the SHA-1 of the blob, i.e. the result of git
->>> hash-object some_file
->>
->> Try 'git cat-file -t <sha>'. It prints what object type is under the hash.
->> Than you can use either 'git cat-file <type> <sha>' (the most precise version,
->> which shall fail if anything is wrong), 'git cat-file -p <sha>' or plain
->> 'git show <sha>' (which always works, unless repo's broken).
->>
->
-> Well thank you for that, but that gives me what i already know - the content.
-> I need to "reverse engineer" the history by having only the content
-> and its SHA-1 in order to indentify the last commitID and get all
-> relevant info (author, date etc. )
+Hi,
 
-Hmm. In that case, your using of git log look like a good way to get the
-information. If you wanted an output format which is better suited for
-automated parsing, you can look at "git rev-list --pretty=format:...",
-let it output only commit and tree hashes, and grep the output of
-"git ls-tree" for your hash...
+chombee wrote:
 
-> This is all about avoiding using keyword expansion (thanks CVS for bad habbits)
->
-> Thanks,
-> Eugene
->
+> My version of git is 1.5.*, from before git diff had the --patience
+> option. I got git diff to use bzr's implementation of patience diff v=
+ia
+> GIT_EXTERNAL_DIFF. But when merging git still seems to use its normal
+> diff. Will I need to write my own merge driver that uses patience dif=
+f?
+
+You will need to if you want that functionality.  By the way, if you
+write a clean patch that adds a git-merge-patience program to git.git
+so one can use =E2=80=98git merge -s patience=E2=80=99 out of the box, =
+I imagine you
+would find some appreciative users.
+
+You could even piggy-back on merge-recursive to do most of the work
+(and share a main() function and so on), like merge-subtree did: see
+commit 68faf689 (A new merge strategy 'subtree', 2007-02-15) in
+git.git.
+
+You might also be interested in the patches at
+<http://bugs.debian.org/522361>, which add patience diff support to
+git add --patch and friends (and are sitting in limbo until I find
+a chance to write some tests for them).
+
+Hope that helps,
+Jonathan
