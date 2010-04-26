@@ -1,80 +1,78 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: "git log -- SHA-1" - how to get/simulate this functionality?
-Date: Mon, 26 Apr 2010 14:22:45 -0400
-Message-ID: <p2y76c5b8581004261122g8e2950fci507cc9090a865843@mail.gmail.com>
-References: <i2o76c5b8581004261054h591c266fre1a0dd87cd8511e1@mail.gmail.com>
-	 <x2z76c5b8581004261056lcdb153a5j825db166916069e9@mail.gmail.com>
-	 <z2m81b0412b1004261108n5453b5d2h179a944fa8db9b49@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [BUG] git shortlog hangs in bare repo
+Date: Mon, 26 Apr 2010 13:25:40 -0500
+Message-ID: <20100426182540.GA11378@progeny.tock>
+References: <u2i76c5b8581004221222ge8bb0b8cp55cb1f13d5f9692a@mail.gmail.com>
+ <20100425215042.GA25547@progeny.tock>
+ <n2i76c5b8581004261103k287ce0fax7b3a511dbb72c95b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Eugene Sajine <euguess@gmail.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 26 20:22:52 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	=?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 26 20:25:17 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6SxI-0000N7-Co
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 20:22:52 +0200
+	id 1O6Szd-0001VW-H4
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 20:25:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753972Ab0DZSWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Apr 2010 14:22:48 -0400
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:46722 "EHLO
-	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754440Ab0DZSWr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Apr 2010 14:22:47 -0400
-Received: by qyk9 with SMTP id 9so17783213qyk.1
-        for <git@vger.kernel.org>; Mon, 26 Apr 2010 11:22:46 -0700 (PDT)
+	id S1754527Ab0DZSYy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Apr 2010 14:24:54 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:36673 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754300Ab0DZSYx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Apr 2010 14:24:53 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so2162119fgg.1
+        for <git@vger.kernel.org>; Mon, 26 Apr 2010 11:24:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=ZE4UnlE2gYKQnzsd3LJedOLUINUy9XqJT991rTp6Gck=;
-        b=eXzcsYfZvIUtQlRO6ya/U1/Le/4U5EDFfmxC5qTXbsHvmRLl8BFkPdSMD7IZ9Iw5SI
-         /2CtZN2oC0d8YMbRgChccQER+Fz2JX6dIyS+UA9JJukAMU1Rh4kiKwR6iS9mnLsh/R6p
-         LTcNOwkmvoJQZYnniaxnpoqvNcF3n4+9sqWd0=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=XEoHMiLm4KkQ1Gy57V2LwAGoq8rqB8s/9WZ7J9z1xf8=;
+        b=fRgxjQ1ckFG7BUTKCtCrIjU347oxuTjirS3JbVnXu+gE/iTvDps/XIJvz01jVI49tR
+         aZmF/UI4JdCHBpRESQwQ7IOHmTzZAr5wfmc2YJphOlX2znwCrIqpEVZwh/JOLkdXfnzh
+         b9rJAv2LmaNcvZk32JQPpiaX08SXZwXsX2iUk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=PCEYJd1s0/swfPUcEx3ElEUQeA17CmfiaeTuM1jD5Yb2K0rMpYuprBYyjecDhzC4tP
-         6JZJ3KxhOEPAiBom3ecSvSuE0Of0r8IsvyKJTcFLg57e6jvjDKnDeXHFJSdZntIzG74k
-         A9MIPsn+N7zfzXCPf7nJP65AN9wiOb7rJRcMM=
-Received: by 10.229.38.69 with SMTP id a5mr5408679qce.15.1272306165777; Mon, 
-	26 Apr 2010 11:22:45 -0700 (PDT)
-Received: by 10.229.190.202 with HTTP; Mon, 26 Apr 2010 11:22:45 -0700 (PDT)
-In-Reply-To: <z2m81b0412b1004261108n5453b5d2h179a944fa8db9b49@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=e1/XV0o5JIPK7Duu9wU1gxEv0De7Rlh+1O74djmCo/0nNR+WsN3ncFQOUDhARmP0HD
+         CjEXi1e6AJx6kRu7uJQsMDA2+wxrtd6mYi0u10rl72UkNJR/ghyO+87zGZXclldOSAX/
+         j3y3RowDGpjA5RFQCUoZSpiIK58g4jonRPDKU=
+Received: by 10.87.68.26 with SMTP id v26mr487117fgk.40.1272306287136;
+        Mon, 26 Apr 2010 11:24:47 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id r12sm107874fah.20.2010.04.26.11.24.45
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 26 Apr 2010 11:24:46 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <n2i76c5b8581004261103k287ce0fax7b3a511dbb72c95b@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145844>
 
-On Mon, Apr 26, 2010 at 2:08 PM, Alex Riesen <raa.lkml@gmail.com> wrote:
-> On Mon, Apr 26, 2010 at 19:56, Eugene Sajine <euguess@gmail.com> wrote:
->> On Mon, Apr 26, 2010 at 1:54 PM, Eugene Sajine <euguess@gmail.com> wrote:
->>> Hi,
->>>
->>> I'm wondering if there is a way to get some repo information if the
->>> only thing i know is SHA-1 (no full path to the file)
->>
->> I mean of course the SHA-1 of the blob, i.e. the result of git
->> hash-object some_file
->
-> Try 'git cat-file -t <sha>'. It prints what object type is under the hash.
-> Than you can use either 'git cat-file <type> <sha>' (the most precise version,
-> which shall fail if anything is wrong), 'git cat-file -p <sha>' or plain
-> 'git show <sha>' (which always works, unless repo's broken).
->
+Eugene Sajine wrote:
 
-Well thank you for that, but that gives me what i already know - the content.
-I need to "reverse engineer" the history by having only the content
-and its SHA-1 in order to indentify the last commitID and get all
-relevant info (author, date etc. )
+> This is happening in Git 1.6.5.6.
+> The case here is that for the same project (same repo) in bare
+> shortlog is not working, in non-bare it is working instantaneously.
 
-This is all about avoiding using keyword expansion (thanks CVS for bad habbits)
+Thanks, that was helpful.  This is fixed by v1.7.1-rc0~157^2~1
+(setenv(GIT_DIR) clean-up, 2010-02-06).  You can find v1.7.1 at
+<http://www.kernel.org/pub/software/scm/git/>, for example[1].
 
-Thanks,
-Eugene
+Thanks, Ren=E9.
+
+Jonathan
+
+[1] http://thread.gmane.org/gmane.linux.kernel/977720
