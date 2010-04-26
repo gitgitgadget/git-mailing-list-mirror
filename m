@@ -1,99 +1,92 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: "git log -- SHA-1" - how to get/simulate this functionality?
-Date: Mon, 26 Apr 2010 16:07:26 -0400
-Message-ID: <g2l76c5b8581004261307g39f96c6en36588bfea6640ac5@mail.gmail.com>
-References: <i2o76c5b8581004261054h591c266fre1a0dd87cd8511e1@mail.gmail.com>
-	 <x2z76c5b8581004261056lcdb153a5j825db166916069e9@mail.gmail.com>
-	 <z2m81b0412b1004261108n5453b5d2h179a944fa8db9b49@mail.gmail.com>
-	 <p2y76c5b8581004261122g8e2950fci507cc9090a865843@mail.gmail.com>
-	 <p2v81b0412b1004261157pf26db339t7d27b1b317a99b5e@mail.gmail.com>
-	 <y2n81b0412b1004261237w1c9221dn1ac75a29f50cb74d@mail.gmail.com>
+From: Will Palmer <wmpalmer@gmail.com>
+Subject: Re: [PATCH 0/3] pretty: format aliases
+Date: Mon, 26 Apr 2010 22:14:21 +0100
+Message-ID: <1272316461.5368.4.camel@walleee>
+References: <1272210175-20484-1-git-send-email-wmpalmer@gmail.com>
+	 <20100425194800.GB14736@coredump.intra.peff.net>
+	 <20100425220955.GA25620@progeny.tock>
+	 <20100426172235.GA626@coredump.intra.peff.net>
+	 <20100426175707.GB11022@progeny.tock>
+	 <20100426180731.GB4012@coredump.intra.peff.net>
+	 <20100426183755.GC11378@progeny.tock>
+Reply-To: wmpalmer@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Eugene Sajine <euguess@gmail.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 26 22:07:42 2010
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com,
+	Cheng Renquan <crquan@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 26 23:14:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6Uak-0004Pn-8g
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 22:07:42 +0200
+	id 1O6VdZ-0003oV-8U
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 23:14:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754912Ab0DZUHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Apr 2010 16:07:30 -0400
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:49506 "EHLO
-	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754897Ab0DZUH3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Apr 2010 16:07:29 -0400
-Received: by qyk9 with SMTP id 9so17940191qyk.1
-        for <git@vger.kernel.org>; Mon, 26 Apr 2010 13:07:27 -0700 (PDT)
+	id S1754855Ab0DZVOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Apr 2010 17:14:33 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:50887 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753816Ab0DZVOc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Apr 2010 17:14:32 -0400
+Received: by wwb22 with SMTP id 22so793045wwb.19
+        for <git@vger.kernel.org>; Mon, 26 Apr 2010 14:14:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=d7q5+0HyFcDQzaof6zeRurkeJBAaFfihVTYlMNgiWiA=;
-        b=geqTsc1qcdxoFQjMyS9mc4Vu3ngTzQKCK6wDiE2Si/f/aO92f0sI/SgidaFPwH8qKo
-         BWwVxa+YtAZboBDj4EK0E85U8rNC1Bf4SHRhFqRpT4C7PFZ+W3SRGAhyjNwP1m3Njj34
-         Ozwe/F98OyzWiDrM55zKP8ssjSZ3j5w5BPlV0=
+        h=domainkey-signature:received:received:subject:from:reply-to:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=C0/9cXgnEtRBsgu6JOG5J2xtStMmrvoXIr6x4omuu3A=;
+        b=T0/sIIq2eAD6RDAGZcq+oC4/Hqqlu2ax2Pcrql/HtOCdGNVPwxcew4E1ERFRM32C5V
+         xNgDxZXCZwXl3va2c/eUwQy7KmqIh8tsjjru3jDi7A72NjJ6bY5+vOZZuKXF3AvhhVO0
+         NJ5uEoN05ljI3gQo2IsuAAEBb9oj3tOIAaBw0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=K25QMS+8fOE2irAkyi2ffAGFi3MT32CA3yddCnKUdPbqYdCCXx7HxaToKA7FreMN+Q
-         9svqYd8RhNAaRJHgmjU9Hm1tRUSB0jlzvAxmhJn+TutFFOofmzLFcdcWrA6fdUD2tSE7
-         688Leh6Seduh53p+gwQ/bVhk3P+fxbLsCp/nM=
-Received: by 10.224.36.15 with SMTP id r15mr1409046qad.129.1272312446874; Mon, 
-	26 Apr 2010 13:07:26 -0700 (PDT)
-Received: by 10.229.190.202 with HTTP; Mon, 26 Apr 2010 13:07:26 -0700 (PDT)
-In-Reply-To: <y2n81b0412b1004261237w1c9221dn1ac75a29f50cb74d@mail.gmail.com>
+        h=subject:from:reply-to:to:cc:in-reply-to:references:content-type
+         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=cl1NrKg2Rr3j1IvN45VDnl1C0mZCgtasL2XdiCmzCyFplVcnbkaCNUcdvFzUdvZLCS
+         xXQ9QDByyb3AKTsQMDWBX/oV7QLGJCATT9TtgM8DIEbXW+CjcC/vxLMCL5GArQGvHcqX
+         dRN+qkECKzVw2h7AWIDqF7lBigiaOSslv8gpg=
+Received: by 10.216.90.21 with SMTP id d21mr695614wef.159.1272316471196;
+        Mon, 26 Apr 2010 14:14:31 -0700 (PDT)
+Received: from [192.168.0.4] (5acc34b2.bb.sky.com [90.204.52.178])
+        by mx.google.com with ESMTPS id z3sm1319959wbs.22.2010.04.26.14.14.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 26 Apr 2010 14:14:30 -0700 (PDT)
+In-Reply-To: <20100426183755.GC11378@progeny.tock>
+X-Mailer: Evolution 2.26.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145855>
 
-On Mon, Apr 26, 2010 at 3:37 PM, Alex Riesen <raa.lkml@gmail.com> wrote:
-> On Mon, Apr 26, 2010 at 20:57, Alex Riesen <raa.lkml@gmail.com> wrote:
->> On Mon, Apr 26, 2010 at 20:22, Eugene Sajine <euguess@gmail.com> wrote:
->>> Well thank you for that, but that gives me what i already know - the content.
->>> I need to "reverse engineer" the history by having only the content
->>> and its SHA-1 in order to indentify the last commitID and get all
->>> relevant info (author, date etc. )
->>
->> Hmm. In that case, your using of git log look like a good way to get the
->> information. If you wanted an output format which is better suited for
->> automated parsing, you can look at "git rev-list --pretty=format:...",
->> let it output only commit and tree hashes, and grep the output of
->> "git ls-tree" for your hash...
->
-> Actually, "git log --no-abbrev --raw --oneline" looks very simple to parse.
-> By the way, you may get ambiguous results: any file any time could have
-> had the given hash. IOW, by looking at the whole history you may see different
-> files having the same hash. It does mean the same content, so maybe its
-> OK for your purposes.
->
+On Mon, 2010-04-26 at 13:37 -0500, Jonathan Nieder wrote:
+> Alternatively, we could use
+> 
+>  [logformat]
+> 	changelog = ...
+> 
+> which is arguably just as clear and may be closer to existing
+> practice.  But really, I am happy as long as the configuration exists.
+> 
+> Jonathan
 
-Yes this looks a bit better, but still not "grep"-able easily as grep
-SHA-1 cuts off the commit ID.
-I'm wondering why this "simple"  feature which actually solves
-(almost) the problem of "keyword expansion" substitution for git once
-and for all is not yet there...:(
+I like the one-level-of-hierarchy thing ([format "pretty"] is ugly for a
+number of reasons), but two problems with that specific name:
+ - it says "log", while this effects more than the "log" command
+ - it says "format", while this doesn't effect --format.
 
-While i do realize that i might have ambiguous results and first of
-all because the same blob can exist in creation commits, modification
-and move, but mostly people are interested in the last commit of this
-particular file/blob. So, i would say, it is very rare that at any
-given point of time there will be two objects with the same hash in
-repo.
+[pretty]
+    changelog = ...
 
-It is a feature request than:)
+is not taken, and my only hesitation there is that some other config
+option may want to be there. Still, it's what I'll call it in the next
+version of the patch, unless there are specific objections. (which I
+certainly may have already missed, as I've just switched mail clients
+twice today)
 
-Please, somebody take a look at the possibility to develop a variant
-of "git log" or rev-list which would show the commits in which the
-given blob SHA-1 has participated.
-
-Thanks,
-Eugene
+-- Will
