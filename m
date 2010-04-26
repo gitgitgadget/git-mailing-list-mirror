@@ -1,89 +1,129 @@
-From: bert Dvornik <dvornik+git@gmail.com>
-Subject: [PATCH] start_command: close cmd->err descriptor when fork/spawn fails
-Date: Sun, 25 Apr 2010 21:15:40 -0400
-Message-ID: <1272244540-5960-1-git-send-email-dvornik+git@gmail.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j6t@kdbg.org>,
-	bert Dvornik <dvornik+git@gmail.com>
-To: git@vger.kernel.org, msysgit@googlegroups.com
-X-From: git-owner@vger.kernel.org Mon Apr 26 03:17:39 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: MIME problem when using git format-patch / git am
+Date: Sun, 25 Apr 2010 20:49:41 -0500
+Message-ID: <20100426014941.GA29220@progeny.tock>
+References: <20100425233549.GA8737@triton>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?iso-8859-1?B?2Hl2aW5kIEEu?= Holm <sunny@sunbase.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 26 03:49:16 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6Cx8-000483-HE
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 03:17:38 +0200
+	id 1O6DRV-0000TJ-2z
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 03:49:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753475Ab0DZBRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Apr 2010 21:17:21 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:56087 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752853Ab0DZBRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Apr 2010 21:17:20 -0400
-Received: by vws17 with SMTP id 17so1073781vws.19
-        for <git@vger.kernel.org>; Sun, 25 Apr 2010 18:17:19 -0700 (PDT)
+	id S1754250Ab0DZBsz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Apr 2010 21:48:55 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:36614 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753536Ab0DZBsz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Apr 2010 21:48:55 -0400
+Received: by gyg13 with SMTP id 13so6087465gyg.19
+        for <git@vger.kernel.org>; Sun, 25 Apr 2010 18:48:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=ctJ5NBLMgYD2AnfbVFOmtLY274C2lUw2PIMxQCq6UaQ=;
-        b=ixOHUoWoC9c6EBc+WbxlgIBbVZTxnlCkEe28nz7ykwWVoyxfP77MJ4bwORdvExwc6W
-         u4+fKS+vNfZqlPqSp/UMR1UBRh//AqCEIdDRgGgOMD2jpU9wC6jPmeJFghiBEY0TVQqR
-         EEtUd4zyArrcDndXhAP493GzMlh1zOggf9Sxo=
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=uXNa4GGbC06n2lgvVBKkI4ZAijvv2D7EiRA1pyETtLw=;
+        b=FAA0Fd8XmfIXdtI5LLVwb9T/Ka8jPAzexxslN15vRhIfsVV5a9HuLsklM5SgxlM/yc
+         fXmcwRyT47pIdEWw4UdT/mBevoShd03fiC1GDomcFnGNxtBsDtQaQm+pWsNQ2zkTbvsl
+         K3MghocefQFDQx+Joi+OiRCEQAH8SEmyOJx7E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        b=XDDgWC/WRnGTMi3BhOuOd5MdZGH/eqAadTYdAAtCl8mchBDDpYjUOBYnOU5loLWSsi
-         DEhGjBumq+b3yfezsAF9WOpslLwX7M4uRYSqSDu9ZWzjSH7qVhuw56UUFtwwJIp/syRQ
-         yJT9l8i6rniZ9tXeTtDFp1ktE7tlMlbrRUbDA=
-Received: by 10.220.127.11 with SMTP id e11mr1432931vcs.125.1272244639176;
-        Sun, 25 Apr 2010 18:17:19 -0700 (PDT)
-Received: from localhost (pool-96-237-1-59.bstnma.east.verizon.net [96.237.1.59])
-        by mx.google.com with ESMTPS id i29sm17323658vcr.0.2010.04.25.18.17.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 25 Apr 2010 18:17:18 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.rc1.1794.g4bea1
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Xs5Hb09+z7tVF1QydKazWxXZ7+Lo/suYt/zMNn6/vu6yI+lgqx1eUWBRXB/dTXv62b
+         jJbhjVqiIvepzLZf55dFKu5oqWULpmdLjM4ka5ig3ghOfXfg3toNvPbZcWkmG+nbELcu
+         p68N+FLHO6mS9EiGaV0k6346KlvLOxA1EC8wU=
+Received: by 10.90.236.8 with SMTP id j8mr1737710agh.5.1272246534020;
+        Sun, 25 Apr 2010 18:48:54 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 20sm2679766iwn.9.2010.04.25.18.48.53
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 25 Apr 2010 18:48:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100425233549.GA8737@triton>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145778>
 
-Fix the problem where the cmd->err passed into start_command wasn't
-being properly closed when certain types of errors occurr.  (Compare
-the affected code with the clean shutdown code later in the function.)
+Hi,
 
-On Windows, this problem would be triggered if mingw_spawnvpe()
-failed, which would happen if the command to be executed was malformed
-(e.g. a text file that didn't start with a #! line).  If cmd->err was
-a pipe, the failure to close it could result in a hang while the other
-side was waiting (forever) for either input or pipe close, e.g. while
-trying to shove the output into the side band.  On msysGit, this
-problem was causing a hang in t5516-fetch-push.
+=C3=98yvind A. Holm wrote:
 
-I'm not sure why (or if) this problem hasn't cropped up under Linux.
-The non-Windows code *does* try to check for execve() failures in the
-child, in addition to the fork() failures.
+| git commit -m "Initial commit" --allow-empty
+| git tag firstrev
+| echo First line >foo.txt
+| git add foo.txt
+| git commit -m "First commit without 8-bit chars"
+| echo Second line >>foo.txt
+| git commit -m "Second commit with =C2=A9 in first line of logmsg" -a
+| echo Third line >>foo.txt
+| git commit -m "Third commit with no 8-bit in first line`echo; echo bu=
+t =E2=82=ACuro further down`" -a
+| echo Fourth line >>foo.txt
+| git commit -m "Fourth commit with =C2=A9 in first line again" -a
+| git format-patch firstrev
+| git checkout -b patches firstrev
+| git am 0*
+| git log
+[...]
+|    Applying: =3D?UTF-8?q?Third=3D20commit=3D20with=3D20no=3D208-bit=3D=
+20in=3D20first=3D20line
+|    Applying: Fourth commit with =C2=A9 in first line again
 
-Signed-off-by: bert Dvornik <dvornik+git@gmail.com>
----
- run-command.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+On this machine, it=E2=80=99s even worse:
 
-diff --git a/run-command.c b/run-command.c
-index d1a8ceb..41666ac 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -383,6 +383,8 @@ fail_pipe:
- 			close(cmd->out);
- 		if (need_err)
- 			close_pair(fderr);
-+		else if (cmd->err)
-+			close(cmd->err);
- 		errno = failed_errno;
- 		return -1;
- 	}
--- 
-1.7.1.rc1.1794.g4bea1
+    =3D?UTF-8?q?Third=3D20commit=3D20with=3D20no=3D208-bit=3D20in=3D20f=
+irst=3D20line
+   =20
+    =3D20but=3D20=3DE2=3D82=3DACuro=3D20further=3D20down?=3D
+    MIME-Version: 1.0
+    Content-Type: text/plain; charset=3DUTF-8
+    Content-Transfer-Encoding: 8bit
+
+An encoded-word [1] is defined to be at most 75 characters long and not
+to contain whitespace.  On the other hand, multiple encoded-words
+within a field are required to be separated by whitespace.
+
+[1] http://tools.ietf.org/html/rfc2047
+
+This leads to a question: what if one wants to include a word that
+quotes to more than 75 characters?  How about more than 997 ASCII
+characters without whitespace?  No can do.
+
+Ideally, I would like to see git quoting single words, though I admit
+I have not seen how well various user agents cope with this.
+
+Maybe this patch would give you some joy until then.  Feel free to pick
+it up and take it somewhere more useful.
+
+Thanks,
+Jonathan
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+
+diff --git a/pretty.c b/pretty.c
+index d493cad..b822e24 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -131,7 +131,7 @@ needquote:
+ 		 * many programs do not understand this and just
+ 		 * leave the underscore in place.
+ 		 */
+-		if (is_rfc2047_special(ch) || ch =3D=3D ' ') {
++		if (is_rfc2047_special(ch) || ch =3D=3D ' ' || ch =3D=3D '\n') {
+ 			strbuf_add(sb, line + last, i - last);
+ 			strbuf_addf(sb, "=3D%02X", ch);
+ 			last =3D i + 1;
