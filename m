@@ -1,90 +1,76 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/3] pretty: format aliases
-Date: Mon, 26 Apr 2010 17:00:49 -0500
-Message-ID: <20100426220049.GA15903@progeny.tock>
-References: <1272210175-20484-1-git-send-email-wmpalmer@gmail.com>
- <20100425194800.GB14736@coredump.intra.peff.net>
- <20100425220955.GA25620@progeny.tock>
- <20100426172235.GA626@coredump.intra.peff.net>
- <20100426175707.GB11022@progeny.tock>
- <20100426180731.GB4012@coredump.intra.peff.net>
- <20100426183755.GC11378@progeny.tock>
- <1272316461.5368.4.camel@walleee>
+From: Will Palmer <wmpalmer@gmail.com>
+Subject: Re: [PATCH v2 3/3] pretty: add aliases for pretty formats
+Date: Mon, 26 Apr 2010 23:11:30 +0100
+Message-ID: <1272319890.5368.15.camel@walleee>
+References: <1272232579-18895-1-git-send-email-wmpalmer@gmail.com>
+	 <1272232579-18895-2-git-send-email-wmpalmer@gmail.com>
+	 <1272232579-18895-3-git-send-email-wmpalmer@gmail.com>
+	 <1272232579-18895-4-git-send-email-wmpalmer@gmail.com>
+	 <20100426072516.GA30416@progeny.tock>
+Reply-To: wmpalmer@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com,
-	Cheng Renquan <crquan@gmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 27 00:00:09 2010
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 27 00:12:11 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6WLW-0001SL-8S
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 00:00:06 +0200
+	id 1O6WXC-0005RG-M2
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 00:12:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753635Ab0DZV75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Apr 2010 17:59:57 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:41613 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753167Ab0DZV74 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Apr 2010 17:59:56 -0400
-Received: by pvg2 with SMTP id 2so743886pvg.19
-        for <git@vger.kernel.org>; Mon, 26 Apr 2010 14:59:55 -0700 (PDT)
+	id S1754883Ab0DZWLg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Apr 2010 18:11:36 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:52377 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754874Ab0DZWLf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Apr 2010 18:11:35 -0400
+Received: by wyb42 with SMTP id 42so296425wyb.19
+        for <git@vger.kernel.org>; Mon, 26 Apr 2010 15:11:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=7J2ivBpqK+SCAMz5dUxEalJ1OnXtDDSWO7suar0k+TE=;
-        b=mjkoM1BKt454WKReP7wn0k4i4QRE3mZnEJwusB1BUr8/sFEtxXSGIGW/Iee91dENQu
-         O3z+/a9rroBPbHj6gUWVe/CWEX+oyxVEV6aWCWydPMD0ZwKkpfWh4XiziPRx5VepVGcT
-         smcHXmxFMHE3LxincbRoVGp5P425tO4Bp5OWo=
+        h=domainkey-signature:received:received:subject:from:reply-to:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=b5/y91WjzSRYMb2PsszSFcBZOpKANoghcduOVCb3lqM=;
+        b=Lk5Ap2jN5dboi4Hhu6BobWZXMKH7DmOXiWKOuQQ83WZBUT6YdQ5JB5briADb0or3L2
+         dY/WwNVAFK9Mxk/ENE35KGewrobf9AGKq5X+loxrLwIvCKGSR6zRVM7X5QHpVmFf1lp8
+         C8s/xy/yHiQz94nrktMaRm1ceXKf+jXvRXAms=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=lS6THDmVDp+lSsKyu1WetlSvo46FMNZaplemK6V3eR09B8cUcE+WAFic/xkDDdvNA9
-         6ICACQNcOlVIETGc0c/RNsvw8paJ362Ro96YcV9yj9HzSOtRcD4ou4hhlX9b60eLww5S
-         7nLwgbINtPgxPHa+H8kLn+p1WCkXfy1k5hSuE=
-Received: by 10.115.115.39 with SMTP id s39mr1347518wam.119.1272319195322;
-        Mon, 26 Apr 2010 14:59:55 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 21sm3396938iwn.3.2010.04.26.14.59.52
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 26 Apr 2010 14:59:53 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1272316461.5368.4.camel@walleee>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=subject:from:reply-to:to:cc:in-reply-to:references:content-type
+         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=bzRrF9nBfrWWp3DDql3QiWgoFHpGw/b2zIG6swe2fVJzl8P+WOb+4s44p5YkFpeNkc
+         QL188YpX/LiZiC7IgNqFIVuNn6VRAwyB8WpGU2aMhQPISyYqM55E0cETzmrKseAaGujZ
+         xwBu2vHaDDYTi14kLJ3Bxwxu1ev90u9crzBEI=
+Received: by 10.216.166.201 with SMTP id g51mr2532463wel.40.1272319892900;
+        Mon, 26 Apr 2010 15:11:32 -0700 (PDT)
+Received: from [192.168.0.4] (5acc34b2.bb.sky.com [90.204.52.178])
+        by mx.google.com with ESMTPS id r29sm1755832wbv.9.2010.04.26.15.11.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 26 Apr 2010 15:11:32 -0700 (PDT)
+In-Reply-To: <20100426072516.GA30416@progeny.tock>
+X-Mailer: Evolution 2.26.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145858>
 
-Will Palmer wrote:
+On Mon, 2010-04-26 at 02:25 -0500, Jonathan Nieder wrote:
+... a lot ...
 
-> [pretty]
->     changelog = ...
+Now that I've had a chance to fully read through this, I see that I
+can't actually just go through line-by-line and respond to it off the
+top of my head. I've made a note of everything, and anything which is
+not directly addressed in the next version, should at least be addressed
+in the cover-letter.
 
-Fine by me. :)
+Thank you very much for taking time to review this
 
-> On Mon, 2010-04-26 at 13:37 -0500, Jonathan Nieder wrote:
-
->>  [logformat]
->> 	changelog = ...
-[...]
-> I like the one-level-of-hierarchy thing ([format "pretty"] is ugly for a
-> number of reasons), but two problems with that specific name:
->  - it says "log", while this effects more than the "log" command
->  - it says "format", while this doesn't effect --format.
-
-Ah, but it does affect --format.  When Nanako wrote commit 3a4c1a5
-(Add --format that is a synonym to --pretty, 2009-02-24), the new
-option made me very happy.  And since then it has remained a synonym.
-
-Cheers,
-Jonathan
+-- 
+-- Will
