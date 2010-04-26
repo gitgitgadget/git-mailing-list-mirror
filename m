@@ -1,8 +1,8 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH v2 2/3] pretty: make %H/%h dependent on
  --abbrev[-commit]
-Date: Sun, 25 Apr 2010 22:41:35 -0500
-Message-ID: <20100426034135.GB30544@progeny.tock>
+Date: Sun, 25 Apr 2010 23:42:54 -0400
+Message-ID: <20100426034254.GA16500@coredump.intra.peff.net>
 References: <1272232579-18895-1-git-send-email-wmpalmer@gmail.com>
  <1272232579-18895-2-git-send-email-wmpalmer@gmail.com>
  <1272232579-18895-3-git-send-email-wmpalmer@gmail.com>
@@ -14,89 +14,41 @@ Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Will Palmer <wmpalmer@gmail.com>, git@vger.kernel.org,
 	gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 26 05:40:54 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 26 05:43:05 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6FBj-0001wp-Bv
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 05:40:51 +0200
+	id 1O6FDq-0002ri-Tw
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Apr 2010 05:43:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754511Ab0DZDkq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Apr 2010 23:40:46 -0400
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:46706 "EHLO
-	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754504Ab0DZDkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Apr 2010 23:40:46 -0400
-Received: by qyk9 with SMTP id 9so16650128qyk.1
-        for <git@vger.kernel.org>; Sun, 25 Apr 2010 20:40:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=rkJSmuIfa9bGJKQn0zJ9oCInNacxjrBYR2kDj5xWfTo=;
-        b=kVfWL6a04JvwqdlAUzmWBa5ZEDcU0/D1gyJYNVQrRVQtaArShi16ZzAU1RMTHD5qEL
-         4V1atvzkbsz9Oa2xJFfowJI43iu8R6xLgxr42OqxNd3xfAofc2vIx/NiYM3pc48ModPP
-         GXZ46PjN8DSQmoQl6lgWonElBedoYU54gOF8k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=ujMEnEjnUTQ62fa+FkZDiAWgKcOl7No2cA9xdfJ6ehkhltuVk28nOo5fQ18UEOzV59
-         18Aq+VN0cPUUlr115IyIxw/zILER8qfIdQIH9/yvtwr705oyxODZ6/zQJh6adn1/h6iq
-         kjQ52Ep53A3yJ9XmUYk8b7Oba1G5Ylod5+oxc=
-Received: by 10.224.88.40 with SMTP id y40mr1006903qal.383.1272253245235;
-        Sun, 25 Apr 2010 20:40:45 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm2750750iwn.0.2010.04.25.20.40.44
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 25 Apr 2010 20:40:44 -0700 (PDT)
+	id S1754455Ab0DZDm5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Apr 2010 23:42:57 -0400
+Received: from peff.net ([208.65.91.99]:38121 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752697Ab0DZDm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Apr 2010 23:42:57 -0400
+Received: (qmail 3001 invoked by uid 107); 26 Apr 2010 03:43:06 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 25 Apr 2010 23:43:06 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 25 Apr 2010 23:42:54 -0400
 Content-Disposition: inline
 In-Reply-To: <20100426033813.GA30544@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145785>
 
-Jonathan Nieder wrote:
-> Jeff King wrote:
->> On Sun, Apr 25, 2010 at 10:11:37PM -0500, Jonathan Nieder wrote:
+On Sun, Apr 25, 2010 at 10:38:13PM -0500, Jonathan Nieder wrote:
 
->>> +static void abbreviate_commit_hashes(char *fmt)
->>> +{
->>> +	char *p;
->>> +	for (p =3D fmt; p !=3D NULL; p =3D strchr(p + 1, '%')) {
->>> +		p++;
->>> +		switch (*p) {
->>> +		case 'H':
->>> +			*p =3D 'h';
->>> +			break;
->>> +		case 'P':
->>> +			*p =3D 'p';
->>> +			break;
->>> +		case 'T':
->>> +		default:
->>> +			break;
->>> +		}
->>> +	}
->>> +}
->>
->> You parse '%%H' incorrectly.
->
+> > You parse '%%H' incorrectly.
+>=20
 > I=E2=80=99m pretty sure I don=E2=80=99t.
 
-Aggh, I see it now.  The first line should be
+Sorry, you're right. I should read more carefully.
 
- for (p =3D strchr(fmt, '%'); ...
-
-as I would have noticed with even a little testing.
-
-Sorry for the nonsense.
-Jonathan
+-Peff
