@@ -1,90 +1,155 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: Re: How to continue to run 'git svn fetch' for a repo with no git-svn 
-	metadata
-Date: Wed, 28 Apr 2010 00:04:24 +0800
-Message-ID: <n2p46dff0321004270904gc590ef83v4b338719c4c18637@mail.gmail.com>
-References: <t2u46dff0321004270248l49d1ae30l6b168342e01a5bfd@mail.gmail.com>
-	 <z2l51dd1af81004270751yf026e946p4b00552eaf4f2632@mail.gmail.com>
+From: Tor Arntsen <tor@spacetec.no>
+Subject: Re: [patch 04/16] Without this patch at least IBM VisualAge C 5.0
+ (I have 5.0.2) on AIX 5.1 fails to compile git.
+Date: Tue, 27 Apr 2010 18:08:58 +0200
+Message-ID: <4BD70C1A.80709@spacetec.no>
+References: <20100427135708.258636000@mlists.thewrittenword.com> <20100427135823.017417000@mlists.thewrittenword.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git mailing list <git@vger.kernel.org>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 27 18:05:09 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
+X-From: git-owner@vger.kernel.org Tue Apr 27 18:09:11 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6nHY-0003Fz-V1
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 18:05:09 +0200
+	id 1O6nLS-0005Ms-Sc
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 18:09:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755537Ab0D0QE1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Apr 2010 12:04:27 -0400
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:61425 "EHLO
-	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751698Ab0D0QE0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Apr 2010 12:04:26 -0400
-Received: by qyk9 with SMTP id 9so19552903qyk.1
-        for <git@vger.kernel.org>; Tue, 27 Apr 2010 09:04:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=4wF2kVbZ1kYelQrUWIo/uV2cFYkxRnfaPHefPxttFJM=;
-        b=KZSnfhjqULnsIUQCk2SH7Ldz+trmDAyiq0NH2kYcJ9s6cnrU6RDfgIp8OXHibQmuZ3
-         /a2wKMNAwpF1lYgbunrVaUIm1q5mzoHe1xBid0ZoU4gyagtUneTde+K2hCkHDVyfimz6
-         orNJL7juLtkSaCT9Ct/jVjsAyKimXAYO9IGvc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=igHCfnIz5KcC4zR+wud+vBYyCOH0welPOXI33iBw4wcAI2nxHh8KEx/7N6EzD9UXbQ
-         OOBLi21jZ4zmwpVfoNzGz/qsvIWp5cdeXrNd4HZLidChGZNY7mWIZDgFaJI9XmXzNxOg
-         hKTJMB3H0tXrH4aUNmyLEY+AMPG2uo8rJVYtk=
-Received: by 10.229.222.12 with SMTP id ie12mr3371965qcb.77.1272384264904; 
-	Tue, 27 Apr 2010 09:04:24 -0700 (PDT)
-Received: by 10.229.79.3 with HTTP; Tue, 27 Apr 2010 09:04:24 -0700 (PDT)
-In-Reply-To: <z2l51dd1af81004270751yf026e946p4b00552eaf4f2632@mail.gmail.com>
+	id S1755774Ab0D0QJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Apr 2010 12:09:04 -0400
+Received: from puck.spacetec.no ([192.51.5.29]:44625 "HELO puck.spacetec.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755609Ab0D0QJB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Apr 2010 12:09:01 -0400
+Received: (qmail 27588 invoked from network); 27 Apr 2010 16:08:58 -0000
+Received: from ringworld4.spacetec.no (HELO ?10.10.1.233?) (tor@10.10.1.233)
+  by puck.spacetec.no with ESMTPA; 27 Apr 2010 16:08:58 -0000
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100411 Iceowl/1.0b1 Icedove/3.0.4
+In-Reply-To: <20100427135823.017417000@mlists.thewrittenword.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145928>
 
-On Tue, Apr 27, 2010 at 10:51 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmaso=
-n
-<avarab@gmail.com> wrote:
-> Read these:
+On Tue, Apr 27, 2010 at 15:57, Gary V. Vaughan <git@mlists.thewrittenword.com> wrote:
+> enum style is inconsistent already, with some enums declared on one
+> line, some over 3 lines with the enum values all on the middle line,
+> sometimes with 1 enum value per line... and independently of that the
+> trailing comma is sometimes present and other times absent, often
+> mixing with/without trailing comma styles in a single file, and
+> sometimes in consecutive enum declarations.
 >
-> =C2=A0 =C2=A0http://code.google.com/p/chromium/wiki/UsingGit#Initial_=
-Setup
-> =C2=A0 =C2=A0http://trac.parrot.org/parrot/wiki/git-svn-tutorial
->
-> This should probably be in the git-svn documentation itself.
+> Clearly, omitting the comma is the more portable style, and this patch
+> changes all enum declarations to use the portable omitted dangling
+> comma style consistently.
+> ---
+>  attr.h                 |    2 +-
+>  builtin/apply.c        |    4 ++--
+>  builtin/branch.c       |    4 ++--
+>  builtin/commit.c       |    6 +++---
+>  builtin/help.c         |    2 +-
+>  builtin/mailinfo.c     |    4 ++--
+>  builtin/receive-pack.c |    2 +-
+>  builtin/remote.c       |    2 +-
+>  cache.h                |   16 ++++++++--------
+>  commit.h               |    2 +-
+>  connect.c              |    2 +-
+>  ctype.c                |    2 +-
+>  diff.h                 |    2 +-
+>  dir.c                  |    6 +++---
+>  fast-import.c          |    2 +-
+>  grep.h                 |    8 ++++----
+>  http-push.c            |    2 +-
+>  http-walker.c          |    2 +-
+>  imap-send.c            |    2 +-
+>  merge-recursive.h      |    2 +-
+>  parse-options.h        |    6 +++---
+>  pretty.c               |    2 +-
+>  remote.h               |    2 +-
+>  rerere.c               |    2 +-
+>  revision.c             |    2 +-
+>  wt-status.h            |    2 +-
+>  26 files changed, 45 insertions(+), 45 deletions(-)
 
-Thanks. The last link explains very clear. I just copy and paste from i=
-t.
+The patch is against master. Are we supposed to make patches against master or maint? (I thought I saw the latter somewhere. I'm pretty new in here though..)
 
-Adding git-svn metadata to the github clone
+I can confirm that master doesn't compile on AIX 5.1 with the IBM VisualAge compiler V5 (V5.0.2) without the patch above, and it does compile with the patch:
 
-If you want to re-populate the SVN metadata that can quickly be done
-by taking your up-to-date clone of leto's repo off of gihub and adding
-this to your .git/config
+Tested-by: Tor Arntsen <tor@spacetec.no>
 
-    [svn-remote "svn"]
-            url =3D https://svn.parrot.org/parrot
-            fetch =3D trunk:refs/remotes/trunk
-Then run this command to find the "top commit"
+but with the following caveats:
 
-     git show origin/upstream | head -n 1
-and put that commit hash into a file .git/refs/remotes/trunk
-(obviously replace the has with the one from the above command)
+1: With the patch, it'll build with configure (and only configure), run like so:
 
-     echo c85aaa38b99cedb087e5f6fb69ce6d4a6ac57a0b > .git/refs/remotes/=
-trunk
-and finally
+./configure --enable-pthreads=-lpthread CFLAGS=-Dinline=''
 
-     git svn fetch
+In other words, this system would also need an AIX version of the 'no-inline' patch you did for HP-UX.
+
+And without the --enable-pthreads=-lpthread above it'll try to link with -pthread, which won't work for this system.
+
+The const-expr patch is also useful for AIX-5.1 / XlC V5.0.2. It does build without, but with warnings.
+
+2: The compiler cannot build on AIX 5.1 without the following additional patch (against master. maint has similar problems but files have been moved):
+
+>From a8989213b4c8baa53c14c1f227b916910265c517 Mon Sep 17 00:00:00 2001
+From: Tor Arntsen <tor@spacetec.no>
+Date: Tue, 27 Apr 2010 16:05:12 +0000
+Subject: [PATCH 2/2] C99 comments changed to old-style C comments
+
+Signed-off-by: Tor Arntsen <tor@spacetec.no>
+---
+ builtin/blame.c        |    2 +-
+ builtin/for-each-ref.c |    4 ++--
+ remote.c               |    2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/blame.c b/builtin/blame.c
+index fc15863..4dd4c3f 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1589,7 +1589,7 @@ static void emit_porcelain(struct scoreboard *sb, struct blame_entry *ent)
+ 	strcpy(hex, sha1_to_hex(suspect->commit->object.sha1));
+ 	printf("%s%c%d %d %d\n",
+ 	       hex,
+-	       ent->guilty ? ' ' : '*', // purely for debugging
++	       ent->guilty ? ' ' : '*', /* purely for debugging */
+ 	       ent->s_lno + 1,
+ 	       ent->lno + 1,
+ 	       ent->num_lines);
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 62be1bb..7f5011f 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -549,10 +549,10 @@ static void grab_values(struct atom_value *val, int deref, struct object *obj, v
+ 		grab_person("committer", val, deref, obj, buf, sz);
+ 		break;
+ 	case OBJ_TREE:
+-		// grab_tree_values(val, deref, obj, buf, sz);
++		/* grab_tree_values(val, deref, obj, buf, sz); */
+ 		break;
+ 	case OBJ_BLOB:
+-		// grab_blob_values(val, deref, obj, buf, sz);
++		/* grab_blob_values(val, deref, obj, buf, sz); */
+ 		break;
+ 	default:
+ 		die("Eh?  Object of type %d?", obj->type);
+diff --git a/remote.c b/remote.c
+index c70181c..26ce560 100644
+--- a/remote.c
++++ b/remote.c
+@@ -476,7 +476,7 @@ static void read_config(void)
+ 	unsigned char sha1[20];
+ 	const char *head_ref;
+ 	int flag;
+-	if (default_remote_name) // did this already
++	if (default_remote_name) /* did this already */
+ 		return;
+ 	default_remote_name = xstrdup("origin");
+ 	current_branch = NULL;
+-- 
+1.7.1.rc1.GIT
