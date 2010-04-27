@@ -1,122 +1,76 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Improve installation instructions in gitweb/INSTALL
-Date: Tue, 27 Apr 2010 22:33:42 +0200
-Message-ID: <20100427203341.31445.82930.stgit@localhost.localdomain>
+From: Jacob Helwig <jacob.helwig@gmail.com>
+Subject: Re: Global .git directory
+Date: Tue, 27 Apr 2010 13:37:29 -0700
+Message-ID: <l2w8c9a061004271337v62c71145jec782712618e4655@mail.gmail.com>
+References: <alpine.LFD.2.00.1004270705280.15197@bbs.intern> 
+	<201004271159.34071.trast@student.ethz.ch> <alpine.LFD.2.00.1004272144470.11216@bbs.intern>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 27 22:34:21 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Gerhard Wiesinger <lists@wiesinger.com>
+X-From: git-owner@vger.kernel.org Tue Apr 27 22:38:02 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6rU4-0007Kx-2s
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 22:34:20 +0200
+	id 1O6rXb-0000e1-5H
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 22:37:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755373Ab0D0UeO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Apr 2010 16:34:14 -0400
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:65527 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754682Ab0D0UeN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Apr 2010 16:34:13 -0400
-Received: by ewy20 with SMTP id 20so4543742ewy.1
-        for <git@vger.kernel.org>; Tue, 27 Apr 2010 13:34:12 -0700 (PDT)
+	id S1755996Ab0D0Uhv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Apr 2010 16:37:51 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:35706 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755011Ab0D0Uhu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Apr 2010 16:37:50 -0400
+Received: by vws13 with SMTP id 13so1250372vws.19
+        for <git@vger.kernel.org>; Tue, 27 Apr 2010 13:37:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:subject:to:cc
-         :date:message-id:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=7h5afBfXFNQMmN/YRREV4WqofcxaYGBL/TK/B4+xSjc=;
-        b=hxXucsv8Hz9tUCzcY42Md8eJBIji6bvQRIHtfaVTfKO/0IYuqsRnzk73ctyOZSxeaC
-         WphAarct9yWYL5n4jukjNoQF7IHSNM7U7Rhg5Urr1gL6eQSjSQ83tXts2WZeV2+IC1uw
-         jp0GjgvfCBi+h3lb0yzUf8txyYA24B/XjqkwY=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=xQ6OfkOvaLPm9v06C1I96kAfAv45MysBXR0pSqF04kE=;
+        b=vbt/zchuyHExSJBH5YyKxWGJjJExbRyJ9zWibpw1/weNfW0Dr42qEixoycK5PHzfmJ
+         qZMgHXFjd4zQbGHmw3EDcv0vDK0H4c9Sa1wbzVtxBhtgM44gSwjoecdVl05UhBV4AQ92
+         5332JdwoYH3BE1SK8U6wE4XzZrz0Z6X2cGnIk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:subject:to:cc:date:message-id:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        b=CcVqkoLAdMmrER1Rng6m7U2/Pqg8zrDtv/4riAgg536L2cV6kBerU/hKpCNmx2Yp2J
-         lgB/Re9qjrfPVYTW8GGqoK5zJ3AXBKGaumXeIIJl8Ki761RYQdMNVDPVG+Wg5QtvL+wi
-         pCbUwcYujq3PUKbYyw49vLcdOhUjGKYpMcLQk=
-Received: by 10.102.16.14 with SMTP id 14mr3487950mup.136.1272400451811;
-        Tue, 27 Apr 2010 13:34:11 -0700 (PDT)
-Received: from localhost.localdomain (abvy105.neoplus.adsl.tpnet.pl [83.8.222.105])
-        by mx.google.com with ESMTPS id g1sm23774663muf.0.2010.04.27.13.34.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 27 Apr 2010 13:34:11 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o3RKXgqh031473;
-	Tue, 27 Apr 2010 22:33:55 +0200
-User-Agent: StGIT/0.14.3
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=HKNDEOSczKn4NShMGlAV6HjgsedYW7VeGmSQ/EWwk1nfo/8cKPYQvfjDzpPMyq8qZy
+         bFc8azT1iO4VBKh/mvldEGrPFDeLuoDfh7sDY5QMtMiay0kmQVkpLp1ZeAqSlhR+eW1X
+         cKJdFF5wKjfTvSzN4pdAssPs70MOwboAizY+o=
+Received: by 10.229.238.72 with SMTP id kr8mr3172170qcb.76.1272400669145; Tue, 
+	27 Apr 2010 13:37:49 -0700 (PDT)
+Received: by 10.229.50.72 with HTTP; Tue, 27 Apr 2010 13:37:29 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1004272144470.11216@bbs.intern>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145949>
 
+On Tue, Apr 27, 2010 at 13:06, Gerhard Wiesinger <lists@wiesinger.com> wrote:
+> I don't like metadata of the repository in MY file structure (e.g. .git in
+> top directory, .svn in every directory in subversion, .hg in top directory)
+> for several reasons:
+> 1.) Searching might arise false results, longer output and takes longer
+> (e.g. grep -ir string .)
 
+Using ack, instead of grep is very handy here.  It'll automatically
+skip common revision control directories, and (by default) only
+searches known text file formats.  There is also "git grep".
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
+> 2.) Making tarballs, diffs, etc.: One has to make ugly --exclude or some
+> other workarounds when directories are traversed.
 
- gitweb/INSTALL |   20 +++++++++++++++-----
- 1 files changed, 15 insertions(+), 5 deletions(-)
+Making tarballs: Is there a reason not to just use git-archive?  You
+don't need to make any ugly --exclude rules there, unless you're
+trying to exclude things that you track in revision control.
 
+Diffs: Is "git diff" not sufficient here?  If it's not, why isn't it?
 
-diff --git a/gitweb/INSTALL b/gitweb/INSTALL
-index cbdc136..be965d2 100644
---- a/gitweb/INSTALL
-+++ b/gitweb/INSTALL
-@@ -7,7 +7,9 @@ gitweb.css, git-logo.png and git-favicon.png) to their destination.
- For example if git was (or is) installed with /usr prefix, you can do
- 
- 	$ make prefix=/usr gitweb             ;# as yourself
--	# cp gitweb/git* /var/www/cgi-bin/    ;# as root
-+	# cp gitweb/*.cgi gitweb/*.css \
-+       gitweb/*.js  gitweb/*.png \
-+       /var/www/cgi-bin/                ;# as root
- 
- Alternatively you can use autoconf generated ./configure script to
- set up path to git binaries (via config.mak.autogen), so you can write
-@@ -16,7 +18,9 @@ instead
- 	$ make configure                     ;# as yourself
- 	$ ./configure --prefix=/usr          ;# as yourself
- 	$ make gitweb                        ;# as yourself
--	# cp gitweb/git* /var/www/cgi-bin/   ;# as root
-+	# cp gitweb/*.cgi gitweb/*.css \
-+       gitweb/*.js  gitweb/*.png \
-+       /var/www/cgi-bin/               ;# as root
- 
- The above example assumes that your web server is configured to run
- [executable] files in /var/www/cgi-bin/ as server scripts (as CGI
-@@ -74,7 +78,7 @@ file for gitweb (in gitweb/README).
- Build example
- ~~~~~~~~~~~~~
- 
--- To install gitweb to /var/www/cgi-bin/gitweb/ when git wrapper
-+- To install gitweb to /var/www/cgi-bin/gitweb/, when git wrapper
-   is installed at /usr/local/bin/git and the repositories (projects)
-   we want to display are under /home/local/scm, you can do
- 
-@@ -86,10 +90,16 @@ Build example
- 	     bindir=/usr/local/bin \
- 	     gitweb
- 
--	cp -fv ~/git/gitweb/gitweb.{cgi,js,css} \
--	       ~/git/gitweb/git-{favicon,logo}.png \
-+	cp -fv gitweb/gitweb.{cgi,js,css} \
-+	       gitweb/git-{favicon,logo}.png \
- 	     /var/www/cgi-bin/gitweb/
- 
-+  The above instruction assumes that you didn't use JavaScript
-+  minimizer or CSS minimizer.  If you use minimizers you need
-+  to modify above instructions accordingly, which means pointing
-+  GITWEB_CSS and GITWEB_JS to minified versions, and copying 
-+  minified files.
-+
- 
- Gitweb config file
- ------------------
+> 3.) From an archtectural point of view: It is not technically necessary to
+> mix up user data with repository data.
+>
