@@ -1,75 +1,221 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [patch 00/16] Portability Patches for git-1.7.1 (v4)
-Date: Tue, 27 Apr 2010 13:54:42 -0400
-Message-ID: <20100427175442.GB13626@coredump.intra.peff.net>
-References: <20100427135708.258636000@mlists.thewrittenword.com>
- <4BD7032D.9050508@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Gary V. Vaughan" <git@mlists.thewrittenword.com>,
-	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Apr 27 19:54:59 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCHv1 1/2] gitweb: Syntax highlighting support
+Date: Tue, 27 Apr 2010 21:34:44 +0200
+Message-ID: <1272396885-30609-2-git-send-email-jnareb@gmail.com>
+References: <1272396885-30609-1-git-send-email-jnareb@gmail.com>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 27 21:35:39 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6ozo-0002j6-B9
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 19:54:56 +0200
+	id 1O6qZG-0003lB-5R
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 21:35:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752114Ab0D0Ryr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Apr 2010 13:54:47 -0400
-Received: from peff.net ([208.65.91.99]:42580 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751362Ab0D0Ryq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Apr 2010 13:54:46 -0400
-Received: (qmail 30824 invoked by uid 107); 27 Apr 2010 17:54:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 27 Apr 2010 13:54:54 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Apr 2010 13:54:42 -0400
-Content-Disposition: inline
-In-Reply-To: <4BD7032D.9050508@drmicha.warpmail.net>
+	id S1756709Ab0D0TfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Apr 2010 15:35:11 -0400
+Received: from mail-pz0-f204.google.com ([209.85.222.204]:55535 "EHLO
+	mail-pz0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756694Ab0D0TfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Apr 2010 15:35:09 -0400
+Received: by pzk42 with SMTP id 42so9225398pzk.4
+        for <git@vger.kernel.org>; Tue, 27 Apr 2010 12:35:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=YccECXgspS/4vd7tlqlNXdMi6ADqKnt+5CPVthYzB7M=;
+        b=d8yr/z7cVzVgtNK5w1eM9KM4PTzZST4ynrUO+nS9E7T+ctEdzzQ+2yeh018WR7fH9L
+         tRJXsuMOR18QQdTjRVsHfqxefK5zJ5okkdrNygfS/lILUok1QUyDkek2PGyr6NUYaKXo
+         Wmq6UtCrfIfl8fL8yS3jBCTmx/mt4rvhHAWr8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=WE1gCFAzKOI0bLtCHl973LRq1heNIhrSTIJ9nG7VN8T39FMuPOPpUyonEItnlfcZZs
+         id/5Z8UwEZjZ28hh575sdFRi45NqWm8/p37cDnb93lIiwoUO9QuGHUzl+dBTtJowvHde
+         d49DMh0QrZDVeSTpF+7DOBQP+mADIIfSLrn1I=
+Received: by 10.142.2.17 with SMTP id 17mr3240969wfb.76.1272396908166;
+        Tue, 27 Apr 2010 12:35:08 -0700 (PDT)
+Received: from localhost.localdomain ([72.14.241.6])
+        by mx.google.com with ESMTPS id s21sm832756wff.0.2010.04.27.12.35.04
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 27 Apr 2010 12:35:07 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.1
+In-Reply-To: <1272396885-30609-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145934>
 
-On Tue, Apr 27, 2010 at 05:30:53PM +0200, Michael J Gruber wrote:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> Your diff -> test_cmp are certainly something we want to have in any
-> case. The code changes look ugly, honestly, making the code much less
-> readable, but it seems to be the only way to make those older platforms
-> and compilers happy. (Erik pointed out some good ways to reduce the
-> uglyness somewhat.)
+It requires the 'highlight' program to do all the heavy-lifting.
 
-I agree. We really need to make a decision here about how far backward
-we are willing to bend for older systems.
+This is loosely based on Daniel Svensson's and Sham Chukoury's work in
+gitweb-xmms2.git (it cannot be cherry-picked, as gitweb-xmms2 first forked
+wildly, then not contributed back, and then went stale).
 
-Solaris 2.6 was released in 1997, and Sun dropped support for it in
-2006, four years ago. How long do we want to continue supporting it? And
-at what cost?  If we have not hit end-of-life on it now, then what would
-be a reasonable time? And what defines end-of-life support for git? I am
-perfectly happy to carry a Solaris 2.6 section of the Makefile forever.
-But if it is going to cause code changes that make the code harder to
-read and maintain, is it worth it? Especially when one could probably
-just use gcc to build for those platforms. Sure, it may be less
-convenient for the builder, and it may not generate quite as good code
-as a vendor compiler, but to what degree should we care? Those platforms
-are an extreme minority, and we need to balance their impact on code
-that developers on every platform have to work with.
+[jn: cherry picked from bc1ed6aafd9ee4937559535c66c8bddf1864bec6
+ in http://repo.or.cz/w/git/dscho.git, with a few changes]
 
-Furthermore, if we do take such changes, how are we going to manage
-portability going forward? Some constructs (like non-constant
-initializers) make the code much easier to read. People _will_ submit
-patches that use them. Is somebody going to be auto-building on all of
-these platforms with vendor compilers to confirm that nothing is broken?
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This patch is unchanged from previous version.
 
-If all of these questions seem like rhetorical "I am trying to convince
-you these patches aren't a good idea" questions, they're not meant as
-such. I think these are serious questions that need to be answered when
-evaluating portability patches.
 
--Peff
+Compared to the version in Dscho repository, it makes gitweb do line
+numbering by itself, instead of making 'highlight' do it... and then
+rewriting it to conform to the rest of gitweb.  It also leaves tab
+expansion to gitweb, for 'blob' view to look the same with and without
+syntax highlighting enabled.
+
+The list of supported extensions is widened, and syntax is decided
+based on basename, not on whole pathname (which might be a mistake).
+Also the '.in' suffix is stripped if it is present (so 'git.spec.in'
+file would use 'spec' syntax).
+
+Note that gitweb.css contains default 'highlight' style, but perhaps
+other style would be better fit for default gitweb CSS.
+
+ gitweb/gitweb.css  |   18 ++++++++++++++
+ gitweb/gitweb.perl |   65 +++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 82 insertions(+), 1 deletions(-)
+
+diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+index 50067f2..4132aab 100644
+--- a/gitweb/gitweb.css
++++ b/gitweb/gitweb.css
+@@ -572,3 +572,21 @@ span.match {
+ div.binary {
+ 	font-style: italic;
+ }
++
++/* Style definition generated by highlight 2.4.5, http://www.andre-simon.de/ */
++
++/* Highlighting theme definition: */
++
++.num    { color:#2928ff; }
++.esc    { color:#ff00ff; }
++.str    { color:#ff0000; }
++.dstr   { color:#818100; }
++.slc    { color:#838183; font-style:italic; }
++.com    { color:#838183; font-style:italic; }
++.dir    { color:#008200; }
++.sym    { color:#000000; }
++.line   { color:#555555; }
++.kwa    { color:#000000; font-weight:bold; }
++.kwb    { color:#830000; }
++.kwc    { color:#000000; font-weight:bold; }
++.kwd    { color:#010181; }
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index c356e95..de18ebf 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -227,6 +227,36 @@ our %avatar_size = (
+ # Leave it undefined (or set to 'undef') to turn off load checking.
+ our $maxload = 300;
+ 
++# syntax highlighting
++our %highlight_type = (
++	# match by basename
++	'SConstruct' => 'py',
++	'Program' => 'py',
++	'Library' => 'py',
++	'Makefile' => 'make',
++	# match by extension
++	'\.py$' => 'py', # Python
++	'\.c$' => 'c',
++	'\.h$' => 'c',
++	'\.cpp$' => 'cpp',
++	'\.cxx$' => 'cpp',
++	'\.rb$' => 'ruby',
++	'\.java$' => 'java',
++	'\.css$' => 'css',
++	'\.php3?$' => 'php',
++	'\.sh$' => 'sh', # Bash / shell script
++	'\.pl$' => 'pl', # Perl
++	'\.js$' => 'js', # JavaScript
++	'\.tex$' => 'tex', # TeX and LaTeX
++	'\.bib$' => 'bib', # BibTeX
++	'\.x?html$' => 'xml',
++	'\.xml$' => 'xml',
++	'\.awk$' => 'awk',
++	'\.bat$' => 'bat', # DOS Batch script
++	'\.ini$' => 'ini',
++	'\.spec$' => 'spec', # RPM Spec
++);
++
+ # You define site-wide feature defaults here; override them with
+ # $GITWEB_CONFIG as necessary.
+ our %feature = (
+@@ -445,6 +475,19 @@ our %feature = (
+ 	'javascript-actions' => {
+ 		'override' => 0,
+ 		'default' => [0]},
++
++	# Syntax highlighting support. This is based on Daniel Svensson's
++	# and Sham Chukoury's work in gitweb-xmms2.git.
++	# It requires the 'highlight' program, and therefore is disabled
++	# by default.
++
++	# To enable system wide have in $GITWEB_CONFIG
++	# $feature{'highlight'}{'default'} = [1];
++
++	'highlight' => {
++		'sub' => sub { feature_bool('highlight', @_) },
++		'override' => 0,
++		'default' => [0]},
+ );
+ 
+ sub gitweb_get_feature {
+@@ -5346,6 +5389,7 @@ sub git_blob {
+ 	open my $fd, "-|", git_cmd(), "cat-file", "blob", $hash
+ 		or die_error(500, "Couldn't cat $file_name, $hash");
+ 	my $mimetype = blob_mimetype($fd, $file_name);
++	# use 'blob_plain' (aka 'raw') view for files that cannot be displayed
+ 	if ($mimetype !~ m!^(?:text/|image/(?:gif|png|jpeg)$)! && -B $fd) {
+ 		close $fd;
+ 		return git_blob_plain($mimetype);
+@@ -5353,6 +5397,25 @@ sub git_blob {
+ 	# we can have blame only for text/* mimetype
+ 	$have_blame &&= ($mimetype =~ m!^text/!);
+ 
++	my $have_highlight = gitweb_check_feature('highlight');
++	my $syntax;
++	if ($have_highlight && defined($file_name)) {
++		my $basename = basename($file_name, '.in');
++		foreach my $regexp (keys %highlight_type) {
++			if ($basename =~ /$regexp/) {
++				$syntax = $highlight_type{$regexp};
++				last;
++			}
++		}
++
++		if ($syntax) {
++			close $fd;
++			open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
++			          "highlight --xhtml --fragment -t 8 --syntax $syntax |"
++				or die_error(500, "Couldn't open file or run syntax highlighter");
++		}
++	}
++
+ 	git_header_html(undef, $expires);
+ 	my $formats_nav = '';
+ 	if (defined $hash_base && (my %co = parse_commit($hash_base))) {
+@@ -5404,7 +5467,7 @@ sub git_blob {
+ 			$line = untabify($line);
+ 			printf "<div class=\"pre\"><a id=\"l%i\" href=\"" . href(-replay => 1)
+ 				. "#l%i\" class=\"linenr\">%4i</a> %s</div>\n",
+-			       $nr, $nr, $nr, esc_html($line, -nbsp=>1);
++			       $nr, $nr, $nr, $syntax ? $line : esc_html($line, -nbsp=>1);
+ 		}
+ 	}
+ 	close $fd
+-- 
+1.7.0.1
