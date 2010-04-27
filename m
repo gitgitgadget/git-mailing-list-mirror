@@ -1,152 +1,93 @@
-From: Dmitrijs Ledkovs <dmitrij.ledkov@ubuntu.com>
-Subject: Re: RFD: git-bzr: anyone interested?
-Date: Tue, 27 Apr 2010 09:47:53 +0100
-Message-ID: <q2j86ecb3c71004270147le799967dw579964600be84066@mail.gmail.com>
-References: <4B7D8358.1080108@gmail.com> <fabb9a1e1002181037n58d6942dpa63a57a23f506d9c@mail.gmail.com> 
-	<4B7E3856.3080609@gmail.com> <20100219135549.GA31796@Knoppix> 
-	<4B820B4E.7050405@gmail.com> <20100222105133.GA10577@Knoppix> 
-	<4B834989.50502@gmail.com> <20100223124553.GA19153@Knoppix> 
-	<p2ka038bef51004261441x7e4857f1mc3f03a4104f8e018@mail.gmail.com> 
-	<4BD651C6.5050501@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Unable to coax hooks into working
+Date: Tue, 27 Apr 2010 10:52:12 +0200
+Message-ID: <4BD6A5BC.3010708@drmicha.warpmail.net>
+References: <B65E8227-B3C0-4AB8-A225-4A5661523CAD@pelagicore.com> <v2u8c9a061004261111l429b0c8cs73cf7e1afea3d39f@mail.gmail.com> <FAF218B9-D2DB-4081-88CB-BEBA08DF1229@pelagicore.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org
-To: Gabriel Filion <lelutin@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 27 10:48:22 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeremiah Foster <jeremiah.foster@pelagicore.com>
+X-From: git-owner@vger.kernel.org Tue Apr 27 10:52:22 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6gSr-0003N5-Lm
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 10:48:22 +0200
+	id 1O6gWj-0004yD-NB
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 10:52:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752561Ab0D0IsP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Apr 2010 04:48:15 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:35303 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751085Ab0D0IsO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Apr 2010 04:48:14 -0400
-Received: by pxi17 with SMTP id 17so2054809pxi.19
-        for <git@vger.kernel.org>; Tue, 27 Apr 2010 01:48:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received
-         :in-reply-to:references:from:date:x-google-sender-auth:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=1aAmYyClrVlxQ84aplg0bJsuRhmqf+lvwW1yOzZZbY8=;
-        b=hP8xsaTfzwrWHd1ubPeIIJKNI+k43je75SjAzXBmRi5f4NIE/q3kZXXbn/8wbAkMMv
-         PdM3Uv27Un8gsx2Nq/oXtSDt7ebSz5u+R0P8QmcfovpxeDggnaysNHUZH7qwvz/UWBBC
-         Kxm+48J5FNwgQdI910JfOo01pMwS7UDAQYl5k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=ukRfWRiV3gWoCOftVQ14Zx9ROWrosa4QtvPrVfb7BgUwhMxgsQ7HC2zS/BKIQotrqO
-         823s9YtR26eYUxMdOJBAkWtpLhSdkjcoTuV5MJSOlAtejnZyucvTqsPmLpY2ezXgrP3b
-         JfGkB4Tq5Tm9443R5MDsSHTgcbHktxLPfhHeU=
-Received: by 10.142.5.28 with SMTP id 28mr2617115wfe.205.1272358093087; Tue, 
-	27 Apr 2010 01:48:13 -0700 (PDT)
-Received: by 10.142.188.15 with HTTP; Tue, 27 Apr 2010 01:47:53 -0700 (PDT)
-In-Reply-To: <4BD651C6.5050501@gmail.com>
-X-Google-Sender-Auth: 0bf5b37701303cf3
+	id S1752777Ab0D0IwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Apr 2010 04:52:15 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:48705 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752642Ab0D0IwP (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Apr 2010 04:52:15 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 85A4BF05E4;
+	Tue, 27 Apr 2010 04:52:14 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Tue, 27 Apr 2010 04:52:14 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=bMJLcp1QcYivjjiTlqY1rUczmfw=; b=KuvK9Nutnkgfch9o72B8flowWt1ibiAOtyK4Ga/ccJP4pHhYEschBWaSaZ2M0G9j4LiHBkRqcGwrD7IfEQLonJetldPEVWcbZJg2ns/rYzFpv5cW/MYgDvtN0NlQA3sKS/oeXqzQ+6a5dONPVl073XkF5eZzvL4VWpa6l3Gqi2Y=
+X-Sasl-enc: unrwYoX/o0/xLirYroZ5CfQ+WZIRpUJIcIj0dKOt2R4m 1272358334
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id F3A6C3713C;
+	Tue, 27 Apr 2010 04:52:13 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100426 Lightning/1.0b2pre Lanikai/3.1b2pre
+In-Reply-To: <FAF218B9-D2DB-4081-88CB-BEBA08DF1229@pelagicore.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145885>
 
-On 27 April 2010 03:53, Gabriel Filion <lelutin@gmail.com> wrote:
-> Hello,
->
-> On 2010-04-26 17:41, Chris Packham wrote:
->> How far did git-bzr or git-remote-bzr get?
->>
->
-> I unfortunately haven't had much time to fiddle with this. Having a f=
-ull
-> time job doesn't give me much space for experiences :( And on my free
-> time, I've been a bit busy with one of my projects..
->
->
-> I've tried simply "plugging in" the bzr-fastimport plugin to do the
-> communication part. They already implement output similar to what
-> git-fastimport expects. I was stuck on the part where you have to
-> specify "marks" files, and about where to place them, so I left it th=
-ere
-> for now.
->
+Jeremiah Foster venit, vidit, dixit 27.04.2010 10:33:
+> 
+> On Apr 26, 2010, at 8:11 PM, Jacob Helwig wrote:
+> 
+>> On Mon, Apr 26, 2010 at 11:04, Jeremiah Foster
+>>> 
+>>> 
+>>> Can I confirm that hooks work with this type of transport?
+>> 
+>> The real problem is that you're using a post-commit hook (or at
+>> least everything you said in your original email implies you are). 
+>> post-commit hooks are only triggered in your _local_ repository,
+>> since this is the only place you actually commit.  Doesn't matter
+>> which transport you're using, post-commit will never be triggered
+>> by a push.
+>> 
+>> You want one of the receive, or update hooks, if you're putting
+>> this in a central place, where it needs to be triggered by someone
+>> doing a push in to the repo.
+> 
+> Thanks Jacob. I'd just like to confirm that I am, in fact, using the
+> update hook. I logged into the server holding the git repo, cd'd to
 
-Except that bzr-fast-export -> bzr-fast-import will produce similar
-history but all revision ids will be different so you will not be able
-to merge in bzr after you worked in git =3D/ so it will be read-only.
-Marks files are used when you want to import multiple related bzr
-branches into a git repo. So in general case you will not need it =3D)
+That used to be different ;) update hook on the server is good.
 
-> I'll try and work on this pretty soon, but since I'm doing this on sp=
-are
-> time, any help would be welcome. Maybe the good thing to do would be =
-to
-> put up a page somewhere with a mini-roadmap and the info needed/the i=
-nfo
-> that was found out?
-> By using bzr fast-import, the whole thing shouldn't take too long.
->
->> I've tried git-bzr from the repo and I seem to be stumbling on bzr n=
-ot
->> having the fast-export command after I install the fast-import plugi=
-n
->> as per [1].
->
->> [1] http://github.com/kfish/git-bzr/blob/master/README
->
-> This script needs you to install bazaar and the bzr "fast-import"
-> plugin. Normally the fast-export command is implemented by it. You ne=
-ed
-> a rather up-to-date version, though.
-> I've found this script to work mostly for pulling in changes from bzr
-> into git. Pushing has proven to be from slow to non-functional.
->
+> the .git/hooks/ directory. Moved the update.sample to update. Changed
+> the code to something trivial that would echo back to the client for
+> testing. I checked permissions, checked ownership, ran the code as
+> the git repo owner. I logged out, did a trivial change in the client
+> repo, ran git commit -a -m "foo" and expected that the trivial update
+> script to run on the server would produce output to the client. This
 
-Well I did this:
+But this is the same problem backwards. Again: Please try to understand
+what commit does, and what push does, in terms of where (local repo vs.
+server) a change happens:
 
-$ mkdir -p ~/.bazaar/plugins
-$ bzr branch lp:bzr-fast-import ~/.bazaar/fast-import
-$ bzr branch lp:xiphos
-$ git init git-xiphos
-$ cd git-xiphos
-$ bzr fast-export ../xiphos | git fast-import
+As long as you only commit in your local repo nothing changes on the
+server (remote repo), so no hook is triggered there.
 
-And the resulting git repository has master branch with tags.
+> never occurred. I further tested the client hooks which also did not
+> run.
 
->
-> As for the interest in this: mine is in using only one tool to do the
-> work right and not having to switch from using 3 vcs tools (the curre=
-nt
-> situation at work is 2 -- git and svn -- but soon bzr will come in). =
-And
-> for the one tool, I'd like to choose git.
-> stupid reason? probably. but I've tried bzr and I don't like it.
->
+Which ones?
 
-Well I have my stupid reasons as well for choosing bzr for small
-projects. With bzr-hg, bzr-git & bzr-svn I can work on all 4 without
-doing a context switch. When I work on something big though like gcc
-or binutils. Yeah git.... because of size & performance.
+committing locally triggers post-commit on your local repo.
+pushing to remote triggers post-update (and others) on the remote
+server's repo.
 
-With bzr-* plugins though you generally get roundtrip & svn support is
-excellent. On two machines bzr branch svn://URL will give identical
-branches which you can merge between in bzr & svn, unlike git where
-you have to use canonical import to have same SHA-1's on commits.
-
-> --
-> Gabriel Filion
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+Michael
