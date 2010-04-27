@@ -1,60 +1,79 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: Re: How to achieve "git tag --merged"?
-Date: Tue, 27 Apr 2010 13:26:01 +0200
-Message-ID: <t2i8c5c35581004270426mf5cb8d2dp81e84506d088108d@mail.gmail.com>
-References: <alpine.DEB.2.00.1004270846280.4769@ds9.cixit.se>
+From: Tor Arntsen <tor@spacetec.no>
+Subject: Re: Git and cvsimport
+Date: Tue, 27 Apr 2010 13:58:01 +0200
+Message-ID: <r2xd2d39d861004270458v2e1cb73by78f53d71103b47e6@mail.gmail.com>
+References: <i2l717f7a3e1004260727wd87900a5tcfb61a3142d0ba@mail.gmail.com>
+	 <4BD69450.8040608@drmicha.warpmail.net>
+	 <l2w717f7a3e1004270341lea6cfe2aqdf8d2b490b1ec067@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Tue Apr 27 13:26:11 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Marin Atanasov <dnaeon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 27 13:58:13 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6ivY-0007ox-VL
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 13:26:09 +0200
+	id 1O6jQa-0003UA-Oh
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 13:58:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754919Ab0D0L0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Apr 2010 07:26:04 -0400
-Received: from mail-qy0-f195.google.com ([209.85.221.195]:57674 "EHLO
-	mail-qy0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754648Ab0D0L0D (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Apr 2010 07:26:03 -0400
-Received: by qyk33 with SMTP id 33so13194118qyk.24
-        for <git@vger.kernel.org>; Tue, 27 Apr 2010 04:26:02 -0700 (PDT)
+	id S1755240Ab0D0L6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Apr 2010 07:58:07 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:25507 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752690Ab0D0L6C (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Apr 2010 07:58:02 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so3126447fga.1
+        for <git@vger.kernel.org>; Tue, 27 Apr 2010 04:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=fMOqXNsJZJU4agH4GX1L6nt819D3Xxkv1MvWLYDqjCw=;
-        b=kFZE0ACCMrg6PEvo7aWYQ6LzUqeZKipZNpWbJZNGeyWy1n9X8R9912aRZ8k0iV1gvR
-         jQp8U+qiVx7ziyzgD9GV4qSU7EkK83Y8S8HlOPLpjp4CEHFbEMQUlRr//a/ICzjAwuP9
-         ly4wTOdT+VZVDPFs6szk9o5bbygqYUwKcHl/A=
+        h=domainkey-signature:mime-version:received:sender:received
+         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
+         :from:to:cc:content-type;
+        bh=pcAQRWp9h9hGz4+/ANePmdOYN5e7rOF+2KGkFMwVtgs=;
+        b=IlXB9/P6S2h3fH9l7u38QMwvGWGOTBuH7nTAarZL3yFTt9khOU5SxjjL39t5q3Ht6q
+         PI6OrWL1cu1dYyTNa3sfTsoHq2fJyEKgVd+TGIuWpDL4QkF0RlZ4M1rtn/HEXiRQZ4mz
+         AWYOTNJ9TbEdH2xkZNhrRFj8OBYq94of7+M3U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=eXcjG2B0f3lvlsqytfQ8px3NABnty8PQBfLCLvBYFWjLmh1aPpqVVVZaLn50lyjFE0
-         ML4hbDm/lcUabVIA0agzBFIFsJ3dhi/mS34FslqjZcefq28sDu+AlYvicpGUV7lEuoMN
-         xqzPAr7+lfJ3NRUAe8etiu+kJsLQnjEHPyqEs=
-Received: by 10.229.212.213 with SMTP id gt21mr2830060qcb.2.1272367562023; 
-	Tue, 27 Apr 2010 04:26:02 -0700 (PDT)
-Received: by 10.229.28.211 with HTTP; Tue, 27 Apr 2010 04:26:01 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.00.1004270846280.4769@ds9.cixit.se>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        b=VOUqHFz9PejebidMW9TqUgvODQrXkUpa5iKq5ucxNj8j7GshLVlVj8oHz+D6XWxJHs
+         PkrHtM65mjwUCbRx0/EaXJs7c3fNPbDA8HN3lGkf3ESrhgyVxVmN4wvIO1nXBLw8bQOh
+         HIEczs4umBs0q3o/wzf4LIo1cTKPr2RivXWs0=
+Received: by 10.239.158.207 with SMTP id v15mr538865hbc.101.1272369481357; 
+	Tue, 27 Apr 2010 04:58:01 -0700 (PDT)
+Received: by 10.239.179.197 with HTTP; Tue, 27 Apr 2010 04:58:01 -0700 (PDT)
+In-Reply-To: <l2w717f7a3e1004270341lea6cfe2aqdf8d2b490b1ec067@mail.gmail.com>
+X-Google-Sender-Auth: 26693f627bd5d1e1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145899>
 
-On Tue, Apr 27, 2010 at 09:59, Peter Krefting <peter@softwolves.pp.se> wrote:
-> I wish to list all tags that are set on commits that are ancestors of
-> the current commit
+On Tue, Apr 27, 2010 at 12:41, Marin Atanasov <dnaeon@gmail.com> wrote:
 
-Try `git log --decorate --simplify-by-decoration --pretty=%d`
+> Perhaps I didn't explain better what I want to accomplish :)
+>
+> I want to convert CVS repo to a Git one.
 
---
-larsh
+But the above statement..
+[..]
+> What I want to do is to checkout from CVS the files which are tagged
+> RELEASE_1_0 for example, and then import the files to a Git repo.
+> Files tagged as RELEASE_1_0 differ from HEAD files, so I want only
+> those files with that tag for example.
+
+.. seems to be in conflict with the above paragraph. Files tagged with
+RELEASE_1_0 sounds like a revision tag (i.e. not a branch). If you
+want to checkout that snapshot and insert into a Git rep you could as
+well just 'cvs export -r RELEASE_1_0 <module>; git init; git add .;
+git commit'
+but that obviously won't give you any CVS history in the Git repo.
+
+Is RELEASE_1_0 instead a branch tag? I.e. a CVS branch?
+
+-Tor
