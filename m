@@ -1,63 +1,63 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Which Git projects got accepted in GSoC 2010?
-Date: Tue, 27 Apr 2010 10:52:36 +0530
-Message-ID: <u2gf3271551004262222jb8825674g1f244bca1db68279@mail.gmail.com>
-References: <201004270146.07131.jnareb@gmail.com> <4BD6608B.3040200@op5.se>
+From: Gerhard Wiesinger <lists@wiesinger.com>
+Subject: Metadata and checkin file date
+Date: Tue, 27 Apr 2010 07:23:57 +0200 (CEST)
+Message-ID: <alpine.LFD.2.00.1004270719320.17234@bbs.intern>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Apr 27 07:23:07 2010
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 27 07:24:38 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6dGC-0002iP-2x
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 07:23:04 +0200
+	id 1O6dHc-00030f-8W
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 07:24:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751958Ab0D0FW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Apr 2010 01:22:58 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:37897 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751571Ab0D0FW5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Apr 2010 01:22:57 -0400
-Received: by gwj19 with SMTP id 19so4207541gwj.19
-        for <git@vger.kernel.org>; Mon, 26 Apr 2010 22:22:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=gpU2/Ussg2uDURSaKT/rLGc+7PGjt1YJMCrV6WZqqgc=;
-        b=NIgBCHllDzsFLMq/FjJ7hURYwr5ELoXPUID0uBAq9E0L3pM79GF2h3tWcB/09Ieufg
-         swzWyZ/NT6Ld+vUOOnDue6F7t1YltCtKuFqZ02eafr271ENRIWvO0VX/sr/JHAHpgutF
-         yWsMTk/7/bLYSIxTKK2LqbIJQACS7xeB3z+rY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=CbnLXN4HTBqnr90vU6HHI4vEthH60Vnjdk7mqoCCEorpHo1etRGG/jhTiDKJeauuPD
-         npPxt1DalPqZCOEYa4OWEl7ErbsdV8nzwVgOAW65XZbkyD/8Uf622y4Zb1qcLRqkzQ7M
-         x2VtqJP+yS7aIFgQeJR3m5TdWBCVlHkO0Rxh0=
-Received: by 10.91.183.7 with SMTP id k7mr2678529agp.32.1272345776332; Mon, 26 
-	Apr 2010 22:22:56 -0700 (PDT)
-Received: by 10.90.90.19 with HTTP; Mon, 26 Apr 2010 22:22:36 -0700 (PDT)
-In-Reply-To: <4BD6608B.3040200@op5.se>
+	id S1752049Ab0D0FY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Apr 2010 01:24:28 -0400
+Received: from chello084112167138.7.11.vie.surfer.at ([84.112.167.138]:56293
+	"EHLO wiesinger.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750849Ab0D0FY1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Apr 2010 01:24:27 -0400
+X-Greylist: delayed 584 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Apr 2010 01:24:26 EDT
+Received: from bbs.intern (localhost [127.0.0.1])
+	by wiesinger.com (8.14.4/8.14.4) with ESMTP id o3R5Nvwc017785
+	for <git@vger.kernel.org>; Tue, 27 Apr 2010 07:23:57 +0200
+Received: from localhost (gerhard@localhost)
+	by bbs.intern (8.14.4/8.14.4/Submit) with ESMTP id o3R5NvfI017781
+	for <git@vger.kernel.org>; Tue, 27 Apr 2010 07:23:57 +0200
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-MailScanner-Information-wiesinger-com: Please contact the ISP for more information
+X-wiesinger-com-MailScanner-ID: o3R5Nvwc017785
+X-MailScanner-wiesinger-com: Found to be clean
+X-MailScanner-SpamCheck-wiesinger-com: not spam, SpamAssassin (not cached,
+	score=-4.347, required 4.5, autolearn=not spam, ALL_TRUSTED -1.80,
+	AWL 0.05, BAYES_00 -2.60)
+X-MailScanner-From: lists@wiesinger.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145876>
 
-On Tue, Apr 27, 2010 at 9:26 AM, Andreas Ericsson <ae@op5.se> wrote:
-> Done. Insomnia has its uses, I guess. Could maybe use a bit fleshing
-> out, but it has the important fields now at least.
->
-> https://git.wiki.kernel.org/index.php/SoC2010Projects
+Hello,
 
-Thanks. I filled up the git-remote-svn section with some information.
+I'm new to git and I'm looking for the following features:
+1.) Metadata for
+   a.) directory versioning (e.g. add/rm, mv)
+   b.) rights (basic: chmod, chow, chgrp, extended: extended attributes 
+like ACLs and selinux), necessary for versioning e.g. /etc
+2.) Original file dates (checkin date) on clone and pull (and not checkout 
+date)
 
--- Ram
+Is this possible? Any plans if missing?
+
+Thnx.
+
+Ciao,
+Gerhard
+
+--
+http://www.wiesinger.com/
