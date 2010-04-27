@@ -1,109 +1,151 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: RFD: git-bzr: anyone interested?
-Date: Tue, 27 Apr 2010 10:13:51 -0700
-Message-ID: <g2ia038bef51004271013i4e085b31u7ee075bf57bc86a1@mail.gmail.com>
-References: <4B7D8358.1080108@gmail.com>
-	 <fabb9a1e1002181037n58d6942dpa63a57a23f506d9c@mail.gmail.com>
-	 <4B7E3856.3080609@gmail.com> <20100219135549.GA31796@Knoppix>
-	 <4B820B4E.7050405@gmail.com> <20100222105133.GA10577@Knoppix>
-	 <4B834989.50502@gmail.com> <20100223124553.GA19153@Knoppix>
-	 <p2ka038bef51004261441x7e4857f1mc3f03a4104f8e018@mail.gmail.com>
-	 <4BD651C6.5050501@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [patch 06/16] diff-test_cmp.patch
+Date: Tue, 27 Apr 2010 12:15:52 -0500
+Message-ID: <20100427171531.GA15553@progeny.tock>
+References: <20100427135708.258636000@mlists.thewrittenword.com>
+ <20100427135833.403548000@mlists.thewrittenword.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Gabriel Filion <lelutin@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 27 19:14:12 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
+X-From: git-owner@vger.kernel.org Tue Apr 27 19:15:00 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6oMN-0001BH-0B
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 19:14:11 +0200
+	id 1O6oN9-0001Yk-HZ
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 19:14:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755027Ab0D0RNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Apr 2010 13:13:54 -0400
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:60240 "EHLO
-	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754541Ab0D0RNx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Apr 2010 13:13:53 -0400
-Received: by qyk9 with SMTP id 9so19656687qyk.1
-        for <git@vger.kernel.org>; Tue, 27 Apr 2010 10:13:52 -0700 (PDT)
+	id S1755054Ab0D0ROu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Apr 2010 13:14:50 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:53035 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754577Ab0D0ROt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Apr 2010 13:14:49 -0400
+Received: by pwj9 with SMTP id 9so9581501pwj.19
+        for <git@vger.kernel.org>; Tue, 27 Apr 2010 10:14:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=BmIpdGsC8RyJWl3XTwN401j4oWhCrMOEDQazWx0lP7M=;
-        b=SMQg4ajGLgVhDnhMw4mxrHbaOuZJyNUym6ELRUrPPW5mlIn1FuDoMx+PDnJRkr3LGG
-         ajukGKi2OmWGISuqVnuychbWH1trYPCKdl7OURm4AbbHauWkvwX7YSmv5TOrqEofCHQ2
-         zmMZp6XHBUlLutkY9WmJxbdUUdpm5ZCsPginQ=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=gz6i9gDSxijJRm1oDhYgHbYaCpp68ZGbQn3dRFXACn4=;
+        b=mcTr7SKThMubEkoCgctk1X/fTZ94mAzUckH+aaq/Ke6EzrL/nCIZU/oQhEapM+3zlc
+         oRmWbbtXEPXZFDIpqwpEseuSAIJXyx3rU6sPenO7eMlqHYSOZEICwq33L0OavPdefB91
+         IXE0dGToiyeFSUWZYPcfw00tSdUXwfmnxLVbI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=H5YC2KWRPo50PVqYG9j3lrWJKoXYPVE3+5W7z4d0AYCgEVWTC1U4Fqh/sBiZFAPaA3
-         6n2GNo4evyOcC/TUNuS7vXhvk+gH+Y3CIehmPfwDuG0+Po3qjFfwTaxFfrWbNbdXffFN
-         gfHBHPkYIU0w+1BFlP4zm5gDD5hIw1Gwda+n4=
-Received: by 10.229.91.16 with SMTP id k16mr7699706qcm.40.1272388431803; Tue, 
-	27 Apr 2010 10:13:51 -0700 (PDT)
-Received: by 10.229.11.77 with HTTP; Tue, 27 Apr 2010 10:13:51 -0700 (PDT)
-In-Reply-To: <4BD651C6.5050501@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=DdmDZzajPOgHYA2YJG9IlY/8C/U5XDhSYCiM4AgJzL4KUb9QCRoi6a/MsOj/QHvj0s
+         lbIvHUqPo3kopSe9sDChYvqVwr8IoxhTMqw0mgWI456kbp23DxytyvLxyqncQmY9LQqJ
+         jrFWOA/VXWfLtwmZA5JDIY2qiQQTcMcehMasc=
+Received: by 10.142.247.16 with SMTP id u16mr3419293wfh.217.1272388488747;
+        Tue, 27 Apr 2010 10:14:48 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 22sm4126441iwn.12.2010.04.27.10.14.46
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 27 Apr 2010 10:14:47 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100427135833.403548000@mlists.thewrittenword.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145932>
 
-On Mon, Apr 26, 2010 at 7:53 PM, Gabriel Filion <lelutin@gmail.com> wrote:
-> Hello,
+Hi,
+
+Gary V. Vaughan wrote:
+
+> Subject: diff-test_cmp.patch
 >
-> On 2010-04-26 17:41, Chris Packham wrote:
->> How far did git-bzr or git-remote-bzr get?
->>
->
-> I unfortunately haven't had much time to fiddle with this. Having a full
-> time job doesn't give me much space for experiences :( And on my free
-> time, I've been a bit busy with one of my projects..
+> In tests, call test_cmp rather than raw diff where possible (i.e. if
+> the output does not go to a pipe), to allow the use of, say, 'cmp'
+> when the default 'diff -u' is not compatible with a vendor diff.
+>=20
+> When that is not possible, use $DIFF, as set in GIT-BUILD-OPTIONS.
 
-Fair enough. My day job tends to suck up most of the time I want to
-spend in front of a computer too.
+Sign-off?  (See SubmittingPatches for what I am asking about here.)  An=
+d
+is it possible to change your mailing script to use more meaningful
+subject lines?
 
-> I've tried simply "plugging in" the bzr-fastimport plugin to do the
-> communication part. They already implement output similar to what
-> git-fastimport expects. I was stuck on the part where you have to
-> specify "marks" files, and about where to place them, so I left it there
-> for now.
->
-> I'll try and work on this pretty soon, but since I'm doing this on spare
-> time, any help would be welcome. Maybe the good thing to do would be to
-> put up a page somewhere with a mini-roadmap and the info needed/the info
-> that was found out?
-> By using bzr fast-import, the whole thing shouldn't take too long.
+This patch makes a good change, but I do not think your description
+captures it.  Most of the changes are from =E2=80=98diff=E2=80=99, not =
+from =E2=80=98diff -u=E2=80=99.
+Is your bare =E2=80=98diff=E2=80=99 really incapable of distinguishing =
+between
+identical and differing files?
 
-I'm probably unqualified to help, not being familiar with bzr at all,
-but if you want a monkey to write test cases I can probably do that.
+But using test_cmp consistently would make debugging test scripts
+with -v much easier, since the output is more readable.
 
->> [1] http://github.com/kfish/git-bzr/blob/master/README
->
-> This script needs you to install bazaar and the bzr "fast-import"
-> plugin. Normally the fast-export command is implemented by it. You need
-> a rather up-to-date version, though.
-> I've found this script to work mostly for pulling in changes from bzr
-> into git. Pushing has proven to be from slow to non-functional.
+> --- a/t/t0000-basic.sh
+> +++ b/t/t0000-basic.sh
+> @@ -280,7 +280,7 @@ $expectfilter >expected <<\EOF
+>  EOF
+>  test_expect_success \
+>      'validate git diff-files output for a know cache/work tree state=
+=2E' \
+> -    'git diff-files >current && diff >/dev/null -b current expected'
+> +    'git diff-files >current && test_cmp current expected >/dev/null=
+'
 
-Actually I can probably contribute a snippet for your README file on
-how to install the required plugin if that would be helpful. It took
-me some fiddling an experimentation to work it out even after reading
-the bazzar documentation.
+The original ignores whitespace changes; this version does not.  It
+turns out that=E2=80=99s okay, but it=E2=80=99s worth mentioning in the=
+ commit
+message.  (I think we do guarantee that diff-files will not change the
+whitespace it produces without good reason.)
 
-> As for the interest in this: mine is in using only one tool to do the
-> work right and not having to switch from using 3 vcs tools (the current
-> situation at work is 2 -- git and svn -- but soon bzr will come in). And
-> for the one tool, I'd like to choose git.
-> stupid reason? probably. but I've tried bzr and I don't like it.
+The original suppressed its output, without any good reason to.  Could
+you remove the >/dev/null while at it, to make it easier to debug?
 
-My interest was purely around updating patches one project that we use
-that happens to use bazaar. Normally most things we do are either in
-git or built from tarballs + patches.
+> --- a/t/t4124-apply-ws-rule.sh
+> +++ b/t/t4124-apply-ws-rule.sh
+> @@ -44,7 +44,7 @@ test_fix () {
+>  	apply_patch --whitespace=3Dfix || return 1
+> =20
+>  	# find touched lines
+> -	diff file target | sed -n -e "s/^> //p" >fixed
+> +	$DIFF file target | sed -n -e "s/^> //p" >fixed
+> =20
+>  	# the changed lines are all expeced to change
+>  	fixed_cnt=3D$(wc -l <fixed)
+
+Is this needed?  I don=E2=80=99t mind it, just curious.
+
+I hope some earlier patch takes care of setting DIFF in test-lib.sh.
+Tests need to be usable without running them through the makefile.
+
+> --- a/t/Makefile
+> +++ b/t/Makefile
+> @@ -6,10 +6,14 @@
+>  -include ../config.mak
+> =20
+>  #GIT_TEST_OPTS=3D--verbose --debug
+> +GIT_TEST_CMP ?=3D $(DIFF)
+>  SHELL_PATH ?=3D $(SHELL)
+>  TAR ?=3D $(TAR)
+>  RM ?=3D rm -f
+> =20
+> +# Make sure test-lib.sh uses make's value of GIT_TEST_CMP
+> +export GIT_TEST_CMP
+> +
+>  # Shell quote;
+>  SHELL_PATH_SQ =3D $(subst ','\'',$(SHELL_PATH))
+
+If neither DIFF nor GIT_TEST_CMP is already set, this will export
+GIT_TEST_CMP as the empty string.  Will t/test-lib.sh treat that as
+asking for the default?  Yes --- phew.
+
+Except for as commented above,
+
+  Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
