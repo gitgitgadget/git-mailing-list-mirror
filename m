@@ -1,83 +1,380 @@
 From: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-Subject: [patch 00/16] Portability Patches for git-1.7.1 (v4)
-Date: Tue, 27 Apr 2010 13:57:08 +0000
-Message-ID: <20100427135708.258636000@mlists.thewrittenword.com>
+Subject: [patch 02/16] const-expr.patch
+Date: Tue, 27 Apr 2010 13:57:10 +0000
+Message-ID: <20100427135812.656626000@mlists.thewrittenword.com>
+References: <20100427135708.258636000@mlists.thewrittenword.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 27 15:58:17 2010
+X-From: git-owner@vger.kernel.org Tue Apr 27 15:58:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6lIm-0002JD-M4
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 15:58:17 +0200
+	id 1O6lIn-0002JD-U7
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 15:58:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755990Ab0D0N6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Apr 2010 09:58:06 -0400
-Received: from mail1.thewrittenword.com ([69.67.212.77]:54347 "EHLO
+	id S1756004Ab0D0N6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Apr 2010 09:58:16 -0400
+Received: from mail1.thewrittenword.com ([69.67.212.77]:53202 "EHLO
 	mail1.thewrittenword.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755628Ab0D0N6E (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Apr 2010 09:58:04 -0400
+	with ESMTP id S1755628Ab0D0N6N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Apr 2010 09:58:13 -0400
 Received: from mail1.il.thewrittenword.com (emma-internal-gw.il.thewrittenword.com [192.168.13.25])
-	by mail1.thewrittenword.com (Postfix) with ESMTP id D6B925CD9
-	for <git@vger.kernel.org>; Tue, 27 Apr 2010 14:19:09 +0000 (UTC)
-X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com D6B925CD9
+	by mail1.thewrittenword.com (Postfix) with ESMTP id 8A82F5CD7
+	for <git@vger.kernel.org>; Tue, 27 Apr 2010 14:19:20 +0000 (UTC)
+X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com 8A82F5CD7
 Received: from akari.il.thewrittenword.com (akari.il.thewrittenword.com [10.191.57.57])
-	by mail1.il.thewrittenword.com (Postfix) with ESMTP id 0FB19ACB;
-	Tue, 27 Apr 2010 13:58:02 +0000 (UTC)
+	by mail1.il.thewrittenword.com (Postfix) with ESMTP id CB63CADA;
+	Tue, 27 Apr 2010 13:58:12 +0000 (UTC)
 Received: by akari.il.thewrittenword.com (Postfix, from userid 1048)
-	id E883111D4D1; Tue, 27 Apr 2010 13:58:01 +0000 (UTC)
+	id C07F511D4D1; Tue, 27 Apr 2010 13:58:12 +0000 (UTC)
 User-Agent: quilt/0.46-1
+Content-Disposition: inline; filename=const-expr.patch
 X-Virus-Scanned: clamav-milter 0.96 at maetel.il.thewrittenword.com
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145904>
 
-Here are the portability patches we needed at TWW to enable git-1.7.1
-to compile and run on all of the wide range of Unix machines we
-support.  These patches apply to the git-1.7.1 release,  and address
-all of the feedback from the previous three times I posted them to
-this list, including fixing the massive testsuite failures I was
-experiencing and taking into account that the ss_family fixes and
-partial GMT_CMP_TEST fixes that have been pushed since my last post of
-this patch queue.
+Unfortunately, there are still plenty of production systems with
+vendor compilers that choke unless all compound declarations can be
+determined statically at compile time, for example hpux10.20 (I can
+provide a comprehensive list of our supported platforms that exhibit
+this problem if necessary).
 
-With the exception of a hand-full of test failures outside of Linux 
-and Solaris8+, git now compiles and passes all tests on the following
-architectures:
+This patch simply breaks apart any compound declarations with dynamic
+initialisation expressions, and moves the initialisation until after
+the last declaration in the same block, in all the places necessary to
+have the offending compilers accept the code.
+---
+ builtin/add.c      |    4 +++-
+ builtin/blame.c    |   10 ++++++----
+ builtin/cat-file.c |    4 +++-
+ builtin/checkout.c |    3 ++-
+ builtin/commit.c   |    3 ++-
+ builtin/fetch.c    |    6 ++++--
+ builtin/remote.c   |    9 ++++++---
+ convert.c          |    4 +++-
+ daemon.c           |   19 ++++++++++---------
+ ll-merge.c         |   14 +++++++-------
+ refs.c             |    6 +++++-
+ remote.c           |    3 +--
+ unpack-trees.c     |    4 +++-
+ wt-status.c        |   23 ++++++++++++-----------
+ 14 files changed, 67 insertions(+), 45 deletions(-)
 
-        Solaris 2.6/SPARC
-        Solaris 7/SPARC
-        Solaris 8/SPARC  
-        Solaris 9/SPARC
-        Solaris 10/SPARC         
-        Solaris 10/Intel         
-        HP-UX 10.20/PA
-        HP-UX 11.00/PA 
-        HP-UX 11.11/PA   
-        HP-UX 11.23/PA   
-        HP-UX 11.23/IA
-        HP-UX 11.31/PA
-        HP-UX 11.31/IA   
-        AIX 5.1  
-        AIX 5.2
-        AIX 5.3  
-        AIX 6.1  
-        Tru64 UNIX 5.1   
-        IRIX 6.5         
-        RHEL 3/x86       
-        RHEL 3/amd64     
-        RHEL 4/x86 
-        RHEL 4/amd64     
-        RHEL 5/x86       
-        RHEL 5/amd64     
-        SLES 10/x86      
-        SLES 10/amd64    
+Index: b/convert.c
+===================================================================
+--- a/convert.c
++++ b/convert.c
+@@ -249,7 +249,9 @@ static int filter_buffer(int in, int out
+ 	struct child_process child_process;
+ 	struct filter_params *params = (struct filter_params *)data;
+ 	int write_err, status;
+-	const char *argv[] = { params->cmd, NULL };
++	const char *argv[] = { NULL, NULL };
++
++	argv[0] = params->cmd;
+ 
+ 	memset(&child_process, 0, sizeof(child_process));
+ 	child_process.argv = argv;
+Index: b/remote.c
+===================================================================
+--- a/remote.c
++++ b/remote.c
+@@ -657,10 +657,9 @@ static struct refspec *parse_refspec_int
+ 
+ int valid_fetch_refspec(const char *fetch_refspec_str)
+ {
+-	const char *fetch_refspec[] = { fetch_refspec_str };
+ 	struct refspec *refspec;
+ 
+-	refspec = parse_refspec_internal(1, fetch_refspec, 1, 1);
++	refspec = parse_refspec_internal(1, &fetch_refspec_str, 1, 1);
+ 	free_refspecs(refspec, 1);
+ 	return !!refspec;
+ }
+Index: b/unpack-trees.c
+===================================================================
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -287,9 +287,11 @@ static void add_same_unmerged(struct cac
+ static int unpack_index_entry(struct cache_entry *ce,
+ 			      struct unpack_trees_options *o)
+ {
+-	struct cache_entry *src[5] = { ce, NULL, };
++	struct cache_entry *src[5] = { NULL, NULL };
+ 	int ret;
+ 
++	src[0] = ce;
++
+ 	mark_ce_used(ce, o);
+ 	if (ce_stage(ce)) {
+ 		if (o->skip_unmerged) {
+Index: b/daemon.c
+===================================================================
+--- a/daemon.c
++++ b/daemon.c
+@@ -141,15 +141,14 @@ static char *path_ok(char *directory)
+ 	}
+ 	else if (interpolated_path && saw_extended_args) {
+ 		struct strbuf expanded_path = STRBUF_INIT;
+-		struct strbuf_expand_dict_entry dict[] = {
+-			{ "H", hostname },
+-			{ "CH", canon_hostname },
+-			{ "IP", ip_address },
+-			{ "P", tcp_port },
+-			{ "D", directory },
+-			{ NULL }
+-		};
++		struct strbuf_expand_dict_entry dict[6];
+ 
++		dict[0].placeholder = "H"; dict[0].value = hostname;
++		dict[1].placeholder = "CH"; dict[1].value = canon_hostname;
++		dict[2].placeholder = "IP"; dict[2].value = ip_address;
++		dict[3].placeholder = "P"; dict[3].value = tcp_port;
++		dict[4].placeholder = "D"; dict[4].value = directory;
++		dict[5].placeholder = NULL; dict[5].value = NULL;
+ 		if (*dir != '/') {
+ 			/* Allow only absolute */
+ 			logerror("'%s': Non-absolute path denied (interpolated-path active)", dir);
+@@ -343,7 +342,9 @@ static int upload_pack(void)
+ {
+ 	/* Timeout as string */
+ 	char timeout_buf[64];
+-	const char *argv[] = { "upload-pack", "--strict", timeout_buf, ".", NULL };
++	const char *argv[] = { "upload-pack", "--strict", NULL, ".", NULL };
++
++	argv[2] = timeout_buf;
+ 
+ 	snprintf(timeout_buf, sizeof timeout_buf, "--timeout=%u", timeout);
+ 	return run_service_command(argv);
+Index: b/wt-status.c
+===================================================================
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -498,17 +498,18 @@ static void wt_status_print_submodule_su
+ 	struct child_process sm_summary;
+ 	char summary_limit[64];
+ 	char index[PATH_MAX];
+-	const char *env[] = { index, NULL };
+-	const char *argv[] = {
+-		"submodule",
+-		"summary",
+-		uncommitted ? "--files" : "--cached",
+-		"--for-status",
+-		"--summary-limit",
+-		summary_limit,
+-		uncommitted ? NULL : (s->amend ? "HEAD^" : "HEAD"),
+-		NULL
+-	};
++	const char *env[] = { NULL, NULL };
++	const char *argv[8];
++
++	env[0] =	index;
++	argv[0] =	"submodule";
++	argv[1] =	"summary";
++	argv[2] =	uncommitted ? "--files" : "--cached";
++	argv[3] =	"--for-status";
++	argv[4] =	"--summary-limit";
++	argv[5] =	summary_limit;
++	argv[6] =	uncommitted ? NULL : (s->amend ? "HEAD^" : "HEAD");
++	argv[7] =	NULL;
+ 
+ 	sprintf(summary_limit, "%d", s->submodule_summary);
+ 	snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", s->index_file);
+Index: b/ll-merge.c
+===================================================================
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -139,17 +139,17 @@ static int ll_ext_merge(const struct ll_
+ {
+ 	char temp[4][50];
+ 	struct strbuf cmd = STRBUF_INIT;
+-	struct strbuf_expand_dict_entry dict[] = {
+-		{ "O", temp[0] },
+-		{ "A", temp[1] },
+-		{ "B", temp[2] },
+-		{ "L", temp[3] },
+-		{ NULL }
+-	};
++	struct strbuf_expand_dict_entry dict[5];
+ 	const char *args[] = { NULL, NULL };
+ 	int status, fd, i;
+ 	struct stat st;
+ 
++	dict[0].placeholder = "O"; dict[0].value = temp[0];
++	dict[1].placeholder = "A"; dict[1].value = temp[1];
++	dict[2].placeholder = "B"; dict[2].value = temp[2];
++	dict[3].placeholder = "L"; dict[3].value = temp[3];
++	dict[4].placeholder = NULL; dict[4].value = NULL;
++
+ 	if (fn->cmdline == NULL)
+ 		die("custom merge driver %s lacks command line.", fn->name);
+ 
+Index: b/builtin/commit.c
+===================================================================
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -717,7 +717,8 @@ static int prepare_to_commit(const char 
+ 
+ 	if (use_editor) {
+ 		char index[PATH_MAX];
+-		const char *env[2] = { index, NULL };
++		const char *env[] = { NULL, NULL };
++		env[0] =  index;
+ 		snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", index_file);
+ 		if (launch_editor(git_path(commit_editmsg), NULL, env)) {
+ 			fprintf(stderr,
+Index: b/builtin/remote.c
+===================================================================
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -705,11 +705,14 @@ static int rm(int argc, const char **arg
+ 	struct known_remotes known_remotes = { NULL, NULL };
+ 	struct string_list branches = { NULL, 0, 0, 1 };
+ 	struct string_list skipped = { NULL, 0, 0, 1 };
+-	struct branches_for_remote cb_data = {
+-		NULL, &branches, &skipped, &known_remotes
+-	};
++	struct branches_for_remote cb_data;
+ 	int i, result;
+ 
++	memset(&cb_data,0,sizeof(cb_data));
++	cb_data.branches = &branches;
++	cb_data.skipped = &skipped;
++	cb_data.keep = &known_remotes;
++
+ 	if (argc != 2)
+ 		usage_with_options(builtin_remote_rm_usage, options);
+ 
+Index: b/builtin/blame.c
+===================================================================
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -733,10 +733,11 @@ static int pass_blame_to_parent(struct s
+ {
+ 	int last_in_target;
+ 	mmfile_t file_p, file_o;
+-	struct blame_chunk_cb_data d = { sb, target, parent, 0, 0 };
++	struct blame_chunk_cb_data d;
+ 	xpparam_t xpp;
+ 	xdemitconf_t xecfg;
+-
++	memset(&d,0,sizeof(d));
++	d.sb = sb; d.target = target; d.parent=parent;
+ 	last_in_target = find_last_in_target(sb, target);
+ 	if (last_in_target < 0)
+ 		return 1; /* nothing remains for this target */
+@@ -875,10 +876,11 @@ static void find_copy_in_blob(struct sco
+ 	const char *cp;
+ 	int cnt;
+ 	mmfile_t file_o;
+-	struct handle_split_cb_data d = { sb, ent, parent, split, 0, 0 };
++	struct handle_split_cb_data d;
+ 	xpparam_t xpp;
+ 	xdemitconf_t xecfg;
+-
++	memset(&d,0,sizeof(d));
++	d.sb = sb; d.ent = ent; d.parent = parent; d.split = split;
+ 	/*
+ 	 * Prepare mmfile that contains only the lines in ent.
+ 	 */
+Index: b/builtin/cat-file.c
+===================================================================
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -118,7 +118,9 @@ static int cat_one_file(int opt, const c
+ 
+ 		/* custom pretty-print here */
+ 		if (type == OBJ_TREE) {
+-			const char *ls_args[3] = {"ls-tree", obj_name, NULL};
++			const char *ls_args[3] = { NULL, NULL, NULL };
++			ls_args[0] =  "ls-tree";
++			ls_args[1] =  obj_name;
+ 			return cmd_ls_tree(2, ls_args, NULL);
+ 		}
+ 
+Index: b/refs.c
+===================================================================
+--- a/refs.c
++++ b/refs.c
+@@ -314,7 +314,11 @@ static int warn_if_dangling_symref(const
+ 
+ void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
+ {
+-	struct warn_if_dangling_data data = { fp, refname, msg_fmt };
++	struct warn_if_dangling_data data;
++
++	data.fp = fp;
++	data.refname = refname;
++	data.msg_fmt = msg_fmt;
+ 	for_each_rawref(warn_if_dangling_symref, &data);
+ }
+ 
+Index: b/builtin/add.c
+===================================================================
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -261,12 +261,14 @@ static int edit_patch(int argc, const ch
+ {
+ 	char *file = xstrdup(git_path("ADD_EDIT.patch"));
+ 	const char *apply_argv[] = { "apply", "--recount", "--cached",
+-		file, NULL };
++		NULL, NULL };
+ 	struct child_process child;
+ 	struct rev_info rev;
+ 	int out;
+ 	struct stat st;
+ 
++	apply_argv[3] = file;
++
+ 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+ 
+ 	if (read_cache() < 0)
+Index: b/builtin/checkout.c
+===================================================================
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -609,7 +609,8 @@ static int check_tracking_name(const cha
+ 
+ static const char *unique_tracking_name(const char *name)
+ {
+-	struct tracking_name_data cb_data = { name, NULL, 1 };
++	struct tracking_name_data cb_data = { NULL, NULL, 1 };
++	cb_data.name = name;
+ 	for_each_ref(check_tracking_name, &cb_data);
+ 	if (cb_data.unique)
+ 		return cb_data.remote;
+Index: b/builtin/fetch.c
+===================================================================
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -574,9 +574,10 @@ static void find_non_local_tags(struct t
+ {
+ 	struct string_list existing_refs = { NULL, 0, 0, 0 };
+ 	struct string_list remote_refs = { NULL, 0, 0, 0 };
+-	struct tag_data data = {head, tail};
++	struct tag_data data;
+ 	const struct ref *ref;
+ 	struct string_list_item *item = NULL;
++	data.head = head; data.tail = tail;
+ 
+ 	for_each_ref(add_existing, &existing_refs);
+ 	for (ref = transport_get_remote_refs(transport); ref; ref = ref->next) {
+@@ -778,7 +779,8 @@ static int get_remote_group(const char *
+ static int add_remote_or_group(const char *name, struct string_list *list)
+ {
+ 	int prev_nr = list->nr;
+-	struct remote_group_data g = { name, list };
++	struct remote_group_data g;
++	g.name = name; g.list = list;
+ 
+ 	git_config(get_remote_group, &g);
+ 	if (list->nr == prev_nr) {
 
-Cheers,
 -- 
 Gary V. Vaughan (gary@thewrittenword.com)
