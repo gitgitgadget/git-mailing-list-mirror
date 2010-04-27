@@ -1,70 +1,89 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [patch 00/16] Portability Patches for git-1.7.1 (v4)
-Date: Tue, 27 Apr 2010 17:30:53 +0200
-Message-ID: <4BD7032D.9050508@drmicha.warpmail.net>
-References: <20100427135708.258636000@mlists.thewrittenword.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: MIME problem when using git format-patch / git am
+Date: Tue, 27 Apr 2010 10:32:50 -0500
+Message-ID: <20100427153250.GA14756@progeny.tock>
+References: <20100425233549.GA8737@triton>
+ <20100426014941.GA29220@progeny.tock>
+ <alpine.DEB.2.00.1004260948070.22806@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-X-From: git-owner@vger.kernel.org Tue Apr 27 17:36:03 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?iso-8859-1?B?2Hl2aW5kIEEu?= Holm <sunny@sunbase.org>,
+	git@vger.kernel.org
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Tue Apr 27 17:36:04 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with smtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6mpK-0003lp-Lq
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 17:35:59 +0200
+	id 1O6mpM-0003lp-FK
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 17:36:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753949Ab0D0Pa5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Apr 2010 11:30:57 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:46594 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753643Ab0D0Pa4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Apr 2010 11:30:56 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id DAA91EAE24;
-	Tue, 27 Apr 2010 11:30:55 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Tue, 27 Apr 2010 11:30:55 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=cbqXZVXp64bnLlSTBUa1NXcIyhM=; b=h92N+gA5axUkAToD1CtmePMxIMkPtgwfUQuoCbllpAk9awu28VT4o5585kqdaK1t6hlpva+TIm0lskwsmVV5omWdgDBRSau9aCGuoFwOW9Y77I82jkEGJEvI3XFf79Xh1OUSAFeUJebvbrqNrkwp4a4+XeDcUxrjJJ5Jq54tlm4=
-X-Sasl-enc: /U59l0nVpsXw7+Rzn/Qp9rDC2c2A+ZKTOEIOhx9un0Q0 1272382255
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id E0071491C8;
-	Tue, 27 Apr 2010 11:30:54 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100426 Lightning/1.0b2pre Lanikai/3.1b2pre
-In-Reply-To: <20100427135708.258636000@mlists.thewrittenword.com>
+	id S1754421Ab0D0Pbx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Apr 2010 11:31:53 -0400
+Received: from mail-pz0-f204.google.com ([209.85.222.204]:33444 "EHLO
+	mail-pz0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752968Ab0D0Pbw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Apr 2010 11:31:52 -0400
+Received: by pzk42 with SMTP id 42so8958462pzk.4
+        for <git@vger.kernel.org>; Tue, 27 Apr 2010 08:31:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=CKjFudiGYMdcyYb8xv1+d3nYu5RpmjrmN7uMFbMVUWg=;
+        b=sH5Uk/BA54zj79nWNzPHLpO6Y8hoEX5YXHevrN+hxAgp3x31wu2HuHtrcIELCLv9XR
+         nsgDvhB9+OLPaWGXRBblz8Jjb70gyLfMK5EIMKXTXpajNEkmQwf8JE6imw8VeSG/ILNt
+         vLl8dUocN3ekj2DoCFbQ/0HwxQr//+2nFQOVg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=EncHxK5idElM2j1GyiljpS+LQ4jBTOY7FSjPbnuvknRbM2J47emUG0kmzLYmzvPbdg
+         rATqq6zJDkYOuxKtpLABes44YMZ0Zv6qMR0BT6KAgGy0ovC4h+OyzUFWPGbAMxf1WU0P
+         upuaUMs2db56Jp//QI0ZaS04mW+B5GAERSLck=
+Received: by 10.114.248.9 with SMTP id v9mr1985972wah.164.1272382309343;
+        Tue, 27 Apr 2010 08:31:49 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 21sm4061845iwn.11.2010.04.27.08.31.46
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 27 Apr 2010 08:31:47 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.00.1004260948070.22806@ds9.cixit.se>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145926>
 
-Gary V. Vaughan venit, vidit, dixit 27.04.2010 15:57:
-> Here are the portability patches we needed at TWW to enable git-1.7.1
-> to compile and run on all of the wide range of Unix machines we
-> support.  These patches apply to the git-1.7.1 release,  and address
-> all of the feedback from the previous three times I posted them to
-> this list, including fixing the massive testsuite failures I was
-> experiencing and taking into account that the ss_family fixes and
-> partial GMT_CMP_TEST fixes that have been pushed since my last post of
-> this patch queue.
+Peter Krefting wrote:
+> Jonathan Nieder:
 
-General remark: None of your patches have a s-o-b line. If you want to
-have your patches in git you are required to sign-off on them (commit
--s) in order to certify that you can submit them under the license terms
-of the project.
+>> This leads to a question: what if one wants to include a word that
+>> quotes to more than 75 characters?
+>
+> You just split it into two encoded words. The whitespace between the
+> encoded words is there for syntactic reasons only, it is not
+> included in the final result if both parts are encoded words (look
+> at the "Examples" section of the RFC for some examples of how it
+> works).
 
-Your diff -> test_cmp are certainly something we want to have in any
-case. The code changes look ugly, honestly, making the code much less
-readable, but it seems to be the only way to make those older platforms
-and compilers happy. (Erik pointed out some good ways to reduce the
-uglyness somewhat.)
+Thank you.  He explains it before then, too; I should be reading more
+carefully.
 
-I can't test your target platform, but I would test the impact of the
-code and test changes on mine. Do you have your series somewhere to pull
-from?
+I=E2=80=99ve been working through a full implementation of that RFC, bu=
+t it
+seems that to support breaking words, Git would need to learn where the
+character boundaries are.  Which means encodings would not be just opaq=
+ue
+strings as far as git cares any more.
 
-Michael
+On the bright side, the only encoding I care about is UTF-8, and that
+one=E2=80=99s easy.
+
+Jonathan
