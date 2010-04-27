@@ -1,292 +1,70 @@
-From: Gerhard Wiesinger <lists@wiesinger.com>
-Subject: Re: Global .git directory
-Date: Tue, 27 Apr 2010 22:06:23 +0200 (CEST)
-Message-ID: <alpine.LFD.2.00.1004272144470.11216@bbs.intern>
-References: <alpine.LFD.2.00.1004270705280.15197@bbs.intern> <201004271159.34071.trast@student.ethz.ch>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [patch 00/16] Portability Patches for git-1.7.1 (v4)
+Date: Tue, 27 Apr 2010 22:13:02 +0200
+Message-ID: <m2iq7cejsh.fsf@igel.home>
+References: <20100427135708.258636000@mlists.thewrittenword.com>
+	<4BD7032D.9050508@drmicha.warpmail.net>
+	<20100427175442.GB13626@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811584-543529835-1272398783=:14350"
-Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Apr 27 22:07:27 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	"Gary V. Vaughan" <git@mlists.thewrittenword.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 27 22:13:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6r3w-0003LG-1v
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 22:07:20 +0200
+	id 1O6r9e-0005wN-8j
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 22:13:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752160Ab0D0UHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Apr 2010 16:07:11 -0400
-Received: from chello084112167138.7.11.vie.surfer.at ([84.112.167.138]:37576
-	"EHLO wiesinger.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751239Ab0D0UHJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Apr 2010 16:07:09 -0400
-Received: from bbs.intern (localhost [127.0.0.1])
-	by wiesinger.com (8.14.4/8.14.4) with ESMTP id o3RK6NU5014968;
-	Tue, 27 Apr 2010 22:06:23 +0200
-Received: from localhost (gerhard@localhost)
-	by bbs.intern (8.14.4/8.14.4/Submit) with ESMTP id o3RK6Nj1014963;
-	Tue, 27 Apr 2010 22:06:23 +0200
-In-Reply-To: <201004271159.34071.trast@student.ethz.ch>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-MailScanner-Information-wiesinger-com: Please contact the ISP for more information
-X-wiesinger-com-MailScanner-ID: o3RK6NU5014968
-X-MailScanner-wiesinger-com: Found to be clean
-X-MailScanner-SpamCheck-wiesinger-com: not spam, SpamAssassin (not cached,
-	score=-4.354, required 4.5, autolearn=not spam, ALL_TRUSTED -1.80,
-	AWL 0.04, BAYES_00 -2.60)
-X-MailScanner-From: lists@wiesinger.com
+	id S1752333Ab0D0UNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Apr 2010 16:13:09 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:57205 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751410Ab0D0UNH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Apr 2010 16:13:07 -0400
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id 245551C1561D;
+	Tue, 27 Apr 2010 22:13:03 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id CF72D9023A;
+	Tue, 27 Apr 2010 22:13:03 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan1.mnet-online.de [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id 1KTdTZmzLjAu; Tue, 27 Apr 2010 22:13:03 +0200 (CEST)
+Received: from igel.home (ppp-88-217-105-240.dynamic.mnet-online.de [88.217.105.240])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Tue, 27 Apr 2010 22:13:03 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id CFA45CA297; Tue, 27 Apr 2010 22:13:02 +0200 (CEST)
+X-Yow: Everybody gets free BORSCHT!
+In-Reply-To: <20100427175442.GB13626@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 27 Apr 2010 13:54:42 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.96 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145943>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Jeff King <peff@peff.net> writes:
 
----1463811584-543529835-1272398783=:14350
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+> Furthermore, if we do take such changes, how are we going to manage
+> portability going forward? Some constructs (like non-constant
+> initializers) make the code much easier to read. People _will_ submit
+> patches that use them. Is somebody going to be auto-building on all of
+> these platforms with vendor compilers to confirm that nothing is broken?
 
-On Tue, 27 Apr 2010, Thomas Rast wrote:
+You can use "gcc -pedantic" to find these portability problems.
 
-> Gerhard Wiesinger wrote:
->> Hello,
->>
->> I'm new to git and as far as I saw that feature is missing: Placing .git
->> directory/repository on a central place for many git repositories. This
->> feature ensures that data directories are kept clean from metadata of git.
-> [...]
->> I think this should be easy to implement on a centralized point.
->
-> What problem are you trying to solve, what solution are you
-> attempting, and why does the .git get in the way of your proposed
-> solution?
+Andreas.
 
-I don't like metadata of the repository in MY file structure (e.g. .git in 
-top directory, .svn in every directory in subversion, .hg in top 
-directory) for several reasons:
-1.) Searching might arise false results, longer output and takes longer 
-(e.g. grep -ir string .)
-2.) Making tarballs, diffs, etc.: One has to make ugly --exclude or some 
-other workarounds when directories are traversed.
-3.) From an archtectural point of view: It is not technically necessary to 
-mix up user data with repository data.
-
-> (In other words, please convince us that this is actually worth
-> having.)
-
-Ok, rather than convincing I've written a (fast) patch which works for 
-me :-)
-
-Any comments? Any (further) changes needed? Will you include it in main 
-git?
-
-Thnx.
-
-Ciao,
-Gerhard
-
---
-http://www.wiesinger.com/
----1463811584-543529835-1272398783=:14350
-Content-Type: TEXT/PLAIN; charset=US-ASCII; name=git-global-dir.patch
-Content-Transfer-Encoding: BASE64
-Content-ID: <alpine.LFD.2.00.1004272206230.14350@bbs.intern>
-Content-Description: 
-Content-Disposition: attachment; filename=git-global-dir.patch
-
-ZGlmZiAtLWdpdCBhL2J1aWx0aW4vaW5pdC1kYi5jIGIvYnVpbHRpbi9pbml0
-LWRiLmMNCmluZGV4IGVkYzQwZmYuLmE5MWU3NjIgMTAwNjQ0DQotLS0gYS9i
-dWlsdGluL2luaXQtZGIuYw0KKysrIGIvYnVpbHRpbi9pbml0LWRiLmMNCkBA
-IC03LDYgKzcsNyBAQA0KICNpbmNsdWRlICJidWlsdGluLmgiDQogI2luY2x1
-ZGUgImV4ZWNfY21kLmgiDQogI2luY2x1ZGUgInBhcnNlLW9wdGlvbnMuaCIN
-CisjaW5jbHVkZSAiZW52aXJvbm1lbnQuaCINCiANCiAjaWZuZGVmIERFRkFV
-TFRfR0lUX1RFTVBMQVRFX0RJUg0KICNkZWZpbmUgREVGQVVMVF9HSVRfVEVN
-UExBVEVfRElSICIvdXNyL3NoYXJlL2dpdC1jb3JlL3RlbXBsYXRlcyINCkBA
-IC0zNCw2ICszNSwyNyBAQCBzdGF0aWMgdm9pZCBzYWZlX2NyZWF0ZV9kaXIo
-Y29uc3QgY2hhciAqZGlyLCBpbnQgc2hhcmUpDQogCQlkaWUoIkNvdWxkIG5v
-dCBtYWtlICVzIHdyaXRhYmxlIGJ5IGdyb3VwIiwgZGlyKTsNCiB9DQogDQor
-c3RhdGljIHZvaWQgbWtkaXJfcmVjdXNpdmUoY2hhciAqZGlyZWN0b3J5KQ0K
-K3sNCisJY2hhciB0bXBbUEFUSF9NQVgrMV07DQorCWNoYXIgKnAgPSBOVUxM
-Ow0KKwlzaXplX3QgbGVuOw0KKw0KKwlzbnByaW50Zih0bXAsIHNpemVvZih0
-bXApLCAiJXMiLCBkaXJlY3RvcnkpOw0KKwlsZW4gPSBzdHJsZW4odG1wKTsN
-CisJaWYoaXNfZGlyX3NlcCh0bXBbbGVuIC0gMV0pKQ0KKwkJdG1wW2xlbiAt
-IDFdID0gMDsNCisNCisJZm9yKHAgPSB0bXAgKyAxOyAqcDsgcCsrKQ0KKwkJ
-aWYoaXNfZGlyX3NlcCgqcCkpIHsNCisJCQljaGFyIGMgPSAqcDsNCisJCQkq
-cCA9IDA7DQorCQkJc2FmZV9jcmVhdGVfZGlyKHRtcCwgMSk7DQorCQkJKnAg
-PSBjOw0KKwkJfQ0KKwlzYWZlX2NyZWF0ZV9kaXIodG1wLDEpOw0KK30NCisN
-CiBzdGF0aWMgdm9pZCBjb3B5X3RlbXBsYXRlc18xKGNoYXIgKnBhdGgsIGlu
-dCBiYXNlbGVuLA0KIAkJCSAgICAgY2hhciAqdGVtcGxhdGUsIGludCB0ZW1w
-bGF0ZV9iYXNlbGVuLA0KIAkJCSAgICAgRElSICpkaXIpDQpAQCAtNDczLDcg
-KzQ5NSw3IEBAIGludCBjbWRfaW5pdF9kYihpbnQgYXJnYywgY29uc3QgY2hh
-ciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCkNCiAJICogR0lUX1dPUktf
-VFJFRSBtYWtlcyBzZW5zZSBvbmx5IGluIGNvbmp1bmN0aW9uIHdpdGggR0lU
-X0RJUg0KIAkgKiB3aXRob3V0IC0tYmFyZS4gIENhdGNoIHRoZSBlcnJvciBl
-YXJseS4NCiAJICovDQotCWdpdF9kaXIgPSBnZXRlbnYoR0lUX0RJUl9FTlZJ
-Uk9OTUVOVCk7DQorCWdpdF9kaXIgPSBnZXRfZ2l0X2Rpcl9mcm9tX2Vudmly
-b25tZW50KCk7DQogCWlmICgoIWdpdF9kaXIgfHwgaXNfYmFyZV9yZXBvc2l0
-b3J5X2NmZyA9PSAxKQ0KIAkgICAgJiYgZ2V0ZW52KEdJVF9XT1JLX1RSRUVf
-RU5WSVJPTk1FTlQpKQ0KIAkJZGllKCIlcyAob3IgLS13b3JrLXRyZWU9PGRp
-cmVjdG9yeT4pIG5vdCBhbGxvd2VkIHdpdGhvdXQgIg0KQEAgLTQ5MCw3ICs1
-MTIsMTkgQEAgaW50IGNtZF9pbml0X2RiKGludCBhcmdjLCBjb25zdCBjaGFy
-ICoqYXJndiwgY29uc3QgY2hhciAqcHJlZml4KQ0KIAlpZiAoaXNfYmFyZV9y
-ZXBvc2l0b3J5X2NmZyA8IDApDQogCQlpc19iYXJlX3JlcG9zaXRvcnlfY2Zn
-ID0gZ3Vlc3NfcmVwb3NpdG9yeV90eXBlKGdpdF9kaXIpOw0KIA0KLQlpZiAo
-IWlzX2JhcmVfcmVwb3NpdG9yeV9jZmcpIHsNCisJaWYgKGlzX2dpdF9kaXJf
-Z2xvYmFsX2Vudmlyb25tZW50KCkpIHsNCisJCWNoYXIgKmdsb2JhbF9iYXNl
-X2RpciA9IGdldF9naXRfZGlyX2dsb2JhbF9iYXNlX2RpcigpOw0KKwkJbWtk
-aXJfcmVjdXNpdmUoZ2xvYmFsX2Jhc2VfZGlyKTsNCisJCWlmICghZ2l0X3dv
-cmtfdHJlZV9jZmcpIHsNCisJCQlnaXRfd29ya190cmVlX2NmZyA9IHhjYWxs
-b2MoUEFUSF9NQVgsIDEpOw0KKwkJCXN0cm5jcHkoZ2l0X3dvcmtfdHJlZV9j
-ZmcsIGdsb2JhbF9iYXNlX2RpciwgUEFUSF9NQVgpOw0KKwkJfQ0KKwkJaWYg
-KGFjY2VzcyhnZXRfZ2l0X3dvcmtfdHJlZSgpLCBYX09LKSkNCisJCQlkaWVf
-ZXJybm8gKCJDYW5ub3QgYWNjZXNzIHdvcmsgdHJlZSAnJXMnIiwNCisJCQkJ
-ICAgZ2V0X2dpdF93b3JrX3RyZWUoKSk7DQorCX0NCisJCQ0KKwlpZiAoIWlz
-X2JhcmVfcmVwb3NpdG9yeV9jZmcgJiYgIWlzX2dpdF9kaXJfZ2xvYmFsX2Vu
-dmlyb25tZW50KCkpIHsNCiAJCWlmIChnaXRfZGlyKSB7DQogCQkJY29uc3Qg
-Y2hhciAqZ2l0X2Rpcl9wYXJlbnQgPSBzdHJyY2hyKGdpdF9kaXIsICcvJyk7
-DQogCQkJaWYgKGdpdF9kaXJfcGFyZW50KSB7DQpkaWZmIC0tZ2l0IGEvYnVp
-bHRpbi9yZXYtcGFyc2UuYyBiL2J1aWx0aW4vcmV2LXBhcnNlLmMNCmluZGV4
-IDhmYmY5ZDAuLmI2NDI2MGYgMTAwNjQ0DQotLS0gYS9idWlsdGluL3Jldi1w
-YXJzZS5jDQorKysgYi9idWlsdGluL3Jldi1wYXJzZS5jDQpAQCAtOSw2ICs5
-LDcgQEANCiAjaW5jbHVkZSAicXVvdGUuaCINCiAjaW5jbHVkZSAiYnVpbHRp
-bi5oIg0KICNpbmNsdWRlICJwYXJzZS1vcHRpb25zLmgiDQorI2luY2x1ZGUg
-ImVudmlyb25tZW50LmgiDQogDQogI2RlZmluZSBET19SRVZTCQkxDQogI2Rl
-ZmluZSBET19OT1JFVgkyDQpAQCAtNjQyLDcgKzY0Myw3IEBAIGludCBjbWRf
-cmV2X3BhcnNlKGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwgY29uc3Qg
-Y2hhciAqcHJlZml4KQ0KIAkJCQljb250aW51ZTsNCiAJCQl9DQogCQkJaWYg
-KCFzdHJjbXAoYXJnLCAiLS1naXQtZGlyIikpIHsNCi0JCQkJY29uc3QgY2hh
-ciAqZ2l0ZGlyID0gZ2V0ZW52KEdJVF9ESVJfRU5WSVJPTk1FTlQpOw0KKwkJ
-CQljb25zdCBjaGFyICpnaXRkaXIgPSBnZXRfZ2l0X2Rpcl9mcm9tX2Vudmly
-b25tZW50KCk7DQogCQkJCXN0YXRpYyBjaGFyIGN3ZFtQQVRIX01BWF07DQog
-CQkJCWludCBsZW47DQogCQkJCWlmIChnaXRkaXIpIHsNCmRpZmYgLS1naXQg
-YS9jYWNoZS5oIGIvY2FjaGUuaA0KaW5kZXggNWViMDU3My4uNTdhNjQ3ZCAx
-MDA2NDQNCi0tLSBhL2NhY2hlLmgNCisrKyBiL2NhY2hlLmgNCkBAIC0zNzIs
-NiArMzcyLDggQEAgc3RhdGljIGlubGluZSBlbnVtIG9iamVjdF90eXBlIG9i
-amVjdF90eXBlKHVuc2lnbmVkIGludCBtb2RlKQ0KIH0NCiANCiAjZGVmaW5l
-IEdJVF9ESVJfRU5WSVJPTk1FTlQgIkdJVF9ESVIiDQorI2RlZmluZSBHSVRf
-RElSX0dMT0JBTF9FTlZJUk9OTUVOVCAiR0lUX0RJUl9HTE9CQUwiDQorI2Rl
-ZmluZSBHSVRfRElSX0dMT0JBTF9TUEVDSUFMX1JPT1RfRElSRUNUT1JZICIv
-U1BFQ0lBTF9ST09UX0RJUkVDVE9SWSINCiAjZGVmaW5lIEdJVF9XT1JLX1RS
-RUVfRU5WSVJPTk1FTlQgIkdJVF9XT1JLX1RSRUUiDQogI2RlZmluZSBERUZB
-VUxUX0dJVF9ESVJfRU5WSVJPTk1FTlQgIi5naXQiDQogI2RlZmluZSBEQl9F
-TlZJUk9OTUVOVCAiR0lUX09CSkVDVF9ESVJFQ1RPUlkiDQpkaWZmIC0tZ2l0
-IGEvZW52aXJvbm1lbnQuYyBiL2Vudmlyb25tZW50LmMNCmluZGV4IDg3NmM1
-ZTUuLmQ5NzY4YTkgMTAwNjQ0DQotLS0gYS9lbnZpcm9ubWVudC5jDQorKysg
-Yi9lbnZpcm9ubWVudC5jDQpAQCAtOCw2ICs4LDkgQEANCiAgKiBhcmUuDQog
-ICovDQogI2luY2x1ZGUgImNhY2hlLmgiDQorI2luY2x1ZGUgInNldHVwLmgi
-DQorDQorI2RlZmluZSBESVJfU0VQQVJBVE9SICIvIg0KIA0KIGNoYXIgZ2l0
-X2RlZmF1bHRfZW1haWxbTUFYX0dJVE5BTUVdOw0KIGNoYXIgZ2l0X2RlZmF1
-bHRfbmFtZVtNQVhfR0lUTkFNRV07DQpAQCAtODAsOSArODMsMTI5IEBAIGNv
-bnN0IGNoYXIgKiBjb25zdCBsb2NhbF9yZXBvX2VudltMT0NBTF9SRVBPX0VO
-Vl9TSVpFICsgMV0gPSB7DQogCU5VTEwNCiB9Ow0KIA0KK2NoYXIqIHBhdGhf
-c2hvcnRlbihjaGFyICpwYXRoKQ0KK3sNCisJaW50IGluZGV4ID0gc3RybGVu
-KHBhdGgpOw0KKw0KKwl3aGlsZSAoaW5kZXggPiAwKSB7DQorCQlpbmRleC0t
-Ow0KKwkJaWYgKGlzX2Rpcl9zZXAocGF0aFtpbmRleF0pKSB7DQorCQkJcGF0
-aFtpbmRleF0gPSAwOw0KKwkJCXJldHVybiBwYXRoOw0KKwkJfQ0KKwl9DQor
-DQorCS8vIHNob3VsZCBuZXZlciBnZXQgaGVyZQ0KKwlyZXR1cm4gIiI7DQor
-fQ0KKw0KK3N0YXRpYyBjaGFyICpnZXRfZGlyX2dsb2JhbF9lbnZpcm9ubWVu
-dCh2b2lkKQ0KK3sNCisJcmV0dXJuIGdldGVudihHSVRfRElSX0dMT0JBTF9F
-TlZJUk9OTUVOVCk7DQorfQ0KKw0KK2NoYXIgKmdldF9naXRfZGlyX2dsb2Jh
-bF9iYXNlX2Rpcih2b2lkKQ0KK3sNCisJc3RhdGljIGNoYXIgY3dkX2J1ZltQ
-QVRIX01BWCsxXTsNCisJc3RhdGljIGNoYXIgZGlyX2dsb2JhbF9idWZbUEFU
-SF9NQVgrMV07DQorCXN0YXRpYyBjaGFyIGdpdF9kaXJfYnVmW1BBVEhfTUFY
-KzFdOw0KKwlpbnQgZ2xvYmFsX2Vudmlyb25tZW50X2xlbiA9IDA7DQorCWNo
-YXIgKmdpdF9kaXJfZ2xvYmFsX2Vudmlyb25tZW50ID0gZ2V0X2Rpcl9nbG9i
-YWxfZW52aXJvbm1lbnQoKTsNCisNCisJaWYgKCFnZXRjd2QoY3dkX2J1Ziwg
-c2l6ZW9mKGN3ZF9idWYpLTEpKQ0KKwkJZGllX2Vycm5vKCJVbmFibGUgdG8g
-cmVhZCBjdXJyZW50IHdvcmtpbmcgZGlyZWN0b3J5Iik7DQorDQorCWlmICgh
-aXNfYWJzb2x1dGVfcGF0aChnaXRfZGlyX2dsb2JhbF9lbnZpcm9ubWVudCkp
-DQorCQlkaWVfZXJybm8oIkdsb2JhbCBlbnZpcm9ubWVudCB2YXJpYWJsZSIg
-R0lUX0RJUl9HTE9CQUxfRU5WSVJPTk1FTlQgIiBuZWVkcyBhYnNvbHV0ZSBw
-YXRoISIpOw0KKw0KKwlzdHJuY3B5KGRpcl9nbG9iYWxfYnVmLCBnaXRfZGly
-X2dsb2JhbF9lbnZpcm9ubWVudCwgc2l6ZW9mKGRpcl9nbG9iYWxfYnVmKSk7
-DQorCWdsb2JhbF9lbnZpcm9ubWVudF9sZW4gPSBzdHJsZW4oZGlyX2dsb2Jh
-bF9idWYpOw0KKwlpZiAoaXNfZGlyX3NlcChkaXJfZ2xvYmFsX2J1ZltnbG9i
-YWxfZW52aXJvbm1lbnRfbGVuXSkpDQorCQlkaXJfZ2xvYmFsX2J1ZltnbG9i
-YWxfZW52aXJvbm1lbnRfbGVuXSA9IDA7DQorDQorCXJldHVybiBta3NucGF0
-aChnaXRfZGlyX2J1Ziwgc2l6ZW9mKGdpdF9kaXJfYnVmKSwgIiVzJXMiLCBk
-aXJfZ2xvYmFsX2J1ZiwgY3dkX2J1Zik7DQorfQ0KKw0KK2NoYXIgKmdldF9n
-aXRfZGlyX2Zyb21fZ2xvYmFsX2Vudmlyb25tZW50KGNoYXIgKmdpdF9kaXJf
-Z2xvYmFsX2Vudmlyb25tZW50KQ0KK3sNCisJc3RhdGljIGNoYXIgY3dkX2J1
-ZltQQVRIX01BWCsxXTsNCisJc3RhdGljIGNoYXIgY3dkX29yaWdpbmFsX2J1
-ZltQQVRIX01BWCsxXTsNCisJc3RhdGljIGNoYXIgZGlyX2dsb2JhbF9idWZb
-UEFUSF9NQVgrMV07DQorCXN0YXRpYyBjaGFyIGdpdF9kaXJfYnVmW1BBVEhf
-TUFYKzFdOw0KKwljaGFyICpjd2QgPSBjd2RfYnVmOw0KKwljaGFyICpnaXRf
-ZGlyID0gZ2l0X2Rpcl9idWY7DQorCWludCBmb3VuZCA9IDA7DQorCWludCBn
-bG9iYWxfZW52aXJvbm1lbnRfbGVuID0gMDsNCisNCisJaWYgKCFnZXRjd2Qo
-Y3dkX2J1Ziwgc2l6ZW9mKGN3ZF9idWYpLTEpKQ0KKwkJZGllX2Vycm5vKCJV
-bmFibGUgdG8gcmVhZCBjdXJyZW50IHdvcmtpbmcgZGlyZWN0b3J5Iik7DQor
-DQorCWlmICghaXNfYWJzb2x1dGVfcGF0aChnaXRfZGlyX2dsb2JhbF9lbnZp
-cm9ubWVudCkpDQorCQlkaWVfZXJybm8oIkdsb2JhbCBlbnZpcm9ubWVudCB2
-YXJpYWJsZSIgR0lUX0RJUl9HTE9CQUxfRU5WSVJPTk1FTlQgIiBuZWVkcyBh
-YnNvbHV0ZSBwYXRoISIpOw0KKw0KKwlzdHJuY3B5KGRpcl9nbG9iYWxfYnVm
-LCBnaXRfZGlyX2dsb2JhbF9lbnZpcm9ubWVudCwgc2l6ZW9mKGRpcl9nbG9i
-YWxfYnVmKSk7DQorCWdsb2JhbF9lbnZpcm9ubWVudF9sZW4gPSBzdHJsZW4o
-ZGlyX2dsb2JhbF9idWYpOw0KKwlpZiAoaXNfZGlyX3NlcChkaXJfZ2xvYmFs
-X2J1ZltnbG9iYWxfZW52aXJvbm1lbnRfbGVuXSkpDQorCQlkaXJfZ2xvYmFs
-X2J1ZltnbG9iYWxfZW52aXJvbm1lbnRfbGVuXSA9IDA7DQorDQorCWlmIChz
-dHJsZW4oY3dkKSA9PSAxICYmIGlzX2Rpcl9zZXAoY3dkWzBdKSkNCisJew0K
-KwkJLy8gc3BlY2lhbCBjYXNlIGZvciAvIGdpdCByZXBvc2l0b3J5DQorCQln
-aXRfZGlyID0gbWtzbnBhdGgoZ2l0X2Rpcl9idWYsIHNpemVvZihnaXRfZGly
-X2J1ZiksICIlcyVzIiBESVJfU0VQQVJBVE9SICIlcyIsIGRpcl9nbG9iYWxf
-YnVmLCBHSVRfRElSX0dMT0JBTF9TUEVDSUFMX1JPT1RfRElSRUNUT1JZLCBE
-RUZBVUxUX0dJVF9ESVJfRU5WSVJPTk1FTlQpOw0KKwkJcmV0dXJuIGdpdF9k
-aXI7DQorCX0NCisNCisJc3RybmNweShjd2Rfb3JpZ2luYWxfYnVmLCBjd2Qs
-IHNpemVvZihjd2Rfb3JpZ2luYWxfYnVmKSk7DQorDQorCS8qDQorCSAqIFRl
-c3QgaW4gdGhlIGZvbGxvd2luZyBvcmRlciAocmVsYXRpdmUgdG8gdGhlIGN3
-ZCk6DQorCSAqIC0gLmdpdCAoZmlsZSBjb250YWluaW5nICJnaXRkaXI6IDxw
-YXRoPiIpDQorCSAqIC0gLmdpdC8NCisJICogLSAuLyAoYmFyZSkNCisJICog
-LSAuLi8uZ2l0DQorCSAqIC0gLi4vLmdpdC8NCisJICogLSAuLi8gKGJhcmUp
-DQorCSAqIC0gLi4vLi4vLmdpdC8NCisJICogICBldGMuDQorCSAqLw0KKwlm
-b3IgKDs7KSB7DQorCQlpZiAoKmN3ZCA9PSAnXDAnKSB7DQorCQkJYnJlYWs7
-DQorCQl9DQorDQorCQlnaXRfZGlyID0gbWtzbnBhdGgoZ2l0X2Rpcl9idWYs
-IHNpemVvZihnaXRfZGlyX2J1ZiksICIlcyVzIiBESVJfU0VQQVJBVE9SICIl
-cyIsIGRpcl9nbG9iYWxfYnVmLCBjd2QsIERFRkFVTFRfR0lUX0RJUl9FTlZJ
-Uk9OTUVOVCk7DQorCQlpZiAoaXNfZ2l0X2RpcmVjdG9yeShnaXRfZGlyKSkg
-ew0KKwkJCWZvdW5kID0gMTsNCisJCQlicmVhazsNCisJCX0NCisNCisJCWN3
-ZCA9IHBhdGhfc2hvcnRlbihjd2QpOw0KKwl9DQorDQorCWlmICghZm91bmQp
-IHsNCisJCWdpdF9kaXIgPSBta3NucGF0aChnaXRfZGlyX2J1Ziwgc2l6ZW9m
-KGdpdF9kaXJfYnVmKSwgIiVzJXMvJXMiLCBkaXJfZ2xvYmFsX2J1ZiwgY3dk
-X29yaWdpbmFsX2J1ZiwgREVGQVVMVF9HSVRfRElSX0VOVklST05NRU5UKTsN
-CisJCXJldHVybiBnaXRfZGlyOw0KKwl9DQorDQorCXJldHVybiBnaXRfZGly
-Ow0KK30NCisNCitpbnQgaXNfZ2l0X2Rpcl9nbG9iYWxfZW52aXJvbm1lbnQo
-dm9pZCkNCit7DQorCXJldHVybiAoZ2V0X2Rpcl9nbG9iYWxfZW52aXJvbm1l
-bnQoKSAhPSBOVUxMKTsNCit9DQorDQorY2hhciAqZ2V0X2dpdF9kaXJfZnJv
-bV9lbnZpcm9ubWVudCh2b2lkKQ0KK3sNCisJY2hhciAqZ2l0X2Rpcl9nbG9i
-YWxfZW52aXJvbm1lbnQgPSBnZXRfZGlyX2dsb2JhbF9lbnZpcm9ubWVudCgp
-Ow0KKwlpZiAoZ2l0X2Rpcl9nbG9iYWxfZW52aXJvbm1lbnQpIHJldHVybiBn
-ZXRfZ2l0X2Rpcl9mcm9tX2dsb2JhbF9lbnZpcm9ubWVudChnaXRfZGlyX2ds
-b2JhbF9lbnZpcm9ubWVudCk7DQorDQorCXJldHVybiBnZXRlbnYoR0lUX0RJ
-Ul9FTlZJUk9OTUVOVCk7DQorfQ0KKw0KIHN0YXRpYyB2b2lkIHNldHVwX2dp
-dF9lbnYodm9pZCkNCiB7DQotCWdpdF9kaXIgPSBnZXRlbnYoR0lUX0RJUl9F
-TlZJUk9OTUVOVCk7DQorCWdpdF9kaXIgPSBnZXRfZ2l0X2Rpcl9mcm9tX2Vu
-dmlyb25tZW50KCk7DQogCWlmICghZ2l0X2RpcikNCiAJCWdpdF9kaXIgPSBy
-ZWFkX2dpdGZpbGVfZ2VudGx5KERFRkFVTFRfR0lUX0RJUl9FTlZJUk9OTUVO
-VCk7DQogCWlmICghZ2l0X2RpcikNCmRpZmYgLS1naXQgYS9zZXR1cC5jIGIv
-c2V0dXAuYw0KaW5kZXggNTcxNmQ5MC4uNmVlM2E1OSAxMDA2NDQNCi0tLSBh
-L3NldHVwLmMNCisrKyBiL3NldHVwLmMNCkBAIC0xLDUgKzEsNiBAQA0KICNp
-bmNsdWRlICJjYWNoZS5oIg0KICNpbmNsdWRlICJkaXIuaCINCisjaW5jbHVk
-ZSAiZW52aXJvbm1lbnQuaCINCiANCiBzdGF0aWMgaW50IGluc2lkZV9naXRf
-ZGlyID0gLTE7DQogc3RhdGljIGludCBpbnNpZGVfd29ya190cmVlID0gLTE7
-DQpAQCAtMTY1LDcgKzE2Niw3IEBAIGNvbnN0IGNoYXIgKipnZXRfcGF0aHNw
-ZWMoY29uc3QgY2hhciAqcHJlZml4LCBjb25zdCBjaGFyICoqcGF0aHNwZWMp
-DQogICogICAgYSBwcm9wZXIgInJlZjoiLCBvciBhIHJlZ3VsYXIgZmlsZSBI
-RUFEIHRoYXQgaGFzIGEgcHJvcGVybHkNCiAgKiAgICBmb3JtYXR0ZWQgc2hh
-MSBvYmplY3QgbmFtZS4NCiAgKi8NCi1zdGF0aWMgaW50IGlzX2dpdF9kaXJl
-Y3RvcnkoY29uc3QgY2hhciAqc3VzcGVjdCkNCitpbnQgaXNfZ2l0X2RpcmVj
-dG9yeShjb25zdCBjaGFyICpzdXNwZWN0KQ0KIHsNCiAJY2hhciBwYXRoW1BB
-VEhfTUFYXTsNCiAJc2l6ZV90IGxlbiA9IHN0cmxlbihzdXNwZWN0KTsNCkBA
-IC0zMzcsNyArMzM4LDcgQEAgY29uc3QgY2hhciAqc2V0dXBfZ2l0X2RpcmVj
-dG9yeV9nZW50bHkoaW50ICpub25naXRfb2spDQogCSAqIHRvIGRvIGFueSBk
-aXNjb3ZlcnksIGJ1dCB3ZSBzdGlsbCBkbyByZXBvc2l0b3J5DQogCSAqIHZh
-bGlkYXRpb24uDQogCSAqLw0KLQlnaXRkaXJlbnYgPSBnZXRlbnYoR0lUX0RJ
-Ul9FTlZJUk9OTUVOVCk7DQorCWdpdGRpcmVudiA9IGdldF9naXRfZGlyX2Zy
-b21fZW52aXJvbm1lbnQoKTsNCiAJaWYgKGdpdGRpcmVudikgew0KIAkJaWYg
-KFBBVEhfTUFYIC0gNDAgPCBzdHJsZW4oZ2l0ZGlyZW52KSkNCiAJCQlkaWUo
-IickJXMnIHRvbyBiaWciLCBHSVRfRElSX0VOVklST05NRU5UKTsNCg==
-
----1463811584-543529835-1272398783=:14350--
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
