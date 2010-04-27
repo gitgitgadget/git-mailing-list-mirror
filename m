@@ -1,70 +1,114 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Which Git projects got accepted in GSoC 2010?
-Date: Tue, 27 Apr 2010 13:45:57 +0300
-Message-ID: <o2n94a0d4531004270345v63005ee5uef667c8655f32c39@mail.gmail.com>
-References: <201004270146.07131.jnareb@gmail.com>
-	 <alpine.DEB.1.00.1004270410540.7651@pacific.mpi-cbg.de>
-	 <201004271106.26638.jnareb@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Unable to coax hooks into working
+Date: Tue, 27 Apr 2010 12:47:20 +0200
+Message-ID: <4BD6C0B8.9040709@drmicha.warpmail.net>
+References: <B65E8227-B3C0-4AB8-A225-4A5661523CAD@pelagicore.com> <v2u8c9a061004261111l429b0c8cs73cf7e1afea3d39f@mail.gmail.com> <FAF218B9-D2DB-4081-88CB-BEBA08DF1229@pelagicore.com> <4BD6A5BC.3010708@drmicha.warpmail.net> <EA3DE148-CDC8-4FA3-8C97-74379E91B495@pelagicore.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 27 12:46:18 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeremiah Foster <jeremiah.foster@pelagicore.com>
+X-From: git-owner@vger.kernel.org Tue Apr 27 12:47:31 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6iIy-0000RN-L4
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 12:46:17 +0200
+	id 1O6iK9-0000uj-Q6
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 12:47:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754606Ab0D0KqD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Apr 2010 06:46:03 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:50589 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754470Ab0D0Kp7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Apr 2010 06:45:59 -0400
-Received: by bwz19 with SMTP id 19so9359bwz.21
-        for <git@vger.kernel.org>; Tue, 27 Apr 2010 03:45:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=eIB3Y1C0boh7yaTagu8BuY4VlX4i2564rTAJeWXw2ZQ=;
-        b=RMywb7mCkM96+BJGGmOJ3zYBoZAE3FP9QQnlqRUC002brzXuWUMmGmJ0JTh29n/b4j
-         /iuXljAFNvuWIihvlDH8wp3CN3VH2lW16f8Jm36YGeiRcoN2O0X4hw2UOx5m0tdl+9aM
-         B92MViDziWlNp2Ur1iDEph7cy2FBWtlHKQFZY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=RnzsHm7gJOl05hpDbqmyA2rq91uX02DTcTXz/EJPd+BUTMrJ2RiQlNoJ2GUwBBQ4Ir
-         6xo/C33r4LJ7gnMVoajUdt0Dlj+HNOc9GZqh3J/tWtAk2MsvDYR2gCPAM2T+oLEAflQM
-         7IA6kftjmGFKhSaITqnwdEAn030rjFgnNViEE=
-Received: by 10.204.152.17 with SMTP id e17mr3586409bkw.105.1272365157507; 
-	Tue, 27 Apr 2010 03:45:57 -0700 (PDT)
-Received: by 10.204.60.78 with HTTP; Tue, 27 Apr 2010 03:45:57 -0700 (PDT)
-In-Reply-To: <201004271106.26638.jnareb@gmail.com>
+	id S1752120Ab0D0KrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Apr 2010 06:47:23 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:35828 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751396Ab0D0KrW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Apr 2010 06:47:22 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 0BBC5EEE7C;
+	Tue, 27 Apr 2010 06:47:22 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Tue, 27 Apr 2010 06:47:22 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=h/d9ee5UEj3R13zdpYS8FFP+5F8=; b=f2CFOmDgwyILorfVXP1ui3iF2pJT32GfQm1LB3PMyF5bk+GrP04J4Apbd7jvxOa+15gtWxVrOW9O6rYbNLD249Bv3QvZgjo7+DCQ9fqS1g5dH6CuVYm96ZdbX2o8IDWsiEIk5kU69oXHYStA2IofXpwo0uzbKIz3r7eRgntU+LM=
+X-Sasl-enc: jiNBJ71QANOEjJQWmN+lr4lHrPXjOSiXNNCrrHPmmdBp 1272365241
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 74F0612722;
+	Tue, 27 Apr 2010 06:47:20 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100426 Lightning/1.0b2pre Lanikai/3.1b2pre
+In-Reply-To: <EA3DE148-CDC8-4FA3-8C97-74379E91B495@pelagicore.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145896>
 
-On Tue, Apr 27, 2010 at 12:06 PM, Jakub Narebski <jnareb@gmail.com> wro=
-te:
-> On Tue, 27 April 2010, Johannes Schindelin wrote:
->> No. I am no longer part of the Git development community.
->
-> Errr, what? =C2=A0Why do you feel this?
+Jeremiah Foster venit, vidit, dixit 27.04.2010 11:08:
+> 
+> On Apr 27, 2010, at 10:52 AM, Michael J Gruber wrote:
+>> Jeremiah Foster venit, vidit, dixit 27.04.2010 10:33:
+>>> 
+>>> On Apr 26, 2010, at 8:11 PM, Jacob Helwig wrote:
+>>>> 
+>>>> You want one of the receive, or update hooks, if you're
+>>>> putting this in a central place, where it needs to be triggered
+>>>> by someone doing a push in to the repo.
+>>> 
+>>> Thanks Jacob. I'd just like to confirm that I am, in fact, using
+>>> the update hook. I logged into the server holding the git repo,
+>>> cd'd to
+>> 
+>> That used to be different ;) update hook on the server is good.
+>> 
+>>> the .git/hooks/ directory. Moved the update.sample to update.
+>>> Changed the code to something trivial that would echo back to the
+>>> client for testing. I checked permissions, checked ownership, ran
+>>> the code as the git repo owner. I logged out, did a trivial
+>>> change in the client repo, ran git commit -a -m "foo" and
+>>> expected that the trivial update script to run on the server
+>>> would produce output to the client. This
+>> 
+>> But this is the same problem backwards. Again: Please try to
+>> understand what commit does, and what push does, in terms of where
+>> (local repo vs. server) a change happens:
+> 
+> I think I do. The commit pushes the change onto the index. The index
+> is local. It gets pushed to the remote server when I do a git push. I
+> should have been more explicit - I am in fact pushing the code to the
+> remote server in such a manner that git-receive-pack is run. My
 
-I'm also interested in this. When a member of a community leaves it's
-good to know why, at least to see if there are some improvements to be
-made.
+Before you said you committed locally and expected the server to run a
+hook in response to that!
 
---=20
-=46elipe Contreras
+I'm sorry but I'm giving up at this point, your description of what
+you've done is to volatile for my nerves.
+
+If you still want help please provide a line by line transcript of what
+commands you're running and what respone you get.
+
+> understanding from the documentation is that this is the trigger
+> which update gets called. Yet no information from that update script
+> is produced in the logs or in the client.
+>> 
+>> As long as you only commit in your local repo nothing changes on
+>> the server (remote repo), so no hook is triggered there.
+>> 
+>>> never occurred. I further tested the client hooks which also did
+>>> not run.
+>> 
+>> Which ones?
+>> 
+>> committing locally triggers post-commit on your local repo.
+> 
+> These did not work.
+> 
+>> pushing to remote triggers post-update (and others) on the remote 
+>> server's repo.
+> 
+> These also did not work. In short, the triggers that the
+> documentation defines for both client and remote hooks fail to
+> produce information in the client. Any idea on why?
+> 
+> Jeremiah-- To unsubscribe from this list: send the line "unsubscribe
+> git" in the body of a message to majordomo@vger.kernel.org More
+> majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
