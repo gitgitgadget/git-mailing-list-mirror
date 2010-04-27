@@ -1,114 +1,166 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Unable to coax hooks into working
-Date: Tue, 27 Apr 2010 12:47:20 +0200
-Message-ID: <4BD6C0B8.9040709@drmicha.warpmail.net>
-References: <B65E8227-B3C0-4AB8-A225-4A5661523CAD@pelagicore.com> <v2u8c9a061004261111l429b0c8cs73cf7e1afea3d39f@mail.gmail.com> <FAF218B9-D2DB-4081-88CB-BEBA08DF1229@pelagicore.com> <4BD6A5BC.3010708@drmicha.warpmail.net> <EA3DE148-CDC8-4FA3-8C97-74379E91B495@pelagicore.com>
+Subject: Re: Git and cvsimport
+Date: Tue, 27 Apr 2010 13:03:18 +0200
+Message-ID: <4BD6C476.6060007@drmicha.warpmail.net>
+References: <i2l717f7a3e1004260727wd87900a5tcfb61a3142d0ba@mail.gmail.com>	 <4BD69450.8040608@drmicha.warpmail.net> <l2w717f7a3e1004270341lea6cfe2aqdf8d2b490b1ec067@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jeremiah Foster <jeremiah.foster@pelagicore.com>
-X-From: git-owner@vger.kernel.org Tue Apr 27 12:47:31 2010
+To: Marin Atanasov <dnaeon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 27 13:04:16 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6iK9-0000uj-Q6
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 12:47:30 +0200
+	id 1O6iaL-0007nG-9k
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 13:04:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752120Ab0D0KrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Apr 2010 06:47:23 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:35828 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751396Ab0D0KrW (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Apr 2010 06:47:22 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 0BBC5EEE7C;
-	Tue, 27 Apr 2010 06:47:22 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Tue, 27 Apr 2010 06:47:22 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=h/d9ee5UEj3R13zdpYS8FFP+5F8=; b=f2CFOmDgwyILorfVXP1ui3iF2pJT32GfQm1LB3PMyF5bk+GrP04J4Apbd7jvxOa+15gtWxVrOW9O6rYbNLD249Bv3QvZgjo7+DCQ9fqS1g5dH6CuVYm96ZdbX2o8IDWsiEIk5kU69oXHYStA2IofXpwo0uzbKIz3r7eRgntU+LM=
-X-Sasl-enc: jiNBJ71QANOEjJQWmN+lr4lHrPXjOSiXNNCrrHPmmdBp 1272365241
+	id S1754221Ab0D0LDX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Apr 2010 07:03:23 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:42112 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754582Ab0D0LDW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Apr 2010 07:03:22 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 9C251F2001;
+	Tue, 27 Apr 2010 07:03:20 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Tue, 27 Apr 2010 07:03:20 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=jOS6ILnZuQY4QLDaUf+BW1ePfrs=; b=TDjvDtzRUB9Cmf7EXvXz3jULkXjgPbJiUi35ZhXmxFeEeNarsWQZ3DJfwJ0VGqwQb4VQR6WrFZNAu8auLbnD7O/pvuqcLsK5QhgTjon7jFLLzO+lUe3yqPeGSMhxO1u7nkPpRcH5mLoN+Al2avYtAqVCA7Z24VXENnNn0PDxN3Q=
+X-Sasl-enc: SxFYb6CKZTNp73V6VjpuhsqKh+zIf1IevbeKu/89VcQM 1272366200
 Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 74F0612722;
-	Tue, 27 Apr 2010 06:47:20 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id CC1FD4AC2B3;
+	Tue, 27 Apr 2010 07:03:19 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100426 Lightning/1.0b2pre Lanikai/3.1b2pre
-In-Reply-To: <EA3DE148-CDC8-4FA3-8C97-74379E91B495@pelagicore.com>
+In-Reply-To: <l2w717f7a3e1004270341lea6cfe2aqdf8d2b490b1ec067@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145897>
 
-Jeremiah Foster venit, vidit, dixit 27.04.2010 11:08:
+Marin Atanasov venit, vidit, dixit 27.04.2010 12:41:
+> On Tue, Apr 27, 2010 at 10:37 AM, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+>> Marin Atanasov venit, vidit, dixit 26.04.2010 16:27:
+>>> Hello,
+>>>
+>>> I need to import an existing CVS repo to Git. Using git-cvsimport
+>>> works well for me when importing from the CVS server itself, but I
+>>> need to do something different.
+>>>
+>>> Here's a little info about what I'm doing.
+>>>
+>>> $ pwd
+>>> /home/<user>/test
+>>>
+>>> $ git --version
+>>> git version 1.5.6.5
+>>>
+>>> $ git cvsimport -v -d :pserver:<user>@<server>:/var/
+>>> cvsroot -C test.git test-repo
+>>> Initialized empty Git repository in /home/<user>/test/test.git/.git/
+>>> Running cvsps...
+>>> connect error: Network is unreachable
+>>> cvs rlog: Logging test-repo
+>>> Fetching file1   v 1.1
+>>> New file1: 14 bytes
+>>> Fetching file2   v 1.1
+>>> New file2: 14 bytes
+>>> Fetching file3   v 1.1
+>>> New file3: 14 bytes
+>>> Tree ID bf675ce25c8ca3fd1f4a120ea933510c90ccda16
+>>> Parent ID (empty)
+>>> Committed patch 1 (origin +0000 2010-04-26 09:40:58)
+>>> Commit ID 377641eae81975e214a579da9e6c0c5afd819b17
+>>> Created tag 'SOMETAG' on 'origin'
+>>> Fetching file1   v 1.2
+>>> Update file1: 47 bytes
+>>> Fetching file3   v 1.2
+>>> Update file3: 47 bytes
+>>> Tree ID 10ab70cdcc53bb94684d09e60817bb62cb8c3d98
+>>> Parent ID 377641eae81975e214a579da9e6c0c5afd819b17
+>>> Committed patch 2 (origin +0000 2010-04-26 09:44:22)
+>>> Commit ID fea2a99c906e57df5c4735ba3f9627cbb8fba295
+>>> DONE; creating master branch
+>>>
+>>> The above commands works fine, when I directly get the files from the
+>>> CVS server, but I want to do the following.
+>>>
+>>>  - checkout files from CVS, which are already tagged with certain
+>>> names to a local folder
+>>>  - then import those files to Git with git-cvsimport
+>>>  - fetch those imports later by a shared bare repo into different
+>>> branches, so at the end each branch will contain the files with the
+>>> certain tag.
+>>>
+>>> So, If i do the following, then git-cvsimport fails:
+>>>
+>>> $ pwd
+>>> /home/<user>/test
+>>>
+>>> $ cvs -d :pserver:<user>@<server>:/var/cvsroot co -r SOMETAG test-repo
+>>> cvs checkout: Updating test-repo
+>>> U test-repo/file1
+>>> U test-repo/file2
+>>> U test-repo/file3
+>>>
+>>> $ git cvsimport -v -d /home/<user>/test -C test.git test-repo
+>>> Expected Valid-requests from server, but got: E Cannot access
+>>> /home/<user>/test/CVSROOT
+>>>
+>>> Can you give me some hints how to do this? Seems that I can import CVS
+>>> repos from remote server, but cannot do this from a local folder..
+>>
+>> ... because a folder is not a server, and a cvs checkout is not a cvs repo.
+>>
+>> It's not completely clear to me what you want and why, but the simplest
+>> way seems to be to checkout each cvs tag using cvs, and (add &) commit
+>> the result to the git branch of your choice using git. You don't seem to
+>> want to convert the cvs repo, so don't use git cvs-import.
+>>
+>> But, really, I don't know what you want - history-less git branches from
+>> cvs tags?
+>>
+>> Michael
+>>
 > 
-> On Apr 27, 2010, at 10:52 AM, Michael J Gruber wrote:
->> Jeremiah Foster venit, vidit, dixit 27.04.2010 10:33:
->>> 
->>> On Apr 26, 2010, at 8:11 PM, Jacob Helwig wrote:
->>>> 
->>>> You want one of the receive, or update hooks, if you're
->>>> putting this in a central place, where it needs to be triggered
->>>> by someone doing a push in to the repo.
->>> 
->>> Thanks Jacob. I'd just like to confirm that I am, in fact, using
->>> the update hook. I logged into the server holding the git repo,
->>> cd'd to
->> 
->> That used to be different ;) update hook on the server is good.
->> 
->>> the .git/hooks/ directory. Moved the update.sample to update.
->>> Changed the code to something trivial that would echo back to the
->>> client for testing. I checked permissions, checked ownership, ran
->>> the code as the git repo owner. I logged out, did a trivial
->>> change in the client repo, ran git commit -a -m "foo" and
->>> expected that the trivial update script to run on the server
->>> would produce output to the client. This
->> 
->> But this is the same problem backwards. Again: Please try to
->> understand what commit does, and what push does, in terms of where
->> (local repo vs. server) a change happens:
+> Hello Michael,
 > 
-> I think I do. The commit pushes the change onto the index. The index
-> is local. It gets pushed to the remote server when I do a git push. I
-> should have been more explicit - I am in fact pushing the code to the
-> remote server in such a manner that git-receive-pack is run. My
+> Perhaps I didn't explain better what I want to accomplish :)
 
-Before you said you committed locally and expected the server to run a
-hook in response to that!
+and perhaps I don't understand cvs tags well enough :)
 
-I'm sorry but I'm giving up at this point, your description of what
-you've done is to volatile for my nerves.
+> 
+> I want to convert CVS repo to a Git one.
+> 
+> But checking  out from CVS and then converting to Git, checks out HEAD
+> from CVS, thus the latest revisions.
+> 
+> What I want to do is to checkout from CVS the files which are tagged
+> RELEASE_1_0 for example, and then import the files to a Git repo.
+> Files tagged as RELEASE_1_0 differ from HEAD files, so I want only
+> those files with that tag for example.
+> 
+> Is this possible to do with git-cvsimport, to specify the tag you want
+> to checkout from CVS?
+> 
 
-If you still want help please provide a line by line transcript of what
-commands you're running and what respone you get.
+I don't think so, but the actual CVS checkout doesn't matter so much.
+git cvsimport will import cvs tags as git tags (at least it promises to,
+never tried myself). Once your git repo has all the cvs commits you want
+(and more) you can always create a git branch which points at the tag
+you want, and delete the other branches if you like. You can even give
+them the same name if you don't mind dealing with ambiguous refnames
+(git checkout -b tagnamebranch tagname).
 
-> understanding from the documentation is that this is the trigger
-> which update gets called. Yet no information from that update script
-> is produced in the logs or in the client.
->> 
->> As long as you only commit in your local repo nothing changes on
->> the server (remote repo), so no hook is triggered there.
->> 
->>> never occurred. I further tested the client hooks which also did
->>> not run.
->> 
->> Which ones?
->> 
->> committing locally triggers post-commit on your local repo.
-> 
-> These did not work.
-> 
->> pushing to remote triggers post-update (and others) on the remote 
->> server's repo.
-> 
-> These also did not work. In short, the triggers that the
-> documentation defines for both client and remote hooks fail to
-> produce information in the client. Any idea on why?
-> 
-> Jeremiah-- To unsubscribe from this list: send the line "unsubscribe
-> git" in the body of a message to majordomo@vger.kernel.org More
-> majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+Especially since you seemlingy want to do this with multiple tags, the
+advantage of that approach is that you run git cvsimport once, and then
+git branch or checkout multiple times (once for each tag), which is fast.
+
+[Do you want to do a one-off conversion or keep syncing with cvs?]
+
+Michael
