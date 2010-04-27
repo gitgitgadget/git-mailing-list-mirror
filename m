@@ -1,89 +1,90 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: MIME problem when using git format-patch / git am
-Date: Tue, 27 Apr 2010 10:32:50 -0500
-Message-ID: <20100427153250.GA14756@progeny.tock>
-References: <20100425233549.GA8737@triton>
- <20100426014941.GA29220@progeny.tock>
- <alpine.DEB.2.00.1004260948070.22806@ds9.cixit.se>
+From: Ping Yin <pkufranky@gmail.com>
+Subject: Re: How to continue to run 'git svn fetch' for a repo with no git-svn 
+	metadata
+Date: Wed, 28 Apr 2010 00:04:24 +0800
+Message-ID: <n2p46dff0321004270904gc590ef83v4b338719c4c18637@mail.gmail.com>
+References: <t2u46dff0321004270248l49d1ae30l6b168342e01a5bfd@mail.gmail.com>
+	 <z2l51dd1af81004270751yf026e946p4b00552eaf4f2632@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?B?2Hl2aW5kIEEu?= Holm <sunny@sunbase.org>,
-	git@vger.kernel.org
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Tue Apr 27 17:36:04 2010
+Cc: git mailing list <git@vger.kernel.org>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 27 18:05:09 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with smtp (Exim 4.69)
+	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6mpM-0003lp-FK
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 17:36:00 +0200
+	id 1O6nHY-0003Fz-V1
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 18:05:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754421Ab0D0Pbx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Apr 2010 11:31:53 -0400
-Received: from mail-pz0-f204.google.com ([209.85.222.204]:33444 "EHLO
-	mail-pz0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752968Ab0D0Pbw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Apr 2010 11:31:52 -0400
-Received: by pzk42 with SMTP id 42so8958462pzk.4
-        for <git@vger.kernel.org>; Tue, 27 Apr 2010 08:31:52 -0700 (PDT)
+	id S1755537Ab0D0QE1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Apr 2010 12:04:27 -0400
+Received: from mail-qy0-f179.google.com ([209.85.221.179]:61425 "EHLO
+	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751698Ab0D0QE0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Apr 2010 12:04:26 -0400
+Received: by qyk9 with SMTP id 9so19552903qyk.1
+        for <git@vger.kernel.org>; Tue, 27 Apr 2010 09:04:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=CKjFudiGYMdcyYb8xv1+d3nYu5RpmjrmN7uMFbMVUWg=;
-        b=sH5Uk/BA54zj79nWNzPHLpO6Y8hoEX5YXHevrN+hxAgp3x31wu2HuHtrcIELCLv9XR
-         nsgDvhB9+OLPaWGXRBblz8Jjb70gyLfMK5EIMKXTXpajNEkmQwf8JE6imw8VeSG/ILNt
-         vLl8dUocN3ekj2DoCFbQ/0HwxQr//+2nFQOVg=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=4wF2kVbZ1kYelQrUWIo/uV2cFYkxRnfaPHefPxttFJM=;
+        b=KZSnfhjqULnsIUQCk2SH7Ldz+trmDAyiq0NH2kYcJ9s6cnrU6RDfgIp8OXHibQmuZ3
+         /a2wKMNAwpF1lYgbunrVaUIm1q5mzoHe1xBid0ZoU4gyagtUneTde+K2hCkHDVyfimz6
+         orNJL7juLtkSaCT9Ct/jVjsAyKimXAYO9IGvc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=EncHxK5idElM2j1GyiljpS+LQ4jBTOY7FSjPbnuvknRbM2J47emUG0kmzLYmzvPbdg
-         rATqq6zJDkYOuxKtpLABes44YMZ0Zv6qMR0BT6KAgGy0ovC4h+OyzUFWPGbAMxf1WU0P
-         upuaUMs2db56Jp//QI0ZaS04mW+B5GAERSLck=
-Received: by 10.114.248.9 with SMTP id v9mr1985972wah.164.1272382309343;
-        Tue, 27 Apr 2010 08:31:49 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 21sm4061845iwn.11.2010.04.27.08.31.46
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 27 Apr 2010 08:31:47 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.00.1004260948070.22806@ds9.cixit.se>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=igHCfnIz5KcC4zR+wud+vBYyCOH0welPOXI33iBw4wcAI2nxHh8KEx/7N6EzD9UXbQ
+         OOBLi21jZ4zmwpVfoNzGz/qsvIWp5cdeXrNd4HZLidChGZNY7mWIZDgFaJI9XmXzNxOg
+         hKTJMB3H0tXrH4aUNmyLEY+AMPG2uo8rJVYtk=
+Received: by 10.229.222.12 with SMTP id ie12mr3371965qcb.77.1272384264904; 
+	Tue, 27 Apr 2010 09:04:24 -0700 (PDT)
+Received: by 10.229.79.3 with HTTP; Tue, 27 Apr 2010 09:04:24 -0700 (PDT)
+In-Reply-To: <z2l51dd1af81004270751yf026e946p4b00552eaf4f2632@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145927>
 
-Peter Krefting wrote:
-> Jonathan Nieder:
-
->> This leads to a question: what if one wants to include a word that
->> quotes to more than 75 characters?
+On Tue, Apr 27, 2010 at 10:51 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmaso=
+n
+<avarab@gmail.com> wrote:
+> Read these:
 >
-> You just split it into two encoded words. The whitespace between the
-> encoded words is there for syntactic reasons only, it is not
-> included in the final result if both parts are encoded words (look
-> at the "Examples" section of the RFC for some examples of how it
-> works).
+> =C2=A0 =C2=A0http://code.google.com/p/chromium/wiki/UsingGit#Initial_=
+Setup
+> =C2=A0 =C2=A0http://trac.parrot.org/parrot/wiki/git-svn-tutorial
+>
+> This should probably be in the git-svn documentation itself.
 
-Thank you.  He explains it before then, too; I should be reading more
-carefully.
+Thanks. The last link explains very clear. I just copy and paste from i=
+t.
 
-I=E2=80=99ve been working through a full implementation of that RFC, bu=
-t it
-seems that to support breaking words, Git would need to learn where the
-character boundaries are.  Which means encodings would not be just opaq=
-ue
-strings as far as git cares any more.
+Adding git-svn metadata to the github clone
 
-On the bright side, the only encoding I care about is UTF-8, and that
-one=E2=80=99s easy.
+If you want to re-populate the SVN metadata that can quickly be done
+by taking your up-to-date clone of leto's repo off of gihub and adding
+this to your .git/config
 
-Jonathan
+    [svn-remote "svn"]
+            url =3D https://svn.parrot.org/parrot
+            fetch =3D trunk:refs/remotes/trunk
+Then run this command to find the "top commit"
+
+     git show origin/upstream | head -n 1
+and put that commit hash into a file .git/refs/remotes/trunk
+(obviously replace the has with the one from the above command)
+
+     echo c85aaa38b99cedb087e5f6fb69ce6d4a6ac57a0b > .git/refs/remotes/=
+trunk
+and finally
+
+     git svn fetch
