@@ -1,221 +1,91 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCHv1 1/2] gitweb: Syntax highlighting support
-Date: Tue, 27 Apr 2010 21:34:44 +0200
-Message-ID: <1272396885-30609-2-git-send-email-jnareb@gmail.com>
-References: <1272396885-30609-1-git-send-email-jnareb@gmail.com>
+Subject: [PATCHv2 0/2] gitweb: Syntax highlighting support
+Date: Tue, 27 Apr 2010 21:34:43 +0200
+Message-ID: <1272396885-30609-1-git-send-email-jnareb@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 27 21:35:39 2010
+X-From: git-owner@vger.kernel.org Tue Apr 27 21:35:40 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6qZG-0003lB-5R
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 21:35:38 +0200
+	id 1O6qZF-0003lB-Jg
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 21:35:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756709Ab0D0TfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Apr 2010 15:35:11 -0400
-Received: from mail-pz0-f204.google.com ([209.85.222.204]:55535 "EHLO
-	mail-pz0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756694Ab0D0TfJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Apr 2010 15:35:09 -0400
-Received: by pzk42 with SMTP id 42so9225398pzk.4
-        for <git@vger.kernel.org>; Tue, 27 Apr 2010 12:35:08 -0700 (PDT)
+	id S1756708Ab0D0TfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Apr 2010 15:35:08 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:62093 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756694Ab0D0TfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Apr 2010 15:35:04 -0400
+Received: by pvg2 with SMTP id 2so1650172pvg.19
+        for <git@vger.kernel.org>; Tue, 27 Apr 2010 12:35:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=YccECXgspS/4vd7tlqlNXdMi6ADqKnt+5CPVthYzB7M=;
-        b=d8yr/z7cVzVgtNK5w1eM9KM4PTzZST4ynrUO+nS9E7T+ctEdzzQ+2yeh018WR7fH9L
-         tRJXsuMOR18QQdTjRVsHfqxefK5zJ5okkdrNygfS/lILUok1QUyDkek2PGyr6NUYaKXo
-         Wmq6UtCrfIfl8fL8yS3jBCTmx/mt4rvhHAWr8=
+         :message-id:x-mailer;
+        bh=s7vPTnUl5Ha+v8ZC3wb0ZoxovT85YTW7SSc/TV1sH88=;
+        b=XPzQkZxbsfYsnX3DXPtJ2cnV17iE0eaKpJOuDXnou6je/bKO5Zpfh8dV0TGpxd3Sb6
+         RWFprg+gKxIWIT7ENcL6jOx5NzEgL3eDY4K6vTG8QPZeKW3/sXP1DA8bdCm1kkEtWgao
+         UxzIb9Ois1z9m05S5eiNVKljzBZUiYZqe4oVc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=WE1gCFAzKOI0bLtCHl973LRq1heNIhrSTIJ9nG7VN8T39FMuPOPpUyonEItnlfcZZs
-         id/5Z8UwEZjZ28hh575sdFRi45NqWm8/p37cDnb93lIiwoUO9QuGHUzl+dBTtJowvHde
-         d49DMh0QrZDVeSTpF+7DOBQP+mADIIfSLrn1I=
-Received: by 10.142.2.17 with SMTP id 17mr3240969wfb.76.1272396908166;
-        Tue, 27 Apr 2010 12:35:08 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=BcUZw2/CGZQatNRRrVVuM4/Kkv9QYmoJv/mHG7EOnjpCtEi69gTq0QNvCJV9Y7Qc9k
+         BaekHFzX2LADCohMwuFAuu+qa74GUdwxDsfjtg1zVmOMPnhQ5/i2BAxxCprTLmUV4Wu/
+         ck3QF+TJaCpcq2fCBhP7fCZ63k4IBCz+IIiNw=
+Received: by 10.143.153.23 with SMTP id f23mr3272438wfo.64.1272396903687;
+        Tue, 27 Apr 2010 12:35:03 -0700 (PDT)
 Received: from localhost.localdomain ([72.14.241.6])
-        by mx.google.com with ESMTPS id s21sm832756wff.0.2010.04.27.12.35.04
+        by mx.google.com with ESMTPS id s21sm832756wff.0.2010.04.27.12.34.59
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 27 Apr 2010 12:35:07 -0700 (PDT)
+        Tue, 27 Apr 2010 12:35:02 -0700 (PDT)
 X-Mailer: git-send-email 1.7.0.1
-In-Reply-To: <1272396885-30609-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145935>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+This series of patches is based originally on on Daniel Svensson's and
+Sham Chukoury's work in gitweb-xmms2.git
 
-It requires the 'highlight' program to do all the heavy-lifting.
+Currently only 'highlight' standalone syntax highlighter from
+http://www.andre-simon.de/ is supported.  Second patch in the series
+reorganizes syntax highlighting code to make it easier to add (in the
+future) support for other syntax highlighters, like source-highlight from
+http://www.gnu.org/software/src-highlite, or some syntax higlighting Perl
+module from CPAN like Text::Highlight or Syntax::Highlight::* modules.
+Unfortunately the name of syntax to be used as parameter to syntax
+highlighter (syntax highlighting engine) depends on highlighter, which would
+complicate code a bit.
 
-This is loosely based on Daniel Svensson's and Sham Chukoury's work in
-gitweb-xmms2.git (it cannot be cherry-picked, as gitweb-xmms2 first forked
-wildly, then not contributed back, and then went stale).
+The list of currently supported file types do not cover all types that
+'highlight' supports, but it is selected a bit, with syntax highlight for
+git.git taking precedence.
 
-[jn: cherry picked from bc1ed6aafd9ee4937559535c66c8bddf1864bec6
- in http://repo.or.cz/w/git/dscho.git, with a few changes]
+Table of contents:
+~~~~~~~~~~~~~~~~~~
+ [PATCH 1/2] gitweb: Syntax highlighting support
+ [PATCH 2/2] gitweb: Refactor syntax highlighting support
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This patch is unchanged from previous version.
+Shortlog:
+~~~~~~~~~
+Jakub Narebski (1):
+  gitweb: Refactor syntax highlighting support
 
+Johannes Schindelin (1):
+  gitweb: Syntax highlighting support
 
-Compared to the version in Dscho repository, it makes gitweb do line
-numbering by itself, instead of making 'highlight' do it... and then
-rewriting it to conform to the rest of gitweb.  It also leaves tab
-expansion to gitweb, for 'blob' view to look the same with and without
-syntax highlighting enabled.
+Diffstat:
+~~~~~~~~~
+ gitweb/gitweb.css                      |   18 +++++++
+ gitweb/gitweb.perl                     |   79 ++++++++++++++++++++++++++++++-
+ t/t9500-gitweb-standalone-no-errors.sh |   29 ++++++++++++
+ 3 files changed, 123 insertions(+), 3 deletions(-)
 
-The list of supported extensions is widened, and syntax is decided
-based on basename, not on whole pathname (which might be a mistake).
-Also the '.in' suffix is stripped if it is present (so 'git.spec.in'
-file would use 'spec' syntax).
-
-Note that gitweb.css contains default 'highlight' style, but perhaps
-other style would be better fit for default gitweb CSS.
-
- gitweb/gitweb.css  |   18 ++++++++++++++
- gitweb/gitweb.perl |   65 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 82 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index 50067f2..4132aab 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -572,3 +572,21 @@ span.match {
- div.binary {
- 	font-style: italic;
- }
-+
-+/* Style definition generated by highlight 2.4.5, http://www.andre-simon.de/ */
-+
-+/* Highlighting theme definition: */
-+
-+.num    { color:#2928ff; }
-+.esc    { color:#ff00ff; }
-+.str    { color:#ff0000; }
-+.dstr   { color:#818100; }
-+.slc    { color:#838183; font-style:italic; }
-+.com    { color:#838183; font-style:italic; }
-+.dir    { color:#008200; }
-+.sym    { color:#000000; }
-+.line   { color:#555555; }
-+.kwa    { color:#000000; font-weight:bold; }
-+.kwb    { color:#830000; }
-+.kwc    { color:#000000; font-weight:bold; }
-+.kwd    { color:#010181; }
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index c356e95..de18ebf 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -227,6 +227,36 @@ our %avatar_size = (
- # Leave it undefined (or set to 'undef') to turn off load checking.
- our $maxload = 300;
- 
-+# syntax highlighting
-+our %highlight_type = (
-+	# match by basename
-+	'SConstruct' => 'py',
-+	'Program' => 'py',
-+	'Library' => 'py',
-+	'Makefile' => 'make',
-+	# match by extension
-+	'\.py$' => 'py', # Python
-+	'\.c$' => 'c',
-+	'\.h$' => 'c',
-+	'\.cpp$' => 'cpp',
-+	'\.cxx$' => 'cpp',
-+	'\.rb$' => 'ruby',
-+	'\.java$' => 'java',
-+	'\.css$' => 'css',
-+	'\.php3?$' => 'php',
-+	'\.sh$' => 'sh', # Bash / shell script
-+	'\.pl$' => 'pl', # Perl
-+	'\.js$' => 'js', # JavaScript
-+	'\.tex$' => 'tex', # TeX and LaTeX
-+	'\.bib$' => 'bib', # BibTeX
-+	'\.x?html$' => 'xml',
-+	'\.xml$' => 'xml',
-+	'\.awk$' => 'awk',
-+	'\.bat$' => 'bat', # DOS Batch script
-+	'\.ini$' => 'ini',
-+	'\.spec$' => 'spec', # RPM Spec
-+);
-+
- # You define site-wide feature defaults here; override them with
- # $GITWEB_CONFIG as necessary.
- our %feature = (
-@@ -445,6 +475,19 @@ our %feature = (
- 	'javascript-actions' => {
- 		'override' => 0,
- 		'default' => [0]},
-+
-+	# Syntax highlighting support. This is based on Daniel Svensson's
-+	# and Sham Chukoury's work in gitweb-xmms2.git.
-+	# It requires the 'highlight' program, and therefore is disabled
-+	# by default.
-+
-+	# To enable system wide have in $GITWEB_CONFIG
-+	# $feature{'highlight'}{'default'} = [1];
-+
-+	'highlight' => {
-+		'sub' => sub { feature_bool('highlight', @_) },
-+		'override' => 0,
-+		'default' => [0]},
- );
- 
- sub gitweb_get_feature {
-@@ -5346,6 +5389,7 @@ sub git_blob {
- 	open my $fd, "-|", git_cmd(), "cat-file", "blob", $hash
- 		or die_error(500, "Couldn't cat $file_name, $hash");
- 	my $mimetype = blob_mimetype($fd, $file_name);
-+	# use 'blob_plain' (aka 'raw') view for files that cannot be displayed
- 	if ($mimetype !~ m!^(?:text/|image/(?:gif|png|jpeg)$)! && -B $fd) {
- 		close $fd;
- 		return git_blob_plain($mimetype);
-@@ -5353,6 +5397,25 @@ sub git_blob {
- 	# we can have blame only for text/* mimetype
- 	$have_blame &&= ($mimetype =~ m!^text/!);
- 
-+	my $have_highlight = gitweb_check_feature('highlight');
-+	my $syntax;
-+	if ($have_highlight && defined($file_name)) {
-+		my $basename = basename($file_name, '.in');
-+		foreach my $regexp (keys %highlight_type) {
-+			if ($basename =~ /$regexp/) {
-+				$syntax = $highlight_type{$regexp};
-+				last;
-+			}
-+		}
-+
-+		if ($syntax) {
-+			close $fd;
-+			open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
-+			          "highlight --xhtml --fragment -t 8 --syntax $syntax |"
-+				or die_error(500, "Couldn't open file or run syntax highlighter");
-+		}
-+	}
-+
- 	git_header_html(undef, $expires);
- 	my $formats_nav = '';
- 	if (defined $hash_base && (my %co = parse_commit($hash_base))) {
-@@ -5404,7 +5467,7 @@ sub git_blob {
- 			$line = untabify($line);
- 			printf "<div class=\"pre\"><a id=\"l%i\" href=\"" . href(-replay => 1)
- 				. "#l%i\" class=\"linenr\">%4i</a> %s</div>\n",
--			       $nr, $nr, $nr, esc_html($line, -nbsp=>1);
-+			       $nr, $nr, $nr, $syntax ? $line : esc_html($line, -nbsp=>1);
- 		}
- 	}
- 	close $fd
 -- 
-1.7.0.1
+Jakub Narebski
