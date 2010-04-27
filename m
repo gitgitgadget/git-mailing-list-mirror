@@ -1,76 +1,70 @@
-From: Jacob Helwig <jacob.helwig@gmail.com>
-Subject: Re: Global .git directory
-Date: Tue, 27 Apr 2010 13:37:29 -0700
-Message-ID: <l2w8c9a061004271337v62c71145jec782712618e4655@mail.gmail.com>
-References: <alpine.LFD.2.00.1004270705280.15197@bbs.intern> 
-	<201004271159.34071.trast@student.ethz.ch> <alpine.LFD.2.00.1004272144470.11216@bbs.intern>
+From: Mark Rada <marada@uwaterloo.ca>
+Subject: Re: [PATCH] gitweb: Improve installation instructions in gitweb/INSTALL
+Date: Tue, 27 Apr 2010 16:40:11 -0400
+Message-ID: <4BD74BAB.1040401@mailservices.uwaterloo.ca>
+References: <20100427203341.31445.82930.stgit@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Gerhard Wiesinger <lists@wiesinger.com>
-X-From: git-owner@vger.kernel.org Tue Apr 27 22:38:02 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 27 22:40:31 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6rXb-0000e1-5H
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 22:37:59 +0200
+	id 1O6ra2-0001mY-EO
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 22:40:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755996Ab0D0Uhv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Apr 2010 16:37:51 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:35706 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755011Ab0D0Uhu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Apr 2010 16:37:50 -0400
-Received: by vws13 with SMTP id 13so1250372vws.19
-        for <git@vger.kernel.org>; Tue, 27 Apr 2010 13:37:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=xQ6OfkOvaLPm9v06C1I96kAfAv45MysBXR0pSqF04kE=;
-        b=vbt/zchuyHExSJBH5YyKxWGJjJExbRyJ9zWibpw1/weNfW0Dr42qEixoycK5PHzfmJ
-         qZMgHXFjd4zQbGHmw3EDcv0vDK0H4c9Sa1wbzVtxBhtgM44gSwjoecdVl05UhBV4AQ92
-         5332JdwoYH3BE1SK8U6wE4XzZrz0Z6X2cGnIk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=HKNDEOSczKn4NShMGlAV6HjgsedYW7VeGmSQ/EWwk1nfo/8cKPYQvfjDzpPMyq8qZy
-         bFc8azT1iO4VBKh/mvldEGrPFDeLuoDfh7sDY5QMtMiay0kmQVkpLp1ZeAqSlhR+eW1X
-         cKJdFF5wKjfTvSzN4pdAssPs70MOwboAizY+o=
-Received: by 10.229.238.72 with SMTP id kr8mr3172170qcb.76.1272400669145; Tue, 
-	27 Apr 2010 13:37:49 -0700 (PDT)
-Received: by 10.229.50.72 with HTTP; Tue, 27 Apr 2010 13:37:29 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.1004272144470.11216@bbs.intern>
+	id S1756411Ab0D0UkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Apr 2010 16:40:22 -0400
+Received: from mailservices.uwaterloo.ca ([129.97.128.141]:54547 "EHLO
+	mailchk-m05.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756391Ab0D0UkT (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Apr 2010 16:40:19 -0400
+Received: from karakura.local (static-66-225-153-161.ptr.terago.net [66.225.153.161])
+	(authenticated bits=0)
+	by mailchk-m05.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id o3RKeBwj026831
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 27 Apr 2010 16:40:12 -0400
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <20100427203341.31445.82930.stgit@localhost.localdomain>
+X-UUID: 84b546af-3844-4b09-b7ae-7bb048a9efb7
+X-Miltered: at mailchk-m05 with ID 4BD74BAB.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: clamav-milter 0.96 at mailchk-m05
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m05.uwaterloo.ca [129.97.128.141]); Tue, 27 Apr 2010 16:40:16 -0400 (EDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145950>
 
-On Tue, Apr 27, 2010 at 13:06, Gerhard Wiesinger <lists@wiesinger.com> wrote:
-> I don't like metadata of the repository in MY file structure (e.g. .git in
-> top directory, .svn in every directory in subversion, .hg in top directory)
-> for several reasons:
-> 1.) Searching might arise false results, longer output and takes longer
-> (e.g. grep -ir string .)
+On 10-04-27 4:33 PM, Jakub Narebski wrote:
+> +  The above instruction assumes that you didn't use JavaScript
+> +  minimizer or CSS minimizer.  If you use minimizers you need
+> +  to modify above instructions accordingly, which means pointing
+> +  GITWEB_CSS and GITWEB_JS to minified versions, and copying 
+> +  minified files.
+> +
+>  
 
-Using ack, instead of grep is very handy here.  It'll automatically
-skip common revision control directories, and (by default) only
-searches known text file formats.  There is also "git grep".
+Hmm, I believe I already put a message like this in the INSTALL
+file. Perhaps that message should be updated, too, or removed in
+place of your patch.
 
-> 2.) Making tarballs, diffs, etc.: One has to make ugly --exclude or some
-> other workarounds when directories are traversed.
+Looks like:
+ 67 
+ 68 - You can optionally generate minified versions of gitweb.js and gitweb.css
+ 69   by defining the JSMIN and CSSMIN build configuration variables. By default
+ 70   the non-minified versions will be used. NOTE: if you enable this option,
+ 71   substitute gitweb.min.js and gitweb.min.css for all uses of gitweb.js and
+ 72   gitweb.css in the help files.
 
-Making tarballs: Is there a reason not to just use git-archive?  You
-don't need to make any ugly --exclude rules there, unless you're
-trying to exclude things that you track in revision control.
 
-Diffs: Is "git diff" not sufficient here?  If it's not, why isn't it?
 
-> 3.) From an archtectural point of view: It is not technically necessary to
-> mix up user data with repository data.
->
+-- 
+Mark Rada
+marada@uwaterloo.ca
