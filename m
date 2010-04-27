@@ -1,83 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] test-lib: tests can have multiple prerequisites
-Date: Mon, 26 Apr 2010 17:06:55 -0700
-Message-ID: <7vpr1liwrk.fsf@alter.siamese.dyndns.org>
-References: <20100421131255.GA2750@progeny.tock>
- <20100421133806.GA5595@progeny.tock>
- <20100426191703.GC10772@coredump.intra.peff.net>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: RFD: git-bzr: anyone interested?
+Date: Mon, 26 Apr 2010 17:58:59 -0700
+Message-ID: <k2ga038bef51004261758gb75415aq9abe4564b67c25f3@mail.gmail.com>
+References: <4B7D8358.1080108@gmail.com>
+	 <fabb9a1e1002181037n58d6942dpa63a57a23f506d9c@mail.gmail.com>
+	 <4B7E3856.3080609@gmail.com> <20100219135549.GA31796@Knoppix>
+	 <4B820B4E.7050405@gmail.com> <20100222105133.GA10577@Knoppix>
+	 <4B834989.50502@gmail.com> <20100223124553.GA19153@Knoppix>
+	 <p2ka038bef51004261441x7e4857f1mc3f03a4104f8e018@mail.gmail.com>
+	 <m2u86ecb3c71004261646zd17cafdcy85cd2ce522a771d5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>,
-	Don Slutz <Don.Slutz@SierraAtlantic.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 27 02:07:17 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Dmitrijs Ledkovs <dmitrij.ledkov@ubuntu.com>
+X-From: git-owner@vger.kernel.org Tue Apr 27 02:59:10 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6YKa-0006nV-PI
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 02:07:17 +0200
+	id 1O6Z8n-00035o-EF
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 02:59:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754639Ab0D0AHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Apr 2010 20:07:10 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51220 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752841Ab0D0AHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Apr 2010 20:07:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F60FAE501;
-	Mon, 26 Apr 2010 20:07:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oy9BkpV9m3ajvomPoDIfZhbjEto=; b=LPyIEg
-	+a0/zimbvdtiWJyKei0Sd6zVEMd+tv8HVA7qmbNtGXmqjz989pMdF9gQ7OK860sf
-	UZ4z7+S/NR2ifZ7qVzOFBMzwEn9GvRlrvYqoRmoprcn8bzRtDfq/Udxf8srzXFJq
-	/qb4xtLKR1GMki3MWFjUwFS6HYNaO/SPXbdX4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DQ+BQ21j4osLcowq/yLa07w7v4J93Mji
-	h8WQiFzZtYuSdl+D7bnaEsGND2GU8kOEq9IeMeNpFj0VZTH+WLSwoiE4QSG2i9LY
-	lOQOOlfS09yl5Rai7Lr+2fjUszmPnXOqLhgB3qtHI5LF6a1iYCK1RUj+wKtmI6sS
-	9FtY7p/keYw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 13F5EAE4FE;
-	Mon, 26 Apr 2010 20:07:03 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 20427AE4F6; Mon, 26 Apr
- 2010 20:06:56 -0400 (EDT)
-In-Reply-To: <20100426191703.GC10772@coredump.intra.peff.net> (Jeff King's
- message of "Mon\, 26 Apr 2010 15\:17\:03 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CEC4442E-5190-11DF-8375-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751581Ab0D0A7C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Apr 2010 20:59:02 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:37167 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751393Ab0D0A7B (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Apr 2010 20:59:01 -0400
+Received: by vws13 with SMTP id 13so392996vws.19
+        for <git@vger.kernel.org>; Mon, 26 Apr 2010 17:59:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=IFQKMFbsm7R/hcLPhL0DjDwyTlnO1Kxh9b1MIZKObyg=;
+        b=OQjsDrDd/Uf38frk5OuvDVXw1cVWncnq5aNsOWJEUeOwU6j48J5Kwm7cQDsbe+vnoS
+         GmNcvolrNTP0Cp58kqcl1ucIdpGgg1sulSdzxIlS/oToe7ltErnJSh6U6fbUDLc9wf2H
+         7j1ea/egFH8DFXWg4LCEmbqgcFSOYCX7VxG3o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=c0Jz+aSIaqKwxbCBJm5DVOJUgxlPdVWHoGJSNAYba9Ln8fsZ1jonF1f7K+81v6tVdM
+         C0kBeJ5eOuOEdAXEUMHmdiTo74PImdrc/YpG7hqp+GTP/W+F0aKfqp+WbJYGCngmbDEL
+         XJXfAHAnCXtHU4GVy70m+TtljU7Z884J2492U=
+Received: by 10.220.126.151 with SMTP id c23mr3361948vcs.4.1272329940011; Mon, 
+	26 Apr 2010 17:59:00 -0700 (PDT)
+Received: by 10.220.99.203 with HTTP; Mon, 26 Apr 2010 17:58:59 -0700 (PDT)
+In-Reply-To: <m2u86ecb3c71004261646zd17cafdcy85cd2ce522a771d5@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145867>
 
-Jeff King <peff@peff.net> writes:
-
-> I do wonder if it might be less error-prone to have:
+On Mon, Apr 26, 2010 at 4:46 PM, Dmitrijs Ledkovs
+<dmitrij.ledkov@ubuntu.com> wrote:
+> On 26 April 2010 22:41, Chris Packham <judge.packham@gmail.com> wrote:
+>> Hi,
+>>
+>> How far did git-bzr or git-remote-bzr get?
+>>
 >
->   test_expect_success PREREQ1 PREREQ2 'desc' 'test'
+> Don't know, never used.
 >
-> instead of
+> As far as I know bzr-git can fetch, clone, commit and push to/from
+> bzr/git repos. Not sure why you would want git-bzr
+
+Because I searched the git list and thats what I found. Also because
+I'm familiar with what I want to do using git.
+
+>> I've tried git-bzr from the repo and I seem to be stumbling on bzr not
+>> having the fast-export command after I install the fast-import plugin
+>> as per [1]. So I think its a bazzar problem not a git-bzr one. Has
+>> anyone got a fully worked example including the installation of the
+>> required bits and pieces.
+>>
 >
->   test_expect_success 'PREREQ1 PREREQ2' 'desc' 'test'
+> fast-export would loose information AFAIK use bzr-git with dalwich.
+>
 
-Spot what is wrong with this:
+I'm not really worried about information loss. As long as I can still
+get at the tags I'm happy. I'm not really planning on keeping this
+repository after migrating the patches (well may be I'll keep it
+around to submit the changes but I don't think the upstream project
+would find them interesting anyway).
 
-        test_expect_success make sure we have the repo '
-                test -d .git
-        '
+>> Alternatively what I'm really trying to do is update a series of
+>> patches for an upstream project that is managed with bazzar. We have
+>> 30 or so patches with our customizations so I'd like to get git (or
+>> bzr) to do the heavy lifting for me. In git I'd do something like this
+>>
+>> git clone <upstream>
+> bzr branch <upstream>
+>> git checkout <tag that corresponds to the version of the tarball we use>
+> bzr checkout -rtag:<tagname> tag-branch
+>> git checkout -b our-patches
+> cd tag-branch
+>> git am <patches>
+> bzr patch patch1 patch2 patch2
+>> git rebase <tag that corresponds to the new version we want to use>
+> bzr rebase ../<upstream>
+>> git format-patch ...
+>>
+> bzr log -p; or bazaar send -p or create bundle depends on what you want.
+>
 
-I think "we may or may not have a single prereq word" would be less error
-prone.  (you could make sure "test_have_prereq" gets no lowercase letter
-to mitigate the issue, though).
+OK heres where I run into problems which I think may be due to
+openSUSE 11.2s really old version of bzr (1.17). I was missing a 'cd'
+in my example so I'm not sure if there is an implied one in the bzr
+example. Either way its barfing on 'bzr checkout -rtag:<tagname>
+tag-branch' and either refuses to work saying that tag-branch is not a
+branch or crashes with I omit tag-branch.
 
-I tend to like the comma myself, but quoted, space separated list is fine
-by me.
+>> Anybody got a similar recipe for bzr? (yes I'll go ask on the bzr list too)
+>>
+
+except the list is subscriber only :( .
+
+> Although I think you really want
+> http://wiki.bazaar.canonical.com/BzrPipeline which helps you import
+> patches ontop of a branch, update upstream, update (merge) patches,
+> and export them again. It's something like quilt, topgit but
+> bzr-styled ;-)
+
+I'll give it a whirl when I've installed a newer version.
+
+> Thanks. Me will shut up about bzr now =)
+>
+
+Yeah me too. I should probably bite the bullet and subscribe or import
+the old and new tarballs and see what git can do with limited
+information.
