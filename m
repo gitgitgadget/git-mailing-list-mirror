@@ -1,76 +1,64 @@
-From: Gerhard Wiesinger <lists@wiesinger.com>
-Subject: Global .git directory
-Date: Tue, 27 Apr 2010 07:14:13 +0200 (CEST)
-Message-ID: <alpine.LFD.2.00.1004270705280.15197@bbs.intern>
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: Re: Which Git projects got accepted in GSoC 2010?
+Date: Tue, 27 Apr 2010 11:55:13 +0530
+Message-ID: <p2xe72faaa81004262325waac20a9bqa822c3dc5c7effc8@mail.gmail.com>
+References: <201004270146.07131.jnareb@gmail.com> <4BD6608B.3040200@op5.se>
+	 <u2gf3271551004262222jb8825674g1f244bca1db68279@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 27 07:28:38 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Andreas Ericsson <ae@op5.se>, Jakub Narebski <jnareb@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 27 08:25:23 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6dLY-00047Z-Dw
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 07:28:36 +0200
+	id 1O6eEV-000799-1t
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Apr 2010 08:25:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752095Ab0D0F2b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Apr 2010 01:28:31 -0400
-Received: from chello084112167138.7.11.vie.surfer.at ([84.112.167.138]:56320
-	"EHLO wiesinger.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750897Ab0D0F2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Apr 2010 01:28:30 -0400
-Received: from bbs.intern (localhost [127.0.0.1])
-	by wiesinger.com (8.14.4/8.14.4) with ESMTP id o3R5EDhL016651
-	for <git@vger.kernel.org>; Tue, 27 Apr 2010 07:14:13 +0200
-Received: from localhost (gerhard@localhost)
-	by bbs.intern (8.14.4/8.14.4/Submit) with ESMTP id o3R5EDOC016646
-	for <git@vger.kernel.org>; Tue, 27 Apr 2010 07:14:13 +0200
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-MailScanner-Information-wiesinger-com: Please contact the ISP for more information
-X-wiesinger-com-MailScanner-ID: o3R5EDhL016651
-X-MailScanner-wiesinger-com: Found to be clean
-X-MailScanner-SpamCheck-wiesinger-com: not spam, SpamAssassin (not cached,
-	score=-4.345, required 4.5, autolearn=not spam, ALL_TRUSTED -1.80,
-	AWL 0.05, BAYES_00 -2.60)
-X-MailScanner-From: lists@wiesinger.com
+	id S1751396Ab0D0GZQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Apr 2010 02:25:16 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:51624 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751202Ab0D0GZP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Apr 2010 02:25:15 -0400
+Received: by gyg13 with SMTP id 13so6610205gyg.19
+        for <git@vger.kernel.org>; Mon, 26 Apr 2010 23:25:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=e0X2zM9HywQOvaiFhgC2Cj/BFlJHP68zVuniDAdR9u0=;
+        b=hqSeixPQcDfj5CYEbQBsk9T3ofI6CX+K2BQMg2il+b7FZKbMHc64vWm5F/C7COeGGx
+         qG/J1uzzBt2xsfZJZ+/+qhqx20c7Qbyw1QoI+JlHw94RGlnj9s0McXSOK6uxq2vs9VMe
+         Y35I7GE/2epEb6F3cp2Yis1Nf6w5PWF04SB1s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=HaClJ+DeDVac3JYIjfCoBDtXR6DCmIbLITy7QXuDSsaN9Q4CvCRPCKj06iQbIaSypc
+         L26tr7xyEl+tvFAvT48vv/lAVCckhKb84h4ymw8cn+/TYEnjlgH3spHzzTsz9WJ+HA2x
+         Dy6859z+JuKIUvFj+uCE7u6uSeyge4Smkqj/E=
+Received: by 10.90.2.18 with SMTP id 18mr2818402agb.7.1272349513797; Mon, 26 
+	Apr 2010 23:25:13 -0700 (PDT)
+Received: by 10.90.99.11 with HTTP; Mon, 26 Apr 2010 23:25:13 -0700 (PDT)
+In-Reply-To: <u2gf3271551004262222jb8825674g1f244bca1db68279@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145878>
 
-Hello,
+>> Done. Insomnia has its uses, I guess. Could maybe use a bit fleshing
+>> out, but it has the important fields now at least.
+>>
+>> https://git.wiki.kernel.org/index.php/SoC2010Projects
 
-I'm new to git and as far as I saw that feature is missing: Placing .git 
-directory/repository on a central place for many git repositories. This 
-feature ensures that data directories are kept clean from metadata of git.
+Thanks. I am having exams right now. But I will be soon filling the
+wiki page for my project.
 
-I know the GIT_DIR environment variable but therefore environment has to 
-be set for each repository which is IHMO not practicable. Therefore I 
-suggest the following approach (which also overrides GIT_DIR when set):
-#  Can be set globally for all users
-export GIT_GLOBAL_DIR=$HOME/.git_global
-
-When this environment variable is set git searches the repository in 
-$HOME/.git_global/`pwd`
-Example:
-cd /home/gerhard/myproject
-=> /home/gerhard/.git_global/home/gerhard/myproject/.git directory is used
-cd /home/gerhard/myproject/subdir
-=> /home/gerhard/.git_global/home/gerhard/myproject/.git directory is 
-still used, base directory must also be searched for (algorithm must 
-already be implemented)
-
-I think this should be easy to implement on a centralized point.
-
-Any feedback is welcome.
-
-Thnx.
-
-Ciao,
-Gerhard
-
---
-http://www.wiesinger.com/
+- Pavan Kumar Sunkara
