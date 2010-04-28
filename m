@@ -1,70 +1,88 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Git and cvsimport
-Date: Wed, 28 Apr 2010 11:19:36 +0200
-Message-ID: <m21ve0vsrb.fsf@igel.home>
-References: <i2l717f7a3e1004260727wd87900a5tcfb61a3142d0ba@mail.gmail.com>
-	<4BD69450.8040608@drmicha.warpmail.net>
-	<l2w717f7a3e1004270341lea6cfe2aqdf8d2b490b1ec067@mail.gmail.com>
-	<r2xd2d39d861004270458v2e1cb73by78f53d71103b47e6@mail.gmail.com>
-	<k2r717f7a3e1004272227g256c42fei6951180db855ad9f@mail.gmail.com>
+From: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
+Subject: Re: [patch 00/16] Portability Patches for git-1.7.1 (v4)
+Date: Wed, 28 Apr 2010 09:32:05 +0000
+Message-ID: <20100428093205.GH36271@thor.il.thewrittenword.com>
+References: <20100427135708.258636000@mlists.thewrittenword.com>
+ <4BD7032D.9050508@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tor Arntsen <tor@spacetec.no>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Marin Atanasov Nikolov <dnaeon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 28 11:19:48 2010
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Apr 28 11:32:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O73Qp-00058f-TT
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 11:19:48 +0200
+	id 1O73cu-0001Sn-Cw
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 11:32:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751254Ab0D1JTl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Apr 2010 05:19:41 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:57246 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750966Ab0D1JTk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Apr 2010 05:19:40 -0400
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id CAFAB1C15954;
-	Wed, 28 Apr 2010 11:19:38 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id 3FAD4903FE;
-	Wed, 28 Apr 2010 11:19:38 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.3.149])
-	by localhost (dynscan1.mnet-online.de [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id Grbz4+MdSzZe; Wed, 28 Apr 2010 11:19:37 +0200 (CEST)
-Received: from igel.home (ppp-88-217-116-118.dynamic.mnet-online.de [88.217.116.118])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Wed, 28 Apr 2010 11:19:37 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id EFBD6CA297; Wed, 28 Apr 2010 11:19:36 +0200 (CEST)
-X-Yow: I'LL get it!!  It's probably a FEW of my ITALIAN GIRL-FRIENDS!!
-In-Reply-To: <k2r717f7a3e1004272227g256c42fei6951180db855ad9f@mail.gmail.com>
-	(Marin Atanasov Nikolov's message of "Wed, 28 Apr 2010 08:27:28
-	+0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.96 (gnu/linux)
+	id S1752796Ab0D1JcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Apr 2010 05:32:09 -0400
+Received: from mail1.thewrittenword.com ([69.67.212.77]:53227 "EHLO
+	mail1.thewrittenword.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751758Ab0D1JcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Apr 2010 05:32:07 -0400
+Received: from mail1.il.thewrittenword.com (emma-internal-gw.il.thewrittenword.com [192.168.13.25])
+	by mail1.thewrittenword.com (Postfix) with ESMTP id 3277D5CD5;
+	Wed, 28 Apr 2010 09:53:15 +0000 (UTC)
+X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com 3277D5CD5
+Received: from thor.il.thewrittenword.com (thor.il.thewrittenword.com [10.191.57.1])
+	by mail1.il.thewrittenword.com (Postfix) with ESMTP id 66136B16;
+	Wed, 28 Apr 2010 09:32:05 +0000 (UTC)
+Received: by thor.il.thewrittenword.com (Postfix, from userid 1048)
+	id 5FD60BAB4; Wed, 28 Apr 2010 09:32:05 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <4BD7032D.9050508@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.96 at maetel.il.thewrittenword.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145982>
 
-Marin Atanasov Nikolov <dnaeon@gmail.com> writes:
+Hi Michael,
 
->  1. git-cvsimport the whole CVS repository.
+On Tue, Apr 27, 2010 at 05:30:53PM +0200, Michael J Gruber wrote:
+> Gary V. Vaughan venit, vidit, dixit 27.04.2010 15:57:                         
+> > Here are the portability patches we needed at TWW to enable git-1.7.1       
+> > to compile and run on all of the wide range of Unix machines we             
+> > support.  These patches apply to the git-1.7.1 release,  and address        
+> > all of the feedback from the previous three times I posted them to          
+> > this list, including fixing the massive testsuite failures I was            
+> > experiencing and taking into account that the ss_family fixes and           
+> > partial GMT_CMP_TEST fixes that have been pushed since my last post of      
+> > this patch queue.                                                           
+>                                                                               
+> General remark: None of your patches have a s-o-b line. If you want to        
+> have your patches in git you are required to sign-off on them (commit         
+> -s) in order to certify that you can submit them under the license terms      
+> of the project.                                                               
 
-That's all you need, IIUC.  There are other tools like parsecvs and
-cvs2git that may produce better results than git-cvsimport, though.
+I didn't read SubmittingPatches carefully enough, sorry.  If
+necessary, I can resubmit with the additional line?
 
-Andreas.
+> Your diff -> test_cmp are certainly something we want to have in any          
+> case. The code changes look ugly, honestly, making the code much less         
+> readable, but it seems to be the only way to make those older platforms       
+> and compilers happy. (Erik pointed out some good ways to reduce the           
+> uglyness somewhat.)                                                           
 
+I think only the const-expr.patch changes are seriously ugly... but
+then I'm perhaps used to staring at portable code all day.
+
+> I can't test your target platform, but I would test the impact of the         
+> code and test changes on mine. Do you have your series somewhere to pull      
+> from?                                                                         
+
+I'm afraid not, though I can send you (off-list) a zip of the patch
+series and a quiltrc to apply using quilt or repeated calls to gnu
+potch, or if you prefer, a sumo-patch containing all the changes in
+one file for gnu patch?
+
+Cheers,
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Gary V. Vaughan (gary@thewrittenword.com)
