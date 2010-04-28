@@ -1,71 +1,67 @@
-From: Jeff King <peff@peff.net>
+From: Michael Poole <mdpoole@troilus.org>
 Subject: Re: Groups of commits
-Date: Tue, 27 Apr 2010 22:14:31 -0400
-Message-ID: <20100428021431.GD16107@coredump.intra.peff.net>
+Date: Tue, 27 Apr 2010 22:15:05 -0400
+Message-ID: <87sk6ge312.fsf@troilus.org>
 References: <j2u43d8ce651004271859t8f306261n330004142a42b6df@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>
 To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 28 04:14:43 2010
+X-From: git-owner@vger.kernel.org Wed Apr 28 04:15:17 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6wnR-00005e-0B
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 04:14:41 +0200
+	id 1O6wo0-0000EZ-SM
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 04:15:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751439Ab0D1COf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Apr 2010 22:14:35 -0400
-Received: from peff.net ([208.65.91.99]:37205 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751007Ab0D1COe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Apr 2010 22:14:34 -0400
-Received: (qmail 5949 invoked by uid 107); 28 Apr 2010 02:14:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 27 Apr 2010 22:14:44 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Apr 2010 22:14:31 -0400
-Content-Disposition: inline
+	id S1751698Ab0D1CPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Apr 2010 22:15:10 -0400
+Received: from na3sys009aog105.obsmtp.com ([74.125.149.75]:54340 "HELO
+	na3sys009aog105.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751007Ab0D1CPI (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Apr 2010 22:15:08 -0400
+Received: from source ([209.85.221.183]) by na3sys009aob105.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKS9eaKwRAGmcOmTXiHH9R/gIdW8tz2LzX@postini.com; Tue, 27 Apr 2010 19:15:08 PDT
+Received: by mail-qy0-f183.google.com with SMTP id 13so17985412qyk.18
+        for <git@vger.kernel.org>; Tue, 27 Apr 2010 19:15:07 -0700 (PDT)
+Received: by 10.224.52.164 with SMTP id i36mr2042208qag.147.1272420907328;
+        Tue, 27 Apr 2010 19:15:07 -0700 (PDT)
+Received: from graviton.troilus.org (pool-72-83-66-147.washdc.east.verizon.net [72.83.66.147])
+        by mx.google.com with ESMTPS id 23sm3312317qyk.15.2010.04.27.19.15.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 27 Apr 2010 19:15:06 -0700 (PDT)
 In-Reply-To: <j2u43d8ce651004271859t8f306261n330004142a42b6df@mail.gmail.com>
+	(John Tapsell's message of "Wed, 28 Apr 2010 10:59:44 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145966>
 
-On Wed, Apr 28, 2010 at 10:59:44AM +0900, John Tapsell wrote:
+John Tapsell writes:
 
+> Hi all,
+>
 >   In my work place, we have a lot of strict rules to get something
 > committed.  The code has to pass against a large test suite, it has to
 > be tested on different hardware, and so on.
-> 
+>
 >   The problem is that it forces everyone to have one single large
 > commit for a week's work.  All the intermediate stages get squashed
 > and that history forever lost.
-
-Redefine "committed" to be "merged to the mainline branch" (or
-"committed to the mainline branch" if you need to keep the nomenclature
-to please pointy-haired people). Have everybody work on their own branch
-each week (or better yet, a branch per topic).
-
-When they would make their single big commit, instead "git merge
---no-ff" from the topic branch into mainline. Do your tests on the
-result. If it fails, kick back an error (or whatever you do now). If it
-works, then add that merge commit to mainline.
-
-If you want to see the "big commits", follow "log --first-parent" of the
-mainline branch. These commits will all pass the test suite. If you want
-to see the whole history, then use regular history browsing. Commits on
-side-branches do not necessarily pass the test suite.
-
+>
 >   It would be nice to have a commit in the repository, treated as a
 > single commit for all purposes, but then be able to split it into
 > multiple commits if necessary.
+>
+>   Any ideas?
 
-My suggestion above is not exactly what you asked for. It treats the
-history as multiple commits most of the time, but using --first-parent
-you can ask for just the big commits.
+Isn't that what topic branches are for?  When development is done on a
+short-lived branch (hopefully one with a descriptive name), the only
+commit that needs to go through that process is the merge onto the
+integration branch.
 
--Peff
+Michael Poole
