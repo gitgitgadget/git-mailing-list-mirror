@@ -1,85 +1,81 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
-Subject: Multiblobs
-Date: Wed, 28 Apr 2010 15:12:07 +0000 (UTC)
-Message-ID: <loom.20100428T164432-954@post.gmane.org>
+From: Michael Olson <mwolson@gnu.org>
+Subject: Re: [spf:guess,iffy,mismatch] Re: [PATCH/RFC 2/2] git-svn: Don't 
+	allow missing commit parent to stop git-svn
+Date: Wed, 28 Apr 2010 08:51:12 -0700
+Message-ID: <r2jc8b3bef91004280851i865a911ei47b1be606dd560d9@mail.gmail.com>
+References: <j2wc8b3bef91004201430ie371be83kee0e3e4c35ab9c9e@mail.gmail.com> 
+	<1271880470.20208.47.camel@denix> <m2sc8b3bef91004211417n1f3368a7ica94a1c2a7656622@mail.gmail.com> 
+	<4BCF8E07.9080507@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 28 17:12:26 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Tim Stoakes <tim@stoakes.net>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Wed Apr 28 17:51:43 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O78w5-00021A-Re
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 17:12:26 +0200
+	id 1O79Y6-0007pM-7M
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 17:51:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754232Ab0D1PMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Apr 2010 11:12:19 -0400
-Received: from lo.gmane.org ([80.91.229.12]:51860 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751539Ab0D1PMT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Apr 2010 11:12:19 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1O78vv-0001xU-6J
-	for git@vger.kernel.org; Wed, 28 Apr 2010 17:12:17 +0200
-Received: from i2-ve060.ingce.unibo.it ([137.204.107.60])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Apr 2010 17:12:15 +0200
-Received: from sergio.callegari by i2-ve060.ingce.unibo.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Apr 2010 17:12:15 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 137.204.107.60 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100402 Ubuntu/9.10 (karmic) Firefox/3.5.9)
+	id S1753381Ab0D1Pvg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Apr 2010 11:51:36 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:53494 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751690Ab0D1Pvf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Apr 2010 11:51:35 -0400
+Received: by vws19 with SMTP id 19so370964vws.19
+        for <git@vger.kernel.org>; Wed, 28 Apr 2010 08:51:34 -0700 (PDT)
+Received: by 10.220.123.95 with SMTP id o31mr5490454vcr.23.1272469892260; Wed, 
+	28 Apr 2010 08:51:32 -0700 (PDT)
+Received: by 10.220.81.20 with HTTP; Wed, 28 Apr 2010 08:51:12 -0700 (PDT)
+X-Originating-IP: [209.104.55.5]
+In-Reply-To: <4BCF8E07.9080507@vilain.net>
+X-Google-Sender-Auth: baa027999d4eb687
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145997>
 
-Hi,
+On Wed, Apr 21, 2010 at 4:45 PM, Sam Vilain <sam@vilain.net> wrote:
+> Michael Olson wrote:
+>> Interestingly, I see people reporting the same problem in the thread
+>> "git svn clone of subversion's own code failing". =C2=A0So it's not =
+just
+>> related to patch 1/2 of this series. =C2=A0At least that thread has =
+a
+>> public-facing repo so the problem should be easier to reproduce for
+>> a real fix.
+>
+> Oh, right ... I remember that issue now. I'm currently testing the
+> below change to see if it breaks the test suite; any issues and I'll
+> post an update.
+>
+> Subject: [PATCH] git-svn: deal with svn cherry-picks with non-linear =
+history
+>
+> The expression 'BASE^..TIP' is only defined when BASE has parents. =C2=
+=A0It
+> actually does what it intends only when it has one parent.
+>
+> Allow for more complicated revision list arguments than a range by
+> splitting any space-containing arguments on the way into _rev_list,
+> and check the parents of the bottom commit so that we may use the
+> correct revision list specifier.
+> ---
+> =C2=A0git-svn.perl | =C2=A0 22 +++++++++++++++++++---
+> =C2=A01 files changed, 19 insertions(+), 3 deletions(-)
+>
+> [snip]
 
-it happened to me to read an older post by Jeff King about "multiblobs"
-(http://kerneltrap.org/mailarchive/git/2008/4/6/1360014) and I was wandering
-whether the idea has been abandoned for some reason or just put on hold.
+This change works great on my private repos, so it should supersede my
+version which only did an eval.
 
-Apparently, this would marvellously help on
-- storing large binary blobs (the split could happen with a rolling checksum
-approach)
-- storing "structured files", such as the many zip-based file formats
-(Opendocument, Docx, Jar files, zip files themselves), tars (including
-compressed tars), pdfs, etc, whose number is rising day after day...
-- storing binary files with textual tags, where the tags could go on a separate
-blob, greatly simplifying their readout without any need for caching them on a
-note tree.
-- etc...
-
-Furthermore, this could also
-- help the management of upstream trees. This could be simplified since the
-"pristine tree" distributed as a tar.gz file and the exploded repo could share
-their blobs making commands such as pristine-tree unnecessary.
-- help projects such as bup that currently need to provide split mechanisms of
-their own.
-- be used to add "different representations" to objects... for instance, when
-storing a pdf one could use a fake split to store in a separate blob the
-corresponding text, making the git-diff of pdfs almost instantaneous.
-
->From Jeff's post, I guess that the major issue could be that the same file could
-get a different sha1 as a multiblob versus a regular blob, but maybe it could be
-possible to make the multiblob take the same sha1 of the "equivalent plain blob"
-rather than its real hash.
-
-For the moment, I am just very curious about the idea and the possible pros and
-cons... can someone (maybe Jeff himself) tell me a little more? Also I wonder
-about the two possibilities (implement it in git vs implement it "on top of"
-git).
-
-Sergio
+--=20
+Michael Olson  |  http://mwolson.org/
