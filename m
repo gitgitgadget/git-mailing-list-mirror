@@ -1,102 +1,63 @@
-From: Alexey Mahotkin <squadette@gmail.com>
-Subject: [PATCH] xdiff/xmerge.c: use memset() instead of explicit for-loop
-Date: Wed, 28 Apr 2010 15:29:06 +0400
-Message-ID: <1272454146-5519-1-git-send-email-squadette@gmail.com>
-Cc: gitster@pobox.com, Alexey Mahotkin <squadette@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 28 13:55:50 2010
+From: Jeff King <peff@peff.net>
+Subject: Re: [patch 00/16] Portability Patches for git-1.7.1 (v4)
+Date: Wed, 28 Apr 2010 08:17:56 -0400
+Message-ID: <20100428121756.GA17244@sigill.intra.peff.net>
+References: <20100427135708.258636000@mlists.thewrittenword.com>
+ <4BD7032D.9050508@drmicha.warpmail.net>
+ <20100427175442.GB13626@coredump.intra.peff.net>
+ <m2iq7cejsh.fsf@igel.home>
+ <20100428020816.GC16107@coredump.intra.peff.net>
+ <20100428091922.GF36271@thor.il.thewrittenword.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
+X-From: git-owner@vger.kernel.org Wed Apr 28 14:18:10 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O75rm-0000fK-Ec
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 13:55:46 +0200
+	id 1O76DR-0005Bx-St
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 14:18:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754249Ab0D1Lzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Apr 2010 07:55:40 -0400
-Received: from mynd.rinet.ru ([195.54.209.181]:47332 "EHLO mynd.rinet.ru"
+	id S1751472Ab0D1MSA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Apr 2010 08:18:00 -0400
+Received: from peff.net ([208.65.91.99]:36632 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751312Ab0D1Lzk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Apr 2010 07:55:40 -0400
-X-Greylist: delayed 1583 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Apr 2010 07:55:39 EDT
-Received: from mynd.rinet.ru (localhost.localdomain [127.0.0.1])
-	by mynd.rinet.ru (8.14.3/8.14.3) with ESMTP id o3SBT9xR005744;
-	Wed, 28 Apr 2010 15:29:09 +0400
-Received: (from alexm@localhost)
-	by mynd.rinet.ru (8.14.3/8.14.3/Submit) id o3SBT6vX005706;
-	Wed, 28 Apr 2010 15:29:06 +0400
-X-Mailer: git-send-email 1.6.2.5
+	id S1750859Ab0D1MR7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Apr 2010 08:17:59 -0400
+Received: (qmail 15485 invoked by uid 107); 28 Apr 2010 12:18:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 28 Apr 2010 08:18:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Apr 2010 08:17:56 -0400
+Content-Disposition: inline
+In-Reply-To: <20100428091922.GF36271@thor.il.thewrittenword.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145989>
 
-memset() is heavily optimized, and resulting assembler code
-is about 150 lines less for that file.
+On Wed, Apr 28, 2010 at 09:19:22AM +0000, Gary V. Vaughan wrote:
 
-Signed-off-by: Alexey Mahotkin <squadette@gmail.com>
----
- xdiff/xmerge.c |   17 ++++++++---------
- 1 files changed, 8 insertions(+), 9 deletions(-)
+> > > > Furthermore, if we do take such changes, how are we going to manage
+> > > > portability going forward? Some constructs (like non-constant
+> > > > initializers) make the code much easier to read. People _will_ submit
+> > > > patches that use them. Is somebody going to be auto-building on all of
+> > > > these platforms with vendor compilers to confirm that nothing is broken?
+> 
+> And that's fine.  People who are trying to build will notice the
+> breakage on their platforms and likely submit patches in due course.
 
-diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-index 16dd9ac..6d6fc1b 100644
---- a/xdiff/xmerge.c
-+++ b/xdiff/xmerge.c
-@@ -152,7 +152,6 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
- 	int marker1_size = (name1 ? strlen(name1) + 1 : 0);
- 	int marker2_size = (name2 ? strlen(name2) + 1 : 0);
- 	int marker3_size = (name3 ? strlen(name3) + 1 : 0);
--	int j;
- 
- 	if (marker_size <= 0)
- 		marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
-@@ -164,8 +163,8 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
- 	if (!dest) {
- 		size += marker_size + 1 + marker1_size;
- 	} else {
--		for (j = 0; j < marker_size; j++)
--			dest[size++] = '<';
-+		memset(dest + size, '<', marker_size);
-+		size += marker_size;
- 		if (marker1_size) {
- 			dest[size] = ' ';
- 			memcpy(dest + size + 1, name1, marker1_size - 1);
-@@ -183,8 +182,8 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
- 		if (!dest) {
- 			size += marker_size + 1 + marker3_size;
- 		} else {
--			for (j = 0; j < marker_size; j++)
--				dest[size++] = '|';
-+			memset(dest + size, '|', marker_size);
-+			size += marker_size;
- 			if (marker3_size) {
- 				dest[size] = ' ';
- 				memcpy(dest + size + 1, name3, marker3_size - 1);
-@@ -199,8 +198,8 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
- 	if (!dest) {
- 		size += marker_size + 1;
- 	} else {
--		for (j = 0; j < marker_size; j++)
--			dest[size++] = '=';
-+		memset(dest + size, '=', marker_size);
-+		size += marker_size;
- 		dest[size++] = '\n';
- 	}
- 
-@@ -210,8 +209,8 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
- 	if (!dest) {
- 		size += marker_size + 1 + marker2_size;
- 	} else {
--		for (j = 0; j < marker_size; j++)
--			dest[size++] = '>';
-+		memset(dest + size, '>', marker_size);
-+		size += marker_size;
- 		if (marker2_size) {
- 			dest[size] = ' ';
- 			memcpy(dest + size + 1, name2, marker2_size - 1);
--- 
-1.6.2.5
+That was sort of implicit in my questions. _Is_ there somebody who is
+going to be building on these platforms that will notice the breakage?
+
+But it sounds from the rest of your mail like you are willing to do so,
+which is at least encouraging.
+
+-Peff
