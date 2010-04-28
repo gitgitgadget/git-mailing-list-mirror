@@ -1,122 +1,149 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [patch 06/16] diff-test_cmp.patch
-Date: Wed, 28 Apr 2010 12:43:02 -0500
-Message-ID: <20100428174302.GD2041@progeny.tock>
-References: <20100427135708.258636000@mlists.thewrittenword.com>
- <20100427135833.403548000@mlists.thewrittenword.com>
- <20100427171531.GA15553@progeny.tock>
- <20100428090045.GD36271@thor.il.thewrittenword.com>
- <20100428095159.GD1394@progeny.tock>
- <20100428102250.GB39644@thor.il.thewrittenword.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Multiblobs
+Date: Wed, 28 Apr 2010 14:07:02 -0400
+Message-ID: <k2y32541b131004281107u6d15ed4ex54b5e5c138cc0e24@mail.gmail.com>
+References: <loom.20100428T164432-954@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-X-From: git-owner@vger.kernel.org Wed Apr 28 19:43:33 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Sergio Callegari <sergio.callegari@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 28 20:07:49 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7BIG-0002II-QC
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 19:43:29 +0200
+	id 1O7Bfk-0006y4-BO
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 20:07:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755242Ab0D1RnL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Apr 2010 13:43:11 -0400
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:48670 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751989Ab0D1RnK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Apr 2010 13:43:10 -0400
-Received: by ewy20 with SMTP id 20so4918200ewy.1
-        for <git@vger.kernel.org>; Wed, 28 Apr 2010 10:43:08 -0700 (PDT)
+	id S1756228Ab0D1SHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Apr 2010 14:07:38 -0400
+Received: from mail-yw0-f194.google.com ([209.85.211.194]:38895 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756201Ab0D1SHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Apr 2010 14:07:37 -0400
+Received: by ywh32 with SMTP id 32so8629113ywh.33
+        for <git@vger.kernel.org>; Wed, 28 Apr 2010 11:07:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=upIWI5IYd7F8Z7NSmKWR+ms0jj6nk/FFRNHt+nCvOnM=;
-        b=PZQ8NrzNkZgqlrmGqSlPxTAcd71XqT68m3FRAFgIKlYe+R3ki2PEg44VhfCWLz7rfI
-         YyxX9g2zYh+JZLS9tGB/MW97oPn2Y29lQnSWICx31eRiRRsZpD5Gt3+e+sjHBBSLEGx+
-         Wq48Mltcm6q4DyncKp7hrp9NehOaGz3p6kxYM=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=lEtXHbUSRaNWcmaslHm4eFFIENr/Lsuq6NDAH1Qxpeg=;
+        b=xf7GI2Scx2I3DqxYdIdVEKwzC50vXOEV3Vt45uPuu7+89zYp/WE5vHDUvYYfdqH2TE
+         8X5wqxCWon55UlpjS1esx2UoIq0GhPkyLptMc/2a/YhARzPTqGa/nQAAoTrLARt9IV2G
+         D3kv7tV8HRCC3TjGR8nRWxgk/YsDvQ9LY+hBc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=QYctM8EvdznPVGmeFP/iJZkdKe7/CaXJkb7aYwfLXVA1ekWsvX18V1dU7DU16yGTGj
-         ooRnFNY9/bTsrM66qBdC303dQVZZBlZzjnDNgXsDOe+5JkdQGo2P38h7lwhPnFDSwVKM
-         FMY+KxJtPUCq+u38crEvm4/1PuA74siVgw9UY=
-Received: by 10.103.7.28 with SMTP id k28mr4283323mui.25.1272476588260;
-        Wed, 28 Apr 2010 10:43:08 -0700 (PDT)
-Received: from progeny.tock (c-76-28-252-211.hsd1.wa.comcast.net [76.28.252.211])
-        by mx.google.com with ESMTPS id b9sm141004mug.7.2010.04.28.10.43.05
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 28 Apr 2010 10:43:07 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100428102250.GB39644@thor.il.thewrittenword.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=PotDaNCc2kZY6Y5C2h8vqc2eeKElCplKenwUd1/wPC5o4IqZ5SRdMpoCtUezZWzKBM
+         FVUQVl9uwV7bQrY9ze9OdOhAjvbowCWyAnwKsZqOHLRNr2nZq70W0ykUpOnsjpIagGIH
+         xdpuEn799k7xyOigrz/lN/3DeDfRiGTMylRc8=
+Received: by 10.151.4.8 with SMTP id g8mr126662ybi.40.1272478043831; Wed, 28 
+	Apr 2010 11:07:23 -0700 (PDT)
+Received: by 10.151.109.5 with HTTP; Wed, 28 Apr 2010 11:07:02 -0700 (PDT)
+In-Reply-To: <loom.20100428T164432-954@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146001>
 
-Gary V. Vaughan wrote:
-> On Wed, Apr 28, 2010 at 04:51:59AM -0500, Jonathan Nieder wrote:
+On Wed, Apr 28, 2010 at 11:12 AM, Sergio Callegari
+<sergio.callegari@gmail.com> wrote:
+> - storing "structured files", such as the many zip-based file formats
+> (Opendocument, Docx, Jar files, zip files themselves), tars (including
+> compressed tars), pdfs, etc, whose number is rising day after day...
 
->> The most general way:
-[git init and git add . and git commit]
-> D'oh.  Of course... I was too fixated on git clone to notice.
->
->> You can automate some of those steps by
->>=20
->>  wget http://address/of/tarball.tar.gz
->>  git init project
->>  cd project
->>  perl /usr/share/doc/git/contrib/fast-import/import-tars.perl tarbal=
-l.tar.gz
->>  git checkout import-tars
->>  ... use git as usual
->
-> What's happening here?  Is this sharing a single repository for all
-> locally hosted git projects, or is this more or less the same as the
-> above?
+I'm not sure it would help very much for these sorts of files.  The
+problem is that compressed files tend to change a lot even if only a
+few bytes of the original data have changed.
 
-It=E2=80=99s the same as the above.  The only advantages I can think of=
- are that
-it might be slightly faster (though I haven=E2=80=99t tested) and that =
-this way
-I don=E2=80=99t have to remember the tar --strip-components option.
+For things like opendocument, or uncompressed tars, you'd be better
+off to decompress them (or recompress with zip -0) using
+.gitattributes.  Generally these files aren't *so* large that they
+really need to be chunked; what you want to do is improve the deltas,
+which decompressing will do.
 
-You could share a single repository for all locally hosted git projects=
-,
-but that would kill the behavior of make.
+> - storing binary files with textual tags, where the tags could go on a separate
+> blob, greatly simplifying their readout without any need for caching them on a
+> note tree.
 
->> If upstream uses git, there is also the shallow-clone facility:
->>=20
->>  git clone -b master --depth=3D1 git://repo.or.cz/git.git/
->>  cd git
->>  ... use git as usual, except history is cauterized
->
-> This is probably the flavour that would be of the most use to us.
-> Thanks for educating me :)
->
->> It has one rough edge you may run into: push is not supported.  If t=
-hat
->> is a problem for you, let me know and maybe I can try to help fix it=
-=2E
->
-> No, I think the main benefit of using git locally would be to provide
-> a pull source for upstream.
+That sounds complicated and error prone, and is suspiciously like
+Apple's "resource forks," which even Apple has mostly realized were a
+bad idea.
 
-Oh, that=E2=80=99s another rough edge (the same one, fundamentally).  S=
-orry.
+> - help the management of upstream trees. This could be simplified since the
+> "pristine tree" distributed as a tar.gz file and the exploded repo could share
+> their blobs making commands such as pristine-tree unnecessary.
 
-Another benefit of using git to fetch from upstream is to get the lates=
-t
-version.
+Sharing the blobs of a tarball with a checked-out tree would require a
+tar-specific chunking algorithm.  Not impossible, but a pain, and you
+might have a hard time getting it accepted into git since it's
+obviously not something you really need for a normal "source code"
+tracking system.
 
-Hope that helps,
-Jonathan
+> - help projects such as bup that currently need to provide split mechanisms of
+> their own.
+
+Since bup is so awesome that it will soon rule the world of file
+splitting backup systems, and bup already has a working implemention,
+this reason by itself probably isn't enough to integrate the feature
+into git.
+
+> - be used to add "different representations" to objects... for instance, when
+> storing a pdf one could use a fake split to store in a separate blob the
+> corresponding text, making the git-diff of pdfs almost instantaneous.
+
+Aie, files that have different content depending how you look at them?
+ You'll make a lot of enemies with such a patch :)
+
+> From Jeff's post, I guess that the major issue could be that the same file could
+> get a different sha1 as a multiblob versus a regular blob, but maybe it could be
+> possible to make the multiblob take the same sha1 of the "equivalent plain blob"
+> rather than its real hash.
+
+I think that's actually not a very important problem.  Files that are
+different will still always have differing sha1s, which is the
+important part.  Files that are the same might not have the same sha1,
+which is a bit weird, but it's unlikely that any algorithm in git
+depends fundamentally on the fact that the sha1s match.
+
+Storing files as split does have a lot of usefulness for calculating
+diffs, however: because you can walk through the tree of hashes and
+short entire circuit subtrees with identical sha1s, you can diff even
+20GB files really rapidly.
+
+> For the moment, I am just very curious about the idea and the possible pros and
+> cons... can someone (maybe Jeff himself) tell me a little more? Also I wonder
+> about the two possibilities (implement it in git vs implement it "on top of"
+> git).
+
+"on top of" git has one major advantage, which is that it's easy: for
+example, bup already does it.  The disadvantage is that checking out
+the resulting repository won't be smart enough to re-merge the data
+again, so you have a bunch of tiny chunk files you have to concatenate
+by hand.
+
+Implementing inside git could be done in one of two ways: add support
+for a new 'multiblob' data type (which is really more like a tree
+object, but gets checked out as a single file), or implement chunking
+at the packfile level, so that higher-level tools never have to know
+about multiblobs.
+
+The latter would probably be easier and more backward-compatibility,
+but you'd probably lose the ability to do really fast diffs between
+multiblobs, since diff happens at the higher level.
+
+Overall, I'm not sure git would benefit much from supporting large
+files in this way; at least not yet.  As soon as you supported this,
+you'd start running into other problems... such as the fact that
+shallow repos don't really work very well, and you obviously don't
+want to clone every single copy of a 100MB file just so you can edit
+the most recent version.  So you might want to make sure shallow repos
+/ sparse checkouts are fully up to speed first.
+
+Have fun,
+
+Avery
