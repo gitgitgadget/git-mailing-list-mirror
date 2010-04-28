@@ -1,114 +1,97 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: Proper way to abort incorrect cherry-picking?
-Date: Thu, 29 Apr 2010 08:39:40 +1000
-Message-ID: <o2j2cfc40321004281539j28fe44e0r5d029061e3e08b90@mail.gmail.com>
-References: <s2m76c5b8581004281238jf7179fffna7d757fee6ab4f10@mail.gmail.com>
-	 <r2s302ed1461004281249xd1b65e41l43fa7b639db7c97d@mail.gmail.com>
-	 <h2v76c5b8581004281259yfaca7abfz5a455ff8fd6cdc6b@mail.gmail.com>
+From: Sylvain Rabot <sylvain@abstraction.fr>
+Subject: Re: See commits on remote repository
+Date: Thu, 29 Apr 2010 00:54:55 +0200
+Message-ID: <1272495295.3021.84.camel@kheops>
+References: <n2v3f81a4241004281535h30d35f5cw5f33e265d19d35b6@mail.gmail.com>
+Reply-To: sylvain@abstraction.fr
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Borowitz <dborowitz@google.com>, git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 29 00:40:08 2010
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-gBKblU4aDGHFZaGtvRR9"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 29 01:00:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7FvI-0000hF-O9
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Apr 2010 00:40:05 +0200
+	id 1O7GF3-0008KF-Af
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Apr 2010 01:00:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757106Ab0D1Wjm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Apr 2010 18:39:42 -0400
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:60843 "EHLO
-	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756335Ab0D1Wjl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Apr 2010 18:39:41 -0400
-Received: by qyk9 with SMTP id 9so22011807qyk.1
-        for <git@vger.kernel.org>; Wed, 28 Apr 2010 15:39:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ZHWKosxW4Chl+X40ThTej7yK+w15VAyl6bttTfQe9Ro=;
-        b=q4nS0vZ/Kcj/Er/fGQDR5c2MWj0IAdJbuwqb7eLuHpOq0kbWvKK8Qbos4Zmru/FNbl
-         DBf1NW87oxR2QdsfRKwP+yfB6pfoLYDa/ZmWHqUDgt6FSEqxVrIjSJ7Net16PVVA7FKl
-         ji1vrht7IYEa11dD29JvYdEF/U55PfqsrUwfs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=DNGD6x1Oz9nlF4YueMCnI9gfLsN5lqVUEd99yguClzYKn/wDv1ei7gJvnla+RwAXZA
-         HQl9cjz858SPKfO+yP5pCXpsC025pLDSoxuDREtKjmMmsEXRYrbePSvjtgHLsWzUxI7w
-         Np+6S9/vmIl/pQu/m7+kCcNulq+gWdSE2MI7w=
-Received: by 10.229.232.198 with SMTP id jv6mr10479623qcb.11.1272494380791; 
-	Wed, 28 Apr 2010 15:39:40 -0700 (PDT)
-Received: by 10.229.224.65 with HTTP; Wed, 28 Apr 2010 15:39:40 -0700 (PDT)
-In-Reply-To: <h2v76c5b8581004281259yfaca7abfz5a455ff8fd6cdc6b@mail.gmail.com>
+	id S1757163Ab0D1XAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Apr 2010 19:00:11 -0400
+Received: from lo.gmane.org ([80.91.229.12]:47814 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750900Ab0D1XAK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Apr 2010 19:00:10 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1O7GEd-00089l-AR
+	for git@vger.kernel.org; Thu, 29 Apr 2010 01:00:03 +0200
+Received: from smj33-1-82-233-66-33.fbx.proxad.net ([82.233.66.33])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Apr 2010 01:00:03 +0200
+Received: from sylvain by smj33-1-82-233-66-33.fbx.proxad.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Apr 2010 01:00:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: smj33-1-82-233-66-33.fbx.proxad.net
+In-Reply-To: <n2v3f81a4241004281535h30d35f5cw5f33e265d19d35b6@mail.gmail.com>
+X-Mailer: Evolution 2.28.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146018>
 
-On Thu, Apr 29, 2010 at 5:59 AM, Eugene Sajine <euguess@gmail.com> wrot=
-e:
-> On Wed, Apr 28, 2010 at 3:49 PM, David Borowitz <dborowitz@google.com=
-> wrote:
->> On Wed, Apr 28, 2010 at 12:38, Eugene Sajine <euguess@gmail.com> wro=
-te:
->>>
->>> hi,
->>>
->>> we have tried to cherry-pick 2 commits from one branch to another
->>> branch, but unfortunately the incorrect commit was chosen to be
->>> applied first.
->>>
->>> Thus, the automatic cherry-pick failed and caused conflicts, so in
->>> order to to cancel the whole operation i had to do the following:
->>>
->>> 1. mark the conflicting files as resolved (without even resolving
->>> them) by doing git add.
->>> 2. unstage all files staged for commit as a result of incomplete ch=
-erry picking
->>> 3. manually checkout touched files to their correct state (git chec=
-kout file)
->>>
->>> and then i was able to repeat cherry-picking with correct commits.
->>>
->>> Is there a better way?
->>
->> git reset --hard HEAD@{1}?
->
-> not always working. In our particular case there were some local
-> modifications to other files, which would be blown away with this for
-> no reason. That's why I went the long way of resetting specific files=
-=2E
->
 
-If you use git reset --mixed HEAD@{1} you can reset the index to
-HEAD@{1} to reflect the pre-merge state. The unstaged changes will
-then be a combination of the failed merge and the local modifications
-to the files. You can then revert the changes from the merge.
+--=-gBKblU4aDGHFZaGtvRR9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Then you can use git stash to move the local modifications out of the
-way, then repeat the cherry pick in the correct order, then use git
-stash pop to reapply the local modifications to the working tree and
-index.
-
-This is more complicated than it needs to be - if you had stashed (or
-committed) before cherry picking, things would be simpler.
-
-jon.
-
-> Thanks,
-> Eugene
+On Wed, 2010-04-28 at 16:35 -0600, Bryan Richardson wrote:
+> Hello All,
+>=20
+> Sorry if this question has been asked already. This mailing list is
+> crazy active, and even after searching I couldn't find anything.
+>=20
+> Is it possible to show commits to a remote repository that was created
+> as a clone of a local repository, similar to how GitHub lets users
+> view commits made to forked projects in a project's network?
+>=20
+> For example, say I have repository X, which I do a bare clone on to
+> create repository Y for someone else to work on (effectively forking
+> repo X). Is there a way for me to see, from repository X, what commits
+> have been made to repository Y?
+>=20
 > --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+> Thanks!
+> Bryan
+
+Hi,
+
+$ git remote update
+$ git log origin/<branch>
+$ gitk origin/<branch>
+
+Regards.
+
+
+--=20
+Sylvain Rabot <sylvain@abstraction.fr>
+
+--=-gBKblU4aDGHFZaGtvRR9
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkvYvLsACgkQ+TklUoyVcyd7ZwCgnP+FVr7XU5OSs3JqidLO1sVk
+BGAAn2NPhG6cxn+RHRRkizZ8eV3QYFV2
+=011r
+-----END PGP SIGNATURE-----
+
+--=-gBKblU4aDGHFZaGtvRR9--
