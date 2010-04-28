@@ -1,82 +1,103 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: Proper way to abort incorrect cherry-picking?
-Date: Wed, 28 Apr 2010 15:59:50 -0400
-Message-ID: <h2v76c5b8581004281259yfaca7abfz5a455ff8fd6cdc6b@mail.gmail.com>
-References: <s2m76c5b8581004281238jf7179fffna7d757fee6ab4f10@mail.gmail.com>
-	 <r2s302ed1461004281249xd1b65e41l43fa7b639db7c97d@mail.gmail.com>
+From: Gerhard Wiesinger <lists@wiesinger.com>
+Subject: Re: Global .git directory
+Date: Wed, 28 Apr 2010 22:03:20 +0200 (CEST)
+Message-ID: <alpine.LFD.2.00.1004282148310.26569@bbs.intern>
+References: <alpine.LFD.2.00.1004270705280.15197@bbs.intern>  <201004271159.34071.trast@student.ethz.ch>  <alpine.LFD.2.00.1004272144470.11216@bbs.intern> <s2y40aa078e1004271326u3fbbd46au30f187bc3ca9c8c8@mail.gmail.com> <alpine.LFD.2.00.1004280710380.27548@bbs.intern>
+ <4BD7D412.5020603@dbservice.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: David Borowitz <dborowitz@google.com>
-X-From: git-owner@vger.kernel.org Wed Apr 28 22:00:00 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: kusmabite@gmail.com, Thomas Rast <trast@student.ethz.ch>,
+	git@vger.kernel.org
+To: Tomas Carnecky <tom@dbservice.com>
+X-From: git-owner@vger.kernel.org Wed Apr 28 22:04:28 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7DQM-0004dA-EP
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 21:59:58 +0200
+	id 1O7DUe-0006pP-DW
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 22:04:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756976Ab0D1T7w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Apr 2010 15:59:52 -0400
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:64835 "EHLO
-	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756954Ab0D1T7v (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Apr 2010 15:59:51 -0400
-Received: by qyk9 with SMTP id 9so21797568qyk.1
-        for <git@vger.kernel.org>; Wed, 28 Apr 2010 12:59:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=J4THPS/4W0bu/YO/lEOmY0x/jSm4b08G2mm0Xu8QI0c=;
-        b=X5UBZ5q9TfmAvg8HLZ0W238fBdsy9Wx+kCHM38yaWDRpwDvfXMpAf5liasTg6qXnGq
-         A5OG4U3A/FZP8QnA7PIOqdtMfTX2cbSJEr7uFIROrfUNRemiigGZqUFLTlWnopLl2uBZ
-         M92LeFsxa23U5jeTtY3nyefnOyA6ch+mMBl7M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=OKvpcUH4IC4VFPsI/kvn5+JTNdyLyDAJlngS9/ybrzXJ8V7TvOuqoD+Ywd7TszrtXn
-         KE59fUkA8xi1KhznWreqtYTbE6JNk16mcHuN8hVbcU6Oe6fnUMBCQm00QwDlP/iHm4B9
-         IlbmoKaSNMkkGLerq9w9iRgnDvbDL5BYGq1PQ=
-Received: by 10.229.219.203 with SMTP id hv11mr10111233qcb.46.1272484790280; 
-	Wed, 28 Apr 2010 12:59:50 -0700 (PDT)
-Received: by 10.229.190.202 with HTTP; Wed, 28 Apr 2010 12:59:50 -0700 (PDT)
-In-Reply-To: <r2s302ed1461004281249xd1b65e41l43fa7b639db7c97d@mail.gmail.com>
+	id S1756986Ab0D1UEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Apr 2010 16:04:16 -0400
+Received: from chello084112167138.7.11.vie.surfer.at ([84.112.167.138]:51950
+	"EHLO wiesinger.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754787Ab0D1UEP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Apr 2010 16:04:15 -0400
+Received: from bbs.intern (localhost [127.0.0.1])
+	by wiesinger.com (8.14.4/8.14.4) with ESMTP id o3SK3Ku7029009;
+	Wed, 28 Apr 2010 22:03:20 +0200
+Received: from localhost (gerhard@localhost)
+	by bbs.intern (8.14.4/8.14.4/Submit) with ESMTP id o3SK3KWu029005;
+	Wed, 28 Apr 2010 22:03:20 +0200
+In-Reply-To: <4BD7D412.5020603@dbservice.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-MailScanner-Information-wiesinger-com: Please contact the ISP for more information
+X-wiesinger-com-MailScanner-ID: o3SK3Ku7029009
+X-MailScanner-wiesinger-com: Found to be clean
+X-MailScanner-SpamCheck-wiesinger-com: not spam, SpamAssassin (not cached,
+	score=-4.359, required 4.5, autolearn=not spam, ALL_TRUSTED -1.80,
+	AWL 0.04, BAYES_00 -2.60)
+X-MailScanner-From: lists@wiesinger.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146010>
 
-On Wed, Apr 28, 2010 at 3:49 PM, David Borowitz <dborowitz@google.com> wrote:
-> On Wed, Apr 28, 2010 at 12:38, Eugene Sajine <euguess@gmail.com> wrote:
->>
->> hi,
->>
->> we have tried to cherry-pick 2 commits from one branch to another
->> branch, but unfortunately the incorrect commit was chosen to be
->> applied first.
->>
->> Thus, the automatic cherry-pick failed and caused conflicts, so in
->> order to to cancel the whole operation i had to do the following:
->>
->> 1. mark the conflicting files as resolved (without even resolving
->> them) by doing git add.
->> 2. unstage all files staged for commit as a result of incomplete cherry picking
->> 3. manually checkout touched files to their correct state (git checkout file)
->>
->> and then i was able to repeat cherry-picking with correct commits.
->>
->> Is there a better way?
+
+
+
+--
+http://www.wiesinger.com/
+
+
+On Wed, 28 Apr 2010, Tomas Carnecky wrote:
+
+> On 4/28/10 7:33 AM, Gerhard Wiesinger wrote:
+>> BTW: The tutorial on http://git-scm.com/ is IHMO wrong:
+>> git --version
+>> git version 1.6.2.5
+>> git commit -m 'Explain what I changed'
+>> =>
+>> git commit -a -m 'Explain what I changed'
+>> => Otherwise changed files are not committed, only added ones.
+>> => Therefore that are 2 commit ...
 >
-> git reset --hard HEAD@{1}?
+> If you mean the snippets right on the front page, it assumes that you add all 
+> edited files.
 
-not always working. In our particular case there were some local
-modifications to other files, which would be blown away with this for
-no reason. That's why I went the long way of resetting specific files.
+OK, I assumed that the tutorial at
+http://git.or.cz/course/svn.html
+when switching from svn to git is correct, but it isn't. I unterstand now, 
+that git is basically a patch management system where you add or remove 
+(rm) files to a patch/commit set (adding in svn means adding or removing 
+a file). So this is very different from svn and other SCM systems.
 
-Thanks,
-Eugene
+Homepage:
+git add (files)
+=>
+git add (all edited and added files)
+would clarify this, too.
+
+>> BTW2:
+>> Why is it necessary to do:
+>> # Displays only changed files
+>> git diff
+>> # Displays only added files
+>> git diff --cached
+>> 
+>> I would like to have a full diff of my changes:
+>> git diff -a
+>> (or better "git diff -a" should be the default behaviour, I think that's
+>> very confusing for new users)
+>
+> What are 'your' changes? Between HEAD and the working tree (aka. git diff 
+> HEAD)?
+
+git diff HEAD
+# no output.
+
+Ciao,
+Gerhard
