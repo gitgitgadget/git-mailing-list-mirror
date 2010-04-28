@@ -1,98 +1,122 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: how to fix the problem correctly?
-Date: Wed, 28 Apr 2010 12:54:33 -0400
-Message-ID: <w2t76c5b8581004280954r436c1be1g8d6e415bf3596f4d@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [patch 06/16] diff-test_cmp.patch
+Date: Wed, 28 Apr 2010 12:43:02 -0500
+Message-ID: <20100428174302.GD2041@progeny.tock>
+References: <20100427135708.258636000@mlists.thewrittenword.com>
+ <20100427135833.403548000@mlists.thewrittenword.com>
+ <20100427171531.GA15553@progeny.tock>
+ <20100428090045.GD36271@thor.il.thewrittenword.com>
+ <20100428095159.GD1394@progeny.tock>
+ <20100428102250.GB39644@thor.il.thewrittenword.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eugene Sajine <euguess@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 28 18:54:41 2010
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
+X-From: git-owner@vger.kernel.org Wed Apr 28 19:43:33 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7AX2-0006DI-TP
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 18:54:41 +0200
+	id 1O7BIG-0002II-QC
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 19:43:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755905Ab0D1Qyg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Apr 2010 12:54:36 -0400
-Received: from mail-qy0-f179.google.com ([209.85.221.179]:49889 "EHLO
-	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753175Ab0D1Qyf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Apr 2010 12:54:35 -0400
-Received: by qyk9 with SMTP id 9so21545210qyk.1
-        for <git@vger.kernel.org>; Wed, 28 Apr 2010 09:54:34 -0700 (PDT)
+	id S1755242Ab0D1RnL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Apr 2010 13:43:11 -0400
+Received: from mail-ew0-f220.google.com ([209.85.219.220]:48670 "EHLO
+	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751989Ab0D1RnK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Apr 2010 13:43:10 -0400
+Received: by ewy20 with SMTP id 20so4918200ewy.1
+        for <git@vger.kernel.org>; Wed, 28 Apr 2010 10:43:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=oRuxYgk3H5KCH+jnvbjU2HlVmmoLM1H4MqSoM/057H0=;
-        b=hHUBTo/vug2gy9V2GN3vCn61npbrOls74khVlZbGrTzy/ISmj9jJeoUuq6pa7lbKMl
-         53Asowkc4W6i4aWO1g8Vk/t0HUbokc5S7R/rlVbu8XyYGxVwjhDiPqnAZ9xyl+Gf7etl
-         Ijy/jfuBaMSFYEpJIGOTvDOfx271bPSPmvWvg=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=upIWI5IYd7F8Z7NSmKWR+ms0jj6nk/FFRNHt+nCvOnM=;
+        b=PZQ8NrzNkZgqlrmGqSlPxTAcd71XqT68m3FRAFgIKlYe+R3ki2PEg44VhfCWLz7rfI
+         YyxX9g2zYh+JZLS9tGB/MW97oPn2Y29lQnSWICx31eRiRRsZpD5Gt3+e+sjHBBSLEGx+
+         Wq48Mltcm6q4DyncKp7hrp9NehOaGz3p6kxYM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=QmgzkhC5XAj5OlZVog8ZtSMcGVnoudXPjN7/MtOv6y8To6aCSQZJLvR+XS0c0UKLXW
-         iVgmK0FooLs18TH+6UUiD6mmHMVTeMaH71X1rRlZ1aDwX9d47281eNT/EGGTX0hBbC7n
-         fWfR529KvNGuFRjsabGdothn+dVCsmhnkeI2I=
-Received: by 10.229.225.73 with SMTP id ir9mr9842206qcb.22.1272473673879; Wed, 
-	28 Apr 2010 09:54:33 -0700 (PDT)
-Received: by 10.229.190.202 with HTTP; Wed, 28 Apr 2010 09:54:33 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=QYctM8EvdznPVGmeFP/iJZkdKe7/CaXJkb7aYwfLXVA1ekWsvX18V1dU7DU16yGTGj
+         ooRnFNY9/bTsrM66qBdC303dQVZZBlZzjnDNgXsDOe+5JkdQGo2P38h7lwhPnFDSwVKM
+         FMY+KxJtPUCq+u38crEvm4/1PuA74siVgw9UY=
+Received: by 10.103.7.28 with SMTP id k28mr4283323mui.25.1272476588260;
+        Wed, 28 Apr 2010 10:43:08 -0700 (PDT)
+Received: from progeny.tock (c-76-28-252-211.hsd1.wa.comcast.net [76.28.252.211])
+        by mx.google.com with ESMTPS id b9sm141004mug.7.2010.04.28.10.43.05
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 28 Apr 2010 10:43:07 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100428102250.GB39644@thor.il.thewrittenword.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146000>
 
-I have a following situation (in dev branch):
+Gary V. Vaughan wrote:
+> On Wed, Apr 28, 2010 at 04:51:59AM -0500, Jonathan Nieder wrote:
 
-3 files:
-1.txt, 2.txt, 3.txt
+>> The most general way:
+[git init and git add . and git commit]
+> D'oh.  Of course... I was too fixated on git clone to notice.
+>
+>> You can automate some of those steps by
+>>=20
+>>  wget http://address/of/tarball.tar.gz
+>>  git init project
+>>  cd project
+>>  perl /usr/share/doc/git/contrib/fast-import/import-tars.perl tarbal=
+l.tar.gz
+>>  git checkout import-tars
+>>  ... use git as usual
+>
+> What's happening here?  Is this sharing a single repository for all
+> locally hosted git projects, or is this more or less the same as the
+> above?
 
-A -> B -> C -> D -> E
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 |
-=C2=A0 =C2=A0Master =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 de=
-v
+It=E2=80=99s the same as the above.  The only advantages I can think of=
+ are that
+it might be slightly faster (though I haven=E2=80=99t tested) and that =
+this way
+I don=E2=80=99t have to remember the tar --strip-components option.
 
-Between B and C the version of file 1.txt was screwed up (let=E2=80=99s=
- say it
-was copied into git repo from other location where it was in state A
-(CVS) and then committed by mistake in C, effectively reverting the
-change of this file in commit B)
-Commit C also had changes to files 2 and 3.
-After this commits D and E did not have changes for file 1.txt, only 2
-and 3 were touched.
+You could share a single repository for all locally hosted git projects=
+,
+but that would kill the behavior of make.
 
-When we tried to revert commit C =E2=80=93 this lead to the code comple=
-tely
-messed up, with conflicts =E2=80=93 so this seems to be not an option.
-Rebase also doesn=E2=80=99t seem to help here
+>> If upstream uses git, there is also the shallow-clone facility:
+>>=20
+>>  git clone -b master --depth=3D1 git://repo.or.cz/git.git/
+>>  cd git
+>>  ... use git as usual, except history is cauterized
+>
+> This is probably the flavour that would be of the most use to us.
+> Thanks for educating me :)
+>
+>> It has one rough edge you may run into: push is not supported.  If t=
+hat
+>> is a problem for you, let me know and maybe I can try to help fix it=
+=2E
+>
+> No, I think the main benefit of using git locally would be to provide
+> a pull source for upstream.
 
-Only two variants I saw:
-1. Do =E2=80=9Cgit co A 1.txt=E2=80=9D and commit the change as F
-2. Do =E2=80=9Cgit reset =E2=80=93soft master=E2=80=9D and recommit all=
- changes once again
+Oh, that=E2=80=99s another rough edge (the same one, fundamentally).  S=
+orry.
 
-Is there a better way?
+Another benefit of using git to fetch from upstream is to get the lates=
+t
+version.
 
-PS interesting enough =E2=80=93 CVS keywords helped us to notice the pr=
-oblem
-as master state was imported from CVS.
-In commit A file 1.txt had version ID 1.5 in commit B it was 1.6 ,
-commit C was changing the line back to 1.5
-Is there a way for git to help me to recognize this kind of issue if
-there are no keywords?
-
-DISCLAIMER: I don=E2=80=99t like keywords, and I don=E2=80=99t want the=
-m to be
-implemented in git.
-
-
-Thanks,
-Eugene
+Hope that helps,
+Jonathan
