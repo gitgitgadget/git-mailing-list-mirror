@@ -1,103 +1,83 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: Global .git directory
-Date: Wed, 28 Apr 2010 14:50:46 +0200
-Message-ID: <q2k40aa078e1004280550o322dc5b8jca74d401a5eb1abe@mail.gmail.com>
-References: <alpine.LFD.2.00.1004270705280.15197@bbs.intern>
-	 <201004271159.34071.trast@student.ethz.ch>
-	 <alpine.LFD.2.00.1004272144470.11216@bbs.intern>
-	 <s2y40aa078e1004271326u3fbbd46au30f187bc3ca9c8c8@mail.gmail.com>
-	 <alpine.LFD.2.00.1004280710380.27548@bbs.intern>
-Reply-To: kusmabite@gmail.com
+From: Ian Hobson <ian@ianhobson.co.uk>
+Subject: Re: Strange permission problem - advice needed
+Date: Wed, 28 Apr 2010 14:09:54 +0100
+Message-ID: <4BD833A2.2060304@ianhobson.co.uk>
+References: <4BD8185B.5060706@ianhobson.co.uk> <4BD82A6A.7080502@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Gerhard Wiesinger <lists@wiesinger.com>
-X-From: git-owner@vger.kernel.org Wed Apr 28 14:51:02 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Apr 28 15:10:04 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O76jF-0006ve-J6
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 14:51:01 +0200
+	id 1O771g-0008FI-62
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 15:10:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752926Ab0D1Mu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Apr 2010 08:50:56 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:59685 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752421Ab0D1Muz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Apr 2010 08:50:55 -0400
-Received: by wye20 with SMTP id 20so719723wye.19
-        for <git@vger.kernel.org>; Wed, 28 Apr 2010 05:50:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:reply-to
-         :in-reply-to:references:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=bNJjsbEbiGserMsXInqyQrbV2izMSmwnfKJDHKwTGu4=;
-        b=XfT3Xe0vKmUNiKTI3g+sHxPLwBsDtF/E7cjqgK2p51XvsIbrRB79IjKv6MQeh8HU1J
-         5HIjI/biSBsjhmVgvK78ORRIcVgUfNUIZI72mQkXU8QozfBtWloRwDsHWmKspgKxKNWA
-         RYYZtnbImv5VxiQ/2rZ8abg+YPa+Y6oLaWelk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        b=p7mTPrKeZSoe9c72FP7rO80C+gSAHhq5zgbUV2hyD/7ssi9bHbZI8r0tRgJ9/AlUXa
-         kzr4MZGrAOiCoPLVFhkgA0Dh2KaI4JWhr6nKPwBE4dd4waFaP0Zt/lbLy4mR7vkKxMyz
-         WPwQYqyF5qb2/l7mwaAZ825PZTGxaU42WLxSA=
-Received: by 10.216.89.130 with SMTP id c2mr2166292wef.44.1272459046956; Wed, 
-	28 Apr 2010 05:50:46 -0700 (PDT)
-Received: by 10.216.51.79 with HTTP; Wed, 28 Apr 2010 05:50:46 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.1004280710380.27548@bbs.intern>
+	id S1754095Ab0D1NJ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Apr 2010 09:09:56 -0400
+Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:62271 "EHLO
+	mtaout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751370Ab0D1NJ4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Apr 2010 09:09:56 -0400
+Received: from aamtaout04-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout01-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20100428130954.OJXZ14666.mtaout01-winn.ispmail.ntl.com@aamtaout04-winn.ispmail.ntl.com>
+          for <git@vger.kernel.org>; Wed, 28 Apr 2010 14:09:54 +0100
+Received: from jupiter.ianhobson.co.uk ([86.12.69.89])
+          by aamtaout04-winn.ispmail.ntl.com
+          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
+          id <20100428130954.YGWR11021.aamtaout04-winn.ispmail.ntl.com@jupiter.ianhobson.co.uk>
+          for <git@vger.kernel.org>; Wed, 28 Apr 2010 14:09:54 +0100
+Received: (qmail 22417 invoked by uid 453); 28 Apr 2010 13:09:52 -0000
+X-Virus-Checked: Checked by ClamAV on ianhobson.co.uk
+Received: from bobgriffiths.mars.hcs (HELO [192.168.0.13]) (192.168.0.13)
+    by ianhobson.co.uk (qpsmtpd/0.40) with ESMTP; Wed, 28 Apr 2010 14:09:52 +0100
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100317 Lightning/1.0b1 Thunderbird/3.0.4 ThunderBrowse/3.2.8.1
+In-Reply-To: <4BD82A6A.7080502@viscovery.net>
+X-Cloudmark-Analysis: v=1.1 cv=ZtHxNT4mZm3rCuM0SmWmgWxeBwJsziC8EqOrwwVkrhA= c=1 sm=0 a=BAbEzbdQzvIA:10 a=8nJEP1OIZ-IA:10 a=8GlCPkqGuturoxpA4WEA:9 a=krEB4LZfGGlzMTxhRfcA:7 a=4szP_HhNh8oK9Yk80SegtL_ngH0A:4 a=wPNLvfGTeEIA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145995>
 
-On Wed, Apr 28, 2010 at 7:33 AM, Gerhard Wiesinger <lists@wiesinger.com> wrote:
-> On Tue, 27 Apr 2010, Erik Faye-Lund wrote:
+On 28/04/2010 13:30, Johannes Sixt wrote:
+> Am 4/28/2010 13:13, schrieb Ian Hobson:
+>    
+>> I'm using git on windows (XP) ...
+>>      
+>    
+>> $ git gc
+>> Counting objects: 398, done.
+>> Compressing objects: 100% (205/205), done.
+>> Writing objects: 100% (398/398), done.
+>> Total 398 (delta 191), reused 398 (delta 191)
+>> rm: cannot unlink `pack-6f07bacdef764f32f12af14877b307d2cb36a1e4.pack':
+>> Permission denied
+>> rm: cannot unlink `pack-6f07bacdef764f32f12af14877b307d2cb36a1e4.idx':
+>> Permission denied
+>> rm: cannot unlink `pack-cba55771937a4549af73c09c17b10cfceb1320df.pack':
+>> Permission denied
+>> rm: cannot unlink `pack-cba55771937a4549af73c09c17b10cfceb1320df.idx':
+>> Permission denied
+>> Removing duplicate objects: 100% (256/256), done.
+>>      
+> Chances are that you have a hung git process that has the files open. Kill
+> it and retry.
 >
->> On Tue, Apr 27, 2010 at 10:06 PM, Gerhard Wiesinger <lists@wiesinger.com>
->> wrote:
->>>
->>> On Tue, 27 Apr 2010, Thomas Rast wrote:
->>>>
->>>> (In other words, please convince us that this is actually worth
->>>> having.)
->>>
->>> Ok, rather than convincing I've written a (fast) patch which works for me
->>> :-)
->>>
->>> Any comments? Any (further) changes needed? Will you include it in main
->>> git?
->>
->> Please see Documentation/SubmittingPatches. It's difficult to comment
->> on a non-inlined patch.
->>
->
-> Patch done on top of HEAD.
-> git format-patch -M origin/master
-> 0001-Added-global-git-directory-when-environment-variable.patch
-> 0002-Added-global-git-directory-when-environment-variable.patch
-> 0003-Updated-documentation-for-submitting-patches.patch
-> Attached.
->
+> -- Hannes
+> --
+>    
+Thanks Hannes,
 
-I was referring to that you sent the patch attached instead of inlined
-(as Documentation/SubmittingPatches suggests).
+Your were completely correct.
 
-By attaching patches you force everyone who wants to review the patch
-to have to copy and manually quote the parts of the patch that they
-have comments about instead of automatic quoting like all decent
-e-mail clients do. That way you get less people interested in the
-patch.
-
-I sent this reply because you did the right thing of cooking up a
-patch in the first place (as opposed to just arguing - very good), so
-I think you deserve a chance of getting the patch reviewed (and
-possibly included... if people agree with you, that is).
-
--- 
-Erik "kusma" Faye-Lund
+All sorted now.
+Regards
+Ian
