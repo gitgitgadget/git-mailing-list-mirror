@@ -1,125 +1,105 @@
-From: Sergio <sergio.callegari@gmail.com>
-Subject: Re: Multiblobs
-Date: Wed, 28 Apr 2010 23:26:27 +0000 (UTC)
-Message-ID: <loom.20100429T010742-199@post.gmane.org>
-References: <loom.20100428T164432-954@post.gmane.org> <k2y32541b131004281107u6d15ed4ex54b5e5c138cc0e24@mail.gmail.com>  <loom.20100428T204406-308@post.gmane.org> <k2x32541b131004281427o2101720at3d324f5e94f05327@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Proper way to abort incorrect cherry-picking?
+Date: Wed, 28 Apr 2010 18:37:58 -0500
+Message-ID: <20100428233758.GA1654@progeny.tock>
+References: <s2m76c5b8581004281238jf7179fffna7d757fee6ab4f10@mail.gmail.com>
+ <r2s302ed1461004281249xd1b65e41l43fa7b639db7c97d@mail.gmail.com>
+ <h2v76c5b8581004281259yfaca7abfz5a455ff8fd6cdc6b@mail.gmail.com>
+ <o2j2cfc40321004281539j28fe44e0r5d029061e3e08b90@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 29 01:26:43 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eugene Sajine <euguess@gmail.com>,
+	David Borowitz <dborowitz@google.com>, git@vger.kernel.org
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 29 01:38:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7GeQ-0002m8-EN
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Apr 2010 01:26:42 +0200
+	id 1O7Gpl-0006FY-GP
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Apr 2010 01:38:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754577Ab0D1X0g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Apr 2010 19:26:36 -0400
-Received: from lo.gmane.org ([80.91.229.12]:60009 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752310Ab0D1X0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Apr 2010 19:26:35 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1O7GeI-0002jH-OF
-	for git@vger.kernel.org; Thu, 29 Apr 2010 01:26:34 +0200
-Received: from 109.54.5.85 ([109.54.5.85])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Apr 2010 01:26:34 +0200
-Received: from sergio.callegari by 109.54.5.85 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Apr 2010 01:26:34 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 109.54.5.85 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100402 Ubuntu/9.10 (karmic) Firefox/3.5.9)
+	id S1755978Ab0D1XiJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Apr 2010 19:38:09 -0400
+Received: from mail-qy0-f179.google.com ([209.85.221.179]:59756 "EHLO
+	mail-qy0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755312Ab0D1XiI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Apr 2010 19:38:08 -0400
+Received: by qyk9 with SMTP id 9so22089315qyk.1
+        for <git@vger.kernel.org>; Wed, 28 Apr 2010 16:38:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=i6GnL68kv4RkUyH1P3yPmJ8pat9i1T3NA46Szh7iq3E=;
+        b=GFjPS41NZpZhTmGi14Pwaf4BFU25pvj3oM8VawruRFb/9T63p88lC25bShsaPERL9D
+         Z3ah8ExHdag2BQkd6nETMDtp3tMJJaSt8mhJZCvFi+mtf4WdeJC1qmmqLFIQ6jnv7oUF
+         sjgzUmgWQVD/UopT9bOdaIvgm529Gpu7KGTR0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=rDe6lu2IZFlNgIevh4OhS7x1JZqqX3OgpOan/HqeMKHSa+FUZzUVuOE9S/QrcG19Py
+         mu+phsPuA7HeImLefbP/oEzwE39n3dJ6cKe8mpy87Kv3BYdM3l5eaOJ6+04L163Wjqwq
+         IXudGnsAtZJILGQAA6uE9hhLHZJ5bOGuY40vI=
+Received: by 10.229.242.3 with SMTP id lg3mr5265642qcb.102.1272497886819;
+        Wed, 28 Apr 2010 16:38:06 -0700 (PDT)
+Received: from progeny.tock (c-76-28-252-211.hsd1.wa.comcast.net [76.28.252.211])
+        by mx.google.com with ESMTPS id x34sm240229qce.21.2010.04.28.16.38.04
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 28 Apr 2010 16:38:05 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <o2j2cfc40321004281539j28fe44e0r5d029061e3e08b90@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146021>
 
-Avery Pennarun <apenwarr <at> gmail.com> writes:
+Hi Jon,
 
-> But why not use a .gitattributes filter to recompress the zip/odp file
-> with no compression, as I suggested?  Then you can just dump the whole
-> thing into git directly.  When you change the file, only the changes
-> need to be stored thanks to delta compression.  Unless your
-> presentation is hundreds of megs in size, git should be able to handle
-> that just fine already.
+Jon Seymour wrote:
 
-Actually, I'm doing so...  But in some occasions odf file that share many
-components do not delta, even when passed through a filter that uncompresses
-them. Multiblobs are like taking advantage of a known structure to get better
-deltas.
+> If you use git reset --mixed HEAD@{1} you can reset the index to
+> HEAD@{1} to reflect the pre-merge state.
 
-> But then you're digging around inside the pdf file by hand, which is a
-> lot of pdf-specific work that probably doesn't belong inside git.
+The HEAD doesn=E2=80=99t advance in a failed merge, right?
 
-I perfectly agree that git should not know about the inner structure of things
-like PDFs, Zips, Tars, Jars, whatever. But having an infrastructure allowing
-multiblobs and attributes like clean/smudge to trigger creation and use of
-multiblobs with user provided split/unsplit drivers could be nice.
+[...]
+> This is more complicated than it needs to be - if you had stashed (or
+> committed) before cherry picking, things would be simpler.
 
-> Worse, because compression programs don't always produce the same
-> output, this operation would most likely actually *change* the hash of
-> your pdf file as you do it. 
+If this were really necessary, I would consider it a bug.
 
-This should depend on the split/unsplit driver that you write. If your driver
-stores a sufficient amount of metadata about the streams and their order, you
-should be able to recreate the original file.
+I do think recovery is more complicated than it needs to be, since one
+has to check whether the merge/cherry-pick failed before cancelling
+it.  There are three cases.
 
-> In what way?  I doubt you'd get more efficient storage, at least.
-> Git's deltas are awfully hard to beat.
+ - If an early check prevented the operation (message with =E2=80=9Cfat=
+al:=E2=80=9D,
+   status =3D 128), then the index and work tree were not touched.
 
-Using the known structure of the file, you automatically identify the bits that
-are identical and you save the need to find a delta altogether.
+   No recovery required.
 
+ - If there were conflicts (message with =E2=80=9CConflicts:=E2=80=9D, =
+status =3D 1),
+   the index will record the competing versions of conflicted files,
+   and the work tree will represent the situation with conflict
+   markers.
 
-> > I agree... but there could be just a mere couple of gitattributes
-multiblobsplit
-> > and multiblobcompose, so that one could provide his own splitting and
-composing
-> > methods for the types of files he is interested in (and maybe contribute
-them to
-> > the community).
-> 
-> I guess this would be mostly harmless; the implementation could mirror
-> the filter stuff.
+   Use =E2=80=98git reset --merge=E2=80=99 to recover.
 
-This is exactly what I was thinking of: multiblobs as a generalization of the
-filter infrastructure.
+ - If the merge proceeded cleanly (status =3D 0), but it was a bad
+   idea after all, the index and work tree record the new version now.
 
-> In that case, I'd like to see some comparisons of real numbers
-> (memory, disk usage, CPU usage) when storing your openoffice documents
-> (using the .gitattributes filter, of course).  I can't really imagine
-> how splitting the files into more pieces would really improve disk
-> space usage, at least.
+   Use =E2=80=98git reset --keep HEAD@{1}=E2=80=99 to undo the operatio=
+n.
 
-I'll try to isolate test cases, making test repos:
-
-a) with 1 odf file changing a little on each checkin
-b) the same storing the odf file with no compression with a suitable filter
-c) the same storing the tree inside the odf file.
-
-> Having done some tests while writing bup, my experience has been that
-> chunking-without-deltas is great for these situations:
-> 1) you have the same data shared across *multiple* files (eg. the same
-> images in lots of openoffice documents with different filenames);
-> 2) you have the same data *repeated* in the same file at large
-> distances (so that gzip compression doesn't catch it; eg. VMware
-> images)
-> 3) your file is too big to work with the delta compressor (eg. VMware images).
-
-An aside: bup is great!!! Thanks!
- 
-And thanks for all your comments, of course!
-
-Sergio
+Have fun,
+Jonathan
