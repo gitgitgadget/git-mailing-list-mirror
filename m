@@ -1,62 +1,65 @@
-From: Rich Collins <richcollins@gmail.com>
-Subject: Katana - An OS X GUI for git
-Date: Tue, 27 Apr 2010 16:54:41 -0700
-Message-ID: <74478B54-CB44-4437-9AF5-7BC416BBBCAA@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 28 01:54:54 2010
+From: John Tapsell <johnflux@gmail.com>
+Subject: Groups of commits
+Date: Wed, 28 Apr 2010 10:59:44 +0900
+Message-ID: <j2u43d8ce651004271859t8f306261n330004142a42b6df@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 28 03:59:53 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O6uc9-0003EF-2z
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 01:54:53 +0200
+	id 1O6wZ5-0004Ya-P0
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Apr 2010 03:59:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754829Ab0D0Xys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Apr 2010 19:54:48 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:54628 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752583Ab0D0Xyr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Apr 2010 19:54:47 -0400
-Received: by pwj9 with SMTP id 9so9948085pwj.19
-        for <git@vger.kernel.org>; Tue, 27 Apr 2010 16:54:47 -0700 (PDT)
+	id S1754718Ab0D1B7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Apr 2010 21:59:46 -0400
+Received: from mail-pz0-f204.google.com ([209.85.222.204]:50305 "EHLO
+	mail-pz0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753548Ab0D1B7p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Apr 2010 21:59:45 -0400
+Received: by pzk42 with SMTP id 42so9473766pzk.4
+        for <git@vger.kernel.org>; Tue, 27 Apr 2010 18:59:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:content-type
-         :content-transfer-encoding:subject:date:message-id:to:mime-version
-         :x-mailer;
-        bh=xeuh8zyj2JjG0gRCBlemzRfSFRPxt91OuBMElEjzjrc=;
-        b=ax7sGvhmX4CoPnMURCJYR823fJR1chGtKFwp5xO568uJIltFQ6/S7l3/qqQeMJOZyV
-         Wh9wvZyDBzkzH+hcR3trGO19jHKzFxjKwxJrHj6mOMuogNrthG3rObIVzsg+IVhI0cu1
-         clHt06OdWAyFsqxNEAuxxs3o+7x7vbrcXLf+I=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=TG3haVndeanEjILHBWe71HbcSyQK20ldm9y+aGjmrLM=;
+        b=L2T4ngNcV1ZNNqjIwmkEJd4WRtIvvihPRdimABzm8zlpCg79CufjiaIMFqcnnI/+p/
+         2bwVYx/kCttwrhwvfFx0XvLUGmsQtxMg+l9icWb8028DpIP3YKeNHiOJ8k4Z41AEdFLp
+         DUnbi6evmnx8ozUuZKtFKm8bCBNjo7fuMbcTI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:content-type:content-transfer-encoding:subject:date:message-id
-         :to:mime-version:x-mailer;
-        b=p5TRp44R8NAJWzhX7gw+B+dh0v9wVTXDQQqVjXAMFh1k7h5F2kY9HfFJ8Cam3hY3BY
-         yxb36pUmhd5pCb9LUVwXI7RROEGcat6YomGUiZJ+jycagIq4KEIWkHX6vj3r99jZ117L
-         246MVfDyd19jIX67z8OLWSFjz6OLdNU/VjNmo=
-Received: by 10.142.9.31 with SMTP id 31mr3410401wfi.7.1272412485486;
-        Tue, 27 Apr 2010 16:54:45 -0700 (PDT)
-Received: from [10.1.9.130] ([204.14.152.126])
-        by mx.google.com with ESMTPS id 22sm5734260pzk.1.2010.04.27.16.54.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 27 Apr 2010 16:54:44 -0700 (PDT)
-X-Mailer: Apple Mail (2.1078)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=MKoDo9yiBLJH5wgcB2NsPPNnFJow5MWiqTzr9ezl7JHduS0IZXPQZAUUu5xUlLnVAj
+         NZRwwylYcCPBURBq9lEBl/Mfn+GvC/QUQjpovnUuvO0iOm5br5D/VBO0XfY38JFU5/g6
+         yJJTGwIz8lJm2n7B3UFTfPLSD1lWlqJw820u8=
+Received: by 10.114.214.26 with SMTP id m26mr3794655wag.204.1272419984587; 
+	Tue, 27 Apr 2010 18:59:44 -0700 (PDT)
+Received: by 10.114.14.18 with HTTP; Tue, 27 Apr 2010 18:59:44 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/145964>
 
-Steve Dekorte and I just released Katana, an OS X app for graphically managing git repos.  I would love to get everyone's feedback.  If you have suggestions please send them.  If you especially like it, we would love to hear from you as well:
+Hi all,
 
-http://www.dekorte.com/projects/shareware/Katana/
+  In my work place, we have a lot of strict rules to get something
+committed.  The code has to pass against a large test suite, it has to
+be tested on different hardware, and so on.
 
-Thanks!
+  The problem is that it forces everyone to have one single large
+commit for a week's work.  All the intermediate stages get squashed
+and that history forever lost.
 
-Rich Collins
+  It would be nice to have a commit in the repository, treated as a
+single commit for all purposes, but then be able to split it into
+multiple commits if necessary.
+
+  Any ideas?
+
+John
