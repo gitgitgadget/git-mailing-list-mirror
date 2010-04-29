@@ -1,86 +1,209 @@
-From: =?UTF-8?B?SGVydsOpIENhdXdlbGllcg==?= <herve@itaapy.com>
-Subject: Re: Multiblobs
-Date: Fri, 30 Apr 2010 21:06:10 +0200
-Message-ID: <4BDB2A22.40400@itaapy.com>
-References: <loom.20100428T164432-954@post.gmane.org> <k2y32541b131004281107u6d15ed4ex54b5e5c138cc0e24@mail.gmail.com> 	<loom.20100428T204406-308@post.gmane.org> <4BDA9F5C.2080808@itaapy.com> <u2lb4087cc51004301116t17ba0efamf4c9b38842bad409@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH/RFC] gitweb: Create install target for gitweb in Makefile
+Date: Fri, 30 Apr 2010 01:58:22 +0200
+Message-ID: <20100429235046.29606.35311.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 30 21:04:51 2010
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 30 21:15:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7vW6-0004r3-3E
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 21:04:50 +0200
+	id 1O7vgM-0005ue-Re
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 21:15:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932953Ab0D3TEl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Apr 2010 15:04:41 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:50345 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759408Ab0D3TER (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Apr 2010 15:04:17 -0400
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 8A08C818157;
-	Fri, 30 Apr 2010 21:04:07 +0200 (CEST)
-Received: from [192.168.1.3] (lns-bzn-28-82-250-155-237.adsl.proxad.net [82.250.155.237])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 52037818196;
-	Fri, 30 Apr 2010 21:04:05 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100330 Shredder/3.0.4
-In-Reply-To: <u2lb4087cc51004301116t17ba0efamf4c9b38842bad409@mail.gmail.com>
+	id S1759499Ab0D3TNp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Apr 2010 15:13:45 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:39791 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759363Ab0D3TNj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Apr 2010 15:13:39 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so234225fga.1
+        for <git@vger.kernel.org>; Fri, 30 Apr 2010 12:13:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:subject:to:date
+         :message-id:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=HCMFUiUg4zeFyCKI3/vXEE1OLjphH8jd5xHY7BKG8SM=;
+        b=U699AXd4c9MdP8a9xl9OCWTDxduYghIvRJkkemruT/jgUhuULwZfks7UMDzlHVqGH2
+         70b7bFQZX4sOBh+P28ubUlnayWxA8Bwu17xUn1WC+idX/s5B3fHtteZwNuv/l500RLVu
+         nmo5SsS1pRt/OZNT0EaoW9iFQxzFJoCaArG9g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:date:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        b=EIMO6V+j2riOHojunihZ4x4Uw+qtBvbTCADKpiotrl4S4JYClH5C3iprE1I2cZreIN
+         gIS9LPD/a/w9dgigjy12PKdZITn41Tw3gSUnT136FmJLFIDkXLBZJnFHzA1xZSEEWpbz
+         ZAge/2oVvTa4r7xOkoeQjFTNd6gT4pns3eQ5I=
+Received: by 10.86.6.37 with SMTP id 37mr2584683fgf.7.1272585527852;
+        Thu, 29 Apr 2010 16:58:47 -0700 (PDT)
+Received: from localhost.localdomain (abwu68.neoplus.adsl.tpnet.pl [83.8.244.68])
+        by mx.google.com with ESMTPS id l12sm8775312fgb.22.2010.04.29.16.58.46
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 29 Apr 2010 16:58:46 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o3TNwMD2029719
+	for <git@vger.kernel.org>; Fri, 30 Apr 2010 01:58:35 +0200
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146048>
 
-On 04/30/10 20:16, Michael Witten wrote:
-> 2010/4/30 Herv=C3=A9 Cauwelier<herve@itaapy.com>:
->>
->> Unless you are talking about a dedicated application to store and ge=
-nerate
->> on-the-fly office documents, built on top of Git, you're better not =
-touching
->> the contents the user is entrusting git to store, and write a .gitat=
-tribute
->> not to compress them in a pack.
->
-> Doesn't OOo provide at least some library of official code for
-> handling such files, so that other programs might be able to
-> interoperate?
+Installing gitweb is now as easy as
+  # make gitwebdir=/var/www/cgi-bin gitweb-install  ;# as root
+The gitweb/INSTALL file was updated accordingly.
 
-I'm not sure what you mean but the only way to interoperate with OOo is=
-=20
-to run it in "server mode" with at least a framebuffer xorg in the=20
-background. Then you connect a client and use their RPC/Corba-like API.
+Fix shell quoting, i.e. setting bindir_SQ etc., in gitweb/Makefile.
+Those variables were not used previously.
 
-OpenDocument libraries all start from scratch, or at least the RelaxNG=20
-schema to generate validating code.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+There is a question whether to rely on correctly set file permissions
+during build phase, i.e.
 
-If the chunks are Zip parts, you're almost done. If you want smarter=20
-splitting logic like slides in a presentation, sheets in a spreadsheet,=
-=20
-and pages... no, there is no page in a text; well, you need to go=20
-through the XML layer or better use a OpenDocument library that=20
-abstracts it. Other parts in the Zip like styles and metadata are easie=
-r=20
-to split since they are basically a linear collection of objects.
+	$(INSTALL) $(GITWEB_FILES) '$(DESTDIR_SQ)$(gitwebdir_SQ)'
 
-> If so, then it would be almost trivial for an OpenDocument 'plugin' t=
-o
-> be 'built on top of Git'.
->
-> If not, then OOo is crap.
+or whether to ensure correct file permissions during installl phase
 
-I already had reasons to conclude this. But hopefully OD is an open=20
-standard, not restricted to OOo.
+	$(INSTALL) -m 755 $(GITWEB_PROGRAMS) '$(DESTDIR_SQ)$(gitwebdir_SQ)'
+	$(INSTALL) -m 644 $(GITWEB_FILES)    '$(DESTDIR_SQ)$(gitwebdir_SQ)'
 
---=20
-Herv=C3=A9 Cauwelier - ITAAPY - 9 rue Darwin 75018 Paris
-T=C3=A9l. 01 42 23 67 45 - Fax 01 53 28 27 88
-http://www.itaapy.com/ - http://www.cms-migration.com
+Currently the first option is used.
+
+Note that install-* targets, including new install-gitweb, are not
+marked as .PHONY
+
+ Makefile        |    3 +++
+ gitweb/INSTALL  |   11 ++++-------
+ gitweb/Makefile |   31 +++++++++++++++++++++++++++----
+ 3 files changed, 34 insertions(+), 11 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 910f471..dab5a14 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2004,6 +2004,9 @@ endif
+ 	  done; } && \
+ 	./check_bindir "z$$bindir" "z$$execdir" "$$bindir/git-add$X"
+ 
++install-gitweb:
++	$(MAKE) -C gitweb install
++
+ install-doc:
+ 	$(MAKE) -C Documentation install
+ 
+diff --git a/gitweb/INSTALL b/gitweb/INSTALL
+index 1bfd9aa..4447e26 100644
+--- a/gitweb/INSTALL
++++ b/gitweb/INSTALL
+@@ -6,10 +6,8 @@ First you have to generate gitweb.cgi from gitweb.perl using
+ gitweb.css, git-logo.png and git-favicon.png) to their destination.
+ For example if git was (or is) installed with /usr prefix, you can do
+ 
+-	$ make prefix=/usr gitweb             ;# as yourself
+-	# cp gitweb/*.cgi gitweb/*.css \
+-	     gitweb/*.js  gitweb/*.png \
+-	     /var/www/cgi-bin/                ;# as root
++	$ make prefix=/usr gitweb                            ;# as yourself
++	# make gitwebdir=/var/www/cgi-bin install-gitweb     ;# as root
+ 
+ Alternatively you can use autoconf generated ./configure script to
+ set up path to git binaries (via config.mak.autogen), so you can write
+@@ -18,9 +16,8 @@ instead
+ 	$ make configure                     ;# as yourself
+ 	$ ./configure --prefix=/usr          ;# as yourself
+ 	$ make gitweb                        ;# as yourself
+-	# cp gitweb/*.cgi gitweb/*.css \
+-	     gitweb/*.js  gitweb/*.png \
+-	     /var/www/cgi-bin/               ;# as root
++	# make gitwebdir=/var/www/cgi-bin \
++	       install-gitweb                ;# as root
+ 
+ The above example assumes that your web server is configured to run
+ [executable] files in /var/www/cgi-bin/ as server scripts (as CGI
+diff --git a/gitweb/Makefile b/gitweb/Makefile
+index f2e1d92..729cf50 100644
+--- a/gitweb/Makefile
++++ b/gitweb/Makefile
+@@ -12,7 +12,10 @@ all::
+ 
+ prefix ?= $(HOME)
+ bindir ?= $(prefix)/bin
++gitwebdir ?= /var/www/cgi-bin
++
+ RM ?= rm -f
++INSTALL ?= install
+ 
+ # default configuration for gitweb
+ GITWEB_CONFIG = gitweb_config.perl
+@@ -49,9 +52,11 @@ SHELL_PATH ?= $(SHELL)
+ PERL_PATH  ?= /usr/bin/perl
+ 
+ # Shell quote;
+-bindir_SQ = $(subst ','\'',$(bindir))         #'
+-SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH)) #'
+-PERL_PATH_SQ  = $(subst ','\'',$(PERL_PATH))  #'
++bindir_SQ = $(subst ','\'',$(bindir))#'
++gitwebdir_SQ = $(subst ','\'',$(gitwebdir))#'
++SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))#'
++PERL_PATH_SQ  = $(subst ','\'',$(PERL_PATH))#'
++DESTDIR_SQ    = $(subst ','\'',$(DESTDIR))#'
+ 
+ # Quiet generation (unless V=1)
+ QUIET_SUBDIR0  = +$(MAKE) -C # space to separate -C and subdir
+@@ -80,20 +85,30 @@ endif
+ 
+ all:: gitweb.cgi
+ 
++GITWEB_FILES = gitweb.cgi
++
+ ifdef JSMIN
++GITWEB_FILES += gitweb.min.js
+ GITWEB_JS = gitweb.min.js
+ all:: gitweb.min.js
+ gitweb.min.js: gitweb.js GITWEB-BUILD-OPTIONS
+ 	$(QUIET_GEN)$(JSMIN) <$< >$@
++else
++GITWEB_FILES += gitweb.js
+ endif
+ 
+ ifdef CSSMIN
++GITWEB_FILES += gitweb.min.css
+ GITWEB_CSS = gitweb.min.css
+ all:: gitweb.min.css
+ gitweb.min.css: gitweb.css GITWEB-BUILD-OPTIONS
+ 	$(QUIET_GEN)$(CSSMIN) <$ >$@
++else
++GITWEB_FILES += gitweb.css
+ endif
+ 
++GITWEB_FILES += git-logo.png git-favicon.png
++
+ GITWEB_REPLACE = \
+ 	-e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
+ 	-e 's|++GIT_BINDIR++|$(bindir)|g' \
+@@ -127,8 +142,16 @@ gitweb.cgi: gitweb.perl GITWEB-BUILD-OPTIONS
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
+ 
++### Installation rules
++
++install: all
++	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebdir_SQ)'
++	$(INSTALL) $(GITWEB_FILES) '$(DESTDIR_SQ)$(gitwebdir_SQ)'
++
++### Cleaning rules
++
+ clean:
+ 	$(RM) gitweb.cgi gitweb.min.js gitweb.min.css GITWEB-BUILD-OPTIONS
+ 
+-.PHONY: all clean .FORCE-GIT-VERSION-FILE FORCE
++.PHONY: all clean install .FORCE-GIT-VERSION-FILE FORCE
+ 
