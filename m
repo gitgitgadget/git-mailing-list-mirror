@@ -1,91 +1,260 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git cherry(pick) dumps core
-Date: Fri, 30 Apr 2010 08:32:29 -0500
-Message-ID: <20100430133228.GA1620@progeny.tock>
-References: <s2m76c5b8581004281238jf7179fffna7d757fee6ab4f10@mail.gmail.com>
- <r2s302ed1461004281249xd1b65e41l43fa7b639db7c97d@mail.gmail.com>
- <h2v76c5b8581004281259yfaca7abfz5a455ff8fd6cdc6b@mail.gmail.com>
- <o2j2cfc40321004281539j28fe44e0r5d029061e3e08b90@mail.gmail.com>
- <20100428233758.GA1654@progeny.tock>
- <20100429191150.GA10526@inner.home.ulmdo.de>
- <20100429194936.GA31941@progeny.tock>
- <20100429202139.GW10879@inner.home.ulmdo.de>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: I need a `git format-patch --attach-complete' for RT
+Date: Thu, 29 Apr 2010 10:16:30 +0000
+Message-ID: <u2v51dd1af81004290316ieb90661ex209a73910cfccb75@mail.gmail.com>
+References: <q2j51dd1af81004210522ze6062110j2033788601e17ce8@mail.gmail.com>
+	 <4BD93465.60507@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Andreas Krey <a.krey@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Apr 30 19:45:52 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Apr 30 20:17:11 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7uHY-0005vn-So
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 19:45:45 +0200
+	id 1O7uly-0004j9-86
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 20:17:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933429Ab0D3RpF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Apr 2010 13:45:05 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:32942 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933496Ab0D3Ro5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Apr 2010 13:44:57 -0400
-Received: by pwj9 with SMTP id 9so292143pwj.19
-        for <git@vger.kernel.org>; Fri, 30 Apr 2010 10:44:57 -0700 (PDT)
+	id S933026Ab0D3SRA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Apr 2010 14:17:00 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:63202 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759194Ab0D3SQu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Apr 2010 14:16:50 -0400
+Received: by bwz19 with SMTP id 19so298198bwz.21
+        for <git@vger.kernel.org>; Fri, 30 Apr 2010 11:16:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=sHfBZsYHuMPIxumupy9PA0qTwHLiTyQrCJzUmRs/ZLE=;
-        b=UHjv9zslxMkH0clMbf/a3P6DUGLAvEtznQWZddKQUujn2JBsVLtumv7b6vrcZFlnnE
-         iUjhkkH7UJ8ja5kZBeIkH8j7QO0rLt5k0iGINAkzmcc6pb4i/A3goMZudQItLa17Aaez
-         j+GxdqCbH6bw0Y5+BPYGeyp2Qa0ID1L0oA70Y=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=TCsThNxSIxDU0t/ixwmqYYiI/Jtq6vMLlPZQvZKIc2Q=;
+        b=mLjcq6sbOGDk1fdGnuet2/pB2gH+mSfTwl45mULdW5krTljzX46DFzr52DR0FPTNbU
+         Zlsd4/vOUm/mpzSqZe3XgWG9GdRggiYKJzwEa0eT+WeUoeETXEx0OmJ/WY8fsnBXZgHZ
+         werVHSxnHdy62ubeiZwKDuQknNkJ1HckvzzkQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=u1riiLPinGlFi9PcD/S8X68+UVvqr4l9murjaPS4asqVWkPMLMTgF9qTiPmY/lfg0k
-         rOuycLE4JBTujaZn5Ok3+AusEi/PE7533jX0ZNjvG5HJLxHbgsCrs5P4Y2hnhwvxhJIR
-         gYl0loKsLySmPlrkTs7dp+GWHvUxvxsm3FrHs=
-Received: by 10.115.20.18 with SMTP id x18mr12083592wai.50.1272634358024;
-        Fri, 30 Apr 2010 06:32:38 -0700 (PDT)
-Received: from progeny.tock (1555hostw130.starwoodbroadband.com [207.14.48.130])
-        by mx.google.com with ESMTPS id 21sm1881192pzk.0.2010.04.30.06.32.35
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 30 Apr 2010 06:32:36 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100429202139.GW10879@inner.home.ulmdo.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=cpU++sq46VA6LOVGuNrYc9xlGX4jWU8CIkTajp0OTezK8gjXROAiaIwUXPaOx1Zc/0
+         FohvHy6+qFOeF/DhMdgI9vNmQ1Q9N/u+AaTC7ZVtRWQI47CdUtL4XJrfLSonnrjqhhqV
+         W96nWjCkSABcOvgXK/z8fBOvfKM0JrDRHezJA=
+Received: by 10.204.161.211 with SMTP id s19mr5693440bkx.129.1272536190601; 
+	Thu, 29 Apr 2010 03:16:30 -0700 (PDT)
+Received: by 10.204.65.144 with HTTP; Thu, 29 Apr 2010 03:16:30 -0700 (PDT)
+In-Reply-To: <4BD93465.60507@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146039>
 
-Andreas Krey wrote:
-> On Thu, 29 Apr 2010 14:49:36 +0000, Jonathan Nieder wrote:
-
->> Thanks for the report.  What encoding were you using?  (You can chec=
-k
->> with =E2=80=98git cat-file commit <revision you were trying to cherr=
-y-pick>=E2=80=99.)
+On Thu, Apr 29, 2010 at 07:25, Paolo Bonzini <bonzini@gnu.org> wrote:
+> On 04/21/2010 02:22 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>
+>> I'm working with a system that doesn't play nice with git-format-pat=
+ch
+>> / git-send-email. When you send mail to RT (e.g. http://rt.perl.org/=
+)
+>> it'll always munge the original E-Mail, so inline patches won't
+>> work. [...]It would be nicer if I could instead:
+>>
+>> =C2=A0 =C2=A0 git format-patch --attach-complete origin..
+>> =C2=A0 =C2=A0 git send-email *.patch
 >
-> Actually, it was both UTF-8, both by the defaults in get_message():
-[...]
-> There being two different incarnations of iconv on this machine
-> isn't making anything easier. :-( Will report when I find out
-> what's wrong here. utf8 should be pretty universally known by now.
+> This is a bit underspecified. =C2=A0What should the subject be? =C2=A0=
+Do you want to
+> have something like --cover-letter but placing the messages after 00/=
+NN in
+> an attachment?
 
-Yes, the problem is that the to and from encodings match.  I hadn=E2=80=
-=99t
-realized so before, but iconv doesn=E2=80=99t like that on some platfor=
-ms
-(e.g., Solaris).
+It should work exactly as if though you'd taken the *.patch file
+generated by `git format-patch a..b` and attached it as a MIME
+attachment in your mailer.
 
-Since this is the usual case, we should probably check for it like
-git mailinfo does instead of waiting for iconv to fail.
+The subject of the E-Mail itself should be the same
 
-Jonathan
+I want it to work exactly like `git format-patch` does, except it
+should attach the patch as a multipart MIME part. The content of the
+message itself (a text/plain MIME part) should be the same as now,
+except it should skip the actual patch.
+
+Here's an example of how it should look, generated by GMail:
+
+    MIME-Version: 1.0
+    Date: Thu, 29 Apr 2010 10:00:18 +0000
+    Subject: [PATCH] Don't ask the porters to fetch commits from a priv=
+ate URL
+    From: =3D?UTF-8?q?=3DC3=3D86var=3D20Arnfj=3DC3=3DB6r=3DC3=3DB0=3D20=
+Bjarmason?=3D <avar@cpan.org>
+    Content-Type: multipart/mixed; boundary=3D00163649a453b0a1ef04855d3=
+190
+
+    --00163649a453b0a1ef04855d3190
+    Content-Type: text/plain; charset=3DUTF-8
+
+    git@github.com:USERNAME/perl.git is only accessible to USERNAME (or
+    collaborators), git://github.com/USERNAME/perl.git is available to
+    everyone.
+    ---
+    See the attached patch for the changes described in the diffstat be=
+low.
+
+     pod/perlrepository.pod |    2 +-
+     1 files changed, 1 insertions(+), 1 deletions(-)
+
+    --00163649a453b0a1ef04855d3190
+    Content-Type: text/x-patch; charset=3DUS-ASCII;
+    name=3D"0001-Don-t-ask-the-porters-to-fetch-commits-from-a-privat.p=
+atch"
+    Content-Disposition: attachment;
+    filename=3D"0001-Don-t-ask-the-porters-to-fetch-commits-from-a-priv=
+at.patch"
+    Content-Transfer-Encoding: base64
+    X-Attachment-Id: f_g8lej0oz0
+
+    RnJvbSBmYjYwZTc0NWZkYWI2YzNkZjNkMjU0YjRjMmE2OTM5MzA3ZDNmOGE3IE1vbiB=
+TZXAgMTcg
+    MDA6MDA6MDAgMjAwMQpGcm9tOiA9P1VURi04P3E/PUMzPTg2dmFyPTIwQXJuZmo9QzM=
+9QjZyPUMz
+    PUIwPTIwQmphcm1hc29uPz0gPGF2YXJAY3Bhbi5vcmc+CkRhdGU6IFR1ZSwgMjAgQXB=
+yIDIwMTAg
+    MTk6Mjg6MDEgKzAwMDAKU3ViamVjdDogW1BBVENIXSBEb24ndCBhc2sgdGhlIHBvcnR=
+lcnMgdG8g
+    ZmV0Y2ggY29tbWl0cyBmcm9tIGEgcHJpdmF0ZSBVUkwKCmdpdEBnaXRodWIuY29tOlV=
+TRVJOQU1F
+    L3BlcmwuZ2l0IGlzIG9ubHkgYWNjZXNzaWJsZSB0byBVU0VSTkFNRSAob3IKY29sbGF=
+ib3JhdG9y
+    cyksIGdpdDovL2dpdGh1Yi5jb20vVVNFUk5BTUUvcGVybC5naXQgaXMgYXZhaWxhYmx=
+lIHRvCmV2
+    ZXJ5b25lLgotLS0KIHBvZC9wZXJscmVwb3NpdG9yeS5wb2QgfCAgICAyICstCiAxIGZ=
+pbGVzIGNo
+    YW5nZWQsIDEgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQ=
+gYS9wb2Qv
+    cGVybHJlcG9zaXRvcnkucG9kIGIvcG9kL3BlcmxyZXBvc2l0b3J5LnBvZAppbmRleCA=
+wMGRiYmZh
+    Li5jYzg3YmRlIDEwMDY0NAotLS0gYS9wb2QvcGVybHJlcG9zaXRvcnkucG9kCisrKyB=
+iL3BvZC9w
+    ZXJscmVwb3NpdG9yeS5wb2QKQEAgLTc1Nyw3ICs3NTcsNyBAQCBlbWFpbCAoc2VlIEw=
+8L1NVQk1J
+    VFRJTkcgQSBQQVRDSD4pIHdpdGggYSBkZXNjcmlwdGlvbiBvZiB5b3VyIGNoYW5nZXM=
+KIGFuZCB0
+    aGUgZm9sbG93aW5nIGluZm9ybWF0aW9uOgogCiAgIGh0dHA6Ly9naXRodWIuY29tL1V=
+TRVJOQU1F
+    L3BlcmwvdHJlZS9vcmFuZ2UKLSAgZ2l0QGdpdGh1Yi5jb206VVNFUk5BTUUvcGVybC5=
+naXQgYnJh
+    bmNoIG9yYW5nZQorICBnaXQ6Ly9naXRodWIuY29tL1VTRVJOQU1FL3BlcmwuZ2l0IGJ=
+yYW5jaCBv
+    cmFuZ2UKIAogPWhlYWQxIE1lcmdpbmcgZnJvbSBhIGJyYW5jaCB2aWEgR2l0SHViCiA=
+KLS0gCjEu
+    Ny4xLnJjMQoK
+    --00163649a453b0a1ef04855d3190--
+
+=46or comparison this is what `git format-patch a..b` will give me now:
+
+    From fb60e745fdab6c3df3d254b4c2a6939307d3f8a7 Mon Sep 17 00:00:00 2=
+001
+    From: =3D?UTF-8?q?=3DC3=3D86var=3D20Arnfj=3DC3=3DB6r=3DC3=3DB0=3D20=
+Bjarmason?=3D <avar@cpan.org>
+    Date: Tue, 20 Apr 2010 19:28:01 +0000
+    Subject: [PATCH] Don't ask the porters to fetch commits from a priv=
+ate URL
+
+    git@github.com:USERNAME/perl.git is only accessible to USERNAME (or
+    collaborators), git://github.com/USERNAME/perl.git is available to
+    everyone.
+    ---
+     pod/perlrepository.pod |    2 +-
+     1 files changed, 1 insertions(+), 1 deletions(-)
+
+    diff --git a/pod/perlrepository.pod b/pod/perlrepository.pod
+    index 00dbbfa..cc87bde 100644
+    --- a/pod/perlrepository.pod
+    +++ b/pod/perlrepository.pod
+    @@ -757,7 +757,7 @@ email (see L</SUBMITTING A PATCH>) with a
+description of your changes
+     and the following information:
+
+       http://github.com/USERNAME/perl/tree/orange
+    -  git@github.com:USERNAME/perl.git branch orange
+    +  git://github.com/USERNAME/perl.git branch orange
+
+     =3Dhead1 Merging from a branch via GitHub
+
+    --
+    1.7.1.rc1
+
+And this is what `git format-patch --attach a..b` gives you. It just
+attaches the patch (`git diff`). Not its commit message:
+
+    From: =3D?UTF-8?q?=3DC3=3D86var=3D20Arnfj=3DC3=3DB6r=3DC3=3DB0=3D20=
+Bjarmason?=3D <avar@cpan.org>
+    Date: Tue, 20 Apr 2010 19:28:01 +0000
+    Subject: [PATCH] Don't ask the porters to fetch commits from a priv=
+ate URL
+    Date: Wed, 21 Apr 2010 11:48:19 +0000
+    MIME-Version: 1.0
+    Content-Type: multipart/mixed; boundary=3D"------------1.7.1.rc1"
+
+    From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar@cpan.org>
+
+    This is a multi-part message in MIME format.
+    --------------1.7.1.rc1
+    Content-Type: text/plain; charset=3DUTF-8; format=3Dfixed
+    Content-Transfer-Encoding: 8bit
+
+
+    git@github.com:USERNAME/perl.git is only accessible to USERNAME (or
+    collaborators), git://github.com/USERNAME/perl.git is available to
+    everyone.
+    ---
+     pod/perlrepository.pod |    2 +-
+     1 files changed, 1 insertions(+), 1 deletions(-)
+
+
+    --------------1.7.1.rc1
+    Content-Type: text/x-patch;
+name=3D"0001-Don-t-ask-the-porters-to-fetch-commits-from-a-privat.patch=
+"
+    Content-Transfer-Encoding: 8bit
+    Content-Disposition: attachment;
+filename=3D"0001-Don-t-ask-the-porters-to-fetch-commits-from-a-privat.p=
+atch"
+
+    diff --git a/pod/perlrepository.pod b/pod/perlrepository.pod
+    index 7dd4c25..15809dc 100644
+    --- a/pod/perlrepository.pod
+    +++ b/pod/perlrepository.pod
+    @@ -757,7 +757,7 @@ email (see L</SUBMITTING A PATCH>) with a
+description of your changes
+     and the following information:
+
+       http://github.com/USERNAME/perl/tree/orange
+    -  git@github.com:USERNAME/perl.git branch orange
+    +  git://github.com/USERNAME/perl.git branch orange
+
+     =3Dhead1 Merging from a branch via GitHub
+
+
+    --------------1.7.1.rc1--
+
+> It seems easiest to write a small filter in Perl, but it could be add=
+ed as
+> an option to git-format-patch, maybe something like
+> --cover-letter=3Dattach-all.
+
+Yeah it'd be easiest to write one in Perl, but it would have to be in
+core so you could tell random contributors to send patches with the
+built-in tools using the new option easily.
+
+The relevant bits in builtin/log.c are scary :) With other projects I
+don't think I'll be patching it myself very soon (if ever). But I'd be
+very thankful if someone would code this up.
+
+It would be very useful for projects with silly Email-to-Bugtracker
+gateways. A lot of silly E-Mail system will destroy inline content,
+but they generally leave MIME attachments alone.
