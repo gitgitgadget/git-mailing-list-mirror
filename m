@@ -1,84 +1,106 @@
-From: Mahesh Vaidya <forvaidya@gmail.com>
-Subject: Re: push instead of
-Date: Fri, 30 Apr 2010 23:54:43 +0530
-Message-ID: <p2nb42431c81004301124l6744553csbe5abdeda0d48e67@mail.gmail.com>
-References: <z2gb42431c81004300256ke7248f40y7bce060d52cfa943@mail.gmail.com>
-	 <4BDB1231.9090600@dbservice.com>
+From: Matthias Lehmann <mat@matlehmann.de>
+Subject: Re: git-apply fails on creating a new file, with both -p and --directory specified
+Date: Thu, 29 Apr 2010 10:20:17 +0200
+Message-ID: <hrbfg2$t5m$1@dough.gmane.org>
+References: <201004281429.26579.mat@matlehmann.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 30 20:25:55 2010
+X-From: git-owner@vger.kernel.org Fri Apr 30 20:32:23 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7uuN-0005dF-I7
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 20:25:51 +0200
+	id 1O7v0f-0002wd-So
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 20:32:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759335Ab0D3SYr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Apr 2010 14:24:47 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:33344 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759331Ab0D3SYo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Apr 2010 14:24:44 -0400
-Received: by pxi17 with SMTP id 17so311600pxi.19
-        for <git@vger.kernel.org>; Fri, 30 Apr 2010 11:24:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=VCrwVFBMxgvCVzJ6yQ5WBIQI33gV8r8sJqVo4Hug8Jg=;
-        b=IUO8jW+EBBezkmmoR+4RamcEZX0IZqlXGYiJql+i8TfbjcCmV8xQX28FscL0rG9NpO
-         JIKn/shCxFEDap4WuN0DFiMrCPm8hwQZB0S/2ODBabXZ0N1b7QaK3u80xfELmbQdvJjI
-         o4UMGd6J6qZqeXRqA8cv8Jx9s9rCAeg1Ps7QI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=rwh6tjlaZUincdtnEDuukm9F1SX8fgL629xomI0iVqxgyMtPnLFuUvW1E/ZPiAAKCn
-         VHRJqkVMKEHmKNXOWVO/lBqZQkURCD1vo1rdfVBjImdKNUMizRR87ZPWmvXPQgnrC521
-         5mMsBKH8dapq8T3oJXJKBwKZX9fHyTPpkJXkQ=
-Received: by 10.142.150.41 with SMTP id x41mr266863wfd.112.1272651883826; Fri, 
-	30 Apr 2010 11:24:43 -0700 (PDT)
-Received: by 10.142.134.21 with HTTP; Fri, 30 Apr 2010 11:24:43 -0700 (PDT)
-In-Reply-To: <4BDB1231.9090600@dbservice.com>
+	id S933932Ab0D3S3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Apr 2010 14:29:43 -0400
+Received: from lo.gmane.org ([80.91.229.12]:49041 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933808Ab0D3S1i (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Apr 2010 14:27:38 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1O7Pue-00018t-1l
+	for git@vger.kernel.org; Thu, 29 Apr 2010 11:20:04 +0200
+Received: from rain.gmane.org ([80.91.229.7])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Apr 2010 11:20:04 +0200
+Received: from mat by rain.gmane.org with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Apr 2010 11:20:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: rain.gmane.org
+User-Agent: KNode/4.4.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146042>
 
-No Luck, it still hits  readonly url ;
+Matthias Lehmann wrote:
 
+> Hi all,
+> 
+> the subject of this mail may read familiar to some - there was a
+> discussion in November last year (see
+> http://kerneltrap.org/mailarchive/git/2009/11/23/16899/) concerning this
+> problem.
+> 
+> Today I had this same issue with git 1.7.0.4. Reading the above mentioned
+> discussion and seaching the net did not help me in finding a solution to
+> the problem.
+> 
+> I have to apply patches from one repository to another repository, which
+> have a different layout (I am working on splitting one big repository into
+> several smaller ones, while development still continues on the big
+> repository).
+> 
+> So I did
+> 
+> big-repo$ git format-patche -o /tmp/foo
+> small-repo$ git apply -p2 --directory=some/path --check /tmp/foo/*
+> 
+> and get
+> 
+> fatal: git diff header lacks filename information when removing 2 leading
+> pathname components (line 37)
+> 
+> the patch looks like this:
+> 
+> 35| diff --git a/xyz/bar.jpg b/xyz/bar.jpg
+> 36| new file mode 100644
+> 37| index
+> 
+0000000000000000000000000000000000000000..3dcce2e1f68586ed2089d86b1bf4e7e41c818d97
+> 38| GIT binary patch
+> 39| literal 8791
+> 
+> 
+> 
+> Since this problem was discussed before - is there a solution?
+> This is something like a showstopper for me right now, so I am very
+> thankful for any hints.
+> 
+> Best regards,
+> 
+> Mat
 
-On Fri, Apr 30, 2010 at 10:54 PM, Tomas Carnecky <tom@dbservice.com> wr=
-ote:
-> On 4/30/10 11:56 AM, Mahesh Vaidya wrote:
->>
->> I am facing problem at pushInsteadIOf. I would like pull from
->> "pullhost" and push to "pushhost" as my pullhost as pre-receive
->> trigger which not accepting pushes.
->>
->> However when I do git push it still hits pull host. I have following
->> config.
->>
->> [remote "origin"]
->> =A0 =A0 =A0 =A0 fetch =3D +refs/heads/*:refs/remotes/origin/*
->> =A0 =A0 =A0 =A0 url =3D gitosis@pull_host:repos.git
->
-> =A0 =A0 =A0 =A0pushurl =3D gitosis@PUSH_host:repos.git
->
-> tom
->
->
+Is there anything I can do to get some feedback to this issue? I don't want 
+to be impatient, it's just quite important to me. 
 
+Since I have not much experience in reporting issues to a mailing list, it 
+might well be, that I did something wrong - so please correct me and direct 
+me to how I can be of better help.
 
+Best regards,
 
---=20
-Thank you and best regards.
-Mahesh Vaidya  / 9740500144
-http://www.twitter.com/forvaidya
+Mat
