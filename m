@@ -1,68 +1,85 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: How to efficiently blame an entire repo?
-Date: Fri, 30 Apr 2010 15:45:12 -0400
-Message-ID: <x2s32541b131004301245o46d8e855va0b51ebce279398b@mail.gmail.com>
-References: <r2l76718491004291612qbe0834ela89f0606e5f477e2@mail.gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: seeing a combined diff (no-conflict files) before committing a merge
+Date: Thu, 29 Apr 2010 17:43:47 +0530
+Message-ID: <r2k2e24e5b91004290513j4e5e2ebm1163a5c8fa1fdf8d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 30 21:46:01 2010
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 30 22:07:24 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7w9u-0005xF-Hu
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 21:45:58 +0200
+	id 1O7wUd-0006vh-5H
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 22:07:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755401Ab0D3Tpv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Apr 2010 15:45:51 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:47420 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755247Ab0D3Tps (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Apr 2010 15:45:48 -0400
-Received: by gyg13 with SMTP id 13so272390gyg.19
-        for <git@vger.kernel.org>; Fri, 30 Apr 2010 12:45:46 -0700 (PDT)
+	id S932119Ab0D3UHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Apr 2010 16:07:15 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:50871 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756236Ab0D3UHK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Apr 2010 16:07:10 -0400
+Received: by vws19 with SMTP id 19so521195vws.19
+        for <git@vger.kernel.org>; Fri, 30 Apr 2010 13:07:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=I6HlYnUCL9alP63AWTkOnp09srL4PN2K8vUf5eL9uNU=;
-        b=i+NU1eSpM0zBrm1/BxRy/s9Qr3H8cyufQKP6EZR26cSl9TKnMqQwAIrRLl5mK47Pu0
-         aaG9mH0x0vRgVOCAeKlPWVIys5NUeZjaznL8EPVWYnMmIVNh5EuDTt8vLD3K0JoLy3Uw
-         L+4m79y3m6uN8gDx8SGTgYibvFxJuelRYqqYg=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=KmgwPpnRGnzU+zqCcemzQEYQy+mmKIYfMDMmBQegp6I=;
+        b=teYfxvA5IVFAZV0ydP5g2bz8eso8MB41XqQ3ZXteosaZSc609tS5pBfpIfMa1XBq1F
+         +hmHrZu1cnstfl7Um34sF14W4PmbepOSDOdo9x+gjXEFVtLKvCSb93UtYR76/cmjUdTw
+         L8ND4Mq3/Teoes7cCjjkjfRxbIof6LA3Z+26M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=QP0IFJCx4t+q+/vw5XrPw0yKd9vIbUzNVxdZnGk5hOzIrocitn0qPbJ0qzhlRuaMFs
-         207rfJiDXLLacUS5PAhcpBPG5/FY/pTePoYquGcTFi38tJuMfBC0AjNv4VoAeu7S3wup
-         dey3ZnyXxYXAnTj8zDld03Hwcf7QkP9pM5ca4=
-Received: by 10.150.209.21 with SMTP id h21mr2650366ybg.118.1272656732899; 
-	Fri, 30 Apr 2010 12:45:32 -0700 (PDT)
-Received: by 10.151.109.5 with HTTP; Fri, 30 Apr 2010 12:45:12 -0700 (PDT)
-In-Reply-To: <r2l76718491004291612qbe0834ela89f0606e5f477e2@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=ATLUh5IcydpA33bHCdXrPm4hr8FNh00SXZGQvxzt9J6lZS1J3LY2I0hP6KiO+R+Z+k
+         5as0lEb25Q0zdM0mypdwBoPwT+C0wHBjz3zWGFnyiDUbM3e+mjQrmIYveTwTU4jj2tGH
+         ejFq5pE5ZNyUOJKOV/08FJzLbt+MrbySXTXRE=
+Received: by 10.220.127.75 with SMTP id f11mr6535948vcs.218.1272543227309; 
+	Thu, 29 Apr 2010 05:13:47 -0700 (PDT)
+Received: by 10.220.94.78 with HTTP; Thu, 29 Apr 2010 05:13:47 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146059>
 
-On Thu, Apr 29, 2010 at 7:12 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> Let's say you've got a repo with ~ 40K files and 35K commits.
-> Well-packed .git is about 800MB.
->
-> You want to find out how many lines of code a particular group of
-> individuals has contributed to HEAD.
->[...]
-> Am I missing a clever solution?
+I saw the thread at
+http://kerneltrap.org/mailarchive/git/2010/3/18/25850, but there
+doesn't seem to have been any resolution or further discussion.
 
-How often do you need to do this?  If it's just once in your life,
-then the brute force solution of just letting 'git blame' grind
-through it for a few hours is probably the cleverest :)
+I am thinking of two possible solutions:
 
-Have fun,
+(1) is there a way we can "simulate" a conflict by putting back stage
+1/2/3 files, for a successfully merged file, into the index so "git
+diff" will work
 
-Avery
+(2) is there some way to just pass along 3 files names (parent1,
+parent2, and merged) and it would show the combined diff output.
+
+Of course, I came up with this shell script (see below sig), but is
+there a better way?  It seems like a horrible kludge!
+
+Thanks,
+
+-- 
+Sitaram
+
+
+#!/bin/bash
+
+export TEMPDIR=$(mktemp -d)
+trap "/bin/rm -rf $TEMPDIR" 0
+export GIT_INDEX_FILE=$TEMPDIR/index
+
+[[ -n $1                ]] || { echo I need a filename;    exit 1; }
+[[ -f $1                ]] || { echo I need a filename;    exit 1; }
+[[ -f .git/MERGE_HEAD   ]] || { echo no MERGE_HEAD;        exit 1; }
+[[ -f .git/ORIG_HEAD    ]] || { echo no ORIG_HEAD;         exit 1; }
+
+git add $1
+fake_commit=$(echo fake commit to view combined diff of $1 | git
+commit-tree $(git write-tree) -p ORIG_HEAD -p MERGE_HEAD)
+git log -p -c -1 $fake_commit -- $1
