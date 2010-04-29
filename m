@@ -1,96 +1,80 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: How to efficiently blame an entire repo?
-Date: Fri, 30 Apr 2010 16:16:13 -0400
-Message-ID: <o2m76718491004301316tfbaf434alb94e6bfd001d36b6@mail.gmail.com>
-References: <r2l76718491004291612qbe0834ela89f0606e5f477e2@mail.gmail.com>
-	 <x2s32541b131004301245o46d8e855va0b51ebce279398b@mail.gmail.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: I need a `git format-patch --attach-complete' for RT
+Date: Thu, 29 Apr 2010 09:25:25 +0200
+Message-ID: <4BD93465.60507@gnu.org>
+References: <q2j51dd1af81004210522ze6062110j2033788601e17ce8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 30 22:16:37 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 30 22:21:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7wdV-0005d2-SR
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 22:16:34 +0200
+	id 1O7wiG-0001B9-FC
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 22:21:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758332Ab0D3UQR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Apr 2010 16:16:17 -0400
-Received: from mail-iw0-f182.google.com ([209.85.223.182]:47516 "EHLO
-	mail-iw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757554Ab0D3UQO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Apr 2010 16:16:14 -0400
-Received: by iwn12 with SMTP id 12so707132iwn.15
-        for <git@vger.kernel.org>; Fri, 30 Apr 2010 13:16:13 -0700 (PDT)
+	id S932588Ab0D3UVV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Apr 2010 16:21:21 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:30601 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932520Ab0D3UVT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Apr 2010 16:21:19 -0400
+Received: by ey-out-2122.google.com with SMTP id d26so38990eyd.19
+        for <git@vger.kernel.org>; Fri, 30 Apr 2010 13:21:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ByCBAshcREBTx/wUyu1qtNAyuVazoagOslkxEy5tsAo=;
-        b=xNo3hmJA67d5E7g037+4ZCRi89aLGax6/U63823ZRUgITB6DFRlr7KhhAl/W5h4jkF
-         IPdqtK932Zv8tqt/gCW4SoNRycCpLXtJTzOK1szlKd5wbU8a8vqKrarvO6hcbn3uXZB4
-         waUsTg1sDm10BB+oe4cOawk9uqfWtdt+O8nt0=
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=pM1884LMXzxbVs2cpJgbnURVvDiMiBfLrs+7EBUV0nA=;
+        b=eL8NTKSUbDq/L8PIgbpB2sm0sIb6UbcAcGEu9dM98S6pBRXHqv1NvbWohJ9RP7bnmX
+         A8majDR8E4M43IPi5e0xfdoMo4SyQ9cHbVfnqvCSWQI0S+dSjEpfztsCVq5RM1iajp6K
+         8Buzu0tiaAjuG93LJrEv4Lx3w5nR2CLcTXgNY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=HxQC8s3SpolkRu+o+AMpq6ZlBwQIUlnM/tvmtye+4v+/XBjkKeneUTBWIAP3Fnz0Ib
-         TmrCksdnw2A9HIDNsVWOKVPbJLwoR0CUk6MomFrMtf3STyTk4iAUT+yuR5RGReD/gRHS
-         Ja5r7BHlgDCaf/Mu6tVpugXA9+h3QJEjMZrWM=
-Received: by 10.231.172.210 with SMTP id m18mr2733411ibz.21.1272658573574; 
-	Fri, 30 Apr 2010 13:16:13 -0700 (PDT)
-Received: by 10.231.17.141 with HTTP; Fri, 30 Apr 2010 13:16:13 -0700 (PDT)
-In-Reply-To: <x2s32541b131004301245o46d8e855va0b51ebce279398b@mail.gmail.com>
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=T6qUo3gCi2UPGtTfYPDpFlDnNndd6I5qGdbtpVGArkRLVYxMV9TK/toRjULGcxFkFX
+         UoV8gp+5owYsXzGIJ2yfwXHpZ0tgLvuJZIsZZ+NOkFkkuO9U4uNvYGZ1M6Rqw+ZCRncm
+         WrgG4++QAb9sr64x0lkzBbH/Wa2n17to4kgcM=
+Received: by 10.213.49.204 with SMTP id w12mr1424403ebf.22.1272525930155;
+        Thu, 29 Apr 2010 00:25:30 -0700 (PDT)
+Received: from yakj.usersys.redhat.com (nat-pool-brq-t.redhat.com [209.132.186.34])
+        by mx.google.com with ESMTPS id 15sm362759ewy.12.2010.04.29.00.25.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 29 Apr 2010 00:25:27 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.8) Gecko/20100301 Fedora/3.0.3-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.3
+In-Reply-To: <q2j51dd1af81004210522ze6062110j2033788601e17ce8@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146062>
 
-On Fri, Apr 30, 2010 at 3:45 PM, Avery Pennarun <apenwarr@gmail.com> wr=
-ote:
-> On Thu, Apr 29, 2010 at 7:12 PM, Jay Soffian <jaysoffian@gmail.com> w=
-rote:
->> Let's say you've got a repo with ~ 40K files and 35K commits.
->> Well-packed .git is about 800MB.
->>
->> You want to find out how many lines of code a particular group of
->> individuals has contributed to HEAD.
->>[...]
->> Am I missing a clever solution?
+On 04/21/2010 02:22 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> I'm working with a system that doesn't play nice with git-format-patc=
+h
+> / git-send-email. When you send mail to RT (e.g. http://rt.perl.org/)
+> it'll always munge the original E-Mail, so inline patches won't
+> work. [...]It would be nicer if I could instead:
 >
-> How often do you need to do this? =C2=A0If it's just once in your lif=
-e,
-> then the brute force solution of just letting 'git blame' grind
-> through it for a few hours is probably the cleverest :)
+>      git format-patch --attach-complete origin..
+>      git send-email *.patch
 
-Yeah, I ended up doing this basically.
+This is a bit underspecified.  What should the subject be?  Do you want=
+=20
+to have something like --cover-letter but placing the messages after=20
+00/NN in an attachment?
 
-Setup a .mailmap mapping the authors I was interested in to domain.com.=
- Then:
+It seems easiest to write a small filter in Perl, but it could be added=
+=20
+as an option to git-format-patch, maybe something like=20
+--cover-letter=3Dattach-all.
 
-$ git log --pretty=3D'%H %aE' HEAD | grep domain.com |
-  awk '{print $1}' |
-  git log --no-walk --stdin --name-only --pretty=3D%n |
-  grep -v '^$' | sort -u > files1
-$ git ls-files | sort > files2
-$ comm -12 files1 files2 > files
-$ xargs < files -n1 git annotate | grep domain.com
-
-I didn't use --author=3Ddomain.com w/the first log invocation because I
-wasn't sure if it respected .mailmap and was too lazy to look it up.
-
-I probably I could've used --diff-filter in the second log invocation, =
-but, meh.
-
-So that worked. Took about 12 minutes to run on a recent Macbook Pro.
-Aside, blame's --porcelain switch is rather poorly documented and
-annotate seemed to have the right output for the job.
-
-j.
+Paolo
