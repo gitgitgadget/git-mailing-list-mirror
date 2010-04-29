@@ -1,67 +1,71 @@
-From: David Lee <zhushenli2@gmail.com>
-Subject: How to push to remote(dropbox) when submit automatically?
-Date: Sat, 01 May 2010 09:42:35 +0800
-Message-ID: <4BDB870B.8080503@gmail.com>
+From: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
+Subject: Re: [patch 00/16] Portability Patches for git-1.7.1 (v4)
+Date: Thu, 29 Apr 2010 10:50:44 +0000
+Message-ID: <20100429105044.GB40206@thor.il.thewrittenword.com>
+References: <20100427135708.258636000@mlists.thewrittenword.com>
+ <4BD7032D.9050508@drmicha.warpmail.net>
+ <4BD94599.5090309@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 01 03:42:50 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Sat May 01 04:54:21 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O81jF-0004qG-QX
-	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 03:42:50 +0200
+	id 1O82qT-0007e0-H2
+	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 04:54:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932438Ab0EABmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Apr 2010 21:42:44 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:63755 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756635Ab0EABmn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Apr 2010 21:42:43 -0400
-Received: by pxi17 with SMTP id 17so473694pxi.19
-        for <git@vger.kernel.org>; Fri, 30 Apr 2010 18:42:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=itTrHtRMazmcG8/M0yNaoiL/mBTVtotAhpzpHJd7YPc=;
-        b=tqYgvxu4VKlkqgfzB+P/1A/YRgry7JkPPlInFq8AYVofLFHe4qsRwb5SPtLmbUIfJW
-         bIMvkij52sS3DfVGfIvpXFQ89l3jTsE6q8zx8AdyuWEaW5xbyqO80Xx0UDJoHipBICPV
-         Mph386EO4nc8oybHOxk7TLFR275Xq19jPG/E0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=Chx8MyCU0DQhh1KftdlEOboWd7pVKi7dTqADUH/UKlh+MWTMInfH2gakjZ9AiLXbr+
-         yU60ZcoS8AFP8Hljd8eQwbrvUpgruQJ1YH0GRHfScY8XqngYJTXOrJaVpRLNRtazkvbW
-         txSZkhPhVTy5UPE2cd1A56KIlbZreYDUUGGVM=
-Received: by 10.115.80.1 with SMTP id h1mr5692389wal.116.1272678162246;
-        Fri, 30 Apr 2010 18:42:42 -0700 (PDT)
-Received: from [116.232.93.59] ([116.232.93.59])
-        by mx.google.com with ESMTPS id g30sm11471372wag.4.2010.04.30.18.42.39
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 30 Apr 2010 18:42:41 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
+	id S1756491Ab0EACqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Apr 2010 22:46:23 -0400
+Received: from mail1.thewrittenword.com ([69.67.212.77]:60863 "EHLO
+	mail1.thewrittenword.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752522Ab0EACqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Apr 2010 22:46:23 -0400
+Received: from mail1.il.thewrittenword.com (emma-internal-gw.il.thewrittenword.com [192.168.13.25])
+	by mail1.thewrittenword.com (Postfix) with ESMTP id 4226F5CAE;
+	Thu, 29 Apr 2010 11:11:57 +0000 (UTC)
+X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com 4226F5CAE
+Received: from thor.il.thewrittenword.com (thor.il.thewrittenword.com [10.191.57.1])
+	by mail1.il.thewrittenword.com (Postfix) with ESMTP id CA033B32;
+	Thu, 29 Apr 2010 10:50:44 +0000 (UTC)
+Received: by thor.il.thewrittenword.com (Postfix, from userid 1048)
+	id BC41ABAB3; Thu, 29 Apr 2010 10:50:44 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <4BD94599.5090309@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.96 at maetel.il.thewrittenword.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146074>
 
-Hi all,
+Hi Michael,
 
-I am new to git and find it powerful.
+On Thu, Apr 29, 2010 at 10:38:49AM +0200, Michael J Gruber wrote:
+> Michael J Gruber venit, vidit, dixit 27.04.2010 17:30:
+> > I can't test your target platform, but I would test the impact of the
+> > code and test changes on mine. Do you have your series somewhere to pull
+> > from?
+> 
+> OK, unsurprsingly, tests still pass on Linux (Fedora 12 x86_64).
+> If anyone wants to try, the series can be found at
+> 
+> git://repo.or.cz/git/mjg.git
+> 
+> in branch
+> 
+> gvv/platform-compatibility
+> 
+> applied cleanly on current master.
 
-I build a local repository(origin) and clone it to dropbox 
-directory(dropbox-git). Each time I submit to origin, I have to "git 
-push dropbox-git" manually.
+Thank you for taking care of that.  Much appreciated.
 
-How to push to remote when I submit automatically?
-
-Thanks,
-David
+Cheers,
+-- 
+Gary V. Vaughan (gary@thewrittenword.com)
