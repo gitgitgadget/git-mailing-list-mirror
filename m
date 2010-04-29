@@ -1,70 +1,83 @@
-From: Lin Mac <mkl0301@gmail.com>
-Subject: How to undo changes?
-Date: Thu, 29 Apr 2010 09:08:19 +0800
-Message-ID: <l2l10d816431004281808s79a559e6p308052c788c9a4ca@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: How to undo changes?
+Date: Thu, 29 Apr 2010 03:29:25 +0200
+Message-ID: <g2z40aa078e1004281829o446bce44r165aa59c98969043@mail.gmail.com>
+References: <l2l10d816431004281808s79a559e6p308052c788c9a4ca@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 29 03:08:28 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Lin Mac <mkl0301@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 29 03:29:35 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7IEt-0007KG-05
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Apr 2010 03:08:27 +0200
+	id 1O7IZK-00056P-4q
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Apr 2010 03:29:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755633Ab0D2BIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Apr 2010 21:08:20 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:62582 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755009Ab0D2BIT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Apr 2010 21:08:19 -0400
-Received: by pxi17 with SMTP id 17so3036184pxi.19
-        for <git@vger.kernel.org>; Wed, 28 Apr 2010 18:08:19 -0700 (PDT)
+	id S1752504Ab0D2B32 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Apr 2010 21:29:28 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:53571 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750924Ab0D2B31 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Apr 2010 21:29:27 -0400
+Received: by wwi14 with SMTP id 14so1278084wwi.19
+        for <git@vger.kernel.org>; Wed, 28 Apr 2010 18:29:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=bTKi98Oa8ZxgoPYOWn6UB7h9zQp579H0zCULTn2Vgc0=;
-        b=kGtxG1evC+2AfomQ8cVHjQAs3bn8/K1N2BnqYhylLsGTgqsMhB+fbkRKPy/ks6WS34
-         RmTtILibaR1Dv1ZNN4exwx3J88L7jYRhlLyZEKz75xaK+CYl+Qifh8LyOOhQhSF4N1M4
-         //dfzh83u0CLbI4b4OqSvgcbssZ+M1KGpfpHI=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:reply-to
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=Uzn0QGAoArgjThC+IktBHFF/1lUVeFtLS3lsUmYH5Vo=;
+        b=vaD/i1FOeh0VgLyasbbiHWAr15P14CuZBhxp4QfdB0Q56xti/BVdv8Yxv8T/nWP/lf
+         zxooosyqOJQEeK2WJdYLAjvolTIBztoh4KhN8i6XVN28ueHAwALtUNLIJw1xxbLbuSHC
+         XAyl5S2wnUnSQV2cE2tsfxT9RNTZcwhPdh5+w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=eM6XaGjKtvcxcb8wb6UEAywbJ2Ds5Z/hge6vVIok4eGzmyIlUYkFCmX4HvJ3gFrSMh
-         zLAwOeAgyoQGNUzBIMozDEqJbcamIR5KfNZcqsIW171sN1qAG0QgUkbcUL7m2f6BS5ik
-         cZ0YSJXmSH7lu0Dz2Kb3lq2ZeDo4vMlH9N+rw=
-Received: by 10.141.188.27 with SMTP id q27mr762684rvp.73.1272503299088; Wed, 
-	28 Apr 2010 18:08:19 -0700 (PDT)
-Received: by 10.140.135.7 with HTTP; Wed, 28 Apr 2010 18:08:19 -0700 (PDT)
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=Z0X8EeoRWn53KI1D2PfVpvvBOlIT3mfB8tG7Vdinkn49K2I0aeOdWzTKupM2N6DMV/
+         k6YbHEa0/XuioJNXSGSbp43PDtTyR3ajQSqqX/puwnpfUdQUHJ2jBGC++JXaktY+0vAf
+         UD9dzItlAbeSwm9HKU7cliDteZAOQ+7TflC7s=
+Received: by 10.216.182.78 with SMTP id n56mr9843797wem.148.1272504566031; 
+	Wed, 28 Apr 2010 18:29:26 -0700 (PDT)
+Received: by 10.216.51.79 with HTTP; Wed, 28 Apr 2010 18:29:25 -0700 (PDT)
+In-Reply-To: <l2l10d816431004281808s79a559e6p308052c788c9a4ca@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146025>
 
-Hi,
+On Thu, Apr 29, 2010 at 3:08 AM, Lin Mac <mkl0301@gmail.com> wrote:
+> Hi,
+>
+> 1.
+> I have multiple files modified, but would like to undo the changes in
+> one of the changed files.
+> "git reset --hard" do not accept single files. So I used to use "git
+> diff <file> | patch -p X", but X cannot be know until I checked the
+> patch and know the path relationship. Is there other way to do it?
 
-1.
-I have multiple files modified, but would like to undo the changes in
-one of the changed files.
-"git reset --hard" do not accept single files. So I used to use "git
-diff <file> | patch -p X", but X cannot be know until I checked the
-patch and know the path relationship. Is there other way to do it?
+git checkout -- <file>
 
-2.
-Sometimes I delete old unused branches with "git branch -D <branch>",
-but I just realized theren't a reflog log for such operation. If the
-branch is the only reference to the logs, deleting the branch makes
-the commits become dangling commits.  How could I recover those
-commit?
+>
+> 2.
+> Sometimes I delete old unused branches with "git branch -D <branch>",
+> but I just realized theren't a reflog log for such operation. If the
+> branch is the only reference to the logs, deleting the branch makes
+> the commits become dangling commits. =A0How could I recover those
+> commit?
+>
 
-I run into situation 1 from time to time. Luckily I have never ran
-into situation 2, but would like to know the recovery ways.
-Thanks in advance.
+Run "git fsck --lost-found" to list the SHA-1s of all dangling objects.
 
-Best Regards,
-Mac Lin
+But make sure you've taken a backup of the repo first, just in case
+something gets messed up further ;)
+
+--=20
+Erik "kusma" Faye-Lund
