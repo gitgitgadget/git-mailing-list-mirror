@@ -1,127 +1,96 @@
-From: Bill Pemberton <wfp5p@virginia.edu>
-Subject: [PATCH] blame: add a range option to -L
-Date: Fri, 30 Apr 2010 17:29:49 -0400
-Message-ID: <1272662989-563-1-git-send-email-wfp5p@virginia.edu>
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Apr 30 23:39:55 2010
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: git daemon on Windows environment
+Date: Fri, 30 Apr 2010 17:44:03 -0400
+Message-ID: <j2q32541b131004301444iea34b138v4c34260aa82f8ec8@mail.gmail.com>
+References: <1272532026043-4979038.post@n2.nabble.com> <t2jc115fd3c1004301434ofe8970fo2ea933dd450847d7@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: santos2010 <santos.claudia2009@googlemail.com>, git@vger.kernel.org
+To: Tim Visher <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 30 23:44:34 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7xwA-0000Tj-3k
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 23:39:54 +0200
+	id 1O7y0f-0004YQ-Pd
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 23:44:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759695Ab0D3Vjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Apr 2010 17:39:36 -0400
-Received: from viridian.itc.Virginia.EDU ([128.143.12.139]:53039 "EHLO
-	viridian.itc.virginia.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758800Ab0D3Vjf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Apr 2010 17:39:35 -0400
-X-Greylist: delayed 584 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Apr 2010 17:39:35 EDT
-Received: by viridian.itc.virginia.edu (Postfix, from userid 1249)
-	id F1A62409AC; Fri, 30 Apr 2010 17:29:49 -0400 (EDT)
-X-Mailer: git-send-email 1.7.0.6
+	id S1759705Ab0D3Vo0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Apr 2010 17:44:26 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:38606 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759674Ab0D3VoY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Apr 2010 17:44:24 -0400
+Received: by gwj19 with SMTP id 19so342187gwj.19
+        for <git@vger.kernel.org>; Fri, 30 Apr 2010 14:44:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=IfbH/GQHj+8uKMdNzCSlcRqgCaDHpBzROv4x9LxY5DE=;
+        b=QTxo8KpKR0eQEp8OEY3nC5jwx5UhaUhG8TjjO284sD1oTRsj3URgKImUK1qmmqBtk4
+         F43fuzOIArcZJrMG1ySrxYylwKhGm2qDuumMGwnXpQat4u1oma1iVb8s5Oiwh/GOATEj
+         xARnG/VcUL/1MgXwKSRQHyhaON8OMZCsJ8D8w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=QVe9OI8DSuHuB9BnOQ4odYItYtaRS+zHmuHfmm2uj4QpaLR7qz4diQUump+/uWniHQ
+         66D/WqAUcTdlY7uJVVT/8qmDEGUKws4fSmbq0C5G0Na75aIgjU1kKcsPalx9dapfwEyK
+         bL8JloQZNAduKnXKpL9c/hWrCnY7DAtAzIkbQ=
+Received: by 10.150.180.1 with SMTP id c1mr134805ybf.57.1272663863177; Fri, 30 
+	Apr 2010 14:44:23 -0700 (PDT)
+Received: by 10.151.109.5 with HTTP; Fri, 30 Apr 2010 14:44:03 -0700 (PDT)
+In-Reply-To: <t2jc115fd3c1004301434ofe8970fo2ea933dd450847d7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146066>
 
-In addition to + and - you can now use r to specify how many lines
-around <start> that you want to see.  For example: -L 20,r5 would show
-lines 15 through 25
+On Fri, Apr 30, 2010 at 5:34 PM, Tim Visher <tim.visher@gmail.com> wrot=
+e:
+> As far as I know, git --daemon is explicitly not supported in Windows
+> environments. =A0At least that was the case not too long ago.
 
-Signed-off-by: Bill Pemberton <wfp5p@virginia.edu>
----
+git daemon works perfectly fine in cygwin.  I've heard that the
+msysgit one doesn't necessarily work, but that may have been fixed.
 
-I've been using a perl wrapper script to get this functionality.
-In case others may find this a useful feature, I went ahead and
-added it to blame.c
+I haven't tried using the git daemon as a service, though; I mostly
+use it as an ad-hoc thing to easily let me exchange branches with my
+co-workers before they're ready to be pushed into the "real" server,
+thus it doesn't matter much if git-daemon doesn't restart on boot.  So
+I can't help with the original poster's problem.
 
+> If you're running git --daemon because of its efficiency, have you
+> considered the fact that [smart-http][] is almost as efficient? =A0Th=
+at
+> should work in any http server, a plethora of which exist for Windoze=
+=2E
 
- Documentation/blame-options.txt |    6 ++++++
- Documentation/git-blame.txt     |    6 ++++++
- builtin/blame.c                 |   19 +++++++++++++++++--
- 3 files changed, 29 insertions(+), 2 deletions(-)
+That's about 10000 times harder than running 'git daemon' from the
+command line, though, if all you want is ad-hoc sharing.
 
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index d820569..acbbc91 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -32,6 +32,12 @@ This is only valid for <end> and will specify a number
- of lines before or after the line given by <start>.
- +
- 
-+- rrange
-++
-+This is only valid for <end> and will specify a number
-+of lines before and after the line given by <start>.
-++
-+
- -l::
- 	Show long rev (Default: off).
- 
-diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
-index a27f439..7a9b99a 100644
---- a/Documentation/git-blame.txt
-+++ b/Documentation/git-blame.txt
-@@ -110,6 +110,12 @@ line 40):
- 	git blame -L 40,60 foo
- 	git blame -L 40,+21 foo
- 
-+A range of lines around a particular line can be shown by using 'r'
-+before the second number.  If you wanted to see line 20 along with the
-+5 lines around it:
-+
-+  	git blame -L 20,r5 foo
-+
- Also you can use a regular expression to specify the line range:
- 
- 	git blame -L '/^sub hello {/,/^}$/' foo
-diff --git a/builtin/blame.c b/builtin/blame.c
-index fc15863..03a8948 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1887,13 +1887,18 @@ static const char *parse_loc(const char *spec,
- 	/* Allow "-L <something>,+20" to mean starting at <something>
- 	 * for 20 lines, or "-L <something>,-5" for 5 lines ending at
- 	 * <something>.
-+	 * In addition "-L <something>,r5" means starting at
-+	 * <something>-5 and ending at <something>+5
- 	 */
--	if (1 < begin && (spec[0] == '+' || spec[0] == '-')) {
-+	if (1 < begin &&
-+	    (spec[0] == '+' || spec[0] == '-' || spec[0] == 'r')) {
- 		num = strtol(spec + 1, &term, 10);
- 		if (term != spec + 1) {
- 			if (spec[0] == '-')
- 				num = 0 - num;
--			if (0 < num)
-+			if (spec[0] == 'r')
-+				*ret = 0 - num;
-+			else if (0 < num)
- 				*ret = begin + num - 2;
- 			else if (!num)
- 				*ret = begin;
-@@ -1960,6 +1965,16 @@ static void prepare_blame_range(struct scoreboard *sb,
- 	term = parse_loc(bottomtop, sb, lno, 1, bottom);
- 	if (*term == ',') {
- 		term = parse_loc(term + 1, sb, lno, *bottom + 1, top);
-+
-+		/* if top is negative then top is actually a range
-+		   that was specified with the r option */
-+		if (*top < 1) {
-+		    long x = *top;
-+		    *top = *bottom - x;
-+		    *bottom += x;
-+		    if (*bottom < 1)
-+			*bottom = 1;
-+		}
- 		if (*term)
- 			usage(blame_usage);
- 	}
--- 
-1.7.0.6
+Your suggestion is probably a good one for setting up a "real" Windows
+git server; setting up a Windows ssh server should also work.  We just
+use a Linux server at work, even for our Windows users, and life is
+fine.
+
+> Also, file system cloning is very efficient so if you're trying to
+> share a repository you could in theory share over the file system
+> using filesystem permissions to allow for cloning.
+
+Hmm, in my experience, git cloning over NFS/SMB is kind of crappy;
+using a real git server is much faster.  This is because of latency:
+the client doesn't know which bytes to read until it reads some of the
+other bytes, so there's a lot of back-and-forth communication.  The
+"real" git protocols (like git daemon, smart http, ssh server, etc)
+let the server make these decisions and can thus go much faster.
+
+Have fun,
+
+Avery
