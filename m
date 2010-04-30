@@ -1,263 +1,232 @@
 From: Will Palmer <wmpalmer@gmail.com>
-Subject: [PATCH v3 5/5] pretty: add aliases for pretty formats
-Date: Fri, 30 Apr 2010 20:35:28 +0100
-Message-ID: <1272656128-2002-6-git-send-email-wmpalmer@gmail.com>
+Subject: [PATCH v3 2/5] pretty: make %H/%h/etc respect --abbrev[-commit]
+Date: Fri, 30 Apr 2010 20:35:25 +0100
+Message-ID: <1272656128-2002-3-git-send-email-wmpalmer@gmail.com>
 References: <1272656128-2002-1-git-send-email-wmpalmer@gmail.com>
 Cc: wmpalmer@gmail.com, gitster@pobox.com, peff@peff.net,
 	raa.lkml@gmail.com, jrnieder@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 30 21:38:50 2010
+X-From: git-owner@vger.kernel.org Fri Apr 30 21:38:49 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7w2u-0008Of-EY
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 21:38:44 +0200
+	id 1O7w2x-0008Of-Hs
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 21:38:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934279Ab0D3TgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Apr 2010 15:36:11 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:57368 "EHLO
+	id S932649Ab0D3Tgr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Apr 2010 15:36:47 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:47873 "EHLO
 	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933390Ab0D3Tfo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Apr 2010 15:35:44 -0400
-Received: by mail-ww0-f46.google.com with SMTP id 34so446912wwb.19
-        for <git@vger.kernel.org>; Fri, 30 Apr 2010 12:35:43 -0700 (PDT)
+	with ESMTP id S1757495Ab0D3Tgj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Apr 2010 15:36:39 -0400
+Received: by wwb34 with SMTP id 34so447610wwb.19
+        for <git@vger.kernel.org>; Fri, 30 Apr 2010 12:36:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=ZUl6xwBzioJ/CEzIgtt/rPAdH9nhua7eTAbZlm+6TEY=;
-        b=DFNQQ5CuanBK/gBhOMs287g3VPhtAmLz822Qe4CKG02Jpst3hO46zC5BPCEs22uC6t
-         5e/97LxGjrkuDnvdS6DYDUHu9tcLzOauKvKv7JgOf8+KZn+OscUImo5avGBVENaOL/62
-         UCZjE9AZCU+uXUQ8fyaSYFOHgVwuJVmL/li2I=
+        bh=l97WLzppDSO4yAgGfavUuyekhDl0m9g7wHQlOpdFZkA=;
+        b=W1P5DwoD4jX9QdS+mE86zpio7oO6KJEnII5I99TiamkfISTlfq9EDecicgGsFJExBn
+         dhbd2KxXz/EZgpOHqiFi6kta52Og2nEMUXMIWR8qZ4nT0zOOczLbNmA8utt+lLaXDUsv
+         OccBxZcyOvhqXYEzpO/sx0O7rWpATTElGmg8s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=W6AR0BoNNwCFoMOLN11Q2H55yso6HfGROApube4JyHVST9f37EVcd+QUjmSCpnzdlw
-         NuXVYlQ7IXicVN+m3PIn1tf8LgkdzQps6mSyT8KDY6Vn6c8z4z15tVJ04lwu4+8qQGWh
-         0Dk7UPMidgahb4kdTpCPy0zC8L4F6dyr4S5BI=
-Received: by 10.216.90.206 with SMTP id e56mr2367655wef.167.1272656143087;
-        Fri, 30 Apr 2010 12:35:43 -0700 (PDT)
+        b=VVQE3ZZKQ2h0KeUQ1O/Pc61XgY2iqnasawbkFuXXxYu3uZUd0Sggc9PV/sUGGU2XDi
+         nfK/lXFaPCzUXkq/yEeIpg9ZhfTZ5gLN5sJVzUiZkYRMgInQNFaGtQByoCmzabhqG/u0
+         IQqzc8vAcAlZBAQddqUdDOSgeyblPoP5q3HkI=
+Received: by 10.216.172.73 with SMTP id s51mr2796499wel.113.1272656140436;
+        Fri, 30 Apr 2010 12:35:40 -0700 (PDT)
 Received: from localhost.localdomain (5acc34b2.bb.sky.com [90.204.52.178])
-        by mx.google.com with ESMTPS id z3sm17896470wbs.4.2010.04.30.12.35.42
+        by mx.google.com with ESMTPS id z3sm17896470wbs.4.2010.04.30.12.35.39
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 30 Apr 2010 12:35:42 -0700 (PDT)
+        Fri, 30 Apr 2010 12:35:40 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.rc1.13.gbb0a0a.dirty
 In-Reply-To: <1272656128-2002-1-git-send-email-wmpalmer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146057>
 
-previously the only ways to alias a --pretty format within git were
-either to set the format as your default format (via the format.pretty
-configuration variable), or by using a regular git alias. This left the
-definition of more complicated formats to the realm of "builtin or
-nothing", with user-defined formats usually being reserved for quick
-one-offs.
+Prior to this, the output of %H was always 40 characters long, and the
+output of %h always DEFAULT_ABBREV characters long, without regard to
+whether --abbrev-commit or --abbrev had been passed.
 
-Here we allow user-defined formats to enjoy more or less the same
-benefits of builtins. By defining pretty.myalias, "myalias" can be
-used in place of whatever would normally come after --pretty=. This
-can be a format:, tformat:, raw (ie, defaulting to tformat), or the name
-of another builtin or user-defined pretty format.
+Here we make "git log --pretty=%H --abbrev-commit" synonymous with
+"git log --pretty=%h", and make %h/abbreviated-%H respect the length
+specified for --abbrev.
+
+The same is applied to other commit-placeholders %P and %p, and
+--abbrev is respected for %t, though %T is not changed.
 
 Signed-off-by: Will Palmer <wmpalmer@gmail.com>
 ---
- Documentation/config.txt         |    9 ++++++
- Documentation/pretty-formats.txt |    7 ++++-
- pretty.c                         |   57 ++++++++++++++++++++++++++++++++++++-
- t/t4205-log-pretty-formats.sh    |   47 +++++++++++++++++++++++++++++++
- 4 files changed, 117 insertions(+), 3 deletions(-)
+ builtin/rev-list.c            |    1 +
+ builtin/shortlog.c            |    2 ++
+ commit.h                      |    3 ++-
+ log-tree.c                    |    6 ++++--
+ pretty.c                      |   30 +++++++++++++++++++-----------
+ t/t4205-log-pretty-formats.sh |   17 +++++++++++++++++
+ 6 files changed, 45 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 92f851e..3987b2d 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1466,6 +1466,15 @@ pager.<cmd>::
- 	it takes precedence over this option.  To disable pagination for
- 	all commands, set `core.pager` or `GIT_PAGER` to `cat`.
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 5a53862..1d1e59c 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -98,6 +98,7 @@ static void show_commit(struct commit *commit, void *data)
+ 		struct strbuf buf = STRBUF_INIT;
+ 		struct pretty_print_context ctx = {0};
+ 		ctx.abbrev = revs->abbrev;
++		ctx.abbrev_commit = revs->abbrev_commit;
+ 		ctx.date_mode = revs->date_mode;
+ 		ctx.use_color = DIFF_OPT_TST(&revs->diffopt, COLOR_DIFF);
+ 		pretty_print_commit(revs->commit_format, commit, &buf, &ctx);
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 7aee491..5c0721c 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -143,6 +143,8 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit, struct rev
+ 	struct strbuf ufbuf = STRBUF_INIT;
+ 	struct pretty_print_context ctx = {0};
  
-+pretty.<name>::
-+	Alias for a --pretty= format string, as specified in
-+	linkgit:git-log[1]. Any aliases defined here can be used just
-+	as the built-in pretty formats could. For example, defining
-+	"format.pretty.hash = format:%H" would cause the invocation
-+	"git log --pretty=hash" to be equivalent to running
-+	"git log --pretty=format:%H". Note that an alias with the same
-+	name as a built-in format will be silently ignored.
-+
- pull.octopus::
- 	The default merge strategy to use when pulling multiple branches
- 	at once.
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 5861256..bb0f0d2 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -11,7 +11,12 @@ have limited your view of history: for example, if you are
- only interested in changes related to a certain directory or
- file.
++	ctx.abbrev = rev->abbrev;
++	ctx.abbrev_commit = rev->abbrev_commit;
+ 	ctx.use_color = DIFF_OPT_TST(&rev->diffopt, COLOR_DIFF);
+ 	pretty_print_commit(CMIT_FMT_RAW, commit, &buf, &ctx);
+ 	buffer = buf.buf;
+diff --git a/commit.h b/commit.h
+index b6caf91..4c52069 100644
+--- a/commit.h
++++ b/commit.h
+@@ -65,7 +65,8 @@ enum cmit_fmt {
  
--Here are some additional details for each format:
-+There are several built-in formats, and you can define
-+additional formats by setting a pretty.<name>
-+config option to either another format name, or a
-+'format:' string, as described below (see
-+linkgit:git-config[1]). Here are the details of the
-+built-in formats:
+ struct pretty_print_context
+ {
+-	int abbrev;
++	int abbrev; /* length of abbreviated hashes */
++	int abbrev_commit; /* whether or not to abbreviate commit hashes */
+ 	const char *subject;
+ 	const char *after_subject;
+ 	enum date_mode date_mode;
+diff --git a/log-tree.c b/log-tree.c
+index 6bb4748..02233ed 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -279,10 +279,13 @@ void show_log(struct rev_info *opt)
+ 	struct strbuf msgbuf = STRBUF_INIT;
+ 	struct log_info *log = opt->loginfo;
+ 	struct commit *commit = log->commit, *parent = log->parent;
+-	int abbrev_commit = opt->abbrev_commit ? opt->abbrev : 40;
++	int abbrev_commit;
+ 	const char *extra_headers = opt->extra_headers;
+ 	struct pretty_print_context ctx = {0};
++	ctx.abbrev = opt->diffopt.abbrev;
++	ctx.abbrev_commit = opt->abbrev_commit && opt->commit_format != CMIT_FMT_RAW;
+ 	ctx.use_color = DIFF_OPT_TST(&opt->diffopt, COLOR_DIFF);
++	abbrev_commit = ctx.abbrev_commit ? ctx.abbrev : 40;
  
- * 'oneline'
- 
+ 	opt->loginfo = NULL;
+ 	ctx.show_notes = opt->show_notes;
+@@ -411,7 +414,6 @@ void show_log(struct rev_info *opt)
+ 	if (ctx.need_8bit_cte >= 0)
+ 		ctx.need_8bit_cte = has_non_ascii(opt->add_signoff);
+ 	ctx.date_mode = opt->date_mode;
+-	ctx.abbrev = opt->diffopt.abbrev;
+ 	ctx.after_subject = extra_headers;
+ 	ctx.reflog_info = opt->reflog_info;
+ 	pretty_print_commit(opt->commit_format, commit, &msgbuf, &ctx);
 diff --git a/pretty.c b/pretty.c
-index 3d1c4a9..9780e32 100644
+index fdb5e16..60ed9f6 100644
 --- a/pretty.c
 +++ b/pretty.c
-@@ -18,7 +18,9 @@ static struct cmt_fmt_map {
- 	int is_alias;
- 	const char *user_format;
- } *commit_formats = NULL;
-+static size_t builtin_formats_len = 0;
- static size_t commit_formats_len = 0;
-+static size_t commit_formats_alloc = 0;
- static struct cmt_fmt_map *find_commit_format(const char *sought);
+@@ -725,13 +725,16 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
  
- static void save_user_format(struct rev_info *rev, const char *cp, int is_tformat)
-@@ -30,6 +32,51 @@ static void save_user_format(struct rev_info *rev, const char *cp, int is_tforma
- 	rev->commit_format = CMIT_FMT_USERFORMAT;
- }
- 
-+static int git_pretty_formats_config(const char *var, const char *value, void *cb)
-+{
-+	struct cmt_fmt_map *commit_format = NULL;
-+	const char *name;
-+	const char *fmt;
-+	int i;
-+
-+	if (prefixcmp(var, "pretty."))
-+		return 0;
-+
-+	name = &var[7];
-+	for (i=0; i<builtin_formats_len; i++) {
-+		if (!strcmp(commit_formats[i].name, name))
-+			return 0;
-+	}
-+
-+	for (i=builtin_formats_len; i<commit_formats_len; i++) {
-+		if (!strcmp(commit_formats[i].name, name)) {
-+			commit_format = &commit_formats[i];
-+			break;
+ 	switch (placeholder[0]) {
+ 	case 'H':		/* commit hash */
+-		strbuf_addstr(sb, sha1_to_hex(commit->object.sha1));
+-		return 1;
+ 	case 'h':		/* abbreviated commit hash */
++		if (placeholder[0] != 'h' && !c->pretty_ctx->abbrev_commit) {
++			strbuf_addstr(sb, sha1_to_hex(commit->object.sha1));
++			return 1;
 +		}
-+	}
 +
-+	if (!commit_format) {
-+		ALLOC_GROW(commit_formats, commit_formats_len+1,
-+			   commit_formats_alloc);
-+		commit_format = &commit_formats[commit_formats_len];
-+		commit_formats_len++;
-+	}
+ 		if (add_again(sb, &c->abbrev_commit_hash))
+ 			return 1;
+ 		strbuf_addstr(sb, find_unique_abbrev(commit->object.sha1,
+-		                                     DEFAULT_ABBREV));
++						     c->pretty_ctx->abbrev));
+ 		c->abbrev_commit_hash.len = sb->len - c->abbrev_commit_hash.off;
+ 		return 1;
+ 	case 'T':		/* tree hash */
+@@ -741,24 +744,29 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
+ 		if (add_again(sb, &c->abbrev_tree_hash))
+ 			return 1;
+ 		strbuf_addstr(sb, find_unique_abbrev(commit->tree->object.sha1,
+-		                                     DEFAULT_ABBREV));
++						     c->pretty_ctx->abbrev));
+ 		c->abbrev_tree_hash.len = sb->len - c->abbrev_tree_hash.off;
+ 		return 1;
+ 	case 'P':		/* parent hashes */
+-		for (p = commit->parents; p; p = p->next) {
+-			if (p != commit->parents)
+-				strbuf_addch(sb, ' ');
+-			strbuf_addstr(sb, sha1_to_hex(p->item->object.sha1));
+-		}
+-		return 1;
+ 	case 'p':		/* abbreviated parent hashes */
++		if (placeholder[0] != 'p' && !c->pretty_ctx->abbrev_commit) {
++			for (p = commit->parents; p; p = p->next) {
++				if (p != commit->parents)
++					strbuf_addch(sb, ' ');
++				strbuf_addstr(sb,
++					      sha1_to_hex(p->item->object.sha1));
++			}
++			return 1;
++		}
 +
-+	commit_format->name = xstrdup(name);
-+	commit_format->format = CMIT_FMT_USERFORMAT;
-+	git_config_string(&fmt, var, value);
-+	if (!prefixcmp(fmt, "format:") || !prefixcmp(fmt, "tformat:")) {
-+		commit_format->is_tformat = fmt[0] == 't';
-+		fmt = strchr(fmt, ':') + 1;
-+	} else if (strchr(fmt, '%'))
-+		commit_format->is_tformat = 1;
-+	else
-+		commit_format->is_alias = 1;
-+	commit_format->user_format = fmt;
-+
-+	return 0;
-+}
-+
- static void setup_commit_formats(void)
- {
- 	struct cmt_fmt_map builtin_formats[] = {
-@@ -42,10 +89,12 @@ static void setup_commit_formats(void)
- 		{ "oneline",	CMIT_FMT_ONELINE,	1 }
- 	};
- 	commit_formats_len = ARRAY_SIZE(builtin_formats);
--	commit_formats = xcalloc(commit_formats_len,
--				 sizeof(*builtin_formats));
-+	builtin_formats_len = commit_formats_len;
-+	ALLOC_GROW(commit_formats, commit_formats_len, commit_formats_alloc);
- 	memcpy(commit_formats, builtin_formats,
- 	       sizeof(*builtin_formats)*ARRAY_SIZE(builtin_formats));
-+
-+	git_config(git_pretty_formats_config, NULL);
- }
- 
- static struct cmt_fmt_map *find_commit_format_recursive(const char *sought,
-@@ -112,6 +161,10 @@ void get_commit_format(const char *arg, struct rev_info *rev)
- 
- 	rev->commit_format = commit_format->format;
- 	rev->use_terminator = commit_format->is_tformat;
-+	if( commit_format->format == CMIT_FMT_USERFORMAT ){
-+		save_user_format(rev, commit_format->user_format,
-+				 commit_format->is_tformat);
-+	}
- }
- 
- /*
+ 		if (add_again(sb, &c->abbrev_parent_hashes))
+ 			return 1;
+ 		for (p = commit->parents; p; p = p->next) {
+ 			if (p != commit->parents)
+ 				strbuf_addch(sb, ' ');
+ 			strbuf_addstr(sb, find_unique_abbrev(
+-					p->item->object.sha1, DEFAULT_ABBREV));
++					p->item->object.sha1,
++					c->pretty_ctx->abbrev));
+ 		}
+ 		c->abbrev_parent_hashes.len = sb->len -
+ 		                              c->abbrev_parent_hashes.off;
 diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index a33f157..d8673fb 100755
+index b7ec943..a33f157 100755
 --- a/t/t4205-log-pretty-formats.sh
 +++ b/t/t4205-log-pretty-formats.sh
-@@ -66,4 +66,51 @@ test_expect_success "log --pretty=raw should NOT respect --abbrev-commit" \
- 	git log -1 --pretty=raw --abbrev-commit > actual &&
- 	test_cmp expected actual'
+@@ -48,5 +48,22 @@ for color in red green blue reset; do
  
-+test_expect_success "alias builtin format" \
-+	"git log --pretty=oneline >expected &&
-+	git config pretty.test-alias oneline &&
-+	git log --pretty=test-alias >actual &&
+ done
+ done
++test_expect_success "reset color flags" "git config --unset color.ui"
++
++test_expect_success "%H with --abbrev-commit should be synonym for %h" \
++	"git log -1 --pretty='format:%H' --abbrev-commit > expected &&
++	git log -1 --pretty='format:%h' > actual &&
 +	test_cmp expected actual"
 +
-+test_expect_success "alias masking builtin format" \
-+	"git log --pretty=oneline >expected &&
-+	git config pretty.oneline '%H' &&
-+	git log --pretty=oneline >actual &&
-+	test_cmp expected actual"
++test_expect_success "%H with --abbrev-commit should respect --abbrev" \
++	'test 20 = $(git log -1 --pretty="format:%H" --abbrev-commit --abbrev=20 | wc -c)'
 +
-+test_expect_success "alias user-defined format" \
-+	"git log --pretty='format:%h' >expected &&
-+	git config pretty.test-alias 'format:%h' &&
-+	git log --pretty=test-alias >actual &&
-+	test_cmp expected actual"
++test_expect_success "%h should respect --abbrev" \
++	'test 20 = $(git log -1 --pretty="format:%h" --abbrev-commit --abbrev=20 | wc -c)'
 +
-+test_expect_success "alias user-defined tformat" \
-+	"git log --pretty='tformat:%h' >expected &&
-+	git config pretty.test-alias 'tformat:%h' &&
-+	git log --pretty=test-alias >actual &&
-+	test_cmp expected actual"
-+
-+test_expect_code 128 "alias non-existant format" \
-+	"git config pretty.test-alias format-that-will-never-exist &&
-+	git log --pretty=test-alias"
-+
-+test_expect_success "alias of an alias" \
-+	"git log --pretty='tformat:%h' >expected &&
-+	git config pretty.test-foo 'tformat:%h' &&
-+	git config pretty.test-bar test-foo &&
-+	git log --pretty=test-bar >actual &&
-+	test_cmp expected actual"
-+
-+test_expect_success "alias masking an alias" \
-+	"git log --pretty=format:'Two %H' >expected &&
-+	git config pretty.duplicate 'format:One %H' &&
-+	git config --add pretty.duplicate 'format:Two %H' &&
-+	git log --pretty=duplicate >actual &&
-+	test_cmp expected actual"
-+
-+test_expect_code 128 "alias loop" \
-+	"git config pretty.test-foo test-bar &&
-+	git config pretty.test-bar test-foo &&
-+	git log --pretty=test-foo"
-+
++test_expect_success "log --pretty=raw should NOT respect --abbrev-commit" \
++	'git log -1 --pretty=raw > expected &&
++	git log -1 --pretty=raw --abbrev-commit > actual &&
++	test_cmp expected actual'
+ 
  test_done
 -- 
 1.7.1.rc1.13.gbb0a0a.dirty
