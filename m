@@ -1,72 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How to efficiently blame an entire repo?
-Date: Fri, 30 Apr 2010 17:21:03 -0400
-Message-ID: <20100430212103.GB14039@coredump.intra.peff.net>
-References: <r2l76718491004291612qbe0834ela89f0606e5f477e2@mail.gmail.com>
+From: Tim Visher <tim.visher@gmail.com>
+Subject: Re: git daemon on Windows environment
+Date: Fri, 30 Apr 2010 17:34:36 -0400
+Message-ID: <t2jc115fd3c1004301434ofe8970fo2ea933dd450847d7@mail.gmail.com>
+References: <1272532026043-4979038.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 30 23:21:19 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: santos2010 <santos.claudia2009@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 30 23:35:10 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7xeB-0002nB-68
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 23:21:19 +0200
+	id 1O7xra-00055B-2w
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 23:35:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759653Ab0D3VVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Apr 2010 17:21:08 -0400
-Received: from peff.net ([208.65.91.99]:46597 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759648Ab0D3VVG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Apr 2010 17:21:06 -0400
-Received: (qmail 16706 invoked by uid 107); 30 Apr 2010 21:21:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 30 Apr 2010 17:21:17 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Apr 2010 17:21:03 -0400
-Content-Disposition: inline
-In-Reply-To: <r2l76718491004291612qbe0834ela89f0606e5f477e2@mail.gmail.com>
+	id S1757753Ab0D3Ve7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Apr 2010 17:34:59 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:42156 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754480Ab0D3Ve5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Apr 2010 17:34:57 -0400
+Received: by gyg13 with SMTP id 13so334382gyg.19
+        for <git@vger.kernel.org>; Fri, 30 Apr 2010 14:34:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=OE2pHSOdibBEsMEJ5WCBfiKAaREaw07aWOMWekAeg/E=;
+        b=c7DZbEZiPJEVhVo1NSqVVCl8Z5rjTaCLFphpZFCWnAAKXMAnFyemfkKBwNjukYrMdd
+         9gPjELndXWR6/XoTTkhoObIKU3P+KH7b+mgVQnNkvYHExI7yeySoEozZXtDQoHD0VpWm
+         0xoaUZk37GVFMV09ZEkUkKgrI+YtpgNGpaMLc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=OVaEt64wn7NZ3RiwLziRajQiXowNI+I79O11jVcziyrCAJNUAGLUbti+bNIul5nMr9
+         ycIzxsWfa0J1fJAE4UPAxMmPuc3FmBhcoWSkAXwPifqElLPX4RzvUO06TmsTssGfwiKP
+         41Qa9wgqM5S411PcDA4FQaekGA+uFX3TIvtyc=
+Received: by 10.151.20.11 with SMTP id x11mr3064137ybi.216.1272663296196; Fri, 
+	30 Apr 2010 14:34:56 -0700 (PDT)
+Received: by 10.100.164.19 with HTTP; Fri, 30 Apr 2010 14:34:36 -0700 (PDT)
+In-Reply-To: <1272532026043-4979038.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146064>
 
-On Thu, Apr 29, 2010 at 07:12:27PM -0400, Jay Soffian wrote:
+On Thu, Apr 29, 2010 at 5:07 AM, santos2010
+<santos.claudia2009@googlemail.com> wrote:
+>
+> Hello,
+>
+> I tried to install git daemon on a Windows Server 2003 using cygrunsr=
+v, but
+> got this error:
+> cygrunsrv: Error starting a service: QueryServiceStatus: =C2=A0Win32 =
+error 1062:
+>
+> I googled and found a possible fix:
+>
+> =C2=A0" explicitly add Full Control for the SYSTEM user to
+>
+> =C2=A0C:\Cygwin
+> =C2=A0C:\Cygwin\var
+> =C2=A0C:\Cygwin\var\log "
+>
+> However this didn't help as well.
+> Anyone has experience with this installation? Any tips?
+>
+> Thanks ina advance,
 
-> Let's say you've got a repo with ~ 40K files and 35K commits.
-> Well-packed .git is about 800MB.
-> 
-> You want to find out how many lines of code a particular group of
-> individuals has contributed to HEAD.
-> 
-> The naive solution is to run git blame on all 40K files grep'ing for
-> the just the authors you want.
+As far as I know, git --daemon is explicitly not supported in Windows
+environments.  At least that was the case not too long ago.
 
-With the exception of your "blame only those files that you know your
-authors have touched" optimization, I think you pretty much have to do
-this. Anything else will just be reimplementing blame. You can't throw
-away most content prematurely, because it may end up blaming to your
-authors of interest eventually.
+If you're running git --daemon because of its efficiency, have you
+considered the fact that [smart-http][] is almost as efficient?  That
+should work in any http server, a plethora of which exist for Windoze.
 
-I think this is also what Junio ended up doing when presenting at
-GitTogether '08:
+Also, file system cloning is very efficient so if you're trying to
+share a repository you could in theory share over the file system
+using filesystem permissions to allow for cloning.
 
-  http://userweb.kernel.org/~junio/200810-Chron.pdf
+Just food for thought.
 
-In theory you might be able to do multi-file blame faster.  I would be
-curious to see the performance difference between:
+[smart-http]: http://progit.org/2010/03/04/smart-http.html
 
-  $ git blame file1 file2 ;# not actually implemented
+--=20
 
-and
+In Christ,
 
-  $ for i in file1 file2; do git blame $i; done
+Timmy V.
 
-Much of the work is O(content), but there is some overlap in walking the
-history and generating diffs.
-
--Peff
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
