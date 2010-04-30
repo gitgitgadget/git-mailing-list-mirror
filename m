@@ -1,92 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Silence 'Variable VAR may be unavailable' warnings
-Date: Fri, 30 Apr 2010 18:30:31 +0200
-Message-ID: <20100430162934.11548.7015.stgit@localhost.localdomain>
+From: =?UTF-8?B?SGVydsOpIENhdXdlbGllcg==?= <herve@itaapy.com>
+Subject: Re: Multiblobs
+Date: Fri, 30 Apr 2010 21:06:10 +0200
+Message-ID: <4BDB2A22.40400@itaapy.com>
+References: <loom.20100428T164432-954@post.gmane.org> <k2y32541b131004281107u6d15ed4ex54b5e5c138cc0e24@mail.gmail.com> 	<loom.20100428T204406-308@post.gmane.org> <4BDA9F5C.2080808@itaapy.com> <u2lb4087cc51004301116t17ba0efamf4c9b38842bad409@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 30 21:04:50 2010
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 30 21:04:51 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7vW3-0004r3-Iz
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 21:04:47 +0200
+	id 1O7vW6-0004r3-3E
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 21:04:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757702Ab0D3TEB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Apr 2010 15:04:01 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37304 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758256Ab0D3RBT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Apr 2010 13:01:19 -0400
-Received: by fxm10 with SMTP id 10so400465fxm.19
-        for <git@vger.kernel.org>; Fri, 30 Apr 2010 10:01:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:subject:to:cc
-         :date:message-id:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=UQCIdWlyRPyWLjuCn3Bm45KvNSmvC+HSz0MGm6Kn/aw=;
-        b=GjchHKJbvG1s6hF6DXB7Bo+Z0IoDyoC6QbtRM/6tUoXf0CUMrIHhkFgfg3Ko+dykOS
-         ij0QB1aII3QaNGzxR7ePx9PFQC73OV1hDhnMlPaQQ1O+g+/k+6skR6nhd9+Bv8p2zDNu
-         9XmhW/WNh84kHFFUm6W7t4giEAT3Tb5ZORwkk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:subject:to:cc:date:message-id:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        b=gSxthNvSNYmZzCosBXuwX6Z3igmX/dFh66QojIjbqhBjhHfbFA/4t4nW78pKVKEAlg
-         9xsVsRFMAw0oFwlWEinYnP/0I3aPJaNPBZYSoL61ODheoCuDOL0J55+oBQ0VQTMHO192
-         FFOhlv+6rxUIjOo66V+Rf/VMdX7cT3mnE9KkQ=
-Received: by 10.102.16.14 with SMTP id 14mr6403807mup.136.1272645059325;
-        Fri, 30 Apr 2010 09:30:59 -0700 (PDT)
-Received: from localhost.localdomain (abvb223.neoplus.adsl.tpnet.pl [83.8.199.223])
-        by mx.google.com with ESMTPS id y2sm9711553mug.51.2010.04.30.09.30.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 30 Apr 2010 09:30:58 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o3UGUVOl011590;
-	Fri, 30 Apr 2010 18:30:41 +0200
-User-Agent: StGIT/0.14.3
+	id S932953Ab0D3TEl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Apr 2010 15:04:41 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:50345 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759408Ab0D3TER (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Apr 2010 15:04:17 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 8A08C818157;
+	Fri, 30 Apr 2010 21:04:07 +0200 (CEST)
+Received: from [192.168.1.3] (lns-bzn-28-82-250-155-237.adsl.proxad.net [82.250.155.237])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 52037818196;
+	Fri, 30 Apr 2010 21:04:05 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100330 Shredder/3.0.4
+In-Reply-To: <u2lb4087cc51004301116t17ba0efamf4c9b38842bad409@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146047>
 
-When $projects_list points to a directory, and git_get_projects_list
-scans this directory for repositories, there can be generated the
-following warnings (for persistent services like mod_perl or plackup):
+On 04/30/10 20:16, Michael Witten wrote:
+> 2010/4/30 Herv=C3=A9 Cauwelier<herve@itaapy.com>:
+>>
+>> Unless you are talking about a dedicated application to store and ge=
+nerate
+>> on-the-fly office documents, built on top of Git, you're better not =
+touching
+>> the contents the user is entrusting git to store, and write a .gitat=
+tribute
+>> not to compress them in a pack.
+>
+> Doesn't OOo provide at least some library of official code for
+> handling such files, so that other programs might be able to
+> interoperate?
 
-  Variable "$project_maxdepth" may be unavailable at gitweb.cgi line 2443.
-  Variable "$projectroot" may be unavailable at gitweb.cgi line 2451.
+I'm not sure what you mean but the only way to interoperate with OOo is=
+=20
+to run it in "server mode" with at least a framebuffer xorg in the=20
+background. Then you connect a client and use their RPC/Corba-like API.
 
-Those are false positives; silence those warnings by explicitely
-declaring $project_maxdepth and $projectroot with 'our', as global
-variables, in anonymous subrotine passed to File::Find::find.
+OpenDocument libraries all start from scratch, or at least the RelaxNG=20
+schema to generate validating code.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Those warnings do not appear when run as simple CGI script, so test
-suite could not catch them.
+If the chunks are Zip parts, you're almost done. If you want smarter=20
+splitting logic like slides in a presentation, sheets in a spreadsheet,=
+=20
+and pages... no, there is no page in a text; well, you need to go=20
+through the XML layer or better use a OpenDocument library that=20
+abstracts it. Other parts in the Zip like styles and metadata are easie=
+r=20
+to split since they are basically a linear collection of objects.
 
- gitweb/gitweb.perl |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+> If so, then it would be almost trivial for an OpenDocument 'plugin' t=
+o
+> be 'built on top of Git'.
+>
+> If not, then OOo is crap.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 7d9b660..d6cbfa9 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2433,6 +2433,9 @@ sub git_get_projects_list {
- 			follow_skip => 2, # ignore duplicates
- 			dangling_symlinks => 0, # ignore dangling symlinks, silently
- 			wanted => sub {
-+				# global variables
-+				our $project_maxdepth;
-+				our $projectroot;
- 				# skip project-list toplevel, if we get it.
- 				return if (m!^[/.]$!);
- 				# only directories can be git repositories
+I already had reasons to conclude this. But hopefully OD is an open=20
+standard, not restricted to OOo.
+
+--=20
+Herv=C3=A9 Cauwelier - ITAAPY - 9 rue Darwin 75018 Paris
+T=C3=A9l. 01 42 23 67 45 - Fax 01 53 28 27 88
+http://www.itaapy.com/ - http://www.cms-migration.com
