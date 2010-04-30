@@ -1,58 +1,65 @@
-From: Eli Barzilay <eli@barzilay.org>
-Subject: Distinguishing trivial and non-trivial merge commits
-Date: Fri, 30 Apr 2010 12:35:05 -0400
-Message-ID: <19419.1721.763210.679444@winooski.ccs.neu.edu>
+From: Bradley Wagner <bradley.wagner@hannonhill.com>
+Subject: Multiple SVN remote branches listed in "git branch -r" after "git-svn 
+	fetch"
+Date: Fri, 30 Apr 2010 14:59:23 -0400
+Message-ID: <v2q2f0f6ced1004301159z21c3539av4983488df963ddf0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jonathan Wage <jonwage@gmail.com>,
+	Chap Lovejoy <chap.lovejoy@clickscape.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 30 20:56:47 2010
+X-From: git-owner@vger.kernel.org Fri Apr 30 21:00:31 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7vOF-0006ME-Pt
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 20:56:44 +0200
+	id 1O7vRt-0001JZ-PV
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 21:00:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933207Ab0D3Szi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Apr 2010 14:55:38 -0400
-Received: from winooski.ccs.neu.edu ([129.10.115.117]:57632 "EHLO barzilay.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932696Ab0D3RIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Apr 2010 13:08:22 -0400
-Received: from eli by barzilay.org with local (Exim 4.66)
-	(envelope-from <eli@barzilay.org>)
-	id 1O7tBB-0004ET-Ox
-	for git@vger.kernel.org; Fri, 30 Apr 2010 12:35:05 -0400
-X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
+	id S1758909Ab0D3S7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Apr 2010 14:59:32 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:52266 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933143Ab0D3S7Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Apr 2010 14:59:24 -0400
+Received: by mail-pw0-f46.google.com with SMTP id 9so336019pwj.19
+        for <git@vger.kernel.org>; Fri, 30 Apr 2010 11:59:24 -0700 (PDT)
+Received: by 10.115.132.31 with SMTP id j31mr3053927wan.114.1272653963781; 
+	Fri, 30 Apr 2010 11:59:23 -0700 (PDT)
+Received: by 10.114.159.7 with HTTP; Fri, 30 Apr 2010 11:59:23 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146045>
 
-I'm trying to get a goot notification script, and got stuck with merge
-commits.  My script shows a list of modifications for each commit
-(based on the diffstat output) -- and if I show all commits, then
-merges are misleading in that a quick glance through the email makes
-it look like a lot more was touched.  Using `--no-merges' helps in
-avoiding the confusing parts, but that's dangerous in omitting
-non-trivial merges too -- and those are probably even more worth
-noting than other changes (just because they'll highlights changes
-that are "hotter" in the sense of more people working on that code).
+So I did a conversion to Git using git-svn.
 
-The only way I've seen to distinguish the two is to use `git show' and
-see if there is no diff output (eg, "git show --pretty=format: $rev").
-But that doesn't help in getting the list of modified files.  So I add
-`--stat' to that, and that goes back to showing all files again, the
-same stuff that "git diff $rev^!" shows.
+git init <svn_url>
+# updated the .git/config file to reference a few different locations
+for branches:
+[svn-remote "svn"]
+        url = <svn_url>
+        fetch = cascade/trunk:refs/remotes/trunk
+        branches =
+cascade/branches/{hibernate-upgrade,spring-upgrade}}:refs/remotes/*
+        branches = cascade/branches/{6.x,5.x,4.x,3.x}/*:refs/remotes/*
+        tags = cascade/tags/{3.7.x,4.x,5.x,6.x,old-releases}/*:refs/remotes/tags/*
+git svn fetch
 
-Is there *any* way to get `git diff --stat' to do the same thing that
-`git show' does?  (Or a way to get `git show --stat' not show all
-files again...)
+Now, I'm seeing branches/tags listed multiple times with: git branch -r
 
--- 
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
-                    http://barzilay.org/                   Maze is Life!
+  6.x/6.0.2.1
+  6.x/6.0.2.1@12401
+  6.x/6.0.2.1@12422
+....
+  tags/4.x/rel_4_22
+  tags/4.x/rel_4_22@4093
+  tags/4.x/rel_4_22@4384
+
+What do these other branches with the @ sign mean? Did I do something wrong?
+
+Thanks,
+Bradley
