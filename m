@@ -1,110 +1,91 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Multiblobs
-Date: Fri, 30 Apr 2010 13:32:39 -0400
-Message-ID: <z2p32541b131004301032jd28b4b0azbb600880f4e15871@mail.gmail.com>
-References: <loom.20100428T164432-954@post.gmane.org> <k2y32541b131004281107u6d15ed4ex54b5e5c138cc0e24@mail.gmail.com> 
-	<loom.20100428T204406-308@post.gmane.org> <4BDA9F5C.2080808@itaapy.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git cherry(pick) dumps core
+Date: Fri, 30 Apr 2010 08:32:29 -0500
+Message-ID: <20100430133228.GA1620@progeny.tock>
+References: <s2m76c5b8581004281238jf7179fffna7d757fee6ab4f10@mail.gmail.com>
+ <r2s302ed1461004281249xd1b65e41l43fa7b639db7c97d@mail.gmail.com>
+ <h2v76c5b8581004281259yfaca7abfz5a455ff8fd6cdc6b@mail.gmail.com>
+ <o2j2cfc40321004281539j28fe44e0r5d029061e3e08b90@mail.gmail.com>
+ <20100428233758.GA1654@progeny.tock>
+ <20100429191150.GA10526@inner.home.ulmdo.de>
+ <20100429194936.GA31941@progeny.tock>
+ <20100429202139.GW10879@inner.home.ulmdo.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Herv=E9_Cauwelier?= <herve@itaapy.com>
-X-From: git-owner@vger.kernel.org Fri Apr 30 19:35:22 2010
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Apr 30 19:45:52 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7u7V-0003qm-O0
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 19:35:22 +0200
+	id 1O7uHY-0005vn-So
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 19:45:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758828Ab0D3RdI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Apr 2010 13:33:08 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:43817 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758825Ab0D3RdA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Apr 2010 13:33:00 -0400
-Received: by vws19 with SMTP id 19so380284vws.19
-        for <git@vger.kernel.org>; Fri, 30 Apr 2010 10:32:59 -0700 (PDT)
+	id S933429Ab0D3RpF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Apr 2010 13:45:05 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:32942 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933496Ab0D3Ro5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Apr 2010 13:44:57 -0400
+Received: by pwj9 with SMTP id 9so292143pwj.19
+        for <git@vger.kernel.org>; Fri, 30 Apr 2010 10:44:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=BAB5BKLaufRtwS1hyV9Mv81ln9wcCDg0N2LlYUbpPh4=;
-        b=lQlgy9+a/MFtrynvAOxpTKiR739YkeV1sbYk0AAfLn2Ny0HhZ/Kdz2baqWOoyR/SyD
-         oJTrsKBWBxYWcqXD2MP/TliPvqmUfv3PAwWxRCHYngYvILwHL+Ub2QHPuTNcd4FGEE/y
-         NW+LWHy1n/qKyhunzvotMYPSnTsvqlsO3aOo0=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=sHfBZsYHuMPIxumupy9PA0qTwHLiTyQrCJzUmRs/ZLE=;
+        b=UHjv9zslxMkH0clMbf/a3P6DUGLAvEtznQWZddKQUujn2JBsVLtumv7b6vrcZFlnnE
+         iUjhkkH7UJ8ja5kZBeIkH8j7QO0rLt5k0iGINAkzmcc6pb4i/A3goMZudQItLa17Aaez
+         j+GxdqCbH6bw0Y5+BPYGeyp2Qa0ID1L0oA70Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=xlTHib/nr5zMibwn8MG84zEafuMJW24GkCLM5DibbMJ8PvyD98v5KDtTveYbGoyAq9
-         dhRutWvim19mPmcJHrBiJ7f6H99u/JdJV/xyVrH2c0qjqjr7H80CUeEDcoq/e9afKxyQ
-         FFVbYYE1l1EhPCwlJl53y3XImrLzhKNgHeTiI=
-Received: by 10.220.48.22 with SMTP id p22mr7919098vcf.213.1272648779338; Fri, 
-	30 Apr 2010 10:32:59 -0700 (PDT)
-Received: by 10.151.109.5 with HTTP; Fri, 30 Apr 2010 10:32:39 -0700 (PDT)
-In-Reply-To: <4BDA9F5C.2080808@itaapy.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=u1riiLPinGlFi9PcD/S8X68+UVvqr4l9murjaPS4asqVWkPMLMTgF9qTiPmY/lfg0k
+         rOuycLE4JBTujaZn5Ok3+AusEi/PE7533jX0ZNjvG5HJLxHbgsCrs5P4Y2hnhwvxhJIR
+         gYl0loKsLySmPlrkTs7dp+GWHvUxvxsm3FrHs=
+Received: by 10.115.20.18 with SMTP id x18mr12083592wai.50.1272634358024;
+        Fri, 30 Apr 2010 06:32:38 -0700 (PDT)
+Received: from progeny.tock (1555hostw130.starwoodbroadband.com [207.14.48.130])
+        by mx.google.com with ESMTPS id 21sm1881192pzk.0.2010.04.30.06.32.35
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 30 Apr 2010 06:32:36 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100429202139.GW10879@inner.home.ulmdo.de>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146038>
 
-2010/4/30 Herv=E9 Cauwelier <herve@itaapy.com>:
-> I'll obviously let the Git experts answer you, but I can answer about
-> OpenDocument itself.
+Andreas Krey wrote:
+> On Thu, 29 Apr 2010 14:49:36 +0000, Jonathan Nieder wrote:
+
+>> Thanks for the report.  What encoding were you using?  (You can chec=
+k
+>> with =E2=80=98git cat-file commit <revision you were trying to cherr=
+y-pick>=E2=80=99.)
 >
-> In a presentation each slide is a <draw:page/> inside a single conten=
-t.xml.
-> So if you change one slide, the whole XML will serialize with a diffe=
-rent
-> SHA.
->
-> And maybe you'll add style to that slide, or probably OpenOffice.org =
-will
-> generate an automatic style, so styles.xml will also change. Adding a=
-n image
-> also changes manifest.xml, along with storing the image itself. OOo w=
-ill
-> surely record the last slide displayed when closing the application, =
-so
-> settings.xml will change too.
->
-> So, all in all, for a single slide, 30 to 80 % of the Zip content may
-> change.
+> Actually, it was both UTF-8, both by the defaults in get_message():
+[...]
+> There being two different incarnations of iconv on this machine
+> isn't making anything easier. :-( Will report when I find out
+> what's wrong here. utf8 should be pretty universally known by now.
 
-Sure.  But if you name the chunks consistently, git's delta
-compression can deal with tiny changes like those very easily.
+Yes, the problem is that the to and from encodings match.  I hadn=E2=80=
+=99t
+realized so before, but iconv doesn=E2=80=99t like that on some platfor=
+ms
+(e.g., Solaris).
 
-The question is whether it'll work equally well, or better, or worse,
-with a one-big-file format.  I think we won't know this without doing
-some actual tests.
+Since this is the usual case, we should probably check for it like
+git mailinfo does instead of waiting for iconv to fail.
 
-(Normally, you could assume that one-big-file is the most
-space-efficient storage format, because then xdelta and gzip have the
-most data to work with.  But if you have a lot of *duplicated* content
-inside the same file, and the distance between duplications is outside
-the gzip window, you could find that more unusual methods - like the
-method used by bup - results in better compression.  I know this is
-true for VM images, so it may be true for other things.  I haven't
-tested everything :))
-
-> You may also be interested in the git-bigfiles project that was menti=
-oned
-> last week.
->
-> http://caca.zoy.org/wiki/git-bigfiles
-
-git-bigfiles is a worthwhile project.  Its goal of "make life
-bearable" is aiming kind of low, though.  Basically they seem to be
-aiming simply to make git not die horribly when given lots of large
-files.  This is commendable, but the resulting repo will be very space
-inefficient when your large files change frequently in small ways.  So
-I think it doesn't solve the problem Sergio brought up.
-
-Have fun,
-
-Avery
+Jonathan
