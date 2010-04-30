@@ -1,119 +1,90 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git cherry(pick) dumps core
-Date: Thu, 29 Apr 2010 14:49:36 -0500
-Message-ID: <20100429194936.GA31941@progeny.tock>
-References: <s2m76c5b8581004281238jf7179fffna7d757fee6ab4f10@mail.gmail.com>
- <r2s302ed1461004281249xd1b65e41l43fa7b639db7c97d@mail.gmail.com>
- <h2v76c5b8581004281259yfaca7abfz5a455ff8fd6cdc6b@mail.gmail.com>
- <o2j2cfc40321004281539j28fe44e0r5d029061e3e08b90@mail.gmail.com>
- <20100428233758.GA1654@progeny.tock>
- <20100429191150.GA10526@inner.home.ulmdo.de>
+From: =?ISO-8859-1?Q?Herv=E9_Cauwelier?= <herve@itaapy.com>
+Subject: Re: Multiblobs
+Date: Fri, 30 Apr 2010 11:14:04 +0200
+Message-ID: <4BDA9F5C.2080808@itaapy.com>
+References: <loom.20100428T164432-954@post.gmane.org> <k2y32541b131004281107u6d15ed4ex54b5e5c138cc0e24@mail.gmail.com> <loom.20100428T204406-308@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Andreas Krey <a.krey@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Apr 30 19:03:37 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 30 19:03:43 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O7tcn-0004GS-17
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 19:03:37 +0200
+	id 1O7tcr-0004GS-H9
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 19:03:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758212Ab0D3Q7w convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Apr 2010 12:59:52 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:43416 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757740Ab0D3Q7q (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1758215Ab0D3Q7x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Apr 2010 12:59:53 -0400
+Received: from smtpfb2-g21.free.fr ([212.27.42.10]:49460 "EHLO
+	smtpfb2-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757806Ab0D3Q7q (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 30 Apr 2010 12:59:46 -0400
-Received: by bwz19 with SMTP id 19so260149bwz.21
-        for <git@vger.kernel.org>; Fri, 30 Apr 2010 09:59:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=St0DSs3RSpM9Yq+cRAwDlbd2HZl8a9bwjUKoHM5vmj0=;
-        b=IDowYwDI8W7qpKMFC4QtssAdaJriQtQXGUFjmDmQfwGFKmPDn3hIPj0C2iA6ixB5cQ
-         9M7k16C3xjiAc2b40U27Q5oXjAFs+TWxQe+5ZLEGyo2tw+Iug8ETuf2sYGdTC9Yu9/YS
-         WF0QCv+rzpzvXVP3BVHDKMtvhWiHm6A/oZga4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=Ndna0dLBQrOoBUmL+RcWnAjIQyyd5e/9+OMSPwIpdJPvrCUjhT8vWQUBhCqa/fSwsZ
-         HwOMjII1WNl2GpgN3E2NI9Qkt0UzqbVT2JUExlMWcmMe6dfpgYG8BQQy8qpCR13FQVyI
-         tuMplsiPfGuLrrWnwK7p9XYqdoWsKjjo82wQY=
-Received: by 10.204.132.131 with SMTP id b3mr6056237bkt.179.1272570577072;
-        Thu, 29 Apr 2010 12:49:37 -0700 (PDT)
-Received: from progeny.tock (c-76-28-252-211.hsd1.wa.comcast.net [76.28.252.211])
-        by mx.google.com with ESMTPS id l1sm203400bkl.2.2010.04.29.12.49.32
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 29 Apr 2010 12:49:34 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100429191150.GA10526@inner.home.ulmdo.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
+	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 4D4CDCA8D35
+	for <git@vger.kernel.org>; Fri, 30 Apr 2010 11:13:40 +0200 (CEST)
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 0525F81801E;
+	Fri, 30 Apr 2010 11:12:02 +0200 (CEST)
+Received: from [192.168.1.3] (lns-bzn-28-82-250-155-237.adsl.proxad.net [82.250.155.237])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id DDD0E818093;
+	Fri, 30 Apr 2010 11:11:59 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100330 Shredder/3.0.4
+In-Reply-To: <loom.20100428T204406-308@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146033>
 
-Hi Andreas,
+On 04/28/10 21:13, Sergio Callegari wrote:
+> If you store a structured file as a multiblob, you can use a blob for=
+ each
+> uncompressed element of content.  For instance, when storing an opend=
+ocument
+> file you could use a blob for manifest.xml, one for content.xml, etc.=
+=2E. (try
+> unzip -l on an odt or odp file to get an idea). When you edit your fi=
+le only a
+> few of these change. For instance, if we talk about a presentation, e=
+ach slide
+> has its own content.xml, so changing one slide only that changes.
 
-Andreas Krey wrote:
+I'll obviously let the Git experts answer you, but I can answer about=20
+OpenDocument itself.
 
-> I just have a case of git cherry-pick dieing with a core dump.
-> The directly offending lines are get_message() in buildin/revert.c:
->=20
-> 	if ((out->reencoded_message =3D reencode_string(raw_message,
-> 					git_commit_encoding, encoding)))
-> 		out->message =3D out->reencoded_message;
->=20
-> 	abbrev =3D find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV);
-> 	abbrev_len =3D strlen(abbrev);
->=20
-> 	/* Find beginning and end of commit subject. */
-> 	p =3D out->message;
-> 	while (*p && (*p !=3D '\n' || p[1] !=3D '\n'))
->=20
-> and out->message is null at that point.
->=20
-> It looks like reencode_string is returning NULL,
-> and get_message can't quite cope with that.
+In a presentation each slide is a <draw:page/> inside a single=20
+content.xml. So if you change one slide, the whole XML will serialize=20
+with a different SHA.
 
-Thanks for the report.  What encoding were you using?  (You can check
-with =E2=80=98git cat-file commit <revision you were trying to cherry-p=
-ick>=E2=80=99.)
+And maybe you'll add style to that slide, or probably OpenOffice.org=20
+will generate an automatic style, so styles.xml will also change. Addin=
+g=20
+an image also changes manifest.xml, along with storing the image itself=
+=2E=20
+OOo will surely record the last slide displayed when closing the=20
+application, so settings.xml will change too.
 
-The code you mention was just wrong, sorry.  If the local iconv
-doesn=E2=80=99t understand some recording, the correct behavior is to p=
-ass the
-message through, not to segfault.
+So, all in all, for a single slide, 30 to 80 % of the Zip content may=20
+change.
 
-With this change, cherry-pick would treat the old message as UTF-8
-(or whatever the current [i18n] commitencoding setting specifies,
-if present).  If the message happens to contain an illegal byte
-sequence, the cherry-pick will not segfault but it will still fail.
+Unless you are talking about a dedicated application to store and=20
+generate on-the-fly office documents, built on top of Git, you're bette=
+r=20
+not touching the contents the user is entrusting git to store, and writ=
+e=20
+a .gitattribute not to compress them in a pack.
 
-In other words, this patch should fix the segfault, but it does not
-fix the underlying problem which was there before.
+You may also be interested in the git-bigfiles project that was=20
+mentioned last week.
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index bbaa937..9f8ceab 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -114,6 +114,8 @@ static int get_message(const char *raw_message, str=
-uct commit_message *out)
- 	if ((out->reencoded_message =3D reencode_string(raw_message,
- 					git_commit_encoding, encoding)))
- 		out->message =3D out->reencoded_message;
-+	else
-+		out->message =3D raw_message;
-=20
- 	abbrev =3D find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV);
- 	abbrev_len =3D strlen(abbrev);
+http://caca.zoy.org/wiki/git-bigfiles
+
+--=20
+Herv=E9 Cauwelier - ITAAPY - 9 rue Darwin 75018 Paris
+T=E9l. 01 42 23 67 45 - Fax 01 53 28 27 88
+http://www.itaapy.com/ - http://www.cms-migration.com
