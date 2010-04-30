@@ -1,107 +1,67 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH] Fix checkout of large files to network shares 
-	under Windows XP
-Date: Fri, 30 Apr 2010 11:08:55 +0200
-Message-ID: <j2tbdca99241004300208qf03f0a5u9e497119e3d42924@mail.gmail.com>
-References: <4BCC5083.30801@gmail.com> <4BCCC05E.4030206@lsrfire.ath.cx>
-	 <t2xbdca99241004200542ud4e8ea5azcad918c37bcacf1a@mail.gmail.com>
-	 <4BCE134C.8090802@lsrfire.ath.cx> <4BD9E58E.8020406@lsrfire.ath.cx>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: Multiblobs
+Date: Fri, 30 Apr 2010 09:20:39 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1004300918310.24359@ds9.cixit.se>
+References: <loom.20100428T164432-954@post.gmane.org> <k2y32541b131004281107u6d15ed4ex54b5e5c138cc0e24@mail.gmail.com>  <loom.20100428T204406-308@post.gmane.org> <k2x32541b131004281427o2101720at3d324f5e94f05327@mail.gmail.com>  <alpine.DEB.2.00.1004291231410.16241@ds9.cixit.se>
+ <x2v32541b131004290828ua9c2d194o1280177360dd231e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Cc: git@vger.kernel.org, msysgit@googlegroups.com, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Johannes Sixt <j.sixt@viscovery.net>, 
-	Junio C Hamano <gitster@pobox.com>, chris.gcode@googlemail.com
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: msysgit+bncCPLFkNe0FhCqvOreBBoEKuEfJw@googlegroups.com Fri Apr 30 11:09:22 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Sergio Callegari <sergio.callegari@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 30 18:58:53 2010
 connect(): No such file or directory
-Return-path: <msysgit+bncCPLFkNe0FhCqvOreBBoEKuEfJw@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ww0-f58.google.com ([74.125.82.58])
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCPLFkNe0FhCqvOreBBoEKuEfJw@googlegroups.com>)
-	id 1O7mDp-0007yG-Iw
-	for gcvm-msysgit@m.gmane.org; Fri, 30 Apr 2010 11:09:21 +0200
-Received: by wwb18 with SMTP id 18sf4461959wwb.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 30 Apr 2010 02:09:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:x-beenthere:received:received:received
-         :received:received-spf:received:mime-version:received:received
-         :in-reply-to:references:date:message-id:subject:from:to:cc
-         :x-original-authentication-results:x-original-sender:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type
-         :content-transfer-encoding;
-        bh=Z/E0E7poYIWEx2yPSJBSopMMGEnW7bzU7BJJZSs97AI=;
-        b=6yXf66Tlp48x53NQkUFpht8AGHpSKUW2cad1GovxRvSU8gFOb/X9yh69olhOxP7hrU
-         ZOprZ7KO/5zNi03tdz1O7C+WS2ta4AqYwHJCdgO7D1iXD2XSvSF7860cCho7Bi+lrtYf
-         fgJho/1SrVMhf/pXUXLmS03LwLnA0KdXBqFi4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:x-original-authentication-results
-         :x-original-sender:precedence:mailing-list:list-id:list-post
-         :list-help:list-archive:sender:list-subscribe:list-unsubscribe
-         :content-type:content-transfer-encoding;
-        b=RHM9/bEXmeSCl7t+EF8wSDgZcI04YaFRF1pDociW2vCmxHQ7w57jw0ZbcEyqcb4w3R
-         nipTypyi1aYWTOr2acMMaXXKuZx6hlY/eoSBvaQvqyFQCZwm2ObUw1o8AyQJrE4Bfs1l
-         dxZfTmPzpets1h+KoW3eBP2AxqLcpuXKHa3d8=
-Received: by 10.223.58.16 with SMTP id e16mr2884053fah.6.1272618538737;
-        Fri, 30 Apr 2010 02:08:58 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.204.35.68 with SMTP id o4ls21657657bkd.1.p; Fri, 30 Apr 2010 
-	02:08:57 -0700 (PDT)
-Received: by 10.204.49.76 with SMTP id u12mr503694bkf.15.1272618536819;
-        Fri, 30 Apr 2010 02:08:56 -0700 (PDT)
-Received: by 10.204.49.76 with SMTP id u12mr503693bkf.15.1272618536790;
-        Fri, 30 Apr 2010 02:08:56 -0700 (PDT)
-Received: from mail-bw0-f214.google.com (mail-bw0-f214.google.com [209.85.218.214])
-        by gmr-mx.google.com with ESMTP id 17si229899bwz.15.2010.04.30.02.08.55;
-        Fri, 30 Apr 2010 02:08:55 -0700 (PDT)
-Received-SPF: pass (google.com: domain of sschuberth@gmail.com designates 209.85.218.214 as permitted sender) client-ip=209.85.218.214;
-Received: by bwz6 with SMTP id 6so5452482bwz.19
-        for <msysgit@googlegroups.com>; Fri, 30 Apr 2010 02:08:55 -0700 (PDT)
-Received: by 10.204.84.5 with SMTP id h5mr6831078bkl.164.1272618535330; Fri, 
-	30 Apr 2010 02:08:55 -0700 (PDT)
-Received: by 10.204.55.132 with HTTP; Fri, 30 Apr 2010 02:08:55 -0700 (PDT)
-In-Reply-To: <4BD9E58E.8020406@lsrfire.ath.cx>
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: 
-	domain of sschuberth@gmail.com designates 209.85.218.214 as permitted sender) 
-	smtp.mail=sschuberth@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-X-Original-Sender: sschuberth@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, 
-	<mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
-	<mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146030>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1O7tYD-0007hV-1b
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Apr 2010 18:58:53 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1757970Ab0D3QyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Apr 2010 12:54:15 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:36880 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1757630Ab0D3QyF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Apr 2010 12:54:05 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id o3U8Kd03029178
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 30 Apr 2010 10:20:39 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o3U8KdD5029175;
+	Fri, 30 Apr 2010 10:20:39 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <x2v32541b131004290828ua9c2d194o1280177360dd231e@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Fri, 30 Apr 2010 10:20:39 +0200 (CEST)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146031>
 
-On Thu, Apr 29, 2010 at 22:01, Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.=
-cx> wrote:
+Avery Pennarun:
 
-> OK, I've been searching the web looking for documentation that explains
-> the issue, but haven't found any watertight evidence.
+(I seem to have been unsubscribed from the list, and can't subscribe again; 
+please keep cc's to me for the time being).
 
-Thanks Ren=C3=A9 for your research and for finally finishing the fix!
+> This use case seems to be converging more and more on the "clean/smudge 
+> filter like" idea, which might be ok.
 
-> It would be nice to reach chris.gcode, who originally reported this
-> problem [5], and ask him to test. =C2=A0I couldn't find an email address =
-on
-> that webpage, though. =C2=A0His proposed patch there also used an upper l=
-imit
-> slightly below 32MB, but tried to compensate for capping by looping until
-> the full requested size was written. =C2=A0That's not really needed.
+That's what I am using now (recompressing files), but that approach is a bit 
+fragile (it suddenly broke on my Mac install, and it only works 
+intermittently on Windows).
 
-I believe to have found his e-mail address on the msysGit mailing list
-and put him on CC.
+> It might be saner to just write some wrapper scripts on top of git, and 
+> cleanly just check in the individual components.
 
---=20
-Sebastian Schuberth
+Yeah, that was my thought to (thus the "zgit" idea).
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
