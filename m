@@ -1,105 +1,101 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: [PATCH] git-gui: make sure placement of panedwindow sashes happens
- correctly on startup
-Date: Sat, 1 May 2010 19:29:18 +0100
-Message-ID: <20100501182918.GA19769@atlantic.linksys.moosehall>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC] pretty.c: add %O format specifier to format_commit_one()
+Date: Sat, 01 May 2010 12:39:48 -0700 (PDT)
+Message-ID: <m3fx2bcsze.fsf@localhost.localdomain>
+References: <1272711401-29005-1-git-send-email-ash@koowaldah.org>
+	<7vsk6b5yms.fsf@alter.siamese.dyndns.org>
+	<20100501175601.GB27062@shisha.kicks-ass.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	msysgit@googlegroups.com
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Sat May 01 21:02:52 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Alexander Shishkin <ash@koowaldah.org>
+X-From: git-owner@vger.kernel.org Sat May 01 21:39:59 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8Hxi-000284-Th
-	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 21:02:51 +0200
+	id 1O8IXe-00033d-BK
+	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 21:39:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755845Ab0EATCq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 May 2010 15:02:46 -0400
-Received: from arctic.adamspiers.org ([212.13.194.176]:48963 "EHLO
-	arctic.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752879Ab0EATCo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 May 2010 15:02:44 -0400
-X-Greylist: delayed 2003 seconds by postgrey-1.27 at vger.kernel.org; Sat, 01 May 2010 15:02:44 EDT
-Received: from localhost (dsl-217-155-199-114.zen.co.uk [217.155.199.114])
-	by arctic.adamspiers.org (Postfix) with ESMTP id F216324017;
-	Sat,  1 May 2010 18:29:19 +0000 (UTC)
-Mail-Followup-To: Pat Thoyts <patthoyts@users.sourceforge.net>,
-	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	msysgit@googlegroups.com
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-08-17)
+	id S1757416Ab0EATjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 May 2010 15:39:53 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:38783 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757232Ab0EATjw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 May 2010 15:39:52 -0400
+Received: by bwz19 with SMTP id 19so674341bwz.21
+        for <git@vger.kernel.org>; Sat, 01 May 2010 12:39:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=aqTa76iVKsZPuSQtrvAFkvNNVxd4FY4cehcwclfKCGY=;
+        b=iRVYgKTObyLa6dI+72KJrLX3vcewQrekA6F8xxqiDiGqojQu7qAPmZ45jKTwqAUS2g
+         ipuMweiwbE8eG36frbHuK/hJsAVMAYG+EnvxmjAKkKAEcjTFYyarMsXezgTrQkrN7tr9
+         o7/xTalsUUTcoMMY0xDJlXTi6DrdPgM6UCCVo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=D/oMSE0KAEMEeFwS2iwPTb1zvqqCH4l/DwaPp38LB0MmXpaGnsDyKQv3xqO8MnRLKY
+         NkXnE6R8LAnX4wRBzCeKFZp6BTdqQvrAmXPzBkO7lzt1e2/7eunkVICOE5ayuTq1Bmkq
+         z8cN1eAVoIHAPNzJNoq+ooxa1J4Jzw+gHfHJc=
+Received: by 10.204.136.156 with SMTP id r28mr8259963bkt.112.1272742789931;
+        Sat, 01 May 2010 12:39:49 -0700 (PDT)
+Received: from localhost.localdomain (abvy46.neoplus.adsl.tpnet.pl [83.8.222.46])
+        by mx.google.com with ESMTPS id 13sm1104856bwz.15.2010.05.01.12.39.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 01 May 2010 12:39:48 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o41JdCdB002637;
+	Sat, 1 May 2010 21:39:23 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o41JckVI002632;
+	Sat, 1 May 2010 21:38:46 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20100501175601.GB27062@shisha.kicks-ass.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146111>
 
-On 20 December 2009 01:46, Pat Thoyts <patthoyts@users.sourceforge.net> wrote:
-> This patch enables the use of themed Tk widgets with Tk 8.5 and above.
-> These make a significant difference on Windows in making the application
-> appear native. The gui.usettk git config variable may be set to disable
-> this if the user prefers the classic Tk look.
-> On Windows and MacOSX ttk defaults to the native look as much as possible.
-> On X11 the user may select a theme using the TkTheme XRDB resource class.
-> Some support is included for Tk 8.6 features (themed spinbox and native
-> font chooser for MacOSX and Windows).
+Alexander Shishkin <ash@koowaldah.org> writes:
 
-For me this broke persistence of the panedwindow's vertical sash
-positioning in between invocations of git-gui.  Upon further
-investigation and discussion with helpful #git inhabitants, it
-transpired that setting gui.usettk to false is a workaround, but that
-the position of panedwindow's *horizontal* sash which sits in between
-the panes for unstaged and staged files *never* persisted, regardless
-of gui.usettk, and even going back to old 1.6.x versions.
+> On Sat, May 01, 2010 at 10:18:35 -0700, Junio C Hamano wrote:
+> > Alexander Shishkin <ash@koowaldah.org> writes:
+> > 
+> > > This specifier represents the number of each commit in the output
+> > > stream.
+> > 
+> > I don't like this.  What does such a number _mean_ in a non-linear
+> > history?
+> 
+> My idea is to have something like
+> 
+> $ git log --pretty=oneline | nl | less -R
+> 
+> This is generally useful when my local topic branch contains more than 5
+> (or so) commits and I can't immediately see which one's which if I want
+> to do a
+> 
+> $ git show HEAD~$n
+> 
+> to see what's inside, which is useful when reordering and/or squashing
+> commits by an interactive rebase. So this %O gives me this $n quicker
+> than counting.
 
-I looked at this a bit closer, and the code seems to be doing exactly
-the right thing, but it seems to be some weird kind of Tk timing
-issue.  I found that the below trivial patch fixes it completely, but
-then I'm completely ignorant when it comes to Tk, so it may not be the
-right fix.
+Wouldn't somthing like
 
-Thanks,
-Adam
+  git log --pretty=oneline | git name-rev --stdin | less -R
 
-P.S. This is my first patch submission via git - after poring over the
-man pages and a lengthy discussion on #git, I still couldn't find a
-way to send it which satisfied all of the following:
+be good enough?
 
-  (a) formatted as a single mail, with the context and discussion
-      first, then the patch at the end,
-  (b) no MIME, and
-  (c) can be piped to `git am' without including the whole
-      mail body in the commit log.
-
-Hopefully this is the best compromise, since everything up to the end
-of this sentence can be trimmed before piping to `git am'; if not
-please let me know any better alternative for future reference.
-
->From 3a6ce310f8b3d1e45f7a8d7ac15af7c360847ee4 Mon Sep 17 00:00:00 2001
-From: Adam Spiers <git@adamspiers.org>
-Date: Sat, 1 May 2010 17:15:18 +0100
-Subject: [PATCH] git-gui: make sure placement of panedwindow sashes happens correctly on startup
-
----
- git-gui.sh |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/git-gui.sh b/git-gui.sh
-index 8996d2d..9585d7f 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -3466,6 +3466,7 @@ $main_status show [mc "Initializing..."]
- catch {
- set gm $repo_config(gui.geometry)
- wm geometry . [lindex $gm 0]
-+update
- if {$use_ttk} {
- 	.vpane sashpos 0 [lindex $gm 1]
- 	.vpane.files sashpos 0 [lindex $gm 2]
 -- 
-1.7.1
+Jakub Narebski
+Poland
+ShadeHawk on #git
