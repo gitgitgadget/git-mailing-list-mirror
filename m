@@ -1,142 +1,195 @@
-From: Adam Monsen <haircut@gmail.com>
-Subject: migrating Mifos from svn to git
-Date: Sat, 01 May 2010 15:08:45 -0700
-Message-ID: <1272751725.21622.57.camel@scraps>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [patch 00/16] Portability Patches for git-1.7.1 (v4)
+Date: Sat, 01 May 2010 16:25:12 -0700
+Message-ID: <7vk4rn2oiv.fsf@alter.siamese.dyndns.org>
+References: <20100427135708.258636000@mlists.thewrittenword.com>
+ <4BD7032D.9050508@drmicha.warpmail.net>
+ <4BDC744E.4050006@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-PMqj8/A2yfdtbWHq1SCw"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 02 00:08:54 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: "Gary V. Vaughan" <git@mlists.thewrittenword.com>,
+	git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Sun May 02 01:25:35 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8Krl-000334-Oc
-	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 00:08:54 +0200
+	id 1O8M3y-0008Kd-SP
+	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 01:25:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755463Ab0EAWIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 May 2010 18:08:48 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:59878 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753766Ab0EAWIr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 May 2010 18:08:47 -0400
-Received: by pwj9 with SMTP id 9so717880pwj.19
-        for <git@vger.kernel.org>; Sat, 01 May 2010 15:08:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:content-type
-         :date:message-id:mime-version:x-mailer;
-        bh=7TGsWNhKNPOZUaslb3h/4ZlcvlrLcymxU/POePt58wE=;
-        b=M2FdJ61zSecOl3LjqFvwLclcbaHGOcXHZUzUOjEI3Qa4XeOeEw8oVVdVJFFIu2W8Kp
-         Tzd7Q7zfXLjdXuMOy9rzvrPhGrd1YJ1Z4tjofQ78Md4z/rL0dIyI2gKMeE44EaRw8Y5l
-         ZxAi5MY/ZwDrE+0KSBngtH6opdjWQzhINi01E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer;
-        b=LQjhifqfTrxUQo49IYeS8YvTCUI0+VGwAa4M8Y1FaM29SXomNqw2Wp964ir0u0eZZ/
-         AaOhZ1CPacy5PmjSnO/LKnnd56TnBu25NnFZR3TxFQEmHyyjjohY4ohf6OATpCCxC0q9
-         X00Xs/ydKylrbB5cxeH47J2z9lyrR9bjOLCxY=
-Received: by 10.142.248.21 with SMTP id v21mr7973019wfh.347.1272751727138;
-        Sat, 01 May 2010 15:08:47 -0700 (PDT)
-Received: from [192.168.0.8] (c-67-183-136-182.hsd1.wa.comcast.net [67.183.136.182])
-        by mx.google.com with ESMTPS id 22sm3172331pzk.5.2010.05.01.15.08.45
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 01 May 2010 15:08:46 -0700 (PDT)
-X-Mailer: Evolution 2.28.1 
+	id S1754455Ab0EAXZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 May 2010 19:25:24 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54111 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752502Ab0EAXZX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 May 2010 19:25:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DAF9AFD03;
+	Sat,  1 May 2010 19:25:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GIPOD7ubC71/fOmrBgQRRGKlyC8=; b=S9gCHH
+	ShcR8TJeDhDx3+6K+J9A/xbg2UfXBcwM7+xNE/Z+ppgZMeClBUiveyRj6dlCaQJu
+	raOz5+JBsd656YmyXlT3ZS7CzHGmMu4tAusl0W5ocAIntIG7xt8X2lb1nt+0PamL
+	AGwOFRc0KpHMVOhBXByP4gCyhd5eMoMi/H4cI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QsQXKaFDY4ITSrEl6zSg3U7lt8CdyRwP
+	ufOfFCondWM1iIG2kO9Z5uu/axSyK/+PMQFbSkevW6aztZ7IrN1Yc6xJNwTJ2pCF
+	qjTXVgjZgWDnY694enxpBbcZ8vgWW1xz7/xTFy1cDCO+T9g3XorB4Wbv0lubdHYq
+	hex1HyQT5/k=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 12B17AFD02;
+	Sat,  1 May 2010 19:25:18 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 08D41AFCFB; Sat,  1 May
+ 2010 19:25:13 -0400 (EDT)
+In-Reply-To: <4BDC744E.4050006@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Sat\, 01 May 2010 20\:34\:54 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CDBB1850-5578-11DF-B1F1-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146122>
 
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
---=-PMqj8/A2yfdtbWHq1SCw
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> Michael J Gruber venit, vidit, dixit 27.04.2010 17:30:
+>> Gary V. Vaughan venit, vidit, dixit 27.04.2010 15:57:
+>>> Here are the portability patches we needed at TWW to enable git-1.7.1
+>>> to compile and run on all of the wide range of Unix machines we
+>>> support.  These patches apply to the git-1.7.1 release,  and address
+>>> all of the feedback from the previous three times I posted them to
+>>> this list, including fixing the massive testsuite failures I was
+>>> experiencing and taking into account that the ss_family fixes and
+>>> partial GMT_CMP_TEST fixes that have been pushed since my last post of
+>>> this patch queue.
+>> 
+>> General remark: None of your patches have a s-o-b line. If you want to
+>> have your patches in git you are required to sign-off on them (commit
+>> -s) in order to certify that you can submit them under the license terms
+>> of the project.
+>> 
+>> Your diff -> test_cmp are certainly something we want to have in any
+>> case. The code changes look ugly, honestly, making the code much less
+>> readable, but it seems to be the only way to make those older platforms
+>> and compilers happy. (Erik pointed out some good ways to reduce the
+>> uglyness somewhat.)
+>> 
+>> I can't test your target platform, but I would test the impact of the
+>> code and test changes on mine. Do you have your series somewhere to pull
+>> from?
+>
+> OK, unsurprsingly, tests still pass on Linux (Fedora 12 x86_64).
+> If anyone wants to try, the series can be found at
+>
+> git://repo.or.cz/git/mjg.git
+>
+> in branch
+>
+> gvv/platform-compatibility
+>
+> applied cleanly on current master.
 
-(If you'd like to skip the fluff and get to the point, skip down to the
-numbered questions.)
+Thanks.  
 
-I'm a developer on a project called "Mifos". Mifos is FLOSS used by
-banks who manage loans and savings accounts for the poor.
+Like everybody else, I like the s/diff/test_cmp/ one in general.  On
+platforms without "diff -u", test_cmp may want to use "diff -c" instead
+for readability, but that can be fixed/enhanced independently.
 
-We're currently using an svn repo hosted at sf.net, and are experiencing
-pain with Subversion that we feel a great dVCS could alleviate. For
-instance, our devs (especially those far from sf.net's servers) hate
-going to the server just to examine logs, branch, and commit. I'm
-getting us on a dVCS.
+I agree with your general remark and also noticed that the titles are way
+suboptimal.
 
-I've spent some time with svk and hg, and neither really felt right to
-me.
+* user-cppflags.patch
 
-git's features are very compelling, and the speed appears unmatched. I
-like that "git svn" actually reads svn 1.5+ mergeinfo, which we've been
-relying on heavily in Mifos. I am having some difficulties learning the
-details of examining history, merging, and rebasing, but I'll figure
-that stuff out eventually.
+  Makefile: pass CPPFLAGS through to fllow customization
 
-The strongest indicator I've had to try git was that everyone I asked
-for help with dVCS said "what's svk?" and "don't use hg, use git". Git
-seems to have a huge, successful community.
+* const-expr.patch
 
-Questions:
+  Rewrite dynamic structure initializations to runtime assignment
 
-1. Is anyone willing to help me migrate Mifos from svn to git? If so,
-please contact me on or off list, or in #mifos or #git on FreeNode IRC
-(my nickname is "meonkeys"). It's for a good cause: our vision is to end
-world poverty!
+* pthread.patch
 
-2. I'm trying out git-svn (a) to get used to git and (b) to actually try
-migrating our svn repo to a git repo. Is there a better way? (cbreak in
-#git seemed to think so)
+  Makefile: -lpthread may still be necessary when libc has only pthread stubs
 
-3. When using git-svn, can I first "init"/"git svn fetch" from a local
-mirror ( file:///opt/mifos_mirror ), then switch to our real repository
-( https://mifos.svn.sourceforge.net/svnroot/mifos ) once I'm mostly up
-to date?
+* Without this patch at least IBM VisualAge C 5.0 (I have 5.0.2) on AIX 5.1 fails to compile git.
 
-4. When using git-svn, "git svn init" works against my local mirror, but
-"git svn fetch" dies on svn revision 16072
-( http://article.gmane.org/gmane.comp.finance.mifos.scm/6053 ). Can I
-maybe just skip that changeset ....nevermind, "git svn fetch
---ignore-paths=3Dbranches/removeFinancialActionCache" seemed to do the
-trick. Hrm, now I'm stuck at some other commit. Anyway, thanks for
-enduring this ramble. Here's the latest problem I'm running into, in
-case anyone has ideas on what Fu I might use to get out of this hole:
+  enums: omit trailing comma for portability
 
+* diff-export.patch
 
-$ git config svn-remote.svn.url
-file:///opt/mifos_mirror
+  Do not use "diff" found on PATH while building and installing
 
-$ git svn fetch --ignore-paths=3Dbranches/sungard
-Found merge parent (svn:mergeinfo prop):
-6e749fea53b200b609ac12239b6d824a78090f7d
-Found merge parent (svn:mergeinfo prop):
-a2fdb47825503de62db74cd349e3feec4c899a88
-Found merge parent (svn:mergeinfo prop):
-827c31be708522130258cdfd2339cd3d7c94c8df
-W:svn cherry-pick ignored (/branches/sungard:15786-16227,16237) -
-missing 3 commit(s) (eg 887a7b93bdec64393230bda45e20e41affde7a4e)
-fatal: ambiguous argument
-'6f43cde2a0e277bb7730dfaff3c5c11b67a54009^..ae3b7383b4dc6a15172346623dee3e9=
-c887c8afc': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions
-rev-list
-6f43cde2a0e277bb7730dfaff3c5c11b67a54009^..ae3b7383b4dc6a15172346623dee3e9c=
-887c8afc: command returned error: 128
+I think the change to git-merge-one-file.sh in this patch is wrong, by the
+way.
 
+* diff-test_cmp.patch
 
---=-PMqj8/A2yfdtbWHq1SCw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+  tests: use "test_cmp", not "diff", when verifying the result
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+The patch to t9400 has indent-with-spaces, by the way.
 
-iEYEABECAAYFAkvcpmgACgkQI/2Fnd3kXZKmtgCfTpO3mF2lzPl6B7xWNC4yhj70
-3swAnRkwSs4r+Tq/mqSBhHSqaD33cAdp
-=skcZ
------END PGP SIGNATURE-----
+* diff-defaults.patch
 
---=-PMqj8/A2yfdtbWHq1SCw--
+  test_cmp: do not use "diff -u" on platforms that lack one
+
+It may be better to use "diff -c" on most of them, though.
+
+* host-SunOS56.patch
+
+  Makefile: SunOS 5.6 portability fix
+
+* host-IRIX.patch
+
+  git-compat-util.h: Irix 6.5 defines 'sgi' but not '__sgi'.
+
+* host-HPUX10.patch
+
+This would be better as two patches
+
+  Makefile: HP-UX 10.20 lacks pread()
+  git-compat-util.h: some platforms with mmap() lack MAP_FAILED definition
+
+* host-HPUX11.patch
+
+  Makefile: HPUX does not have nanosecond timestamp in struct stat
+
+* host-OSF1.patch
+
+  Makefile: Tru64 portability fix
+
+* no-hstrerror.patch
+
+I think this should come before "Makefile: SunOS 5.6 portability fix"
+(split the change to Makefile from this one and move it to the other
+patch).  Then this patch does not talk about SunOS specific issues.
+
+  Makefile: some platforms do not have hstrerror anywhere
+
+* no-inet_ntop.patch
+
+It might make sense to squash this patch into the previous one (and again
+do this before HPUX patches to Makefile) that deals with three functions
+that are traditionally related to libresolv (hstrerror, inet_ntop/pton).
+
+  Make NO_{HSTRERROR,INET_NTOP,INET_PTON} configured independently
+
+* no-socklen_t.patch
+
+Do this before the platform dependent bits, i.e. move the hunks that
+changes "ifeq ($(uname_S,XXX)" block from this patch to host-XXX patch,
+and do the remainder of this patch before any of the platform ones.
+
+  Some platforms lack socklen_t type
+
+* no-inline.patch
+
+Do this before ... (ditto) ...
+
+  Allow disabling "inline"
