@@ -1,85 +1,130 @@
-From: "Tilo Schwarz" <tilo@tilo-schwarz.de>
-Subject: How to manage parameter files and code separately using git?
-Date: Sat, 01 May 2010 14:57:31 +0200
-Message-ID: <op.vb0195s1a8ed4e@dellschleppa>
+From: Grant Olson <kgo@grant-olson.net>
+Subject: PATCH:  Less fragile lookup of gpg key
+Date: Sat, 01 May 2010 11:16:59 -0400
+Message-ID: <4BDC45EB.8090305@grant-olson.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: 7BIT
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------enigC248D8B5A11E4E4538516102"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 01 14:58:43 2010
+X-From: git-owner@vger.kernel.org Sat May 01 17:17:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8CHK-0006Bt-Mv
-	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 14:58:43 +0200
+	id 1O8ERO-0005LV-NY
+	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 17:17:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752522Ab0EAM5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 May 2010 08:57:34 -0400
-Received: from mo-p00-ob.rzone.de ([81.169.146.160]:64345 "EHLO
-	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752400Ab0EAM5d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 May 2010 08:57:33 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1272718651; l=1497;
-	s=domk; d=tilo-schwarz.de;
-	h=From:Content-Transfer-Encoding:MIME-Version:Date:Subject:To:
-	Content-Type:X-RZG-CLASS-ID:X-RZG-AUTH;
-	bh=gLNwqzT2ztcJnzAkRhgbLRga/wY=;
-	b=Mn8UMJfWXeAR5Sa+gx2nDdIfBj7SJlTeoLRfPythyq8Qk9CmURo0uKzwA/qvq125i8L
-	XP/rh/ZUbUZAYpEn+9JUxNdw/55QY+1hBbUyCu5UDaZh0TkAn4omcHfkBd8O6+Ng40EvF
-	4SVGCCOrtb2ucVo3keixb/XKIvq0MXm9ffE=
-X-RZG-AUTH: :IW0NeWC8cvPlgn0IPTehqi9r6o/0DSXjJ1Me0yWdPTUrUVR0TMXac2ZAlc5y1cxMLDk=
-X-RZG-CLASS-ID: mo00
-Received: from dellschleppa (p549CB694.dip.t-dialin.net [84.156.182.148])
-	by post.strato.de (fruni mo57) (RZmta 23.0)
-	with ESMTP id w01861m41BYsxn for <git@vger.kernel.org>;
-	Sat, 1 May 2010 14:57:31 +0200 (MEST)
-User-Agent: Opera Mail/10.10 (Linux)
+	id S1754683Ab0EAPRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 May 2010 11:17:09 -0400
+Received: from mail-qy0-f183.google.com ([209.85.221.183]:40835 "EHLO
+	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754322Ab0EAPRH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 May 2010 11:17:07 -0400
+Received: by qyk13 with SMTP id 13so1762573qyk.1
+        for <git@vger.kernel.org>; Sat, 01 May 2010 08:17:03 -0700 (PDT)
+Received: by 10.224.47.136 with SMTP id n8mr5134363qaf.171.1272727022926;
+        Sat, 01 May 2010 08:17:02 -0700 (PDT)
+Received: from [192.168.1.180] (pool-96-235-50-222.pitbpa.east.verizon.net [96.235.50.222])
+        by mx.google.com with ESMTPS id 20sm1883037qyk.8.2010.05.01.08.17.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 01 May 2010 08:17:02 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146085>
 
-Hi all,
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigC248D8B5A11E4E4538516102
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-maybe someone has an idea how to do what I'd like to do using git:
+When signing a tag, git will attempt to lookup your gpg key if you don't
+provide the key id.  Right now, it's a little fragile.  My gpg key uid
+is "Grant T. Olson (Personal Email) <kgo@grant-olson.net>".  My git user
+info is "Grant T. Olson <kgo@grant-olson.net>".  Things don't match
+because git doesn't have the comment.
 
-I use git for "normal" c coding, i.e. having branches like master, test,  
-foo, etc. Built are executables (Linux), which need parameter text files  
-to work. What I did up to now was to check in the parameter files in the  
-same way I check in the code: when I change a parameter file, I do a  
-commit on it, this way I always have a history of my parameter files.
+However, if I lookup just by email, things work perfectly.
 
-This has one drawback: If I check out an older version, I also get the old  
-parameter file, which is not what I want, because the parameters are  
-determined by hardware settings. I.e., I would like to checkout an old  
-commit, but still have the last version of the parameter file.
+I think doing this would make life much easier for new users, and in the
+case that someone has an OpenPGP key without email (e.g. Ubuntu Master
+Signing Key) we can safely assume they're an expert and will either add
+the key id to their configuration or use -u instead of -s.
 
-I tried to solve the problem by
+Here's a patch that will try to lookup the user by email only if no
+signing key is provided.  If there is no email, it will still fall back
+to the default generated by git.
 
-1. creating a branch 'parameters', which contains only the parameter files
-2. ignore the parameters files with extension *.m in .gitignore in the  
-code branches (master etc.)
+=46rom d0fcf1340495045813758f910e8f4d745e28546b Mon Sep 17 00:00:00 2001
+From: Grant Olson <kgo@grant-olson.net>
+Date: Sat, 1 May 2010 11:02:18 -0400
+Subject: [PATCH] Lookup gpg key by email
 
-This seemed to work at first, but when I switch back from the parameters  
-branch to master, all *.m files are removed, although .gitignore of master  
-contains '*.m'.
+---
+ builtin/tag.c |    2 +-
+ ident.c       |    9 +++++++++
+ 2 files changed, 10 insertions(+), 1 deletions(-)
 
-So apparently git removes during branch switch first the tracked files and  
-than populates the working dir with the new files of master.
+diff --git a/builtin/tag.c b/builtin/tag.c
+index d311491..4eb3cc5 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -165,7 +165,7 @@ static int do_sign(struct strbuf *buffer)
+ 	int i, j;
 
-Now my questions are
+ 	if (!*signingkey) {
+-		if (strlcpy(signingkey, git_committer_info(IDENT_ERROR_ON_NO_NAME),
++		if (strlcpy(signingkey, git_committer_email(),
+ 				sizeof(signingkey)) > sizeof(signingkey) - 1)
+ 			return error("committer info too long.");
+ 		bracket =3D strchr(signingkey, '>');
+diff --git a/ident.c b/ident.c
+index 9e24388..0e8b78a 100644
+--- a/ident.c
++++ b/ident.c
+@@ -260,6 +260,15 @@ const char *git_committer_info(int flag)
+ 			 flag);
+ }
 
-1. Is there a way to work around it?
-2. Is there a maybe totally different way to solve my initial problem  
-(separate code history from parameter file history) without using two git  
-repos?
++const char *git_committer_email(void)
++{
++	const char *email =3D getenv("GIT_COMMITTER_EMAIL");
++	if(!email)
++		email =3D git_default_email;
++
++	return email;
++}
++
+ int user_ident_sufficiently_given(void)
+ {
+ #ifndef WINDOWS
+--=20
+1.7.0.4
 
 
-Thanks a lot!
 
-     Tilo
+--------------enigC248D8B5A11E4E4538516102
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQEcBAEBCAAGBQJL3EXrAAoJEP5F5V2hilTWKkgH/105EpgmVEazqHYmQj2cHeCH
+uZYSa7VkLekiOPFdgT4AgiOv9Hr543p9jia6WRSAyLTxrkt+L0oKiKKkjCsOUY7D
+uu3o5r3CQpUMcOFBnORQq+uoFT+Krhz50p+jy4xVr0Xorx/+RswsvGhCpk1pWSAJ
+60MPLLMb/TynZhDu6KxdCbrQ2BhmFVMM+YVbPoOtCye1iWGhbGSTaTYenn9ywxML
+fSZ2uPYKRhgVAdS1yZlCQtNuFzsA1gT5uIuLMa8LzkYiYyQUGT22eH+Ksd0Q4gjo
+SPBkivw0lUR5xTZ+KKxqSOX5vVrGF908oZNi9l54FtUvw67qRxjc/YJzm7ZcMEk=
+=4K66
+-----END PGP SIGNATURE-----
+
+--------------enigC248D8B5A11E4E4538516102--
