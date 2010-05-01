@@ -1,67 +1,66 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 0/3] git over TLS (gits://) support
-Date: Sat, 1 May 2010 19:17:05 +0200
-Message-ID: <o2tfabb9a1e1005011017heb74f177qf5b16eabedddce2f@mail.gmail.com>
-References: <1272733791-11341-1-git-send-email-ilari.liusvaara@elisanet.fi>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] pretty.c: add %O format specifier to
+ format_commit_one()
+Date: Sat, 01 May 2010 10:18:35 -0700
+Message-ID: <7vsk6b5yms.fsf@alter.siamese.dyndns.org>
+References: <1272711401-29005-1-git-send-email-ash@koowaldah.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Sat May 01 19:17:33 2010
+To: Alexander Shishkin <ash@koowaldah.org>
+X-From: git-owner@vger.kernel.org Sat May 01 19:18:53 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8GJo-00013s-NZ
-	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 19:17:33 +0200
+	id 1O8GL5-00021e-Bg
+	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 19:18:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753157Ab0EARR1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 May 2010 13:17:27 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:14048 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752991Ab0EARR0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 May 2010 13:17:26 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so517786fga.1
-        for <git@vger.kernel.org>; Sat, 01 May 2010 10:17:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=4W5vAZMdZp4Jd1zTBiPeZuYUf/0VTA8vGSl66sVbILo=;
-        b=dF84BxwdUWAgE+vI4YfhYE1YsIwAuGK1C2SOuZQVgCkeBmQFKxq+/2/2knu61RcMhV
-         oKW9y77WwF1XJ83Xz15A7wY7pX1/n4ayWpb3aFa2ycifk6vB9vQ+gnP6nI5BJPLFdJiT
-         SoIOYADRp4AGiu05F+8BncxmIH/GwwG97lZPc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=S3NvGrsO1dULxkY42iJ0ndRmrm7pykYODhc9C0Hlaf88pOGiTTVbcLyzMjW9bUuQhY
-         7An6DG0nyFqhv4ta2m/DLsIh2AioJ82oNj7ctprjXbNey+QeQiR9z/lSaB/l4UhpU3iF
-         UF4UE4sDXbUF7z2jXITDD32zqtLWu/Fn8ssSg=
-Received: by 10.87.71.21 with SMTP id y21mr6457923fgk.69.1272734245096; Sat, 
-	01 May 2010 10:17:25 -0700 (PDT)
-Received: by 10.86.72.19 with HTTP; Sat, 1 May 2010 10:17:05 -0700 (PDT)
-In-Reply-To: <1272733791-11341-1-git-send-email-ilari.liusvaara@elisanet.fi>
+	id S1753272Ab0EARSp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 May 2010 13:18:45 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40566 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751289Ab0EARSp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 May 2010 13:18:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DDBAAFC06;
+	Sat,  1 May 2010 13:18:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=juTp1C0rf1gBE6wHYqJzEIBkIr0=; b=IBOUfQdVmdIGfsJby7YlGTo
+	tKPGPjRq1QalP59M5WwDbJmkCTsCqv5s7XF3Gzm+CiI2ww03hDgHN91rVcesYpjk
+	4qGdOYcjjp2FheK1Wln4WFiHUrL+Dx2Bdf5jJzs/bw0ToNEHB/RGUMnIqa6lxgjC
+	KGQBStpm+oaTlNgJOrd8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=NjD1SngG6JNX9D24UUcbj+IJSicUd8ip89WFD89t7ZqUOH2zZ
+	cbkb74SvUHTbFa/PBdW9PdRmihQ9XUcvRPefjlJb0Sny9qMRwuh/EWzAYUP3qJuq
+	WNuoljBhIXo6ApnDANt1AlcWO4K4CFvNRp+HkXkoOL6Tb7A2BMV3BSKVW8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B5B7AFC05;
+	Sat,  1 May 2010 13:18:39 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BCC2DAFC04; Sat,  1 May
+ 2010 13:18:36 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9572366E-5545-11DF-BDD5-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146096>
 
-Heya,
+Alexander Shishkin <ash@koowaldah.org> writes:
 
-On Sat, May 1, 2010 at 19:09, Ilari Liusvaara
-<ilari.liusvaara@elisanet.fi> wrote:
-> =C2=A040 files changed, 7913 insertions(+), 3 deletions(-)
+> This specifier represents the number of each commit in the output
+> stream.
 
-How do you suppose anyone can ever review that much code? I don't
-really see anyone having the time to thoroughly review 8kloc?
+I don't like this.  What does such a number _mean_ in a non-linear
+history?
 
---=20
-Cheers,
-
-Sverre Rabbelier
+Also the next person who sees this will inevitably ask for %TOTAL to so
+that the output can say [N/M], but that would mean the list has to be
+limited and we cannot stream the output anymore.
