@@ -1,195 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [patch 00/16] Portability Patches for git-1.7.1 (v4)
-Date: Sat, 01 May 2010 16:25:12 -0700
-Message-ID: <7vk4rn2oiv.fsf@alter.siamese.dyndns.org>
-References: <20100427135708.258636000@mlists.thewrittenword.com>
- <4BD7032D.9050508@drmicha.warpmail.net>
- <4BDC744E.4050006@drmicha.warpmail.net>
+From: Alan Hourihane <alanh@fairlite.co.uk>
+Subject: new platform & S_IFGITLINK problem
+Date: Sun, 02 May 2010 00:29:15 +0100
+Message-ID: <1272756555.13488.1314.camel@jetpack.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Gary V. Vaughan" <git@mlists.thewrittenword.com>,
-	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sun May 02 01:25:35 2010
+Content-Type: multipart/mixed; boundary="=-wn13fhkQGB89aEuCrjdI"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 02 01:47:09 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8M3y-0008Kd-SP
-	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 01:25:35 +0200
+	id 1O8MOo-0004uD-MB
+	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 01:47:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754455Ab0EAXZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 May 2010 19:25:24 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54111 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752502Ab0EAXZX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 May 2010 19:25:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DAF9AFD03;
-	Sat,  1 May 2010 19:25:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GIPOD7ubC71/fOmrBgQRRGKlyC8=; b=S9gCHH
-	ShcR8TJeDhDx3+6K+J9A/xbg2UfXBcwM7+xNE/Z+ppgZMeClBUiveyRj6dlCaQJu
-	raOz5+JBsd656YmyXlT3ZS7CzHGmMu4tAusl0W5ocAIntIG7xt8X2lb1nt+0PamL
-	AGwOFRc0KpHMVOhBXByP4gCyhd5eMoMi/H4cI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QsQXKaFDY4ITSrEl6zSg3U7lt8CdyRwP
-	ufOfFCondWM1iIG2kO9Z5uu/axSyK/+PMQFbSkevW6aztZ7IrN1Yc6xJNwTJ2pCF
-	qjTXVgjZgWDnY694enxpBbcZ8vgWW1xz7/xTFy1cDCO+T9g3XorB4Wbv0lubdHYq
-	hex1HyQT5/k=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 12B17AFD02;
-	Sat,  1 May 2010 19:25:18 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 08D41AFCFB; Sat,  1 May
- 2010 19:25:13 -0400 (EDT)
-In-Reply-To: <4BDC744E.4050006@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Sat\, 01 May 2010 20\:34\:54 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CDBB1850-5578-11DF-B1F1-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754550Ab0EAXqz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 May 2010 19:46:55 -0400
+Received: from fairlite.demon.co.uk ([80.176.228.186]:39519 "EHLO
+	fairlite.demon.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753711Ab0EAXqy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 May 2010 19:46:54 -0400
+X-Greylist: delayed 590 seconds by postgrey-1.27 at vger.kernel.org; Sat, 01 May 2010 19:46:54 EDT
+Received: from localhost (unknown [127.0.0.1])
+	by fairlite.demon.co.uk (Postfix) with ESMTP id E80E03D5AF5
+	for <git@vger.kernel.org>; Sat,  1 May 2010 23:29:26 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at demon.co.uk
+Received: from fairlite.demon.co.uk ([127.0.0.1])
+	by localhost (server.demon.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id NwZ9YSp5lxQc for <git@vger.kernel.org>;
+	Sun,  2 May 2010 00:29:16 +0100 (BST)
+Received: from [192.168.0.226] (unknown [192.168.0.226])
+	by fairlite.demon.co.uk (Postfix) with ESMTP id F252D3D4002
+	for <git@vger.kernel.org>; Sun,  2 May 2010 00:29:15 +0100 (BST)
+X-Mailer: Evolution 2.26.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146123>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> Michael J Gruber venit, vidit, dixit 27.04.2010 17:30:
->> Gary V. Vaughan venit, vidit, dixit 27.04.2010 15:57:
->>> Here are the portability patches we needed at TWW to enable git-1.7.1
->>> to compile and run on all of the wide range of Unix machines we
->>> support.  These patches apply to the git-1.7.1 release,  and address
->>> all of the feedback from the previous three times I posted them to
->>> this list, including fixing the massive testsuite failures I was
->>> experiencing and taking into account that the ss_family fixes and
->>> partial GMT_CMP_TEST fixes that have been pushed since my last post of
->>> this patch queue.
->> 
->> General remark: None of your patches have a s-o-b line. If you want to
->> have your patches in git you are required to sign-off on them (commit
->> -s) in order to certify that you can submit them under the license terms
->> of the project.
->> 
->> Your diff -> test_cmp are certainly something we want to have in any
->> case. The code changes look ugly, honestly, making the code much less
->> readable, but it seems to be the only way to make those older platforms
->> and compilers happy. (Erik pointed out some good ways to reduce the
->> uglyness somewhat.)
->> 
->> I can't test your target platform, but I would test the impact of the
->> code and test changes on mine. Do you have your series somewhere to pull
->> from?
->
-> OK, unsurprsingly, tests still pass on Linux (Fedora 12 x86_64).
-> If anyone wants to try, the series can be found at
->
-> git://repo.or.cz/git/mjg.git
->
-> in branch
->
-> gvv/platform-compatibility
->
-> applied cleanly on current master.
+--=-wn13fhkQGB89aEuCrjdI
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Thanks.  
+Hello,
 
-Like everybody else, I like the s/diff/test_cmp/ one in general.  On
-platforms without "diff -u", test_cmp may want to use "diff -c" instead
-for readability, but that can be fixed/enhanced independently.
+Just joined as I'm compiling git on a new platform and wondered if
+someone can help solve a problem with the definition of S_IFGITLINK.
 
-I agree with your general remark and also noticed that the titles are way
-suboptimal.
+On my platform I have the following definitions....
 
-* user-cppflags.patch
+#define __S_IFSOCK      0010000 /* Socket.  */
+#define __S_IFCHR       0020000 /* Character device.  */
+#define __S_IFDIR       0040000 /* Directory.  */
+#define __S_IFBLK       0060000 /* Block device.  */
+#define __S_IFREG       0100000 /* Regular file.  */
+#define __S_IFIFO       0120000 /* FIFO.  */
+#define __S_IFMEM       0140000 /* memory region or process */
+#define __S_IFLNK       0160000 /* Symbolic link.  */
 
-  Makefile: pass CPPFLAGS through to fllow customization
+Yet, S_IFGITLINK in the git sources is defined as 0160000, so this
+clashes with my platform.
 
-* const-expr.patch
+There is a comment about the definition of S_IFGITLINK in cache.h that
+it shouldn't be used like this and should use internal values.
 
-  Rewrite dynamic structure initializations to runtime assignment
+So I'm wondering if this can be fixed to remove this assumption ?
 
-* pthread.patch
+Additionally, attached is a patch that I currently need to apply in
+order to compile git successfully on the FreeMiNT platform (which is
+m68k based).
 
-  Makefile: -lpthread may still be necessary when libc has only pthread stubs
+Comments appreciated.
 
-* Without this patch at least IBM VisualAge C 5.0 (I have 5.0.2) on AIX 5.1 fails to compile git.
+Thanks,
 
-  enums: omit trailing comma for portability
+Alan.
 
-* diff-export.patch
+--=-wn13fhkQGB89aEuCrjdI
+Content-Disposition: attachment; filename="git-1.7.0.4-mint.patch"
+Content-Type: text/x-patch; name="git-1.7.0.4-mint.patch"; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-  Do not use "diff" found on PATH while building and installing
+--- git-compat-util.h	2008-12-22 18:35:58.000000000 +0000
++++ git-compat-util.h	2008-12-22 18:39:21.000000000 +0000
+@@ -123,7 +123,9 @@
+ #ifdef _MSC_VER
+ #include "compat/msvc.h"
+ #endif
+-
++#ifdef __MINT__
++#include "compat/mint.h"
++#endif
+ #ifndef NO_LIBGEN_H
+ #include <libgen.h>
+ #else
+--- /dev/null	2008-12-07 20:01:52.000000000 +0000
++++ compat/mint.h	2008-12-23 11:52:10.000000000 +0000
+@@ -0,0 +1,2 @@
++#define SA_RESTART 0
++#define ss_family sa_family
+--- Makefile	2009-01-29 12:12:01.000000000 +0000
++++ Makefile	2009-01-29 12:13:39.000000000 +0000
+@@ -1618,7 +1613,7 @@
+ 
+ git-imap-send$X: imap-send.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+-		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL)
++		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
+ 
+ http.o http-walker.o http-push.o: http.h
+ 
+@@ -1626,10 +1621,10 @@
+ 
+ git-http-fetch$X: revision.o http.o http-walker.o http-fetch.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+-		$(LIBS) $(CURL_LIBCURL)
++		$(LIBS) $(CURL_LIBCURL) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
+ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+-		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
++		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
+ 
+ $(REMOTE_CURL_ALIASES): $(REMOTE_CURL_PRIMARY)
+ 	$(QUIET_LNCP)$(RM) $@ && \
+@@ -1639,7 +1634,7 @@
+ 
+ $(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+-		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
++		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
+ 
+ $(LIB_OBJS) $(BUILTIN_OBJS): $(LIB_H)
+ $(patsubst git-%$X,%.o,$(PROGRAMS)) git.o: $(LIB_H) $(wildcard */*.h)
 
-I think the change to git-merge-one-file.sh in this patch is wrong, by the
-way.
-
-* diff-test_cmp.patch
-
-  tests: use "test_cmp", not "diff", when verifying the result
-
-The patch to t9400 has indent-with-spaces, by the way.
-
-* diff-defaults.patch
-
-  test_cmp: do not use "diff -u" on platforms that lack one
-
-It may be better to use "diff -c" on most of them, though.
-
-* host-SunOS56.patch
-
-  Makefile: SunOS 5.6 portability fix
-
-* host-IRIX.patch
-
-  git-compat-util.h: Irix 6.5 defines 'sgi' but not '__sgi'.
-
-* host-HPUX10.patch
-
-This would be better as two patches
-
-  Makefile: HP-UX 10.20 lacks pread()
-  git-compat-util.h: some platforms with mmap() lack MAP_FAILED definition
-
-* host-HPUX11.patch
-
-  Makefile: HPUX does not have nanosecond timestamp in struct stat
-
-* host-OSF1.patch
-
-  Makefile: Tru64 portability fix
-
-* no-hstrerror.patch
-
-I think this should come before "Makefile: SunOS 5.6 portability fix"
-(split the change to Makefile from this one and move it to the other
-patch).  Then this patch does not talk about SunOS specific issues.
-
-  Makefile: some platforms do not have hstrerror anywhere
-
-* no-inet_ntop.patch
-
-It might make sense to squash this patch into the previous one (and again
-do this before HPUX patches to Makefile) that deals with three functions
-that are traditionally related to libresolv (hstrerror, inet_ntop/pton).
-
-  Make NO_{HSTRERROR,INET_NTOP,INET_PTON} configured independently
-
-* no-socklen_t.patch
-
-Do this before the platform dependent bits, i.e. move the hunks that
-changes "ifeq ($(uname_S,XXX)" block from this patch to host-XXX patch,
-and do the remainder of this patch before any of the platform ones.
-
-  Some platforms lack socklen_t type
-
-* no-inline.patch
-
-Do this before ... (ditto) ...
-
-  Allow disabling "inline"
+--=-wn13fhkQGB89aEuCrjdI--
