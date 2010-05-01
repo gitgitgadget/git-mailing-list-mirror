@@ -1,80 +1,64 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: PATCH:  Less fragile lookup of gpg key
-Date: Sat, 01 May 2010 12:26:03 -0400
-Message-ID: <4BDC561B.4030307@gmail.com>
-References: <4BDC45EB.8090305@grant-olson.net>
-Reply-To: gitzilla@gmail.com
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: git fast-import crashes importing commits with more than one author
+Date: Sat, 01 May 2010 18:36:48 +0200
+Message-ID: <m2ocgztw7z.fsf@igel.home>
+References: <1272728636.27562.12.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Grant Olson <kgo@grant-olson.net>
-X-From: git-owner@vger.kernel.org Sat May 01 18:33:13 2010
+To: Giedrius Slavinskas <giedrius.slavinskas@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 01 18:36:58 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8Fcu-0006vA-5d
-	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 18:33:12 +0200
+	id 1O8FgX-0001gk-Cm
+	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 18:36:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756634Ab0EAQdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 May 2010 12:33:05 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:61177 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751135Ab0EAQdB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 May 2010 12:33:01 -0400
-Received: by gyg13 with SMTP id 13so574385gyg.19
-        for <git@vger.kernel.org>; Sat, 01 May 2010 09:33:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id
-         :disposition-notification-to:date:from:reply-to:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=b/e1AoasyYUcneqDDN8gq80DQ00l/j7ia4lbDolVzzU=;
-        b=NLIy+AOKee4LYQXJi6KahKmJ8g1nbKBtOpykjsqtoSTVMochLi0+W75ZyWzJfHTH3c
-         nZVWAxzSG33Zicrt15kA9zk4DElwbmubrRXbooYkTpPEuG8Xb++2KddGy1nedLGKXoom
-         qSsQ3K1GG+VLI9Bx18RE4EzOr8S0PEVP24y18=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        b=B1FNCvzvzvUsrnXUq6gnY9WtvzS/+cyBG9YB3XPg0vT29t/akV+ByKtpQpPF7I7sto
-         +7+oHaUY++IPwuUR9AcDckAz2C+jELnKImDVaEc/m3mSSmkHuI7HGJVMLjsWZmauxaa+
-         MVf0/5wdu3Zthaer8AnOb+mTYbjk+LJxXbMTU=
-Received: by 10.150.247.23 with SMTP id u23mr5544020ybh.150.1272731169632;
-        Sat, 01 May 2010 09:26:09 -0700 (PDT)
-Received: from [10.0.0.6] (c-24-129-111-166.hsd1.fl.comcast.net [24.129.111.166])
-        by mx.google.com with ESMTPS id 26sm31821069anx.13.2010.05.01.09.26.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 01 May 2010 09:26:08 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
-In-Reply-To: <4BDC45EB.8090305@grant-olson.net>
+	id S1756775Ab0EAQgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 May 2010 12:36:52 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:59259 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754161Ab0EAQgv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 May 2010 12:36:51 -0400
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id AF3301C00214;
+	Sat,  1 May 2010 18:36:49 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id A905C902C7;
+	Sat,  1 May 2010 18:36:49 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan1.mnet-online.de [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id DvjO6VZcIpxb; Sat,  1 May 2010 18:36:48 +0200 (CEST)
+Received: from igel.home (ppp-88-217-103-229.dynamic.mnet-online.de [88.217.103.229])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Sat,  1 May 2010 18:36:48 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 6D1FBCA297; Sat,  1 May 2010 18:36:48 +0200 (CEST)
+X-Yow: Where's th' DAFFY DUCK EXHIBIT??
+In-Reply-To: <1272728636.27562.12.camel@localhost.localdomain> (Giedrius
+	Slavinskas's message of "Sat, 01 May 2010 18:43:56 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.96 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146088>
 
-Grant Olson wrote:
-> When signing a tag, git will attempt to lookup your gpg key if you don't
-> provide the key id.  Right now, it's a little fragile.  My gpg key uid
-> is "Grant T. Olson (Personal Email) <kgo@grant-olson.net>".  My git user
-> info is "Grant T. Olson <kgo@grant-olson.net>".  Things don't match
-> because git doesn't have the comment.
-> 
-> However, if I lookup just by email, things work perfectly.
-> 
-> I think doing this would make life much easier for new users, and in the
-> case that someone has an OpenPGP key without email (e.g. Ubuntu Master
-> Signing Key) we can safely assume they're an expert and will either add
-> the key id to their configuration or use -u instead of -s.
-> 
-> Here's a patch that will try to lookup the user by email only if no
-> signing key is provided.  If there is no email, it will still fall back
-> to the default generated by git.
+Giedrius Slavinskas <giedrius.slavinskas@gmail.com> writes:
 
-Why not fall back to just the email if the full lookup fails?
+> git fast-import does not support commits with more than one author. I
+> try to import bzr repository and it crashes.
+
+You can find a patch here:
+<http://bazaar.launchpad.net/~schwab-linux-m68k/bzr-fastimport/fastimport.dev/revision/262>
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
