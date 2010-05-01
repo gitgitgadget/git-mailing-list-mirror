@@ -1,122 +1,98 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH 1/2] do not overwrite files marked "assume unchanged"
-Date: Sat, 1 May 2010 11:25:12 +0200
-Message-ID: <20100501092512.GA15941@localhost>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
+From: Alexander Shishkin <ash@koowaldah.org>
+Subject: [PATCH/RFC] pretty.c: add %O format specifier to format_commit_one()
+Date: Sat,  1 May 2010 13:56:41 +0300
+Message-ID: <1272711401-29005-1-git-send-email-ash@koowaldah.org>
+Cc: Alexander Shishkin <ash@koowaldah.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 01 11:41:48 2010
+X-From: git-owner@vger.kernel.org Sat May 01 13:03:42 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O89Cl-0004yy-UE
-	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 11:41:48 +0200
+	id 1O8AU1-0001mF-8L
+	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 13:03:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751844Ab0EAJll (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 May 2010 05:41:41 -0400
-Received: from mail-fx0-f66.google.com ([209.85.161.66]:34603 "EHLO
-	mail-fx0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751802Ab0EAJlk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 May 2010 05:41:40 -0400
-X-Greylist: delayed 960 seconds by postgrey-1.27 at vger.kernel.org; Sat, 01 May 2010 05:41:40 EDT
-Received: by fxm18 with SMTP id 18so346800fxm.1
-        for <git@vger.kernel.org>; Sat, 01 May 2010 02:41:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:mime-version:content-type:content-disposition
-         :user-agent;
-        bh=8OsZqjnrh/StUn6dcKH/+IDrD7mZF+mTQDyfQ8U4EIM=;
-        b=joetv04bLkzaNS6l4jXrxzzev/Zg8syBw19J2ub33g480RvjhA58UW7W1pvww/O02X
-         n0VLeRUCXQuQrQTzUD9X2qRVTdO78JlwxdfuH38sILGQbVxD9kk39r0SOyNRe1L9gXZc
-         ZKOktl6TZH+bUGlwUeblbLxRNwui+c/87hrto=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:mime-version
-         :content-type:content-disposition:user-agent;
-        b=Li0JCi1IDt1IeDxs6afJMGaje1X1SzHKMrFIyzQktKKVrPoa4JXDAp5Q7r5mhKzC96
-         AffDfed8K6TOWckGJScPFYWM3RoQfOuOoMEAtLPX2xxGRr1ekYalE6ck8eYSaDNzsI3b
-         +K93M4qzoR+AOMNNpIqf0GFmSPfpyNAKZHSUo=
-Received: by 10.87.5.30 with SMTP id h30mr5939208fgi.3.1272705938322;
-        Sat, 01 May 2010 02:25:38 -0700 (PDT)
-Received: from darc.lan (p549A6756.dip.t-dialin.net [84.154.103.86])
-        by mx.google.com with ESMTPS id 12sm1562898fgg.14.2010.05.01.02.25.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 01 May 2010 02:25:38 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1O88wi-00088r-7N; Sat, 01 May 2010 11:25:12 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752104Ab0EALDf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 May 2010 07:03:35 -0400
+Received: from filtteri5.pp.htv.fi ([213.243.153.188]:57852 "EHLO
+	filtteri5.pp.htv.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751739Ab0EALDe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 May 2010 07:03:34 -0400
+X-Greylist: delayed 383 seconds by postgrey-1.27 at vger.kernel.org; Sat, 01 May 2010 07:03:34 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by filtteri5.pp.htv.fi (Postfix) with ESMTP id E69305A6157;
+	Sat,  1 May 2010 13:57:09 +0300 (EEST)
+X-Virus-Scanned: Debian amavisd-new at pp.htv.fi
+Received: from smtp5.welho.com ([213.243.153.39])
+	by localhost (filtteri5.pp.htv.fi [213.243.153.188]) (amavisd-new, port 10024)
+	with ESMTP id VavMURUIFlwY; Sat,  1 May 2010 13:57:09 +0300 (EEST)
+Received: from ukko (cs27003010.pp.htv.fi [89.27.3.10])
+	by smtp5.welho.com (Postfix) with ESMTP id 937B45BC002;
+	Sat,  1 May 2010 13:57:09 +0300 (EEST)
+Received: from ash by ukko with local (Exim 4.69)
+	(envelope-from <ash@shisha.kicks-ass.net>)
+	id 1O8ANR-0007YQ-Kz; Sat, 01 May 2010 13:56:53 +0300
+X-Mailer: git-send-email 1.7.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146083>
 
-A merge will fail gracefully if it needs to update files marked
-"assume unchanged", but other similar commands will not. In
-particular, checkout and rebase will silently overwrite changes to
-such files.
+This specifier represents the number of each commit in the output
+stream.
 
-This is a regression introduced in commit 1dcafcc0 (verify_uptodate():
-add ce_uptodate(ce) test), which avoids lstat's during a merge, if the
-index entry is up-to-date. If the CE_VALID flag is set, however, we
-cannot trust CE_UPTODATE.
-
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+Signed-off-by: Alexander Shishkin <ash@koowaldah.org>
 ---
- t/t2106-update-index-assume-unchanged.sh |   24 ++++++++++++++++++++++++
- unpack-trees.c                           |    2 +-
- 2 files changed, 25 insertions(+), 1 deletions(-)
- create mode 100755 t/t2106-update-index-assume-unchanged.sh
+ Documentation/pretty-formats.txt |    3 ++-
+ pretty.c                         |    5 +++++
+ 2 files changed, 7 insertions(+), 1 deletions(-)
 
-diff --git a/t/t2106-update-index-assume-unchanged.sh b/t/t2106-update-index-assume-unchanged.sh
-new file mode 100755
-index 0000000..99d858c
---- /dev/null
-+++ b/t/t2106-update-index-assume-unchanged.sh
-@@ -0,0 +1,24 @@
-+#!/bin/sh
-+
-+test_description='git update-index --assume-unchanged test.
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' \
-+	': >file &&
-+	 git add file &&
-+	 git commit -m initial &&
-+	 git branch other &&
-+	 echo upstream >file &&
-+	 git add file &&
-+	 git commit -m upstream'
-+
-+test_expect_success 'do not switch branches with dirty file' \
-+	'git reset --hard &&
-+	 git checkout other &&
-+	 echo dirt >file &&
-+	 git update-index --assume-unchanged file &&
-+	 test_must_fail git checkout master'
-+
-+test_done
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 75f54ca..1a8030c 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -862,7 +862,7 @@ static int verify_uptodate_1(struct cache_entry *ce,
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 1686a54..7b0cab1 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -137,7 +137,8 @@ The placeholders are:
+ - '%%': a raw '%'
+ - '%x00': print a byte from a hex code
+ - '%w([<w>[,<i1>[,<i2>]]])': switch line wrapping, like the -w option of
+-  linkgit:git-shortlog[1].
++  linkgit:git-shortlog[1]
++- '%O': number of the record in the output.
+ 
+ NOTE: Some placeholders may depend on other options given to the
+ revision traversal engine. For example, the `%g*` reflog options will
+diff --git a/pretty.c b/pretty.c
+index 7cb3a2a..3e3d399 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -11,6 +11,7 @@
+ #include "reflog-walk.h"
+ 
+ static char *user_format;
++static int record_number;
+ 
+ static void save_user_format(struct rev_info *rev, const char *cp, int is_tformat)
  {
- 	struct stat st;
+@@ -639,6 +640,9 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
  
--	if (o->index_only || (!ce_skip_worktree(ce) && (o->reset || ce_uptodate(ce))))
-+	if (o->index_only || (!((ce->ce_flags & CE_VALID) || ce_skip_worktree(ce)) && (o->reset || ce_uptodate(ce))))
- 		return 0;
+ 	/* these are independent of the commit */
+ 	switch (placeholder[0]) {
++	case 'O':
++		strbuf_addf(sb, "%d", record_number);
++		return 1;
+ 	case 'C':
+ 		if (placeholder[1] == '(') {
+ 			const char *end = strchr(placeholder + 2, ')');
+@@ -899,6 +903,7 @@ void format_commit_message(const struct commit *commit,
+ 	context.wrap_start = sb->len;
+ 	strbuf_expand(sb, format, format_commit_item, &context);
+ 	rewrap_message_tail(sb, &context, 0, 0, 0);
++	record_number++;
+ }
  
- 	if (!lstat(ce->name, &st)) {
+ static void pp_header(enum cmit_fmt fmt,
 -- 
-1.7.0.5.3.ga76e
+1.7.0.4
